@@ -1,0 +1,72 @@
+<form [formGroup]="registerForm" (ngSubmit)="register()">
+
+  <br>
+
+  <div>
+    <label>nome:</label>
+    <input type="text" formControlName="name">
+    <div *ngIf="registerForm.get('name').invalid && registerForm.get('name').dirty" style="color: red;">
+      <div *ngIf="registerForm.get('name').errors.required">
+        Campo richiesto
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <label>cognome:</label>
+    <input type="text" formControlName="lastName">
+    <div *ngIf="registerForm.get('lastName').invalid && registerForm.get('lastName').dirty" style="color: red;">
+      <div *ngIf="registerForm.get('lastName').errors.required">
+        Campo richiesto
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <label>user name:</label>
+    <input type="text" formControlName="userName">
+    <div *ngIf="registerForm.get('userName').invalid && registerForm.get('userName').dirty" style="color: red;">
+      <div *ngIf="registerForm.get('userName').errors.required">
+        Campo richiesto
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <label>email:</label>
+    <input type="email" formControlName="email">
+    <div *ngIf="registerForm.get('email').invalid && registerForm.get('email').dirty" style="color: red;">
+      <div *ngIf="registerForm.get('email').errors.required">
+        Campo richiesto
+      </div>
+      <div *ngIf="registerForm.get('email').errors.email">
+        Indirizzo email non valido
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <label>password:</label>
+    <input type="text" formControlName="password">
+    <div *ngIf="registerForm.get('password').invalid && registerForm.get('password').dirty" style="color: red;">
+      <div *ngIf="registerForm.get('password').errors.required">
+        Campo richiesto
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <label>conferma password:</label>
+    <input type="text" formControlName="confPassword">
+    <div *ngIf="registerForm.get('confPassword').invalid && registerForm.get('confPassword').dirty" style="color: red;">
+      <div *ngIf="registerForm.get('confPassword').errors.required">
+        Campo richiesto
+      </div>
+    </div>
+  </div>
+
+  <br>
+
+  <button type="submit" [disabled]="!registerForm.valid">Registrati</button>
+
+</form>
