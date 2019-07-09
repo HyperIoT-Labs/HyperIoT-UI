@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthenticationService, JWTLoginResponse } from '@hyperiot/core';
+import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +18,7 @@ export class LoginComponent implements OnInit {
     password: new FormControl('', Validators.required)
   });
 
-  constructor(private authenticationService: AuthenticationService) { }
+  constructor(private authenticationService: AuthenticationService, private cookieService: CookieService, private router: Router) { }
 
   ngOnInit() {
   }
@@ -26,7 +28,8 @@ export class LoginComponent implements OnInit {
       res => {
         this.loginStatus = 200;
         var jwtToken = <JWTLoginResponse>res;
-        localStorage.setItem('jwt', jwtToken.token)
+        this.cookieService.set('HIT-AUTH', jwtToken.token, 30);
+        this.router.navigate(['/test']);
       },
       err => {
         this.loginStatus = err.status;

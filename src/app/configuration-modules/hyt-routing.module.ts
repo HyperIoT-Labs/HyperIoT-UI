@@ -1,8 +1,27 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { NgModule, Injectable } from '@angular/core';
+import { Routes, RouterModule, CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { AuthenticationComponent } from '../pages/authentication/authentication.component';
 import { PasswordResetComponent } from '../pages/password-reset/password-reset.component';
 import { UserActivationComponent } from '../pages/user-activation/user-activation.component';
+import { TestComponent } from '../pages/test/test.component';
+import { Observable } from 'rxjs';
+import { CookieService } from 'ngx-cookie-service';
+
+@Injectable()
+export class LoggedInGuard implements CanActivate {
+
+  constructor(private router: Router, private cookieService: CookieService) { }
+
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):
+    Observable<boolean> | Promise<boolean> | boolean {
+    if (this.cookieService.check('HIT-AUTH')) {
+      return true;
+    }
+    this.router.navigate(['/authentication']);
+    return false;
+  }
+
+}
 
 const hyperiotRoutes: Routes = [
   {
@@ -32,6 +51,14 @@ const hyperiotRoutes: Routes = [
     }
   },
   {
+    path: 'test',
+    component: TestComponent,
+    canActivate: [LoggedInGuard],
+    data: {
+      showToolBar: true,
+    }
+  },
+  {
     path: '**',
     redirectTo: 'authentication'
   }
@@ -40,6 +67,7 @@ const hyperiotRoutes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(hyperiotRoutes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [LoggedInGuard]
 })
 export class HytRoutingModule { }
