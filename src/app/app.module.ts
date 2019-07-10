@@ -4,7 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 
-import { Configuration, ConfigurationParameters, HUserClientModule, AuthenticationClientModule } from '@hyperiot/core';
+import { Configuration, ConfigurationParameters, HUserClientModule, AuthenticationClientModule, DataStreamService } from '@hyperiot/core';
 import { CookieService } from 'ngx-cookie-service';
 
 //modules
@@ -45,7 +45,7 @@ export function apiConfigFactory(): Configuration {
     AuthenticationClientModule.forRoot(apiConfigFactory),
     HUserClientModule.forRoot(apiConfigFactory)
   ],
-  providers: [CookieService],
+  providers: [CookieService, DataStreamService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
