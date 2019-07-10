@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
       res => {
         this.loginStatus = 200;
         var jwtToken = <JWTLoginResponse>res;
-        this.cookieService.set('HIT-AUTH', jwtToken.token, 30);
+        this.cookieService.set('HIT-AUTH', jwtToken.token, 2);
         this.router.navigate(['/test']);
       },
       err => {
