@@ -23,6 +23,9 @@ export class RegistrationComponent implements OnInit {
   ngOnInit() {
   }
 
+  exception: boolean = false;
+  errorMessage: string[] = [];
+
   register() {
     let user: HUser = {
       name: this.registerForm.value.name,
@@ -38,7 +41,23 @@ export class RegistrationComponent implements OnInit {
         console.log(res)
       },
       err => {
-        console.log(err.status);
+        console.log(err)
+        this.errorMessage = [];
+        if (err.error.type == 'it.acsoftware.hyperiot.base.exception.HyperIoTDuplicateEntityException') {
+          for (let k of err.error.errorMessages) {
+            this.errorMessage.push(k + ' non disponibile.')
+          }
+        }
+        if (err.error.type == 'it.acsoftware.hyperiot.base.exception.HyperIoTValidationException') {
+
+          for (let k of err.error.validationErrors)
+            this.errorMessage.push(k.field + k.message)
+        }
+
+        if (this.errorMessage.length == 0)
+          this.errorMessage.push('Unknown error')
+
+        this.exception = true;
       }
     )
   }

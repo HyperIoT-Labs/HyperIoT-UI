@@ -34,12 +34,10 @@
           },
           "configurations": {
             "production": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
-                }
-              ],
+              "fileReplacements": [{
+                "replace": "src/environments/environment.ts",
+                "with": "src/environments/environment.prod.ts"
+              }],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -49,24 +47,78 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
-                }
-              ]
+              "budgets": [{
+                "type": "initial",
+                "maximumWarning": "2mb",
+                "maximumError": "5mb"
+              }],
+              "i18nFile": "src/locale/translations.en-US.xlf",
+              "i18nFormat": "xlf",
+              "i18nLocale": "en-US",
+              "i18nMissingTranslation": "error"
+            },
+            "production-it": {
+              "fileReplacements": [{
+                "replace": "src/environments/environment.ts",
+                "with": "src/environments/environment.prod.ts"
+              }],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true
+            },
+            "it": {
+              "aot": true,
+              "outputPath": "dist/hyperiot-it/",
+              "i18nFile": "src/locale/translations.it-IT.xlf",
+              "i18nFormat": "xlf",
+              "i18nLocale": "it-IT",
+              "i18nMissingTranslation": "error"
+            },
+            "production-en": {
+              "fileReplacements": [{
+                "replace": "src/environments/environment.ts",
+                "with": "src/environments/environment.prod.ts"
+              }],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true
+            },
+            "en": {
+              "aot": true,
+              "outputPath": "dist/hyperiot-en/",
+              "i18nFile": "src/locale/translations.en-US.xlf",
+              "i18nFormat": "xlf",
+              "i18nLocale": "en-US",
+              "i18nMissingTranslation": "error"
             }
           }
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "hyperiot:build"
+            "browserTarget": "hyperiot:build:en"
           },
           "configurations": {
             "production": {
               "browserTarget": "hyperiot:build:production"
+            },
+            "it": {
+              "browserTarget": "hyperiot:build:it"
+            },
+            "en": {
+              "browserTarget": "ssysweb:build:en"
             }
           }
         },
@@ -119,6 +171,7 @@
           }
         }
       }
-    }},
+    }
+  },
   "defaultProject": "hyperiot"
 }

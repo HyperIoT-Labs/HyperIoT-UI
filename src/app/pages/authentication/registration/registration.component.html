@@ -67,6 +67,13 @@
 
   <br>
 
-  <button type="submit" [disabled]="!registerForm.valid">Registrati</button>
+  <ng-container *ngFor="let errmsg of errorMessage">
+    {{errmsg}}
+    <br>
+  </ng-container>
+
+  <br>
+
+  <button type="submit">Registrati</button>
 
 </form>

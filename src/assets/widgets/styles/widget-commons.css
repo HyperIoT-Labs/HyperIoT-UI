@@ -1,0 +1,33 @@
+/* Widget header and buttons */
+:host {
+    position: absolute;
+    top: 4px; left: 4px; bottom: 4px; right: 4px;
+    display: block;
+    border: solid 1px rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+    -webkit-box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.3);
+    box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.3);
+}
+header {
+    position: absolute;
+    top: 6px; left: 12px;
+    color: #16A4FA;
+    font-weight: 600;
+    font-size: 16px;
+}
+.play-pause {
+    position: absolute;
+    top:0; right: 32px;
+    width: 24px; height: 24px;
+    padding: 4px;
+    opacity: 0.5;
+}
+.drag-handle {
+    position: absolute;
+    top:0; right: 0;
+    width: 24px; height: 24px;
+    padding: 4px;
+    opacity: 0.5;
+}
+

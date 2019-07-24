@@ -1,7 +1,31 @@
 <p>test works!</p>
 <button (click)="click()">get all users</button>
 <button (click)="buttonClick()">connect</button>
-<button (click)="getAll()">get all</button>
+<button (click)="getAll()">get all cookie</button>
+
+<!-- <div class="test-widget"> -->
+<!-- <hyperiot-stats-chart [widget]="{
+        widgetId: 'my-widget-id',
+        config: {
+        data: [
+            {
+                x: [1, 2, 3, 4],
+                y: [10, 15, 13, 17],
+                type: 'scatter'
+            },
+            {
+                x: [1, 2, 3, 4],
+                y: [16, 5, 11, 9],
+                type: 'scatter'
+            }
+        ]
+        }
+    }"></hyperiot-stats-chart> -->
+<!-- </div> -->
 
 <hyt-input-text [isRequired]="true" [hint]="'Prova di un HINT'" [placeholder]="'Placeholder test'">
 </hyt-input-text>
+
+<ng-container i18n="@@helloi18n">TEST_H_helloi18n</ng-container>
+<br>
+{{stringToTranslate}}

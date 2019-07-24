@@ -14,9 +14,9 @@ export class LoggedInGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):
     Observable<boolean> | Promise<boolean> | boolean {
-    if (this.cookieService.check('HIT-AUTH')) {
-      return true;
-    }
+    //if (this.cookieService.check('HIT-AUTH')) {
+    return true;
+    //}
     this.router.navigate(['/authentication']);
     return false;
   }
