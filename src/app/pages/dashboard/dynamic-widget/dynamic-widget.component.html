@@ -1,0 +1,11 @@
+<!-- List of widget that can be dynamically loaded -->
+
+<hyperiot-time-chart *ngIf="widget.type === 'time-chart'" [widget]="widget"></hyperiot-time-chart>
+
+<hyperiot-stats-chart *ngIf="widget.type === 'stats-chart'" [widget]="widget"></hyperiot-stats-chart>
+
+<hyperiot-sensor-value *ngIf="widget.type === 'sensor-value'" [widget]="widget"></hyperiot-sensor-value>
+
+<hyperiot-events-log *ngIf="widget.type === 'events-log'" [widget]="widget"></hyperiot-events-log>
+
+<hyperiot-text-label *ngIf="widget.type === 'text-label'" [widget]="widget"></hyperiot-text-label>

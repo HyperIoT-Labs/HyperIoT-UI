@@ -6,6 +6,7 @@ import { UserActivationComponent } from '../pages/user-activation/user-activatio
 import { TestComponent } from '../pages/test/test.component';
 import { Observable } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
+import { DashboardComponent } from '../pages/dashboard/dashboard.component';
 
 @Injectable()
 export class LoggedInGuard implements CanActivate {
@@ -53,6 +54,14 @@ const hyperiotRoutes: Routes = [
   {
     path: 'test',
     component: TestComponent,
+    canActivate: [LoggedInGuard],
+    data: {
+      showToolBar: true,
+    }
+  },
+  {
+    path: 'dashboard/:id',
+    component: DashboardComponent,
     canActivate: [LoggedInGuard],
     data: {
       showToolBar: true,

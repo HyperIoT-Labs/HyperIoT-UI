@@ -18,6 +18,7 @@ import { UserActivationModule } from './pages/user-activation/user-activation.mo
 import { AppComponent } from './app.component';
 import { TestModule } from './pages/test/test.module';
 import { I18n } from '@ngx-translate/i18n-polyfill';
+import { DashboardModule } from './pages/dashboard/dashboard.module';
 
 export function apiConfigFactory(): Configuration {
   const params: ConfigurationParameters = {
@@ -31,13 +32,14 @@ export function apiConfigFactory(): Configuration {
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
     CustomMaterialModule,
+    DashboardModule,
     HytRoutingModule,
     AuthenticationModule,
     PasswordResetModule,

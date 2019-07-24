@@ -38,7 +38,6 @@
     "ngx-cookie-service": "^2.2.0",
     "patch-package": "^6.1.2",
     "plotly.js": "1.48.3",
-    "plotly.js-dist": "^1.48.3",
     "rxjs": "~6.4.0",
     "tslib": "^1.9.0",
     "zone.js": "~0.9.1"
