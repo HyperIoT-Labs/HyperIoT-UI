@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 
 @Component({
-  selector: 'app-login',
+  selector: '[app-login]',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })

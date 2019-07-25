@@ -6,6 +6,7 @@ import { AuthenticationComponent } from './authentication.component';
 import { LoginComponent } from './login/login.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { PasswordRecoveryComponent } from './password-recovery/password-recovery.component';
+import { HyperiotComponentsModule } from '@hyperiot/components';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { PasswordRecoveryComponent } from './password-recovery/password-recovery
   ],
   imports: [
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HyperiotComponentsModule
   ],
   providers: []
 })

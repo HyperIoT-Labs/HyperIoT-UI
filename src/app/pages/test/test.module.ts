@@ -9,7 +9,6 @@ import { HyperiotComponentsModule } from '@hyperiot/components'
     CommonModule,
     HyperiotComponentsModule
   ],
-  providers: [],
-  exports: [TestComponent]
+  providers: []
 })
 export class TestModule { }

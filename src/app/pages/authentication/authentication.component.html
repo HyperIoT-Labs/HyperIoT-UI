@@ -1,16 +1,26 @@
 <div class="authenticationCard" [ngSwitch]="authType">
 
-  <div *ngSwitchCase="0">
-    LOGIN
-    <button style="margin-left: 250px;" (click)="authType=1">REGISTRATI</button>
-    <app-login></app-login>
-    <hr>
-    <div style="text-align: center">
-      <a (click)="authType=2" class="forgotPwdText">
-        Forgot password?
-      </a>
-    </div>
-  </div>
+  <div *ngSwitchCase="0" class="container-login">
+    
+    <!-- <div> -->
+
+      <div app-login class="wrap-login"> 
+
+        <!-- LOGIN -->
+        <!-- <button style="margin-left: 250px;" (click)="authType=1">REGISTRATI</button> -->
+        <!-- <app-login></app-login> -->
+        <!-- <hr>
+        <div style="text-align: center">
+          <a (click)="authType=2" class="forgotPwdText">
+            Forgot password?
+          </a>
+        </div> -->
+
+      </div> <!-- End Wrap Login -->
+      
+    <!-- </div>  -->
+    
+  </div> <!-- End Container Login -->
 
   <div *ngSwitchCase="1">
     REGISTRATI

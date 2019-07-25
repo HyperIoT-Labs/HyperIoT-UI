@@ -1,28 +1,58 @@
-<form [formGroup]="loginForm" (ngSubmit)="login()" autocomplete="on">
+<div class="login-pic">
+  <img src="https://cdn1.iconfinder.com/data/icons/business-and-commercial-mixed-round/128/35-512.png" alt="Image">
+</div>
 
-  <div>
-    <label>user:</label>
-    <input type="text" formControlName="username" required>
-    <div *ngIf="loginForm.get('username').invalid && loginForm.get('username').dirty" style="color: red;">
-      <div *ngIf="loginForm.get('username').errors.required">
-        Campo richiesto
-      </div>
-    </div>
+<form class="login-form" [formGroup]="loginForm" (ngSubmit)="login()" autocomplete="on">
+  LOGIN
+   <div class="container-input">
+
+      <hyt-input-text 
+        [isRequired]="true" 
+        [hint]="'Suggerimento di prova'" 
+        [placeholder]="'User'"
+      >
+      </hyt-input-text>
+
+      <!-- <label>user:</label>
+      <input type="text" formControlName="username" required>
+      <div *ngIf="loginForm.get('username').invalid && loginForm.get('username').dirty" style="color: red;">
+        <div *ngIf="loginForm.get('username').errors.required">
+          Campo richiesto
+        </div>
+      </div> -->
+
   </div>
 
   <div>
-    <label>password:</label>
+    <hyt-input-text 
+      class="login"
+      [isPassword]="true" 
+      type="password" 
+      [isRequired]="true" 
+      [hint]="'Errors appears instantly!'"
+      [placeholder]="'Insert password'" 
+      [errorMsgRequired]="'Il campo è obbligatorio'"
+      [errorMsgMinLength]="'Minimo 6 caratteri'"
+      [errorMsgOneNumber]="'Almeno 1 numero'"
+      [errorMsgUpperCase]="'Almeno 1 carattere maiuscolo'"
+      [errorMsgSpecialChar]="'Almeno 1 carattere speciale'"
+    >
+    </hyt-input-text>
+
+    <!-- <label>password:</label>
     <input type="password" formControlName="password">
     <div *ngIf="loginForm.get('password').invalid && loginForm.get('password').dirty" style="color: red;">
       <div *ngIf="loginForm.get('password').errors.required">
         Campo richiesto
       </div>
-    </div>
+    </div> -->
+
   </div>
 
   <br>
 
-  <button type="submit" [disabled]="!loginForm.valid">Login</button>
+  <!-- <button type="submit" [disabled]="!loginForm.valid">Login</button> -->
+  <hyt-button>Invia Brutto Sacco di merda!!!</hyt-button>
 
   <p *ngIf="loginStatus==401" style="color: red; text-align: center">Invalid user or password</p>
   <p *ngIf="loginStatus==0" style="color: red; text-align: center">No connection</p>
