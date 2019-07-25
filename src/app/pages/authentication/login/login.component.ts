@@ -3,22 +3,29 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthenticationService, JWTLoginResponse } from '@hyperiot/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { AuthenticationHttpErrorHandlerService } from 'src/app/services/authentication-http-error-handler.service';
+import { Handler } from 'src/app/services/models/models';
 
 @Component({
-  selector: '[app-login]',
+  selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
 
-  loginStatus: number = -1;
+  error: string[] = [null, null, null];
 
   loginForm = new FormGroup({
     username: new FormControl('', Validators.required),
     password: new FormControl('', Validators.required)
   });
 
-  constructor(private authenticationService: AuthenticationService, private cookieService: CookieService, private router: Router) { }
+  constructor(
+    private authenticationService: AuthenticationService,
+    private cookieService: CookieService,
+    private router: Router,
+    private httperrorHandler: AuthenticationHttpErrorHandlerService
+  ) { }
 
   ngOnInit() {
   }
@@ -26,14 +33,16 @@ export class LoginComponent implements OnInit {
   login() {
     this.authenticationService.login(this.loginForm.value.username, this.loginForm.value.password).subscribe(
       res => {
-        this.loginStatus = 200;
         var jwtToken = <JWTLoginResponse>res;
         this.cookieService.set('HIT-AUTH', jwtToken.token, 2);
         this.router.navigate(['/test']);
       },
       err => {
-        this.loginStatus = err.status;
-        console.log(this.loginStatus)
+        let k: Handler[] = this.httperrorHandler.handlePwdRecovery(err);
+        for (let e of k) {
+          this.error[2] = e.message;
+        }
+        console.log(this.error)
       }
     )
   }

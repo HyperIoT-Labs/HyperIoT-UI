@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HusersService, HUser } from '@hyperiot/core';
 import { AuthenticationHttpErrorHandlerService } from 'src/app/services/authentication-http-error-handler.service';
+import { I18n } from '@ngx-translate/i18n-polyfill';
+import { Handler } from 'src/app/services/models/models';
 
 @Component({
   selector: 'app-registration',
@@ -9,6 +11,9 @@ import { AuthenticationHttpErrorHandlerService } from 'src/app/services/authenti
   styleUrls: ['./registration.component.scss']
 })
 export class RegistrationComponent implements OnInit {
+
+  error: string[] = [null, null, null, null, null, null, null];
+  registrationOkText: string;
 
   registerForm = new FormGroup({
     name: new FormControl('', [Validators.required]),
@@ -19,7 +24,11 @@ export class RegistrationComponent implements OnInit {
     confPassword: new FormControl('', [Validators.required])
   });
 
-  constructor(private hUserService: HusersService, private httperrorHandler: AuthenticationHttpErrorHandlerService) { }
+  constructor(
+    private hUserService: HusersService,
+    private i18n: I18n,
+    private httperrorHandler: AuthenticationHttpErrorHandlerService
+  ) { }
 
   ngOnInit() {
   }
@@ -28,40 +37,28 @@ export class RegistrationComponent implements OnInit {
   errorMessage: string[] = [];
 
   register() {
+    //DISABLE BUTTON
+    this.error = [null, null, null, null, null, null, null];
+
     let user: HUser = {
-      name: '',//this.registerForm.value.name,
-      lastname: '',//this.registerForm.value.lastName,
-      username: '',//this.registerForm.value.userName,
-      email: 'gabriele.losiczkoa@acsoftware.it',//this.registerForm.value.email,
-      password: 'Pino123?',//this.registerForm.value.password,
-      passwordConfirm: 'Pino123!',//this.registerForm.value.confPassword
+      name: this.registerForm.value.name,
+      lastname: this.registerForm.value.lastName,
+      username: this.registerForm.value.userName,
+      email: this.registerForm.value.email,
+      password: this.registerForm.value.password,
+      passwordConfirm: this.registerForm.value.confPassword
     }
 
     this.hUserService.register(user).subscribe(
       res => {
-        console.log(res)
+        this.registrationOkText = this.i18n('REG_ok');
       },
       err => {
-        // console.log(err)
-        // this.errorMessage = [];
-        // if (err.error.type == 'it.acsoftware.hyperiot.base.exception.HyperIoTDuplicateEntityException') {
-        //   for (let k of err.error.errorMessages) {
-        //     this.errorMessage.push(k + ' non disponibile.')
-        //   }
-        // }
-        // if (err.error.type == 'it.acsoftware.hyperiot.base.exception.HyperIoTValidationException') {
-
-        //   for (let k of err.error.validationErrors)
-        //     this.errorMessage.push(k.field + k.message)
-        // }
-
-        // if (this.errorMessage.length == 0)
-        //   this.errorMessage.push('Unknown error')
-
-        // this.exception = true;ù
-
-        let k = this.httperrorHandler.handle(err);
-        console.log(k)
+        let k: Handler[] = this.httperrorHandler.handle(err);
+        for (let e of k) {
+          this.error[e.container] = e.message;
+        }
+        console.log(this.error)
       }
     )
   }

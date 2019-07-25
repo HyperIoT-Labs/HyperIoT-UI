@@ -4,17 +4,81 @@
     <body>
       <trans-unit id="helloi18n" datatype="html">
         <source>TEST_H_helloi18n</source>
-        <target>ciao ITA html</target>
+        <target>TEST_H_helloi18n</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/test/test.component.html</context>
           <context context-type="linenumber">29</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="c6639f49ca92be95925f5d1e28c29ff93614409e" datatype="html">
+        <source>REG_ok</source>
+        <target>Controlla la tua casella email. Ti abbiamo inviato una mail per completare la registrazione</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/authentication/registration/registration.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="7e5714e4284e9a85b4857a1b1e3cf8cde766a225" datatype="html">
         <source>TEST_stringToTranslate</source>
-        <target>i18n ITA typescript</target>
+        <target>TEST_H_helloi18n</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/test/test.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="d046bbcf4a4b85862c1f3559670fa5eb6f5e27dd" datatype="html">
+        <source>server_error_500</source>
+        <target>Errore interno</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/services/authentication-http-error-handler.service.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/services/authentication-http-error-handler.service.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/services/authentication-http-error-handler.service.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="216b81e3fd2ed8d36587c3e100eab32d8fd4fab9" datatype="html">
+        <source>offline_504</source>
+        <target>Sembra che tu sia offline. Per favore controlla la tua connessione ad internet.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/services/authentication-http-error-handler.service.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/services/authentication-http-error-handler.service.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/services/authentication-http-error-handler.service.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3f9a0f4ff1648092f52f0017c5baa42e74472a9a" datatype="html">
+        <source>HyperIoTDuplicateEntityException</source>
+        <target>già in uso</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/services/authentication-http-error-handler.service.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8e28215076d791f8312f4634a296f267330e8d29" datatype="html">
+        <source>unknown_error</source>
+        <target>Errore sconosciuto</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/services/authentication-http-error-handler.service.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/services/authentication-http-error-handler.service.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/services/authentication-http-error-handler.service.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>

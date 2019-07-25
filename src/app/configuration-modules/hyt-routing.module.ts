@@ -3,7 +3,6 @@ import { Routes, RouterModule, CanActivate, Router, ActivatedRouteSnapshot, Rout
 import { AuthenticationComponent } from '../pages/authentication/authentication.component';
 import { PasswordResetComponent } from '../pages/password-reset/password-reset.component';
 import { UserActivationComponent } from '../pages/user-activation/user-activation.component';
-import { TestComponent } from '../pages/test/test.component';
 import { Observable } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import { DashboardComponent } from '../pages/dashboard/dashboard.component';
@@ -15,9 +14,9 @@ export class LoggedInGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):
     Observable<boolean> | Promise<boolean> | boolean {
-    //if (this.cookieService.check('HIT-AUTH')) {
-    return true;
-    //}
+    if (this.cookieService.check('HIT-AUTH')) {
+      return true;
+    }
     this.router.navigate(['/authentication']);
     return false;
   }
@@ -49,14 +48,6 @@ const hyperiotRoutes: Routes = [
     component: PasswordResetComponent,
     data: {
       showToolBar: false,
-    }
-  },
-  {
-    path: 'test',
-    component: TestComponent,
-    canActivate: [LoggedInGuard],
-    data: {
-      showToolBar: true,
     }
   },
   {

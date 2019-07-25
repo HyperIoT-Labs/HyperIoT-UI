@@ -16,7 +16,6 @@ import { UserActivationModule } from './pages/user-activation/user-activation.mo
 
 //components
 import { AppComponent } from './app.component';
-import { TestModule } from './pages/test/test.module';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { DashboardModule } from './pages/dashboard/dashboard.module';
 
@@ -44,8 +43,6 @@ export function apiConfigFactory(): Configuration {
     AuthenticationModule,
     PasswordResetModule,
     UserActivationModule,
-    TestModule,
-
     HyperiotClientModule.forRoot(apiConfigFactory)
   ],
   providers: [
