@@ -1,0 +1,42 @@
+[
+    {
+      "id": 1,
+      "widgetId": "widget-1",
+      "widgetConf": "{\n    \"cols\": 4,\n    \"rows\": 3,\n    \"y\": 0,\n    \"x\": 0,\n    \"type\": \"stats-chart\",\n    \"dataUrl\": \"assets/data/test.widget-stats.1.json\"\n}"
+    },
+    {
+      "id": 2,
+      "widgetId": "widget-2",
+      "widgetConf": "{\n    \"cols\": 2,\n    \"rows\": 1,\n    \"y\": 0,\n    \"x\": 4,\n    \"type\": \"text-label\",\n    \"config\": {\n        \"labelText\": \"Hello ...\"\n    }\n}"
+    },
+    {
+      "id": 3,
+      "widgetId": "widget-3",
+      "widgetConf": "{\n    \"cols\": 2,\n    \"rows\": 2,\n    \"y\": 0,\n    \"x\": 4,\n    \"type\": \"sensor-value\",\n    \"config\": {\n        \"packetId\": 14,\n        \"packetFields\": [\n            \"temperature\"\n        ],\n        \"displayUnit\": \"celsius\"\n    }\n}"
+    },
+    {
+      "id": 4,
+      "widgetId": "widget-4",
+      "widgetConf": "{\n    \"cols\": 2,\n    \"rows\": 1,\n    \"y\": 0,\n    \"x\": 4,\n    \"type\": \"text-label\",\n    \"config\": {\n        \"labelText\": \"... World!\"\n    }\n}"
+    },
+    {
+      "id": 5,
+      "widgetId": "widget-5",
+      "widgetConf": "{\n    \"cols\": 4,\n    \"rows\": 3,\n    \"y\": 0,\n    \"x\": 0,\n    \"type\": \"time-chart\",\n    \"config\": {\n        \"packetId\": 23,\n        \"packetFields\": [\n            \"temperature\",\n            \"humidity\"\n        ],\n        \"timeAxisRange\": 10,\n        \"maxDataPoints\": 100,\n        \"timeWindow\": 60,\n        \"seriesConfig\": [\n            {\n                \"series\": \"temperature\",\n                \"config\": {\n                    \"yaxis\": \"y2\"\n                },\n                \"layout\": {\n                    \"title\": {\n                        \"font\": {\n                            \"size\": 14,\n                            \"color\": \"#16A4FA\"\n                        },\n                        \"xref\": \"container\",\n                        \"yref\": \"container\",\n                        \"x\": 0,\n                        \"y\": 1,\n                        \"pad\": {\n                            \"t\": 10,\n                            \"l\": 10\n                        },\n                        \"text\": \"<b>Real time temperature and humidity</b>\"\n                    },\n                    \"yaxis2\": {\n                        \"title\": \"temperature\",\n                        \"titlefont\": {\n                            \"color\": \"#00f\"\n                        },\n                        \"tickfont\": {\n                            \"color\": \"#00f\"\n                        },\n                        \"anchor\": \"free\",\n                        \"overlaying\": \"y\",\n                        \"side\": \"right\",\n                        \"position\": 1,\n                        \"range\": [\n                            -50,\n                            50\n                        ]\n                    }\n                }\n            },\n            {\n                \"series\": \"humidity\",\n                \"layout\": {\n                    \"yaxis\": {\n                        \"title\": \"humidity\",\n                        \"titlefont\": {\n                            \"color\": \"darkorange\"\n                        },\n                        \"tickfont\": {\n                            \"color\": \"darkorange\"\n                        }\n                    }\n                }\n            }\n        ]\n    }\n}"
+    },
+    {
+      "id": 6,
+      "widgetId": "widget-6",
+      "widgetConf": "{\n    \"cols\": 4,\n    \"rows\": 2,\n    \"y\": 3,\n    \"x\": 0,\n    \"type\": \"events-log\",\n    \"config\": {\n        \"maxLogLines\": 100\n    }\n}"
+    },
+    {
+      "id": 7,
+      "widgetId": "widget-7",
+      "widgetConf": "{\n    \"cols\": 4,\n    \"rows\": 3,\n    \"y\": 5,\n    \"x\": 0,\n    \"type\": \"stats-chart\",\n    \"dataUrl\": \"assets/data/test.widget-stats.2.json\"\n}"
+    },
+    {
+      "id": 8,
+      "widgetId": "widget-8",
+      "widgetConf": "{\n    \"cols\": 4,\n    \"rows\": 3,\n    \"y\": 0,\n    \"x\": 0,\n    \"type\": \"time-chart\",\n    \"config\": {\n        \"packetId\": 24,\n        \"packetFields\": [\n            \"motion\"\n        ],\n        \"timeAxisRange\": 20,\n        \"maxDataPoints\": 100,\n        \"timeWindow\": 60,\n        \"seriesConfig\": [\n            {\n                \"series\": \"motion\",\n                \"config\": {\n                    \"fill\": \"tozeroy\",\n                    \"line\": {\n                        \"shape\": \"line\"\n                    }\n                },\n                \"layout\": {\n                    \"title\": {\n                        \"font\": {\n                            \"size\": 14,\n                            \"color\": \"#16A4FA\"\n                        },\n                        \"xref\": \"container\",\n                        \"yref\": \"container\",\n                        \"x\": 0,\n                        \"y\": 1,\n                        \"pad\": {\n                            \"t\": 10,\n                            \"l\": 10\n                        },\n                        \"text\": \"<b>Real time motion level</b>\"\n                    }\n                }\n            }\n        ]\n    }\n}"
+    }
+  ]

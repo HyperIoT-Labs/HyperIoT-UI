@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="helloi18n" datatype="html">
+        <source>TEST_H_helloi18n</source>
+        <target>hello ENG html</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/test/test.component.html</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7e5714e4284e9a85b4857a1b1e3cf8cde766a225" datatype="html">
+        <source>TEST_stringToTranslate</source>
+        <target>i18n ENG typescript</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/test/test.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

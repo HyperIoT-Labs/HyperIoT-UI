@@ -1,0 +1,37 @@
+{
+    "data": [
+        {
+            "name": "Pie test",
+            "labels": [
+                "AVC",
+                "Heating",
+                "Lighting",
+                "Appliances"
+            ],
+            "values": [
+                18,
+                32,
+                9,
+                41
+            ],
+            "type": "pie"
+        }
+    ],
+    "layout": {
+        "title": {
+            "font": {
+                "size": 14,
+                "color": "#16A4FA"
+            },
+            "xref": "container",
+            "yref": "container",
+            "x": 0,
+            "y": 1,
+            "pad": {
+                "t": 10,
+                "l": 10
+            },
+            "text": "<b>Overall energy use</b>"
+        }
+    }
+}

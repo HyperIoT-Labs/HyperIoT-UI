@@ -1,0 +1,88 @@
+{
+    "data": [
+        {
+            "name": "2018",
+            "x": [
+                "gen",
+                "feb",
+                "mar",
+                "apr",
+                "mag",
+                "giu",
+                "lug",
+                "ago",
+                "set",
+                "ott",
+                "nov",
+                "dic"
+            ],
+            "y": [
+                5.2,
+                8.45,
+                11.28,
+                14.8,
+                22.2,
+                25.13,
+                27.9,
+                30.2,
+                26.64,
+                20.12,
+                12.88,
+                6.73
+            ],
+            "type": "bar"
+        },
+        {
+            "name": "2019",
+            "x": [
+                "gen",
+                "feb",
+                "mar",
+                "apr",
+                "mag",
+                "giu",
+                "lug",
+                "ago",
+                "set",
+                "ott",
+                "nov",
+                "dic"
+            ],
+            "y": [
+                7.2,
+                10.45,
+                13.28,
+                16.8,
+                24.2,
+                27.13,
+                29.9,
+                32.2,
+                28.64,
+                22.12,
+                14.88,
+                8.73
+            ],
+            "type": "bar"
+        }
+    ],
+    "layout": {
+        "title": {
+            "font": {
+                "size": 14,
+                "color": "#16A4FA"
+            },
+            "xref": "container",
+            "yref": "container",
+            "x": 0,
+            "y": 1,
+            "pad": {
+                "t": 10,
+                "l": 10
+            },
+            "text": "<b>Average temperature comparison by year</b>"
+        },
+        "xaxis": {
+            "tickangle": -45
+        }
+    }
+}
