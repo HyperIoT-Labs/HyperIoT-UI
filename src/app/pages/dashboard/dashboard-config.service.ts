@@ -29,7 +29,7 @@ export class DashboardConfigService {
             return this.getTestConfig();
         }
         // Map DashboardWidget config to Plotly compatible configuration
-        const subject = this.dashboardWidgetService.findAllDashboardWidget(+dashboardId)
+        const subject = this.dashboardWidgetService.findAllDashboardWidgetInDashboard(+dashboardId)
             .pipe(
                 map(
                     (data: any[]) => {
