@@ -1,52 +1,57 @@
 #container-registration {
-    width: 100%;
-    min-height: 100vh;
-    display: -webkit-box;
-    display: flex;
-    flex-wrap: wrap;
-    -webkit-box-pack: center;
-    justify-content: center;
-    -webkit-box-align: center;
-    align-items: center;
-    padding: 15px;
-    background: #17A4FA;
-    background: linear-gradient(-130deg, #17A4FA, #0A1E3C);
+  width: 100%;
+  min-height: 100vh;
+  display: -webkit-box;
+  display: flex;
+  flex-wrap: wrap;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  padding: 15px;
+  background: #17A4FA;
+  background: linear-gradient(-130deg, #17A4FA, #0A1E3C);
 
-    #box-login {
-        background-color: #ffffff;
+  #box-login {
+    background-color: #ffffff;
 
-        #column-welcome {
-            background-image: url('https://www.ionos.it/digitalguide/fileadmin/DigitalGuide/Teaser/big-data-t.jpg');
-            background-position: center center;
-            background-repeat: no-repeat;
-            background-size: cover;
-        }
-
-        #column-registration-form {
-            
-            padding: 20px 55px 45px 40px;
-
-            #registration-form {
-                form {
-
-                    .container-form-field {
-                        margin-bottom: 15px;
-
-                        label {
-                            &.mat-form-field-label {
-                                font-size: .9em;
-                            }
-
-                            &.mat-checkbox-layout {
-                                span.mat-checkbox-label {
-                                    font-size: .78em;
-                                }
-                            }
-                        }
-                    }
-
-                }
-            }
-        }
+    #column-welcome {
+      background-image: url('https://www.ionos.it/digitalguide/fileadmin/DigitalGuide/Teaser/big-data-t.jpg');
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-size: cover;
     }
+
+    #column-registration-form {
+
+      padding: 20px 55px 45px 40px;
+
+      #registration-form {
+        form {
+
+          .container-form-field {
+            margin-bottom: 15px;
+
+            label {
+              &.mat-form-field-label {
+                font-size: .9em;
+              }
+
+              &.mat-checkbox-layout {
+                span.mat-checkbox-label {
+                  font-size: .78em;
+                }
+              }
+            }
+
+            .errorMessage {
+              color: red;
+            }
+
+          }
+
+        }
+      }
+    }
+  }
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { DataStreamService } from '@hyperiot/core';
 
 @Component({
   selector: 'hyt-dashboard',
@@ -10,7 +11,7 @@ export class DashboardComponent implements OnInit {
 
   dashboardId: string;
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, private dataStreamService: DataStreamService) { }
 
   ngOnInit() {
     this.route.paramMap.subscribe(
@@ -24,6 +25,14 @@ export class DashboardComponent implements OnInit {
   addWidget() {
     //this.widgetDialog.open();
     // TODO: bind to "requestWidgetAdd" event
+  }
+
+  click() {
+    this.dataStreamService.eventStream.subscribe((event) => {
+      console.log(event.data)
+    })
+
+    this.dataStreamService.connect();
   }
 
 }

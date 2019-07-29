@@ -46,12 +46,10 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
 
     if (this.cookieService.check('hytUser')) {
       this.decrypting(this.cookieService.get('hytUser'), this.key)
-      console.log(this.decrypted.toString(CryptoJS.enc.Utf8).split("&")[0])
 
       this.loginForm = new FormGroup({
         username: new FormControl(this.decrypted.toString(CryptoJS.enc.Utf8).split("&")[0], Validators.required),
@@ -69,7 +67,7 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    this.loading= true;
+    this.loading = true;
 
     if (this.loginForm.invalid) {
       return;

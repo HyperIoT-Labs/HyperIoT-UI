@@ -105,37 +105,37 @@
 
               <div class="container-form-field">
                 <hyt-input-text [isRequired]="true" [hint]="'Suggerimento per Nome'" [placeholder]="'Nome'"
-                  [injectedErrorState]="injectedErrorState" [errorMsgState]="error[0]">
+                  [injectedErrorState]="injectedErrorState[0]" [errorMsgState]="error[0]">
                 </hyt-input-text>
               </div> <!-- Field Name -->
 
               <div class="container-form-field">
                 <hyt-input-text [isRequired]="true" [hint]="'Suggerimento per Cognome'" [placeholder]="'Cognome'"
-                  [injectedErrorState]="injectedErrorState" [errorMsgState]="error[1]">
+                  [injectedErrorState]="injectedErrorState[1]" [errorMsgState]="error[1]">
                 </hyt-input-text>
               </div> <!-- Field Surname -->
 
               <div class="container-form-field">
                 <hyt-input-text [isRequired]="true" [hint]="'Suggerimento per Username'" [placeholder]="'Username'"
-                  [injectedErrorState]="injectedErrorState" [errorMsgState]="error[2]">
+                  [injectedErrorState]="injectedErrorState[2]" [errorMsgState]="error[2]">
                 </hyt-input-text>
               </div> <!-- Field Username -->
 
               <div class="container-form-field">
                 <hyt-input-text [isRequired]="true" [hint]="'Suggerimento per Email'" [placeholder]="'Email'"
-                  [injectedErrorState]="injectedErrorState" [errorMsgState]="error[3]">
+                  [injectedErrorState]="injectedErrorState[3]" [errorMsgState]="error[3]">
                 </hyt-input-text>
               </div> <!-- Field Email -->
 
               <div class="container-form-field">
                 <hyt-input-text [isRequired]="true" [hint]="'Suggerimento per PAssword'" [placeholder]="'Password'"
-                  [injectedErrorState]="injectedErrorState" [errorMsgState]="error[4]">
+                  [injectedErrorState]="injectedErrorState[4]" [errorMsgState]="error[4]">
                 </hyt-input-text>
               </div> <!-- Field Password -->
 
               <div class="container-form-field">
                 <hyt-input-text [isRequired]="true" [hint]="'Suggerimento per Ripeti Password'"
-                  [placeholder]="'Ripeti  Password'" [injectedErrorState]="injectedErrorState"
+                  [placeholder]="'Ripeti  Password'" [injectedErrorState]="injectedErrorState[5]"
                   [errorMsgState]="error[5]">
                 </hyt-input-text>
               </div> <!-- Field Repeat Password -->
@@ -147,14 +147,16 @@
               </div> <!-- Container CheckBox Privacy -->
 
               <div class="container-form-field">
+                <ng-container *ngIf="error[6]" class="errorMessage">
+                  {{error[6]}}
+                </ng-container>
+              </div>
+
+              <div class="container-form-field">
                 <hyt-button>
                   Click Me
                 </hyt-button>
               </div> <!-- Container Button -->
-
-              <ng-container *ngIf="error[6]">
-                {{error[6]}}
-              </ng-container>
 
             </form> <!-- End Form -->
 
