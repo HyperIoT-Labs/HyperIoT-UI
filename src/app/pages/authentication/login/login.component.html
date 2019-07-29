@@ -6,7 +6,8 @@
   LOGIN
   <div class="container-input">
 
-    <hyt-input-text [isRequired]="true" [hint]="'Suggerimento di prova'" [placeholder]="'User'">
+    <hyt-input-text [isRequired]="true" [placeholder]="'User'" [injectedErrorState]="injectedErrorState"
+      [errorMsgState]="error[0]">
     </hyt-input-text>
 
     <!-- <label>user:</label>
@@ -20,11 +21,10 @@
   </div>
 
   <div>
+
     <hyt-input-text class="login" [isPassword]="true" type="password" [isRequired]="true"
-      [hint]="'Errors appears instantly!'" [placeholder]="'Insert password'"
-      [errorMsgRequired]="'Il campo è obbligatorio'" [errorMsgMinLength]="'Minimo 6 caratteri'"
-      [errorMsgOneNumber]="'Almeno 1 numero'" [errorMsgUpperCase]="'Almeno 1 carattere maiuscolo'"
-      [errorMsgSpecialChar]="'Almeno 1 carattere speciale'">
+      [placeholder]="'Insert password'" [errorMsgRequired]="'Il campo è obbligatorio'"
+      [injectedErrorState]="injectedErrorState" [errorMsgState]="error[1]">
     </hyt-input-text>
 
     <!-- <label>password:</label>

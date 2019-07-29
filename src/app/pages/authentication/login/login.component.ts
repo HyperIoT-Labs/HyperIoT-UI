@@ -20,6 +20,8 @@ export class LoginComponent implements OnInit {
     password: new FormControl('', Validators.required)
   });
 
+  injectedErrorState = false;
+
   constructor(
     private authenticationService: AuthenticationService,
     private cookieService: CookieService,
@@ -38,11 +40,10 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/test']);
       },
       err => {
-        let k: Handler[] = this.httperrorHandler.handlePwdRecovery(err);
+        let k: Handler[] = this.httperrorHandler.handleLogin(err);
         for (let e of k) {
           this.error[2] = e.message;
         }
-        console.log(this.error)
       }
     )
   }
