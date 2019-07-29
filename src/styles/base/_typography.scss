@@ -1,0 +1,6 @@
+@import "../abstracts/mixins";
+
+/* exo-200 - latin */
+@include font-face(Exo, assets/fonts/exo-v8-latin/exo-v8-latin-200, 200, normal);
+/* exo-200italic - latin */
+@include font-face(Exo, assets/fonts/exo-v8-latin/exo-v8-latin-200italic, 200, italic);
