@@ -77,7 +77,16 @@ export class AuthenticationHttpErrorHandlerService extends HttpErrorHandlerServi
   }
 
   handleLogin(httpError: HttpErrorResponse): Handler[] {
-    switch (httpError.error.statusCode) {
+    console.log(httpError)
+    console.log(httpError.status)
+    switch (httpError.status) {
+      case 401: {
+        return [{
+          message: this.i18n('wrong_user_or_password'),
+          container: RegisterField.general
+        }]
+        break;
+      }
       case 500: {
         return [{
           message: this.i18n('server_error_500'),
@@ -102,7 +111,8 @@ export class AuthenticationHttpErrorHandlerService extends HttpErrorHandlerServi
   }
 
   handlePwdRecovery(httpError: HttpErrorResponse): Handler[] {
-    switch (httpError.error.statusCode) {
+    console.log(httpError)
+    switch (httpError.status) {
       case 500: {
         return [{
           message: this.i18n('server_error_500'),

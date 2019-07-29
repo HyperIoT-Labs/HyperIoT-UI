@@ -2,22 +2,43 @@
   <img src="https://cdn1.iconfinder.com/data/icons/business-and-commercial-mixed-round/128/35-512.png" alt="Image">
 </div>
 
-<form class="login-form" [formGroup]="loginForm" (ngSubmit)="login()" autocomplete="on">
+<form
+  #f="ngForm"
+  class="login-form"
+  [formGroup]="loginForm"
+  (ngSubmit)="login()"
+  autocomplete="on"
+>
   <h3>Login</h3>
   <div class="container-input">
 
-    <hyt-input-text [isRequired]="true" [hint]="'Suggerimento di prova'" [placeholder]="'User'">
+    <hyt-input-text
+      [isRequired]="true"
+      [hint]="'Suggerimento di prova'"
+      [placeholder]="'User'"
+      [id]="'username'"
+      [formControl]="loginForm.controls.username"
+      [errorPosition]="'bottom'"
+      [fieldValue]="loginForm.value.username"
+      [injectedErrorState]="injectedErrorState"
+      [errorMsgState]="error[0]"
+    >
     </hyt-input-text>
 
   </div>
 
   <div>
-    <hyt-input-text 
-      class="login" 
-      type="password" 
-      [isRequired]="true" 
-      [hint]="'Errors appears instantly!'"
-      [placeholder]="'Insert password'" 
+    <hyt-input-text
+      class="login"
+      [isPassword]="true"
+      type="password"
+      [isRequired]="true"
+      [placeholder]="'Insert password'"
+      [errorMsgRequired]="'Il campo è obbligatorio'"
+      [id]="'password'"
+      [formControl]="loginForm.controls.password"
+      [fieldValue]="loginForm.value.password"
+      [injectedErrorState]="injectedErrorState" [errorMsgState]="error[1]"
     >
     </hyt-input-text>
 
@@ -25,7 +46,15 @@
 
   <br>
 
-  <hyt-button>Click me!</hyt-button>
+  <mat-checkbox type="checkbox" formControlName="rememberMe" id="remember-me">
+    Remember me
+  </mat-checkbox>
+
+  <br>
+
+  <hyt-button type="submit" [isDisabled]="!f.valid || loading">
+    Invia
+  </hyt-button>
 
   <ng-container *ngIf="error[2]">
     {{error[2]}}
