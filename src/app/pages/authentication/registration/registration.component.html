@@ -23,8 +23,6 @@
             >
               
               <div class="container-form-field">
-                  [formControl]="registerForm.controls.name"
-                  [injectedErrorState]="injectedErrorState[0]" [errorMsgState]="error[0]"
                   <hyt-input-text 
                   [isRequired]="true" 
                   [hint]="'Suggerimento per Nome'" 
@@ -105,7 +103,7 @@
               </div>
 
               <div class="container-form-field">
-                <hyt-button type="submit" [isDisabled]="!rf.valid">
+                <hyt-button type="submit" [isDisabled]="!rf.valid"> Registrati </hyt-button>
               </div> <!-- Container Button -->
 
             </form> <!-- End Form -->
