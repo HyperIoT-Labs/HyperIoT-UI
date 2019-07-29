@@ -7,6 +7,7 @@ import { LoginComponent } from './login/login.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { PasswordRecoveryComponent } from './password-recovery/password-recovery.component';
 import { HyperiotComponentsModule } from '@hyperiot/components';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { HyperiotComponentsModule } from '@hyperiot/components';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    HyperiotComponentsModule
+    HyperiotComponentsModule,
+    MatCheckboxModule
   ],
   providers: []
 })

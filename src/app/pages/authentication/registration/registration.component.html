@@ -1,4 +1,4 @@
-<form [formGroup]="registerForm" (ngSubmit)="register()">
+<!-- <form [formGroup]="registerForm" (ngSubmit)="register()">
 
   <br>
 
@@ -80,4 +80,104 @@
     {{error[6]}}
   </ng-container>
 
-</form>
+</form> -->
+
+
+<!-- REGISTRATION FORM BLOCK -->
+<div id="container-registration">
+  <div class="container" id="box-login">
+    
+    <div class="row">
+
+      <div id="column-welcome" class="col-md-6">
+        Messaggio di benvenuto
+      </div>
+      
+      <div id="column-registration-form" class="col-md-6">
+        
+        <h2>Register Now</h2>
+        
+        <div class="row">
+          
+          <div id="registration-form" class="col-md-12">
+            
+            <form [formGroup]="registerForm">
+              
+              <div class="container-form-field">
+                  <hyt-input-text 
+                  [isRequired]="true" 
+                  [hint]="'Suggerimento per Nome'" 
+                  [placeholder]="'Nome'"
+                >
+                </hyt-input-text>
+              </div> <!-- Field Name -->
+
+              <div class="container-form-field">
+                <hyt-input-text 
+                  [isRequired]="true" 
+                  [hint]="'Suggerimento per Cognome'" 
+                  [placeholder]="'Cognome'"
+                >
+                </hyt-input-text>
+              </div>  <!-- Field Surname -->
+
+              <div class="container-form-field">
+                <hyt-input-text 
+                  [isRequired]="true" 
+                  [hint]="'Suggerimento per Username'" 
+                  [placeholder]="'Username'"
+                >
+                </hyt-input-text>
+              </div>  <!-- Field Username -->
+
+              <div class="container-form-field">
+                <hyt-input-text 
+                  [isRequired]="true" 
+                  [hint]="'Suggerimento per Email'" 
+                  [placeholder]="'Email'"
+                >
+                </hyt-input-text>
+              </div>  <!-- Field Email -->
+
+              <div class="container-form-field">
+                <hyt-input-text 
+                  [isRequired]="true" 
+                  [hint]="'Suggerimento per PAssword'" 
+                  [placeholder]="'Password'"
+                >
+                </hyt-input-text>
+              </div>  <!-- Field Password -->
+
+              <div class="container-form-field">
+                <hyt-input-text 
+                  [isRequired]="true" 
+                  [hint]="'Suggerimento per Ripeti Password'" 
+                  [placeholder]="'Ripeti  Password'"
+                >
+                </hyt-input-text>
+              </div>  <!-- Field Repeat Password -->
+
+              <div class="container-form-field">
+                <mat-checkbox>
+                  Check per <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a>.
+                </mat-checkbox>
+              </div>  <!-- Container CheckBox Privacy -->
+
+              <div class="container-form-field">
+                <hyt-button>
+                  Click Me
+                </hyt-button>
+              </div>  <!-- Container Button -->
+            
+            </form> <!-- End Form -->
+
+          </div>
+
+        </div> <!-- End Row Registration Form -->
+
+      </div>
+    
+    </div> <!-- End Row Login Box -->
+
+  </div>
+</div>
