@@ -9,7 +9,7 @@
   (ngSubmit)="login()"
   autocomplete="on"
 >
-  LOGIN
+  <h3>Login</h3>
   <div class="container-input">
 
     <hyt-input-text
@@ -20,6 +20,8 @@
       [formControl]="loginForm.controls.username"
       [errorPosition]="'bottom'"
       [fieldValue]="loginForm.value.username"
+      [injectedErrorState]="injectedErrorState"
+      [errorMsgState]="error[0]"
     >
     </hyt-input-text>
 
@@ -31,12 +33,12 @@
       [isPassword]="true"
       type="password"
       [isRequired]="true"
-      [hint]="'Errors appears instantly!'"
       [placeholder]="'Insert password'"
       [errorMsgRequired]="'Il campo è obbligatorio'"
       [id]="'password'"
       [formControl]="loginForm.controls.password"
       [fieldValue]="loginForm.value.password"
+      [injectedErrorState]="injectedErrorState" [errorMsgState]="error[1]"
     >
     </hyt-input-text>
 

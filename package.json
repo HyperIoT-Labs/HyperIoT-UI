@@ -3,6 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
+    "ng-high-memory": "node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng",
+    "build-memory": "npm run ng-high-memory && ng build",
     "start": "ng serve --proxy-config proxy.config.json",
     "startProd": "ng serve --prod --proxy-config proxy.config.json",
     "build": "ng build",
@@ -11,7 +13,9 @@
     "e2e": "ng e2e",
     "compodoc": "npx compodoc -p src/tsconfig.app.json",
     "ngx-extractor": "ngx-extractor",
-    "postinstall": "patch-package"
+    "postinstall": "patch-package",
+    "ng-high-memory": "node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng",
+    "build-memory": "npm run ng-high-memory && ng build"
   },
   "private": true,
   "dependencies": {
@@ -26,7 +30,7 @@
     "@angular/platform-browser-dynamic": "~8.1.0",
     "@angular/router": "~8.1.0",
     "@hyperiot/components": "0.0.1",
-    "@hyperiot/core": "^0.1.1",
+    "@hyperiot/core": "^0.1.3",
     "@hyperiot/widgets": "0.0.7",
     "@ngx-translate/i18n-polyfill": "^1.0.0",
     "angular-gridster2": "^8.0.0",

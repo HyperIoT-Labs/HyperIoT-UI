@@ -35,6 +35,8 @@ export class LoginComponent implements OnInit {
 
   loading: boolean = false;
 
+  injectedErrorState = false;
+
   constructor(
     private authenticationService: AuthenticationService,
     private cookieService: CookieService,
@@ -64,12 +66,10 @@ export class LoginComponent implements OnInit {
       });
     }
 
-    console.log(this.loginForm)
   }
 
   login() {
     this.loading= true;
-    console.log(this.loginForm);
 
     if (this.loginForm.invalid) {
       return;
@@ -77,7 +77,6 @@ export class LoginComponent implements OnInit {
 
     this.authenticationService.login(this.loginForm.value.username, this.loginForm.value.password).subscribe(
       res => {
-        console.log("res")
         var jwtToken = <JWTLoginResponse>res;
         this.cookieService.set('HIT-AUTH', jwtToken.token, 2);
         this.router.navigate([this.returnUrl]);
@@ -92,12 +91,10 @@ export class LoginComponent implements OnInit {
         this.loading = false;
       },
       err => {
-        console.log("err")
-        let k: Handler[] = this.httperrorHandler.handlePwdRecovery(err);
+        let k: Handler[] = this.httperrorHandler.handleLogin(err);
         for (let e of k) {
           this.error[2] = e.message;
         }
-        console.log(this.error)
         this.loading = false;
       }
     )

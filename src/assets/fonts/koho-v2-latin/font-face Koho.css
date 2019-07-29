@@ -1,0 +1,104 @@
+/* koho-300 - latin */
+@font-face {
+  font-family: 'KoHo';
+  font-style: normal;
+  font-weight: 300;
+  src: url('../fonts/koho-v2-latin-300.eot'); /* IE9 Compat Modes */
+  src: local('KoHo Light'), local('KoHo-Light'),
+       url('../fonts/koho-v2-latin-300.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../fonts/koho-v2-latin-300.woff2') format('woff2'), /* Super Modern Browsers */
+       url('../fonts/koho-v2-latin-300.woff') format('woff'), /* Modern Browsers */
+       url('../fonts/koho-v2-latin-300.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('../fonts/koho-v2-latin-300.svg#KoHo') format('svg'); /* Legacy iOS */
+}
+/* koho-300italic - latin */
+@font-face {
+  font-family: 'KoHo';
+  font-style: italic;
+  font-weight: 300;
+  src: url('../fonts/koho-v2-latin-300italic.eot'); /* IE9 Compat Modes */
+  src: local('KoHo Light Italic'), local('KoHo-LightItalic'),
+       url('../fonts/koho-v2-latin-300italic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../fonts/koho-v2-latin-300italic.woff2') format('woff2'), /* Super Modern Browsers */
+       url('../fonts/koho-v2-latin-300italic.woff') format('woff'), /* Modern Browsers */
+       url('../fonts/koho-v2-latin-300italic.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('../fonts/koho-v2-latin-300italic.svg#KoHo') format('svg'); /* Legacy iOS */
+}
+/* koho-regular - latin */
+@font-face {
+  font-family: 'KoHo';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/koho-v2-latin-regular.eot'); /* IE9 Compat Modes */
+  src: local('KoHo Regular'), local('KoHo-Regular'),
+       url('../fonts/koho-v2-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../fonts/koho-v2-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+       url('../fonts/koho-v2-latin-regular.woff') format('woff'), /* Modern Browsers */
+       url('../fonts/koho-v2-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('../fonts/koho-v2-latin-regular.svg#KoHo') format('svg'); /* Legacy iOS */
+}
+/* koho-italic - latin */
+@font-face {
+  font-family: 'KoHo';
+  font-style: italic;
+  font-weight: 400;
+  src: url('../fonts/koho-v2-latin-italic.eot'); /* IE9 Compat Modes */
+  src: local('KoHo Italic'), local('KoHo-Italic'),
+       url('../fonts/koho-v2-latin-italic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../fonts/koho-v2-latin-italic.woff2') format('woff2'), /* Super Modern Browsers */
+       url('../fonts/koho-v2-latin-italic.woff') format('woff'), /* Modern Browsers */
+       url('../fonts/koho-v2-latin-italic.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('../fonts/koho-v2-latin-italic.svg#KoHo') format('svg'); /* Legacy iOS */
+}
+/* koho-600 - latin */
+@font-face {
+  font-family: 'KoHo';
+  font-style: normal;
+  font-weight: 600;
+  src: url('../fonts/koho-v2-latin-600.eot'); /* IE9 Compat Modes */
+  src: local('KoHo SemiBold'), local('KoHo-SemiBold'),
+       url('../fonts/koho-v2-latin-600.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../fonts/koho-v2-latin-600.woff2') format('woff2'), /* Super Modern Browsers */
+       url('../fonts/koho-v2-latin-600.woff') format('woff'), /* Modern Browsers */
+       url('../fonts/koho-v2-latin-600.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('../fonts/koho-v2-latin-600.svg#KoHo') format('svg'); /* Legacy iOS */
+}
+/* koho-600italic - latin */
+@font-face {
+  font-family: 'KoHo';
+  font-style: italic;
+  font-weight: 600;
+  src: url('../fonts/koho-v2-latin-600italic.eot'); /* IE9 Compat Modes */
+  src: local('KoHo SemiBold Italic'), local('KoHo-SemiBoldItalic'),
+       url('../fonts/koho-v2-latin-600italic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../fonts/koho-v2-latin-600italic.woff2') format('woff2'), /* Super Modern Browsers */
+       url('../fonts/koho-v2-latin-600italic.woff') format('woff'), /* Modern Browsers */
+       url('../fonts/koho-v2-latin-600italic.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('../fonts/koho-v2-latin-600italic.svg#KoHo') format('svg'); /* Legacy iOS */
+}
+/* koho-700 - latin */
+@font-face {
+  font-family: 'KoHo';
+  font-style: normal;
+  font-weight: 700;
+  src: url('../fonts/koho-v2-latin-700.eot'); /* IE9 Compat Modes */
+  src: local('KoHo Bold'), local('KoHo-Bold'),
+       url('../fonts/koho-v2-latin-700.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../fonts/koho-v2-latin-700.woff2') format('woff2'), /* Super Modern Browsers */
+       url('../fonts/koho-v2-latin-700.woff') format('woff'), /* Modern Browsers */
+       url('../fonts/koho-v2-latin-700.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('../fonts/koho-v2-latin-700.svg#KoHo') format('svg'); /* Legacy iOS */
+}
+/* koho-700italic - latin */
+@font-face {
+  font-family: 'KoHo';
+  font-style: italic;
+  font-weight: 700;
+  src: url('../fonts/koho-v2-latin-700italic.eot'); /* IE9 Compat Modes */
+  src: local('KoHo Bold Italic'), local('KoHo-BoldItalic'),
+       url('../fonts/koho-v2-latin-700italic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../fonts/koho-v2-latin-700italic.woff2') format('woff2'), /* Super Modern Browsers */
+       url('../fonts/koho-v2-latin-700italic.woff') format('woff'), /* Modern Browsers */
+       url('../fonts/koho-v2-latin-700italic.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('../fonts/koho-v2-latin-700italic.svg#KoHo') format('svg'); /* Legacy iOS */
+}
