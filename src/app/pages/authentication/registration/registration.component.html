@@ -15,89 +15,59 @@
         <div class="row">
 
           <div id="registration-form" class="col-md-12">
-            
-            <form
-              #rf="ngForm"
-              [formGroup]="registerForm"
-              (ngSubmit)="register()"
-            >
-              
+
+            <form #rf="ngForm" [formGroup]="registerForm" (ngSubmit)="register()">
+
               <div class="container-form-field">
-                  <hyt-input-text 
-                  [isRequired]="true" 
-                  [hint]="'Suggerimento per Nome'" 
-                  [placeholder]="'Nome'"
-                  [formControl]="registerForm.controls.name"
-                  [injectedErrorState]="injectedErrorState[0]" [errorMsgState]="error[0]"
-                >
+                <hyt-input-text [isRequired]="true" [hint]="'Suggerimento per Nome'" [placeholder]="'Nome'"
+                  [formControl]="registerForm.controls.name" [injectedErrorState]="injectedErrorState[0]"
+                  [errorMsgState]="error[0]">
                 </hyt-input-text>
               </div> <!-- Field Name -->
 
               <div class="container-form-field">
-                <hyt-input-text 
-                  [isRequired]="true" 
-                  [hint]="'Suggerimento per Cognome'" 
-                  [placeholder]="'Cognome'"
-                  [formControl]="registerForm.controls.lastName"
-                  [injectedErrorState]="injectedErrorState[1]" [errorMsgState]="error[1]"
-                >
+                <hyt-input-text [isRequired]="true" [hint]="'Suggerimento per Cognome'" [placeholder]="'Cognome'"
+                  [formControl]="registerForm.controls.lastName" [injectedErrorState]="injectedErrorState[1]"
+                  [errorMsgState]="error[1]">
                 </hyt-input-text>
               </div> <!-- Field Surname -->
 
               <div class="container-form-field">
-                <hyt-input-text 
-                  [isRequired]="true" 
-                  [hint]="'Suggerimento per Username'" 
-                  [placeholder]="'Username'"
-                  [formControl]="registerForm.controls.userName"
-                  [injectedErrorState]="injectedErrorState[2]" [errorMsgState]="error[2]"
-                >
+                <hyt-input-text [isRequired]="true" [hint]="'Suggerimento per Username'" [placeholder]="'Username'"
+                  [formControl]="registerForm.controls.userName" [injectedErrorState]="injectedErrorState[2]"
+                  [errorMsgState]="error[2]">
                 </hyt-input-text>
               </div> <!-- Field Username -->
 
               <div class="container-form-field">
-                <hyt-input-text 
-                  [isRequired]="true" 
-                  [hint]="'Suggerimento per Email'" 
-                  [placeholder]="'Email'"
-                  [formControl]="registerForm.controls.email"
-                  [injectedErrorState]="injectedErrorState[3]" [errorMsgState]="error[3]"
-                >
+                <hyt-input-text [isRequired]="true" [hint]="'Suggerimento per Email'" [placeholder]="'Email'"
+                  [formControl]="registerForm.controls.email" [injectedErrorState]="injectedErrorState[3]"
+                  [errorMsgState]="error[3]">
                 </hyt-input-text>
               </div> <!-- Field Email -->
 
               <div class="container-form-field">
-                <hyt-input-text 
-                  [isRequired]="true" 
-                  [hint]="'Suggerimento per PAssword'" 
-                  [placeholder]="'Password'"
-                  [formControl]="registerForm.controls.password"
-                  [injectedErrorState]="injectedErrorState[4]" [errorMsgState]="error[4]"
-                >
+                <hyt-input-text [isRequired]="true" [hint]="'Suggerimento per PAssword'" [placeholder]="'Password'"
+                  [formControl]="registerForm.controls.password" [injectedErrorState]="injectedErrorState[4]"
+                  [errorMsgState]="error[4]">
                 </hyt-input-text>
               </div> <!-- Field Password -->
 
               <div class="container-form-field">
-                <hyt-input-text 
-                  [isRequired]="true" 
-                  [hint]="'Suggerimento per Ripeti Password'" 
-                  [placeholder]="'Ripeti  Password'"
-                  [formControl]="registerForm.controls.confPassword"
-                  [injectedErrorState]="injectedErrorState[5]" [errorMsgState]="error[5]"
-                >
+                <hyt-input-text [isRequired]="true" [hint]="'Suggerimento per Ripeti Password'"
+                  [placeholder]="'Ripeti  Password'" [formControl]="registerForm.controls.confPassword"
+                  [injectedErrorState]="injectedErrorState[5]" [errorMsgState]="error[5]">
                 </hyt-input-text>
               </div> <!-- Field Repeat Password -->
 
               <div class="container-form-field">
-                <mat-checkbox
-                [formControl]="registerForm.controls.acceptConditions"
-                >
+                <mat-checkbox [formControl]="registerForm.controls.acceptConditions">
                   Check per <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a>.
                 </mat-checkbox>
               </div> <!-- Container CheckBox Privacy -->
 
-              <div class="container-form-field">
-                <ng-container *ngIf="error[6]" class="errorMessage">
+              <div class="container-form-field errorMessage">
+                <ng-container *ngIf="error[6]">
                   {{error[6]}}
                 </ng-container>
               </div>

@@ -2,24 +2,10 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
   <file source-language="en" datatype="plaintext" original="ng2.template">
     <body>
-      <trans-unit id="helloi18n" datatype="html">
-        <source>TEST_H_helloi18n</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/pages/test/test.component.html</context>
-          <context context-type="linenumber">29</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="c6639f49ca92be95925f5d1e28c29ff93614409e" datatype="html">
         <source>REG_ok</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/authentication/registration/registration.component.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="7e5714e4284e9a85b4857a1b1e3cf8cde766a225" datatype="html">
-        <source>TEST_stringToTranslate</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/pages/test/test.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -70,6 +56,13 @@
           <context context-type="sourcefile">src/app/services/authentication-http-error-handler.service.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/services/authentication-http-error-handler.service.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3dadffbb82cf327b508f59baa8a509ba5bc9fe72" datatype="html">
+        <source>wrong_user_or_password</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/services/authentication-http-error-handler.service.ts</context>
           <context context-type="linenumber">1</context>

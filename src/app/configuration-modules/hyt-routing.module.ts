@@ -17,7 +17,7 @@ export class LoggedInGuard implements CanActivate {
     if (this.cookieService.check('HIT-AUTH')) {
       return true;
     }
-    this.router.navigate(['/authentication'], { queryParams: { returnUrl: state.url }});
+    this.router.navigate(['/authentication'], { queryParams: { returnUrl: state.url } });
     return false;
   }
 
@@ -26,7 +26,7 @@ export class LoggedInGuard implements CanActivate {
 const hyperiotRoutes: Routes = [
   {
     path: '',
-    redirectTo: 'activation/a/a',
+    redirectTo: 'dashboard/demo',
     pathMatch: "full"
   },
   {

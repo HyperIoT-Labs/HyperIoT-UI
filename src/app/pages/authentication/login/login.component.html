@@ -2,14 +2,8 @@
   <img src="https://cdn1.iconfinder.com/data/icons/business-and-commercial-mixed-round/128/35-512.png" alt="Image">
 </div>
 
-<form
-  #f="ngForm"
-  class="login-form"
-  [formGroup]="loginForm"
-  (ngSubmit)="login()"
-  autocomplete="on"
-  (keydown)="keyDownFunction($event)"
->
+<form #f="ngForm" class="login-form" [formGroup]="loginForm" (ngSubmit)="login()" autocomplete="on"
+  (keydown)="keyDownFunction($event)">
   <h3>Login</h3>
   <div class="container-input">
 
@@ -21,10 +15,9 @@
   </div>
 
   <div>
-    <hyt-input-text class="login" [isPassword]="true" type="password" [isRequired]="true"
-      [placeholder]="'Insert password'" [errorMsgRequired]="'Il campo è obbligatorio'" [id]="'password'"
-      [formControl]="loginForm.controls.password" [fieldValue]="loginForm.value.password"
-      [injectedErrorState]="injectedErrorState" [errorMsgState]="error[1]">
+    <hyt-input-text class="login" type="password" [isRequired]="true" [placeholder]="'Insert password'"
+      [errorMsgRequired]="'Il campo è obbligatorio'" [id]="'password'" [formControl]="loginForm.controls.password"
+      [fieldValue]="loginForm.value.password" [injectedErrorState]="injectedErrorState" [errorMsgState]="error[1]">
     </hyt-input-text>
 
   </div>
@@ -37,12 +30,14 @@
 
   <br>
 
+  <div class="container-form-field errorMessage">
+    <ng-container *ngIf="error[2]">
+      {{error[2]}}
+    </ng-container>
+  </div>
+
   <hyt-button type="submit" [isDisabled]="!f.valid || loading">
     Invia
   </hyt-button>
-
-  <ng-container *ngIf="error[2]">
-    {{error[2]}}
-  </ng-container>
 
 </form>

@@ -1,20 +1,25 @@
 .login-pic {
-    width: 316px;
-    text-align: center;
+  width: 316px;
+  text-align: center;
 
-    img {
-        width: 100%;
-    }
+  img {
+    width: 100%;
+  }
 
 }
 
 .login-form {
-    width: 290px;
+  width: 290px;
 
-    h3 {
-        font-family: 'Exo';
-        font-style: italic;
-        font-weight: 200;
-        font-size: 3em;
-    }
+  h3 {
+    font-family: 'Exo';
+    font-style: italic;
+    font-weight: 200;
+    font-size: 3em;
+  }
+
+  .errorMessage {
+    color: red;
+    text-align: center;
+  }
 }
