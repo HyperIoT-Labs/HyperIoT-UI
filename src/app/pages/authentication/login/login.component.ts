@@ -46,7 +46,6 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
 
     if (this.cookieService.check('hytUser')) {
@@ -68,7 +67,7 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    this.loading= true;
+    this.loading = true;
 
     if (this.loginForm.invalid) {
       return;

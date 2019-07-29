@@ -45,7 +45,8 @@ export class AuthenticationHttpErrorHandlerService extends HttpErrorHandlerServi
           case 'it.acsoftware.hyperiot.base.exception.HyperIoTDuplicateEntityException': {
             return [{
               message: httpError.error.errorMessages[0] + ' ' + this.i18n('HyperIoTDuplicateEntityException'),
-              container: (httpError.error.errorMessages[0] == 'username') ? RegisterField.username : RegisterField.email
+              //container: (httpError.error.errorMessages[0] == 'username') ? RegisterField.username : RegisterField.email
+              container: RegisterField.general
             }]
           }
           case 'it.acsoftware.hyperiot.base.exception.HyperIoTValidationException': {
@@ -53,7 +54,8 @@ export class AuthenticationHttpErrorHandlerService extends HttpErrorHandlerServi
             for (let k of httpError.error.validationErrors)
               arr.push({
                 message: k.field + k.message,
-                container: k.field
+                //container: k.field
+                container: RegisterField.general
               })
             return arr;
           }

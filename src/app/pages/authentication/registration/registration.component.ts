@@ -38,6 +38,8 @@ export class RegistrationComponent implements OnInit {
   exception: boolean = false;
   errorMessage: string[] = [];
 
+  injectedErrorState: boolean[] = [false, false, false, false, false, false];
+
   register() {
     //DISABLE BUTTON
     this.error = [null, null, null, null, null, null, null];

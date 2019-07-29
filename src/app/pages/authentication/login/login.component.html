@@ -13,34 +13,18 @@
   <h3>Login</h3>
   <div class="container-input">
 
-    <hyt-input-text
-      [isRequired]="true"
-      [hint]="'Suggerimento di prova'"
-      [placeholder]="'User'"
-      [id]="'username'"
-      [formControl]="loginForm.controls.username"
-      [errorPosition]="'bottom'"
-      [fieldValue]="loginForm.value.username"
-      [injectedErrorState]="injectedErrorState"
-      [errorMsgState]="error[0]"
-    >
+    <hyt-input-text [isRequired]="true" [placeholder]="'User'" [id]="'username'"
+      [formControl]="loginForm.controls.username" [fieldValue]="loginForm.value.username"
+      [injectedErrorState]="injectedErrorState" [errorMsgState]="error[0]">
     </hyt-input-text>
 
   </div>
 
   <div>
-    <hyt-input-text
-      class="login"
-      [isPassword]="true"
-      type="password"
-      [isRequired]="true"
-      [placeholder]="'Insert password'"
-      [errorMsgRequired]="'Il campo è obbligatorio'"
-      [id]="'password'"
-      [formControl]="loginForm.controls.password"
-      [fieldValue]="loginForm.value.password"
-      [injectedErrorState]="injectedErrorState" [errorMsgState]="error[1]"
-    >
+    <hyt-input-text class="login" [isPassword]="true" type="password" [isRequired]="true"
+      [placeholder]="'Insert password'" [errorMsgRequired]="'Il campo è obbligatorio'" [id]="'password'"
+      [formControl]="loginForm.controls.password" [fieldValue]="loginForm.value.password"
+      [injectedErrorState]="injectedErrorState" [errorMsgState]="error[1]">
     </hyt-input-text>
 
   </div>
