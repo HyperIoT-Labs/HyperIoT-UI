@@ -1,88 +1,3 @@
-<!-- <form [formGroup]="registerForm" (ngSubmit)="register()">
-
-  <br>
-
-  <div>
-    <label>nome:</label>
-    <input type="text" formControlName="name">
-    <div *ngIf="registerForm.get('name').invalid && registerForm.get('name').dirty" style="color: red;">
-      <div *ngIf="registerForm.get('name').errors.required">
-        Campo richiesto
-      </div>
-    </div>
-  </div>
-
-  <div>
-    <label>cognome:</label>
-    <input type="text" formControlName="lastName">
-    <div *ngIf="registerForm.get('lastName').invalid && registerForm.get('lastName').dirty" style="color: red;">
-      <div *ngIf="registerForm.get('lastName').errors.required">
-        Campo richiesto
-      </div>
-    </div>
-  </div>
-
-  <div>
-    <label>user name:</label>
-    <input type="text" formControlName="userName">
-    <div *ngIf="registerForm.get('userName').invalid && registerForm.get('userName').dirty" style="color: red;">
-      <div *ngIf="registerForm.get('userName').errors.required">
-        Campo richiesto
-      </div>
-    </div>
-  </div>
-
-  <div>
-    <label>email:</label>
-    <input type="email" formControlName="email">
-    <div *ngIf="registerForm.get('email').invalid && registerForm.get('email').dirty" style="color: red;">
-      <div *ngIf="registerForm.get('email').errors.required">
-        Campo richiesto
-      </div>
-      <div *ngIf="registerForm.get('email').errors.email">
-        Indirizzo email non valido
-      </div>
-    </div>
-  </div>
-
-  <div>
-    <label>password:</label>
-    <input type="text" formControlName="password">
-    <div *ngIf="registerForm.get('password').invalid && registerForm.get('password').dirty" style="color: red;">
-      <div *ngIf="registerForm.get('password').errors.required">
-        Campo richiesto
-      </div>
-    </div>
-  </div>
-
-  <div>
-    <label>conferma password:</label>
-    <input type="text" formControlName="confPassword">
-    <div *ngIf="registerForm.get('confPassword').invalid && registerForm.get('confPassword').dirty" style="color: red;">
-      <div *ngIf="registerForm.get('confPassword').errors.required">
-        Campo richiesto
-      </div>
-    </div>
-  </div>
-
-  <br>
-
-  <ng-container *ngFor="let errmsg of errorMessage">
-    {{errmsg}}
-    <br>
-  </ng-container>
-
-  <br>
-
-  <button type="submit">Registrati</button>
-
-  <ng-container *ngIf="error[6]">
-    {{error[6]}}
-  </ng-container>
-
-</form> -->
-
-
 <!-- REGISTRATION FORM BLOCK -->
 <div id="container-registration">
   <div class="container" id="box-login">
@@ -101,13 +16,18 @@
           
           <div id="registration-form" class="col-md-12">
             
-            <form [formGroup]="registerForm">
+            <form
+              #rf="ngForm"
+              [formGroup]="registerForm"
+              (ngSubmit)="register()"
+            >
               
               <div class="container-form-field">
                   <hyt-input-text 
                   [isRequired]="true" 
                   [hint]="'Suggerimento per Nome'" 
                   [placeholder]="'Nome'"
+                  [formControl]="registerForm.controls.name"
                 >
                 </hyt-input-text>
               </div> <!-- Field Name -->
@@ -117,6 +37,7 @@
                   [isRequired]="true" 
                   [hint]="'Suggerimento per Cognome'" 
                   [placeholder]="'Cognome'"
+                  [formControl]="registerForm.controls.lastName"
                 >
                 </hyt-input-text>
               </div>  <!-- Field Surname -->
@@ -126,6 +47,7 @@
                   [isRequired]="true" 
                   [hint]="'Suggerimento per Username'" 
                   [placeholder]="'Username'"
+                  [formControl]="registerForm.controls.userName"
                 >
                 </hyt-input-text>
               </div>  <!-- Field Username -->
@@ -135,6 +57,7 @@
                   [isRequired]="true" 
                   [hint]="'Suggerimento per Email'" 
                   [placeholder]="'Email'"
+                  [formControl]="registerForm.controls.email"
                 >
                 </hyt-input-text>
               </div>  <!-- Field Email -->
@@ -144,6 +67,7 @@
                   [isRequired]="true" 
                   [hint]="'Suggerimento per PAssword'" 
                   [placeholder]="'Password'"
+                  [formControl]="registerForm.controls.password"
                 >
                 </hyt-input-text>
               </div>  <!-- Field Password -->
@@ -153,18 +77,21 @@
                   [isRequired]="true" 
                   [hint]="'Suggerimento per Ripeti Password'" 
                   [placeholder]="'Ripeti  Password'"
+                  [formControl]="registerForm.controls.confPassword"
                 >
                 </hyt-input-text>
               </div>  <!-- Field Repeat Password -->
 
               <div class="container-form-field">
-                <mat-checkbox>
+                <mat-checkbox
+                [formControl]="registerForm.controls.acceptConditions"
+                >
                   Check per <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a>.
                 </mat-checkbox>
               </div>  <!-- Container CheckBox Privacy -->
 
               <div class="container-form-field">
-                <hyt-button>
+                <hyt-button type="submit" [isDisabled]="!rf.valid">
                   Click Me
                 </hyt-button>
               </div>  <!-- Container Button -->

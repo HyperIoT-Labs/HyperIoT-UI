@@ -51,7 +51,6 @@ export class LoginComponent implements OnInit {
 
     if (this.cookieService.check('hytUser')) {
       this.decrypting(this.cookieService.get('hytUser'), this.key)
-      console.log(this.decrypted.toString(CryptoJS.enc.Utf8).split("&")[0])
 
       this.loginForm = new FormGroup({
         username: new FormControl(this.decrypted.toString(CryptoJS.enc.Utf8).split("&")[0], Validators.required),
@@ -98,6 +97,12 @@ export class LoginComponent implements OnInit {
         this.loading = false;
       }
     )
+  }
+
+  keyDownFunction(event) {
+    if(event.keyCode == 13) {
+      this.login()
+    }
   }
 
   private encrypting(message: string, key: string) {

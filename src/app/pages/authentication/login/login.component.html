@@ -8,6 +8,7 @@
   [formGroup]="loginForm"
   (ngSubmit)="login()"
   autocomplete="on"
+  (keydown)="keyDownFunction($event)"
 >
   <h3>Login</h3>
   <div class="container-input">

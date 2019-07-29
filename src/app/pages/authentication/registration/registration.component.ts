@@ -19,10 +19,11 @@ export class RegistrationComponent implements OnInit {
   registerForm = new FormGroup({
     name: new FormControl('', [Validators.required]),
     lastName: new FormControl('', [Validators.required]),
-    userName: new FormControl('', [Validators.required]),
+    userName: new FormControl('', [Validators.required, Validators.pattern(new RegExp('^[a-zA-Z0-9]+$'))]),
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required]),
-    confPassword: new FormControl('', [Validators.required])
+    confPassword: new FormControl('', [Validators.required]),
+    acceptConditions: new FormControl(false, [Validators.required])
   });
 
   constructor(
