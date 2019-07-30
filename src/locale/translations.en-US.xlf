@@ -2,32 +2,16 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
   <file source-language="en" datatype="plaintext" original="ng2.template">
     <body>
-      <trans-unit id="helloi18n" datatype="html">
-        <source>TEST_H_helloi18n</source>
-        <target>TEST_H_helloi18n</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/pages/test/test.component.html</context>
-          <context context-type="linenumber">29</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="c6639f49ca92be95925f5d1e28c29ff93614409e" datatype="html">
-        <source>REG_ok</source>
+      <trans-unit id="c35f672f27dd845cb6d8bbdee25315c27cefb3d3" datatype="html">
+        <source>HYT_registration_form_ok</source>
         <target>Please click on the link that has just been sent to your email account to complete the registration process</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/authentication/registration/registration.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="7e5714e4284e9a85b4857a1b1e3cf8cde766a225" datatype="html">
-        <source>TEST_stringToTranslate</source>
-        <target>TEST_H_helloi18n</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/pages/test/test.component.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="d046bbcf4a4b85862c1f3559670fa5eb6f5e27dd" datatype="html">
-        <source>server_error_500</source>
+      <trans-unit id="6ab904593389e6b2cef07dbdd8176dfe41662bc1" datatype="html">
+        <source>HYT_server_error_500</source>
         <target>Internal error</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/services/authentication-http-error-handler.service.ts</context>
@@ -42,8 +26,8 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="216b81e3fd2ed8d36587c3e100eab32d8fd4fab9" datatype="html">
-        <source>offline_504</source>
+      <trans-unit id="a7ab86c6bc245dc3e54a80f23afb53728fab8167" datatype="html">
+        <source>HYT_offline_504</source>
         <target>You seem to be offline. Please check your network connection</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/services/authentication-http-error-handler.service.ts</context>
@@ -58,17 +42,17 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="3f9a0f4ff1648092f52f0017c5baa42e74472a9a" datatype="html">
-        <source>HyperIoTDuplicateEntityException</source>
+      <trans-unit id="a04ce575c9895b8cb4283b493a2703883520710a" datatype="html">
+        <source>HYT_duplicate_entity</source>
         <target>already in use</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/services/authentication-http-error-handler.service.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="8e28215076d791f8312f4634a296f267330e8d29" datatype="html">
-        <source>unknown_error</source>
-        <target>unknown error</target>
+      <trans-unit id="a48a62b370f07697e5532c369fa4e1e400f53b40" datatype="html">
+        <source>HYT_unknown_error</source>
+        <target>Error executing your request</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/services/authentication-http-error-handler.service.ts</context>
           <context context-type="linenumber">1</context>
@@ -82,11 +66,19 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="3dadffbb82cf327b508f59baa8a509ba5bc9fe72" datatype="html">
-        <source>wrong_user_or_password</source>
+      <trans-unit id="f8e19291bb0f5e04beab8ca91700587fe9d3b9b3" datatype="html">
+        <source>HYT_wrong_user_or_password</source>
         <target>wrong username or password</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/services/authentication-http-error-handler.service.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3c4fbd403c69c8a40066aa376cfd533c85122814" datatype="html">
+        <source>HytIC_field_required</source>
+        <target>Field required</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">C:/Users/Gabriele Losiczko/HyperIoT/HyperIoT-component/projects/hyperiot-components/src/lib/hyt-input/hyt-input.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>

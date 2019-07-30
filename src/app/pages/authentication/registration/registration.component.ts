@@ -43,6 +43,7 @@ export class RegistrationComponent implements OnInit {
   register() {
     //DISABLE BUTTON
     this.error = [null, null, null, null, null, null, null];
+    this.registrationOkText = '';
 
     let user: HUser = {
       name: this.registerForm.value.name,
@@ -55,7 +56,7 @@ export class RegistrationComponent implements OnInit {
 
     this.hUserService.register(user).subscribe(
       res => {
-        this.registrationOkText = this.i18n('REG_ok');
+        this.registrationOkText = this.i18n('HYT_registration_form_ok');
       },
       err => {
         let k: Handler[] = this.httperrorHandler.handle(err);
