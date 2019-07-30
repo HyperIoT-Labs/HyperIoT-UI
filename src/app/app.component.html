@@ -1,5 +1,6 @@
 <mat-toolbar *ngIf="showToolBar()" id="hyt-toolBar">
   <span>HyperIoT</span>
+  <button mat-button (click)="logout()">Logout</button>
 </mat-toolbar>
 
 <router-outlet></router-outlet>
