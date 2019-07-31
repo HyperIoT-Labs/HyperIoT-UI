@@ -9,6 +9,7 @@ import { DashboardComponent } from '../pages/dashboard/dashboard.component';
 import { DashboardViewComponent } from '../pages/dashboard/dashboard-view/dashboard-view.component';
 import { AddWidgetDialogComponent } from '../pages/dashboard/add-widget-dialog/add-widget-dialog.component';
 import { WidgetSettingsDialogComponent } from '../pages/dashboard/widget-settings-dialog/widget-settings-dialog.component';
+import { NotFoundComponent } from '../pages/not-found/not-found.component';
 
 @Injectable()
 export class LoggedInGuard implements CanActivate {
@@ -33,7 +34,7 @@ const hyperiotRoutes: Routes = [
     pathMatch: "full"
   },
   {
-    path: 'authentication',
+    path: 'authenitcation',
     component: AuthenticationComponent,
     data: {
       showToolBar: false,
@@ -74,7 +75,7 @@ const hyperiotRoutes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'authentication'
+    component: NotFoundComponent
   }
 ];
 
