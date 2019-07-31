@@ -2,11 +2,96 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
   <file source-language="en" datatype="plaintext" original="ng2.template">
     <body>
-      <trans-unit id="c35f672f27dd845cb6d8bbdee25315c27cefb3d3" datatype="html">
+      <trans-unit id="HYT_login" datatype="html">
+        <source>HYT_login</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/authentication/login/login.component.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="HYT_username" datatype="html">
+        <source>HYT_username</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/authentication/login/login.component.html</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/authentication/registration/registration.component.html</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="HYT_password" datatype="html">
+        <source>HYT_password</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/authentication/login/login.component.html</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/authentication/registration/registration.component.html</context>
+          <context context-type="linenumber">50</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="HYT_remember_me" datatype="html">
+        <source>HYT_remember_me</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/authentication/login/login.component.html</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="HYT_login_button" datatype="html">
+        <source>HYT_login_button</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/authentication/login/login.component.html</context>
+          <context context-type="linenumber">41</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="HYT_registration" datatype="html">
+        <source>HYT_registration</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/authentication/registration/registration.component.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="HYT_name" datatype="html">
+        <source>HYT_name</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/authentication/registration/registration.component.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="HYT_surname" datatype="html">
+        <source>HYT_surname</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/authentication/registration/registration.component.html</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="HYT_email" datatype="html">
+        <source>HYT_email</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/authentication/registration/registration.component.html</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="HYT_passwordConfirm" datatype="html">
+        <source>HYT_passwordConfirm</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/authentication/registration/registration.component.html</context>
+          <context context-type="linenumber">58</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="HYT_registration_button" datatype="html">
+        <source>HYT_registration_button</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/authentication/registration/registration.component.html</context>
+          <context context-type="linenumber">77</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="HYT_registration_form_ok" datatype="html">
         <source>HYT_registration_form_ok</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/pages/authentication/registration/registration.component.ts</context>
-          <context context-type="linenumber">1</context>
+          <context context-type="sourcefile">src/app/pages/authentication/registration/registration.component.html</context>
+          <context context-type="linenumber">81</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6ab904593389e6b2cef07dbdd8176dfe41662bc1" datatype="html">

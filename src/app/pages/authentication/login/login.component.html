@@ -4,10 +4,10 @@
 
 <form #f="ngForm" class="login-form" [formGroup]="loginForm" (ngSubmit)="login()" autocomplete="on"
   (keydown)="keyDownFunction($event)">
-  <h3>Login</h3>
+  <h3 i18n="@@HYT_login">HYT_login</h3>
   <div class="container-input">
 
-    <hyt-input-text [isRequired]="true" [placeholder]="'User'" [id]="'username'"
+    <hyt-input-text [isRequired]="true" i18n-placeholder="@@HYT_username" placeholder="HYT_username" [id]="'username'"
       [formControl]="loginForm.controls.username" [fieldValue]="loginForm.value.username"
       [injectedErrorState]="injectedErrorState" [errorMsgState]="error[0]">
     </hyt-input-text>
@@ -15,9 +15,10 @@
   </div>
 
   <div>
-    <hyt-input-text class="login" type="password" [isRequired]="true" [placeholder]="'Insert password'"
-      [errorMsgRequired]="'Il campo è obbligatorio'" [id]="'password'" [formControl]="loginForm.controls.password"
-      [fieldValue]="loginForm.value.password" [injectedErrorState]="injectedErrorState" [errorMsgState]="error[1]">
+    <hyt-input-text class="login" type="password" [isRequired]="true" i18n-placeholder="@@HYT_password"
+      placeholder="HYT_password" [errorMsgRequired]="'Il campo è obbligatorio'" [id]="'password'"
+      [formControl]="loginForm.controls.password" [fieldValue]="loginForm.value.password"
+      [injectedErrorState]="injectedErrorState" [errorMsgState]="error[1]">
     </hyt-input-text>
 
   </div>
@@ -25,7 +26,7 @@
   <br>
 
   <mat-checkbox type="checkbox" formControlName="rememberMe" id="remember-me">
-    Remember me
+    <ng-container i18n="@@HYT_remember_me">HYT_remember_me</ng-container>
   </mat-checkbox>
 
   <br>
@@ -37,7 +38,7 @@
   </div>
 
   <hyt-button type="submit" [isDisabled]="!f.valid || loading">
-    Invia
+    <ng-container i18n="@@HYT_login_button">HYT_login_button</ng-container>
   </hyt-button>
 
 </form>

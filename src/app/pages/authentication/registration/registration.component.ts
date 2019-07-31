@@ -2,7 +2,6 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HusersService, HUser } from '@hyperiot/core';
 import { AuthenticationHttpErrorHandlerService } from 'src/app/services/authentication-http-error-handler.service';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Handler } from 'src/app/services/models/models';
 
 @Component({
@@ -14,7 +13,6 @@ import { Handler } from 'src/app/services/models/models';
 export class RegistrationComponent implements OnInit {
 
   error: string[] = [null, null, null, null, null, null, null];
-  registrationOkText: string;
 
   registerForm = new FormGroup({
     name: new FormControl('', [Validators.required]),
@@ -28,7 +26,6 @@ export class RegistrationComponent implements OnInit {
 
   constructor(
     private hUserService: HusersService,
-    private i18n: I18n,
     private httperrorHandler: AuthenticationHttpErrorHandlerService
   ) { }
 
@@ -40,10 +37,12 @@ export class RegistrationComponent implements OnInit {
 
   injectedErrorState: boolean[] = [false, false, false, false, false, false];
 
+  registrationSucceeded: boolean = false;
+
   register() {
     //DISABLE BUTTON
     this.error = [null, null, null, null, null, null, null];
-    this.registrationOkText = '';
+    this.registrationSucceeded = false;
 
     let user: HUser = {
       name: this.registerForm.value.name,
@@ -56,7 +55,7 @@ export class RegistrationComponent implements OnInit {
 
     this.hUserService.register(user).subscribe(
       res => {
-        this.registrationOkText = this.i18n('HYT_registration_form_ok');
+        this.registrationSucceeded = true;
       },
       err => {
         let k: Handler[] = this.httperrorHandler.handle(err);
