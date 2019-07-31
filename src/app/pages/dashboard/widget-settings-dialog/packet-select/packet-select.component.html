@@ -1,0 +1,26 @@
+<ng-container *ngIf="widget.config">
+    <p>Packet id {{ widget.config.packetId }}</p>
+
+    <div *ngIf="widget.config.packetFields">
+        <ul>
+            <li *ngFor="let field of widget.config.packetFields">{{ field }}</li>
+        </ul>
+    </div>
+
+    <p>Select packet</p>
+    <select size="5" [(ngModel)]="selectedPacket" [compareWith]="packetCompare">
+        <option *ngFor="let packet of projectPackets" [ngValue]="packet">
+            {{packet.name}}
+            ({{packet.id}})
+        </option>
+    </select>
+
+</ng-container>
+
+
+<ng-container *ngIf="selectedPacket != null">
+    <p>Select fields</p>
+    <select size="5" multiple [(ngModel)]="selectedFields">
+        <option *ngFor="let field of selectedPacket.fields" [ngValue]="field">{{field.name}}</option>
+    </select>
+</ng-container>

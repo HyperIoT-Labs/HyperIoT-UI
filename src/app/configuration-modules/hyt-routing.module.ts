@@ -6,6 +6,9 @@ import { UserActivationComponent } from '../pages/user-activation/user-activatio
 import { Observable } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import { DashboardComponent } from '../pages/dashboard/dashboard.component';
+import { DashboardViewComponent } from '../pages/dashboard/dashboard-view/dashboard-view.component';
+import { AddWidgetDialogComponent } from '../pages/dashboard/add-widget-dialog/add-widget-dialog.component';
+import { WidgetSettingsDialogComponent } from '../pages/dashboard/widget-settings-dialog/widget-settings-dialog.component';
 
 @Injectable()
 export class LoggedInGuard implements CanActivate {
@@ -26,7 +29,7 @@ export class LoggedInGuard implements CanActivate {
 const hyperiotRoutes: Routes = [
   {
     path: '',
-    redirectTo: 'dashboard/demo',
+    redirectTo: 'dashboards/demo',
     pathMatch: "full"
   },
   {
@@ -51,9 +54,20 @@ const hyperiotRoutes: Routes = [
     }
   },
   {
-    path: 'dashboard/:id',
-    component: DashboardComponent,
-    canActivate: [LoggedInGuard],
+    path: 'dashboards/:dashboardId',
+    component: DashboardViewComponent,
+    children: [
+      {
+        path: 'widgets',
+        component: AddWidgetDialogComponent,
+        outlet: 'modal'
+      },
+      {
+        path: 'settings/:widgetId',
+        component: WidgetSettingsDialogComponent,
+        outlet: 'modal'
+      }
+    ],
     data: {
       showToolBar: true,
     }

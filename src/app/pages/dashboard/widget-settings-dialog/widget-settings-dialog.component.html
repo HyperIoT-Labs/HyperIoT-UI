@@ -1,0 +1,41 @@
+<div class="dialog">
+
+  <header>Widget Settings</header>
+  <footer>
+    <button class="button-close" (click)="close($event)">Cancel &#10006;</button>
+    <button class="button-confirm" (click)="confirm($event)">Apply &#10004;</button>
+  </footer>
+
+  <div class="content">
+
+    <div class="common-settings">
+      <p><strong>Type</strong>: {{ widget.type }}</p>
+      <p><strong>widgetId</strong>: {{ widget.widgetId }}</p>
+      <input type="text" [(ngModel)]="widgetName">
+    </div>
+
+    <div class="custom-settings" [ngSwitch]="widget.type">
+      <div *ngSwitchCase="'sensor-value'">
+        <hyt-sensor-value-settings [widget]="widget" [modalApply]="modalApply">
+        </hyt-sensor-value-settings>
+      </div>
+      <div *ngSwitchCase="'stats-chart'">
+        <hyt-stats-chart-settings [widget]="widget" [modalApply]="modalApply">
+        </hyt-stats-chart-settings>
+      </div>
+      <div *ngSwitchCase="'time-chart'">
+        <hyt-time-chart-settings [widget]="widget" [modalApply]="modalApply">
+        </hyt-time-chart-settings>
+      </div>
+      <div *ngSwitchCase="'text-label'">
+        <hyt-text-label-settings [widget]="widget" [modalApply]="modalApply">
+        </hyt-text-label-settings>
+      </div>
+      <div *ngSwitchDefault>
+        <em>TODO: ....</em>
+      </div>
+    </div>
+
+  </div>
+
+</div>

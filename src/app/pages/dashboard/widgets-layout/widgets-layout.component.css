@@ -1,0 +1,16 @@
+:host {
+    display: block;
+    height: 100vh;
+}
+
+gridster {
+    background: transparent;
+    height: 100vh;
+}
+gridster-item {
+    background: transparent;
+}
+
+label {
+    padding: 4px;
+}

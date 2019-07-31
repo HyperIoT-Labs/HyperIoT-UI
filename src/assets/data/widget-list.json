@@ -1,0 +1,97 @@
+[{
+    "id": 0,
+    "widgetId": "events-log",
+    "categoryId": 3,
+    "name": "Events log",
+    "cols": 4,
+    "rows": 2,
+    "y": 0,
+    "x": 0,
+    "type": "events-log",
+    "config": {}
+  },
+  {
+    "id": 0,
+    "widgetId": "stats-chart",
+    "categoryId": 3,
+    "name": "Classic pie chart",
+    "cols": 4,
+    "rows": 3,
+    "y": 0,
+    "x": 0,
+    "type": "stats-chart",
+    "config": {
+      "data": []
+    }
+  },
+  {
+    "id": 0,
+    "widgetId": "time-chart",
+    "name": "Realttime line chart",
+    "categoryId": 2,
+    "cols": 4,
+    "rows": 3,
+    "y": 0,
+    "x": 0,
+    "type": "time-chart",
+    "config": {
+      "data": []
+    }
+  },
+  {
+    "id": 0,
+    "widgetId": "stats-chart",
+    "name": "Classic line chart",
+    "categoryId": 2,
+    "cols": 4,
+    "rows": 3,
+    "y": 0,
+    "x": 0,
+    "type": "stats-chart",
+    "config": {
+      "data": []
+    }
+  },
+  {
+    "id": 0,
+    "widgetId": "stats-chart",
+    "name": "Classic bar chart",
+    "categoryId": 1,
+    "cols": 4,
+    "rows": 3,
+    "y": 0,
+    "x": 0,
+    "type": "stats-chart",
+    "config": {
+      "data": []
+    }
+  },
+  {
+    "id": 0,
+    "widgetId": "sensor-value",
+    "name": "Sensor value",
+    "categoryId": 5,
+    "cols": 2,
+    "rows": 2,
+    "y": 0,
+    "x": 0,
+    "type": "sensor-value",
+    "config": {
+      "data": []
+    }
+  },
+  {
+    "id": 0,
+    "widgetId": "text-label",
+    "name": "Simple text",
+    "categoryId": 5,
+    "cols": 2,
+    "rows": 1,
+    "y": 0,
+    "x": 0,
+    "type": "text-label",
+    "config": {
+      "labelText": "Change me!"
+    }
+  }
+]

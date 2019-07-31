@@ -1,0 +1,8 @@
+<div>
+  <button (click)="saveDashboard()" [disabled]="dashboardLayout.isDirty()">Save</button>
+  <button [routerLink]="[{outlets: { modal: [ 'widgets' ] }}]">Add widget</button>
+</div>
+
+<hyt-widgets-layout [dashboardId]="dashboardId"></hyt-widgets-layout>
+
+<router-outlet name="modal" (activate)="onActivate($event)"></router-outlet>

@@ -1,5 +1,5 @@
 <gridster [options]="options">
   <gridster-item [item]="item" *ngFor="let item of dashboard">
-    <hyt-dynamic-widget [widget]="item"></hyt-dynamic-widget>
+    <hyt-dynamic-widget [widget]="item" (widgetAction)="onWidgetAction($event)"></hyt-dynamic-widget>
   </gridster-item>
 </gridster>

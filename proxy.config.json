@@ -47,6 +47,18 @@
     "logLevel": "debug",
     "changeOrigin": true
   },
+  "/hyperiot/dashboards/*": {
+    "target": "http://karaf-microservices-test.hyperiot.cloud",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/hyperiot/dashboardwidgets/*": {
+    "target": "http://karaf-microservices-test.hyperiot.cloud",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
   "/hyperiot/ws/*": {
     "target": "http://karaf-microservices-test.hyperiot.cloud",
     "secure": false,

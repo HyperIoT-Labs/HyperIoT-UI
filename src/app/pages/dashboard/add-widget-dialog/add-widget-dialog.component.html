@@ -1,0 +1,42 @@
+<div class="dialog">
+
+    <header>Add widget</header>
+
+    <div class="category-list">
+
+        <button class="category-item"
+            disabled={{category.disabled}}
+            [ngClass]="{selected: category === selectedCategory}"
+            *ngFor="let category of widgetCategoryList"
+            (click)="onCategorySelect(category)">
+            <img src="assets/widgets/images/{{category.icon}}">
+            <div>{{category.name}}</div>
+        </button> 
+
+    </div>
+
+    <div class="widget-list" *ngIf="selectedCategory != null">
+
+        <div class="widget-item"
+             *ngFor="let widget of categorydWidgets"
+             [ngClass]="{selected: widget.count > 0}">
+            <header>{{ widget.name }}</header>
+
+            <input type="number" class="item-count"
+                min="0" max="{{widgetAddMax}}"
+                [(ngModel)]="widget.count"
+                (ngModelChange)="onWidgetChange(widget)">
+            <button class="remove" title="remove" (click)="removeWidget(widget)"></button>
+            <button class="add" title="add" (click)="addWidget(widget)"></button>
+        </div>
+
+    </div>
+
+    <footer>
+        <button class="button-close"
+            (click)="close()">Cancel &#10006;</button>
+        <button [disabled]="selectedWidgets.length === 0" class="button-confirm"
+            (click)="confirm()">Add &#10010;</button>
+    </footer>
+
+</div>

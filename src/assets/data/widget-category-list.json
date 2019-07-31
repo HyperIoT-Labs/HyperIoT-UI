@@ -1,0 +1,50 @@
+[{
+    "id": 0,
+    "name": "All",
+    "icon": "outline-view_list-24px.svg"
+  },
+  {
+    "id": 1,
+    "name": "Bar chart",
+    "icon": "outline-multiline_chart-24px.svg"
+  },
+  {
+    "id": 2,
+    "name": "Line chart",
+    "icon": "outline-multiline_chart-24px.svg"
+  },
+  {
+    "id": 3,
+    "name": "Pie chart",
+    "icon": "outline-multiline_chart-24px.svg"
+  },
+  {
+    "id": 4,
+    "name": "Radar chart",
+    "icon": "outline-multiline_chart-24px.svg",
+    "disabled": true
+  },
+  {
+    "id": 5,
+    "name": "Gauges",
+    "icon": "outline-multiline_chart-24px.svg"
+  },
+  {
+    "id": 6,
+    "name": "Map",
+    "icon": "outline-multiline_chart-24px.svg",
+    "disabled": true
+  },
+  {
+    "id": 7,
+    "name": "Action",
+    "icon": "outline-multiline_chart-24px.svg",
+    "disabled": true
+  },
+  {
+    "id": 8,
+    "name": "Tables",
+    "icon": "outline-multiline_chart-24px.svg",
+    "disabled": true
+  }
+]
