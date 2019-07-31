@@ -30,4 +30,16 @@ header {
     padding: 4px;
     opacity: 0.5;
 }
-
+.configure-notice {
+    position: absolute;
+    top: 32px; left: 0; bottom: 0; right: 0;
+    background-color: #80808042;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+}
+.configure-notice div {
+    text-align: center;
+    padding: 6px;
+}
