@@ -18,7 +18,7 @@
 
       <div id="column-registration-form" class="col-md-6">
 
-        <h3 id="registration-title">Register Now</h3>
+        <h2 i18n="@@HYT_registration">HYT_registration</h2>
 
         <div class="row">
 
@@ -27,43 +27,43 @@
             <form #rf="ngForm" [formGroup]="registerForm" (ngSubmit)="register()">
 
               <div class="container-form-field">
-                <hyt-input-text [isRequired]="true" [placeholder]="'Nome'"
+                <hyt-input-text [isRequired]="true" i18n-placeholder="@@HYT_name" placeholder="HYT_name"
                   [formControl]="registerForm.controls.name" [injectedErrorState]="injectedErrorState[0]"
                   [errorMsgState]="error[0]">
                 </hyt-input-text>
               </div> <!-- Field Name -->
 
               <div class="container-form-field">
-                <hyt-input-text [isRequired]="true" [placeholder]="'Cognome'"
+                <hyt-input-text [isRequired]="true" i18n-placeholder="@@HYT_surname" placeholder="HYT_surname"
                   [formControl]="registerForm.controls.lastName" [injectedErrorState]="injectedErrorState[1]"
                   [errorMsgState]="error[1]">
                 </hyt-input-text>
               </div> <!-- Field Surname -->
 
               <div class="container-form-field">
-                <hyt-input-text [isRequired]="true" [placeholder]="'Username'"
+                <hyt-input-text [isRequired]="true" i18n-placeholder="@@HYT_username" placeholder="HYT_username"
                   [formControl]="registerForm.controls.userName" [injectedErrorState]="injectedErrorState[2]"
                   [errorMsgState]="error[2]">
                 </hyt-input-text>
               </div> <!-- Field Username -->
 
               <div class="container-form-field">
-                <hyt-input-text [isRequired]="true" [placeholder]="'Email'"
+                <hyt-input-text [isRequired]="true" i18n-placeholder="@@HYT_email" placeholder="HYT_email"
                   [formControl]="registerForm.controls.email" [injectedErrorState]="injectedErrorState[3]"
                   [errorMsgState]="error[3]">
                 </hyt-input-text>
               </div> <!-- Field Email -->
 
               <div class="container-form-field">
-                <hyt-input-text [isRequired]="true" [placeholder]="'Password'"
+                <hyt-input-text [isRequired]="true" i18n-placeholder="@@HYT_password" placeholder="HYT_password"
                   [formControl]="registerForm.controls.password" [injectedErrorState]="injectedErrorState[4]"
                   [errorMsgState]="error[4]">
                 </hyt-input-text>
               </div> <!-- Field Password -->
 
               <div class="container-form-field">
-                <hyt-input-text [isRequired]="true"
-                  [placeholder]="'Ripeti  Password'" [formControl]="registerForm.controls.confPassword"
+                <hyt-input-text [isRequired]="true" i18n-placeholder="@@HYT_passwordConfirm"
+                  placeholder="HYT_passwordConfirm" [formControl]="registerForm.controls.confPassword"
                   [injectedErrorState]="injectedErrorState[5]" [errorMsgState]="error[5]">
                 </hyt-input-text>
               </div> <!-- Field Repeat Password -->
@@ -81,8 +81,13 @@
               </div>
 
               <div class="container-form-field">
-                <hyt-button id="submit-btn" type="submit" [isDisabled]="!rf.valid"> Registrati </hyt-button>
+                <hyt-button type="submit" [isDisabled]="!rf.valid">
+                  <ng-container i18n="@@HYT_registration_button">HYT_registration_button</ng-container>
+                </hyt-button>
               </div> <!-- Container Button -->
+
+              <ng-container *ngIf="registrationSucceeded" i18n="@@HYT_registration_form_ok">HYT_registration_form_ok
+              </ng-container>
 
             </form> <!-- End Form -->
 

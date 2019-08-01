@@ -28,14 +28,14 @@ export class AuthenticationHttpErrorHandlerService extends HttpErrorHandlerServi
     switch (httpError.error.statusCode) {
       case 500: {
         return [{
-          message: this.i18n('server_error_500'),
+          message: this.i18n('HYT_server_error_500'),
           container: RegisterField.general
         }]
         break;
       }
       case 504: {
         return [{
-          message: this.i18n('offline_504'),
+          message: this.i18n('HYT_offline_504'),
           container: RegisterField.general
         }]
         break;
@@ -44,7 +44,7 @@ export class AuthenticationHttpErrorHandlerService extends HttpErrorHandlerServi
         switch (httpError.error.type) {
           case 'it.acsoftware.hyperiot.base.exception.HyperIoTDuplicateEntityException': {
             return [{
-              message: httpError.error.errorMessages[0] + ' ' + this.i18n('HyperIoTDuplicateEntityException'),
+              message: httpError.error.errorMessages[0] + ' ' + this.i18n('HYT_duplicate_entity'),
               //container: (httpError.error.errorMessages[0] == 'username') ? RegisterField.username : RegisterField.email
               container: RegisterField.general
             }]
@@ -64,7 +64,7 @@ export class AuthenticationHttpErrorHandlerService extends HttpErrorHandlerServi
       }
       default: {
         return [{
-          message: this.i18n('unknown_error'),
+          message: this.i18n('HYT_unknown_error'),
           container: RegisterField.general
         }]
       }
@@ -84,28 +84,28 @@ export class AuthenticationHttpErrorHandlerService extends HttpErrorHandlerServi
     switch (httpError.status) {
       case 401: {
         return [{
-          message: this.i18n('wrong_user_or_password'),
+          message: this.i18n('HYT_wrong_user_or_password'),
           container: RegisterField.general
         }]
         break;
       }
       case 500: {
         return [{
-          message: this.i18n('server_error_500'),
+          message: this.i18n('HYT_server_error_500'),
           container: RegisterField.general
         }]
         break;
       }
       case 504: {
         return [{
-          message: this.i18n('offline_504'),
+          message: this.i18n('HYT_offline_504'),
           container: RegisterField.general
         }]
         break;
       }
       default: {
         return [{
-          message: this.i18n('unknown_error'),
+          message: this.i18n('HYT_unknown_error'),
           container: RegisterField.general
         }]
       }
@@ -117,21 +117,21 @@ export class AuthenticationHttpErrorHandlerService extends HttpErrorHandlerServi
     switch (httpError.status) {
       case 500: {
         return [{
-          message: this.i18n('server_error_500'),
+          message: this.i18n('HYT_server_error_500'),
           container: RegisterField.general
         }]
         break;
       }
       case 504: {
         return [{
-          message: this.i18n('offline_504'),
+          message: this.i18n('HYT_offline_504'),
           container: RegisterField.general
         }]
         break;
       }
       default: {
         return [{
-          message: this.i18n('unknown_error'),
+          message: this.i18n('HYT_unknown_error'),
           container: RegisterField.general
         }]
       }

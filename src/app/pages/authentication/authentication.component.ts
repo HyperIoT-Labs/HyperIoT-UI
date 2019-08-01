@@ -1,21 +1,16 @@
-import { Component, OnInit, ComponentFactoryResolver } from '@angular/core';
-import { AuthType } from './models/pageStatus'
+import { Component, OnInit } from '@angular/core';
+import { fadeAnimation } from '../../route-animation';
 
 @Component({
   selector: 'app-authentication',
   templateUrl: './authentication.component.html',
-  styleUrls: ['./authentication.component.scss']
+  styleUrls: ['./authentication.component.scss'],
+  animations: [fadeAnimation]
 })
 export class AuthenticationComponent implements OnInit {
 
-  authType: AuthType;
-
-  email: string = '';
-
   constructor() { }
 
-  ngOnInit() {
-    this.authType = AuthType.Login;
-  }
+  ngOnInit() { }
 
 }

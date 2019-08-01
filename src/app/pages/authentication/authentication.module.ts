@@ -7,7 +7,10 @@ import { LoginComponent } from './login/login.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { PasswordRecoveryComponent } from './password-recovery/password-recovery.component';
 import { HyperiotComponentsModule } from '@hyperiot/components';
-import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { HytRoutingModule } from 'src/app/configuration-modules/hyt-routing.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserModule } from '@angular/platform-browser';
 
 @NgModule({
   declarations: [
@@ -17,10 +20,13 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     PasswordRecoveryComponent
   ],
   imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
     CommonModule,
     ReactiveFormsModule,
     HyperiotComponentsModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    HytRoutingModule
   ],
   providers: []
 })

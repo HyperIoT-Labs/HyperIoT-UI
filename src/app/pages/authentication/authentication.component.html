@@ -1,22 +1,9 @@
-<div class="authenticationCard" [ngSwitch]="authType">
+<div class="authenticationCard">
 
   <div id="container-autentication-box">
-
-    <div *ngSwitchCase="0" class="container-login">
-      <!-- LOGIN -->
-      <app-login class="wrap-login"></app-login>
-
-    </div> <!-- End Container Login -->
-
-    <div *ngSwitchCase="1">
-      <!-- REGISTRATI -->
-      <app-registration></app-registration>
+  <div [@routeAnimations]="ro.isActivated ? ro.activatedRoute : ''">
+    <router-outlet #ro="outlet"></router-outlet>
     </div>
-
-    <div *ngSwitchCase="2">
-      <app-password-recovery></app-password-recovery>
-    </div>
-
   </div>
 
 </div>

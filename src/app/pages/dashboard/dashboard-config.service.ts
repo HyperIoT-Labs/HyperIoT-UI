@@ -13,6 +13,8 @@ import {
 export class DashboardConfigService {
     configUrl = 'assets/data/dashboard-config-rest.json';
     testConfigUrl = 'assets/data/dashboard-config.json';
+    widgetCategoryListUrl = 'assets/data/widget-category-list.json';
+    widgetListUrl = 'assets/data/widget-list.json';
 
     constructor(
         private dashboardService: DashboardsService,
@@ -38,7 +40,7 @@ export class DashboardConfigService {
                         data.map((w: DashboardWidget) => {
                             const widget = JSON.parse(w.widgetConf);
                             widget.id = w.id;
-                            widget.widgetId = w.widgetId;
+                            widget.widgetId = `widget-${w.id}`;
                             config.push(widget);
                         });
                         return config;
@@ -55,18 +57,31 @@ export class DashboardConfigService {
         const dashboardWidgets: DashboardWidget[] = [];
         // Map Plotly config to HyperIoT-DashboardWidget compatible configuration
         config.slice().map((d) => {
+            // Create a copy of widget configuration
             const widgetConf: any = {};
             Object.assign(widgetConf, d);
+            // Remove properties that are redundant
+            // or reserved for internal-use
             delete widgetConf.id;
+            delete widgetConf.widgetId;
+            delete widgetConf.instance;
+            // Create and populate DashboardWidget entity
             const widget: DashboardWidget = {
-                dashboard: null,
                 id: d.id,
                 widgetId: d.widgetId,
                 widgetConf: JSON.stringify(widgetConf)
             };
+            // Add it to the list of dashboard widgets
             dashboardWidgets.push(widget);
         });
+        // Save the dashboard structure
         return this.dashboardWidgetService
             .saveAllDashboardWidget(+dashboardId, dashboardWidgets);
+    }
+    getWidgetCategoryList() {
+        return this.http.get(this.widgetCategoryListUrl);
+    }
+    getWidgetList() {
+        return this.http.get(this.widgetListUrl);
     }
 }
