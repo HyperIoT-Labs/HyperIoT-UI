@@ -6,7 +6,7 @@ import { AuthenticationHttpErrorHandlerService } from 'src/app/services/authenti
 import { Handler } from 'src/app/services/models/models';
 
 @Component({
-  selector: 'app-password-recovery',
+  selector: 'hyt-password-recovery',
   templateUrl: './password-recovery.component.html',
   styleUrls: ['./password-recovery.component.scss']
 })

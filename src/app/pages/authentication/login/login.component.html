@@ -1,4 +1,3 @@
-
 <!-- LOGIN FORM BLOCK -->
 <div id="container-login">
   <div class="container" id="box-login">
@@ -13,7 +12,7 @@
           We are happy to see you again!
         </div>
         <div id="footer-welcome-box">
-          Don't have an account?<br/><a routerLink="/auth/registration">Register Now</a> and Enjoy all our benefits!
+          Don't have an account?<br /><a routerLink="/auth/registration">Register Now</a> and Enjoy all our benefits!
         </div>
       </div>
 
@@ -25,29 +24,24 @@
 
           <div id="login-form" class="col-md-12">
 
-            <form 
-              #f="ngForm" 
-              class="login-form" 
-              [formGroup]="loginForm" 
-              (ngSubmit)="login()" 
-              autocomplete="on"
-              (keydown)="keyDownFunction($event)"
-            >
+            <form #f="ngForm" class="login-form" [formGroup]="loginForm" (ngSubmit)="login()" autocomplete="on"
+              (keydown)="keyDownFunction($event)">
 
               <div class="container-form-field">
 
-                <hyt-input-text [isRequired]="true" [placeholder]="'User'" [id]="'username'"
-                  [formControl]="loginForm.controls.username" [fieldValue]="loginForm.value.username"
+                <hyt-input-text [isRequired]="true" i18n-placeholder="@@HYT_username" placeholder="HYT_username"
+                  [id]="'username'" [formControl]="loginForm.controls.username" [fieldValue]="loginForm.value.username"
                   [injectedErrorState]="injectedErrorState" [errorMsgState]="error[0]">
                 </hyt-input-text>
 
               </div> <!-- Field Username -->
 
               <div class="container-form-field">
-                
-                <hyt-input-text class="login" type="password" [isRequired]="true" [placeholder]="'Insert password'"
-                  [errorMsgRequired]="'Il campo è obbligatorio'" [id]="'password'" [formControl]="loginForm.controls.password"
-                  [fieldValue]="loginForm.value.password" [injectedErrorState]="injectedErrorState" [errorMsgState]="error[1]">
+
+                <hyt-input-text class="login" type="password" [isRequired]="true" i18n-placeholder="@@HYT_password"
+                  placeholder="HYT_password" [id]="'password'" [formControl]="loginForm.controls.password"
+                  [fieldValue]="loginForm.value.password" [injectedErrorState]="injectedErrorState"
+                  [errorMsgState]="error[1]">
                 </hyt-input-text>
 
               </div> <!-- Field Password -->
@@ -55,25 +49,25 @@
               <div id="forgot-container" class="container-form-field">
 
                 <a routerLink="/auth/passwordRecovery">Forgot Password?</a>
-              
+
               </div> <!-- Container Forgot Password -->
 
               <div class="container-form-field">
-                  <mat-checkbox type="checkbox" formControlName="rememberMe" id="remember-me">
-                    Remember me
-                  </mat-checkbox>
+                <mat-checkbox type="checkbox" formControlName="rememberMe" id="remember-me">
+                  Remember me
+                </mat-checkbox>
               </div> <!-- Container Remember Me -->
 
               <div class="container-form-field errorMessage">
-                  <ng-container *ngIf="error[2]">
-                    {{error[2]}}
-                  </ng-container>
+                <ng-container *ngIf="error[2]">
+                  {{error[2]}}
+                </ng-container>
               </div> <!-- Error Box -->
 
               <div class="container-form-field">
-                  <hyt-button type="submit" [isDisabled]="!f.valid || loading">
-                      Login
-                  </hyt-button>
+                <hyt-button type="submit" [isDisabled]="!f.valid || loading">
+                  Login
+                </hyt-button>
               </div> <!-- Container Button -->
 
             </form> <!-- End Form -->

@@ -9,7 +9,7 @@ import { Handler } from 'src/app/services/models/models';
 import * as CryptoJS from 'crypto-js';
 
 @Component({
-  selector: 'app-login',
+  selector: 'hyt-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
   encapsulation: ViewEncapsulation.None

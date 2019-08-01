@@ -5,7 +5,7 @@ import { AuthenticationHttpErrorHandlerService } from 'src/app/services/authenti
 import { Handler } from 'src/app/services/models/models';
 
 @Component({
-  selector: 'app-registration',
+  selector: 'hyt-registration',
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.scss'],
   encapsulation: ViewEncapsulation.None
