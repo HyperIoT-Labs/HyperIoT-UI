@@ -5,11 +5,13 @@ import { PasswordResetComponent } from '../pages/password-reset/password-reset.c
 import { UserActivationComponent } from '../pages/user-activation/user-activation.component';
 import { Observable } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
-import { DashboardComponent } from '../pages/dashboard/dashboard.component';
 import { DashboardViewComponent } from '../pages/dashboard/dashboard-view/dashboard-view.component';
 import { AddWidgetDialogComponent } from '../pages/dashboard/add-widget-dialog/add-widget-dialog.component';
 import { WidgetSettingsDialogComponent } from '../pages/dashboard/widget-settings-dialog/widget-settings-dialog.component';
 import { NotFoundComponent } from '../pages/not-found/not-found.component';
+import { LoginComponent } from '../pages/authentication/login/login.component';
+import { RegistrationComponent } from '../pages/authentication/registration/registration.component';
+import { PasswordRecoveryComponent } from '../pages/authentication/password-recovery/password-recovery.component';
 
 @Injectable()
 export class LoggedInGuard implements CanActivate {
@@ -21,7 +23,7 @@ export class LoggedInGuard implements CanActivate {
     if (this.cookieService.check('HIT-AUTH')) {
       return true;
     }
-    this.router.navigate(['/authentication'], { queryParams: { returnUrl: state.url } });
+    this.router.navigate(['/auth/login'], { queryParams: { returnUrl: state.url } });
     return false;
   }
 
@@ -34,8 +36,27 @@ const hyperiotRoutes: Routes = [
     pathMatch: "full"
   },
   {
-    path: 'authenitcation',
+    path: 'auth',
     component: AuthenticationComponent,
+    children: [
+      {
+        path: '',
+        redirectTo: 'login',
+        pathMatch: 'full'
+      },
+      {
+        path: 'login',
+        component: LoginComponent
+      },
+      {
+        path: 'registration',
+        component: RegistrationComponent
+      },
+      {
+        path: 'passwordRecovery',
+        component: PasswordRecoveryComponent
+      }
+    ],
     data: {
       showToolBar: false,
     }

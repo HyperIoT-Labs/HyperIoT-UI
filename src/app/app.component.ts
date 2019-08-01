@@ -18,7 +18,7 @@ export class AppComponent {
 
   logout() {
     this.cookieService.delete('HIT-AUTH');
-    this.route.navigate(['/authenitcation']);
+    this.route.navigate(['/auth/login']);
   }
 
 }
