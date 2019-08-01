@@ -1,54 +1,20 @@
 .authenticationCard {
-  // margin: 0 auto;
-  // margin-top: 100px;
-  // width: 500px;
-  // padding: 20px;
-  // border: 1px solid black;
-  // transition: all .3s ease;
   width: 100%;
   margin: 0 auto;
 
-  .container-login {
+  #container-autentication-box {
     width: 100%;
     min-height: 100vh;
     display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
     display: flex;
     flex-wrap: wrap;
+    -webkit-box-pack: center;
     justify-content: center;
+    -webkit-box-align: center;
     align-items: center;
     padding: 15px;
     background: #17A4FA;
-    background: -webkit-linear-gradient(-130deg,#17A4FA,#0A1E3C);
-    background: -o-linear-gradient(-130deg,#17A4FA,#0A1E3C);
-    background: -moz-linear-gradient(-130deg,#17A4FA,#0A1E3C);
-    background: linear-gradient(-130deg,#17A4FA,#0A1E3C);
+    background: linear-gradient(-130deg, #17A4FA, #0A1E3C);
+    font-family: 'Exo';
   }
-
-  .wrap-login {
-    width: 960px;
-    background: #fff;
-    border-radius: 10px;
-    overflow: hidden;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    padding: 150px 130px 33px 95px;
-  }
-
 }
-
-
-
-
-
-// .forgotPwdText:hover {
-//   cursor: pointer;
-//   color: grey !important;
-// }

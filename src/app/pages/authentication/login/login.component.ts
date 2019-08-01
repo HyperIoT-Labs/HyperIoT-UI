@@ -14,7 +14,7 @@ import * as CryptoJS from 'crypto-js';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-
+  
   error: string[] = [null, null, null];
 
   returnUrl: String;
@@ -46,6 +46,7 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
 
     if (this.cookieService.check('hytUser')) {

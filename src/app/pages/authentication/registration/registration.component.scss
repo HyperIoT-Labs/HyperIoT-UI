@@ -1,46 +1,113 @@
+@import '../../../../styles/abstracts/mixins';
+
 #container-registration {
-  width: 100%;
-  min-height: 100vh;
-  display: -webkit-box;
-  display: flex;
-  flex-wrap: wrap;
-  -webkit-box-pack: center;
-  justify-content: center;
-  -webkit-box-align: center;
-  align-items: center;
-  padding: 15px;
-  background: #17A4FA;
-  background: linear-gradient(-130deg, #17A4FA, #0A1E3C);
 
   #box-login {
     background-color: #ffffff;
+    @include box-shadow(0px, 0px, 25px, -1px, #151515);
 
     #column-welcome {
-      background-image: url('https://www.ionos.it/digitalguide/fileadmin/DigitalGuide/Teaser/big-data-t.jpg');
+      background-image: url('https://cdn.xingosoftware.com/elektor/images/fetch/dpr_1/https%3A%2F%2Fwww.elektormagazine.de%2Fassets%2Fupload%2Fimages%2F42%2F20151230172745_Semiconductor-electronics---Thin-Film-Precursors.jpg');
       background-position: center center;
       background-repeat: no-repeat;
       background-size: cover;
+
+      #head-welcome-box {
+        color: #fff;
+        text-transform: uppercase;
+        font-weight: 600;
+        font-size: 5em;
+
+        text-shadow: 2px 8px 6px rgba(0, 0, 0, 0.65), 
+                     0px -5px 35px rgba(255, 255, 255, 0.32);
+        margin-top: 10px;
+        margin-left: 15px;
+      }
+
+      #body-welcome-box {
+        color: #fff;
+        text-transform: uppercase;
+        font-weight: 600;
+        font-size: 3.5em;
+        line-height: 65px;
+        text-shadow: 2px 8px 6px rgba(0, 0, 0, 0.65), 
+                     0px -5px 35px rgba(255, 255, 255, 0.32);
+        margin-left: 15px;
+        margin-top: 40px;
+      }
+
+      #footer-welcome-box {
+        color: #fff;
+        text-transform: capitalize;
+        font-weight: 400;
+        font-size: 1.2em;
+        line-height: 65px;
+        text-shadow: 2px 8px 6px rgba(0, 0, 0, 0.65), 
+                     0px -5px 35px rgba(255, 255, 255, 0.32);
+        margin-left: 15px;
+        margin-top: 255px;
+
+        a {
+          color: #ffffff;
+          font-style: italic;
+          font-weight: 600;
+          text-decoration: underline;
+
+          &:hover {
+            color: aqua;
+          } 
+        }
+      }
+
     }
 
     #column-registration-form {
 
       padding: 20px 55px 45px 40px;
 
+      h3#registration-title {
+        font-weight: 200;
+        font-size: 2.4em;
+        margin-bottom: 20px;
+      }
+
       #registration-form {
         form {
 
           .container-form-field {
-            margin-bottom: 15px;
+            width: 90%;
+            margin: 0px auto 10px auto;
+
+            input.hyt-input {
+              font-family: "Exo";
+              font-size: 1.1em;
+            }
 
             label {
               &.mat-form-field-label {
                 font-size: .9em;
+                font-family: "Exo";
               }
 
               &.mat-checkbox-layout {
                 span.mat-checkbox-label {
                   font-size: .78em;
+                  font-family: "Exo";
                 }
+              }
+            }
+
+            mat-error {
+              font-family: "Exo";
+            }
+
+            hyt-button#submit-btn {
+              float: right;
+              margin-top: 20px;
+
+              button {
+                font-family: "Exo";
+                text-transform: uppercase;
               }
             }
 

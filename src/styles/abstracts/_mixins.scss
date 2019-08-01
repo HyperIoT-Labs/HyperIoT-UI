@@ -43,3 +43,27 @@
 		src: $src;
 	}
 }
+
+// =============================================================================
+// CROSS BROWSER ELEMENTS
+// REFERENCE URL: https://gist.github.com/wagnerbeethoven/8452e2b8eced825fdb03
+// =============================================================================
+
+// ADDS A BROWSER PREFIX TO THE PROPERTY
+@mixin css3-prefix($property, $value) {
+	-webkit-#{$property}: #{$value};
+	-khtml-#{$property}: #{$value};
+	-moz-#{$property}: #{$value};
+	-ms-#{$property}: #{$value};
+	-o-#{$property}: #{$value};
+	#{$property}: #{$value};
+}
+
+// BOX SHADOW
+@mixin box-shadow($x, $y, $blur, $inset, $color) {
+	@if ($inset != "") {
+		@include css3-prefix('box-shadow', $x $y $blur $inset $color);
+	} @else {
+		@include css3-prefix('box-shadow', $x $y $blur $color);
+	}
+}

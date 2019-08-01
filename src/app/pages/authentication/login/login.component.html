@@ -1,43 +1,90 @@
-<div class="login-pic">
-  <img src="https://cdn1.iconfinder.com/data/icons/business-and-commercial-mixed-round/128/35-512.png" alt="Image">
+
+<!-- LOGIN FORM BLOCK -->
+<div id="container-login">
+  <div class="container" id="box-login">
+
+    <div class="row">
+
+      <div id="column-welcome" class="col-md-6">
+        <div id="head-welcome-box">
+          Hello!
+        </div>
+        <div id="body-welcome-box">
+          We are happy to see you again!
+        </div>
+        <div id="footer-welcome-box">
+          Don't have an account?<br/><a href="">Register Now</a> and Enjoy all our benefits!
+        </div>
+      </div>
+
+      <div id="column-login-form" class="col-md-6">
+
+        <h3 id="login-title">Login to your Account</h3>
+
+        <div class="row">
+
+          <div id="login-form" class="col-md-12">
+
+            <form 
+              #f="ngForm" 
+              class="login-form" 
+              [formGroup]="loginForm" 
+              (ngSubmit)="login()" 
+              autocomplete="on"
+              (keydown)="keyDownFunction($event)"
+            >
+
+              <div class="container-form-field">
+
+                <hyt-input-text [isRequired]="true" [placeholder]="'User'" [id]="'username'"
+                  [formControl]="loginForm.controls.username" [fieldValue]="loginForm.value.username"
+                  [injectedErrorState]="injectedErrorState" [errorMsgState]="error[0]">
+                </hyt-input-text>
+
+              </div> <!-- Field Username -->
+
+              <div class="container-form-field">
+                
+                <hyt-input-text class="login" type="password" [isRequired]="true" [placeholder]="'Insert password'"
+                  [errorMsgRequired]="'Il campo è obbligatorio'" [id]="'password'" [formControl]="loginForm.controls.password"
+                  [fieldValue]="loginForm.value.password" [injectedErrorState]="injectedErrorState" [errorMsgState]="error[1]">
+                </hyt-input-text>
+
+              </div> <!-- Field Password -->
+
+              <div id="forgot-container" class="container-form-field">
+
+                <a href="#">Forgot Password?</a>
+              
+              </div> <!-- Container Forgot Password -->
+
+              <div class="container-form-field">
+                  <mat-checkbox type="checkbox" formControlName="rememberMe" id="remember-me">
+                    Remember me
+                  </mat-checkbox>
+              </div> <!-- Container Remember Me -->
+
+              <div class="container-form-field errorMessage">
+                  <ng-container *ngIf="error[2]">
+                    {{error[2]}}
+                  </ng-container>
+              </div> <!-- Error Box -->
+
+              <div class="container-form-field">
+                  <hyt-button type="submit" [isDisabled]="!f.valid || loading">
+                      Login
+                  </hyt-button>
+              </div> <!-- Container Button -->
+
+            </form> <!-- End Form -->
+
+          </div>
+
+        </div> <!-- End Row Registration Form -->
+
+      </div>
+
+    </div> <!-- End Row Login Box -->
+
+  </div>
 </div>
-
-<form #f="ngForm" class="login-form" [formGroup]="loginForm" (ngSubmit)="login()" autocomplete="on"
-  (keydown)="keyDownFunction($event)">
-  <h3>Login</h3>
-  <div class="container-input">
-
-    <hyt-input-text [isRequired]="true" [placeholder]="'User'" [id]="'username'"
-      [formControl]="loginForm.controls.username" [fieldValue]="loginForm.value.username"
-      [injectedErrorState]="injectedErrorState" [errorMsgState]="error[0]">
-    </hyt-input-text>
-
-  </div>
-
-  <div>
-    <hyt-input-text class="login" type="password" [isRequired]="true" [placeholder]="'Insert password'"
-      [errorMsgRequired]="'Il campo è obbligatorio'" [id]="'password'" [formControl]="loginForm.controls.password"
-      [fieldValue]="loginForm.value.password" [injectedErrorState]="injectedErrorState" [errorMsgState]="error[1]">
-    </hyt-input-text>
-
-  </div>
-
-  <br>
-
-  <mat-checkbox type="checkbox" formControlName="rememberMe" id="remember-me">
-    Remember me
-  </mat-checkbox>
-
-  <br>
-
-  <div class="container-form-field errorMessage">
-    <ng-container *ngIf="error[2]">
-      {{error[2]}}
-    </ng-container>
-  </div>
-
-  <hyt-button type="submit" [isDisabled]="!f.valid || loading">
-    Invia
-  </hyt-button>
-
-</form>

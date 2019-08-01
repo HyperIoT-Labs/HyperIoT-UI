@@ -5,12 +5,20 @@
     <div class="row">
 
       <div id="column-welcome" class="col-md-6">
-        Messaggio di benvenuto
+        <div id="head-welcome-box">
+          Welcome!
+        </div>
+        <div id="body-welcome-box">
+          register and enjoy our benefits
+        </div>
+        <div id="footer-welcome-box">
+          Already a Member? <a href="">Login Now</a> and Enjoy the experience
+        </div>
       </div>
 
       <div id="column-registration-form" class="col-md-6">
 
-        <h2>Register Now</h2>
+        <h3 id="registration-title">Register Now</h3>
 
         <div class="row">
 
@@ -19,42 +27,42 @@
             <form #rf="ngForm" [formGroup]="registerForm" (ngSubmit)="register()">
 
               <div class="container-form-field">
-                <hyt-input-text [isRequired]="true" [hint]="'Suggerimento per Nome'" [placeholder]="'Nome'"
+                <hyt-input-text [isRequired]="true" [placeholder]="'Nome'"
                   [formControl]="registerForm.controls.name" [injectedErrorState]="injectedErrorState[0]"
                   [errorMsgState]="error[0]">
                 </hyt-input-text>
               </div> <!-- Field Name -->
 
               <div class="container-form-field">
-                <hyt-input-text [isRequired]="true" [hint]="'Suggerimento per Cognome'" [placeholder]="'Cognome'"
+                <hyt-input-text [isRequired]="true" [placeholder]="'Cognome'"
                   [formControl]="registerForm.controls.lastName" [injectedErrorState]="injectedErrorState[1]"
                   [errorMsgState]="error[1]">
                 </hyt-input-text>
               </div> <!-- Field Surname -->
 
               <div class="container-form-field">
-                <hyt-input-text [isRequired]="true" [hint]="'Suggerimento per Username'" [placeholder]="'Username'"
+                <hyt-input-text [isRequired]="true" [placeholder]="'Username'"
                   [formControl]="registerForm.controls.userName" [injectedErrorState]="injectedErrorState[2]"
                   [errorMsgState]="error[2]">
                 </hyt-input-text>
               </div> <!-- Field Username -->
 
               <div class="container-form-field">
-                <hyt-input-text [isRequired]="true" [hint]="'Suggerimento per Email'" [placeholder]="'Email'"
+                <hyt-input-text [isRequired]="true" [placeholder]="'Email'"
                   [formControl]="registerForm.controls.email" [injectedErrorState]="injectedErrorState[3]"
                   [errorMsgState]="error[3]">
                 </hyt-input-text>
               </div> <!-- Field Email -->
 
               <div class="container-form-field">
-                <hyt-input-text [isRequired]="true" [hint]="'Suggerimento per PAssword'" [placeholder]="'Password'"
+                <hyt-input-text [isRequired]="true" [placeholder]="'Password'"
                   [formControl]="registerForm.controls.password" [injectedErrorState]="injectedErrorState[4]"
                   [errorMsgState]="error[4]">
                 </hyt-input-text>
               </div> <!-- Field Password -->
 
               <div class="container-form-field">
-                <hyt-input-text [isRequired]="true" [hint]="'Suggerimento per Ripeti Password'"
+                <hyt-input-text [isRequired]="true"
                   [placeholder]="'Ripeti  Password'" [formControl]="registerForm.controls.confPassword"
                   [injectedErrorState]="injectedErrorState[5]" [errorMsgState]="error[5]">
                 </hyt-input-text>
@@ -73,7 +81,7 @@
               </div>
 
               <div class="container-form-field">
-                <hyt-button type="submit" [isDisabled]="!rf.valid"> Registrati </hyt-button>
+                <hyt-button id="submit-btn" type="submit" [isDisabled]="!rf.valid"> Registrati </hyt-button>
               </div> <!-- Container Button -->
 
             </form> <!-- End Form -->

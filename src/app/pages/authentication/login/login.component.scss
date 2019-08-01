@@ -1,25 +1,128 @@
-.login-pic {
-  width: 316px;
-  text-align: center;
+@import '../../../../styles/abstracts/mixins';
 
-  img {
-    width: 100%;
+#container-login {
+
+  #box-login {
+    background-color: #ffffff;
+    @include box-shadow(0px, 0px, 25px, -1px, #151515);
+
+    #column-welcome {
+      background-image: url('https://lfrfu3w8vyl1p3bai347o9xv-wpengine.netdna-ssl.com/wp-content/uploads/2015/12/bigstock-Technology-background-from-se-67240435.jpg');
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      padding-bottom: 30px;
+
+      #head-welcome-box {
+        color: #fff;
+        text-transform: uppercase;
+        font-weight: 600;
+        font-size: 5em;
+        text-shadow: 2px 8px 6px rgba(0, 0, 0, 0.65), 
+                     0px -5px 35px rgba(255, 255, 255, 0.32);
+        margin-top: 10px;
+        margin-left: 15px;
+      }
+
+      #body-welcome-box {
+        color: #fff;
+        text-transform: uppercase;
+        font-weight: 600;
+        font-size: 3.5em;
+        line-height: 65px;
+        text-shadow: 2px 8px 6px rgba(0, 0, 0, 0.65), 
+                     0px -5px 35px rgba(255, 255, 255, 0.32);
+        margin-left: 15px;
+        margin-top: 40px;
+      }
+
+      #footer-welcome-box {
+        color: #fff;
+        text-transform: capitalize;
+        font-weight: 400;
+        font-size: 1.2em;
+        line-height: 27px;
+        text-shadow: 2px 8px 6px rgba(0, 0, 0, 0.65), 
+                     0px -5px 35px rgba(255, 255, 255, 0.32);
+        margin-left: 15px;
+        margin-top: 180px;
+
+        a {
+          color: #ffffff;
+          font-style: italic;
+          font-weight: 600;
+          text-decoration: underline;
+
+          &:hover {
+            color: aqua;
+          } 
+        }
+      }
+
+    }
+
+    #column-login-form {
+
+      padding: 20px 55px 45px 40px;
+
+      h3#login-title {
+        font-weight: 200;
+        font-size: 2.4em;
+        margin-bottom: 20px;
+      }
+
+      #login-form {
+
+        form {
+
+          .container-form-field {
+            width: 90%;
+            margin: 0px auto 10px auto;
+
+            input.hyt-input {
+              font-family: "Exo";
+              font-size: 1.1em;
+            }
+
+            label {
+              &.mat-form-field-label {
+                font-size: .9em;
+                font-family: "Exo";
+              }
+
+              &.mat-checkbox-layout {
+                span.mat-checkbox-label {
+                  font-size: .78em;
+                  font-family: "Exo";
+                }
+              }
+            }
+
+            mat-error {
+              font-family: "Exo";
+            }
+
+            hyt-button#submit-btn {
+              float: right;
+              margin-top: 20px;
+
+              button {
+                font-family: "Exo";
+                text-transform: uppercase;
+              }
+            }
+
+            &.errorMessage {
+              color: red;
+              text-align: center;
+            }
+
+          }
+
+        }
+        
+      }
+    }
   }
-
 }
 
-.login-form {
-  width: 290px;
-
-  h3 {
-    font-family: 'Exo';
-    font-style: italic;
-    font-weight: 200;
-    font-size: 3em;
-  }
-
-  .errorMessage {
-    color: red;
-    text-align: center;
-  }
-}
