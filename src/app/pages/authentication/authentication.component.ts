@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { fadeAnimation } from '../../route-animation';
 
 @Component({
   selector: 'app-authentication',
   templateUrl: './authentication.component.html',
   styleUrls: ['./authentication.component.scss'],
+  encapsulation: ViewEncapsulation.None,
   animations: [fadeAnimation]
 })
 export class AuthenticationComponent implements OnInit {
