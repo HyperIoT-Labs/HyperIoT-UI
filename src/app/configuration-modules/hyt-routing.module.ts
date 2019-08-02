@@ -23,7 +23,7 @@ export class LoggedInGuard implements CanActivate {
     if (this.cookieService.check('HIT-AUTH')) {
       return true;
     }
-    this.router.navigate(['/auth/login'], { queryParams: { returnUrl: state.url } });
+    this.router.navigate(['/auth/login'], { state: { returnUrl: state.url } });
     return false;
   }
 
@@ -78,6 +78,7 @@ const hyperiotRoutes: Routes = [
   {
     path: 'dashboards/:dashboardId',
     component: DashboardViewComponent,
+    canActivate: [LoggedInGuard],
     children: [
       {
         path: 'widgets',

@@ -55,16 +55,16 @@
               </div> <!-- Field Email -->
 
               <div class="container-form-field">
-                <hyt-input-text [isRequired]="true" i18n-placeholder="@@HYT_password" placeholder="HYT_password"
-                  [formControl]="registerForm.controls.password" [injectedErrorState]="injectedErrorState[4]"
-                  [errorMsgState]="error[4]">
+                <hyt-input-text [isRequired]="true" [isPassword]="true" i18n-placeholder="@@HYT_password"
+                  placeholder="HYT_password" [formControl]="registerForm.controls.password"
+                  [injectedErrorState]="injectedErrorState[4]" [errorMsgState]="error[4]" type="password">
                 </hyt-input-text>
               </div> <!-- Field Password -->
 
               <div class="container-form-field">
-                <hyt-input-text [isRequired]="true" i18n-placeholder="@@HYT_passwordConfirm"
+                <hyt-input-text [isRequired]="true" [isPassword]="true" i18n-placeholder="@@HYT_passwordConfirm"
                   placeholder="HYT_passwordConfirm" [formControl]="registerForm.controls.confPassword"
-                  [injectedErrorState]="injectedErrorState[5]" [errorMsgState]="error[5]">
+                  [injectedErrorState]="injectedErrorState[5]" [errorMsgState]="error[5]" type="password">
                 </hyt-input-text>
               </div> <!-- Field Repeat Password -->
 
@@ -81,7 +81,7 @@
               </div>
 
               <div class="container-form-field">
-                <hyt-button type="submit" [isDisabled]="!rf.valid">
+                <hyt-button type="submit" [isDisabled]="!rf.valid || loading || registrationSucceeded">
                   <ng-container i18n="@@HYT_registration_button">HYT_registration_button</ng-container>
                 </hyt-button>
               </div> <!-- Container Button -->

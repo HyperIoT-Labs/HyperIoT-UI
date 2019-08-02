@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { HusersService, HUser } from '@hyperiot/core';
+import { HusersService } from '@hyperiot/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
