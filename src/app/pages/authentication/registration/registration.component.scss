@@ -54,11 +54,13 @@
         text-transform: capitalize;
         font-weight: 400;
         font-size: 1.2em;
-        line-height: 65px;
+        line-height: 27px;
         text-shadow: 2px 8px 6px rgba(0, 0, 0, 0.65),
           0px -5px 35px rgba(255, 255, 255, 0.32);
         margin-left: 15px;
-        margin-top: 255px;
+        position: absolute;
+        left: 15px;
+        bottom: 10px;
 
         a {
           color: #ffffff;
@@ -91,9 +93,19 @@
             width: 90%;
             margin: 0px auto 10px auto;
 
-            input.hyt-input {
-              font-family: "Exo";
-              font-size: 1.1em;
+            input {
+
+              &.hyt-input {
+                font-family: "Exo";
+                font-size: 1.1em;
+              }
+
+              &:-webkit-autofill,
+              &:-webkit-autofill:hover, 
+              &:-webkit-autofill:focus {
+                -webkit-box-shadow: 0 0 0px 1000px #ffffff inset
+              }
+              
             }
 
             label {
@@ -110,12 +122,32 @@
               }
             }
 
+            hyt-button {
+              &#submit-btn {
+                button {
+                  text-transform: uppercase;
+                  font-size: 1.1em;
+                  background-color: #0d416d;
+                  color: #fff;
+                  font-family: "Exo";
+                  font-weight: 200;
+                  -webkit-transition: background-color 0.3s;
+                  -moz-transition: background-color 0.3s;
+                  -o-transition: background-color 0.3s;
+                  transition: background-color 0.3s;
+
+                  &:hover {
+                    background-color: #105f99;
+                  }
+                }
+              }
+            }
+
             mat-error {
               font-family: "Exo";
             }
 
             hyt-button#submit-btn {
-              float: right;
               margin-top: 20px;
 
               button {
@@ -129,7 +161,7 @@
               text-align: center;
             }
 
-          }
+          } /* End Container Form Field */
 
         }
       }

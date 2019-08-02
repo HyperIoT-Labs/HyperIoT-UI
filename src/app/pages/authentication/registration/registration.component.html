@@ -12,13 +12,13 @@
           register and enjoy our benefits
         </div>
         <div id="footer-welcome-box">
-          Already a Member? <a routerLink="/auth/login">Login Now</a> and Enjoy the experience
+          Already a Member?<br/><a routerLink="/auth/login">Login Now</a> and Enjoy the experience
         </div>
       </div>
 
       <div id="column-registration-form" class="col-md-6">
 
-        <h2 i18n="@@HYT_registration">HYT_registration</h2>
+        <h3 id="registration-title" i18n="@@HYT_registration">HYT_registration</h3>
 
         <div class="row">
 
@@ -81,7 +81,7 @@
               </div>
 
               <div class="container-form-field">
-                <hyt-button type="submit" [isDisabled]="!rf.valid">
+                <hyt-button id="submit-btn" type="submit" [isDisabled]="!rf.valid">
                   <ng-container i18n="@@HYT_registration_button">HYT_registration_button</ng-container>
                 </hyt-button>
               </div> <!-- Container Button -->
