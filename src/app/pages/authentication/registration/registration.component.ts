@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { HusersService, HUser } from '@hyperiot/core';
 import { AuthenticationHttpErrorHandlerService } from 'src/app/services/authentication-http-error-handler.service';
 import { Handler } from 'src/app/services/models/models';
@@ -12,58 +12,87 @@ import { Handler } from 'src/app/services/models/models';
 })
 export class RegistrationComponent implements OnInit {
 
-  error: string[] = [null, null, null, null, null, null, null];
+  error: string;
 
-  registerForm = new FormGroup({
-    name: new FormControl('', [Validators.required]),
-    lastName: new FormControl('', [Validators.required]),
-    userName: new FormControl('', [Validators.required, Validators.pattern(new RegExp('^[a-zA-Z0-9]+$'))]),
-    email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', [Validators.required]),
-    confPassword: new FormControl('', [Validators.required]),
-    acceptConditions: new FormControl(false, [Validators.required])
-  });
+  registrationForm: FormGroup;
+  //  = new FormGroup({
+  //   acceptConditions: new FormControl(false, [
+  //     Validators.required
+  //   ])
+  // });
+
+  loading: boolean = false;
 
   constructor(
     private hUserService: HusersService,
+    private fb: FormBuilder,
     private httperrorHandler: AuthenticationHttpErrorHandlerService
   ) { }
 
   ngOnInit() {
+    this.registrationForm = this.fb.group({});
   }
+
+  generalError = 0;
 
   exception: boolean = false;
   errorMessage: string[] = [];
 
-  injectedErrorState: boolean[] = [false, false, false, false, false, false];
+  fieldError = new Map();
 
   registrationSucceeded: boolean = false;
 
   register() {
     //DISABLE BUTTON
-    this.error = [null, null, null, null, null, null, null];
+    this.error = '';
+    this.generalError = 0;
     this.registrationSucceeded = false;
 
     let user: HUser = {
-      name: this.registerForm.value.name,
-      lastname: this.registerForm.value.lastName,
-      username: this.registerForm.value.userName,
-      email: this.registerForm.value.email,
-      password: this.registerForm.value.password,
-      passwordConfirm: this.registerForm.value.confPassword
+      name: this.registrationForm.value.name,
+      lastname: this.registrationForm.value.lastName,
+      username: this.registrationForm.value.username,
+      email: this.registrationForm.value.email,
+      password: this.registrationForm.value.password,
+      passwordConfirm: this.registrationForm.value.confPassword
     }
 
     this.hUserService.register(user).subscribe(
       res => {
         this.registrationSucceeded = true;
+        this.loading = false
       },
       err => {
-        let k: Handler[] = this.httperrorHandler.handle(err);
+        let k: Map<string, string> = this.httperrorHandler.handleRegistration(err);
+        console.log(k)
         for (let e of k) {
-          this.error[e.container] = e.message;
+          if (e[0] == 'general') {
+            this.error = e[1]
+            this.generalError = 1;
+          }
+          else {
+            this.error = e[1]
+            this.registrationForm.get(e[0]).setErrors({
+              validateInjectedError: {
+                valid: false
+              }
+            });
+          }
         }
-        console.log(this.error)
+
+        this.loading = false
       }
+    )
+  }
+
+  notValid(): boolean {
+    return (
+      this.registrationForm.get('name').invalid ||
+      this.registrationForm.get('lastName').invalid ||
+      this.registrationForm.get('username').invalid ||
+      this.registrationForm.get('email').invalid ||
+      this.registrationForm.get('password').invalid ||
+      this.registrationForm.get('confPassword').invalid
     )
   }
 

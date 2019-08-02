@@ -2,96 +2,76 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
   <file source-language="en" datatype="plaintext" original="ng2.template">
     <body>
-      <trans-unit id="HYT_login" datatype="html">
-        <source>HYT_login</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/pages/authentication/login/login.component.html</context>
-          <context context-type="linenumber">7</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="HYT_username" datatype="html">
         <source>HYT_username</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/authentication/login/login.component.html</context>
-          <context context-type="linenumber">10</context>
+          <context context-type="linenumber">33</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/authentication/registration/registration.component.html</context>
-          <context context-type="linenumber">36</context>
+          <context context-type="linenumber">43</context>
         </context-group>
       </trans-unit>
       <trans-unit id="HYT_password" datatype="html">
         <source>HYT_password</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/authentication/login/login.component.html</context>
-          <context context-type="linenumber">19</context>
+          <context context-type="linenumber">41</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/authentication/registration/registration.component.html</context>
-          <context context-type="linenumber">50</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="HYT_remember_me" datatype="html">
-        <source>HYT_remember_me</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/pages/authentication/login/login.component.html</context>
-          <context context-type="linenumber">29</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="HYT_login_button" datatype="html">
-        <source>HYT_login_button</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/pages/authentication/login/login.component.html</context>
-          <context context-type="linenumber">41</context>
+          <context context-type="linenumber">55</context>
         </context-group>
       </trans-unit>
       <trans-unit id="HYT_registration" datatype="html">
         <source>HYT_registration</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/authentication/registration/registration.component.html</context>
-          <context context-type="linenumber">13</context>
+          <context context-type="linenumber">21</context>
         </context-group>
       </trans-unit>
       <trans-unit id="HYT_name" datatype="html">
         <source>HYT_name</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/authentication/registration/registration.component.html</context>
-          <context context-type="linenumber">22</context>
+          <context context-type="linenumber">31</context>
         </context-group>
       </trans-unit>
       <trans-unit id="HYT_surname" datatype="html">
         <source>HYT_surname</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/authentication/registration/registration.component.html</context>
-          <context context-type="linenumber">29</context>
+          <context context-type="linenumber">37</context>
         </context-group>
       </trans-unit>
       <trans-unit id="HYT_email" datatype="html">
         <source>HYT_email</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/authentication/registration/registration.component.html</context>
-          <context context-type="linenumber">43</context>
+          <context context-type="linenumber">49</context>
         </context-group>
       </trans-unit>
       <trans-unit id="HYT_passwordConfirm" datatype="html">
         <source>HYT_passwordConfirm</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/authentication/registration/registration.component.html</context>
-          <context context-type="linenumber">58</context>
+          <context context-type="linenumber">63</context>
         </context-group>
       </trans-unit>
       <trans-unit id="HYT_registration_button" datatype="html">
         <source>HYT_registration_button</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/authentication/registration/registration.component.html</context>
-          <context context-type="linenumber">77</context>
+          <context context-type="linenumber">81</context>
         </context-group>
       </trans-unit>
       <trans-unit id="HYT_registration_form_ok" datatype="html">
-        <source>HYT_registration_form_ok</source>
+        <source>HYT_registration_form_ok
+        </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/authentication/registration/registration.component.html</context>
-          <context context-type="linenumber">81</context>
+          <context context-type="linenumber">85</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6ab904593389e6b2cef07dbdd8176dfe41662bc1" datatype="html">
@@ -153,8 +133,43 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="3c4fbd403c69c8a40066aa376cfd533c85122814" datatype="html">
-        <source>HytIC_field_required</source>
+      <trans-unit id="96b015a8cb3d48869109e5ce0b72af06d2bf9031" datatype="html">
+        <source>HYT_field_required</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">C:/Users/Gabriele Losiczko/HyperIoT/HyperIoT-component/projects/hyperiot-components/src/lib/hyt-input/hyt-input.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="caa12f28e24ab3f2fe27e9123a59c2e0aa5a57c6" datatype="html">
+        <source>HYT_valid_email</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">C:/Users/Gabriele Losiczko/HyperIoT/HyperIoT-component/projects/hyperiot-components/src/lib/hyt-input/hyt-input.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="33c9ece659dd5c0489ef586aae0136c6c480bb19" datatype="html">
+        <source>HYT_min_length</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">C:/Users/Gabriele Losiczko/HyperIoT/HyperIoT-component/projects/hyperiot-components/src/lib/hyt-input/hyt-input.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="099248b4e8ef7f4dfb63ac0a0815c387b95bf564" datatype="html">
+        <source>HYT_min_one_number</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">C:/Users/Gabriele Losiczko/HyperIoT/HyperIoT-component/projects/hyperiot-components/src/lib/hyt-input/hyt-input.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="88e4d8c0ae5f7fb56559746c5f537ed55f114e4b" datatype="html">
+        <source>HYT_upper_case</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">C:/Users/Gabriele Losiczko/HyperIoT/HyperIoT-component/projects/hyperiot-components/src/lib/hyt-input/hyt-input.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="e75c1bdd7a657e3e31ef4323632c18c18cc0db9e" datatype="html">
+        <source>HYT_special_char</source>
         <context-group purpose="location">
           <context context-type="sourcefile">C:/Users/Gabriele Losiczko/HyperIoT/HyperIoT-component/projects/hyperiot-components/src/lib/hyt-input/hyt-input.component.ts</context>
           <context context-type="linenumber">1</context>

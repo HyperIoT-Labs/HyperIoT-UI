@@ -23,50 +23,40 @@ export class AuthenticationHttpErrorHandlerService extends HttpErrorHandlerServi
     return true;
   }
 
-  handle(httpError: HttpErrorResponse): Handler[] {
+  handleRegistration(httpError: HttpErrorResponse): Map<string, string> {
+    let map = new Map();
 
     switch (httpError.error.statusCode) {
       case 500: {
-        return [{
-          message: this.i18n('HYT_server_error_500'),
-          container: RegisterField.general
-        }]
+        map.set('general', this.i18n('HYT_server_error_500'))
+        return map;
         break;
       }
       case 504: {
-        return [{
-          message: this.i18n('HYT_offline_504'),
-          container: RegisterField.general
-        }]
+        map.set('general', this.i18n('HYT_offline_504'))
+        return map;
         break;
       }
       case 422: {
         switch (httpError.error.type) {
           case 'it.acsoftware.hyperiot.base.exception.HyperIoTDuplicateEntityException': {
-            return [{
-              message: httpError.error.errorMessages[0] + ' ' + this.i18n('HYT_duplicate_entity'),
-              //container: (httpError.error.errorMessages[0] == 'username') ? RegisterField.username : RegisterField.email
-              container: RegisterField.general
-            }]
+            map.set(
+              (httpError.error.errorMessages[0] == 'username') ? 'username' : 'email',
+              httpError.error.errorMessages[0] + ' ' + this.i18n('HYT_duplicate_entity')
+            )
+            return map;
           }
           case 'it.acsoftware.hyperiot.base.exception.HyperIoTValidationException': {
             var arr: any[] = [];
             for (let k of httpError.error.validationErrors)
-              arr.push({
-                message: k.field + k.message,
-                //container: k.field
-                container: RegisterField.general
-              })
-            return arr;
+              map.set('general', k.field + k.message)
+            return map;
           }
         }
         break;
       }
       default: {
-        return [{
-          message: this.i18n('HYT_unknown_error'),
-          container: RegisterField.general
-        }]
+        map.set('general', this.i18n('HYT_unknown_error'))
       }
 
     }

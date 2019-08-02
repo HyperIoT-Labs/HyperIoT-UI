@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { AuthenticationService, JWTLoginResponse } from '@hyperiot/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { AuthenticationHttpErrorHandlerService } from 'src/app/services/authentication-http-error-handler.service';
 import { Handler } from 'src/app/services/models/models';
@@ -20,11 +20,7 @@ export class LoginComponent implements OnInit {
 
   returnUrl: String;
 
-  loginForm: FormGroup = new FormGroup({
-    username: new FormControl("", Validators.required),
-    password: new FormControl("", Validators.required),
-    rememberMe: new FormControl(false, Validators.required)
-  });
+  loginForm: FormGroup;
 
   cookieValue: String;
 
@@ -40,31 +36,33 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private authenticationService: AuthenticationService,
+    private fb: FormBuilder,
     private cookieService: CookieService,
     private router: Router,
-    private route: ActivatedRoute,
     private httperrorHandler: AuthenticationHttpErrorHandlerService
   ) { }
 
   ngOnInit() {
 
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    this.loginForm = this.fb.group({});
 
-    if (this.cookieService.check('hytUser')) {
-      this.decrypting(this.cookieService.get('hytUser'), this.key)
+    this.returnUrl = window.history.state.returnUrl || '/';
 
-      this.loginForm = new FormGroup({
-        username: new FormControl(this.decrypted.toString(CryptoJS.enc.Utf8).split("&")[0], Validators.required),
-        password: new FormControl(this.decrypted.toString(CryptoJS.enc.Utf8).split("&")[1], Validators.required),
-        rememberMe: new FormControl(true, Validators.required)
-      });
-    } else {
-      this.loginForm = new FormGroup({
-        username: new FormControl('', Validators.required),
-        password: new FormControl('', Validators.required),
-        rememberMe: new FormControl(false, Validators.required)
-      });
-    }
+    // if (this.cookieService.check('hytUser')) {
+    //   this.decrypting(this.cookieService.get('hytUser'), this.key)
+
+    //   this.loginForm = new FormGroup({
+    //     username: new FormControl(this.decrypted.toString(CryptoJS.enc.Utf8).split("&")[0], Validators.required),
+    //     password: new FormControl(this.decrypted.toString(CryptoJS.enc.Utf8).split("&")[1], Validators.required),
+    //     rememberMe: new FormControl(true, Validators.required)
+    //   });
+    // } else {
+    //   this.loginForm = new FormGroup({
+    //     username: new FormControl('', Validators.required),
+    //     password: new FormControl('', Validators.required),
+    //     rememberMe: new FormControl(false, Validators.required)
+    //   });
+    // }
 
   }
 
@@ -78,17 +76,18 @@ export class LoginComponent implements OnInit {
     this.authenticationService.login(this.loginForm.value.username, this.loginForm.value.password).subscribe(
       res => {
         var jwtToken = <JWTLoginResponse>res;
-        this.cookieService.set('HIT-AUTH', jwtToken.token, 2);
-        this.router.navigate([this.returnUrl]);
+        this.cookieService.set('HIT-AUTH', jwtToken.token, 2, '/');
 
         if (this.loginForm.value.rememberMe == true) {
           this.encrypting(this.loginForm.value.username + "&" + this.loginForm.value.password, this.key);
-          this.cookieService.set('hytUser', this.encrypted, 28);
+          this.cookieService.set('hytUser', this.encrypted, 28, '/');
           this.cookieValue = this.cookieService.get('hytUser');
         } else if (this.cookieService.check('hytUser')) {
-          this.cookieService.delete('hytUser');
+          this.cookieService.delete('hytUser', '/');
         }
         this.loading = false;
+
+        this.router.navigate([this.returnUrl]);
       },
       err => {
         let k: Handler[] = this.httperrorHandler.handleLogin(err);
@@ -112,6 +111,13 @@ export class LoginComponent implements OnInit {
 
   private decrypting(encrypted: string, key: string) {
     this.decrypted = CryptoJS.AES.decrypt(encrypted, key);
+  }
+
+  notValid(): boolean {
+    return (
+      this.loginForm.get('username').invalid ||
+      this.loginForm.get('password').invalid
+    )
   }
 
 }

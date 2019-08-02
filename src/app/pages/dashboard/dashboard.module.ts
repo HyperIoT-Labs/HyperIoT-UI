@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DashboardComponent } from './dashboard.component';
 import { WidgetsLayoutComponent } from './widgets-layout/widgets-layout.component';
 import { DynamicWidgetComponent } from './dynamic-widget/dynamic-widget.component';
 import { GridsterModule } from 'angular-gridster2';
@@ -22,7 +21,6 @@ import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
-    DashboardComponent,
     WidgetsLayoutComponent,
     DynamicWidgetComponent,
     AddWidgetDialogComponent,
@@ -46,8 +44,6 @@ import { RouterModule } from '@angular/router';
   providers: [
     DashboardConfigService
   ],
-  exports: [
-    DashboardComponent
-  ]
+  exports: []
 })
 export class DashboardModule { }

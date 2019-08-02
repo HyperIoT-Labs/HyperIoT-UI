@@ -29,19 +29,17 @@
 
               <div class="container-form-field">
 
-                <hyt-input-text [isRequired]="true" i18n-placeholder="@@HYT_username" placeholder="HYT_username"
-                  [id]="'username'" [formControl]="loginForm.controls.username" [fieldValue]="loginForm.value.username"
-                  [injectedErrorState]="injectedErrorState" [errorMsgState]="error[0]">
+                <hyt-input-text [form]="loginForm" formControlName="username" name="username" [isRequired]="true"
+                  i18n-placeholder="@@HYT_username" placeholder="HYT_username">
                 </hyt-input-text>
 
               </div> <!-- Field Username -->
 
               <div class="container-form-field">
 
-                <hyt-input-text class="login" type="password" [isRequired]="true" i18n-placeholder="@@HYT_password"
-                  placeholder="HYT_password" [id]="'password'" [formControl]="loginForm.controls.password"
-                  [fieldValue]="loginForm.value.password" [injectedErrorState]="injectedErrorState"
-                  [errorMsgState]="error[1]">
+                <hyt-input-text [form]="loginForm" formControlName="password" name="password" class="login"
+                  type="password" [isRequired]="true" i18n-placeholder="@@HYT_password" placeholder="HYT_password"
+                  [injectedErrorMsg]="injectedErrorState">
                 </hyt-input-text>
 
               </div> <!-- Field Password -->
@@ -53,7 +51,7 @@
               </div> <!-- Container Forgot Password -->
 
               <div class="container-form-field">
-                <mat-checkbox type="checkbox" formControlName="rememberMe" id="remember-me">
+                <mat-checkbox type="checkbox" id="remember-me">
                   Remember me
                 </mat-checkbox>
               </div> <!-- Container Remember Me -->
@@ -65,7 +63,7 @@
               </div> <!-- Error Box -->
 
               <div class="container-form-field">
-                <hyt-button id="submit-btn" type="submit" [isDisabled]="!f.valid || loading">
+                <hyt-button id="submit-btn" type="submit" [isDisabled]="notValid() || loading">
                   Login
                 </hyt-button>
               </div> <!-- Container Button -->
