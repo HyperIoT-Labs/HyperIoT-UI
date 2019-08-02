@@ -24,64 +24,60 @@
 
           <div id="registration-form" class="col-md-12">
 
-            <form #rf="ngForm" [formGroup]="registerForm" (ngSubmit)="register()">
+            <form #rf="ngForm" [formGroup]="registrationForm" (ngSubmit)="register()">
 
               <div class="container-form-field">
-                <hyt-input-text [isRequired]="true" i18n-placeholder="@@HYT_name" placeholder="HYT_name"
-                  [formControl]="registerForm.controls.name" [injectedErrorState]="injectedErrorState[0]"
-                  [errorMsgState]="error[0]">
+                <hyt-input-text [form]="registrationForm" formControlName="name" name="name" [isRequired]="true"
+                  i18n-placeholder="@@HYT_name" placeholder="HYT_name" [injectedErrorMsg]="error">
                 </hyt-input-text>
               </div> <!-- Field Name -->
 
               <div class="container-form-field">
-                <hyt-input-text [isRequired]="true" i18n-placeholder="@@HYT_surname" placeholder="HYT_surname"
-                  [formControl]="registerForm.controls.lastName" [injectedErrorState]="injectedErrorState[1]"
-                  [errorMsgState]="error[1]">
+                <hyt-input-text [form]="registrationForm" formControlName="lastName" name="lastName" [isRequired]="true"
+                  i18n-placeholder="@@HYT_surname" placeholder="HYT_surname" [injectedErrorMsg]="error">
                 </hyt-input-text>
               </div> <!-- Field Surname -->
 
               <div class="container-form-field">
-                <hyt-input-text [isRequired]="true" i18n-placeholder="@@HYT_username" placeholder="HYT_username"
-                  [formControl]="registerForm.controls.userName" [injectedErrorState]="injectedErrorState[2]"
-                  [errorMsgState]="error[2]">
+                <hyt-input-text [form]="registrationForm" formControlName="username" name="username" [isRequired]="true"
+                  i18n-placeholder="@@HYT_username" placeholder="HYT_username" [injectedErrorMsg]="error">
                 </hyt-input-text>
               </div> <!-- Field Username -->
 
               <div class="container-form-field">
-                <hyt-input-text [isRequired]="true" i18n-placeholder="@@HYT_email" placeholder="HYT_email"
-                  [formControl]="registerForm.controls.email" [injectedErrorState]="injectedErrorState[3]"
-                  [errorMsgState]="error[3]">
+                <hyt-input-text [form]="registrationForm" formControlName="email" name="email" [isEmail]="true"
+                  [isRequired]="true" i18n-placeholder="@@HYT_email" placeholder="HYT_email" [injectedErrorMsg]="error">
                 </hyt-input-text>
               </div> <!-- Field Email -->
 
               <div class="container-form-field">
-                <hyt-input-text [isRequired]="true" [isPassword]="true" i18n-placeholder="@@HYT_password"
-                  placeholder="HYT_password" [formControl]="registerForm.controls.password"
-                  [injectedErrorState]="injectedErrorState[4]" [errorMsgState]="error[4]" type="password">
+                <hyt-input-text [form]="registrationForm" formControlName="password" name="password" [isRequired]="true"
+                  [isPassword]="true" i18n-placeholder="@@HYT_password" placeholder="HYT_password"
+                  [injectedErrorMsg]="error" type="password" errorPosition="bottom">
                 </hyt-input-text>
               </div> <!-- Field Password -->
 
               <div class="container-form-field">
-                <hyt-input-text [isRequired]="true" [isPassword]="true" i18n-placeholder="@@HYT_passwordConfirm"
-                  placeholder="HYT_passwordConfirm" [formControl]="registerForm.controls.confPassword"
-                  [injectedErrorState]="injectedErrorState[5]" [errorMsgState]="error[5]" type="password">
+                <hyt-input-text [form]="registrationForm" formControlName="confPassword" name="confPassword"
+                  [isRequired]="true" i18n-placeholder="@@HYT_passwordConfirm" placeholder="HYT_passwordConfirm"
+                  [injectedErrorMsg]="error" type="password">
                 </hyt-input-text>
               </div> <!-- Field Repeat Password -->
 
               <div class="container-form-field">
-                <mat-checkbox [formControl]="registerForm.controls.acceptConditions">
+                <mat-checkbox>
                   Check per <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a>.
                 </mat-checkbox>
               </div> <!-- Container CheckBox Privacy -->
 
               <div class="container-form-field errorMessage">
-                <ng-container *ngIf="error[6]">
-                  {{error[6]}}
+                <ng-container *ngIf="generalError == 1">
+                  {{error}}
                 </ng-container>
               </div>
 
               <div class="container-form-field">
-                <hyt-button type="submit" [isDisabled]="!rf.valid || loading || registrationSucceeded">
+                <hyt-button type="submit" [isDisabled]="notValid() || loading || registrationSucceeded">
                   <ng-container i18n="@@HYT_registration_button">HYT_registration_button</ng-container>
                 </hyt-button>
               </div> <!-- Container Button -->
