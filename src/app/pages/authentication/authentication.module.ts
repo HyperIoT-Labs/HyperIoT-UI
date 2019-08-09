@@ -11,13 +11,17 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { HytRoutingModule } from 'src/app/configuration-modules/hyt-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
+import { PasswordResetComponent } from './password-reset/password-reset.component';
+import { UserActivationComponent } from './user-activation/user-activation.component';
 
 @NgModule({
   declarations: [
     AuthenticationComponent,
     LoginComponent,
     RegistrationComponent,
-    PasswordRecoveryComponent
+    PasswordRecoveryComponent,
+    PasswordResetComponent,
+    UserActivationComponent
   ],
   imports: [
     BrowserModule,

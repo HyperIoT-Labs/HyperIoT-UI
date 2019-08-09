@@ -20,7 +20,7 @@
     @include box-shadow(0px, 0px, 25px, -1px, #151515);
 
     #column-welcome {
-      background-image: url('https://cdn.xingosoftware.com/elektor/images/fetch/dpr_1/https%3A%2F%2Fwww.elektormagazine.de%2Fassets%2Fupload%2Fimages%2F42%2F20151230172745_Semiconductor-electronics---Thin-Film-Precursors.jpg');
+      background-image: url('../../../../assets/images/registration_bg_600x338.jpg');
       background-position: center center;
       background-repeat: no-repeat;
       background-size: cover;
@@ -103,7 +103,9 @@
               &:-webkit-autofill,
               &:-webkit-autofill:hover, 
               &:-webkit-autofill:focus {
-                -webkit-box-shadow: 0 0 0px 1000px #ffffff inset
+                -webkit-box-shadow: 0 0 0px 1000px #ffffff inset;
+                -moz-box-shadow: 0 0 0px 1000px #ffffff inset;
+                box-shadow: 0 0 0px 1000px #ffffff inset;
               }
               
             }
@@ -118,13 +120,26 @@
                 span.mat-checkbox-label {
                   font-size: .78em;
                   font-family: "Exo";
+                  a {
+                    color: #0d416d;
+                    text-decoration: underline;
+
+                    &:hover {
+                      color: #105f99;
+                    }
+
+                  }
                 }
               }
             }
 
             hyt-button {
+
               &#submit-btn {
+
                 button {
+                  width: 120px;
+                  margin-top: 20px;
                   text-transform: uppercase;
                   font-size: 1.1em;
                   background-color: #0d416d;
@@ -135,26 +150,35 @@
                   -moz-transition: background-color 0.3s;
                   -o-transition: background-color 0.3s;
                   transition: background-color 0.3s;
+                  font-family: "Exo";
 
                   &:hover {
                     background-color: #105f99;
                   }
+
+                  &:disabled {
+                    background-color: #bcbcbc;
+                    cursor: not-allowed;
+                  }
+
                 }
+
               }
+
             }
 
             mat-error {
               font-family: "Exo";
             }
 
-            hyt-button#submit-btn {
-              margin-top: 20px;
+            // hyt-button#submit-btn {
+            //   margin-top: 20px;
 
-              button {
-                font-family: "Exo";
-                text-transform: uppercase;
-              }
-            }
+            //   button {
+            //     font-family: "Exo";
+            //     text-transform: uppercase;
+            //   }
+            // }
 
             &.errorMessage {
               color: red;

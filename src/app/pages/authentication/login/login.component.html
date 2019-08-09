@@ -35,7 +35,7 @@
 
               </div> <!-- Field Username -->
 
-              <div class="container-form-field">
+              <div id="container-password-field" class="container-form-field">
 
                 <hyt-input-text [form]="loginForm" formControlName="password" name="password" class="login"
                   type="password" [isRequired]="true" i18n-placeholder="@@HYT_password" placeholder="HYT_password"
@@ -46,7 +46,7 @@
 
               <div id="forgot-container" class="container-form-field">
 
-                <a routerLink="/auth/passwordRecovery">Forgot Password?</a>
+                <a routerLink="/auth/password-recovery">Forgot Password?</a>
 
               </div> <!-- Container Forgot Password -->
 
@@ -63,13 +63,13 @@
               </div> <!-- Error Box -->
 
               <div class="container-form-field">
-                <hyt-button id="submit-btn" type="submit" [isDisabled]="notValid() || loading">
+                <hyt-button id="submit-btn" [ngClass]="{'submit-valid-form' : !notValid() }" type="submit" [isDisabled]="notValid() || loading">
                   Login
                 </hyt-button>
               </div> <!-- Container Button -->
 
             </form> <!-- End Form -->
-
+            
           </div>
 
         </div> <!-- End Row Registration Form -->

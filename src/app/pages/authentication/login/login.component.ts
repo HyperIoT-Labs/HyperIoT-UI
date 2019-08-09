@@ -48,22 +48,6 @@ export class LoginComponent implements OnInit {
 
     this.returnUrl = window.history.state.returnUrl || '/';
 
-    // if (this.cookieService.check('hytUser')) {
-    //   this.decrypting(this.cookieService.get('hytUser'), this.key)
-
-    //   this.loginForm = new FormGroup({
-    //     username: new FormControl(this.decrypted.toString(CryptoJS.enc.Utf8).split("&")[0], Validators.required),
-    //     password: new FormControl(this.decrypted.toString(CryptoJS.enc.Utf8).split("&")[1], Validators.required),
-    //     rememberMe: new FormControl(true, Validators.required)
-    //   });
-    // } else {
-    //   this.loginForm = new FormGroup({
-    //     username: new FormControl('', Validators.required),
-    //     password: new FormControl('', Validators.required),
-    //     rememberMe: new FormControl(false, Validators.required)
-    //   });
-    // }
-
   }
 
   login() {

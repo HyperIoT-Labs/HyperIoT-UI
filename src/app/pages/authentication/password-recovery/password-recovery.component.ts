@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { SubmissionStatus } from '../models/pageStatus';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HusersService } from '@hyperiot/core';
@@ -8,7 +8,8 @@ import { Handler } from 'src/app/services/models/models';
 @Component({
   selector: 'hyt-password-recovery',
   templateUrl: './password-recovery.component.html',
-  styleUrls: ['./password-recovery.component.scss']
+  styleUrls: ['./password-recovery.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class PasswordRecoveryComponent implements OnInit {
 

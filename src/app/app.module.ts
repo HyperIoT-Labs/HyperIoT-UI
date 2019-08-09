@@ -11,8 +11,6 @@ import { CookieService } from 'ngx-cookie-service';
 import { HytRoutingModule } from './configuration-modules/hyt-routing.module';
 import { CustomMaterialModule } from './configuration-modules/custom-material.module';
 import { AuthenticationModule } from './pages/authentication/authentication.module';
-import { PasswordResetModule } from './pages/password-reset/password-reset.module';
-import { UserActivationModule } from './pages/user-activation/user-activation.module';
 
 //components
 import { AppComponent } from './app.component';
@@ -43,8 +41,6 @@ export function apiConfigFactory(): Configuration {
     DashboardModule,
     HytRoutingModule,
     AuthenticationModule,
-    PasswordResetModule,
-    UserActivationModule,
     HyperiotClientModule.forRoot(apiConfigFactory)
   ],
   providers: [

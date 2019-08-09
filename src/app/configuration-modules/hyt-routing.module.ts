@@ -1,8 +1,8 @@
 import { NgModule, Injectable } from '@angular/core';
 import { Routes, RouterModule, CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { AuthenticationComponent } from '../pages/authentication/authentication.component';
-import { PasswordResetComponent } from '../pages/password-reset/password-reset.component';
-import { UserActivationComponent } from '../pages/user-activation/user-activation.component';
+import { PasswordResetComponent } from '../pages/authentication/password-reset/password-reset.component';
+import { UserActivationComponent } from '../pages/authentication/user-activation/user-activation.component';
 import { Observable } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import { DashboardViewComponent } from '../pages/dashboard/dashboard-view/dashboard-view.component';
@@ -53,24 +53,24 @@ const hyperiotRoutes: Routes = [
         component: RegistrationComponent
       },
       {
-        path: 'passwordRecovery',
+        path: 'password-recovery',
         component: PasswordRecoveryComponent
+      },
+      {
+        path: 'password-reset/:email/:code',
+        component: PasswordResetComponent,
+        data: {
+          showToolBar: false,
+        }
+      },
+      {
+        path: 'activation/:email/:code',
+        component: UserActivationComponent,
+        data: {
+          showToolBar: false,
+        }
       }
     ],
-    data: {
-      showToolBar: false,
-    }
-  },
-  {
-    path: 'activation/:email/:code',
-    component: UserActivationComponent,
-    data: {
-      showToolBar: false,
-    }
-  },
-  {
-    path: 'passwordReset/:email/:code',
-    component: PasswordResetComponent,
     data: {
       showToolBar: false,
     }

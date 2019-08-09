@@ -34,8 +34,8 @@ export class UserActivationComponent implements OnInit {
 
   activate() {
     this.hUserService.activate(this.email, this.code).subscribe(
-      res => this.status = "SUCCESSO",
-      err => this.status = "ERRORE"
+      res => this.status = "SUCCESS",
+      err => this.status = "ERROR"
     )
   }
 
