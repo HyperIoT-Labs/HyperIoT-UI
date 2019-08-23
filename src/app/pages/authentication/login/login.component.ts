@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { AuthenticationService, JWTLoginResponse } from '@hyperiot/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';

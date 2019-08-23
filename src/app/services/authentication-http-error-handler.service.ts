@@ -69,8 +69,6 @@ export class AuthenticationHttpErrorHandlerService extends HttpErrorHandlerServi
   }
 
   handleLogin(httpError: HttpErrorResponse): Handler[] {
-    console.log(httpError)
-    console.log(httpError.status)
     switch (httpError.status) {
       case 401: {
         return [{
@@ -103,7 +101,31 @@ export class AuthenticationHttpErrorHandlerService extends HttpErrorHandlerServi
   }
 
   handlePwdRecovery(httpError: HttpErrorResponse): Handler[] {
-    console.log(httpError)
+    switch (httpError.status) {
+      case 500: {
+        return [{
+          message: this.i18n('HYT_server_error_500'),
+          container: RegisterField.general
+        }]
+        break;
+      }
+      case 504: {
+        return [{
+          message: this.i18n('HYT_offline_504'),
+          container: RegisterField.general
+        }]
+        break;
+      }
+      default: {
+        return [{
+          message: this.i18n('HYT_unknown_error'),
+          container: RegisterField.general
+        }]
+      }
+    }
+  }
+
+  handlePwdReset(httpError: HttpErrorResponse): Handler[] {
     switch (httpError.status) {
       case 500: {
         return [{

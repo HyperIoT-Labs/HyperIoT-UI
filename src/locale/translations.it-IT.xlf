@@ -194,6 +194,161 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+
+
+      <trans-unit id="widgetsToolbar-title-play" datatype="html">
+        <source>Play</source>
+        <target>Riprendi</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">project/widgets/src/lib/common-toolbar/common-toolbar.component.html</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="widgetsToolbar-title-pause" datatype="html">
+        <source>Pause</source>
+        <target>Pausa</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">project/widgets/src/lib/common-toolbar/common-toolbar.component.html</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="widgetsToolbar-title-chartview" datatype="html">
+        <source>Chart View</source>
+        <target>Vista Grafico</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">project/widgets/src/lib/common-toolbar/common-toolbar.component.html</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="widgetsToolbar-title-tableview" datatype="html">
+        <source>Table View</source>
+        <target>Vista Tabella</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">project/widgets/src/lib/common-toolbar/common-toolbar.component.html</context>
+        </context-group>
+      </trans-unit>
+
+      <trans-unit id="widgetsToolbar-title-settings" datatype="html">
+        <source>Settings</source>
+        <target>Impostazioni</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">project/widgets/src/lib/common-toolbar/common-toolbar.component.html</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="widgetsToolbar-title-refresh" datatype="html">
+        <source>Refresh</source>
+        <target>Aggiorna</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">project/widgets/src/lib/common-toolbar/common-toolbar.component.html</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="widgetsToolbar-title-close" datatype="html">
+        <source>Close</source>
+        <target>Chiudi</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">project/widgets/src/lib/common-toolbar/common-toolbar.component.html</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="widgetsToolbar-title-move" datatype="html">
+        <source>Move</source>
+        <target>Sposta</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">project/widgets/src/lib/common-toolbar/common-toolbar.component.html</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="widgetsCommon-msg-notconfigured" datatype="html">
+        <source>Click 'Settings' button to configure.</source>
+        <target>Premi il pulsante 'Impostazioni' per configurare il widget.</target>
+      </trans-unit>
+      <!-- HyperIoT-widgets test application -->
+      <trans-unit id="addWidgetDialog-header" datatype="html">
+        <source>Add Widget</source>
+        <target>Aggiungi Widget</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/dashboard/add-widget-dialog/add-widget-dialog.component.html</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="addWidgetDialog-btn-add" datatype="html">
+        <source>Add</source>
+        <target>Aggiungi</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/dashboard/add-widget-dialog/add-widget-dialog.component.html</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="addWidgetDialog-btn-cancel" datatype="html">
+        <source>Cancel</source>
+        <target>Annulla</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/dashboard/add-widget-dialog/add-widget-dialog.component.html</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="dashboardButtonSave" datatype="html">
+        <source>Save</source>
+        <target>Salva</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/dashboard/dashboard-view/dashboard-view.component.html</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="widgetSettingsDialog-header" datatype="html">
+        <source>Widget Settings</source>
+        <target>Impostazioni Widget</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/dashboard/widget-settings-dialog/widget-settings-dialog.component.html</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="widgetSettingsDialog-lbl-name" datatype="html">
+        <source>Name</source>
+        <target>Nome</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/dashboard/widget-settings-dialog/widget-settings-dialog.component.html</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="widgetSettingsDialog-lbl-type" datatype="html">
+        <source>Type</source>
+        <target>Tipo</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/dashboard/widget-settings-dialog/widget-settings-dialog.component.html</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="widgetSettingsDialog-btn-apply" datatype="html">
+        <source>Apply</source>
+        <target>Applica</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/dashboard/widget-settings-dialog/widget-settings-dialog.component.html</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="widgetSettingsDialog-btn-cancel" datatype="html">
+        <source>Cancel</source>
+        <target>Annulla</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/dashboard/widget-settings-dialog/widget-settings-dialog.component.html</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="widgetSettingsDialog/packet-lbl-type" datatype="html">
+        <source>Select packet</source>
+        <target>Seleziona pacchetto</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/dashboard/widget-settings-dialog/packet-select/packet-select.component.html</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="widgetSettingsDialog/packet-lbl-fields" datatype="html">
+        <source>Select {multiPacketSelect?1:0, plural, =0 {field} other {fields}}</source>
+        <target>Seleziona {multiPacketSelect?1:0, plural, =0 {campo} other {campi}}</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/dashboard/widget-settings-dialog/packet-select/packet-select.component.html</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="widgetSettingsDialog/timechart-lbl-series" datatype="html">
+        <source>Series title</source>
+        <target>Titolo serie</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/dashboard/widget-settings-dialog/time-chart-settings/time-chart-settings.component.html</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="widgetSettingsDialog/statschart-lbl-series" datatype="html">
+        <source>Series title</source>
+        <target>Titolo serie</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/dashboard/widget-settings-dialog/stats-chart-settings/stats-chart-settings.component.html</context>
+        </context-group>
+      </trans-unit>
     </body>
   </file>
 </xliff>

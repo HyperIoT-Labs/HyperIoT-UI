@@ -1,8 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { HusersService, HUser } from '@hyperiot/core';
 import { AuthenticationHttpErrorHandlerService } from 'src/app/services/authentication-http-error-handler.service';
-import { Handler } from 'src/app/services/models/models';
 
 @Component({
   selector: 'hyt-registration',
@@ -54,7 +53,8 @@ export class RegistrationComponent implements OnInit {
       username: this.registrationForm.value.username,
       email: this.registrationForm.value.email,
       password: this.registrationForm.value.password,
-      passwordConfirm: this.registrationForm.value.confPassword
+      passwordConfirm: this.registrationForm.value.confPassword,
+      entityVersion: 1
     }
 
     this.hUserService.register(user).subscribe(
@@ -64,7 +64,6 @@ export class RegistrationComponent implements OnInit {
       },
       err => {
         let k: Map<string, string> = this.httperrorHandler.handleRegistration(err);
-        console.log(k)
         for (let e of k) {
           if (e[0] == 'general') {
             this.error = e[1]

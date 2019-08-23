@@ -1,4 +1,10 @@
-<strong>Series title</strong><br>
-<input type="text" [(ngModel)]="seriesTitle">
+<hyt-packet-select [widget]="widget" [multiPacketSelect]="true" [selectedFields]="selectedFields"
+  (selectedFieldsChange)="onSelectedFieldsChange($event)"></hyt-packet-select>
+<!--
+<div *ngFor="let field of selectedFields">{{field.name}}</div>
+-->
+<!-- Plotly chart specific options -->
 
-<hyt-packet-select [widget]="widget"></hyt-packet-select>
+<div class="padding-6 d-flex flex-column justify-content-stretch">
+  <!-- not yet implemented -->
+</div>

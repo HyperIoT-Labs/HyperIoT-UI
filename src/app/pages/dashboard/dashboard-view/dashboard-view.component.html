@@ -1,5 +1,5 @@
 <div>
-  <button (click)="saveDashboard()" [disabled]="dashboardLayout.isDirty()">Save</button>
+  <button (click)="saveDashboard()" [disabled]="dashboardLayout.isDirty()" i18n="@@dashboardButtonSave">Save</button>
   <button [routerLink]="[{outlets: { modal: [ 'widgets' ] }}]">Add widget</button>
 </div>
 

@@ -14,8 +14,8 @@ export class DashboardsListComponent implements OnInit {
 
   ngOnInit() {
     this.configService
-      .getDashboardList()
-      .subscribe((list) => this.dashboardList = list);
+        .getDashboardList()
+        .subscribe((list) => this.dashboardList = list);
   }
 
 }

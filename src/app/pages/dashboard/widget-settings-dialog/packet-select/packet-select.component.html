@@ -1,26 +1,36 @@
-<ng-container *ngIf="widget.config">
-    <p>Packet id {{ widget.config.packetId }}</p>
+<div class="padding-6 d-flex flex-column justify-content-stretch">
 
-    <div *ngIf="widget.config.packetFields">
-        <ul>
-            <li *ngFor="let field of widget.config.packetFields">{{ field }}</li>
-        </ul>
+  <ng-container *ngIf="widget.config">
+
+    <div class="d-flex flex-column">
+      <label for="packet-select" [ngClass]="{'error-color': selectedPacket == null}"
+        i18n="@@widgetSettingsDialog/packet-lbl-type">Select packet</label>
+      <select size="5" [(ngModel)]="selectedPacket" [compareWith]="packetCompare" (ngModelChange)="onPacketChange()"
+        name="packet-select" id="packet-select" required>
+        <option *ngFor="let packet of projectPackets" [ngValue]="packet" selected>
+          {{packet.name}}
+          ({{packet.id}})
+        </option>
+      </select>
     </div>
 
-    <p>Select packet</p>
-    <select size="5" [(ngModel)]="selectedPacket" [compareWith]="packetCompare">
-        <option *ngFor="let packet of projectPackets" [ngValue]="packet">
-            {{packet.name}}
-            ({{packet.id}})
-        </option>
-    </select>
+  </ng-container>
 
-</ng-container>
+  <ng-container *ngIf="selectedPacket != null">
 
-
-<ng-container *ngIf="selectedPacket != null">
-    <p>Select fields</p>
-    <select size="5" multiple [(ngModel)]="selectedFields">
+    <div class="d-flex flex-column">
+      <label for="field-select"
+        [ngClass]="{'error-color': selectedFields == null || selectedFields.length === 0 || selectedFields[0] === null}"
+        i18n="@@widgetSettingsDialog/packet-lbl-fields">
+        Select {multiPacketSelect?1:0, plural, =0 {field} other {fields}}
+      </label>
+      <select [size]="multiPacketSelect ? 5 : null" [(ngModel)]="selectedFields" [multiple]="multiPacketSelect"
+        (ngModelChange)="onPacketFieldChange($event)" name="field-select" id="field-select" required minlength="1">
+        <option *ngIf="!multiPacketSelect" [ngValue]="null"></option>
         <option *ngFor="let field of selectedPacket.fields" [ngValue]="field">{{field.name}}</option>
-    </select>
-</ng-container>
+      </select>
+    </div>
+
+  </ng-container>
+
+</div>

@@ -11,10 +11,7 @@ import {
 
 import {
   DataStreamService,
-  DashboardwidgetsService,
-  DashboardWidget,
-  Dashboard,
-  DashboardsService
+  Dashboard
 } from '@hyperiot/core';
 
 import { DashboardConfigService } from '../dashboard-config.service';
@@ -26,7 +23,7 @@ import { DashboardConfigService } from '../dashboard-config.service';
 })
 export class WidgetsLayoutComponent implements OnInit, OnDestroy {
   @Input() options: GridsterConfig;
-  @Input() dashboardId: string;
+  @Input() dashboardId: number | string;
 
   dashboard: Array<GridsterItem>;
   dashboardEntity: Dashboard;
@@ -42,8 +39,6 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
   constructor(
     private dataStreamService: DataStreamService,
     private configService: DashboardConfigService,
-    private dashboardService: DashboardsService,
-    private dashboardWidgetService: DashboardwidgetsService,
     private router: Router
   ) { }
 
@@ -77,11 +72,12 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
       }
     };
     this.dashboard = [];
-    this.dashboardService.findDashboard(+this.dashboardId)
+    this.configService.getDashboard(+this.dashboardId)
       .subscribe((d) => this.dashboardEntity = d);
     this.configService.getConfig(this.dashboardId).subscribe((dashboardConfig: Array<GridsterItem>) => {
       this.dashboard = dashboardConfig;
       this.originalDashboard = JSON.parse(JSON.stringify(dashboardConfig));
+      console.log(this.dashboard);
     });
     // TODO: the connection should happen somewhere else in the main page
     this.dataStreamService.connect();
@@ -115,12 +111,12 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
         this.router.navigate([
           'dashboards',
           this.dashboardId,
-          { outlets: { modal: ['settings', data.widget.id] } }
+          {outlets: { modal: [ 'settings', data.widget.id ] }}
         ]).then((e) => {
           if (e) {
-            console.log('Navigation is successful!');
+            //console.log('Navigation is successful!');
           } else {
-            console.log('Navigation has failed!');
+            //console.log('Navigation has failed!');
           }
         });
         break;
@@ -150,36 +146,33 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
   }
 
   removeItem(item) {
-    this.dashboard.splice(this.dashboard.indexOf(item), 1);
     if (item.id > 0) {
-      this.dashboardWidgetService.deleteDashboardWidget(item.id)
-        .subscribe();
+      this.configService
+        .removeDashboardWidget(item.id)
+        .subscribe(() => {
+          // TODO: handle errors
+          this.dashboard.splice(this.dashboard.indexOf(item), 1);
+        });
     }
   }
 
-  addItem(widget) {
-    const count = widget.count;
-    delete widget.count;
-    for (let c = 0; c < count; c++) {
-      this.dashboard.push(widget);
-      const dashboardWidget: DashboardWidget = {
-        widgetId: widget.widgetId,
-        widgetConf: JSON.stringify(widget),
-        dashboard: { id: +this.dashboardId }
-      };
-      this.dashboardWidgetService.saveDashboardWidget(dashboardWidget)
+  addItem(widgetTemplate) {
+    for (let c = 0; c < widgetTemplate.count; c++) {
+      const widget = JSON.parse(JSON.stringify(widgetTemplate));
+      delete widget.count;
+      this.configService
+        .addDashboardWidget(+this.dashboardId, widget)
         .subscribe((w) => {
-          // update new widget id
-          widget.id = w.id;
-          widget.widgetId = `widget-${w.id}`;
+          // TODO: handle errors
+          // widget saved (should have a new id)
+          this.dashboard.push(widget);
         });
     }
   }
 
   saveDashboard() {
-    this.configService.putConfig(this.dashboardId, this.dashboard)
+    this.configService.putConfig(+this.dashboardId, this.dashboard)
       .subscribe((res) => {
-        console.log('saveDashboard output', res);
         if (res && res.status_code === 200) {
           this.originalDashboard = this.dashboard;
         }

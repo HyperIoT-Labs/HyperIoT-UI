@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { HusersService } from '@hyperiot/core';
 import { ActivatedRoute } from '@angular/router';
+import { SubmissionStatus } from '../models/pageStatus';
 
 @Component({
   selector: 'app-user-activation',
@@ -9,6 +10,8 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./user-activation.component.scss']
 })
 export class UserActivationComponent implements OnInit {
+
+  submissionStatus: SubmissionStatus = SubmissionStatus.Default;
 
   email: string;
   code: string;
@@ -34,8 +37,8 @@ export class UserActivationComponent implements OnInit {
 
   activate() {
     this.hUserService.activate(this.email, this.code).subscribe(
-      res => this.status = "SUCCESS",
-      err => this.status = "ERROR"
+      res => { this.submissionStatus = SubmissionStatus.Submitted; },
+      err => { this.submissionStatus = SubmissionStatus.Error; }
     )
   }
 

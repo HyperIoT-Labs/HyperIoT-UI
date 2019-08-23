@@ -27,6 +27,7 @@
     height: var(--header-height);
     line-height: var(--header-height);
     vertical-align: middle;
+    font-family: serif;
     font-size: 22px;
     font-weight: 800;
     text-transform: uppercase;
@@ -53,7 +54,7 @@
 
 .dialog .button-close, .dialog .button-confirm {
     float: right;
-    margin-top: 4px;
+    margin-top: 1px;
     margin-right: 10px;
 }
 

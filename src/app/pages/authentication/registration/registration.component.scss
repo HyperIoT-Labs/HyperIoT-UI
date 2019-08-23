@@ -20,7 +20,7 @@
     @include box-shadow(0px, 0px, 25px, -1px, #151515);
 
     #column-welcome {
-      background-image: url('../../../../assets/images/registration_bg_600x338.jpg');
+      background-image: url('../../../../assets/images/compressed/registration_bg_600x338-min.jpg');
       background-position: center center;
       background-repeat: no-repeat;
       background-size: cover;
@@ -101,13 +101,13 @@
               }
 
               &:-webkit-autofill,
-              &:-webkit-autofill:hover, 
+              &:-webkit-autofill:hover,
               &:-webkit-autofill:focus {
                 -webkit-box-shadow: 0 0 0px 1000px #ffffff inset;
                 -moz-box-shadow: 0 0 0px 1000px #ffffff inset;
                 box-shadow: 0 0 0px 1000px #ffffff inset;
               }
-              
+
             }
 
             label {
@@ -120,6 +120,7 @@
                 span.mat-checkbox-label {
                   font-size: .78em;
                   font-family: "Exo";
+
                   a {
                     color: #0d416d;
                     text-decoration: underline;
@@ -185,7 +186,9 @@
               text-align: center;
             }
 
-          } /* End Container Form Field */
+          }
+
+          /* End Container Form Field */
 
         }
       }

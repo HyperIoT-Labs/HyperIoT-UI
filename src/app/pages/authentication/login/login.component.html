@@ -1,5 +1,10 @@
 <!-- LOGIN FORM BLOCK -->
 <div id="container-login">
+
+  <div class="preload" style="display: none">
+    <img src="../../../../assets/images/compressed/login_bg_600x400-min.jpg" />
+  </div>
+
   <div class="container" id="box-login">
 
     <div class="row">
@@ -63,13 +68,14 @@
               </div> <!-- Error Box -->
 
               <div class="container-form-field">
-                <hyt-button id="submit-btn" [ngClass]="{'submit-valid-form' : !notValid() }" type="submit" [isDisabled]="notValid() || loading">
+                <hyt-button id="submit-btn" [ngClass]="{'submit-valid-form' : !notValid() }" type="submit"
+                  [isDisabled]="notValid() || loading">
                   Login
                 </hyt-button>
               </div> <!-- Container Button -->
 
             </form> <!-- End Form -->
-            
+
           </div>
 
         </div> <!-- End Row Registration Form -->

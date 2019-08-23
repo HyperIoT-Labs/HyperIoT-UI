@@ -12,11 +12,7 @@ import { WidgetSettingsDialogComponent } from '../widget-settings-dialog/widget-
 })
 export class DashboardViewComponent implements OnInit {
   @ViewChild(WidgetsLayoutComponent, { static: true })
-
-  //private
   dashboardLayout: WidgetsLayoutComponent;
-
-  //private
   dashboardId: string;
 
   constructor(
@@ -43,7 +39,6 @@ export class DashboardViewComponent implements OnInit {
 
   onWidgetsAdd(widgetList: any[]) {
     widgetList.map((widget) => {
-      console.log(widget);
       this.dashboardLayout.addItem(widget);
     });
   }

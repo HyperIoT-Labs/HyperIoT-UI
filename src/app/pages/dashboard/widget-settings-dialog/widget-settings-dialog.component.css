@@ -3,30 +3,22 @@
     top: 0; left: 0; bottom: 0; right: 0;
     background-color: rgba(0,0,0,0.5);
     z-index: 100;
+    display: flex;
+    justify-content: center;
     /* variables */
-    --header-height: 32px;
-    --footer-height: 32px;
-    --category-list-width: 120px;
     --header-color: rgba(50, 50, 50, 0.1);
 }
 
 .dialog {
-    position: absolute;
+    max-height: 100vh;
     overflow: hidden; 
-    top: 48px; bottom: 48px;
-    left: 48px; right: 48px;
     background: white;
     border: solid 1px rgba(0, 0, 0, 0.1);
-    padding-top: var(--header-height);
     box-shadow: 0 0 5px 2px rgba(0,0,0,.35);
 }
 
 .dialog header {
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: var(--header-height);
-    line-height: var(--header-height);
-    vertical-align: middle;
+    font-family: serif;
     font-size: 22px;
     font-weight: 800;
     text-transform: uppercase;
@@ -36,35 +28,21 @@
 }
 
 .dialog footer {
-    position: absolute;
-    left: 0; right:0; bottom: 0;
-    height: var(--footer-height);
     background-color: var(--header-color);
     border-top: 1px solid rgba(0,0,0,0.1);
-}
-.dialog footer div.selected-status {
-    position: absolute;
-    height: var(--footer-height);
-    line-height: var(--footer-height);
-    vertical-align: middle;
-    margin-left: 10px;
-    font-weight: 600;
+    padding: 6px;
 }
 
 .dialog .button-close, .dialog .button-confirm {
-    float: right;
-    margin-top: 4px;
-    margin-right: 10px;
+    margin-left:6px;
 }
 
 .content {
-    position: absolute;
-    left: 0; top: var(--header-height);
-    bottom: var(--footer-height);
-    width: 100%;
     overflow-y: auto;
+    padding-bottom: 12px;
 }
 
 .common-settings,.custom-settings {
-    padding: 24px;
+    padding-left: 12px;
+    padding-right: 12px; 
 }

@@ -1,5 +1,5 @@
 export enum SubmissionStatus {
-    Default,
-    Submitted,
-    Error
+    Default = 0,
+    Submitted = 1,
+    Error = -1
 }

@@ -5,23 +5,27 @@ import {
   Output,
   EventEmitter,
   ElementRef,
-  OnDestroy
+  OnDestroy,
+  ViewChild,
+  HostListener
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Subject } from 'rxjs';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'hyt-widget-settings-dialog',
   templateUrl: './widget-settings-dialog.component.html',
   styleUrls: ['./widget-settings-dialog.component.css']
 })
-export class WidgetSettingsDialogComponent implements OnInit, OnDestroy {
+export class WidgetSettingsDialogComponent implements OnInit {
   @Output() modalClose: EventEmitter<any> = new EventEmitter<any>();
   modalApply: Subject<any> = new Subject();
   @Input() widget;
   @Input() widgetName;
   private widgetId: string;
+  @ViewChild(NgForm, { static: true }) settingsForm: NgForm;
 
   constructor(
     private viewContainer: ElementRef,
@@ -31,15 +35,14 @@ export class WidgetSettingsDialogComponent implements OnInit, OnDestroy {
     this.widgetId = this.activatedRoute.snapshot.paramMap.get('widgetId');
   }
 
-  ngOnInit() {
-    this.viewContainer.nativeElement
-      .addEventListener('click', this.dismiss.bind(this));
-    this.open();
+  @HostListener('document:keydown.escape', ['$event']) onKeydownHandler(event: KeyboardEvent) {
+    if (event.key.toUpperCase() === 'ESCAPE') {
+      this.close(event);
+    }
   }
 
-  ngOnDestroy() {
-    this.viewContainer.nativeElement
-      .removeEventListener('click', this.dismiss.bind(this));
+  ngOnInit() {
+    this.open();
   }
 
   getWidgetId() {
@@ -72,7 +75,7 @@ export class WidgetSettingsDialogComponent implements OnInit, OnDestroy {
     // TODO: init stuff goes here
   }
 
-  close($event) {
+  close($event?) {
     this.router.navigate(
       ['../', { outlets: { modal: null } }],
       { relativeTo: this.activatedRoute }

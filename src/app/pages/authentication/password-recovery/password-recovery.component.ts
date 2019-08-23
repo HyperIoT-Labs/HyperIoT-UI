@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { SubmissionStatus } from '../models/pageStatus';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { HusersService } from '@hyperiot/core';
 import { AuthenticationHttpErrorHandlerService } from 'src/app/services/authentication-http-error-handler.service';
 import { Handler } from 'src/app/services/models/models';
@@ -13,17 +13,19 @@ import { Handler } from 'src/app/services/models/models';
 })
 export class PasswordRecoveryComponent implements OnInit {
 
-  error: string[] = [null]
+  error: string = null;
 
   submissionStatus: SubmissionStatus = SubmissionStatus.Default;
 
-  recoverMailForm = new FormGroup({
-    email: new FormControl('', [])
-  });
+  recoverMailForm: FormGroup;
 
-  constructor(private hUserService: HusersService, private httperrorHandler: AuthenticationHttpErrorHandlerService) { }
+  constructor(private hUserService: HusersService,
+    private httperrorHandler: AuthenticationHttpErrorHandlerService,
+    private fb: FormBuilder,
+  ) { }
 
   ngOnInit() {
+    this.recoverMailForm = this.fb.group({});
   }
 
   recoveryRequest() {
@@ -33,12 +35,15 @@ export class PasswordRecoveryComponent implements OnInit {
       err => {
         let k: Handler[] = this.httperrorHandler.handlePwdRecovery(err);
         for (let e of k) {
-          this.error[0] = e.message;
+          this.error = e.message;
         }
-        console.log(this.error)
         this.submissionStatus = SubmissionStatus.Error;
       }
     )
+  }
+
+  notValid(): boolean {
+    return this.recoverMailForm.get('email').invalid;
   }
 
 }

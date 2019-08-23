@@ -1,7 +1,10 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { HusersService, HUserPasswordReset } from '@hyperiot/core';
 import { ActivatedRoute } from '@angular/router';
+import { Handler } from 'src/app/services/models/models';
+import { AuthenticationHttpErrorHandlerService } from 'src/app/services/authentication-http-error-handler.service';
+import { SubmissionStatus } from '../models/pageStatus';
 
 @Component({
   selector: 'app-password-reset',
@@ -14,24 +17,32 @@ export class PasswordResetComponent implements OnInit {
   email: string;
   code: string;
 
-  recoverPassForm = new FormGroup({});
+  recoverPassForm: FormGroup;
 
-  status: string = '';
+  error: string = null;
 
-  constructor(private route: ActivatedRoute, private hUserService: HusersService) { }
+  submissionStatus: SubmissionStatus = SubmissionStatus.Default;
+
+  constructor(
+    private route: ActivatedRoute,
+    private hUserService: HusersService,
+    private httperrorHandler: AuthenticationHttpErrorHandlerService
+  ) { }
 
   ngOnInit() {
+
+    this.recoverPassForm = new FormGroup({});
+
     this.route.paramMap.subscribe(
       (p) => {
         this.email = p.get('email');
         this.code = p.get('code');
       }
     )
-  
+
   }
 
   resetPwd() {
-    console.log(this.email)
 
     var pwdReset: HUserPasswordReset = {
       password: this.recoverPassForm.value.password,
@@ -43,9 +54,20 @@ export class PasswordResetComponent implements OnInit {
     console.log(pwdReset)
 
     this.hUserService.resetPassword(pwdReset).subscribe(
-      res => this.status = 'SUCCESS',
-      err => this.status = 'ERROR'
+      res => { this.submissionStatus = SubmissionStatus.Submitted },
+      err => {
+        let k: Handler[] = this.httperrorHandler.handlePwdRecovery(err);
+        for (let e of k) {
+          this.error = e.message;
+        }
+        this.submissionStatus = SubmissionStatus.Error;
+      }
+
     )
+  }
+
+  notValid(): boolean {
+    return this.recoverPassForm.get('email').invalid;
   }
 
 }

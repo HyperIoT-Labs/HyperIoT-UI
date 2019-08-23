@@ -1,6 +1,6 @@
 <div class="dialog">
 
-    <header>Add widget</header>
+    <header i18n="@@addWidgetDialog-header">Add Widget</header>
 
     <div class="category-list">
 
@@ -34,9 +34,13 @@
 
     <footer>
         <button class="button-close"
-            (click)="close()">Cancel &#10006;</button>
+            (click)="close()">
+            <span i18n="@@addWidgetDialog-btn-cancel">Cancel</span> &#10006;
+        </button>
         <button [disabled]="selectedWidgets.length === 0" class="button-confirm"
-            (click)="confirm()">Add &#10010;</button>
+            (click)="confirm()">
+            <span i18n="@@addWidgetDialog-btn-add">Add</span> &#10010;
+        </button>
     </footer>
 
 </div>

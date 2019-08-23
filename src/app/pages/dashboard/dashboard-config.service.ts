@@ -8,6 +8,7 @@ import {
     DashboardsService,
     DashboardWidget
 } from '@hyperiot/core';
+import { Subject } from 'rxjs';
 
 @Injectable()
 export class DashboardConfigService {
@@ -26,7 +27,35 @@ export class DashboardConfigService {
         return this.dashboardService.findAllDashboard();
     }
 
-    getConfig(dashboardId: string) {
+    getDashboard(dashboardId: number) {
+        return this.dashboardService.findDashboard(dashboardId);
+    }
+
+    addDashboardWidget(dashboardId: number, widget: any) {
+        // creates a copy of widget object and
+        // remove redundant properties
+        delete widget.id;
+        const dashboardWidget: DashboardWidget = {
+            dashboard: { id: dashboardId, entityVersion: null },
+            widgetConf: JSON.stringify(widget),
+            entityVersion: null
+        };
+        const subject = new Subject();
+        this.dashboardWidgetService.saveDashboardWidget(dashboardWidget)
+            .subscribe((w: DashboardWidget) => {
+                // update new widget id
+                widget.id = w.id;
+                widget.entityVersion = w.entityVersion;
+                subject.next(widget);
+                subject.unsubscribe();
+            });
+        return subject;
+    }
+    removeDashboardWidget(widgetId: number) {
+        return this.dashboardWidgetService.deleteDashboardWidget(widgetId);
+    }
+
+    getConfig(dashboardId: number | string) {
         if (dashboardId === 'demo') {
             return this.getTestConfig();
         }
@@ -40,7 +69,7 @@ export class DashboardConfigService {
                         data.map((w: DashboardWidget) => {
                             const widget = JSON.parse(w.widgetConf);
                             widget.id = w.id;
-                            widget.widgetId = `widget-${w.id}`;
+                            widget.entityVersion = w.entityVersion;
                             config.push(widget);
                         });
                         return config;
@@ -53,28 +82,28 @@ export class DashboardConfigService {
     getTestConfig() {
         return this.http.get(this.testConfigUrl);
     }
-    putConfig(dashboardId: string, config: any) {
+    putConfig(dashboardId: number, config: any) {
         const dashboardWidgets: DashboardWidget[] = [];
         // Map Plotly config to HyperIoT-DashboardWidget compatible configuration
-        config.slice().map((d) => {
+        config.slice().map((d: DashboardWidget) => {
             // Create a copy of widget configuration
             const widgetConf: any = {};
             Object.assign(widgetConf, d);
             // Remove properties that are redundant
             // or reserved for internal-use
             delete widgetConf.id;
-            delete widgetConf.widgetId;
             delete widgetConf.instance;
             // Create and populate DashboardWidget entity
             const widget: DashboardWidget = {
                 id: d.id,
-                widgetId: d.widgetId,
-                widgetConf: JSON.stringify(widgetConf)
+                widgetConf: JSON.stringify(widgetConf),
+                entityVersion: d.entityVersion
             };
             // Add it to the list of dashboard widgets
             dashboardWidgets.push(widget);
         });
         // Save the dashboard structure
+        console.log('Saving Dashboard', dashboardId, dashboardWidgets);
         return this.dashboardWidgetService
             .saveAllDashboardWidget(+dashboardId, dashboardWidgets);
     }
