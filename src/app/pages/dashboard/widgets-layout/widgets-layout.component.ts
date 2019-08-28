@@ -161,7 +161,10 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
       this.options.api.optionsChanged();
       */
       // the following is a work around for the above issue (forcing component reload)
-      const currentRouteUrl = this.router.url;
+      let currentRouteUrl = this.router.url;
+      if (currentRouteUrl.indexOf('/(') > 0) {
+        currentRouteUrl = currentRouteUrl.substring(0, currentRouteUrl.indexOf('/('));
+      }
       const parentRouteUrl = currentRouteUrl.substring(0, currentRouteUrl.lastIndexOf('/'));
       this.router.navigateByUrl(
         parentRouteUrl, { skipLocationChange: true }

@@ -3,6 +3,10 @@
         "id": 0,
         "categoryId": 3,
         "name": "Events log",
+        "details": {
+            "description": "This widget shows real time event stream data.",
+            "preview": "/path/to/image/preview"
+        },
         "cols": 2,
         "rows": 2,
         "y": 0,

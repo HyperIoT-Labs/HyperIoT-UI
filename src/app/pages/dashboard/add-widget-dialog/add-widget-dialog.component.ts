@@ -24,6 +24,7 @@ export class AddWidgetDialogComponent implements OnInit {
   selectedWidgets: { id: number, name: string }[] = [];
   selectedCategory = null;
   widgetAddMax = 10;
+  currentWidget;
 
   constructor(
     private viewContainer: ElementRef,
@@ -114,5 +115,9 @@ export class AddWidgetDialogComponent implements OnInit {
     this.categorydWidgets = this.widgetList.filter((w) => {
       return w.categoryId === category.id;
     });
+  }
+
+  onWidgetClick(widget: any) {
+    console.log(widget);
   }
 }

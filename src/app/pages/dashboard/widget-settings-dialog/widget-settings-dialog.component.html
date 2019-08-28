@@ -57,12 +57,14 @@
     </form>
 
     <footer class="d-flex flex-row align-items-center justify-content-end">
-        <button class="button-confirm" (click)="confirm($event)" [disabled]="settingsForm.invalid">
-            <span i18n="@@widgetSettingsDialog-btn-apply">Apply</span> &#10004;
-        </button>
-        <button class="button-close" (click)="close($event)">
-            <span i18n="@@widgetSettingsDialog-btn-cancel">Cancel</span> &#10006;
-        </button>
+        <hyt-button class="button-confirm" (clickFn)="confirm($event)" [disabled]="settingsForm.invalid">
+            <mat-icon>check</mat-icon>
+            <span i18n="@@widgetSettingsDialog-btn-apply">Apply</span>
+        </hyt-button>
+        <hyt-button class="button-close" (clickFn)="close($event)">
+            <mat-icon>close</mat-icon>
+            <span i18n="@@widgetSettingsDialog-btn-cancel">Cancel</span>
+        </hyt-button>
     </footer>
 
 </div>
