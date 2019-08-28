@@ -2,7 +2,6 @@ import {
   Component,
   OnInit,
   ElementRef,
-  OnDestroy,
   Output,
   EventEmitter,
   HostListener

@@ -3,6 +3,10 @@
     top: 0; left: 0; bottom: 0; right: 0;
     background-color: rgba(0,0,0,0.5);
     z-index: 100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     /* variables */
     --header-height: 32px;
     --footer-height: 32px;
@@ -11,10 +15,10 @@
 }
 
 .dialog {
-    position: absolute;
+    position: relative;
+    width: 100%; height: 600px;
+    max-width: 800px;
     overflow: hidden; 
-    top: 48px; bottom: 48px;
-    left: 48px; right: 48px;
     background: white;
     border: solid 1px rgba(0, 0, 0, 0.1);
     padding-top: var(--header-height);

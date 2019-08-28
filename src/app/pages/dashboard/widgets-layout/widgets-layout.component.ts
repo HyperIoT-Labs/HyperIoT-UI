@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, HostListener, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
 import {
@@ -6,7 +6,8 @@ import {
   GridsterItem,
   GridType,
   DisplayGrid,
-  CompactType
+  CompactType,
+  GridsterComponent
 } from 'angular-gridster2';
 
 import {
@@ -22,6 +23,7 @@ import { DashboardConfigService } from '../dashboard-config.service';
   styleUrls: ['./widgets-layout.component.css']
 })
 export class WidgetsLayoutComponent implements OnInit, OnDestroy {
+  @ViewChild(GridsterComponent, { static: true }) gridster: GridsterComponent;
   @Input() options: GridsterConfig;
   @Input() dashboardId: number | string;
 
@@ -29,6 +31,15 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
   dashboardEntity: Dashboard;
   dragEnabled = true;
   private originalDashboard: Array<GridsterItem>;
+
+  private responsiveBreakPoints = [
+    { breakPoint: 1024, columns: 6},
+    { breakPoint: 880, columns: 5},
+    { breakPoint: 720, columns: 4},
+    { breakPoint: 640, columns: 3},
+    { breakPoint: 480, columns: 2},
+    { breakPoint: 0, columns: 1},
+  ];
 
   /**
    * This is a demo dashboard for testing widgets
@@ -44,19 +55,24 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.options = {
+      gridSizeChangedCallback: this.onGridSizeChanged.bind(this),
       itemChangeCallback: this.onItemChange.bind(this),
       itemResizeCallback: this.onItemResize.bind(this),
-      gridType: GridType.Fit,
+      gridType: GridType.Fixed,
+      setGridSize: true,
       compactType: CompactType.CompactUp,
       displayGrid: DisplayGrid.OnDragAndResize,
-      disableWindowResize: false,
-      scrollToNewItems: false,
+      disableWindowResize: true,
+      disableAutoPositionOnConflict: false,
+      scrollToNewItems: true,
       disableWarnings: true,
       ignoreMarginInRow: false,
-      minCols: 8,
-      maxCols: 8,
-      minRows: 4,
-      maxRows: 100,
+      mobileBreakpoint: 480,
+      keepFixedHeightInMobile: true,
+      keepFixedWidthInMobile: false,
+      minCols: 1, maxCols: 10,
+      minRows: 1,
+      margin: 6,
       draggable: {
         enabled: this.dragEnabled,
         dropOverItems: true,
@@ -65,19 +81,28 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
       },
       swap: false,
       disableScrollHorizontal: true,
-      disableScrollVertical: false,
+      disableScrollVertical: true,
       pushItems: true,
       resizable: {
         enabled: false
       }
     };
+
+    this.options.maxCols = this.getResponsiveColumns();
+    if (this.options.maxCols > 1) {
+      this.options.mobileBreakpoint = 0;
+    }
+    //const cellSize = (availableWidth - (this.options.margin * this.options.maxCols)) / this.options.maxCols;
+    const cellSize = 160;
+    this.options.fixedColWidth = cellSize;
+    this.options.fixedRowHeight = cellSize / 2;
+
     this.dashboard = [];
     this.configService.getDashboard(+this.dashboardId)
       .subscribe((d) => this.dashboardEntity = d);
     this.configService.getConfig(this.dashboardId).subscribe((dashboardConfig: Array<GridsterItem>) => {
       this.dashboard = dashboardConfig;
       this.originalDashboard = JSON.parse(JSON.stringify(dashboardConfig));
-      console.log(this.dashboard);
     });
     // TODO: the connection should happen somewhere else in the main page
     this.dataStreamService.connect();
@@ -111,7 +136,7 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
         this.router.navigate([
           'dashboards',
           this.dashboardId,
-          {outlets: { modal: [ 'settings', data.widget.id ] }}
+          { outlets: { modal: ['settings', data.widget.id] } }
         ]).then((e) => {
           if (e) {
             //console.log('Navigation is successful!');
@@ -123,7 +148,32 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
     }
   }
 
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    const columns = this.getResponsiveColumns();
+    if (columns !== this.options.maxCols) {
+      /*
+      // TODO: Angular-Gridster2 won't apply maxCols option on change (bug??)
+      this.options.maxCols = columns;
+      if (this.options.maxCols > 1) {
+        this.options.mobileBreakpoint = 0;
+      }
+      this.options.api.optionsChanged();
+      */
+      // the following is a work around for the above issue (forcing component reload)
+      const currentRouteUrl = this.router.url;
+      const parentRouteUrl = currentRouteUrl.substring(0, currentRouteUrl.lastIndexOf('/'));
+      this.router.navigateByUrl(
+        parentRouteUrl, { skipLocationChange: true }
+      ).then(() => this.router.navigate([currentRouteUrl]));
+    }
+  }
+
   // Gridster events/methods
+
+  onGridSizeChanged(gridster, a, b, c) {
+    // TODO: ... this event seems not to be working as expected
+  }
 
   onItemChange(item, itemComponent) {
     if (typeof item.change === 'function') {
@@ -177,5 +227,20 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
           this.originalDashboard = this.dashboard;
         }
       });
+  }
+
+  getResponsiveColumns(): number {
+    let columns = 8;
+    const availableWidth = document.documentElement.clientWidth;
+    if (availableWidth <= this.options.mobileBreakpoint) {
+      columns = 1;
+    } else {
+      let b = 0;
+      const bp = this.responsiveBreakPoints.find((p) => p.breakPoint <= availableWidth);
+      if (bp) {
+        columns = bp.columns;
+      }
+    }
+    return columns;
   }
 }
