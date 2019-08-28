@@ -12,7 +12,8 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "compodoc": "npx compodoc -p src/tsconfig.app.json",
-    "ngx-extractor": "ngx-extractor"
+    "ngx-extractor": "ngx-extractor",
+    "postinstall": "patch-package"
   },
   "private": true,
   "dependencies": {
@@ -28,7 +29,7 @@
     "@angular/router": "~8.1.0",
     "@hyperiot/components": "0.0.3",
     "@hyperiot/core": "^0.2.0",
-    "@hyperiot/widgets": "0.0.9",
+    "@hyperiot/widgets": "0.0.8",
     "@ngx-translate/i18n-polyfill": "^1.0.0",
     "angular-gridster2": "^8.0.0",
     "angular-plotly.js": "^1.3.2",
@@ -38,10 +39,9 @@
     "gulp-json-editor": "^2.5.2",
     "hammerjs": "^2.0.8",
     "map-stream": "0.0.7",
-    "moment": "^2.24.0",
     "ngx-cookie-service": "^2.2.0",
-    "ngx-moment": "^3.4.0",
-    "plotly.js": "^1.49.4",
+    "patch-package": "^6.1.2",
+    "plotly.js": "1.48.3",
     "rxjs": "~6.4.0",
     "tslib": "^1.9.0",
     "zone.js": "~0.9.1"
