@@ -4,7 +4,20 @@
 
     <div class="row">
 
-      <div class="col-md-6"></div>
+      <div class="col-md-6">
+
+        <ul id="devices">
+          <li *ngFor="let hdev of hDevices">
+            {{hdev.deviceName}}
+            <ul>
+              <li *ngFor="let hpac of hPackets">
+                <p *ngIf="hpac.deivce.id == hdev.id">{{hpac.name</p>
+              </li>
+            </ul>
+          </li>
+        </ul>
+
+      </div>
 
       <div class="col-md-6">
         <form class="field-form" [formGroup]="fieldForm" autocomplete="on">
@@ -16,9 +29,9 @@
           </div>
 
           <div class="container-form-field">
-            Typology
+            <!-- Typology
             <hyt-radio-button [options]="multiplicityOptions" [verticalAlign]="true">
-            </hyt-radio-button>
+            </hyt-radio-button> -->
           </div>
 
           <div class="container-form-field">

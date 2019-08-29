@@ -66,8 +66,6 @@ export class PacketsStepComponent implements OnInit, OnChanges {
     this.devicesOptions = [];
     for (let el of this.hDevices)
       this.devicesOptions.push({ value: el.id.toString(), label: el.deviceName })
-    console.log(this.hDevices)
-    console.log(this.devicesOptions)
   }
 
   type;
@@ -82,14 +80,14 @@ export class PacketsStepComponent implements OnInit, OnChanges {
       // type: this.packetForm.value.packetTypology,
       // format: this.packetForm.value.packetFormat,
       // serialization: this.packetForm.value.packetSerialization,
-      type: this.type,
-      format: this.format,
-      serialization: this.serialization,
-      trafficPlan: this.packetForm.value.packetTrafficPlan,
+      type: 'IO',//this.type,
+      format: 'JSON',//this.format,
+      serialization: 'AVRO',//this.serialization,
+      trafficPlan: 'HIGH',
       timestampField: 'timestampField',
       timestampFormat: 'dd/MM/yyyy HH.mmZ',
       version: '1',
-      device: { entityVersion: 1, id: +(this.packetForm.value.packetDevice) }
+      device: { entityVersion: 1, id: 395 }
     }
 
     this.hPacketService.saveHPacket(hPacket).subscribe(

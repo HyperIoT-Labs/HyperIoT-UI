@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Option } from '@hyperiot/components/lib/hyt-radio-button/hyt-radio-button.component';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { HPacketField, HpacketsService, HPacket } from '@hyperiot/core';
+import { HPacketField, HpacketsService, HPacket, HDevice } from '@hyperiot/core';
 import { SelectOption } from '@hyperiot/components';
 
 @Component({
@@ -10,6 +10,8 @@ import { SelectOption } from '@hyperiot/components';
   styleUrls: ['./fields-step.component.scss']
 })
 export class FieldsStepComponent implements OnInit {
+
+  @Input() hDevices: HDevice[] = [];
 
   @Input() hPackets: HPacket[] = [];
 
@@ -58,7 +60,7 @@ export class FieldsStepComponent implements OnInit {
 
     // this.packetAdded.emit(hPacket);
 
-    // this.hPacketService.saveHPacket(hPacket).subscribe(
+    // this.hPacketService.updateHPacket(hPacket).subscribe(
     //   res => console.log(res),
     //   err => console.log(err)
     // )
