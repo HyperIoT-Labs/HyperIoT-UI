@@ -23,7 +23,7 @@
              (click)="currentWidget = widget"
              >
             <header>{{ widget.name }}</header>
-
+            <img *ngIf="widget.info && widget.info.icon" [src]="widget.info.icon">
             <input type="number" class="item-count"
                 min="0" max="{{widgetAddMax}}"
                 [(ngModel)]="widget.count"
@@ -34,12 +34,33 @@
 
     </div>
 
-    <div class="widget-details">
+    <div class="widget-info">
 
         <div *ngIf="currentWidget != null">
             <h3>{{ currentWidget.name }}</h3>
-            <img [src]="currentWidget.details.preview">
-            <p *ngIf="currentWidget.details">{{ currentWidget.details.description }}</p>
+            <div *ngIf="currentWidget.info && currentWidget.info.preview">
+                <img [src]="currentWidget.info.preview" width="100%">
+            </div>
+            <div>
+                <star-rating
+                    [value]="currentWidget.info.rating"
+                    checkedcolor="gold"
+                    uncheckedcolor="gray"
+                    size="32px"
+                    readonly="false"
+                    (rate)="onRate($event)">
+                </star-rating>
+            </div>
+            <label>Type</label>
+            <p>
+                {{ currentWidget.type }}
+            </p>
+            <div *ngIf="currentWidget.info">
+                <label>Description</label>
+                <p>
+                    {{ currentWidget.info.description }}
+                </p>
+            </div>
         </div>
         <div *ngIf="currentWidget == null">
             Seleziona uno o più widget da aggiungere alla dashboard.. etc.. etc...

@@ -66,6 +66,15 @@
         }
     ],
     "layout": {
+        "margin": {
+            "t": 0, "b": 0,
+            "l": 16, "r": 8
+        },
+        "legend": {
+            "x": 0,
+            "y": 1,
+            "orientation": "h"
+        },
         "xaxis": {
             "tickangle": -45
         }
