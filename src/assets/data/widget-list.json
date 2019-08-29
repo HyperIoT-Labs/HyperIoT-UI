@@ -1,97 +1,244 @@
-[{
-    "id": 0,
-    "widgetId": "events-log",
-    "categoryId": 3,
-    "name": "Events log",
-    "cols": 4,
-    "rows": 2,
-    "y": 0,
-    "x": 0,
-    "type": "events-log",
-    "config": {}
-  },
-  {
-    "id": 0,
-    "widgetId": "stats-chart",
-    "categoryId": 3,
-    "name": "Classic pie chart",
-    "cols": 4,
-    "rows": 3,
-    "y": 0,
-    "x": 0,
-    "type": "stats-chart",
-    "config": {
-      "data": []
+[
+    {
+        "id": 0,
+        "categoryId": 3,
+        "name": "Events log",
+        "details": {
+            "description": "This widget shows real time event stream data.",
+            "preview": "/path/to/image/preview"
+        },
+        "cols": 2,
+        "rows": 2,
+        "y": 0,
+        "x": 0,
+        "type": "events-log",
+        "config": {}
+    },
+    {
+        "id": 0,
+        "categoryId": 3,
+        "name": "Classic pie chart",
+        "cols": 2,
+        "rows": 3,
+        "y": 0,
+        "x": 0,
+        "type": "stats-chart",
+        "dataUrl": "assets/data/test.widget-stats.2.json",
+        "dataTableUrl": "assets/data/test.widget-stats.2-table.json",
+        "config": {
+            "data": []
+        }
+    },
+    {
+        "id": 0,
+        "name": "Realttime line chart",
+        "categoryId": 2,
+        "cols": 2,
+        "rows": 3,
+        "y": 0,
+        "x": 0,
+        "type": "time-chart",
+        "config": {
+            "data": []
+        }
+    },
+    {
+        "id": 0,
+        "name": "Classic line chart",
+        "categoryId": 2,
+        "cols": 2,
+        "rows": 3,
+        "y": 0,
+        "x": 0,
+        "type": "stats-chart",
+        "dataUrl": "assets/data/test.widget-stats.3.json",
+        "dataTableUrl": "assets/data/test.widget-stats.3-table.json",
+        "config": {
+            "data": []
+        }
+    },
+    {
+        "id": 0,
+        "name": "Classic bar chart",
+        "categoryId": 1,
+        "cols": 2,
+        "rows": 3,
+        "y": 0,
+        "x": 0,
+        "type": "stats-chart",
+        "dataUrl": "assets/data/test.widget-stats.1.json",
+        "dataTableUrl": "assets/data/test.widget-stats.1-table.json",
+        "config": {
+            "data": []
+        }
+    },
+    {
+        "id": 0,
+        "name": "Sensor value",
+        "categoryId": 5,
+        "cols": 1,
+        "rows": 2,
+        "y": 0,
+        "x": 0,
+        "type": "sensor-value",
+        "config": {
+            "data": []
+        }
+    },
+    {
+        "id": 0,
+        "name": "Pressure Gauge",
+        "categoryId": 5,
+        "cols": 2,
+        "rows": 3,
+        "y": 0,
+        "x": 0,
+        "type": "gauge-value",
+        "config": {
+            "data": [
+                {
+                    "domain": {
+                        "x": [
+                            0,
+                            1
+                        ],
+                        "y": [
+                            0,
+                            1
+                        ]
+                    },
+                    "value": 850,
+                    "type": "indicator",
+                    "mode": "gauge+number",
+                    "gauge": {
+                        "axis": {
+                            "range": [
+                                null,
+                                2500
+                            ]
+                        },
+                        "steps": [
+                            {
+                                "range": [
+                                    0,
+                                    500
+                                ],
+                                "color": "lightgreen"
+                            },
+                            {
+                                "range": [
+                                    500,
+                                    1250
+                                ],
+                                "color": "yellow"
+                            },
+                            {
+                                "range": [
+                                    1250,
+                                    2100
+                                ],
+                                "color": "orange"
+                            },
+                            {
+                                "range": [
+                                    2100,
+                                    2500
+                                ],
+                                "color": "red"
+                            }
+                        ],
+                        "threshold": {
+                            "line": {
+                                "color": "magenta",
+                                "width": 4
+                            },
+                            "thickness": 0.75,
+                            "value": 2300
+                        }
+                    }
+                }
+            ],
+            "layout": {
+                "autosize": true,
+                "margin": {
+                    "t": 24,
+                    "b": 8
+                }
+            }
+        }
+    },
+    {
+        "id": 0,
+        "name": "Speed Gauge",
+        "categoryId": 5,
+        "cols": 2,
+        "rows": 3,
+        "y": 0,
+        "x": 0,
+        "type": "gauge-value",
+        "config": {
+            "data": [
+                {
+                    "domain": {
+                        "x": [
+                            0,
+                            1
+                        ],
+                        "y": [
+                            0,
+                            1
+                        ]
+                    },
+                    "value": 850,
+                    "type": "indicator",
+                    "mode": "gauge+number",
+                    "gauge": {
+                        "axis": {
+                            "range": [
+                                null,
+                                280
+                            ]
+                        },
+                        "steps": [
+                            {
+                                "range": [
+                                    0,
+                                    280
+                                ],
+                                "color": "lightgrey"
+                            }
+                        ],
+                        "threshold": {
+                            "line": {
+                                "color": "red",
+                                "width": 4
+                            },
+                            "thickness": 0.75,
+                            "value": 220
+                        }
+                    }
+                }
+            ],
+            "layout": {
+                "autosize": true,
+                "margin": {
+                    "t": 24,
+                    "b": 8
+                }
+            }
+        }
+    },
+    {
+        "id": 0,
+        "name": "Simple text",
+        "categoryId": 5,
+        "cols": 1,
+        "rows": 1,
+        "y": 0,
+        "x": 0,
+        "type": "text-label",
+        "config": {
+            "labelText": "Change me!"
+        }
     }
-  },
-  {
-    "id": 0,
-    "widgetId": "time-chart",
-    "name": "Realttime line chart",
-    "categoryId": 2,
-    "cols": 4,
-    "rows": 3,
-    "y": 0,
-    "x": 0,
-    "type": "time-chart",
-    "config": {
-      "data": []
-    }
-  },
-  {
-    "id": 0,
-    "widgetId": "stats-chart",
-    "name": "Classic line chart",
-    "categoryId": 2,
-    "cols": 4,
-    "rows": 3,
-    "y": 0,
-    "x": 0,
-    "type": "stats-chart",
-    "config": {
-      "data": []
-    }
-  },
-  {
-    "id": 0,
-    "widgetId": "stats-chart",
-    "name": "Classic bar chart",
-    "categoryId": 1,
-    "cols": 4,
-    "rows": 3,
-    "y": 0,
-    "x": 0,
-    "type": "stats-chart",
-    "config": {
-      "data": []
-    }
-  },
-  {
-    "id": 0,
-    "widgetId": "sensor-value",
-    "name": "Sensor value",
-    "categoryId": 5,
-    "cols": 2,
-    "rows": 2,
-    "y": 0,
-    "x": 0,
-    "type": "sensor-value",
-    "config": {
-      "data": []
-    }
-  },
-  {
-    "id": 0,
-    "widgetId": "text-label",
-    "name": "Simple text",
-    "categoryId": 5,
-    "cols": 2,
-    "rows": 1,
-    "y": 0,
-    "x": 0,
-    "type": "text-label",
-    "config": {
-      "labelText": "Change me!"
-    }
-  }
 ]

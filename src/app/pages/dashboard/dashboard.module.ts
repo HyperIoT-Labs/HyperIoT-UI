@@ -1,5 +1,13 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA, } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+
 import { CommonModule } from '@angular/common';
+
+import { MatIconModule } from '@angular/material/icon';
+
+import { HyperiotComponentsModule } from '@hyperiot/components';
+
 import { WidgetsLayoutComponent } from './widgets-layout/widgets-layout.component';
 import { DynamicWidgetComponent } from './dynamic-widget/dynamic-widget.component';
 import { GridsterModule } from 'angular-gridster2';
@@ -15,9 +23,6 @@ import { SensorValueSettingsComponent } from './widget-settings-dialog/sensor-va
 import { StatsChartSettingsComponent } from './widget-settings-dialog/stats-chart-settings/stats-chart-settings.component';
 import { TextLabelSettingsComponent } from './widget-settings-dialog/text-label-settings/text-label-settings.component';
 import { TimeChartSettingsComponent } from './widget-settings-dialog/time-chart-settings/time-chart-settings.component';
-
-import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -36,14 +41,18 @@ import { RouterModule } from '@angular/router';
   ],
   imports: [
     CommonModule,
+    HyperiotComponentsModule,
+    MatIconModule,
     GridsterModule,
     WidgetsModule,
     FormsModule,
+    ReactiveFormsModule,
     RouterModule
   ],
   providers: [
     DashboardConfigService
   ],
-  exports: []
+  exports: [],
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
 export class DashboardModule { }

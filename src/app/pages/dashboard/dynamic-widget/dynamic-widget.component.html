@@ -1,21 +1,31 @@
 <!-- List of widget that can be dynamically loaded -->
 
-<hyperiot-time-chart *ngIf="widget.type === 'time-chart'" [widget]="widget" (widgetAction)="onWidgetAction($event)">
-</hyperiot-time-chart>
+<hyperiot-time-chart
+  *ngIf="widget.type === 'time-chart'"
+  [widget]="widget"
+  (widgetAction)="onWidgetAction($event)"></hyperiot-time-chart>
 
-<hyperiot-stats-chart *ngIf="widget.type === 'stats-chart'" [widget]="widget" (widgetAction)="onWidgetAction($event)">
-</hyperiot-stats-chart>
+<hyperiot-stats-chart
+  *ngIf="widget.type === 'stats-chart'"
+  [widget]="widget"
+  (widgetAction)="onWidgetAction($event)"></hyperiot-stats-chart>
 
-<hyperiot-sensor-value *ngIf="widget.type === 'sensor-value'" [widget]="widget" (widgetAction)="onWidgetAction($event)">
-</hyperiot-sensor-value>
-<!-- 
+<hyperiot-sensor-value
+  *ngIf="widget.type === 'sensor-value'"
+  [widget]="widget"
+  (widgetAction)="onWidgetAction($event)"></hyperiot-sensor-value>
+
 <hyperiot-gauge-value
   *ngIf="widget.type === 'gauge-value'"
   [widget]="widget"
-  (widgetAction)="onWidgetAction($event)"></hyperiot-gauge-value> -->
+  (widgetAction)="onWidgetAction($event)"></hyperiot-gauge-value>
 
-<hyperiot-events-log *ngIf="widget.type === 'events-log'" [widget]="widget" (widgetAction)="onWidgetAction($event)">
-</hyperiot-events-log>
+<hyperiot-events-log
+  *ngIf="widget.type === 'events-log'"
+  [widget]="widget"
+  (widgetAction)="onWidgetAction($event)"></hyperiot-events-log>
 
-<hyperiot-text-label *ngIf="widget.type === 'text-label'" [widget]="widget" (widgetAction)="onWidgetAction($event)">
-</hyperiot-text-label>
+<hyperiot-text-label
+  *ngIf="widget.type === 'text-label'"
+  [widget]="widget"
+  (widgetAction)="onWidgetAction($event)"></hyperiot-text-label>

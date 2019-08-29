@@ -12,6 +12,7 @@ import { NotFoundComponent } from '../pages/not-found/not-found.component';
 import { LoginComponent } from '../pages/authentication/login/login.component';
 import { RegistrationComponent } from '../pages/authentication/registration/registration.component';
 import { PasswordRecoveryComponent } from '../pages/authentication/password-recovery/password-recovery.component';
+import { DashboardsListComponent } from '../pages/dashboard/dashboards-list/dashboards-list.component';
 
 @Injectable()
 export class LoggedInGuard implements CanActivate {
@@ -32,8 +33,8 @@ export class LoggedInGuard implements CanActivate {
 const hyperiotRoutes: Routes = [
   {
     path: '',
-    redirectTo: 'dashboards/demo',
-    pathMatch: "full"
+    redirectTo: 'dashboards/',
+    pathMatch: 'full'
   },
   {
     path: 'auth',
@@ -76,6 +77,14 @@ const hyperiotRoutes: Routes = [
     }
   },
   {
+    path: 'dashboards',
+    component: DashboardsListComponent,
+    canActivate: [LoggedInGuard],
+    data: {
+      showToolBar: true,
+    }
+  },
+  {
     path: 'dashboards/:dashboardId',
     component: DashboardViewComponent,
     canActivate: [LoggedInGuard],
@@ -100,7 +109,6 @@ const hyperiotRoutes: Routes = [
     component: NotFoundComponent
   }
 ];
-
 
 @NgModule({
   imports: [RouterModule.forRoot(hyperiotRoutes)],

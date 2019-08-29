@@ -5,9 +5,8 @@ import {
   Output,
   EventEmitter,
   ElementRef,
-  OnDestroy,
-  ViewChild,
-  HostListener
+  HostListener,
+  ViewChild
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 

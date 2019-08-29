@@ -3,18 +3,23 @@
     top: 0; left: 0; bottom: 0; right: 0;
     background-color: rgba(0,0,0,0.5);
     z-index: 100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     /* variables */
     --header-height: 32px;
-    --footer-height: 32px;
+    --footer-height: 50px;
     --category-list-width: 120px;
+    --widget-details-width: 240px;
     --header-color: rgba(50, 50, 50, 0.1);
 }
 
 .dialog {
-    position: absolute;
+    position: relative;
+    width: 100%; height: 600px;
+    max-width: 1024px;
     overflow: hidden; 
-    top: 48px; bottom: 48px;
-    left: 48px; right: 48px;
     background: white;
     border: solid 1px rgba(0, 0, 0, 0.1);
     padding-top: var(--header-height);
@@ -39,6 +44,7 @@
 .dialog footer {
     position: absolute;
     left: 0; right:0; bottom: 0;
+    padding: 6px;
     height: var(--footer-height);
     background-color: var(--header-color);
     border-top: 1px solid rgba(0,0,0,0.1);
@@ -54,7 +60,6 @@
 
 .dialog .button-close, .dialog .button-confirm {
     float: right;
-    margin-top: 1px;
     margin-right: 10px;
 }
 
@@ -105,7 +110,8 @@ button.category-item.selected {
     position: absolute;
     top: var(--header-height);
     left: var(--category-list-width);
-    right: 0; bottom: 0;
+    right: var(--widget-details-width);
+    bottom: 18px;
     padding: 8px;
     overflow-y: auto;
     margin-bottom: 32px;
@@ -184,4 +190,21 @@ button.category-item.selected {
     background-image: url("/assets/widgets/images/baseline-arrow_right-24px.svg");
 }
 
+.widget-details {
+    position: absolute;
+    top: var(--header-height);
+    bottom: var(--footer-height);
+    right: 0;
+    width: var(--widget-details-width);
+    padding: 6px;
+}
+
 /* TODO: add responsive media-query for smaller screens (1024 / 640 / 480) */
+@media only screen and (max-width: 650px) {
+    .widget-details {
+        display: none;
+    }
+    .widget-list {
+        right: 0;
+    }
+}

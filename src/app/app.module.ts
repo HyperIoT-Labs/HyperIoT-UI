@@ -18,6 +18,9 @@ import { I18n } from '@ngx-translate/i18n-polyfill';
 import { DashboardModule } from './pages/dashboard/dashboard.module';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 
+// hyperiot
+import { HyperiotComponentsModule } from '@hyperiot/components';
+
 export function apiConfigFactory(): Configuration {
   const params: ConfigurationParameters = {
     apiKeys: {},

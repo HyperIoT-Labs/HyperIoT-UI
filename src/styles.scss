@@ -1,3 +1,29 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 @import './styles/main';
+
+/* Bootstrap optional */
+@import "../node_modules/bootstrap/scss/reboot";
+@import "../node_modules/bootstrap/scss/grid";
+@import "../node_modules/bootstrap/scss/utilities/display";
+@import "../node_modules/bootstrap/scss/utilities/flex";
+
+body {
+    background: lightblue;
+}
+label {
+    font-weight: 800;
+    padding-top: 8px; 
+}
+.padding-6 {
+    padding: 6px;
+}
+
+/* Forms validation classes */
+
+.ng-invalid:not(form) {
+    background-color: rgba(255,0,0,0.15);
+}
+.error-color {
+    color: red;
+}

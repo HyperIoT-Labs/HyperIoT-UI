@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { ControlContainer, NgForm } from '@angular/forms';
+
 import { Subject } from 'rxjs';
-import { NgForm, ControlContainer } from '@angular/forms';
 
 @Component({
   selector: 'hyt-stats-chart-settings',
