@@ -59,8 +59,9 @@ export class LoginComponent implements OnInit {
 
     this.authenticationService.login(this.loginForm.value.username, this.loginForm.value.password).subscribe(
       res => {
-        var jwtToken = <JWTLoginResponse>res;
-        this.cookieService.set('HIT-AUTH', jwtToken.token, 2, '/');
+        this.cookieService.set('HIT-AUTH', res.token, 2, '/');
+        localStorage.setItem('userInfo', JSON.stringify(res));
+        localStorage.setItem('user', JSON.stringify(res.authenticable));
 
         if (this.loginForm.value.rememberMe == true) {
           this.encrypting(this.loginForm.value.username + "&" + this.loginForm.value.password, this.key);

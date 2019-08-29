@@ -1,0 +1,53 @@
+<div id="container-projects">
+
+  <div class=row>
+    <div class="col-md-10">breadcrumb/to/projects</div>
+    <div class="col-md-2">ADD</div>
+  </div>
+
+  <div [ngSwitch]="pageStatus">
+
+    <div *ngSwitchCase="0">
+      loading
+    </div>
+
+    <div *ngSwitchCase="1">
+      <table>
+        <tr>
+          <th><b>ID</b></th>
+          <th><b>NOME</b></th>
+          <th><b>UTENTE</b></th>
+        </tr>
+        <tr *ngFor="let proj of hProjects">
+          <td>{{proj.id}}</td>
+          <td>{{proj.name}}</td>
+          <td>{{proj.user.username}}</td>
+        </tr>
+      </table>
+    </div>
+
+    <div *ngSwitchCase="2">
+      <div class="no-projects row">
+        <div class="col-md-12">
+          Non ci sono progetti. Devi aggiungerne uno.
+          Premi il bottone qui sotto
+        </div>
+        <div class="col-md-12">
+          <hyt-button id="add-project-btn" (click)="addProject()" type="button">
+            Add Project
+          </hyt-button>
+        </div>
+      </div>
+    </div>
+
+    <div *ngSwitchCase="-1">
+      Errore
+    </div>
+
+    <div *ngSwitchDefault>
+      switch-case error
+    </div>
+
+  </div>
+
+</div>

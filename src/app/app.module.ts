@@ -54,7 +54,8 @@ export function apiConfigFactory(): Configuration {
       provide: TRANSLATIONS,
       useFactory: (locale) => {
         locale = locale || 'en-US';
-        return require(`raw-loader!../locale/translations.${locale}.xlf`);
+        return (locale == 'en-US') ? require(`raw-loader!../locale/translations.xlf`) : require(`raw-loader!../locale/translations.${locale}.xlf`);
+        // return require(`raw-loader!../locale/translations.${locale}.xlf`);
       },
       deps: [LOCALE_ID]
     }
