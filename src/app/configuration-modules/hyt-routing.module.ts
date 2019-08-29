@@ -13,6 +13,8 @@ import { LoginComponent } from '../pages/authentication/login/login.component';
 import { RegistrationComponent } from '../pages/authentication/registration/registration.component';
 import { PasswordRecoveryComponent } from '../pages/authentication/password-recovery/password-recovery.component';
 import { DashboardsListComponent } from '../pages/dashboard/dashboards-list/dashboards-list.component';
+import { ProjectWizardComponent } from '../pages/projects/project-wizard/project-wizard.component';
+import { ProjectsComponent } from '../pages/projects/projects.component';
 
 @Injectable()
 export class LoggedInGuard implements CanActivate {
@@ -76,6 +78,14 @@ const hyperiotRoutes: Routes = [
   {
     path: 'project-wizard',
     component: ProjectWizardComponent,
+    canActivate: [LoggedInGuard],
+    data: {
+      showToolBar: true,
+    }
+  },
+  {
+    path: 'projects',
+    component: ProjectsComponent,
     canActivate: [LoggedInGuard],
     data: {
       showToolBar: true,
