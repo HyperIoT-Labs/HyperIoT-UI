@@ -1,0 +1,49 @@
+<div id="container-project-wizard">
+  <!-- <div class=row>
+    <div class="col-md-10">breadcrumb/to/project-wizard</div>
+    <div class="col-md-2">ADD</div>
+  </div> -->
+  <div class=row>
+
+    <ng-template #projectTemplate>
+      <hyt-project-step (projectOutput)="updateProject($event)"></hyt-project-step>
+    </ng-template>
+
+    <ng-template #devicesTemplate>
+      <hyt-devices-step [hProject]="hProject" (hDevicesOutput)="updateDevices($event)"></hyt-devices-step>
+      <hyt-button (clickFn)="stepper.previous()">Back</hyt-button>
+      <hyt-button (clickFn)="stepper.next()">Next</hyt-button>
+    </ng-template>
+
+    <ng-template #packetsTemplate>
+      <hyt-packets-step [hDevices]="hDevices" (hPacketsOutput)="updatePackets($event)"></hyt-packets-step>
+      <hyt-button (clickFn)="stepper.previous()">Back</hyt-button>
+      <hyt-button (clickFn)="stepper.next()">Next</hyt-button>
+    </ng-template>
+
+    <ng-template #fieldsTemplate>
+      <hyt-fields-step [hPackets]="hPackets"></hyt-fields-step>
+      <hyt-button (clickFn)="stepper.previous()">Back</hyt-button>
+      <hyt-button (clickFn)="stepper.next()">Next</hyt-button>
+    </ng-template>
+
+    <ng-template #statisticsTemplate>
+      <hyt-statistics-step></hyt-statistics-step>
+      <hyt-button (clickFn)="stepper.previous()">Back</hyt-button>
+      <hyt-button (clickFn)="stepper.next()">Next</hyt-button>
+    </ng-template>
+
+    <ng-template #eventsTemplate>
+      <hyt-events-step></hyt-events-step>
+      <hyt-button (clickFn)="stepper.previous()">Back</hyt-button>
+    </ng-template>
+
+
+    <hyt-stepper #stepper style="width: 100%" [firstStep]="projectTemplate" firstLabel="Projects"
+      [secondStep]="devicesTemplate" secondLabel="Devices" [thirdStep]="packetsTemplate" thirdLabel="Packets"
+      [fourthStep]="fieldsTemplate" fourthLabel="Fields" [fifthStep]="statisticsTemplate" fifthLabel="Statistics"
+      [sixthStep]="eventsTemplate" sixthLabel="Events" [isLinear]="false">
+    </hyt-stepper>
+
+  </div>
+</div>

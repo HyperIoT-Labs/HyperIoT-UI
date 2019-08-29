@@ -18,6 +18,8 @@ export class AppComponent {
 
   logout() {
     this.cookieService.delete('HIT-AUTH', '/');
+    localStorage.removeItem('user');
+    localStorage.removeItem('userInfo');
     this.route.navigate(['/auth/login']);
   }
 

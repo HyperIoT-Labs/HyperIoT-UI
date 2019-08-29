@@ -1,0 +1,54 @@
+<div id="fields-step" class="row">
+
+  <div class="col-md-10">
+
+    <div class="row">
+
+      <div class="col-md-6"></div>
+
+      <div class="col-md-6">
+        <form class="field-form" [formGroup]="fieldForm" autocomplete="on">
+
+          <div class="container-form-field">
+            <hyt-input-text [form]="fieldForm" formControlName="fieldName" name="fieldName" [isRequired]="true"
+              placeholder="HYT_fieldName">
+            </hyt-input-text>
+          </div>
+
+          <div class="container-form-field">
+            Typology
+            <hyt-radio-button [options]="multiplicityOptions" [verticalAlign]="true">
+            </hyt-radio-button>
+          </div>
+
+          <div class="container-form-field">
+            <hyt-select [form]="fieldForm" [options]="typeOptions" formControlName="fieldType" name="fieldType"
+              [isRequired]="true" label="HYT_fieldType">
+            </hyt-select>
+          </div>
+
+          <div class="container-form-field">
+            <hyt-text-area [form]="fieldForm" formControlName="fieldDescription" name="fieldDescription"
+              placeholder="HYT_fieldDescription">
+            </hyt-text-area>
+          </div>
+
+          <hyt-button id="field-form-submit-button" [isDisabled]="invalid()" (clickFn)="createField()" type="submit">
+            Add Field
+          </hyt-button>
+
+        </form>
+      </div>
+
+    </div>
+
+
+  </div>
+
+  <div class="col-md-2">
+    <div>
+      FIELDS
+    </div>
+  </div>
+
+</div>
