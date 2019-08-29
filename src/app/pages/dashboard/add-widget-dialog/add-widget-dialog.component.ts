@@ -120,4 +120,8 @@ export class AddWidgetDialogComponent implements OnInit {
   onWidgetClick(widget: any) {
     console.log(widget);
   }
+
+  onRate(rating: any) {
+    console.log('onRate', rating);
+  }
 }

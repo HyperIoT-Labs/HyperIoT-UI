@@ -6,6 +6,8 @@ import { CommonModule } from '@angular/common';
 
 import { MatIconModule } from '@angular/material/icon';
 
+import { RatingModule } from 'ng-starrating';
+
 import { HyperiotComponentsModule } from '@hyperiot/components';
 
 import { WidgetsLayoutComponent } from './widgets-layout/widgets-layout.component';
@@ -41,13 +43,14 @@ import { TimeChartSettingsComponent } from './widget-settings-dialog/time-chart-
   ],
   imports: [
     CommonModule,
-    HyperiotComponentsModule,
-    MatIconModule,
-    GridsterModule,
-    WidgetsModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule
+    RouterModule,
+    RatingModule,
+    MatIconModule,
+    HyperiotComponentsModule,
+    GridsterModule,
+    WidgetsModule
   ],
   providers: [
     DashboardConfigService

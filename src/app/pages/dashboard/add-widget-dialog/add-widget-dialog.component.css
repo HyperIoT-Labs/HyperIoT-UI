@@ -11,7 +11,7 @@
     --header-height: 32px;
     --footer-height: 50px;
     --category-list-width: 120px;
-    --widget-details-width: 240px;
+    --widget-info-width: 240px;
     --header-color: rgba(50, 50, 50, 0.1);
 }
 
@@ -110,7 +110,7 @@ button.category-item.selected {
     position: absolute;
     top: var(--header-height);
     left: var(--category-list-width);
-    right: var(--widget-details-width);
+    right: var(--widget-info-width);
     bottom: 18px;
     padding: 8px;
     overflow-y: auto;
@@ -136,6 +136,7 @@ button.category-item.selected {
     border-radius: 4px;
     transition: all;
     transition-duration: 200ms;
+    text-align: center;
 }
 .widget-item header {
     position: relative;
@@ -153,7 +154,10 @@ button.category-item.selected {
     -moz-box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.25);
     box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.25);
 }
-
+.widget-item img {
+    margin: 8px;
+    height: 80px;
+}
 .widget-item input.item-count {
     position: absolute;
     right: 50%;
@@ -190,18 +194,19 @@ button.category-item.selected {
     background-image: url("/assets/widgets/images/baseline-arrow_right-24px.svg");
 }
 
-.widget-details {
+.widget-info {
     position: absolute;
     top: var(--header-height);
     bottom: var(--footer-height);
     right: 0;
-    width: var(--widget-details-width);
-    padding: 6px;
+    width: var(--widget-info-width);
+    padding: 10px;
+    overflow-y: auto;
 }
 
 /* TODO: add responsive media-query for smaller screens (1024 / 640 / 480) */
 @media only screen and (max-width: 650px) {
-    .widget-details {
+    .widget-info {
         display: none;
     }
     .widget-list {
