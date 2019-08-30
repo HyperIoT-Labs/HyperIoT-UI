@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { HProject, HDevice, HPacket } from '@hyperiot/core';
 
 @Component({
@@ -12,6 +12,14 @@ export class ProjectWizardComponent implements OnInit {
   hDevices: HDevice[] = [];
   hPackets: HPacket[] = [];
 
+  projectValidated: boolean = false;
+  devicesValidated: boolean = false;
+  packetsValidated: boolean = false;
+  fieldsValidated: boolean = false;
+  enrichmentValidated: boolean = false;
+  statisticsValidated: boolean = false;
+  eventsValidated: boolean = false;
+
   constructor(
   ) { }
 
@@ -21,14 +29,20 @@ export class ProjectWizardComponent implements OnInit {
 
   updateProject(proj: HProject) {
     this.hProject = proj;
+    if (this.hProject)
+      this.projectValidated = true;
   }
 
   updateDevices(dev: HDevice[]) {
     this.hDevices = [...dev];
+    if (this.hDevices.length != 0)
+      this.devicesValidated = true;
   }
 
   updatePackets(pac: HPacket[]) {
     this.hPackets = [...pac];
+    if (this.hPackets.length != 0)
+      this.packetsValidated = true;
   }
 
 }

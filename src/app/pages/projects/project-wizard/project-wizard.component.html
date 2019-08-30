@@ -6,7 +6,7 @@
   <div class=row>
 
     <ng-template #projectTemplate>
-      <hyt-project-step (projectOutput)="updateProject($event)"></hyt-project-step>
+      <hyt-project-step (projectOutput)="updateProject($event); stepper.next()"></hyt-project-step>
     </ng-template>
 
     <ng-template #devicesTemplate>
@@ -27,6 +27,12 @@
       <hyt-button (clickFn)="stepper.next()">Next</hyt-button>
     </ng-template>
 
+    <ng-template #enrichmentTemplate>
+      <hyt-enrichment-step></hyt-enrichment-step>
+      <hyt-button (clickFn)="stepper.previous()">Back</hyt-button>
+      <hyt-button (clickFn)="stepper.next()">Next</hyt-button>
+    </ng-template>
+
     <ng-template #statisticsTemplate>
       <hyt-statistics-step></hyt-statistics-step>
       <hyt-button (clickFn)="stepper.previous()">Back</hyt-button>
@@ -39,10 +45,10 @@
     </ng-template>
 
 
-    <hyt-stepper #stepper style="width: 100%" [firstStep]="projectTemplate" firstLabel="Projects"
-      [secondStep]="devicesTemplate" secondLabel="Devices" [thirdStep]="packetsTemplate" thirdLabel="Packets"
-      [fourthStep]="fieldsTemplate" fourthLabel="Fields" [fifthStep]="statisticsTemplate" fifthLabel="Statistics"
-      [sixthStep]="eventsTemplate" sixthLabel="Events" [isLinear]="false">
+    <hyt-stepper #stepper [isLinear]="true" style="width: 100%"
+      [stepArray]="[ projectTemplate, devicesTemplate, packetsTemplate, fieldsTemplate, enrichmentTemplate, statisticsTemplate, eventsTemplate ]"
+      [labelArray]="[ 'Projects', 'Devices', 'Packets', 'Fields', 'Enrichment', 'Statistics', 'Events' ]"
+      [completedArray]="[ projectValidated, devicesValidated, packetsValidated, fieldsValidated, enrichmentValidated, statisticsValidated, eventsValidated ]">
     </hyt-stepper>
 
   </div>
