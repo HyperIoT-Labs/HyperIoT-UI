@@ -35,7 +35,7 @@ export class LoggedInGuard implements CanActivate {
 const hyperiotRoutes: Routes = [
   {
     path: '',
-    redirectTo: 'dashboards/',
+    redirectTo: 'dashboards',
     pathMatch: 'full'
   },
   {
