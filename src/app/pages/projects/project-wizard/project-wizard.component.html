@@ -22,7 +22,7 @@
     </ng-template>
 
     <ng-template #fieldsTemplate>
-      <hyt-fields-step [hPackets]="hPackets"></hyt-fields-step>
+      <hyt-fields-step [hDevices]="hDevices" [hPackets]="hPackets"></hyt-fields-step>
       <hyt-button (clickFn)="stepper.previous()">Back</hyt-button>
       <hyt-button (clickFn)="stepper.next()">Next</hyt-button>
     </ng-template>
