@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 import { RatingModule } from 'ng-starrating';
 
@@ -26,6 +27,8 @@ import { StatsChartSettingsComponent } from './widget-settings-dialog/stats-char
 import { TextLabelSettingsComponent } from './widget-settings-dialog/text-label-settings/text-label-settings.component';
 import { TimeChartSettingsComponent } from './widget-settings-dialog/time-chart-settings/time-chart-settings.component';
 
+import { MyTelInputComponent } from '../../test/my-tel-input/my-tel-input.component';
+
 @NgModule({
   declarations: [
     WidgetsLayoutComponent,
@@ -39,7 +42,8 @@ import { TimeChartSettingsComponent } from './widget-settings-dialog/time-chart-
     SensorValueSettingsComponent,
     StatsChartSettingsComponent,
     TextLabelSettingsComponent,
-    TimeChartSettingsComponent
+    TimeChartSettingsComponent,
+    MyTelInputComponent
   ],
   imports: [
     CommonModule,
@@ -50,7 +54,8 @@ import { TimeChartSettingsComponent } from './widget-settings-dialog/time-chart-
     MatIconModule,
     HyperiotComponentsModule,
     GridsterModule,
-    WidgetsModule
+    WidgetsModule,
+    MatFormFieldModule
   ],
   providers: [
     DashboardConfigService
