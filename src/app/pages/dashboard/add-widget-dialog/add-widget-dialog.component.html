@@ -25,11 +25,12 @@
             <header>{{ widget.name }}</header>
             <img *ngIf="widget.info && widget.info.icon" [src]="widget.info.icon">
             <input type="number" class="item-count"
+                title="HYT_widget_add_quantity" i18n-title="@@addWidgetDialog-add-quantity"
                 min="0" max="{{widgetAddMax}}"
                 [(ngModel)]="widget.count"
                 (ngModelChange)="onWidgetChange(widget)">
-            <button class="remove" title="remove" (click)="removeWidget(widget)"></button>
-            <button class="add" title="add" (click)="addWidget(widget)"></button>
+            <button class="remove" i18n-title="@@addWidgetDialog-add-less" title="HYT_widget_add_less" (click)="removeWidget(widget)"></button>
+            <button class="add" i18n-title="@@addWidgetDialog-add-more" title="HYT_widget_add_more" (click)="addWidget(widget)"></button>
         </div>
 
     </div>
@@ -51,19 +52,19 @@
                     (rate)="onRate($event)">
                 </star-rating>
             </div>
-            <label>Type</label>
+            <label i18n="@@addWidgetDialog-info-type">HYT_widget_info_type</label>
             <p>
                 {{ currentWidget.type }}
             </p>
             <div *ngIf="currentWidget.info">
-                <label>Description</label>
+                <label i18n="@@addWidgetDialog-info-description">Description</label>
                 <p>
                     {{ currentWidget.info.description }}
                 </p>
             </div>
         </div>
-        <div *ngIf="currentWidget == null">
-            Seleziona uno o più widget da aggiungere alla dashboard.. etc.. etc...
+        <div *ngIf="currentWidget == null" i18n="@@addWidgetDialog-info-intro">
+            HYT_widget_info_intro
         </div>
 
     </div>

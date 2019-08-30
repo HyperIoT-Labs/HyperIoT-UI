@@ -9,6 +9,48 @@
           <context context-type="sourcefile">src/app/dashboard/add-widget-dialog/add-widget-dialog.component.html</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="addWidgetDialog-info-intro" datatype="html">
+        <source>HYT_widget_info_intro</source>
+        <target>Seleziona uno o più widget da aggiungere alla dashboard.. etc.. etc...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/dashboard/add-widget-dialog/add-widget-dialog.component.html</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="addWidgetDialog-info-description" datatype="html">
+        <source>HYT_widget_info_description</source>
+        <target>Description</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/dashboard/add-widget-dialog/add-widget-dialog.component.html</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="addWidgetDialog-info-type" datatype="html">
+        <source>HYT_widget_info_type</source>
+        <target>Type</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/dashboard/add-widget-dialog/add-widget-dialog.component.html</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="addWidgetDialog-add-quantity" datatype="html">
+        <source>HYT_widget_add_quantity</source>
+        <target>Quantity</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/dashboard/add-widget-dialog/add-widget-dialog.component.html</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="addWidgetDialog-add-more" datatype="html">
+        <source>HYT_widget_add_more</source>
+        <target>More</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/dashboard/add-widget-dialog/add-widget-dialog.component.html</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="addWidgetDialog-add-less" datatype="html">
+        <source>HYT_widget_add_less</source>
+        <target>Less</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/dashboard/add-widget-dialog/add-widget-dialog.component.html</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="addWidgetDialog-btn-add" datatype="html">
         <source>HYT_widget_add</source>
         <target>Add</target>
