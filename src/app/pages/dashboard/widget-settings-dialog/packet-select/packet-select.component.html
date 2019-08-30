@@ -4,7 +4,7 @@
 
         <div class="d-flex flex-column">
             <label for="packet-select" [ngClass]="{'error-color': selectedPacket == null}"
-                i18n="@@widgetSettingsDialog/packet-lbl-type">Select packet</label>
+                i18n="@@widgetSettingsDialog/packet-lbl-type">HYT_widget_settings_select_packet</label>
             <select size="5"
                 [(ngModel)]="selectedPacket" [compareWith]="packetCompare"
                 (ngModelChange)="onPacketChange()"
@@ -23,7 +23,7 @@
         <div class="d-flex flex-column">
             <label for="field-select" [ngClass]="{'error-color': selectedFields == null || selectedFields.length === 0}"
                 i18n="@@widgetSettingsDialog/packet-lbl-fields">
-                Select {multiPacketSelect?1:0, plural, =0 {field} other {fields}}
+                HYT_widget_settings_select_fields
             </label>
             <select [size]="multiPacketSelect ? 5 : null"
                 [(ngModel)]="selectedFields" [multiple]="multiPacketSelect"
