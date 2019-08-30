@@ -57,7 +57,7 @@
     </form>
 
     <footer class="d-flex flex-row align-items-center justify-content-end">
-        <hyt-button class="button-confirm" (clickFn)="confirm($event)" [disabled]="settingsForm.invalid">
+        <hyt-button class="button-confirm" (clickFn)="confirm($event)" [isDisabled]="settingsForm.invalid">
             <mat-icon>check</mat-icon>
             <span i18n="@@widgetSettingsDialog-btn-apply">HYT_widget_settings_apply</span>
         </hyt-button>

@@ -74,7 +74,7 @@
             <mat-icon>close</mat-icon>
             <span i18n="@@addWidgetDialog-btn-cancel">HYT_widget_cancel</span>
         </hyt-button>
-        <hyt-button [disabled]="selectedWidgets.length === 0" class="button-confirm"
+        <hyt-button [isDisabled]="selectedWidgets.length === 0" class="button-confirm"
             (clickFn)="confirm()">
             <mat-icon>add</mat-icon>
             <span i18n="@@addWidgetDialog-btn-add">HYT_widget_add</span>

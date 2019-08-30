@@ -8,7 +8,7 @@ import { PacketSelectComponent } from '../packet-select/packet-select.component'
 @Component({
   selector: 'hyt-sensor-value-settings',
   templateUrl: './sensor-value-settings.component.html',
-  styleUrls: ['./sensor-value-settings.component.css']
+  styleUrls: ['../common.css', './sensor-value-settings.component.css']
 })
 export class SensorValueSettingsComponent implements OnInit, OnDestroy {
   @ViewChild(PacketSelectComponent, {static: true}) packetSelect: PacketSelectComponent;

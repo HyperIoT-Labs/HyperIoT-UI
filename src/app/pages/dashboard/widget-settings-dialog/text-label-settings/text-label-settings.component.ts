@@ -5,7 +5,7 @@ import { NgForm, ControlContainer } from '@angular/forms';
 @Component({
   selector: 'hyt-text-label-settings',
   templateUrl: './text-label-settings.component.html',
-  styleUrls: ['./text-label-settings.component.css'],
+  styleUrls: ['../common.css', './text-label-settings.component.css'],
   viewProviders: [ { provide: ControlContainer, useExisting: NgForm } ]
 })
 export class TextLabelSettingsComponent implements OnInit, OnDestroy {

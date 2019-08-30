@@ -6,7 +6,7 @@ import { HPacket, HPacketField, HpacketsService } from '@hyperiot/core';
 @Component({
   selector: 'hyt-packet-select',
   templateUrl: './packet-select.component.html',
-  styleUrls: ['./packet-select.component.css'],
+  styleUrls: ['../common.css', './packet-select.component.css'],
   viewProviders: [ { provide: ControlContainer, useExisting: NgForm } ]
 })
 export class PacketSelectComponent implements OnInit {
