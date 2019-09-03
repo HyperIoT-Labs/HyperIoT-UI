@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { PageStatus } from './models/pageStatus';
 import { HProject, HprojectsService } from '@hyperiot/core';
 
+
 @Component({
   selector: 'hyt-projects',
   templateUrl: './projects.component.html',
@@ -10,7 +11,7 @@ import { HProject, HprojectsService } from '@hyperiot/core';
   encapsulation: ViewEncapsulation.None
 })
 export class ProjectsComponent implements OnInit {
-
+  PageStatus = PageStatus;
   pageStatus: PageStatus = PageStatus.Loading;
 
   hProjects: HProject[] = [];
@@ -24,18 +25,18 @@ export class ProjectsComponent implements OnInit {
     this.hProjectService.findAllHProject().subscribe(
       res => {
         this.hProjects = res;
-        this.hProjects = [];
-        this.pageStatus = (this.hProjects.length != 0) ? PageStatus.Standard : PageStatus.New;
+        this.pageStatus = (this.hProjects.length !== 0)
+          ? PageStatus.Standard
+          : PageStatus.New;
       },
       err => {
-        console.log(err)
+        console.log(err);
         this.pageStatus = PageStatus.Error;
       }
-    )
+    );
   }
 
   addProject() {
     this.router.navigate(['/project-wizard']);
   }
-
 }
