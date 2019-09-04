@@ -20,19 +20,20 @@
       <div class="row">
         <div class="col-md-4 container-form-field">
           Typology
-          <hyt-radio-button [options]="typologyOptions" [verticalAlign]="true"
-            (changeFn)="typologyOptionsChanged($event)">
+          <hyt-radio-button [form]="packetForm" [options]="typologyOptions" formControlName="packetTypology"
+            name="packetTypology" [verticalAlign]="true">
           </hyt-radio-button>
         </div>
         <div class="col-md-4 container-form-field">
           Format
-          <hyt-radio-button [options]="formatOptions" [verticalAlign]="true" (changeFn)="formatOptionsChanged($event)">
+          <hyt-radio-button [form]="packetForm" [options]="formatOptions" formControlName="packetFormat"
+            name="packetFormat" [verticalAlign]="true">
           </hyt-radio-button>
         </div>
         <div class="col-md-4 container-form-field">
           Serialization
-          <hyt-radio-button [options]="serializationOptions" [verticalAlign]="true"
-            (changeFn)="serializationOptionsChanged($event)">
+          <hyt-radio-button [form]="packetForm" [options]="serializationOptions" formControlName="packetSerialization"
+            name="packetSerialization" [verticalAlign]="true">
           </hyt-radio-button>
         </div>
       </div>
@@ -49,7 +50,7 @@
         Add Packet
       </hyt-button>
 
-      <button (click)="createPacket()">NON ME NE FREGA NIENTE DELLA VALIDAZIONE</button>
+      <button (click)="createPacket()">NO VALIDAZIONE</button>
 
     </form>
 

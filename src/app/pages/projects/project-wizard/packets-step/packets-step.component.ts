@@ -20,13 +20,29 @@ export class PacketsStepComponent implements OnInit, OnChanges {
 
   devicesOptions: SelectOption[] = [];
 
-  typologyOptions: Option[] = [];
+  typologyOptions: Option[] = [
+    { value: 'INPUT', label: 'Input', checked: true },
+    { value: 'OUTPUT', label: 'Output' },
+    { value: 'IO', label: 'I/O' }
+  ];
 
-  formatOptions: Option[] = [];
+  formatOptions: Option[] = [
+    { value: 'JSON', label: 'json', checked: true },
+    { value: 'XML', label: 'xml' },
+    { value: 'CSV', label: 'csv' }
+  ];
 
-  serializationOptions: Option[] = [];
+  serializationOptions: Option[] = [
+    { value: 'AVRO', label: 'avro', checked: true },
+    { value: 'NONE', label: 'none' }
+  ];
 
-  trafficPlanOptions: SelectOption[] = [];
+  trafficPlanOptions: SelectOption[] = [
+    { value: 'LOW', label: 'Low' },
+    { value: 'MEDIUM', label: 'Medium' },
+    { value: 'HIGH', label: 'High' },
+    { value: 'INTENSIVE', label: 'Intensive' },
+  ];
 
   packetForm: FormGroup;
 
@@ -42,23 +58,6 @@ export class PacketsStepComponent implements OnInit, OnChanges {
   ) { }
 
   ngOnInit() {
-
-    Object.keys(HPacket.TypeEnum).forEach((key) => {
-      this.typologyOptions.push({ value: HPacket.TypeEnum[key], label: HPacket.TypeEnum[key] })
-    });
-
-    Object.keys(HPacket.FormatEnum).forEach((key) => {
-      this.formatOptions.push({ value: HPacket.FormatEnum[key], label: HPacket.FormatEnum[key] })
-    });
-
-    Object.keys(HPacket.SerializationEnum).forEach((key) => {
-      this.serializationOptions.push({ value: HPacket.SerializationEnum[key], label: HPacket.SerializationEnum[key] })
-    });
-
-    Object.keys(HPacket.TrafficPlanEnum).forEach((key) => {
-      this.trafficPlanOptions.push({ value: HPacket.TrafficPlanEnum[key], label: HPacket.TrafficPlanEnum[key] })
-    });
-
     this.packetForm = this.fb.group({});
   }
 
@@ -68,31 +67,25 @@ export class PacketsStepComponent implements OnInit, OnChanges {
       this.devicesOptions.push({ value: el.id.toString(), label: el.deviceName })
   }
 
-  type;
-  format;
-  serialization;
-
   createPacket() {
 
     let hPacket: HPacket = {
       entityVersion: 1,
       name: this.packetForm.value.packetIdentification,
-      // type: this.packetForm.value.packetTypology,
-      // format: this.packetForm.value.packetFormat,
-      // serialization: this.packetForm.value.packetSerialization,
-      type: 'IO',//this.type,
-      format: 'JSON',//this.format,
-      serialization: 'AVRO',//this.serialization,
+      type: this.packetForm.value.packetTypology.value,
+      format: this.packetForm.value.packetFormat.value,
+      serialization: this.packetForm.value.packetSerialization.value,
+      fields: [],
       trafficPlan: 'HIGH',
       timestampField: 'timestampField',
       timestampFormat: 'dd/MM/yyyy HH.mmZ',
       version: '1',
-      device: { entityVersion: 1, id: 395 }
+      device: { entityVersion: 1, id: this.packetForm.value.packetDevice }
     }
 
     this.hPacketService.saveHPacket(hPacket).subscribe(
       res => {
-        this.packetsList.push(hPacket);
+        this.packetsList.push(res);
         this.hPacketsOutput.emit(this.packetsList);
       },
       err => console.log(err)
@@ -102,27 +95,12 @@ export class PacketsStepComponent implements OnInit, OnChanges {
   invalid() {
     return (
       this.packetForm.get('packetIdentification').invalid ||
-      this.packetForm.get('packetDevice').invalid
-      // this.packetForm.get('packetTypology').invalid ||
-      // this.packetForm.get('packetFormat').invalid ||
-      // this.packetForm.get('packetSerialization').invalid
+      this.packetForm.get('packetDevice').invalid ||
+      this.packetForm.get('packetTypology').invalid ||
+      this.packetForm.get('packetFormat').invalid ||
+      this.packetForm.get('packetSerialization').invalid ||
+      this.packetForm.get('packetTrafficPlan').invalid
     )
   }
-
-  typologyOptionsChanged(e) {
-    this.type = e.value;
-  }
-  formatOptionsChanged(e) {
-    this.format = e.value;
-  }
-  serializationOptionsChanged(e) {
-    this.serialization = e.value;
-  }
-
-  // "field": "hpacket-timestampfield",
-
-  // "field": "hpacket-timestampformat",
-
-  // "field": "hpacket-version",
 
 }

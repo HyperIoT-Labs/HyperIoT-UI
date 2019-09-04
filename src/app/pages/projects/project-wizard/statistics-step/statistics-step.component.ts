@@ -12,4 +12,8 @@ export class StatisticsStepComponent implements OnInit {
   ngOnInit() {
   }
 
+  createStatistic() {
+
+  }
+
 }

@@ -1,1 +1,76 @@
-<p>enrichment-step works!</p>
+<div id="enrichment-step" class="row">
+
+  <div class="col-md-10">
+
+    <form class="enrichment-form" [formGroup]="enrichmentForm" autocomplete="on">
+
+      <div class="row">
+        <div class="col-md-6 container-form-field">
+          <hyt-input-text [form]="enrichmentForm" formControlName="ruleName" name="ruleName" [isRequired]="true"
+            placeholder="HYT_ruleName">
+          </hyt-input-text>
+        </div>
+        <div class="col-md-6 container-form-field">
+          <hyt-select [form]="enrichmentForm" [options]="enrichmentRules" formControlName="enrichmentRule"
+            name="enrichmentRule" [isRequired]="true" label="HYT_enrichmentRule">
+          </hyt-select>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 container-form-field">
+          <hyt-select [form]="enrichmentForm" [options]="hDevices" formControlName="deviceEnrichment"
+            name="deviceEnrichment" [isRequired]="true" label="HYT_deviceEnrichment">
+          </hyt-select>
+        </div>
+        <div class="col-md-6 container-form-field">
+          <hyt-select [form]="enrichmentForm" [options]="hPacketsforDevice" formControlName="packetEnrichment"
+            name="packetEnrichment" [isRequired]="true" label="HYT_packetEnrichment">
+          </hyt-select>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12 container-form-field">
+          <hyt-rule-definition *ngIf="true" [hPacket]="currentPacket" (ruleDefinition)="updateRuleDefinition($event)">
+          </hyt-rule-definition>
+        </div>
+      </div>
+
+      <hyt-button id="rule-form-submit-button" [isDisabled]="invalid()" (clickFn)="createRule()" type="submit">
+        Add Rule
+      </hyt-button>
+
+      <button (click)="createRule()">NO VALIDAZIONE</button>
+
+    </form>
+
+  </div>
+
+  <div class="col-md-2">
+
+    <div class="row">
+
+      <div class="col-md-12">
+        ENRICHMENT DATA
+        <table>
+          <tr>
+            <th><b>ID</b></th>
+            <th><b>NOME</b></th>
+            <th><b>PACKET</b></th>
+          </tr>
+          <tr *ngFor="let enr of enrichmentList">
+            <td>{{enr.id}}</td>
+            <td>{{enr.name}}</td>
+            <td>{{enr.packet.id}}</td>
+          </tr>
+        </table>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- <button (click)="dati()">chiedi dati</button> -->

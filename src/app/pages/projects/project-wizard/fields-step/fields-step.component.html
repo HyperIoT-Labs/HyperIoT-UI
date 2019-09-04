@@ -11,7 +11,7 @@
             {{hdev.deviceName}}
             <ul>
               <li *ngFor="let hpac of hPackets">
-                <p *ngIf="hpac.deivce.id == hdev.id">{{hpac.name</p>
+                <p *ngIf="hpac.device.id == hdev.id" (click)="sethPackets(hpac.id)">{{hpac.name}}</p>
               </li>
             </ul>
           </li>
@@ -29,9 +29,10 @@
           </div>
 
           <div class="container-form-field">
-            Typology
-            <hyt-radio-button [form]="fieldForm" formControlName="fieldTypology" name="fieldTypology" [options]="multiplicityOptions" [verticalAlign]="true">
-            </hyt-radio-button> 
+            LEVEL OF MULTIPLICITY
+            <hyt-radio-button [form]="fieldForm" formControlName="fieldTypology" name="fieldTypology"
+              [options]="multiplicityOptions" [verticalAlign]="true">
+            </hyt-radio-button>
           </div>
 
           <div class="container-form-field">

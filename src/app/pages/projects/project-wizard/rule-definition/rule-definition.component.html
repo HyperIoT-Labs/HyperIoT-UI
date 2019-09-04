@@ -1,0 +1,51 @@
+<div id="ruleDefinition">
+
+  <div *ngFor="let ruleDefForm of ruleDefForms; let i = index" class="row">
+
+    <div class="col-md-12">
+
+      <form class="ruleDefinition-form" [formGroup]="ruleDefForm" autocomplete="on">
+
+        <div class="row">
+
+          <div class="col-md-3 container-form-field">
+            <hyt-select [form]="ruleDefForm" [options]="fieldOptions" formControlName="fieldRule" name="fieldRule"
+              [isRequired]="true" placeholder="HYT_field">
+            </hyt-select>
+          </div>
+
+          <div class="col-md-3 container-form-field">
+            <hyt-select [form]="ruleDefForm" [options]="allConditionOptions" formControlName="conditionRule"
+              name="conditionRule" [isRequired]="true" placeholder="HYT_condition">
+            </hyt-select>
+          </div>
+
+          <div class="col-md-3 container-form-field">
+            <hyt-input-text [form]="ruleDefForm" formControlName="valueRule" name="valueRule" [isRequired]="true"
+              placeholder="HYT_value">
+            </hyt-input-text>
+          </div>
+
+          <div class="col-md-2 container-form-field">
+            <hyt-radio-button [form]="ruleDefForm" [options]="joinOptions" (changeFn)="addCondition(i)"
+              formControlName="joinRule" name="joinRule" placeholder="HYT_join">
+            </hyt-radio-button>
+          </div>
+
+          <div class="col-md-1 container-form-field">
+            <hyt-button *ngIf="i!=0" (clickFn)="removeCondition(i)">Remove
+            </hyt-button>
+          </div>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+
+  <button (click)="buildRuleDefinition()">BUTTON</button>
+
+</div>
