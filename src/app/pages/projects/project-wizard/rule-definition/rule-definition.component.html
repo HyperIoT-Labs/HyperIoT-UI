@@ -15,14 +15,14 @@
           </div>
 
           <div class="col-md-3 container-form-field">
-            <hyt-select [form]="ruleDefForm" (changeFn)="onChangeRadio($event)" [options]="allConditionOptions"
-              formControlName="conditionRule" name="conditionRule" [isRequired]="true" placeholder="HYT_condition">
+            <hyt-select [form]="ruleDefForm" [options]="allConditionOptions" formControlName="conditionRule"
+              name="conditionRule" [isRequired]="true" placeholder="HYT_condition">
             </hyt-select>
           </div>
 
           <div class="col-md-3 container-form-field">
-            <hyt-input-text [form]="ruleDefForm" (change)="onChange($event)" formControlName="valueRule"
-              name="valueRule" [isRequired]="true" placeholder="HYT_value">
+            <hyt-input-text [form]="ruleDefForm" formControlName="valueRule" name="valueRule" [isRequired]="true"
+              placeholder="HYT_value">
             </hyt-input-text>
           </div>
 
