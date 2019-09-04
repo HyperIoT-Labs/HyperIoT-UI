@@ -48,7 +48,6 @@ export class DevicesStepComponent implements OnInit {
       res => {
         this.devicesList.push(res);
         this.hDevicesOutput.emit(this.devicesList);
-        console.log(res)
       },
       err => console.log(err)
     )

@@ -12,4 +12,8 @@ export class EventsStepComponent implements OnInit {
   ngOnInit() {
   }
 
+  createEvent() {
+
+  }
+
 }

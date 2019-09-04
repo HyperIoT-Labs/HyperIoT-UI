@@ -1,0 +1,25 @@
+[{
+    "statusCode": 422,
+    "type": "it.acsoftware.hyperiot.base.exception.HyperIoTValidationException",
+    "errorMessages": [],
+    "validationErrors": [{
+      "message": "must not be null",
+      "field": "hpacket-serialization",
+      "invalidValue": ""
+    }, {
+      "message": "must not be null",
+      "field": "hpacket-type",
+      "invalidValue": ""
+    }, {
+      "message": "must not be null",
+      "field": "hpacket-format",
+      "invalidValue": ""
+    }]
+  },
+  {
+    "statusCode": 500,
+    "type": "it.acsoftware.hyperiot.base.exception.HyperIoTRuntimeException",
+    "errorMessages": ["Row was updated or deleted by another transaction (or unsaved-value mapping was incorrect) : [it.acsoftware.hyperiot.hpacket.model.HPacket#489]"],
+    "validationErrors": []
+  }
+]

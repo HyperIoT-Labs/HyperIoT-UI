@@ -17,11 +17,24 @@ export class FieldsStepComponent implements OnInit {
 
   fieldForm: FormGroup;
 
-  multiplicityOptions: Option[] = [];
+  multiplicityOptions: Option[] = [
+    { value: 'SINGLE', label: 'Single', checked: true },
+    { value: 'ARRAY', label: 'Array' },
+    { value: 'MATRIX', label: 'Matrix' }
+  ];
 
-  typeOptions: SelectOption[] = [];
-
-
+  typeOptions: SelectOption[] = [
+    { value: 'OBJECT', label: 'OBJECT' },
+    { value: 'INTEGER', label: 'INTEGER' },
+    { value: 'DOUBLE', label: 'DOUBLE' },
+    { value: 'FLOAT', label: 'FLOAT' },
+    { value: 'BOOLEAN', label: 'BOOLEAN' },
+    { value: 'DATE', label: 'DATE' },
+    { value: 'TEXT', label: 'TEXT' },
+    { value: 'TIMESTAMP', label: 'TIMESTAMP' },
+    { value: 'CATEGORY', label: 'CATEGORY' },
+    { value: 'TAG', label: 'TAG' }
+  ];
 
   // @Output() packetAdded = new EventEmitter<HDevice>();
 
@@ -34,18 +47,18 @@ export class FieldsStepComponent implements OnInit {
 
   ngOnInit() {
 
-    Object.keys(HPacketField.MultiplicityEnum).forEach((key) => {
-      this.multiplicityOptions.push({ value: HPacketField.MultiplicityEnum[key], label: HPacketField.MultiplicityEnum[key] })
-    });
-
-    Object.keys(HPacketField.TypeEnum).forEach((key) => {
-      this.typeOptions.push({ value: HPacketField.TypeEnum[key], label: HPacketField.TypeEnum[key] })
-    });
-
     // for (let el of this.hDeviceList)
     //   this.devicesOptions.push({ value: el.id.toString(), label: el.deviceName })
 
     this.fieldForm = this.fb.group({});
+  }
+
+  idPacket: number = 417;
+
+  sethPackets(id: number) {
+    this.idPacket = id;
+    console.log(this.idPacket)
+    console.log("cliccato");
   }
 
   createField() {
@@ -53,17 +66,25 @@ export class FieldsStepComponent implements OnInit {
     let hPacketField: HPacketField = {
       entityVersion: 1,
       name: this.fieldForm.value.fieldName,
-      //multiplicity: this.fieldForm.value.,
+      multiplicity: this.fieldForm.value.fieldTypology.value,
       type: this.fieldForm.value.fieldType,
       description: this.fieldForm.value.fieldDescription
     }
 
+    let hPacket = this.hPackets.find(x => x.id == this.idPacket);
+
+    hPacket.fields.push(hPacketField)
+
+    console.log(hPacket);
+
     // this.packetAdded.emit(hPacket);
 
-    // this.hPacketService.updateHPacket(hPacket).subscribe(
-    //   res => console.log(res),
-    //   err => console.log(err)
-    // )
+    this.hPacketService.updateHPacket(hPacket).subscribe(
+      res => {
+
+      },
+      err => console.log(err)
+    )
   }
 
   invalid() {

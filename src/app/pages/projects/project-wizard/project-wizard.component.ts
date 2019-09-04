@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { HProject, HDevice, HPacket } from '@hyperiot/core';
 
 @Component({
@@ -7,6 +7,8 @@ import { HProject, HDevice, HPacket } from '@hyperiot/core';
   styleUrls: ['./project-wizard.component.scss']
 })
 export class ProjectWizardComponent implements OnInit {
+
+  @ViewChild('stepper', { static: false }) stepper;
 
   hProject: HProject;
   hDevices: HDevice[] = [];
@@ -31,6 +33,9 @@ export class ProjectWizardComponent implements OnInit {
     this.hProject = proj;
     if (this.hProject)
       this.projectValidated = true;
+    setTimeout(() => {
+      this.stepper.next();
+    }, 0);
   }
 
   updateDevices(dev: HDevice[]) {
