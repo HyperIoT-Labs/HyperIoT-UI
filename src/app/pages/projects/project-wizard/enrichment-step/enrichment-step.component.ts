@@ -1,8 +1,9 @@
 import { Component, OnInit, Input, OnChanges, ViewChild } from '@angular/core';
-import { HProject, HDevice, HPacket, Rule, HpacketsService } from '@hyperiot/core';
+import { HProject, HDevice, HPacket, Rule, HpacketsService, RulesService } from '@hyperiot/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { SelectOption } from '@hyperiot/components';
 import { RuleDefinitionComponent } from '../rule-definition/rule-definition.component';
+import { HYTError } from 'src/app/services/errorHandler/models/models';
 
 @Component({
   selector: 'hyt-enrichment-step',
@@ -15,13 +16,19 @@ export class EnrichmentStepComponent implements OnInit, OnChanges {
 
   @Input() hDevices: HDevice[] = [];
 
+  devicesOptions: SelectOption[] = [];
+
   @Input() hPackets: HPacket[] = [];
+
+  packetsOptions: SelectOption[] = [];
 
   @ViewChild('ruleDef', { static: false }) ruleDefinitionComponent: RuleDefinitionComponent;
 
   hPacketsforDevice: HPacket[] = [];
 
   currentPacket;
+
+  errors: HYTError[] = [];
 
   // ruleDefinition: string = '';
 
@@ -33,11 +40,12 @@ export class EnrichmentStepComponent implements OnInit, OnChanges {
     { value: ' Validation', label: 'Validation' }
   ]
 
-  enrichmentList = [];
+  ruleList: Rule[] = [];
 
   constructor(
     private fb: FormBuilder,
-    private hPacketService: HpacketsService
+    private hPacketService: HpacketsService,
+    private rulesService: RulesService
   ) { }
 
   ngOnInit() {
@@ -45,23 +53,52 @@ export class EnrichmentStepComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
-    console.log("new hPackets")
-    console.log(this.hPackets);
-    // this.hDevices = [];
-    // for (let el of this.hDevices)
-    //   this.hDevices.push({ value: el.id.toString(), label: el.deviceName })
+    this.devicesOptions = [];
+    for (let el of this.hDevices)
+      this.devicesOptions.push({ value: el.id.toString(), label: el.deviceName });
+    this.packetsOptions = [];
+  }
+
+  deviceChanged(event: Event) {
+    console.log(event)
+    this.packetsOptions = [];
+    for (let el of this.hPackets)
+      if (this.enrichmentForm.value.deviceEnrichment == el.id)
+        this.packetsOptions.push({ value: el.id.toString(), label: el.name });
+  }
+
+  packetChanged(event: Event) {
+    this.currentPacket = this.enrichmentForm.value.packetEnrichment;
   }
 
   createRule() {
+
+    this.errors = [];
+
+    var action = JSON.stringify({ actionName: "AddCategoryRuleAction2", ruleId: 0, categoryIds: [456], ruleType: "ENRICHMENT" });
+    var actions = [action];
+    var str: string = JSON.stringify(actions);
+
     let rule: Rule = {
       name: this.enrichmentForm.value.ruleName,
       ruleDefinition: this.ruleDefinitionComponent.buildRuleDefinition(),
       project: this.hProject,
       packet: this.currentPacket,
+      jsonActions: str,
       actions: null,
       type: 'ENRICHMENT',
       entityVersion: 1
     }
+
+    this.rulesService.saveRule(rule).subscribe(
+      res => {
+        this.ruleList.push(res);
+      },
+      err => {
+
+      }
+    )
+
   }
 
   updateRuleDefinition(rd) {
@@ -77,14 +114,5 @@ export class EnrichmentStepComponent implements OnInit, OnChanges {
       this.ruleDefinitionComponent.isInvalid()
     )
   }
-
-  // dati() {
-  //   this.hPacketService.findHPacket(417).subscribe(
-  //     res => {
-  //       console.log(res);
-  //       this.currentPacket = res;
-  //     }
-  //   )
-  // }
 
 }

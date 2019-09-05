@@ -44,5 +44,31 @@
     "type": "it.acsoftware.hyperiot.base.exception.HyperIoTDuplicateEntityException",
     "errorMessages": ["name", "user_id"],
     "validationErrors": []
+  },
+  {
+    "statusCode": 422,
+    "type": "it.acsoftware.hyperiot.base.exception.HyperIoTValidationException",
+    "errorMessages": [],
+    "validationErrors": [{
+      "message": "Invalid pattern",
+      "field": "hdevice-devicename",
+      "invalidValue": "¥ £ ⅕ ⅙ ⅛ ⅔ ⅖ ⅗ ⅘ ⅜ ⅚ ⅐ ⅝ ↉ ⅓ ⅑ ⅒ ⅞ ← ↑ → ↓ ↔ ↕ ↖ ↗ ↘"
+    }, {
+      "message": "Passwords must match",
+      "field": "hdevice-password",
+      "invalidValue": ""
+    }, {
+      "message": "Passwords must match",
+      "field": "hdevice-passwordConfirm",
+      "invalidValue": ""
+    }, {
+      "message": "Invalid password",
+      "field": "hdevice-password",
+      "invalidValue": ""
+    }, {
+      "message": "Invalid password",
+      "field": "hdevice-passwordConfirm",
+      "invalidValue": ""
+    }]
   }
 ]

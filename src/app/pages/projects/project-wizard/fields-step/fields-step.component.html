@@ -24,7 +24,7 @@
 
           <div class="container-form-field">
             <hyt-input-text [form]="fieldForm" formControlName="fieldName" name="fieldName" [isRequired]="true"
-              placeholder="HYT_fieldName">
+              placeholder="HYT_fieldName" [injectedErrorMsg]="getError('fieldName')">
             </hyt-input-text>
           </div>
 
@@ -46,6 +46,12 @@
               placeholder="HYT_fieldDescription">
             </hyt-text-area>
           </div>
+
+          <div class="container-form-field errorMessage">
+            <ng-container *ngIf="getError('general')">
+              {{getError('general')}}
+            </ng-container>
+          </div> <!-- Error Box -->
 
           <hyt-button id="field-form-submit-button" [isDisabled]="invalid()" (clickFn)="createField()" type="submit">
             Add Field

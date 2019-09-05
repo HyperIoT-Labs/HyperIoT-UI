@@ -93,12 +93,6 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
     console.log("ciao")
   }
 
-  // this.enrichmentForm.get('ruleName').invalid ||
-  // this.enrichmentForm.get('enrichmentRule').invalid ||
-  // this.enrichmentForm.get('deviceEnrichment').invalid ||
-  // this.enrichmentForm.get('packetEnrichment').invalid ||
-  // this.ruleDefinitionComponent.get
-
   isFormInvalid(k: number): boolean {
     return (
       this.ruleDefForms[k].get('fieldOptions').invalid ||

@@ -3,6 +3,8 @@ import { HDevice, HpacketsService, HPacket } from '@hyperiot/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { SelectOption } from '@hyperiot/components/lib/hyt-select/hyt-select.component';
 import { Option } from '@hyperiot/components/lib/hyt-radio-button/hyt-radio-button.component';
+import { HYTError } from 'src/app/services/errorHandler/models/models';
+import { ProjectWizardHttpErrorHandlerService } from 'src/app/services/errorHandler/project-wizard-http-error-handler.service';
 
 export enum myEnum {
   Customer = 1,
@@ -19,6 +21,8 @@ export class PacketsStepComponent implements OnInit, OnChanges {
   @Input() hDevices: HDevice[] = [];
 
   devicesOptions: SelectOption[] = [];
+
+  errors: HYTError[] = [];
 
   typologyOptions: Option[] = [
     { value: 'INPUT', label: 'Input', checked: true },
@@ -54,7 +58,8 @@ export class PacketsStepComponent implements OnInit, OnChanges {
 
   constructor(
     private fb: FormBuilder,
-    private hPacketService: HpacketsService
+    private hPacketService: HpacketsService,
+    private errorHandler: ProjectWizardHttpErrorHandlerService
   ) { }
 
   ngOnInit() {
@@ -69,9 +74,11 @@ export class PacketsStepComponent implements OnInit, OnChanges {
 
   createPacket() {
 
+    this.errors = [];
+
     let hPacket: HPacket = {
       entityVersion: 1,
-      name: this.packetForm.value.packetIdentification,
+      name: this.packetForm.value['packetName'],
       type: this.packetForm.value.packetTypology.value,
       format: this.packetForm.value.packetFormat.value,
       serialization: this.packetForm.value.packetSerialization.value,
@@ -88,19 +95,33 @@ export class PacketsStepComponent implements OnInit, OnChanges {
         this.packetsList.push(res);
         this.hPacketsOutput.emit(this.packetsList);
       },
-      err => console.log(err)
+      err => {
+        this.errors = this.errorHandler.handleCreatePacket(err);
+        this.errors.forEach(e => {
+          if (e.container != 'general')
+            this.packetForm.get(e.container).setErrors({
+              validateInjectedError: {
+                valid: false
+              }
+            });
+        })
+      }
     )
   }
 
   invalid() {
     return (
-      this.packetForm.get('packetIdentification').invalid ||
+      this.packetForm.get('packetName').invalid ||
       this.packetForm.get('packetDevice').invalid ||
       this.packetForm.get('packetTypology').invalid ||
       this.packetForm.get('packetFormat').invalid ||
       this.packetForm.get('packetSerialization').invalid ||
       this.packetForm.get('packetTrafficPlan').invalid
     )
+  }
+
+  getError(field: string): string {
+    return (this.errors.find(x => x.container == field)) ? this.errors.find(x => x.container == field).message : null;
   }
 
 }

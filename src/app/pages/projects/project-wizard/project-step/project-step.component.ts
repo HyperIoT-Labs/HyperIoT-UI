@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { HProject, HprojectsService } from '@hyperiot/core';
 import { ProjectWizardHttpErrorHandlerService } from 'src/app/services/errorHandler/project-wizard-http-error-handler.service';
 import { HYTError } from 'src/app/services/errorHandler/models/models';
+import { SelectOption } from '@hyperiot/components/lib/hyt-select-template/hyt-select-template.component';
 
 @Component({
   selector: 'hyt-project-step',
@@ -58,8 +59,6 @@ export class ProjectStepComponent implements OnInit {
   }
 
   getError(field: string): string {
-    console.log(this.errors)
-    console.log(this.errors.find(x => x.container == field))
     return (this.errors.find(x => x.container == field)) ? this.errors.find(x => x.container == field).message : null;
   }
 
@@ -69,5 +68,16 @@ export class ProjectStepComponent implements OnInit {
       this.projectForm.get('projectDescription').invalid
     )
   }
+
+  onChange(eve) {
+    console.log(eve)
+  }
+
+  optionsasdf: SelectOption[] = [
+    { value: '1', label: '1' },
+    { value: '2', label: '2' },
+    { value: '3', label: '3' },
+    { value: '4', label: '4' },
+  ]
 
 }

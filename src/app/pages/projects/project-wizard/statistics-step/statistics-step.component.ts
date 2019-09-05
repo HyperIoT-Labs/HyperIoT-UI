@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HYTError } from 'src/app/services/errorHandler/models/models';
 
 @Component({
   selector: 'hyt-statistics-step',
@@ -7,12 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StatisticsStepComponent implements OnInit {
 
+  errors: HYTError[] = [];
+
   constructor() { }
 
   ngOnInit() {
   }
 
   createStatistic() {
+
+    this.errors = [];
 
   }
 

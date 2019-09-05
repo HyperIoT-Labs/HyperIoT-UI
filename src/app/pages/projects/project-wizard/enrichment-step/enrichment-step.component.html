@@ -19,13 +19,13 @@
 
       <div class="row">
         <div class="col-md-6 container-form-field">
-          <hyt-select [form]="enrichmentForm" [options]="hDevices" formControlName="deviceEnrichment"
-            name="deviceEnrichment" [isRequired]="true" label="HYT_deviceEnrichment">
+          <hyt-select [form]="enrichmentForm" [options]="devicesOptions" (blur)="deviceChanged($event)"
+            formControlName="deviceEnrichment" name="deviceEnrichment" [isRequired]="true" label="HYT_deviceEnrichment">
           </hyt-select>
         </div>
         <div class="col-md-6 container-form-field">
-          <hyt-select [form]="enrichmentForm" [options]="hPacketsforDevice" formControlName="packetEnrichment"
-            name="packetEnrichment" [isRequired]="true" label="HYT_packetEnrichment">
+          <hyt-select [form]="enrichmentForm" [options]="packetsOptions" (blur)="packetChanged($event)"
+            formControlName="packetEnrichment" name="packetEnrichment" [isRequired]="true" label="HYT_packetEnrichment">
           </hyt-select>
         </div>
       </div>
@@ -60,7 +60,7 @@
             <th><b>NOME</b></th>
             <th><b>PACKET</b></th>
           </tr>
-          <tr *ngFor="let enr of enrichmentList">
+          <tr *ngFor="let enr of ruleList">
             <td>{{enr.id}}</td>
             <td>{{enr.name}}</td>
             <td>{{enr.packet.id}}</td>

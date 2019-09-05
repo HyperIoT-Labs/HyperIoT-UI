@@ -9,13 +9,13 @@
         <div class="row">
 
           <div class="col-md-3 container-form-field">
-            <hyt-select [form]="ruleDefForm" (onChange)="onChange($event)" [options]="fieldOptions"
+            <hyt-select [form]="ruleDefForm" (blur)="onChange($event)" [options]="fieldOptions"
               formControlName="fieldRule" name="fieldRule" [isRequired]="true" placeholder="HYT_field">
             </hyt-select>
           </div>
 
           <div class="col-md-3 container-form-field">
-            <hyt-select [form]="ruleDefForm" (onChange)="onChange($event)" [options]="allConditionOptions"
+            <hyt-select [form]="ruleDefForm" (blur)="onChange($event)" [options]="allConditionOptions"
               formControlName="conditionRule" name="conditionRule" [isRequired]="true" placeholder="HYT_condition">
             </hyt-select>
           </div>

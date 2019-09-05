@@ -4,6 +4,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { HPacketField, HpacketsService, HPacket, HDevice } from '@hyperiot/core';
 import { SelectOption } from '@hyperiot/components';
 import { HttpClient } from '@angular/common/http';
+import { HYTError } from 'src/app/services/errorHandler/models/models';
+import { ProjectWizardHttpErrorHandlerService } from 'src/app/services/errorHandler/project-wizard-http-error-handler.service';
 
 @Component({
   selector: 'hyt-fields-step',
@@ -37,6 +39,8 @@ export class FieldsStepComponent implements OnInit {
     { value: 'TAG', label: 'TAG' }
   ];
 
+  errors: HYTError[] = [];
+
   @Output() hPacketsOutput = new EventEmitter<HPacket[]>();
 
   formDeviceActive: boolean = false;
@@ -44,7 +48,7 @@ export class FieldsStepComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private hPacketService: HpacketsService,
-    private httpClient: HttpClient
+    private errorHandler: ProjectWizardHttpErrorHandlerService
   ) { }
 
   ngOnInit() {
@@ -64,9 +68,11 @@ export class FieldsStepComponent implements OnInit {
 
   createField() {
 
+    this.errors = [];
+
     let hPacketField: HPacketField = {
       entityVersion: 1,
-      name: this.fieldForm.value.fieldName,
+      name: this.fieldForm.value['fieldName'],
       multiplicity: this.fieldForm.value.fieldTypology.value,
       type: this.fieldForm.value.fieldType,
       description: this.fieldForm.value.fieldDescription
@@ -84,9 +90,23 @@ export class FieldsStepComponent implements OnInit {
         }
         this.hPacketsOutput.emit(this.hPackets);
       },
-      err => { }
+      err => {
+        this.errors = this.errorHandler.handleCreateField(err);
+        this.errors.forEach(e => {
+          if (e.container != 'general')
+            this.fieldForm.get(e.container).setErrors({
+              validateInjectedError: {
+                valid: false
+              }
+            });
+        })
+      }
     );
 
+  }
+
+  getError(field: string): string {
+    return (this.errors.find(x => x.container == field)) ? this.errors.find(x => x.container == field).message : null;
   }
 
   invalid() {

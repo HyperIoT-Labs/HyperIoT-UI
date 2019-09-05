@@ -6,8 +6,8 @@
 
       <div class="row">
         <div class="col-md-6 container-form-field">
-          <hyt-input-text [form]="packetForm" formControlName="packetIdentification" name="packetIdentification"
-            [isRequired]="true" placeholder="HYT_packetIdentification">
+          <hyt-input-text [form]="packetForm" formControlName="packetName" name="packetName" [isRequired]="true"
+            placeholder="packetName" [injectedErrorMsg]="getError('packetName')">
           </hyt-input-text>
         </div>
         <div class="col-md-6 container-form-field">
@@ -46,11 +46,15 @@
         </div>
       </div>
 
+      <div class="container-form-field errorMessage">
+        <ng-container *ngIf="getError('general')">
+          {{getError('general')}}
+        </ng-container>
+      </div> <!-- Error Box -->
+
       <hyt-button id="packet-form-submit-button" [isDisabled]="invalid()" (clickFn)="createPacket()" type="submit">
         Add Packet
       </hyt-button>
-
-      <button (click)="createPacket()">NO VALIDAZIONE</button>
 
     </form>
 
