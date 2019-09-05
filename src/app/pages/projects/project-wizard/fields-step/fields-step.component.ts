@@ -112,7 +112,6 @@ export class FieldsStepComponent implements OnInit {
   invalid() {
     return (
       this.fieldForm.get('fieldName').invalid ||
-      //this.packetForm.get('fieldMultiplicity').invalid ||
       this.fieldForm.get('fieldType').invalid
     )
   }

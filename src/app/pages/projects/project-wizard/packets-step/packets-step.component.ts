@@ -79,9 +79,9 @@ export class PacketsStepComponent implements OnInit, OnChanges {
     let hPacket: HPacket = {
       entityVersion: 1,
       name: this.packetForm.value['packetName'],
-      type: this.packetForm.value.packetTypology.value,
-      format: this.packetForm.value.packetFormat.value,
-      serialization: this.packetForm.value.packetSerialization.value,
+      type: this.packetForm.value['hpacket-type'].value,
+      format: this.packetForm.value['hpacket-format'].value,
+      serialization: this.packetForm.value['hpacket-serialization'].value,
       fields: [],
       trafficPlan: 'HIGH',
       timestampField: 'timestampField',
@@ -113,9 +113,6 @@ export class PacketsStepComponent implements OnInit, OnChanges {
     return (
       this.packetForm.get('packetName').invalid ||
       this.packetForm.get('packetDevice').invalid ||
-      this.packetForm.get('packetTypology').invalid ||
-      this.packetForm.get('packetFormat').invalid ||
-      this.packetForm.get('packetSerialization').invalid ||
       this.packetForm.get('packetTrafficPlan').invalid
     )
   }
