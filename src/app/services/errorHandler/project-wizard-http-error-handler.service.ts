@@ -143,8 +143,8 @@ export class ProjectWizardHttpErrorHandlerService extends HttpErrorHandlerServic
             var errors: HYTError[] = [];
             errors.length
             for (let k of httpError.error.validationErrors)
-              errors.push({ message: k.message, container: k.field })
-            errors.push({ message: 'alcuni campi inseriti sono invalidi', container: 'general' })
+              errors.push({ message: k.message, container: k.field });
+            errors.push({ message: 'Alcuni campi inseriti sono invalidi', container: 'general' });
             return errors;
             break;
           }

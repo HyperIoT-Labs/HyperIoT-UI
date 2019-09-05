@@ -30,8 +30,7 @@ export class AuthenticationHttpErrorHandlerService extends HttpErrorHandlerServi
           case 'it.acsoftware.hyperiot.base.exception.HyperIoTValidationException': {
             var errors: HYTError[] = [];
             for (let k of httpError.error.validationErrors)
-              errors.push({ message: k.field + k.message, container: 'general' })
-            console.log(errors)
+              errors.push({ message: k.message, container: k.field })
             return errors;
             break;
           }

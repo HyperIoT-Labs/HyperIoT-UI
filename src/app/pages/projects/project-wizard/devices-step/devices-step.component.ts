@@ -48,7 +48,7 @@ export class DevicesStepComponent implements OnInit {
       description: this.deviceForm.value.deviceDescription,
       password: this.deviceForm.value['hdevice-password'],
       passwordConfirm: this.deviceForm.value['hdevice-passwordConfirm'],
-      project: { id: 579, entityVersion: 1 }
+      project: { id: this.hProject.id, entityVersion: 1 }
     }
 
     this.hDeviceService.saveHDevice(hDevice).subscribe(
