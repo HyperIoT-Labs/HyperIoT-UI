@@ -1,10 +1,25 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { trigger, state, style, animate, transition } from '@angular/animations';
+
 import { HProject, HDevice, HdevicesService, RulesService, Rule } from '@hyperiot/core';
 
 @Component({
   selector: 'hyt-project-card',
   templateUrl: './project-card.component.html',
-  styleUrls: ['./project-card.component.scss']
+  styleUrls: ['./project-card.component.scss'],
+  animations: [
+    trigger('crossFade', [
+        state('in', style({opacity: 1})),
+        transition(':enter', [
+          style({opacity: 0}),
+          animate('200ms 10ms')
+        ]),
+        transition(':leave', [
+          animate('200ms 10ms', style({opacity: 0}))
+        ])
+      ]
+    )
+]
 })
 export class ProjectCardComponent implements OnInit {
   @Input() project: HProject;
