@@ -43,6 +43,7 @@ export class RegistrationComponent implements OnInit {
   registrationSucceeded: boolean = false;
 
   register() {
+    this.loading = true;
     this.errors = [];
     this.generalError = 0;
     this.registrationSucceeded = false;
