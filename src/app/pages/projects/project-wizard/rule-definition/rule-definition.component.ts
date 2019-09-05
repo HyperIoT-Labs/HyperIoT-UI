@@ -48,7 +48,7 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
     { value: ' OR ', label: 'OR', checked: false }
   ]
 
-  @Output() ruleDefinition = new EventEmitter<string>();
+  // @Output() ruleDefinition = new EventEmitter<string>();
 
   constructor(
     private fb: FormBuilder
@@ -75,9 +75,6 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
   }
   // this.packetForm.value.packetIdentification
 
-
-
-
   buildRuleDefinition() {
     let rd = '';
     for (let k = 0; k < this.ruleDefForms.length; k++) {
@@ -87,14 +84,34 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
       let joinRule: string = (this.ruleDefForms[k].value.joinRule.value) ? this.ruleDefForms[k].value.joinRule.value + ' ' : '';
       rd += element + condition + valueRule + joinRule;
     }
-    // rd +=
-    //   this.hPacket.name + '.' + this.ruleDefForms[k].value.fieldOptions + ' '
-    //   + this.ruleDefForms[k].value.conditionRule + ' '
-    //   + this.ruleDefForms[k].value.valueRule
-    //   + this.ruleDefForms[k].value.joinRule.value;
-
 
     console.log(rd)
+    return rd;
+  }
+
+  onChange(event) {
+    console.log("ciao")
+  }
+
+  // this.enrichmentForm.get('ruleName').invalid ||
+  // this.enrichmentForm.get('enrichmentRule').invalid ||
+  // this.enrichmentForm.get('deviceEnrichment').invalid ||
+  // this.enrichmentForm.get('packetEnrichment').invalid ||
+  // this.ruleDefinitionComponent.get
+
+  isFormInvalid(k: number): boolean {
+    return (
+      this.ruleDefForms[k].get('fieldOptions').invalid ||
+      this.ruleDefForms[k].get('conditionRule').invalid ||
+      this.ruleDefForms[k].get('valueRule').invalid
+    )
+  }
+
+  isInvalid() {
+    for (let k = 0; k < this.ruleDefForms.length; k++)
+      if (this.isFormInvalid(k))
+        return true;
+    return false;
   }
 
 }

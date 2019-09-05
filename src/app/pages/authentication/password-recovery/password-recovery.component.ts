@@ -2,8 +2,8 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { SubmissionStatus } from '../models/pageStatus';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { HusersService } from '@hyperiot/core';
-import { AuthenticationHttpErrorHandlerService } from 'src/app/services/authentication-http-error-handler.service';
-import { Handler } from 'src/app/services/models/models';
+import { AuthenticationHttpErrorHandlerService } from 'src/app/services/errorHandler/authentication-http-error-handler.service';
+import { HYTError } from 'src/app/services/errorHandler/models/models';
 
 @Component({
   selector: 'hyt-password-recovery',
@@ -33,7 +33,7 @@ export class PasswordRecoveryComponent implements OnInit {
     this.hUserService.resetPasswordRequest(this.recoverMailForm.value.email).subscribe(
       res => { this.submissionStatus = SubmissionStatus.Submitted },
       err => {
-        let k: Handler[] = this.httperrorHandler.handlePwdRecovery(err);
+        let k: HYTError[] = this.httperrorHandler.handlePwdRecovery(err);
         for (let e of k) {
           this.error = e.message;
         }

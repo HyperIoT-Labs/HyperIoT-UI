@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { HusersService, HUser } from '@hyperiot/core';
-import { AuthenticationHttpErrorHandlerService } from 'src/app/services/authentication-http-error-handler.service';
+import { AuthenticationHttpErrorHandlerService } from 'src/app/services/errorHandler/authentication-http-error-handler.service';
+import { HYTError } from 'src/app/services/errorHandler/models/models';
 
 @Component({
   selector: 'hyt-registration',
@@ -11,7 +12,7 @@ import { AuthenticationHttpErrorHandlerService } from 'src/app/services/authenti
 })
 export class RegistrationComponent implements OnInit {
 
-  error: string;
+  error: string = '';
 
   registrationForm: FormGroup;
   //  = new FormGroup({
@@ -63,15 +64,15 @@ export class RegistrationComponent implements OnInit {
         this.loading = false
       },
       err => {
-        let k: Map<string, string> = this.httperrorHandler.handleRegistration(err);
+        let k: HYTError[] = this.httperrorHandler.handleRegistration(err);
         for (let e of k) {
-          if (e[0] == 'general') {
-            this.error = e[1]
+          if (e.container == 'general') {
+            this.error = e.message
             this.generalError = 1;
           }
           else {
-            this.error = e[1]
-            this.registrationForm.get(e[0]).setErrors({
+            this.error = e.message
+            this.registrationForm.get(e.container).setErrors({
               validateInjectedError: {
                 valid: false
               }

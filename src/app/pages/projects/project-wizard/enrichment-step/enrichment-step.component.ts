@@ -1,7 +1,8 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, ViewChild } from '@angular/core';
 import { HProject, HDevice, HPacket, Rule, HpacketsService } from '@hyperiot/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { SelectOption } from '@hyperiot/components';
+import { RuleDefinitionComponent } from '../rule-definition/rule-definition.component';
 
 @Component({
   selector: 'hyt-enrichment-step',
@@ -16,11 +17,13 @@ export class EnrichmentStepComponent implements OnInit, OnChanges {
 
   @Input() hPackets: HPacket[] = [];
 
+  @ViewChild('ruleDef', { static: false }) ruleDefinitionComponent: RuleDefinitionComponent;
+
   hPacketsforDevice: HPacket[] = [];
 
   currentPacket;
 
-  ruleDefinition: string = '';
+  // ruleDefinition: string = '';
 
   enrichmentForm: FormGroup;
 
@@ -42,6 +45,8 @@ export class EnrichmentStepComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
+    console.log("new hPackets")
+    console.log(this.hPackets);
     // this.hDevices = [];
     // for (let el of this.hDevices)
     //   this.hDevices.push({ value: el.id.toString(), label: el.deviceName })
@@ -50,7 +55,7 @@ export class EnrichmentStepComponent implements OnInit, OnChanges {
   createRule() {
     let rule: Rule = {
       name: this.enrichmentForm.value.ruleName,
-      ruleDefinition: '',
+      ruleDefinition: this.ruleDefinitionComponent.buildRuleDefinition(),
       project: this.hProject,
       packet: this.currentPacket,
       actions: null,
@@ -60,7 +65,7 @@ export class EnrichmentStepComponent implements OnInit, OnChanges {
   }
 
   updateRuleDefinition(rd) {
-    this.ruleDefinition = rd;
+    // this.ruleDefinition = rd;
   }
 
   invalid(): boolean {
@@ -68,17 +73,18 @@ export class EnrichmentStepComponent implements OnInit, OnChanges {
       this.enrichmentForm.get('ruleName').invalid ||
       this.enrichmentForm.get('enrichmentRule').invalid ||
       this.enrichmentForm.get('deviceEnrichment').invalid ||
-      this.enrichmentForm.get('packetEnrichment').invalid
+      this.enrichmentForm.get('packetEnrichment').invalid ||
+      this.ruleDefinitionComponent.isInvalid()
     )
   }
 
-  dati() {
-    this.hPacketService.findHPacket(417).subscribe(
-      res => {
-        console.log(res);
-        this.currentPacket = res;
-      }
-    )
-  }
+  // dati() {
+  //   this.hPacketService.findHPacket(417).subscribe(
+  //     res => {
+  //       console.log(res);
+  //       this.currentPacket = res;
+  //     }
+  //   )
+  // }
 
 }

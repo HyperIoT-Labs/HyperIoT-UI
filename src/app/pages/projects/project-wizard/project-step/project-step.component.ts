@@ -1,6 +1,8 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { HProject, HprojectsService } from '@hyperiot/core';
+import { ProjectWizardHttpErrorHandlerService } from 'src/app/services/errorHandler/project-wizard-http-error-handler.service';
+import { HYTError } from 'src/app/services/errorHandler/models/models';
 
 @Component({
   selector: 'hyt-project-step',
@@ -13,9 +15,12 @@ export class ProjectStepComponent implements OnInit {
 
   projectForm: FormGroup;
 
+  errors: HYTError[] = [];
+
   constructor(
     private fb: FormBuilder,
-    private hProjectService: HprojectsService
+    private hProjectService: HprojectsService,
+    private errorHandler: ProjectWizardHttpErrorHandlerService
   ) { }
 
   ngOnInit() {
@@ -23,6 +28,8 @@ export class ProjectStepComponent implements OnInit {
   }
 
   createProject() {
+
+    this.errors = [];
 
     let hProject: HProject = {
       name: this.projectForm.value.projectName,
@@ -36,9 +43,24 @@ export class ProjectStepComponent implements OnInit {
         this.projectOutput.emit(res);
       },
       err => {
-        console.log(err);
+        this.errors = this.errorHandler.handleCreateHProject(err);
+        this.errors.forEach(e => {
+          if (e.container != 'general')
+            this.projectForm.get(e.container).setErrors({
+              validateInjectedError: {
+                valid: false
+              }
+            });
+
+        })
       }
     )
+  }
+
+  getError(field: string): string {
+    console.log(this.errors)
+    console.log(this.errors.find(x => x.container == field))
+    return (this.errors.find(x => x.container == field)) ? this.errors.find(x => x.container == field).message : null;
   }
 
   invalid(): boolean {

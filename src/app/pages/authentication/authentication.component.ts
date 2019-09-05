@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { fadeAnimation } from '../../route-animation';
+import { fadeAnimation } from './route-animation';
 
 @Component({
   selector: 'hyt-authentication',

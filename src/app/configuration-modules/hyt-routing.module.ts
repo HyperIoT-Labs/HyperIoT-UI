@@ -76,6 +76,11 @@ const hyperiotRoutes: Routes = [
     ]
   },
   {
+    path: 'login',
+    redirectTo: '/auth/login',
+    pathMatch: 'full'
+  },
+  {
     path: 'project-wizard',
     component: ProjectWizardComponent,
     canActivate: [LoggedInGuard],

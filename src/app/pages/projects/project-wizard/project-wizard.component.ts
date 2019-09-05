@@ -50,4 +50,10 @@ export class ProjectWizardComponent implements OnInit {
       this.packetsValidated = true;
   }
 
+  updatePacketFields(pac: HPacket[]) {
+    this.hPackets = [...pac];
+    if (this.hPackets[0].fields.length != 0)
+      this.fieldsValidated = true;
+  }
+
 }

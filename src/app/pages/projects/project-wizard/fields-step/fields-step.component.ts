@@ -1,8 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { Option } from '@hyperiot/components/lib/hyt-radio-button/hyt-radio-button.component';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { HPacketField, HpacketsService, HPacket, HDevice } from '@hyperiot/core';
 import { SelectOption } from '@hyperiot/components';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'hyt-fields-step',
@@ -36,13 +37,14 @@ export class FieldsStepComponent implements OnInit {
     { value: 'TAG', label: 'TAG' }
   ];
 
-  // @Output() packetAdded = new EventEmitter<HDevice>();
+  @Output() hPacketsOutput = new EventEmitter<HPacket[]>();
 
   formDeviceActive: boolean = false;
 
   constructor(
     private fb: FormBuilder,
-    private hPacketService: HpacketsService
+    private hPacketService: HpacketsService,
+    private httpClient: HttpClient
   ) { }
 
   ngOnInit() {
@@ -58,7 +60,6 @@ export class FieldsStepComponent implements OnInit {
   sethPackets(id: number) {
     this.idPacket = id;
     console.log(this.idPacket)
-    console.log("cliccato");
   }
 
   createField() {
@@ -73,18 +74,19 @@ export class FieldsStepComponent implements OnInit {
 
     let hPacket = this.hPackets.find(x => x.id == this.idPacket);
 
-    hPacket.fields.push(hPacketField)
-
-    console.log(hPacket);
-
-    // this.packetAdded.emit(hPacket);
-
-    this.hPacketService.updateHPacket(hPacket).subscribe(
+    this.hPacketService.addHPacketField(hPacket.id, hPacketField).subscribe(
       res => {
+        let hPacket = this.hPackets.find(x => x.id == res.id);
+        var index = this.hPackets.indexOf(hPacket);
 
+        if (index !== -1) {
+          this.hPackets[index] = res;
+        }
+        this.hPacketsOutput.emit(this.hPackets);
       },
-      err => console.log(err)
-    )
+      err => { }
+    );
+
   }
 
   invalid() {

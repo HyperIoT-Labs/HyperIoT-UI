@@ -2,8 +2,8 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { HusersService, HUserPasswordReset } from '@hyperiot/core';
 import { ActivatedRoute } from '@angular/router';
-import { Handler } from 'src/app/services/models/models';
-import { AuthenticationHttpErrorHandlerService } from 'src/app/services/authentication-http-error-handler.service';
+import { HYTError } from 'src/app/services/errorHandler/models/models';
+import { AuthenticationHttpErrorHandlerService } from 'src/app/services/errorHandler/authentication-http-error-handler.service';
 import { SubmissionStatus } from '../models/pageStatus';
 
 @Component({
@@ -56,7 +56,7 @@ export class PasswordResetComponent implements OnInit {
     this.hUserService.resetPassword(pwdReset).subscribe(
       res => { this.submissionStatus = SubmissionStatus.Submitted },
       err => {
-        let k: Handler[] = this.httperrorHandler.handlePwdRecovery(err);
+        let k: HYTError[] = this.httperrorHandler.handlePwdRecovery(err);
         for (let e of k) {
           this.error = e.message;
         }

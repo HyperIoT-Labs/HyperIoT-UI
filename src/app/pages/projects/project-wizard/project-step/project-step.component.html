@@ -5,7 +5,7 @@
     <div class="container-form-field">
 
       <hyt-input-text [form]="projectForm" formControlName="projectName" name="projectName" [isRequired]="true"
-        placeholder="HYT_projectName">
+        placeholder="HYT_projectName" [injectedErrorMsg]="getError('projectName')">
       </hyt-input-text>
 
     </div> <!-- Field projectName -->
@@ -17,6 +17,12 @@
       </hyt-text-area>
 
     </div> <!-- Field HYT_projectDescription -->
+
+    <div class="container-form-field errorMessage">
+      <ng-container *ngIf="getError('general')">
+        {{getError('general')}}
+      </ng-container>
+    </div> <!-- Error Box -->
 
     <hyt-button id="project-form-submit-button" [isDisabled]="invalid()" (clickFn)="createProject()" type="submit">Next
     </hyt-button>
