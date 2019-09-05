@@ -8,12 +8,12 @@
         <div class="col-md-6 container-form-field">
           <hyt-input-text [form]="packetForm" formControlName="packetName" name="packetName" [isRequired]="true"
             placeholder="packetName" [injectedErrorMsg]="getError('packetName')">
-          </hyt-input-text>
+          </hyt-input-text> <!-- Field Name -->
         </div>
         <div class="col-md-6 container-form-field">
           <hyt-select [form]="packetForm" [options]="devicesOptions" formControlName="packetDevice" name="packetDevice"
             [isRequired]="true" label="HYT_device">
-          </hyt-select>
+          </hyt-select> <!-- Field Packet -->
         </div>
       </div>
 
@@ -23,26 +23,26 @@
           <hyt-radio-button [form]="packetForm" [options]="typologyOptions" formControlName="packetTypology"
             name="packetTypology" [verticalAlign]="true">
           </hyt-radio-button>
-        </div>
+        </div> <!-- Field Typology -->
         <div class="col-md-4 container-form-field">
           Format
           <hyt-radio-button [form]="packetForm" [options]="formatOptions" formControlName="packetFormat"
             name="packetFormat" [verticalAlign]="true">
           </hyt-radio-button>
-        </div>
+        </div> <!-- Field Format -->
         <div class="col-md-4 container-form-field">
           Serialization
           <hyt-radio-button [form]="packetForm" [options]="serializationOptions" formControlName="packetSerialization"
             name="packetSerialization" [verticalAlign]="true">
           </hyt-radio-button>
-        </div>
+        </div> <!-- Field Serialization -->
       </div>
 
       <div class="row">
         <div class="col-md-12 container-form-field">
           <hyt-select [form]="packetForm" [options]="trafficPlanOptions" formControlName="packetTrafficPlan"
             name="packetTrafficPlan" [isRequired]="true" label="HYT_trafficPlan">
-          </hyt-select>
+          </hyt-select> <!-- Field Traffic Plan -->
         </div>
       </div>
 

@@ -73,7 +73,7 @@ export class FieldsStepComponent implements OnInit {
     let hPacketField: HPacketField = {
       entityVersion: 1,
       name: this.fieldForm.value['fieldName'],
-      multiplicity: this.fieldForm.value.fieldTypology.value,
+      multiplicity: this.fieldForm.value.fieldMultiplicity.value,
       type: this.fieldForm.value.fieldType,
       description: this.fieldForm.value.fieldDescription
     }
@@ -112,7 +112,7 @@ export class FieldsStepComponent implements OnInit {
   invalid() {
     return (
       this.fieldForm.get('fieldName').invalid ||
-      //this.packetForm.get('multiplicity').invalid ||
+      //this.packetForm.get('fieldMultiplicity').invalid ||
       this.fieldForm.get('fieldType').invalid
     )
   }

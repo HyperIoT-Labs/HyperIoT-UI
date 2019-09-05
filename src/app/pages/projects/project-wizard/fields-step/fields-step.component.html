@@ -5,6 +5,7 @@
     <div class="row">
 
       <div class="col-md-6">
+        TreeView
 
         <ul id="devices">
           <li *ngFor="let hdev of hDevices">
@@ -26,26 +27,26 @@
             <hyt-input-text [form]="fieldForm" formControlName="fieldName" name="fieldName" [isRequired]="true"
               placeholder="HYT_fieldName" [injectedErrorMsg]="getError('fieldName')">
             </hyt-input-text>
-          </div>
+          </div> <!-- Field Name -->
 
           <div class="container-form-field">
             LEVEL OF MULTIPLICITY
-            <hyt-radio-button [form]="fieldForm" formControlName="fieldTypology" name="fieldTypology"
+            <hyt-radio-button [form]="fieldForm" formControlName="fieldMultiplicity" name="fieldMultiplicity"
               [options]="multiplicityOptions" [verticalAlign]="true">
             </hyt-radio-button>
-          </div>
+          </div> <!-- Field Multiplicity -->
 
           <div class="container-form-field">
             <hyt-select [form]="fieldForm" [options]="typeOptions" formControlName="fieldType" name="fieldType"
               [isRequired]="true" label="HYT_fieldType">
             </hyt-select>
-          </div>
+          </div> <!-- Field Type -->
 
           <div class="container-form-field">
             <hyt-text-area [form]="fieldForm" formControlName="fieldDescription" name="fieldDescription"
               placeholder="HYT_fieldDescription">
             </hyt-text-area>
-          </div>
+          </div> <!-- Field Description -->
 
           <div class="container-form-field errorMessage">
             <ng-container *ngIf="getError('general')">
