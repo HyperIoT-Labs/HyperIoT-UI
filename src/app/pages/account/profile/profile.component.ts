@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { HusersService } from '@hyperiot/core';
-import { AuthenticationHttpErrorHandlerService } from 'src/app/services/authentication-http-error-handler.service';
+import { AuthenticationHttpErrorHandlerService } from '../../../services/errorHandler/authentication-http-error-handler.service';
 
 @Component({
   selector: 'hyt-profile',

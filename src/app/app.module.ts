@@ -17,11 +17,10 @@ import { I18n } from '@ngx-translate/i18n-polyfill';
 import { DashboardModule } from './pages/dashboard/dashboard.module';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { ProfileComponent } from './pages/account/profile/profile.component';
-import { HyperiotComponentsModule } from '@hyperiot/components';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { TopbarComponent } from './components/topbar/topbar.component';
-import { AccountButtonComponent } from './components/account-button/account-button.component';
+import { AccountButtonComponent } from './components/topbar/account-button/account-button.component';
 
 // hyperiot
 import { Configuration, ConfigurationParameters, HyperiotClientModule } from '@hyperiot/core';
@@ -44,7 +43,7 @@ export function apiConfigFactory(): Configuration {
     NotFoundComponent,
     SidebarComponent,
     TopbarComponent,
-    AccountButtonComponent
+    AccountButtonComponent,
     ProfileComponent
   ],
   imports: [

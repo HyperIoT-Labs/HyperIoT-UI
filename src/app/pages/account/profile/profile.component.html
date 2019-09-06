@@ -177,7 +177,6 @@
                 <div id="container-form-details" class="col-12">
 
                     <form #pif="ngForm" id="form-details" [formGroup]="personalInfoForm" (ngSubmit)="updatePersonalInfo()"> 
-                    <!--form id="form-details"-->
 
                         <div class="row row-field-details">
 
@@ -285,7 +284,6 @@
                                     formControlName="oldPassword" 
                                     name="oldPassword" 
                                     [isRequired]="true"
-                                    [isPassword]="true" 
                                     placeholder="Old Password"
                                     [injectedErrorMsg]="error" 
                                     type="password"
@@ -320,7 +318,6 @@
                                     type="password"
                                     [isRequired]="true" 
                                     placeholder="Confirm password"
-                                    errorPosition="bottom"
                                 >
                                 </hyt-input-text>
 
