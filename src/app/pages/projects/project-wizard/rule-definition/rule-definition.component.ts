@@ -73,8 +73,8 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
 
   removeCondition(index) {
     this.ruleDefForms.splice(index, 1)
+    this.ruleDefForms[index - 1].get('ruleJoin').setValue(null);
   }
-  // this.packetForm.value.packetIdentification
 
   buildRuleDefinition() {
     let rd = '';
@@ -85,20 +85,16 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
       let joinRule: string = (this.ruleDefForms[k].value.ruleJoin.value) ? this.ruleDefForms[k].value.ruleJoin.value + ' ' : '';
       rd += element + condition + valueRule + joinRule;
     }
-
-    console.log(rd)
     return rd;
-  }
-
-  onChange(event) {
-    console.log("ciao")
   }
 
   isFormInvalid(k: number): boolean {
     return (
-      this.ruleDefForms[k].get('ruleField').invalid ||
-      this.ruleDefForms[k].get('ruleCondition').invalid ||
-      this.ruleDefForms[k].get('ruleValue').invalid
+      (Object.entries(this.ruleDefForms[k].value).length == 0) ?
+        true :
+        this.ruleDefForms[k].get('ruleField').invalid ||
+        this.ruleDefForms[k].get('ruleCondition').invalid ||
+        this.ruleDefForms[k].get('ruleValue').invalid
     )
   }
 

@@ -9,27 +9,26 @@
         <div class="row">
 
           <div class="col-md-3 container-form-field">
-            <hyt-select [form]="ruleDefForm" (blur)="onChange($event)" [options]="fieldOptions"
-              formControlName="ruleField" name="ruleField" [isRequired]="true" placeholder="HYT_field">
+            <hyt-select [form]="ruleDefForm" [options]="fieldOptions" formControlName="ruleField" name="ruleField"
+              [isRequired]="true" placeholder="HYT_field">
             </hyt-select>
           </div> <!-- Field Field -->
 
           <div class="col-md-3 container-form-field">
-            <hyt-select [form]="ruleDefForm" (blur)="onChange($event)" [options]="allConditionOptions"
-              formControlName="ruleCondition" name="ruleCondition" [isRequired]="true" placeholder="HYT_condition">
+            <hyt-select [form]="ruleDefForm" [options]="allConditionOptions" formControlName="ruleCondition"
+              name="ruleCondition" [isRequired]="true" placeholder="HYT_condition">
             </hyt-select>
           </div> <!-- Field Condition -->
 
           <div class="col-md-3 container-form-field">
-            <hyt-input-text [form]="ruleDefForm" (change)="onChange($event)" formControlName="ruleValue"
-              name="ruleValue" [isRequired]="true" placeholder="HYT_value">
+            <hyt-input-text [form]="ruleDefForm" formControlName="ruleValue" name="ruleValue" [isRequired]="true"
+              placeholder="HYT_value">
             </hyt-input-text>
           </div> <!-- Field Value -->
 
           <div class="col-md-2 container-form-field">
-            <hyt-radio-button [form]="ruleDefForm" [options]="joinOptions"
-              (changeFn)="addCondition(i); onChange($event);" formControlName="ruleJoin" name="ruleJoin"
-              placeholder="HYT_join">
+            <hyt-radio-button [form]="ruleDefForm" [options]="joinOptions" (changeFn)="addCondition(i)"
+              formControlName="ruleJoin" name="ruleJoin">
             </hyt-radio-button>
           </div> <!-- Field Join -->
 

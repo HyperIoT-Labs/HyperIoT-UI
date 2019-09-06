@@ -82,10 +82,10 @@ export class EnrichmentStepComponent implements OnInit, OnChanges {
     let rule: Rule = {
       name: this.enrichmentForm.value.ruleName,
       ruleDefinition: this.ruleDefinitionComponent.buildRuleDefinition(),
+      description: this.enrichmentForm.value['rule-description'],
       project: this.hProject,
       packet: this.currentPacket,
       jsonActions: str,
-      actions: null,
       type: 'ENRICHMENT',
       entityVersion: 1
     }
@@ -109,14 +109,15 @@ export class EnrichmentStepComponent implements OnInit, OnChanges {
     return (
       this.enrichmentForm.get('ruleName').invalid ||
       this.enrichmentForm.get('enrichmentRule').invalid ||
-      this.enrichmentForm.get('deviceEnrichment').invalid ||
-      this.enrichmentForm.get('packetEnrichment').invalid ||
+      this.enrichmentForm.get('rule-description').invalid ||
+      this.enrichmentForm.get('enrichmentDevice').invalid ||
+      this.enrichmentForm.get('enrichmentPacket').invalid ||
       this.ruleDefinitionComponent.isInvalid()
     )
   }
 
   isDeviceInserted() {
-    return (this.enrichmentForm.get('deviceEnrichment')) ? this.enrichmentForm.get('deviceEnrichment').invalid : true;
+    return (this.enrichmentForm.get('enrichmentDevice')) ? this.enrichmentForm.get('enrichmentDevice').invalid : true;
   }
 
 }

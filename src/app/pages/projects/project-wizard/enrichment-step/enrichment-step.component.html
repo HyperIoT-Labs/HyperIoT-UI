@@ -5,27 +5,32 @@
     <form class="enrichment-form" [formGroup]="enrichmentForm" autocomplete="on">
 
       <div class="row">
-        <div class="col-md-6 container-form-field">
+        <div class="col-md-4 container-form-field">
           <hyt-input-text [form]="enrichmentForm" formControlName="ruleName" name="ruleName" [isRequired]="true"
             placeholder="HYT_ruleName">
           </hyt-input-text>
         </div> <!-- Field Name -->
-        <div class="col-md-6 container-form-field">
+        <div class="col-md-4 container-form-field">
           <hyt-select [form]="enrichmentForm" [options]="enrichmentRules" formControlName="enrichmentRule"
             name="enrichmentRule" [isRequired]="true" label="HYT_enrichmentRule">
           </hyt-select>
         </div> <!-- Field RuleType -->
+        <div>
+          <hyt-text-area [form]="enrichmentForm" formControlName="rule-description" name="rule-description"
+            placeholder="HYT_description">
+          </hyt-text-area>
+        </div> <!-- Field RuleDescription -->
       </div>
 
       <div class="row">
         <div class="col-md-6 container-form-field">
           <hyt-select [form]="enrichmentForm" [options]="devicesOptions" (changeFn)="deviceChanged($event)"
-            formControlName="deviceEnrichment" name="deviceEnrichment" [isRequired]="true" label="HYT_deviceEnrichment">
+            formControlName="enrichmentDevice" name="enrichmentDevice" [isRequired]="true" label="HYT_device">
           </hyt-select>
         </div> <!-- Field Device -->
         <div class="col-md-6 container-form-field">
           <hyt-select [form]="enrichmentForm" [options]="packetsOptions" (changeFn)="packetChanged($event)"
-            formControlName="packetEnrichment" name="packetEnrichment" [isRequired]="true" label="HYT_packetEnrichment"
+            formControlName="enrichmentPacket" name="enrichmentPacket" [isRequired]="true" label="HYT_packet"
             [disabled]="false">
           </hyt-select>
         </div> <!-- Field Packet -->
