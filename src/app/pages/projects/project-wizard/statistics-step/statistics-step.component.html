@@ -1,4 +1,4 @@
-<!-- <div id="statistics-step" class="row">
+<div id="statistics-step" class="row">
 
   <div class="col-md-10">
 
@@ -12,12 +12,18 @@
             <hyt-input-text [form]="statisticsForm" formControlName="statisticsName" name="statisticsName"
               [isRequired]="true" placeholder="HYT_statisticsName">
             </hyt-input-text>
+          </div> <!-- Field Name -->
+
+          <div class="container-form-field">
+            <hyt-select [form]="statisticsForm" [options]="algorithmOptions" formControlName="statisticsAlgorithm"
+              name="statisticsAlgorithm" [isRequired]="true" placeholder="HYT_algorithm">
+            </hyt-select> <!-- Field Algorithm -->
           </div>
 
           <div class="container-form-field">
-            <hyt-input-text [form]="statisticsForm" formControlName="statisticsAlgorithm" name="statisticsAlgorithm"
-              placeholder="HYT_statisticsAlgorithm">
-            </hyt-input-text>
+            <hyt-text-area [form]="statisticsForm" formControlName="statisticsInputFields" name="statisticsInputFields"
+              placeholder="HYT_statisticsInputFields">
+            </hyt-text-area> <!-- Field Field -->
           </div>
 
         </div>
@@ -27,30 +33,31 @@
           <div class="container-form-field">
             <hyt-input-text [form]="statisticsForm" formControlName="statisticsPacket" name="statisticsPacket"
               placeholder="HYT_statisticsPacket">
-            </hyt-input-text>
+            </hyt-input-text> <!-- Field Packet -->
           </div>
 
           <div class="container-form-field">
-            <hyt-input-text [form]="statisticsForm" formControlName="statisticsSourceData" name="statisticsSourceData"
-              placeholder="HYT_statisticsSourceData">
-            </hyt-input-text>
+            SOURCE DATA
+            <hyt-radio-button [form]="statisticsForm" [options]="sourceDataOptions"
+              formControlName="statisticsSourceData" name="statisticsSourceData" [verticalAlign]="true">
+            </hyt-radio-button> <!-- Field Sourde Data -->
           </div>
 
           <div class="container-form-field">
-            <hyt-text-area [form]="statisticsForm" formControlName="statisticsInputFields" name="statisticsInputFields"
-              placeholder="HYT_statisticsInputFields">
-            </hyt-text-area>
-          </div>
-
-          <div class="container-form-field">
-            <hyt-text-area [form]="statisticsForm" formControlName="statisticsTimeRange" name="statisticsTimeRange"
-              placeholder="HYT_statisticsTimeRange">
-            </hyt-text-area>
+            <hyt-select [form]="statisticsForm" [options]="timeRangeOptions" formControlName="statisticsTimeRange"
+              name="statisticsTimeRange" [isRequired]="true" placeholder="HYT_time_range">
+            </hyt-select> <!-- Field Time Range -->
           </div>
 
         </div>
 
       </div>
+
+      <div class="container-form-field errorMessage">
+        <ng-container *ngIf="getError('general')">
+          {{getError('general')}}
+        </ng-container>
+      </div> <!-- Error Box -->
 
       <hyt-button id="statistics-form-submit-button" [isDisabled]="invalid()" (clickFn)="createStatistic()"
         type="submit">
@@ -77,4 +84,4 @@
     </table>
   </div>
 
-</div> -->
+</div>

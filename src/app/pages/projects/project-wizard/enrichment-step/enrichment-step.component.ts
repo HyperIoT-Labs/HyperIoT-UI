@@ -29,11 +29,9 @@ export class EnrichmentStepComponent implements OnInit, OnChanges {
 
   currentPacket;
 
-  errors: HYTError[] = [];
-
-  // ruleDefinition: string = '';
-
   enrichmentForm: FormGroup;
+
+  errors: HYTError[] = [];
 
   enrichmentRules: SelectOption[] = [
     { value: ' Categories', label: 'Categories' },
@@ -45,7 +43,6 @@ export class EnrichmentStepComponent implements OnInit, OnChanges {
 
   constructor(
     private fb: FormBuilder,
-    private hPacketService: HpacketsService,
     private rulesService: RulesService,
     private errorHandler: ProjectWizardHttpErrorHandlerService
   ) { }
@@ -62,7 +59,6 @@ export class EnrichmentStepComponent implements OnInit, OnChanges {
   }
 
   deviceChanged(event) {
-    console.log(event.value)
     this.packetsOptions = [];
     for (let el of this.hPackets)
       if (event.value == el.device.id)
@@ -109,10 +105,6 @@ export class EnrichmentStepComponent implements OnInit, OnChanges {
       }
     )
 
-  }
-
-  updateRuleDefinition(rd) {
-    // this.ruleDefinition = rd;
   }
 
   invalid(): boolean {

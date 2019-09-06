@@ -20,8 +20,6 @@ export class DevicesStepComponent implements OnInit {
 
   @Output() hDevicesOutput = new EventEmitter<HDevice[]>();
 
-  formDeviceActive: boolean = false;
-
   errors: HYTError[] = [];
 
   constructor(
@@ -86,10 +84,6 @@ export class DevicesStepComponent implements OnInit {
 
   getError(field: string): string {
     return (this.errors.find(x => x.container == field)) ? this.errors.find(x => x.container == field).message : null;
-  }
-
-  startAddDevice() {
-    this.formDeviceActive = true;
   }
 
 }

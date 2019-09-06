@@ -15,7 +15,7 @@
             name="enrichmentRule" [isRequired]="true" label="HYT_enrichmentRule">
           </hyt-select>
         </div> <!-- Field RuleType -->
-        <div>
+        <div class="col-md-4 container-form-field">
           <hyt-text-area [form]="enrichmentForm" formControlName="rule-description" name="rule-description"
             placeholder="HYT_description">
           </hyt-text-area>
@@ -38,8 +38,7 @@
 
       <div class="row">
         <div class="col-md-12 container-form-field">
-          <hyt-rule-definition #ruleDef *ngIf="true" [hPacket]="currentPacket"
-            (ruleDefinition)="updateRuleDefinition($event)">
+          <hyt-rule-definition #ruleDef [hPacket]="currentPacket">
           </hyt-rule-definition>
         </div> <!-- Field RuleDefinition -->
       </div>

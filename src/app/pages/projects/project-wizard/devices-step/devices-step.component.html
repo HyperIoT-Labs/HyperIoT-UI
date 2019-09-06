@@ -2,9 +2,7 @@
 
   <div class="col-md-10">
 
-    <hyt-button *ngIf="!formDeviceActive" (clickFn)="startAddDevice()">Add device</hyt-button>
-
-    <form *ngIf="formDeviceActive" class="device-form" [formGroup]="deviceForm" autocomplete="on">
+    <form class="device-form" [formGroup]="deviceForm" autocomplete="on">
 
       <div class="row">
 
