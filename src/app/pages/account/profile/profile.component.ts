@@ -28,6 +28,8 @@ export class ProfileComponent implements OnInit {
   fieldError = new Map();
 
   personalInfoUpdated: boolean = false;
+  
+  error;
 
   constructor(
     private hUserService: HusersService,
@@ -41,6 +43,9 @@ export class ProfileComponent implements OnInit {
   }
 
   updatePersonalInfo() {
+  }
+
+  updatePassword() {
   }
 
   notValid(): boolean {
