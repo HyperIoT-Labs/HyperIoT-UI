@@ -15,11 +15,6 @@ export class RegistrationComponent implements OnInit {
   errors: HYTError[] = [];
 
   registrationForm: FormGroup;
-  //  = new FormGroup({
-  //   acceptConditions: new FormControl(false, [
-  //     Validators.required
-  //   ])
-  // });
 
   loading: boolean = false;
 
@@ -66,7 +61,6 @@ export class RegistrationComponent implements OnInit {
       err => {
         this.errors = this.httperrorHandler.handleRegistration(err);
         this.errors.forEach(e => {
-          console.log(e)
           if (e.container != 'general')
             this.registrationForm.get(e.container).setErrors({
               validateInjectedError: {

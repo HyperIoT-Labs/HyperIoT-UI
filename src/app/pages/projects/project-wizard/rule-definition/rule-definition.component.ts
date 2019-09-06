@@ -60,7 +60,6 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
 
   ngOnChanges() {
     this.fieldOptions = [];
-    console.log(this.hPacket)
     if (this.hPacket)
       for (let el of this.hPacket.fields)
         this.fieldOptions.push({ value: el.name, label: el.name })
@@ -81,8 +80,8 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
     for (let k = 0; k < this.ruleDefForms.length; k++) {
       let element: string = (this.hPacket && this.ruleDefForms[k].value.ruleField) ? this.hPacket.name + '.' + this.ruleDefForms[k].value.ruleField + ' ' : '';
       let condition: string = (this.ruleDefForms[k].value.ruleCondition) ? this.ruleDefForms[k].value.ruleCondition + ' ' : '';
-      let valueRule: string = (this.ruleDefForms[k].value.ruleValue) ? this.ruleDefForms[k].value.ruleValue + ' ' : '';
-      let joinRule: string = (this.ruleDefForms[k].value.ruleJoin.value) ? this.ruleDefForms[k].value.ruleJoin.value + ' ' : '';
+      let valueRule: string = (this.ruleDefForms[k].value.ruleValue) ? this.ruleDefForms[k].value.ruleValue : '';
+      let joinRule: string = (this.ruleDefForms[k].value.ruleJoin) ? this.ruleDefForms[k].value.ruleJoin.value : '';
       rd += element + condition + valueRule + joinRule;
     }
     return rd;

@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { SelectOption } from '@hyperiot/components';
 import { RuleDefinitionComponent } from '../rule-definition/rule-definition.component';
 import { HYTError } from 'src/app/services/errorHandler/models/models';
+import { ProjectWizardHttpErrorHandlerService } from 'src/app/services/errorHandler/project-wizard-http-error-handler.service';
 
 @Component({
   selector: 'hyt-enrichment-step',
@@ -45,7 +46,8 @@ export class EnrichmentStepComponent implements OnInit, OnChanges {
   constructor(
     private fb: FormBuilder,
     private hPacketService: HpacketsService,
-    private rulesService: RulesService
+    private rulesService: RulesService,
+    private errorHandler: ProjectWizardHttpErrorHandlerService
   ) { }
 
   ngOnInit() {
@@ -80,7 +82,7 @@ export class EnrichmentStepComponent implements OnInit, OnChanges {
     var str: string = JSON.stringify(actions);
 
     let rule: Rule = {
-      name: this.enrichmentForm.value.ruleName,
+      name: this.enrichmentForm.value['rule-name'],
       ruleDefinition: this.ruleDefinitionComponent.buildRuleDefinition(),
       description: this.enrichmentForm.value['rule-description'],
       project: this.hProject,
@@ -95,7 +97,15 @@ export class EnrichmentStepComponent implements OnInit, OnChanges {
         this.ruleList.push(res);
       },
       err => {
-
+        this.errors = this.errorHandler.handleCreateRuleEnrichment(err);
+        this.errors.forEach(e => {
+          if (e.container != 'general')
+            this.enrichmentForm.get(e.container).setErrors({
+              validateInjectedError: {
+                valid: false
+              }
+            });
+        })
       }
     )
 
@@ -107,13 +117,17 @@ export class EnrichmentStepComponent implements OnInit, OnChanges {
 
   invalid(): boolean {
     return (
-      this.enrichmentForm.get('ruleName').invalid ||
+      this.enrichmentForm.get('rule-name').invalid ||
       this.enrichmentForm.get('enrichmentRule').invalid ||
       this.enrichmentForm.get('rule-description').invalid ||
       this.enrichmentForm.get('enrichmentDevice').invalid ||
       this.enrichmentForm.get('enrichmentPacket').invalid ||
       this.ruleDefinitionComponent.isInvalid()
     )
+  }
+
+  getError(field: string): string {
+    return (this.errors.find(x => x.container == field)) ? this.errors.find(x => x.container == field).message : null;
   }
 
   isDeviceInserted() {

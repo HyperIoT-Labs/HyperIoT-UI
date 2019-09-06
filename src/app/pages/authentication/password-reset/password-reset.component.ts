@@ -51,8 +51,6 @@ export class PasswordResetComponent implements OnInit {
       resetCode: this.code
     }
 
-    console.log(pwdReset)
-
     this.hUserService.resetPassword(pwdReset).subscribe(
       res => { this.submissionStatus = SubmissionStatus.Submitted },
       err => {

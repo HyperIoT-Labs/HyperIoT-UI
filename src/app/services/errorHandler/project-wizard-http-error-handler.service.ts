@@ -165,4 +165,47 @@ export class ProjectWizardHttpErrorHandlerService extends HttpErrorHandlerServic
     }
   }
 
+  handleCreateRuleEnrichment(httpError: HttpErrorResponse): HYTError[] {
+    switch (httpError.status) {
+      case 422: {
+        switch (httpError.error.type) {
+          case 'it.acsoftware.hyperiot.base.exception.HyperIoTDuplicateEntityException': {
+            return [
+              {
+                message: 'rule name ' + this.i18n('HYT_duplicate_entity'),
+                container: 'rule-name'
+              },
+              {
+                message: 'Una regola con lo stesso nome esiste già',
+                container: 'general'
+              }
+            ];
+            break;
+          }
+          case 'it.acsoftware.hyperiot.base.exception.HyperIoTValidationException': {
+            var errors: HYTError[] = [];
+            errors.length
+            for (let k of httpError.error.validationErrors)
+              errors.push({ message: k.message, container: k.field });
+            errors.push({ message: 'Alcuni campi inseriti sono invalidi', container: 'general' });
+            return errors;
+            break;
+          }
+          default: {
+            return [
+              {
+                message: this.i18n('HYT_unknown_error'),
+                container: 'general'
+              }
+            ];
+          }
+        }
+        break;
+      }
+      default: {
+        return this.handle(httpError);
+      }
+    }
+  }
+
 }

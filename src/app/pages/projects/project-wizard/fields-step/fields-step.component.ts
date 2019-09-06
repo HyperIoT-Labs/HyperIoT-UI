@@ -63,7 +63,6 @@ export class FieldsStepComponent implements OnInit {
 
   sethPackets(id: number) {
     this.idPacket = id;
-    console.log(this.idPacket)
   }
 
   createField() {
