@@ -16,9 +16,9 @@ export class EnrichmentStepComponent implements OnInit, OnChanges {
 
   @Input() hDevices: HDevice[] = [];
 
-  devicesOptions: SelectOption[] = [];
-
   @Input() hPackets: HPacket[] = [];
+
+  devicesOptions: SelectOption[] = [];
 
   packetsOptions: SelectOption[] = [];
 
@@ -59,16 +59,16 @@ export class EnrichmentStepComponent implements OnInit, OnChanges {
     this.packetsOptions = [];
   }
 
-  deviceChanged(event: Event) {
-    console.log(event)
+  deviceChanged(event) {
+    console.log(event.value)
     this.packetsOptions = [];
     for (let el of this.hPackets)
-      if (this.enrichmentForm.value.deviceEnrichment == el.id)
+      if (event.value == el.device.id)
         this.packetsOptions.push({ value: el.id.toString(), label: el.name });
   }
 
-  packetChanged(event: Event) {
-    this.currentPacket = this.enrichmentForm.value.packetEnrichment;
+  packetChanged(event) {
+    this.currentPacket = this.hPackets.find(x => x.id == event.value);
   }
 
   createRule() {
@@ -113,6 +113,10 @@ export class EnrichmentStepComponent implements OnInit, OnChanges {
       this.enrichmentForm.get('packetEnrichment').invalid ||
       this.ruleDefinitionComponent.isInvalid()
     )
+  }
+
+  isDeviceInserted() {
+    return (this.enrichmentForm.get('deviceEnrichment')) ? this.enrichmentForm.get('deviceEnrichment').invalid : true;
   }
 
 }

@@ -37,8 +37,8 @@ export class PacketsStepComponent implements OnInit, OnChanges {
   ];
 
   serializationOptions: Option[] = [
-    { value: 'AVRO', label: 'avro', checked: true },
-    { value: 'NONE', label: 'none' }
+    { value: 'NONE', label: 'none', checked: true },
+    { value: 'AVRO', label: 'avro' }
   ];
 
   trafficPlanOptions: SelectOption[] = [

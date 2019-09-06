@@ -59,10 +59,11 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
-    // this.fieldOptions = [];
-    //if(this.hPacket)
-    // for (let el of this.hPacket.fields)
-    //   this.fieldOptions.push({ value: el.id.toString(), label: el.name })
+    this.fieldOptions = [];
+    console.log(this.hPacket)
+    if (this.hPacket)
+      for (let el of this.hPacket.fields)
+        this.fieldOptions.push({ value: el.name, label: el.name })
   }
 
   addCondition(index) {
@@ -78,10 +79,10 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
   buildRuleDefinition() {
     let rd = '';
     for (let k = 0; k < this.ruleDefForms.length; k++) {
-      let element: string = (this.hPacket && this.ruleDefForms[k].value.fieldOptions) ? this.hPacket.name + '.' + this.ruleDefForms[k].value.fieldOptions + ' ' : '';
-      let condition: string = (this.ruleDefForms[k].value.conditionRule) ? this.ruleDefForms[k].value.conditionRule + ' ' : '';
-      let valueRule: string = (this.ruleDefForms[k].value.valueRule) ? this.ruleDefForms[k].value.valueRule + ' ' : '';
-      let joinRule: string = (this.ruleDefForms[k].value.joinRule.value) ? this.ruleDefForms[k].value.joinRule.value + ' ' : '';
+      let element: string = (this.hPacket && this.ruleDefForms[k].value.ruleField) ? this.hPacket.name + '.' + this.ruleDefForms[k].value.ruleField + ' ' : '';
+      let condition: string = (this.ruleDefForms[k].value.ruleCondition) ? this.ruleDefForms[k].value.ruleCondition + ' ' : '';
+      let valueRule: string = (this.ruleDefForms[k].value.ruleValue) ? this.ruleDefForms[k].value.ruleValue + ' ' : '';
+      let joinRule: string = (this.ruleDefForms[k].value.ruleJoin.value) ? this.ruleDefForms[k].value.ruleJoin.value + ' ' : '';
       rd += element + condition + valueRule + joinRule;
     }
 
@@ -95,9 +96,9 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
 
   isFormInvalid(k: number): boolean {
     return (
-      this.ruleDefForms[k].get('fieldOptions').invalid ||
-      this.ruleDefForms[k].get('conditionRule').invalid ||
-      this.ruleDefForms[k].get('valueRule').invalid
+      this.ruleDefForms[k].get('ruleField').invalid ||
+      this.ruleDefForms[k].get('ruleCondition').invalid ||
+      this.ruleDefForms[k].get('ruleValue').invalid
     )
   }
 

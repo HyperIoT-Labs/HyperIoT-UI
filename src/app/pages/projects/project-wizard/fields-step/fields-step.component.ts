@@ -78,16 +78,9 @@ export class FieldsStepComponent implements OnInit {
       description: this.fieldForm.value.fieldDescription
     }
 
-    let hPacket = this.hPackets.find(x => x.id == this.idPacket);
-
-    this.hPacketService.addHPacketField(hPacket.id, hPacketField).subscribe(
+    this.hPacketService.addHPacketField(this.idPacket, hPacketField).subscribe(
       res => {
-        let hPacket = this.hPackets.find(x => x.id == res.id);
-        var index = this.hPackets.indexOf(hPacket);
-
-        if (index !== -1) {
-          this.hPackets[index] = res;
-        }
+        this.hPackets.find(x => x.id == this.idPacket).fields.push(res);
         this.hPacketsOutput.emit(this.hPackets);
       },
       err => {
