@@ -1,6 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { Router } from '@angular/router';
-import { CookieService } from 'ngx-cookie-service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'hyt-root',
@@ -10,15 +9,12 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class AppComponent {
 
-  constructor(private route: Router, private cookieService: CookieService) { }
+  constructor(
+    private activatedRoute: ActivatedRoute
+  ) { }
 
-  showToolBar(): boolean {
-    return (this.route.routerState.snapshot.root.children[0] != undefined) ? this.route.routerState.snapshot.root.children[0].data.showToolBar : true;
-  }
-
-  logout() {
-    this.cookieService.delete('HIT-AUTH', '/');
-    this.route.navigate(['/auth/login']);
+  showToolBars(): boolean {
+    return (this.activatedRoute.snapshot.firstChild != undefined) ? this.activatedRoute.snapshot.firstChild.data.showToolBar : true;
   }
 
 }

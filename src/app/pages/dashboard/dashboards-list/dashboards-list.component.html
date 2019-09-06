@@ -10,6 +10,25 @@
     <li><a [routerLink]="['/dashboards', 'demo']">Demo dashboard</a></li>
 </ul>
 
+<!-- <h3>Test custom material component</h3>
+<form #testForm="ngForm">
+
+    <mat-form-field>
+        <example-tel-input
+            placeholder="Phone number"
+            required
+            name="num" id="num"
+            [(ngModel)]="number" #num="ngModel"></example-tel-input>
+        <mat-icon matSuffix>phone</mat-icon>
+        <mat-hint>Include area code</mat-hint>
+    </mat-form-field>
+
+    <p>{{ num && num.value && num.value.area }}</p>
+    <p>{{ number.area }}</p>
+
+</form>
+
+<h3>Test inline widget</h3>
 <div class="test-widget">
     <hyperiot-stats-chart [widget]="{
         id: 'my-widget-id',
@@ -28,7 +47,7 @@
         ]
         }
     }"></hyperiot-stats-chart>
-</div>
+</div> -->
 <!--
 <hyperiot-text-label [widget]="{
     id: 'my-widget-id',

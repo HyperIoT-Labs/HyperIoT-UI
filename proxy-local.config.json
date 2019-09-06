@@ -1,0 +1,68 @@
+{
+    "/hyperiot/authentication/*": {
+        "target": "http://localhost:8181",
+        "secure": false,
+        "logLevel": "debug",
+        "changeOrigin": true
+    },
+    "/hyperiot/husers/*": {
+        "target": "http://localhost:8181",
+        "secure": false,
+        "logLevel": "debug",
+        "changeOrigin": true
+    },
+    "/hyperiot/roles/*": {
+        "target": "http://localhost:8181",
+        "secure": false,
+        "logLevel": "debug",
+        "changeOrigin": true
+    },
+    "/hyperiot/permissions/*": {
+        "target": "http://localhost:8181",
+        "secure": false,
+        "logLevel": "debug",
+        "changeOrigin": true
+    },
+    "/hyperiot/hprojects/*": {
+        "target": "http://localhost:8181",
+        "secure": false,
+        "logLevel": "debug",
+        "changeOrigin": true
+    },
+    "/hyperiot/hdevices/*": {
+        "target": "http://localhost:8181",
+        "secure": false,
+        "logLevel": "debug",
+        "changeOrigin": true
+    },
+    "/hyperiot/hpackets/*": {
+        "target": "http://localhost:8181",
+        "secure": false,
+        "logLevel": "debug",
+        "changeOrigin": true
+    },
+    "/hyperiot/rules/*": {
+        "target": "http://localhost:8181",
+        "secure": false,
+        "logLevel": "debug",
+        "changeOrigin": true
+    },
+    "/hyperiot/dashboards/*": {
+        "target": "http://localhost:8181",
+        "secure": false,
+        "logLevel": "debug",
+        "changeOrigin": true
+    },
+    "/hyperiot/dashboardwidgets/*": {
+        "target": "http://localhost:8181",
+        "secure": false,
+        "logLevel": "debug",
+        "changeOrigin": true
+    },
+    "/hyperiot/ws/*": {
+        "target": "http://localhost:8181",
+        "secure": false,
+        "logLevel": "debug",
+        "ws": true
+    }
+}

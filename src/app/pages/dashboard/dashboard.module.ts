@@ -1,5 +1,16 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA, } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+
 import { CommonModule } from '@angular/common';
+
+import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
+
+import { RatingModule } from 'ng-starrating';
+
+import { HyperiotComponentsModule } from '@hyperiot/components';
+
 import { WidgetsLayoutComponent } from './widgets-layout/widgets-layout.component';
 import { DynamicWidgetComponent } from './dynamic-widget/dynamic-widget.component';
 import { GridsterModule } from 'angular-gridster2';
@@ -16,8 +27,7 @@ import { StatsChartSettingsComponent } from './widget-settings-dialog/stats-char
 import { TextLabelSettingsComponent } from './widget-settings-dialog/text-label-settings/text-label-settings.component';
 import { TimeChartSettingsComponent } from './widget-settings-dialog/time-chart-settings/time-chart-settings.component';
 
-import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { MyTelInputComponent } from '../../test/my-tel-input/my-tel-input.component';
 
 @NgModule({
   declarations: [
@@ -32,18 +42,25 @@ import { RouterModule } from '@angular/router';
     SensorValueSettingsComponent,
     StatsChartSettingsComponent,
     TextLabelSettingsComponent,
-    TimeChartSettingsComponent
+    TimeChartSettingsComponent,
+    MyTelInputComponent
   ],
   imports: [
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    RouterModule,
+    RatingModule,
+    MatIconModule,
+    HyperiotComponentsModule,
     GridsterModule,
     WidgetsModule,
-    FormsModule,
-    RouterModule
+    MatFormFieldModule
   ],
   providers: [
     DashboardConfigService
   ],
-  exports: []
+  exports: [],
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
 export class DashboardModule { }

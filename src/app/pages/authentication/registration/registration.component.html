@@ -33,39 +33,42 @@
 
               <div class="container-form-field">
                 <hyt-input-text [form]="registrationForm" formControlName="name" name="name" [isRequired]="true"
-                  i18n-placeholder="@@HYT_name" placeholder="HYT_name" [injectedErrorMsg]="error">
+                  i18n-placeholder="@@HYT_name" placeholder="HYT_name" [injectedErrorMsg]="getError('name')">
                 </hyt-input-text>
               </div> <!-- Field Name -->
 
               <div class="container-form-field">
                 <hyt-input-text [form]="registrationForm" formControlName="lastName" name="lastName" [isRequired]="true"
-                  i18n-placeholder="@@HYT_surname" placeholder="HYT_surname" [injectedErrorMsg]="error">
+                  i18n-placeholder="@@HYT_surname" placeholder="HYT_surname" [injectedErrorMsg]="getError('lastName')">
                 </hyt-input-text>
               </div> <!-- Field Surname -->
 
               <div class="container-form-field">
                 <hyt-input-text [form]="registrationForm" formControlName="username" name="username" [isRequired]="true"
-                  i18n-placeholder="@@HYT_username" placeholder="HYT_username" [injectedErrorMsg]="error">
+                  i18n-placeholder="@@HYT_username" placeholder="HYT_username"
+                  [injectedErrorMsg]="getError('username')">
                 </hyt-input-text>
               </div> <!-- Field Username -->
 
               <div class="container-form-field">
                 <hyt-input-text [form]="registrationForm" formControlName="email" name="email" [isEmail]="true"
-                  [isRequired]="true" i18n-placeholder="@@HYT_email" placeholder="HYT_email" [injectedErrorMsg]="error">
+                  [isRequired]="true" i18n-placeholder="@@HYT_email" placeholder="HYT_email"
+                  [injectedErrorMsg]="getError('email')">
                 </hyt-input-text>
               </div> <!-- Field Email -->
 
               <div class="container-form-field">
-                <hyt-input-text [form]="registrationForm" formControlName="password" name="password" [isRequired]="true"
-                  [isPassword]="true" i18n-placeholder="@@HYT_password" placeholder="HYT_password"
-                  [injectedErrorMsg]="error" type="password" errorPosition="bottom">
+                <hyt-input-text [form]="registrationForm" formControlName="huser-password" name="huser-password"
+                  [isRequired]="true" [isPassword]="true" i18n-placeholder="@@HYT_password" placeholder="HYT_password"
+                  [injectedErrorMsg]="getError('huser-password')" type="password" errorPosition="bottom">
                 </hyt-input-text>
               </div> <!-- Field Password -->
 
               <div class="container-form-field">
-                <hyt-input-text [form]="registrationForm" formControlName="confPassword" name="confPassword"
-                  [isRequired]="true" i18n-placeholder="@@HYT_passwordConfirm" placeholder="HYT_passwordConfirm"
-                  [injectedErrorMsg]="error" type="password">
+                <hyt-input-text [form]="registrationForm" formControlName="huser-passwordConfirm"
+                  name="huser-passwordConfirm" [isRequired]="true" i18n-placeholder="@@HYT_passwordConfirm"
+                  placeholder="HYT_passwordConfirm" [injectedErrorMsg]="getError('huser-passwordConfirm')"
+                  type="password">
                 </hyt-input-text>
               </div> <!-- Field Repeat Password -->
 
@@ -76,10 +79,10 @@
               </div> <!-- Container CheckBox Privacy -->
 
               <div class="container-form-field errorMessage">
-                <ng-container *ngIf="generalError == 1">
-                  {{error}}
+                <ng-container *ngIf="getError('general')">
+                  {{getError('general')}}
                 </ng-container>
-              </div>
+              </div> <!-- Error Box -->
 
               <div class="container-form-field">
                 <hyt-button id="submit-btn" type="submit" [isDisabled]="notValid() || loading || registrationSucceeded">

@@ -1,11 +1,12 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { ControlContainer, NgForm } from '@angular/forms';
+
 import { Subject } from 'rxjs';
-import { NgForm, ControlContainer } from '@angular/forms';
 
 @Component({
   selector: 'hyt-stats-chart-settings',
   templateUrl: './stats-chart-settings.component.html',
-  styleUrls: ['./stats-chart-settings.component.css'],
+  styleUrls: ['../common.css', './stats-chart-settings.component.css'],
   viewProviders: [ { provide: ControlContainer, useExisting: NgForm } ]
 })
 export class StatsChartSettingsComponent implements OnInit, OnDestroy {

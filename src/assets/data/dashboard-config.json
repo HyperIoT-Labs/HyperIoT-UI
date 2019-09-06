@@ -1,193 +1,276 @@
-[{
-    "id": 1,
-    "widgetId": "widget-1",
-    "cols": 4,
-    "rows": 3,
-    "y": 0,
-    "x": 0,
-    "type": "stats-chart",
-    "dataUrl": "assets/data/test.widget-stats.1.json",
-    "dataTableUrl": "assets/data/test.widget-stats.1-table.json"
-  },
-  {
-    "id": 2,
-    "widgetId": "widget-2",
-    "cols": 2,
-    "rows": 1,
-    "y": 0,
-    "x": 4,
-    "type": "text-label",
-    "config": {
-      "labelText": "Hello ..."
-    }
-  },
-  {
-    "id": 3,
-    "widgetId": "widget-sensor",
-    "cols": 2,
-    "rows": 2,
-    "y": 0,
-    "x": 4,
-    "type": "sensor-value",
-    "config": {
-      "packetId": 14,
-      "packetFields": [
-        "temperature"
-      ],
-      "displayUnit": "celsius"
-    }
-  },
-  {
-    "id": 4,
-    "widgetId": "widget-2ter",
-    "cols": 2,
-    "rows": 1,
-    "y": 0,
-    "x": 4,
-    "type": "text-label",
-    "config": {
-      "labelText": "... World!"
-    }
-  },
-  {
-    "id": 5,
-    "widgetId": "widget-3",
-    "cols": 4,
-    "rows": 3,
-    "y": 0,
-    "x": 0,
-    "type": "time-chart",
-    "config": {
-      "packetId": 23,
-      "packetFields": [
-        "temperature",
-        "humidity"
-      ],
-      "timeAxisRange": 10,
-      "maxDataPoints": 100,
-      "timeWindow": 60,
-      "seriesConfig": [{
-          "series": "temperature",
-          "config": {
-            "yaxis": "y2"
-          },
-          "layout": {
-            "title": {
-              "font": {
-                "size": 14,
-                "color": "#16A4FA"
-              },
-              "xref": "container",
-              "yref": "container",
-              "x": 0,
-              "y": 1,
-              "pad": {
-                "t": 10,
-                "l": 10
-              },
-              "text": "<b>Real time temperature and humidity</b>"
+[
+    {
+      "name": "Sensor value",
+      "categoryId": 5,
+      "cols": 1,
+      "rows": 2,
+      "y": 0,
+      "x": 2,
+      "type": "sensor-value",
+      "config": {
+        "data": [],
+        "packetId": 23,
+        "packetFields": [
+          "humidity"
+        ]
+      }
+    },
+    {
+      "name": "Classic bar chart",
+      "info": {
+        "description": "Widget to show single or combined statistics with a bar chart representation.",
+        "icon": "assets/widgets/images/preview/chart_bar_mini.png",
+        "preview": "assets/widgets/images/preview/chart_bar.png",
+        "rating": 2.15
+      },
+      "categoryId": 1,
+      "cols": 2,
+      "rows": 3,
+      "y": 3,
+      "x": 4,
+      "type": "stats-chart",
+      "dataUrl": "assets/data/test.widget-stats.1.json",
+      "dataTableUrl": "assets/data/test.widget-stats.1-table.json",
+      "config": {
+        "data": []
+      }
+    },
+    {
+      "name": "Simple text",
+      "categoryId": 5,
+      "cols": 1,
+      "rows": 1,
+      "y": 0,
+      "x": 0,
+      "type": "text-label",
+      "config": {
+        "labelText": "Change me!"
+      }
+    },
+    {
+      "categoryId": 3,
+      "name": "Classic pie chart",
+      "cols": 2,
+      "rows": 3,
+      "y": 3,
+      "x": 0,
+      "type": "stats-chart",
+      "dataUrl": "assets/data/test.widget-stats.2.json",
+      "dataTableUrl": "assets/data/test.widget-stats.2-table.json",
+      "config": {
+        "data": []
+      }
+    },
+    {
+      "categoryId": 3,
+      "name": "Events log",
+      "info": {
+        "description": "This widget shows real time event stream data.",
+        "preview": "/path/to/image/preview",
+        "rating": 4.75
+      },
+      "cols": 2,
+      "rows": 2,
+      "y": 1,
+      "x": 0,
+      "type": "events-log",
+      "config": {}
+    },
+    {
+      "name": "Sensor value",
+      "categoryId": 5,
+      "cols": 1,
+      "rows": 2,
+      "y": 0,
+      "x": 3,
+      "type": "sensor-value",
+      "config": {
+        "data": [],
+        "packetId": 23,
+        "packetFields": [
+          "temperature"
+        ]
+      }
+    },
+    {
+      "name": "Dati sensore multi",
+      "categoryId": 2,
+      "cols": 2,
+      "rows": 3,
+      "y": 2,
+      "x": 2,
+      "type": "time-chart",
+      "config": {
+        "data": [],
+        "timeAxisRange": 10,
+        "maxDataPoints": 100,
+        "timeWindow": 60,
+        "layout": {
+          "showlegend": true,
+          "legend": {
+            "orientation": "h",
+            "x": 0.25,
+            "y": 1,
+            "traceorder": "normal",
+            "font": {
+              "family": "sans-serif",
+              "size": 10,
+              "color": "#000"
             },
-            "yaxis2": {
-              "title": "temperature",
-              "titlefont": {
-                "color": "#00f"
-              },
-              "tickfont": {
-                "color": "#00f"
-              },
-              "anchor": "free",
-              "overlaying": "y",
-              "side": "right",
-              "position": 1,
-              "range": [
-                -50,
-                50
-              ]
-            }
+            "bgcolor": "#FFFFFF85",
+            "borderwidth": 0
+          },
+          "margin": {
+            "l": 0,
+            "r": 32,
+            "b": 0,
+            "t": 0,
+            "pad": 0
+          },
+          "yaxis": {
+            "title": {
+              "text": "temperature"
+            },
+            "domain": [
+              0.15,
+              0.85
+            ],
+            "range": [
+              20.16377468138245,
+              33.963449406163384
+            ],
+            "autorange": true,
+            "type": "linear"
+          },
+          "yaxis2": {
+            "title": {
+              "text": "humidity"
+            },
+            "autorange": true,
+            "anchor": "free",
+            "overlaying": "y",
+            "side": "right",
+            "position": 1,
+            "range": [
+              50.014040803750596,
+              60.30426910952022
+            ],
+            "type": "linear"
           }
         },
-        {
-          "series": "humidity",
-          "layout": {
-            "yaxis": {
-              "title": "humidity",
-              "titlefont": {
-                "color": "darkorange"
+        "packetId": 14,
+        "packetFields": [
+          "temperature",
+          "humidity"
+        ],
+        "seriesConfig": [
+          {
+            "series": "temperature"
+          },
+          {
+            "series": "humidity",
+            "config": {
+              "yaxis": "y2"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Simple text",
+      "categoryId": 5,
+      "cols": 1,
+      "rows": 1,
+      "y": 0,
+      "x": 1,
+      "type": "text-label",
+      "config": {
+        "labelText": "Change me!"
+      }
+    },
+    {
+      "name": "Pressure Gauge",
+      "categoryId": 5,
+      "cols": 2,
+      "rows": 3,
+      "y": 0,
+      "x": 4,
+      "type": "gauge-value",
+      "config": {
+        "data": [
+          {
+            "domain": {
+              "x": [
+                0,
+                1
+              ],
+              "y": [
+                0,
+                1
+              ]
+            },
+            "value": 1364.9927524935247,
+            "type": "indicator",
+            "mode": "gauge+number",
+            "gauge": {
+              "axis": {
+                "range": [
+                  null,
+                  2500
+                ]
               },
-              "tickfont": {
-                "color": "darkorange"
+              "steps": [
+                {
+                  "range": [
+                    0,
+                    500
+                  ],
+                  "color": "lightgreen"
+                },
+                {
+                  "range": [
+                    500,
+                    1250
+                  ],
+                  "color": "yellow"
+                },
+                {
+                  "range": [
+                    1250,
+                    2100
+                  ],
+                  "color": "orange"
+                },
+                {
+                  "range": [
+                    2100,
+                    2500
+                  ],
+                  "color": "red"
+                }
+              ],
+              "threshold": {
+                "line": {
+                  "color": "magenta",
+                  "width": 4
+                },
+                "thickness": 0.75,
+                "value": 2300
               }
             }
           }
-        }
-      ]
-    }
-  },
-  {
-    "id": 6,
-    "widgetId": "widget-4",
-    "cols": 4,
-    "rows": 2,
-    "y": 3,
-    "x": 0,
-    "type": "events-log",
-    "config": {
-      "maxLogLines": 100
-    }
-  },
-  {
-    "id": 7,
-    "widgetId": "widget-5",
-    "cols": 4,
-    "rows": 3,
-    "y": 5,
-    "x": 0,
-    "type": "stats-chart",
-    "dataUrl": "assets/data/test.widget-stats.2.json",
-    "dataTableUrl": "assets/data/test.widget-stats.2-table.json"
-  },
-  {
-    "id": 8,
-    "widgetId": "widget-6",
-    "cols": 4,
-    "rows": 3,
-    "y": 0,
-    "x": 0,
-    "type": "time-chart",
-    "config": {
-      "packetId": 24,
-      "packetFields": [
-        "motion"
-      ],
-      "timeAxisRange": 20,
-      "maxDataPoints": 100,
-      "timeWindow": 60,
-      "seriesConfig": [{
-        "series": "motion",
-        "config": {
-          "fill": "tozeroy",
-          "line": {
-            "shape": "line"
+        ],
+        "layout": {
+          "autosize": true,
+          "margin": {
+            "t": 24,
+            "b": 8
           }
         },
-        "layout": {
-          "title": {
-            "font": {
-              "size": 14,
-              "color": "#16A4FA"
-            },
-            "xref": "container",
-            "yref": "container",
-            "x": 0,
-            "y": 1,
-            "pad": {
-              "t": 10,
-              "l": 10
-            },
-            "text": "<b>Real time motion level</b>"
-          }
-        }
-      }]
+        "packetId": 14,
+        "packetFields": [
+          "pressure"
+        ]
+      }
     }
-  }
-]
+  ]

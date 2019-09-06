@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="widgetsToolbar-title-play" datatype="html">
+        <source>HYT_toolbar_play</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">project/widgets/src/lib//common-toolbar/common-toolbar.component.html</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="widgetsToolbar-title-pause" datatype="html">
+        <source>HYT_toolbar_pause</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">project/widgets/src/lib//common-toolbar/common-toolbar.component.html</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="widgetsToolbar-title-chartview" datatype="html">
+        <source>HYT_toolbar_chart_view</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">project/widgets/src/lib//common-toolbar/common-toolbar.component.html</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="widgetsToolbar-title-tableview" datatype="html">
+        <source>HYT_toolbar_table_view</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">project/widgets/src/lib//common-toolbar/common-toolbar.component.html</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="widgetsToolbar-title-settings" datatype="html">
+        <source>HYT_toolbar_settings</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">project/widgets/src/lib//common-toolbar/common-toolbar.component.html</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="widgetsToolbar-title-refresh" datatype="html">
+        <source>HYT_toolbar_refresh</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">project/widgets/src/lib//common-toolbar/common-toolbar.component.html</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="widgetsToolbar-title-close" datatype="html">
+        <source>HYT_toolbar_close</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">project/widgets/src/lib//common-toolbar/common-toolbar.component.html</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="widgetsToolbar-title-move" datatype="html">
+        <source>HYT_toolbar_move</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">project/widgets/src/lib//common-toolbar/common-toolbar.component.html</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="widgetsCommon-msg-notconfigured" datatype="html">
+        <source>HYT_common_not_configured</source>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

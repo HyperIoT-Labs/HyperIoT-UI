@@ -1,17 +1,17 @@
 import { Component, OnInit, Input, OnDestroy, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 
 import { Subject } from 'rxjs';
+
 import { PacketSelectComponent } from '../packet-select/packet-select.component';
-import { NgForm, ControlContainer } from '@angular/forms';
 
 @Component({
   selector: 'hyt-sensor-value-settings',
   templateUrl: './sensor-value-settings.component.html',
-  styleUrls: ['./sensor-value-settings.component.css'],
-  viewProviders: [{ provide: ControlContainer, useExisting: NgForm }]
+  styleUrls: ['../common.css', './sensor-value-settings.component.css']
 })
 export class SensorValueSettingsComponent implements OnInit, OnDestroy {
-  @ViewChild(PacketSelectComponent, { static: true }) packetSelect: PacketSelectComponent;
+  @ViewChild(PacketSelectComponent, {static: true}) packetSelect: PacketSelectComponent;
   @Input() modalApply: Subject<any>;
   @Input() widget;
 
@@ -19,9 +19,9 @@ export class SensorValueSettingsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.modalApply.subscribe((event) => {
-      if (event === 'apply') {
-        this.apply();
-      }
+        if (event === 'apply') {
+          this.apply();
+        }
     });
   }
   ngOnDestroy() {

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DashboardConfigService } from '../dashboard-config.service';
 import { Dashboard } from '@hyperiot/core';
+import { MyTel } from 'src/app/test/my-tel-input/my-tel-input.component';
 
 @Component({
   selector: 'hyt-dashboards-list',
@@ -9,6 +10,13 @@ import { Dashboard } from '@hyperiot/core';
 })
 export class DashboardsListComponent implements OnInit {
   dashboardList: Dashboard[] = [];
+
+  // just for testint mat custom form control
+  number: MyTel = {
+    area: '',
+    exchange: '',
+    subscriber: ''
+  };
 
   constructor(private configService: DashboardConfigService) { }
 

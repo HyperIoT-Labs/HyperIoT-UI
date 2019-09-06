@@ -1,11 +1,14 @@
 .authenticationCard {
   width: 100%;
   margin: 0 auto;
+  height: 100%;
 
   #container-autentication-box {
     background: #17A4FA;
     background: linear-gradient(-130deg, #17A4FA, #0A1E3C);
     width: 100%;
-    height: 100vh;
+    height: 100%;
+    position: fixed;
+    overflow: auto;
   }
 }

@@ -3,8 +3,8 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { AuthenticationService, JWTLoginResponse } from '@hyperiot/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
-import { AuthenticationHttpErrorHandlerService } from 'src/app/services/authentication-http-error-handler.service';
-import { Handler } from 'src/app/services/models/models';
+import { AuthenticationHttpErrorHandlerService } from 'src/app/services/errorHandler/authentication-http-error-handler.service';
+import { HYTError } from 'src/app/services/errorHandler/models/models';
 
 import * as CryptoJS from 'crypto-js';
 
@@ -59,8 +59,9 @@ export class LoginComponent implements OnInit {
 
     this.authenticationService.login(this.loginForm.value.username, this.loginForm.value.password).subscribe(
       res => {
-        var jwtToken = <JWTLoginResponse>res;
-        this.cookieService.set('HIT-AUTH', jwtToken.token, 2, '/');
+        this.cookieService.set('HIT-AUTH', res.token, 2, '/');
+        localStorage.setItem('userInfo', JSON.stringify(res));
+        localStorage.setItem('user', JSON.stringify(res.authenticable));
 
         if (this.loginForm.value.rememberMe == true) {
           this.encrypting(this.loginForm.value.username + "&" + this.loginForm.value.password, this.key);
@@ -74,7 +75,7 @@ export class LoginComponent implements OnInit {
         this.router.navigate([this.returnUrl]);
       },
       err => {
-        let k: Handler[] = this.httperrorHandler.handleLogin(err);
+        let k: HYTError[] = this.httperrorHandler.handleLogin(err);
         for (let e of k) {
           this.error[2] = e.message;
         }

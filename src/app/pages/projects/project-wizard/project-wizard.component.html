@@ -1,0 +1,58 @@
+<div id="container-project-wizard">
+  <!-- <div class=row>
+    <div class="col-md-10">breadcrumb/to/project-wizard</div>
+    <div class="col-md-2">ADD</div>
+  </div> -->
+  <div class=row>
+
+    <ng-template #projectTemplate>
+      <hyt-project-step (projectOutput)="updateProject($event)">
+      </hyt-project-step>
+    </ng-template>
+
+    <ng-template #devicesTemplate>
+      <hyt-devices-step [hProject]=" hProject" (hDevicesOutput)="updateDevices($event)">
+      </hyt-devices-step>
+      <hyt-button (clickFn)="stepper.previous()">Back</hyt-button>
+      <hyt-button [isDisabled]="!devicesValidated" (clickFn)="stepper.next()">Next</hyt-button>
+    </ng-template>
+
+    <ng-template #packetsTemplate>
+      <hyt-packets-step [hDevices]="hDevices" (hPacketsOutput)="updatePackets($event)"></hyt-packets-step>
+      <hyt-button (clickFn)="stepper.previous()">Back</hyt-button>
+      <hyt-button [isDisabled]="!packetsValidated" (clickFn)="stepper.next()">Next</hyt-button>
+    </ng-template>
+
+    <ng-template #fieldsTemplate>
+      <hyt-fields-step [hDevices]="hDevices" (hPacketsOutput)="updatePacketFields($event)" [hPackets]="hPackets">
+      </hyt-fields-step>
+      <hyt-button (clickFn)="stepper.previous()">Back</hyt-button>
+      <hyt-button (clickFn)="stepper.next()">Next</hyt-button>
+    </ng-template>
+
+    <ng-template #enrichmentTemplate>
+      <hyt-enrichment-step [hProject]="hProject" [hDevices]="hDevices" [hPackets]="hPackets"></hyt-enrichment-step>
+      <hyt-button (clickFn)="stepper.previous()">Back</hyt-button>
+      <hyt-button (clickFn)="stepper.next()">Next</hyt-button>
+    </ng-template>
+
+    <ng-template #statisticsTemplate>
+      <hyt-statistics-step></hyt-statistics-step>
+      <hyt-button (clickFn)="stepper.previous()">Back</hyt-button>
+      <hyt-button (clickFn)="stepper.next()">Next</hyt-button>
+    </ng-template>
+
+    <ng-template #eventsTemplate>
+      <hyt-events-step></hyt-events-step>
+      <hyt-button (clickFn)="stepper.previous()">Back</hyt-button>
+    </ng-template>
+
+
+    <hyt-stepper #stepper [isLinear]="false" style="width: 100%"
+      [stepArray]="[ projectTemplate, devicesTemplate, packetsTemplate, fieldsTemplate, enrichmentTemplate, statisticsTemplate, eventsTemplate ]"
+      [labelArray]="[ 'Projects', 'Devices', 'Packets', 'Fields', 'Enrichment', 'Statistics', 'Events' ]"
+      [completedArray]="[ projectValidated, devicesValidated, packetsValidated, fieldsValidated, enrichmentValidated, statisticsValidated, eventsValidated ]">
+    </hyt-stepper>
+
+  </div>
+</div>

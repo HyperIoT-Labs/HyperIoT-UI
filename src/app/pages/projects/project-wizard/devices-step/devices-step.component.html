@@ -1,0 +1,106 @@
+<div id="devices-step" class="row">
+
+  <div class="col-md-10">
+
+    <hyt-button *ngIf="!formDeviceActive" (clickFn)="startAddDevice()">Add device</hyt-button>
+
+    <form *ngIf="formDeviceActive" class="device-form" [formGroup]="deviceForm" autocomplete="on">
+
+      <div class="row">
+
+        <div class="col-md-6">
+
+          <div class="container-form-field">
+            <hyt-input-text [form]="deviceForm" formControlName="hdevice-devicename" name="hdevice-devicename"
+              [isRequired]="true" placeholder="HYT_deviceName" [injectedErrorMsg]="getError('hdevice-devicename')">
+            </hyt-input-text>
+          </div> <!-- Field Name -->
+
+          <div class="container-form-field">
+            <hyt-input-text [form]="deviceForm" formControlName="deviceModel" name="deviceModel" placeholder="HYT_model"
+              [injectedErrorMsg]="getError('deviceModel')">
+            </hyt-input-text>
+          </div> <!-- Field Model -->
+
+          <div class="container-form-field">
+            <hyt-input-text [form]="deviceForm" formControlName="deviceFirmwareVersion" name="deviceFirmwareVersion"
+              placeholder="HYT_firmwareVersion" [injectedErrorMsg]="getError('deviceFirmwareVersion')">
+            </hyt-input-text>
+          </div> <!-- Field Firmware Version -->
+
+          <div class="container-form-field">
+            <hyt-input-text [form]="deviceForm" formControlName="hdevice-password" name="hdevice-password"
+              [isRequired]="true" [isPassword]="true" i18n-placeholder="@@HYT_password" placeholder="HYT_password"
+              type="password" [injectedErrorMsg]="getError('hdevice-password')">
+            </hyt-input-text>
+          </div> <!-- Field Password -->
+
+          <div class="container-form-field">
+            <hyt-input-text [form]="deviceForm" formControlName="hdevice-passwordConfirm" name="hdevice-passwordConfirm"
+              [isRequired]="true" i18n-placeholder="@@HYT_passwordConfirm" placeholder="HYT_passwordConfirm"
+              type="password" [injectedErrorMsg]="getError('hdevice-passwordConfirm')">
+            </hyt-input-text>
+          </div> <!-- Field Confirm Password -->
+
+        </div>
+
+        <div class="col-md-6">
+
+          <div class="container-form-field">
+            <hyt-input-text [form]="deviceForm" formControlName="deviceBrand" name="deviceBrand" placeholder="HYT_brand"
+              [injectedErrorMsg]="getError('deviceBrand')">
+            </hyt-input-text>
+          </div> <!-- Field Brand -->
+
+          <div class="container-form-field">
+            <hyt-input-text [form]="deviceForm" formControlName="deviceSoftwareVersion" name="deviceSoftwareVersion"
+              placeholder="HYT_softwareVersion" [injectedErrorMsg]="getError('deviceSoftwareVersion')">
+            </hyt-input-text>
+          </div> <!-- Field Software Version -->
+
+          <div class="container-form-field">
+            <hyt-text-area [form]="deviceForm" formControlName="deviceDescription" name="deviceDescription"
+              placeholder="HYT_description">
+            </hyt-text-area>
+          </div> <!-- Field Description -->
+
+        </div>
+
+      </div>
+
+      <div class="container-form-field errorMessage">
+        <ng-container *ngIf="getError('general')">
+          {{getError('general')}}
+        </ng-container>
+      </div> <!-- Error Box -->
+
+      <hyt-button id="device-form-submit-button" [isDisabled]="invalid()" (clickFn)="createDevice()" type="submit">
+        Add device
+      </hyt-button>
+
+    </form>
+
+  </div>
+
+  <div class="col-md-2">
+    <div *ngIf="!formDeviceActive">
+      descrizione packets
+    </div>
+    <div *ngIf="formDeviceActive">
+      DEVICES
+      <table>
+        <tr>
+          <th><b>ID</b></th>
+          <th><b>NOME</b></th>
+          <th><b>PROGETTO</b></th>
+        </tr>
+        <tr *ngFor="let dev of devicesList">
+          <td>{{dev.id}}</td>
+          <td>{{dev.deviceName}}</td>
+          <td>{{dev.project.id}}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+</div>

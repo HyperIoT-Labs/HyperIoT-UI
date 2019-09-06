@@ -1,12 +1,13 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { ControlContainer, NgForm } from '@angular/forms';
 
 import { HPacket, HPacketField, HpacketsService } from '@hyperiot/core';
-import { NgForm, ControlContainer } from '@angular/forms';
+import { SelectOption } from '@hyperiot/components';
 
 @Component({
   selector: 'hyt-packet-select',
   templateUrl: './packet-select.component.html',
-  styleUrls: ['./packet-select.component.css'],
+  styleUrls: ['../common.css', './packet-select.component.css'],
   viewProviders: [ { provide: ControlContainer, useExisting: NgForm } ]
 })
 export class PacketSelectComponent implements OnInit {
@@ -39,7 +40,6 @@ export class PacketSelectComponent implements OnInit {
     if (nullIndex >= 0) {
       delete this.selectedFields[nullIndex];
     }
-    console.log($event, this.selectedFields);
     this.selectedFieldsChange.emit(this.selectedFields);
   }
 

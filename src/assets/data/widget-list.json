@@ -1,97 +1,288 @@
-[{
-    "id": 0,
-    "widgetId": "events-log",
-    "categoryId": 3,
-    "name": "Events log",
-    "cols": 4,
-    "rows": 2,
-    "y": 0,
-    "x": 0,
-    "type": "events-log",
-    "config": {}
-  },
-  {
-    "id": 0,
-    "widgetId": "stats-chart",
-    "categoryId": 3,
-    "name": "Classic pie chart",
-    "cols": 4,
-    "rows": 3,
-    "y": 0,
-    "x": 0,
-    "type": "stats-chart",
-    "config": {
-      "data": []
+[
+    {
+        "id": 0,
+        "categoryId": 3,
+        "name": "Classic pie chart",
+        "info": {
+            "description": "Widget to show statistics data with pie chart representation.",
+            "icon": "assets/widgets/images/preview/chart_pie_mini.png",
+            "preview": "assets/widgets/images/preview/chart_pie.png",
+            "rating": 4.15
+        },
+        "cols": 2,
+        "rows": 3,
+        "y": 0,
+        "x": 0,
+        "type": "stats-chart",
+        "dataUrl": "assets/data/test.widget-stats.2.json",
+        "dataTableUrl": "assets/data/test.widget-stats.2-table.json",
+        "config": {
+            "data": []
+        }
+    },
+    {
+        "id": 0,
+        "name": "Realttime line chart",
+        "info": {
+            "description": "Widget to show single or combined realtime statistics with a line chart representation.",
+            "icon": "assets/widgets/images/preview/chart_realtime_mini.png",
+            "preview": "assets/widgets/images/preview/chart_realtime.png",
+            "rating": 3.75
+        },
+        "categoryId": 2,
+        "cols": 2,
+        "rows": 3,
+        "y": 0,
+        "x": 0,
+        "type": "time-chart",
+        "config": {
+            "data": []
+        }
+    },
+    {
+        "id": 0,
+        "name": "Classic line chart",
+        "info": {
+            "description": "Widget to show single or combined statistics with a line chart representation.",
+            "icon": "assets/widgets/images/preview/chart_line_mini.png",
+            "preview": "assets/widgets/images/preview/chart_line.png",
+            "rating": 5
+        },
+        "categoryId": 2,
+        "cols": 2,
+        "rows": 3,
+        "y": 0,
+        "x": 0,
+        "type": "stats-chart",
+        "dataUrl": "assets/data/test.widget-stats.3.json",
+        "dataTableUrl": "assets/data/test.widget-stats.3-table.json",
+        "config": {
+            "data": []
+        }
+    },
+    {
+        "id": 0,
+        "name": "Classic bar chart",
+        "info": {
+            "description": "Widget to show single or combined statistics with a bar chart representation.",
+            "icon": "assets/widgets/images/preview/chart_bar_mini.png",
+            "preview": "assets/widgets/images/preview/chart_bar.png",
+            "rating": 2.15
+        },
+        "categoryId": 1,
+        "cols": 2,
+        "rows": 3,
+        "y": 0,
+        "x": 0,
+        "type": "stats-chart",
+        "dataUrl": "assets/data/test.widget-stats.1.json",
+        "dataTableUrl": "assets/data/test.widget-stats.1-table.json",
+        "config": {
+            "data": []
+        }
+    },
+    {
+        "id": 0,
+        "name": "Sensor value",
+        "info": {
+            "description": "Widget to display sensor values.",
+            "icon": "assets/widgets/images/preview/sensor_value_mini.png",
+            "preview": "assets/widgets/images/preview/sensor_value.png",
+            "rating": 4.75
+        },
+        "categoryId": 5,
+        "cols": 1,
+        "rows": 2,
+        "y": 0,
+        "x": 0,
+        "type": "sensor-value",
+        "config": {
+            "data": []
+        }
+    },
+    {
+        "id": 0,
+        "categoryId": 3,
+        "name": "Events log",
+        "info": {
+            "description": "This widget shows real time event stream data.",
+            "icon": "assets/widgets/images/preview/events_log_mini.png",
+            "preview": "assets/widgets/images/preview/events_log.png",
+            "rating": 3.9
+        },
+        "cols": 2,
+        "rows": 2,
+        "y": 0,
+        "x": 0,
+        "type": "events-log",
+        "config": {}
+    },
+    {
+        "id": 0,
+        "name": "Pressure Gauge",
+        "info": {
+            "description": "Widget to show a gauge with value.",
+            "icon": "assets/widgets/images/preview/chart_gauge_mini.png",
+            "preview": "assets/widgets/images/preview/chart_gauge.png",
+            "rating": 5
+        },
+        "categoryId": 5,
+        "cols": 2,
+        "rows": 3,
+        "y": 0,
+        "x": 0,
+        "type": "gauge-value",
+        "config": {
+            "data": [
+                {
+                    "domain": {
+                        "x": [
+                            0,
+                            1
+                        ],
+                        "y": [
+                            0,
+                            1
+                        ]
+                    },
+                    "value": 850,
+                    "type": "indicator",
+                    "mode": "gauge+number",
+                    "gauge": {
+                        "axis": {
+                            "range": [
+                                null,
+                                2500
+                            ]
+                        },
+                        "steps": [
+                            {
+                                "range": [
+                                    0,
+                                    500
+                                ],
+                                "color": "lightgreen"
+                            },
+                            {
+                                "range": [
+                                    500,
+                                    1250
+                                ],
+                                "color": "yellow"
+                            },
+                            {
+                                "range": [
+                                    1250,
+                                    2100
+                                ],
+                                "color": "orange"
+                            },
+                            {
+                                "range": [
+                                    2100,
+                                    2500
+                                ],
+                                "color": "red"
+                            }
+                        ],
+                        "threshold": {
+                            "line": {
+                                "color": "magenta",
+                                "width": 4
+                            },
+                            "thickness": 0.75,
+                            "value": 2300
+                        }
+                    }
+                }
+            ],
+            "layout": {
+                "autosize": true,
+                "margin": {
+                    "t": 24,
+                    "b": 8
+                }
+            }
+        }
+    },
+    {
+        "id": 0,
+        "name": "Speed Gauge",
+        "info": {
+            "description": "Widget to show a speed meter with value.",
+            "icon": "assets/widgets/images/preview/chart_gauge_speed_mini.png",
+            "preview": "assets/widgets/images/preview/chart_gauge_speed.png",
+            "rating": 4.75
+        },
+        "categoryId": 5,
+        "cols": 2,
+        "rows": 3,
+        "y": 0,
+        "x": 0,
+        "type": "gauge-value",
+        "config": {
+            "data": [
+                {
+                    "domain": {
+                        "x": [
+                            0,
+                            1
+                        ],
+                        "y": [
+                            0,
+                            1
+                        ]
+                    },
+                    "value": 850,
+                    "type": "indicator",
+                    "mode": "gauge+number",
+                    "gauge": {
+                        "axis": {
+                            "range": [
+                                null,
+                                280
+                            ]
+                        },
+                        "steps": [
+                            {
+                                "range": [
+                                    0,
+                                    280
+                                ],
+                                "color": "lightgrey"
+                            }
+                        ],
+                        "threshold": {
+                            "line": {
+                                "color": "red",
+                                "width": 4
+                            },
+                            "thickness": 0.75,
+                            "value": 220
+                        }
+                    }
+                }
+            ],
+            "layout": {
+                "autosize": true,
+                "margin": {
+                    "t": 24,
+                    "b": 8
+                }
+            }
+        }
+    },
+    {
+        "id": 0,
+        "name": "Simple text",
+        "categoryId": 5,
+        "cols": 1,
+        "rows": 1,
+        "y": 0,
+        "x": 0,
+        "type": "text-label",
+        "config": {
+            "labelText": "Change me!"
+        }
     }
-  },
-  {
-    "id": 0,
-    "widgetId": "time-chart",
-    "name": "Realttime line chart",
-    "categoryId": 2,
-    "cols": 4,
-    "rows": 3,
-    "y": 0,
-    "x": 0,
-    "type": "time-chart",
-    "config": {
-      "data": []
-    }
-  },
-  {
-    "id": 0,
-    "widgetId": "stats-chart",
-    "name": "Classic line chart",
-    "categoryId": 2,
-    "cols": 4,
-    "rows": 3,
-    "y": 0,
-    "x": 0,
-    "type": "stats-chart",
-    "config": {
-      "data": []
-    }
-  },
-  {
-    "id": 0,
-    "widgetId": "stats-chart",
-    "name": "Classic bar chart",
-    "categoryId": 1,
-    "cols": 4,
-    "rows": 3,
-    "y": 0,
-    "x": 0,
-    "type": "stats-chart",
-    "config": {
-      "data": []
-    }
-  },
-  {
-    "id": 0,
-    "widgetId": "sensor-value",
-    "name": "Sensor value",
-    "categoryId": 5,
-    "cols": 2,
-    "rows": 2,
-    "y": 0,
-    "x": 0,
-    "type": "sensor-value",
-    "config": {
-      "data": []
-    }
-  },
-  {
-    "id": 0,
-    "widgetId": "text-label",
-    "name": "Simple text",
-    "categoryId": 5,
-    "cols": 2,
-    "rows": 1,
-    "y": 0,
-    "x": 0,
-    "type": "text-label",
-    "config": {
-      "labelText": "Change me!"
-    }
-  }
 ]

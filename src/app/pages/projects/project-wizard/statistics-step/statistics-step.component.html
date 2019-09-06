@@ -1,0 +1,80 @@
+<!-- <div id="statistics-step" class="row">
+
+  <div class="col-md-10">
+
+    <form class="statistics-form" [formGroup]="statisticsForm" autocomplete="on">
+
+      <div class="row">
+
+        <div class="col-md-6">
+
+          <div class="container-form-field">
+            <hyt-input-text [form]="statisticsForm" formControlName="statisticsName" name="statisticsName"
+              [isRequired]="true" placeholder="HYT_statisticsName">
+            </hyt-input-text>
+          </div>
+
+          <div class="container-form-field">
+            <hyt-input-text [form]="statisticsForm" formControlName="statisticsAlgorithm" name="statisticsAlgorithm"
+              placeholder="HYT_statisticsAlgorithm">
+            </hyt-input-text>
+          </div>
+
+        </div>
+
+        <div class="col-md-6">
+
+          <div class="container-form-field">
+            <hyt-input-text [form]="statisticsForm" formControlName="statisticsPacket" name="statisticsPacket"
+              placeholder="HYT_statisticsPacket">
+            </hyt-input-text>
+          </div>
+
+          <div class="container-form-field">
+            <hyt-input-text [form]="statisticsForm" formControlName="statisticsSourceData" name="statisticsSourceData"
+              placeholder="HYT_statisticsSourceData">
+            </hyt-input-text>
+          </div>
+
+          <div class="container-form-field">
+            <hyt-text-area [form]="statisticsForm" formControlName="statisticsInputFields" name="statisticsInputFields"
+              placeholder="HYT_statisticsInputFields">
+            </hyt-text-area>
+          </div>
+
+          <div class="container-form-field">
+            <hyt-text-area [form]="statisticsForm" formControlName="statisticsTimeRange" name="statisticsTimeRange"
+              placeholder="HYT_statisticsTimeRange">
+            </hyt-text-area>
+          </div>
+
+        </div>
+
+      </div>
+
+      <hyt-button id="statistics-form-submit-button" [isDisabled]="invalid()" (clickFn)="createStatistic()"
+        type="submit">
+        Add Statistic
+      </hyt-button>
+
+    </form>
+
+  </div>
+
+  <div class="col-md-2">
+    STATISTICS
+    <table>
+      <tr>
+        <th><b>ID</b></th>
+        <th><b>NOME</b></th>
+        <th><b>PACKET</b></th>
+      </tr>
+      <tr *ngFor="let sta of statisticsList">
+        <td>{{sta.id}}</td>
+        <td>{{sta.deviceName}}</td>
+        <td>{{sta.packet.id}}</td>
+      </tr>
+    </table>
+  </div>
+
+</div> -->

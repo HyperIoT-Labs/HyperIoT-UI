@@ -1,3 +1,21 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 @import './assets/styles/main';
+
+/* Bootstrap optional */
+@import "~bootstrap/scss/reboot";
+@import "~bootstrap/scss/grid";
+@import "~bootstrap/scss/utilities/display";
+@import "~bootstrap/scss/utilities/flex";
+@import "~bootstrap/scss/utilities/spacing";
+
+body {
+    background: transparent;
+}
+label {
+    font-weight: 800;
+    padding-top: 8px; 
+}
+.padding-6 {
+    padding: 6px;
+}

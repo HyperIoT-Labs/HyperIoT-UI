@@ -5,9 +5,8 @@ import {
   Output,
   EventEmitter,
   ElementRef,
-  OnDestroy,
-  ViewChild,
-  HostListener
+  HostListener,
+  ViewChild
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -17,7 +16,7 @@ import { NgForm } from '@angular/forms';
 @Component({
   selector: 'hyt-widget-settings-dialog',
   templateUrl: './widget-settings-dialog.component.html',
-  styleUrls: ['./widget-settings-dialog.component.css']
+  styleUrls: ['./common.css', './widget-settings-dialog.component.css']
 })
 export class WidgetSettingsDialogComponent implements OnInit {
   @Output() modalClose: EventEmitter<any> = new EventEmitter<any>();

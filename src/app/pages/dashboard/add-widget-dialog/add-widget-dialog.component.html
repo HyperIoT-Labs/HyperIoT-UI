@@ -1,6 +1,6 @@
 <div class="dialog">
 
-    <header i18n="@@addWidgetDialog-header">Add Widget</header>
+    <header i18n="@@addWidgetDialog-header">HYT_widget_add_widget</header>
 
     <div class="category-list">
 
@@ -19,28 +19,67 @@
 
         <div class="widget-item"
              *ngFor="let widget of categorydWidgets"
-             [ngClass]="{selected: widget.count > 0}">
+             [ngClass]="{selected: widget.count > 0}"
+             (click)="currentWidget = widget"
+             >
             <header>{{ widget.name }}</header>
-
+            <img *ngIf="widget.info && widget.info.icon" [src]="widget.info.icon">
             <input type="number" class="item-count"
+                title="HYT_widget_add_quantity" i18n-title="@@addWidgetDialog-add-quantity"
                 min="0" max="{{widgetAddMax}}"
                 [(ngModel)]="widget.count"
                 (ngModelChange)="onWidgetChange(widget)">
-            <button class="remove" title="remove" (click)="removeWidget(widget)"></button>
-            <button class="add" title="add" (click)="addWidget(widget)"></button>
+            <button class="remove" i18n-title="@@addWidgetDialog-add-less" title="HYT_widget_add_less" (click)="removeWidget(widget)"></button>
+            <button class="add" i18n-title="@@addWidgetDialog-add-more" title="HYT_widget_add_more" (click)="addWidget(widget)"></button>
+        </div>
+
+    </div>
+
+    <div class="widget-info">
+
+        <div *ngIf="currentWidget != null">
+            <h3>{{ currentWidget.name }}</h3>
+            <div *ngIf="currentWidget.info && currentWidget.info.preview">
+                <img [src]="currentWidget.info.preview" width="100%">
+            </div>
+            <div>
+                <star-rating
+                    [value]="currentWidget.info.rating"
+                    checkedcolor="gold"
+                    uncheckedcolor="gray"
+                    size="32px"
+                    readonly="false"
+                    (rate)="onRate($event)">
+                </star-rating>
+            </div>
+            <label i18n="@@addWidgetDialog-info-type">HYT_widget_info_type</label>
+            <p>
+                {{ currentWidget.type }}
+            </p>
+            <div *ngIf="currentWidget.info">
+                <label i18n="@@addWidgetDialog-info-description">Description</label>
+                <p>
+                    {{ currentWidget.info.description }}
+                </p>
+            </div>
+        </div>
+        <div *ngIf="currentWidget == null" i18n="@@addWidgetDialog-info-intro">
+            HYT_widget_info_intro
         </div>
 
     </div>
 
     <footer>
-        <button class="button-close"
-            (click)="close()">
-            <span i18n="@@addWidgetDialog-btn-cancel">Cancel</span> &#10006;
-        </button>
-        <button [disabled]="selectedWidgets.length === 0" class="button-confirm"
-            (click)="confirm()">
-            <span i18n="@@addWidgetDialog-btn-add">Add</span> &#10010;
-        </button>
+        <hyt-button class="button-close"
+            (clickFn)="close()">
+            <mat-icon>close</mat-icon>
+            <span i18n="@@addWidgetDialog-btn-cancel">HYT_widget_cancel</span>
+        </hyt-button>
+        <hyt-button [isDisabled]="selectedWidgets.length === 0" class="button-confirm"
+            (clickFn)="confirm()">
+            <mat-icon>add</mat-icon>
+            <span i18n="@@addWidgetDialog-btn-add">HYT_widget_add</span>
+        </hyt-button>
     </footer>
 
 </div>
