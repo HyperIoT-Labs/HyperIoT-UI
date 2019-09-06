@@ -4,7 +4,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule, TRANSLATIONS, LOCALE_ID, TRANSLATIONS_FORMAT } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 
-import { Configuration, ConfigurationParameters, HyperiotClientModule } from '@hyperiot/core';
 import { CookieService } from 'ngx-cookie-service';
 
 //modules
@@ -17,9 +16,14 @@ import { AppComponent } from './app.component';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { DashboardModule } from './pages/dashboard/dashboard.module';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { TopbarComponent } from './components/topbar/topbar.component';
+import { AccountButtonComponent } from './components/account-button/account-button.component';
 
 // hyperiot
+import { Configuration, ConfigurationParameters, HyperiotClientModule } from '@hyperiot/core';
 import { HyperiotComponentsModule } from '@hyperiot/components';
+import { ActivatedRoute, ActivatedRouteSnapshot, RouterModule } from '@angular/router';
 
 export function apiConfigFactory(): Configuration {
   const params: ConfigurationParameters = {
@@ -34,9 +38,13 @@ export function apiConfigFactory(): Configuration {
 @NgModule({
   declarations: [
     AppComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    SidebarComponent,
+    TopbarComponent,
+    AccountButtonComponent
   ],
   imports: [
+    RouterModule,
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
@@ -47,6 +55,7 @@ export function apiConfigFactory(): Configuration {
     HyperiotClientModule.forRoot(apiConfigFactory)
   ],
   providers: [
+    // ActivatedRouteSnapshot,
     CookieService,
     I18n,
     { provide: TRANSLATIONS_FORMAT, useValue: "xlf" },

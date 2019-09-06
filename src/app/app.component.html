@@ -1,6 +1,21 @@
-<mat-toolbar *ngIf="showToolBar()" id="hyt-toolBar">
-  <span>HyperIoT</span>
-  <button mat-button (click)="logout()">Logout</button>
-</mat-toolbar>
+<div id="hyt-container">
 
-<router-outlet></router-outlet>
+  <div *ngIf="showToolBars()" id="hyt-container-topbar">
+    <hyt-topbar></hyt-topbar>
+  </div>
+
+  <div id="hyt-container-nav">
+
+    <div *ngIf="showToolBars()" id="hyt-container-sidebar">
+      <hyt-sidebar></hyt-sidebar>
+    </div>
+  
+    <div id="hyt-container-router" class="{{(showToolBars()) ? 'container-fluid' : 'container-full-screen'}}">
+      <router-outlet></router-outlet>
+      
+    </div>
+
+  </div>
+
+</div>
+

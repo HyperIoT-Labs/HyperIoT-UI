@@ -61,19 +61,16 @@ const hyperiotRoutes: Routes = [
       },
       {
         path: 'password-reset/:email/:code',
-        component: PasswordResetComponent,
-        data: {
-          showToolBar: false,
-        }
+        component: PasswordResetComponent
       },
       {
         path: 'activation/:email/:code',
-        component: UserActivationComponent,
-        data: {
-          showToolBar: false,
-        }
+        component: UserActivationComponent
       }
-    ]
+    ],
+    data: {
+      showToolBar: false,
+    }
   },
   {
     path: 'project-wizard',
