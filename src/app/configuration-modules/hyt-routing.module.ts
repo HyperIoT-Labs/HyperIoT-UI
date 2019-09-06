@@ -12,6 +12,7 @@ import { NotFoundComponent } from '../pages/not-found/not-found.component';
 import { LoginComponent } from '../pages/authentication/login/login.component';
 import { RegistrationComponent } from '../pages/authentication/registration/registration.component';
 import { PasswordRecoveryComponent } from '../pages/authentication/password-recovery/password-recovery.component';
+import { ProfileComponent } from '../pages/account/profile/profile.component';
 
 @Injectable()
 export class LoggedInGuard implements CanActivate {
@@ -76,9 +77,17 @@ const hyperiotRoutes: Routes = [
     }
   },
   {
+    path: 'account/profile',
+    component: ProfileComponent,
+    canActivate: [LoggedInGuard],
+    data: {
+      showToolBar: true
+    }
+  },
+  {
     path: 'dashboards/:dashboardId',
     component: DashboardViewComponent,
-    canActivate: [LoggedInGuard],
+    // canActivate: [LoggedInGuard],
     children: [
       {
         path: 'widgets',

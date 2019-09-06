@@ -14,11 +14,6 @@ export class RegistrationComponent implements OnInit {
   error: string;
 
   registrationForm: FormGroup;
-  //  = new FormGroup({
-  //   acceptConditions: new FormControl(false, [
-  //     Validators.required
-  //   ])
-  // });
 
   loading: boolean = false;
 

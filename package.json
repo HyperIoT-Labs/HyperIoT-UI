@@ -27,7 +27,7 @@
     "@angular/platform-browser": "~8.1.0",
     "@angular/platform-browser-dynamic": "~8.1.0",
     "@angular/router": "~8.1.0",
-    "@hyperiot/components": "0.0.3",
+    "@hyperiot/components": "0.0.7",
     "@hyperiot/core": "^0.2.0",
     "@hyperiot/widgets": "0.0.8",
     "@ngx-translate/i18n-polyfill": "^1.0.0",
