@@ -1,0 +1,31 @@
+:host {
+    position: relative;
+    width: 200px;
+    height: 260px;
+}
+
+mat-card {
+    background-color: whitesmoke;
+    position: absolute;
+    left: 0; top: 0; right: 0; bottom: 0;
+    border-radius: 6px;
+}
+mat-card.active {
+    background-color: white;
+}
+.position-abs {
+    position: absolute;
+    left:12px; right: 12px; top: 12px; bottom: 12px;
+}
+.multiline-ellipsis {
+    font-size: 80%;
+    max-width: 100%;
+    height: 60px;
+    margin: 8px auto;
+    display: block;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

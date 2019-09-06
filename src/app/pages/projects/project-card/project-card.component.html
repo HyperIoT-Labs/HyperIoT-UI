@@ -1,0 +1,44 @@
+<!-- Cover (inactive state) -->
+<mat-card *ngIf="!isActive" [@crossFade]
+    class="md-padding d-flex flex-row align-items-stretch"
+    [class.mat-elevation-z2]="!isActive"
+    [class.mat-elevation-z8]="isActive"
+    (mouseover)="setActive(true)"
+    (mouseout)="setActive(false)">
+
+    <div class="flex-fill d-flex align-items-end">
+        <h3 class="m-0">{{ project.name }}</h3>
+    </div>
+
+</mat-card>
+<mat-card *ngIf="isActive" [@crossFade]
+    class="active md-padding d-flex flex-row align-items-stretch"
+    [class.mat-elevation-z2]="!isActive"
+    [class.mat-elevation-z8]="isActive"
+    (mouseover)="setActive(true)"
+    (mouseout)="setActive(false)">
+
+    <!-- Summary (hover / tapped state) -->
+    <div class="flex-fill d-flex flex-column">
+        <header>
+            <h3 class="m-0">{{ project.name }}</h3>
+        </header>
+        <main class="flex-grow-1 d-flex flex-column">
+            <p class="multiline-ellipsis">{{ project.description }}</p>
+            <div class="m-1 d-flex flex-row align-items-center">
+                <mat-icon>devices_other</mat-icon>
+                <strong class="px-2">{{ deviceCount }}</strong>
+                <span i18n="@@projectCard-string-device">HYT_string_device</span>
+            </div>
+            <div class="m-1 d-flex flex-row align-items-center">
+                <mat-icon>code</mat-icon>
+                <strong class="px-2">{{ rulesCount }}</strong>
+                <span i18n="@@projectCard-string-rule">HYT_string_rule</span>
+            </div>
+        </main>
+        <footer class="mt-auto d-flex">
+            <button mat-stroked-button class="flex-grow-1" i18n="@@projectCard-button-view">HYT_button_view</button>
+        </footer>
+    </div>
+
+</mat-card>

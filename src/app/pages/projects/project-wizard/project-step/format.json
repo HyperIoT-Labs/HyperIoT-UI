@@ -1,0 +1,74 @@
+[{
+    "statusCode": 422,
+    "type": "it.acsoftware.hyperiot.base.exception.HyperIoTValidationException",
+    "errorMessages": [],
+    "validationErrors": [{
+      "message": "must not be null",
+      "field": "hpacket-serialization",
+      "invalidValue": ""
+    }, {
+      "message": "must not be null",
+      "field": "hpacket-type",
+      "invalidValue": ""
+    }, {
+      "message": "must not be null",
+      "field": "hpacket-format",
+      "invalidValue": ""
+    }]
+  },
+  {
+    "statusCode": 500,
+    "type": "it.acsoftware.hyperiot.base.exception.HyperIoTRuntimeException",
+    "errorMessages": ["Row was updated or deleted by another transaction (or unsaved-value mapping was incorrect) : [it.acsoftware.hyperiot.hpacket.model.HPacket#489]"],
+    "validationErrors": []
+  },
+  {
+    "status": 500,
+    "message": "An internal error has occurred",
+    "developerMessage": "Unrecognized field \"parent\" (class it.acsoftware.hyperiot.hdevice.model.HDevice), not marked as ignorable (19 known properties: \"deviceName\", \"pubKey\", \"passwordConfirm\", \"brand\", \"model\", \"x509Cert\", \"admin\", \"softwareVersion\", \"entityVersion\", \"project\", \"categoryIds\", \"id\", \"description\", \"firmwareVersion\", \"tagIds\", \"loginWithSSLCert\", \"x509CertKey\", \"password\", \"roles\"])\n at [Source: (org.apache.cxf.transport.http.AbstractHTTPDestination$1); line: 1, column: 416] (through reference chain: it.acsoftware.hyperiot.hpacket.model.HPacket[\"device\"]->it.acsoftware.hyperiot.hdevice.model.HDevice[\"parent\"])"
+  },
+  {
+    "statusCode": 500,
+    "type": "it.acsoftware.hyperiot.base.exception.HyperIoTRuntimeException",
+    "errorMessages": ["RollbackException is propagating"],
+    "validationErrors": []
+  },
+  {
+    "statusCode": 500,
+    "type": "it.acsoftware.hyperiot.base.exception.HyperIoTRuntimeException",
+    "errorMessages": ["Multiple representations of the same entity [it.acsoftware.hyperiot.hpacket.model.HPacketField#36] are being merged. Detached: [it.acsoftware.hyperiot.hpacket.model.HPacketField@aee59695]; Detached: [it.acsoftware.hyperiot.hpacket.model.HPacketField@4b5911de]"],
+    "validationErrors": []
+  },
+  {
+    "statusCode": 422,
+    "type": "it.acsoftware.hyperiot.base.exception.HyperIoTDuplicateEntityException",
+    "errorMessages": ["name", "user_id"],
+    "validationErrors": []
+  },
+  {
+    "statusCode": 422,
+    "type": "it.acsoftware.hyperiot.base.exception.HyperIoTValidationException",
+    "errorMessages": [],
+    "validationErrors": [{
+      "message": "Invalid pattern",
+      "field": "hdevice-devicename",
+      "invalidValue": "¥ £ ⅕ ⅙ ⅛ ⅔ ⅖ ⅗ ⅘ ⅜ ⅚ ⅐ ⅝ ↉ ⅓ ⅑ ⅒ ⅞ ← ↑ → ↓ ↔ ↕ ↖ ↗ ↘"
+    }, {
+      "message": "Passwords must match",
+      "field": "hdevice-password",
+      "invalidValue": ""
+    }, {
+      "message": "Passwords must match",
+      "field": "hdevice-passwordConfirm",
+      "invalidValue": ""
+    }, {
+      "message": "Invalid password",
+      "field": "hdevice-password",
+      "invalidValue": ""
+    }, {
+      "message": "Invalid password",
+      "field": "hdevice-passwordConfirm",
+      "invalidValue": ""
+    }]
+  }
+]

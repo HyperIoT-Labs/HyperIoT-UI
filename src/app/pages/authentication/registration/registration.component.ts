@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { HusersService, HUser } from '@hyperiot/core';
-import { AuthenticationHttpErrorHandlerService } from 'src/app/services/authentication-http-error-handler.service';
+import { AuthenticationHttpErrorHandlerService } from 'src/app/services/errorHandler/authentication-http-error-handler.service';
+import { HYTError } from 'src/app/services/errorHandler/models/models';
 
 @Component({
   selector: 'hyt-registration',
@@ -11,14 +12,9 @@ import { AuthenticationHttpErrorHandlerService } from 'src/app/services/authenti
 })
 export class RegistrationComponent implements OnInit {
 
-  error: string;
+  errors: HYTError[] = [];
 
   registrationForm: FormGroup;
-  //  = new FormGroup({
-  //   acceptConditions: new FormControl(false, [
-  //     Validators.required
-  //   ])
-  // });
 
   loading: boolean = false;
 
@@ -42,8 +38,8 @@ export class RegistrationComponent implements OnInit {
   registrationSucceeded: boolean = false;
 
   register() {
-    //DISABLE BUTTON
-    this.error = '';
+    this.loading = true;
+    this.errors = [];
     this.generalError = 0;
     this.registrationSucceeded = false;
 
@@ -52,8 +48,8 @@ export class RegistrationComponent implements OnInit {
       lastname: this.registrationForm.value.lastName,
       username: this.registrationForm.value.username,
       email: this.registrationForm.value.email,
-      password: this.registrationForm.value.password,
-      passwordConfirm: this.registrationForm.value.confPassword,
+      password: this.registrationForm.value['huser-password'],
+      passwordConfirm: this.registrationForm.value['huser-passwordConfirm'],
       entityVersion: 1
     }
 
@@ -63,22 +59,15 @@ export class RegistrationComponent implements OnInit {
         this.loading = false
       },
       err => {
-        let k: Map<string, string> = this.httperrorHandler.handleRegistration(err);
-        for (let e of k) {
-          if (e[0] == 'general') {
-            this.error = e[1]
-            this.generalError = 1;
-          }
-          else {
-            this.error = e[1]
-            this.registrationForm.get(e[0]).setErrors({
+        this.errors = this.httperrorHandler.handleRegistration(err);
+        this.errors.forEach(e => {
+          if (e.container != 'general')
+            this.registrationForm.get(e.container).setErrors({
               validateInjectedError: {
                 valid: false
               }
             });
-          }
-        }
-
+        })
         this.loading = false
       }
     )
@@ -90,9 +79,13 @@ export class RegistrationComponent implements OnInit {
       this.registrationForm.get('lastName').invalid ||
       this.registrationForm.get('username').invalid ||
       this.registrationForm.get('email').invalid ||
-      this.registrationForm.get('password').invalid ||
-      this.registrationForm.get('confPassword').invalid
+      this.registrationForm.get('huser-password').invalid ||
+      this.registrationForm.get('huser-passwordConfirm').invalid
     )
+  }
+
+  getError(field: string): string {
+    return (this.errors.find(x => x.container == field)) ? this.errors.find(x => x.container == field).message : null;
   }
 
 }

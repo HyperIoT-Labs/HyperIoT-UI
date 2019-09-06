@@ -11,7 +11,12 @@ import { PacketsStepComponent } from './project-wizard/packets-step/packets-step
 import { ProjectStepComponent } from './project-wizard/project-step/project-step.component';
 import { StatisticsStepComponent } from './project-wizard/statistics-step/statistics-step.component';
 import { EnrichmentStepComponent } from './project-wizard/enrichment-step/enrichment-step.component';
+import { RuleDefinitionComponent } from './project-wizard/rule-definition/rule-definition.component';
 
+import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule, MatButtonModule } from '@angular/material';
+
+import { ProjectCardComponent } from './project-card/project-card.component';
 
 
 @NgModule({
@@ -24,9 +29,14 @@ import { EnrichmentStepComponent } from './project-wizard/enrichment-step/enrich
     PacketsStepComponent,
     ProjectStepComponent,
     StatisticsStepComponent,
-    EnrichmentStepComponent
+    EnrichmentStepComponent,
+    ProjectCardComponent,
+    RuleDefinitionComponent
   ],
   imports: [
+    MatIconModule,
+    MatButtonModule,
+    MatCardModule,
     CommonModule,
     HyperiotComponentsModule,
     ReactiveFormsModule

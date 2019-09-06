@@ -2,6 +2,7 @@ import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { ControlContainer, NgForm } from '@angular/forms';
 
 import { HPacket, HPacketField, HpacketsService } from '@hyperiot/core';
+import { SelectOption } from '@hyperiot/components';
 
 @Component({
   selector: 'hyt-packet-select',
@@ -39,7 +40,6 @@ export class PacketSelectComponent implements OnInit {
     if (nullIndex >= 0) {
       delete this.selectedFields[nullIndex];
     }
-    console.log($event, this.selectedFields);
     this.selectedFieldsChange.emit(this.selectedFields);
   }
 

@@ -7,11 +7,11 @@
 
   <div [ngSwitch]="pageStatus">
 
-    <div *ngSwitchCase="0">
+    <div *ngSwitchCase="PageStatus.Loading">
       loading
     </div>
 
-    <div *ngSwitchCase="1">
+    <div *ngSwitchCase="PageStatus.Standard">
       <table>
         <tr>
           <th><b>ID</b></th>
@@ -24,9 +24,16 @@
           <td>{{proj.user.username}}</td>
         </tr>
       </table>
+
+      <h2>Projects List</h2>
+      <div class="d-flex flex-row justify-content-center">
+        <hyt-project-card *ngFor="let p of hProjects" [project]="p">
+        </hyt-project-card>
+      </div>
+
     </div>
 
-    <div *ngSwitchCase="2">
+    <div *ngSwitchCase="PageStatus.New">
       <div class="no-projects row">
         <div class="col-md-12">
           Non ci sono progetti. Devi aggiungerne uno.
@@ -40,7 +47,7 @@
       </div>
     </div>
 
-    <div *ngSwitchCase="-1">
+    <div *ngSwitchCase="PageStatus.Error">
       Errore
     </div>
 

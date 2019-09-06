@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewEncapsulation, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { HDevice, HProject, HdevicesService } from '@hyperiot/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { HYTError } from 'src/app/services/errorHandler/models/models';
+import { ProjectWizardHttpErrorHandlerService } from 'src/app/services/errorHandler/project-wizard-http-error-handler.service';
 
 @Component({
   selector: 'hyt-devices-step',
@@ -20,9 +22,12 @@ export class DevicesStepComponent implements OnInit {
 
   formDeviceActive: boolean = false;
 
+  errors: HYTError[] = [];
+
   constructor(
     private fb: FormBuilder,
-    private hDeviceService: HdevicesService
+    private hDeviceService: HdevicesService,
+    private errorHandler: ProjectWizardHttpErrorHandlerService
   ) { }
 
   ngOnInit() {
@@ -31,16 +36,18 @@ export class DevicesStepComponent implements OnInit {
 
   createDevice() {
 
+    this.errors = [];
+
     let hDevice: HDevice = {
       entityVersion: 1,
-      deviceName: this.deviceForm.value.deviceName,
+      deviceName: this.deviceForm.value['hdevice-devicename'],
       brand: this.deviceForm.value.deviceBrand,
       model: this.deviceForm.value.deviceModel,
       softwareVersion: this.deviceForm.value.deviceSoftwareVersion,
       firmwareVersion: this.deviceForm.value.deviceFirmwareVersion,
       description: this.deviceForm.value.deviceDescription,
-      password: this.deviceForm.value.devicePassword,
-      passwordConfirm: this.deviceForm.value.devicePasswordConfirm,
+      password: this.deviceForm.value['hdevice-password'],
+      passwordConfirm: this.deviceForm.value['hdevice-passwordConfirm'],
       project: { id: this.hProject.id, entityVersion: 1 }
     }
 
@@ -48,23 +55,37 @@ export class DevicesStepComponent implements OnInit {
       res => {
         this.devicesList.push(res);
         this.hDevicesOutput.emit(this.devicesList);
-        console.log(res)
       },
-      err => console.log(err)
+      err => {
+        this.errors = this.errorHandler.handleCreateHDevice(err);
+        this.errors.forEach(e => {
+          if (e.container != 'general')
+            this.deviceForm.get(e.container).setErrors({
+              validateInjectedError: {
+                valid: false
+              }
+            });
+        })
+      }
     )
+
   }
 
   invalid() {
     return (
-      this.deviceForm.get('deviceName').invalid ||
+      this.deviceForm.get('hdevice-devicename').invalid ||
       this.deviceForm.get('deviceBrand').invalid ||
       this.deviceForm.get('deviceModel').invalid ||
       this.deviceForm.get('deviceSoftwareVersion').invalid ||
       this.deviceForm.get('deviceFirmwareVersion').invalid ||
       this.deviceForm.get('deviceDescription').invalid ||
-      this.deviceForm.get('devicePassword').invalid ||
-      this.deviceForm.get('devicePasswordConfirm').invalid
+      this.deviceForm.get('hdevice-password').invalid ||
+      this.deviceForm.get('hdevice-passwordConfirm').invalid
     )
+  }
+
+  getError(field: string): string {
+    return (this.errors.find(x => x.container == field)) ? this.errors.find(x => x.container == field).message : null;
   }
 
   startAddDevice() {

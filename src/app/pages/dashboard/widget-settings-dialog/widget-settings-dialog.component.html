@@ -6,24 +6,19 @@
 
         <div class="common-settings">
             <div class="d-flex flex-row">
-                <div class="padding-6 d-flex flex-column align-items-stretch">
-                    <label for="name"
-                        [ngClass]="{'error-color': name.invalid}"
-                        i18n="@@widgetSettingsDialog-lbl-name">
-                        HYT_widget_settings_name
-                    </label>
-                    <input name="name" id="name" type="text"
+                <div class="mt-4 mx-2 d-flex flex-column align-items-stretch">
+                    <hyt-input-template name="name" id="name" type="text"
+                        i18n-placeholder="@@widgetSettingsDialog-lbl-name"
+                        placeholder="HYT_widget_settings_name"
                         [(ngModel)]="widgetName" #name="ngModel"
-                        required
-                        pattern="[A-Za-z0-9 ]*">
+                        [isRequired]="true" required pattern="[A-Za-z0-9 ]*"></hyt-input-template>
                 </div>
-                <div class="padding-6 d-flex flex-column align-items-stretch">
-                    <label i18n="@@widgetSettingsDialog-lbl-type">HYT_widget_settings_type</label>
-                    {{ widget.type }}
-                </div>
-                <div class="padding-6 d-flex flex-column align-items-stretch">
-                    <label>ID</label>
-                    {{ widget.id }}
+                <div class="mt-4 mx-2 d-flex flex-column align-items-stretch">
+                    <hyt-input-template type="text"
+                        disabled [isDisabled]="true"
+                        i18n-placeholder="@@widgetSettingsDialog-lbl-type"
+                        placeholder="HYT_widget_settings_type"
+                        fieldValue="{{widget.type}}"></hyt-input-template>
                 </div>
             </div>
         </div>
