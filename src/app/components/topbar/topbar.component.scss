@@ -1,0 +1,26 @@
+#hyt-topbar {
+    height: 64px;
+    background-color: #008aff;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+#logo-container {
+    font-family: "Exo";
+    font-style: italic;
+    font-weight: 400;
+    text-transform: capitalize;
+    font-size: 2em;
+    float: left;
+    display: table;
+    height: 100%
+}
+
+#logo-container span {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+#main-container {
+    float: right;
+}

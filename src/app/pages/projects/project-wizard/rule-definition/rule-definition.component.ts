@@ -48,8 +48,6 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
     { value: ' OR ', label: 'OR', checked: false }
   ]
 
-  // @Output() ruleDefinition = new EventEmitter<string>();
-
   constructor(
     private fb: FormBuilder
   ) { }
@@ -72,7 +70,7 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
 
   removeCondition(index) {
     this.ruleDefForms.splice(index, 1)
-    this.ruleDefForms[index - 1].get('ruleJoin').setValue(null);
+    this.ruleDefForms[this.ruleDefForms.length - 1].get('ruleJoin').setValue(null);
   }
 
   buildRuleDefinition() {

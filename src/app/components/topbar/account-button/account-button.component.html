@@ -1,0 +1,15 @@
+<div id="hyt-account-button" class="dropdown">
+    <button class="dropbtn">
+        <i class="fa fa-user"></i>
+    </button>
+
+    <div *ngIf="isLoggedIn" class="dropdown-content">
+        <div>
+            <a routerLink="/account/profile">Account</a>
+        </div>
+        <div (click)="logout()" class="clickable">
+            <a>Logout</a>
+        </div>
+    </div>
+
+</div>

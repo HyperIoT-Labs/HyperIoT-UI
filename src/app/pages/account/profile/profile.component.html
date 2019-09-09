@@ -1,0 +1,346 @@
+<div id="container-profile" class="container">
+
+    <div id="row-box-photo" class="row row-box">
+        <div id="container-box-photo" class="col-12">
+            
+            <div 
+                id="img-box" 
+                style="
+                    background-image: url('./../../../../assets/images/account/aristide-cittadino.jpg');
+                    background-size: cover;
+                "
+            >
+                <div id="mod-photo">
+                    <img 
+                        id="edit-photo" 
+                        src="./../../../../assets/images/account/edit-icon.svg" 
+                        alt="Edit Photo Icon"
+                    >
+                </div>
+            </div>
+
+            <div id="box-upload-photo">
+                <div id="upload-photo">
+                </div>
+            </div>
+
+            <h3 id="name-profile">Aristide Citizen</h3>
+            <h4 id="username-profile">MyUsername</h4>
+        </div>
+    </div> <!-- End Row Box Photo -->
+
+    <div id="row-box-company" class="row row-box" *ngIf="isCompany; else rowBoxPlan">
+
+        <div id="container-box-company" class="col-12">
+
+            <div class="title-box">
+                <img 
+                    src="./../../../../assets/images/account/personal-info-icon.svg"
+                    class="title-icon"
+                    id="icon-company-section"
+                    alt="Icon Company Section"
+                > 
+                Company Info
+            </div>
+
+            <div id="info-company">
+                Qui Inseriremo i dati relativi all'Azienda
+            </div>
+
+        </div>
+
+    </div> <!--End Row Box Company -->
+
+    <ng-template #rowBoxPlan>
+        <div class="row row-box" style="display: none;">
+            <div class="col-12" id="ciccio">
+                DA MODIFICARE
+            </div>
+        </div>
+    </ng-template>
+    
+
+    <div id="row-box-plan" class="row row-box">
+        
+        <div id="container-box-plan" class="col-12">
+
+            <div class="title-box">
+                <img 
+                    src="./../../../../assets/images/account/personal-info-icon.svg"
+                    class="title-icon"
+                    id="icon-plan-section"
+                    alt="Icon Personal Info Section"
+                > 
+                Plan Info
+            </div>
+
+            <div id="current-role">
+                Your role is: <span class="name-role">Administrator</span>
+            </div>
+
+            <div id="current-plan">
+                Your current plan is: <span class="name-plan">Plan Exclusive</span>
+            </div>
+
+            <div id="title-summary-plan">
+                <span class="info-current-plan">i</span> This plan include: 
+            </div>
+
+            <div id="row-summary-plan" class="row">
+
+                <div id="projects" class="col-4">
+                    <div class="row">
+                        <div class="col-6 icon-obj-plan">
+                            <img src="./../../../../assets/images/account/projects.svg" alt="Projects">
+                        </div>
+                        <div class="col-6 txt-obj-plan">
+                            Projects 
+                            <span class="one-of">
+                                <span class="firstNumber">1</span><span class="slash">/</span><span class="secondNumber">2</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="devices" class="col-4">
+                    <div class="row">
+                        <div class="col-6 icon-obj-plan">
+                            <img src="./../../../../assets/images/account/projects.svg" alt="Projects">
+                        </div>
+                        <div class="col-6 txt-obj-plan">
+                            Devices 
+                            <span class="one-of">
+                                <span class="firstNumber">1</span><span class="slash">/</span><span class="secondNumber">2</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="statistics" class="col-4">
+                    
+                    <div class="row">
+
+                        <div class="col-6 icon-obj-plan">
+
+                            <img src="./../../../../assets/images/account/projects.svg" alt="Projects">
+
+                        </div>
+
+                        <div class="col-6 txt-obj-plan">
+
+                            Statistics 
+                            <span class="one-of">
+                                <span class="firstNumber">1</span><span class="slash">/</span><span class="secondNumber">2</span>
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div> <!-- End Row Summary Plan -->
+
+            <div id="row-upgrade-plan" class="row">
+
+                <div id="info-msg-upgrade" class="col-12">
+                    You can upgrade your plan at any time
+                    <hyt-button 
+                        id="upgrade-plane-btn" 
+                    >
+                    Upgrade Plane Now!
+                    </hyt-button>
+                </div>
+
+            </div> <!-- End Row Upgrade Plan -->
+
+        </div>
+
+    </div> <!-- End Row Box Plan -->
+
+    <div id="row-box-details" class="row row-box">
+
+        <div id="container-box-details" class="col-6">
+
+            <div class="title-box">
+               <img 
+                src="./../../../../assets/images/account/personal-info-icon.svg"
+                class="title-icon"
+                id="icon-details-section"
+                alt="Icon Personal Info Section"
+               > 
+               Personal Info
+            </div>
+
+            <div id="row-form-details" class="row">
+
+                <div id="container-form-details" class="col-12">
+
+                    <form #pif="ngForm" id="form-details" [formGroup]="personalInfoForm" (ngSubmit)="updatePersonalInfo()"> 
+
+                        <div class="row row-field-details">
+
+                            <div class="container-form-field col-12">
+
+                                <hyt-input-text 
+                                    [form]="personalInfoForm"
+                                    formControlName="username"
+                                    name="username"
+                                    [isRequired]="true"
+                                    placeholder="Username"
+                                >
+                                </hyt-input-text>
+                                <!-- [injectedErrorMsg]="error" -->
+
+                            </div> <!-- Field Username -->
+
+                            <div class="container-form-field col-12">
+
+                                <hyt-input-text 
+                                    [form]="personalInfoForm"
+                                    formControlName="email"
+                                    name="email"
+                                    [isEmail]="true"
+                                    [isRequired]="true"
+                                    placeholder="Email" 
+                                >
+                                </hyt-input-text>
+                                <!-- [injectedErrorMsg]="error" -->
+
+                            </div> <!-- End Field Email -->
+
+                            <div class="container-form-field col-12">
+
+                                <hyt-input-text 
+                                    [form]="personalInfoForm"
+                                    formControlName="name"
+                                    name="name"
+                                    [isRequired]="true"
+                                    placeholder="Name"  
+                                >
+                                </hyt-input-text>
+                                <!-- [injectedErrorMsg]="error" -->
+
+                            </div> <!-- End Field Name -->
+
+                            <div class="container-form-field col-12">
+
+                                <hyt-input-text 
+                                    [form]="personalInfoForm"
+                                    formControlName="lastname"
+                                    name="lastname"
+                                    [isRequired]="true"
+                                    placeholder="Lastname"  
+                                >
+                                </hyt-input-text>
+                                <!-- [injectedErrorMsg]="error" -->
+
+                            </div> <!-- End Field Lastame -->
+
+                            <div class="container-form-field col-12 btn-form-account">
+                                <hyt-button 
+                                    type="submit"
+                                    [isDisabled]="notValid() || loading || personalInfoUpdated"
+                                >
+                                Update Personal Info
+                                </hyt-button>
+                            </div> <!-- Container Update Details Button -->
+
+                        </div> <!-- End Row Field -->
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div id="container-box-password" class="col-6">
+
+            <div class="title-box">
+                <img 
+                    src="./../../../../assets/images/account/change-password-icon.svg"
+                    class="title-icon"
+                    id="icon-password-section"
+                    alt="Icon Password Section"
+                > 
+                Change Password
+            </div>
+
+            <div id="row-form-password" class="row">
+
+                <div id="container-form-password" class="col-12">
+
+                    <form #cpf="ngForm" id="form-password" [formGroup]="changePasswordForm" (ngSubmit)="updatePassword()">
+                    <!--form id="form-password"-->
+
+                        <div class="row row-field-password">
+
+                            <div class="container-form-field col-12">
+
+                                <hyt-input-text 
+                                    [form]="changePasswordForm"
+                                    formControlName="oldPassword" 
+                                    name="oldPassword" 
+                                    [isRequired]="true"
+                                    placeholder="Old Password"
+                                    [injectedErrorMsg]="error" 
+                                    type="password"
+                                >
+                                </hyt-input-text>
+
+                            </div> <!-- Field Old Password -->
+
+                            <div class="container-form-field col-12">
+
+                                <hyt-input-text 
+                                    [form]="changePasswordForm" 
+                                    formControlName="newPassword"
+                                    name="newPassword"
+                                    [isPassword]="true"
+                                    type="password"
+                                    [isRequired]="true" 
+                                    placeholder="New Password"
+                                    errorPosition="bottom"
+                                >
+                                </hyt-input-text>
+
+                            </div> <!-- Field New Password -->
+
+                            <div class="container-form-field col-12">
+
+                                <hyt-input-text
+                                    [form]="changePasswordForm"
+                                    formControlName="confirmPassword"
+                                    name="confirmPassword"
+                                    confirmPassword="newPassword"
+                                    type="password"
+                                    [isRequired]="true" 
+                                    placeholder="Confirm password"
+                                >
+                                </hyt-input-text>
+
+                            </div> <!-- Field Confirm Password -->
+
+                            <div class="container-form-field col-12 btn-form-account">
+                                <hyt-button 
+                                    id="change-password-btn" 
+                                    type="submit"
+                                >
+                                Change Password
+                                </hyt-button>
+                            </div> <!-- Container Change Password Button -->
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div> <!-- End Row Box Details -->
+
+</div>

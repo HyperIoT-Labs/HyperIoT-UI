@@ -1,5 +1,44 @@
-#hyt-toolBar {
-  background-color: #008aff;
-  color: #fff;
-  text-transform: uppercase;
+html {
+  box-sizing: border-box;
 }
+
+html, body {
+  height: 100%;
+  position: relative;
+}
+
+body {
+  overflow: hidden;
+}
+
+#hyt-container {
+  position: relative;
+  height: 100%;
+}
+
+#hyt-container-topbar {
+  position: fixed;
+  z-index: 1001;
+  width: 100%;
+}
+
+#hyt-container-nav {
+  position: relative;
+  height: 100%;
+}
+
+#hyt-container-router.container-fluid {
+  position: relative;
+  padding-left: 75px;
+  top: 74px;
+  padding-bottom: 100px;
+  overflow: auto;
+  height: 100%;
+}
+
+#hyt-container-router.container-full-screen {
+  position: relative;
+  overflow: auto;
+  height: 100%;
+}
+

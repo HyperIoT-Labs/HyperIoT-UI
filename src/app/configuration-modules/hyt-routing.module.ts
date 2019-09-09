@@ -15,6 +15,7 @@ import { PasswordRecoveryComponent } from '../pages/authentication/password-reco
 import { DashboardsListComponent } from '../pages/dashboard/dashboards-list/dashboards-list.component';
 import { ProjectWizardComponent } from '../pages/projects/project-wizard/project-wizard.component';
 import { ProjectsComponent } from '../pages/projects/projects.component';
+import { ProfileComponent } from '../pages/account/profile/profile.component';
 
 @Injectable()
 export class LoggedInGuard implements CanActivate {
@@ -61,19 +62,16 @@ const hyperiotRoutes: Routes = [
       },
       {
         path: 'password-reset/:email/:code',
-        component: PasswordResetComponent,
-        data: {
-          showToolBar: false,
-        }
+        component: PasswordResetComponent
       },
       {
         path: 'activation/:email/:code',
-        component: UserActivationComponent,
-        data: {
-          showToolBar: false,
-        }
+        component: UserActivationComponent
       }
-    ]
+    ],
+    data: {
+      showToolBar: false,
+    }
   },
   {
     path: 'login',
@@ -105,9 +103,17 @@ const hyperiotRoutes: Routes = [
     }
   },
   {
+    path: 'account/profile',
+    component: ProfileComponent,
+    canActivate: [LoggedInGuard],
+    data: {
+      showToolBar: true
+    }
+  },
+  {
     path: 'dashboards/:dashboardId',
     component: DashboardViewComponent,
-    canActivate: [LoggedInGuard],
+    // canActivate: [LoggedInGuard],
     children: [
       {
         path: 'widgets',

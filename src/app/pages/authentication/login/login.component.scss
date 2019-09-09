@@ -1,10 +1,10 @@
-@import '../../../../styles/abstracts/mixins';
+@import '../../../../assets/styles/abstracts/mixins';
 
 #container-login {
 
   position: absolute;
-  width: 100%;
   min-height: 100vh;
+  width: 100%;
   display: -webkit-box;
   display: flex;
   flex-wrap: wrap;

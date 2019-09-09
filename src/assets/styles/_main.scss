@@ -4,16 +4,16 @@
 // @import "../../node_modules/bootstrap/scss/bootstrap"; /* ALL */
 
 // Required
-@import "../../node_modules/bootstrap/scss/functions";
-@import "../../node_modules/bootstrap/scss/variables";
-@import "../../node_modules/bootstrap/scss/mixins";
+@import "../../../node_modules/bootstrap/scss/functions";
+@import "../../../node_modules/bootstrap/scss/variables";
+@import "../../../node_modules/bootstrap/scss/mixins";
 
 // Optional
-@import "../../node_modules/bootstrap/scss/reboot";
-// @import "../../node_modules/bootstrap/scss/type";
-// @import "../../node_modules/bootstrap/scss/images";
-// @import "../../node_modules/bootstrap/scss/code";
-@import "../../node_modules/bootstrap/scss/grid";
+@import "../../../node_modules/bootstrap/scss/reboot";
+// @import "../../../node_modules/bootstrap/scss/type";
+// @import "../../../node_modules/bootstrap/scss/images";
+// @import "../../../node_modules/bootstrap/scss/code";
+@import "../../../node_modules/bootstrap/scss/grid";
 
 /* Abstracts */
 @import "./abstracts/variables";
@@ -39,6 +39,7 @@
 @import "./layout/navigation";
 @import "./layout/header";
 @import "./layout/sidebar";
+@import "./layout/body";
 
 /* Pages */
 @import "./pages/login";
