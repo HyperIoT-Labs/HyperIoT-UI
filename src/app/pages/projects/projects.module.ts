@@ -17,6 +17,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule, MatButtonModule } from '@angular/material';
 
 import { ProjectCardComponent } from './project-card/project-card.component';
+import { ProjectDetailComponent } from './project-detail/project-detail.component';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
@@ -31,7 +33,8 @@ import { ProjectCardComponent } from './project-card/project-card.component';
     StatisticsStepComponent,
     EnrichmentStepComponent,
     ProjectCardComponent,
-    RuleDefinitionComponent
+    RuleDefinitionComponent,
+    ProjectDetailComponent
   ],
   imports: [
     MatIconModule,
@@ -39,7 +42,8 @@ import { ProjectCardComponent } from './project-card/project-card.component';
     MatCardModule,
     CommonModule,
     HyperiotComponentsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterModule
   ]
 })
 export class ProjectsModule { }

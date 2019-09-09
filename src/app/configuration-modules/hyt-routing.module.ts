@@ -16,6 +16,7 @@ import { DashboardsListComponent } from '../pages/dashboard/dashboards-list/dash
 import { ProjectWizardComponent } from '../pages/projects/project-wizard/project-wizard.component';
 import { ProjectsComponent } from '../pages/projects/projects.component';
 import { ProfileComponent } from '../pages/account/profile/profile.component';
+import { ProjectDetailComponent } from '../pages/projects/project-detail/project-detail.component';
 
 @Injectable()
 export class LoggedInGuard implements CanActivate {
@@ -95,6 +96,14 @@ const hyperiotRoutes: Routes = [
     }
   },
   {
+    path: 'projects/:projectId',
+    component: ProjectDetailComponent,
+    canActivate: [LoggedInGuard],
+    data: {
+      showToolBar: true,
+    }
+  },
+  {
     path: 'dashboards',
     component: DashboardsListComponent,
     canActivate: [LoggedInGuard],
@@ -103,17 +112,9 @@ const hyperiotRoutes: Routes = [
     }
   },
   {
-    path: 'account/profile',
-    component: ProfileComponent,
-    canActivate: [LoggedInGuard],
-    data: {
-      showToolBar: true
-    }
-  },
-  {
     path: 'dashboards/:dashboardId',
     component: DashboardViewComponent,
-    // canActivate: [LoggedInGuard],
+    canActivate: [LoggedInGuard],
     children: [
       {
         path: 'widgets',
@@ -128,6 +129,14 @@ const hyperiotRoutes: Routes = [
     ],
     data: {
       showToolBar: true,
+    }
+  },
+  {
+    path: 'account/profile',
+    component: ProfileComponent,
+    canActivate: [LoggedInGuard],
+    data: {
+      showToolBar: true
     }
   },
   {
