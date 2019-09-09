@@ -6,6 +6,8 @@ import { CommonModule } from '@angular/common';
 
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import {MatSelectModule} from '@angular/material/select';
+import {MatInputModule} from '@angular/material';
 
 import { RatingModule } from 'ng-starrating';
 
@@ -28,6 +30,7 @@ import { TextLabelSettingsComponent } from './widget-settings-dialog/text-label-
 import { TimeChartSettingsComponent } from './widget-settings-dialog/time-chart-settings/time-chart-settings.component';
 
 import { MyTelInputComponent } from '../../test/my-tel-input/my-tel-input.component';
+import { from } from 'rxjs';
 
 @NgModule({
   declarations: [
@@ -55,7 +58,9 @@ import { MyTelInputComponent } from '../../test/my-tel-input/my-tel-input.compon
     HyperiotComponentsModule,
     GridsterModule,
     WidgetsModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule
   ],
   providers: [
     DashboardConfigService

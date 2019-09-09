@@ -28,7 +28,7 @@
     "@angular/platform-browser-dynamic": "~8.1.0",
     "@angular/router": "~8.1.0",
     "@hyperiot/components": "0.0.7",
-    "@hyperiot/core": "^0.2.2",
+    "@hyperiot/core": "^0.2.3",
     "@hyperiot/widgets": "0.0.10",
     "@ngx-translate/i18n-polyfill": "^1.0.0",
     "angular-gridster2": "^8.0.0",
