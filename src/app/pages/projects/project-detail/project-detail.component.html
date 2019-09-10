@@ -1,9 +1,14 @@
-<p>project-detail works!</p>
-<div class="d-flex flex-row justify-content-stretch flex-wrap">
-    <div class="treeview p-4">
-        treeview
+<div class="d-flex flex-row align-items-start justify-content-stretch flex-wrap">
+    <a class="back-btn d-flex flex-column align-items-center justify-content-center"
+        [routerLink]="['/projects']">
+        <mat-icon>arrow_back</mat-icon>
+    </a>
+    <div class="treeview pb-2 flex-grow-1 flex-sm-grow-0">
+        <hyt-tree-view-project #treeView (nodeClick)="onNodeClick($event)"></hyt-tree-view-project>
     </div>
-    <div class="content p-4 flex-grow-1">
-        content
+    <div class="content pl-4 pr-4 flex-grow-1">
+        <router-outlet
+            name="projectDetails"
+            (activate)="onActivate($event)"></router-outlet>
     </div>
 </div>

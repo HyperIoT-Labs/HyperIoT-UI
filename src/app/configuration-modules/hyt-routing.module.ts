@@ -17,6 +17,9 @@ import { ProjectWizardComponent } from '../pages/projects/project-wizard/project
 import { ProjectsComponent } from '../pages/projects/projects.component';
 import { ProfileComponent } from '../pages/account/profile/profile.component';
 import { ProjectDetailComponent } from '../pages/projects/project-detail/project-detail.component';
+import { ProjectDataComponent } from '../pages/projects/project-detail/project-data/project-data.component';
+import { DeviceDataComponent } from '../pages/projects/project-detail/device-data/device-data.component';
+import { PacketDataComponent } from '../pages/projects/project-detail/packet-data/packet-data.component';
 
 @Injectable()
 export class LoggedInGuard implements CanActivate {
@@ -99,6 +102,23 @@ const hyperiotRoutes: Routes = [
     path: 'projects/:projectId',
     component: ProjectDetailComponent,
     canActivate: [LoggedInGuard],
+    children: [
+      {
+        path: '',
+        component: ProjectDataComponent,
+        outlet: 'projectDetails'
+      },
+      {
+        path: 'device/:deviceId',
+        component: DeviceDataComponent,
+        outlet: 'projectDetails'
+      },
+      {
+        path: 'packet/:packetId',
+        component: PacketDataComponent,
+        outlet: 'projectDetails'
+      }
+    ],
     data: {
       showToolBar: true,
     }
