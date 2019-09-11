@@ -13,6 +13,7 @@ export class ProjectDataComponent implements OnInit {
   project: HProject = {} as HProject;
 
   form: FormGroup;
+  originalValue: string;
 
   constructor(
     private hProjectService: HprojectsService,
@@ -32,21 +33,23 @@ export class ProjectDataComponent implements OnInit {
   ngOnInit() {
   }
 
-  onInputChange(e) {
-    console.log(e);
-  }
   onSubmit() {
     console.log();
   }
 
+  isDirty(): boolean {
+    return JSON.stringify(this.form.value) !== this.originalValue;
+  }
+
   private loadProject() {
-    this.hProjectService.findHProject(this.projectId).subscribe((p) => {
+    this.hProjectService.findHProject(this.projectId).subscribe((p: HProject) => {
       this.project = p;
       // update form data
       this.form.get('name')
         .setValue(p.name);
       this.form.get('description')
         .setValue(p.description);
+      this.originalValue = JSON.stringify(this.form.value);
     });
   }
 }
