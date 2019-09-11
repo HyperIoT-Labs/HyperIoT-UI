@@ -1,0 +1,27 @@
+<h2>Project</h2>
+
+<form [formGroup]="form" (submit)="onSubmit()" class="d-flex flex-column justify-content-center">
+
+    <hyt-input-text [form]="form"
+        name="name" placeholder="Name"
+        formControlName="name"
+        errorPosition="bottom"
+        minlength="3"
+        [isRequired]="true"></hyt-input-text>
+
+    <hyt-text-area [form]="form"
+        name="description" placeholder="Description"
+        formControlName="description"></hyt-text-area>
+
+    <div class="mt-4 d-flex flex-row justify-content-around">
+        <hyt-button [isDisabled]="!form.valid || !isDirty()">
+            <mat-icon class="md-primary">save</mat-icon>
+            <span>Save</span>
+        </hyt-button>
+        <hyt-button>
+            <mat-icon>close</mat-icon>
+            <span>Delete</span>
+        </hyt-button>
+    </div>
+
+</form>

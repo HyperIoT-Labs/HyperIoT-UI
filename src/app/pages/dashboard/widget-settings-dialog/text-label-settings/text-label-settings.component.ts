@@ -23,9 +23,6 @@ export class TextLabelSettingsComponent implements OnInit, OnDestroy {
           this.apply();
         }
     });
-    console.log('PAERNT FORM', this.settingsForm);
-    //this.settingsForm.reset();
-    // TODO: should rebuild the form group
   }
   ngOnDestroy() {
     this.modalApply.unsubscribe();

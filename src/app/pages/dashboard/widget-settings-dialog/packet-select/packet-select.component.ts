@@ -2,7 +2,6 @@ import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { ControlContainer, NgForm } from '@angular/forms';
 
 import { HPacket, HPacketField, HpacketsService } from '@hyperiot/core';
-import { SelectOption } from '@hyperiot/components';
 
 @Component({
   selector: 'hyt-packet-select',
@@ -15,7 +14,7 @@ export class PacketSelectComponent implements OnInit {
   @Input()
   selectedPacket: HPacket = null;
   @Input()
-  selectedFields: HPacketField[] = [];
+  selectedFields: any = [];
   @Output()
   selectedFieldsChange = new EventEmitter();
   projectPackets: HPacket[] = [];
@@ -36,9 +35,15 @@ export class PacketSelectComponent implements OnInit {
   }
 
   onPacketFieldChange($event) {
-    const nullIndex = this.selectedFields.indexOf(null);
-    if (nullIndex >= 0) {
-      delete this.selectedFields[nullIndex];
+    if (this.multiPacketSelect) {
+      // multiple select
+      const nullIndex = this.selectedFields.indexOf(null);
+      if (nullIndex >= 0) {
+        delete this.selectedFields[nullIndex];
+      }
+    } else {
+      // single select
+      this.selectedFields = $event;
     }
     this.selectedFieldsChange.emit(this.selectedFields);
   }
@@ -47,6 +52,9 @@ export class PacketSelectComponent implements OnInit {
     if (this.selectedPacket) {
       this.widget.config.packetId = this.selectedPacket.id;
       this.widget.config.packetFields = [];
+      if (!this.multiPacketSelect) {
+        this.selectedFields = [ this.selectedFields ];
+      }
       this.selectedFields.map((pf) => this.widget.config.packetFields.push(pf.name));
     }
   }
@@ -70,7 +78,11 @@ export class PacketSelectComponent implements OnInit {
               if (this.widget.config.packetFields) {
                 packet.fields.map((pf) => {
                   if (this.widget.config.packetFields.indexOf(pf.name) !== -1) {
-                    this.selectedFields.push(pf);
+                    if (this.multiPacketSelect) {
+                      this.selectedFields.push(pf);
+                    } else {
+                      this.selectedFields = pf;
+                    }
                   }
                 });
               }
