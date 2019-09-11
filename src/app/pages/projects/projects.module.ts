@@ -23,7 +23,6 @@ import { ProjectDataComponent } from './project-detail/project-data/project-data
 import { DeviceDataComponent } from './project-detail/device-data/device-data.component';
 import { PacketDataComponent } from './project-detail/packet-data/packet-data.component';
 
-
 @NgModule({
   declarations: [
     ProjectsComponent,

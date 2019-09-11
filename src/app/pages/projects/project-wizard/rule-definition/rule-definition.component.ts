@@ -4,6 +4,11 @@ import { SelectOption } from '@hyperiot/components';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Option } from '@hyperiot/components/lib/hyt-radio-button/hyt-radio-button.component';
 
+interface RuleForm {
+  form: FormGroup;
+  conditionOptions: SelectOption[];
+}
+
 @Component({
   selector: 'hyt-rule-definition',
   templateUrl: './rule-definition.component.html',
@@ -13,34 +18,20 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
 
   @Input() hPacket: HPacket;
 
-  ruleDefForms: FormGroup[] = [];
-
   fieldOptions: SelectOption[] = [];
 
-  //conditionOptions: SelectOption[] = [];
-
-  // allConditionOptions = [
-  //   { value: '>', label: '(>) Greater', type: ['OBJECT', 'INTEGER', 'DOUBLE', 'FLOAT', 'DATE'] },
-  //   { value: '>=', label: '(>=) Greater / Equal', type: ['OBJECT', 'INTEGER', 'DOUBLE', 'FLOAT', 'DATE'] },
-  //   { value: '<', label: '(<) Lower', type: ['OBJECT', 'INTEGER', 'DOUBLE', 'FLOAT', 'DATE'] },
-  //   { value: '<=', label: '(<=) Lower / Equal', type: ['OBJECT', 'INTEGER', 'DOUBLE', 'FLOAT', 'DATE'] },
-  //   { value: '=', label: '(=) Equal', type: ['OBJECT', 'INTEGER', 'DOUBLE', 'FLOAT', 'DATE', 'TEXT'] },
-  //   { value: '!=', label: '(!=) Different', type: ['OBJECT', 'INTEGER', 'DOUBLE', 'FLOAT', 'DATE', 'TEXT'] },
-  //   { value: '()', label: '(()) Like', type: ['OBJECT', 'INTEGER', 'DOUBLE', 'FLOAT', 'BOOLEAN', 'DATE'] },
-  //   { value: 'isTrue', label: 'isTrue', type: ['OBJECT', 'BOOLEAN'] },
-  //   { value: 'isFalse', label: 'isFalse', type: ['OBJECT', 'BOOLEAN'] }
-  // ]
+  ruleForms: RuleForm[] = [];
 
   allConditionOptions = [
-    { value: '>', label: '(>) Greater' },
-    { value: '>=', label: '(>=) Greater / Equal' },
-    { value: '<', label: '(<) Lower' },
-    { value: '<=', label: '(<=) Lower / Equal' },
-    { value: '=', label: '(=) Equal' },
-    { value: '!=', label: '(!=) Different' },
-    { value: '()', label: '(()) Like' },
-    { value: 'isTrue', label: 'isTrue' },
-    { value: 'isFalse', label: 'isFalse' }
+    { value: '>', label: '(>) Greater', type: ['OBJECT', 'INTEGER', 'DOUBLE', 'FLOAT', 'DATE'] },
+    { value: '>=', label: '(>=) Greater / Equal', type: ['OBJECT', 'INTEGER', 'DOUBLE', 'FLOAT', 'DATE'] },
+    { value: '<', label: '(<) Lower', type: ['OBJECT', 'INTEGER', 'DOUBLE', 'FLOAT', 'DATE'] },
+    { value: '<=', label: '(<=) Lower / Equal', type: ['OBJECT', 'INTEGER', 'DOUBLE', 'FLOAT', 'DATE'] },
+    { value: '=', label: '(=) Equal', type: ['OBJECT', 'INTEGER', 'DOUBLE', 'FLOAT', 'DATE', 'TEXT'] },
+    { value: '!=', label: '(!=) Different', type: ['OBJECT', 'INTEGER', 'DOUBLE', 'FLOAT', 'DATE', 'TEXT'] },
+    { value: '()', label: '(()) Like', type: ['OBJECT', 'INTEGER', 'DOUBLE', 'FLOAT', 'BOOLEAN', 'DATE'] },
+    { value: 'isTrue', label: 'isTrue', type: ['OBJECT', 'BOOLEAN'] },
+    { value: 'isFalse', label: 'isFalse', type: ['OBJECT', 'BOOLEAN'] }
   ]
 
   joinOptions: Option[] = [
@@ -53,7 +44,10 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
   ) { }
 
   ngOnInit() {
-    this.ruleDefForms.push(this.fb.group({}));
+    this.ruleForms.push({
+      form: this.fb.group({}),
+      conditionOptions: []
+    })
   }
 
   ngOnChanges() {
@@ -64,39 +58,57 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
   }
 
   addCondition(index) {
-    if (this.ruleDefForms.length == index + 1)
-      this.ruleDefForms.push(this.fb.group({}));
+    if (this.ruleForms.length == index + 1)
+      this.ruleForms.push({
+        form: this.fb.group({}),
+        conditionOptions: []
+      });
   }
 
   removeCondition(index) {
-    this.ruleDefForms.splice(index, 1)
-    this.ruleDefForms[this.ruleDefForms.length - 1].get('ruleJoin').setValue(null);
+    this.ruleForms.splice(index, 1)
+    this.ruleForms[this.ruleForms.length - 1].form.get('ruleJoin').setValue(null);
   }
 
   buildRuleDefinition() {
     let rd = '';
-    for (let k = 0; k < this.ruleDefForms.length; k++) {
-      let element: string = (this.hPacket && this.ruleDefForms[k].value.ruleField) ? this.hPacket.name + '.' + this.ruleDefForms[k].value.ruleField + ' ' : '';
-      let condition: string = (this.ruleDefForms[k].value.ruleCondition) ? this.ruleDefForms[k].value.ruleCondition + ' ' : '';
-      let valueRule: string = (this.ruleDefForms[k].value.ruleValue) ? this.ruleDefForms[k].value.ruleValue : '';
-      let joinRule: string = (this.ruleDefForms[k].value.ruleJoin) ? this.ruleDefForms[k].value.ruleJoin.value : '';
+    for (let k = 0; k < this.ruleForms.length; k++) {
+      let element: string = (this.hPacket && this.ruleForms[k].form.value.ruleField) ? this.hPacket.name + '.' + this.ruleForms[k].form.value.ruleField + ' ' : '';
+      let condition: string = (this.ruleForms[k].form.value.ruleCondition) ? this.ruleForms[k].form.value.ruleCondition + ' ' : '';
+      let valueRule: string = (this.ruleForms[k].form.value.ruleValue) ? this.ruleForms[k].form.value.ruleValue : '';
+      let joinRule: string = (this.ruleForms[k].form.value.ruleJoin) ? this.ruleForms[k].form.value.ruleJoin : '';
       rd += element + condition + valueRule + joinRule;
     }
     return rd;
   }
 
+  fieldChanged(event, index) {
+    console.log(event)
+    console.log(index)
+    let type = this.hPacket.fields.find(x => x.name == event.value).type;
+    console.log(type)
+    this.ruleForms[index].conditionOptions = [];
+
+    this.allConditionOptions.forEach(x => {
+      if (x.type.includes(type))
+        this.ruleForms[index].conditionOptions.push({ value: x.value, label: x.label })
+    })
+
+  }
+
   isFormInvalid(k: number): boolean {
+    let valArr = this.ruleForms[k].form;
     return (
-      (Object.entries(this.ruleDefForms[k].value).length == 0) ?
+      (Object.entries(valArr.value).length == 0) ?
         true :
-        this.ruleDefForms[k].get('ruleField').invalid ||
-        this.ruleDefForms[k].get('ruleCondition').invalid ||
-        this.ruleDefForms[k].get('ruleValue').invalid
+        valArr.get('ruleField').invalid ||
+        valArr.get('ruleCondition').invalid ||
+        valArr.get('ruleValue').invalid
     )
   }
 
   isInvalid() {
-    for (let k = 0; k < this.ruleDefForms.length; k++)
+    for (let k = 0; k < this.ruleForms.length; k++)
       if (this.isFormInvalid(k))
         return true;
     return false;

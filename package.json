@@ -6,6 +6,7 @@
     "ng-high-memory": "node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng",
     "build-memory": "npm run ng-high-memory && ng build",
     "start": "ng serve --proxy-config proxy.config.json",
+    "startLoc": "ng serve --proxy-config proxy-local.config.json",
     "startProd": "ng serve --prod --proxy-config proxy.config.json",
     "build": "ng build",
     "test": "ng test",
