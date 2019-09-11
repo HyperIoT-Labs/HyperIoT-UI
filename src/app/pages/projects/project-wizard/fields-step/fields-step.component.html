@@ -5,9 +5,21 @@
     <div class="row">
 
       <div class="col-md-6">
-        TreeView
 
-        <ul id="devices">
+        <div class="container-form-field">
+          <hyt-select [options]="devicesOptions" [isRequired]="true" label="HYT_fieldType"
+            (changeFn)="deviceChanged($event)">
+          </hyt-select>
+        </div>
+
+        <div *ngIf="currentDevice && packetTreeView.length == 0">
+          Non ci sono pacchetti in questo device
+        </div>
+
+        <hyt-tree-view-editable *ngFor="let pack of packetTreeView" [deviceName]="pack.packetName"
+          [treeData]="pack.tree" (addFn)="addField($event)" (removeFn)="removeField($event)"></hyt-tree-view-editable>
+
+        <!-- <ul id="devices">
           <li *ngFor="let hdev of hDevices">
             {{hdev.deviceName}}
             <ul>
@@ -16,12 +28,12 @@
               </li>
             </ul>
           </li>
-        </ul>
+        </ul> -->
 
       </div>
 
       <div class="col-md-6">
-        <form class="field-form" [formGroup]="fieldForm" autocomplete="on">
+        <form *ngIf="fieldForm" class="field-form" [formGroup]="fieldForm" autocomplete="on">
 
           <div class="container-form-field">
             <hyt-input-text [form]="fieldForm" formControlName="fieldName" name="fieldName" [isRequired]="true"
