@@ -164,7 +164,7 @@ export class FieldsStepComponent implements OnInit, OnChanges {
     this.fieldForm = this.fb.group({});
   }
 
-  removeField() {
+  removeField(event) {
     console.log("remove")
   }
 
