@@ -23,8 +23,9 @@ body {
 }
 
 #hyt-container-nav {
-  position: relative;
+  position: fixed;
   height: 100%;
+  width: 100%;
 }
 
 #hyt-container-router.container-fluid {
