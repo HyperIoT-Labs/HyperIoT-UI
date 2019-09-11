@@ -27,7 +27,9 @@
       <hyt-fields-step [hDevices]="hDevices" (hPacketsOutput)="updatePacketFields($event)" [hPackets]="hPackets">
       </hyt-fields-step>
       <hyt-button (clickFn)="stepper.previous()">Back</hyt-button>
-      <hyt-button (clickFn)="stepper.next()">Next</hyt-button>
+      <hyt-button
+        (clickFn)="(fieldsValidated == true && enrichmentValidated == false)? openOptionModal() : stepper.next()">Next
+      </hyt-button>
     </ng-template>
 
     <ng-template #enrichmentTemplate>
@@ -45,14 +47,111 @@
     <ng-template #eventsTemplate>
       <hyt-events-step></hyt-events-step>
       <hyt-button (clickFn)="stepper.previous()">Back</hyt-button>
+      <hyt-button (clickFn)="openOptionModal()">Next</hyt-button>
     </ng-template>
 
 
-    <hyt-stepper #stepper [isLinear]="false" style="width: 100%"
+    <hyt-stepper #stepper [isLinear]="true" style="width: 100%"
       [stepArray]="[ projectTemplate, devicesTemplate, packetsTemplate, fieldsTemplate, enrichmentTemplate, statisticsTemplate, eventsTemplate ]"
       [labelArray]="[ 'Projects', 'Devices', 'Packets', 'Fields', 'Enrichment', 'Statistics', 'Events' ]"
       [completedArray]="[ projectValidated, devicesValidated, packetsValidated, fieldsValidated, enrichmentValidated, statisticsValidated, eventsValidated ]">
     </hyt-stepper>
+
+    <hyt-modal id="optionsModal" [mOpen]="ovpOpen">
+      <div class="center">
+        <div class="row">
+          <div class="col-md-12">
+            Choose how to proceed
+            <button (click)="closeOptionModal()">X</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <img src="assets/projects/icons/monitor.png" (click)="goToStepByIndex(4)">
+            <br>
+            <b>Enrichment data</b>
+            <br>
+            Sed eu imperdiet mauris. Nullam iaculis leo eget justo sodales sagittis. Morbi purus lorem, luctus id lectus
+            ac, pulvinar fermentum nisl. Nulla sit amet accumsan libero, vitae molestie velit. Nulla non pretium magna,
+            et pulvinar felis. Fusce semper augue at odio ornare, sit amet pharetra tellus scelerisque. Cras sed
+            accumsan libero. Aliquam sed congue diam. Donec imperdiet faucibus risus sit amet mattis. Ut auctor mattis
+            mauris.
+          </div>
+          <div class="col-md-4">
+            <img src="assets/projects/icons/monitor.png" (click)="goToStepByIndex(5)">
+            <br>
+            <b>Statistic</b>
+            <br>
+            Morbi tincidunt eget augue vitae iaculis. Mauris sed sapien fringilla, scelerisque urna consectetur, aliquam
+            erat. Curabitur rhoncus, tellus eu feugiat dictum, elit leo tincidunt arcu, sed tristique mauris nisi
+            fermentum dui. Ut elementum, libero ac vehicula pretium, quam nunc pulvinar est, vitae sagittis metus leo
+            eleifend ex. Sed id aliquam risus. Vestibulum at mi ac nisl ullamcorper sagittis at at erat. Nam ut mi
+            convallis eros dictum faucibus ac et mauris. Vestibulum vulputate felis ut semper ullamcorper
+          </div>
+          <div class="col-md-4">
+            <img src="assets/projects/icons/monitor.png" (click)="goToStepByIndex(6)">
+            <br>
+            <b>Events</b>
+            <br>
+            Sed magna mi, ultricies et dignissim a, sagittis elementum ligula. Proin tempus, justo non venenatis
+            molestie, ligula mi pretium odio, varius fringilla nisi mauris a massa. Fusce tempor lectus in laoreet
+            convallis. Nulla non felis nec diam pulvinar mattis. Mauris feugiat feugiat ultrices. Suspendisse potenti.
+            Praesent fringilla felis ut risus tristique, ut ullamcorper massa malesuada. Ut volutpat aliquam turpis
+            vitae porttitor. Suspendisse dapibus lobortis purus, id egestas mauris porttitor ac.
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-md-12">
+            <hyt-button (clickFn)="openFinishModal()">Finish</hyt-button>
+          </div>
+        </div>
+      </div>
+    </hyt-modal>
+
+    <hyt-modal [mOpen]="finishOpen">
+      <div class="center">
+        <div class="row">
+          <div class="col-md-12">
+            Congratulations
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            You have finished configuring your firt project
+            <div class="row">
+              <div class="col-md-6">
+              </div>
+              <div class="col-md-3">
+                <img src="assets/projects/icons/monitor.png" (click)="goToProjectWizard()">
+                <br>
+                <b>New Project</b>
+                <br>
+                Morbi tincidunt eget augue vitae iaculis. Mauris sed sapien fringilla, scelerisque urna consectetur,
+                aliquam
+                erat. Curabitur rhoncus, tellus eu feugiat dictum, elit leo tincidunt arcu, sed tristique mauris nisi
+                fermentum dui. Ut elementum, libero ac vehicula pretium, quam nunc pulvinar est, vitae sagittis metus
+                leo
+                eleifend ex. Sed id aliquam risus. Vestibulum at mi ac nisl ullamcorper sagittis at at erat. Nam ut mi
+                convallis eros dictum faucibus ac et mauris. Vestibulum vulputate felis ut semper ullamcorper
+              </div>
+              <div class="col-md-3">
+                <img src="assets/projects/icons/monitor.png" (click)="goToDashboard()">
+                <br>
+                <b>Go To Dashboard</b>
+                <br>
+                Sed magna mi, ultricies et dignissim a, sagittis elementum ligula. Proin tempus, justo non venenatis
+                molestie, ligula mi pretium odio, varius fringilla nisi mauris a massa. Fusce tempor lectus in laoreet
+                convallis. Nulla non felis nec diam pulvinar mattis. Mauris feugiat feugiat ultrices. Suspendisse
+                potenti.
+                Praesent fringilla felis ut risus tristique, ut ullamcorper massa malesuada. Ut volutpat aliquam turpis
+                vitae porttitor. Suspendisse dapibus lobortis purus, id egestas mauris porttitor ac.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </hyt-modal>
 
   </div>
 </div>

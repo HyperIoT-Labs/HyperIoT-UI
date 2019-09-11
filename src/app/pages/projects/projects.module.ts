@@ -18,7 +18,6 @@ import { MatCardModule, MatButtonModule } from '@angular/material';
 
 import { ProjectCardComponent } from './project-card/project-card.component';
 
-
 @NgModule({
   declarations: [
     ProjectsComponent,

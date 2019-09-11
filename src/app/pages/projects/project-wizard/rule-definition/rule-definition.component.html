@@ -1,33 +1,33 @@
 <div id="ruleDefinition">
 
-  <div *ngFor="let ruleDefForm of ruleDefForms; let i = index" class="row">
+  <div *ngFor="let ruleForm of ruleForms; let i = index" class="row">
 
     <div class="col-md-12">
 
-      <form class="ruleDefinition-form" [formGroup]="ruleDefForm" autocomplete="on">
+      <form class="ruleDefinition-form" [formGroup]="ruleForm.form" autocomplete="on">
 
         <div class="row">
 
           <div class="col-md-3 container-form-field">
-            <hyt-select [form]="ruleDefForm" [options]="fieldOptions" formControlName="ruleField" name="ruleField"
-              [isRequired]="true" placeholder="HYT_field">
+            <hyt-select [form]="ruleForm.form" [options]="fieldOptions" formControlName="ruleField" name="ruleField"
+              [isRequired]="true" placeholder="HYT_field" (changeFn)="fieldChanged($event, i)">
             </hyt-select>
           </div> <!-- Field Field -->
 
           <div class="col-md-3 container-form-field">
-            <hyt-select [form]="ruleDefForm" [options]="allConditionOptions" formControlName="ruleCondition"
+            <hyt-select [form]="ruleForm.form" [options]="ruleForm.conditionOptions" formControlName="ruleCondition"
               name="ruleCondition" [isRequired]="true" placeholder="HYT_condition">
             </hyt-select>
           </div> <!-- Field Condition -->
 
           <div class="col-md-3 container-form-field">
-            <hyt-input-text [form]="ruleDefForm" formControlName="ruleValue" name="ruleValue" [isRequired]="true"
+            <hyt-input-text [form]="ruleForm.form" formControlName="ruleValue" name="ruleValue" [isRequired]="true"
               placeholder="HYT_value">
             </hyt-input-text>
           </div> <!-- Field Value -->
 
           <div class="col-md-2 container-form-field">
-            <hyt-radio-button [form]="ruleDefForm" [options]="joinOptions" (changeFn)="addCondition(i)"
+            <hyt-radio-button [form]="ruleForm.form" [options]="joinOptions" (changeFn)="addCondition(i)"
               formControlName="ruleJoin" name="ruleJoin">
             </hyt-radio-button>
           </div> <!-- Field Join -->
