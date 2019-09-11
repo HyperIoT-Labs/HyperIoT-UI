@@ -5,17 +5,16 @@
     <hyt-input-text [form]="form"
         name="name" placeholder="Name"
         formControlName="name"
-        (change)="onInputChange($event)"
+        errorPosition="bottom"
+        minlength="3"
         [isRequired]="true"></hyt-input-text>
 
     <hyt-text-area [form]="form"
         name="description" placeholder="Description"
-        formControlName="description"
-        (change)="onInputChange($event)"
-        [isRequired]="true"></hyt-text-area>
+        formControlName="description"></hyt-text-area>
 
-    <div class="d-flex flex-row justify-content-around">
-        <hyt-button>
+    <div class="mt-4 d-flex flex-row justify-content-around">
+        <hyt-button [isDisabled]="!form.valid || !isDirty()">
             <mat-icon class="md-primary">save</mat-icon>
             <span>Save</span>
         </hyt-button>

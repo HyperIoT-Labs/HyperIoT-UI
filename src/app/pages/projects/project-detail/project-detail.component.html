@@ -3,7 +3,7 @@
         [routerLink]="['/projects']">
         <mat-icon>arrow_back</mat-icon>
     </a>
-    <div class="treeview pb-2 flex-grow-1 flex-sm-grow-0">
+    <div class="treeview pb-2 flex-grow-1 flex-sm-grow-0 flex-fill">
         <hyt-tree-view-project #treeView (nodeClick)="onNodeClick($event)"></hyt-tree-view-project>
     </div>
     <div class="content pl-4 pr-4 flex-grow-1">

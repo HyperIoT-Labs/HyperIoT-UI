@@ -12,21 +12,9 @@
     </div>
 
     <div *ngSwitchCase="PageStatus.Standard">
-      <table>
-        <tr>
-          <th><b>ID</b></th>
-          <th><b>NOME</b></th>
-          <th><b>UTENTE</b></th>
-        </tr>
-        <tr *ngFor="let proj of hProjects">
-          <td>{{proj.id}}</td>
-          <td>{{proj.name}}</td>
-          <td>{{proj.user.username}}</td>
-        </tr>
-      </table>
 
-      <h2>Projects List</h2>
-      <div class="d-flex flex-row justify-content-center">
+      <h2>Projects</h2>
+      <div class="d-flex flex-row flex-wrap justify-content-center">
         <hyt-project-card *ngFor="let p of hProjects" [project]="p">
         </hyt-project-card>
       </div>

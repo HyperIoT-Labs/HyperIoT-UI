@@ -1,5 +1,47 @@
 <h2>Device</h2>
 
-<h3>{{device.deviceName}}</h3>
+<form [formGroup]="form" (submit)="onSubmit()">
 
-<code>// TODO: ...</code>
+    <div class="d-flex flex-column flex-md-row flex-wrap">
+
+        <div class="pr-md-3 flex-fill">
+            <hyt-input-text name="name" placeholder="Name"
+                [form]="form"
+                formControlName="name"
+                errorPosition="bottom"
+                minlength="3"
+                isRequired="true">
+            </hyt-input-text>
+            <hyt-input-text name="model" placeholder="Model"
+                [form]="form"
+                formControlName="model"></hyt-input-text>
+            <hyt-input-text name="firmware" placeholder="Firmware version"
+                [form]="form"
+                formControlName="firmware"></hyt-input-text>
+        </div>
+        <div class="pl-md-3 flex-fill">
+            <hyt-input-text name="brand" placeholder="Brand"
+                [form]="form"
+                formControlName="brand"></hyt-input-text>
+            <hyt-input-text name="software" placeholder="Software version"
+                [form]="form"
+                formControlName="software"></hyt-input-text>
+            <hyt-text-area name="description" placeholder="Description"
+                [form]="form"
+                formControlName="description"></hyt-text-area>
+        </div>
+
+    </div>
+
+    <div class="mt-4 d-flex flex-row justify-content-around">
+        <hyt-button [isDisabled]="!form.valid || !isDirty()">
+            <mat-icon class="md-primary">save</mat-icon>
+            <span>Save</span>
+        </hyt-button>
+        <hyt-button>
+            <mat-icon>close</mat-icon>
+            <span>Delete</span>
+        </hyt-button>
+    </div>
+
+</form>
