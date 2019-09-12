@@ -1,0 +1,18 @@
+<h1 mat-dialog-title>{{data.title}}</h1>
+<mat-dialog-content class="mb-3">
+    {{data.message}}
+</mat-dialog-content>
+<mat-dialog-actions class="d-flex flex-row justify-content-around">
+    <hyt-button mat-dialog-close="cancel" class="m-2">
+        <mat-icon>arrow_back</mat-icon>
+        <span>Cancel</span>
+    </hyt-button>
+    <hyt-button mat-dialog-close="discard" class="m-2">
+        <mat-icon>close</mat-icon>
+        <span>Discard</span>
+    </hyt-button>
+    <hyt-button mat-dialog-close="save" class="m-2">
+        <mat-icon>save</mat-icon>
+        <span>Save</span>
+    </hyt-button>
+</mat-dialog-actions>

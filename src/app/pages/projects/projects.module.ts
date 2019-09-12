@@ -4,6 +4,11 @@ import { ProjectWizardComponent } from './project-wizard/project-wizard.componen
 import { ProjectsComponent } from './projects.component';
 import { HyperiotComponentsModule } from '@hyperiot/components';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+
+import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule, MatButtonModule } from '@angular/material';
+
 import { DevicesStepComponent } from './project-wizard/devices-step/devices-step.component';
 import { EventsStepComponent } from './project-wizard/events-step/events-step.component';
 import { FieldsStepComponent } from './project-wizard/fields-step/fields-step.component';
@@ -13,12 +18,8 @@ import { StatisticsStepComponent } from './project-wizard/statistics-step/statis
 import { EnrichmentStepComponent } from './project-wizard/enrichment-step/enrichment-step.component';
 import { RuleDefinitionComponent } from './project-wizard/rule-definition/rule-definition.component';
 
-import { MatIconModule } from '@angular/material/icon';
-import { MatCardModule, MatButtonModule } from '@angular/material';
-
 import { ProjectCardComponent } from './project-card/project-card.component';
 import { ProjectDetailComponent } from './project-detail/project-detail.component';
-import { RouterModule } from '@angular/router';
 import { ProjectDataComponent } from './project-detail/project-data/project-data.component';
 import { DeviceDataComponent } from './project-detail/device-data/device-data.component';
 import { PacketDataComponent } from './project-detail/packet-data/packet-data.component';
@@ -51,6 +52,6 @@ import { PacketDataComponent } from './project-detail/packet-data/packet-data.co
     ReactiveFormsModule,
     RouterModule
   ],
-  schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class ProjectsModule { }

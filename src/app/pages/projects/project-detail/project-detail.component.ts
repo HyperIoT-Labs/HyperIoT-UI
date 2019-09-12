@@ -82,7 +82,6 @@ export class ProjectDetailComponent implements OnInit {
   }
 
   onNodeClick(node) {
-    console.log('click', node);
     if (node.data && node.data.type) {
       this.router.navigate(
         [ { outlets: {projectDetails: [node.data.type, node.data.id]} } ],
