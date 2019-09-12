@@ -9,13 +9,12 @@
     <div *ngIf="showToolBars()" id="hyt-container-sidebar">
       <hyt-sidebar></hyt-sidebar>
     </div>
-  
+
     <div id="hyt-container-router" class="{{(showToolBars()) ? 'container-fluid' : 'container-full-screen'}}">
       <router-outlet></router-outlet>
-      
+
     </div>
 
   </div>
 
 </div>
-

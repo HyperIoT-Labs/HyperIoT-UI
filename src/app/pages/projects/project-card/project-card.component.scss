@@ -1,32 +1,121 @@
+// :host {
+//     position: relative;
+//     width: 200px;
+//     height: 260px;
+// }
+
+// mat-card {
+//     background-color: #35a2ff;
+//     position: absolute;
+//     left: 0; top: 0; right: 0; bottom: 0;
+//     border-radius: 6px;
+//     color: #ffffff;
+
+//     &.active {
+//         background-color: #ffffff;
+//         color: #0f78d1;
+//     }
+
+//     #card-front {
+
+//         .multiline-ellipsis {
+//             font-size: 80%;
+//             max-width: 100%;
+//             height: 60px;
+//             margin: 8px auto;
+//             display: block;
+//             display: -webkit-box;
+//             -webkit-line-clamp: 3;
+//             -webkit-box-orient: vertical;
+//             overflow: hidden;
+//             text-overflow: ellipsis;
+//         }
+
+//     }
+// }
+
 :host {
     position: relative;
-    width: 200px;
-    height: 260px;
-    margin: 8px;
+    min-width: 250px;
+    height: 320px;
 }
 
 mat-card {
-    background-color: whitesmoke;
+    background-color: #35a2ff;
     position: absolute;
     left: 0; top: 0; right: 0; bottom: 0;
     border-radius: 6px;
+    color: #ffffff;
+    font-family: 'Exo';
 }
-mat-card.active {
-    background-color: white;
+
+/*****************************************************
+******************************************************
+
+RESPONSIVE
+
+******************************************************
+*****************************************************/
+
+@media (max-width: 1700px) {
+    :host {
+        min-width: 230px;
+        height: 294px;
+    }
 }
-.position-abs {
-    position: absolute;
-    left:12px; right: 12px; top: 12px; bottom: 12px;
+
+@media (max-width: 1560px) {
+    :host {
+        min-width: 200px;
+        height: 256px;
+    }
 }
-.multiline-ellipsis {
-    font-size: 80%;
-    max-width: 100%;
-    height: 60px;
-    margin: 8px auto;
-    display: block;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
+
+@media (max-width: 1400px) {
+    :host {
+        min-width: 180px;
+        height: 230px;
+    }
+}
+
+@media (max-width: 1240px) {
+    :host {
+        min-width: 170px;
+        height: 218px;
+    }
+}
+
+@media (max-width: 1200px) { /* BOOTSTRAP BREACKPOINT */
+    :host {
+        min-width: 215px;
+        height: 275px;
+    }
+}
+
+@media (max-width: 767px) { /* BOOTSTRAP BREACKPOINT */
+    :host {
+        min-width: 225px;
+        height: 288px;
+    }
+}
+
+@media (max-width: 575px) { /* BOOTSTRAP BREACKPOINT */
+    :host {
+        min-width: 250px;
+        height: 320px;
+    }
+}
+
+@media (max-width: 374px) { 
+    :host {
+        min-width: 200px;
+        height: 256px;
+    }
+}
+
+@media (max-width: 320px) { 
+    :host {
+        min-width: 180px;
+        height: 230px;
+    }
 }

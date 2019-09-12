@@ -68,11 +68,15 @@
         PACKETS
         <table>
           <tr>
+            <th><b>X</b></th>
             <th><b>ID</b></th>
             <th><b>NOME</b></th>
             <th><b>DEVICE</b></th>
           </tr>
           <tr *ngFor="let pac of packetsList">
+            <td (click)="showDeleteModal(pac.id)">
+              X
+            </td>
             <td>{{pac.id}}</td>
             <td>{{pac.name}}</td>
             <td>{{pac.device.id}}</td>
@@ -83,5 +87,16 @@
     </div>
 
   </div>
+
+  <hyt-modal [mOpen]="deleteId!=-1">
+    <div class="alignCenter">
+      Sei sicuro di voler eliminare il pacchetto?
+      <hr>
+      <button (click)="deletePacket()">Sì</button>
+      <button (click)="hideDeleteModal()">No</button>
+      <br>
+      <div *ngIf="deleteError">{{deleteError}}</div>
+    </div>
+  </hyt-modal>
 
 </div>

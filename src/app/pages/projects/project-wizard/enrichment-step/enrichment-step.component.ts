@@ -126,4 +126,37 @@ export class EnrichmentStepComponent implements OnInit, OnChanges {
     return (this.enrichmentForm.get('enrichmentDevice')) ? this.enrichmentForm.get('enrichmentDevice').invalid : true;
   }
 
+  //delete logic
+
+  deleteId: number = -1;
+
+  deleteError: string = null;
+
+  showDeleteModal(id: number) {
+    this.deleteError = null;
+    this.deleteId = id;
+  }
+
+  hideDeleteModal() {
+    this.deleteId = -1;
+  }
+
+  deleteRule() {
+    this.deleteError = null;
+    this.rulesService.deleteRule(this.deleteId).subscribe(
+      res => {
+        for (let i = 0; i < this.ruleList.length; i++) {
+          if (this.ruleList[i].id == this.deleteId) {
+            this.ruleList.splice(i, 1);
+          }
+        }
+        // this.out.emit(this.ruleList);
+        this.hideDeleteModal();
+      },
+      err => {
+        this.deleteError = "Error executing your request";
+      }
+    );
+  }
+
 }
