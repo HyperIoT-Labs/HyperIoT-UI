@@ -65,11 +65,15 @@
         ENRICHMENT DATA
         <table>
           <tr>
+            <th><b>X</b></th>
             <th><b>ID</b></th>
             <th><b>NOME</b></th>
             <th><b>PACKET</b></th>
           </tr>
           <tr *ngFor="let enr of ruleList">
+            <td (click)="showDeleteModal(enr.id)">
+              X
+            </td>
             <td>{{enr.id}}</td>
             <td>{{enr.name}}</td>
             <td>{{enr.packet.id}}</td>
@@ -80,6 +84,17 @@
     </div>
 
   </div>
+
+  <hyt-modal [mOpen]="deleteId!=-1">
+    <div class="alignCenter">
+      Sei sicuro di voler eliminare il device?
+      <hr>
+      <button (click)="deleteRule()">Sì</button>
+      <button (click)="hideDeleteModal()">No</button>
+      <br>
+      <div *ngIf="deleteError">{{deleteError}}</div>
+    </div>
+  </hyt-modal>
 
 </div>
 

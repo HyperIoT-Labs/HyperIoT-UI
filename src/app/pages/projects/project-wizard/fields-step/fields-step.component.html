@@ -17,7 +17,7 @@
         </div>
 
         <hyt-tree-view-editable *ngFor="let pack of deviceTreeView" [deviceName]="pack.packet.name"
-          [treeData]="pack.tree" (addFn)="addField($event, pack.packet)" (removeFn)="removeField($event)">
+          [treeData]="pack.tree" (addFn)="addField($event, pack.packet)" (removeFn)="removeField($event, pack.packet)">
         </hyt-tree-view-editable>
 
       </div>

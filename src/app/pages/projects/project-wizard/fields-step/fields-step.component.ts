@@ -205,8 +205,12 @@ export class FieldsStepComponent implements OnInit, OnChanges {
     }
   }
 
-  removeField(event) {
-    console.log("remove")
+  removeField(event, packet: HPacket) {
+    this.hPacketService.deleteHPacketField(packet.id, event.id).subscribe(
+      res => { },
+      err => { }
+    )
+    console.log(event)
   }
 
 }

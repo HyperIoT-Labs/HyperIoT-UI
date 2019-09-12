@@ -43,20 +43,17 @@ export class ProjectWizardComponent implements OnInit {
 
   updateDevices(dev: HDevice[]) {
     this.hDevices = [...dev];
-    if (this.hDevices.length != 0)
-      this.devicesValidated = true;
+    this.devicesValidated = this.hDevices.length != 0;
   }
 
   updatePackets(pac: HPacket[]) {
     this.hPackets = [...pac];
-    if (this.hPackets.length != 0)
-      this.packetsValidated = true;
+    this.packetsValidated = this.hPackets.length != 0;
   }
 
   updatePacketFields(pac: HPacket[]) {
     this.hPackets = [...pac];
-    if (this.hPackets[0].fields.length != 0)
-      this.fieldsValidated = true;
+    this.fieldsValidated = this.hPackets[0].fields.length != 0;
   }
 
   openOptionModal() {

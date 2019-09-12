@@ -64,16 +64,31 @@
     EVENTS
     <table>
       <tr>
+        <th><b>X</b></th>
         <th><b>ID</b></th>
         <th><b>NOME</b></th>
         <!-- <th><b></b></th> -->
       </tr>
-      <!-- <tr>
+      <!-- <td (click)="showDeleteModal(enr.id)">
+        X
+      </td>
+      <tr>
         <td>{{eve.id}}</td>
         <td>{{eve.name}}</td>
         <td>{{eve.}}</td>
       </tr> -->
     </table>
   </div>
+
+  <hyt-modal [mOpen]="deleteId!=-1">
+    <div class="alignCenter">
+      Sei sicuro di voler eliminare l'evento?
+      <hr>
+      <button (click)="deleteEvent()">Sì</button>
+      <button (click)="hideDeleteModal()">No</button>
+      <br>
+      <div *ngIf="deleteError">{{deleteError}}</div>
+    </div>
+  </hyt-modal>
 
 </div>
