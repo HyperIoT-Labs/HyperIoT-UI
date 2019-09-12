@@ -6,15 +6,17 @@ import { SelectOption } from '@hyperiot/components';
 import { HYTError } from 'src/app/services/errorHandler/models/models';
 import { ProjectWizardHttpErrorHandlerService } from 'src/app/services/errorHandler/project-wizard-http-error-handler.service';
 import { Node } from '@hyperiot/components/lib/hyt-tree-view-editable/hyt-tree-view-editable.component';
-import { Settings } from 'http2';
 
-interface PacketNode extends Node {
-  id: number;
+interface deviceTreeView {
+  packet: HPacket;
+  tree: Node[];
 }
 
-interface PacketTreeView {
-  packetName: string;
-  tree: PacketNode[];
+interface FieldForm {
+  packet: HPacket,
+  fieldId: number;
+  isPacket: boolean;
+  form: FormGroup;
 }
 
 @Component({
@@ -28,9 +30,9 @@ export class FieldsStepComponent implements OnInit, OnChanges {
 
   @Input() hPackets: HPacket[] = [];
 
-  packetTreeView: PacketTreeView[] = [];
+  deviceTreeView: deviceTreeView[] = [];
 
-  fieldForm: FormGroup;
+  fieldForm: FieldForm;
 
   multiplicityOptions: Option[] = [
     { value: 'SINGLE', label: 'Single', checked: true },
@@ -71,79 +73,115 @@ export class FieldsStepComponent implements OnInit, OnChanges {
 
   ngOnChanges() {
     this.devicesOptions = [];
-    this.packetTreeView = [];
+    this.deviceTreeView = [];
     for (let el of this.hDevices)
       this.devicesOptions.push({ value: el.id.toString(), label: el.deviceName })
-    this.updatePacketTreeView();
+    this.updateDeviceTreeView();
   }
 
-  updatePacketTreeView() {
-    this.packetTreeView = [];
+  updateDeviceTreeView() {
+    this.deviceTreeView = [];
     if (this.currentDevice) {
       let packetsForDevice = this.hPackets.filter(x => x.device.id == this.currentDevice.id)
-      packetsForDevice.forEach(x => {
-        this.packetTreeView.push({
-          packetName: x.name,
-          tree: this.createTree(x.fields)
+      packetsForDevice.forEach(pack => {
+        this.deviceTreeView.push({
+          packet: pack,
+          tree: this.createTree(pack.fields, true)
         })
       })
     }
   }
 
-  createTree(fields: HPacketField[]): PacketNode[] {
-    let node: PacketNode[] = [];
+  createTree(fields: HPacketField[], root: boolean): Node[] {
+    let node: Node[] = [];
     fields.forEach(element => {
       node.push({
         id: element.id,
+        root: false,
         name: element.name,
         lom: element.multiplicity,
         type: element.type,
-        children: (element.innerFields) ? this.createTree(element.innerFields) : null
+        children: (element.innerFields) ? this.createTree(element.innerFields, false) : null
       })
     });
     return node;
   }
 
-  deviceChanged(event) {
-    this.currentDevice = this.hDevices.find(x => x.id == event.value)
-    this.updatePacketTreeView();
+  findField(fields: HPacketField[], id: number, hPacketField: HPacketField): HPacketField {
+    fields.forEach(x => {
+      if (x.innerFields != null) {
+        if (x.id == id) {
+          x.innerFields.push(hPacketField);
+        }
+        else {
+          this.findField(x.innerFields, id, hPacketField)
+        }
+      }
+    })
+    return;
   }
 
-  idPacket: string;
+  deviceChanged(event) {
+    this.currentDevice = this.hDevices.find(x => x.id == event.value)
+    this.updateDeviceTreeView();
+  }
 
   createField() {
 
     this.errors = [];
 
-    let hPacketField: HPacketField = {
+    let field: HPacketField = {
       entityVersion: 1,
-      name: this.fieldForm.value['fieldName'],
-      multiplicity: this.fieldForm.value.fieldMultiplicity.value,
-      type: this.fieldForm.value.fieldType,
-      description: this.fieldForm.value.fieldDescription,
-      innerFields: (this.fieldForm.value.fieldMultiplicity.value == 'SINGLE') ? null : []
+      name: this.fieldForm.form.value['fieldName'],
+      multiplicity: this.fieldForm.form.value.fieldMultiplicity.value,
+      type: this.fieldForm.form.value.fieldType,
+      description: this.fieldForm.form.value.fieldDescription,
+      innerFields: (this.fieldForm.form.value.fieldMultiplicity.value == 'SINGLE') ? null : []
     }
 
-    let id = this.hPackets.find(x => x.name == this.idPacket).id;
+    if (this.fieldForm.isPacket) {
+      console.log("aggiungendo a packet")
+      this.hPacketService.addHPacketField(this.fieldForm.packet.id, field).subscribe(
+        res => {
+          this.hPackets.find(x => x.id == this.fieldForm.packet.id).fields.push(res);
+          this.hPacketsOutput.emit(this.hPackets);
+          this.fieldForm = null;
+        },
+        err => {
+          this.errors = this.errorHandler.handleCreateField(err);
+          this.errors.forEach(e => {
+            if (e.container != 'general')
+              this.fieldForm.form.get(e.container).setErrors({
+                validateInjectedError: {
+                  valid: false
+                }
+              });
+          })
+        }
+      );
+    }
+    else {
+      this.findField(this.fieldForm.packet.fields, this.fieldForm.fieldId, field);
 
-    this.hPacketService.addHPacketField(id, hPacketField).subscribe(//    this.hPacketService.addHPacketField(this.idPacket, hPacketField).subscribe(
-      res => {
-        this.hPackets.find(x => x.id == id).fields.push(res);//  this.hPackets.find(x => x.id == this.idPacket).fields.push(res);
-        this.hPacketsOutput.emit(this.hPackets);
-        this.fieldForm = null;
-      },
-      err => {
-        this.errors = this.errorHandler.handleCreateField(err);
-        this.errors.forEach(e => {
-          if (e.container != 'general')
-            this.fieldForm.get(e.container).setErrors({
-              validateInjectedError: {
-                valid: false
-              }
-            });
-        })
-      }
-    );
+      this.hPacketService.updateHPacket(this.fieldForm.packet).subscribe(
+        res => {
+          this.hPackets.find(x => x.id == this.fieldForm.packet.id).fields = res.fields;
+          this.hPacketsOutput.emit(this.hPackets);
+          this.fieldForm = null;
+        },
+        err => {
+          this.errors = this.errorHandler.handleCreateField(err);
+          this.errors.forEach(e => {
+            if (e.container != 'general')
+              this.fieldForm.form.get(e.container).setErrors({
+                validateInjectedError: {
+                  valid: false
+                }
+              });
+          })
+        }
+      );
+    }
 
   }
 
@@ -153,15 +191,18 @@ export class FieldsStepComponent implements OnInit, OnChanges {
 
   invalid() {
     return (
-      this.fieldForm.get('fieldName').invalid ||
-      this.fieldForm.get('fieldType').invalid
+      this.fieldForm.form.get('fieldName').invalid ||
+      this.fieldForm.form.get('fieldType').invalid
     )
   }
 
-  addField(event) {
-    console.log(event)
-    this.idPacket = event.name;//ID instead of NAME
-    this.fieldForm = this.fb.group({});
+  addField(event, packet: HPacket) {
+    this.fieldForm = {
+      packet: packet,
+      fieldId: (!event.root) ? event.id : null,
+      isPacket: event.root,
+      form: this.fb.group({})
+    }
   }
 
   removeField(event) {
