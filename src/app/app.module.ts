@@ -35,6 +35,7 @@ import { ActivatedRoute, ActivatedRouteSnapshot, RouterModule } from '@angular/r
 import { ProjectsModule } from './pages/projects/projects.module';
 import { CanDeactivateGuard } from './components/CanDeactivateGuard';
 import { SaveChangesDialogComponent } from './components/dialogs/save-changes-dialog/save-changes-dialog.component';
+import { DeleteConfirmDialogComponent } from './components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
 
 export function apiConfigFactory(): Configuration {
   const params: ConfigurationParameters = {
@@ -54,9 +55,14 @@ export function apiConfigFactory(): Configuration {
     TopbarComponent,
     AccountButtonComponent,
     ProfileComponent,
-    SaveChangesDialogComponent
+    SaveChangesDialogComponent,
+    DeleteConfirmDialogComponent
   ],
-  entryComponents: [SaveChangesDialogComponent], // dynamically created components
+  // dynamically created components
+  entryComponents: [
+    SaveChangesDialogComponent,
+    DeleteConfirmDialogComponent
+  ],
   imports: [
     RouterModule,
     BrowserModule,

@@ -2,11 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { FormGroup, FormBuilder } from '@angular/forms';
 
-import { HdevicesService, HDevice } from '@hyperiot/core';
 import { Observable, Observer } from 'rxjs';
-import { SaveChangesDialogComponent } from 'src/app/components/dialogs/save-changes-dialog/save-changes-dialog.component';
+
 import { MatDialog } from '@angular/material';
-import { map } from 'rxjs/operators';
+
+import { HdevicesService, HDevice } from '@hyperiot/core';
+
+import { SaveChangesDialogComponent } from 'src/app/components/dialogs/save-changes-dialog/save-changes-dialog.component';
+import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
 
 @Component({
   selector: 'hyt-device-data',
@@ -19,6 +22,9 @@ export class DeviceDataComponent implements OnInit {
 
   form: FormGroup;
   originalValue: string;
+
+  updateCallback: any = null;
+  deleteCallback: any = null;
 
   constructor(
     private hDeviceService: HdevicesService,
@@ -41,7 +47,7 @@ export class DeviceDataComponent implements OnInit {
 
   canDeactivate(): Observable<any> | boolean {
     if (this.isDirty()) {
-      return this.openDialog();
+      return this.openSaveDialog();
     }
     return true;
   }
@@ -51,7 +57,7 @@ export class DeviceDataComponent implements OnInit {
   }
 
   onDeleteClick() {
-    // TODO: ...
+    this.openDeleteDialog();
   }
 
   isDirty(): boolean {
@@ -79,17 +85,31 @@ export class DeviceDataComponent implements OnInit {
   }
 
   private saveDevice(successCallback?, errorCallback?) {
-    const d = this.device;
+    let d = this.device;
     d.deviceName = this.form.get('name').value;
     d.description = this.form.get('description').value;
     d.brand = this.form.get('brand').value;
     d.model = this.form.get('model').value;
     d.firmwareVersion = this.form.get('firmware').value;
     d.softwareVersion = this.form.get('software').value;
-    this.hDeviceService.updateHDevice(this.device).subscribe((res) => {
+    this.hDeviceService.updateHDevice(d).subscribe((res) => {
       // TODO: show 'ok' message on screen
-      console.log('@@@', res);
+      console.log('SUCCESS', res);
+      this.device = d = res;
       this.originalValue = JSON.stringify(this.form.value);
+      this.updateCallback && this.updateCallback({id: d.id, type: 'device', name: d.deviceName});
+      successCallback && successCallback(res);
+    }, (err) => {
+      // TODO: show 'error' message on screen
+      console.log('ERROR', err);
+      errorCallback && errorCallback(err);
+    });
+  }
+  private deleteDevice(successCallback?, errorCallback?) {
+    this.hDeviceService.deleteHDevice(this.device.id).subscribe((res) => {
+      // TODO: show 'ok' message on screen
+      console.log('SUCCESS', res);
+      this.deleteCallback && this.deleteCallback();
       successCallback && successCallback(res);
     }, (err) => {
       // TODO: show 'error' message on screen
@@ -98,13 +118,12 @@ export class DeviceDataComponent implements OnInit {
     });
   }
 
-  private openDialog(): Observable<boolean> {
-    return Observable.create((observer: Observer<boolean>) => {
+  private openSaveDialog(): Observable<boolean> {
+    return new Observable((observer: Observer<boolean>) => {
       const dialogRef = this.dialog.open(SaveChangesDialogComponent, {
         data: {title: 'Discard changes?', message: 'There are pending changes to be saved.'}
       });
       dialogRef.afterClosed().subscribe((result) => {
-        console.log(result);
         if (result === 'save') {
           this.saveDevice((res) => {
             observer.next(true);
@@ -118,6 +137,20 @@ export class DeviceDataComponent implements OnInit {
           observer.complete();
         }
       });
+    });
+  }
+  private openDeleteDialog() {
+    const dialogRef = this.dialog.open(DeleteConfirmDialogComponent, {
+      data: {title: 'Delete device?', message: 'This operation cannot be undone.'}
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === 'delete') {
+        this.deleteDevice((res) => {
+          // TODO: ...
+        }, (err) => {
+          // TODO: report error
+        });
+      }
     });
   }
 }

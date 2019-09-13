@@ -2,14 +2,14 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-
-import { map } from 'rxjs/operators';
 import { Observable, Observer } from 'rxjs';
+
+import { MatDialog } from '@angular/material/dialog';
 
 import { HprojectsService, HProject } from '@hyperiot/core';
 
 import { SaveChangesDialogComponent } from 'src/app/components/dialogs/save-changes-dialog/save-changes-dialog.component';
+import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
 
 @Component({
   selector: 'hyt-project-data',
@@ -22,6 +22,8 @@ export class ProjectDataComponent implements OnInit {
 
   form: FormGroup;
   originalValue: string;
+
+  updateCallback: any = null;
 
   constructor(
     private hProjectService: HprojectsService,
@@ -44,7 +46,7 @@ export class ProjectDataComponent implements OnInit {
 
   canDeactivate(): Observable<any> | boolean {
     if (this.isDirty()) {
-      return this.openDialog();
+      return this.openSaveDialog();
     }
     return true;
   }
@@ -54,7 +56,7 @@ export class ProjectDataComponent implements OnInit {
   }
 
   onDeleteClick() {
-    // TODO: ...
+    this.openDeleteDialog();
   }
 
   isDirty(): boolean {
@@ -74,13 +76,15 @@ export class ProjectDataComponent implements OnInit {
   }
 
   private saveProject(successCallback?, errorCallback?) {
-    const p = this.project;
+    let p = this.project;
     p.name = this.form.get('name').value;
     p.description = this.form.get('description').value;
-    this.hProjectService.updateHProject(this.project).subscribe((res) => {
+    this.hProjectService.updateHProject(p).subscribe((res) => {
       // TODO: show 'ok' message on screen
-      console.log('@@@', res);
+      console.log('SUCCESS', res);
+      this.project = p = res;
       this.originalValue = JSON.stringify(this.form.value);
+      this.updateCallback && this.updateCallback({id: p.id, undefined, name: p.name});
       successCallback && successCallback(res);
     }, (err) => {
       // TODO: show 'error' message on screen
@@ -88,14 +92,25 @@ export class ProjectDataComponent implements OnInit {
       errorCallback && errorCallback(err);
     });
   }
+  private deleteProject(successCallback?, errorCallback?) {
+    this.hProjectService.deleteHProject(this.project.id).subscribe((res) => {
+      // TODO: show 'ok' message on screen
+      console.log('SUCCESS', res);
+      successCallback && successCallback(res);
+      this.router.navigate(['/projects']);
+    }, (err) => {
+      // TODO: show 'error' message on screen
+      console.log('ERROR', err);
+      errorCallback && errorCallback(err);
+    });
+  }
 
-  private openDialog(): Observable<any> {
-    return Observable.create((observer: Observer<boolean>) => {
+  private openSaveDialog(): Observable<any> {
+    return new Observable((observer: Observer<boolean>) => {
       const dialogRef = this.dialog.open(SaveChangesDialogComponent, {
         data: {title: 'Discard changes?', message: 'There are pending changes to be saved.'}
       });
       dialogRef.afterClosed().subscribe((result) => {
-        console.log(result);
         if (result === 'save') {
           this.saveProject((res) => {
             observer.next(true);
@@ -111,5 +126,18 @@ export class ProjectDataComponent implements OnInit {
       });
     });
   }
-
+  private openDeleteDialog() {
+    const dialogRef = this.dialog.open(DeleteConfirmDialogComponent, {
+      data: {title: 'Delete project?', message: 'This operation cannot be undone.'}
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === 'delete') {
+        this.deleteProject((res) => {
+          // TODO: ...
+        }, (err) => {
+          // TODO: report error
+        });
+      }
+    });
+  }
 }
