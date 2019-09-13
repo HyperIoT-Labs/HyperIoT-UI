@@ -51,14 +51,6 @@ export class ProjectDataComponent implements OnInit {
 
   onSaveClick() {
     this.saveProject();
-    this.hProjectService.updateHProject(this.project).subscribe((res) => {
-      console.log('@@@', res);
-      return true;
-    }, (err) => {
-      // TODO: show error message on screen
-      console.log('###', err);
-      return false;
-    });
   }
 
   onDeleteClick() {
@@ -81,10 +73,20 @@ export class ProjectDataComponent implements OnInit {
     });
   }
 
-  private saveProject() {
+  private saveProject(successCallback?, errorCallback?) {
     const p = this.project;
     p.name = this.form.get('name').value;
     p.description = this.form.get('description').value;
+    this.hProjectService.updateHProject(this.project).subscribe((res) => {
+      // TODO: show 'ok' message on screen
+      console.log('@@@', res);
+      this.originalValue = JSON.stringify(this.form.value);
+      successCallback && successCallback(res);
+    }, (err) => {
+      // TODO: show 'error' message on screen
+      console.log('ERROR', err);
+      errorCallback && errorCallback(err);
+    });
   }
 
   private openDialog(): Observable<any> {
@@ -95,15 +97,10 @@ export class ProjectDataComponent implements OnInit {
       dialogRef.afterClosed().subscribe((result) => {
         console.log(result);
         if (result === 'save') {
-          this.saveProject();
-          this.hProjectService.updateHProject(this.project).subscribe((res) => {
-            console.log('@@@', res);
-            this.originalValue = JSON.stringify(this.form.value);
+          this.saveProject((res) => {
             observer.next(true);
             observer.complete();
           }, (err) => {
-            // TODO: show error message on screen
-            console.log('ERROR', err);
             observer.next(false);
             observer.complete();
           });

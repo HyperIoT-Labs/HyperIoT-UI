@@ -48,14 +48,6 @@ export class DeviceDataComponent implements OnInit {
 
   onSaveClick() {
     this.saveDevice();
-    this.hDeviceService.updateHDevice(this.device).subscribe((res) => {
-      // TODO: show 'ok' message on screen
-      console.log('@@@', res);
-      this.originalValue = JSON.stringify(this.form.value);
-    }, (err) => {
-      // TODO: show 'error' message on screen
-      console.log('ERROR', err);
-    });
   }
 
   onDeleteClick() {
@@ -86,7 +78,7 @@ export class DeviceDataComponent implements OnInit {
     });
   }
 
-  private saveDevice() {
+  private saveDevice(successCallback?, errorCallback?) {
     const d = this.device;
     d.deviceName = this.form.get('name').value;
     d.description = this.form.get('description').value;
@@ -94,6 +86,16 @@ export class DeviceDataComponent implements OnInit {
     d.model = this.form.get('model').value;
     d.firmwareVersion = this.form.get('firmware').value;
     d.softwareVersion = this.form.get('software').value;
+    this.hDeviceService.updateHDevice(this.device).subscribe((res) => {
+      // TODO: show 'ok' message on screen
+      console.log('@@@', res);
+      this.originalValue = JSON.stringify(this.form.value);
+      successCallback && successCallback(res);
+    }, (err) => {
+      // TODO: show 'error' message on screen
+      console.log('ERROR', err);
+      errorCallback && errorCallback(err);
+    });
   }
 
   private openDialog(): Observable<boolean> {
@@ -104,15 +106,10 @@ export class DeviceDataComponent implements OnInit {
       dialogRef.afterClosed().subscribe((result) => {
         console.log(result);
         if (result === 'save') {
-          this.saveDevice();
-          this.hDeviceService.updateHDevice(this.device).subscribe((res) => {
-            console.log('@@@', res);
-            this.originalValue = JSON.stringify(this.form.value);
+          this.saveDevice((res) => {
             observer.next(true);
             observer.complete();
           }, (err) => {
-            // TODO: show error message on screen
-            console.log('ERROR', err);
             observer.next(false);
             observer.complete();
           });
