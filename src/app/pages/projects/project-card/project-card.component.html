@@ -1,5 +1,5 @@
 <!-- Cover (inactive state) -->
-<!-- <mat-card 
+<mat-card 
     *ngIf="!isActive" 
     [@crossFade]
     class="md-padding d-flex flex-row align-items-stretch"
@@ -22,7 +22,7 @@
     (mouseover)="setActive(true)"
     (mouseout)="setActive(false)">
 
-    <!-- Summary (hover / tapped state) --
+    <!-- Summary (hover / tapped state) -->
     <div id="card-front" class="flex-fill d-flex flex-column">
         <header>
             <h3 class="m-0">{{ project.name }}</h3>
@@ -47,8 +47,9 @@
         </footer>
     </div>
 
-</mat-card> -->
-
+</mat-card>
+<!--
 <mat-card>
     <p>Ciao sono Una Card Material</p>
 </mat-card>
+-->
