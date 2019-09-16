@@ -1,6 +1,6 @@
 <h2>Device</h2>
 
-<form [formGroup]="form" (submit)="onSubmit()">
+<form [formGroup]="form">
 
     <div class="d-flex flex-column flex-md-row flex-wrap">
 
@@ -34,12 +34,12 @@
     </div>
 
     <div class="mt-4 d-flex flex-row justify-content-around">
-        <hyt-button [isDisabled]="!form.valid || !isDirty()">
+        <hyt-button (clickFn)="onSaveClick()" [isDisabled]="!form.valid || !isDirty()">
             <mat-icon class="md-primary">save</mat-icon>
             <span>Save</span>
         </hyt-button>
-        <hyt-button>
-            <mat-icon>close</mat-icon>
+        <hyt-button (clickFn)="onDeleteClick()">
+            <mat-icon>delete</mat-icon>
             <span>Delete</span>
         </hyt-button>
     </div>

@@ -28,8 +28,31 @@ export class ProjectDetailComponent implements OnInit {
 
   ngOnInit() {
     this.projectId = this.activatedRoute.snapshot.params.projectId;
+    this.loadTreeData();
+  }
+
+  onActivate(childComponent) {
+    if (childComponent.updateCallback === null) {
+      childComponent.updateCallback = this.childUpdate.bind(this);
+    }
+    if (childComponent.deleteCallback === null) {
+      childComponent.deleteCallback = this.loadTreeData.bind(this);
+    }
+    /*
+    if (childComponent instanceof ProjectDataComponent) {
+    } else if (childComponent instanceof DeviceDataComponent) {
+    } else if (childComponent instanceof PacketDataComponent) {
+    }
+    */
+  }
+
+  loadTreeData() {
+    this.treeData = [];
     this.hProjectService.findAllHProject().subscribe((list: HProject[]) => {
       list.forEach((p) => {
+        if (p.id !== +this.projectId) {
+          return;
+        }
         const projectNode: TreeDataNode = {
           data: {id: p.id},
           name: p.name,
@@ -37,9 +60,7 @@ export class ProjectDetailComponent implements OnInit {
           children: []
         };
         this.treeData.push(projectNode);
-
         this.packetService.findAllHPacket().subscribe((packetList: HPacket[]) => {
-
           this.hDeviceService.findAllHDevice().subscribe((deviceList: HDevice[]) => {
             deviceList.forEach((d) => {
               if (d.project && d.project.id === p.id) {
@@ -66,23 +87,11 @@ export class ProjectDetailComponent implements OnInit {
             }
           });
         });
-
       });
     });
   }
 
-  onActivate(childComponent) {
-    /*
-    console.log(childComponent);
-    if (childComponent instanceof ProjectDataComponent) {
-    } else if (childComponent instanceof DeviceDataComponent) {
-    } else if (childComponent instanceof PacketDataComponent) {
-    }
-    */
-  }
-
   onNodeClick(node) {
-    console.log('click', node);
     if (node.data && node.data.type) {
       this.router.navigate(
         [ { outlets: {projectDetails: [node.data.type, node.data.id]} } ],
@@ -94,5 +103,13 @@ export class ProjectDetailComponent implements OnInit {
         { relativeTo: this.activatedRoute }
       );
     }
+  }
+
+  private childUpdate(data) {
+    // refresh treeview node data
+    const node = this.treeView.treeControl.dataNodes.find((d) => d.data.id === data.id && d.data.type == data.type);
+    node.name = data.name;
+    this.treeView.treeControl.toggle(node);
+    this.treeView.treeControl.toggle(node);
   }
 }
