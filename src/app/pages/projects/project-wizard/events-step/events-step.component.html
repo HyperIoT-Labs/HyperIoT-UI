@@ -6,7 +6,7 @@
 
       <div class="row">
         <div class="col-md-6 container-form-field">
-          <hyt-input-text [form]="eventsForm" formControlName="eventName" name="eventName" [isRequired]="true"
+          <hyt-input-text [form]="eventsForm" formControlName="rule-name" name="rule-name" [isRequired]="true"
             placeholder="HYT_eventName">
           </hyt-input-text>
         </div> <!-- Field Name -->
@@ -67,16 +67,14 @@
         <th><b>X</b></th>
         <th><b>ID</b></th>
         <th><b>NOME</b></th>
-        <!-- <th><b></b></th> -->
       </tr>
-      <!-- <td (click)="showDeleteModal(enr.id)">
-        X
-      </td>
-      <tr>
+      <tr *ngFor="let eve of eventList">
+        <td (click)="showDeleteModal(eve.id)">
+          X
+        </td>
         <td>{{eve.id}}</td>
         <td>{{eve.name}}</td>
-        <td>{{eve.}}</td>
-      </tr> -->
+      </tr>
     </table>
   </div>
 

@@ -107,18 +107,35 @@ export class FieldsStepComponent implements OnInit, OnChanges {
     return node;
   }
 
-  findField(fields: HPacketField[], id: number, hPacketField: HPacketField): HPacketField {
-    fields.forEach(x => {
-      if (x.innerFields != null) {
-        if (x.id == id) {
-          x.innerFields.push(hPacketField);
-        }
-        else {
-          this.findField(x.innerFields, id, hPacketField)
-        }
+  // findField(fields: HPacketField[], id: number, hPacketField: HPacketField): boolean {
+  //   fields.forEach(x => {
+  //     if (x.innerFields != null) {
+  //       if (x.id == id) {
+  //         console.log("dentro")
+  //         x.innerFields.push(hPacketField);
+  //         return true;
+  //       }
+  //       else {
+  //         console.log("else")
+  //         return this.findField(x.innerFields, id, hPacketField)
+  //       }
+  //     }
+  //   })
+  // }
+
+  findField2(field: HPacketField, id: number, hPacketField: HPacketField): boolean {
+    if (field.id == id) {
+      field.innerFields.push(hPacketField);
+      return true;
+    }
+    else {
+      let ret = false;
+      for (let i = 0; i < field.innerFields.length; i++) {
+        if (this.findField2(field.innerFields[i], id, hPacketField))
+          return true;
+        return false;
       }
-    })
-    return;
+    }
   }
 
   deviceChanged(event) {
@@ -161,10 +178,26 @@ export class FieldsStepComponent implements OnInit, OnChanges {
       );
     }
     else {
-      this.findField(this.fieldForm.packet.fields, this.fieldForm.fieldId, field);
+      let fi: HPacketField;
+      this.fieldForm.packet.fields.forEach(x => {
+        if (x.multiplicity != 'SINGLE') {
+          fi = x;
+          console.log("FI")
+          console.log(fi)
+          if (this.findField2(x, this.fieldForm.fieldId, field)) {
+            console.log("USCITA")
+            console.log(fi)
+            return;
+          }
+        }
+      })
 
-      this.hPacketService.updateHPacket(this.fieldForm.packet).subscribe(
+      console.log(this.fieldForm.packet)
+      console.log(fi)
+
+      this.hPacketService.updateHPacketField(this.fieldForm.packet.id, fi).subscribe(
         res => {
+          // this.hPackets.find(x => x.id == this.fieldForm.packet.id).fields.push(res);
           this.hPackets.find(x => x.id == this.fieldForm.packet.id).fields = res.fields;
           this.hPacketsOutput.emit(this.hPackets);
           this.fieldForm = null;
