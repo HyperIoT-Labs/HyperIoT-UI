@@ -1,6 +1,6 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ProjectWizardComponent } from './project-wizard/project-wizard.component';
+import { ProjectWizardComponent, ProjectWizardCanDeactivate } from './project-wizard/project-wizard.component';
 import { ProjectsComponent } from './projects.component';
 import { HyperiotComponentsModule } from '@hyperiot/components';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -23,6 +23,7 @@ import { ProjectDetailComponent } from './project-detail/project-detail.componen
 import { ProjectDataComponent } from './project-detail/project-data/project-data.component';
 import { DeviceDataComponent } from './project-detail/device-data/device-data.component';
 import { PacketDataComponent } from './project-detail/packet-data/packet-data.component';
+import { EventMailComponent } from './project-wizard/events-step/event-mail/event-mail.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { PacketDataComponent } from './project-detail/packet-data/packet-data.co
     ProjectDetailComponent,
     ProjectDataComponent,
     DeviceDataComponent,
-    PacketDataComponent
+    PacketDataComponent,
+    EventMailComponent
   ],
   imports: [
     MatIconModule,
