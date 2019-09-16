@@ -7,7 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { MatIconModule } from '@angular/material/icon';
-import { MatCardModule, MatButtonModule } from '@angular/material';
+import { MatCardModule, MatButtonModule, MatRadioModule } from '@angular/material';
 
 import { DevicesStepComponent } from './project-wizard/devices-step/devices-step.component';
 import { EventsStepComponent } from './project-wizard/events-step/events-step.component';
@@ -46,6 +46,7 @@ import { PacketDataComponent } from './project-detail/packet-data/packet-data.co
     MatIconModule,
     MatButtonModule,
     MatCardModule,
+    MatRadioModule,
     CommonModule,
     HyperiotComponentsModule,
     FormsModule,

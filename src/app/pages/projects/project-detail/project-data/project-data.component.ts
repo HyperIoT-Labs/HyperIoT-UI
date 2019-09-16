@@ -1,6 +1,6 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 import { Observable, Observer } from 'rxjs';
 
@@ -10,20 +10,21 @@ import { HprojectsService, HProject } from '@hyperiot/core';
 
 import { SaveChangesDialogComponent } from 'src/app/components/dialogs/save-changes-dialog/save-changes-dialog.component';
 import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
+import { ProjectDetailComponent } from '../project-detail.component';
 
 @Component({
   selector: 'hyt-project-data',
   templateUrl: './project-data.component.html',
   styleUrls: ['./project-data.component.scss']
 })
-export class ProjectDataComponent implements OnInit {
+export class ProjectDataComponent {
   projectId: number;
   project: HProject = {} as HProject;
 
   form: FormGroup;
   originalValue: string;
 
-  updateCallback: any = null;
+  treeHost: ProjectDetailComponent = null;
 
   constructor(
     private hProjectService: HprojectsService,
@@ -39,9 +40,6 @@ export class ProjectDataComponent implements OnInit {
         this.loadProject();
       }
     });
-  }
-
-  ngOnInit() {
   }
 
   canDeactivate(): Observable<any> | boolean {
@@ -84,7 +82,7 @@ export class ProjectDataComponent implements OnInit {
       console.log('SUCCESS', res);
       this.project = p = res;
       this.originalValue = JSON.stringify(this.form.value);
-      this.updateCallback && this.updateCallback({id: p.id, undefined, name: p.name});
+      this.treeHost && this.treeHost.updateNode({id: p.id, name: p.name});
       successCallback && successCallback(res);
     }, (err) => {
       // TODO: show 'error' message on screen
@@ -120,7 +118,7 @@ export class ProjectDataComponent implements OnInit {
             observer.complete();
           });
         } else {
-          observer.next(result === 'discard' || result === 'save')
+          observer.next(result === 'discard' || result === 'save');
           observer.complete();
         }
       });

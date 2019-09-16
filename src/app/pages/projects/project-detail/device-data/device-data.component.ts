@@ -10,6 +10,7 @@ import { HdevicesService, HDevice } from '@hyperiot/core';
 
 import { SaveChangesDialogComponent } from 'src/app/components/dialogs/save-changes-dialog/save-changes-dialog.component';
 import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
+import { ProjectDetailComponent } from '../project-detail.component';
 
 @Component({
   selector: 'hyt-device-data',
@@ -23,8 +24,7 @@ export class DeviceDataComponent implements OnInit {
   form: FormGroup;
   originalValue: string;
 
-  updateCallback: any = null;
-  deleteCallback: any = null;
+  treeHost: ProjectDetailComponent = null;
 
   constructor(
     private hDeviceService: HdevicesService,
@@ -81,6 +81,7 @@ export class DeviceDataComponent implements OnInit {
       this.form.get('description')
         .setValue(d.description);
       this.originalValue = JSON.stringify(this.form.value);
+      this.treeHost.focus({id: d.id, type: 'device'});
     });
   }
 
@@ -97,7 +98,7 @@ export class DeviceDataComponent implements OnInit {
       console.log('SUCCESS', res);
       this.device = d = res;
       this.originalValue = JSON.stringify(this.form.value);
-      this.updateCallback && this.updateCallback({id: d.id, type: 'device', name: d.deviceName});
+      this.treeHost && this.treeHost.updateNode({id: d.id, type: 'device', name: d.deviceName});
       successCallback && successCallback(res);
     }, (err) => {
       // TODO: show 'error' message on screen
@@ -109,7 +110,8 @@ export class DeviceDataComponent implements OnInit {
     this.hDeviceService.deleteHDevice(this.device.id).subscribe((res) => {
       // TODO: show 'ok' message on screen
       console.log('SUCCESS', res);
-      this.deleteCallback && this.deleteCallback();
+      this.treeHost && this.treeHost.refresh();
+      // TODO: implement tree-view refresh
       successCallback && successCallback(res);
     }, (err) => {
       // TODO: show 'error' message on screen
@@ -133,7 +135,7 @@ export class DeviceDataComponent implements OnInit {
             observer.complete();
           });
         } else {
-          observer.next(result === 'discard' || result === 'save')
+          observer.next(result === 'discard' || result === 'save');
           observer.complete();
         }
       });
