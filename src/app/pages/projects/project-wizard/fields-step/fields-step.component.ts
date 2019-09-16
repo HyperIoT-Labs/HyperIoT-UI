@@ -137,11 +137,6 @@ export class FieldsStepComponent implements OnInit, OnChanges {
     this.updateDeviceTreeView();
   }
 
-  getParent(): HPacketField {
-
-    return null;
-  }
-
   createField() {
 
     this.errors = [];

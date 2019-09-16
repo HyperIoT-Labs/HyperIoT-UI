@@ -23,6 +23,7 @@ import { ProjectDetailComponent } from './project-detail/project-detail.componen
 import { ProjectDataComponent } from './project-detail/project-data/project-data.component';
 import { DeviceDataComponent } from './project-detail/device-data/device-data.component';
 import { PacketDataComponent } from './project-detail/packet-data/packet-data.component';
+import { EventMailComponent } from './project-wizard/events-step/event-mail/event-mail.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { PacketDataComponent } from './project-detail/packet-data/packet-data.co
     ProjectDetailComponent,
     ProjectDataComponent,
     DeviceDataComponent,
-    PacketDataComponent
+    PacketDataComponent,
+    EventMailComponent
   ],
   imports: [
     MatIconModule,

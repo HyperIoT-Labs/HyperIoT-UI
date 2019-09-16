@@ -31,7 +31,7 @@
       </div>
 
       <div class="row">
-        <div class="col-md-12 container-form-field">
+        <div class="col-md-12 container-form-field center">
           OUTPUT DATA
           <br>
           <hyt-radio-button [form]="eventsForm" [options]="outputOptions" formControlName="eventOutput"
@@ -45,6 +45,10 @@
           <hyt-rule-definition #eventDef [hPacket]="currentPacket"></hyt-rule-definition>
         </div> <!-- Field RuleDefinition -->
       </div>
+
+      <hyt-event-mail *ngIf="eventsForm.value['eventOutput'].value=='0'"></hyt-event-mail>
+
+      <br>
 
       <div class="container-form-field errorMessage">
         <ng-container *ngIf="getError('general')">
