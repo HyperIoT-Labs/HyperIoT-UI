@@ -74,4 +74,13 @@
     </div>
   </div>
 
+  <hyt-modal [mOpen]="deleteModal">
+    <div class="center">
+      You are about to delete the selected object and its children. Are you sure?
+      <hr>
+      <button (click)="confDelete(true)">Yes</button>
+      <button (click)="confDelete(false)">No</button>
+    </div>
+  </hyt-modal>
+
 </div>

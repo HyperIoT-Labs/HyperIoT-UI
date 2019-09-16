@@ -5,7 +5,7 @@ import { HPacketField, HpacketsService, HPacket, HDevice } from '@hyperiot/core'
 import { SelectOption } from '@hyperiot/components';
 import { HYTError } from 'src/app/services/errorHandler/models/models';
 import { ProjectWizardHttpErrorHandlerService } from 'src/app/services/errorHandler/project-wizard-http-error-handler.service';
-import { Node } from '@hyperiot/components/lib/hyt-tree-view-editable/hyt-tree-view-editable.component';
+import { Node } from '@hyperiot/components';
 
 interface deviceTreeView {
   packet: HPacket;
@@ -14,7 +14,7 @@ interface deviceTreeView {
 
 interface FieldForm {
   packet: HPacket,
-  fieldId: number;
+  fieldData: any;
   isPacket: boolean;
   form: FormGroup;
 }
@@ -96,7 +96,7 @@ export class FieldsStepComponent implements OnInit, OnChanges {
     let node: Node[] = [];
     fields.forEach(element => {
       node.push({
-        id: element.id,
+        data: element,
         root: false,
         name: element.name,
         lom: element.multiplicity,
@@ -107,40 +107,39 @@ export class FieldsStepComponent implements OnInit, OnChanges {
     return node;
   }
 
-  // findField(fields: HPacketField[], id: number, hPacketField: HPacketField): boolean {
-  //   fields.forEach(x => {
-  //     if (x.innerFields != null) {
-  //       if (x.id == id) {
-  //         console.log("dentro")
-  //         x.innerFields.push(hPacketField);
-  //         return true;
-  //       }
-  //       else {
-  //         console.log("else")
-  //         return this.findField(x.innerFields, id, hPacketField)
-  //       }
-  //     }
-  //   })
-  // }
-
-  findField2(field: HPacketField, id: number, hPacketField: HPacketField): boolean {
-    if (field.id == id) {
-      field.innerFields.push(hPacketField);
-      return true;
-    }
-    else {
-      let ret = false;
-      for (let i = 0; i < field.innerFields.length; i++) {
-        if (this.findField2(field.innerFields[i], id, hPacketField))
-          return true;
-        return false;
+  updatePacketView(fields: HPacketField[], id: number, hPacketField: HPacketField) {
+    fields.forEach(x => {
+      if (x.innerFields != null) {
+        if (x.id == id) {
+          x.innerFields.push(hPacketField);
+          return;
+        }
+        else {
+          return this.updatePacketView(x.innerFields, id, hPacketField);
+        }
       }
+    })
+  }
+
+  updatePacketViewDelete(fields: HPacketField[], id: number) {
+    for (var i = 0; i < fields.length; i++) {
+      if (fields[i].id == id) {
+        fields.splice(i, 1);
+        return;
+      }
+      else if (fields[i].innerFields != null)
+        this.updatePacketViewDelete(fields[i].innerFields, id)
     }
   }
 
   deviceChanged(event) {
     this.currentDevice = this.hDevices.find(x => x.id == event.value)
     this.updateDeviceTreeView();
+  }
+
+  getParent(): HPacketField {
+
+    return null;
   }
 
   createField() {
@@ -153,11 +152,11 @@ export class FieldsStepComponent implements OnInit, OnChanges {
       multiplicity: this.fieldForm.form.value.fieldMultiplicity.value,
       type: this.fieldForm.form.value.fieldType,
       description: this.fieldForm.form.value.fieldDescription,
-      innerFields: (this.fieldForm.form.value.fieldMultiplicity.value == 'SINGLE') ? null : []
+      innerFields: (this.fieldForm.form.value.fieldMultiplicity.value == 'SINGLE') ? null : [],
+      parentField: (this.fieldForm.fieldData) ? { id: this.fieldForm.fieldData.id, entityVersion: this.fieldForm.fieldData.entityVersion } : null
     }
 
     if (this.fieldForm.isPacket) {
-      console.log("aggiungendo a packet")
       this.hPacketService.addHPacketField(this.fieldForm.packet.id, field).subscribe(
         res => {
           this.hPackets.find(x => x.id == this.fieldForm.packet.id).fields.push(res);
@@ -178,40 +177,15 @@ export class FieldsStepComponent implements OnInit, OnChanges {
       );
     }
     else {
-      let fi: HPacketField;
-      this.fieldForm.packet.fields.forEach(x => {
-        if (x.multiplicity != 'SINGLE') {
-          fi = x;
-          console.log("FI")
-          console.log(fi)
-          if (this.findField2(x, this.fieldForm.fieldId, field)) {
-            console.log("USCITA")
-            console.log(fi)
-            return;
-          }
-        }
-      })
-
-      console.log(this.fieldForm.packet)
-      console.log(fi)
-
-      this.hPacketService.updateHPacketField(this.fieldForm.packet.id, fi).subscribe(
+      this.hPacketService.addHPacketField(this.fieldForm.packet.id, field).subscribe(
         res => {
-          // this.hPackets.find(x => x.id == this.fieldForm.packet.id).fields.push(res);
-          this.hPackets.find(x => x.id == this.fieldForm.packet.id).fields = res.fields;
+          console.log(res);
+          this.updatePacketView(this.hPackets.find(x => x.id == this.fieldForm.packet.id).fields, field.parentField.id, res);
           this.hPacketsOutput.emit(this.hPackets);
           this.fieldForm = null;
         },
         err => {
-          this.errors = this.errorHandler.handleCreateField(err);
-          this.errors.forEach(e => {
-            if (e.container != 'general')
-              this.fieldForm.form.get(e.container).setErrors({
-                validateInjectedError: {
-                  valid: false
-                }
-              });
-          })
+
         }
       );
     }
@@ -232,18 +206,41 @@ export class FieldsStepComponent implements OnInit, OnChanges {
   addField(event, packet: HPacket) {
     this.fieldForm = {
       packet: packet,
-      fieldId: (!event.root) ? event.id : null,
+      fieldData: event.data,
       isPacket: event.root,
       form: this.fb.group({})
     }
   }
 
+  deletePacket: HPacket;
+  deleteFieldId: number;
+  deleteModal: boolean = false;
+
   removeField(event, packet: HPacket) {
-    this.hPacketService.deleteHPacketField(packet.id, event.id).subscribe(
-      res => { },
+    this.deletePacket = packet;
+    this.deleteFieldId = event.data.id;
+    if (event.children && event.children.length != 0) {
+      this.deleteModal = true;
+    }
+    else
+      this.deleteField();
+
+  }
+
+  deleteField() {
+    this.hPacketService.deleteHPacketField(this.deletePacket.id, this.deleteFieldId).subscribe(
+      res => {
+        this.updatePacketViewDelete(this.deletePacket.fields, this.deleteFieldId);
+        this.hPacketsOutput.emit(this.hPackets);
+      },
       err => { }
     )
-    console.log(event)
+  }
+
+  confDelete(cd: boolean): void {
+    if (cd)
+      this.deleteField();
+    this.deleteModal = false;
   }
 
 }

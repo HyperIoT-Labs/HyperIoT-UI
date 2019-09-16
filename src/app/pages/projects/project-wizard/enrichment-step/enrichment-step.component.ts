@@ -114,7 +114,7 @@ export class EnrichmentStepComponent implements OnInit, OnChanges {
       this.enrichmentForm.get('rule-description').invalid ||
       this.enrichmentForm.get('enrichmentDevice').invalid ||
       this.enrichmentForm.get('enrichmentPacket').invalid ||
-      this.ruleDefinitionComponent.isInvalid()
+      ((this.ruleDefinitionComponent) ? this.ruleDefinitionComponent.isInvalid() : false)
     )
   }
 

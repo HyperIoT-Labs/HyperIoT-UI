@@ -85,7 +85,7 @@ export function apiConfigFactory(): Configuration {
     CanDeactivateGuard,
     CookieService,
     I18n,
-    {provide: TRANSLATIONS_FORMAT, useValue: 'xlf'},
+    { provide: TRANSLATIONS_FORMAT, useValue: 'xlf' },
     {
       provide: TRANSLATIONS,
       useFactory: (locale) => {
@@ -94,7 +94,7 @@ export function apiConfigFactory(): Configuration {
       },
       deps: [LOCALE_ID]
     },
-    {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: true}}
+    { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: true } }
   ],
   bootstrap: [AppComponent]
 })
