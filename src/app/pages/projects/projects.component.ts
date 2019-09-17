@@ -47,6 +47,8 @@ export class ProjectsComponent implements OnInit {
           : PageStatus.New;
 
         this.hProjectsFiltered = [...this.hProjects];
+        /* Defaultin Sort */
+        this.sortBy('date-decreasing');
         console.log(this.hProjectsFiltered)
       },
       err => {
@@ -96,8 +98,8 @@ export class ProjectsComponent implements OnInit {
 
       case "none":
           this.hProjectsFiltered.sort(function(a, b){
-            if(a.id < b.id) { return -1; }
-            if(a.id > b.id) { return 1; }
+            if(a.id > b.id) { return -1; }
+            if(a.id < b.id) { return 1; }
             return 0;
           });
           console.log(this.hProjectsFiltered)
