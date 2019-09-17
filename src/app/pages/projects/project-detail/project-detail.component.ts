@@ -16,7 +16,7 @@ enum TreeStatusEnum {
   styleUrls: ['./project-detail.component.scss']
 })
 export class ProjectDetailComponent implements OnInit {
-  @ViewChild('treeView', {static: true}) treeView: HytTreeViewProjectComponent;
+  @ViewChild('treeView', { static: true }) treeView: HytTreeViewProjectComponent;
 
   TreeStatus = TreeStatusEnum;
   treeStatus = TreeStatusEnum.Ready;
@@ -39,7 +39,7 @@ export class ProjectDetailComponent implements OnInit {
   }
 
   onActivate(childComponent) {
-    if (childComponent.treeHost === null)  {
+    if (childComponent.treeHost === null) {
       childComponent.treeHost = this;
     }
   }
@@ -49,43 +49,41 @@ export class ProjectDetailComponent implements OnInit {
     this.treeData = [];
     this.hProjectService.findHProject(+this.projectId).subscribe((p: HProject) => {
         const projectNode: TreeDataNode = {
-          data: {id: p.id},
+          data: { id: p.id },
           name: p.name,
           icon: 'work',
           children: []
         };
         this.treeData.push(projectNode);
         this.treeStatus = TreeStatusEnum.Loading;
-        this.hDeviceService.findAllHDevice().subscribe((deviceList: HDevice[]) => {
+        this.hDeviceService.findAllHDevice(p.id).subscribe((deviceList: HDevice[]) => {
           this.treeStatus = TreeStatusEnum.Ready;
           deviceList.forEach((d) => {
-            if (d.project && d.project.id === p.id) {
-              this.treeStatus = TreeStatusEnum.Loading;
-              this.packetService.getHDevicePacketList(d.id).subscribe((packetList: HPacket[]) => {
-                projectNode.children.push({
-                  data: {id: d.id, type: 'device'},
-                  name: d.deviceName,
-                  icon: 'devices_other',
-                  children: packetList
-                    .filter((k) => k.device && k.device.id === d.id)
-                    .map((k) => {
-                      return {
-                        data: {id: k.id, type: 'packet'},
-                        name: k.name,
-                        icon: 'settings_ethernet'
-                      };
-                    }
+            this.treeStatus = TreeStatusEnum.Loading;
+            this.packetService.getHDevicePacketList(d.id).subscribe((packetList: HPacket[]) => {
+              projectNode.children.push({
+                data: { id: d.id, type: 'device' },
+                name: d.deviceName,
+                icon: 'devices_other',
+                children: packetList
+                  .filter((k) => k.device && k.device.id === d.id)
+                  .map((k) => {
+                    return {
+                      data: { id: k.id, type: 'packet' },
+                      name: k.name,
+                      icon: 'settings_ethernet'
+                    };
+                  }
                   ) as TreeDataNode[]
-                });
-                this.treeView.setData(this.treeData);
-                if (this.treeView.treeControl.dataNodes.length > 0) {
-                  this.treeView.treeControl.expand(this.treeView.treeControl.dataNodes[0]);
-                }
-                this.treeStatus = TreeStatusEnum.Ready;
-              }, (err) => {
-                this.treeStatus = TreeStatusEnum.Error;
               });
-            }
+              this.treeView.setData(this.treeData);
+              if (this.treeView.treeControl.dataNodes.length > 0) {
+                this.treeView.treeControl.expand(this.treeView.treeControl.dataNodes[0]);
+              }
+              this.treeStatus = TreeStatusEnum.Ready;
+            }, (err) => {
+              this.treeStatus = TreeStatusEnum.Error;
+            });
           });
         }, (err) => {
           this.treeStatus = TreeStatusEnum.Error;
@@ -98,12 +96,12 @@ export class ProjectDetailComponent implements OnInit {
   onNodeClick(node) {
     if (node.data && node.data.type) {
       this.router.navigate(
-        [ { outlets: {projectDetails: [node.data.type, node.data.id]} } ],
+        [{ outlets: { projectDetails: [node.data.type, node.data.id] } }],
         { relativeTo: this.activatedRoute }
       );
     } else {
       this.router.navigate(
-        [ './', { outlets: {projectDetails: null} } ],
+        ['./', { outlets: { projectDetails: null } }],
         { relativeTo: this.activatedRoute }
       );
     }
