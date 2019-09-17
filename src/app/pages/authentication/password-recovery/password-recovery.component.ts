@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { SubmissionStatus } from '../models/pageStatus';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { HusersService } from '@hyperiot/core';
+import { HusersService, LoggerService, Logger } from '@hyperiot/core';
 import { AuthenticationHttpErrorHandlerService } from 'src/app/services/errorHandler/authentication-http-error-handler.service';
 import { HYTError } from 'src/app/services/errorHandler/models/models';
 
@@ -19,10 +19,16 @@ export class PasswordRecoveryComponent implements OnInit {
 
   recoverMailForm: FormGroup;
 
+  private logger: Logger;
+
   constructor(private hUserService: HusersService,
     private httperrorHandler: AuthenticationHttpErrorHandlerService,
     private fb: FormBuilder,
-  ) { }
+    private loggerService: LoggerService
+  ) {
+    this.logger = new Logger(this.loggerService);
+    this.logger.registerClass('PasswordRecoveryComponent');
+   }
 
   ngOnInit() {
     this.recoverMailForm = this.fb.group({});
@@ -31,7 +37,9 @@ export class PasswordRecoveryComponent implements OnInit {
   recoveryRequest() {
     this.submissionStatus = SubmissionStatus.Default
     this.hUserService.resetPasswordRequest(this.recoverMailForm.value.email).subscribe(
-      res => { this.submissionStatus = SubmissionStatus.Submitted },
+      res => { 
+        this.logger.debug('email address:', res)
+        this.submissionStatus = SubmissionStatus.Submitted },
       err => {
         let k: HYTError[] = this.httperrorHandler.handlePwdRecovery(err);
         for (let e of k) {
