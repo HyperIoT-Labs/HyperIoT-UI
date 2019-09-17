@@ -45,13 +45,13 @@
     </ng-template>
 
     <ng-template #eventsTemplate>
-      <hyt-events-step></hyt-events-step>
+      <hyt-events-step [hProject]="hProject" [hDevices]="hDevices" [hPackets]="hPackets"></hyt-events-step>
       <hyt-button (clickFn)="stepper.previous()">Back</hyt-button>
       <hyt-button (clickFn)="openOptionModal()">Next</hyt-button>
     </ng-template>
 
 
-    <hyt-stepper #stepper [isLinear]="true" style="width: 100%"
+    <hyt-stepper #stepper [isLinear]="false" style="width: 100%"
       [stepArray]="[ projectTemplate, devicesTemplate, packetsTemplate, fieldsTemplate, enrichmentTemplate, statisticsTemplate, eventsTemplate ]"
       [labelArray]="[ 'Projects', 'Devices', 'Packets', 'Fields', 'Enrichment', 'Statistics', 'Events' ]"
       [completedArray]="[ projectValidated, devicesValidated, packetsValidated, fieldsValidated, enrichmentValidated, statisticsValidated, eventsValidated ]">
@@ -150,6 +150,16 @@
             </div>
           </div>
         </div>
+      </div>
+    </hyt-modal>
+
+    <hyt-modal [mOpen]="deactivateModal">
+      <div class="center">
+        Se esci dalla pagina perderai tutte le modifiche non salvate
+        <br>
+        <br>
+        <hyt-button (clickFn)="deactivate(true)">OK</hyt-button>
+        <hyt-button (clickFn)="deactivate(false)">ANNULLA</hyt-button>
       </div>
     </hyt-modal>
 

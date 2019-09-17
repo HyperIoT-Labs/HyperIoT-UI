@@ -1,0 +1,37 @@
+<div id="eventMail">
+  <form class="eventMail-form" [formGroup]="mailForm" autocomplete="on">
+
+    <div class="row">
+      <div class="col-md-4 container-form-field">
+        <hyt-input-text [form]="mailForm" formControlName="mailRecipient" name="mailRecipient" [isRequired]="true"
+          placeholder="HYT_mail_to">
+        </hyt-input-text>
+      </div> <!-- Mail Recipient -->
+      <div class="col-md-4 container-form-field">
+        <hyt-input-text [form]="mailForm" formControlName="mailCC" name="mailCC" placeholder="HYT_mail_cc">
+        </hyt-input-text>
+      </div> <!-- Mail CC -->
+      <div class="col-md-4 container-form-field">
+        <hyt-input-text [form]="mailForm" formControlName="mailObject" name="mailObject" placeholder="HYT_mail_object">
+        </hyt-input-text>
+      </div> <!-- Mail Object -->
+    </div>
+
+    <div class="row">
+      <div class="col-md-12 container-form-field">
+        <hyt-text-area [form]="mailForm" formControlName="mailBody" name="mailBody" placeholder="HYT_mail_body">
+        </hyt-text-area>
+      </div> <!-- Mail Body -->
+    </div>
+
+  </form>
+
+  <!--Temporaneo-->
+  Definition of terms:
+  <br>
+  [$NAME_DEVICE$] - The Name of Device [$NAME_PACKET$] - The Name of Packet
+  <br>
+  [$NAME_FIELD$] - The Name of Field [$DATA_EVENT$] - The Date of eventMail
+  <!--/Temporaneo-->
+
+</div>

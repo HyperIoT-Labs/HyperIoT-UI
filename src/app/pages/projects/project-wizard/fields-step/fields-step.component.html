@@ -5,45 +5,47 @@
     <div class="row">
 
       <div class="col-md-6">
-        TreeView
 
-        <ul id="devices">
-          <li *ngFor="let hdev of hDevices">
-            {{hdev.deviceName}}
-            <ul>
-              <li *ngFor="let hpac of hPackets">
-                <p *ngIf="hpac.device.id == hdev.id" (click)="sethPackets(hpac.id)">{{hpac.name}}</p>
-              </li>
-            </ul>
-          </li>
-        </ul>
+        <div class="container-form-field">
+          <hyt-select [options]="devicesOptions" [isRequired]="true" label="HYT_fieldType"
+            (changeFn)="deviceChanged($event)">
+          </hyt-select>
+        </div>
+
+        <div *ngIf="currentDevice && deviceTreeView.length == 0">
+          Non ci sono pacchetti in questo device
+        </div>
+
+        <hyt-tree-view-editable *ngFor="let pack of deviceTreeView" [deviceName]="pack.packet.name"
+          [treeData]="pack.tree" (addFn)="addField($event, pack.packet)" (removeFn)="removeField($event, pack.packet)">
+        </hyt-tree-view-editable>
 
       </div>
 
       <div class="col-md-6">
-        <form class="field-form" [formGroup]="fieldForm" autocomplete="on">
+        <form *ngIf="fieldForm" class="field-form" [formGroup]="fieldForm.form" autocomplete="on">
 
           <div class="container-form-field">
-            <hyt-input-text [form]="fieldForm" formControlName="fieldName" name="fieldName" [isRequired]="true"
+            <hyt-input-text [form]="fieldForm.form" formControlName="fieldName" name="fieldName" [isRequired]="true"
               placeholder="HYT_fieldName" [injectedErrorMsg]="getError('fieldName')">
             </hyt-input-text>
           </div> <!-- Field Name -->
 
           <div class="container-form-field">
             LEVEL OF MULTIPLICITY
-            <hyt-radio-button [form]="fieldForm" formControlName="fieldMultiplicity" name="fieldMultiplicity"
+            <hyt-radio-button [form]="fieldForm.form" formControlName="fieldMultiplicity" name="fieldMultiplicity"
               [options]="multiplicityOptions" [verticalAlign]="true">
             </hyt-radio-button>
           </div> <!-- Field Multiplicity -->
 
           <div class="container-form-field">
-            <hyt-select [form]="fieldForm" [options]="typeOptions" formControlName="fieldType" name="fieldType"
+            <hyt-select [form]="fieldForm.form" [options]="typeOptions" formControlName="fieldType" name="fieldType"
               [isRequired]="true" label="HYT_fieldType">
             </hyt-select>
           </div> <!-- Field Type -->
 
           <div class="container-form-field">
-            <hyt-text-area [form]="fieldForm" formControlName="fieldDescription" name="fieldDescription"
+            <hyt-text-area [form]="fieldForm.form" formControlName="fieldDescription" name="fieldDescription"
               placeholder="HYT_fieldDescription">
             </hyt-text-area>
           </div> <!-- Field Description -->
@@ -71,5 +73,14 @@
       FIELDS
     </div>
   </div>
+
+  <hyt-modal [mOpen]="deleteModal">
+    <div class="center">
+      You are about to delete the selected object and its children. Are you sure?
+      <hr>
+      <button (click)="confDelete(true)">Yes</button>
+      <button (click)="confDelete(false)">No</button>
+    </div>
+  </hyt-modal>
 
 </div>

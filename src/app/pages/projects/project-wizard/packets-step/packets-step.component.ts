@@ -121,4 +121,37 @@ export class PacketsStepComponent implements OnInit, OnChanges {
     return (this.errors.find(x => x.container == field)) ? this.errors.find(x => x.container == field).message : null;
   }
 
+  //delete logic
+
+  deleteId: number = -1;
+
+  deleteError: string = null;
+
+  showDeleteModal(id: number) {
+    this.deleteError = null;
+    this.deleteId = id;
+  }
+
+  hideDeleteModal() {
+    this.deleteId = -1;
+  }
+
+  deletePacket() {
+    this.deleteError = null;
+    this.hPacketService.deleteHPacket(this.deleteId).subscribe(
+      res => {
+        for (let i = 0; i < this.packetsList.length; i++) {
+          if (this.packetsList[i].id == this.deleteId) {
+            this.packetsList.splice(i, 1);
+          }
+        }
+        this.hPacketsOutput.emit(this.packetsList);
+        this.hideDeleteModal();
+      },
+      err => {
+        this.deleteError = "Error executing your request";
+      }
+    );
+  }
+
 }
