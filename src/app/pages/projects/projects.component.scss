@@ -48,4 +48,73 @@
     padding-left: 32px;
   }
 
+
+
+  #container-projects {
+
+    .no-projects {
+
+      #content-no-projects, #btn-no-projects {
+        text-align: center;
+      }
+
+      #content-no-projects {
+
+          h3 {
+
+            &#title-no-project {
+              font-size: 2.2em;
+              text-transform: uppercase;
+              color: #0d416d;
+              margin-bottom: 0px;
+            }
+
+          }
+
+          h4 {
+
+            &#subtitle-no-project {
+              font-size: 1.1em;
+              color: #2d82cb;
+              margin-bottom: 60px;
+              font-style: italic;
+            }
+
+          }
+
+      }
+
+      #btn-no-projects {
+        
+        hyt-button {
+
+          &#add-project-btn {
+            margin-top: 2px;
+            
+            button.mat-raised-button {
+              background-color: #0d416d;
+              color: #fff;
+              font-family: "Exo";
+              font-size: 1.2em;
+              font-weight: 400;
+              text-transform: uppercase;
+              line-height: 45px;
+  
+              &:hover {
+                background-color: #105f99;
+                box-shadow: none;
+              }
+  
+            }
+  
+          }
+  
+        }
+
+      }
+
+    }
+
+  }
+
 }
