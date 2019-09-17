@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { HusersService, HUser } from '@hyperiot/core';
+import { HusersService, HUser, LoggerService, Logger } from '@hyperiot/core';
 import { AuthenticationHttpErrorHandlerService } from 'src/app/services/errorHandler/authentication-http-error-handler.service';
 import { HYTError } from 'src/app/services/errorHandler/models/models';
 
@@ -18,11 +18,17 @@ export class RegistrationComponent implements OnInit {
 
   loading: boolean = false;
 
+  private logger: Logger;
+
   constructor(
     private hUserService: HusersService,
     private fb: FormBuilder,
-    private httperrorHandler: AuthenticationHttpErrorHandlerService
-  ) { }
+    private httperrorHandler: AuthenticationHttpErrorHandlerService,
+    private loggerService: LoggerService
+  ) {
+    this.logger = new Logger(this.loggerService);
+    this.logger.registerClass('RegistrationComponent');
+  }
 
   ngOnInit() {
     this.registrationForm = this.fb.group({});
@@ -55,8 +61,9 @@ export class RegistrationComponent implements OnInit {
 
     this.hUserService.register(user).subscribe(
       res => {
+        this.logger.debug('user:', res);
         this.registrationSucceeded = true;
-        this.loading = false
+        this.loading = false;
       },
       err => {
         this.errors = this.httperrorHandler.handleRegistration(err);

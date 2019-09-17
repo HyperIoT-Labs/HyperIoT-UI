@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { AuthenticationService, JWTLoginResponse } from '@hyperiot/core';
+import { AuthenticationService, JWTLoginResponse, LoggerService, Logger } from '@hyperiot/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { AuthenticationHttpErrorHandlerService } from 'src/app/services/errorHandler/authentication-http-error-handler.service';
@@ -34,13 +34,18 @@ export class LoginComponent implements OnInit {
 
   injectedErrorState = false;
 
+  private logger: Logger;
+
   constructor(
     private authenticationService: AuthenticationService,
     private fb: FormBuilder,
     private cookieService: CookieService,
     private router: Router,
-    private httperrorHandler: AuthenticationHttpErrorHandlerService
-  ) { }
+    private httperrorHandler: AuthenticationHttpErrorHandlerService,
+    private loggerService: LoggerService) {
+    this.logger = new Logger(this.loggerService);
+    this.logger.registerClass('LoginComponent');
+  }
 
   ngOnInit() {
 
@@ -59,10 +64,12 @@ export class LoginComponent implements OnInit {
 
     this.authenticationService.login(this.loginForm.value.username, this.loginForm.value.password).subscribe(
       res => {
+        this.logger.debug('username and password:', res);
         this.cookieService.set('HIT-AUTH', res.token, 2, '/');
         localStorage.setItem('userInfo', JSON.stringify(res));
         localStorage.setItem('user', JSON.stringify(res.authenticable));
-
+        this.logger.trace('userInfo', JSON.stringify(res.authenticable));
+ 
         if (this.loginForm.value.rememberMe == true) {
           this.encrypting(this.loginForm.value.username + "&" + this.loginForm.value.password, this.key);
           this.cookieService.set('hytUser', this.encrypted, 28, '/');
@@ -75,6 +82,7 @@ export class LoginComponent implements OnInit {
         this.router.navigate([this.returnUrl]);
       },
       err => {
+        this.logger.error('Invalid account credentials', err);
         let k: HYTError[] = this.httperrorHandler.handleLogin(err);
         for (let e of k) {
           this.error[2] = e.message;

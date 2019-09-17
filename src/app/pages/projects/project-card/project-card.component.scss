@@ -12,7 +12,7 @@ hyt-project-card {
         font-family: 'Exo';
         overflow: hidden;
         box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 5px 8px 0 rgba(0,0,0,.14), 0 1px 14px 0 rgba(0,0,0,.12);
-        transition: all .2s ease-in-out;
+        transition: all 0.15s ease-in-out;
 
         &:hover {
             .box-card-front {
@@ -43,7 +43,7 @@ hyt-project-card {
             padding: 5px;
             background-color: #ffffff;
             height: 100%;
-            transition: all .2s ease-in-out;
+            transition: all 0.15s ease-in-out;
 
             .header-card-front {
                 // border: 1px solid;
@@ -108,7 +108,7 @@ hyt-project-card {
                 height: 43px;
 
                 hyt-button {
-                    width: 80%;
+                    // width: 80%;
 
                     &:hover {
                         button.mat-raised-button {
@@ -124,7 +124,7 @@ hyt-project-card {
                         background-color: #ffffff;
                         color: #0956B6;
                         font-size: 1em;
-                        width: 100%;
+                        width: 85%;
                         height: 100%;
                         border: 1px solid #0956B6;
                         border-radius: 0px;

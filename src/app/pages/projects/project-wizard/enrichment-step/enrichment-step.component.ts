@@ -34,9 +34,9 @@ export class EnrichmentStepComponent implements OnInit, OnChanges {
   errors: HYTError[] = [];
 
   enrichmentRules: SelectOption[] = [
-    { value: ' Categories', label: 'Categories' },
-    { value: ' Tags', label: 'Tags' },
-    { value: ' Validation', label: 'Validation' }
+    { value: JSON.stringify({ actionName: "AddCategoryRuleAction", ruleId: 0, categoryIds: null, ruleType: "ENRICHMENT" }), label: 'Categories' },
+    { value: JSON.stringify({ actionName: "AddTagRuleAction", ruleId: 0, tagIds: null, ruleType: "ENRICHMENT" }), label: 'Tags' },
+    { value: JSON.stringify({ actionName: "ValidateHPacketRuleAction", ruleId: 0, ruleType: "ENRICHMENT" }), label: 'Validation' }
   ]
 
   ruleList: Rule[] = [];
@@ -73,9 +73,8 @@ export class EnrichmentStepComponent implements OnInit, OnChanges {
 
     this.errors = [];
 
-    var action = JSON.stringify({ actionName: "AddCategoryRuleAction2", ruleId: 0, categoryIds: [456], ruleType: "ENRICHMENT" });
-    var actions = [action];
-    var str: string = JSON.stringify(actions);
+    var jActions = [this.enrichmentForm.value['enrichmentRule']];
+    var jActionStr: string = JSON.stringify(jActions);
 
     let rule: Rule = {
       name: this.enrichmentForm.value['rule-name'],
@@ -83,7 +82,7 @@ export class EnrichmentStepComponent implements OnInit, OnChanges {
       description: this.enrichmentForm.value['rule-description'],
       project: this.hProject,
       packet: this.currentPacket,
-      jsonActions: str,
+      jsonActions: jActionStr,
       type: 'ENRICHMENT',
       entityVersion: 1
     }
@@ -114,7 +113,7 @@ export class EnrichmentStepComponent implements OnInit, OnChanges {
       this.enrichmentForm.get('rule-description').invalid ||
       this.enrichmentForm.get('enrichmentDevice').invalid ||
       this.enrichmentForm.get('enrichmentPacket').invalid ||
-      ((this.ruleDefinitionComponent) ? this.ruleDefinitionComponent.isInvalid() : false)
+      ((this.ruleDefinitionComponent) ? this.ruleDefinitionComponent.isInvalid() : true)
     )
   }
 

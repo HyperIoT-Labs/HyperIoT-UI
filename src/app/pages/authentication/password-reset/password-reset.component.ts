@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { HusersService, HUserPasswordReset } from '@hyperiot/core';
+import { HusersService, HUserPasswordReset, Logger, LoggerService } from '@hyperiot/core';
 import { ActivatedRoute } from '@angular/router';
 import { HYTError } from 'src/app/services/errorHandler/models/models';
 import { AuthenticationHttpErrorHandlerService } from 'src/app/services/errorHandler/authentication-http-error-handler.service';
@@ -23,11 +23,17 @@ export class PasswordResetComponent implements OnInit {
 
   submissionStatus: SubmissionStatus = SubmissionStatus.Default;
 
+  private logger: Logger;
+
   constructor(
     private route: ActivatedRoute,
     private hUserService: HusersService,
-    private httperrorHandler: AuthenticationHttpErrorHandlerService
-  ) { }
+    private httperrorHandler: AuthenticationHttpErrorHandlerService,
+    private loggerService: LoggerService
+  ) {
+    this.logger = new Logger(this.loggerService);
+    this.logger.registerClass('PasswordResetComponent');
+   }
 
   ngOnInit() {
 
@@ -35,6 +41,7 @@ export class PasswordResetComponent implements OnInit {
 
     this.route.paramMap.subscribe(
       (p) => {
+        this.logger.debug('data:', p)
         this.email = p.get('email');
         this.code = p.get('code');
       }
@@ -52,7 +59,9 @@ export class PasswordResetComponent implements OnInit {
     }
 
     this.hUserService.resetPassword(pwdReset).subscribe(
-      res => { this.submissionStatus = SubmissionStatus.Submitted },
+      res => { 
+        this.logger.debug('', res);
+        this.submissionStatus = SubmissionStatus.Submitted },
       err => {
         let k: HYTError[] = this.httperrorHandler.handlePwdRecovery(err);
         for (let e of k) {
