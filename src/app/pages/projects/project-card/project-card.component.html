@@ -1,54 +1,55 @@
-<!-- Cover (inactive state) -->
-<!-- <mat-card 
-    *ngIf="!isActive" 
-    [@crossFade]
-    class="md-padding d-flex flex-row align-items-stretch"
-    [class.mat-elevation-z2]="!isActive"
-    [class.mat-elevation-z8]="isActive"
-    (mouseover)="setActive(true)"
-    (mouseout)="setActive(false)"
->
 
-    <div id="card-back" class="flex-fill d-flex align-items-end">
-        <h3 class="m-0">{{ project.name }}</h3>
+<mat-card class="mat-elevation-z5">
+
+    <div class="title-card-back"> <!-- flex-fill d-flex align-items-end -->
+        {{ project.name }}
     </div>
 
-</mat-card>
+    <div class="box-card-front">
 
-<mat-card *ngIf="isActive" [@crossFade]
-    class="active md-padding d-flex flex-row align-items-stretch"
-    [class.mat-elevation-z2]="!isActive"
-    [class.mat-elevation-z8]="isActive"
-    (mouseover)="setActive(true)"
-    (mouseout)="setActive(false)">
+        <div class="header-card-front">
 
-    <!-- Summary (hover / tapped state) --
-    <div id="card-front" class="flex-fill d-flex flex-column">
-        <header>
-            <h3 class="m-0">{{ project.name }}</h3>
-        </header>
-        <main class="flex-grow-1 d-flex flex-column">
-            <p class="multiline-ellipsis">{{ project.description }}</p>
-            <div class="m-1 d-flex flex-row align-items-center">
-                <mat-icon>devices_other</mat-icon>
-                <strong class="px-2">{{ deviceCount }}</strong>
-                <span i18n="@@projectCard-string-device">HYT_string_device</span>
-            </div>
-            <div class="m-1 d-flex flex-row align-items-center">
-                <mat-icon>code</mat-icon>
-                <strong class="px-2">{{ rulesCount }}</strong>
-                <span i18n="@@projectCard-string-rule">HYT_string_rule</span>
-            </div>
-        </main>
-        <footer class="mt-auto d-flex">
-            <button mat-stroked-button class="flex-grow-1"
+            {{ project.name }}
+
+        </div> <!-- End Card Front Header -->
+
+        <div class="content-card-front">
+
+            <div class="card-description">
+                {{ project.description }}
+            </div> <!-- End Card Description -->
+
+            <div class="card-elements">
+
+                <div class="single-element">
+                    <mat-icon>devices_other</mat-icon>
+                    <strong class="single-element px-2">{{ deviceCount }}</strong>
+                    <span i18n="@@projectCard-string-device">HYT_string_device</span>
+                </div> <!-- End Single Element -->
+
+                <div class="single-element">
+                    <mat-icon>code</mat-icon>
+                    <strong class="count-element px-2">{{ rulesCount }}</strong>
+                    <span i18n="@@projectCard-string-rule">HYT_string_rule</span>
+                </div> <!-- End Single Element -->
+                
+
+            </div> <!-- End Card Elements -->
+
+        </div> <!-- End Card Front Content -->
+
+        <div class="footer-card-front">
+
+            <hyt-button
+                class="view-project-btn" 
                 routerLink="{{project.id}}"
-                i18n="@@projectCard-button-view">HYT_button_view</button>
-        </footer>
+                i18n="@@projectCard-button-view">
+                HYT_button_view
+            </hyt-button>
+            
+        </div> <!-- End Card Front Footer -->
+
     </div>
 
-</mat-card> -->
-
-<mat-card>
-    <p>Ciao sono Una Card Material</p>
 </mat-card>
+-->

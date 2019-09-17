@@ -1,72 +1,56 @@
-
 #projects-page {
   font-family: 'Exo';
   font-size: 1em;
 
-  #container-breadcrumb {
+  .header {
     border-bottom: 1px solid #008aff;
     min-height: 50px;
-    margin-top: 5px;
 
-    #breadcrumb-element {
-      font-weight: 400;
-      font-size: 1.2em;
-      line-height: 45px;
-      background-image: url('./../../../assets/images/projects/cube-breadcrumb.png');
-      background-position: 0px center;
-      background-repeat: no-repeat;
-      background-size: 25px;
-      padding-left: 32px;
-    }
+    hyt-button {
+      &#add-project-btn-top {
+        margin-top: 2px;
+        
+        button.mat-raised-button {
+          background-color: #0d416d;
+          color: #fff;
+          font-family: "Exo";
+          font-size: .9em;
+          font-weight: 200;
+          text-transform: uppercase;
 
-    #container-add-btn {
-      text-align: right;
-
-      hyt-button {
-
-        &#add-project-btn-top {
-          margin-top: 2px;
-          
-          button.mat-raised-button {
-            background-color: #0d416d;
-            color: #fff;
-            font-family: "Exo";
-            font-size: .9em;
-            font-weight: 200;
-            text-transform: uppercase;
-
-            &::before {
-              content: '+';
-              padding: 1px 7px 0px 7px;
-              font-size: 17px;
-              border-radius: 50%;
-              border: .5px solid #d1d1d1;
-            }
-
-            &:hover {
-              background-color: #105f99;
-              box-shadow: none;
-            }
-
+          &::before {
+            content: '+';
+            padding: 1px 7px 0px 7px;
+            font-size: 17px;
+            border-radius: 50%;
+            border: .5px solid #d1d1d1;
           }
 
+          &:hover {
+            background-color: #105f99;
+            box-shadow: none;
+          }
         }
 
       }
 
     }
-
+  }
+  .breadcrumb {
+    font-weight: 400;
+    font-size: 1.2em;
+    line-height: 48px;
+    vertical-align: middle;
+    background-image: url('./../../../assets/images/projects/cube-breadcrumb.png');
+    background-position: 0px center;
+    background-repeat: no-repeat;
+    background-size: 25px;
+    padding-left: 32px;
   }
 
-  #container-projects {
-    
-    &.container {
-      margin-top: 80px;
-    }
 
-    &.container-fluid {
-      margin-top: 50px;
-    }
+
+  #container-projects {
 
     .no-projects {
 
@@ -148,17 +132,61 @@
       #row-container-title {
         margin-bottom: 40px;
 
-        h2 {
-          &#title-projects {
-            font-size: 2.2em;
-            color: #0d416d;
-          }
+        #projects-title-box {
 
-          span {
-            &#total-projects {
-              font-size: .6em;
+          h2 {
+            &#title-projects {
+              font-size: 2.2em;
+              color: #0d416d;
+            }
+  
+            span {
+              &#total-projects {
+                font-size: .6em;
+              }
             }
           }
+
+        }
+
+        #projects-topfilters-box {
+
+          hyt-input-text {
+
+            &#hyt-search-bottom {
+              
+              mat-form-field {
+                width: 350px;
+              }
+            }
+
+          }
+
+          .sort-right {
+            text-align: right;
+
+            span {
+
+              &#sort-text{
+                padding-right: 15px;
+              }
+              
+            }
+
+            hyt-select {
+              
+              label {
+
+                &.mat-form-field-label{
+                  top: .9em;
+                }
+
+              }
+
+            }
+
+          }
+
         }
 
       }
@@ -176,11 +204,3 @@
   }
 
 }
-
-/*****************************************************
-******************************************************
-
-RESPONSIVE
-
-******************************************************
-*****************************************************/

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 
 import { HProject, HDevice, HdevicesService, RulesService, Rule } from '@hyperiot/core';
@@ -7,20 +7,9 @@ import { HProject, HDevice, HdevicesService, RulesService, Rule } from '@hyperio
   selector: 'hyt-project-card',
   templateUrl: './project-card.component.html',
   styleUrls: ['./project-card.component.scss'],
-  animations: [
-    trigger('crossFade', [
-        state('in', style({opacity: 1})),
-        transition(':enter', [
-          style({opacity: 0}),
-          animate('200ms 10ms')
-        ]),
-        transition(':leave', [
-          animate('200ms 10ms', style({opacity: 0}))
-        ])
-      ]
-    )
-]
+  encapsulation: ViewEncapsulation.None
 })
+
 export class ProjectCardComponent implements OnInit {
   @Input() project: HProject;
   isActive = false;
@@ -50,7 +39,7 @@ export class ProjectCardComponent implements OnInit {
     if (this.activeTimeout) {
       clearTimeout(this.activeTimeout);
     }
-    this.activeTimeout = setTimeout(() => this.isActive = active, 10);
+    this.activeTimeout = setTimeout(() => this.isActive = active, 50);
   }
 
 }

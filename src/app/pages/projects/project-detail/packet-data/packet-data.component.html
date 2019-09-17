@@ -1,8 +1,120 @@
 <h2>Packet</h2>
 
-<h3>{{packet.name}}</h3>
-
 <form [formGroup]="form">
-</form>
 
-<code>// TODO: ...</code>
+    <div class="d-flex flex-column flex-md-row flex-wrap">
+        <div class="pr-md-3 flex-fill">
+
+            <hyt-input-text name="name" placeholder="Name"
+                [form]="form"
+                formControlName="name"
+                errorPosition="bottom"
+                minlength="3"
+                isRequired="true">
+            </hyt-input-text>
+
+        </div>
+        <div class="pl-md-3 flex-fill">
+
+            <div>
+                <hyt-select [form]="form" label="Traffic plan"
+                    name="trafficPlan" formControlName="trafficPlan"
+                    isRequired="true" [options]="trafficPlanOptions"></hyt-select>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="d-flex flex-column flex-md-row flex-wrap">
+        <div class="pr-md-3 flex-fill">
+
+            <label>Type</label>
+            <div class="radio-options pl-2 pr-2">
+                <hyt-radio-button [form]="form" name="type" formControlName="type" [options]="typeOptions">
+                </hyt-radio-button>
+            </div>        
+        
+        </div>
+        <div class="pl-md-3 flex-fill">
+
+            <label>Format</label>
+            <div class="radio-options pl-2 pr-2">
+                <hyt-radio-button [form]="form" name="format" formControlName="format" [options]="formatOptions">
+                </hyt-radio-button>
+            </div>        
+
+        </div>
+    </div>
+
+    <div class="d-flex flex-column flex-md-row flex-wrap">
+        <div class="pr-md-3 flex-fill">
+
+            <label>Serialization</label>
+            <div class="radio-options pl-2 pr-2">
+                <hyt-radio-button [form]="form" name="serialization" formControlName="serialization" [options]="serializationOptions">
+                </hyt-radio-button>
+            </div>        
+
+        </div>
+        <div class="pl-md-3 flex-fill">
+            
+        </div>
+    </div>
+
+    <div class="d-flex flex-column flex-md-row flex-wrap">
+        <div class="pr-md-3 flex-fill">
+
+        </div>
+        <div class="pl-md-3 flex-fill">
+
+        </div>
+    </div>
+
+    <div class="d-flex flex-column flex-md-row flex-wrap">
+        <div class="pr-md-3 flex-fill">
+
+        </div>
+        <div class="pl-md-3 flex-fill">
+
+        </div>
+    </div>
+
+    <div class="mt-4 d-flex flex-column flex-md-row flex-wrap">
+
+        <div class="pr-md-3 flex-fill">
+
+            <hyt-input-text placeholder="Timestamp field"
+                [form]="form"
+                name="timestampField" formControlName="timestampField"
+                errorPosition="bottom"
+                minlength="1"
+                isRequired="true">
+            </hyt-input-text>
+
+        </div>
+        <div class="pl-md-3 flex-fill">
+
+            <hyt-input-text placeholder="Timestamp format"
+                [form]="form"
+                name="timestampFormat" formControlName="timestampFormat"
+                errorPosition="bottom"
+                minlength="3"
+                isRequired="true">
+            </hyt-input-text>
+
+        </div>
+
+    </div>
+
+    <div class="mt-4 d-flex flex-row justify-content-around">
+        <hyt-button (clickFn)="onSaveClick()" [isDisabled]="!form.valid || !isDirty()">
+            <mat-icon class="md-primary">save</mat-icon>
+            <span>Save</span>
+        </hyt-button>
+        <hyt-button (clickFn)="onDeleteClick()">
+            <mat-icon>delete</mat-icon>
+            <span>Delete</span>
+        </hyt-button>
+    </div>
+
+</form>

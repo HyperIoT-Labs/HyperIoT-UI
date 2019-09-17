@@ -12,20 +12,39 @@
                 minlength="3"
                 isRequired="true">
             </hyt-input-text>
-            <hyt-input-text name="model" placeholder="Model"
-                [form]="form"
-                formControlName="model"></hyt-input-text>
-            <hyt-input-text name="firmware" placeholder="Firmware version"
-                [form]="form"
-                formControlName="firmware"></hyt-input-text>
         </div>
         <div class="pl-md-3 flex-fill">
             <hyt-input-text name="brand" placeholder="Brand"
                 [form]="form"
                 formControlName="brand"></hyt-input-text>
+        </div>
+
+    </div>
+
+
+    <div class="d-flex flex-column flex-md-row flex-wrap">
+
+        <div class="pr-md-3 flex-fill">
+            <hyt-input-text name="model" placeholder="Model"
+                [form]="form"
+                formControlName="model"></hyt-input-text>
+        </div>
+        <div class="pl-md-3 flex-fill">
             <hyt-input-text name="software" placeholder="Software version"
                 [form]="form"
                 formControlName="software"></hyt-input-text>
+        </div>
+
+    </div>
+
+    <div class="d-flex flex-column flex-md-row flex-wrap">
+
+        <div class="pr-md-3 flex-fill">
+            <hyt-input-text name="firmware" placeholder="Firmware version"
+                [form]="form"
+                formControlName="firmware"></hyt-input-text>
+        </div>
+        <div class="pl-md-3 flex-fill">
             <hyt-text-area name="description" placeholder="Description"
                 [form]="form"
                 formControlName="description"></hyt-text-area>

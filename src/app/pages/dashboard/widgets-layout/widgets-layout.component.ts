@@ -33,6 +33,7 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
   private originalDashboard: Array<GridsterItem>;
 
   private responsiveBreakPoints = [
+    { breakPoint: 1200, columns: 8},
     { breakPoint: 1024, columns: 6},
     { breakPoint: 880, columns: 5},
     { breakPoint: 720, columns: 4},
