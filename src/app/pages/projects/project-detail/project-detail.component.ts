@@ -10,7 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./project-detail.component.scss']
 })
 export class ProjectDetailComponent implements OnInit {
-  @ViewChild('treeView', {static: true}) treeView: HytTreeViewProjectComponent;
+  @ViewChild('treeView', { static: true }) treeView: HytTreeViewProjectComponent;
 
   treeData: TreeDataNode[] = [];
   private projectId: 0;
@@ -29,7 +29,7 @@ export class ProjectDetailComponent implements OnInit {
   }
 
   onActivate(childComponent) {
-    if (childComponent.treeHost === null)  {
+    if (childComponent.treeHost === null) {
       childComponent.treeHost = this;
     }
   }
@@ -42,30 +42,30 @@ export class ProjectDetailComponent implements OnInit {
           return;
         }
         const projectNode: TreeDataNode = {
-          data: {id: p.id},
+          data: { id: p.id },
           name: p.name,
           icon: 'work',
           children: []
         };
         this.treeData.push(projectNode);
         this.packetService.findAllHPacket().subscribe((packetList: HPacket[]) => {
-          this.hDeviceService.findAllHDevice().subscribe((deviceList: HDevice[]) => {
+          this.hDeviceService.findAllHDevice_1().subscribe((deviceList: HDevice[]) => {
             deviceList.forEach((d) => {
               if (d.project && d.project.id === p.id) {
                 projectNode.children.push({
-                  data: {id: d.id, type: 'device'},
+                  data: { id: d.id, type: 'device' },
                   name: d.deviceName,
                   icon: 'devices_other',
                   children: packetList
                     .filter((k) => k.device && k.device.id === d.id)
                     .map((k) => {
                       return {
-                        data: {id: k.id, type: 'packet'},
+                        data: { id: k.id, type: 'packet' },
                         name: k.name,
                         icon: 'settings_ethernet'
                       };
                     }
-                  ) as TreeDataNode[]
+                    ) as TreeDataNode[]
                 });
               }
             });
@@ -82,12 +82,12 @@ export class ProjectDetailComponent implements OnInit {
   onNodeClick(node) {
     if (node.data && node.data.type) {
       this.router.navigate(
-        [ { outlets: {projectDetails: [node.data.type, node.data.id]} } ],
+        [{ outlets: { projectDetails: [node.data.type, node.data.id] } }],
         { relativeTo: this.activatedRoute }
       );
     } else {
       this.router.navigate(
-        [ './', { outlets: {projectDetails: null} } ],
+        ['./', { outlets: { projectDetails: null } }],
         { relativeTo: this.activatedRoute }
       );
     }

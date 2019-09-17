@@ -23,15 +23,15 @@ export class ProjectCardComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.hDeviceService.findAllHDevice().subscribe((deviceList: HDevice[]) => {
+    this.hDeviceService.findAllHDevice_1().subscribe((deviceList: HDevice[]) => {
       deviceList.forEach((d: HDevice) => {
         d.project && d.project.id === this.project.id && this.deviceCount++;
       });
     });
     this.ruleService.findAllRule().subscribe((ruleList: Rule[]) => {
-        ruleList.forEach((r: Rule) => {
-          r.project && r.project.id === this.project.id && this.rulesCount++;
-        });
+      ruleList.forEach((r: Rule) => {
+        r.project && r.project.id === this.project.id && this.rulesCount++;
+      });
     });
   }
 
