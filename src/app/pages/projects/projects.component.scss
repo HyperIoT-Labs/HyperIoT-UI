@@ -148,17 +148,61 @@
       #row-container-title {
         margin-bottom: 40px;
 
-        h2 {
-          &#title-projects {
-            font-size: 2.2em;
-            color: #0d416d;
-          }
+        #projects-title-box {
 
-          span {
-            &#total-projects {
-              font-size: .6em;
+          h2 {
+            &#title-projects {
+              font-size: 2.2em;
+              color: #0d416d;
+            }
+  
+            span {
+              &#total-projects {
+                font-size: .6em;
+              }
             }
           }
+
+        }
+
+        #projects-topfilters-box {
+
+          hyt-input-text {
+
+            &#hyt-search-bottom {
+              
+              mat-form-field {
+                width: 350px;
+              }
+            }
+
+          }
+
+          .sort-right {
+            text-align: right;
+
+            span {
+
+              &#sort-text{
+                padding-right: 15px;
+              }
+              
+            }
+
+            hyt-select {
+              
+              label {
+
+                &.mat-form-field-label{
+                  top: .9em;
+                }
+
+              }
+
+            }
+
+          }
+
         }
 
       }

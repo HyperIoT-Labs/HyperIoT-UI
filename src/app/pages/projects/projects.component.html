@@ -51,17 +51,40 @@
       
         <div id="row-container-title" class="row">
 
-          <div class="col-12">
-              <h2 id="title-projects">Projects List <span id="total-projects">({{hProjects.length}})</span></h2>
+          <div id="projects-title-box" class="col-6">
+            <h2 id="title-projects">Projects List <span id="total-projects">({{hProjects.length}})</span></h2>
           </div>
-          
+
+          <div id="projects-topfilters-box" class="col-12">
+            <form #f="ngForm" [formGroup]="filteringForm" (ngSubmit)="filter()">
+              <div class="row">
+                <div class="col-6">
+                  <hyt-input-text id="hyt-search-bottom" [form]="filteringForm" formControlName="textFilter" name="textFilter" placeholder="Search" (keyup)="onChangeInputSearch($event)"></hyt-input-text>
+                </div>
+                <div class="col-6 sort-right">
+                  <span id="sort-text">Sort by: </span><hyt-select [form]="filteringForm" [label]="'Select a sort type'" formControlName="sort" name="sort" (changeFn)="onChangeSelectSort($event)" [options]="sortOptions"></hyt-select>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <div class="col-12">
+
+            <span>Show {{hProjectsFiltered.length}} projects of {{hProjects.length}}</span>
+
+          </div>
+
         </div> <!-- End Row Title -->
 
         <div id="row-cotainer-cards" class="row">
 
+          <div *ngIf="noProjectsMatches" class="col-12">
+            <span>No project found that matches the search...</span>
+          </div>
+
           <div 
             class="col-sm-6 col-md-4 col-lg-3 col-xl-2 single-card-container d-flex flex-row justify-content-center" 
-            *ngFor="let p of hProjects"
+            *ngFor="let p of hProjectsFiltered"
           >
 
             <hyt-project-card 
@@ -82,7 +105,7 @@
       <div class="no-projects row">
 
         <div id="content-no-projects" class="col-md-12">
-          <h3 id="title-no-project">There are no projects !!</h3>
+          <h3 id="title-no-project">There are no projects!!!</h3>
           <h4 id="subtitle-no-project">To add a project click the button below.</h4>
         </div>
 
@@ -109,7 +132,7 @@
         <div class="col-12">
 
           <h2 id="title-error-status">
-             An error has occurred, contact the administrator!!
+            An error has occurred, contact the administrator!!
           </h2>
 
         </div>
