@@ -1,58 +1,40 @@
 <div id="projects-page">
 
-  <div id="container-breadcrumb" class="container-fluid">
-    <div class=row>
-
-      <div id="breadcrumb-element" class="col-10">
+  <div class="header d-flex flex-row justify-content-stretch">
+      <div class="breadcrumb flex-grow-1">
         Projects >
       </div>
-
-      <div id="container-add-btn" class="col-2">
-
+      <!-- button on the right side -->
+      <div class="align-self-right">
         <hyt-button *ngIf="pageStatus === 1" id="add-project-btn-top" (click)="addProject()" type="button">
           Add New Project
         </hyt-button>
-
       </div>
+  </div>
 
-    </div>
-  </div> <!-- End Container Breadcrumb -->
+  <div id="container-projects" [ngSwitch]="pageStatus">
 
-  <div id="container-projects"
-    [ngClass]="{'container-fluid': pageStatus == 1, 'container': pageStatus == 2 || pageStatus == -1 || pageStatus == 0}"
-    [ngSwitch]="pageStatus">
-
-    <div id="loadingStatus" *ngSwitchCase="PageStatus.Loading">
-
-      <div class="row">
-
-        <div class="col-12">
-
-          <h2 id="title-loading-status">
-            The page is loading...
-          </h2>
-
-        </div>
-
+    <div *ngSwitchCase="PageStatus.Loading">
+      <div class="mt-5 d-flex flex-column align-items-center justify-content-center">
+          <h2>Page is loading...</h2>
       </div>
-
     </div>
 
-    <div id="standardStatus" *ngSwitchCase="PageStatus.Standard">
+    <div *ngSwitchCase="PageStatus.Standard" class="mt-4 mt-sm-5">
       <!-- Standard -->
 
-      <h2 id="title-projects">Projects List <span id="total-projects">({{hProjects.length}})</span></h2>
+      <h2>Projects List <span>({{hProjects.length}})</span></h2>
 
       <div class="d-flex flex-row justify-content-left flex-wrap">
-
-        <hyt-project-card *ngFor="let p of hProjects" class="m-2" [project]="p">
-        </hyt-project-card>
-
+        <hyt-project-card *ngFor="let p of hProjects"
+          class="m-2"
+          [project]="p"></hyt-project-card>
       </div>
 
     </div>
 
-    <div id="newStatus" *ngSwitchCase="PageStatus.New">
+    <!-- TODO: is this block ever displayed? -->
+    <div *ngSwitchCase="PageStatus.New">
       <!-- New -->
 
       <div class="no-projects row">
@@ -74,20 +56,10 @@
 
     </div>
 
-    <div id="errorStatus" *ngSwitchCase="PageStatus.Error">
-
-      <div class="row">
-
-        <div class="col-12">
-
-          <h2 id="title-error-status">
-            An error has occurred, contact the administrator!!
-          </h2>
-
-        </div>
-
+    <div id="errorStatus" *ngSwitchCase="PageStatus.Standard">
+      <div class="mt-5 d-flex flex-column align-items-center justify-content-center">
+          <h2>An error has occurred, contact the administrator!!</h2>
       </div>
-
     </div>
 
     <div *ngSwitchDefault>
