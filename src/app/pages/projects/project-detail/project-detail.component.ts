@@ -55,6 +55,7 @@ export class ProjectDetailComponent implements OnInit {
           children: []
         };
         this.treeData.push(projectNode);
+        this.treeView.setData(this.treeData);
         this.treeStatus = TreeStatusEnum.Loading;
         this.hDeviceService.findAllHDevice(p.id).subscribe((deviceList: HDevice[]) => {
           this.treeStatus = TreeStatusEnum.Ready;

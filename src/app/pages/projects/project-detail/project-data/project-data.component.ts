@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { FormGroup, FormBuilder } from '@angular/forms';
 
-import { Observable, Observer } from 'rxjs';
+import { Observable, Observer, Subscription } from 'rxjs';
 
 import { MatDialog } from '@angular/material/dialog';
 
@@ -15,6 +15,7 @@ import { ProjectDetailComponent } from '../project-detail.component';
 enum LoadingStatusEnum {
   Ready,
   Loading,
+  Saving,
   Error
 }
 
@@ -23,7 +24,7 @@ enum LoadingStatusEnum {
   templateUrl: './project-data.component.html',
   styleUrls: ['./project-data.component.scss']
 })
-export class ProjectDataComponent {
+export class ProjectDataComponent implements OnDestroy {
   projectId: number;
   project: HProject = {} as HProject;
 
@@ -35,6 +36,8 @@ export class ProjectDataComponent {
 
   treeHost: ProjectDetailComponent = null;
 
+  private routerSubscription: Subscription;
+
   constructor(
     private hProjectService: HprojectsService,
     private activatedRoute: ActivatedRoute,
@@ -43,12 +46,16 @@ export class ProjectDataComponent {
     private dialog: MatDialog
   ) {
     this.form = this.formBuilder.group({});
-    this.router.events.subscribe((rl) => {
+    this.routerSubscription = this.router.events.subscribe((rl) => {
       if (rl instanceof NavigationEnd) {
         this.projectId = this.activatedRoute.snapshot.params.projectId;
         this.loadProject();
       }
     });
+  }
+
+  ngOnDestroy() {
+    this.routerSubscription.unsubscribe();
   }
 
   canDeactivate(): Observable<any> | boolean {
@@ -87,6 +94,7 @@ export class ProjectDataComponent {
   }
 
   private saveProject(successCallback?, errorCallback?) {
+    this.loadingStatus = LoadingStatusEnum.Saving;
     let p = this.project;
     p.name = this.form.get('name').value;
     p.description = this.form.get('description').value;
@@ -97,22 +105,27 @@ export class ProjectDataComponent {
       this.originalValue = JSON.stringify(this.form.value);
       this.treeHost && this.treeHost.updateNode({id: p.id, name: p.name});
       successCallback && successCallback(res);
+      this.loadingStatus = LoadingStatusEnum.Ready;
     }, (err) => {
       // TODO: show 'error' message on screen
       console.log('ERROR', err);
       errorCallback && errorCallback(err);
+      this.loadingStatus = LoadingStatusEnum.Error;
     });
   }
   private deleteProject(successCallback?, errorCallback?) {
+    this.loadingStatus = LoadingStatusEnum.Saving;
     this.hProjectService.deleteHProject(this.project.id).subscribe((res) => {
       // TODO: show 'ok' message on screen
       console.log('SUCCESS', res);
       successCallback && successCallback(res);
       this.router.navigate(['/projects']);
+      this.loadingStatus = LoadingStatusEnum.Ready;
     }, (err) => {
       // TODO: show 'error' message on screen
       console.log('ERROR', err);
       errorCallback && errorCallback(err);
+      this.loadingStatus = LoadingStatusEnum.Error;
     });
   }
 

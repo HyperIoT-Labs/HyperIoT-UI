@@ -111,7 +111,8 @@
 
     <div *ngIf="loadingStatus !== LoadingStatus.Ready" class="overlay d-flex flex-column align-items-center justify-content-center">
         <h4 *ngIf="loadingStatus === LoadingStatus.Loading">Loading packet data...</h4>
-        <h4 *ngIf="loadingStatus === LoadingStatus.Error">Error loading packet data.</h4>
+        <h4 *ngIf="loadingStatus === LoadingStatus.Error">An error has occurred =/</h4>
+        <h4 *ngIf="loadingStatus === LoadingStatus.Saving">Saving packet data...</h4>
     </div>
 
 </div>
