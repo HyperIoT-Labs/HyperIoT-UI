@@ -19,3 +19,11 @@ label {
     border: lightgray solid 1px;
     border-radius: 4px;
 }
+.container {
+    position: relative;
+}
+.overlay {
+    position: absolute;
+    background-color: rgba(255,255,255,.65);
+    left: 0; top: 0; right: 0; bottom: 0;
+}

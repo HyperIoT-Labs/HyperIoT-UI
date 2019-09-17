@@ -12,6 +12,11 @@ import { SaveChangesDialogComponent } from 'src/app/components/dialogs/save-chan
 import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
 import { ProjectDetailComponent } from '../project-detail.component';
 
+enum LoadingStatusEnum {
+  Ready,
+  Loading,
+  Error
+}
 @Component({
   selector: 'hyt-device-data',
   templateUrl: './device-data.component.html',
@@ -23,6 +28,9 @@ export class DeviceDataComponent implements OnInit {
 
   form: FormGroup;
   originalValue: string;
+
+  LoadingStatus = LoadingStatusEnum;
+  loadingStatus = LoadingStatusEnum.Ready;
 
   treeHost: ProjectDetailComponent = null;
 
@@ -65,6 +73,7 @@ export class DeviceDataComponent implements OnInit {
   }
 
   private loadDevice() {
+    this.loadingStatus = LoadingStatusEnum.Loading;
     this.hDeviceService.findHDevice(this.deviceId).subscribe((d: HDevice) => {
       this.device = d;
       // update form data
@@ -82,6 +91,9 @@ export class DeviceDataComponent implements OnInit {
         .setValue(d.description);
       this.originalValue = JSON.stringify(this.form.value);
       this.treeHost.focus({id: d.id, type: 'device'});
+      this.loadingStatus = LoadingStatusEnum.Ready;
+    }, (err) => {
+      this.loadingStatus = LoadingStatusEnum.Error;
     });
   }
 

@@ -13,6 +13,11 @@ import { SaveChangesDialogComponent } from 'src/app/components/dialogs/save-chan
 import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
 import { ProjectDetailComponent } from '../project-detail.component';
 
+enum LoadingStatusEnum {
+  Ready,
+  Loading,
+  Error
+}
 @Component({
   selector: 'hyt-packet-data',
   templateUrl: './packet-data.component.html',
@@ -25,6 +30,9 @@ export class PacketDataComponent {
 
   form: FormGroup;
   originalValue: string;
+
+  LoadingStatus = LoadingStatusEnum;
+  loadingStatus = LoadingStatusEnum.Ready;
 
   treeHost: ProjectDetailComponent = null;
 
@@ -83,6 +91,7 @@ export class PacketDataComponent {
   }
 
   private loadPacket() {
+    this.loadingStatus = LoadingStatusEnum.Loading;
     this.hPacketService.findHPacket(this.packetId).subscribe((p: HPacket) => {
       this.packet = p;
       // update form data
@@ -102,6 +111,9 @@ export class PacketDataComponent {
         .setValue(p.trafficPlan);
       this.originalValue = JSON.stringify(this.form.value, this.circularFix);
       this.treeHost && this.treeHost.focus({id: p.id, type: 'packet'});
+      this.loadingStatus = LoadingStatusEnum.Ready;
+    }, (err) => {
+      this.loadingStatus = LoadingStatusEnum.Error;
     });
   }
   private savePacket(successCallback?, errorCallback?) {

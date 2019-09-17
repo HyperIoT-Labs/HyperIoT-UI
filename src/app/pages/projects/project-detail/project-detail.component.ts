@@ -4,6 +4,12 @@ import { HprojectsService, HProject, HdevicesService, HDevice, HpacketsService, 
 import { HytTreeViewProjectComponent } from '@hyperiot/components/lib/hyt-tree-view-project/hyt-tree-view-project.component';
 import { ActivatedRoute, Router } from '@angular/router';
 
+enum TreeStatusEnum {
+  Ready,
+  Loading,
+  Error
+}
+
 @Component({
   selector: 'hyt-project-detail',
   templateUrl: './project-detail.component.html',
@@ -12,7 +18,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class ProjectDetailComponent implements OnInit {
   @ViewChild('treeView', {static: true}) treeView: HytTreeViewProjectComponent;
 
+  TreeStatus = TreeStatusEnum;
+  treeStatus = TreeStatusEnum.Ready;
+
   treeData: TreeDataNode[] = [];
+  private focusTimeout: any = null;
   private projectId: 0;
 
   constructor(
@@ -35,12 +45,9 @@ export class ProjectDetailComponent implements OnInit {
   }
 
   refresh() {
+    this.treeStatus = TreeStatusEnum.Loading;
     this.treeData = [];
-    this.hProjectService.findAllHProject().subscribe((list: HProject[]) => {
-      list.forEach((p) => {
-        if (p.id !== +this.projectId) {
-          return;
-        }
+    this.hProjectService.findHProject(+this.projectId).subscribe((p: HProject) => {
         const projectNode: TreeDataNode = {
           data: {id: p.id},
           name: p.name,
@@ -48,10 +55,13 @@ export class ProjectDetailComponent implements OnInit {
           children: []
         };
         this.treeData.push(projectNode);
-        this.packetService.findAllHPacket().subscribe((packetList: HPacket[]) => {
-          this.hDeviceService.findAllHDevice().subscribe((deviceList: HDevice[]) => {
-            deviceList.forEach((d) => {
-              if (d.project && d.project.id === p.id) {
+        this.treeStatus = TreeStatusEnum.Loading;
+        this.hDeviceService.findAllHDevice().subscribe((deviceList: HDevice[]) => {
+          this.treeStatus = TreeStatusEnum.Ready;
+          deviceList.forEach((d) => {
+            if (d.project && d.project.id === p.id) {
+              this.treeStatus = TreeStatusEnum.Loading;
+              this.packetService.getHDevicePacketList(d.id).subscribe((packetList: HPacket[]) => {
                 projectNode.children.push({
                   data: {id: d.id, type: 'device'},
                   name: d.deviceName,
@@ -67,15 +77,21 @@ export class ProjectDetailComponent implements OnInit {
                     }
                   ) as TreeDataNode[]
                 });
-              }
-            });
-            this.treeView.setData(this.treeData);
-            if (this.treeView.treeControl.dataNodes.length > 0) {
-              this.treeView.treeControl.expand(this.treeView.treeControl.dataNodes[0]);
+                this.treeView.setData(this.treeData);
+                if (this.treeView.treeControl.dataNodes.length > 0) {
+                  this.treeView.treeControl.expand(this.treeView.treeControl.dataNodes[0]);
+                }
+                this.treeStatus = TreeStatusEnum.Ready;
+              }, (err) => {
+                this.treeStatus = TreeStatusEnum.Error;
+              });
             }
           });
+        }, (err) => {
+          this.treeStatus = TreeStatusEnum.Error;
         });
-      });
+    }, (err) => {
+      this.treeStatus = TreeStatusEnum.Error;
     });
   }
 
@@ -100,19 +116,24 @@ export class ProjectDetailComponent implements OnInit {
   }
 
   focus(data) {
-    // TODO: remove the timeout and use a status variable for deteting if the tree has been already loaded
-    setTimeout(() => {
-      // refresh treeview node data
-      const tc = this.treeView.treeControl;
-      const node = this.find(data);
-      //tc.expand(node);
-      let n = node.parent;
-      while (n) {
-        const np = this.find(n.data);
-        tc.expand(np);
-        n = np.parent;
+    if (this.treeStatus === TreeStatusEnum.Loading) {
+      if (this.focusTimeout !== null) {
+        clearTimeout(this.focusTimeout);
       }
-    }, 500);
+      this.focusTimeout = setTimeout( () => {
+        this.focus(data);
+      }, 100);
+      return;
+    }
+    // refresh treeview node data
+    const tc = this.treeView.treeControl;
+    const node = this.find(data);
+    let n = node.parent;
+    while (n) {
+      const np = this.find(n.data);
+      tc.expand(np);
+      n = np.parent;
+    }
   }
 
   updateNode(data) {
