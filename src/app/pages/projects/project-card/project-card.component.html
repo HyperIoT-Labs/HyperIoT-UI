@@ -24,13 +24,13 @@
                 <div class="single-element">
                     <mat-icon>devices_other</mat-icon>
                     <strong class="single-element px-2">{{ deviceCount }}</strong>
-                    <span>Devices</span>
+                    <span i18n="@@projectCard-string-device">HYT_string_device</span>
                 </div> <!-- End Single Element -->
 
                 <div class="single-element">
                     <mat-icon>code</mat-icon>
                     <strong class="count-element px-2">{{ rulesCount }}</strong>
-                    <span>Rules</span>
+                    <span i18n="@@projectCard-string-rule">HYT_string_rule</span>
                 </div> <!-- End Single Element -->
                 
 
@@ -42,11 +42,11 @@
 
             <hyt-button
                 class="view-project-btn" 
-                type="button"
-            >
-            View Project
+                routerLink="{{project.id}}"
+                i18n="@@projectCard-button-view">
+                HYT_button_view
             </hyt-button>
-
+            
         </div> <!-- End Card Front Footer -->
 
     </div>
