@@ -3,8 +3,8 @@
 <form [formGroup]="form">
 
     <div class="d-flex flex-column flex-md-row flex-wrap">
-
         <div class="pr-md-3 flex-fill">
+
             <hyt-input-text name="name" placeholder="Name"
                 [form]="form"
                 formControlName="name"
@@ -13,11 +13,41 @@
                 isRequired="true">
             </hyt-input-text>
 
+        </div>
+        <div class="pl-md-3 flex-fill">
+
+            <div>
+                <hyt-select [form]="form" label="Traffic plan"
+                    name="trafficPlan" formControlName="trafficPlan"
+                    isRequired="true" [options]="trafficPlanOptions"></hyt-select>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="d-flex flex-column flex-md-row flex-wrap">
+        <div class="pr-md-3 flex-fill">
+
             <label>Type</label>
             <div class="radio-options pl-2 pr-2">
                 <hyt-radio-button [form]="form" name="type" formControlName="type" [options]="typeOptions">
                 </hyt-radio-button>
             </div>        
+        
+        </div>
+        <div class="pl-md-3 flex-fill">
+
+            <label>Format</label>
+            <div class="radio-options pl-2 pr-2">
+                <hyt-radio-button [form]="form" name="format" formControlName="format" [options]="formatOptions">
+                </hyt-radio-button>
+            </div>        
+
+        </div>
+    </div>
+
+    <div class="d-flex flex-column flex-md-row flex-wrap">
+        <div class="pr-md-3 flex-fill">
 
             <label>Serialization</label>
             <div class="radio-options pl-2 pr-2">
@@ -27,32 +57,31 @@
 
         </div>
         <div class="pl-md-3 flex-fill">
-            <!--
-            <hyt-input-template name="device" placeholder="Device"
-                [form]="form"
-                disabled [isDisabled]="true"
-                fieldValue="{{deviceName || '---'}}">
-            </hyt-input-template>
-            -->
-            <div>
-                <hyt-select [form]="form" label="Traffic plan"
-                    name="trafficPlan" formControlName="trafficPlan"
-                    isRequired="true" [options]="trafficPlanOptions"></hyt-select>
-            </div>
+            
+        </div>
+    </div>
 
-            <label>Format</label>
-            <div class="radio-options pl-2 pr-2">
-                <hyt-radio-button [form]="form" name="format" formControlName="format" [options]="formatOptions">
-                </hyt-radio-button>
-            </div>        
+    <div class="d-flex flex-column flex-md-row flex-wrap">
+        <div class="pr-md-3 flex-fill">
 
         </div>
+        <div class="pl-md-3 flex-fill">
 
+        </div>
+    </div>
+
+    <div class="d-flex flex-column flex-md-row flex-wrap">
+        <div class="pr-md-3 flex-fill">
+
+        </div>
+        <div class="pl-md-3 flex-fill">
+
+        </div>
     </div>
 
     <div class="mt-4 d-flex flex-column flex-md-row flex-wrap">
 
-        <div class="m-1 pr-md-3 flex-fill">
+        <div class="pr-md-3 flex-fill">
 
             <hyt-input-text placeholder="Timestamp field"
                 [form]="form"
@@ -63,7 +92,7 @@
             </hyt-input-text>
 
         </div>
-        <div class="m-1 pl-md-3 flex-fill">
+        <div class="pl-md-3 flex-fill">
 
             <hyt-input-text placeholder="Timestamp format"
                 [form]="form"

@@ -1,3 +1,15 @@
+.flex-fill {
+    min-width: 50%;
+}
+
+:host ::ng-deep .mat-radio-label-content {
+    font-size: 12px;
+    font-weight: 400;
+    padding-left: 4px;
+}
+:host ::ng-deep .mat-radio-checked .mat-radio-label-content {
+    font-weight: 600;
+}
 label {
     font-size: 12px;
     color: grey;

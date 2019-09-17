@@ -52,17 +52,12 @@
 
         </div> <!-- End Row Title -->
 
-        <div id="row-cotainer-cards" class="row">
+        <div class="d-flex flex-row justify-content-around flex-wrap">
 
-          <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2 single-card-container d-flex flex-row justify-content-center"
-            *ngFor="let p of hProjects">
+          <hyt-project-card *ngFor="let p of hProjects" class="m-2" [project]="p">
+          </hyt-project-card>
 
-            <hyt-project-card [project]="p">
-            </hyt-project-card>
-
-          </div>
-
-        </div> <!-- End Row Cards -->
+        </div>
 
       </div>
 
