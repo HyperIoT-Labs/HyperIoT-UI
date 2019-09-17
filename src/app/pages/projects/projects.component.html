@@ -1,83 +1,41 @@
 <div id="projects-page">
 
-  <div id="container-breadcrumb" class="container-fluid">
-    <div class=row>
-
-      <div id="breadcrumb-element" class="col-10">
+  <div class="header d-flex flex-row justify-content-stretch">
+      <div class="breadcrumb flex-grow-1">
         Projects >
       </div>
-
-      <div id="container-add-btn" class="col-2">
-        
-        <hyt-button *ngIf="pageStatus === 1" 
-          id="add-project-btn-top" 
-          (click)="addProject()"
-          type="button"
-        >
+      <!-- button on the right side -->
+      <div class="align-self-right">
+        <hyt-button *ngIf="pageStatus === 1" id="add-project-btn-top" (click)="addProject()" type="button">
           Add New Project
         </hyt-button>
-
       </div>
+  </div>
 
+  <div id="container-projects" [ngSwitch]="pageStatus">
+
+    <div *ngSwitchCase="PageStatus.Loading">
+      <div class="mt-5 d-flex flex-column align-items-center justify-content-center">
+          <h2>Page is loading...</h2>
+      </div>
     </div>
-  </div> <!-- End Container Breadcrumb -->
 
-  <div 
-    id="container-projects" 
-    [ngClass]="{'container-fluid': pageStatus == 1, 'container': pageStatus == 2 || pageStatus == -1 || pageStatus == 0}" 
-    [ngSwitch]="pageStatus"
-  >
+    <div *ngSwitchCase="PageStatus.Standard" class="mt-4 mt-sm-5">
+      <!-- Standard -->
 
-    <div id="loadingStatus" *ngSwitchCase="PageStatus.Loading">
+      <h2>Projects List <span>({{hProjects.length}})</span></h2>
 
-      <div class="row">
-
-        <div class="col-12">
-
-          <h2 id="title-loading-status">
-              The page is loading...
-          </h2>
-          
-        </div>
-
+      <div class="d-flex flex-row justify-content-left flex-wrap">
+        <hyt-project-card *ngFor="let p of hProjects"
+          class="m-2"
+          [project]="p"></hyt-project-card>
       </div>
 
     </div>
 
-    <div id="standardStatus" class="row" *ngSwitchCase="PageStatus.Standard"> <!-- Standard -->
-
-      <div id="container-box-project" class="col-12">
-        
-      
-        <div id="row-container-title" class="row">
-
-          <div class="col-12">
-              <h2 id="title-projects">Projects List <span id="total-projects">({{hProjects.length}})</span></h2>
-          </div>
-          
-        </div> <!-- End Row Title -->
-
-        <div id="row-cotainer-cards" class="row">
-
-          <div 
-            class="col-sm-6 col-md-4 col-lg-3 col-xl-2 single-card-container d-flex flex-row justify-content-center" 
-            *ngFor="let p of hProjects"
-          >
-
-            <hyt-project-card 
-              [project]="p"
-            >
-            </hyt-project-card>
-
-          </div>
-
-        </div> <!-- End Row Cards -->
-
-      </div>
-
-    </div>
-
-    <div id="newStatus" *ngSwitchCase="PageStatus.New"> <!-- New -->
+    <!-- TODO: is this block ever displayed? -->
+    <div *ngSwitchCase="PageStatus.New">
+      <!-- New -->
 
       <div class="no-projects row">
 
@@ -88,11 +46,7 @@
 
         <div id="btn-no-projects" class="col-md-12">
 
-          <hyt-button 
-            id="add-project-btn" 
-            (click)="addProject()"
-            type="button"
-          >
+          <hyt-button id="add-project-btn" (click)="addProject()" type="button">
             create your first project
           </hyt-button>
 
@@ -100,22 +54,12 @@
 
       </div> <!-- End No Projects Row -->
 
-    </div> 
+    </div>
 
     <div id="errorStatus" *ngSwitchCase="PageStatus.Error">
-      
-      <div class="row">
-
-        <div class="col-12">
-
-          <h2 id="title-error-status">
-             An error has occurred, contact the administrator!!
-          </h2>
-
-        </div>
-
+      <div class="mt-5 d-flex flex-column align-items-center justify-content-center">
+          <h2>An error has occurred, contact the administrator!!</h2>
       </div>
-
     </div>
 
     <div *ngSwitchDefault>

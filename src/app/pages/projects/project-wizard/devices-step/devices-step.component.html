@@ -85,11 +85,15 @@
       DEVICES
       <table>
         <tr>
+          <th><b>X</b></th>
           <th><b>ID</b></th>
           <th><b>NOME</b></th>
           <th><b>PROGETTO</b></th>
         </tr>
         <tr *ngFor="let dev of devicesList">
+          <td (click)="showDeleteModal(dev.id)">
+            X
+          </td>
           <td>{{dev.id}}</td>
           <td>{{dev.deviceName}}</td>
           <td>{{dev.project.id}}</td>
@@ -97,5 +101,16 @@
       </table>
     </div>
   </div>
+
+  <hyt-modal [mOpen]="deleteId!=-1">
+    <div class="alignCenter">
+      Sei sicuro di voler eliminare il device?
+      <hr>
+      <button (click)="deleteDevice()">Sì</button>
+      <button (click)="hideDeleteModal()">No</button>
+      <br>
+      <div *ngIf="deleteError">{{deleteError}}</div>
+    </div>
+  </hyt-modal>
 
 </div>

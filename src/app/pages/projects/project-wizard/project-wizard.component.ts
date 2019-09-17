@@ -1,6 +1,17 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Injectable } from '@angular/core';
 import { HProject, HDevice, HPacket } from '@hyperiot/core';
-import { Router } from '@angular/router';
+import { Router, CanDeactivate } from '@angular/router';
+import { Observable, BehaviorSubject, Subject } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class ProjectWizardCanDeactivate implements CanDeactivate<ProjectWizardComponent>{
+  canDeactivate(com: ProjectWizardComponent) {
+    com.deactivateModal = true;
+    return com.canDeactivate$;
+  }
+}
 
 @Component({
   selector: 'hyt-project-wizard',
@@ -30,7 +41,9 @@ export class ProjectWizardComponent implements OnInit {
     private router: Router
   ) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+
+  }
 
   updateProject(proj: HProject) {
     this.hProject = proj;
@@ -43,20 +56,17 @@ export class ProjectWizardComponent implements OnInit {
 
   updateDevices(dev: HDevice[]) {
     this.hDevices = [...dev];
-    if (this.hDevices.length != 0)
-      this.devicesValidated = true;
+    this.devicesValidated = this.hDevices.length != 0;
   }
 
   updatePackets(pac: HPacket[]) {
     this.hPackets = [...pac];
-    if (this.hPackets.length != 0)
-      this.packetsValidated = true;
+    this.packetsValidated = this.hPackets.length != 0;
   }
 
   updatePacketFields(pac: HPacket[]) {
     this.hPackets = [...pac];
-    if (this.hPackets[0].fields.length != 0)
-      this.fieldsValidated = true;
+    this.fieldsValidated = this.hPackets[0].fields.length != 0;
   }
 
   openOptionModal() {
@@ -90,6 +100,17 @@ export class ProjectWizardComponent implements OnInit {
 
   goToProjectWizard() {
     this.router.navigate(['/projects']);
+  }
+
+  //Deactivation logic
+
+  canDeactivate$: Subject<boolean> = new Subject<boolean>();
+
+  deactivateModal: boolean = false;
+
+  deactivate(cd: boolean): void {
+    this.deactivateModal = false;
+    this.canDeactivate$.next(cd);
   }
 
 }

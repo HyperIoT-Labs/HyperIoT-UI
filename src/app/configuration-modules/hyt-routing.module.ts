@@ -1,5 +1,5 @@
 import { NgModule, Injectable } from '@angular/core';
-import { Routes, RouterModule, CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { Routes, RouterModule, CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot, CanDeactivate } from '@angular/router';
 import { AuthenticationComponent } from '../pages/authentication/authentication.component';
 import { PasswordResetComponent } from '../pages/authentication/password-reset/password-reset.component';
 import { UserActivationComponent } from '../pages/authentication/user-activation/user-activation.component';
@@ -13,13 +13,14 @@ import { LoginComponent } from '../pages/authentication/login/login.component';
 import { RegistrationComponent } from '../pages/authentication/registration/registration.component';
 import { PasswordRecoveryComponent } from '../pages/authentication/password-recovery/password-recovery.component';
 import { DashboardsListComponent } from '../pages/dashboard/dashboards-list/dashboards-list.component';
-import { ProjectWizardComponent } from '../pages/projects/project-wizard/project-wizard.component';
+import { ProjectWizardComponent, ProjectWizardCanDeactivate } from '../pages/projects/project-wizard/project-wizard.component';
 import { ProjectsComponent } from '../pages/projects/projects.component';
 import { ProfileComponent } from '../pages/account/profile/profile.component';
 import { ProjectDetailComponent } from '../pages/projects/project-detail/project-detail.component';
 import { ProjectDataComponent } from '../pages/projects/project-detail/project-data/project-data.component';
 import { DeviceDataComponent } from '../pages/projects/project-detail/device-data/device-data.component';
 import { PacketDataComponent } from '../pages/projects/project-detail/packet-data/packet-data.component';
+import { CanDeactivateGuard } from '../components/CanDeactivateGuard';
 
 @Injectable()
 export class LoggedInGuard implements CanActivate {
@@ -86,6 +87,7 @@ const hyperiotRoutes: Routes = [
     path: 'project-wizard',
     component: ProjectWizardComponent,
     canActivate: [LoggedInGuard],
+    canDeactivate: [ProjectWizardCanDeactivate],
     data: {
       showToolBar: true,
     }
@@ -104,16 +106,19 @@ const hyperiotRoutes: Routes = [
     canActivate: [LoggedInGuard],
     children: [
       {
+        canDeactivate: [CanDeactivateGuard],
         path: '',
         component: ProjectDataComponent,
         outlet: 'projectDetails'
       },
       {
+        canDeactivate: [CanDeactivateGuard],
         path: 'device/:deviceId',
         component: DeviceDataComponent,
         outlet: 'projectDetails'
       },
       {
+        canDeactivate: [CanDeactivateGuard],
         path: 'packet/:packetId',
         component: PacketDataComponent,
         outlet: 'projectDetails'
@@ -168,6 +173,6 @@ const hyperiotRoutes: Routes = [
 @NgModule({
   imports: [RouterModule.forRoot(hyperiotRoutes)],
   exports: [RouterModule],
-  providers: [LoggedInGuard]
+  providers: [LoggedInGuard, CanDeactivateGuard]
 })
 export class HytRoutingModule { }

@@ -20,8 +20,6 @@ export class DevicesStepComponent implements OnInit {
 
   @Output() hDevicesOutput = new EventEmitter<HDevice[]>();
 
-  errors: HYTError[] = [];
-
   constructor(
     private fb: FormBuilder,
     private hDeviceService: HdevicesService,
@@ -82,8 +80,45 @@ export class DevicesStepComponent implements OnInit {
     )
   }
 
+  //error logic
+
+  errors: HYTError[] = [];
+
   getError(field: string): string {
     return (this.errors.find(x => x.container == field)) ? this.errors.find(x => x.container == field).message : null;
+  }
+
+  //delete logic
+
+  deleteId: number = -1;
+
+  deleteError: string = null;
+
+  showDeleteModal(id: number) {
+    this.deleteError = null;
+    this.deleteId = id;
+  }
+
+  hideDeleteModal() {
+    this.deleteId = -1;
+  }
+
+  deleteDevice() {
+    this.deleteError = null;
+    this.hDeviceService.deleteHDevice(this.deleteId).subscribe(
+      res => {
+        for (let i = 0; i < this.devicesList.length; i++) {
+          if (this.devicesList[i].id == this.deleteId) {
+            this.devicesList.splice(i, 1);
+          }
+        }
+        this.hDevicesOutput.emit(this.devicesList);
+        this.hideDeleteModal();
+      },
+      err => {
+        this.deleteError = "Error executing your request";
+      }
+    );
   }
 
 }

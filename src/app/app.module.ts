@@ -22,10 +22,20 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { TopbarComponent } from './components/topbar/topbar.component';
 import { AccountButtonComponent } from './components/topbar/account-button/account-button.component';
 
+// angular-material
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule, MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material';
+
 // hyperiot
 import { Configuration, ConfigurationParameters, HyperiotClientModule } from '@hyperiot/core';
 import { HyperiotComponentsModule } from '@hyperiot/components';
 import { ActivatedRoute, ActivatedRouteSnapshot, RouterModule } from '@angular/router';
+
+// local
+import { ProjectsModule } from './pages/projects/projects.module';
+import { CanDeactivateGuard } from './components/CanDeactivateGuard';
+import { SaveChangesDialogComponent } from './components/dialogs/save-changes-dialog/save-changes-dialog.component';
+import { DeleteConfirmDialogComponent } from './components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
 
 export function apiConfigFactory(): Configuration {
   const params: ConfigurationParameters = {
@@ -44,26 +54,38 @@ export function apiConfigFactory(): Configuration {
     SidebarComponent,
     TopbarComponent,
     AccountButtonComponent,
-    ProfileComponent
+    ProfileComponent,
+    SaveChangesDialogComponent,
+    DeleteConfirmDialogComponent
+  ],
+  // dynamically created components
+  entryComponents: [
+    SaveChangesDialogComponent,
+    DeleteConfirmDialogComponent
   ],
   imports: [
     RouterModule,
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    MatIconModule,
+    MatButtonModule,
+    MatDialogModule,
     CustomMaterialModule,
     DashboardModule,
     ReactiveFormsModule,
     HytRoutingModule,
     AuthenticationModule,
     HyperiotComponentsModule,
+    ProjectsModule,
     HyperiotClientModule.forRoot(apiConfigFactory)
   ],
   providers: [
     // ActivatedRouteSnapshot,
+    CanDeactivateGuard,
     CookieService,
     I18n,
-    { provide: TRANSLATIONS_FORMAT, useValue: "xlf" },
+    { provide: TRANSLATIONS_FORMAT, useValue: 'xlf' },
     {
       provide: TRANSLATIONS,
       useFactory: (locale) => {
@@ -71,7 +93,8 @@ export function apiConfigFactory(): Configuration {
         return require(`raw-loader!../locale/translations.${locale}.xlf`);
       },
       deps: [LOCALE_ID]
-    }
+    },
+    { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: true } }
   ],
   bootstrap: [AppComponent]
 })

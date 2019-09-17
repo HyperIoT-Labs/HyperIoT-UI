@@ -1,6 +1,6 @@
 import { Component, OnInit, OnChanges, ViewChild, Input } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { RulesService, HProject, HDevice, HPacket } from '@hyperiot/core';
+import { RulesService, HProject, HDevice, HPacket, Rule } from '@hyperiot/core';
 import { ProjectWizardHttpErrorHandlerService } from 'src/app/services/errorHandler/project-wizard-http-error-handler.service';
 import { RuleDefinitionComponent } from '../rule-definition/rule-definition.component';
 import { HYTError } from 'src/app/services/errorHandler/models/models';
@@ -29,6 +29,8 @@ export class EventsStepComponent implements OnInit, OnChanges {
   hPacketsforDevice: HPacket[] = [];
 
   currentPacket;
+
+  eventList: Rule[] = [];
 
   eventsForm: FormGroup;
 
@@ -71,13 +73,43 @@ export class EventsStepComponent implements OnInit, OnChanges {
 
     this.errors = [];
 
-    console.log(this.eventsForm.value)
+    var action = JSON.stringify({ actionName: "AddCategoryRuleAction2", ruleId: 0, categoryIds: [456], ruleType: "ENRICHMENT" });
+    var actions = [action];
+    var str: string = JSON.stringify(actions);
+
+    let rule: Rule = {
+      name: this.eventsForm.value['rule-name'],
+      ruleDefinition: this.ruleDefinitionComponent.buildRuleDefinition(),
+      description: this.eventsForm.value['rule-description'],
+      project: this.hProject,
+      packet: this.currentPacket,
+      jsonActions: str,
+      type: 'EVENT',
+      entityVersion: 1
+    }
+
+    this.rulesService.saveRule(rule).subscribe(
+      res => {
+        this.eventList.push(res);
+      },
+      err => {
+        this.errors = this.errorHandler.handleCreateRuleEnrichment(err);
+        this.errors.forEach(e => {
+          if (e.container != 'general')
+            this.eventsForm.get(e.container).setErrors({
+              validateInjectedError: {
+                valid: false
+              }
+            });
+        })
+      }
+    )
 
   }
 
   invalid(): boolean {
     return (
-      this.eventsForm.get('eventName').invalid ||
+      this.eventsForm.get('rule-name').invalid ||
       this.eventsForm.get('rule-description').invalid ||
       this.eventsForm.get('eventDevice').invalid ||
       this.eventsForm.get('eventPacket').invalid ||
@@ -88,6 +120,39 @@ export class EventsStepComponent implements OnInit, OnChanges {
 
   getError(field: string): string {
     return (this.errors.find(x => x.container == field)) ? this.errors.find(x => x.container == field).message : null;
+  }
+
+  //delete logic
+
+  deleteId: number = -1;
+
+  deleteError: string = null;
+
+  showDeleteModal(id: number) {
+    this.deleteError = null;
+    this.deleteId = id;
+  }
+
+  hideDeleteModal() {
+    this.deleteId = -1;
+  }
+
+  deleteEvent() {
+    this.deleteError = null;
+    this.rulesService.deleteRule(this.deleteId).subscribe(
+      res => {
+        for (let i = 0; i < this.eventList.length; i++) {
+          if (this.eventList[i].id == this.deleteId) {
+            this.eventList.splice(i, 1);
+          }
+        }
+        // this.out.emit(this.eventList);
+        this.hideDeleteModal();
+      },
+      err => {
+        this.deleteError = "Error executing your request";
+      }
+    );
   }
 
 }

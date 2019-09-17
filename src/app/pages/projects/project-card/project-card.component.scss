@@ -1,45 +1,3 @@
-// :host {
-//     position: relative;
-//     width: 200px;
-//     height: 260px;
-// }
-
-// mat-card {
-//     background-color: #35a2ff;
-//     position: absolute;
-//     left: 0; top: 0; right: 0; bottom: 0;
-//     border-radius: 6px;
-//     color: #ffffff;
-
-//     &.active {
-//         background-color: #ffffff;
-//         color: #0f78d1;
-//     }
-
-//     #card-front {
-
-//         .multiline-ellipsis {
-//             font-size: 80%;
-//             max-width: 100%;
-//             height: 60px;
-//             margin: 8px auto;
-//             display: block;
-//             display: -webkit-box;
-//             -webkit-line-clamp: 3;
-//             -webkit-box-orient: vertical;
-//             overflow: hidden;
-//             text-overflow: ellipsis;
-//         }
-
-//     }
-// }
-
-// :host {
-//     position: relative;
-//     min-width: 250px;
-//     height: 320px;
-// }
-
 hyt-project-card {
     position: relative;
     min-width: 250px;
@@ -182,13 +140,25 @@ hyt-project-card {
 
 }
 
-/*****************************************************
-******************************************************
+    &.active {
+        background-color: #ffffff;
+        color: #0f78d1;
+    }
 
-RESPONSIVE
+    #card-front {
 
-******************************************************
-*****************************************************/
+        .multiline-ellipsis {
+            font-size: 80%;
+            max-width: 100%;
+            height: 60px;
+            margin: 8px auto;
+            display: block;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
 
 
 @media (max-width: 1700px) {
