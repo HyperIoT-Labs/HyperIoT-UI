@@ -49,6 +49,56 @@
 
 </mat-card> -->
 
-<mat-card>
-    <p>Ciao sono Una Card Material</p>
+<mat-card class="mat-elevation-z5">
+
+    <div class="title-card-back"> <!-- flex-fill d-flex align-items-end -->
+        {{ project.name }}
+    </div>
+
+    <div class="box-card-front">
+
+        <div class="header-card-front">
+
+            {{ project.name }}
+
+        </div> <!-- End Card Front Header -->
+
+        <div class="content-card-front">
+
+            <div class="card-description">
+                {{ project.description }}
+            </div> <!-- End Card Description -->
+
+            <div class="card-elements">
+
+                <div class="single-element">
+                    <mat-icon>devices_other</mat-icon>
+                    <strong class="single-element px-2">{{ deviceCount }}</strong>
+                    <span>Devices</span>
+                </div> <!-- End Single Element -->
+
+                <div class="single-element">
+                    <mat-icon>code</mat-icon>
+                    <strong class="count-element px-2">{{ rulesCount }}</strong>
+                    <span>Rules</span>
+                </div> <!-- End Single Element -->
+                
+
+            </div> <!-- End Card Elements -->
+
+        </div> <!-- End Card Front Content -->
+
+        <div class="footer-card-front">
+
+            <hyt-button
+                class="view-project-btn" 
+                type="button"
+            >
+            View Project
+            </hyt-button>
+
+        </div> <!-- End Card Front Footer -->
+
+    </div>
+
 </mat-card>
