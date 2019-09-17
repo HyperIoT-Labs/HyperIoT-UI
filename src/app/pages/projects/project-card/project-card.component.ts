@@ -50,7 +50,7 @@ export class ProjectCardComponent implements OnInit {
     if (this.activeTimeout) {
       clearTimeout(this.activeTimeout);
     }
-    this.activeTimeout = setTimeout(() => this.isActive = active, 100);
+    this.activeTimeout = setTimeout(() => this.isActive = active, 50);
   }
 
 }

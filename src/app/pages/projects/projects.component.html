@@ -38,26 +38,15 @@
 
     </div>
 
-    <div id="standardStatus" class="row" *ngSwitchCase="PageStatus.Standard">
+    <div id="standardStatus" *ngSwitchCase="PageStatus.Standard">
       <!-- Standard -->
 
-      <div id="container-box-project" class="col-12">
+      <h2 id="title-projects">Projects List <span id="total-projects">({{hProjects.length}})</span></h2>
 
+      <div class="d-flex flex-row justify-content-left flex-wrap">
 
-        <div id="row-container-title" class="row">
-
-          <div class="col-12">
-            <h2 id="title-projects">Projects List <span id="total-projects">({{hProjects.length}})</span></h2>
-          </div>
-
-        </div> <!-- End Row Title -->
-
-        <div class="d-flex flex-row justify-content-around flex-wrap">
-
-          <hyt-project-card *ngFor="let p of hProjects" class="m-2" [project]="p">
-          </hyt-project-card>
-
-        </div>
+        <hyt-project-card *ngFor="let p of hProjects" class="m-2" [project]="p">
+        </hyt-project-card>
 
       </div>
 
