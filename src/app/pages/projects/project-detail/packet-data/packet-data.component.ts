@@ -137,16 +137,12 @@ export class PacketDataComponent implements OnDestroy {
     p.timestampFormat = this.form.get('timestampFormat').value;
     p.trafficPlan = this.form.get('trafficPlan').value;
     this.hPacketService.updateHPacket(p).subscribe((res) => {
-      // TODO: show 'ok' message on screen
-      console.log('SUCCESS', res);
       this.packet = p = res;
       this.originalValue = JSON.stringify(this.form.value, this.circularFix);
       this.treeHost && this.treeHost.updateNode({id: p.id, type: 'packet', name: p.name});
       successCallback && successCallback(res);
       this.loadingStatus = LoadingStatusEnum.Ready;
     }, (err) => {
-      // TODO: show 'error' message on screen
-      console.log('ERROR', err);
       errorCallback && errorCallback(err);
       this.loadingStatus = LoadingStatusEnum.Error;
     });
@@ -154,14 +150,10 @@ export class PacketDataComponent implements OnDestroy {
   private deletePacket(successCallback?, errorCallback?) {
     this.loadingStatus = LoadingStatusEnum.Saving;
     this.hPacketService.deleteHPacket(this.packet.id).subscribe((res) => {
-      // TODO: show 'ok' message on screen
-      console.log('SUCCESS', res);
       // TODO: implement tree-view refresh
       successCallback && successCallback(res);
       this.loadingStatus = LoadingStatusEnum.Ready;
     }, (err) => {
-      // TODO: show 'error' message on screen
-      console.log('ERROR', err);
       errorCallback && errorCallback(err);
       this.loadingStatus = LoadingStatusEnum.Error;
     });
@@ -195,7 +187,12 @@ export class PacketDataComponent implements OnDestroy {
     dialogRef.afterClosed().subscribe((result) => {
       if (result === 'delete') {
         this.deletePacket((res) => {
-          // TODO: ...
+          // Navigate to parent node (device page)
+          this.router.navigate([
+            '/projects', this.packet.device.project.id,
+            {outlets: { projectDetails: ['device', this.packet.device.id] }}
+          ]);
+          this.treeHost.refresh();
         }, (err) => {
           // TODO: report error
         });

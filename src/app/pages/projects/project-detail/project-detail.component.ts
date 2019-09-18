@@ -111,7 +111,7 @@ export class ProjectDetailComponent implements OnInit {
   find(data: any) {
     return this.treeView
       .treeControl
-      .dataNodes.find((d) => d.data.id === data.id && d.data.type == data.type);
+      .dataNodes.find((d) => d.data.id === data.id && d.data.type === data.type);
   }
 
   focus(data) {
@@ -127,6 +127,7 @@ export class ProjectDetailComponent implements OnInit {
     // refresh treeview node data
     const tc = this.treeView.treeControl;
     const node = this.find(data);
+    this.treeView.setActiveNode(node);
     let n = node.parent;
     while (n) {
       const np = this.find(n.data);
