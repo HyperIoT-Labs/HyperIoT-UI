@@ -72,7 +72,8 @@
         </ng-container>
       </div> <!-- Error Box -->
 
-      <hyt-button id="device-form-submit-button" [isDisabled]="invalid()" (clickFn)="createDevice()" type="submit">
+      <hyt-button id="device-form-submit-button" [isDisabled]="invalid() || pageStatus == PageStatus.Loading"
+        (clickFn)="createDevice()" type="submit">
         Add device
       </hyt-button>
 

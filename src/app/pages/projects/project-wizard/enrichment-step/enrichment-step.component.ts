@@ -1,10 +1,11 @@
-import { Component, OnInit, Input, OnChanges, ViewChild } from '@angular/core';
-import { HProject, HDevice, HPacket, Rule, HpacketsService, RulesService } from '@hyperiot/core';
+import { Component, OnInit, Input, OnChanges, ViewChild, Output, EventEmitter } from '@angular/core';
+import { HProject, HDevice, HPacket, Rule, RulesService } from '@hyperiot/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { SelectOption } from '@hyperiot/components';
 import { RuleDefinitionComponent } from '../rule-definition/rule-definition.component';
 import { HYTError } from 'src/app/services/errorHandler/models/models';
 import { ProjectWizardHttpErrorHandlerService } from 'src/app/services/errorHandler/project-wizard-http-error-handler.service';
+import { PageStatusEnum } from '../model/pageStatusEnum';
 
 @Component({
   selector: 'hyt-enrichment-step',
@@ -31,15 +32,20 @@ export class EnrichmentStepComponent implements OnInit, OnChanges {
 
   enrichmentForm: FormGroup;
 
+  PageStatus = PageStatusEnum;
+  pageStatus: PageStatusEnum = PageStatusEnum.Default;
+
   errors: HYTError[] = [];
 
   enrichmentRules: SelectOption[] = [
-    { value: JSON.stringify({ actionName: "AddCategoryRuleAction", ruleId: 0, categoryIds: null, ruleType: "ENRICHMENT" }), label: 'Categories' },
-    { value: JSON.stringify({ actionName: "AddTagRuleAction", ruleId: 0, tagIds: null, ruleType: "ENRICHMENT" }), label: 'Tags' },
-    { value: JSON.stringify({ actionName: "ValidateHPacketRuleAction", ruleId: 0, ruleType: "ENRICHMENT" }), label: 'Validation' }
+    { value: JSON.stringify({ actionName: "AddCategoryRuleAction", ruleId: 0, categoryIds: null }), label: 'Categories' },
+    { value: JSON.stringify({ actionName: "AddTagRuleAction", ruleId: 0, tagIds: null }), label: 'Tags' },
+    { value: JSON.stringify({ actionName: "ValidateHPacketRuleAction", ruleId: 0 }), label: 'Validation' }
   ]
 
   ruleList: Rule[] = [];
+
+  @Output() rulesOutput = new EventEmitter<Rule[]>();
 
   constructor(
     private fb: FormBuilder,
@@ -48,7 +54,10 @@ export class EnrichmentStepComponent implements OnInit, OnChanges {
   ) { }
 
   ngOnInit() {
-    this.enrichmentForm = this.fb.group({});
+    this.enrichmentForm = this.fb.group({})
+    this.rulesService.findAllRuleActions('ENRICHMENT').subscribe(
+      res => { }//TO DO //this.enrichmentRules = res
+    )
   }
 
   ngOnChanges() {
@@ -71,6 +80,8 @@ export class EnrichmentStepComponent implements OnInit, OnChanges {
 
   createRule() {
 
+    this.pageStatus = PageStatusEnum.Loading;
+
     this.errors = [];
 
     var jActions = [this.enrichmentForm.value['enrichmentRule']];
@@ -90,8 +101,11 @@ export class EnrichmentStepComponent implements OnInit, OnChanges {
     this.rulesService.saveRule(rule).subscribe(
       res => {
         this.ruleList.push(res);
+        this.rulesOutput.emit(this.ruleList);
+        this.pageStatus = PageStatusEnum.Submitted;
       },
       err => {
+        this.pageStatus = PageStatusEnum.Error;
         this.errors = this.errorHandler.handleCreateRuleEnrichment(err);
         this.errors.forEach(e => {
           if (e.container != 'general')
@@ -149,7 +163,7 @@ export class EnrichmentStepComponent implements OnInit, OnChanges {
             this.ruleList.splice(i, 1);
           }
         }
-        // this.out.emit(this.ruleList);
+        this.rulesOutput.emit(this.ruleList);
         this.hideDeleteModal();
       },
       err => {

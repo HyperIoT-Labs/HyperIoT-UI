@@ -6,6 +6,7 @@ import { SelectOption } from '@hyperiot/components';
 import { HYTError } from 'src/app/services/errorHandler/models/models';
 import { ProjectWizardHttpErrorHandlerService } from 'src/app/services/errorHandler/project-wizard-http-error-handler.service';
 import { Node } from '@hyperiot/components';
+import { PageStatusEnum } from '../model/pageStatusEnum';
 
 interface deviceTreeView {
   packet: HPacket;
@@ -33,6 +34,9 @@ export class FieldsStepComponent implements OnInit, OnChanges {
   deviceTreeView: deviceTreeView[] = [];
 
   fieldForm: FieldForm;
+
+  PageStatus = PageStatusEnum;
+  pageStatus: PageStatusEnum = PageStatusEnum.Default;
 
   multiplicityOptions: Option[] = [
     { value: 'SINGLE', label: 'Single', checked: true },
@@ -139,6 +143,8 @@ export class FieldsStepComponent implements OnInit, OnChanges {
 
   createField() {
 
+    this.pageStatus = PageStatusEnum.Loading;
+
     this.errors = [];
 
     let field: HPacketField = {
@@ -147,7 +153,7 @@ export class FieldsStepComponent implements OnInit, OnChanges {
       multiplicity: this.fieldForm.form.value.fieldMultiplicity.value,
       type: this.fieldForm.form.value.fieldType,
       description: this.fieldForm.form.value.fieldDescription,
-      innerFields: (this.fieldForm.form.value.fieldMultiplicity.value == 'SINGLE') ? null : [],
+      innerFields: (this.fieldForm.form.value.fieldType == 'OBJECT') ? [] : null,
       parentField: (this.fieldForm.fieldData) ? { id: this.fieldForm.fieldData.id, entityVersion: this.fieldForm.fieldData.entityVersion } : null
     }
 
@@ -157,8 +163,10 @@ export class FieldsStepComponent implements OnInit, OnChanges {
           this.hPackets.find(x => x.id == this.fieldForm.packet.id).fields.push(res);
           this.hPacketsOutput.emit(this.hPackets);
           this.fieldForm = null;
+          this.pageStatus = PageStatusEnum.Submitted;
         },
         err => {
+          this.pageStatus = PageStatusEnum.Error;
           this.errors = this.errorHandler.handleCreateField(err);
           this.errors.forEach(e => {
             if (e.container != 'general')
@@ -174,7 +182,6 @@ export class FieldsStepComponent implements OnInit, OnChanges {
     else {
       this.hPacketService.addHPacketField(this.fieldForm.packet.id, field).subscribe(
         res => {
-          console.log(res);
           this.updatePacketView(this.hPackets.find(x => x.id == this.fieldForm.packet.id).fields, field.parentField.id, res);
           this.hPacketsOutput.emit(this.hPackets);
           this.fieldForm = null;

@@ -49,7 +49,8 @@
         </ng-container>
       </div> <!-- Error Box -->
 
-      <hyt-button id="rule-form-submit-button" [isDisabled]="invalid()" (clickFn)="createRule()" type="submit">
+      <hyt-button id="rule-form-submit-button" [isDisabled]="invalid() || pageStatus == PageStatus.Loading"
+        (clickFn)="createRule()" type="submit">
         Add Rule
       </hyt-button>
 

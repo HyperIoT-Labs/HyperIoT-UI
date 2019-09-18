@@ -5,6 +5,7 @@ import { SelectOption } from '@hyperiot/components/lib/hyt-select/hyt-select.com
 import { Option } from '@hyperiot/components/lib/hyt-radio-button/hyt-radio-button.component';
 import { HYTError } from 'src/app/services/errorHandler/models/models';
 import { ProjectWizardHttpErrorHandlerService } from 'src/app/services/errorHandler/project-wizard-http-error-handler.service';
+import { PageStatusEnum } from '../model/pageStatusEnum';
 
 export enum myEnum {
   Customer = 1,
@@ -50,6 +51,9 @@ export class PacketsStepComponent implements OnInit, OnChanges {
 
   packetForm: FormGroup;
 
+  PageStatus = PageStatusEnum;
+  pageStatus: PageStatusEnum = PageStatusEnum.Default;
+
   packetsList: HPacket[] = [];
 
   @Output() hPacketsOutput = new EventEmitter<HPacket[]>();
@@ -74,6 +78,8 @@ export class PacketsStepComponent implements OnInit, OnChanges {
 
   createPacket() {
 
+    this.pageStatus = PageStatusEnum.Loading;
+
     this.errors = [];
 
     let hPacket: HPacket = {
@@ -94,8 +100,10 @@ export class PacketsStepComponent implements OnInit, OnChanges {
       res => {
         this.packetsList.push(res);
         this.hPacketsOutput.emit(this.packetsList);
+        this.pageStatus = PageStatusEnum.Submitted;
       },
       err => {
+        this.pageStatus = PageStatusEnum.Error;
         this.errors = this.errorHandler.handleCreatePacket(err);
         this.errors.forEach(e => {
           if (e.container != 'general')
