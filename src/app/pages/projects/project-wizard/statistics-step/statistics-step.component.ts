@@ -3,6 +3,7 @@ import { HYTError } from 'src/app/services/errorHandler/models/models';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Option } from '@hyperiot/components/lib/hyt-radio-button/hyt-radio-button.component';
 import { SelectOption } from '@hyperiot/components';
+import { PageStatusEnum } from '../model/pageStatusEnum';
 
 @Component({
   selector: 'hyt-statistics-step',
@@ -12,6 +13,9 @@ import { SelectOption } from '@hyperiot/components';
 export class StatisticsStepComponent implements OnInit {
 
   statisticsForm: FormGroup;
+
+  PageStatus = PageStatusEnum;
+  pageStatus: PageStatusEnum = PageStatusEnum.Default;
 
   errors: HYTError[] = [];
 
@@ -55,6 +59,7 @@ export class StatisticsStepComponent implements OnInit {
     this.errors = [];
 
   }
+
   invalid() {
     return true;
   }

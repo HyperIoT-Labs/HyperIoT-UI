@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { HProject, HprojectsService } from '@hyperiot/core';
 import { ProjectWizardHttpErrorHandlerService } from 'src/app/services/errorHandler/project-wizard-http-error-handler.service';
 import { HYTError } from 'src/app/services/errorHandler/models/models';
+import { PageStatusEnum } from '../model/pageStatusEnum'
 
 @Component({
   selector: 'hyt-project-step',
@@ -14,6 +15,9 @@ export class ProjectStepComponent implements OnInit {
   @Output() projectOutput = new EventEmitter<HProject>();
 
   projectForm: FormGroup;
+
+  PageStatus = PageStatusEnum;
+  pageStatus: PageStatusEnum = PageStatusEnum.Default;
 
   errors: HYTError[] = [];
 
@@ -29,6 +33,13 @@ export class ProjectStepComponent implements OnInit {
 
   createProject() {
 
+    if (this.pageStatus == PageStatusEnum.Submitted) {
+      this.projectOutput.emit(null);
+      return;
+    }
+
+    this.pageStatus = PageStatusEnum.Loading;
+
     this.errors = [];
 
     let hProject: HProject = {
@@ -41,8 +52,10 @@ export class ProjectStepComponent implements OnInit {
     this.hProjectService.saveHProject(hProject).subscribe(
       res => {
         this.projectOutput.emit(res);
+        this.pageStatus = PageStatusEnum.Submitted;
       },
       err => {
+        this.pageStatus = PageStatusEnum.Error;
         this.errors = this.errorHandler.handleCreateHProject(err);
         this.errors.forEach(e => {
           if (e.container != 'general')

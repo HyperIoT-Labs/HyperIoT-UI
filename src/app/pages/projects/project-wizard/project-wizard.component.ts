@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, Injectable } from '@angular/core';
-import { HProject, HDevice, HPacket } from '@hyperiot/core';
+import { HProject, HDevice, HPacket, Rule } from '@hyperiot/core';
 import { Router, CanDeactivate } from '@angular/router';
-import { Observable, BehaviorSubject, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -25,6 +25,8 @@ export class ProjectWizardComponent implements OnInit {
   hProject: HProject;
   hDevices: HDevice[] = [];
   hPackets: HPacket[] = [];
+  rules: Rule[] = [];
+  events: Rule[] = [];
 
   projectValidated: boolean = false;
   devicesValidated: boolean = false;
@@ -41,14 +43,13 @@ export class ProjectWizardComponent implements OnInit {
     private router: Router
   ) { }
 
-  ngOnInit() {
-
-  }
+  ngOnInit() { }
 
   updateProject(proj: HProject) {
-    this.hProject = proj;
-    if (this.hProject)
+    if (proj) {
+      this.hProject = proj;
       this.projectValidated = true;
+    }
     setTimeout(() => {
       this.stepper.next();
     }, 0);
@@ -67,6 +68,14 @@ export class ProjectWizardComponent implements OnInit {
   updatePacketFields(pac: HPacket[]) {
     this.hPackets = [...pac];
     this.fieldsValidated = this.hPackets[0].fields.length != 0;
+  }
+
+  updateRules(enr: Rule[]) {
+    this.rules = [...enr];
+  }
+
+  updateEvents(events: Rule[]) {
+    this.events = [...events];
   }
 
   openOptionModal() {

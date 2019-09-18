@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, OnChanges, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { RulesService, HProject, HDevice, HPacket, Rule } from '@hyperiot/core';
 import { ProjectWizardHttpErrorHandlerService } from 'src/app/services/errorHandler/project-wizard-http-error-handler.service';
@@ -6,6 +6,7 @@ import { RuleDefinitionComponent } from '../rule-definition/rule-definition.comp
 import { HYTError } from 'src/app/services/errorHandler/models/models';
 import { Option } from '@hyperiot/components/lib/hyt-radio-button/hyt-radio-button.component';
 import { SelectOption } from '@hyperiot/components';
+import { PageStatusEnum } from '../model/pageStatusEnum';
 
 @Component({
   selector: 'hyt-events-step',
@@ -32,13 +33,18 @@ export class EventsStepComponent implements OnInit, OnChanges {
 
   eventList: Rule[] = [];
 
+  @Output() eventsOutput = new EventEmitter<Rule[]>();
+
   eventsForm: FormGroup;
+
+  PageStatus = PageStatusEnum;
+  pageStatus: PageStatusEnum = PageStatusEnum.Default;
 
   errors: HYTError[] = [];
 
   outputOptions: Option[] = [
-    { value: '0', label: 'SEND MAIL', checked: true },
-    { value: '1', label: 'START STATISTIC' }
+    { value: JSON.stringify({ "actionName": "events.SendMailAction", "ruleId": 0, "recipients": null, "ccRecipients": null, "subject": null, "body": null }), label: 'SEND MAIL', checked: true }
+    // { value: '', label: 'START STATISTIC' }
   ]
 
   constructor(
@@ -49,6 +55,9 @@ export class EventsStepComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.eventsForm = this.fb.group({});
+    this.rulesService.findAllRuleActions('EVENT').subscribe(
+      res => { }//TO DO //this.outputOptions = res
+    )
   }
 
   ngOnChanges() {
@@ -71,11 +80,12 @@ export class EventsStepComponent implements OnInit, OnChanges {
 
   createEvent() {
 
+    this.pageStatus = PageStatusEnum.Loading;
+
     this.errors = [];
 
-    var action = JSON.stringify({ actionName: "AddCategoryRuleAction2", ruleId: 0, categoryIds: [456], ruleType: "ENRICHMENT" });
-    var actions = [action];
-    var str: string = JSON.stringify(actions);
+    var jActions = [this.eventsForm.value['eventOutput'].value];
+    var jActionStr: string = JSON.stringify(jActions);
 
     let rule: Rule = {
       name: this.eventsForm.value['rule-name'],
@@ -83,7 +93,7 @@ export class EventsStepComponent implements OnInit, OnChanges {
       description: this.eventsForm.value['rule-description'],
       project: this.hProject,
       packet: this.currentPacket,
-      jsonActions: str,
+      jsonActions: jActionStr,
       type: 'EVENT',
       entityVersion: 1
     }
@@ -91,8 +101,11 @@ export class EventsStepComponent implements OnInit, OnChanges {
     this.rulesService.saveRule(rule).subscribe(
       res => {
         this.eventList.push(res);
+        this.eventsOutput.emit(this.eventList);
+        this.pageStatus = PageStatusEnum.Submitted;
       },
       err => {
+        this.pageStatus = PageStatusEnum.Error;
         this.errors = this.errorHandler.handleCreateRuleEnrichment(err);
         this.errors.forEach(e => {
           if (e.container != 'general')
@@ -146,7 +159,7 @@ export class EventsStepComponent implements OnInit, OnChanges {
             this.eventList.splice(i, 1);
           }
         }
-        // this.out.emit(this.eventList);
+        this.eventsOutput.emit(this.eventList);
         this.hideDeleteModal();
       },
       err => {

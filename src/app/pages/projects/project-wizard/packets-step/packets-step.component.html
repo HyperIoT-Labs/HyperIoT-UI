@@ -52,7 +52,8 @@
         </ng-container>
       </div> <!-- Error Box -->
 
-      <hyt-button id="packet-form-submit-button" [isDisabled]="invalid()" (clickFn)="createPacket()" type="submit">
+      <hyt-button id="packet-form-submit-button" [isDisabled]="invalid() || pageStatus == PageStatus.Loading"
+        (clickFn)="createPacket()" type="submit">
         Add Packet
       </hyt-button>
 

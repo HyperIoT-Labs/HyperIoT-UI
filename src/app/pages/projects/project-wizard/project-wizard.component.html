@@ -33,7 +33,8 @@
     </ng-template>
 
     <ng-template #enrichmentTemplate>
-      <hyt-enrichment-step [hProject]="hProject" [hDevices]="hDevices" [hPackets]="hPackets"></hyt-enrichment-step>
+      <hyt-enrichment-step [hProject]="hProject" [hDevices]="hDevices" [hPackets]="hPackets"
+        (rulesOutput)="updateRules($event)"></hyt-enrichment-step>
       <hyt-button (clickFn)="stepper.previous()">Back</hyt-button>
       <hyt-button (clickFn)="stepper.next()">Next</hyt-button>
     </ng-template>
@@ -45,7 +46,8 @@
     </ng-template>
 
     <ng-template #eventsTemplate>
-      <hyt-events-step [hProject]="hProject" [hDevices]="hDevices" [hPackets]="hPackets"></hyt-events-step>
+      <hyt-events-step [hProject]="hProject" [hDevices]="hDevices" [hPackets]="hPackets"
+        (eventsOutput)="updateEvents($event)"></hyt-events-step>
       <hyt-button (clickFn)="stepper.previous()">Back</hyt-button>
       <hyt-button (clickFn)="openOptionModal()">Next</hyt-button>
     </ng-template>
