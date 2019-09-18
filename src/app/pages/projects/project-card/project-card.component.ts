@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core';
-import { trigger, state, style, animate, transition } from '@angular/animations';
 
-import { HProject, HDevice, HdevicesService, RulesService, Rule } from '@hyperiot/core';
+import { HProject } from '@hyperiot/core';
 
 @Component({
   selector: 'hyt-project-card',
@@ -17,22 +16,14 @@ export class ProjectCardComponent implements OnInit {
   rulesCount = 0;
   activeTimeout;
 
-  constructor(
-    private hDeviceService: HdevicesService,
-    private ruleService: RulesService
-  ) { }
+  constructor() { }
 
   ngOnInit() {
-    this.hDeviceService.findAllHDevice().subscribe((deviceList: HDevice[]) => {
-      deviceList.forEach((d: HDevice) => {
-        d.project && d.project.id === this.project.id && this.deviceCount++;
-      });
-    });
-    this.ruleService.findAllRule().subscribe((ruleList: Rule[]) => {
-        ruleList.forEach((r: Rule) => {
-          r.project && r.project.id === this.project.id && this.rulesCount++;
-        });
-    });
+    /* Find All Device */
+    this.deviceCount = this.project.deviceCount;
+
+    /* Find All Device */
+    this.rulesCount = this.project.rulesCount;
   }
 
   setActive(active) {
