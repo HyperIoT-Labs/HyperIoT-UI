@@ -99,16 +99,12 @@ export class ProjectDataComponent implements OnDestroy {
     p.name = this.form.get('name').value;
     p.description = this.form.get('description').value;
     this.hProjectService.updateHProject(p).subscribe((res) => {
-      // TODO: show 'ok' message on screen
-      console.log('SUCCESS', res);
       this.project = p = res;
       this.originalValue = JSON.stringify(this.form.value);
       this.treeHost && this.treeHost.updateNode({id: p.id, name: p.name});
       successCallback && successCallback(res);
       this.loadingStatus = LoadingStatusEnum.Ready;
     }, (err) => {
-      // TODO: show 'error' message on screen
-      console.log('ERROR', err);
       errorCallback && errorCallback(err);
       this.loadingStatus = LoadingStatusEnum.Error;
     });
@@ -116,14 +112,10 @@ export class ProjectDataComponent implements OnDestroy {
   private deleteProject(successCallback?, errorCallback?) {
     this.loadingStatus = LoadingStatusEnum.Saving;
     this.hProjectService.deleteHProject(this.project.id).subscribe((res) => {
-      // TODO: show 'ok' message on screen
-      console.log('SUCCESS', res);
       successCallback && successCallback(res);
       this.router.navigate(['/projects']);
       this.loadingStatus = LoadingStatusEnum.Ready;
     }, (err) => {
-      // TODO: show 'error' message on screen
-      console.log('ERROR', err);
       errorCallback && errorCallback(err);
       this.loadingStatus = LoadingStatusEnum.Error;
     });

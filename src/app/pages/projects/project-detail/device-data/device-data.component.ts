@@ -114,16 +114,12 @@ export class DeviceDataComponent implements OnInit, OnDestroy {
     d.firmwareVersion = this.form.get('firmware').value;
     d.softwareVersion = this.form.get('software').value;
     this.hDeviceService.updateHDevice(d).subscribe((res) => {
-      // TODO: show 'ok' message on screen
-      console.log('SUCCESS', res);
       this.device = d = res;
       this.originalValue = JSON.stringify(this.form.value);
       this.treeHost && this.treeHost.updateNode({id: d.id, type: 'device', name: d.deviceName});
       successCallback && successCallback(res);
       this.loadingStatus = LoadingStatusEnum.Ready;
     }, (err) => {
-      // TODO: show 'error' message on screen
-      console.log('ERROR', err);
       errorCallback && errorCallback(err);
       this.loadingStatus = LoadingStatusEnum.Error;
     });
@@ -131,15 +127,11 @@ export class DeviceDataComponent implements OnInit, OnDestroy {
   private deleteDevice(successCallback?, errorCallback?) {
     this.loadingStatus = LoadingStatusEnum.Saving;
     this.hDeviceService.deleteHDevice(this.device.id).subscribe((res) => {
-      // TODO: show 'ok' message on screen
-      console.log('SUCCESS', res);
       this.treeHost && this.treeHost.refresh();
       // TODO: implement tree-view refresh
       successCallback && successCallback(res);
       this.loadingStatus = LoadingStatusEnum.Ready;
     }, (err) => {
-      // TODO: show 'error' message on screen
-      console.log('ERROR', err);
       errorCallback && errorCallback(err);
       this.loadingStatus = LoadingStatusEnum.Error;
     });
@@ -173,7 +165,8 @@ export class DeviceDataComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe((result) => {
       if (result === 'delete') {
         this.deleteDevice((res) => {
-          // TODO: ...
+          // navigate to project page when a device is deleted
+          this.router.navigate(['/projects', this.device.project.id]);
         }, (err) => {
           // TODO: report error
         });
