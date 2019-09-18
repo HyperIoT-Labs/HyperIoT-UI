@@ -25,9 +25,6 @@
             height:100%;
             left:0;
             width:60px;
-            -webkit-transition:width .05s linear;
-            transition:width .05s linear;
-            -webkit-transform:translateZ(0) scale(1,1);
             z-index:1000;
     
             ul {
@@ -35,13 +32,18 @@
                 padding-top: 80px;
                 overflow:hidden;
                 background: white;
+                -webkit-transition: all .2s linear;
+                -moz-transition: all .2s linear;
+                transition: all .2s linear;
+                border: #e5e5e5;
+                
 
                 &:hover,
                 &.expanded {
                     width:250px;
                     overflow:visible;
                     height: 100%;
-                    border-right:1px solid #e5e5e5;
+                    border-right: 1px solid #e5e5e5;
                 }
     
                 &.logout {
@@ -55,6 +57,11 @@
                 position:relative;
                 display:block;
                 width:250px;
+                border-bottom: 1px solid #e5e5e5;
+
+                &:first-child {
+                    // border-top: 1px solid #e5e5e5;
+                }
 
                 &:hover,
                 &.active {
@@ -65,6 +72,19 @@
                     }
 
                 }
+
+                &:hover {
+                    border-color: #3b9aff;
+
+                    a {
+                        color: #398fd7;
+                        background-color: #ffffff;
+                    }
+                }
+
+                &:active {
+                    background-color: #5fa2db;
+                }
     
                 a {
                     position:relative;
@@ -73,8 +93,10 @@
                     border-spacing:0;
                     color:#999;
                     font-family: arial;
-                    font-size: 14px;
+                    font-size: 15px;
                     text-decoration:none;
+                    font-family: 'Exo';
+                    color: #000000;
                     -webkit-transform:translateZ(0) scale(1,1);
                     -webkit-transition:all .1s linear;
                     transition:all .1s linear;

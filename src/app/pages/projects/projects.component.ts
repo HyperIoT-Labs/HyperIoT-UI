@@ -38,24 +38,24 @@ export class ProjectsComponent implements OnInit {
   ngOnInit() {
 
     this.filteringForm = this.fb.group({});
-    
-    this.hProjectService.findAllHProject().subscribe(
+
+    this.hProjectService.cardsView().subscribe(
       res => {
         this.hProjects = res;
-        this.pageStatus = (this.hProjects.length !== 0)
+        this.pageStatus = (this.hProjects.length !==0)
           ? PageStatus.Standard
-          : PageStatus.New;
+          : PageStatus.New
 
         this.hProjectsFiltered = [...this.hProjects];
-        /* Defaultin Sort */
+        /* Default Sort */
         this.sortBy('date-decreasing');
-        console.log(this.hProjectsFiltered)
       },
       err => {
         console.log(err);
         this.pageStatus = PageStatus.Error;
       }
     );
+
   }
 
   filter(){
@@ -102,7 +102,6 @@ export class ProjectsComponent implements OnInit {
             if(a.id < b.id) { return 1; }
             return 0;
           });
-          console.log(this.hProjectsFiltered)
         break;
 
       case "alfabetic-increasing":
@@ -111,7 +110,6 @@ export class ProjectsComponent implements OnInit {
             if(a.name.toLocaleLowerCase() > b.name.toLocaleLowerCase()) { return 1; }
             return 0;
           });
-          console.log(this.hProjectsFiltered)
         break;
 
       case "alfabetic-decreasing":
@@ -120,7 +118,6 @@ export class ProjectsComponent implements OnInit {
             if(a.name.toLocaleLowerCase() < b.name.toLocaleLowerCase()) { return 1; }
             return 0;
           });
-          console.log(this.hProjectsFiltered)
         break;
 
       case "date-increasing":
@@ -129,7 +126,6 @@ export class ProjectsComponent implements OnInit {
             if(a.id > b.id) { return 1; }
             return 0;
           });
-          console.log(this.hProjectsFiltered)
         break;
 
       case "date-decreasing":
@@ -138,7 +134,6 @@ export class ProjectsComponent implements OnInit {
             if(a.id < b.id) { return 1; }
             return 0;
           });
-          console.log(this.hProjectsFiltered)
         break;
 
       default:
