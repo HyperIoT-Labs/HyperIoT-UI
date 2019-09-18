@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { FormGroup, FormBuilder } from '@angular/forms';
 
-import { Observable, Observer } from 'rxjs';
+import { Observable, Observer, Subscription } from 'rxjs';
 
 import { MatDialog } from '@angular/material';
 
@@ -12,19 +12,30 @@ import { SaveChangesDialogComponent } from 'src/app/components/dialogs/save-chan
 import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
 import { ProjectDetailComponent } from '../project-detail.component';
 
+enum LoadingStatusEnum {
+  Ready,
+  Loading,
+  Saving,
+  Error
+}
 @Component({
   selector: 'hyt-device-data',
   templateUrl: './device-data.component.html',
   styleUrls: ['./device-data.component.scss']
 })
-export class DeviceDataComponent implements OnInit {
+export class DeviceDataComponent implements OnInit, OnDestroy {
   deviceId: number;
   device: HDevice = {} as HDevice;
 
   form: FormGroup;
   originalValue: string;
 
+  LoadingStatus = LoadingStatusEnum;
+  loadingStatus = LoadingStatusEnum.Ready;
+
   treeHost: ProjectDetailComponent = null;
+
+  private routerSubscription: Subscription;
 
   constructor(
     private hDeviceService: HdevicesService,
@@ -34,7 +45,7 @@ export class DeviceDataComponent implements OnInit {
     private dialog: MatDialog
   ) {
     this.form = this.formBuilder.group({});
-    this.router.events.subscribe((rl) => {
+    this.routerSubscription = this.router.events.subscribe((rl) => {
       if (rl instanceof NavigationEnd) {
         this.deviceId = activatedRoute.snapshot.params.deviceId;
         this.loadDevice();
@@ -43,6 +54,10 @@ export class DeviceDataComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  ngOnDestroy() {
+    this.routerSubscription.unsubscribe();
   }
 
   canDeactivate(): Observable<any> | boolean {
@@ -65,6 +80,7 @@ export class DeviceDataComponent implements OnInit {
   }
 
   private loadDevice() {
+    this.loadingStatus = LoadingStatusEnum.Loading;
     this.hDeviceService.findHDevice(this.deviceId).subscribe((d: HDevice) => {
       this.device = d;
       // update form data
@@ -82,10 +98,14 @@ export class DeviceDataComponent implements OnInit {
         .setValue(d.description);
       this.originalValue = JSON.stringify(this.form.value);
       this.treeHost.focus({id: d.id, type: 'device'});
+      this.loadingStatus = LoadingStatusEnum.Ready;
+    }, (err) => {
+      this.loadingStatus = LoadingStatusEnum.Error;
     });
   }
 
   private saveDevice(successCallback?, errorCallback?) {
+    this.loadingStatus = LoadingStatusEnum.Saving;
     let d = this.device;
     d.deviceName = this.form.get('name').value;
     d.description = this.form.get('description').value;
@@ -94,29 +114,26 @@ export class DeviceDataComponent implements OnInit {
     d.firmwareVersion = this.form.get('firmware').value;
     d.softwareVersion = this.form.get('software').value;
     this.hDeviceService.updateHDevice(d).subscribe((res) => {
-      // TODO: show 'ok' message on screen
-      console.log('SUCCESS', res);
       this.device = d = res;
       this.originalValue = JSON.stringify(this.form.value);
       this.treeHost && this.treeHost.updateNode({id: d.id, type: 'device', name: d.deviceName});
       successCallback && successCallback(res);
+      this.loadingStatus = LoadingStatusEnum.Ready;
     }, (err) => {
-      // TODO: show 'error' message on screen
-      console.log('ERROR', err);
       errorCallback && errorCallback(err);
+      this.loadingStatus = LoadingStatusEnum.Error;
     });
   }
   private deleteDevice(successCallback?, errorCallback?) {
+    this.loadingStatus = LoadingStatusEnum.Saving;
     this.hDeviceService.deleteHDevice(this.device.id).subscribe((res) => {
-      // TODO: show 'ok' message on screen
-      console.log('SUCCESS', res);
       this.treeHost && this.treeHost.refresh();
       // TODO: implement tree-view refresh
       successCallback && successCallback(res);
+      this.loadingStatus = LoadingStatusEnum.Ready;
     }, (err) => {
-      // TODO: show 'error' message on screen
-      console.log('ERROR', err);
       errorCallback && errorCallback(err);
+      this.loadingStatus = LoadingStatusEnum.Error;
     });
   }
 
@@ -148,7 +165,8 @@ export class DeviceDataComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result === 'delete') {
         this.deleteDevice((res) => {
-          // TODO: ...
+          // navigate to project page when a device is deleted
+          this.router.navigate(['/projects', this.device.project.id]);
         }, (err) => {
           // TODO: report error
         });

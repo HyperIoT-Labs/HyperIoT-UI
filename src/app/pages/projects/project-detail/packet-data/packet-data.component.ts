@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 
-import { Observable, Observer } from 'rxjs';
+import { Observable, Observer, Subscription } from 'rxjs';
 
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { MatDialog, MatRadioChange } from '@angular/material';
@@ -13,18 +13,27 @@ import { SaveChangesDialogComponent } from 'src/app/components/dialogs/save-chan
 import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
 import { ProjectDetailComponent } from '../project-detail.component';
 
+enum LoadingStatusEnum {
+  Ready,
+  Loading,
+  Saving,
+  Error
+}
 @Component({
   selector: 'hyt-packet-data',
   templateUrl: './packet-data.component.html',
   styleUrls: ['./packet-data.component.scss']
 })
-export class PacketDataComponent {
+export class PacketDataComponent implements OnDestroy {
   packetId: number;
   packet: HPacket = {} as HPacket;
   deviceName: '---';
 
   form: FormGroup;
   originalValue: string;
+
+  LoadingStatus = LoadingStatusEnum;
+  loadingStatus = LoadingStatusEnum.Ready;
 
   treeHost: ProjectDetailComponent = null;
 
@@ -48,6 +57,8 @@ export class PacketDataComponent {
     return value;
   }
 
+  private routerSubscription: Subscription;
+
   constructor(
     private hPacketService: HpacketsService,
     private activatedRoute: ActivatedRoute,
@@ -56,12 +67,16 @@ export class PacketDataComponent {
     private dialog: MatDialog
   ) {
     this.form = this.formBuilder.group({});
-    this.router.events.subscribe((rl) => {
+    this.routerSubscription = this.router.events.subscribe((rl) => {
       if (rl instanceof NavigationEnd) {
         this.packetId = this.activatedRoute.snapshot.params.packetId;
         this.loadPacket();
       }
     });
+  }
+
+  ngOnDestroy() {
+    this.routerSubscription.unsubscribe();
   }
 
   isDirty(): boolean {
@@ -83,6 +98,7 @@ export class PacketDataComponent {
   }
 
   private loadPacket() {
+    this.loadingStatus = LoadingStatusEnum.Loading;
     this.hPacketService.findHPacket(this.packetId).subscribe((p: HPacket) => {
       this.packet = p;
       // update form data
@@ -102,9 +118,13 @@ export class PacketDataComponent {
         .setValue(p.trafficPlan);
       this.originalValue = JSON.stringify(this.form.value, this.circularFix);
       this.treeHost && this.treeHost.focus({id: p.id, type: 'packet'});
+      this.loadingStatus = LoadingStatusEnum.Ready;
+    }, (err) => {
+      this.loadingStatus = LoadingStatusEnum.Error;
     });
   }
   private savePacket(successCallback?, errorCallback?) {
+    this.loadingStatus = LoadingStatusEnum.Saving;
     let p = this.packet;
     p.name = this.form.get('name').value;
     p.type = this.form.get('type').value;
@@ -117,28 +137,25 @@ export class PacketDataComponent {
     p.timestampFormat = this.form.get('timestampFormat').value;
     p.trafficPlan = this.form.get('trafficPlan').value;
     this.hPacketService.updateHPacket(p).subscribe((res) => {
-      // TODO: show 'ok' message on screen
-      console.log('SUCCESS', res);
       this.packet = p = res;
       this.originalValue = JSON.stringify(this.form.value, this.circularFix);
       this.treeHost && this.treeHost.updateNode({id: p.id, type: 'packet', name: p.name});
       successCallback && successCallback(res);
+      this.loadingStatus = LoadingStatusEnum.Ready;
     }, (err) => {
-      // TODO: show 'error' message on screen
-      console.log('ERROR', err);
       errorCallback && errorCallback(err);
+      this.loadingStatus = LoadingStatusEnum.Error;
     });
   }
   private deletePacket(successCallback?, errorCallback?) {
+    this.loadingStatus = LoadingStatusEnum.Saving;
     this.hPacketService.deleteHPacket(this.packet.id).subscribe((res) => {
-      // TODO: show 'ok' message on screen
-      console.log('SUCCESS', res);
       // TODO: implement tree-view refresh
       successCallback && successCallback(res);
+      this.loadingStatus = LoadingStatusEnum.Ready;
     }, (err) => {
-      // TODO: show 'error' message on screen
-      console.log('ERROR', err);
       errorCallback && errorCallback(err);
+      this.loadingStatus = LoadingStatusEnum.Error;
     });
   }
 
@@ -170,7 +187,12 @@ export class PacketDataComponent {
     dialogRef.afterClosed().subscribe((result) => {
       if (result === 'delete') {
         this.deletePacket((res) => {
-          // TODO: ...
+          // Navigate to parent node (device page)
+          this.router.navigate([
+            '/projects', this.packet.device.project.id,
+            {outlets: { projectDetails: ['device', this.packet.device.id] }}
+          ]);
+          this.treeHost.refresh();
         }, (err) => {
           // TODO: report error
         });

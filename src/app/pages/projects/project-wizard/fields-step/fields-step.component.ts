@@ -238,4 +238,8 @@ export class FieldsStepComponent implements OnInit, OnChanges {
     this.deleteModal = false;
   }
 
+  cancelField() {
+    this.fieldForm = null;
+  }
+
 }
