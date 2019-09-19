@@ -25,6 +25,8 @@ export class ProjectDetailComponent implements OnInit {
   private focusTimeout: any = null;
   private projectId: 0;
 
+  projectName: string;
+
   constructor(
     private hProjectService: HprojectsService,
     private hDeviceService: HdevicesService,
@@ -54,6 +56,9 @@ export class ProjectDetailComponent implements OnInit {
           icon: 'work',
           children: []
         };
+        
+        this.projectName = p.name;
+
         this.treeData.push(projectNode);
         this.treeView.setData(this.treeData);
         this.treeStatus = TreeStatusEnum.Loading;

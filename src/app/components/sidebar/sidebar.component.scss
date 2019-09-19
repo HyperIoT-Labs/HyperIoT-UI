@@ -59,10 +59,6 @@
                 width:250px;
                 border-bottom: 1px solid #e5e5e5;
 
-                &:first-child {
-                    // border-top: 1px solid #e5e5e5;
-                }
-
                 &:hover,
                 &.active {
 
@@ -75,6 +71,7 @@
 
                 &:hover {
                     border-color: #3b9aff;
+                    border-right: 1px solid #e5e5e5;
 
                     a {
                         color: #398fd7;
@@ -97,9 +94,12 @@
                     text-decoration:none;
                     font-family: 'Exo';
                     color: #000000;
-                    -webkit-transform:translateZ(0) scale(1,1);
-                    -webkit-transition:all .1s linear;
-                    transition:all .1s linear;
+
+                    // -webkit-transform:translateZ(0) scale(1,1);
+
+                    -moz-transition: width .1s linear;
+                    -webkit-transition: width .1s linear;
+                    transition: width .1s linear;
     
                     &:hover,
                     &:focus {
@@ -107,6 +107,17 @@
                     }
                     
                     .fa {
+                        position: relative;
+                        display: table-cell;
+                        width: 60px;
+                        height: 36px;
+                        text-align: center;
+                        vertical-align: middle;
+                        font-size: 22px;
+                        padding: 12px 0px 12px 0px;
+                    }
+
+                    .hyt-icon {
                         position: relative;
                         display: table-cell;
                         width: 60px;
@@ -132,20 +143,19 @@
             }
     
             .nav-text {
-                position:relative;
-                display:table-cell;
-                vertical-align:middle;
-                width:190px;
-                font-family: 'Titillium Web', sans-serif;
+                position: relative;
+                display: table-cell;
+                vertical-align: middle;
+                width: 190px;
             }
 
         }
 
         ul,
         li {
-            outline:0;
-            margin:0;
-            padding:0;
+            outline: 0;
+            margin: 0;
+            padding: 0;
         }
 
     }
