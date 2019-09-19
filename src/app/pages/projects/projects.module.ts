@@ -25,6 +25,10 @@ import { DeviceDataComponent } from './project-detail/device-data/device-data.co
 import { PacketDataComponent } from './project-detail/packet-data/packet-data.component';
 import { EventMailComponent } from './project-wizard/events-step/event-mail/event-mail.component';
 
+
+import { MatChipsModule } from '@angular/material/chips';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatInputModule } from '@angular/material/input';
 @NgModule({
   declarations: [
     ProjectsComponent,
@@ -54,7 +58,10 @@ import { EventMailComponent } from './project-wizard/events-step/event-mail/even
     HyperiotComponentsModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule
+    RouterModule,
+    MatChipsModule,
+    MatAutocompleteModule,
+    MatInputModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
