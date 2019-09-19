@@ -1,3 +1,15 @@
 .center {
   text-align: center;
 }
+
+#tableSummary {
+  width: 100%;
+}
+
+#tableSummary tr:nth-child(even) {
+  background: rgb(220, 220, 220)
+}
+
+#tableSummary tr:nth-child(odd) {
+  background: #fff
+}

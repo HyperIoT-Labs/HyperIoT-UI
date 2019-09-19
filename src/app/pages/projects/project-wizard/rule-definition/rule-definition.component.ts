@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
-import { HPacketField, HPacket } from '@hyperiot/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { HPacket } from '@hyperiot/core';
 import { SelectOption } from '@hyperiot/components';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Option } from '@hyperiot/components/lib/hyt-radio-button/hyt-radio-button.component';

@@ -1,55 +1,31 @@
 <div id="single-project-page">
 
-    <div class="header d-flex flex-row justify-content-stretch">
-    
-        <div class="breadcrumb flex-grow-1">
-                <a [routerLink]="['/']">Home</a> > <a [routerLink]="['/projects']">Projects</a> > <strong>{{ projectName | titlecase }}</strong>
+    <div class="d-flex flex-row align-items-start justify-content-stretch flex-wrap">
+        <a class="back-btn d-flex flex-column align-items-center justify-content-center"
+            [routerLink]="['/projects']">
+            <mat-icon>arrow_back</mat-icon>
+        </a>
+
+    <!-- BEGIN TreeView -->
+    <div [ngStyle]="{display: treeStatus == TreeStatus.Ready ? '' : 'none'}" class="treeview pb-2 flex-grow-1 flex-sm-grow-0 flex-fill">
+        <hyt-tree-view-project #treeView (nodeClick)="onNodeClick($event)"></hyt-tree-view-project>
+    </div>        
+    <div *ngIf="treeStatus == TreeStatus.Loading || treeStatus == TreeStatus.LoadingComplete" class="treeview mt-2 d-flex flex-column align-items-center justify-content-center">
+        <h4>Loading project tree</h4>
+        <mat-spinner></mat-spinner>
+    </div>
+    <div *ngIf="treeStatus == TreeStatus.Error" class="mt-2 treeview">
+        <h4>Error loading project tree</h4>
+    </div>
+    <!-- END TreeView -->
+
+        <div class="content pl-4 pr-4 flex-grow-1">
+            <router-outlet
+            name="projectDetails"
+            (attach)="onActivate($event)"
+            (activate)="onActivate($event)"></router-outlet>
         </div>
+
+    </div>
     
-        <!-- Element/s on the right side -->
-        <div class="align-self-right">
-            ???
-        </div>
-    
-    </div> <!-- End Header with Breadcrums -->
-
-    <div id="container-single-project">
-
-        <div class="d-flex flex-row align-items-start justify-content-stretch flex-wrap">
-            <a 
-                class="back-btn d-flex flex-column align-items-center justify-content-center"
-                [routerLink]="['/projects']"
-            >
-                <mat-icon>arrow_back</mat-icon>
-            </a>
-
-            <!-- BEGIN TreeView -->
-            <div [ngStyle]="{display: treeStatus == TreeStatus.Ready ? '' : 'none'}" class="treeview pb-2 flex-grow-1 flex-sm-grow-0 flex-fill">
-                <hyt-tree-view-project #treeView (nodeClick)="onNodeClick($event)"></hyt-tree-view-project>
-            </div>    
-
-            <div *ngIf="treeStatus == TreeStatus.Loading" class="treeview mt-2 d-flex flex-column align-items-center justify-content-center">
-                <h4>Loading project tree</h4>
-                <mat-spinner></mat-spinner>
-            </div>
-
-            <div *ngIf="treeStatus == TreeStatus.Error" class="mt-2 treeview">
-                <h4>Error loading project tree</h4>
-            </div>
-            <!-- END TreeView -->
-
-            <div class="content pl-4 pr-4 flex-grow-1">
-
-                <router-outlet
-                    name="projectDetails"
-                    (attach)="onActivate($event)"
-                    (activate)="onActivate($event)"
-                ></router-outlet>
-
-            </div>
-
-        </div>
-        
-    </div> <!-- End Container Single Project -->
-
 </div> <!-- End Single Project Page -->

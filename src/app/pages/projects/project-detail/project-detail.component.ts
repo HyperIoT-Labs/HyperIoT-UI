@@ -1,12 +1,17 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { TreeDataNode } from '@hyperiot/components';
-import { HprojectsService, HProject, HdevicesService, HDevice, HpacketsService, HPacket } from '@hyperiot/core';
-import { HytTreeViewProjectComponent } from '@hyperiot/components/lib/hyt-tree-view-project/hyt-tree-view-project.component';
 import { ActivatedRoute, Router } from '@angular/router';
+
+import { Observable, zip } from 'rxjs';
+
+import { HprojectsService, HProject, HdevicesService, HDevice, HpacketsService, HPacket } from '@hyperiot/core';
+import { TreeDataNode } from '@hyperiot/components';
+
+import { HytTreeViewProjectComponent } from '@hyperiot/components/lib/hyt-tree-view-project/hyt-tree-view-project.component';
 
 enum TreeStatusEnum {
   Ready,
   Loading,
+  LoadingComplete,
   Error
 }
 
@@ -22,6 +27,7 @@ export class ProjectDetailComponent implements OnInit {
   treeStatus = TreeStatusEnum.Ready;
 
   treeData: TreeDataNode[] = [];
+
   private focusTimeout: any = null;
   private projectId: 0;
 
@@ -61,19 +67,22 @@ export class ProjectDetailComponent implements OnInit {
 
         this.treeData.push(projectNode);
         this.treeView.setData(this.treeData);
-        this.treeStatus = TreeStatusEnum.Loading;
         this.hDeviceService.findAllHDevice(p.id).subscribe((deviceList: HDevice[]) => {
-          this.treeStatus = TreeStatusEnum.Ready;
-          deviceList.forEach((d) => {
-            this.treeStatus = TreeStatusEnum.Loading;
-            this.packetService.getHDevicePacketList(d.id).subscribe((packetList: HPacket[]) => {
-              projectNode.children.push({
+          const requests: Observable<any>[] = [];
+          deviceList.map((d) => {
+            requests.push(this.packetService.getHDevicePacketList(d.id));
+          });
+          zip(...requests).subscribe((packetList: Array<HPacket[]>) => {
+            packetList.map((kd: HPacket[]) => {
+              if (kd.length === 0) {
+                return;
+              }
+              const d = kd[0].device;
+              const node = {
                 data: { id: d.id, type: 'device' },
                 name: d.deviceName,
                 icon: 'devices_other',
-                children: packetList
-                  .filter((k) => k.device && k.device.id === d.id)
-                  .map((k) => {
+                children: kd.map((k) => {
                     return {
                       data: { id: k.id, type: 'packet' },
                       name: k.name,
@@ -81,16 +90,20 @@ export class ProjectDetailComponent implements OnInit {
                     };
                   }
                   ) as TreeDataNode[]
-              });
-              this.treeView.setData(this.treeData);
-              if (this.treeView.treeControl.dataNodes.length > 0) {
-                this.treeView.treeControl.expand(this.treeView.treeControl.dataNodes[0]);
-              }
-              this.treeStatus = TreeStatusEnum.Ready;
-            }, (err) => {
-              this.treeStatus = TreeStatusEnum.Error;
+              };
+              projectNode.children.push(node);
             });
+            this.treeView.setData(this.treeData);
+            if (this.treeView.treeControl.dataNodes.length > 0) {
+              this.treeView.treeControl.expand(this.treeView.treeControl.dataNodes[0]);
+            }
+            this.treeStatus = TreeStatusEnum.Ready;
+          }, (err) => {
+            this.treeStatus = TreeStatusEnum.Error;
           });
+          if (requests.length === 0) {
+            this.treeStatus = TreeStatusEnum.Ready;
+          }
         }, (err) => {
           this.treeStatus = TreeStatusEnum.Error;
         });
@@ -116,11 +129,11 @@ export class ProjectDetailComponent implements OnInit {
   find(data: any) {
     return this.treeView
       .treeControl
-      .dataNodes.find((d) => d.data.id === data.id && d.data.type == data.type);
+      .dataNodes.find((d) => d.data.id === data.id && d.data.type === data.type);
   }
 
   focus(data) {
-    if (this.treeStatus === TreeStatusEnum.Loading) {
+    if (this.treeStatus !== TreeStatusEnum.Ready) {
       if (this.focusTimeout !== null) {
         clearTimeout(this.focusTimeout);
       }
@@ -132,6 +145,7 @@ export class ProjectDetailComponent implements OnInit {
     // refresh treeview node data
     const tc = this.treeView.treeControl;
     const node = this.find(data);
+    this.treeView.setActiveNode(node);
     let n = node.parent;
     while (n) {
       const np = this.find(n.data);

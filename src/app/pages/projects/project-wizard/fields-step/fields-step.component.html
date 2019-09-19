@@ -57,7 +57,8 @@
             </ng-container>
           </div> <!-- Error Box -->
 
-          <hyt-button id="field-form-submit-button" [isDisabled]="invalid()" (clickFn)="createField()" type="submit">
+          <hyt-button id="field-form-submit-button" [isDisabled]="invalid() || pageStatus == PageStatus.Loading"
+            (clickFn)="createField()" type="submit">
             Add Field
           </hyt-button>
 

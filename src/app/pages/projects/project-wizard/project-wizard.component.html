@@ -33,7 +33,8 @@
     </ng-template>
 
     <ng-template #enrichmentTemplate>
-      <hyt-enrichment-step [hProject]="hProject" [hDevices]="hDevices" [hPackets]="hPackets"></hyt-enrichment-step>
+      <hyt-enrichment-step [hProject]="hProject" [hDevices]="hDevices" [hPackets]="hPackets"
+        (rulesOutput)="updateRules($event)"></hyt-enrichment-step>
       <hyt-button (clickFn)="stepper.previous()">Back</hyt-button>
       <hyt-button (clickFn)="stepper.next()">Next</hyt-button>
     </ng-template>
@@ -45,7 +46,8 @@
     </ng-template>
 
     <ng-template #eventsTemplate>
-      <hyt-events-step [hProject]="hProject" [hDevices]="hDevices" [hPackets]="hPackets"></hyt-events-step>
+      <hyt-events-step [hProject]="hProject" [hDevices]="hDevices" [hPackets]="hPackets"
+        (eventsOutput)="updateEvents($event)"></hyt-events-step>
       <hyt-button (clickFn)="stepper.previous()">Back</hyt-button>
       <hyt-button (clickFn)="openOptionModal()">Next</hyt-button>
     </ng-template>
@@ -121,6 +123,59 @@
             You have finished configuring your firt project
             <div class="row">
               <div class="col-md-6">
+                <table id="tableSummary">
+                  <tr>
+                    <td><img src="assets/projects/icons/monitor.png"></td>
+                    <td>Projects
+                      <hr>{{(hProject)?hProject.name:''}}</td>
+                  </tr>
+                  <tr>
+                    <td><img src="assets/projects/icons/monitor.png"></td>
+                    <td>Devices
+                      <hr>
+                      <ul>
+                        <li *ngFor="let el of hDevices">{{el.deviceName}}</li>
+                      </ul>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><img src="assets/projects/icons/monitor.png"></td>
+                    <td>Packets
+                      <hr>
+                      <ul>
+                        <li *ngFor="let el of hPackets">{{el.name}}</li>
+                      </ul>
+                    </td>
+                  </tr>
+                  <!-- <tr>
+                    <td><img src="assets/projects/icons/monitor.png"></td>
+                    <td>Fields<hr><ul><li *ngFor="el of hPackets">el.name</li></ul></td>
+                  </tr> -->
+                  <tr>
+                    <td><img src="assets/projects/icons/monitor.png"></td>
+                    <td>Enrichment
+                      <hr>
+                      <ul>
+                        <li *ngFor="let el of rules">{{el.name}}</li>
+                      </ul>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><img src="assets/projects/icons/monitor.png"></td>
+                    <td>Statistics
+                      <hr>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><img src="assets/projects/icons/monitor.png"></td>
+                    <td>Events
+                      <hr>
+                      <ul>
+                        <li *ngFor="let el of events">{{el.name}}</li>
+                      </ul>
+                    </td>
+                  </tr>
+                </table>
               </div>
               <div class="col-md-3">
                 <img src="assets/projects/icons/monitor.png" (click)="goToProjectWizard()">

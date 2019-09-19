@@ -1,42 +1,19 @@
-#single-project-page {
-
-    .header {
-        border-bottom: 1px solid #008aff;
-        min-height: 50px;
-    
-        .breadcrumb {
-            font-weight: 400;
-            font-size: 1.2em;
-            line-height: 48px;
-            vertical-align: middle;
-            background-image: url('./../../../../assets/images/projects/cube-breadcrumb.png');
-            background-position: 0px center;
-            background-repeat: no-repeat;
-            background-size: 25px;
-            padding-left: 32px;
-
-            a {
-                color: #000000;
-            }
-
-        }
-    
-    }
-
-    .treeview {
-        min-width: 200px;
-    }
-
-    .content {
-        min-width: 240px;
-    }
-
-    .back-btn {
-        height: 36px;
-        width: 36px;
-        text-decoration: none;
-    }
-
+.treeview {
+    min-width: 200px;
+    width: 200px;
+}
+.content {
+    min-width: 240px;
+}
+.back-btn {
+    height: 36px;
+    width: 36px;
+    text-decoration: none;
+}
+:host ::ng-deep .node-name {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 

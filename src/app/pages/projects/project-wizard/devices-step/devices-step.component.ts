@@ -1,8 +1,9 @@
-import { Component, OnInit, ViewEncapsulation, Input, Output, EventEmitter, OnChanges } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Input, Output, EventEmitter } from '@angular/core';
 import { HDevice, HProject, HdevicesService } from '@hyperiot/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { HYTError } from 'src/app/services/errorHandler/models/models';
 import { ProjectWizardHttpErrorHandlerService } from 'src/app/services/errorHandler/project-wizard-http-error-handler.service';
+import { PageStatusEnum } from '../model/pageStatusEnum';
 
 @Component({
   selector: 'hyt-devices-step',
@@ -15,6 +16,9 @@ export class DevicesStepComponent implements OnInit {
   @Input() hProject: HProject;
 
   deviceForm: FormGroup;
+
+  PageStatus = PageStatusEnum;
+  pageStatus: PageStatusEnum = PageStatusEnum.Default;
 
   devicesList: HDevice[] = [];
 
@@ -31,6 +35,8 @@ export class DevicesStepComponent implements OnInit {
   }
 
   createDevice() {
+
+    this.pageStatus = PageStatusEnum.Loading;
 
     this.errors = [];
 
@@ -51,8 +57,10 @@ export class DevicesStepComponent implements OnInit {
       res => {
         this.devicesList.push(res);
         this.hDevicesOutput.emit(this.devicesList);
+        this.pageStatus = PageStatusEnum.Submitted;
       },
       err => {
+        this.pageStatus = PageStatusEnum.Error;
         this.errors = this.errorHandler.handleCreateHDevice(err);
         this.errors.forEach(e => {
           if (e.container != 'general')

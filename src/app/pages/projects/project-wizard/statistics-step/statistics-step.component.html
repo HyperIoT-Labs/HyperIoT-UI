@@ -59,8 +59,8 @@
         </ng-container>
       </div> <!-- Error Box -->
 
-      <hyt-button id="statistics-form-submit-button" [isDisabled]="invalid()" (clickFn)="createStatistic()"
-        type="submit">
+      <hyt-button id="statistics-form-submit-button" [isDisabled]="invalid() || pageStatus == PageStatus.Loading"
+        (clickFn)="createStatistic()" type="submit">
         Add Statistic
       </hyt-button>
 

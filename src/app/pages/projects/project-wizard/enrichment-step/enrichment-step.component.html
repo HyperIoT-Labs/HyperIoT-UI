@@ -43,13 +43,35 @@
         </div> <!-- Field RuleDefinition -->
       </div>
 
+      <div class="row">
+        <div class="col-md-12 center">
+          <mat-form-field class="tag-list">
+            <mat-chip-list #chipList>
+              <mat-chip *ngFor="let tag of tags" [selectable]="true" [removable]="true" (removed)="remove(tag)">
+                {{tag.name}}
+                <mat-icon matChipRemove>cancel</mat-icon>
+              </mat-chip>
+              <input placeholder="Tags" #tagInput [formControl]="tagCtrl" [matAutocomplete]="auto"
+                [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="[13, 188]" [matChipInputAddOnBlur]="false"
+                (matChipInputTokenEnd)="add($event)">
+            </mat-chip-list>
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+              <mat-option *ngFor="let tag of filteredTags | async" [value]="tag">
+                {{tag.name}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+      </div>
+
       <div class="container-form-field errorMessage">
         <ng-container *ngIf="getError('general')">
           {{getError('general')}}
         </ng-container>
       </div> <!-- Error Box -->
 
-      <hyt-button id="rule-form-submit-button" [isDisabled]="invalid()" (clickFn)="createRule()" type="submit">
+      <hyt-button id="rule-form-submit-button" [isDisabled]="invalid() || pageStatus == PageStatus.Loading"
+        (clickFn)="createRule()" type="submit">
         Add Rule
       </hyt-button>
 
@@ -97,5 +119,3 @@
   </hyt-modal>
 
 </div>
-
-<!-- <button (click)="dati()">chiedi dati</button> -->
