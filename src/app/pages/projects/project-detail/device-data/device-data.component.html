@@ -54,17 +54,6 @@
 
         </div>
 
-        <div class="mt-4 d-flex flex-row justify-content-around">
-            <hyt-button (clickFn)="onSaveClick()" [isDisabled]="!form.valid || !isDirty()">
-                <mat-icon class="md-primary">save</mat-icon>
-                <span>Save</span>
-            </hyt-button>
-            <hyt-button (clickFn)="onDeleteClick()">
-                <mat-icon>delete</mat-icon>
-                <span>Delete</span>
-            </hyt-button>
-        </div>
-
     </form>
 
     <div *ngIf="loadingStatus !== LoadingStatus.Ready" class="overlay d-flex flex-column align-items-center justify-content-center">
