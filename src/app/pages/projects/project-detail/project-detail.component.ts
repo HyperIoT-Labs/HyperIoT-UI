@@ -69,6 +69,9 @@ export class ProjectDetailComponent implements OnInit {
           });
           zip(...requests).subscribe((packetList: Array<HPacket[]>) => {
             packetList.map((kd: HPacket[]) => {
+              if (kd.length === 0) {
+                return;
+              }
               const d = kd[0].device;
               const node = {
                 data: { id: d.id, type: 'device' },
