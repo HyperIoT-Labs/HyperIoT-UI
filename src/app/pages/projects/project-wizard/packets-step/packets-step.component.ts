@@ -7,11 +7,6 @@ import { HYTError } from 'src/app/services/errorHandler/models/models';
 import { ProjectWizardHttpErrorHandlerService } from 'src/app/services/errorHandler/project-wizard-http-error-handler.service';
 import { PageStatusEnum } from '../model/pageStatusEnum';
 
-export enum myEnum {
-  Customer = 1,
-  Store = 2
-}
-
 @Component({
   selector: 'hyt-packets-step',
   templateUrl: './packets-step.component.html',
