@@ -1,5 +1,6 @@
 .treeview {
     min-width: 200px;
+    width: 200px;
 }
 .content {
     min-width: 240px;
@@ -8,4 +9,9 @@
     height: 36px;
     width: 36px;
     text-decoration: none;
+}
+:host ::ng-deep .node-name {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
