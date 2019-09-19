@@ -68,7 +68,6 @@ export class ProjectDetailComponent implements OnInit {
             requests.push(this.packetService.getHDevicePacketList(d.id));
           });
           zip(...requests).subscribe((packetList: Array<HPacket[]>) => {
-            console.log(packetList);
             packetList.map((kd: HPacket[]) => {
               const d = kd[0].device;
               const node = {
@@ -94,8 +93,7 @@ export class ProjectDetailComponent implements OnInit {
           }, (err) => {
             this.treeStatus = TreeStatusEnum.Error;
           });
-          if (deviceList.length === 0) {
-            this.treeView.setData(this.treeData);
+          if (requests.length === 0) {
             this.treeStatus = TreeStatusEnum.Ready;
           }
         }, (err) => {
