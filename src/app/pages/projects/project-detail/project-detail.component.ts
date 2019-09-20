@@ -27,6 +27,9 @@ enum TreeStatusEnum {
 export class ProjectDetailComponent implements OnInit {
   @ViewChild('treeView', { static: true }) treeView: HytTreeViewProjectComponent;
 
+  hintMessage = '';
+  hintVisible = false;
+
   TreeStatus = TreeStatusEnum;
   treeStatus = TreeStatusEnum.Ready;
 
@@ -56,7 +59,7 @@ export class ProjectDetailComponent implements OnInit {
   onActivate(childComponent: ProjectDetailEntity) {
     if (childComponent.isProjectEntity) {
       this.currentEntity = childComponent;
-      this.currentEntity.treeHost = this;
+      this.currentEntity.projectHost = this;
     }
   }
 
@@ -217,5 +220,13 @@ export class ProjectDetailComponent implements OnInit {
         });
       }
     });
+  }
+
+  showHintMessage(message: string) {
+    this.hintMessage = message;
+    this.hintVisible = true;
+  }
+  hideHintMessage() {
+    this.hintVisible = false;
   }
 }

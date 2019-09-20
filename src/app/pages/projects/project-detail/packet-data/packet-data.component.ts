@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 
 import { Subscription } from 'rxjs';
@@ -36,11 +36,12 @@ export class PacketDataComponent extends ProjectDetailEntity implements OnDestro
 
   constructor(
     formBuilder: FormBuilder,
+    @ViewChild('form', { static: true }) formView: ElementRef,
     private hPacketService: HpacketsService,
     private activatedRoute: ActivatedRoute,
     private router: Router
   ) {
-    super(formBuilder);
+    super(formBuilder, formView);
     this.routerSubscription = this.router.events.subscribe((rl) => {
       if (rl instanceof NavigationEnd) {
         this.packetId = this.activatedRoute.snapshot.params.packetId;
@@ -81,7 +82,7 @@ export class PacketDataComponent extends ProjectDetailEntity implements OnDestro
       this.form.get('hpacket-trafficplan')
         .setValue(p.trafficPlan);
       this.resetForm();
-      this.treeHost && this.treeHost.focus({id: p.id, type: 'packet'});
+      this.treeView().focus({id: p.id, type: 'packet'});
       this.loadingStatus = LoadingStatusEnum.Ready;
     }, (err) => {
       this.loadingStatus = LoadingStatusEnum.Error;
@@ -104,16 +105,11 @@ export class PacketDataComponent extends ProjectDetailEntity implements OnDestro
     this.hPacketService.updateHPacket(p).subscribe((res) => {
       this.packet = p = res;
       this.resetForm();
-      this.treeHost && this.treeHost.updateNode({id: p.id, type: 'packet', name: p.name});
+      this.treeView().updateNode({id: p.id, type: 'packet', name: p.name});
       this.loadingStatus = LoadingStatusEnum.Ready;
       successCallback && successCallback(res);
     }, (err) => {
-      if (err.error && err.error.validationErrors) {
-        this.setErrors(err);
-        this.loadingStatus = LoadingStatusEnum.Ready;
-      } else {
-        this.loadingStatus = LoadingStatusEnum.Error;
-      }
+      this.setErrors(err);
       errorCallback && errorCallback(err);
     });
   }
@@ -127,7 +123,7 @@ export class PacketDataComponent extends ProjectDetailEntity implements OnDestro
         '/projects', this.packet.device.project.id,
         {outlets: { projectDetails: ['device', this.packet.device.id] }}
       ]);
-      this.treeHost.refresh();
+      this.treeView().refresh();
     }, (err) => {
       errorCallback && errorCallback(err);
       this.loadingStatus = LoadingStatusEnum.Error;
