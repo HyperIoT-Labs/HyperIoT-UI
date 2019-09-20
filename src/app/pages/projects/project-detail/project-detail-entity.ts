@@ -7,4 +7,5 @@ export interface ProjectDetailEntity {
     delete(successCallback: any, errorCallback: any): void;
     isDirty(): boolean;
     isValid(): boolean;
+    getError(): any;
 }

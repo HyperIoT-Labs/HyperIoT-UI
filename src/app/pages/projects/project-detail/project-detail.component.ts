@@ -36,6 +36,7 @@ export class ProjectDetailComponent implements OnInit {
   private projectId: 0;
 
   projectName: string;
+  validationErrors: [];
 
   constructor(
     private hProjectService: HprojectsService,
@@ -60,10 +61,17 @@ export class ProjectDetailComponent implements OnInit {
   }
 
   onSaveClick() {
+    this.validationErrors = [];
     this.currentEntity.save((res) => {
       // TODO: ...
     }, (err) => {
       // TODO: ...
+      if (err.error && err.error.type === 'it.acsoftware.hyperiot.base.exception.HyperIoTValidationException') {
+        this.validationErrors = err.error.validationErrors;
+        err.error.validationErrors.map((e) => {
+          console.log('###', e.message, e.field, e.invalidValue);
+        });
+      }
     });
   }
 
@@ -81,9 +89,7 @@ export class ProjectDetailComponent implements OnInit {
           icon: 'work',
           children: []
         };
-        
         this.projectName = p.name;
-
         this.treeData.push(projectNode);
         this.treeView.setData(this.treeData);
         this.hDeviceService.findAllHDevice(p.id).subscribe((deviceList: HDevice[]) => {
@@ -188,10 +194,12 @@ export class ProjectDetailComponent implements OnInit {
       });
       dialogRef.afterClosed().subscribe((result) => {
         if (result === 'save') {
+          this.validationErrors = [];
           this.currentEntity.save((res) => {
             observer.next(true);
             observer.complete();
           }, (err) => {
+            console.log('###', err);
             observer.next(false);
             observer.complete();
           });

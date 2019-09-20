@@ -33,6 +33,7 @@ export class PacketDataComponent implements ProjectDetailEntity, OnDestroy {
 
   LoadingStatus = LoadingStatusEnum;
   loadingStatus = LoadingStatusEnum.Ready;
+  validationError = [];
 
   isProjectEntity = true;
   treeHost: ProjectDetailComponent = null;
@@ -99,6 +100,9 @@ export class PacketDataComponent implements ProjectDetailEntity, OnDestroy {
   isDirty(): boolean {
     return JSON.stringify(this.form.value, this.circularFix) !== this.originalValue;
   }
+  getError() {
+    return this.validationError;
+  }
 
   private loadPacket() {
     this.loadingStatus = LoadingStatusEnum.Loading;
@@ -128,6 +132,7 @@ export class PacketDataComponent implements ProjectDetailEntity, OnDestroy {
   }
   private savePacket(successCallback?, errorCallback?) {
     this.loadingStatus = LoadingStatusEnum.Saving;
+    this.validationError = [];
     let p = this.packet;
     p.name = this.form.get('name').value;
     p.type = this.form.get('type').value;
@@ -147,7 +152,12 @@ export class PacketDataComponent implements ProjectDetailEntity, OnDestroy {
       this.loadingStatus = LoadingStatusEnum.Ready;
     }, (err) => {
       errorCallback && errorCallback(err);
-      this.loadingStatus = LoadingStatusEnum.Error;
+      if (err.error && err.error.validationErrors) {
+        this.validationError = err.error.validationErrors;
+        this.loadingStatus = LoadingStatusEnum.Ready;
+      } else {
+        this.loadingStatus = LoadingStatusEnum.Error;
+      }
     });
   }
   private deletePacket(successCallback?, errorCallback?) {

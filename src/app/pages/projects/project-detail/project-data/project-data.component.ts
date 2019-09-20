@@ -30,6 +30,7 @@ export class ProjectDataComponent implements ProjectDetailEntity, OnDestroy {
 
   LoadingStatus = LoadingStatusEnum;
   loadingStatus = LoadingStatusEnum.Ready;
+  validationError = [];
 
   isProjectEntity = true;
   treeHost: ProjectDetailComponent = null;
@@ -76,6 +77,9 @@ export class ProjectDataComponent implements ProjectDetailEntity, OnDestroy {
   isDirty(): boolean {
     return JSON.stringify(this.form.value) !== this.originalValue;
   }
+  getError() {
+    return this.validationError;
+  }
 
   private loadProject() {
     this.loadingStatus = LoadingStatusEnum.Loading;
@@ -95,6 +99,7 @@ export class ProjectDataComponent implements ProjectDetailEntity, OnDestroy {
 
   private saveProject(successCallback?, errorCallback?) {
     this.loadingStatus = LoadingStatusEnum.Saving;
+    this.validationError = [];
     let p = this.project;
     p.name = this.form.get('name').value;
     p.description = this.form.get('description').value;
@@ -106,7 +111,12 @@ export class ProjectDataComponent implements ProjectDetailEntity, OnDestroy {
       this.loadingStatus = LoadingStatusEnum.Ready;
     }, (err) => {
       errorCallback && errorCallback(err);
-      this.loadingStatus = LoadingStatusEnum.Error;
+      if (err.error && err.error.validationErrors) {
+        this.validationError = err.error.validationErrors;
+        this.loadingStatus = LoadingStatusEnum.Ready;
+      } else {
+        this.loadingStatus = LoadingStatusEnum.Error;
+      }
     });
   }
   private deleteProject(successCallback?, errorCallback?) {
@@ -114,6 +124,8 @@ export class ProjectDataComponent implements ProjectDetailEntity, OnDestroy {
     this.hProjectService.deleteHProject(this.project.id).subscribe((res) => {
       successCallback && successCallback(res);
       this.loadingStatus = LoadingStatusEnum.Ready;
+      // navigate to project list when the project itself is deleted
+      this.router.navigate(['/projects']);
     }, (err) => {
       errorCallback && errorCallback(err);
       this.loadingStatus = LoadingStatusEnum.Error;

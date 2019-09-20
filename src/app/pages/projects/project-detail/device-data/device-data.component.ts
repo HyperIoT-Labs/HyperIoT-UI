@@ -29,6 +29,7 @@ export class DeviceDataComponent implements ProjectDetailEntity, OnInit, OnDestr
 
   LoadingStatus = LoadingStatusEnum;
   loadingStatus = LoadingStatusEnum.Ready;
+  validationError = [];
 
   // ProjectDetailEntity interface
   isProjectEntity = true;
@@ -79,6 +80,9 @@ export class DeviceDataComponent implements ProjectDetailEntity, OnInit, OnDestr
   isDirty(): boolean {
     return JSON.stringify(this.form.value) !== this.originalValue;
   }
+  getError() {
+    return this.validationError;
+  }
 
   private loadDevice() {
     this.loadingStatus = LoadingStatusEnum.Loading;
@@ -107,6 +111,7 @@ export class DeviceDataComponent implements ProjectDetailEntity, OnInit, OnDestr
 
   private saveDevice(successCallback?, errorCallback?) {
     this.loadingStatus = LoadingStatusEnum.Saving;
+    this.validationError = [];
     let d = this.device;
     d.deviceName = this.form.get('name').value;
     d.description = this.form.get('description').value;
@@ -122,7 +127,12 @@ export class DeviceDataComponent implements ProjectDetailEntity, OnInit, OnDestr
       this.loadingStatus = LoadingStatusEnum.Ready;
     }, (err) => {
       errorCallback && errorCallback(err);
-      this.loadingStatus = LoadingStatusEnum.Error;
+      if (err.error && err.error.validationErrors) {
+        this.validationError = err.error.validationErrors;
+        this.loadingStatus = LoadingStatusEnum.Ready;
+      } else {
+        this.loadingStatus = LoadingStatusEnum.Error;
+      }
     });
   }
   private deleteDevice(successCallback?, errorCallback?) {
