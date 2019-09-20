@@ -31,6 +31,7 @@ import { TimeChartSettingsComponent } from './widget-settings-dialog/time-chart-
 
 import { MyTelInputComponent } from '../../test/my-tel-input/my-tel-input.component';
 import { from } from 'rxjs';
+import { DashboardComponent } from './dashboard.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { from } from 'rxjs';
     StatsChartSettingsComponent,
     TextLabelSettingsComponent,
     TimeChartSettingsComponent,
-    MyTelInputComponent
+    MyTelInputComponent,
+    DashboardComponent
   ],
   imports: [
     CommonModule,
