@@ -66,12 +66,6 @@ export class ProjectDetailComponent implements OnInit {
       // TODO: ...
     }, (err) => {
       // TODO: ...
-      if (err.error && err.error.type === 'it.acsoftware.hyperiot.base.exception.HyperIoTValidationException') {
-        this.validationErrors = err.error.validationErrors;
-        err.error.validationErrors.map((e) => {
-          console.log('###', e.message, e.field, e.invalidValue);
-        });
-      }
     });
   }
 

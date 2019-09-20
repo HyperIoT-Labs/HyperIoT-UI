@@ -1,50 +1,31 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 import { HdevicesService, HDevice } from '@hyperiot/core';
 
-import { ProjectDetailComponent } from '../project-detail.component';
-import { ProjectDetailEntity } from '../project-detail-entity';
+import { ProjectDetailEntity, LoadingStatusEnum } from '../project-detail-entity';
 
-enum LoadingStatusEnum {
-  Ready,
-  Loading,
-  Saving,
-  Error
-}
 @Component({
   selector: 'hyt-device-data',
   templateUrl: './device-data.component.html',
   styleUrls: ['./device-data.component.scss']
 })
-export class DeviceDataComponent implements ProjectDetailEntity, OnInit, OnDestroy {
+export class DeviceDataComponent extends ProjectDetailEntity implements OnInit, OnDestroy {
   deviceId: number;
   device: HDevice = {} as HDevice;
-
-  form: FormGroup;
-  originalValue: string;
-
-  LoadingStatus = LoadingStatusEnum;
-  loadingStatus = LoadingStatusEnum.Ready;
-  validationError = [];
-
-  // ProjectDetailEntity interface
-  isProjectEntity = true;
-  treeHost: ProjectDetailComponent = null;
 
   private routerSubscription: Subscription;
 
   constructor(
+    formBuilder: FormBuilder,
     private hDeviceService: HdevicesService,
     private activatedRoute: ActivatedRoute,
-    private router: Router,
-    private formBuilder: FormBuilder
+    private router: Router
   ) {
-    this.form = this.formBuilder.group({});
-    this.originalValue = JSON.stringify(this.form.value);
+    super(formBuilder);
     this.routerSubscription = this.router.events.subscribe((rl) => {
       if (rl instanceof NavigationEnd) {
         this.deviceId = activatedRoute.snapshot.params.deviceId;
@@ -60,13 +41,6 @@ export class DeviceDataComponent implements ProjectDetailEntity, OnInit, OnDestr
     this.routerSubscription.unsubscribe();
   }
 
-  canDeactivate(): Observable<any> | boolean {
-    if (this.isDirty()) {
-      return this.treeHost.openSaveDialog();
-    }
-    return true;
-  }
-
   // ProjectDetailEntity interface
   save(successCallback, errorCallback) {
     this.saveDevice(successCallback, errorCallback);
@@ -74,22 +48,13 @@ export class DeviceDataComponent implements ProjectDetailEntity, OnInit, OnDestr
   delete(successCallback, errorCallback) {
     this.deleteDevice(successCallback, errorCallback);
   }
-  isValid(): boolean {
-    return this.form.valid;
-  }
-  isDirty(): boolean {
-    return JSON.stringify(this.form.value) !== this.originalValue;
-  }
-  getError() {
-    return this.validationError;
-  }
 
   private loadDevice() {
     this.loadingStatus = LoadingStatusEnum.Loading;
     this.hDeviceService.findHDevice(this.deviceId).subscribe((d: HDevice) => {
       this.device = d;
       // update form data
-      this.form.get('name')
+      this.form.get('hdevice-devicename')
         .setValue(d.deviceName);
       this.form.get('brand')
         .setValue(d.brand);
@@ -101,8 +66,8 @@ export class DeviceDataComponent implements ProjectDetailEntity, OnInit, OnDestr
         .setValue(d.softwareVersion);
       this.form.get('description')
         .setValue(d.description);
-      this.originalValue = JSON.stringify(this.form.value);
-      this.treeHost.focus({id: d.id, type: 'device'});
+      this.resetForm();
+      this.treeHost.focus({ id: d.id, type: 'device' });
       this.loadingStatus = LoadingStatusEnum.Ready;
     }, (err) => {
       this.loadingStatus = LoadingStatusEnum.Error;
@@ -113,7 +78,7 @@ export class DeviceDataComponent implements ProjectDetailEntity, OnInit, OnDestr
     this.loadingStatus = LoadingStatusEnum.Saving;
     this.validationError = [];
     let d = this.device;
-    d.deviceName = this.form.get('name').value;
+    d.deviceName = this.form.get('hdevice-devicename').value;
     d.description = this.form.get('description').value;
     d.brand = this.form.get('brand').value;
     d.model = this.form.get('model').value;
@@ -121,18 +86,18 @@ export class DeviceDataComponent implements ProjectDetailEntity, OnInit, OnDestr
     d.softwareVersion = this.form.get('software').value;
     this.hDeviceService.updateHDevice(d).subscribe((res) => {
       this.device = d = res;
-      this.originalValue = JSON.stringify(this.form.value);
-      this.treeHost && this.treeHost.updateNode({id: d.id, type: 'device', name: d.deviceName});
-      successCallback && successCallback(res);
+      this.resetForm();
+      this.treeHost && this.treeHost.updateNode({ id: d.id, type: 'device', name: d.deviceName });
       this.loadingStatus = LoadingStatusEnum.Ready;
+      successCallback && successCallback(res);
     }, (err) => {
-      errorCallback && errorCallback(err);
       if (err.error && err.error.validationErrors) {
-        this.validationError = err.error.validationErrors;
+        this.setError(err);
         this.loadingStatus = LoadingStatusEnum.Ready;
       } else {
         this.loadingStatus = LoadingStatusEnum.Error;
       }
+      errorCallback && errorCallback(err);
     });
   }
   private deleteDevice(successCallback?, errorCallback?) {

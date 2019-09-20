@@ -2,16 +2,18 @@
 
 <div class="container">
 
-    <form [formGroup]="form">
+    <form [formGroup]="form" #formReference>
 
         <div class="d-flex flex-column flex-md-row flex-wrap">
 
             <div class="pr-md-3 flex-fill">
-                <hyt-input-text name="name" placeholder="Name"
+                <hyt-input-text name="hdevice-devicename" formControlName="hdevice-devicename"
                     [form]="form"
-                    formControlName="name"
                     errorPosition="bottom"
+                    placeholder="Name"
                     minlength="3"
+                    patternz="[A-Za-z0-9_-]*"
+                    [injectedErrorMsg]="getError('hdevice-devicename')"
                     isRequired="true">
                 </hyt-input-text>
             </div>

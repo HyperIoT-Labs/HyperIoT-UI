@@ -1,42 +1,24 @@
 import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 
-import { FormGroup, FormBuilder } from '@angular/forms';
-import { MatRadioChange } from '@angular/material';
+import { FormBuilder } from '@angular/forms';
 
 import { HPacket, HpacketsService } from '@hyperiot/core';
 import { Option } from '@hyperiot/components';
 
-import { ProjectDetailComponent } from '../project-detail.component';
-import { ProjectDetailEntity } from '../project-detail-entity';
+import { ProjectDetailEntity, LoadingStatusEnum } from '../project-detail-entity';
 
-enum LoadingStatusEnum {
-  Ready,
-  Loading,
-  Saving,
-  Error
-}
 @Component({
   selector: 'hyt-packet-data',
   templateUrl: './packet-data.component.html',
   styleUrls: ['./packet-data.component.scss']
 })
-export class PacketDataComponent implements ProjectDetailEntity, OnDestroy {
+export class PacketDataComponent extends ProjectDetailEntity implements OnDestroy {
   packetId: number;
   packet: HPacket = {} as HPacket;
   deviceName: '---';
-
-  form: FormGroup;
-  originalValue: string;
-
-  LoadingStatus = LoadingStatusEnum;
-  loadingStatus = LoadingStatusEnum.Ready;
-  validationError = [];
-
-  isProjectEntity = true;
-  treeHost: ProjectDetailComponent = null;
 
   typeOptions: Option[] = Object.keys(HPacket.TypeEnum)
     .map((k) => { return {label: k, value: k} });
@@ -52,22 +34,13 @@ export class PacketDataComponent implements ProjectDetailEntity, OnDestroy {
 
   private routerSubscription: Subscription;
 
-  private circularFix = (key: any, value: any) => {
-    if (value instanceof MatRadioChange) {
-      // TODO: this should be fixed in HyperIoT components library (hyt-radio-button)
-      return value.value;
-    }
-    return value;
-  }
-
   constructor(
+    formBuilder: FormBuilder,
     private hPacketService: HpacketsService,
     private activatedRoute: ActivatedRoute,
-    private router: Router,
-    private formBuilder: FormBuilder
+    private router: Router
   ) {
-    this.form = this.formBuilder.group({});
-    this.originalValue = JSON.stringify(this.form.value);
+    super(formBuilder);
     this.routerSubscription = this.router.events.subscribe((rl) => {
       if (rl instanceof NavigationEnd) {
         this.packetId = this.activatedRoute.snapshot.params.packetId;
@@ -80,28 +53,12 @@ export class PacketDataComponent implements ProjectDetailEntity, OnDestroy {
     this.routerSubscription.unsubscribe();
   }
 
-  canDeactivate(): Observable<any> | boolean {
-    if (this.isDirty()) {
-      return this.treeHost.openSaveDialog();
-    }
-    return true;
-  }
-
   // ProjectDetailEntity interface
   save(successCallback, errorCallback) {
     this.savePacket(successCallback, errorCallback);
   }
   delete(successCallback, errorCallback) {
     this.deletePacket(successCallback, errorCallback);
-  }
-  isValid(): boolean {
-    return this.form.valid;
-  }
-  isDirty(): boolean {
-    return JSON.stringify(this.form.value, this.circularFix) !== this.originalValue;
-  }
-  getError() {
-    return this.validationError;
   }
 
   private loadPacket() {
@@ -123,7 +80,7 @@ export class PacketDataComponent implements ProjectDetailEntity, OnDestroy {
         .setValue(p.timestampFormat);
       this.form.get('trafficPlan')
         .setValue(p.trafficPlan);
-      this.originalValue = JSON.stringify(this.form.value, this.circularFix);
+      this.resetForm();
       this.treeHost && this.treeHost.focus({id: p.id, type: 'packet'});
       this.loadingStatus = LoadingStatusEnum.Ready;
     }, (err) => {
@@ -146,18 +103,18 @@ export class PacketDataComponent implements ProjectDetailEntity, OnDestroy {
     p.trafficPlan = this.form.get('trafficPlan').value;
     this.hPacketService.updateHPacket(p).subscribe((res) => {
       this.packet = p = res;
-      this.originalValue = JSON.stringify(this.form.value, this.circularFix);
+      this.resetForm();
       this.treeHost && this.treeHost.updateNode({id: p.id, type: 'packet', name: p.name});
-      successCallback && successCallback(res);
       this.loadingStatus = LoadingStatusEnum.Ready;
+      successCallback && successCallback(res);
     }, (err) => {
-      errorCallback && errorCallback(err);
       if (err.error && err.error.validationErrors) {
-        this.validationError = err.error.validationErrors;
+        this.setError(err);
         this.loadingStatus = LoadingStatusEnum.Ready;
       } else {
         this.loadingStatus = LoadingStatusEnum.Error;
       }
+      errorCallback && errorCallback(err);
     });
   }
   private deletePacket(successCallback?, errorCallback?) {
