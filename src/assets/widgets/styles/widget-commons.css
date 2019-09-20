@@ -20,6 +20,7 @@ header {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    background-color: red;
 }
 .play-pause {
     position: absolute;

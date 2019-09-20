@@ -20,11 +20,16 @@ import { RuleDefinitionComponent } from './project-wizard/rule-definition/rule-d
 
 import { ProjectCardComponent } from './project-card/project-card.component';
 import { ProjectDetailComponent } from './project-detail/project-detail.component';
+import { ProjectDetailEntity } from './project-detail/project-detail-entity';
 import { ProjectDataComponent } from './project-detail/project-data/project-data.component';
 import { DeviceDataComponent } from './project-detail/device-data/device-data.component';
 import { PacketDataComponent } from './project-detail/packet-data/packet-data.component';
 import { EventMailComponent } from './project-wizard/events-step/event-mail/event-mail.component';
 
+
+import { MatChipsModule } from '@angular/material/chips';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatInputModule } from '@angular/material/input';
 @NgModule({
   declarations: [
     ProjectsComponent,
@@ -54,7 +59,10 @@ import { EventMailComponent } from './project-wizard/events-step/event-mail/even
     HyperiotComponentsModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule
+    RouterModule,
+    MatChipsModule,
+    MatAutocompleteModule,
+    MatInputModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

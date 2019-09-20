@@ -1,12 +1,16 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { Observable, zip } from 'rxjs';
+import { Observable, zip, Observer } from 'rxjs';
 
 import { HprojectsService, HProject, HdevicesService, HDevice, HpacketsService, HPacket } from '@hyperiot/core';
 import { TreeDataNode } from '@hyperiot/components';
 
 import { HytTreeViewProjectComponent } from '@hyperiot/components/lib/hyt-tree-view-project/hyt-tree-view-project.component';
+import { ProjectDetailEntity } from './project-detail-entity';
+import { MatDialog } from '@angular/material';
+import { SaveChangesDialogComponent } from 'src/app/components/dialogs/save-changes-dialog/save-changes-dialog.component';
+import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
 
 enum TreeStatusEnum {
   Ready,
@@ -31,12 +35,16 @@ export class ProjectDetailComponent implements OnInit {
   private focusTimeout: any = null;
   private projectId: 0;
 
+  projectName: string;
+  validationErrors: [];
+
   constructor(
     private hProjectService: HprojectsService,
     private hDeviceService: HdevicesService,
     private packetService: HpacketsService,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit() {
@@ -44,10 +52,25 @@ export class ProjectDetailComponent implements OnInit {
     this.refresh();
   }
 
-  onActivate(childComponent) {
-    if (childComponent.treeHost === null) {
-      childComponent.treeHost = this;
+  currentEntity: ProjectDetailEntity = null;
+  onActivate(childComponent: ProjectDetailEntity) {
+    if (childComponent.isProjectEntity) {
+      this.currentEntity = childComponent;
+      this.currentEntity.treeHost = this;
     }
+  }
+
+  onSaveClick() {
+    this.validationErrors = [];
+    this.currentEntity.save((res) => {
+      // TODO: ...
+    }, (err) => {
+      // TODO: ...
+    });
+  }
+
+  onDeleteClick() {
+    this.openDeleteDialog();
   }
 
   refresh() {
@@ -60,31 +83,35 @@ export class ProjectDetailComponent implements OnInit {
           icon: 'work',
           children: []
         };
+        this.projectName = p.name;
         this.treeData.push(projectNode);
         this.treeView.setData(this.treeData);
         this.hDeviceService.findAllHDevice(p.id).subscribe((deviceList: HDevice[]) => {
           const requests: Observable<any>[] = [];
+          const devices = []; // device lookup list
           deviceList.map((d) => {
+            const node = {
+              data: { id: d.id, type: 'device' },
+              name: d.deviceName,
+              icon: 'devices_other'
+            };
+            devices[d.id] = node;
+            projectNode.children.push(node);
             requests.push(this.packetService.getHDevicePacketList(d.id));
           });
           zip(...requests).subscribe((packetList: Array<HPacket[]>) => {
-            console.log(packetList);
             packetList.map((kd: HPacket[]) => {
+              if (kd.length === 0) {
+                return;
+              }
               const d = kd[0].device;
-              const node = {
-                data: { id: d.id, type: 'device' },
-                name: d.deviceName,
-                icon: 'devices_other',
-                children: kd.map((k) => {
-                    return {
-                      data: { id: k.id, type: 'packet' },
-                      name: k.name,
-                      icon: 'settings_ethernet'
-                    };
-                  }
-                  ) as TreeDataNode[]
-              };
-              projectNode.children.push(node);
+              devices[d.id].children = kd.map((k) => {
+                return {
+                  data: { id: k.id, type: 'packet' },
+                  name: k.name,
+                  icon: 'settings_ethernet'
+                };
+              });
             });
             this.treeView.setData(this.treeData);
             if (this.treeView.treeControl.dataNodes.length > 0) {
@@ -94,8 +121,7 @@ export class ProjectDetailComponent implements OnInit {
           }, (err) => {
             this.treeStatus = TreeStatusEnum.Error;
           });
-          if (deviceList.length === 0) {
-            this.treeView.setData(this.treeData);
+          if (requests.length === 0) {
             this.treeStatus = TreeStatusEnum.Ready;
           }
         }, (err) => {
@@ -153,5 +179,43 @@ export class ProjectDetailComponent implements OnInit {
     const node = this.find(data);
     node.name = data.name;
     this.focus(data);
+  }
+
+  openSaveDialog(): Observable<boolean> {
+    return new Observable((observer: Observer<boolean>) => {
+      const dialogRef = this.dialog.open(SaveChangesDialogComponent, {
+        data: {title: 'Discard changes?', message: 'There are pending changes to be saved.'}
+      });
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result === 'save') {
+          this.validationErrors = [];
+          this.currentEntity.save((res) => {
+            observer.next(true);
+            observer.complete();
+          }, (err) => {
+            console.log('###', err);
+            observer.next(false);
+            observer.complete();
+          });
+        } else {
+          observer.next(result === 'discard' || result === 'save');
+          observer.complete();
+        }
+      });
+    });
+  }
+  openDeleteDialog() {
+    const dialogRef = this.dialog.open(DeleteConfirmDialogComponent, {
+      data: {title: 'Delete item?', message: 'This operation cannot be undone.'}
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === 'delete') {
+        this.currentEntity.delete((res) => {
+          // TODO: ...
+        }, (err) => {
+          // TODO: report error
+        });
+      }
+    });
   }
 }

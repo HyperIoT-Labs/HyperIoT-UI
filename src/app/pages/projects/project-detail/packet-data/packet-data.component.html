@@ -7,7 +7,8 @@
         <div class="d-flex flex-column flex-md-row flex-wrap">
             <div class="pr-md-3 flex-fill">
 
-                <hyt-input-text name="name" placeholder="Name" [form]="form" formControlName="name"
+                <hyt-input-text name="hpacket-name" placeholder="Name"
+                    [form]="form"
                     errorPosition="bottom" minlength="3" isRequired="true">
                 </hyt-input-text>
 
@@ -15,7 +16,7 @@
             <div class="pl-md-3 flex-fill">
 
                 <div>
-                    <hyt-select [form]="form" label="Traffic plan" name="trafficPlan" formControlName="trafficPlan"
+                    <hyt-select [form]="form" label="Traffic plan" name="hpacket-trafficplan"
                         isRequired="true" [options]="trafficPlanOptions"></hyt-select>
                 </div>
 
@@ -27,7 +28,7 @@
 
                 <label>Type</label>
                 <div class="radio-options pl-2 pr-2">
-                    <hyt-radio-button [form]="form" name="type" formControlName="type" [options]="typeOptions">
+                    <hyt-radio-button [form]="form" name="hpacket-type" [options]="typeOptions">
                     </hyt-radio-button>
                 </div>
 
@@ -36,7 +37,7 @@
 
                 <label>Format</label>
                 <div class="radio-options pl-2 pr-2">
-                    <hyt-radio-button [form]="form" name="format" formControlName="format" [options]="formatOptions">
+                    <hyt-radio-button [form]="form" name="hpacket-format" [options]="formatOptions">
                     </hyt-radio-button>
                 </div>
 
@@ -48,7 +49,7 @@
 
                 <label>Serialization</label>
                 <div class="radio-options pl-2 pr-2">
-                    <hyt-radio-button [form]="form" name="serialization" formControlName="serialization"
+                    <hyt-radio-button [form]="form" name="hpacket-serialization"
                         [options]="serializationOptions">
                     </hyt-radio-button>
                 </div>
@@ -81,30 +82,19 @@
 
             <div class="pr-md-3 flex-fill">
 
-                <hyt-input-text placeholder="Timestamp field" [form]="form" name="timestampField"
-                    formControlName="timestampField" errorPosition="bottom" minlength="1" isRequired="true">
+                <hyt-input-text placeholder="Timestamp field" [form]="form" name="hpacket-timestampfield"
+                    errorPosition="bottom" minlength="1" isRequired="true">
                 </hyt-input-text>
 
             </div>
             <div class="pl-md-3 flex-fill">
 
-                <hyt-input-text placeholder="Timestamp format" [form]="form" name="timestampFormat"
-                    formControlName="timestampFormat" errorPosition="bottom" minlength="3" isRequired="true">
+                <hyt-input-text placeholder="Timestamp format" [form]="form" name="hpacket-timestampformat"
+                    errorPosition="bottom" minlength="3" isRequired="true">
                 </hyt-input-text>
 
             </div>
 
-        </div>
-
-        <div class="mt-4 d-flex flex-row justify-content-around">
-            <hyt-button (clickFn)="onSaveClick()" [isDisabled]="!form.valid || !isDirty()">
-                <mat-icon class="md-primary">save</mat-icon>
-                <span>Save</span>
-            </hyt-button>
-            <hyt-button (clickFn)="onDeleteClick()">
-                <mat-icon>delete</mat-icon>
-                <span>Delete</span>
-            </hyt-button>
         </div>
 
     </form>

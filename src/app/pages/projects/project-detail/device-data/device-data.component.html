@@ -2,23 +2,25 @@
 
 <div class="container">
 
-    <form [formGroup]="form">
+    <form [formGroup]="form" #formReference>
 
         <div class="d-flex flex-column flex-md-row flex-wrap">
 
             <div class="pr-md-3 flex-fill">
-                <hyt-input-text name="name" placeholder="Name"
+                <hyt-input-text name="hdevice-devicename"
                     [form]="form"
-                    formControlName="name"
                     errorPosition="bottom"
+                    placeholder="Name"
                     minlength="3"
+                    patternz="[A-Za-z0-9_-]*"
+                    [injectedErrorMsg]="getError('hdevice-devicename')"
                     isRequired="true">
                 </hyt-input-text>
             </div>
             <div class="pl-md-3 flex-fill">
-                <hyt-input-text name="brand" placeholder="Brand"
-                    [form]="form"
-                    formControlName="brand"></hyt-input-text>
+                <hyt-input-text name="hdevice-brand"
+                    placeholder="Brand"
+                    [form]="form"></hyt-input-text>
             </div>
 
         </div>
@@ -27,14 +29,14 @@
         <div class="d-flex flex-column flex-md-row flex-wrap">
 
             <div class="pr-md-3 flex-fill">
-                <hyt-input-text name="model" placeholder="Model"
-                    [form]="form"
-                    formControlName="model"></hyt-input-text>
+                <hyt-input-text name="hdevice-model"
+                    placeholder="Model"
+                    [form]="form"></hyt-input-text>
             </div>
             <div class="pl-md-3 flex-fill">
-                <hyt-input-text name="software" placeholder="Software version"
-                    [form]="form"
-                    formControlName="software"></hyt-input-text>
+                <hyt-input-text name="hdevice-softwareversion"
+                    placeholder="Software version"
+                    [form]="form"></hyt-input-text>
             </div>
 
         </div>
@@ -42,27 +44,16 @@
         <div class="d-flex flex-column flex-md-row flex-wrap">
 
             <div class="pr-md-3 flex-fill">
-                <hyt-input-text name="firmware" placeholder="Firmware version"
-                    [form]="form"
-                    formControlName="firmware"></hyt-input-text>
+                <hyt-input-text name="hdevice-firmwareversion"
+                    placeholder="Firmware version"
+                    [form]="form"></hyt-input-text>
             </div>
             <div class="pl-md-3 flex-fill">
-                <hyt-text-area name="description" placeholder="Description"
-                    [form]="form"
-                    formControlName="description"></hyt-text-area>
+                <hyt-text-area name="hdevice-description"
+                    placeholder="Description"
+                    [form]="form"></hyt-text-area>
             </div>
 
-        </div>
-
-        <div class="mt-4 d-flex flex-row justify-content-around">
-            <hyt-button (clickFn)="onSaveClick()" [isDisabled]="!form.valid || !isDirty()">
-                <mat-icon class="md-primary">save</mat-icon>
-                <span>Save</span>
-            </hyt-button>
-            <hyt-button (clickFn)="onDeleteClick()">
-                <mat-icon>delete</mat-icon>
-                <span>Delete</span>
-            </hyt-button>
         </div>
 
     </form>

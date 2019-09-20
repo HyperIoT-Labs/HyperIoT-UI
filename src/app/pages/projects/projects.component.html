@@ -3,15 +3,15 @@
   <div class="header d-flex flex-row justify-content-stretch">
       
     <div class="breadcrumb flex-grow-1">
-        Projects >
-      </div>
+        <a [routerLink]="['/']">Home</a> > <strong>Projects</strong> 
+    </div>
 
-      <!-- button on the right side -->
-      <div class="align-self-right">
-        <hyt-button *ngIf="pageStatus === 1" id="add-project-btn-top" (click)="addProject()" type="button">
-          Add New Project
-        </hyt-button>
-      </div>
+    <!-- button on the right side -->
+    <div class="align-self-right">
+      <hyt-button *ngIf="pageStatus === 1" id="add-project-btn-top" (click)="addProject()" type="button">
+        Add New Project
+      </hyt-button>
+    </div>
 
   </div>
 
