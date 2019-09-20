@@ -76,7 +76,7 @@ export class DeviceDataComponent extends ProjectDetailEntity implements OnInit, 
 
   private saveDevice(successCallback?, errorCallback?) {
     this.loadingStatus = LoadingStatusEnum.Saving;
-    this.validationError = [];
+    this.resetErrors();
     let d = this.device;
     d.deviceName = this.form.get('hdevice-devicename').value;
     d.description = this.form.get('hdevice-description').value;
@@ -92,7 +92,7 @@ export class DeviceDataComponent extends ProjectDetailEntity implements OnInit, 
       successCallback && successCallback(res);
     }, (err) => {
       if (err.error && err.error.validationErrors) {
-        this.setError(err);
+        this.setErrors(err);
         this.loadingStatus = LoadingStatusEnum.Ready;
       } else {
         this.loadingStatus = LoadingStatusEnum.Error;

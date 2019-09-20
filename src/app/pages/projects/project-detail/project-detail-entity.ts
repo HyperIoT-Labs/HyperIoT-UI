@@ -54,7 +54,7 @@ export abstract class ProjectDetailEntity {
         const err = this.validationError.find((e) => e.field === field);
         return (err && err.message) || '';
     }
-    setError(err) {
+    setErrors(err) {
         this.validationError = err.error.validationErrors;
         this.validationError.map((e) => {
           this.form.get(e.field).setErrors({
@@ -63,6 +63,9 @@ export abstract class ProjectDetailEntity {
               }
           });
         });
+    }
+    resetErrors() {
+        this.validationError = [];
     }
     resetForm() {
         this.originalValue = JSON.stringify(this.form.value, this.circularFix);

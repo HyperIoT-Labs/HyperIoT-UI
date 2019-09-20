@@ -64,7 +64,7 @@ export class ProjectDataComponent extends ProjectDetailEntity implements OnDestr
 
   private saveProject(successCallback?, errorCallback?) {
     this.loadingStatus = LoadingStatusEnum.Saving;
-    this.validationError = [];
+    this.resetErrors();
     let p = this.project;
     p.name = this.form.get('hproject-name').value;
     p.description = this.form.get('hproject-description').value;
@@ -76,7 +76,7 @@ export class ProjectDataComponent extends ProjectDetailEntity implements OnDestr
       successCallback && successCallback(res);
     }, (err) => {
       if (err.error && err.error.validationErrors) {
-        this.setError(err);
+        this.setErrors(err);
         this.loadingStatus = LoadingStatusEnum.Ready;
       } else {
         this.loadingStatus = LoadingStatusEnum.Error;
