@@ -5,15 +5,15 @@
     <form [formGroup]="form" class="d-flex flex-column justify-content-center">
 
         <hyt-input-text [form]="form"
-            name="name" placeholder="Name"
-            formControlName="name"
+            name="hproject-name"
+            placeholder="Name"
             errorPosition="bottom"
             minlength="3"
             [isRequired]="true"></hyt-input-text>
 
         <hyt-text-area [form]="form"
-            name="description" placeholder="Description"
-            formControlName="description"></hyt-text-area>
+            name="hproject-description"
+            placeholder="Description"></hyt-text-area>
 
     </form>
 

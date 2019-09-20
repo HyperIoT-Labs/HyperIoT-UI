@@ -56,15 +56,15 @@ export class DeviceDataComponent extends ProjectDetailEntity implements OnInit, 
       // update form data
       this.form.get('hdevice-devicename')
         .setValue(d.deviceName);
-      this.form.get('brand')
+      this.form.get('hdevice-brand')
         .setValue(d.brand);
-      this.form.get('model')
+      this.form.get('hdevice-model')
         .setValue(d.model);
-      this.form.get('firmware')
+      this.form.get('hdevice-firmwareversion')
         .setValue(d.firmwareVersion);
-      this.form.get('software')
+      this.form.get('hdevice-softwareversion')
         .setValue(d.softwareVersion);
-      this.form.get('description')
+      this.form.get('hdevice-description')
         .setValue(d.description);
       this.resetForm();
       this.treeHost.focus({ id: d.id, type: 'device' });
@@ -79,11 +79,11 @@ export class DeviceDataComponent extends ProjectDetailEntity implements OnInit, 
     this.validationError = [];
     let d = this.device;
     d.deviceName = this.form.get('hdevice-devicename').value;
-    d.description = this.form.get('description').value;
-    d.brand = this.form.get('brand').value;
-    d.model = this.form.get('model').value;
-    d.firmwareVersion = this.form.get('firmware').value;
-    d.softwareVersion = this.form.get('software').value;
+    d.description = this.form.get('hdevice-description').value;
+    d.brand = this.form.get('hdevice-brand').value;
+    d.model = this.form.get('hdevice-model').value;
+    d.firmwareVersion = this.form.get('hdevice-firmwareversion').value;
+    d.softwareVersion = this.form.get('hdevice-softwareversion').value;
     this.hDeviceService.updateHDevice(d).subscribe((res) => {
       this.device = d = res;
       this.resetForm();

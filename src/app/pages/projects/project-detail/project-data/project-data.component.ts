@@ -51,9 +51,9 @@ export class ProjectDataComponent extends ProjectDetailEntity implements OnDestr
     this.hProjectService.findHProject(this.projectId).subscribe((p: HProject) => {
       this.project = p;
       // update form data
-      this.form.get('name')
+      this.form.get('hproject-name')
         .setValue(p.name);
-      this.form.get('description')
+      this.form.get('hproject-description')
         .setValue(p.description);
       this.resetForm();
       this.loadingStatus = LoadingStatusEnum.Ready;
@@ -66,8 +66,8 @@ export class ProjectDataComponent extends ProjectDetailEntity implements OnDestr
     this.loadingStatus = LoadingStatusEnum.Saving;
     this.validationError = [];
     let p = this.project;
-    p.name = this.form.get('name').value;
-    p.description = this.form.get('description').value;
+    p.name = this.form.get('hproject-name').value;
+    p.description = this.form.get('hproject-description').value;
     this.hProjectService.updateHProject(p).subscribe((res) => {
       this.project = p = res;
       this.resetForm();
