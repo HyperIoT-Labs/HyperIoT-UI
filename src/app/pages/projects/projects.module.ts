@@ -20,6 +20,7 @@ import { RuleDefinitionComponent } from './project-wizard/rule-definition/rule-d
 
 import { ProjectCardComponent } from './project-card/project-card.component';
 import { ProjectDetailComponent } from './project-detail/project-detail.component';
+import { ProjectDetailEntity } from './project-detail/project-detail-entity';
 import { ProjectDataComponent } from './project-detail/project-data/project-data.component';
 import { DeviceDataComponent } from './project-detail/device-data/device-data.component';
 import { PacketDataComponent } from './project-detail/packet-data/packet-data.component';

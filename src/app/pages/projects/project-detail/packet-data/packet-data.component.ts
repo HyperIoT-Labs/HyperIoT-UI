@@ -1,17 +1,16 @@
 import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 
-import { Observable, Observer, Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { MatDialog, MatRadioChange } from '@angular/material';
+import { MatRadioChange } from '@angular/material';
 
 import { HPacket, HpacketsService } from '@hyperiot/core';
 import { Option } from '@hyperiot/components';
 
-import { SaveChangesDialogComponent } from 'src/app/components/dialogs/save-changes-dialog/save-changes-dialog.component';
-import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
 import { ProjectDetailComponent } from '../project-detail.component';
+import { ProjectDetailEntity } from '../project-detail-entity';
 
 enum LoadingStatusEnum {
   Ready,
@@ -24,7 +23,7 @@ enum LoadingStatusEnum {
   templateUrl: './packet-data.component.html',
   styleUrls: ['./packet-data.component.scss']
 })
-export class PacketDataComponent implements OnDestroy {
+export class PacketDataComponent implements ProjectDetailEntity, OnDestroy {
   packetId: number;
   packet: HPacket = {} as HPacket;
   deviceName: '---';
@@ -35,6 +34,7 @@ export class PacketDataComponent implements OnDestroy {
   LoadingStatus = LoadingStatusEnum;
   loadingStatus = LoadingStatusEnum.Ready;
 
+  isProjectEntity = true;
   treeHost: ProjectDetailComponent = null;
 
   typeOptions: Option[] = Object.keys(HPacket.TypeEnum)
@@ -49,6 +49,8 @@ export class PacketDataComponent implements OnDestroy {
   trafficPlanOptions: Option[] = Object.keys(HPacket.TrafficPlanEnum)
     .map((k) => { return {label: k, value: k} });
 
+  private routerSubscription: Subscription;
+
   private circularFix = (key: any, value: any) => {
     if (value instanceof MatRadioChange) {
       // TODO: this should be fixed in HyperIoT components library (hyt-radio-button)
@@ -57,16 +59,14 @@ export class PacketDataComponent implements OnDestroy {
     return value;
   }
 
-  private routerSubscription: Subscription;
-
   constructor(
     private hPacketService: HpacketsService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private formBuilder: FormBuilder,
-    private dialog: MatDialog
+    private formBuilder: FormBuilder
   ) {
     this.form = this.formBuilder.group({});
+    this.originalValue = JSON.stringify(this.form.value);
     this.routerSubscription = this.router.events.subscribe((rl) => {
       if (rl instanceof NavigationEnd) {
         this.packetId = this.activatedRoute.snapshot.params.packetId;
@@ -79,22 +79,25 @@ export class PacketDataComponent implements OnDestroy {
     this.routerSubscription.unsubscribe();
   }
 
-  isDirty(): boolean {
-    return JSON.stringify(this.form.value, this.circularFix) !== this.originalValue;
-  }
-
   canDeactivate(): Observable<any> | boolean {
     if (this.isDirty()) {
-      return this.openSaveDialog();
+      return this.treeHost.openSaveDialog();
     }
     return true;
   }
 
-  onSaveClick() {
-    this.savePacket();
+  // ProjectDetailEntity interface
+  save(successCallback, errorCallback) {
+    this.savePacket(successCallback, errorCallback);
   }
-  onDeleteClick() {
-    this.openDeleteDialog();
+  delete(successCallback, errorCallback) {
+    this.deletePacket(successCallback, errorCallback);
+  }
+  isValid(): boolean {
+    return this.form.valid;
+  }
+  isDirty(): boolean {
+    return JSON.stringify(this.form.value, this.circularFix) !== this.originalValue;
   }
 
   private loadPacket() {
@@ -150,53 +153,18 @@ export class PacketDataComponent implements OnDestroy {
   private deletePacket(successCallback?, errorCallback?) {
     this.loadingStatus = LoadingStatusEnum.Saving;
     this.hPacketService.deleteHPacket(this.packet.id).subscribe((res) => {
-      // TODO: implement tree-view refresh
       successCallback && successCallback(res);
       this.loadingStatus = LoadingStatusEnum.Ready;
+      // Navigate to parent node (device page)
+      this.router.navigate([
+        '/projects', this.packet.device.project.id,
+        {outlets: { projectDetails: ['device', this.packet.device.id] }}
+      ]);
+      this.treeHost.refresh();
     }, (err) => {
       errorCallback && errorCallback(err);
       this.loadingStatus = LoadingStatusEnum.Error;
     });
   }
 
-  private openSaveDialog(): Observable<boolean> {
-    return new Observable((observer: Observer<boolean>) => {
-      const dialogRef = this.dialog.open(SaveChangesDialogComponent, {
-        data: {title: 'Discard changes?', message: 'There are pending changes to be saved.'}
-      });
-      dialogRef.afterClosed().subscribe((result) => {
-        if (result === 'save') {
-          this.savePacket((res) => {
-            observer.next(true);
-            observer.complete();
-          }, (err) => {
-            observer.next(false);
-            observer.complete();
-          });
-        } else {
-          observer.next(result === 'discard' || result === 'save');
-          observer.complete();
-        }
-      });
-    });
-  }
-  private openDeleteDialog() {
-    const dialogRef = this.dialog.open(DeleteConfirmDialogComponent, {
-      data: {title: 'Delete project?', message: 'This operation cannot be undone.'}
-    });
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result === 'delete') {
-        this.deletePacket((res) => {
-          // Navigate to parent node (device page)
-          this.router.navigate([
-            '/projects', this.packet.device.project.id,
-            {outlets: { projectDetails: ['device', this.packet.device.id] }}
-          ]);
-          this.treeHost.refresh();
-        }, (err) => {
-          // TODO: report error
-        });
-      }
-    });
-  }
 }

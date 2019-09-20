@@ -29,13 +29,20 @@ import { MatButtonModule, MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS } from '@a
 // hyperiot
 import { Configuration, ConfigurationParameters, HyperiotClientModule } from '@hyperiot/core';
 import { HyperiotComponentsModule } from '@hyperiot/components';
-import { ActivatedRoute, ActivatedRouteSnapshot, RouterModule } from '@angular/router';
+import { RouterModule, DefaultUrlSerializer, UrlSerializer, UrlTree } from '@angular/router';
 
 // local
 import { ProjectsModule } from './pages/projects/projects.module';
 import { CanDeactivateGuard } from './components/CanDeactivateGuard';
 import { SaveChangesDialogComponent } from './components/dialogs/save-changes-dialog/save-changes-dialog.component';
 import { DeleteConfirmDialogComponent } from './components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
+
+export class MyUrlSerializer extends DefaultUrlSerializer implements UrlSerializer  {
+  /** Converts a `UrlTree` into a url */
+  serialize(tree: UrlTree): string {
+    return super.serialize(tree); //.replace(/\(|\)|\w+-\w+:/g, '');
+  }
+}
 
 export function apiConfigFactory(): Configuration {
   const params: ConfigurationParameters = {
@@ -82,6 +89,7 @@ export function apiConfigFactory(): Configuration {
   ],
   providers: [
     // ActivatedRouteSnapshot,
+    { provide: UrlSerializer, useClass: MyUrlSerializer },
     CanDeactivateGuard,
     CookieService,
     I18n,

@@ -1,3 +1,11 @@
+:host {
+    position: relative;
+    display: block;
+    padding-top: 16px;
+    padding-left: 8px;
+    margin-right: 240px;
+}
+
 .treeview {
     min-width: 200px;
     width: 200px;
@@ -10,10 +18,10 @@
     width: 36px;
     text-decoration: none;
 }
-:host ::ng-deep .node-name {
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
+.side-bar {
+    z-index: 10;
+    position: fixed;
+    padding-right: 20px;
+    right: 0; top: 64px; bottom: 0;
+    width: 240px;
 }
-
-

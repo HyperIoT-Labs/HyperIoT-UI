@@ -2,15 +2,12 @@ import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { FormGroup, FormBuilder } from '@angular/forms';
 
-import { Observable, Observer, Subscription } from 'rxjs';
-
-import { MatDialog } from '@angular/material/dialog';
+import { Observable, Subscription } from 'rxjs';
 
 import { HprojectsService, HProject } from '@hyperiot/core';
 
-import { SaveChangesDialogComponent } from 'src/app/components/dialogs/save-changes-dialog/save-changes-dialog.component';
-import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
 import { ProjectDetailComponent } from '../project-detail.component';
+import { ProjectDetailEntity } from '../project-detail-entity';
 
 enum LoadingStatusEnum {
   Ready,
@@ -24,7 +21,7 @@ enum LoadingStatusEnum {
   templateUrl: './project-data.component.html',
   styleUrls: ['./project-data.component.scss']
 })
-export class ProjectDataComponent implements OnDestroy {
+export class ProjectDataComponent implements ProjectDetailEntity, OnDestroy {
   projectId: number;
   project: HProject = {} as HProject;
 
@@ -34,6 +31,7 @@ export class ProjectDataComponent implements OnDestroy {
   LoadingStatus = LoadingStatusEnum;
   loadingStatus = LoadingStatusEnum.Ready;
 
+  isProjectEntity = true;
   treeHost: ProjectDetailComponent = null;
 
   private routerSubscription: Subscription;
@@ -42,10 +40,10 @@ export class ProjectDataComponent implements OnDestroy {
     private hProjectService: HprojectsService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private formBuilder: FormBuilder,
-    private dialog: MatDialog
+    private formBuilder: FormBuilder
   ) {
     this.form = this.formBuilder.group({});
+    this.originalValue = JSON.stringify(this.form.value);
     this.routerSubscription = this.router.events.subscribe((rl) => {
       if (rl instanceof NavigationEnd) {
         this.projectId = this.activatedRoute.snapshot.params.projectId;
@@ -60,19 +58,21 @@ export class ProjectDataComponent implements OnDestroy {
 
   canDeactivate(): Observable<any> | boolean {
     if (this.isDirty()) {
-      return this.openSaveDialog();
+      return this.treeHost.openSaveDialog();
     }
     return true;
   }
 
-  onSaveClick() {
-    this.saveProject();
+  // ProjectDetailEntity interface
+  save(successCallback, errorCallback) {
+    this.saveProject(successCallback, errorCallback);
   }
-
-  onDeleteClick() {
-    this.openDeleteDialog();
+  delete(successCallback, errorCallback) {
+    this.deleteProject(successCallback, errorCallback);
   }
-
+  isValid(): boolean {
+    return this.form.valid;
+  }
   isDirty(): boolean {
     return JSON.stringify(this.form.value) !== this.originalValue;
   }
@@ -113,47 +113,10 @@ export class ProjectDataComponent implements OnDestroy {
     this.loadingStatus = LoadingStatusEnum.Saving;
     this.hProjectService.deleteHProject(this.project.id).subscribe((res) => {
       successCallback && successCallback(res);
-      this.router.navigate(['/projects']);
       this.loadingStatus = LoadingStatusEnum.Ready;
     }, (err) => {
       errorCallback && errorCallback(err);
       this.loadingStatus = LoadingStatusEnum.Error;
-    });
-  }
-
-  private openSaveDialog(): Observable<any> {
-    return new Observable((observer: Observer<boolean>) => {
-      const dialogRef = this.dialog.open(SaveChangesDialogComponent, {
-        data: {title: 'Discard changes?', message: 'There are pending changes to be saved.'}
-      });
-      dialogRef.afterClosed().subscribe((result) => {
-        if (result === 'save') {
-          this.saveProject((res) => {
-            observer.next(true);
-            observer.complete();
-          }, (err) => {
-            observer.next(false);
-            observer.complete();
-          });
-        } else {
-          observer.next(result === 'discard' || result === 'save');
-          observer.complete();
-        }
-      });
-    });
-  }
-  private openDeleteDialog() {
-    const dialogRef = this.dialog.open(DeleteConfirmDialogComponent, {
-      data: {title: 'Delete project?', message: 'This operation cannot be undone.'}
-    });
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result === 'delete') {
-        this.deleteProject((res) => {
-          // TODO: ...
-        }, (err) => {
-          // TODO: report error
-        });
-      }
     });
   }
 }
