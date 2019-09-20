@@ -7,7 +7,8 @@ import { Subject } from 'rxjs';
 import {
     DashboardwidgetsService,
     DashboardsService,
-    DashboardWidget
+    DashboardWidget,
+    HprojectsService
 } from '@hyperiot/core';
 
 @Injectable()
@@ -20,8 +21,13 @@ export class DashboardConfigService {
     constructor(
         private dashboardService: DashboardsService,
         private dashboardWidgetService: DashboardwidgetsService,
+        private hProjectService: HprojectsService,
         private http: HttpClient
     ) { }
+
+    getProjectsList() {
+        return this.hProjectService.cardsView();
+    }
 
     getDashboardList() {
         return this.dashboardService.findAllDashboard();

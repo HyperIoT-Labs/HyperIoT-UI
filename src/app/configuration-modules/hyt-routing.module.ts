@@ -21,6 +21,7 @@ import { ProjectDataComponent } from '../pages/projects/project-detail/project-d
 import { DeviceDataComponent } from '../pages/projects/project-detail/device-data/device-data.component';
 import { PacketDataComponent } from '../pages/projects/project-detail/packet-data/packet-data.component';
 import { CanDeactivateGuard } from '../components/CanDeactivateGuard';
+import { DashboardComponent } from '../pages/dashboard/dashboard.component';
 
 @Injectable()
 export class LoggedInGuard implements CanActivate {
@@ -130,7 +131,7 @@ const hyperiotRoutes: Routes = [
   },
   {
     path: 'dashboards',
-    component: DashboardsListComponent,
+    component: DashboardComponent,
     canActivate: [LoggedInGuard],
     data: {
       showToolBar: true,
