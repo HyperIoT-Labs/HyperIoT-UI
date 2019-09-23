@@ -9,6 +9,8 @@
 
                 <hyt-input-text name="hpacket-name" placeholder="Name"
                     [form]="form"
+                    [injectedErrorMsg]="getError('hpacket-name')"
+                    hintMessage="Enter the packet name."
                     errorPosition="bottom" minlength="3" isRequired="true">
                 </hyt-input-text>
 
@@ -17,6 +19,8 @@
 
                 <div>
                     <hyt-select [form]="form" label="Traffic plan" name="hpacket-trafficplan"
+                        [injectedErrorMsg]="getError('hpacket-trafficplan')"
+                        hintMessage="Select traffic plan."
                         isRequired="true" [options]="trafficPlanOptions"></hyt-select>
                 </div>
 
@@ -28,7 +32,11 @@
 
                 <label>Type</label>
                 <div class="radio-options pl-2 pr-2">
-                    <hyt-radio-button [form]="form" name="hpacket-type" [options]="typeOptions">
+                    <hyt-radio-button
+                        [form]="form" name="hpacket-type"
+                        [options]="typeOptions"
+                        [injectedErrorMsg]="getError('hpacket-type')"
+                        hintMessage="Set the packet type.">
                     </hyt-radio-button>
                 </div>
 
@@ -37,7 +45,10 @@
 
                 <label>Format</label>
                 <div class="radio-options pl-2 pr-2">
-                    <hyt-radio-button [form]="form" name="hpacket-format" [options]="formatOptions">
+                    <hyt-radio-button
+                        [form]="form"
+                        [injectedErrorMsg]="getError('hpacket-format')"
+                        name="hpacket-format" [options]="formatOptions">
                     </hyt-radio-button>
                 </div>
 
@@ -49,28 +60,11 @@
 
                 <label>Serialization</label>
                 <div class="radio-options pl-2 pr-2">
-                    <hyt-radio-button [form]="form" name="hpacket-serialization"
-                        [options]="serializationOptions">
+                    <hyt-radio-button [form]="form"
+                        name="hpacket-serialization" [options]="serializationOptions"
+                        [injectedErrorMsg]="getError('hpacket-serialization')">
                     </hyt-radio-button>
                 </div>
-
-            </div>
-            <div class="pl-md-3 flex-fill">
-
-            </div>
-        </div>
-
-        <div class="d-flex flex-column flex-md-row flex-wrap">
-            <div class="pr-md-3 flex-fill">
-
-            </div>
-            <div class="pl-md-3 flex-fill">
-
-            </div>
-        </div>
-
-        <div class="d-flex flex-column flex-md-row flex-wrap">
-            <div class="pr-md-3 flex-fill">
 
             </div>
             <div class="pl-md-3 flex-fill">
@@ -83,6 +77,8 @@
             <div class="pr-md-3 flex-fill">
 
                 <hyt-input-text placeholder="Timestamp field" [form]="form" name="hpacket-timestampfield"
+                    [injectedErrorMsg]="getError('hpacket-timestampfield')"
+                    hintMessage="Enter the timestamp field name."
                     errorPosition="bottom" minlength="1" isRequired="true">
                 </hyt-input-text>
 
@@ -90,7 +86,9 @@
             <div class="pl-md-3 flex-fill">
 
                 <hyt-input-text placeholder="Timestamp format" [form]="form" name="hpacket-timestampformat"
-                    errorPosition="bottom" minlength="3" isRequired="true">
+                [injectedErrorMsg]="getError('hpacket-timestampformat')"
+                hintMessage="Enter the timestamp field format: eg. 'dd/MM/yyyy HH.mmZ'."
+                errorPosition="bottom" minlength="3" isRequired="true">
                 </hyt-input-text>
 
             </div>
@@ -99,8 +97,11 @@
 
     </form>
 
+    <!-- TODO: This HTML block is repeated
+               across all 'entity' components,
+               consider making a component out of it -->
     <div *ngIf="loadingStatus !== LoadingStatus.Ready" class="overlay d-flex flex-column align-items-center justify-content-center">
-        <h4 *ngIf="loadingStatus === LoadingStatus.Loading">Loading packet data...</h4>
+        <h4 *ngIf="loadingStatus === LoadingStatus.Loading">Loading project data...</h4>
         <div *ngIf="loadingStatus === LoadingStatus.Error" class="d-flex flex-column justify-content-center">
             <h4>An error has occurred =/</h4>
             <button mat-stroked-button (click)="loadingStatus = LoadingStatus.Ready">
@@ -108,7 +109,10 @@
                 <mat-icon>close</mat-icon>
             </button>
         </div>
-        <h4 *ngIf="loadingStatus === LoadingStatus.Saving">Saving packet data...</h4>
+        <h4 *ngIf="loadingStatus === LoadingStatus.Saving">Saving project data...</h4>
+        <mat-progress-bar
+            *ngIf="loadingStatus === LoadingStatus.Loading || loadingStatus === LoadingStatus.Saving"
+            mode="query"></mat-progress-bar>
     </div>
 
 </div>

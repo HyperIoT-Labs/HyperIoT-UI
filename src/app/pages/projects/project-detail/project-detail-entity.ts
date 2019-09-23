@@ -38,13 +38,23 @@ export abstract class ProjectDetailEntity implements OnInit {
                 .querySelectorAll('[hintMessage]');
         hintElements.forEach((el: Element) => {
             const message = el.getAttribute('hintMessage');
-            el = el.querySelector('.hyt-input');
+            let tmp = el.querySelector('.hyt-input,mat-select');
+            if (tmp == null) {
+                return;
+                //tmp = el.closest('.mat-radio-group,.radio-options');
+                //console.log('2', tmp)
+                //if (tmp == null) return;
+            }
+            el = tmp;
             el.addEventListener('focus', () => {
                 this.projectHost.showHintMessage(message);
             });
             el.addEventListener('blur', () => {
                 this.projectHost.hideHintMessage();
             });
+            // TODO: remove listeners on ngOnDestroy()
+            // TODO: remove listeners on ngOnDestroy()
+            // TODO: remove listeners on ngOnDestroy()
             // TODO: remove listeners on ngOnDestroy()
         });
     }
@@ -99,7 +109,7 @@ export abstract class ProjectDetailEntity implements OnInit {
 
     treeView() {
         return {
-            refresh: this.projectHost.refresh,
+            refresh: this.projectHost.refresh.bind(this.projectHost),
             focus: (node: { id: any, type?: 'packet' | 'device' | 'project' | '' }) =>
                 this.projectHost.focus(node),
             updateNode: (nodeData: { id: any, type?: string, name: string }) =>

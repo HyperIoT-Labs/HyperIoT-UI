@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnDestroy, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 
@@ -13,7 +13,7 @@ import { ProjectDetailEntity, LoadingStatusEnum } from '../project-detail-entity
   templateUrl: './device-data.component.html',
   styleUrls: ['./device-data.component.scss']
 })
-export class DeviceDataComponent extends ProjectDetailEntity implements OnInit, OnDestroy {
+export class DeviceDataComponent extends ProjectDetailEntity implements OnDestroy {
   deviceId: number;
   device: HDevice = {} as HDevice;
 
@@ -33,9 +33,6 @@ export class DeviceDataComponent extends ProjectDetailEntity implements OnInit, 
         this.loadDevice();
       }
     });
-  }
-
-  ngOnInit() {
   }
 
   ngOnDestroy() {

@@ -42,8 +42,9 @@
             </hyt-button>
         </div>
 
-        <div class="m-2 mt-4 p-3 info-message" *ngIf="hintVisible">
-            {{hintMessage}}
+        <div *ngIf="hintVisible" class="info-message m-2 mt-4 d-flex flex-row">
+            <span class="text p-2 flex-grow-1">{{hintMessage}}</span>
+            <mat-icon class="mt-2 mr-2">info</mat-icon>
         </div>
         
     </div>
