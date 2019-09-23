@@ -38,13 +38,19 @@ export abstract class ProjectDetailEntity implements OnInit {
                 .querySelectorAll('[hintMessage]');
         hintElements.forEach((el: Element) => {
             const message = el.getAttribute('hintMessage');
-            el = el.querySelector('.hyt-input');
+            el = el.querySelector('.hyt-input,mat-select');
+            if (el == null) {
+                return;
+            }
             el.addEventListener('focus', () => {
                 this.projectHost.showHintMessage(message);
             });
             el.addEventListener('blur', () => {
                 this.projectHost.hideHintMessage();
             });
+            // TODO: remove listeners on ngOnDestroy()
+            // TODO: remove listeners on ngOnDestroy()
+            // TODO: remove listeners on ngOnDestroy()
             // TODO: remove listeners on ngOnDestroy()
         });
     }

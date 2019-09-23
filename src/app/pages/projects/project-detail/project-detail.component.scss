@@ -30,29 +30,16 @@
 .info-message {
     @include mat-elevation(4);
     border-radius: 8px;
-    animation: popup 0.3s;
     background: whitesmoke;
-}
-@keyframes popup {
-    0% {
-      transform: scale(1);
+    font-size: 14px;
+    & mat-icon {
+      color: gray;
     }
-    50% {
-      transform: scale(1.2);
-    }
-    60% {
-      transform: scale(1.15);
-    }
-    70% {
-      transform: scale(1.1);
-    }
-    80% {
-      transform: scale(1);
-    }
-    90% {
-      transform: scale(1.1);
-    }
-    100% {
-      transform: scale(1);
+    & .text {
+      margin: 0; padding: 0;
+      padding-left: 4px;
+      padding-right: 4px;
+      vertical-align: top;
+      line-height: 24px;
     }
 }

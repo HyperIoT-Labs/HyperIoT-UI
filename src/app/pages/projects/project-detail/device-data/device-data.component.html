@@ -14,12 +14,15 @@
                     minlength="3"
                     patternz="[A-Za-z0-9_-]*"
                     [injectedErrorMsg]="getError('hdevice-devicename')"
+                    hintMessage="Enter the device name."
                     isRequired="true">
                 </hyt-input-text>
             </div>
             <div class="pl-md-3 flex-fill">
                 <hyt-input-text name="hdevice-brand"
                     placeholder="Brand"
+                    [injectedErrorMsg]="getError('hdevice-brand')"
+                    hintMessage="Enter the device brand."
                     [form]="form"></hyt-input-text>
             </div>
 
@@ -31,11 +34,15 @@
             <div class="pr-md-3 flex-fill">
                 <hyt-input-text name="hdevice-model"
                     placeholder="Model"
+                    [injectedErrorMsg]="getError('hdevice-model')"
+                    hintMessage="Enter the device model."
                     [form]="form"></hyt-input-text>
             </div>
             <div class="pl-md-3 flex-fill">
                 <hyt-input-text name="hdevice-softwareversion"
                     placeholder="Software version"
+                    [injectedErrorMsg]="getError('hdevice-softwareversion')"
+                    hintMessage="Enter the device software version."
                     [form]="form"></hyt-input-text>
             </div>
 
@@ -46,11 +53,15 @@
             <div class="pr-md-3 flex-fill">
                 <hyt-input-text name="hdevice-firmwareversion"
                     placeholder="Firmware version"
+                    [injectedErrorMsg]="getError('hdevice-firmwareversion')"
+                    hintMessage="Enter the device firmware version."
                     [form]="form"></hyt-input-text>
             </div>
             <div class="pl-md-3 flex-fill">
                 <hyt-text-area name="hdevice-description"
                     placeholder="Description"
+                    [injectedErrorMsg]="getError('hdevice-description')"
+                    hintMessage="Enter the device description."
                     [form]="form"></hyt-text-area>
             </div>
 

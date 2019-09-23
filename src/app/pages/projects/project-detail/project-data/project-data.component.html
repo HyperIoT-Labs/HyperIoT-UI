@@ -9,11 +9,13 @@
             placeholder="Name"
             errorPosition="bottom"
             minlength="3"
+            [injectedErrorMsg]="getError('project-name')"
             hintMessage="Enter the project name."
             [isRequired]="true"></hyt-input-text>
 
         <hyt-text-area [form]="form"
             name="hproject-description"
+            [injectedErrorMsg]="getError('project-description')"
             hintMessage="Enter the project description."
             placeholder="Description"></hyt-text-area>
 
