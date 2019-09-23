@@ -30,6 +30,8 @@ import { EventMailComponent } from './project-wizard/events-step/event-mail/even
 import { MatChipsModule } from '@angular/material/chips';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
+import { AssetCategoryComponent } from './project-wizard/asset-category/asset-category.component';
+import { AssetTagComponent } from './project-wizard/asset-tag/asset-tag.component';
 @NgModule({
   declarations: [
     ProjectsComponent,
@@ -47,7 +49,9 @@ import { MatInputModule } from '@angular/material/input';
     ProjectDataComponent,
     DeviceDataComponent,
     PacketDataComponent,
-    EventMailComponent
+    EventMailComponent,
+    AssetCategoryComponent,
+    AssetTagComponent
   ],
   imports: [
     MatIconModule,
