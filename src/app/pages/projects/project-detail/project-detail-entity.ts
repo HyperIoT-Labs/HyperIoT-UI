@@ -109,7 +109,7 @@ export abstract class ProjectDetailEntity implements OnInit {
 
     treeView() {
         return {
-            refresh: this.projectHost.refresh,
+            refresh: this.projectHost.refresh.bind(this.projectHost),
             focus: (node: { id: any, type?: 'packet' | 'device' | 'project' | '' }) =>
                 this.projectHost.focus(node),
             updateNode: (nodeData: { id: any, type?: string, name: string }) =>
