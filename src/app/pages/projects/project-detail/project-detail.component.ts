@@ -34,6 +34,7 @@ export class ProjectDetailComponent implements OnInit {
   treeStatus = TreeStatusEnum.Ready;
 
   treeData: TreeDataNode[] = [];
+  currentNode;
 
   private focusTimeout: any = null;
   private projectId: 0;
@@ -140,12 +141,22 @@ export class ProjectDetailComponent implements OnInit {
       this.router.navigate(
         [{ outlets: { projectDetails: [node.data.type, node.data.id] } }],
         { relativeTo: this.activatedRoute }
-      );
+      ).then((success) => {
+        if (!success) {
+          // reposition on last selected node if navigation is cancelled
+          this.treeView.setActiveNode(this.currentNode);
+        }
+      });
     } else {
       this.router.navigate(
         ['./', { outlets: { projectDetails: null } }],
         { relativeTo: this.activatedRoute }
-      );
+      ).then((success) => {
+        if (!success) {
+          // reposition on last selected node if navigation is cancelled
+          this.treeView.setActiveNode(this.currentNode);
+        }
+      });
     }
   }
 
@@ -167,7 +178,7 @@ export class ProjectDetailComponent implements OnInit {
     }
     // refresh treeview node data
     const tc = this.treeView.treeControl;
-    const node = this.find(data);
+    const node = this.currentNode = this.find(data);
     this.treeView.setActiveNode(node);
     let n = node.parent;
     while (n) {

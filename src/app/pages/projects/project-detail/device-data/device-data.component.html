@@ -69,8 +69,11 @@
 
     </form>
 
+    <!-- TODO: This HTML block is repeated
+               across all 'entity' components,
+               consider making a component out of it -->
     <div *ngIf="loadingStatus !== LoadingStatus.Ready" class="overlay d-flex flex-column align-items-center justify-content-center">
-        <h4 *ngIf="loadingStatus === LoadingStatus.Loading">Loading device data...</h4>
+        <h4 *ngIf="loadingStatus === LoadingStatus.Loading">Loading project data...</h4>
         <div *ngIf="loadingStatus === LoadingStatus.Error" class="d-flex flex-column justify-content-center">
             <h4>An error has occurred =/</h4>
             <button mat-stroked-button (click)="loadingStatus = LoadingStatus.Ready">
@@ -78,7 +81,10 @@
                 <mat-icon>close</mat-icon>
             </button>
         </div>
-        <h4 *ngIf="loadingStatus === LoadingStatus.Saving">Saving device data...</h4>
+        <h4 *ngIf="loadingStatus === LoadingStatus.Saving">Saving project data...</h4>
+        <mat-progress-bar
+            *ngIf="loadingStatus === LoadingStatus.Loading || loadingStatus === LoadingStatus.Saving"
+            mode="query"></mat-progress-bar>
     </div>
 
 </div>
