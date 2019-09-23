@@ -53,6 +53,8 @@ export class EnrichmentStepComponent implements OnInit, OnChanges {
 
   @Output() rulesOutput = new EventEmitter<Rule[]>();
 
+  @Output() hPacketsOutput = new EventEmitter<HPacket[]>();
+
   constructor(
     private fb: FormBuilder,
     private rulesService: RulesService,
@@ -80,6 +82,7 @@ export class EnrichmentStepComponent implements OnInit, OnChanges {
     for (let el of this.hPackets)
       if (event.value == el.device.id)
         this.packetsOptions.push({ value: el.id.toString(), label: el.name });
+    this.currentPacket = null;
   }
 
   packetChanged(event) {
@@ -135,16 +138,18 @@ export class EnrichmentStepComponent implements OnInit, OnChanges {
     if (this.enrichmentType == 'AddTagRuleAction') {
       this.currentPacket.tagIds = this.assetTags;
       this.packetService.updateHPacket(this.currentPacket).subscribe(
-        res => {
-          console.log(res);
+        (res: HPacket) => {
+          this.hPackets.find(x => x.id == this.currentPacket.id).tagIds = res.tagIds;
+          this.hPacketsOutput.emit(this.hPackets);
         }
       )
     }
     else if (this.enrichmentType == 'AddCategoryRuleAction') {
       this.currentPacket.categoryIds = this.assetCategories;
       this.packetService.updateHPacket(this.currentPacket).subscribe(
-        res => {
-          console.log(res);
+        (res: HPacket) => {
+          this.hPackets.find(x => x.id == this.currentPacket.id).categoryIds = res.categoryIds;
+          this.hPacketsOutput.emit(this.hPackets);
         }
       )
     }

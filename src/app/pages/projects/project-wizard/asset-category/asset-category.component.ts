@@ -1,13 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { HProject, AssetscategoriesService, AssetCategory, AssetTag } from '@hyperiot/core';
+import { HProject, AssetscategoriesService, AssetCategory, AssetTag, HPacket } from '@hyperiot/core';
 import { TreeNodeCategory } from '@hyperiot/components';
-
-export interface Pac {
-  id: number
-  parent: number
-  children: number[]
-  data: any
-}
 
 @Component({
   selector: 'hyt-asset-category',
@@ -18,9 +11,11 @@ export class AssetCategoryComponent implements OnInit {
 
   @Input() project: HProject;
 
+  @Input() packet: HPacket;
+
   @Output() categoryIds: EventEmitter<number[]> = new EventEmitter<number[]>();
 
-  treeCategory: TreeNodeCategory[] = [];
+  categoriesFlatTree: TreeNodeCategory[] = [];
 
   constructor(
     private assetCategoriesService: AssetscategoriesService
@@ -28,77 +23,64 @@ export class AssetCategoryComponent implements OnInit {
 
   ngOnInit() {
     this.assetCategoriesService.findAllAssetCategory().subscribe(
-      res => {
-        this.categories = res;
-        this.createTreeCategory(null);
+      (res: AssetCategory[]) => {
+        res.forEach(x => {
+          this.categoriesFlatTree.push({
+            id: x.id,
+            label: x.name,
+            parent: null,
+            children: [],
+            data: x,
+            active: false
+          })
+        })
+        this.categoriesFlatTree.forEach(x => {
+          x.parent = (x.data.parent) ? this.categoriesFlatTree.find(y => y.id == x.data.parent.id) : null;
+          // x.active = this.packet.categoryIds.includes(x.id);
+        })
+        this.categoriesFlatTree = [...this.categoriesFlatTree];
       }
     )
   }
 
-  categories: AssetCategory[] = []
-  pac: Pac[] = [];
-
-  createTreeCategory(node: TreeNodeCategory) {
-    this.categories.forEach(x => {
-      this.pac.push({
-        id: x.id,
-        parent: (x.parent) ? x.parent.id : null,
-        children: this.categories.filter(a => a.parent.id == x.id).map(a => a.id),
-        data: x
-      })
-    })
-    // for (let i = 0; i < this.categories.length; i++) {
-
-    //   let node: TreeNodeCategory = {
-    //     label: this.categories[i].name,
-    //     data: this.categories[i],
-    //     active: false,
-    //     children: []
-    //   }
-
-    //   if (!node && !this.categories[i].parent) {
-    //     this.treeCategory.push(node);
-    //     this.createTreeCategory(node);
-    //   }
-
-    //   else if (this.categories[i].parent.id == node.data.id) {
-    //     node.children.push(node);
-    //     this.createTreeCategory(node);
-    //   }
-    // }
-
-  }
-
   catIds: number[] = [];
 
-  fillCatIds(categories: TreeNodeCategory[]) {
-    for (let i = 0; i < categories.length; i++) {
-      if (categories[i].children.length == 0)
-        if (categories[i].active)
-          this.catIds.push(categories[i].data.id);
-        else this.fillCatIds(categories[i].children);
-    }
+  fillCatIds() {
+    this.catIds = [];
+    this.categoriesFlatTree.forEach(x => {
+      if (x.children.length == 0 && x.active)
+        this.catIds.push(x.id);
+    })
   }
 
   cbChange(event) {
-    this.catIds = [];
-    this.fillCatIds(this.treeCategory);
+    this.fillCatIds();
     this.categoryIds.emit(this.catIds);
   }
 
   cbAdd(event) {
-    console.log(event)
-    let data: AssetTag = {
+    let data: AssetCategory = {
       entityVersion: 1,
       name: event.label,
       owner: {
         ownerResourceName: 'it.acsoftware.hyperiot.hproject',
         ownerResourceId: this.project.id
-      }
+      },
+      parent: event.parent ? event.parent.data : null
     }
 
     this.assetCategoriesService.saveAssetCategory(data).subscribe(
-      res => event.data = res,
+      (res: AssetCategory) => {
+        this.categoriesFlatTree.push({
+          id: res.id,
+          label: res.name,
+          parent: event.parent,
+          children: [],
+          data: res,
+          active: false
+        })
+        this.categoriesFlatTree = [...this.categoriesFlatTree];
+      },
       err => console.log(err)
     )
   }
