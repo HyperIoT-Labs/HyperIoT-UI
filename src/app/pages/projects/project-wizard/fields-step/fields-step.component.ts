@@ -157,40 +157,29 @@ export class FieldsStepComponent implements OnInit, OnChanges {
       parentField: (this.fieldForm.fieldData) ? { id: this.fieldForm.fieldData.id, entityVersion: this.fieldForm.fieldData.entityVersion } : null
     }
 
-    if (this.fieldForm.isPacket) {
-      this.hPacketService.addHPacketField(this.fieldForm.packet.id, field).subscribe(
-        res => {
+    this.hPacketService.addHPacketField(this.fieldForm.packet.id, field).subscribe(
+      res => {
+        if (this.fieldForm.isPacket)
           this.hPackets.find(x => x.id == this.fieldForm.packet.id).fields.push(res);
-          this.hPacketsOutput.emit(this.hPackets);
-          this.fieldForm = null;
-          this.pageStatus = PageStatusEnum.Submitted;
-        },
-        err => {
-          this.pageStatus = PageStatusEnum.Error;
-          this.errors = this.errorHandler.handleCreateField(err);
-          this.errors.forEach(e => {
-            if (e.container != 'general')
-              this.fieldForm.form.get(e.container).setErrors({
-                validateInjectedError: {
-                  valid: false
-                }
-              });
-          })
-        }
-      );
-    }
-    else {
-      this.hPacketService.addHPacketField(this.fieldForm.packet.id, field).subscribe(
-        res => {
+        else
           this.updatePacketView(this.hPackets.find(x => x.id == this.fieldForm.packet.id).fields, field.parentField.id, res);
-          this.hPacketsOutput.emit(this.hPackets);
-          this.fieldForm = null;
-        },
-        err => {
-
-        }
-      );
-    }
+        this.hPacketsOutput.emit(this.hPackets);
+        this.fieldForm = null;
+        this.pageStatus = PageStatusEnum.Submitted;
+      },
+      err => {
+        this.pageStatus = PageStatusEnum.Error;
+        this.errors = this.errorHandler.handleCreateField(err);
+        this.errors.forEach(e => {
+          if (e.container != 'general')
+            this.fieldForm.form.get(e.container).setErrors({
+              validateInjectedError: {
+                valid: false
+              }
+            });
+        })
+      }
+    );
 
   }
 
