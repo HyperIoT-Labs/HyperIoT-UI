@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
-import { HPacket } from '@hyperiot/core';
+import { HPacket, HPacketField } from '@hyperiot/core';
 import { SelectOption } from '@hyperiot/components';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Option } from '@hyperiot/components/lib/hyt-radio-button/hyt-radio-button.component';
@@ -50,11 +50,22 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
     })
   }
 
+  fieldFlatList: HPacketField[] = [];
+
+  extractField(fieldArr: HPacketField[]) {
+    fieldArr.forEach(f => {
+      this.fieldFlatList.push(f);
+      if (f.innerFields)
+        this.extractField(f.innerFields);
+    })
+  }
+
   ngOnChanges() {
     this.fieldOptions = [];
     if (this.hPacket)
-      for (let el of this.hPacket.fields)
-        this.fieldOptions.push({ value: el.name, label: el.name })
+      this.extractField(this.hPacket.fields)
+    for (let el of this.fieldFlatList)
+      this.fieldOptions.push({ value: el.name, label: el.name })
   }
 
   addCondition(index) {

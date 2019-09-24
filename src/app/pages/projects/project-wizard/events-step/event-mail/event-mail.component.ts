@@ -15,7 +15,12 @@ export class EventMailComponent implements OnInit {
   ) { }
 
   buildMail() {
-
+    return {
+      mailRecipient: this.mailForm.value['mailRecipient'],
+      mailCC: this.mailForm.value['mailCC'],
+      mailObject: this.mailForm.value['mailObject'],
+      mailBody: this.mailForm.value['mailBody']
+    }
   }
 
   ngOnInit() {
@@ -23,7 +28,7 @@ export class EventMailComponent implements OnInit {
   }
 
   isInvalid() {
-    return this.mailForm.value.get('mailRecipient').invalid;
+    return this.mailForm.get('mailRecipient').invalid;
   }
 
 }
