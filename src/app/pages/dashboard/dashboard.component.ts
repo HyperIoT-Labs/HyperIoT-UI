@@ -1,9 +1,10 @@
 import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { DashboardConfigService } from './dashboard-config.service';
 import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { Subject, forkJoin } from 'rxjs';
 import { Dashboard, HProject } from '@hyperiot/core';
 import { SelectOption } from '@hyperiot/components';
+import { RouterLink, Router, ActivatedRoute, RouterOutlet } from '@angular/router';
 
 enum PageStatus {
   Loading = 0,
@@ -14,7 +15,7 @@ enum PageStatus {
 
 interface HytSelectOption extends HProject {
   label: string;
-  value?: string;
+  value?: number;
 }
 
 @Component({
@@ -32,7 +33,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   hProjectList: HProject[] = [];
 
-  hProjectListOptions: HytSelectOption[];
+  hProjectListOptions: HytSelectOption[] = [];
 
   PageStatus = PageStatus;
 
@@ -42,71 +43,79 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   streamIsOn: boolean = true;
 
-  sortOptions: SelectOption[] = [
-    { value: 'none', label: 'None' },
-    { value: 'alfabetic-increasing', label: 'A-Z' },
-    { value: 'alfabetic-decreasing', label: 'Z-A' },
-    { value: 'date-increasing', label: 'Oldest' },
-    { value: 'date-decreasing', label: 'Newest' }
-  ];
+  defaultProjectSelected: number;
+
+  currentDashboardId: number;
 
   constructor(
     private dashboardConfigService: DashboardConfigService,
+    private route: Router
   ) { }
 
   ngOnInit() {
 
-    this.dashboardConfigService.getProjectsList()
+    this.dashboardConfigService.getAllDashboardsAndProjects()
     .pipe(takeUntil(this.ngUnsubscribe))
     .subscribe(
-      res => {
-        this.hProjectList = [...res];
-        this.hProjectListOptions = <HytSelectOption[]>this.hProjectList;
-        this.hProjectListOptions.forEach(element => {
-          element.label = element.name;
-        });
+      ([res1, res2]) => {
+        try {
+          this.hProjectList = [...res1];
+          this.hProjectListOptions = <HytSelectOption[]>this.hProjectList;
+          this.hProjectListOptions.forEach(element => {
+            element.label = element.name;
+            element.value = element.id;
+          });
+        } catch (error) { }
+
+        try {
+          this.dashboardList = [...res2];
+        } catch (error) { }
+
+      },
+      error => {
+        this.pageStatus = PageStatus.Error;
+      },
+      ()=> {
+
+        this.hProjectListOptions.sort(function(a, b){
+          if(a.entityModifyDate > b.entityModifyDate) { return -1; }
+          if(a.entityModifyDate < b.entityModifyDate) { return 1; }
+          return 0;
+        })
         console.log(this.hProjectListOptions)
-      },
-      err => {
 
-      },
-      () => {
+        this.dashboardList.sort(function(a, b){
+          if(a.entityModifyDate > b.entityModifyDate) { return -1; }
+          if(a.entityModifyDate < b.entityModifyDate) { return 1; }
+          return 0;
+        })
 
-      }
-    )
-
-    this.dashboardConfigService.getDashboardList()
-    .pipe(takeUntil(this.ngUnsubscribe))
-    .subscribe(
-      res => {
-        this.dashboardList = [...res];
         console.log(this.dashboardList)
+
         if(this.dashboardList.length > 0) {
+          
+          try {
+            this.defaultProjectSelected = this.hProjectListOptions.find(x=>(x.id == this.dashboardList[0].hproject.id)).value;
+            this.currentDashboardId = this.dashboardList[0].id;
+          } catch (error) {
+            
+          }
           this.pageStatus = PageStatus.Standard;
+          console.log(this.defaultProjectSelected)
+
         } else if (this.dashboardList.length == 0) {
+          
+          this.defaultProjectSelected = this.hProjectListOptions[0].value;
+          this.currentDashboardId = this.defaultProjectSelected[0].id;
+
           this.pageStatus = PageStatus.New;
-
-          this.dashboardList.sort(function(a, b){
-            if(a.entityModifyDate > b.entityModifyDate) { return -1; }
-            if(a.entityModifyDate < b.entityModifyDate) { return 1; }
-            return 0;
-          })
-
-          this.dashboardList.forEach( element => {
-            element
-          })
         } else {
           this.pageStatus = PageStatus.Error;
         }
-      },
-      err => {
-        this.pageStatus = PageStatus.Error;
-      },
-      () => {
-
+        
       }
     )
-    console.log(this.pageStatus)
+
   }
 
   ngOnDestroy() {
@@ -115,12 +124,26 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }
   }
 
+  onSelectChange(event) {
+
+    try {
+      this.currentDashboardId = this.dashboardList.find(x => (x.hproject.id == event.value)).id;
+    } catch (error) {}
+
+    console.log(this.currentDashboardId)
+    
+  }
+
   changeSignalState(event){
     this.signalIsOn = !this.signalIsOn;
   }
 
   changeStreamState(event) {
     this.streamIsOn = !this.streamIsOn;
+  }
+
+  openAddWidget(){
+    
   }
 
 }

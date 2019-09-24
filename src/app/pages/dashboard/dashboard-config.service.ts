@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { map } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
+import { Subject, forkJoin, of } from 'rxjs';
 
 import {
     DashboardwidgetsService,
@@ -24,6 +24,22 @@ export class DashboardConfigService {
         private hProjectService: HprojectsService,
         private http: HttpClient
     ) { }
+
+    getAllDashboardsAndProjects () {
+
+        return forkJoin(
+
+            this.hProjectService.cardsView().pipe(
+                catchError(err => of(err))
+            ),
+
+            this.dashboardService.findAllDashboard().pipe(
+                catchError(err => of(err))
+            )
+
+        )
+
+    }
 
     getProjectsList() {
         return this.hProjectService.cardsView();

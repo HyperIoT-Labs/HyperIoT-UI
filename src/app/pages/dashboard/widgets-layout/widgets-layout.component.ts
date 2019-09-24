@@ -31,6 +31,7 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
   dashboardEntity: Dashboard;
   dragEnabled = true;
   private originalDashboard: Array<GridsterItem>;
+  projectId: number;
 
   private responsiveBreakPoints = [
     { breakPoint: 1200, columns: 8},
@@ -100,13 +101,15 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
 
     this.dashboard = [];
     this.configService.getDashboard(+this.dashboardId)
-      .subscribe((d) => this.dashboardEntity = d);
+      .subscribe((d) => {
+        this.dashboardEntity = d;
+        this.projectId = this.dashboardEntity.hproject.id;
+        this.dataStreamService.connect(this.projectId);
+    });
     this.configService.getConfig(this.dashboardId).subscribe((dashboardConfig: Array<GridsterItem>) => {
-      this.dashboard = dashboardConfig;
+      this.dashboard = dashboardConfig; 
       this.originalDashboard = JSON.parse(JSON.stringify(dashboardConfig));
     });
-    // TODO: the connection should happen somewhere else in the main page
-    this.dataStreamService.connect();
   }
   ngOnDestroy() {
     this.dataStreamService.disconnect();

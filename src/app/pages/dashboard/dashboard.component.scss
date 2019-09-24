@@ -3,6 +3,9 @@
 #dashboard-page {
     font-family: 'Exo';
     font-size: 1em;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 15px;
   
     .header {
       border-bottom: 1px solid #008aff;
@@ -37,34 +40,24 @@
                 #signal-btn,
                 #play-btn {
                     float: left;
-                    margin: .4em 1.2em .4em 1.2em;
+                    margin: .3em 1.2em .3em 1.2em;
                     text-align: center;
                     cursor: pointer;
                     text-transform: uppercase;
 
                     &:hover {
                         color: #008aff;
-
-                        i {
-                            color: #008aff;
-                        }
-                    }
-                    
-                    i {
-                        color: #252525;
-
-                        &.fa {
-                            font-size: 1.8em
-                        }
-
-                        &.offline-state{
-                            color: #c4c4c4;
-                        }
-
                     }
 
                     span {
-                        font-size: .7em;
+                        font-size: 2.3em;
+                        display: block;
+                    }
+
+                    p {
+                        margin-bottom: 0;
+                        margin-top: -5px;
+                        font-size: .8em;
                     }
 
                 }
@@ -78,27 +71,23 @@
                 #save-dashboard-btn {
                     float: right;
                     text-align: center;
-                    margin: .4em 1.2em .4em 1.2em;
-                    font-size: .7em;
+                    margin: .3em 1.2em .3em 1.2em;
                     cursor: pointer;
                     text-transform: uppercase;
-
-                    img {
-                        width: 35px;
-                        margin-bottom: 5px;
-                    }
 
                     &:hover {
                         color: #008aff;
                     }
 
-                    i {
-                        color: #252525;
+                    span {
+                        font-size: 2.0em;
+                        display: block;
+                    }
 
-                        &.fa {
-                            font-size: 1.8em
-                        }
-
+                    p {
+                        margin-bottom: 0;
+                        margin-top: -2px;
+                        font-size: .8em;
                     }
 
                 }
