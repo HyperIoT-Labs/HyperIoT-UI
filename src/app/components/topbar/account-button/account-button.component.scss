@@ -1,4 +1,4 @@
-@import url(//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css);
+// @import url(//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css);
 
 #hyt-account-button {
     font-family: "Exo";
@@ -26,8 +26,7 @@
         .dropbtn {
             background: none;
             color: #f9f9f9;
-            padding: 16px;
-            font-size: 16px;
+            padding: 6px;
             border: none;
             cursor: pointer;
     
@@ -35,12 +34,17 @@
                 outline: none;
             }
 
-            .fa {
-                position: relative;
-                display: table-cell;
-                text-align: center;
-                vertical-align: middle;
-                font-size: 2em;
+            span {
+                
+                &.hyt-icon.icon-hyt_userCircle {
+                    font-size: 3em;
+
+                    &:hover {
+                        color: #7af9ff;
+                    }
+
+                }
+
             }
         }
 

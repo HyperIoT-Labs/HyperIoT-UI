@@ -7,7 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { MatIconModule } from '@angular/material/icon';
-import { MatCardModule, MatButtonModule, MatRadioModule, MatProgressSpinnerModule } from '@angular/material';
+import { MatCardModule, MatButtonModule, MatRadioModule, MatProgressSpinnerModule, MatProgressBarModule } from '@angular/material';
 
 import { DevicesStepComponent } from './project-wizard/devices-step/devices-step.component';
 import { EventsStepComponent } from './project-wizard/events-step/events-step.component';
@@ -20,7 +20,6 @@ import { RuleDefinitionComponent } from './project-wizard/rule-definition/rule-d
 
 import { ProjectCardComponent } from './project-card/project-card.component';
 import { ProjectDetailComponent } from './project-detail/project-detail.component';
-import { ProjectDetailEntity } from './project-detail/project-detail-entity';
 import { ProjectDataComponent } from './project-detail/project-data/project-data.component';
 import { DeviceDataComponent } from './project-detail/device-data/device-data.component';
 import { PacketDataComponent } from './project-detail/packet-data/packet-data.component';
@@ -30,6 +29,8 @@ import { EventMailComponent } from './project-wizard/events-step/event-mail/even
 import { MatChipsModule } from '@angular/material/chips';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
+import { AssetCategoryComponent } from './project-wizard/asset-category/asset-category.component';
+import { AssetTagComponent } from './project-wizard/asset-tag/asset-tag.component';
 @NgModule({
   declarations: [
     ProjectsComponent,
@@ -47,7 +48,9 @@ import { MatInputModule } from '@angular/material/input';
     ProjectDataComponent,
     DeviceDataComponent,
     PacketDataComponent,
-    EventMailComponent
+    EventMailComponent,
+    AssetCategoryComponent,
+    AssetTagComponent
   ],
   imports: [
     MatIconModule,
@@ -55,6 +58,7 @@ import { MatInputModule } from '@angular/material/input';
     MatCardModule,
     MatRadioModule,
     MatProgressSpinnerModule,
+    MatProgressBarModule,
     CommonModule,
     HyperiotComponentsModule,
     FormsModule,

@@ -42,18 +42,10 @@
             </hyt-button>
         </div>
 
-        <!--
-        <div *ngIf="currentEntity && currentEntity.getError().length > 0"
-            class="m-2 mt-4 p-2 validation-errors arrow_box">
-            <h4>Data cannot be saved, please fix the following errors:</h4>
-            <ul>
-                <li *ngFor="let error of currentEntity.getError()">
-                    <strong>{{error.field}}</strong><br/>
-                    {{error.message}}
-                </li>
-            </ul>
+        <div *ngIf="hintVisible" class="info-message m-2 mt-4 d-flex flex-row">
+            <span class="text p-2 flex-grow-1">{{hintMessage}}</span>
+            <mat-icon class="mt-2 mr-2">info</mat-icon>
         </div>
-        -->
         
     </div>
 

@@ -84,7 +84,6 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
 
   fieldChanged(event, index) {
     let type = this.hPacket.fields.find(x => x.name == event.value).type;
-    console.log(type)
     this.ruleForms[index].conditionOptions = [];
 
     this.allConditionOptions.forEach(x => {
