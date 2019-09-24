@@ -26,14 +26,15 @@
             left:0;
             width:60px;
             z-index:1000;
+            background-color: #ffffff;
     
             ul {
                 padding-top: 65px;
                 overflow: hidden;
                 background: white;
-                -webkit-transition: all .2s linear;
-                -moz-transition: all .2s linear;
-                transition: all .2s linear;
+                -webkit-transition: width .2s linear;
+                -moz-transition: width .2s linear;
+                transition: width .2s linear;
                 border: #e5e5e5;
                 
 
@@ -43,6 +44,9 @@
                     overflow:visible;
                     height: 100%;
                     border-right: 1px solid #e5e5e5;
+                    -moz-box-shadow: -7px 0px 24px -4px #000;
+                    -webkit-box-shadow: -7px 0px 24px -4px #000;
+                    box-shadow: -7px 0px 24px -4px #000;
                 }
     
                 &.logout {

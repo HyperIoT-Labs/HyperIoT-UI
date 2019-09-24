@@ -21,9 +21,6 @@ export class DashboardsListComponent implements OnInit {
   constructor(private configService: DashboardConfigService) { }
 
   ngOnInit() {
-    this.configService
-        .getDashboardList()
-        .subscribe((list) => this.dashboardList = list);
   }
 
 }

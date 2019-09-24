@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy, HostListener, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, HostListener, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 
 import {
@@ -16,6 +16,7 @@ import {
 } from '@hyperiot/core';
 
 import { DashboardConfigService } from '../dashboard-config.service';
+import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 
 @Component({
   selector: 'hyt-widgets-layout',
@@ -31,15 +32,31 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
   dashboardEntity: Dashboard;
   dragEnabled = true;
   private originalDashboard: Array<GridsterItem>;
+  cellSize: number;
+  projectId: number;
+
+  // private responsiveBreakPoints = [
+  //   { breakPoint: 1200, columns: 6, cell: 250},
+  //   { breakPoint: 1024, columns: 6, cell: 200},
+  //   { breakPoint: 880, columns: 5,cell: 160},
+  //   { breakPoint: 720, columns: 4,cell: 160},
+  //   { breakPoint: 640, columns: 3,cell: 160},
+  //   { breakPoint: 480, columns: 2,cell: 160},
+  //   { breakPoint: 0, columns: 1,cell: 160},
+  // ];
 
   private responsiveBreakPoints = [
-    { breakPoint: 1200, columns: 8},
-    { breakPoint: 1024, columns: 6},
-    { breakPoint: 880, columns: 5},
-    { breakPoint: 720, columns: 4},
-    { breakPoint: 640, columns: 3},
-    { breakPoint: 480, columns: 2},
-    { breakPoint: 0, columns: 1},
+    { breakPoint: 1611, columns: 6, cell: 250},
+    { breakPoint: 1610, columns: 6, cell: 200},
+    { breakPoint: 1327, columns: 6, cell: 180},
+    { breakPoint: 1200, columns: 6, cell: 180},
+    { breakPoint: 1024, columns: 4, cell: 230},
+    { breakPoint: 880, columns: 4,cell: 190},
+    { breakPoint: 720, columns: 3,cell: 210},
+    { breakPoint: 640, columns: 2,cell: 270},
+    { breakPoint: 480, columns: 2,cell: 200},
+    { breakPoint: 400, columns: 1,cell: 170},
+    { breakPoint: 0, columns: 1,cell: 120}
   ];
 
   /**
@@ -68,10 +85,10 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
       scrollToNewItems: true,
       disableWarnings: true,
       ignoreMarginInRow: false,
-      mobileBreakpoint: 480,
+      mobileBreakpoint: 400,
       keepFixedHeightInMobile: true,
       keepFixedWidthInMobile: false,
-      minCols: 1, maxCols: 10,
+      minCols: 1, maxCols: 10, maxCellsize: 280,
       minRows: 1,
       margin: 6,
       draggable: {
@@ -90,24 +107,38 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
     };
 
     this.options.maxCols = this.getResponsiveColumns();
+    this.options.maxCellSize = this.getResponsiveCellSize();
+
     if (this.options.maxCols > 1) {
       this.options.mobileBreakpoint = 0;
     }
+
     //const cellSize = (availableWidth - (this.options.margin * this.options.maxCols)) / this.options.maxCols;
-    const cellSize = 160;
-    this.options.fixedColWidth = cellSize;
-    this.options.fixedRowHeight = cellSize / 2;
+    // const cellSize = 250;
+
+    this.cellSize = this.getResponsiveCellSize(); /* 160 misura base */
+    console.log('CELLA ON INIT: '+this.cellSize);
+    this.options.fixedColWidth = this.cellSize;
+    this.options.fixedRowHeight = this.cellSize / 2;
 
     this.dashboard = [];
-    this.configService.getDashboard(+this.dashboardId)
-      .subscribe((d) => this.dashboardEntity = d);
+    console.log("primo " + this.dashboardId)
+    this.configService.getDashboard(<number>this.dashboardId)
+    .subscribe(
+      (d) =>{
+        this.dashboardEntity = d;
+        this.projectId = this.dashboardEntity.hproject.id;
+        this.dataStreamService.connect(this.projectId);
+      }
+    );
+  
     this.configService.getConfig(this.dashboardId).subscribe((dashboardConfig: Array<GridsterItem>) => {
-      this.dashboard = dashboardConfig;
+      this.dashboard = dashboardConfig; 
       this.originalDashboard = JSON.parse(JSON.stringify(dashboardConfig));
     });
-    // TODO: the connection should happen somewhere else in the main page
-    this.dataStreamService.connect();
+  
   }
+
   ngOnDestroy() {
     this.dataStreamService.disconnect();
   }
@@ -152,7 +183,9 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
     const columns = this.getResponsiveColumns();
-    if (columns !== this.options.maxCols) {
+    const cell = this.getResponsiveCellSize();
+    
+    if (columns !== this.options.maxCols || cell !== this.options.maxCellSize) {
       /*
       // TODO: Angular-Gridster2 won't apply maxCols option on change (bug??)
       this.options.maxCols = columns;
@@ -247,4 +280,21 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
     }
     return columns;
   }
+
+  getResponsiveCellSize(): number {
+    let singleCell = 160;
+
+    const availableWidth = document.documentElement.clientWidth;
+    if (availableWidth <= this.options.mobileBreakpoint) {
+      singleCell = singleCell;
+    } else {
+      const bp = this.responsiveBreakPoints.find((p) => p.breakPoint <= availableWidth);
+      if (bp) {
+        singleCell = bp.cell;
+      }
+    }     
+
+    return singleCell;
+  }
+
 }
