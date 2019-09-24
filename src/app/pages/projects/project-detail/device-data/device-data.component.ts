@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 
@@ -13,7 +13,7 @@ import { ProjectDetailEntity, LoadingStatusEnum } from '../project-detail-entity
   templateUrl: './device-data.component.html',
   styleUrls: ['./device-data.component.scss']
 })
-export class DeviceDataComponent extends ProjectDetailEntity implements OnInit, OnDestroy {
+export class DeviceDataComponent extends ProjectDetailEntity implements OnDestroy {
   deviceId: number;
   device: HDevice = {} as HDevice;
 
@@ -21,20 +21,18 @@ export class DeviceDataComponent extends ProjectDetailEntity implements OnInit, 
 
   constructor(
     formBuilder: FormBuilder,
+    @ViewChild('form', { static: true }) formView: ElementRef,
     private hDeviceService: HdevicesService,
     private activatedRoute: ActivatedRoute,
     private router: Router
   ) {
-    super(formBuilder);
+    super(formBuilder, formView);
     this.routerSubscription = this.router.events.subscribe((rl) => {
       if (rl instanceof NavigationEnd) {
         this.deviceId = activatedRoute.snapshot.params.deviceId;
         this.loadDevice();
       }
     });
-  }
-
-  ngOnInit() {
   }
 
   ngOnDestroy() {
@@ -67,7 +65,7 @@ export class DeviceDataComponent extends ProjectDetailEntity implements OnInit, 
       this.form.get('hdevice-description')
         .setValue(d.description);
       this.resetForm();
-      this.treeHost.focus({ id: d.id, type: 'device' });
+      this.treeView().focus({ id: d.id, type: 'device' });
       this.loadingStatus = LoadingStatusEnum.Ready;
     }, (err) => {
       this.loadingStatus = LoadingStatusEnum.Error;
@@ -87,23 +85,18 @@ export class DeviceDataComponent extends ProjectDetailEntity implements OnInit, 
     this.hDeviceService.updateHDevice(d).subscribe((res) => {
       this.device = d = res;
       this.resetForm();
-      this.treeHost && this.treeHost.updateNode({ id: d.id, type: 'device', name: d.deviceName });
+      this.treeView().updateNode({ id: d.id, type: 'device', name: d.deviceName });
       this.loadingStatus = LoadingStatusEnum.Ready;
       successCallback && successCallback(res);
     }, (err) => {
-      if (err.error && err.error.validationErrors) {
-        this.setErrors(err);
-        this.loadingStatus = LoadingStatusEnum.Ready;
-      } else {
-        this.loadingStatus = LoadingStatusEnum.Error;
-      }
+      this.setErrors(err);
       errorCallback && errorCallback(err);
     });
   }
   private deleteDevice(successCallback?, errorCallback?) {
     this.loadingStatus = LoadingStatusEnum.Saving;
     this.hDeviceService.deleteHDevice(this.device.id).subscribe((res) => {
-      this.treeHost && this.treeHost.refresh();
+      this.treeView().refresh();
       successCallback && successCallback(res);
       this.loadingStatus = LoadingStatusEnum.Ready;
       // navigate to project page when a device is deleted

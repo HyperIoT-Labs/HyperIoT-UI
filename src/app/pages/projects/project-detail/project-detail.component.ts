@@ -27,10 +27,14 @@ enum TreeStatusEnum {
 export class ProjectDetailComponent implements OnInit {
   @ViewChild('treeView', { static: true }) treeView: HytTreeViewProjectComponent;
 
+  hintMessage = '';
+  hintVisible = false;
+
   TreeStatus = TreeStatusEnum;
   treeStatus = TreeStatusEnum.Ready;
 
   treeData: TreeDataNode[] = [];
+  currentNode;
 
   private focusTimeout: any = null;
   private projectId: 0;
@@ -56,7 +60,7 @@ export class ProjectDetailComponent implements OnInit {
   onActivate(childComponent: ProjectDetailEntity) {
     if (childComponent.isProjectEntity) {
       this.currentEntity = childComponent;
-      this.currentEntity.treeHost = this;
+      this.currentEntity.projectHost = this;
     }
   }
 
@@ -137,12 +141,22 @@ export class ProjectDetailComponent implements OnInit {
       this.router.navigate(
         [{ outlets: { projectDetails: [node.data.type, node.data.id] } }],
         { relativeTo: this.activatedRoute }
-      );
+      ).then((success) => {
+        if (!success) {
+          // reposition on last selected node if navigation is cancelled
+          this.treeView.setActiveNode(this.currentNode);
+        }
+      });
     } else {
       this.router.navigate(
         ['./', { outlets: { projectDetails: null } }],
         { relativeTo: this.activatedRoute }
-      );
+      ).then((success) => {
+        if (!success) {
+          // reposition on last selected node if navigation is cancelled
+          this.treeView.setActiveNode(this.currentNode);
+        }
+      });
     }
   }
 
@@ -164,7 +178,7 @@ export class ProjectDetailComponent implements OnInit {
     }
     // refresh treeview node data
     const tc = this.treeView.treeControl;
-    const node = this.find(data);
+    const node = this.currentNode = this.find(data);
     this.treeView.setActiveNode(node);
     let n = node.parent;
     while (n) {
@@ -217,5 +231,13 @@ export class ProjectDetailComponent implements OnInit {
         });
       }
     });
+  }
+
+  showHintMessage(message: string) {
+    this.hintMessage = message;
+    this.hintVisible = true;
+  }
+  hideHintMessage() {
+    this.hintVisible = false;
   }
 }

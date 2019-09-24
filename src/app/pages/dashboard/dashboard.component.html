@@ -1,0 +1,103 @@
+<div id="dashboard-page">
+
+    <div class="header d-flex flex-row justify-content-stretch">
+        
+        <div class="breadcrumb flex-grow-1">
+            <a [routerLink]="['/']">Home</a> > <strong>Dashboard</strong>
+        </div>
+    
+    </div>
+    
+    <div id="container-dashboard" [ngSwitch]="pageStatus">
+
+        <div id="tools-dashboard-box">
+
+            <div class="row no-gutters">
+
+                <div class="col-6 left-tools">
+
+                    <div id="signal-btn" (click)="changeSignalState($event)">
+                        <i class="fa fa-signal {{(signalIsOn)?'':'offline-state'}}"></i>
+                        <br>
+                        <span>{{(signalIsOn)?'Online':'Offline'}}</span>
+                    </div>
+
+                    <div id="play-btn" (click)="changeStreamState($event)">
+                        <i class="fa {{(streamIsOn)?'fa fa-pause':'fa fa-play'}}"></i>
+                        <br>
+                        <span>{{(streamIsOn)?'Pause':'Play'}}</span>
+                    </div>
+
+                </div>
+
+                <div class="col-6 right-tools">
+                    <hyt-select [label]="'Select a project'" name="project" [options]="hProjectListOptions"></hyt-select>
+
+                    <div id="add-widget-btn">
+                        <img src="assets/images/dashboard/add-button.png" alt="add widget button">
+                        <br>
+                        <span>Add a widget</span>
+                    </div>
+
+                    <div id="save-dashboard-btn">
+                        <i class="fa fa-floppy-o"></i>
+                        <br>
+                        <span>Save</span>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div id="loadingStatus" *ngSwitchCase="PageStatus.Loading" class="row align-items-center justify-content-center">
+            <div class="mt-5 d-flex flex-column">
+                <h2>Page is loading...</h2>
+            </div>
+        </div>
+    
+        <div id="standardStatus" *ngSwitchCase="PageStatus.Standard" class="row">
+        <!-- Standard -->
+    
+            <div id="container-box-dashboard" class="col-12">
+        
+            </div>
+
+        </div>
+
+        <div id="newStatus" *ngSwitchCase="PageStatus.New" class="row align-items-center justify-content-center">
+        <!-- New -->
+
+            <div class="mt-5 no-dashboards">
+
+                <div id="content-no-dashboards" class="col-md-12">
+                    <i class="fa fa-bar-chart-o"></i>
+                    <h3 id="title-no-dashboards">You have not configured any dashboards.</h3>
+                    <h4 id="subtitle-no-dashboards">Start adding widgets.</h4>
+                </div>
+
+                <!-- <div id="btn-no-dashboards" class="col-md-12">
+
+                    <hyt-button id="add-dashboard-btn" (clickFn)="openModalNewDashboard()">
+                        Create your first Dashboard
+                    </hyt-button>
+
+                </div> -->
+
+            </div> <!-- End No Projects Row -->
+
+        </div>
+
+        <div id="errorStatus" *ngSwitchCase="PageStatus.Error" class="row align-items-center justify-content-center">
+            <div class="mt-5 d-flex flex-column align-items-center justify-content-center">
+                <h2>An error has occurred, contact the administrator.</h2>
+            </div>
+        </div>
+
+        <div *ngSwitchDefault>
+            switch-case error
+        </div>
+
+    </div>
+
+</div>

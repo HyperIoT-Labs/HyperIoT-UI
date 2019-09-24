@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 
@@ -21,11 +21,12 @@ export class ProjectDataComponent extends ProjectDetailEntity implements OnDestr
 
   constructor(
     formBuilder: FormBuilder,
+    @ViewChild('form', { static: true }) formView: ElementRef,
     private hProjectService: HprojectsService,
     private activatedRoute: ActivatedRoute,
     private router: Router
   ) {
-    super(formBuilder);
+    super(formBuilder, formView);
     this.routerSubscription = this.router.events.subscribe((rl) => {
       if (rl instanceof NavigationEnd) {
         this.projectId = this.activatedRoute.snapshot.params.projectId;
@@ -71,16 +72,11 @@ export class ProjectDataComponent extends ProjectDetailEntity implements OnDestr
     this.hProjectService.updateHProject(p).subscribe((res) => {
       this.project = p = res;
       this.resetForm();
-      this.treeHost && this.treeHost.updateNode({id: p.id, name: p.name});
+      this.treeView().updateNode({id: p.id, name: p.name});
       this.loadingStatus = LoadingStatusEnum.Ready;
       successCallback && successCallback(res);
     }, (err) => {
-      if (err.error && err.error.validationErrors) {
-        this.setErrors(err);
-        this.loadingStatus = LoadingStatusEnum.Ready;
-      } else {
-        this.loadingStatus = LoadingStatusEnum.Error;
-      }
+      this.setErrors(err);
       errorCallback && errorCallback(err);
     });
   }
