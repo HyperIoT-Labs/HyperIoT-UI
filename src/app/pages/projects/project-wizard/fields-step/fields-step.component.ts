@@ -215,10 +215,10 @@ export class FieldsStepComponent implements OnInit, OnChanges {
     }
     else
       this.deleteField();
-
   }
 
   deleteField() {
+    this.fieldForm = null;
     this.hPacketService.deleteHPacketField(this.deletePacket.id, this.deleteFieldId).subscribe(
       res => {
         this.updatePacketViewDelete(this.deletePacket.fields, this.deleteFieldId);
