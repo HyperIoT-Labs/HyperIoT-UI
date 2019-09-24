@@ -64,6 +64,7 @@ export class ProjectsComponent implements OnInit {
   noProjectsMatches: boolean = false;
 
   search(value: string) {
+
     if (value) {
       if (value.split('*').length > 18) {
         this.hProjectsFiltered = [];
@@ -73,6 +74,7 @@ export class ProjectsComponent implements OnInit {
         let reg = new RegExp(value.replace(/[.+^${}()|[\]\\]/g, '\\$&').replace(/\*/g, '.+').replace(/\?/g, '.'), 'i');
         this.hProjectsFiltered =  this.hProjects.filter(el => (el.name.match(reg)));
         this.sortBy(this.filteringForm.value.sort);
+        
         if(this.hProjectsFiltered.length == 0)
           this.noProjectsMatches = true;
         else
@@ -83,6 +85,7 @@ export class ProjectsComponent implements OnInit {
       this.hProjectsFiltered = [...this.hProjects];
       this.sortBy(this.filteringForm.value.sort);
     }
+
   }
 
   onChangeInputSearch(event) {

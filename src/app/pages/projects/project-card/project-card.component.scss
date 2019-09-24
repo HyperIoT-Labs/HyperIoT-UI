@@ -5,6 +5,10 @@ hyt-project-card {
 
     mat-card.mat-card {
         background-color: #0d416d;
+        background-image: url('../../../../assets/images/projects/Card_Idle.png');
+        background-repeat: no-repeat;
+        background-position: bottom center;
+        background-size: cover;
         position: absolute;
         left: 0; top: 0; right: 0; bottom: 0;
         border-radius: 6px;
@@ -17,6 +21,10 @@ hyt-project-card {
         &:hover {
             .box-card-front {
                 top: 0px;
+                background-image: url('../../../../assets/images/projects/Card_Round-Hover.png');
+                background-repeat: no-repeat;
+                background-position: bottom center;
+                background-size: cover;
             }
         }
 
@@ -31,8 +39,18 @@ hyt-project-card {
             left: 0px;
             font-size: 2em;
             font-weight: 400;
-            line-height: 32px;
+            line-height: 34px;
             overflow: hidden;
+
+            background: rgba(30,88,165,1);
+            background: -moz-linear-gradient(left, rgba(30,88,165,1) 66%, rgba(255,255,255,0) 100%);
+            background: -webkit-gradient(left top, right top, color-stop(66%, rgba(30,88,165,1)), color-stop(100%, rgba(255,255,255,0)));
+            background: -webkit-linear-gradient(left, rgba(30,88,165,1) 66%, rgba(255,255,255,0) 100%);
+            background: -o-linear-gradient(left, rgba(30,88,165,1) 66%, rgba(255,255,255,0) 100%);
+            background: -ms-linear-gradient(left, rgba(30,88,165,1) 66%, rgba(255,255,255,0) 100%);
+            background: linear-gradient(to right, rgba(30,88,165,1) 66%, rgba(255,255,255,0) 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e58a5', endColorstr='#ffffff', GradientType=1 );
+
         }
 
         .box-card-front {
@@ -124,7 +142,7 @@ hyt-project-card {
                         background-color: #ffffff;
                         color: #0956B6;
                         font-size: 1em;
-                        width: 85%;
+                        width: 80%;
                         height: 100%;
                         border: 1px solid #0956B6;
                         border-radius: 0px;
