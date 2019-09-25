@@ -25,7 +25,7 @@ export class DashboardConfigService {
         private http: HttpClient
     ) { }
 
-    getAllDashboardsAndProjects () {
+    getAllDashboardsAndProjects() {
 
         return forkJoin(
 
@@ -58,7 +58,6 @@ export class DashboardConfigService {
         // remove redundant properties
         delete widget.id;
         const dashboardWidget: DashboardWidget = {
-            dashboard: { id: dashboardId, entityVersion: null },
             widgetConf: JSON.stringify(widget),
             entityVersion: null
         };
