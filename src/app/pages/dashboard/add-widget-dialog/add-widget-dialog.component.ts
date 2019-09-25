@@ -13,7 +13,7 @@ import { DashboardConfigService } from '../dashboard-config.service';
 @Component({
   selector: 'hyt-add-widget-dialog',
   templateUrl: './add-widget-dialog.component.html',
-  styleUrls: ['./add-widget-dialog.component.css']
+  styleUrls: ['./add-widget-dialog.component.scss']
 })
 export class AddWidgetDialogComponent implements OnInit {
   @Output() modalClose: EventEmitter<any> = new EventEmitter<any>();

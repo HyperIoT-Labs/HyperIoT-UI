@@ -2,50 +2,59 @@
 	{
 		"id": 0,
 		"name": "All",
-		"icon": "outline-view_list-24px.svg"
+		"icon": "outline-view_list-24px.svg",
+		"fontIcon": "icon-hyt_layout"
 	},
 	{
 		"id": 1,
 		"name": "Bar chart",
-		"icon": "outline-multiline_chart-24px.svg"
+		"icon": "outline-multiline_chart-24px.svg",
+		"fontIcon": "icon-hyt_chartBar"
 	},
 	{
 		"id": 2,
 		"name": "Line chart",
-		"icon": "outline-multiline_chart-24px.svg"
+		"icon": "outline-multiline_chart-24px.svg",
+		"fontIcon": "icon-hyt_chartLine"
 	},
 	{
 		"id": 3,
 		"name": "Pie chart",
-		"icon": "outline-multiline_chart-24px.svg"
+		"icon": "outline-multiline_chart-24px.svg",
+		"fontIcon": "icon-hyt_charCake"
 	},
 	{
 		"id": 4,
 		"name": "Radar chart",
 		"icon": "outline-multiline_chart-24px.svg",
-		"disabled": true
+		"disabled": true,
+		"fontIcon": "icon-hyt_chartRadar"
 	},
 	{
 		"id": 5,
 		"name": "Gauges",
-		"icon": "outline-multiline_chart-24px.svg"
+		"icon": "outline-multiline_chart-24px.svg",
+		"fontIcon": "icon-hyt_chartGauge"
 	},
 	{
 		"id": 6,
 		"name": "Map",
 		"icon": "outline-multiline_chart-24px.svg",
-		"disabled": true
+		"disabled": true,
+		"fontIcon": "icon-hyt_map"
 	},
 	{
 		"id": 7,
 		"name": "Action",
 		"icon": "outline-multiline_chart-24px.svg",
-		"disabled": true
+		"disabled": true,
+		"fontIcon": "icon-hyt_action"
 	},
 	{
 		"id": 8,
 		"name": "Tables",
 		"icon": "outline-multiline_chart-24px.svg",
-		"disabled": true
+		"disabled": true,
+		"fontIcon": "icon-hyt_tableBig"
 	}
 ]
