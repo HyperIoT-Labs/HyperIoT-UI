@@ -97,9 +97,9 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
   buildRuleDefinition() {
     let rd = '';
     for (let k = 0; k < this.ruleForms.length; k++) {
-      let element: string = (this.hPacket && this.ruleForms[k].form.value.ruleField) ? this.hPacket.name + this.ruleForms[k].form.value.ruleField + ' ' : '';
-      let condition: string = (this.ruleForms[k].form.value.ruleCondition) ? this.ruleForms[k].form.value.ruleCondition + ' ' : '';
-      let valueRule: string = (this.ruleForms[k].form.value.ruleValue) ? this.ruleForms[k].form.value.ruleValue : '';
+      let element: string = (this.hPacket && this.ruleForms[k].form.value.ruleField) ? this.hPacket.name + this.ruleForms[k].form.value.ruleField : '';
+      let condition: string = (this.ruleForms[k].form.value.ruleCondition) ? ' ' + this.ruleForms[k].form.value.ruleCondition : '';
+      let valueRule: string = (this.ruleForms[k].form.value.ruleValue) ? ' ' + this.ruleForms[k].form.value.ruleValue : '';
       let joinRule: string = (this.ruleForms[k].form.value.ruleJoin) ? this.ruleForms[k].form.value.ruleJoin.value : '';
       rd += element + condition + valueRule + joinRule;
     }
