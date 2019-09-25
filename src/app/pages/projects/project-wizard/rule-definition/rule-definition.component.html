@@ -21,8 +21,8 @@
           </div> <!-- Field Condition -->
 
           <div class="col-md-3 container-form-field">
-            <hyt-input-text [form]="ruleForm.form" formControlName="ruleValue" name="ruleValue" [isRequired]="true"
-              placeholder="HYT_value">
+            <hyt-input-text *ngIf="ruleForm.compareWith" [form]="ruleForm.form" formControlName="ruleValue"
+              name="ruleValue" [isRequired]="true" placeholder="HYT_value">
             </hyt-input-text>
           </div> <!-- Field Value -->
 

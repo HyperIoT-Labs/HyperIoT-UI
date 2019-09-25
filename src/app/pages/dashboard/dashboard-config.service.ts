@@ -26,7 +26,7 @@ export class DashboardConfigService {
         private http: HttpClient
     ) { }
 
-    getAllDashboardsAndProjects () {
+    getAllDashboardsAndProjects() {
 
         return forkJoin(
 

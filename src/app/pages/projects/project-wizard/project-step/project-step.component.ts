@@ -12,6 +12,8 @@ import { PageStatusEnum } from '../model/pageStatusEnum'
 })
 export class ProjectStepComponent implements OnInit {
 
+  hProject: HProject;
+
   @Output() projectOutput = new EventEmitter<HProject>();
 
   projectForm: FormGroup;
@@ -31,43 +33,60 @@ export class ProjectStepComponent implements OnInit {
     this.projectForm = this.fb.group({});
   }
 
-  createProject() {
-
+  submitProject() {
     if (this.pageStatus == PageStatusEnum.Submitted) {
-      this.projectOutput.emit(null);
-      return;
+      this.updateProject();
     }
+    else {
+      this.createProject();
+    }
+  }
+
+  projectObs = {
+    next: (res) => {
+      this.hProject = res;
+      this.projectOutput.emit(this.hProject);
+      this.pageStatus = PageStatusEnum.Submitted;
+    },
+    error: (err) => {
+      this.pageStatus = PageStatusEnum.Error;
+      this.errors = this.errorHandler.handleCreateHProject(err);
+      this.errors.forEach(e => {
+        if (e.container != 'general')
+          this.projectForm.get(e.container).setErrors({
+            validateInjectedError: {
+              valid: false
+            }
+          });
+      })
+    }
+  }
+
+  updateProject() {
 
     this.pageStatus = PageStatusEnum.Loading;
-
     this.errors = [];
 
-    let hProject: HProject = {
+    this.hProject.name = this.projectForm.value.projectName;
+    this.hProject.description = this.projectForm.value.projectDescription;
+    this.hProjectService.updateHProject(this.hProject).subscribe(this.projectObs);
+
+  }
+
+  createProject() {
+
+    this.pageStatus = PageStatusEnum.Loading;
+    this.errors = [];
+
+    this.hProject = {
       name: this.projectForm.value.projectName,
       description: this.projectForm.value.projectDescription,
       user: { id: JSON.parse(localStorage.getItem('user')).id, entityVersion: 1 },
       entityVersion: 1
     }
 
-    this.hProjectService.saveHProject(hProject).subscribe(
-      res => {
-        this.projectOutput.emit(res);
-        this.pageStatus = PageStatusEnum.Submitted;
-      },
-      err => {
-        this.pageStatus = PageStatusEnum.Error;
-        this.errors = this.errorHandler.handleCreateHProject(err);
-        this.errors.forEach(e => {
-          if (e.container != 'general')
-            this.projectForm.get(e.container).setErrors({
-              validateInjectedError: {
-                valid: false
-              }
-            });
+    this.hProjectService.saveHProject(this.hProject).subscribe(this.projectObs);
 
-        })
-      }
-    )
   }
 
   getError(field: string): string {

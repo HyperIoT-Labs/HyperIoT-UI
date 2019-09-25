@@ -26,12 +26,6 @@
 
   </form>
 
-  <!--Temporaneo-->
-  Definition of terms:
-  <br>
-  [$NAME_DEVICE$] - The Name of Device [$NAME_PACKET$] - The Name of Packet
-  <br>
-  [$NAME_FIELD$] - The Name of Field [$DATA_EVENT$] - The Date of eventMail
-  <!--/Temporaneo-->
+  <hyt-selectable-text [placeHolders]="placeHolders" (clicked)="addPlaceHolder($event)"></hyt-selectable-text>
 
 </div>

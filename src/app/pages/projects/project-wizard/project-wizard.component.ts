@@ -8,8 +8,12 @@ import { Subject } from 'rxjs';
 })
 export class ProjectWizardCanDeactivate implements CanDeactivate<ProjectWizardComponent>{
   canDeactivate(com: ProjectWizardComponent) {
-    com.deactivateModal = true;
-    return com.canDeactivate$;
+    if (com.hProject == null || com.finishOpen)
+      return true;
+    else {
+      com.deactivateModal = true;
+      return com.canDeactivate$;
+    }
   }
 }
 
