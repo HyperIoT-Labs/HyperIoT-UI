@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { map } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
+import { Subject, forkJoin, of } from 'rxjs';
 
 import {
     DashboardwidgetsService,
@@ -25,6 +25,22 @@ export class DashboardConfigService {
         private http: HttpClient
     ) { }
 
+    getAllDashboardsAndProjects() {
+
+        return forkJoin(
+
+            this.hProjectService.cardsView().pipe(
+                catchError(err => of(err))
+            ),
+
+            this.dashboardService.findAllDashboard().pipe(
+                catchError(err => of(err))
+            )
+
+        )
+
+    }
+
     getProjectsList() {
         return this.hProjectService.cardsView();
     }
@@ -42,7 +58,6 @@ export class DashboardConfigService {
         // remove redundant properties
         delete widget.id;
         const dashboardWidget: DashboardWidget = {
-            dashboard: { id: dashboardId, entityVersion: null },
             widgetConf: JSON.stringify(widget),
             entityVersion: null
         };

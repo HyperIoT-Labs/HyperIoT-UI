@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
-import { HPacket } from '@hyperiot/core';
+import { HPacket, HPacketField } from '@hyperiot/core';
 import { SelectOption } from '@hyperiot/components';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Option } from '@hyperiot/components/lib/hyt-radio-button/hyt-radio-button.component';
@@ -7,6 +7,12 @@ import { Option } from '@hyperiot/components/lib/hyt-radio-button/hyt-radio-butt
 interface RuleForm {
   form: FormGroup;
   conditionOptions: SelectOption[];
+  compareWith: boolean
+}
+
+interface FieldList {
+  field: HPacketField;
+  label: string;
 }
 
 @Component({
@@ -34,6 +40,8 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
     { value: 'isFalse', label: 'isFalse', type: ['OBJECT', 'BOOLEAN'] }
   ]
 
+  comared: boolean = true;
+
   joinOptions: Option[] = [
     { value: ' AND ', label: 'AND', checked: false },
     { value: ' OR ', label: 'OR', checked: false }
@@ -46,22 +54,38 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
   ngOnInit() {
     this.ruleForms.push({
       form: this.fb.group({}),
-      conditionOptions: []
+      conditionOptions: [],
+      compareWith: false
+    })
+  }
+
+  fieldFlatList: FieldList[] = [];
+
+  extractField(fieldArr: HPacketField[], pre: string) {
+    fieldArr.forEach(f => {
+      let fieldName: string = pre + '.' + f.name;
+      console.log(fieldName)
+      this.fieldFlatList.push({ field: f, label: fieldName });
+      if (f.innerFields)
+        this.extractField(f.innerFields, fieldName);
     })
   }
 
   ngOnChanges() {
     this.fieldOptions = [];
     if (this.hPacket)
-      for (let el of this.hPacket.fields)
-        this.fieldOptions.push({ value: el.name, label: el.name })
+      this.extractField(this.hPacket.fields, '');
+    for (let el of this.fieldFlatList)
+      this.fieldOptions.push({ value: el.label, label: el.field.name });
+    console.log(this.fieldFlatList)
   }
 
   addCondition(index) {
     if (this.ruleForms.length == index + 1)
       this.ruleForms.push({
         form: this.fb.group({}),
-        conditionOptions: []
+        conditionOptions: [],
+        compareWith: false
       });
   }
 
@@ -73,24 +97,24 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
   buildRuleDefinition() {
     let rd = '';
     for (let k = 0; k < this.ruleForms.length; k++) {
-      let element: string = (this.hPacket && this.ruleForms[k].form.value.ruleField) ? this.hPacket.name + '.' + this.ruleForms[k].form.value.ruleField + ' ' : '';
-      let condition: string = (this.ruleForms[k].form.value.ruleCondition) ? this.ruleForms[k].form.value.ruleCondition + ' ' : '';
-      let valueRule: string = (this.ruleForms[k].form.value.ruleValue) ? this.ruleForms[k].form.value.ruleValue : '';
-      let joinRule: string = (this.ruleForms[k].form.value.ruleJoin) ? this.ruleForms[k].form.value.ruleJoin : '';
+      let element: string = (this.hPacket && this.ruleForms[k].form.value.ruleField) ? this.hPacket.name + this.ruleForms[k].form.value.ruleField : '';
+      let condition: string = (this.ruleForms[k].form.value.ruleCondition) ? ' ' + this.ruleForms[k].form.value.ruleCondition : '';
+      let valueRule: string = (this.ruleForms[k].form.value.ruleValue) ? ' ' + this.ruleForms[k].form.value.ruleValue : '';
+      let joinRule: string = (this.ruleForms[k].form.value.ruleJoin) ? this.ruleForms[k].form.value.ruleJoin.value : '';
       rd += element + condition + valueRule + joinRule;
     }
     return rd;
   }
 
   fieldChanged(event, index) {
-    let type = this.hPacket.fields.find(x => x.name == event.value).type;
+    let type = this.fieldFlatList.find(y => y.label == event.value).field.type;
     this.ruleForms[index].conditionOptions = [];
 
     this.allConditionOptions.forEach(x => {
       if (x.type.includes(type))
         this.ruleForms[index].conditionOptions.push({ value: x.value, label: x.label })
     })
-
+    this.ruleForms[index].compareWith = (type == 'BOOLEAN') ? false : true;
   }
 
   isFormInvalid(k: number): boolean {
@@ -100,7 +124,7 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
         true :
         valArr.get('ruleField').invalid ||
         valArr.get('ruleCondition').invalid ||
-        valArr.get('ruleValue').invalid
+        ((this.ruleForms[k].compareWith) ? valArr.get('ruleValue').invalid : false)
     )
   }
 

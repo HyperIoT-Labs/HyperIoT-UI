@@ -7,7 +7,7 @@
       <div class="row">
         <div class="col-md-6 container-form-field">
           <hyt-input-text [form]="eventsForm" formControlName="rule-name" name="rule-name" [isRequired]="true"
-            placeholder="HYT_eventName">
+            placeholder="HYT_eventName" [injectedErrorMsg]="getError('rule-name')">
           </hyt-input-text>
         </div> <!-- Field Name -->
         <div class="col-md-6 container-form-field">
@@ -46,7 +46,7 @@
         </div> <!-- Field RuleDefinition -->
       </div>
 
-      <hyt-event-mail></hyt-event-mail>
+      <hyt-event-mail #eventMail></hyt-event-mail>
 
       <br>
 

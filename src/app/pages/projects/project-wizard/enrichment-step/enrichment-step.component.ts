@@ -34,6 +34,7 @@ export class EnrichmentStepComponent implements OnInit, OnChanges {
 
   hPacketsforDevice: HPacket[] = [];
 
+  currentDevice;
   currentPacket;
 
   enrichmentForm: FormGroup;
@@ -71,18 +72,36 @@ export class EnrichmentStepComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
+    this.refreshDeviceList();
+    this.refreshPacketList();
+  }
+
+  refreshDeviceList() {
     this.devicesOptions = [];
-    for (let el of this.hDevices)
-      this.devicesOptions.push({ value: el.id.toString(), label: el.deviceName });
+    if (this.enrichmentForm)
+      this.enrichmentForm.patchValue({
+        enrichmentDevice: null
+      });
+    this.currentDevice = null;
+    this.hDevices.forEach(x => this.devicesOptions.push({ value: x.id.toString(), label: x.deviceName }));
+  }
+
+  refreshPacketList() {
     this.packetsOptions = [];
+    if (this.enrichmentForm)
+      this.enrichmentForm.patchValue({
+        enrichmentPacket: null
+      });
+    this.currentPacket = null;
+    if (this.currentDevice)
+      for (let el of this.hPackets)
+        if (this.currentDevice.id == el.device.id)
+          this.packetsOptions.push({ value: el.id.toString(), label: el.name });
   }
 
   deviceChanged(event) {
-    this.packetsOptions = [];
-    for (let el of this.hPackets)
-      if (event.value == el.device.id)
-        this.packetsOptions.push({ value: el.id.toString(), label: el.name });
-    this.currentPacket = null;
+    this.currentDevice = this.hDevices.find(x => x.id == event.value);
+    this.refreshPacketList();
   }
 
   packetChanged(event) {
@@ -124,7 +143,7 @@ export class EnrichmentStepComponent implements OnInit, OnChanges {
       },
       err => {
         this.pageStatus = PageStatusEnum.Error;
-        this.errors = this.errorHandler.handleCreateRuleEnrichment(err);
+        this.errors = this.errorHandler.handleCreateRule(err);
         this.errors.forEach(e => {
           if (e.container != 'general')
             this.enrichmentForm.get(e.container).setErrors({

@@ -44,7 +44,7 @@ export class ProjectWizardHttpErrorHandlerService extends HttpErrorHandlerServic
             return [
               {
                 message: httpError.error.errorMessages[0] + ' ' + this.i18n('HYT_duplicate_entity'),
-                container: 'packetName'
+                container: 'hdevice-devicename'
               },
               {
                 message: httpError.error.errorMessages[0] + ' ' + this.i18n('HYT_duplicate_entity'),
@@ -165,14 +165,14 @@ export class ProjectWizardHttpErrorHandlerService extends HttpErrorHandlerServic
     }
   }
 
-  handleCreateRuleEnrichment(httpError: HttpErrorResponse): HYTError[] {
+  handleCreateRule(httpError: HttpErrorResponse): HYTError[] {
     switch (httpError.status) {
       case 422: {
         switch (httpError.error.type) {
           case 'it.acsoftware.hyperiot.base.exception.HyperIoTDuplicateEntityException': {
             return [
               {
-                message: 'rule name ' + this.i18n('HYT_duplicate_entity'),
+                message: 'Name ' + this.i18n('HYT_duplicate_entity'),
                 container: 'rule-name'
               },
               {

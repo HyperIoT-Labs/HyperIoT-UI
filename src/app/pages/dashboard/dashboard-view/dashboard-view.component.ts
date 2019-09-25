@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { WidgetsLayoutComponent } from '../widgets-layout/widgets-layout.component';
@@ -13,14 +13,15 @@ import { WidgetSettingsDialogComponent } from '../widget-settings-dialog/widget-
 export class DashboardViewComponent implements OnInit {
   @ViewChild(WidgetsLayoutComponent, { static: true })
   dashboardLayout: WidgetsLayoutComponent;
-  dashboardId: string;
+  
+  @Input() dashboardId: string;
 
   constructor(
     private activatedRoute: ActivatedRoute
   ) { }
 
   ngOnInit() {
-    this.dashboardId = this.activatedRoute.snapshot.paramMap.get('dashboardId');
+    // this.dashboardId = this.activatedRoute.snapshot.paramMap.get('dashboardId');
   }
 
   onActivate(childComponent) {

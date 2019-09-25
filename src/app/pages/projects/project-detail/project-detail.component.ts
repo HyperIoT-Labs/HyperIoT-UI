@@ -90,7 +90,7 @@ export class ProjectDetailComponent implements OnInit {
         this.projectName = p.name;
         this.treeData.push(projectNode);
         this.treeView.setData(this.treeData);
-        this.hDeviceService.findAllHDevice(p.id).subscribe((deviceList: HDevice[]) => {
+        this.hDeviceService.findAllHDeviceByProjectId(p.id).subscribe((deviceList: HDevice[]) => {
           const requests: Observable<any>[] = [];
           const devices = []; // device lookup list
           deviceList.map((d) => {

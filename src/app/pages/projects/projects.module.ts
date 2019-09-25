@@ -31,6 +31,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
 import { AssetCategoryComponent } from './project-wizard/asset-category/asset-category.component';
 import { AssetTagComponent } from './project-wizard/asset-tag/asset-tag.component';
+import { SelectableTextComponent } from './project-wizard/events-step/event-mail/selectable-text/selectable-text.component';
 @NgModule({
   declarations: [
     ProjectsComponent,
@@ -50,7 +51,8 @@ import { AssetTagComponent } from './project-wizard/asset-tag/asset-tag.componen
     PacketDataComponent,
     EventMailComponent,
     AssetCategoryComponent,
-    AssetTagComponent
+    AssetTagComponent,
+    SelectableTextComponent
   ],
   imports: [
     MatIconModule,

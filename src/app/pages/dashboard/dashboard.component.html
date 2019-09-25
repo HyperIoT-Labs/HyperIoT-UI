@@ -10,39 +10,35 @@
     
     <div id="container-dashboard" [ngSwitch]="pageStatus">
 
-        <div id="tools-dashboard-box">
+        <div id="tools-dashboard-box" *ngIf="pageStatus == PageStatus.Standard || pageStatus == PageStatus.New">
 
             <div class="row no-gutters">
 
                 <div class="col-6 left-tools">
 
                     <div id="signal-btn" (click)="changeSignalState($event)">
-                        <i class="fa fa-signal {{(signalIsOn)?'':'offline-state'}}"></i>
-                        <br>
-                        <span>{{(signalIsOn)?'Online':'Offline'}}</span>
+                        <span class="hyt-icon {{(signalIsOn)?'icon-hyt_wifiOnFilled':'icon-hyt_wifiOffFilled'}}"></span>
+                        <p>{{(signalIsOn)?'Online':'Offline'}}</p>
                     </div>
 
                     <div id="play-btn" (click)="changeStreamState($event)">
-                        <i class="fa {{(streamIsOn)?'fa fa-pause':'fa fa-play'}}"></i>
-                        <br>
-                        <span>{{(streamIsOn)?'Pause':'Play'}}</span>
+                        <span class="hyt-icon {{(streamIsOn)?'icon-hyt_pause':'icon-hyt_play'}}"></span>
+                        <p>{{(streamIsOn)?'Pause':'Play'}}</p>
                     </div>
 
                 </div>
 
                 <div class="col-6 right-tools">
-                    <hyt-select [label]="'Select a project'" name="project" [options]="hProjectListOptions"></hyt-select>
+                    <hyt-select [label]="'Select a project'" name="project" [options]="hProjectListOptions" [selected]="defaultProjectSelected" (changeFn)="onSelectChange($event)"></hyt-select>
 
                     <div id="add-widget-btn">
-                        <img src="assets/images/dashboard/add-button.png" alt="add widget button">
-                        <br>
-                        <span>Add a widget</span>
+                        <span class="hyt-icon icon-hyt_widgetPlus"></span>
+                        <p>Add a widget</p>
                     </div>
 
-                    <div id="save-dashboard-btn">
-                        <i class="fa fa-floppy-o"></i>
-                        <br>
-                        <span>Save</span>
+                    <div id="save-dashboard-btn" (click)="openAddWidget()">
+                        <span class="hyt-icon icon-hyt_save"></span>
+                        <p>Save</p>
                     </div>
                 </div>
 
@@ -58,9 +54,9 @@
     
         <div id="standardStatus" *ngSwitchCase="PageStatus.Standard" class="row">
         <!-- Standard -->
-    
+
             <div id="container-box-dashboard" class="col-12">
-        
+                <hyt-dashboard-view [dashboardId]="currentDashboardId"></hyt-dashboard-view>
             </div>
 
         </div>
@@ -75,6 +71,8 @@
                     <h3 id="title-no-dashboards">You have not configured any dashboards.</h3>
                     <h4 id="subtitle-no-dashboards">Start adding widgets.</h4>
                 </div>
+
+                <hyt-dashboard-view [dashboardId]="currentDashboardId"></hyt-dashboard-view>
 
                 <!-- <div id="btn-no-dashboards" class="col-md-12">
 

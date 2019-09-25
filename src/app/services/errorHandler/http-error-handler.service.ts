@@ -13,6 +13,15 @@ export class HttpErrorHandlerService {
   handle(httpError: HttpErrorResponse): HYTError[] {
 
     switch (httpError.status) {
+      case 404: {
+        return [
+          {
+            message: 'Service temporarily unavaiable',
+            container: 'general'
+          }
+        ];
+        break;
+      }
       case 500: {
         return [
           {
