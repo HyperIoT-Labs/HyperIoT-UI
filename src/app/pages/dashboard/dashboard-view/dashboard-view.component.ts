@@ -17,7 +17,6 @@ export class DashboardViewComponent implements OnInit {
   @Input() dashboardId: string;
 
   constructor(
-    private activatedRoute: ActivatedRoute
   ) { }
 
   ngOnInit() {

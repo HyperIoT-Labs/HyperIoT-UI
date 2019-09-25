@@ -167,7 +167,6 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
       case 'toolbar:settings':
         this.router.navigate([
           'dashboards',
-          this.dashboardId,
           { outlets: { modal: ['settings', data.widget.id] } }
         ]).then((e) => {
           if (e) {
@@ -292,7 +291,7 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
       if (bp) {
         singleCell = bp.cell;
       }
-    }     
+    }
 
     return singleCell;
   }

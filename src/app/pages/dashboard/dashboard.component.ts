@@ -1,10 +1,14 @@
-import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, OnDestroy, ViewChild } from '@angular/core';
 import { DashboardConfigService } from './dashboard-config.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject, forkJoin } from 'rxjs';
 import { Dashboard, HProject } from '@hyperiot/core';
 import { SelectOption } from '@hyperiot/components';
 import { RouterLink, Router, ActivatedRoute, RouterOutlet } from '@angular/router';
+import { WidgetsLayoutComponent } from './widgets-layout/widgets-layout.component';
+import { DashboardViewComponent } from './dashboard-view/dashboard-view.component';
+import { AddWidgetDialogComponent } from './add-widget-dialog/add-widget-dialog.component';
+import { WidgetSettingsDialogComponent } from './widget-settings-dialog/widget-settings-dialog.component';
 
 enum PageStatus {
   Loading = 0,
@@ -25,6 +29,9 @@ interface HytSelectOption extends HProject {
   encapsulation: ViewEncapsulation.None
 })
 export class DashboardComponent implements OnInit, OnDestroy {
+  // @ViewChild(WidgetsLayoutComponent, { static: false }) dashboardLayout : WidgetsLayoutComponent;
+  @ViewChild(DashboardViewComponent, { static: false })
+  dashboardView: DashboardViewComponent;
 
   /** Subject for manage the open subscriptions */
   protected ngUnsubscribe: Subject<void> = new Subject<void>();
@@ -43,14 +50,16 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   streamIsOn: boolean = true;
 
-  defaultProjectSelected: number;
+  idProjectSelected: number;
 
   currentDashboardId: number;
 
   constructor(
     private dashboardConfigService: DashboardConfigService,
     private route: Router
-  ) { }
+  ) {
+
+  }
 
   ngOnInit() {
 
@@ -95,18 +104,18 @@ export class DashboardComponent implements OnInit, OnDestroy {
         if(this.dashboardList.length > 0) {
           
           try {
-            this.defaultProjectSelected = this.hProjectListOptions.find(x=>(x.id == this.dashboardList[0].hproject.id)).value;
+            this.idProjectSelected = this.hProjectListOptions.find(x=>(x.id == this.dashboardList[0].hproject.id)).value;
             this.currentDashboardId = this.dashboardList[0].id;
           } catch (error) {
             
           }
           this.pageStatus = PageStatus.Standard;
-          console.log(this.defaultProjectSelected)
+          console.log(this.idProjectSelected)
 
         } else if (this.dashboardList.length == 0) {
           
-          this.defaultProjectSelected = this.hProjectListOptions[0].value;
-          this.currentDashboardId = this.defaultProjectSelected[0].id;
+          this.idProjectSelected = this.hProjectListOptions[0].value;
+          this.currentDashboardId = this.idProjectSelected[0].id;
 
           this.pageStatus = PageStatus.New;
         } else {
@@ -126,11 +135,19 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   onSelectChange(event) {
 
+    this.idProjectSelected = event.value;
+
+    console.log("project id selected", event.value)
     try {
       this.currentDashboardId = this.dashboardList.find(x => (x.hproject.id == event.value)).id;
-    } catch (error) {}
+      this.pageStatus = PageStatus.Standard;
+    } catch (error) {
+      this.createDashboard(event.value);
+      this.currentDashboardId = null;
+      this.pageStatus = PageStatus.New;
+    }
 
-    console.log(this.currentDashboardId)
+    console.log("dashboard id selected", this.currentDashboardId)
     
   }
 
@@ -142,8 +159,44 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.streamIsOn = !this.streamIsOn;
   }
 
-  openAddWidget(){
-    
+
+
+  createDashboard(idProject: number) {
+
+    let dashboard: Dashboard = {
+      dashboardType: "REALTIME",
+      entityVersion: 1,
+      hproject: this.hProjectList.find(x => (x.id == idProject)),
+      // name: this.hProjectList.find(x => (x.id == idProject)).name
+    };
+
+    // this.dashboardConfigService.saveDashboard(dashboard)
+    console.log(dashboard)
+
   }
+
+  saveDashboard() {
+    this.dashboardView.saveDashboard();
+  }
+
+  // onActivate(childComponent) {
+  //   if (childComponent instanceof AddWidgetDialogComponent) {
+  //     childComponent.addWidgets.subscribe((widgets) => this.onWidgetsAdd(widgets));
+  //   } else if (childComponent instanceof WidgetSettingsDialogComponent) {
+  //     const widgetId = childComponent.getWidgetId();
+  //     const widget = this.dashboardLayout.getItemById(widgetId);
+  //     childComponent.setWidget(widget);
+  //   }
+  // }
+
+  // saveDashboard() {
+  //   this.dashboardLayout.saveDashboard();
+  // }
+
+  // onWidgetsAdd(widgetList: any[]) {
+  //   widgetList.map((widget) => {
+  //     this.dashboardLayout.addItem(widget);
+  //   });
+  // }
 
 }
