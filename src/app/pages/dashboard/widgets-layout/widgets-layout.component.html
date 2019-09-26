@@ -16,8 +16,7 @@
 
 </gridster>
 
-<div class="row align-items-center justify-content-center">
-  <!-- New -->
+<div *ngIf="dashboard.length == 0" class="row align-items-center justify-content-center">
 
   <div class="mt-5 no-dashboards">
 
@@ -27,6 +26,6 @@
       <h4 id="subtitle-no-dashboards">Start adding widgets.</h4>
     </div>
 
-  </div> <!-- End No Projects Row -->
+  </div>
 
 </div>
