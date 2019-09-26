@@ -43,6 +43,7 @@ export class EventMailComponent implements OnInit {
     this.mailForm.patchValue({
       mailBody: this.mailForm.value['mailBody'] + event
     });
+    (<HTMLElement>document.querySelector('#mailBody.hyt-input.mat-input-element')).focus();
   }
 
 }

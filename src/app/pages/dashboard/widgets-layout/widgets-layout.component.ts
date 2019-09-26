@@ -16,7 +16,6 @@ import {
 } from '@hyperiot/core';
 
 import { DashboardConfigService } from '../dashboard-config.service';
-import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 
 @Component({
   selector: 'hyt-widgets-layout',
@@ -163,6 +162,7 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
         this.removeItem(data.widget);
         break;
       case 'toolbar:settings':
+        console.log("aaaaa")
         this.router.navigate([
           'dashboards',
           { outlets: { modal: ['settings', data.widget.id] } }
@@ -249,6 +249,7 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
         .subscribe((w) => {
           // TODO: handle errors
           // widget saved (should have a new id)
+          widget.projectId = this.projectId;
           this.dashboard.push(widget);
         });
     }
