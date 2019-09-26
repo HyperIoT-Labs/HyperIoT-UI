@@ -1,55 +1,76 @@
-<div class="d-flex flex-row align-items-start justify-content-stretch">
-    
-    <div class="flex-grow-1 d-flex flex-row align-items-start justify-content-stretch flex-wrap">
+<div id="single-project-page">
 
-        <a 
-            class="back-btn d-flex flex-column align-items-center justify-content-center"
-            [routerLink]="['/projects']"
-        >
-            <!-- <mat-icon>arrow_back</mat-icon> -->
-            <span class="icon-hyt_caretDown hyt-icon"></span>
-        </a>
-
-        <!-- BEGIN TreeView -->
-        <div [ngStyle]="{display: treeStatus == TreeStatus.Ready ? '' : 'none'}" class="treeview pb-2 flex-grow-1 flex-sm-grow-0 flex-fill">
-            <hyt-tree-view-project #treeView (nodeClick)="onNodeClick($event)"></hyt-tree-view-project>
-        </div>        
-        <div *ngIf="treeStatus == TreeStatus.Loading || treeStatus == TreeStatus.LoadingComplete" class="treeview mt-2 d-flex flex-column align-items-center justify-content-center">
-            <h4>Loading project tree</h4>
-            <mat-spinner></mat-spinner>
-        </div>
-        <div *ngIf="treeStatus == TreeStatus.Error" class="mt-2 treeview">
-            <h4>Error loading project tree</h4>
-        </div>
-        <!-- END TreeView -->
-
-        <div class="content pl-4 pr-4 flex-grow-1">
-            <router-outlet
-                name="projectDetails"
-                (attach)="onActivate($event)"
-                (activate)="onActivate($event)"></router-outlet>
-        </div>
-
-    </div>
-
-    <div class="side-bar">
-
-        <div class="mt-4 d-flex flex-row justify-content-around">
-            <hyt-button (clickFn)="onSaveClick()" [isDisabled]="currentEntity && (!currentEntity.isValid() || !currentEntity.isDirty())">
-                <mat-icon class="md-primary">save</mat-icon>
-                <span>Save</span>
-            </hyt-button>
-            <hyt-button (clickFn)="onDeleteClick()">
-                <mat-icon>delete</mat-icon>
-                <span>Delete</span>
-            </hyt-button>
-        </div>
-
-        <div *ngIf="hintVisible" class="info-message m-2 mt-4 d-flex flex-row">
-            <span class="text p-2 flex-grow-1">{{hintMessage}}</span>
-            <mat-icon class="mt-2 mr-2">info</mat-icon>
-        </div>
+    <div class="header d-flex flex-row justify-content-stretch">
         
+        <div class="breadcrumb flex-grow-1">
+            <span class="hyt-icon icon-hyt_projectSolo"></span> <a [routerLink]="['/']">Home</a> > <strong>Project</strong> 
+        </div>
+
+    </div> <!-- End of Breadcrumb -->
+
+    <div id="container-general-form" class="d-flex flex-row align-items-start justify-content-stretch">
+        
+        <div class="flex-grow-1 d-flex flex-row align-items-start justify-content-stretch flex-wrap">
+
+            <a 
+                class="back-btn d-flex flex-column align-items-center justify-content-center"
+                [routerLink]="['/projects']"
+            >
+                <span class="icon-hyt_caretDown hyt-icon-back"></span>
+
+            </a>
+
+            <!-- BEGIN TreeView -->
+            <div [ngStyle]="{display: treeStatus == TreeStatus.Ready ? '' : 'none'}" class="treeview pb-2 flex-grow-1 flex-sm-grow-0 flex-fill">
+                <hyt-tree-view-project #treeView (nodeClick)="onNodeClick($event)"></hyt-tree-view-project>
+            </div>        
+            <div *ngIf="treeStatus == TreeStatus.Loading || treeStatus == TreeStatus.LoadingComplete" class="treeview mt-2 d-flex flex-column align-items-center justify-content-center">
+                <h4>Loading project tree</h4>
+                <mat-spinner></mat-spinner>
+            </div>
+            <div *ngIf="treeStatus == TreeStatus.Error" class="mt-2 treeview">
+                <h4>Error loading project tree</h4>
+            </div>
+            <!-- END TreeView -->
+
+            <div class="content pl-4 pr-4 flex-grow-1">
+                <router-outlet
+                    name="projectDetails"
+                    (attach)="onActivate($event)"
+                    (activate)="onActivate($event)"></router-outlet>
+            </div>
+
+        </div>
+
+        <div class="side-bar">
+
+            <div class="mt-4 d-flex flex-row justify-content-around">
+                <hyt-button 
+                    id="save-btn"
+                    (clickFn)="onSaveClick()" 
+                    [isDisabled]="currentEntity && (!currentEntity.isValid() || !currentEntity.isDirty())"
+                >
+                    <mat-icon class="md-primary">save</mat-icon>
+                    <span>Save</span>
+                </hyt-button>
+
+                <hyt-button 
+                    id="delete-btn"
+                    (clickFn)="onDeleteClick()"
+                >
+                    <mat-icon>delete</mat-icon>
+                    <span>Delete</span>
+                </hyt-button>
+
+            </div>
+
+            <div *ngIf="hintVisible" class="info-message m-2 mt-4 d-flex flex-row"> 
+                <span class="text p-2 flex-grow-1">{{hintMessage}}</span>
+                <mat-icon class="">info</mat-icon> <!-- mt-2 mr-2 -->
+            </div>
+            
+        </div>
+
     </div>
 
 </div>
