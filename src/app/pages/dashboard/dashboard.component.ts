@@ -29,7 +29,6 @@ interface HytSelectOption extends HProject {
   encapsulation: ViewEncapsulation.None
 })
 export class DashboardComponent implements OnInit, OnDestroy {
-  // @ViewChild(WidgetsLayoutComponent, { static: false }) dashboardLayout : WidgetsLayoutComponent;
   @ViewChild(DashboardViewComponent, { static: false })
   dashboardView: DashboardViewComponent;
 
@@ -54,6 +53,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   currentDashboardId: number;
 
+  currentDashboard: Dashboard;
+
   constructor(
     private dashboardConfigService: DashboardConfigService,
     private route: Router
@@ -63,6 +64,132 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
+    this.dashboardConfigService.getProjectsList()
+    .pipe(takeUntil(this.ngUnsubscribe))
+    .subscribe(
+      res => {
+        // console.log(res)
+        try {
+          this.hProjectList = [...res];
+          this.hProjectListOptions = <HytSelectOption[]>this.hProjectList;
+          this.hProjectListOptions.forEach(element => {
+            element.label = element.name;
+            element.value = element.id;
+          });
+
+          this.hProjectListOptions.sort(function(a, b){
+            if(a.entityModifyDate > b.entityModifyDate) { return -1; }
+            if(a.entityModifyDate < b.entityModifyDate) { return 1; }
+            return 0;
+          })
+
+          // console.log(this.hProjectListOptions)
+
+          this.idProjectSelected = this.hProjectListOptions[0].id;
+
+          this.dashboardConfigService.getRealtimeDashboardFromProject(this.idProjectSelected)
+          .pipe(takeUntil(this.ngUnsubscribe))
+          .subscribe(
+            res => {
+              try {
+                // console.log(res)
+                this.currentDashboard = res;
+                // console.log("first dashboard", this.currentDashboard)
+                this.currentDashboardId = this.currentDashboard[0].id;
+                this.pageStatus = PageStatus.Standard;
+              } catch (error) {
+                this.pageStatus = PageStatus.New;
+              }
+            },
+            error => {
+              this.pageStatus = PageStatus.New;
+            }
+          )
+        } catch (error) {
+          this.pageStatus = PageStatus.Error;
+        }
+
+      },
+      error => {
+        this.pageStatus = PageStatus.Error;
+      }
+    )
+
+
+
+  }
+
+  ngOnDestroy() {
+    if(this.ngUnsubscribe) {
+      this.ngUnsubscribe.next();
+    }
+  }
+
+  onSelectChange(event) {
+    this.pageStatus = PageStatus.Loading;
+    this.idProjectSelected = event.value;
+    // console.log("project id selected", event.value)
+
+    this.dashboardConfigService.getRealtimeDashboardFromProject(event.value)
+    .pipe(takeUntil(this.ngUnsubscribe))
+    .subscribe(
+      res=>{
+        try {
+          // console.log("on change select", res)
+          this.currentDashboard = res;
+          this.currentDashboardId = this.currentDashboard[0].id;
+          // console.log("dashboard id selected", this.currentDashboardId)
+          this.pageStatus = PageStatus.Standard;
+        } catch (error) {
+          this.pageStatus = PageStatus.New;
+        }
+
+      },
+      error => {
+        this.pageStatus = PageStatus.New;
+      }
+    )
+
+    // try {
+    //   this.currentDashboardId = this.dashboardList.find(x => (x.hproject.id == event.value)).id;
+    //   this.pageStatus = PageStatus.Standard;
+    // } catch (error) {
+    //   this.createDashboard(event.value);
+    //   this.currentDashboardId = null;
+    //   this.pageStatus = PageStatus.New;
+    // }
+
+  }
+
+  changeSignalState(event){
+    this.signalIsOn = !this.signalIsOn;
+  }
+
+  changeStreamState(event) {
+    this.streamIsOn = !this.streamIsOn;
+  }
+
+  saveDashboard() {
+    this.dashboardView.saveDashboard();
+  }
+
+  /******************************************************************************************************************************* Not used */
+
+  createDashboard(idProject: number) {
+
+    let dashboard: Dashboard = {
+      dashboardType: "REALTIME",
+      entityVersion: 1,
+      hproject: this.hProjectList.find(x => (x.id == idProject)),
+      // name: this.hProjectList.find(x => (x.id == idProject)).name
+    };
+
+    // this.dashboardConfigService.saveDashboard(dashboard)
+    // console.log(dashboard)
+
+  }
+
+  getAllDashboardAndProjects() {
     this.dashboardConfigService.getAllDashboardsAndProjects()
     .pipe(takeUntil(this.ngUnsubscribe))
     .subscribe(
@@ -74,7 +201,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
             element.label = element.name;
             element.value = element.id;
           });
-        } catch (error) { }
+        } catch (error) {
+          this.pageStatus = PageStatus.Error;
+        }
 
         try {
           this.dashboardList = [...res2];
@@ -91,7 +220,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
           if(a.entityModifyDate < b.entityModifyDate) { return 1; }
           return 0;
         })
-        console.log(this.hProjectListOptions)
+        // console.log(this.hProjectListOptions)
 
         this.dashboardList.sort(function(a, b){
           if(a.entityModifyDate > b.entityModifyDate) { return -1; }
@@ -99,9 +228,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
           return 0;
         })
 
-        console.log(this.dashboardList)
+        // console.log(this.dashboardList)
 
-        if(this.dashboardList.length > 0) {
+        if(this.dashboardList.length > 0 && this.hProjectListOptions.length > 0) {
           
           try {
             this.idProjectSelected = this.hProjectListOptions.find(x=>(x.id == this.dashboardList[0].hproject.id)).value;
@@ -110,9 +239,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
             
           }
           this.pageStatus = PageStatus.Standard;
-          console.log(this.idProjectSelected)
+          // console.log(this.idProjectSelected)
 
-        } else if (this.dashboardList.length == 0) {
+        } else if (this.dashboardList.length == 0 && this.hProjectListOptions.length > 0) {
           
           this.idProjectSelected = this.hProjectListOptions[0].value;
           this.currentDashboardId = this.idProjectSelected[0].id;
@@ -124,79 +253,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
         
       }
     )
-
   }
-
-  ngOnDestroy() {
-    if(this.ngUnsubscribe) {
-      this.ngUnsubscribe.next();
-    }
-  }
-
-  onSelectChange(event) {
-
-    this.idProjectSelected = event.value;
-
-    console.log("project id selected", event.value)
-    try {
-      this.currentDashboardId = this.dashboardList.find(x => (x.hproject.id == event.value)).id;
-      this.pageStatus = PageStatus.Standard;
-    } catch (error) {
-      this.createDashboard(event.value);
-      this.currentDashboardId = null;
-      this.pageStatus = PageStatus.New;
-    }
-
-    console.log("dashboard id selected", this.currentDashboardId)
-    
-  }
-
-  changeSignalState(event){
-    this.signalIsOn = !this.signalIsOn;
-  }
-
-  changeStreamState(event) {
-    this.streamIsOn = !this.streamIsOn;
-  }
-
-
-
-  createDashboard(idProject: number) {
-
-    let dashboard: Dashboard = {
-      dashboardType: "REALTIME",
-      entityVersion: 1,
-      hproject: this.hProjectList.find(x => (x.id == idProject)),
-      // name: this.hProjectList.find(x => (x.id == idProject)).name
-    };
-
-    // this.dashboardConfigService.saveDashboard(dashboard)
-    console.log(dashboard)
-
-  }
-
-  saveDashboard() {
-    this.dashboardView.saveDashboard();
-  }
-
-  // onActivate(childComponent) {
-  //   if (childComponent instanceof AddWidgetDialogComponent) {
-  //     childComponent.addWidgets.subscribe((widgets) => this.onWidgetsAdd(widgets));
-  //   } else if (childComponent instanceof WidgetSettingsDialogComponent) {
-  //     const widgetId = childComponent.getWidgetId();
-  //     const widget = this.dashboardLayout.getItemById(widgetId);
-  //     childComponent.setWidget(widget);
-  //   }
-  // }
-
-  // saveDashboard() {
-  //   this.dashboardLayout.saveDashboard();
-  // }
-
-  // onWidgetsAdd(widgetList: any[]) {
-  //   widgetList.map((widget) => {
-  //     this.dashboardLayout.addItem(widget);
-  //   });
-  // }
 
 }

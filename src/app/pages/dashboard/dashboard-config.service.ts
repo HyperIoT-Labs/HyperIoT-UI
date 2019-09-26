@@ -26,6 +26,14 @@ export class DashboardConfigService {
         private http: HttpClient
     ) { }
 
+    getRealtimeDashboardFromProject(projectId: number) {
+        return this.dashboardService.findHProjectRealtimeDashboard(projectId);
+    }
+
+    getOfflineDashboardFromProject(projectId: number) {
+        return this.dashboardService.findHProjectOfflineDashboard(projectId);
+    }
+
     getAllDashboardsAndProjects() {
 
         return forkJoin(
