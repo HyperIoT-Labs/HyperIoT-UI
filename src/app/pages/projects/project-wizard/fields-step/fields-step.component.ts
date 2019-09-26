@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, EventEmitter, Output, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output, OnChanges, ViewChild } from '@angular/core';
 import { Option } from '@hyperiot/components/lib/hyt-radio-button/hyt-radio-button.component';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { HPacketField, HpacketsService, HPacket, HDevice } from '@hyperiot/core';
@@ -7,17 +7,13 @@ import { HYTError } from 'src/app/services/errorHandler/models/models';
 import { ProjectWizardHttpErrorHandlerService } from 'src/app/services/errorHandler/project-wizard-http-error-handler.service';
 import { Node } from '@hyperiot/components';
 import { PageStatusEnum } from '../model/pageStatusEnum';
+import { HytTreeViewEditableComponent } from '@hyperiot/components/lib/hyt-tree-view-editable/hyt-tree-view-editable.component';
 
-interface deviceTreeView {
-  packet: HPacket;
-  tree: Node[];
-}
-
-interface FieldForm {
-  packet: HPacket,
-  fieldData: any;
-  isPacket: boolean;
-  form: FormGroup;
+enum FormStatusEnum {
+  SelectAction = 0,
+  Editable = 1,
+  Loading = 2,
+  Error = -1
 }
 
 @Component({
@@ -31,12 +27,23 @@ export class FieldsStepComponent implements OnInit, OnChanges {
 
   @Input() hPackets: HPacket[] = [];
 
-  deviceTreeView: deviceTreeView[] = [];
+  @ViewChild('treeView', { static: false }) treeView: HytTreeViewEditableComponent;
 
-  fieldForm: FieldForm;
+  packetTree: Node[];
+
+  currentPacket: HPacket;
+
+  currentDevice: HDevice;
+
+  currentField;
+
+  selectForm: FormGroup;
+  fieldForm: FormGroup;
 
   PageStatus = PageStatusEnum;
   pageStatus: PageStatusEnum = PageStatusEnum.Default;
+
+  formStatus: FormStatusEnum = FormStatusEnum.SelectAction;
 
   multiplicityOptions: Option[] = [
     { value: 'SINGLE', label: 'Single', checked: true },
@@ -69,34 +76,35 @@ export class FieldsStepComponent implements OnInit, OnChanges {
     private errorHandler: ProjectWizardHttpErrorHandlerService
   ) { }
 
-  ngOnInit() { }
-
-  devicesOptions: SelectOption[] = [];
-
-  currentDevice: HDevice;
-
-  ngOnChanges() {
-    this.devicesOptions = [];
-    this.deviceTreeView = [];
-    for (let el of this.hDevices)
-      this.devicesOptions.push({ value: el.id.toString(), label: el.deviceName })
-    this.updateDeviceTreeView();
+  ngOnInit() {
+    this.fieldForm = this.fb.group({});
+    this.selectForm = this.fb.group({});
   }
 
-  updateDeviceTreeView() {
-    this.deviceTreeView = [];
-    if (this.currentDevice) {
-      let packetsForDevice = this.hPackets.filter(x => x.device.id == this.currentDevice.id)
-      packetsForDevice.forEach(pack => {
-        this.deviceTreeView.push({
-          packet: pack,
-          tree: this.createTree(pack.fields, true)
-        })
-      })
+  devicesOptions: SelectOption[] = [];
+  packetsOptions: SelectOption[] = [];
+
+  internal: boolean = false;
+
+  ngOnChanges() {
+    if (!this.internal) {
+      this.resetForm();
+      this.currentPacket = null;
+      this.selectForm.reset();
+      this.devicesOptions = [];
+      this.packetsOptions = [];
+      for (let el of this.hDevices)
+        this.devicesOptions.push({ value: el.id.toString(), label: el.deviceName })
+    }
+    this.internal = false;
+    if (this.currentPacket) {
+      this.packetTree = [...this.createPacketTree(this.currentPacket.fields)];
+      if (this.treeView)
+        this.treeView.refresh(this.packetTree, this.currentDevice.deviceName);
     }
   }
 
-  createTree(fields: HPacketField[], root: boolean): Node[] {
+  createPacketTree(fields: HPacketField[]): Node[] {
     let node: Node[] = [];
     fields.forEach(element => {
       node.push({
@@ -105,7 +113,7 @@ export class FieldsStepComponent implements OnInit, OnChanges {
         name: element.name,
         lom: element.multiplicity,
         type: element.type,
-        children: (element.innerFields) ? this.createTree(element.innerFields, false) : null
+        children: (element.innerFields) ? this.createPacketTree(element.innerFields) : null
       })
     });
     return node;
@@ -132,47 +140,60 @@ export class FieldsStepComponent implements OnInit, OnChanges {
         return;
       }
       else if (fields[i].innerFields != null)
-        this.updatePacketViewDelete(fields[i].innerFields, id)
+        this.updatePacketViewDelete(fields[i].innerFields, id);
     }
   }
 
   deviceChanged(event) {
-    this.currentDevice = this.hDevices.find(x => x.id == event.value)
-    this.updateDeviceTreeView();
+    console.log("device")
+    this.packetsOptions = [];
+    this.currentDevice = this.hDevices.find(x => x.id == event.value);
+    this.hPackets.filter(p => p.device.id == this.currentDevice.id).forEach(p => this.packetsOptions.push({ value: p.id.toString(), label: p.name }));
+  }
+
+  packetChanged(event) {
+    console.log("packet")
+    this.currentPacket = this.hPackets.find(x => x.id == event.value);
+    this.packetTree = [...this.createPacketTree(this.currentPacket.fields)];
+    if (this.treeView)
+      this.treeView.refresh(this.packetTree, this.currentDevice.deviceName);
   }
 
   createField() {
 
     this.pageStatus = PageStatusEnum.Loading;
+    this.formStatus = FormStatusEnum.Loading;
 
     this.errors = [];
 
     let field: HPacketField = {
       entityVersion: 1,
-      name: this.fieldForm.form.value['fieldName'],
-      multiplicity: this.fieldForm.form.value.fieldMultiplicity.value,
-      type: this.fieldForm.form.value.fieldType,
-      description: this.fieldForm.form.value.fieldDescription,
-      innerFields: (this.fieldForm.form.value.fieldType == 'OBJECT') ? [] : null,
-      parentField: (this.fieldForm.fieldData) ? { id: this.fieldForm.fieldData.id, entityVersion: this.fieldForm.fieldData.entityVersion } : null
+      name: this.fieldForm.value['fieldName'],
+      multiplicity: this.fieldForm.value.fieldMultiplicity.value,
+      type: this.fieldForm.value.fieldType,
+      description: this.fieldForm.value.fieldDescription,
+      innerFields: (this.fieldForm.value.fieldType == 'OBJECT') ? [] : null,
+      parentField: (this.currentField) ? { id: this.currentField.id, entityVersion: this.currentField.entityVersion } : null
     }
 
-    this.hPacketService.addHPacketField(this.fieldForm.packet.id, field).subscribe(
+    this.hPacketService.addHPacketField(this.currentPacket.id, field).subscribe(
       res => {
-        if (this.fieldForm.isPacket)
-          this.hPackets.find(x => x.id == this.fieldForm.packet.id).fields.push(res);
+        if (!field.parentField)
+          this.hPackets.find(x => x.id == this.currentPacket.id).fields.push(res);
         else
-          this.updatePacketView(this.hPackets.find(x => x.id == this.fieldForm.packet.id).fields, field.parentField.id, res);
+          this.updatePacketView(this.hPackets.find(x => x.id == this.currentPacket.id).fields, field.parentField.id, res);
+        this.internal = true;
         this.hPacketsOutput.emit(this.hPackets);
-        this.fieldForm = null;
+        this.resetForm();
         this.pageStatus = PageStatusEnum.Submitted;
       },
       err => {
         this.pageStatus = PageStatusEnum.Error;
+        this.formStatus = FormStatusEnum.Editable;
         this.errors = this.errorHandler.handleCreateField(err);
         this.errors.forEach(e => {
           if (e.container != 'general')
-            this.fieldForm.form.get(e.container).setErrors({
+            this.fieldForm.get(e.container).setErrors({
               validateInjectedError: {
                 valid: false
               }
@@ -189,18 +210,15 @@ export class FieldsStepComponent implements OnInit, OnChanges {
 
   invalid() {
     return (
-      this.fieldForm.form.get('fieldName').invalid ||
-      this.fieldForm.form.get('fieldType').invalid
+      this.fieldForm.get('fieldName').invalid ||
+      !this.fieldForm.value.fieldMultiplicity ||
+      this.fieldForm.get('fieldType').invalid
     )
   }
 
-  addField(event, packet: HPacket) {
-    this.fieldForm = {
-      packet: packet,
-      fieldData: event.data,
-      isPacket: event.root,
-      form: this.fb.group({})
-    }
+  addField(event) {
+    this.currentField = event.data;
+    this.formStatus = FormStatusEnum.Editable;
   }
 
   deletePacket: HPacket;
@@ -215,10 +233,11 @@ export class FieldsStepComponent implements OnInit, OnChanges {
     }
     else
       this.deleteField();
+
   }
 
   deleteField() {
-    this.fieldForm = null;
+    this.formStatus = FormStatusEnum.SelectAction;
     this.hPacketService.deleteHPacketField(this.deletePacket.id, this.deleteFieldId).subscribe(
       res => {
         this.updatePacketViewDelete(this.deletePacket.fields, this.deleteFieldId);
@@ -235,7 +254,14 @@ export class FieldsStepComponent implements OnInit, OnChanges {
   }
 
   cancelField() {
-    this.fieldForm = null;
+    this.formStatus = FormStatusEnum.SelectAction;
+    this.resetForm();
+  }
+
+  resetForm() {
+    this.formStatus = FormStatusEnum.SelectAction;
+    this.fieldForm.reset();
+    this.currentField = null;
   }
 
 }

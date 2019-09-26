@@ -64,7 +64,6 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
   extractField(fieldArr: HPacketField[], pre: string) {
     fieldArr.forEach(f => {
       let fieldName: string = pre + '.' + f.name;
-      console.log(fieldName)
       this.fieldFlatList.push({ field: f, label: fieldName });
       if (f.innerFields)
         this.extractField(f.innerFields, fieldName);
@@ -77,7 +76,6 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
       this.extractField(this.hPacket.fields, '');
     for (let el of this.fieldFlatList)
       this.fieldOptions.push({ value: el.label, label: el.field.name });
-    console.log(this.fieldFlatList)
   }
 
   addCondition(index) {
