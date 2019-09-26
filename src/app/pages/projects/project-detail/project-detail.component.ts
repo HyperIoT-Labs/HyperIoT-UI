@@ -84,7 +84,7 @@ export class ProjectDetailComponent implements OnInit {
         const projectNode: TreeDataNode = {
           data: { id: p.id },
           name: p.name,
-          icon: 'work',
+          icon: 'icon-hyt_projectRSolo',
           children: []
         };
         this.projectName = p.name;
@@ -97,7 +97,7 @@ export class ProjectDetailComponent implements OnInit {
             const node = {
               data: { id: d.id, type: 'device' },
               name: d.deviceName,
-              icon: 'devices_other'
+              icon: 'icon-hyt_device'
             };
             devices[d.id] = node;
             projectNode.children.push(node);
@@ -113,7 +113,7 @@ export class ProjectDetailComponent implements OnInit {
                 return {
                   data: { id: k.id, type: 'packet' },
                   name: k.name,
-                  icon: 'settings_ethernet'
+                  icon: 'icon-hyt_packets'
                 };
               });
             });
