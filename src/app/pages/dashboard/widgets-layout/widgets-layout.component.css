@@ -23,3 +23,12 @@ gridster-item {
 label {
     padding: 4px;
 }
+
+#no-widgets-container{
+    color: gainsboro;
+}
+
+#no-widgets-container .fa {
+    font-size: 6em;
+    margin-bottom: 20px;
+}

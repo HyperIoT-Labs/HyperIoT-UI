@@ -6,7 +6,7 @@ import { HPacket, HPacketField, HpacketsService } from '@hyperiot/core';
 @Component({
   selector: 'hyt-packet-select',
   templateUrl: './packet-select.component.html',
-  styleUrls: ['../common.css', './packet-select.component.css'],
+  styleUrls: ['./packet-select.component.css'],
   viewProviders: [ { provide: ControlContainer, useExisting: NgForm } ]
 })
 export class PacketSelectComponent implements OnInit {
@@ -66,7 +66,7 @@ export class PacketSelectComponent implements OnInit {
   loadPackets() {
     // fetch all packets
     this.packetService
-      .findAllHPacket()
+      .findAllHPacketByProjectId(this.widget.projectId)
       .subscribe((packetList) => {
         this.projectPackets = packetList;
         const w = this.widget;

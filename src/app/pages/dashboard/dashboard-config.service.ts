@@ -26,6 +26,14 @@ export class DashboardConfigService {
         private http: HttpClient
     ) { }
 
+    getRealtimeDashboardFromProject(projectId: number) {
+        return this.dashboardService.findHProjectRealtimeDashboard(projectId);
+    }
+
+    getOfflineDashboardFromProject(projectId: number) {
+        return this.dashboardService.findHProjectOfflineDashboard(projectId);
+    }
+
     getAllDashboardsAndProjects() {
 
         return forkJoin(
@@ -82,7 +90,7 @@ export class DashboardConfigService {
         return this.dashboardWidgetService.deleteDashboardWidget(widgetId);
     }
 
-    getConfig(dashboardId: number | string) {
+    getConfig(projectId: number | string, dashboardId: number | string) {
         if (dashboardId === 'demo') {
             return this.getTestConfig();
         }
@@ -95,6 +103,7 @@ export class DashboardConfigService {
                         // Normalize data received from server
                         data.map((w: DashboardWidget) => {
                             const widget = JSON.parse(w.widgetConf);
+                            widget.projectId = +projectId;
                             widget.id = w.id;
                             widget.entityVersion = w.entityVersion;
                             config.push(widget);

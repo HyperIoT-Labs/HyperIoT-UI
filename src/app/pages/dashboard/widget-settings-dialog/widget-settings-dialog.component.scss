@@ -1,0 +1,76 @@
+:host {
+    position: fixed;
+    top: 0; left: 0; bottom: 0; right: 0;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    /* variables */
+    --header-color: rgba(50, 50, 50, 0.1);
+}
+
+.dialog {
+    min-width: 320px;
+    max-height: 100vh;
+    overflow: hidden; 
+    background: white;
+    border: solid 1px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 5px 2px rgba(0,0,0,.35);
+    font-family: 'Exo';
+
+    header {
+        font-weight: 600;
+        text-transform: uppercase;
+        text-align: center;
+        border-bottom: 1px solid rgba(0,0,0,0.1);
+        height: 45px;
+        background-color: #0956B6;
+        color: #fff;
+        line-height: 47px;
+        font-size: 1.4em;
+    }
+
+    form {
+        &.content {
+            overflow-y: auto;
+            padding-bottom: 12px;
+
+            .common-settings, .custom-settings {
+                padding-left: 12px;
+                padding-right: 12px;
+            }
+        }
+    }
+
+    footer {
+        background-color: var(--header-color);
+        border-top: 1px solid rgba(0,0,0,0.1);
+        padding: 6px;
+
+        .button-close, .button-confirm {
+            margin-left:6px;
+        }
+
+    }
+
+}
+
+// .dialog footer {
+//     background-color: var(--header-color);
+//     border-top: 1px solid rgba(0,0,0,0.1);
+//     padding: 6px;
+// }
+
+// .dialog .button-close, .dialog .button-confirm {
+//     margin-left:6px;
+// }
+
+// .content {
+//     overflow-y: auto;
+//     padding-bottom: 12px;
+// }
+
+// .common-settings,.custom-settings {
+//     padding-left: 12px;
+//     padding-right: 12px; 
+// }

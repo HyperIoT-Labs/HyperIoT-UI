@@ -16,7 +16,7 @@ import { NgForm } from '@angular/forms';
 @Component({
   selector: 'hyt-widget-settings-dialog',
   templateUrl: './widget-settings-dialog.component.html',
-  styleUrls: ['./common.css', './widget-settings-dialog.component.css']
+  styleUrls: ['./widget-settings-dialog.component.scss']
 })
 export class WidgetSettingsDialogComponent implements OnInit {
   @Output() modalClose: EventEmitter<any> = new EventEmitter<any>();

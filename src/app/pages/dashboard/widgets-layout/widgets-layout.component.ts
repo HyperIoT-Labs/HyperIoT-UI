@@ -16,7 +16,6 @@ import {
 } from '@hyperiot/core';
 
 import { DashboardConfigService } from '../dashboard-config.service';
-import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 
 @Component({
   selector: 'hyt-widgets-layout',
@@ -117,26 +116,24 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
     // const cellSize = 250;
 
     this.cellSize = this.getResponsiveCellSize(); /* 160 misura base */
-    console.log('CELLA ON INIT: '+this.cellSize);
     this.options.fixedColWidth = this.cellSize;
     this.options.fixedRowHeight = this.cellSize / 2;
 
     this.dashboard = [];
-    console.log("primo " + this.dashboardId)
-    this.configService.getDashboard(<number>this.dashboardId)
+    this.configService.getDashboard(+this.dashboardId)
     .subscribe(
-      (d) =>{
+      (d) => {
         this.dashboardEntity = d;
         this.projectId = this.dashboardEntity.hproject.id;
+        // connect to data upstream
         this.dataStreamService.connect(this.projectId);
+        // get dashboard config
+        this.configService.getConfig(this.projectId, this.dashboardId).subscribe((dashboardConfig: Array<GridsterItem>) => {
+          this.dashboard = dashboardConfig;
+          this.originalDashboard = JSON.parse(JSON.stringify(dashboardConfig));
+        });
       }
     );
-  
-    this.configService.getConfig(this.dashboardId).subscribe((dashboardConfig: Array<GridsterItem>) => {
-      this.dashboard = dashboardConfig; 
-      this.originalDashboard = JSON.parse(JSON.stringify(dashboardConfig));
-    });
-  
   }
 
   ngOnDestroy() {
@@ -165,6 +162,7 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
         this.removeItem(data.widget);
         break;
       case 'toolbar:settings':
+        console.log("aaaaa")
         this.router.navigate([
           'dashboards',
           { outlets: { modal: ['settings', data.widget.id] } }
@@ -183,7 +181,7 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
   onResize(event: any) {
     const columns = this.getResponsiveColumns();
     const cell = this.getResponsiveCellSize();
-    
+
     if (columns !== this.options.maxCols || cell !== this.options.maxCellSize) {
       /*
       // TODO: Angular-Gridster2 won't apply maxCols option on change (bug??)
@@ -251,6 +249,7 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
         .subscribe((w) => {
           // TODO: handle errors
           // widget saved (should have a new id)
+          widget.projectId = this.projectId;
           this.dashboard.push(widget);
         });
     }

@@ -1,8 +1,3 @@
-<!-- <div>
-    <hyt-button (clickFn)="saveDashboard()" [isDisabled]="dashboardLayout.isDirty()" i18n="@@dashboardButtonSave">HYT_dashboard_save</hyt-button>
-    <hyt-button [routerLink]="[{outlets: { modal: [ 'widgets' ] }}]" i18n="@@dashboardButtonAddWidget">HYT_dashboard_add_widget</hyt-button>
-</div> -->
-
 <hyt-widgets-layout [dashboardId]="dashboardId"></hyt-widgets-layout>
 
 <router-outlet name="modal" (activate)="onActivate($event)"></router-outlet>
