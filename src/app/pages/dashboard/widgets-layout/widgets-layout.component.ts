@@ -249,6 +249,7 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
         .subscribe((w) => {
           // TODO: handle errors
           // widget saved (should have a new id)
+          widget.projectId = this.projectId;
           this.dashboard.push(widget);
         });
     }
