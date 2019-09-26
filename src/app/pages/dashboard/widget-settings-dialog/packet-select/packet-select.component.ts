@@ -66,7 +66,7 @@ export class PacketSelectComponent implements OnInit {
   loadPackets() {
     // fetch all packets
     this.packetService
-      .findAllHPacket()
+      .findAllHPacketByProjectId(this.widget.projectId)
       .subscribe((packetList) => {
         this.projectPackets = packetList;
         const w = this.widget;
