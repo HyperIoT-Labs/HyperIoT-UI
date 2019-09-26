@@ -129,17 +129,17 @@ const hyperiotRoutes: Routes = [
       showToolBar: true,
     }
   },
+  // {
+  //   path: 'dashboards',
+  //   component: DashboardComponent,
+  //   canActivate: [LoggedInGuard],
+  //   data: {
+  //     showToolBar: true,
+  //   }
+  // },
   {
     path: 'dashboards',
     component: DashboardComponent,
-    canActivate: [LoggedInGuard],
-    data: {
-      showToolBar: true,
-    }
-  },
-  {
-    path: 'dashboards/:dashboardId',
-    component: DashboardViewComponent,
     canActivate: [LoggedInGuard],
     children: [
       {
