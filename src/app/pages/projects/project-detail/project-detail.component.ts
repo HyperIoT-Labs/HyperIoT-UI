@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { Observable, zip, Observer } from 'rxjs';
 
-import { HprojectsService, HProject, HdevicesService, HDevice, HpacketsService, HPacket } from '@hyperiot/core';
+import { HprojectsService, HProject, HdevicesService, HDevice, HpacketsService, HPacket, HPacketField } from '@hyperiot/core';
 import { TreeDataNode } from '@hyperiot/components';
 
 import { HytTreeViewProjectComponent } from '@hyperiot/components/lib/hyt-tree-view-project/hyt-tree-view-project.component';
@@ -113,7 +113,29 @@ export class ProjectDetailComponent implements OnInit {
                 return {
                   data: { id: k.id, type: 'packet' },
                   name: k.name,
-                  icon: 'icon-hyt_packets'
+                  icon: 'icon-hyt_packets',
+                  children: [
+                    {
+                      data: { id: 0, type: 'packet-fields' },
+                      name: 'Fields',
+                      icon: 'icon-hyt_fields'
+                    },
+                    {
+                      data: { id: 0, type: 'packet-enrichments' },
+                      name: 'Enrichments',
+                      icon: 'icon-hyt_enrichments'
+                    },
+                    {
+                      data: { id: 0, type: 'packet-statistics' },
+                      name: 'Statistics',
+                      icon: 'icon-hyt_statistics'
+                    },
+                    {
+                      data: { id: 0, type: 'packet-events' },
+                      name: 'Events',
+                      icon: 'icon-hyt_event'
+                    }
+                  ]
                 };
               });
             });
