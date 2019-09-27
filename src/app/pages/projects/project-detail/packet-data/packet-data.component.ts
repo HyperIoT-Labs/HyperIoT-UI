@@ -94,11 +94,8 @@ export class PacketDataComponent extends ProjectDetailEntity implements OnDestro
     let p = this.packet;
     p.name = this.form.get('hpacket-name').value;
     p.type = this.form.get('hpacket-type').value;
-    p.type = p.type['value'] || p.type; // TODO: <-- this is a fix for 'hyt-radio-button' bug
     p.serialization = this.form.get('hpacket-serialization').value;
-    p.serialization = p.serialization['value'] || p.serialization; // TODO: <-- this is a fix for 'hyt-radio-button' bug
     p.format = this.form.get('hpacket-format').value;
-    p.format = p.format['value'] || p.format; // TODO: <-- this is a fix for 'hyt-radio-button' bug
     p.timestampField = this.form.get('hpacket-timestampfield').value;
     p.timestampFormat = this.form.get('hpacket-timestampformat').value;
     p.trafficPlan = this.form.get('hpacket-trafficplan').value;
