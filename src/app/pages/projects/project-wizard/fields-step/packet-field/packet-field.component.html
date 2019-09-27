@@ -1,0 +1,73 @@
+<div class="row">
+
+  <div class="col-md-6">
+
+    <hyt-tree-view-editable #treeView *ngIf="currentPacket" [deviceName]="currentPacket.name" [treeData]="packetTree"
+      (addFn)="addField($event)" (removeFn)="removeField($event, currentPacket)" (cancelFn)="cancelField()">
+    </hyt-tree-view-editable>
+
+    <div *ngIf="!currentPacket">
+      Select a Packet
+    </div>
+
+  </div>
+
+  <div class="col-md-6">
+    <div class="container">
+      <form class="field-form" [formGroup]="fieldForm" autocomplete="on">
+
+        <div class="container-form-field">
+          <hyt-input-text [form]="fieldForm" formControlName="fieldName" name="fieldName" [isRequired]="true"
+            placeholder="HYT_fieldName" [injectedErrorMsg]="getError('fieldName')">
+          </hyt-input-text>
+        </div> <!-- Field Name -->
+
+        <div class="container-form-field">
+          LEVEL OF MULTIPLICITY
+          <hyt-radio-button [form]="fieldForm" formControlName="fieldMultiplicity" name="fieldMultiplicity"
+            [options]="multiplicityOptions" [verticalAlign]="true">
+          </hyt-radio-button>
+        </div> <!-- Field Multiplicity -->
+
+        <div class="container-form-field">
+          <hyt-select [form]="fieldForm" [options]="typeOptions" formControlName="fieldType" name="fieldType"
+            [isRequired]="true" label="HYT_fieldType">
+          </hyt-select>
+        </div> <!-- Field Type -->
+
+        <div class="container-form-field">
+          <hyt-text-area [form]="fieldForm" formControlName="fieldDescription" name="fieldDescription"
+            placeholder="HYT_fieldDescription">
+          </hyt-text-area>
+        </div> <!-- Field Description -->
+
+        <div class="container-form-field errorMessage">
+          <ng-container *ngIf="getError('general')">
+            {{getError('general')}}
+          </ng-container>
+        </div> <!-- Error Box -->
+
+        <hyt-button id="field-form-submit-button" [isDisabled]="invalid() || pageStatus == PageStatus.Loading"
+          (clickFn)="createField()" type="submit">
+          Save Field
+        </hyt-button>
+
+      </form>
+
+      <div *ngIf="formStatus != 1" class="overlay d-flex flex-column align-items-center justify-content-center">
+
+        <h4 *ngIf="formStatus == 0">Please, add or select a field in the treeview</h4>
+        <div *ngIf="formStatus == -1" class="d-flex flex-column justify-content-center">
+          <h4>An error has occurred</h4>
+        </div>
+        <div *ngIf="formStatus == 2">
+          <h4>Saving field...</h4>
+          <mat-progress-bar mode="query"></mat-progress-bar>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+</div>

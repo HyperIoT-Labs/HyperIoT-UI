@@ -58,7 +58,7 @@ export class EventsStepComponent implements OnInit, OnChanges {
   ngOnInit() {
     this.eventsForm = this.fb.group({});
     this.rulesService.findAllRuleActions('EVENT').subscribe(
-      res => { }//TO DO //this.outputOptions = res
+      res => { }//TODO //this.outputOptions = res
     )
   }
 
@@ -88,7 +88,7 @@ export class EventsStepComponent implements OnInit, OnChanges {
 
     var jActionStr: string = '';
 
-    if (this.eventsForm.value['eventOutput'].value == 'SendMailAction') {
+    if (this.eventsForm.value['eventOutput'] == 'SendMailAction') {
       let mail = this.EventMailComponent.buildMail();
       let act = {
         actionName: 'events.SendMailAction',

@@ -68,7 +68,7 @@ export class PacketsStepComponent implements OnInit, OnChanges {
   ngOnChanges() {
     this.devicesOptions = [];
     for (let el of this.hDevices)
-      this.devicesOptions.push({ value: el.id.toString(), label: el.deviceName })
+      this.devicesOptions.push({ value: el.id.toString(), label: el.deviceName });
   }
 
   createPacket() {
@@ -79,16 +79,16 @@ export class PacketsStepComponent implements OnInit, OnChanges {
 
     let hPacket: HPacket = {
       entityVersion: 1,
-      name: this.packetForm.value['packetName'],
-      type: this.packetForm.value['hpacket-type'].value,
-      format: this.packetForm.value['hpacket-format'].value,
-      serialization: this.packetForm.value['hpacket-serialization'].value,
+      name: this.packetForm.value['hpacket-name'],
+      type: this.packetForm.value['hpacket-type'],
+      format: this.packetForm.value['hpacket-format'],
+      serialization: this.packetForm.value['hpacket-serialization'],
       fields: [],
-      trafficPlan: 'HIGH',
-      timestampField: 'timestampField',
-      timestampFormat: 'dd/MM/yyyy HH.mmZ',
+      trafficPlan: this.packetForm.value['packetTrafficPlan'],
+      timestampField: this.packetForm.value['hpacketTimeStamp'], //'timestampField',
+      timestampFormat: this.packetForm.value['hpacketTimeStampFormat'], //'dd/MM/yyyy HH.mmZ',
       version: '1',
-      device: { entityVersion: 1, id: this.packetForm.value.packetDevice }
+      device: { entityVersion: 1, id: this.packetForm.value['hpacket-device'] }
     }
 
     this.hPacketService.saveHPacket(hPacket).subscribe(
@@ -114,9 +114,14 @@ export class PacketsStepComponent implements OnInit, OnChanges {
 
   invalid() {
     return (
-      this.packetForm.get('packetName').invalid ||
-      this.packetForm.get('packetDevice').invalid ||
-      this.packetForm.get('packetTrafficPlan').invalid
+      this.packetForm.get('hpacket-name').invalid ||
+      this.packetForm.get('hpacket-device').invalid ||
+      this.packetForm.get('hpacket-type').invalid ||
+      this.packetForm.get('hpacket-format').invalid ||
+      this.packetForm.get('hpacket-serialization').invalid ||
+      this.packetForm.get('packetTrafficPlan').invalid ||
+      this.packetForm.get('hpacketTimeStamp').invalid ||
+      this.packetForm.get('hpacketTimeStampFormat').invalid
     )
   }
 
