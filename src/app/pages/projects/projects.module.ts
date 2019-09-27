@@ -62,7 +62,7 @@ import { PacketFieldComponent } from './project-wizard/fields-step/packet-field/
     PacketFieldsDataComponent,
     PacketEnrichmentsDataComponent,
     PacketStatisticsDataComponent,
-    PacketEventsDataComponent
+    PacketEventsDataComponent,
     SelectableTextComponent,
     PacketSelectComponent,
     PacketFieldComponent
