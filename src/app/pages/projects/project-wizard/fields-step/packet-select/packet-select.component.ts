@@ -44,14 +44,12 @@ export class PacketSelectComponent implements OnInit, OnChanges {
   }
 
   deviceChanged(event) {
-    console.log("device");
     this.packetsOptions = [];
     this.currentDevice = this.hDevices.find(x => x.id == event.value);
     this.hPackets.filter(p => p.device.id == this.currentDevice.id).forEach(p => this.packetsOptions.push({ value: p.id.toString(), label: p.name }));
   }
 
   packetChanged(event) {
-    console.log("packet");
     this.currentPacket.emit(this.hPackets.find(x => x.id == event.value));
   }
 

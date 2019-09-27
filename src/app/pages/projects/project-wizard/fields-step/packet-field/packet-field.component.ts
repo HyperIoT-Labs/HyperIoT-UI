@@ -185,12 +185,10 @@ export class PacketFieldComponent implements OnInit, OnChanges {
     this.formStatus = FormStatusEnum.Editable;
   }
 
-  deletePacket: HPacket;
   deleteFieldId: number;
   deleteModal: boolean = false;
 
-  removeField(event, packet: HPacket) {
-    this.deletePacket = packet;
+  removeField(event) {
     this.deleteFieldId = event.data.id;
     if (event.children && event.children.length != 0) {
       this.deleteModal = true;
@@ -202,9 +200,9 @@ export class PacketFieldComponent implements OnInit, OnChanges {
 
   deleteField() {
     this.formStatus = FormStatusEnum.SelectAction;
-    this.hPacketService.deleteHPacketField(this.deletePacket.id, this.deleteFieldId).subscribe(
+    this.hPacketService.deleteHPacketField(this.currentPacket.id, this.deleteFieldId).subscribe(
       res => {
-        this.updatePacketViewDelete(this.deletePacket.fields, this.deleteFieldId);
+        this.updatePacketViewDelete(this.currentPacket.fields, this.deleteFieldId);
         this.internal = true;
         this.hPacketsOutput.emit(this.hPackets);
       },
