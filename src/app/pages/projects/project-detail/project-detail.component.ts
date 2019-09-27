@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Observable, zip, Observer } from 'rxjs';
@@ -22,7 +22,8 @@ enum TreeStatusEnum {
 @Component({
   selector: 'hyt-project-detail',
   templateUrl: './project-detail.component.html',
-  styleUrls: ['./project-detail.component.scss']
+  styleUrls: ['./project-detail.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ProjectDetailComponent implements OnInit {
   @ViewChild('treeView', { static: true }) treeView: HytTreeViewProjectComponent;

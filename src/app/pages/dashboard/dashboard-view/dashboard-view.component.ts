@@ -19,9 +19,7 @@ export class DashboardViewComponent implements OnInit {
   constructor(
   ) { }
 
-  ngOnInit() {
-    // this.dashboardId = this.activatedRoute.snapshot.paramMap.get('dashboardId');
-  }
+  ngOnInit() {}
 
   onActivate(childComponent) {
     if (childComponent instanceof AddWidgetDialogComponent) {
