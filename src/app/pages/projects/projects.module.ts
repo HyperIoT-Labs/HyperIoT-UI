@@ -36,6 +36,8 @@ import { PacketFieldsDataComponent } from './project-detail/packet-fields-data/p
 import { PacketEnrichmentsDataComponent } from './project-detail/packet-enrichments-data/packet-enrichments-data.component';
 import { PacketStatisticsDataComponent } from './project-detail/packet-statistics-data/packet-statistics-data.component';
 import { PacketEventsDataComponent } from './project-detail/packet-events-data/packet-events-data.component';
+import { PacketSelectComponent } from './project-wizard/fields-step/packet-select/packet-select.component';
+import { PacketFieldComponent } from './project-wizard/fields-step/packet-field/packet-field.component';
 @NgModule({
   declarations: [
     ProjectsComponent,
@@ -60,7 +62,10 @@ import { PacketEventsDataComponent } from './project-detail/packet-events-data/p
     PacketFieldsDataComponent,
     PacketEnrichmentsDataComponent,
     PacketStatisticsDataComponent,
-    PacketEventsDataComponent
+    PacketEventsDataComponent,
+    SelectableTextComponent,
+    PacketSelectComponent,
+    PacketFieldComponent
   ],
   imports: [
     MatIconModule,
