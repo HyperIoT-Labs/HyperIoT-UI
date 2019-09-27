@@ -117,22 +117,22 @@ export class ProjectDetailComponent implements OnInit {
                   icon: 'icon-hyt_packets',
                   children: [
                     {
-                      data: { id: 0, type: 'packet-fields' },
+                      data: { id: k.id, type: 'packet-fields' },
                       name: 'Fields',
                       icon: 'icon-hyt_fields'
                     },
                     {
-                      data: { id: 0, type: 'packet-enrichments' },
+                      data: { id: k.id, type: 'packet-enrichments' },
                       name: 'Enrichments',
                       icon: 'icon-hyt_enrichments'
                     },
                     {
-                      data: { id: 0, type: 'packet-statistics' },
+                      data: { id: k.id, type: 'packet-statistics' },
                       name: 'Statistics',
                       icon: 'icon-hyt_statistics'
                     },
                     {
-                      data: { id: 0, type: 'packet-events' },
+                      data: { id: k.id, type: 'packet-events' },
                       name: 'Events',
                       icon: 'icon-hyt_event'
                     }

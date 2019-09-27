@@ -1,10 +1,10 @@
-import { FormGroup, FormBuilder, FormControl, AbstractControl } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 import { Observable } from 'rxjs';
 
 import { ProjectDetailComponent } from './project-detail.component';
 import { MatRadioChange } from '@angular/material';
-import { ElementRef, ViewChild, AfterViewInit, OnInit } from '@angular/core';
+import { ElementRef, ViewChild, OnInit } from '@angular/core';
 
 export enum LoadingStatusEnum {
     Ready,

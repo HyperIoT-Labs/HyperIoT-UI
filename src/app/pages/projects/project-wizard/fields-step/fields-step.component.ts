@@ -31,7 +31,7 @@ export class FieldsStepComponent implements OnInit, OnChanges {
 
   packetTree: Node[];
 
-  currentPacket: HPacket;
+  @Input() currentPacket: HPacket;
 
   currentDevice: HDevice;
 
