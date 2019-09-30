@@ -66,11 +66,17 @@
 
       </div>
 
-      <div class="container-form-field errorMessage">
-        <ng-container *ngIf="getError('general')">
-          {{getError('general')}}
-        </ng-container>
-      </div> <!-- Error Box -->
+      <div id="row-error" class="row">
+        <div class="col-12">
+
+          <div class="container-form-field errorMessage">
+            <ng-container *ngIf="getError('general')">
+              {{getError('general')}}
+            </ng-container>
+          </div> <!-- Error Box -->
+
+        </div>
+      </div> <!-- END ERROR ROW -->
 
       <hyt-button id="device-form-submit-button" [isDisabled]="invalid() || pageStatus == PageStatus.Loading"
         (clickFn)="createDevice()" type="submit">
@@ -124,7 +130,19 @@
             </div> <!-- end header box -->
         
             <div class="col-12 body-box">
-              Qui Il Body
+              <!-- Qui Il Body -->
+              <div class="row">
+                <div class="col-8" style="background-color: antiquewhite">Nome</div>
+                <div class="col-4" style="background-color: aquamarine">
+                  <div class="row">
+
+                    <div class="col" style="background-color: rebeccapurple">1</div>
+                    <div class="col" style="background-color: rosybrown">2</div>
+                    <div class="col" style="background-color: royalblue">3</div>
+
+                  </div>
+                </div>
+              </div>
             </div> <!-- end body box -->
             <div class="col-12 body-box">
               Qui Il Body
