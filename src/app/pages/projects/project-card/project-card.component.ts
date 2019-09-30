@@ -33,4 +33,8 @@ export class ProjectCardComponent implements OnInit {
     this.activeTimeout = setTimeout(() => this.isActive = active, 50);
   }
 
+  deleteProject() {
+    confirm('Do you want to delete the project?');
+  }
+
 }
