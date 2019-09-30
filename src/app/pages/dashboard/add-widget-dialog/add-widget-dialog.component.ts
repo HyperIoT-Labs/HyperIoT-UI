@@ -4,18 +4,21 @@ import {
   ElementRef,
   Output,
   EventEmitter,
-  HostListener
+  HostListener,
+  Input,
+  OnDestroy
 } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { DashboardConfigService } from '../dashboard-config.service';
+import { HytModalConfService } from 'src/app/services/hyt-modal-conf.service';
 
 @Component({
   selector: 'hyt-add-widget-dialog',
   templateUrl: './add-widget-dialog.component.html',
   styleUrls: ['./add-widget-dialog.component.scss']
 })
-export class AddWidgetDialogComponent implements OnInit {
+export class AddWidgetDialogComponent implements OnInit, OnDestroy {
   @Output() modalClose: EventEmitter<any> = new EventEmitter<any>();
   @Output() addWidgets: EventEmitter<any> = new EventEmitter();
   categorydWidgets: any = null;
@@ -26,25 +29,63 @@ export class AddWidgetDialogComponent implements OnInit {
   widgetAddMax = 10;
   currentWidget;
 
+  @Input() id: string;
+  private element: any;
+
   constructor(
     private viewContainer: ElementRef,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private dashboardConfigService: DashboardConfigService
-  ) { }
+    private dashboardConfigService: DashboardConfigService,
+    private hytModalService: HytModalConfService
+  ) {
+    this.element = viewContainer.nativeElement;
+  }
 
   @HostListener('document:keydown.escape', ['$event']) onKeydownHandler(event: KeyboardEvent) {
     if (event.key.toUpperCase() === 'ESCAPE') {
-      this.close(event);
+      // this.close(event);
+      this.close();
     }
   }
 
   ngOnInit() {
-    this.open();
+    let modal = this;
+
+    // ensure id attribute exists
+    if (!this.id) {
+        console.error('modal must have an id');
+        return;
+    }
+
+    // move element to bottom of page (just before </body>) so it can be displayed above everything else
+    document.body.appendChild(this.element);
+
+    // close modal on background click
+    this.element.addEventListener('click', function (e: any) {
+        if (e.target.className === 'hyt-modal') {
+            modal.close();
+        }
+    });
+
+    // add self (this modal instance) to the modal service so it's accessible from controllers
+    this.hytModalService.add(this);
+
+    // this.open();
   }
 
-  open() {
-    this.viewContainer.nativeElement.style.display = '';
+  // remove self from modal service when directive is destroyed
+  ngOnDestroy(): void {
+    this.hytModalService.remove(this.id);
+    this.element.remove();
+  }
+
+  // open modal
+  open(): void {
+    this.element.style.display = 'block';
+    document.body.classList.add('hyt-modal-open');
+
+    // this.viewContainer.nativeElement.style.display = '';
     this.categorydWidgets = null;
     this.selectedWidgets = [];
     // get widget list
@@ -62,17 +103,26 @@ export class AddWidgetDialogComponent implements OnInit {
       });
   }
 
-  close($event?) {
-    this.router.navigate(
-      ['../', ''],
-      {relativeTo: this.activatedRoute}
-    );
-    this.modalClose.emit($event);
+  // close modal
+  close(): void {
+    this.element.style.display = 'none';
+    document.body.classList.remove('hyt-modal-open');
   }
+
+  /****************************************************************************************** */
+
+  // close($event?) {
+  //   this.router.navigate(
+  //     ['/dashboards'],
+  //     {relativeTo: this.activatedRoute}
+  //   );
+  //   this.modalClose.emit($event);
+  // }
 
   dismiss(e: any) {
     if (e.target === this.viewContainer.nativeElement) {
-      this.close(e);
+      // this.close(e);
+      this.close();
     }
   }
 
@@ -118,10 +168,10 @@ export class AddWidgetDialogComponent implements OnInit {
   }
 
   onWidgetClick(widget: any) {
-    console.log(widget);
+    // console.log(widget);
   }
 
   onRate(rating: any) {
-    console.log('onRate', rating);
+    // console.log('onRate', rating);
   }
 }

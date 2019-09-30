@@ -39,7 +39,7 @@ export class StatsChartSettingsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.modalApply.unsubscribe();
+    // this.modalApply.unsubscribe();
   }
 
   apply() {

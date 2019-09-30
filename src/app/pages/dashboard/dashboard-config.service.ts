@@ -110,7 +110,7 @@ export class DashboardConfigService {
                         });
                         return config;
                     },
-                    error => console.log(error)
+                    error => console.error(error)
                 )
             );
         return subject;
@@ -139,7 +139,7 @@ export class DashboardConfigService {
             dashboardWidgets.push(widget);
         });
         // Save the dashboard structure
-        console.log('Saving Dashboard', dashboardId, dashboardWidgets);
+        // console.log('Saving Dashboard', dashboardId, dashboardWidgets);
         return this.dashboardWidgetService
             .saveAllDashboardWidget(+dashboardId, dashboardWidgets);
     }
