@@ -17,6 +17,8 @@ export abstract class ProjectDetailEntity implements OnInit {
     isProjectEntity = true;
     projectHost: ProjectDetailComponent;
 
+    hideDelete = false;
+
     form: FormGroup;
     private originalValue: string;
     private validationError = [];
