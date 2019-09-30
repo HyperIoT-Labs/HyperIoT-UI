@@ -202,7 +202,7 @@ export class PacketFieldComponent implements OnInit, OnChanges {
     this.hPacketService.deleteHPacketField(this.currentPacket.id, this.deleteFieldId).subscribe(
       res => {
         this.updatePacketViewDelete(this.currentPacket.fields, this.deleteFieldId);
-        this.hPacketsOutput.emit(this.hPackets);
+        this.ngOnChanges();
       },
       err => { }
     )
