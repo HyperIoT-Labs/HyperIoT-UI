@@ -87,26 +87,31 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
           // console.log(this.hProjectListOptions)
 
-          this.idProjectSelected = this.hProjectListOptions[0].id;
+          if(this.hProjectListOptions.length > 0) {
+            this.idProjectSelected = this.hProjectListOptions[0].id;
 
-          this.dashboardConfigService.getRealtimeDashboardFromProject(this.idProjectSelected)
-          .pipe(takeUntil(this.ngUnsubscribe))
-          .subscribe(
-            res => {
-              try {
-                // console.log(res)
-                this.currentDashboard = res;
-                // console.log("first dashboard", this.currentDashboard)
-                this.currentDashboardId = this.currentDashboard[0].id;
-                this.pageStatus = PageStatus.Standard;
-              } catch (error) {
+            this.dashboardConfigService.getRealtimeDashboardFromProject(this.idProjectSelected)
+            .pipe(takeUntil(this.ngUnsubscribe))
+            .subscribe(
+              res => {
+                try {
+                  // console.log(res)
+                  this.currentDashboard = res;
+                  // console.log("first dashboard", this.currentDashboard)
+                  this.currentDashboardId = this.currentDashboard[0].id;
+                  this.pageStatus = PageStatus.Standard;
+                } catch (error) {
+                  this.pageStatus = PageStatus.New;
+                }
+              },
+              error => {
                 this.pageStatus = PageStatus.New;
               }
-            },
-            error => {
-              this.pageStatus = PageStatus.New;
-            }
-          )
+            )
+          } else {
+            this.pageStatus = PageStatus.New;
+          }
+
         } catch (error) {
           this.pageStatus = PageStatus.Error;
         }

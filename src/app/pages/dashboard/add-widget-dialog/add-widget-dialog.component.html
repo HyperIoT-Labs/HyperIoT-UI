@@ -40,41 +40,41 @@
 
         <div class="widget-info">
 
-    <div class="widget-info">
-
-        <div id="info" *ngIf="currentWidget != null">
-            <h3>{{ currentWidget.name }}</h3>
-            <div *ngIf="currentWidget.info && currentWidget.info.preview">
-                <img [src]="currentWidget.info.preview" width="100%">
-            </div>
-            <div *ngIf="currentWidget.info && currentWidget.info.rating">
-                <star-rating
-                    [value]="currentWidget.info.rating"
-                    checkedcolor="gold"
-                    uncheckedcolor="gray"
-                    size="32px"
-                    readonly="false"
-                    (rate)="onRate($event)">
-                </star-rating>
-            </div>
-            <label i18n="@@addWidgetDialog-info-type">HYT_widget_info_type</label>
-            <p>
-                {{ currentWidget.type }}
-            </p>
-            <div *ngIf="currentWidget.info">
-                <label i18n="@@addWidgetDialog-info-description">Description</label>
+            <div id="info" *ngIf="currentWidget != null">
+                <h3>{{ currentWidget.name }}</h3>
+                <div *ngIf="currentWidget.info && currentWidget.info.preview">
+                    <img [src]="currentWidget.info.preview" width="100%">
+                </div>
+                <div *ngIf="currentWidget.info && currentWidget.info.rating">
+                    <star-rating
+                        [value]="currentWidget.info.rating"
+                        checkedcolor="gold"
+                        uncheckedcolor="gray"
+                        size="32px"
+                        readonly="false"
+                        (rate)="onRate($event)">
+                    </star-rating>
+                </div>
+                <label i18n="@@addWidgetDialog-info-type">HYT_widget_info_type</label>
                 <p>
                     {{ currentWidget.type }}
                 </p>
                 <div *ngIf="currentWidget.info">
                     <label i18n="@@addWidgetDialog-info-description">Description</label>
                     <p>
-                        {{ currentWidget.info.description }}
+                        {{ currentWidget.type }}
                     </p>
+                    <div *ngIf="currentWidget.info">
+                        <label i18n="@@addWidgetDialog-info-description">Description</label>
+                        <p>
+                            {{ currentWidget.info.description }}
+                        </p>
+                    </div>
                 </div>
-            </div>
-            <div id="intro-info" *ngIf="currentWidget == null" i18n="@@addWidgetDialog-info-intro">
-                HYT_widget_info_intro
+                <div id="intro-info" *ngIf="currentWidget == null" i18n="@@addWidgetDialog-info-intro">
+                    HYT_widget_info_intro
+                </div>
+
             </div>
 
         </div>
