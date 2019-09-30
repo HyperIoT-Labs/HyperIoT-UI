@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 
 import { Subscription } from 'rxjs';
@@ -10,11 +10,12 @@ import { HpacketsService, HPacket } from '@hyperiot/core';
   templateUrl: './packet-fields-data.component.html',
   styleUrls: ['./packet-fields-data.component.scss']
 })
-export class PacketFieldsDataComponent implements OnDestroy {
+export class PacketFieldsDataComponent implements OnInit, OnDestroy {
   private routerSubscription: Subscription;
   private packetId: number;
 
-  packet: HPacket;
+  packet: HPacket = {} as HPacket;
+  packetList: HPacket[] = [];
 
   constructor(
     private hPacketService: HpacketsService,
@@ -27,13 +28,26 @@ export class PacketFieldsDataComponent implements OnDestroy {
         // TODO: load data
         this.hPacketService.findHPacket(this.packetId).subscribe((p: HPacket) => {
           this.packet = p;
+          // TODO: temporary bound fields that will be removed
+          console.log(this.packet)
+          this.hPacketService.findAllHPacketByProjectId(this.packet.device.project.id)
+            .subscribe((pl: HPacket[]) => {
+              this.packetList = pl;
+              console.log(this.packetList);
+            });
         });
       }
     });
+  }
+
+  ngOnInit() {
   }
 
   ngOnDestroy() {
     this.routerSubscription.unsubscribe();
   }
 
+  packetsOutputChanged($event) {
+    console.log($event);
+  }
 }
