@@ -38,6 +38,7 @@ import { PacketStatisticsDataComponent } from './project-detail/packet-statistic
 import { PacketEventsDataComponent } from './project-detail/packet-events-data/packet-events-data.component';
 import { PacketSelectComponent } from './project-wizard/fields-step/packet-select/packet-select.component';
 import { PacketFieldComponent } from './project-wizard/fields-step/packet-field/packet-field.component';
+import { FieldTipColumnComponent } from './project-wizard/fields-step/field-tip-column/field-tip-column.component';
 @NgModule({
   declarations: [
     ProjectsComponent,
@@ -65,7 +66,8 @@ import { PacketFieldComponent } from './project-wizard/fields-step/packet-field/
     PacketEventsDataComponent,
     SelectableTextComponent,
     PacketSelectComponent,
-    PacketFieldComponent
+    PacketFieldComponent,
+    FieldTipColumnComponent
   ],
   imports: [
     MatIconModule,
