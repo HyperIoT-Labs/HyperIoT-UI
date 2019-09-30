@@ -32,3 +32,10 @@ label {
     font-size: 6em;
     margin-bottom: 20px;
 }
+
+#dashbaord-changes-unsaved-label {
+    padding-bottom: 2px;
+    border-radius: 8px;
+    padding-top: 2px;
+    background-color: #ffd7005c;
+}
