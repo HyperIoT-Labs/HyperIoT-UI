@@ -67,7 +67,7 @@ export class EnrichmentStepComponent implements OnInit, OnChanges {
     this.enrichmentForm = this.fb.group({})
 
     this.rulesService.findAllRuleActions('ENRICHMENT').subscribe(
-      res => { }//TO DO //this.enrichmentRules = res
+      res => { }//TODO //this.enrichmentRules = res
     )
   }
 

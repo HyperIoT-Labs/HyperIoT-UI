@@ -15,14 +15,14 @@
           </div> <!-- Field Name -->
 
           <div class="container-form-field">
-            <hyt-input-text [form]="deviceForm" formControlName="deviceModel" name="deviceModel" placeholder="HYT_model"
-              [injectedErrorMsg]="getError('deviceModel')">
+            <hyt-input-text [form]="deviceForm" formControlName="hdevice-model" name="hdevice-model"
+              placeholder="HYT_model" [injectedErrorMsg]="getError('hdevice-model')">
             </hyt-input-text>
           </div> <!-- Field Model -->
 
           <div class="container-form-field">
-            <hyt-input-text [form]="deviceForm" formControlName="deviceFirmwareVersion" name="deviceFirmwareVersion"
-              placeholder="HYT_firmwareVersion" [injectedErrorMsg]="getError('deviceFirmwareVersion')">
+            <hyt-input-text [form]="deviceForm" formControlName="hdevice-firmwareversion" name="hdevice-firmwareversion"
+              placeholder="HYT_firmwareVersion" [injectedErrorMsg]="getError('hdevice-firmwareversion')">
             </hyt-input-text>
           </div> <!-- Field Firmware Version -->
 
@@ -45,19 +45,19 @@
         <div class="col-md-6">
 
           <div class="container-form-field">
-            <hyt-input-text [form]="deviceForm" formControlName="deviceBrand" name="deviceBrand" placeholder="HYT_brand"
-              [injectedErrorMsg]="getError('deviceBrand')">
+            <hyt-input-text [form]="deviceForm" formControlName="hdevice-brand" name="hdevice-brand"
+              placeholder="HYT_brand" [injectedErrorMsg]="getError('hdevice-brand')">
             </hyt-input-text>
           </div> <!-- Field Brand -->
 
           <div class="container-form-field">
-            <hyt-input-text [form]="deviceForm" formControlName="deviceSoftwareVersion" name="deviceSoftwareVersion"
-              placeholder="HYT_softwareVersion" [injectedErrorMsg]="getError('deviceSoftwareVersion')">
+            <hyt-input-text [form]="deviceForm" formControlName="hdevice-softwareversion" name="hdevice-softwareversion"
+              placeholder="HYT_softwareVersion" [injectedErrorMsg]="getError('hdevice-softwareversion')">
             </hyt-input-text>
           </div> <!-- Field Software Version -->
 
           <div class="container-form-field">
-            <hyt-text-area [form]="deviceForm" formControlName="deviceDescription" name="deviceDescription"
+            <hyt-text-area [form]="deviceForm" formControlName="hdevice-description" name="hdevice-description"
               placeholder="HYT_description">
             </hyt-text-area>
           </div> <!-- Field Description -->
@@ -81,27 +81,75 @@
 
   </div>
 
-  <div class="col-md-2">
-    <div>
-      DEVICES
-      <table>
-        <tr>
-          <th><b>X</b></th>
-          <th><b>ID</b></th>
-          <th><b>NOME</b></th>
-          <th><b>PROGETTO</b></th>
-        </tr>
-        <tr *ngFor="let dev of devicesList">
-          <td (click)="showDeleteModal(dev.id)">
-            X
-          </td>
-          <td>{{dev.id}}</td>
-          <td>{{dev.deviceName}}</td>
-          <td>{{dev.project.id}}</td>
-        </tr>
-      </table>
-    </div>
-  </div>
+  <div id="container-hints" class="col-md-2">
+      
+    <h3 id="title-area">DEVICES</h3>
+
+    <!-- <table id="table-device">
+      <tr>
+        <!-- <th><b>ID</b></th> --
+        <th><b>NOME</b></th>
+        <th><b>PROGETTO</b></th>
+        <th><b>X</b></th>
+      </tr>
+      <tr *ngFor="let dev of devicesList">
+        <!-- <td>{{dev.id}}</td> --
+        <td>{{dev.deviceName}}</td>
+        <td>{{dev.project.id}}</td>
+        <td (click)="showDeleteModal(dev.id)">
+          X
+        </td>
+      </tr>
+    </table> END TABLE -->
+
+    <!----------------------------------------------------------------------->
+
+    <!-- <div class="row"> -->
+
+      <div id="box-devices" class="col-12">
+        <div class="row">
+
+            <div id="header-box" class="col-12">
+
+                <div class="row">
+                  
+                  <div id="title-box" class="col-8">Devices</div>
+        
+                  <div id="actions-box" class="col-4" style="background-color: antiquewhite">
+                    Actions
+                  </div>
+        
+                </div>
+        
+            </div> <!-- end header box -->
+        
+            <div class="col-12 body-box">
+              Qui Il Body
+            </div> <!-- end body box -->
+            <div class="col-12 body-box">
+              Qui Il Body
+            </div> <!-- end body box -->
+            <div class="col-12 body-box">
+              Qui Il Body
+            </div> <!-- end body box -->
+      
+            <div id="footer-box" class="col-12">
+              <span class="arrow">&lt;</span> 1 2 3 <span class="arrow">&gt;</span>
+            </div> <!-- end footer box -->
+          
+        </div>
+      </div>
+
+    <!-- </div> -->
+
+    <!----------------------------------------------------------------------->
+
+    <div class="info-message"> 
+        <span class="text">Messaggio di Info</span>
+        <mat-icon class="">info</mat-icon>
+    </div> <!-- END INFO MESSAGE -->
+      
+  </div> <!-- END CONTAINER HINTS -->
 
   <hyt-modal [mOpen]="deleteId!=-1">
     <div class="alignCenter">

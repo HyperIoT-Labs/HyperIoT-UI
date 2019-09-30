@@ -32,6 +32,13 @@ import { MatInputModule } from '@angular/material/input';
 import { AssetCategoryComponent } from './project-wizard/asset-category/asset-category.component';
 import { AssetTagComponent } from './project-wizard/asset-tag/asset-tag.component';
 import { SelectableTextComponent } from './project-wizard/events-step/event-mail/selectable-text/selectable-text.component';
+import { PacketFieldsDataComponent } from './project-detail/packet-fields-data/packet-fields-data.component';
+import { PacketEnrichmentsDataComponent } from './project-detail/packet-enrichments-data/packet-enrichments-data.component';
+import { PacketStatisticsDataComponent } from './project-detail/packet-statistics-data/packet-statistics-data.component';
+import { PacketEventsDataComponent } from './project-detail/packet-events-data/packet-events-data.component';
+import { PacketSelectComponent } from './project-wizard/fields-step/packet-select/packet-select.component';
+import { PacketFieldComponent } from './project-wizard/fields-step/packet-field/packet-field.component';
+import { FieldTipColumnComponent } from './project-wizard/fields-step/field-tip-column/field-tip-column.component';
 @NgModule({
   declarations: [
     ProjectsComponent,
@@ -52,7 +59,15 @@ import { SelectableTextComponent } from './project-wizard/events-step/event-mail
     EventMailComponent,
     AssetCategoryComponent,
     AssetTagComponent,
-    SelectableTextComponent
+    SelectableTextComponent,
+    PacketFieldsDataComponent,
+    PacketEnrichmentsDataComponent,
+    PacketStatisticsDataComponent,
+    PacketEventsDataComponent,
+    SelectableTextComponent,
+    PacketSelectComponent,
+    PacketFieldComponent,
+    FieldTipColumnComponent
   ],
   imports: [
     MatIconModule,

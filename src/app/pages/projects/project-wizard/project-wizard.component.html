@@ -1,9 +1,14 @@
 <div id="container-project-wizard">
-  <!-- <div class=row>
-    <div class="col-md-10">breadcrumb/to/project-wizard</div>
-    <div class="col-md-2">ADD</div>
-  </div> -->
-  <div class=row>
+
+  <div class="header d-flex flex-row justify-content-stretch">
+    
+    <div class="breadcrumb flex-grow-1">
+      <span class="hyt-icon icon-hyt_projectSolo"></span> <a [routerLink]="['/']">Home</a> > <strong>Projects Wizard</strong> 
+    </div>
+
+  </div>
+  
+  <div id="container-steps" class="row">
 
     <ng-template #projectTemplate>
       <hyt-project-step (projectOutput)="updateProject($event)">

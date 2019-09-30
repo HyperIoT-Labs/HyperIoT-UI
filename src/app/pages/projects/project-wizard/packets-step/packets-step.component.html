@@ -6,13 +6,13 @@
 
       <div class="row">
         <div class="col-md-6 container-form-field">
-          <hyt-input-text [form]="packetForm" formControlName="packetName" name="packetName" [isRequired]="true"
-            placeholder="packetName" [injectedErrorMsg]="getError('packetName')">
+          <hyt-input-text [form]="packetForm" formControlName="hpacket-name" name="hpacket-name" [isRequired]="true"
+            placeholder="Packet name" [injectedErrorMsg]="getError('hpacket-name')">
           </hyt-input-text> <!-- Field Name -->
         </div>
         <div class="col-md-6 container-form-field">
-          <hyt-select [form]="packetForm" [options]="devicesOptions" formControlName="packetDevice" name="packetDevice"
-            [isRequired]="true" label="HYT_device">
+          <hyt-select [form]="packetForm" [options]="devicesOptions" formControlName="hpacket-device"
+            name="hpacket-device" [isRequired]="true" label="HYT_device">
           </hyt-select> <!-- Field Packet -->
         </div>
       </div>
@@ -36,6 +36,19 @@
             name="hpacket-serialization" [verticalAlign]="true">
           </hyt-radio-button>
         </div> <!-- Field Serialization -->
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 container-form-field">
+          <hyt-input-text [form]="packetForm" formControlName="hpacketTimeStamp" name="hpacketTimeStamp"
+            [isRequired]="true" placeholder="Timestamp" [injectedErrorMsg]="getError('hpacketTimeStamp')">
+          </hyt-input-text> <!-- Field TimeStamp -->
+        </div>
+        <div class="col-md-6 container-form-field">
+          <hyt-input-text [form]="packetForm" formControlName="hpacketTimeStampFormat" name="hpacketTimeStampFormat"
+            [isRequired]="true" placeholder="Timestamp format" [injectedErrorMsg]="getError('hpacketTimeStampFormat')">
+          </hyt-input-text> <!-- Field TimeStampFormat -->
+        </div>
       </div>
 
       <div class="row">
@@ -69,18 +82,18 @@
         PACKETS
         <table>
           <tr>
-            <th><b>X</b></th>
             <th><b>ID</b></th>
             <th><b>NOME</b></th>
-            <th><b>DEVICE</b></th>
+            <!-- <th><b>M</b></th>
+            <th><b>D</b></th> -->
+            <th><b>X</b></th>
           </tr>
           <tr *ngFor="let pac of packetsList">
-            <td (click)="showDeleteModal(pac.id)">
-              X
-            </td>
             <td>{{pac.id}}</td>
             <td>{{pac.name}}</td>
-            <td>{{pac.device.id}}</td>
+            <!-- <td (click)="copyData(pac, 'UPDATE')">M</td> -->
+            <!-- <td (click)="copyData(pac, 'ADD')">D</td> -->
+            <td (click)="showDeleteModal(pac.id)">X</td>
           </tr>
         </table>
       </div>

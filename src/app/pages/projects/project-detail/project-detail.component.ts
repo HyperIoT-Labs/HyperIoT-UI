@@ -1,9 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Observable, zip, Observer } from 'rxjs';
 
-import { HprojectsService, HProject, HdevicesService, HDevice, HpacketsService, HPacket } from '@hyperiot/core';
+import { HprojectsService, HProject, HdevicesService, HDevice, HpacketsService, HPacket, HPacketField } from '@hyperiot/core';
 import { TreeDataNode } from '@hyperiot/components';
 
 import { HytTreeViewProjectComponent } from '@hyperiot/components/lib/hyt-tree-view-project/hyt-tree-view-project.component';
@@ -22,7 +22,8 @@ enum TreeStatusEnum {
 @Component({
   selector: 'hyt-project-detail',
   templateUrl: './project-detail.component.html',
-  styleUrls: ['./project-detail.component.scss']
+  styleUrls: ['./project-detail.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ProjectDetailComponent implements OnInit {
   @ViewChild('treeView', { static: true }) treeView: HytTreeViewProjectComponent;
@@ -113,7 +114,29 @@ export class ProjectDetailComponent implements OnInit {
                 return {
                   data: { id: k.id, type: 'packet' },
                   name: k.name,
-                  icon: 'icon-hyt_packets'
+                  icon: 'icon-hyt_packets',
+                  children: [
+                    {
+                      data: { id: k.id, type: 'packet-fields' },
+                      name: 'Fields',
+                      icon: 'icon-hyt_fields'
+                    },
+                    {
+                      data: { id: k.id, type: 'packet-enrichments' },
+                      name: 'Enrichments',
+                      icon: 'icon-hyt_enrichments'
+                    },
+                    {
+                      data: { id: k.id, type: 'packet-statistics' },
+                      name: 'Statistics',
+                      icon: 'icon-hyt_statistics'
+                    },
+                    {
+                      data: { id: k.id, type: 'packet-events' },
+                      name: 'Events',
+                      icon: 'icon-hyt_event'
+                    }
+                  ]
                 };
               });
             });
@@ -152,7 +175,7 @@ export class ProjectDetailComponent implements OnInit {
         ['./', { outlets: { projectDetails: null } }],
         { relativeTo: this.activatedRoute }
       ).then((success) => {
-        if (!success) {
+        if (!success && this.currentNode) {
           // reposition on last selected node if navigation is cancelled
           this.treeView.setActiveNode(this.currentNode);
         }
@@ -179,12 +202,14 @@ export class ProjectDetailComponent implements OnInit {
     // refresh treeview node data
     const tc = this.treeView.treeControl;
     const node = this.currentNode = this.find(data);
-    this.treeView.setActiveNode(node);
-    let n = node.parent;
-    while (n) {
-      const np = this.find(n.data);
-      tc.expand(np);
-      n = np.parent;
+    if (node) {
+      this.treeView.setActiveNode(node);
+      let n = node.parent;
+      while (n) {
+        const np = this.find(n.data);
+        tc.expand(np);
+        n = np.parent;
+      }
     }
   }
 
