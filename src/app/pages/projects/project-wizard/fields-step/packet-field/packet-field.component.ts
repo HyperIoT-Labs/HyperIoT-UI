@@ -76,7 +76,7 @@ export class PacketFieldComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
-    if (this.currentPacket) {
+    if (this.currentPacket && this.currentPacket.fields) {
       this.packetTree = [...this.createPacketTree(this.currentPacket.fields)];
       if (this.treeView)
         this.treeView.refresh(this.packetTree, this.currentPacket.name);
