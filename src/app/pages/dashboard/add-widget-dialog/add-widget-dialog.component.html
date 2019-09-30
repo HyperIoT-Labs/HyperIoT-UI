@@ -43,7 +43,7 @@
             <div *ngIf="currentWidget.info && currentWidget.info.preview">
                 <img [src]="currentWidget.info.preview" width="100%">
             </div>
-            <div>
+            <div *ngIf="currentWidget.info && currentWidget.info.rating">
                 <star-rating
                     [value]="currentWidget.info.rating"
                     checkedcolor="gold"
