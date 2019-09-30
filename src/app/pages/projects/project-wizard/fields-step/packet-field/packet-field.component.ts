@@ -38,8 +38,6 @@ export class PacketFieldComponent implements OnInit, OnChanges {
 
   formStatus: FormStatusEnum = FormStatusEnum.SelectAction;
 
-  internal: boolean = false;
-
   multiplicityOptions: Option[] = [
     { value: 'SINGLE', label: 'Single', checked: true },
     { value: 'ARRAY', label: 'Array' },
@@ -76,6 +74,7 @@ export class PacketFieldComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
+    console.log(this.currentPacket);
     if (this.currentPacket && this.currentPacket.fields) {
       this.packetTree = [...this.createPacketTree(this.currentPacket.fields)];
       if (this.treeView)
@@ -143,10 +142,10 @@ export class PacketFieldComponent implements OnInit, OnChanges {
     this.hPacketService.addHPacketField(this.currentPacket.id, field).subscribe(
       res => {
         if (!field.parentField)
-          this.hPackets.find(x => x.id == this.currentPacket.id).fields.push(res);
+          this.currentPacket.fields.push(res);
         else
-          this.updatePacketView(this.hPackets.find(x => x.id == this.currentPacket.id).fields, field.parentField.id, res);
-        this.internal = true;
+          this.updatePacketView(this.currentPacket.fields, field.parentField.id, res);
+        this.ngOnChanges();
         this.hPacketsOutput.emit(this.hPackets);
         this.resetForm();
         this.pageStatus = PageStatusEnum.Submitted;
@@ -203,7 +202,6 @@ export class PacketFieldComponent implements OnInit, OnChanges {
     this.hPacketService.deleteHPacketField(this.currentPacket.id, this.deleteFieldId).subscribe(
       res => {
         this.updatePacketViewDelete(this.currentPacket.fields, this.deleteFieldId);
-        this.internal = true;
         this.hPacketsOutput.emit(this.hPackets);
       },
       err => { }
