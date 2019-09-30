@@ -175,7 +175,7 @@ export class ProjectDetailComponent implements OnInit {
         ['./', { outlets: { projectDetails: null } }],
         { relativeTo: this.activatedRoute }
       ).then((success) => {
-        if (!success) {
+        if (!success && this.currentNode) {
           // reposition on last selected node if navigation is cancelled
           this.treeView.setActiveNode(this.currentNode);
         }
