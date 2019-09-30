@@ -9,6 +9,7 @@ import { WidgetsLayoutComponent } from './widgets-layout/widgets-layout.componen
 import { DashboardViewComponent } from './dashboard-view/dashboard-view.component';
 import { AddWidgetDialogComponent } from './add-widget-dialog/add-widget-dialog.component';
 import { WidgetSettingsDialogComponent } from './widget-settings-dialog/widget-settings-dialog.component';
+import { HytModalConfService } from 'src/app/services/hyt-modal-conf.service';
 
 enum PageStatus {
   Loading = 0,
@@ -57,7 +58,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   constructor(
     private dashboardConfigService: DashboardConfigService,
-    private route: Router
+    private route: Router,
+    private hytModalService: HytModalConfService
   ) {
 
   }
@@ -171,6 +173,18 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   saveDashboard() {
     this.dashboardView.saveDashboard();
+  }
+
+  // addWidget() {
+  //   this.dashboardView.navigateToAddWidget();
+  // }
+
+  openModal(id: string) {
+    this.hytModalService.open(id);
+  }
+
+  closeModal(id: string) {
+      this.hytModalService.close(id);
   }
 
   /******************************************************************************************************************************* Not used */

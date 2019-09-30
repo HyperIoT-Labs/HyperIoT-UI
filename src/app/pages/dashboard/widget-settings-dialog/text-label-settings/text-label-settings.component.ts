@@ -25,7 +25,7 @@ export class TextLabelSettingsComponent implements OnInit, OnDestroy {
     });
   }
   ngOnDestroy() {
-    this.modalApply.unsubscribe();
+    // this.modalApply.unsubscribe();
   }
 
   apply() {
