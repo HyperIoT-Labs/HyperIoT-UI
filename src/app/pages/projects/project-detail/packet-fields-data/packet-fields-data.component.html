@@ -1,1 +1,4 @@
-<hyt-fields-step [currentPacket]="packet"></hyt-fields-step>
+<hyt-packet-field
+    [currentPacket]="packet"
+    [hPackets]="packetList"
+    (hPacketsOutput)="packetsOutputChanged($event)"></hyt-packet-field>

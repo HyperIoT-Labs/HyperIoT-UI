@@ -1,13 +1,19 @@
 <div id="fields-step" class="row">
 
-  <div class="col-md-12">
+  <div class="col-md-10">
+
     <hyt-packet-select [hDevices]="hDevices" [hPackets]="hPackets" (currentPacket)="packetChanged($event)">
     </hyt-packet-select>
+
+    <hyt-packet-field [currentPacket]="currentPacket" [hPackets]="hPackets"
+      (hPacketsOutput)="packetsOutputChanged($event)">
+    </hyt-packet-field>
+
+
   </div>
 
-  <div class="col-md-12">
-    <hyt-packet-field [currentPacket]="currentPacket" [hPackets]="hPackets"
-      (hPacketsOutput)="packetsOutputChanged($event)"></hyt-packet-field>
+  <div class="col-md-2">
+    <hyt-field-tip-column></hyt-field-tip-column>
   </div>
 
 </div>

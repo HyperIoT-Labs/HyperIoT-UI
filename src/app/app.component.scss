@@ -1,46 +1,126 @@
 html {
   box-sizing: border-box;
-}
-
-html,
-body {
   height: 100%;
   position: relative;
-}
 
-body {
-  overflow: hidden;
-}
+  body {
+    height: 100%;
+    position: relative;
+    overflow: hidden;
 
-#hyt-container {
-  position: relative;
-  height: 100%;
-}
+    #hyt-container {
+      position: relative;
+      height: 100%;
 
-#hyt-container-topbar {
-  position: fixed;
-  z-index: 1;
-  width: 100%;
-}
+      #hyt-container-topbar {
+        position: fixed;
+        z-index: 1;
+        width: 100%;
+      }
+      
+      #hyt-container-nav {
+        position: fixed;
+        height: 100%;
+        width: 100%;
 
-#hyt-container-nav {
-  position: fixed;
-  height: 100%;
-  width: 100%;
-}
+        #hyt-container-router {
+        
+          &.container-fluid {
+            position: relative;
+            padding-left: 64px;
+            padding-right: 0;
+            top: 64px;
+            padding-bottom: 100px;
+            overflow: auto;
+            height: 100%;
+          }
 
-#hyt-container-router.container-fluid {
-  position: relative;
-  padding-left: 64px;
-  padding-right: 0;
-  top: 64px;
-  padding-bottom: 100px;
-  overflow: auto;
-  height: 100%;
-}
+          &.container-full-screen {
+            position: relative;
+            overflow: auto;
+            height: 100%;
+          }
 
-#hyt-container-router.container-full-screen {
-  position: relative;
-  overflow: auto;
-  height: 100%;
+        }
+
+      }
+    }
+
+    /* MODAL STYLES
+    -------------------------------*/
+    hyt-add-widget-dialog,
+    hyt-widget-settings-dialog {
+      /* modals are hidden by default */
+      display: none;
+  
+      .hyt-modal {
+        /* modal container fixed across whole screen */
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+  
+        /* z-index must be higher than .hyt-modal-background */
+        z-index: 999;
+        
+        /* enables scrolling for tall modals */
+        overflow: auto;
+  
+        .hyt-modal-body {
+          // padding: 20px;
+          background: #fff;
+          border-radius: 8px;
+  
+          /* margin exposes part of the modal background */
+          // margin: 40px;
+        }
+      }
+  
+      .hyt-modal-background {
+        /* modal background fixed across whole screen */
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+  
+        /* semi-transparent black  */
+        background-color: #000;
+        opacity: 0.75;
+        
+        /* z-index must be below .hyt-modal and above everything else  */
+        z-index: 900;
+      }
+    }
+  
+    .hyt-modal-open {
+      /* body overflow is hidden to hide main scrollbar when modal window is open */
+      overflow: hidden;
+    }
+  
+    hyt-add-widget-dialog {
+  
+      .hyt-modal-body {
+        top: 10%;
+        left: 50%;
+        margin-left: -512px;
+      }
+  
+    }
+  
+    hyt-widget-settings-dialog {
+      /* modals are hidden by default */
+  
+      .hyt-modal { 
+        top: 10%;
+        left: 50%;
+        width: 800px;
+        margin-left: -400px;
+      }
+  
+    }
+  
+  }
+
 }

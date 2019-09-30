@@ -16,6 +16,10 @@ import {
 } from '@hyperiot/core';
 
 import { DashboardConfigService } from '../dashboard-config.service';
+import { HytModalConfService } from 'src/app/services/hyt-modal-conf.service';
+import { WidgetSettingsDialogComponent } from '../widget-settings-dialog/widget-settings-dialog.component';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'hyt-widgets-layout',
@@ -24,6 +28,7 @@ import { DashboardConfigService } from '../dashboard-config.service';
 })
 export class WidgetsLayoutComponent implements OnInit, OnDestroy {
   @ViewChild(GridsterComponent, { static: true }) gridster: GridsterComponent;
+  @ViewChild(WidgetSettingsDialogComponent, { static: true }) widgetSetting: WidgetSettingsDialogComponent;
   @Input() options: GridsterConfig;
   @Input() dashboardId: number | string;
 
@@ -33,6 +38,11 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
   private originalDashboard: Array<GridsterItem>;
   cellSize: number;
   projectId: number;
+
+  currentWidgetIdSetting;
+
+  /** Subject for manage the open subscriptions */
+  protected ngUnsubscribe: Subject<void> = new Subject<void>();
 
   // private responsiveBreakPoints = [
   //   { breakPoint: 1200, columns: 6, cell: 250},
@@ -67,7 +77,8 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
   constructor(
     private dataStreamService: DataStreamService,
     private configService: DashboardConfigService,
-    private router: Router
+    private router: Router,
+    private hytModalService: HytModalConfService
   ) { }
 
   ngOnInit() {
@@ -121,6 +132,7 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
 
     this.dashboard = [];
     this.configService.getDashboard(+this.dashboardId)
+    .pipe(takeUntil(this.ngUnsubscribe))
     .subscribe(
       (d) => {
         this.dashboardEntity = d;
@@ -128,7 +140,7 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
         // connect to data upstream
         this.dataStreamService.connect(this.projectId);
         // get dashboard config
-        this.configService.getConfig(this.projectId, this.dashboardId).subscribe((dashboardConfig: Array<GridsterItem>) => {
+        this.configService.getConfig(this.projectId, this.dashboardId).pipe(takeUntil(this.ngUnsubscribe)).subscribe((dashboardConfig: Array<GridsterItem>) => {
           this.dashboard = dashboardConfig;
           this.originalDashboard = JSON.parse(JSON.stringify(dashboardConfig));
         });
@@ -137,6 +149,9 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    if(this.ngUnsubscribe)
+      this.ngUnsubscribe.next();
+
     this.dataStreamService.disconnect();
   }
 
@@ -154,27 +169,55 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
 
   // Widget events
 
+  onWidgetSettingClose(event){
+    // const widgetId = event.getWidgetId();
+    // const widget = this.getItemById(widgetId);
+    // event.setWidget(widget);
+    this.showSettingWidget = false;
+
+    if(this.ngUnsubscribe)
+      this.ngUnsubscribe.next();
+  }
+
+  showSettingWidget: boolean = false
+
   onWidgetAction(data) {
-    console.log('Widget action...', data);
     switch (data.action) {
       case 'toolbar:close':
         // TODO: should request action confim
         this.removeItem(data.widget);
         break;
       case 'toolbar:settings':
-        console.log("aaaaa")
-        this.router.navigate([
-          'dashboards',
-          { outlets: { modal: ['settings', data.widget.id] } }
-        ]).then((e) => {
-          if (e) {
-            //console.log('Navigation is successful!');
-          } else {
-            //console.log('Navigation has failed!');
-          }
-        });
+        this.currentWidgetIdSetting = data.widget.id;
+        this.showSettingWidget = true;
+
+        const widgetId = this.widgetSetting.getWidgetId();
+        const widget = this.getItemById(data.widget.id);
+        this.widgetSetting.setWidget(widget);
+
+        this.openModal("hyt-modal-widget-setting")
+        // this.router.navigate([
+        //   'dashboards',
+        //   { outlets: { modal: ['settings', data.widget.id] } }
+        // ]).then((e) => {
+        //   if (e) {
+        //     //console.log('Navigation is successful!');
+        //   } else {
+        //     //console.log('Navigation has failed!');
+        //   }
+        // });
         break;
     }
+  }
+
+  openModal(id: string) {
+    this.hytModalService.open(id);
+  }
+
+  closeModal(id: string) {
+    this.hytModalService.close(id);
+    if(this.ngUnsubscribe)
+      this.ngUnsubscribe.next();
   }
 
   @HostListener('window:resize', ['$event'])
@@ -233,6 +276,7 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
     if (item.id > 0) {
       this.configService
         .removeDashboardWidget(item.id)
+        .pipe(takeUntil(this.ngUnsubscribe))
         .subscribe(() => {
           // TODO: handle errors
           this.dashboard.splice(this.dashboard.indexOf(item), 1);
@@ -246,6 +290,7 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
       delete widget.count;
       this.configService
         .addDashboardWidget(+this.dashboardId, widget)
+        .pipe(takeUntil(this.ngUnsubscribe))
         .subscribe((w) => {
           // TODO: handle errors
           // widget saved (should have a new id)
@@ -257,6 +302,7 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
 
   saveDashboard() {
     this.configService.putConfig(+this.dashboardId, this.dashboard)
+    .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((res) => {
         if (res && res.status_code === 200) {
           this.originalDashboard = this.dashboard;
