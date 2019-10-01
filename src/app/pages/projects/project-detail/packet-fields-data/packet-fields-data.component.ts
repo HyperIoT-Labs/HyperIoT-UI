@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnDestroy, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 
 import { Subscription } from 'rxjs';
@@ -38,9 +38,7 @@ export class PacketFieldsDataComponent extends ProjectDetailEntity implements On
           this.packet = p;
           // TODO: data for temporary bound field [hPackets] that will be removed
           this.hPacketService.findAllHPacketByProjectId(this.packet.device.project.id)
-            .subscribe((pl: HPacket[]) => {
-              this.packetList = pl;
-            });
+            .subscribe((pl: HPacket[]) => this.packetList = pl);
         });
       }
     });
@@ -49,11 +47,6 @@ export class PacketFieldsDataComponent extends ProjectDetailEntity implements On
   ngAfterViewInit() {
     // the following timeout is to prevent validatio check errors due to value changes
     setTimeout(() => {
-      /*
-      Object.keys(this.packetFieldComponent.fieldForm.controls).forEach((k) => {
-        this.form.addControl(k, this.packetFieldComponent.fieldForm.controls[k]);
-      });
-      */
       this.form.addControl('packetFieldComponent', this.packetFieldComponent.fieldForm);
       this.packetFieldComponent.fieldForm.setParent(this.form);
       this.resetForm();

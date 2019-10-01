@@ -25,7 +25,6 @@ import { DeviceDataComponent } from './project-detail/device-data/device-data.co
 import { PacketDataComponent } from './project-detail/packet-data/packet-data.component';
 import { EventMailComponent } from './project-wizard/events-step/event-mail/event-mail.component';
 
-
 import { MatChipsModule } from '@angular/material/chips';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
@@ -39,6 +38,10 @@ import { PacketEventsDataComponent } from './project-detail/packet-events-data/p
 import { PacketSelectComponent } from './project-wizard/fields-step/packet-select/packet-select.component';
 import { PacketFieldComponent } from './project-wizard/fields-step/packet-field/packet-field.component';
 import { FieldTipColumnComponent } from './project-wizard/fields-step/field-tip-column/field-tip-column.component';
+import { PacketEnrichmentsListComponent } from './project-detail/packet-enrichments-list/packet-enrichments-list.component';
+
+import { PacketEnrichmentsService } from '../../services/packet-enrichments.service';
+
 @NgModule({
   declarations: [
     ProjectsComponent,
@@ -67,7 +70,8 @@ import { FieldTipColumnComponent } from './project-wizard/fields-step/field-tip-
     SelectableTextComponent,
     PacketSelectComponent,
     PacketFieldComponent,
-    FieldTipColumnComponent
+    FieldTipColumnComponent,
+    PacketEnrichmentsListComponent
   ],
   imports: [
     MatIconModule,
@@ -85,6 +89,11 @@ import { FieldTipColumnComponent } from './project-wizard/fields-step/field-tip-
     MatAutocompleteModule,
     MatInputModule
   ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  providers: [
+    PacketEnrichmentsService
+  ],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
+  ]
 })
 export class ProjectsModule { }
