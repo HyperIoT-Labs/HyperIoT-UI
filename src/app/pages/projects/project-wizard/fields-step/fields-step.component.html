@@ -2,87 +2,18 @@
 
   <div class="col-md-10">
 
-    <div class="row">
+    <hyt-packet-select [hDevices]="hDevices" [hPackets]="hPackets" (currentPacket)="packetChanged($event)">
+    </hyt-packet-select>
 
-      <div class="col-md-6">
-
-        <div class="container-form-field">
-          <hyt-select [options]="devicesOptions" [isRequired]="true" label="HYT_fieldType"
-            (changeFn)="deviceChanged($event)">
-          </hyt-select>
-        </div>
-
-        <div *ngIf="currentDevice && deviceTreeView.length == 0">
-          Non ci sono pacchetti in questo device
-        </div>
-
-        <hyt-tree-view-editable *ngFor="let pack of deviceTreeView" [deviceName]="pack.packet.name"
-          [treeData]="pack.tree" (addFn)="addField($event, pack.packet)" (removeFn)="removeField($event, pack.packet)"
-          (cancelFn)="cancelField()">
-        </hyt-tree-view-editable>
-
-      </div>
-
-      <div class="col-md-6">
-        <form *ngIf="fieldForm" class="field-form" [formGroup]="fieldForm.form" autocomplete="on">
-
-          <div class="container-form-field">
-            <hyt-input-text [form]="fieldForm.form" formControlName="fieldName" name="fieldName" [isRequired]="true"
-              placeholder="HYT_fieldName" [injectedErrorMsg]="getError('fieldName')">
-            </hyt-input-text>
-          </div> <!-- Field Name -->
-
-          <div class="container-form-field">
-            LEVEL OF MULTIPLICITY
-            <hyt-radio-button [form]="fieldForm.form" formControlName="fieldMultiplicity" name="fieldMultiplicity"
-              [options]="multiplicityOptions" [verticalAlign]="true">
-            </hyt-radio-button>
-          </div> <!-- Field Multiplicity -->
-
-          <div class="container-form-field">
-            <hyt-select [form]="fieldForm.form" [options]="typeOptions" formControlName="fieldType" name="fieldType"
-              [isRequired]="true" label="HYT_fieldType">
-            </hyt-select>
-          </div> <!-- Field Type -->
-
-          <div class="container-form-field">
-            <hyt-text-area [form]="fieldForm.form" formControlName="fieldDescription" name="fieldDescription"
-              placeholder="HYT_fieldDescription">
-            </hyt-text-area>
-          </div> <!-- Field Description -->
-
-          <div class="container-form-field errorMessage">
-            <ng-container *ngIf="getError('general')">
-              {{getError('general')}}
-            </ng-container>
-          </div> <!-- Error Box -->
-
-          <hyt-button id="field-form-submit-button" [isDisabled]="invalid() || pageStatus == PageStatus.Loading"
-            (clickFn)="createField()" type="submit">
-            Add Field
-          </hyt-button>
-
-        </form>
-      </div>
-
-    </div>
+    <hyt-packet-field [currentPacket]="currentPacket" [hPackets]="hPackets"
+      (hPacketsOutput)="packetsOutputChanged($event)">
+    </hyt-packet-field>
 
 
   </div>
 
   <div class="col-md-2">
-    <div>
-      FIELDS
-    </div>
+    <hyt-field-tip-column></hyt-field-tip-column>
   </div>
-
-  <hyt-modal [mOpen]="deleteModal">
-    <div class="center">
-      You are about to delete the selected object and its children. Are you sure?
-      <hr>
-      <button (click)="confDelete(true)">Yes</button>
-      <button (click)="confDelete(false)">No</button>
-    </div>
-  </hyt-modal>
 
 </div>

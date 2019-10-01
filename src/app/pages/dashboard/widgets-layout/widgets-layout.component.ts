@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy, HostListener, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, HostListener, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 
 import {
@@ -16,6 +16,10 @@ import {
 } from '@hyperiot/core';
 
 import { DashboardConfigService } from '../dashboard-config.service';
+import { HytModalConfService } from 'src/app/services/hyt-modal-conf.service';
+import { WidgetSettingsDialogComponent } from '../widget-settings-dialog/widget-settings-dialog.component';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'hyt-widgets-layout',
@@ -24,6 +28,7 @@ import { DashboardConfigService } from '../dashboard-config.service';
 })
 export class WidgetsLayoutComponent implements OnInit, OnDestroy {
   @ViewChild(GridsterComponent, { static: true }) gridster: GridsterComponent;
+  @ViewChild(WidgetSettingsDialogComponent, { static: true }) widgetSetting: WidgetSettingsDialogComponent;
   @Input() options: GridsterConfig;
   @Input() dashboardId: number | string;
 
@@ -31,15 +36,36 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
   dashboardEntity: Dashboard;
   dragEnabled = true;
   private originalDashboard: Array<GridsterItem>;
+  cellSize: number;
+  projectId: number;
+
+  currentWidgetIdSetting;
+
+  /** Subject for manage the open subscriptions */
+  protected ngUnsubscribe: Subject<void> = new Subject<void>();
+
+  // private responsiveBreakPoints = [
+  //   { breakPoint: 1200, columns: 6, cell: 250},
+  //   { breakPoint: 1024, columns: 6, cell: 200},
+  //   { breakPoint: 880, columns: 5,cell: 160},
+  //   { breakPoint: 720, columns: 4,cell: 160},
+  //   { breakPoint: 640, columns: 3,cell: 160},
+  //   { breakPoint: 480, columns: 2,cell: 160},
+  //   { breakPoint: 0, columns: 1,cell: 160},
+  // ];
 
   private responsiveBreakPoints = [
-    { breakPoint: 1200, columns: 8},
-    { breakPoint: 1024, columns: 6},
-    { breakPoint: 880, columns: 5},
-    { breakPoint: 720, columns: 4},
-    { breakPoint: 640, columns: 3},
-    { breakPoint: 480, columns: 2},
-    { breakPoint: 0, columns: 1},
+    { breakPoint: 1611, columns: 6, cell: 250},
+    { breakPoint: 1610, columns: 6, cell: 200},
+    { breakPoint: 1327, columns: 6, cell: 180},
+    { breakPoint: 1200, columns: 6, cell: 180},
+    { breakPoint: 1024, columns: 4, cell: 230},
+    { breakPoint: 880, columns: 4,cell: 190},
+    { breakPoint: 720, columns: 3,cell: 210},
+    { breakPoint: 640, columns: 2,cell: 270},
+    { breakPoint: 480, columns: 2,cell: 200},
+    { breakPoint: 400, columns: 1,cell: 170},
+    { breakPoint: 0, columns: 1,cell: 120}
   ];
 
   /**
@@ -51,7 +77,8 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
   constructor(
     private dataStreamService: DataStreamService,
     private configService: DashboardConfigService,
-    private router: Router
+    private router: Router,
+    private hytModalService: HytModalConfService
   ) { }
 
   ngOnInit() {
@@ -68,10 +95,10 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
       scrollToNewItems: true,
       disableWarnings: true,
       ignoreMarginInRow: false,
-      mobileBreakpoint: 480,
+      mobileBreakpoint: 400,
       keepFixedHeightInMobile: true,
       keepFixedWidthInMobile: false,
-      minCols: 1, maxCols: 10,
+      minCols: 1, maxCols: 10, maxCellsize: 280,
       minRows: 1,
       margin: 6,
       draggable: {
@@ -90,25 +117,41 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
     };
 
     this.options.maxCols = this.getResponsiveColumns();
+    this.options.maxCellSize = this.getResponsiveCellSize();
+
     if (this.options.maxCols > 1) {
       this.options.mobileBreakpoint = 0;
     }
+
     //const cellSize = (availableWidth - (this.options.margin * this.options.maxCols)) / this.options.maxCols;
-    const cellSize = 160;
-    this.options.fixedColWidth = cellSize;
-    this.options.fixedRowHeight = cellSize / 2;
+    // const cellSize = 250;
+
+    this.cellSize = this.getResponsiveCellSize(); /* 160 misura base */
+    this.options.fixedColWidth = this.cellSize;
+    this.options.fixedRowHeight = this.cellSize / 2;
 
     this.dashboard = [];
     this.configService.getDashboard(+this.dashboardId)
-      .subscribe((d) => this.dashboardEntity = d);
-    this.configService.getConfig(this.dashboardId).subscribe((dashboardConfig: Array<GridsterItem>) => {
-      this.dashboard = dashboardConfig;
-      this.originalDashboard = JSON.parse(JSON.stringify(dashboardConfig));
-    });
-    // TODO: the connection should happen somewhere else in the main page
-    this.dataStreamService.connect();
+    .pipe(takeUntil(this.ngUnsubscribe))
+    .subscribe(
+      (d) => {
+        this.dashboardEntity = d;
+        this.projectId = this.dashboardEntity.hproject.id;
+        // connect to data upstream
+        this.dataStreamService.connect(this.projectId);
+        // get dashboard config
+        this.configService.getConfig(this.projectId, this.dashboardId).pipe(takeUntil(this.ngUnsubscribe)).subscribe((dashboardConfig: Array<GridsterItem>) => {
+          this.dashboard = dashboardConfig;
+          this.originalDashboard = JSON.parse(JSON.stringify(dashboardConfig));
+        });
+      }
+    );
   }
+
   ngOnDestroy() {
+    if(this.ngUnsubscribe)
+      this.ngUnsubscribe.next();
+
     this.dataStreamService.disconnect();
   }
 
@@ -126,33 +169,63 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
 
   // Widget events
 
+  onWidgetSettingClose(event){
+    // const widgetId = event.getWidgetId();
+    // const widget = this.getItemById(widgetId);
+    // event.setWidget(widget);
+    this.showSettingWidget = false;
+
+    if(this.ngUnsubscribe)
+      this.ngUnsubscribe.next();
+  }
+
+  showSettingWidget: boolean = false
+
   onWidgetAction(data) {
-    console.log('Widget action...', data);
     switch (data.action) {
       case 'toolbar:close':
         // TODO: should request action confim
         this.removeItem(data.widget);
         break;
       case 'toolbar:settings':
-        this.router.navigate([
-          'dashboards',
-          this.dashboardId,
-          { outlets: { modal: ['settings', data.widget.id] } }
-        ]).then((e) => {
-          if (e) {
-            //console.log('Navigation is successful!');
-          } else {
-            //console.log('Navigation has failed!');
-          }
-        });
+        this.currentWidgetIdSetting = data.widget.id;
+        this.showSettingWidget = true;
+
+        const widgetId = this.widgetSetting.getWidgetId();
+        const widget = this.getItemById(data.widget.id);
+        this.widgetSetting.setWidget(widget);
+
+        this.openModal("hyt-modal-widget-setting")
+        // this.router.navigate([
+        //   'dashboards',
+        //   { outlets: { modal: ['settings', data.widget.id] } }
+        // ]).then((e) => {
+        //   if (e) {
+        //     //console.log('Navigation is successful!');
+        //   } else {
+        //     //console.log('Navigation has failed!');
+        //   }
+        // });
         break;
     }
+  }
+
+  openModal(id: string) {
+    this.hytModalService.open(id);
+  }
+
+  closeModal(id: string) {
+    this.hytModalService.close(id);
+    if(this.ngUnsubscribe)
+      this.ngUnsubscribe.next();
   }
 
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
     const columns = this.getResponsiveColumns();
-    if (columns !== this.options.maxCols) {
+    const cell = this.getResponsiveCellSize();
+
+    if (columns !== this.options.maxCols || cell !== this.options.maxCellSize) {
       /*
       // TODO: Angular-Gridster2 won't apply maxCols option on change (bug??)
       this.options.maxCols = columns;
@@ -203,6 +276,7 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
     if (item.id > 0) {
       this.configService
         .removeDashboardWidget(item.id)
+        .pipe(takeUntil(this.ngUnsubscribe))
         .subscribe(() => {
           // TODO: handle errors
           this.dashboard.splice(this.dashboard.indexOf(item), 1);
@@ -216,9 +290,11 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
       delete widget.count;
       this.configService
         .addDashboardWidget(+this.dashboardId, widget)
+        .pipe(takeUntil(this.ngUnsubscribe))
         .subscribe((w) => {
           // TODO: handle errors
           // widget saved (should have a new id)
+          widget.projectId = this.projectId;
           this.dashboard.push(widget);
         });
     }
@@ -226,6 +302,7 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
 
   saveDashboard() {
     this.configService.putConfig(+this.dashboardId, this.dashboard)
+    .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((res) => {
         if (res && res.status_code === 200) {
           this.originalDashboard = this.dashboard;
@@ -247,4 +324,21 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
     }
     return columns;
   }
+
+  getResponsiveCellSize(): number {
+    let singleCell = 160;
+
+    const availableWidth = document.documentElement.clientWidth;
+    if (availableWidth <= this.options.mobileBreakpoint) {
+      singleCell = singleCell;
+    } else {
+      const bp = this.responsiveBreakPoints.find((p) => p.breakPoint <= availableWidth);
+      if (bp) {
+        singleCell = bp.cell;
+      }
+    }
+
+    return singleCell;
+  }
+
 }

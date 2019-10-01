@@ -16,7 +16,7 @@ export class RegistrationComponent implements OnInit {
 
   registrationForm: FormGroup;
 
-  loading: boolean = false;
+  loading: boolean = false; /* false */
 
   private logger: Logger;
 

@@ -1,0 +1,7 @@
+Definition of terms
+<div class="row bgGrey">
+  <div *ngFor="let ph of placeHolders" class="col-md-6">
+    <div class="clickable inline" (click)="emitText(ph.placeholder)">{{ph.placeholder}}</div>
+    <div class="inline">&#160;- {{ph.description}}</div>
+  </div>
+</div>

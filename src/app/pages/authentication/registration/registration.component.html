@@ -68,7 +68,7 @@
                 <hyt-input-text [form]="registrationForm" formControlName="huser-passwordConfirm"
                   name="huser-passwordConfirm" [isRequired]="true" i18n-placeholder="@@HYT_passwordConfirm"
                   placeholder="HYT_passwordConfirm" [injectedErrorMsg]="getError('huser-passwordConfirm')"
-                  type="password">
+                  type="password" confirmPassword="huser-password">
                 </hyt-input-text>
               </div> <!-- Field Repeat Password -->
 
@@ -89,9 +89,14 @@
                   <ng-container i18n="@@HYT_registration_button">HYT_registration_button</ng-container>
                 </hyt-button>
               </div> <!-- Container Button -->
+              
+              <ng-container *ngIf="registrationSucceeded">
 
-              <ng-container *ngIf="registrationSucceeded" i18n="@@HYT_registration_form_ok">HYT_registration_form_ok
-              </ng-container>
+                <div id="successMessage" i18n="@@HYT_registration_form_ok">
+                    HYT_registration_form_ok
+                </div>
+
+              </ng-container> <!-- *ngIf="registrationSucceeded" -->
 
             </form> <!-- End Form -->
 

@@ -1,0 +1,24 @@
+<div *ngIf="tagStatus==0">
+  Loading...
+</div>
+<div *ngIf="tagStatus==-1">
+  An error has occurred while loading tag data
+</div>
+<div *ngIf="tagStatus==1">
+  <mat-form-field class="tag-list">
+    <mat-chip-list #chipList>
+      <mat-chip *ngFor="let tag of tags" [selectable]="true" [removable]="true" (removed)="remove(tag)">
+        {{tag.name}}
+        <mat-icon matChipRemove>cancel</mat-icon>
+      </mat-chip>
+      <input placeholder="Tags" #tagInput [formControl]="tagCtrl" [matAutocomplete]="auto" [matChipInputFor]="chipList"
+        [matChipInputSeparatorKeyCodes]="[13, 188]" [matChipInputAddOnBlur]="false"
+        (matChipInputTokenEnd)="add($event)">
+    </mat-chip-list>
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+      <mat-option *ngFor="let tag of filteredTags | async" [value]="tag">
+        {{tag.name}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+</div>

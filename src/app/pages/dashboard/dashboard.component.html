@@ -1,0 +1,111 @@
+<div id="dashboard-page">
+
+    <div class="header d-flex flex-row justify-content-stretch">
+        
+        <div class="breadcrumb flex-grow-1">
+            <a [routerLink]="['/']">Home</a> > <strong>Dashboard</strong>
+        </div>
+    
+    </div>
+    
+    <div id="container-dashboard" [ngSwitch]="pageStatus">
+
+        <div id="tools-dashboard-box" *ngIf="pageStatus == PageStatus.Standard || pageStatus == PageStatus.New">
+
+            <div class="row no-gutters">
+
+                <div class="col-6 left-tools">
+
+                    <div id="signal-btn" (click)="changeSignalState($event)">
+                        <span class="hyt-icon {{(signalIsOn)?'icon-hyt_wifiOnFilled':'icon-hyt_wifiOffFilled'}}"></span>
+                        <p>{{(signalIsOn)?'Online':'Offline'}}</p>
+                    </div>
+
+                    <div id="play-btn" (click)="changeStreamState($event)">
+                        <span class="hyt-icon {{(streamIsOn)?'icon-hyt_pause':'icon-hyt_play'}}"></span>
+                        <p>{{(streamIsOn)?'Pause':'Play'}}</p>
+                    </div>
+
+                </div>
+
+                <div class="col-6 right-tools">
+                    <hyt-select [label]="'Select a project'" name="project" [options]="hProjectListOptions" [selected]="idProjectSelected" (changeFn)="onSelectChange($event)" [disabled]="false"></hyt-select>
+
+                    <div id="add-widget-btn" *ngIf="pageStatus == PageStatus.Standard" (click)="openModal('hyt-modal-add-widgets')">
+                        <!-- <a [routerLink]="[{outlets: { modal: [ 'widgets' ] }}]"> -->
+                            <span class="hyt-icon icon-hyt_widgetPlus"></span>
+                            <p>Add a widget</p>
+                        <!-- </a> -->
+                    </div>
+
+                    <div id="save-dashboard-btn" *ngIf="pageStatus == PageStatus.Standard" (click)="saveDashboard()">
+                        <span class="hyt-icon icon-hyt_save"></span>
+                        <p>Save</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div id="loadingStatus" *ngSwitchCase="PageStatus.Loading" class="row align-items-center justify-content-center">
+            <div class="mt-5 d-flex flex-column">
+                <h2>Page is loading...</h2>
+            </div>
+        </div>
+
+        <div id="standardStatus" *ngSwitchCase="PageStatus.Standard" class="row">
+        <!-- Standard -->
+
+            <div id="container-box-dashboard" class="col-12">
+                <hyt-dashboard-view [dashboardId]="currentDashboardId"></hyt-dashboard-view>
+
+                <!-- <hyt-widgets-layout [dashboardId]="currentDashboardId"></hyt-widgets-layout>
+
+                <router-outlet name="modal" (activate)="onActivate($event)"></router-outlet> -->
+            </div>
+
+        </div>
+
+        <div id="newStatus" *ngSwitchCase="PageStatus.New" class="row align-items-center justify-content-center">
+        <!-- New -->
+
+            <div class="mt-5 no-dashboards">
+
+                <div id="content-no-dashboards" class="col-md-12">
+                    <i class="fa fa-bar-chart-o"></i>
+                    <h3 id="title-no-dashboards">You have not configured any dashboards.</h3>
+                    <!-- <h4 id="subtitle-no-dashboards">Start adding widgets.</h4> -->
+                </div>
+
+                <!-- <hyt-dashboard-view [dashboardId]="currentDashboardId"></hyt-dashboard-view> -->
+
+                <!-- <hyt-button id="add-dashboard-btn" [routerLink]="[{outlets: { modal: [ 'widgets' ] }}]" (clickFn)="">
+                    Add widget
+                </hyt-button> -->
+
+                <!-- <div id="btn-no-dashboards" class="col-md-12">
+
+                    <hyt-button id="add-dashboard-btn" (clickFn)="openModalNewDashboard()">
+                        Create your first Dashboard
+                    </hyt-button>
+
+                </div> -->
+
+            </div> <!-- End No Projects Row -->
+
+        </div>
+
+        <div id="errorStatus" *ngSwitchCase="PageStatus.Error" class="row align-items-center justify-content-center">
+            <div class="mt-5 d-flex flex-column align-items-center justify-content-center">
+                <h2>An error has occurred, contact the administrator.</h2>
+            </div>
+        </div>
+
+        <div *ngSwitchDefault>
+            switch-case error
+        </div>
+
+    </div>
+
+</div>

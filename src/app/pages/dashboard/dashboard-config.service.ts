@@ -1,14 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { map } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
+import { Subject, forkJoin, of } from 'rxjs';
 
 import {
     DashboardwidgetsService,
     DashboardsService,
-    DashboardWidget
+    DashboardWidget,
+    HprojectsService,
+    Dashboard
 } from '@hyperiot/core';
+import { DashboardWidgetPlus } from 'src/app/models/dashboard-models';
 
 @Injectable()
 export class DashboardConfigService {
@@ -20,8 +23,37 @@ export class DashboardConfigService {
     constructor(
         private dashboardService: DashboardsService,
         private dashboardWidgetService: DashboardwidgetsService,
+        private hProjectService: HprojectsService,
         private http: HttpClient
     ) { }
+
+    getRealtimeDashboardFromProject(projectId: number) {
+        return this.dashboardService.findHProjectRealtimeDashboard(projectId);
+    }
+
+    getOfflineDashboardFromProject(projectId: number) {
+        return this.dashboardService.findHProjectOfflineDashboard(projectId);
+    }
+
+    getAllDashboardsAndProjects() {
+
+        return forkJoin(
+
+            this.hProjectService.cardsView().pipe(
+                catchError(err => of(err))
+            ),
+
+            this.dashboardService.findAllDashboard().pipe(
+                catchError(err => of(err))
+            )
+
+        )
+
+    }
+
+    getProjectsList() {
+        return this.hProjectService.cardsView();
+    }
 
     getDashboardList() {
         return this.dashboardService.findAllDashboard();
@@ -31,11 +63,15 @@ export class DashboardConfigService {
         return this.dashboardService.findDashboard(dashboardId);
     }
 
+    saveDashboard(dashboard: Dashboard) {
+        this.dashboardService.saveDashboard(dashboard);
+    }
+
     addDashboardWidget(dashboardId: number, widget: any) {
         // creates a copy of widget object and
         // remove redundant properties
         delete widget.id;
-        const dashboardWidget: DashboardWidget = {
+        const dashboardWidget: DashboardWidgetPlus = {
             dashboard: { id: dashboardId, entityVersion: null },
             widgetConf: JSON.stringify(widget),
             entityVersion: null
@@ -55,7 +91,7 @@ export class DashboardConfigService {
         return this.dashboardWidgetService.deleteDashboardWidget(widgetId);
     }
 
-    getConfig(dashboardId: number | string) {
+    getConfig(projectId: number | string, dashboardId: number | string) {
         if (dashboardId === 'demo') {
             return this.getTestConfig();
         }
@@ -68,13 +104,14 @@ export class DashboardConfigService {
                         // Normalize data received from server
                         data.map((w: DashboardWidget) => {
                             const widget = JSON.parse(w.widgetConf);
+                            widget.projectId = +projectId;
                             widget.id = w.id;
                             widget.entityVersion = w.entityVersion;
                             config.push(widget);
                         });
                         return config;
                     },
-                    error => console.log(error)
+                    error => console.error(error)
                 )
             );
         return subject;
@@ -103,7 +140,7 @@ export class DashboardConfigService {
             dashboardWidgets.push(widget);
         });
         // Save the dashboard structure
-        console.log('Saving Dashboard', dashboardId, dashboardWidgets);
+        // console.log('Saving Dashboard', dashboardId, dashboardWidgets);
         return this.dashboardWidgetService
             .saveAllDashboardWidget(+dashboardId, dashboardWidgets);
     }

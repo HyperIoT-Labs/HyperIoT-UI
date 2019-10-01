@@ -1,9 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Observable, zip, Observer } from 'rxjs';
 
-import { HprojectsService, HProject, HdevicesService, HDevice, HpacketsService, HPacket } from '@hyperiot/core';
+import { HprojectsService, HProject, HdevicesService, HDevice, HpacketsService, HPacket, HPacketField } from '@hyperiot/core';
 import { TreeDataNode } from '@hyperiot/components';
 
 import { HytTreeViewProjectComponent } from '@hyperiot/components/lib/hyt-tree-view-project/hyt-tree-view-project.component';
@@ -22,15 +22,20 @@ enum TreeStatusEnum {
 @Component({
   selector: 'hyt-project-detail',
   templateUrl: './project-detail.component.html',
-  styleUrls: ['./project-detail.component.scss']
+  styleUrls: ['./project-detail.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ProjectDetailComponent implements OnInit {
   @ViewChild('treeView', { static: true }) treeView: HytTreeViewProjectComponent;
+
+  hintMessage = '';
+  hintVisible = false;
 
   TreeStatus = TreeStatusEnum;
   treeStatus = TreeStatusEnum.Ready;
 
   treeData: TreeDataNode[] = [];
+  currentNode;
 
   private focusTimeout: any = null;
   private projectId: 0;
@@ -56,7 +61,7 @@ export class ProjectDetailComponent implements OnInit {
   onActivate(childComponent: ProjectDetailEntity) {
     if (childComponent.isProjectEntity) {
       this.currentEntity = childComponent;
-      this.currentEntity.treeHost = this;
+      this.currentEntity.projectHost = this;
     }
   }
 
@@ -80,20 +85,20 @@ export class ProjectDetailComponent implements OnInit {
         const projectNode: TreeDataNode = {
           data: { id: p.id },
           name: p.name,
-          icon: 'work',
+          icon: 'icon-hyt_projectRSolo',
           children: []
         };
         this.projectName = p.name;
         this.treeData.push(projectNode);
         this.treeView.setData(this.treeData);
-        this.hDeviceService.findAllHDevice(p.id).subscribe((deviceList: HDevice[]) => {
+        this.hDeviceService.findAllHDeviceByProjectId(p.id).subscribe((deviceList: HDevice[]) => {
           const requests: Observable<any>[] = [];
           const devices = []; // device lookup list
           deviceList.map((d) => {
             const node = {
               data: { id: d.id, type: 'device' },
               name: d.deviceName,
-              icon: 'devices_other'
+              icon: 'icon-hyt_device'
             };
             devices[d.id] = node;
             projectNode.children.push(node);
@@ -109,7 +114,29 @@ export class ProjectDetailComponent implements OnInit {
                 return {
                   data: { id: k.id, type: 'packet' },
                   name: k.name,
-                  icon: 'settings_ethernet'
+                  icon: 'icon-hyt_packets',
+                  children: [
+                    {
+                      data: { id: k.id, type: 'packet-fields' },
+                      name: 'Fields',
+                      icon: 'icon-hyt_fields'
+                    },
+                    {
+                      data: { id: k.id, type: 'packet-enrichments' },
+                      name: 'Enrichments',
+                      icon: 'icon-hyt_enrichments'
+                    },
+                    {
+                      data: { id: k.id, type: 'packet-statistics' },
+                      name: 'Statistics',
+                      icon: 'icon-hyt_statistics'
+                    },
+                    {
+                      data: { id: k.id, type: 'packet-events' },
+                      name: 'Events',
+                      icon: 'icon-hyt_event'
+                    }
+                  ]
                 };
               });
             });
@@ -137,12 +164,22 @@ export class ProjectDetailComponent implements OnInit {
       this.router.navigate(
         [{ outlets: { projectDetails: [node.data.type, node.data.id] } }],
         { relativeTo: this.activatedRoute }
-      );
+      ).then((success) => {
+        if (!success) {
+          // reposition on last selected node if navigation is cancelled
+          this.treeView.setActiveNode(this.currentNode);
+        }
+      });
     } else {
       this.router.navigate(
         ['./', { outlets: { projectDetails: null } }],
         { relativeTo: this.activatedRoute }
-      );
+      ).then((success) => {
+        if (!success && this.currentNode) {
+          // reposition on last selected node if navigation is cancelled
+          this.treeView.setActiveNode(this.currentNode);
+        }
+      });
     }
   }
 
@@ -164,13 +201,15 @@ export class ProjectDetailComponent implements OnInit {
     }
     // refresh treeview node data
     const tc = this.treeView.treeControl;
-    const node = this.find(data);
-    this.treeView.setActiveNode(node);
-    let n = node.parent;
-    while (n) {
-      const np = this.find(n.data);
-      tc.expand(np);
-      n = np.parent;
+    const node = this.currentNode = this.find(data);
+    if (node) {
+      this.treeView.setActiveNode(node);
+      let n = node.parent;
+      while (n) {
+        const np = this.find(n.data);
+        tc.expand(np);
+        n = np.parent;
+      }
     }
   }
 
@@ -217,5 +256,13 @@ export class ProjectDetailComponent implements OnInit {
         });
       }
     });
+  }
+
+  showHintMessage(message: string) {
+    this.hintMessage = message;
+    this.hintVisible = true;
+  }
+  hideHintMessage() {
+    this.hintVisible = false;
   }
 }

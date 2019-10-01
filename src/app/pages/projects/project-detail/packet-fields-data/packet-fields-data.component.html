@@ -1,0 +1,10 @@
+<h2 id="title-fields">Fields</h2>
+
+<form [formGroup]="form">
+
+    <hyt-packet-field
+        [currentPacket]="packet"
+        [hPackets]="packetList"
+        (hPacketsOutput)="packetsOutputChanged($event)"></hyt-packet-field>
+
+</form>

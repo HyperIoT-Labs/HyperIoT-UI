@@ -21,6 +21,11 @@ import { ProjectDataComponent } from '../pages/projects/project-detail/project-d
 import { DeviceDataComponent } from '../pages/projects/project-detail/device-data/device-data.component';
 import { PacketDataComponent } from '../pages/projects/project-detail/packet-data/packet-data.component';
 import { CanDeactivateGuard } from '../components/CanDeactivateGuard';
+import { DashboardComponent } from '../pages/dashboard/dashboard.component';
+import { PacketFieldsDataComponent } from '../pages/projects/project-detail/packet-fields-data/packet-fields-data.component';
+import { PacketEnrichmentsDataComponent } from '../pages/projects/project-detail/packet-enrichments-data/packet-enrichments-data.component';
+import { PacketStatisticsDataComponent } from '../pages/projects/project-detail/packet-statistics-data/packet-statistics-data.component';
+import { PacketEventsDataComponent } from '../pages/projects/project-detail/packet-events-data/packet-events-data.component';
 
 @Injectable()
 export class LoggedInGuard implements CanActivate {
@@ -122,6 +127,30 @@ const hyperiotRoutes: Routes = [
         path: 'packet/:packetId',
         component: PacketDataComponent,
         outlet: 'projectDetails'
+      },
+      {
+        canDeactivate: [CanDeactivateGuard],
+        path: 'packet-fields/:packetId',
+        component: PacketFieldsDataComponent,
+        outlet: 'projectDetails'
+      },
+      {
+        canDeactivate: [CanDeactivateGuard],
+        path: 'packet-enrichments/:packetId',
+        component: PacketEnrichmentsDataComponent,
+        outlet: 'projectDetails'
+      },
+      {
+        canDeactivate: [CanDeactivateGuard],
+        path: 'packet-statistics/:packetId',
+        component: PacketStatisticsDataComponent,
+        outlet: 'projectDetails'
+      },
+      {
+        canDeactivate: [CanDeactivateGuard],
+        path: 'packet-events/:packetId',
+        component: PacketEventsDataComponent,
+        outlet: 'projectDetails'
       }
     ],
     data: {
@@ -130,28 +159,8 @@ const hyperiotRoutes: Routes = [
   },
   {
     path: 'dashboards',
-    component: DashboardsListComponent,
+    component: DashboardComponent,
     canActivate: [LoggedInGuard],
-    data: {
-      showToolBar: true,
-    }
-  },
-  {
-    path: 'dashboards/:dashboardId',
-    component: DashboardViewComponent,
-    canActivate: [LoggedInGuard],
-    children: [
-      {
-        path: 'widgets',
-        component: AddWidgetDialogComponent,
-        outlet: 'modal'
-      },
-      {
-        path: 'settings/:widgetId',
-        component: WidgetSettingsDialogComponent,
-        outlet: 'modal'
-      }
-    ],
     data: {
       showToolBar: true,
     }

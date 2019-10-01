@@ -8,7 +8,7 @@ import { PacketSelectComponent } from '../packet-select/packet-select.component'
 @Component({
     selector: 'hyt-time-chart-settings',
     templateUrl: './time-chart-settings.component.html',
-    styleUrls: ['../common.css', './time-chart-settings.component.css'],
+    styleUrls: ['./time-chart-settings.component.css'],
     viewProviders: [{ provide: ControlContainer, useExisting: NgForm }]
 })
 export class TimeChartSettingsComponent implements OnInit, OnDestroy {
@@ -51,7 +51,7 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
         });
     }
     ngOnDestroy() {
-        this.modalApply.unsubscribe();
+        // this.modalApply.unsubscribe();
     }
 
     onSelectedFieldsChange(fields) {

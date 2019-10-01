@@ -7,7 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { MatIconModule } from '@angular/material/icon';
-import { MatCardModule, MatButtonModule, MatRadioModule, MatProgressSpinnerModule } from '@angular/material';
+import { MatCardModule, MatButtonModule, MatRadioModule, MatProgressSpinnerModule, MatProgressBarModule } from '@angular/material';
 
 import { DevicesStepComponent } from './project-wizard/devices-step/devices-step.component';
 import { EventsStepComponent } from './project-wizard/events-step/events-step.component';
@@ -20,7 +20,6 @@ import { RuleDefinitionComponent } from './project-wizard/rule-definition/rule-d
 
 import { ProjectCardComponent } from './project-card/project-card.component';
 import { ProjectDetailComponent } from './project-detail/project-detail.component';
-import { ProjectDetailEntity } from './project-detail/project-detail-entity';
 import { ProjectDataComponent } from './project-detail/project-data/project-data.component';
 import { DeviceDataComponent } from './project-detail/device-data/device-data.component';
 import { PacketDataComponent } from './project-detail/packet-data/packet-data.component';
@@ -30,6 +29,16 @@ import { EventMailComponent } from './project-wizard/events-step/event-mail/even
 import { MatChipsModule } from '@angular/material/chips';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
+import { AssetCategoryComponent } from './project-wizard/asset-category/asset-category.component';
+import { AssetTagComponent } from './project-wizard/asset-tag/asset-tag.component';
+import { SelectableTextComponent } from './project-wizard/events-step/event-mail/selectable-text/selectable-text.component';
+import { PacketFieldsDataComponent } from './project-detail/packet-fields-data/packet-fields-data.component';
+import { PacketEnrichmentsDataComponent } from './project-detail/packet-enrichments-data/packet-enrichments-data.component';
+import { PacketStatisticsDataComponent } from './project-detail/packet-statistics-data/packet-statistics-data.component';
+import { PacketEventsDataComponent } from './project-detail/packet-events-data/packet-events-data.component';
+import { PacketSelectComponent } from './project-wizard/fields-step/packet-select/packet-select.component';
+import { PacketFieldComponent } from './project-wizard/fields-step/packet-field/packet-field.component';
+import { FieldTipColumnComponent } from './project-wizard/fields-step/field-tip-column/field-tip-column.component';
 @NgModule({
   declarations: [
     ProjectsComponent,
@@ -47,7 +56,18 @@ import { MatInputModule } from '@angular/material/input';
     ProjectDataComponent,
     DeviceDataComponent,
     PacketDataComponent,
-    EventMailComponent
+    EventMailComponent,
+    AssetCategoryComponent,
+    AssetTagComponent,
+    SelectableTextComponent,
+    PacketFieldsDataComponent,
+    PacketEnrichmentsDataComponent,
+    PacketStatisticsDataComponent,
+    PacketEventsDataComponent,
+    SelectableTextComponent,
+    PacketSelectComponent,
+    PacketFieldComponent,
+    FieldTipColumnComponent
   ],
   imports: [
     MatIconModule,
@@ -55,6 +75,7 @@ import { MatInputModule } from '@angular/material/input';
     MatCardModule,
     MatRadioModule,
     MatProgressSpinnerModule,
+    MatProgressBarModule,
     CommonModule,
     HyperiotComponentsModule,
     FormsModule,

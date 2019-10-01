@@ -6,7 +6,7 @@ import { Subject } from 'rxjs';
 @Component({
   selector: 'hyt-stats-chart-settings',
   templateUrl: './stats-chart-settings.component.html',
-  styleUrls: ['../common.css', './stats-chart-settings.component.css'],
+  styleUrls: ['./stats-chart-settings.component.css'],
   viewProviders: [ { provide: ControlContainer, useExisting: NgForm } ]
 })
 export class StatsChartSettingsComponent implements OnInit, OnDestroy {
@@ -39,7 +39,7 @@ export class StatsChartSettingsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.modalApply.unsubscribe();
+    // this.modalApply.unsubscribe();
   }
 
   apply() {

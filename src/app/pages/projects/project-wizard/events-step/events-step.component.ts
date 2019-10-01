@@ -7,6 +7,7 @@ import { HYTError } from 'src/app/services/errorHandler/models/models';
 import { Option } from '@hyperiot/components/lib/hyt-radio-button/hyt-radio-button.component';
 import { SelectOption } from '@hyperiot/components';
 import { PageStatusEnum } from '../model/pageStatusEnum';
+import { EventMailComponent } from './event-mail/event-mail.component';
 
 @Component({
   selector: 'hyt-events-step',
@@ -26,6 +27,7 @@ export class EventsStepComponent implements OnInit, OnChanges {
   packetsOptions: SelectOption[] = [];
 
   @ViewChild('eventDef', { static: false }) ruleDefinitionComponent: RuleDefinitionComponent;
+  @ViewChild('eventMail', { static: false }) EventMailComponent: EventMailComponent;
 
   hPacketsforDevice: HPacket[] = [];
 
@@ -43,7 +45,7 @@ export class EventsStepComponent implements OnInit, OnChanges {
   errors: HYTError[] = [];
 
   outputOptions: Option[] = [
-    { value: JSON.stringify({ "actionName": "events.SendMailAction", "ruleId": 0, "recipients": null, "ccRecipients": null, "subject": null, "body": null }), label: 'SEND MAIL', checked: true }
+    { value: 'SendMailAction', label: 'SEND MAIL', checked: true }
     // { value: '', label: 'START STATISTIC' }
   ]
 
@@ -56,7 +58,7 @@ export class EventsStepComponent implements OnInit, OnChanges {
   ngOnInit() {
     this.eventsForm = this.fb.group({});
     this.rulesService.findAllRuleActions('EVENT').subscribe(
-      res => { }//TO DO //this.outputOptions = res
+      res => { }//TODO //this.outputOptions = res
     )
   }
 
@@ -84,8 +86,20 @@ export class EventsStepComponent implements OnInit, OnChanges {
 
     this.errors = [];
 
-    var jActions = [this.eventsForm.value['eventOutput'].value];
-    var jActionStr: string = JSON.stringify(jActions);
+    var jActionStr: string = '';
+
+    if (this.eventsForm.value['eventOutput'] == 'SendMailAction') {
+      let mail = this.EventMailComponent.buildMail();
+      let act = {
+        actionName: 'events.SendMailAction',
+        recipients: mail.mailRecipient,
+        ccRecipients: mail.mailCC,
+        subject: mail.mailObject,
+        body: mail.mailBody
+      }
+      var jActions = [JSON.stringify(act)];
+      jActionStr = JSON.stringify(jActions);
+    }
 
     let rule: Rule = {
       name: this.eventsForm.value['rule-name'],
@@ -106,7 +120,7 @@ export class EventsStepComponent implements OnInit, OnChanges {
       },
       err => {
         this.pageStatus = PageStatusEnum.Error;
-        this.errors = this.errorHandler.handleCreateRuleEnrichment(err);
+        this.errors = this.errorHandler.handleCreateRule(err);
         this.errors.forEach(e => {
           if (e.container != 'general')
             this.eventsForm.get(e.container).setErrors({
@@ -127,7 +141,8 @@ export class EventsStepComponent implements OnInit, OnChanges {
       this.eventsForm.get('eventDevice').invalid ||
       this.eventsForm.get('eventPacket').invalid ||
       this.eventsForm.get('eventOutput').invalid ||
-      this.ruleDefinitionComponent.isInvalid()
+      this.ruleDefinitionComponent.isInvalid() ||
+      this.EventMailComponent.isInvalid()
     )
   }
 

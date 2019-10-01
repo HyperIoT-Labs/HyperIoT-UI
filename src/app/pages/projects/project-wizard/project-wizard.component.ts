@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Injectable } from '@angular/core';
+import { Component, OnInit, ViewChild, Injectable, ViewEncapsulation } from '@angular/core';
 import { HProject, HDevice, HPacket, Rule } from '@hyperiot/core';
 import { Router, CanDeactivate } from '@angular/router';
 import { Subject } from 'rxjs';
@@ -8,8 +8,12 @@ import { Subject } from 'rxjs';
 })
 export class ProjectWizardCanDeactivate implements CanDeactivate<ProjectWizardComponent>{
   canDeactivate(com: ProjectWizardComponent) {
-    com.deactivateModal = true;
-    return com.canDeactivate$;
+    if (com.hProject == null || com.finishOpen)
+      return true;
+    else {
+      com.deactivateModal = true;
+      return com.canDeactivate$;
+    }
   }
 }
 

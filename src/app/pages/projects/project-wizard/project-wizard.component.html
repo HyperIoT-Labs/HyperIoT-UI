@@ -1,9 +1,14 @@
 <div id="container-project-wizard">
-  <!-- <div class=row>
-    <div class="col-md-10">breadcrumb/to/project-wizard</div>
-    <div class="col-md-2">ADD</div>
-  </div> -->
-  <div class=row>
+
+  <div class="header d-flex flex-row justify-content-stretch">
+    
+    <div class="breadcrumb flex-grow-1">
+      <span class="hyt-icon icon-hyt_projectSolo"></span> <a [routerLink]="['/']">Home</a> > <strong>Projects Wizard</strong> 
+    </div>
+
+  </div>
+  
+  <div id="container-steps" class="row">
 
     <ng-template #projectTemplate>
       <hyt-project-step (projectOutput)="updateProject($event)">
@@ -34,7 +39,7 @@
 
     <ng-template #enrichmentTemplate>
       <hyt-enrichment-step [hProject]="hProject" [hDevices]="hDevices" [hPackets]="hPackets"
-        (rulesOutput)="updateRules($event)"></hyt-enrichment-step>
+        (rulesOutput)="updateRules($event)" (hPacketsOutput)="updatePackets($event)"></hyt-enrichment-step>
       <hyt-button (clickFn)="stepper.previous()">Back</hyt-button>
       <hyt-button (clickFn)="stepper.next()">Next</hyt-button>
     </ng-template>
@@ -53,7 +58,7 @@
     </ng-template>
 
 
-    <hyt-stepper #stepper [isLinear]="false" style="width: 100%"
+    <hyt-stepper #stepper [isLinear]="true" style="width: 100%"
       [stepArray]="[ projectTemplate, devicesTemplate, packetsTemplate, fieldsTemplate, enrichmentTemplate, statisticsTemplate, eventsTemplate ]"
       [labelArray]="[ 'Projects', 'Devices', 'Packets', 'Fields', 'Enrichment', 'Statistics', 'Events' ]"
       [completedArray]="[ projectValidated, devicesValidated, packetsValidated, fieldsValidated, enrichmentValidated, statisticsValidated, eventsValidated ]">
@@ -120,7 +125,7 @@
         </div>
         <div class="row">
           <div class="col-md-12">
-            You have finished configuring your firt project
+            You have finished configuring your project
             <div class="row">
               <div class="col-md-6">
                 <table id="tableSummary">
@@ -180,7 +185,7 @@
               <div class="col-md-3">
                 <img src="assets/projects/icons/monitor.png" (click)="goToProjectWizard()">
                 <br>
-                <b>New Project</b>
+                <b>Go To Project List</b>
                 <br>
                 Morbi tincidunt eget augue vitae iaculis. Mauris sed sapien fringilla, scelerisque urna consectetur,
                 aliquam

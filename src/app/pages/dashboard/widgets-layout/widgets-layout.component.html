@@ -1,8 +1,42 @@
-<gridster [options]="options">
-    <gridster-item [item]="item" *ngFor="let item of dashboard">
+<!-- <div class="row">
+
+    <div id="dashbaord-changes-unsaved-label" class="col-12">
+      <span class="hyt-icon icon-hyt_warnC"></span>
+      <span>You have unsaved changes. Save them.</span>
+    </div>
+
+</div> -->
+
+<gridster 
+  [options]="options"
+>
+
+  <gridster-item 
+    [item]="item" 
+    *ngFor="let item of dashboard"
+  >
+
       <hyt-dynamic-widget
         [widget]="item"
         (widgetAction)="onWidgetAction($event)"
-        ></hyt-dynamic-widget>
-    </gridster-item>
+      ></hyt-dynamic-widget>
+
+  </gridster-item>
+
 </gridster>
+
+<div *ngIf="dashboard.length == 0" id="no-widgets-container" class="row align-items-center justify-content-center">
+
+  <div class="mt-5 no-widgets">
+
+    <div class="col-md-12">
+      <i class="fa fa-bar-chart-o"></i>
+      <h3 id="title-no-widgets">You have not widgets in this dashboard.</h3>
+      <h4 id="subtitle-no-widgets">Start adding widgets.</h4>
+    </div>
+
+  </div>
+
+</div>
+
+<hyt-widget-settings-dialog  id="hyt-modal-widget-setting" (modalClose)="onWidgetSettingClose($event)" [widgetId]="currentWidgetIdSetting"></hyt-widget-settings-dialog>
