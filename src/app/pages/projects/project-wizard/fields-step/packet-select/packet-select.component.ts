@@ -21,7 +21,9 @@ export class PacketSelectComponent implements OnInit, OnChanges {
   selectForm: FormGroup;
 
   devicesOptions: SelectOption[] = [];
+  devicesLastLength: number = 0; //TODO <- update onchange device/packets logic
   packetsOptions: SelectOption[] = [];
+  packetsLastLength: number = 0; //TODO <- update onchange device/packets logic
 
   constructor(
     private fb: FormBuilder,
@@ -32,7 +34,9 @@ export class PacketSelectComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
-    if (this.devicesOptions.length != this.hDevices.length || this.packetsOptions.length != this.hPackets.length) {//TODO <- update onchange device/packets logic
+    if (this.devicesLastLength != this.hDevices.length || this.packetsLastLength != this.hPackets.length) {//TODO <- update onchange device/packets logic
+      this.devicesLastLength = this.hDevices.length;
+      this.packetsLastLength = this.hPackets.length;
       if (this.selectForm)
         this.selectForm.reset();
       this.devicesOptions = [];
