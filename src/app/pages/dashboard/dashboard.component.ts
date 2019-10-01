@@ -120,9 +120,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
       error => {
         this.pageStatus = PageStatus.Error;
       }
+
     )
-
-
 
   }
 

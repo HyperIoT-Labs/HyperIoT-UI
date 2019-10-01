@@ -1,23 +1,79 @@
 import { AppPage } from './app.po';
-import { browser, logging } from 'protractor';
+import { browser, logging, element, by } from 'protractor';
 
-describe('workspace-project App', () => {
+describe('Authentication Page', () => {
   let page: AppPage;
 
-  beforeEach(() => {
+  // beforeAll(() => {
+    
+
+  //   browser.driver.manage().window().maximize();
+  //   browser.waitForAngularEnabled(false);
+  //   browser.sleep(500);
+
+  //   page.navigateTo();
+  // });
+
+  beforeEach(()=>{
     page = new AppPage();
+    // page.editUserName.clear();
+    // page.editPwd.clear();
   });
 
-  it('should display welcome message', () => {
+  it('should display the authentication page', () => {
     page.navigateTo();
-    expect(page.getTitleText()).toEqual('Welcome to hyperiot!');
+    expect(browser.getCurrentUrl()).toContain('/auth/login');
+    browser.sleep(1000);
   });
 
-  afterEach(async () => {
-    // Assert that there are no errors emitted from the browser
-    const logs = await browser.manage().logs().get(logging.Type.BROWSER);
-    expect(logs).not.toContain(jasmine.objectContaining({
-      level: logging.Level.SEVERE,
-    } as logging.Entry));
+  it('should render the login button as disabled(greyed out) with empty fields', () => {
+    page.navigateTo();
+    expect(page.loginButton.getAttribute('disabled')).toBe('true');
+    browser.sleep(1000);
   });
+
+  // it('should redirect you to the authentication page if you are not logged in while trying to access to another url', () => {
+  //   page.goToAnotherPage().then();
+  //   expect(browser.getCurrentUrl());
+  // });
+
+  it('should perform an incorrect login procedure and show an error message', () => {
+    page.enterUserName('ciao');
+    browser.sleep(500);
+    page.enterPwd('mondo');
+    browser.sleep(2000);
+    //expect(page.loginButton.getAttribute('ng-reflect-is-disabled')).toBe('false');
+    browser.sleep(500);
+    page.getLoginBtn().click();
+    browser.sleep(2000);
+    expect(element(by.className('errorMessage')).getText()).toContain('Error executing your request');
+    browser.sleep(1000);
+    page.editUserName.clear();
+    browser.sleep(500);
+    page.editPwd.clear();
+    browser.sleep(500);
+  });
+
+  it('should set credentials to storage if "Remember me" is selected', () => {
+    page.enterUserName('mirko');
+    browser.sleep(500);
+    page.enterPwd('Hotrovato1lavoro!');
+    browser.sleep(500);
+    page.rememberMe.click();
+    browser.sleep(1000);
+    page.getLoginBtn().click();
+    browser.sleep(500);
+    var storedCredentials = browser.executeScript("return window.localStorage.getItem('userInfo');");
+    browser.sleep(1000);
+    expect(storedCredentials).toContain('mirko');
+  });
+
+  // afterEach(async () => {
+  //   // Assert that there are no errors emitted from the browser
+  //   const logs = await browser.manage().logs().get(logging.Type.BROWSER);
+  //   expect(logs).not.toContain(jasmine.objectContaining({
+  //     level: logging.Level.SEVERE,
+  //   } as logging.Entry));
+  // });
+
 });

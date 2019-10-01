@@ -48,16 +48,15 @@
                 <hyt-button 
                     id="save-btn"
                     (clickFn)="onSaveClick()" 
-                    [isDisabled]="currentEntity && (!currentEntity.isValid() || !currentEntity.isDirty())"
-                >
+                    [isDisabled]="currentEntity && (!currentEntity.isValid() || !currentEntity.isDirty())">
                     <mat-icon class="md-primary">save</mat-icon>
                     <span>Save</span>
                 </hyt-button>
 
                 <hyt-button 
+                    [ngClass]="{hidden: currentEntity && currentEntity.hideDelete}"
                     id="delete-btn"
-                    (clickFn)="onDeleteClick()"
-                >
+                    (clickFn)="onDeleteClick()">
                     <mat-icon>delete</mat-icon>
                     <span>Delete</span>
                 </hyt-button>
