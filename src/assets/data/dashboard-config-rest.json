@@ -21,7 +21,7 @@
     },
     {
       "id": 6,
-      "widgetConf": "{\n    \"cols\": 4,\n    \"rows\": 2,\n    \"y\": 3,\n    \"x\": 0,\n    \"type\": \"events-log\",\n    \"config\": {\n        \"maxLogLines\": 100\n    }\n}"
+      "widgetConf": "{\n    \"cols\": 4,\n    \"rows\": 2,\n    \"y\": 3,\n    \"x\": 0,\n    \"type\": \"events-logxxx\",\n    \"config\": {\n        \"maxLogLines\": 100\n    }\n}"
     },
     {
       "id": 7,

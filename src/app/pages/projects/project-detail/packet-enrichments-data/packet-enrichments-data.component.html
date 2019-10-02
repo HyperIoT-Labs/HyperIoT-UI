@@ -1,3 +1,5 @@
 <h2 id="title-encrichments">Enrichments</h2>
 
-<hyt-enrichment-step></hyt-enrichment-step>
+<hyt-enrichment-step [hProject]="project" [hDevices]="deviceList" [hPackets]="packetList"></hyt-enrichment-step>
+
+<hyt-packet-enrichments-list *ngIf="packet" [packet]="packet"></hyt-packet-enrichments-list>

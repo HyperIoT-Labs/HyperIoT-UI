@@ -21,10 +21,16 @@ import { WidgetSettingsDialogComponent } from '../widget-settings-dialog/widget-
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
+enum PageStatus {
+  Loading = 0,
+  Standard = 1,
+  New = 2,
+  Error = -1
+}
 @Component({
   selector: 'hyt-widgets-layout',
   templateUrl: './widgets-layout.component.html',
-  styleUrls: ['./widgets-layout.component.css']
+  styleUrls: ['./widgets-layout.component.scss']
 })
 export class WidgetsLayoutComponent implements OnInit, OnDestroy {
   @ViewChild(GridsterComponent, { static: true }) gridster: GridsterComponent;
@@ -34,12 +40,15 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
 
   dashboard: Array<GridsterItem>;
   dashboardEntity: Dashboard;
+  dashboardType: Dashboard.DashboardTypeEnum;
   dragEnabled = true;
   private originalDashboard: Array<GridsterItem>;
   cellSize: number;
   projectId: number;
 
   currentWidgetIdSetting;
+
+  pageStatus: PageStatus = PageStatus.Loading;
 
   /** Subject for manage the open subscriptions */
   protected ngUnsubscribe: Subject<void> = new Subject<void>();
@@ -136,6 +145,7 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
     .subscribe(
       (d) => {
         this.dashboardEntity = d;
+        this.dashboardType = this.dashboardEntity.dashboardType
         this.projectId = this.dashboardEntity.hproject.id;
         // connect to data upstream
         this.dataStreamService.connect(this.projectId);
@@ -143,7 +153,13 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
         this.configService.getConfig(this.projectId, this.dashboardId).pipe(takeUntil(this.ngUnsubscribe)).subscribe((dashboardConfig: Array<GridsterItem>) => {
           this.dashboard = dashboardConfig;
           this.originalDashboard = JSON.parse(JSON.stringify(dashboardConfig));
+          this.pageStatus = PageStatus.Standard;
         });
+        
+      },
+      error => {
+        console.log(error);
+        this.pageStatus = PageStatus.Error;
       }
     );
   }

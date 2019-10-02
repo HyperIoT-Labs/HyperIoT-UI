@@ -10,7 +10,7 @@ import {
 @Component({
   selector: 'hyt-dynamic-widget',
   templateUrl: './dynamic-widget.component.html',
-  styleUrls: ['./dynamic-widget.component.css'],
+  styleUrls: ['./dynamic-widget.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class DynamicWidgetComponent implements OnInit {
