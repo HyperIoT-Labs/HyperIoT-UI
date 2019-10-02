@@ -36,9 +36,14 @@ import { PacketFieldsDataComponent } from './project-detail/packet-fields-data/p
 import { PacketEnrichmentsDataComponent } from './project-detail/packet-enrichments-data/packet-enrichments-data.component';
 import { PacketStatisticsDataComponent } from './project-detail/packet-statistics-data/packet-statistics-data.component';
 import { PacketEventsDataComponent } from './project-detail/packet-events-data/packet-events-data.component';
-import { PacketSelectComponent } from './project-wizard/fields-step/packet-select/packet-select.component';
+import { PacketSelectComponent } from './project-wizard/packet-select/packet-select.component';
 import { PacketFieldComponent } from './project-wizard/fields-step/packet-field/packet-field.component';
 import { FieldTipColumnComponent } from './project-wizard/fields-step/field-tip-column/field-tip-column.component';
+import { PacketEnrichmentComponent } from './project-wizard/enrichment-step/packet-enrichment/packet-enrichment.component';
+import { EnrichmentTipColumnComponent } from './project-wizard/enrichment-step/enrichment-tip-column/enrichment-tip-column.component';
+import { EventTipColumnComponent } from './project-wizard/events-step/event-tip-column/event-tip-column.component';
+import { PacketEventComponent } from './project-wizard/events-step/packet-event/packet-event.component';
+
 @NgModule({
   declarations: [
     ProjectsComponent,
@@ -67,7 +72,11 @@ import { FieldTipColumnComponent } from './project-wizard/fields-step/field-tip-
     SelectableTextComponent,
     PacketSelectComponent,
     PacketFieldComponent,
-    FieldTipColumnComponent
+    FieldTipColumnComponent,
+    PacketEnrichmentComponent,
+    EnrichmentTipColumnComponent,
+    EventTipColumnComponent,
+    PacketEventComponent
   ],
   imports: [
     MatIconModule,

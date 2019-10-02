@@ -2,71 +2,23 @@
 
   <div class="col-md-10">
 
-    <form class="enrichment-form" [formGroup]="enrichmentForm" autocomplete="on">
+    <div class="row">
 
-      <div class="row">
-        <div class="col-md-4 container-form-field">
-          <hyt-input-text [form]="enrichmentForm" formControlName="rule-name" name="rule-name" [isRequired]="true"
-            placeholder="HYT_ruleName" [injectedErrorMsg]="getError('rule-name')">
-          </hyt-input-text>
-        </div> <!-- Field Name -->
-        <div class="col-md-4 container-form-field">
-          <hyt-select [form]="enrichmentForm" [options]="enrichmentRules" (changeFn)="enrichmentTypeChanged($event)"
-            formControlName="enrichmentRule" name="enrichmentRule" [isRequired]="true" label="HYT_enrichmentRule">
-          </hyt-select>
-        </div> <!-- Field RuleType -->
-        <div class="col-md-4 container-form-field">
-          <hyt-text-area [form]="enrichmentForm" formControlName="rule-description" name="rule-description"
-            placeholder="HYT_description">
-          </hyt-text-area>
-        </div> <!-- Field RuleDescription -->
+      <div class="col-md-12">
+
+        <hyt-packet-select [hDevices]="hDevices" [hPackets]="hPackets" (currentPacket)="packetChanged($event)">
+        </hyt-packet-select>
+
       </div>
 
-      <div class="row">
-        <div class="col-md-6 container-form-field">
-          <hyt-select [form]="enrichmentForm" [options]="devicesOptions" (changeFn)="deviceChanged($event)"
-            formControlName="enrichmentDevice" name="enrichmentDevice" [isRequired]="true" label="HYT_device">
-          </hyt-select>
-        </div> <!-- Field Device -->
-        <div class="col-md-6 container-form-field">
-          <hyt-select [form]="enrichmentForm" [options]="packetsOptions" (changeFn)="packetChanged($event)"
-            formControlName="enrichmentPacket" name="enrichmentPacket" [isRequired]="true" label="HYT_packet"
-            [disabled]="false">
-          </hyt-select>
-        </div> <!-- Field Packet -->
+      <div class="col-md-12">
+
+        <hyt-packet-enrichment [hProject]="hProject" [hPackets]="hPackets" [currentPacket]="currentPacket"
+          (hPacketsOutput)="packetsOutputChanged($event)" (rulesOutput)="rulesChanged($event)">
+        </hyt-packet-enrichment>
       </div>
 
-      <div class="row">
-        <div class="col-md-12 container-form-field">
-          <hyt-rule-definition *ngIf="currentPacket" #ruleDef [hPacket]="currentPacket">
-          </hyt-rule-definition>
-        </div> <!-- Field RuleDefinition -->
-      </div>
-
-      <div *ngIf="enrichmentType=='AddTagRuleAction'" class="row">
-        <div class="col-md-12 center">
-          <hyt-asset-tag [project]="hProject" [packet]="currentPacket" (tagIds)="updateAssetTag($event)">
-          </hyt-asset-tag>
-        </div>
-      </div>
-
-      <div *ngIf="enrichmentType=='AddCategoryRuleAction'" class="row">
-        <hyt-asset-category [project]="hProject" [packet]="currentPacket" (categoryIds)="updateAssetCategory($event)">
-        </hyt-asset-category>
-      </div>
-
-      <div class="container-form-field errorMessage">
-        <ng-container *ngIf="getError('general')">
-          {{getError('general')}}
-        </ng-container>
-      </div> <!-- Error Box -->
-
-      <hyt-button id="rule-form-submit-button" [isDisabled]="invalid() || pageStatus == PageStatus.Loading"
-        (clickFn)="createRule()" type="submit">
-        Add Rule
-      </hyt-button>
-
-    </form>
+    </div>
 
   </div>
 
