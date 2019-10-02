@@ -43,6 +43,7 @@ import { EnrichmentTipColumnComponent } from './project-wizard/enrichment-step/e
 import { EventTipColumnComponent } from './project-wizard/events-step/event-tip-column/event-tip-column.component';
 import { PacketEventComponent } from './project-wizard/events-step/packet-event/packet-event.component';
 import { PacketEnrichmentsService } from '../../services/packet-enrichments.service';
+import { PacketEnrichmentsListComponent } from './project-detail/packet-enrichments-list/packet-enrichments-list.component';
 
 @NgModule({
   declarations: [
