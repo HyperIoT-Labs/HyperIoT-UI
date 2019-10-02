@@ -11,7 +11,8 @@ import { Subscription } from 'rxjs';
 export class PacketEnrichmentsListComponent implements OnInit, OnDestroy {
   @Input() packet: HPacket;
 
-  private rules: Rule[];
+  rules: Rule[];
+
   private ruleServiceSubscription: Subscription;
 
   constructor(
