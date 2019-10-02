@@ -19,6 +19,7 @@ export class DashboardViewComponent implements OnInit {
   dashboardLayout: WidgetsLayoutComponent;
   
   @Input() dashboardId: string;
+  @Input() dashboardType: any;
 
   bool: boolean = false;
 
