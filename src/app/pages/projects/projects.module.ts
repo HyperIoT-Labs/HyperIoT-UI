@@ -76,7 +76,7 @@ import { PacketEnrichmentsService } from '../../services/packet-enrichments.serv
     PacketEnrichmentComponent,
     EnrichmentTipColumnComponent,
     EventTipColumnComponent,
-    PacketEventComponent
+    PacketEventComponent,
     PacketEnrichmentsListComponent
   ],
   imports: [
