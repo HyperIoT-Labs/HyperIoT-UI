@@ -17,7 +17,13 @@
         "dataUrl": "assets/data/test.widget-stats.2.json",
         "dataTableUrl": "assets/data/test.widget-stats.2-table.json",
         "config": {
-            "data": []
+            "data": [],
+            "layout": {
+                "font": {
+                    "family": "Exo",
+                    "color": "magenta"
+                }
+            }
         }
     },
     {
@@ -57,7 +63,13 @@
         "dataUrl": "assets/data/test.widget-stats.3.json",
         "dataTableUrl": "assets/data/test.widget-stats.3-table.json",
         "config": {
-            "data": []
+            "data": [],
+            "layout": {
+                "font": {
+                    "family": "Exo",
+                    "color": "magenta"
+                }
+            }
         }
     },
     {

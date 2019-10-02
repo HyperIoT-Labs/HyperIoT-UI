@@ -24,7 +24,7 @@ import { takeUntil } from 'rxjs/operators';
 @Component({
   selector: 'hyt-widgets-layout',
   templateUrl: './widgets-layout.component.html',
-  styleUrls: ['./widgets-layout.component.css']
+  styleUrls: ['./widgets-layout.component.scss']
 })
 export class WidgetsLayoutComponent implements OnInit, OnDestroy {
   @ViewChild(GridsterComponent, { static: true }) gridster: GridsterComponent;
