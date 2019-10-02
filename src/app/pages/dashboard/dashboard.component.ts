@@ -56,6 +56,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   currentDashboard: Dashboard;
 
+  currentDashboardType: Dashboard.DashboardTypeEnum;
+
   constructor(
     private dashboardConfigService: DashboardConfigService,
     private route: Router,
@@ -67,66 +69,66 @@ export class DashboardComponent implements OnInit, OnDestroy {
   ngOnInit() {
 
     this.dashboardConfigService.getProjectsList()
-    .pipe(takeUntil(this.ngUnsubscribe))
-    .subscribe(
-      res => {
-        // console.log(res)
-        try {
-          this.hProjectList = [...res];
-          this.hProjectListOptions = <HytSelectOption[]>this.hProjectList;
-          this.hProjectListOptions.forEach(element => {
-            element.label = element.name;
-            element.value = element.id;
-          });
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        res => {
+          // console.log(res)
+          try {
+            this.hProjectList = [...res];
+            this.hProjectListOptions = <HytSelectOption[]>this.hProjectList;
+            this.hProjectListOptions.forEach(element => {
+              element.label = element.name;
+              element.value = element.id;
+            });
 
-          this.hProjectListOptions.sort(function(a, b){
-            if(a.entityModifyDate > b.entityModifyDate) { return -1; }
-            if(a.entityModifyDate < b.entityModifyDate) { return 1; }
-            return 0;
-          })
+            this.hProjectListOptions.sort(function (a, b) {
+              if (a.entityModifyDate > b.entityModifyDate) { return -1; }
+              if (a.entityModifyDate < b.entityModifyDate) { return 1; }
+              return 0;
+            })
 
-          // console.log(this.hProjectListOptions)
+            // console.log(this.hProjectListOptions)
 
-          if(this.hProjectListOptions.length > 0) {
-            this.idProjectSelected = this.hProjectListOptions[0].id;
+            if (this.hProjectListOptions.length > 0) {
+              this.idProjectSelected = this.hProjectListOptions[0].id;
 
-            this.dashboardConfigService.getRealtimeDashboardFromProject(this.idProjectSelected)
-            .pipe(takeUntil(this.ngUnsubscribe))
-            .subscribe(
-              res => {
-                try {
-                  // console.log(res)
-                  this.currentDashboard = res;
-                  // console.log("first dashboard", this.currentDashboard)
-                  this.currentDashboardId = this.currentDashboard[0].id;
-                  this.pageStatus = PageStatus.Standard;
-                } catch (error) {
-                  this.pageStatus = PageStatus.New;
-                }
-              },
-              error => {
-                this.pageStatus = PageStatus.New;
-              }
-            )
-          } else {
-            this.pageStatus = PageStatus.New;
+              this.dashboardConfigService.getRealtimeDashboardFromProject(this.idProjectSelected)
+                .pipe(takeUntil(this.ngUnsubscribe))
+                .subscribe(
+                  res => {
+                    try {
+                      // console.log(res)
+                      this.currentDashboard = res;
+                      // console.log("first dashboard: ", this.currentDashboard)
+                      this.currentDashboardId = this.currentDashboard[0].id;
+                      this.pageStatus = PageStatus.Standard;
+                    } catch (error) {
+                      this.pageStatus = PageStatus.New;
+                    }
+                  },
+                  error => {
+                    this.pageStatus = PageStatus.New;
+                  }
+                )
+            } else {
+              this.pageStatus = PageStatus.New;
+            }
+
+          } catch (error) {
+            this.pageStatus = PageStatus.Error;
           }
 
-        } catch (error) {
+        },
+        error => {
           this.pageStatus = PageStatus.Error;
         }
 
-      },
-      error => {
-        this.pageStatus = PageStatus.Error;
-      }
-
-    )
+      )
 
   }
 
   ngOnDestroy() {
-    if(this.ngUnsubscribe) {
+    if (this.ngUnsubscribe) {
       this.ngUnsubscribe.next();
     }
   }
@@ -137,24 +139,24 @@ export class DashboardComponent implements OnInit, OnDestroy {
     // console.log("project id selected", event.value)
 
     this.dashboardConfigService.getRealtimeDashboardFromProject(event.value)
-    .pipe(takeUntil(this.ngUnsubscribe))
-    .subscribe(
-      res=>{
-        try {
-          // console.log("on change select", res)
-          this.currentDashboard = res;
-          this.currentDashboardId = this.currentDashboard[0].id;
-          // console.log("dashboard id selected", this.currentDashboardId)
-          this.pageStatus = PageStatus.Standard;
-        } catch (error) {
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        res => {
+          try {
+            // console.log("on change select", res)
+            this.currentDashboard = res;
+            this.currentDashboardId = this.currentDashboard[0].id;
+            // console.log("dashboard id selected", this.currentDashboardId)
+            this.pageStatus = PageStatus.Standard;
+          } catch (error) {
+            this.pageStatus = PageStatus.New;
+          }
+
+        },
+        error => {
           this.pageStatus = PageStatus.New;
         }
-
-      },
-      error => {
-        this.pageStatus = PageStatus.New;
-      }
-    )
+      )
 
     // try {
     //   this.currentDashboardId = this.dashboardList.find(x => (x.hproject.id == event.value)).id;
@@ -167,8 +169,40 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   }
 
-  changeSignalState(event){
-    this.signalIsOn = !this.signalIsOn;
+  changeSignalState(event) {
+    if (this.signalIsOn) {
+      this.signalIsOn = !this.signalIsOn;
+      this.pageStatus = PageStatus.Loading;
+      this.dashboardConfigService.getOfflineDashboardFromProject(this.idProjectSelected).subscribe(
+        res => {
+          this.currentDashboard = res;
+          this.currentDashboardId = this.currentDashboard[0].id;
+          this.pageStatus = PageStatus.Standard;
+        },
+        error => {
+          this.pageStatus = PageStatus.New;
+        }
+      );
+    } else {
+      this.signalIsOn = !this.signalIsOn;
+      this.pageStatus = PageStatus.Loading;
+      this.dashboardConfigService.getRealtimeDashboardFromProject(this.idProjectSelected)
+        .pipe(takeUntil(this.ngUnsubscribe))
+        .subscribe(
+          res => {
+            try {
+              this.currentDashboard = res;
+              this.currentDashboardId = this.currentDashboard[0].id;
+              this.pageStatus = PageStatus.Standard;
+            } catch (error) {
+              this.pageStatus = PageStatus.New;
+            }
+          },
+          error => {
+            this.pageStatus = PageStatus.New;
+          }
+        );
+    }
   }
 
   changeStreamState(event) {
@@ -188,7 +222,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   closeModal(id: string) {
-      this.hytModalService.close(id);
+    this.hytModalService.close(id);
   }
 
   /******************************************************************************************************************************* Not used */
@@ -209,68 +243,68 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   getAllDashboardAndProjects() {
     this.dashboardConfigService.getAllDashboardsAndProjects()
-    .pipe(takeUntil(this.ngUnsubscribe))
-    .subscribe(
-      ([res1, res2]) => {
-        try {
-          this.hProjectList = [...res1];
-          this.hProjectListOptions = <HytSelectOption[]>this.hProjectList;
-          this.hProjectListOptions.forEach(element => {
-            element.label = element.name;
-            element.value = element.id;
-          });
-        } catch (error) {
-          this.pageStatus = PageStatus.Error;
-        }
-
-        try {
-          this.dashboardList = [...res2];
-        } catch (error) { }
-
-      },
-      error => {
-        this.pageStatus = PageStatus.Error;
-      },
-      ()=> {
-
-        this.hProjectListOptions.sort(function(a, b){
-          if(a.entityModifyDate > b.entityModifyDate) { return -1; }
-          if(a.entityModifyDate < b.entityModifyDate) { return 1; }
-          return 0;
-        })
-        // console.log(this.hProjectListOptions)
-
-        this.dashboardList.sort(function(a, b){
-          if(a.entityModifyDate > b.entityModifyDate) { return -1; }
-          if(a.entityModifyDate < b.entityModifyDate) { return 1; }
-          return 0;
-        })
-
-        // console.log(this.dashboardList)
-
-        if(this.dashboardList.length > 0 && this.hProjectListOptions.length > 0) {
-          
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        ([res1, res2]) => {
           try {
-            this.idProjectSelected = this.hProjectListOptions.find(x=>(x.id == this.dashboardList[0].hproject.id)).value;
-            this.currentDashboardId = this.dashboardList[0].id;
+            this.hProjectList = [...res1];
+            this.hProjectListOptions = <HytSelectOption[]>this.hProjectList;
+            this.hProjectListOptions.forEach(element => {
+              element.label = element.name;
+              element.value = element.id;
+            });
           } catch (error) {
-            
+            this.pageStatus = PageStatus.Error;
           }
-          this.pageStatus = PageStatus.Standard;
-          // console.log(this.idProjectSelected)
 
-        } else if (this.dashboardList.length == 0 && this.hProjectListOptions.length > 0) {
-          
-          this.idProjectSelected = this.hProjectListOptions[0].value;
-          this.currentDashboardId = this.idProjectSelected[0].id;
+          try {
+            this.dashboardList = [...res2];
+          } catch (error) { }
 
-          this.pageStatus = PageStatus.New;
-        } else {
+        },
+        error => {
           this.pageStatus = PageStatus.Error;
+        },
+        () => {
+
+          this.hProjectListOptions.sort(function (a, b) {
+            if (a.entityModifyDate > b.entityModifyDate) { return -1; }
+            if (a.entityModifyDate < b.entityModifyDate) { return 1; }
+            return 0;
+          })
+          // console.log(this.hProjectListOptions)
+
+          this.dashboardList.sort(function (a, b) {
+            if (a.entityModifyDate > b.entityModifyDate) { return -1; }
+            if (a.entityModifyDate < b.entityModifyDate) { return 1; }
+            return 0;
+          })
+
+          // console.log(this.dashboardList)
+
+          if (this.dashboardList.length > 0 && this.hProjectListOptions.length > 0) {
+
+            try {
+              this.idProjectSelected = this.hProjectListOptions.find(x => (x.id == this.dashboardList[0].hproject.id)).value;
+              this.currentDashboardId = this.dashboardList[0].id;
+            } catch (error) {
+
+            }
+            this.pageStatus = PageStatus.Standard;
+            // console.log(this.idProjectSelected)
+
+          } else if (this.dashboardList.length == 0 && this.hProjectListOptions.length > 0) {
+
+            this.idProjectSelected = this.hProjectListOptions[0].value;
+            this.currentDashboardId = this.idProjectSelected[0].id;
+
+            this.pageStatus = PageStatus.New;
+          } else {
+            this.pageStatus = PageStatus.Error;
+          }
+
         }
-        
-      }
-    )
+      )
   }
 
 }
