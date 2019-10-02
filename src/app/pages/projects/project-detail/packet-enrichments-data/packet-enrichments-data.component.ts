@@ -3,10 +3,10 @@ import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 
 import { Subscription } from 'rxjs';
 
-import { HpacketsService, HPacket, HDevice, HProject, HdevicesService } from '@hyperiot/core';
+import { HpacketsService, HPacket, HDevice, HProject, HdevicesService, Rule } from '@hyperiot/core';
 import { FormBuilder } from '@angular/forms';
 import { ProjectDetailEntity } from '../project-detail-entity';
-import { EnrichmentStepComponent } from '../../project-wizard/enrichment-step/enrichment-step.component';
+import { PacketEnrichmentComponent } from '../../project-wizard/enrichment-step/packet-enrichment/packet-enrichment.component';
 
 @Component({
   selector: 'hyt-packet-enrichments-data',
@@ -14,14 +14,17 @@ import { EnrichmentStepComponent } from '../../project-wizard/enrichment-step/en
   styleUrls: ['./packet-enrichments-data.component.scss']
 })
 export class PacketEnrichmentsDataComponent extends ProjectDetailEntity implements OnDestroy, AfterViewInit {
-  @ViewChild(EnrichmentStepComponent, {static: true}) enrichmentComponent: EnrichmentStepComponent;
+  @ViewChild(PacketEnrichmentComponent, {static: true}) enrichmentComponent: PacketEnrichmentComponent;
   private routerSubscription: Subscription;
+  private activatedRouteSubscription: Subscription;
   private packetId: number;
 
   packet: HPacket;
   packetList: HPacket[] = [];
   deviceList: HDevice[] = [];
   project: HProject = {} as HProject;
+
+  editMode = false;
 
   constructor(
     formBuilder: FormBuilder,
@@ -36,17 +39,12 @@ export class PacketEnrichmentsDataComponent extends ProjectDetailEntity implemen
     this.routerSubscription = this.router.events.subscribe((rl) => {
       if (rl instanceof NavigationEnd) {
         this.packetId = +(activatedRoute.snapshot.params.packetId);
-        // TODO: load data
-        this.hPacketService.findHPacket(this.packetId).subscribe((p: HPacket) => {
-          this.packet = p;
-          this.project = p.device.project;
-          this.hDeviceService.findAllHDeviceByProjectId(this.project.id)
-            .subscribe((dl: HDevice[]) => this.deviceList = dl);
-          // TODO: data for temporary bound field [hPackets] that will be removed
-          this.hPacketService.findAllHPacketByProjectId(this.project.id)
-            .subscribe((pl: HPacket[]) => this.packetList = pl);
-        });
+        this.loadData();
       }
+    });
+    this.activatedRouteSubscription = this.activatedRoute.params.subscribe(routeParams => {
+      this.packetId = +(activatedRoute.snapshot.params.packetId);
+      this.loadData();
     });
   }
 
@@ -60,7 +58,25 @@ export class PacketEnrichmentsDataComponent extends ProjectDetailEntity implemen
   }
 
   ngOnDestroy() {
+    this.activatedRouteSubscription.unsubscribe();
     this.routerSubscription.unsubscribe();
   }
 
+  onAddClick() {
+    this.editMode = true;
+  }
+
+  loadData() {
+    this.hPacketService.findHPacket(this.packetId).subscribe((p: HPacket) => {
+      this.packet = p;
+      this.project = p.device.project;
+      this.hDeviceService.findAllHDeviceByProjectId(this.project.id)
+        .subscribe((dl: HDevice[]) => this.deviceList = dl);
+      // TODO: data for temporary bound field [hPackets] that will be removed
+      this.hPacketService.findAllHPacketByProjectId(this.project.id)
+        .subscribe((pl: HPacket[]) => this.packetList = pl);
+      this.resetForm();
+      this.treeView().focus({id: p.id, type: 'packet-enrichments'});
+    });
+  }
 }

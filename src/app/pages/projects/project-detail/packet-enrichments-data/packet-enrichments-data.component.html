@@ -1,5 +1,14 @@
 <h2 id="title-encrichments">Enrichments</h2>
 
-<hyt-enrichment-step [hProject]="project" [hDevices]="deviceList" [hPackets]="packetList"></hyt-enrichment-step>
+<div *ngIf="!editMode" class="d-flex flex-column align-items-center justify-content-center">
+    <hyt-button (clickFn)="onAddClick($event)">
+        <mat-icon>add</mat-icon>
+        <span>Add enrichment</span>
+    </hyt-button>
+</div>
 
-<hyt-packet-enrichments-list *ngIf="packet" [packet]="packet"></hyt-packet-enrichments-list>
+<hyt-packet-enrichment
+    *ngIf="editMode"
+    [hProject]="project"
+    [hPackets]="packetList"
+    [currentPacket]="packet"></hyt-packet-enrichment>

@@ -1,0 +1,49 @@
+:host {
+    display: block;
+    max-width: 200px;
+    font-size: 10px;
+    margin-top: 48px;
+}
+header {
+    height: 32px;
+    line-height: 32px;
+    vertical-align: middle;
+    background: black;
+    border-right: solid 1px black;
+    color: white;
+    font-weight: 800;
+    font-size: 140%;
+    text-transform: uppercase;
+    padding-left: 12px;
+    padding-right: 12px;
+}
+.flex-row {
+    border-right: solid 1px gray;
+    border-bottom: solid 1px gray;
+}
+.item:hover {
+    cursor: pointer;
+    background: rgba(150, 150, 150, 0.240710);
+}
+.icon {
+    width: 32px;
+    height: 32px;
+    background: gray;
+    color: white;
+}
+.row-content {
+    height: 32px;
+}
+.row-fields {
+    padding-left: 8px;
+    padding-right: 8px;
+}
+.field-name {
+    font-weight: 600;
+}
+.truncate {
+    width: 152px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
