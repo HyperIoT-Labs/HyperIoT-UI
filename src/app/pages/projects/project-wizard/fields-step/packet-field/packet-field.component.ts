@@ -78,7 +78,7 @@ export class PacketFieldComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
-    if (this.currentPacket.id && !this.packetFieldService.checkPacket(this.currentPacket)) {
+    if (this.currentPacket && this.currentPacket.id && !this.packetFieldService.checkPacket(this.currentPacket)) {
       this.packetFieldService.setPacket(this.currentPacket);
       this.packetFieldService.treeFields$.subscribe(
         res => {
@@ -129,6 +129,10 @@ export class PacketFieldComponent implements OnInit, OnChanges {
     this.hPacketService.addHPacketField(this.currentPacket.id, field).subscribe(
       res => {
         this.packetFieldService.getTreeFields();
+        for (let i = 0; i < this.hPackets.length; i++)
+          if (this.hPackets[i].id == res.id)
+            this.hPackets[i] = res;
+        this.hPacketsOutput.emit(this.hPackets);
       },
       err => {
         this.pageStatus = PageStatusEnum.Error;
@@ -165,6 +169,10 @@ export class PacketFieldComponent implements OnInit, OnChanges {
 
     this.hPacketService.updateHPacketField(this.currentPacket.id, field).subscribe(
       res => {
+        for (let i = 0; i < this.hPackets.length; i++)
+          if (this.hPackets[i].id == res.id)
+            this.hPackets[i] = res;
+        this.hPacketsOutput.emit(this.hPackets);
         this.packetFieldService.getTreeFields();
       },
       err => {
@@ -218,6 +226,10 @@ export class PacketFieldComponent implements OnInit, OnChanges {
   deleteField() {
     this.hPacketService.deleteHPacketField(this.currentPacket.id, this.deleteFieldId).subscribe(
       res => {
+        for (let i = 0; i < this.hPackets.length; i++)
+          if (this.hPackets[i].id == res.id)
+            this.hPackets[i] = res;
+        this.hPacketsOutput.emit(this.hPackets);
         this.packetFieldService.getTreeFields();
       },
       err => { }

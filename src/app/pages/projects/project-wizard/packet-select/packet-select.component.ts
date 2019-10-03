@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { SelectOption } from '@hyperiot/components';
-import { HDevice, HPacket } from '@hyperiot/core';
+import { HDevice, HPacket, HpacketsService } from '@hyperiot/core';
 
 @Component({
   selector: 'hyt-packet-select',
@@ -27,6 +27,7 @@ export class PacketSelectComponent implements OnInit, OnChanges {
 
   constructor(
     private fb: FormBuilder,
+    private hPacketService: HpacketsService
   ) { }
 
   ngOnInit() {
@@ -49,12 +50,15 @@ export class PacketSelectComponent implements OnInit, OnChanges {
 
   deviceChanged(event) {
     this.packetsOptions = [];
+    this.currentPacket.emit(null);
     this.currentDevice = this.hDevices.find(x => x.id == event.value);
     this.hPackets.filter(p => p.device.id == this.currentDevice.id).forEach(p => this.packetsOptions.push({ value: p.id.toString(), label: p.name }));
   }
 
   packetChanged(event) {
-    this.currentPacket.emit(this.hPackets.find(x => x.id == event.value));
+    this.hPacketService.findHPacket(event.value).subscribe(
+      res => this.currentPacket.emit(res)
+    )
   }
 
 }
