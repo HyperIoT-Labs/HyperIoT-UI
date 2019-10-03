@@ -42,7 +42,6 @@ import { PacketEnrichmentComponent } from './project-wizard/enrichment-step/pack
 import { EnrichmentTipColumnComponent } from './project-wizard/enrichment-step/enrichment-tip-column/enrichment-tip-column.component';
 import { EventTipColumnComponent } from './project-wizard/events-step/event-tip-column/event-tip-column.component';
 import { PacketEventComponent } from './project-wizard/events-step/packet-event/packet-event.component';
-import { PacketEnrichmentsService } from '../../services/packet-enrichments.service';
 import { PacketEnrichmentsListComponent } from './project-detail/packet-enrichments-list/packet-enrichments-list.component';
 
 @NgModule({
@@ -95,9 +94,6 @@ import { PacketEnrichmentsListComponent } from './project-detail/packet-enrichme
     MatChipsModule,
     MatAutocompleteModule,
     MatInputModule
-  ],
-  providers: [
-    PacketEnrichmentsService
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA

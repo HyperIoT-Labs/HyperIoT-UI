@@ -1,9 +1,9 @@
-import { Component, OnDestroy, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnDestroy, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 
 import { Subscription } from 'rxjs';
 
-import { HpacketsService, HPacket, HDevice, HProject, HdevicesService, Rule } from '@hyperiot/core';
+import { HpacketsService, HPacket, HDevice, HProject, Rule } from '@hyperiot/core';
 import { FormBuilder } from '@angular/forms';
 import { ProjectDetailEntity } from '../project-detail-entity';
 import { PacketEnrichmentComponent } from '../../project-wizard/enrichment-step/packet-enrichment/packet-enrichment.component';
@@ -13,7 +13,7 @@ import { PacketEnrichmentComponent } from '../../project-wizard/enrichment-step/
   templateUrl: './packet-enrichments-data.component.html',
   styleUrls: ['./packet-enrichments-data.component.scss']
 })
-export class PacketEnrichmentsDataComponent extends ProjectDetailEntity implements OnDestroy, AfterViewInit {
+export class PacketEnrichmentsDataComponent extends ProjectDetailEntity implements OnDestroy {
   @ViewChild(PacketEnrichmentComponent, {static: true}) enrichmentComponent: PacketEnrichmentComponent;
   private routerSubscription: Subscription;
   private activatedRouteSubscription: Subscription;
@@ -21,7 +21,6 @@ export class PacketEnrichmentsDataComponent extends ProjectDetailEntity implemen
 
   packet: HPacket;
   packetList: HPacket[] = [];
-  deviceList: HDevice[] = [];
   project: HProject = {} as HProject;
 
   editMode = false;
@@ -30,7 +29,6 @@ export class PacketEnrichmentsDataComponent extends ProjectDetailEntity implemen
     formBuilder: FormBuilder,
     @ViewChild('form', { static: true }) formView: ElementRef,
     private hPacketService: HpacketsService,
-    private hDeviceService: HdevicesService,
     private activatedRoute: ActivatedRoute,
     private router: Router
   ) {
@@ -43,17 +41,9 @@ export class PacketEnrichmentsDataComponent extends ProjectDetailEntity implemen
       }
     });
     this.activatedRouteSubscription = this.activatedRoute.params.subscribe(routeParams => {
+      this.editMode = false;
       this.packetId = +(activatedRoute.snapshot.params.packetId);
       this.loadData();
-    });
-  }
-
-  ngAfterViewInit() {
-    // the following timeout is to prevent validatio check errors due to value changes
-    setTimeout(() => {
-      this.form.addControl('packetFieldComponent', this.enrichmentComponent.enrichmentForm);
-      this.enrichmentComponent.enrichmentForm.setParent(this.form);
-      this.resetForm();
     });
   }
 
@@ -64,18 +54,29 @@ export class PacketEnrichmentsDataComponent extends ProjectDetailEntity implemen
 
   onAddClick() {
     this.editMode = true;
+    //this.form.removeControl('packetFieldComponent');
+    //this.form.addControl('packetFieldComponent', this.enrichmentComponent.enrichmentForm);
+    //this.enrichmentComponent.enrichmentForm.setParent(this.form);
+    this.resetForm();
+  }
+
+  onRulesOutput(rule: Rule) {
+    console.log('rulesOutput', rule);
+    // refresh buond data
+    this.loadData();
   }
 
   loadData() {
     this.hPacketService.findHPacket(this.packetId).subscribe((p: HPacket) => {
-      this.packet = p;
       this.project = p.device.project;
-      this.hDeviceService.findAllHDeviceByProjectId(this.project.id)
-        .subscribe((dl: HDevice[]) => this.deviceList = dl);
+      //this.hDeviceService.findAllHDeviceByProjectId(this.project.id)
+      //  .subscribe((dl: HDevice[]) => this.deviceList = dl);
       // TODO: data for temporary bound field [hPackets] that will be removed
       this.hPacketService.findAllHPacketByProjectId(this.project.id)
-        .subscribe((pl: HPacket[]) => this.packetList = pl);
-      this.resetForm();
+        .subscribe((pl: HPacket[]) => {
+          this.packetList = pl;
+          this.packet = p;
+      });
       this.treeView().focus({id: p.id, type: 'packet-enrichments'});
     });
   }
