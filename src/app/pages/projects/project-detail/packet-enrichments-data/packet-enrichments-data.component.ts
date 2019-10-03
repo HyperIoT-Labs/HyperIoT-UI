@@ -43,6 +43,7 @@ export class PacketEnrichmentsDataComponent extends ProjectDetailEntity implemen
       }
     });
     this.activatedRouteSubscription = this.activatedRoute.params.subscribe(routeParams => {
+      this.editMode = false;
       this.packetId = +(activatedRoute.snapshot.params.packetId);
       this.loadData();
     });

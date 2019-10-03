@@ -270,7 +270,11 @@ export class ProjectDetailComponent implements OnInit {
     this.hintVisible = false;
   }
 
-  isEnrichmentsDataComponent(): boolean {
-    return this.currentEntity instanceof PacketEnrichmentsDataComponent && this.currentEntity.packet != null;
+  getEnrichmentsDataPacket(): HPacket {
+    let p: HPacket;
+    if (this.currentEntity instanceof PacketEnrichmentsDataComponent) {
+      p = this.currentEntity.packet;
+    }
+    return p;
   }
 }
