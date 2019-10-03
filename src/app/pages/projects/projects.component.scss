@@ -198,6 +198,102 @@
 
       }
 
+      #row-messages-area {
+        margin-bottom: 30px;
+        animation: showAnimatedDiv .2s ease-in-out;
+
+        .alert-box {
+          padding-top: 10px;
+          padding-bottom: 10px;
+          max-width: 95%;
+          margin-left: auto;
+          margin-right: auto;
+          border: .5px solid;
+          font-size: 1em;
+          
+          p {
+            // background: green;
+            width: 98%;
+            float: left;
+            margin-bottom: 0px;
+          }
+
+          &.alert-error {
+            border-color: red;
+            color: #b30e0e;
+            font-style: italic;
+
+            span {
+
+              &.cls-msg-area {
+
+                &.btn-error {
+                  
+                  &::before {
+                    content: 'X';
+                    float: right;
+                    border-radius: 50%;
+                    width: 22px;
+                    height: 22px;
+                    text-align: center;
+                    padding-top: 2px;
+                    font-size: .8em;
+                    cursor: pointer;
+                    background-color: #d63636;
+                    color: #fff;
+                  }
+  
+                  &:hover {
+                    &::before {
+                      background-color: #8e2121;
+                    }
+                  }
+                }
+
+              }
+
+            }
+
+          }
+
+          &.alert-success {
+            border-color: #2ca500;
+            color: #237904;
+            font-style: italic;
+
+            span {
+              &.cls-msg-area {
+                &.btn-success {
+
+                  &::before {
+                    content: 'X';
+                    float: right;
+                    border-radius: 50%;
+                    width: 22px;
+                    height: 22px;
+                    text-align: center;
+                    padding-top: 2px;
+                    font-size: .8em;
+                    cursor: pointer;
+                    background-color: #2ca500;
+                    color: #fff;
+                  }
+  
+                  &:hover {
+                    &::before {
+                      background-color: #237904;
+                    }
+                  }
+  
+                }
+              }
+            }
+          }
+
+        }
+
+      }
+
       #row-cotainer-cards {
 
         .single-card-container {
@@ -208,6 +304,22 @@
       
     }
 
+  }
+
+}
+
+@keyframes showAnimatedDiv {
+
+  0% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: .5;
+  }
+
+  100% {
+    opacity: 1;
   }
 
 }

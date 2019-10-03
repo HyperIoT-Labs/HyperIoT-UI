@@ -6,6 +6,7 @@ import { PageStatusEnum } from '../../model/pageStatusEnum';
 import { Option, SelectOption } from '@hyperiot/components';
 import { HYTError } from 'src/app/services/errorHandler/models/models';
 import { ProjectWizardHttpErrorHandlerService } from 'src/app/services/errorHandler/project-wizard-http-error-handler.service';
+import { PacketFieldService } from 'src/app/services/projectWizard/packet-field.service';
 
 enum FormStatusEnum {
   SelectAction = 0,
@@ -68,6 +69,7 @@ export class PacketFieldComponent implements OnInit, OnChanges {
   constructor(
     private fb: FormBuilder,
     private hPacketService: HpacketsService,
+    private packetFieldService: PacketFieldService,
     private errorHandler: ProjectWizardHttpErrorHandlerService
   ) { }
 
@@ -76,11 +78,18 @@ export class PacketFieldComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
-    if (this.currentPacket) {
-      this.packetTree = [...this.createPacketTree(this.currentPacket.fields)];
-      console.log(this.packetTree)
-      if (this.treeView)
-        this.treeView.refresh(this.packetTree, this.currentPacket.name);
+    if (this.currentPacket.id && !this.packetFieldService.checkPacket(this.currentPacket)) {
+      this.packetFieldService.setPacket(this.currentPacket);
+      this.packetFieldService.treeFields$.subscribe(
+        res => {
+          this.packetTree = [...this.createPacketTree(res)];
+          if (this.treeView)
+            this.treeView.refresh(this.packetTree, this.currentPacket.name);
+          this.resetForm('ADD');
+          this.pageStatus = PageStatusEnum.Submitted;
+        }
+      )
+      this.packetFieldService.getTreeFields();
     }
   }
 
@@ -99,45 +108,6 @@ export class PacketFieldComponent implements OnInit, OnChanges {
       });
     return node;
   }
-
-  // updatePacketView(fields: HPacketField[], id: number, hPacketField: HPacketField) {
-  //   fields.forEach(x => {
-  //     if (x.innerFields != null) {
-  //       if (x.id == id) {
-  //         x.innerFields.push(hPacketField);
-  //         return;
-  //       }
-  //       else {
-  //         return this.updatePacketView(x.innerFields, id, hPacketField);
-  //       }
-  //     }
-  //   })
-  // }
-
-  // updatePacketViewDelete(fields: HPacketField[], id: number) {
-  //   for (var i = 0; i < fields.length; i++) {
-  //     if (fields[i].id == id) {
-  //       fields.splice(i, 1);
-  //       return;
-  //     }
-  //     else if (fields[i].innerFields != null)
-  //       this.updatePacketViewDelete(fields[i].innerFields, id);
-  //   }
-  // }
-
-  // updatePacketViewUpdate(fields: HPacketField[], hPacketField: HPacketField) {
-  //   for (let i = 0; i < fields.length; i++) {
-  //     if (fields[i].id == hPacketField.id) {
-  //       fields[i].name = hPacketField.name;
-  //       fields[i].multiplicity = hPacketField.multiplicity;
-  //       fields[i].type = hPacketField.type;
-  //       fields[i].description = hPacketField.description;
-  //       console.log(fields[i]);
-  //     }
-  //     else if (fields[i].innerFields)
-  //       this.updatePacketViewUpdate(fields[i].innerFields, hPacketField)
-  //   }
-  // }
 
   createField() {
 
@@ -158,22 +128,7 @@ export class PacketFieldComponent implements OnInit, OnChanges {
 
     this.hPacketService.addHPacketField(this.currentPacket.id, field).subscribe(
       res => {
-        this.hPacketService.findHPacket(this.currentPacket.id).subscribe(
-          res => {
-            this.currentPacket = res;
-            for (let k = 0; k < this.hPackets.length; k++)
-              if (this.hPackets[k].id == this.currentPacket.id)
-                this.hPackets[k] = this.currentPacket;
-            this.ngOnChanges();
-            this.hPacketsOutput.emit(this.hPackets);
-            this.resetForm('ADD');
-            this.pageStatus = PageStatusEnum.Submitted;
-          }
-        )
-        // if (!field.parentField)
-        //   this.currentPacket.fields.push(res);
-        // else
-        //   this.updatePacketView(this.currentPacket.fields, field.parentField.id, res);
+        this.packetFieldService.getTreeFields();
       },
       err => {
         this.pageStatus = PageStatusEnum.Error;
@@ -208,28 +163,9 @@ export class PacketFieldComponent implements OnInit, OnChanges {
       description: this.fieldForm.value.fieldDescription
     }
 
-    console.log(field);
-
     this.hPacketService.updateHPacketField(this.currentPacket.id, field).subscribe(
       res => {
-        this.hPacketService.findHPacket(this.currentPacket.id).subscribe(
-          res => {
-            this.currentPacket = res;
-            for (let k = 0; k < this.hPackets.length; k++)
-              if (this.hPackets[k].id == this.currentPacket.id)
-                this.hPackets[k] = this.currentPacket;
-            this.ngOnChanges();
-            this.hPacketsOutput.emit(this.hPackets);
-            this.resetForm('ADD');
-            this.pageStatus = PageStatusEnum.Submitted;
-          }
-        )
-        // this.updatePacketViewUpdate(this.currentPacket.fields, field);
-        // console.log("ok")
-        // this.ngOnChanges();
-        // this.resetForm('ADD');
-        // this.hPacketsOutput.emit(this.hPackets);
-        // this.pageStatus = PageStatusEnum.Submitted;
+        this.packetFieldService.getTreeFields();
       },
       err => {
         this.pageStatus = PageStatusEnum.Error;
@@ -282,20 +218,7 @@ export class PacketFieldComponent implements OnInit, OnChanges {
   deleteField() {
     this.hPacketService.deleteHPacketField(this.currentPacket.id, this.deleteFieldId).subscribe(
       res => {
-        this.hPacketService.findHPacket(this.currentPacket.id).subscribe(
-          res => {
-            this.currentPacket = res;
-            for (let k = 0; k < this.hPackets.length; k++)
-              if (this.hPackets[k].id == this.currentPacket.id)
-                this.hPackets[k] = this.currentPacket;
-            this.ngOnChanges();
-            this.hPacketsOutput.emit(this.hPackets);
-            this.resetForm('ADD');
-            this.pageStatus = PageStatusEnum.Submitted;
-          }
-        )
-        //this.updatePacketViewDelete(this.currentPacket.fields, this.deleteFieldId);
-        // this.ngOnChanges();
+        this.packetFieldService.getTreeFields();
       },
       err => { }
     )

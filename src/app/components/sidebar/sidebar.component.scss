@@ -49,19 +49,33 @@
                     -webkit-box-shadow: -7px 0px 24px -4px #000;
                     box-shadow: -7px 0px 24px -4px #000;
                 }
+
+                &:hover {
+                    li {
+                        width: 250px;
+                        a {
+                            span {
+                                &.nav-text {
+                                    display: table-cell;
+                                }
+                            }
+                        }
+                    }
+                }
     
                 &.logout {
                     position:absolute;
-                    left:0;
-                    bottom:0;
+                    left: 0;
+                    bottom: 0;
                 }
             }
     
             li {
-                position:relative;
-                display:block;
-                width:250px;
+                position: relative;
+                display: block;
+                width: 59px; /* 250px */
                 border-bottom: 1px solid #e5e5e5;
+                transition: width 0.1s ease-in-out;
 
                 &:hover,
                 &.active {
@@ -124,12 +138,10 @@
                     .hyt-icon {
                         position: relative;
                         display: table-cell;
-                        width: 60px;
-                        height: 36px;
                         text-align: center;
                         vertical-align: middle;
                         font-size: 2em;
-                        padding: 12px 0px 12px 0px;
+                        padding: 12px 15px;
                     }
                   
                 }
@@ -151,6 +163,7 @@
                 display: table-cell;
                 vertical-align: middle;
                 width: 190px;
+                display: none;
             }
 
         }
