@@ -1,6 +1,5 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { HPacket, Rule } from '@hyperiot/core';
-import { PacketEnrichmentsService } from 'src/app/services/packet-enrichments.service';
+import { Component, Input, OnDestroy, OnInit, Output, EventEmitter } from '@angular/core';
+import { HPacket, Rule, RulesService } from '@hyperiot/core';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -8,26 +7,29 @@ import { Subscription } from 'rxjs';
   templateUrl: './packet-enrichments-list.component.html',
   styleUrls: ['./packet-enrichments-list.component.scss']
 })
-export class PacketEnrichmentsListComponent implements OnInit, OnDestroy {
-  @Input() packet: HPacket;
+export class PacketEnrichmentsListComponent {
+  @Output() ruleClick = new EventEmitter<Rule>();
+
+  private _packet: HPacket;
+  @Input()
+  set packet(packet: HPacket) {
+    this._packet = packet;
+    this.loadData();
+  }
 
   rules: Rule[];
 
-  private ruleServiceSubscription: Subscription;
-
   constructor(
-    private enrichmentsService: PacketEnrichmentsService
+    private rulesService: RulesService
   ) { }
 
-  ngOnInit() {
-    this.enrichmentsService.setPacket(this.packet.id);
-    this.ruleServiceSubscription = this.enrichmentsService.ruleList$.subscribe((ruleList: Rule[]) => {
-      this.rules = ruleList;
-    });
-    this.enrichmentsService.getRuleList();
+  onRuleClick(rule: Rule) {
+    this.ruleClick.emit(rule);
   }
 
-  ngOnDestroy() {
-    this.ruleServiceSubscription.unsubscribe();
+  loadData() {
+    this.rulesService.findAllRuleByPacketId(this._packet.id).subscribe((rules: Rule[]) => {
+      this.rules = rules;
+    });
   }
 }

@@ -50,6 +50,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   streamIsOn: boolean = true;
 
+  dataRecordingIsOn: boolean = true;
+
   idProjectSelected: number;
 
   currentDashboardId: number;
@@ -68,11 +70,18 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
+    // if(localStorage.getItem("DASHBOARDTOSAVE")){
+    //   let toSave = localStorage.getItem("DASHBOARDTOSAVE");
+    //   localStorage.removeItem("DASHBOARDTOSAVE");
+    //   let idToSave = toSave.split("_")[0];
+    //   toSave = JSON.parse(toSave);
+    //   this.dashboardConfigService.putConfig(+idToSave, toSave);
+    // }
+
     this.dashboardConfigService.getProjectsList()
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         res => {
-          // console.log(res)
           try {
             this.hProjectList = [...res];
             this.hProjectListOptions = <HytSelectOption[]>this.hProjectList;
@@ -87,8 +96,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
               return 0;
             })
 
-            // console.log(this.hProjectListOptions)
-
             if (this.hProjectListOptions.length > 0) {
               this.idProjectSelected = this.hProjectListOptions[0].id;
 
@@ -97,9 +104,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
                 .subscribe(
                   res => {
                     try {
-                      // console.log(res)
                       this.currentDashboard = res;
-                      // console.log("first dashboard: ", this.currentDashboard)
                       this.currentDashboardId = this.currentDashboard[0].id;
                       this.pageStatus = PageStatus.Standard;
                     } catch (error) {
@@ -136,17 +141,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
   onSelectChange(event) {
     this.pageStatus = PageStatus.Loading;
     this.idProjectSelected = event.value;
-    // console.log("project id selected", event.value)
 
     this.dashboardConfigService.getRealtimeDashboardFromProject(event.value)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         res => {
           try {
-            // console.log("on change select", res)
             this.currentDashboard = res;
             this.currentDashboardId = this.currentDashboard[0].id;
-            // console.log("dashboard id selected", this.currentDashboardId)
             this.pageStatus = PageStatus.Standard;
           } catch (error) {
             this.pageStatus = PageStatus.New;
@@ -158,22 +160,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
         }
       )
 
-    // try {
-    //   this.currentDashboardId = this.dashboardList.find(x => (x.hproject.id == event.value)).id;
-    //   this.pageStatus = PageStatus.Standard;
-    // } catch (error) {
-    //   this.createDashboard(event.value);
-    //   this.currentDashboardId = null;
-    //   this.pageStatus = PageStatus.New;
-    // }
-
   }
 
   changeSignalState(event) {
     if (this.signalIsOn) {
       this.signalIsOn = !this.signalIsOn;
       this.pageStatus = PageStatus.Loading;
-      this.dashboardConfigService.getOfflineDashboardFromProject(this.idProjectSelected).subscribe(
+      this.dashboardConfigService.getOfflineDashboardFromProject(this.idProjectSelected)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
         res => {
           this.currentDashboard = res;
           this.currentDashboardId = this.currentDashboard[0].id;
@@ -207,6 +202,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   changeStreamState(event) {
     this.streamIsOn = !this.streamIsOn;
+  }
+
+  changeRecordingState(event) {
+    this.dataRecordingIsOn = !this.dataRecordingIsOn;
   }
 
   saveDashboard() {

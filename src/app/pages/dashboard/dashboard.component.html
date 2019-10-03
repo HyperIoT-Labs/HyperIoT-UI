@@ -10,7 +10,17 @@
     
     <div id="container-dashboard" [ngSwitch]="pageStatus">
 
-        <div id="tools-dashboard-box" *ngIf="pageStatus == PageStatus.Standard || pageStatus == PageStatus.New">
+        <div id="row-recording" class="row">
+            <div class="col-12 recording {{(dataRecordingIsOn)?'on':'off'}}" (click)="changeRecordingState($event)">
+                <span id="icon-recording" class="{{(dataRecordingIsOn)?'recOn':'recOff'}}">
+                    <svg xmlns="http://www.w3.org/2000/svg" id="Capa_1" enable-background="new 0 0 515.556 515.556" height="512" viewBox="0 0 515.556 515.556" width="512"><path d="m257.778 0c-142.137 0-257.778 115.641-257.778 257.778s115.641 257.778 257.778 257.778 257.778-115.641 257.778-257.778-115.642-257.778-257.778-257.778zm0 451.111c-106.61 0-193.333-86.723-193.333-193.333s86.723-193.334 193.333-193.334 193.333 86.723 193.333 193.333-86.723 193.334-193.333 193.334z"/><path d="m257.778 128.889c-71.068 0-128.889 57.805-128.889 128.889s57.821 128.889 128.889 128.889 128.889-57.805 128.889-128.889-57.821-128.889-128.889-128.889z"/></svg>
+                </span>
+                {{(dataRecordingIsOn)?'Data recording on':'Data recording off'}}
+            </div>
+        </div>
+
+        <div class="row">
+        <div id="tools-dashboard-box" class="col-12" *ngIf="pageStatus != -1">
 
             <div class="row no-gutters">
 
@@ -26,10 +36,16 @@
                         <p>{{(streamIsOn)?'Play':'Pause'}}</p>
                     </div>
 
+                    <!-- <div id="recording-btn" (click)="changeRecordingState($event)">
+                        <span class="hyt-icon {{(dataRecordingIsOn)?'icon-hyt_reload recording':'icon-hyt_reload'}}"></span>
+                        <p>{{(dataRecordingIsOn)?'Data recording':'No data recording'}}</p>
+                    </div> -->
+
                 </div>
 
                 <div class="col-6 right-tools">
-                    <hyt-select [label]="'Select a project'" name="project" [options]="hProjectListOptions" [selected]="idProjectSelected" (changeFn)="onSelectChange($event)" [disabled]="false"></hyt-select>
+
+                    <hyt-select *ngIf="pageStatus == 1" [label]="'Select a project'" name="project" [options]="hProjectListOptions" [selected]="idProjectSelected" (changeFn)="onSelectChange($event)" [disabled]="false"></hyt-select>
 
                     <div id="add-widget-btn" *ngIf="pageStatus == PageStatus.Standard" (click)="openModal('hyt-modal-add-widgets')">
                         <!-- <a [routerLink]="[{outlets: { modal: [ 'widgets' ] }}]"> -->
@@ -38,14 +54,16 @@
                         <!-- </a> -->
                     </div>
 
-                    <div id="save-dashboard-btn" *ngIf="pageStatus == PageStatus.Standard" (click)="saveDashboard()">
+                    <!-- <div id="save-dashboard-btn" *ngIf="pageStatus == PageStatus.Standard" (click)="saveDashboard()">
                         <span class="hyt-icon icon-hyt_save"></span>
                         <p>Save</p>
-                    </div>
+                    </div> -->
+
                 </div>
 
             </div>
 
+        </div>
         </div>
 
         <div id="loadingStatus" *ngSwitchCase="PageStatus.Loading" class="row align-items-center justify-content-center">
@@ -59,10 +77,6 @@
 
             <div id="container-box-dashboard" class="col-12">
                 <hyt-dashboard-view [dashboardId]="currentDashboardId" [dashboardType]="currentDashboardType"></hyt-dashboard-view>
-
-                <!-- <hyt-widgets-layout [dashboardId]="currentDashboardId"></hyt-widgets-layout> -->
-
-                <!-- <router-outlet name="modal" (activate)="onActivate($event)"></router-outlet> -->
             </div>
 
         </div>
@@ -79,18 +93,6 @@
                 </div>
 
                 <hyt-dashboard-view [dashboardId]="currentDashboardId"></hyt-dashboard-view>
-
-                <!-- <hyt-button id="add-dashboard-btn" [routerLink]="[{outlets: { modal: [ 'widgets' ] }}]" (clickFn)="">
-                    Add widget
-                </hyt-button> -->
-
-                <!-- <div id="btn-no-dashboards" class="col-md-12">
-
-                    <hyt-button id="add-dashboard-btn" (clickFn)="openModalNewDashboard()">
-                        Create your first Dashboard
-                    </hyt-button>
-
-                </div> -->
 
             </div> <!-- End No Projects Row -->
 

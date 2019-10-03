@@ -112,7 +112,7 @@ export abstract class ProjectDetailEntity implements OnInit {
     treeView() {
         return {
             refresh: this.projectHost.refresh.bind(this.projectHost),
-            focus: (node: { id: any, type?: 'packet' | 'device' | 'project' | '' }) =>
+            focus: (node: { id: any, type?: 'packet-events' | 'packet-statistics' | 'packet-enrichments' | 'packet-fields' | 'packet' | 'device' | 'project' | '' }) =>
                 this.projectHost.focus(node),
             updateNode: (nodeData: { id: any, type?: string, name: string }) =>
                 this.projectHost && this.projectHost.updateNode(nodeData)
@@ -122,7 +122,7 @@ export abstract class ProjectDetailEntity implements OnInit {
     protected circularFix = (key: any, value: any) => {
         if (value instanceof MatRadioChange) {
             // TODO: maybe this should be fixed in HyperIoT components library (hyt-radio-button)
-            return value.value;
+            return value.value || value;
         }
         return value;
     }
