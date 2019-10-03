@@ -43,30 +43,6 @@ export class DashboardViewComponent implements OnInit {
     // );
   }
 
-  // onActivate(childComponent) {
-
-  //   console.log(childComponent)
-  //   if (childComponent instanceof AddWidgetDialogComponent) {
-  //     childComponent.addWidgets
-  //     .pipe(takeUntil(this.ngUnsubscribe))
-  //     .subscribe(
-  //       (widgets) => {this.onWidgetsAdd(widgets)}
-  //     );
-  //   } else if (childComponent instanceof WidgetSettingsDialogComponent) {
-  //     const widgetId = childComponent.getWidgetId();
-  //     const widget = this.dashboardLayout.getItemById(widgetId);
-  //     childComponent.setWidget(widget);
-  //   }
-
-  // }
-
-  // onDeactivate(event) {
-  //   console.log("deact",event)
-  //   if(this.ngUnsubscribe)
-  //     this.ngUnsubscribe.next();
-
-  // }
-
   saveDashboard() {
     this.dashboardLayout.saveDashboard();
   }
@@ -76,8 +52,4 @@ export class DashboardViewComponent implements OnInit {
       this.dashboardLayout.addItem(widget);
     });
   }
-
-  // navigateToAddWidget() {
-  //   this.router.navigate(["dashboards/",{outlets: { modal: [ 'widgets' ] }}]);
-  // }
 }

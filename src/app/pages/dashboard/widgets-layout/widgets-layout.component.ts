@@ -63,6 +63,12 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
   //   { breakPoint: 0, columns: 1,cell: 160},
   // ];
 
+  autoSaveTimeout;
+
+  changes: number = 0;
+
+  showSettingWidget: boolean = false
+
   private responsiveBreakPoints = [
     { breakPoint: 1611, columns: 6, cell: 250},
     { breakPoint: 1610, columns: 6, cell: 200},
@@ -158,17 +164,41 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
         
       },
       error => {
-        console.log(error);
+        console.error(error);
         this.pageStatus = PageStatus.Error;
       }
     );
+
+    // window.onbeforeunload = () => {
+    //   this.saveDashboard();
+    //   console.log("saviiiing")
+    //   // localStorage.setItem("DASHBOARDTOSAVE",this.dashboardId+"_"+JSON.stringify(this.dashboard))
+    // };
+
+    window.addEventListener('beforeunload', (e) => {
+      this.saveDashboard();
+    });
   }
 
   ngOnDestroy() {
+
+    if(this.autoSaveTimeout)
+      clearTimeout(this.autoSaveTimeout);
+
     if(this.ngUnsubscribe)
       this.ngUnsubscribe.next();
 
+    this.saveDashboard();
+
     this.dataStreamService.disconnect();
+  }
+
+  activeAutoSave() {
+    if(this.autoSaveTimeout)
+      clearTimeout(this.autoSaveTimeout);
+    this.autoSaveTimeout = setTimeout(() => {
+      this.saveDashboard();
+    }, 5000);
   }
 
   onToggleDragging() {
@@ -190,12 +220,11 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
     // const widget = this.getItemById(widgetId);
     // event.setWidget(widget);
     this.showSettingWidget = false;
-
-    if(this.ngUnsubscribe)
-      this.ngUnsubscribe.next();
+    this.changes++;
+    this.activeAutoSave()
+    // if(this.ngUnsubscribe)
+    //   this.ngUnsubscribe.next();
   }
-
-  showSettingWidget: boolean = false
 
   onWidgetAction(data) {
     switch (data.action) {
@@ -236,29 +265,47 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
       this.ngUnsubscribe.next();
   }
 
+  lastWindowSize: number;
+
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
     const columns = this.getResponsiveColumns();
     const cell = this.getResponsiveCellSize();
+    
+    // setInterval(()=>{
+    //   if(this.lastWindowSize != event.timeStamp) {
+    //     this.pageStatus = PageStatus.Loading;
+
+    //     if (columns !== this.options.maxCols || cell !== this.options.maxCellSize) {
+    //       console.log("a")
+    //       this.options.maxCols = columns;
+    //       if (this.options.maxCols > 1) {
+    //         this.options.mobileBreakpoint = 0;
+    //       }
+    //       this.options.api.optionsChanged();
+  
+    //     }
+    //     this.lastWindowSize = event.timeStamp;
+    //   } else {
+    //     this.pageStatus = PageStatus.Standard;
+    //   }
+    // }, 100)
+
 
     if (columns !== this.options.maxCols || cell !== this.options.maxCellSize) {
-      /*
+
       // TODO: Angular-Gridster2 won't apply maxCols option on change (bug??)
       this.options.maxCols = columns;
       if (this.options.maxCols > 1) {
         this.options.mobileBreakpoint = 0;
       }
       this.options.api.optionsChanged();
-      */
-      // the following is a work around for the above issue (forcing component reload)
-      let currentRouteUrl = this.router.url;
-      if (currentRouteUrl.indexOf('/(') > 0) {
-        currentRouteUrl = currentRouteUrl.substring(0, currentRouteUrl.indexOf('/('));
-      }
-      const parentRouteUrl = currentRouteUrl.substring(0, currentRouteUrl.lastIndexOf('/'));
-      this.router.navigateByUrl(
-        parentRouteUrl, { skipLocationChange: true }
-      ).then(() => this.router.navigate([currentRouteUrl]));
+
+      // this.pageStatus = PageStatus.Loading;
+      // setTimeout(()=> {
+      //   this.pageStatus = PageStatus.Standard;
+      // }, 100)
+      
     }
   }
 
@@ -269,6 +316,8 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
   }
 
   onItemChange(item, itemComponent) {
+    this.changes++;
+    this.activeAutoSave()
     if (typeof item.change === 'function') {
       item.change();
     }

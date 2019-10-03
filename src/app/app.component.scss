@@ -52,7 +52,7 @@ html {
     hyt-widget-settings-dialog {
       /* modals are hidden by default */
       display: none;
-  
+
       .hyt-modal {
         /* modal container fixed across whole screen */
         position: fixed;
@@ -60,6 +60,7 @@ html {
         right: 0;
         bottom: 0;
         left: 0;
+        opacity: 0;
   
         /* z-index must be higher than .hyt-modal-background */
         z-index: 999;
@@ -71,12 +72,24 @@ html {
           // padding: 20px;
           background: #fff;
           border-radius: 8px;
+          transform: scale(0.9);
+
+          -webkit-animation-name: modalTransform; /* Safari 4.0 - 8.0 */
+          -webkit-animation-duration: .4s; /* Safari 4.0 - 8.0 */
+          animation-name: modalTransform;
+          animation-duration: .4s cubic-bezier(.25, .8, .25, 1);
+
+          -webkit-animation-name: modalOpacityBody; /* Safari 4.0 - 8.0 */
+          -webkit-animation-duration: .4s; /* Safari 4.0 - 8.0 */
+          animation-name: modalOpacityBody;
+          animation-duration: .4s cubic-bezier(.25, .8, .25, 1);
   
           /* margin exposes part of the modal background */
           // margin: 40px;
         }
+
       }
-  
+
       .hyt-modal-background {
         /* modal background fixed across whole screen */
         position: fixed;
@@ -84,14 +97,57 @@ html {
         right: 0;
         bottom: 0;
         left: 0;
-  
+
         /* semi-transparent black  */
         background-color: #000;
-        opacity: 0.75;
-        
+        opacity: 0;
+
         /* z-index must be below .hyt-modal and above everything else  */
         z-index: 900;
+
+        -webkit-animation-name: modalOpacity; /* Safari 4.0 - 8.0 */
+        -webkit-animation-duration: .4s; /* Safari 4.0 - 8.0 */
+        animation-name: modalOpacity;
+        animation-duration: .4s cubic-bezier(.25, .8, .25, 1);
+        
       }
+
+      &.open {
+        display: block;
+
+        .hyt-modal {
+          opacity: 1;
+
+          .hyt-modal-body {
+            transform: scale(1);
+            // transition: transform 0.4s cubic-bezier(.25, .8, .25, 1);
+          }
+        }
+
+        .hyt-modal-background {
+          opacity: 0.75;
+          // transition: all 0.4s cubic-bezier(.25, .8, .25, 1);
+        }
+      }
+
+      &.close {
+        display: none;
+
+        .hyt-modal {
+          opacity: 0;
+
+          .hyt-modal-body {
+            transform: scale(0.9);
+            transition: transform 0.4s cubic-bezier(.25, .8, .25, 1);
+          }
+        }
+
+        .hyt-modal-background {
+          opacity: 0;
+          transition: all 0.4s cubic-bezier(.25, .8, .25, 1);
+        }
+      }
+
     }
   
     .hyt-modal-open {
@@ -123,4 +179,19 @@ html {
   
   }
 
+}
+
+@keyframes modalOpacity {
+  0% {opacity: 0}
+  100% {opacity: 0.75}
+}
+
+@keyframes modalOpacityBody {
+  0% {opacity: 0}
+  100% {opacity: 1}
+}
+
+@keyframes modalTransform {
+  0% {transform: scale(0.9)}
+  100% {transform: scale(1)}
 }
