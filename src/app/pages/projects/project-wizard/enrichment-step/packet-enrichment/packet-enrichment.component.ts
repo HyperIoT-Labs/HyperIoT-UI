@@ -1,7 +1,7 @@
-import { Component, OnInit, Input, OnChanges, ViewChild, Output, EventEmitter, ElementRef } from '@angular/core';
-import { HProject, HDevice, HPacket, Rule, RulesService, AssetstagsService, AssetTag, HpacketsService } from '@hyperiot/core';
-import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
-import { SelectOption, TreeNodeCategory } from '@hyperiot/components';
+import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
+import { HProject, HPacket, Rule, RulesService, HpacketsService } from '@hyperiot/core';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { SelectOption } from '@hyperiot/components';
 import { RuleDefinitionComponent } from '../../rule-definition/rule-definition.component';
 import { HYTError } from 'src/app/services/errorHandler/models/models';
 import { ProjectWizardHttpErrorHandlerService } from 'src/app/services/errorHandler/project-wizard-http-error-handler.service';

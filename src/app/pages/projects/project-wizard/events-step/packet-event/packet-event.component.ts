@@ -1,11 +1,10 @@
 import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { RulesService, HProject, HDevice, HPacket, Rule } from '@hyperiot/core';
+import { RulesService, HProject, HPacket, Rule } from '@hyperiot/core';
 import { ProjectWizardHttpErrorHandlerService } from 'src/app/services/errorHandler/project-wizard-http-error-handler.service';
 import { RuleDefinitionComponent } from '../../rule-definition/rule-definition.component';
 import { HYTError } from 'src/app/services/errorHandler/models/models';
 import { Option } from '@hyperiot/components/lib/hyt-radio-button/hyt-radio-button.component';
-import { SelectOption } from '@hyperiot/components';
 import { PageStatusEnum } from '../../model/pageStatusEnum';
 import { EventMailComponent } from '../event-mail/event-mail.component';
 
