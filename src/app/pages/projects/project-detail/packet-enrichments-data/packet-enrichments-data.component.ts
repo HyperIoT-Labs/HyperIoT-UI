@@ -56,6 +56,15 @@ export class PacketEnrichmentsDataComponent extends ProjectDetailEntity implemen
 
   onAddClick() {
     this.editMode = true;
+    //this.form.removeControl('packetFieldComponent');
+    //this.form.addControl('packetFieldComponent', this.enrichmentComponent.enrichmentForm);
+    //this.enrichmentComponent.enrichmentForm.setParent(this.form);
+    this.resetForm();
+  }
+
+  onRulesOutput(rule) {
+    console.log('rulesOutput', rule);
+    this.loadData();
   }
 
   loadData() {
@@ -67,10 +76,6 @@ export class PacketEnrichmentsDataComponent extends ProjectDetailEntity implemen
       // TODO: data for temporary bound field [hPackets] that will be removed
       this.hPacketService.findAllHPacketByProjectId(this.project.id)
         .subscribe((pl: HPacket[]) => this.packetList = pl);
-      this.form.removeControl('packetFieldComponent');
-      this.form.addControl('packetFieldComponent', this.enrichmentComponent.enrichmentForm);
-      this.enrichmentComponent.enrichmentForm.setParent(this.form);
-      this.resetForm();
       this.treeView().focus({id: p.id, type: 'packet-enrichments'});
     });
   }
