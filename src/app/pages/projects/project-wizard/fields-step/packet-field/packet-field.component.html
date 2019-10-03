@@ -3,7 +3,8 @@
   <div class="col-md-6">
 
     <hyt-tree-view-editable #treeView *ngIf="currentPacket" [deviceName]="currentPacket.name" [treeData]="packetTree"
-      (addFn)="addField($event)" (removeFn)="removeField($event)" (cancelFn)="cancelField()">
+      (addFn)="addField($event)" (removeFn)="removeField($event)" (editFn)="editField($event)"
+      (cancelFn)="cancelField()">
     </hyt-tree-view-editable>
 
     <div *ngIf="!currentPacket">
@@ -47,9 +48,14 @@
           </ng-container>
         </div> <!-- Error Box -->
 
-        <hyt-button id="field-form-submit-button" [isDisabled]="invalid() || pageStatus == PageStatus.Loading"
-          (clickFn)="createField()" type="submit">
+        <hyt-button *ngIf="submitType=='ADD'" id="field-form-submit-button"
+          [isDisabled]="invalid() || pageStatus == PageStatus.Loading" (clickFn)="createField()" type="submit">
           Save Field
+        </hyt-button>
+
+        <hyt-button *ngIf="submitType=='UPDATE'" id="field-form-submit-button-2"
+          [isDisabled]="invalid() || pageStatus == PageStatus.Loading" (clickFn)="updateField()" type="submit">
+          Update Field
         </hyt-button>
 
       </form>

@@ -33,13 +33,7 @@ export class PacketFieldsDataComponent extends ProjectDetailEntity implements On
     this.routerSubscription = this.router.events.subscribe((rl) => {
       if (rl instanceof NavigationEnd) {
         this.packetId = +(activatedRoute.snapshot.params.packetId);
-        // TODO: load data
-        this.hPacketService.findHPacket(this.packetId).subscribe((p: HPacket) => {
-          this.packet = p;
-          // TODO: data for temporary bound field [hPackets] that will be removed
-          this.hPacketService.findAllHPacketByProjectId(this.packet.device.project.id)
-            .subscribe((pl: HPacket[]) => this.packetList = pl);
-        });
+        this.loadData();
       }
     });
   }
@@ -50,12 +44,22 @@ export class PacketFieldsDataComponent extends ProjectDetailEntity implements On
       this.form.addControl('packetFieldComponent', this.packetFieldComponent.fieldForm);
       this.packetFieldComponent.fieldForm.setParent(this.form);
       this.resetForm();
-      console.log(this.form)
     });
   }
 
   ngOnDestroy() {
     this.routerSubscription.unsubscribe();
+  }
+
+  loadData() {
+    this.hPacketService.findHPacket(this.packetId).subscribe((p: HPacket) => {
+      this.packet = p;
+      // TODO: data for temporary bound field [hPackets] that will be removed
+      this.hPacketService.findAllHPacketByProjectId(this.packet.device.project.id)
+        .subscribe((pl: HPacket[]) => this.packetList = pl);
+      this.resetForm();
+      this.treeView().focus({id: p.id, type: 'packet-fields'});
+    });
   }
 
   packetsOutputChanged($event) {

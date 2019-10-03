@@ -26,6 +26,7 @@ import { PacketFieldsDataComponent } from '../pages/projects/project-detail/pack
 import { PacketEnrichmentsDataComponent } from '../pages/projects/project-detail/packet-enrichments-data/packet-enrichments-data.component';
 import { PacketStatisticsDataComponent } from '../pages/projects/project-detail/packet-statistics-data/packet-statistics-data.component';
 import { PacketEventsDataComponent } from '../pages/projects/project-detail/packet-events-data/packet-events-data.component';
+import { HomeComponent } from '../pages/home/home.component';
 
 @Injectable()
 export class LoggedInGuard implements CanActivate {
@@ -43,11 +44,19 @@ export class LoggedInGuard implements CanActivate {
 
 }
 
+// {
+//   path: '',
+//   redirectTo: 'dashboards',
+//   pathMatch: 'full'
+// }
+
 const hyperiotRoutes: Routes = [
   {
     path: '',
-    redirectTo: 'dashboards',
-    pathMatch: 'full'
+    component: HomeComponent,
+    data: {
+      showToolBar: true
+    }
   },
   {
     path: 'auth',

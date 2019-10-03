@@ -63,7 +63,7 @@
     },
     {
       "categoryId": 3,
-      "name": "Events log",
+      "name": "Events log CONFIG",
       "info": {
         "description": "This widget shows real time event stream data.",
         "preview": "/path/to/image/preview",

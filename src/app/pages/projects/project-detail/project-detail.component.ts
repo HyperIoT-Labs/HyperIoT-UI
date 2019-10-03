@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { Observable, zip, Observer } from 'rxjs';
 
-import { HprojectsService, HProject, HdevicesService, HDevice, HpacketsService, HPacket, HPacketField } from '@hyperiot/core';
+import { HprojectsService, HProject, HdevicesService, HDevice, HpacketsService, HPacket, HPacketField, Rule } from '@hyperiot/core';
 import { TreeDataNode } from '@hyperiot/components';
 
 import { HytTreeViewProjectComponent } from '@hyperiot/components/lib/hyt-tree-view-project/hyt-tree-view-project.component';
@@ -11,6 +11,7 @@ import { ProjectDetailEntity } from './project-detail-entity';
 import { MatDialog } from '@angular/material';
 import { SaveChangesDialogComponent } from 'src/app/components/dialogs/save-changes-dialog/save-changes-dialog.component';
 import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
+import { PacketEnrichmentsDataComponent } from './packet-enrichments-data/packet-enrichments-data.component';
 
 enum TreeStatusEnum {
   Ready,
@@ -76,6 +77,10 @@ export class ProjectDetailComponent implements OnInit {
 
   onDeleteClick() {
     this.openDeleteDialog();
+  }
+
+  onRuleClick(rule: Rule) {
+    console.log('clicked rule', rule);
   }
 
   refresh() {
@@ -232,7 +237,6 @@ export class ProjectDetailComponent implements OnInit {
             observer.next(true);
             observer.complete();
           }, (err) => {
-            console.log('###', err);
             observer.next(false);
             observer.complete();
           });
@@ -264,5 +268,13 @@ export class ProjectDetailComponent implements OnInit {
   }
   hideHintMessage() {
     this.hintVisible = false;
+  }
+
+  getEnrichmentsDataPacket(): HPacket {
+    let p: HPacket;
+    if (this.currentEntity instanceof PacketEnrichmentsDataComponent) {
+      p = this.currentEntity.packet;
+    }
+    return p;
   }
 }
