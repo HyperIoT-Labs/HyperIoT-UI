@@ -29,6 +29,10 @@ export class ProjectsComponent implements OnInit {
     { value: 'date-decreasing', label: 'Newest' }
   ];
 
+  displayMessageArea : boolean = false;
+  messageAreaText : string;
+  typeMessageArea : string;
+
   constructor(
     private router: Router,
     private hProjectService: HprojectsService,
@@ -89,10 +93,12 @@ export class ProjectsComponent implements OnInit {
   }
 
   onChangeInputSearch(event) {
-    this.search(this.filteringForm.value.textFilter)
+    this.displayMessageArea = false;
+    this.search(this.filteringForm.value.textFilter);
   }
 
   onChangeSelectSort(event) {
+    this.displayMessageArea = false;
     this.sortBy(event.value);
   }
 
@@ -148,4 +154,57 @@ export class ProjectsComponent implements OnInit {
   addProject() {
     this.router.navigate(['/project-wizard']);
   }
+
+  refreshViewOnDelete(event) {
+    this.displayMessageArea = false;
+
+    this.typeMessageArea = event.type; 
+    
+    if(this.typeMessageArea === 'error'){
+
+      this.displayMessageArea = true;
+      this.messageAreaText = event.value;
+
+      // setTimeout(() => {
+      //   this.hideMessageArea();
+      // }, 5000);
+      
+    } else {
+
+      this.displayMessageArea = false;
+      // setTimeout(() => {
+      //   this.hideMessageArea();
+      // }, 2000);
+      // Update Component
+      this.refreshComponent();
+    }
+    
+    
+  }
+
+  refreshComponent(){
+    this.filteringForm = this.fb.group({});
+
+    this.hProjectService.cardsView().subscribe(
+      res => {
+        this.hProjects = res;
+        this.pageStatus = (this.hProjects.length !==0)
+          ? PageStatus.Standard
+          : PageStatus.New
+
+        this.hProjectsFiltered = [...this.hProjects];
+        /* Default Sort */
+        this.sortBy('date-decreasing');
+      },
+      err => {
+        console.log(err);
+        this.pageStatus = PageStatus.Error;
+      }
+    );
+  }
+
+  hideMessageArea() {
+    this.displayMessageArea = false;
+  }
+
 }

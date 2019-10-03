@@ -25,7 +25,7 @@
 
     <div id="standardStatus" *ngSwitchCase="PageStatus.Standard" class="row">
       <!-- Standard -->
-
+      
       <div id="container-box-project" class="col-12">
         
       
@@ -56,9 +56,28 @@
 
         </div> <!-- End Row Title -->
 
+        <div *ngIf="displayMessageArea" id="row-messages-area" class="row">
+
+          <div 
+            class="col-12 alert-box"
+            [ngClass]="{'alert-error' : typeMessageArea == 'error', 'alert-success' : typeMessageArea == 'success'}"
+          > <!-- alert-error | alert-success -->
+            <p>{{ messageAreaText }}</p>
+
+            <span 
+              class="cls-msg-area"
+              [ngClass]="{'btn-error' : typeMessageArea == 'error', 'btn-success' : typeMessageArea == 'success'}"
+              (click)="hideMessageArea()"
+            >
+            </span>
+
+          </div>
+
+        </div> <!-- END DISPLAY MESSAGE AREA -->
+
         <div id="row-cotainer-cards" class="row">
 
-          <div *ngIf="noProjectsMatches" class="col-12">
+          <div *ngIf="hProjectsFiltered.length == 0" class="col-12">
             <span>No project found that matches the search...</span>
           </div>
 
@@ -69,6 +88,7 @@
           >
               
             <hyt-project-card 
+              (refreshView)='refreshViewOnDelete($event)'
               [project]="p"
               
             ></hyt-project-card> 
