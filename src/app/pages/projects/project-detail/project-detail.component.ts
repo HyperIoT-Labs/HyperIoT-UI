@@ -79,7 +79,7 @@ export class ProjectDetailComponent implements OnInit {
     this.openDeleteDialog();
   }
 
-  onRuleClick(rule: Rule) {
+  onSummaryItemClick(rule: Rule) {
     console.log('clicked rule', rule);
   }
 
@@ -247,6 +247,7 @@ export class ProjectDetailComponent implements OnInit {
       });
     });
   }
+  
   openDeleteDialog() {
     const dialogRef = this.dialog.open(DeleteConfirmDialogComponent, {
       data: {title: 'Delete item?', message: 'This operation cannot be undone.'}
@@ -270,11 +271,4 @@ export class ProjectDetailComponent implements OnInit {
     this.hintVisible = false;
   }
 
-  getEnrichmentsDataPacket(): HPacket {
-    let p: HPacket;
-    if (this.currentEntity instanceof PacketEnrichmentsDataComponent) {
-      p = this.currentEntity.packet;
-    }
-    return p;
-  }
 }

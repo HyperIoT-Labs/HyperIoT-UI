@@ -5,14 +5,10 @@ import { PasswordResetComponent } from '../pages/authentication/password-reset/p
 import { UserActivationComponent } from '../pages/authentication/user-activation/user-activation.component';
 import { Observable } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
-import { DashboardViewComponent } from '../pages/dashboard/dashboard-view/dashboard-view.component';
-import { AddWidgetDialogComponent } from '../pages/dashboard/add-widget-dialog/add-widget-dialog.component';
-import { WidgetSettingsDialogComponent } from '../pages/dashboard/widget-settings-dialog/widget-settings-dialog.component';
 import { NotFoundComponent } from '../pages/not-found/not-found.component';
 import { LoginComponent } from '../pages/authentication/login/login.component';
 import { RegistrationComponent } from '../pages/authentication/registration/registration.component';
 import { PasswordRecoveryComponent } from '../pages/authentication/password-recovery/password-recovery.component';
-import { DashboardsListComponent } from '../pages/dashboard/dashboards-list/dashboards-list.component';
 import { ProjectWizardComponent, ProjectWizardCanDeactivate } from '../pages/projects/project-wizard/project-wizard.component';
 import { ProjectsComponent } from '../pages/projects/projects.component';
 import { ProfileComponent } from '../pages/account/profile/profile.component';

@@ -26,7 +26,7 @@
         .dropbtn {
             background: none;
             color: #f9f9f9;
-            padding: 6px;
+            padding: 10px;
             border: none;
             cursor: pointer;
     
@@ -34,15 +34,18 @@
                 outline: none;
             }
 
+            &:hover {
+                span {
+                    &.hyt-icon.icon-hyt_userCircle {
+                        color: #95c4ff;
+                    }
+                }
+            }
+
             span {
                 
                 &.hyt-icon.icon-hyt_userCircle {
-                    font-size: 3em;
-
-                    &:hover {
-                        color: #7af9ff;
-                    }
-
+                    font-size: 2.4em;
                 }
 
             }

@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { ProjectDetailComponent } from './project-detail.component';
 import { MatRadioChange } from '@angular/material';
 import { ElementRef, ViewChild, OnInit } from '@angular/core';
+import { SummaryList } from './generic-summary-list/generic-summary-list.component';
 
 export enum LoadingStatusEnum {
     Ready,
@@ -22,6 +23,8 @@ export abstract class ProjectDetailEntity implements OnInit {
     form: FormGroup;
     private originalValue: string;
     private validationError = [];
+
+    summaryList: SummaryList;
 
     LoadingStatus = LoadingStatusEnum;
     loadingStatus = LoadingStatusEnum.Ready;

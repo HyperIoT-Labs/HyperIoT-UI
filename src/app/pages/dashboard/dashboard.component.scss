@@ -26,19 +26,82 @@
     }
 
     #container-dashboard {
-        padding-top: 30px;
+        padding-top: 20px;
+
+        #row-recording {
+            margin-bottom: 15px;
+            font-size: .9em;
+
+            .recording {
+                padding-bottom: 12px;
+                padding-top: 12px;
+                max-width: 96%;
+                margin-left: auto;
+                margin-right: auto;
+                border-radius: 8px;
+                cursor: pointer;
+
+                &.on {
+                    border: 0.5px solid #00800078;
+                    background-color: rgba(55, 169, 29, 0.07);
+                }
+
+                &.off {
+                    border: 0.5px solid #a89c0063;
+                    background-color: rgba(255, 239, 0, 0.11);
+                }
+
+                span {
+
+                    vertical-align: middle;
+
+                    &#icon-recording {
+                        margin-right: 10px;
+
+                        svg {
+                            width: 20px;
+                            height: 20px;
+                        }
+                    }
+
+                    &.recOn {
+
+                        svg {
+                            animation-duration: 1s;
+                            animation-name: recOn;
+                            animation-iteration-count: infinite;
+                        }
+
+                    }
+
+                    &.recOff {
+
+                        svg {
+                            fill: black;
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
 
         #tools-dashboard-box {
-            margin-left: 25px;
-            margin-right: 25px;
-            padding: .6em .8em .6em .8em;
+            max-width: 96%;
+            margin-left: auto;
+            margin-right: auto;
+            // padding: .6em .8em .6em .8em;
+            padding-top: 10px;
             border-radius: .8em;
             box-shadow: 0 2px 6px 0px rgba(0, 0, 0, 0.2);
 
             .left-tools {
 
                 #signal-btn,
-                #play-btn {
+                #play-btn,
+                #recording-btn {
                     float: left;
                     margin: .3em 1.2em .3em 1.2em;
                     text-align: center;
@@ -60,6 +123,19 @@
                         font-size: .8em;
                     }
 
+                }
+
+                #recording-btn {
+                    span {
+                        font-size: 1.95em;
+                        margin-bottom: 0.15em;
+
+                        &.recording {
+                            animation-duration: 1.5s;
+                            animation-name: recording;
+                            animation-iteration-count: infinite;
+                        }
+                    }
                 }
 
             }
@@ -156,4 +232,31 @@
     }
   
 }
-  
+
+@keyframes recording {
+
+    from {
+      transform: rotate(0deg);
+    }
+    
+    to {
+     transform: rotate(360deg);
+    }
+
+}
+
+@keyframes recOn {
+
+    0% {
+      fill: #950404;
+    }
+    
+    50% {
+     fill: red;
+    }
+
+    100% {
+        fill: #950404;
+    }
+
+}
