@@ -1,4 +1,4 @@
-import { Component, OnDestroy, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnDestroy, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 
 import { Subscription } from 'rxjs';
@@ -13,7 +13,7 @@ import { PacketEnrichmentComponent } from '../../project-wizard/enrichment-step/
   templateUrl: './packet-enrichments-data.component.html',
   styleUrls: ['./packet-enrichments-data.component.scss']
 })
-export class PacketEnrichmentsDataComponent extends ProjectDetailEntity implements OnDestroy, AfterViewInit {
+export class PacketEnrichmentsDataComponent extends ProjectDetailEntity implements OnDestroy {
   @ViewChild(PacketEnrichmentComponent, {static: true}) enrichmentComponent: PacketEnrichmentComponent;
   private routerSubscription: Subscription;
   private activatedRouteSubscription: Subscription;
@@ -49,15 +49,6 @@ export class PacketEnrichmentsDataComponent extends ProjectDetailEntity implemen
     });
   }
 
-  ngAfterViewInit() {
-    // the following timeout is to prevent validatio check errors due to value changes
-    setTimeout(() => {
-      this.form.addControl('packetFieldComponent', this.enrichmentComponent.enrichmentForm);
-      this.enrichmentComponent.enrichmentForm.setParent(this.form);
-      this.resetForm();
-    });
-  }
-
   ngOnDestroy() {
     this.activatedRouteSubscription.unsubscribe();
     this.routerSubscription.unsubscribe();
@@ -76,6 +67,9 @@ export class PacketEnrichmentsDataComponent extends ProjectDetailEntity implemen
       // TODO: data for temporary bound field [hPackets] that will be removed
       this.hPacketService.findAllHPacketByProjectId(this.project.id)
         .subscribe((pl: HPacket[]) => this.packetList = pl);
+      this.form.removeControl('packetFieldComponent');
+      this.form.addControl('packetFieldComponent', this.enrichmentComponent.enrichmentForm);
+      this.enrichmentComponent.enrichmentForm.setParent(this.form);
       this.resetForm();
       this.treeView().focus({id: p.id, type: 'packet-enrichments'});
     });
