@@ -42,7 +42,7 @@ import { PacketEnrichmentComponent } from './project-wizard/enrichment-step/pack
 import { EnrichmentTipColumnComponent } from './project-wizard/enrichment-step/enrichment-tip-column/enrichment-tip-column.component';
 import { EventTipColumnComponent } from './project-wizard/events-step/event-tip-column/event-tip-column.component';
 import { PacketEventComponent } from './project-wizard/events-step/packet-event/packet-event.component';
-import { PacketEnrichmentsListComponent } from './project-detail/packet-enrichments-list/packet-enrichments-list.component';
+import { GenericSummaryListComponent } from './project-detail/generic-summary-list/generic-summary-list.component';
 
 @NgModule({
   declarations: [
@@ -77,7 +77,7 @@ import { PacketEnrichmentsListComponent } from './project-detail/packet-enrichme
     EnrichmentTipColumnComponent,
     EventTipColumnComponent,
     PacketEventComponent,
-    PacketEnrichmentsListComponent
+    GenericSummaryListComponent
   ],
   imports: [
     MatIconModule,

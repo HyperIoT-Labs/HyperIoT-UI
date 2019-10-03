@@ -68,7 +68,8 @@
                 <mat-icon class="">info</mat-icon> <!-- mt-2 mr-2 -->
             </div>
 
-            <hyt-packet-enrichments-list *ngIf="getEnrichmentsDataPacket()" [packet]="getEnrichmentsDataPacket()" (ruleClick)="onRuleClick($event)"></hyt-packet-enrichments-list>
+            <hyt-generic-summary-list *ngIf="currentEntity && currentEntity.summaryList"
+                [summaryList]="currentEntity.summaryList" (itemClick)="onSummaryItemClick($event)"></hyt-generic-summary-list>
 
         </div>
 
