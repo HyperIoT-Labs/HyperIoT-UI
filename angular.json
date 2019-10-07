@@ -49,8 +49,8 @@
               "buildOptimizer": true,
               "budgets": [{
                 "type": "initial",
-                "maximumWarning": "6mb",
-                "maximumError": "10mb"
+                "maximumWarning": "8mb",
+                "maximumError": "15mb"
               }],
               "i18nFile": "src/locale/translations.en-US.xlf",
               "i18nFormat": "xlf",
