@@ -6,15 +6,13 @@
 
       <div class="col-md-12">
 
-        <hyt-packet-select [hDevices]="hDevices" [hPackets]="hPackets" (currentPacket)="packetChanged($event)">
-        </hyt-packet-select>
+        <hyt-packet-select (currentPacket)="packetChanged($event)"></hyt-packet-select>
 
       </div>
 
       <div class="col-md-12">
 
-        <hyt-packet-event [hProject]="hProject" [currentPacket]="currentPacket"
-          (hPacketsOutput)="packetsOutputChanged($event)" (rulesOutput)="rulesChanged($event)"></hyt-packet-event>
+        <hyt-packet-event [currentPacket]="currentPacket"></hyt-packet-event>
 
       </div>
 
@@ -23,24 +21,13 @@
   </div>
 
   <div class="col-md-2">
-    EVENTS
-    <table>
-      <tr>
-        <th><b>X</b></th>
-        <th><b>ID</b></th>
-        <th><b>NOME</b></th>
-      </tr>
-      <tr *ngFor="let eve of eventList">
-        <td (click)="showDeleteModal(eve.id)">
-          X
-        </td>
-        <td>{{eve.id}}</td>
-        <td>{{eve.name}}</td>
-      </tr>
-    </table>
+
+    <hyt-event-tip-column (copyEventRule)="tableCopyRule($event)" (updateEventRule)="tableUpdateRule($event)"
+      (deleteEventRule)="showDeleteModal($event)"></hyt-event-tip-column>
+
   </div>
 
-  <hyt-modal [mOpen]="deleteId!=-1">
+  <hyt-modal [mOpen]="deleteModal">
     <div class="alignCenter">
       Sei sicuro di voler eliminare l'evento?
       <hr>

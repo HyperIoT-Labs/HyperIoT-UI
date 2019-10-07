@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { HProject, AssetscategoriesService, AssetCategory, AssetTag, HPacket } from '@hyperiot/core';
+import { AssetscategoriesService, AssetCategory, HPacket } from '@hyperiot/core';
 import { TreeNodeCategory } from '@hyperiot/components';
+import { ProjectWizardService } from 'src/app/services/projectWizard/project-wizard.service';
 
 @Component({
   selector: 'hyt-asset-category',
@@ -9,8 +10,6 @@ import { TreeNodeCategory } from '@hyperiot/components';
 })
 export class AssetCategoryComponent implements OnInit {
 
-  @Input() project: HProject;
-
   @Input() packet: HPacket;
 
   @Output() categoryIds: EventEmitter<number[]> = new EventEmitter<number[]>();
@@ -18,6 +17,7 @@ export class AssetCategoryComponent implements OnInit {
   categoriesFlatTree: TreeNodeCategory[] = [];
 
   constructor(
+    private wizardService: ProjectWizardService,
     private assetCategoriesService: AssetscategoriesService
   ) { }
 
@@ -64,7 +64,7 @@ export class AssetCategoryComponent implements OnInit {
       name: event.label,
       owner: {
         ownerResourceName: 'it.acsoftware.hyperiot.hproject',
-        ownerResourceId: this.project.id
+        ownerResourceId: this.wizardService.getHProject().id
       },
       parent: event.parent ? event.parent.data : null
     }

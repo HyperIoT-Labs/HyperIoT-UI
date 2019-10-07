@@ -1,5 +1,7 @@
-import { Component, Input, EventEmitter, Output } from '@angular/core';
-import { RulesService, HDevice, HPacket, Rule, HProject } from '@hyperiot/core';
+import { Component, Input, EventEmitter, Output, ViewChild } from '@angular/core';
+import { RulesService, HPacket, Rule } from '@hyperiot/core';
+import { PacketEventComponent } from './packet-event/packet-event.component';
+import { ProjectWizardService } from 'src/app/services/projectWizard/project-wizard.service';
 
 
 @Component({
@@ -9,67 +11,52 @@ import { RulesService, HDevice, HPacket, Rule, HProject } from '@hyperiot/core';
 })
 export class EventsStepComponent {
 
-  constructor(
-    private rulesService: RulesService
-  ) { }
+  selectedRule: Rule;
 
-  @Input() hDevices: HDevice[] = [];
+  constructor(
+    private rulesService: RulesService,
+    private wizardService: ProjectWizardService
+  ) { }
 
   currentPacket: HPacket;
 
   eventList: Rule[] = [];
 
-  @Input() hProject: HProject;
-
-  @Input() hPackets: HPacket[] = [];
-
-  @Output() hPacketsOutput = new EventEmitter<HPacket[]>();
-
-  @Output() eventsOutput = new EventEmitter<Rule[]>();
-
-  ngOnChanges() {
-    this.hDevices = [...this.hDevices];
-    this.hPackets = [...this.hPackets];
-  }
-
   packetChanged(event) {
     this.currentPacket = event;
   }
 
-  packetsOutputChanged(event) {
-    this.hPacketsOutput.emit(event);
+  tableUpdateRule(rule: Rule) {//TODO
+    // this.selectedRule = rule;
+    // this.form.setForm(rule, 'UPDATE');
   }
 
-  rulesChanged(event) {
-    this.eventList = event;
-    this.eventsOutput.emit(event);
+  tableCopyRule(rule: Rule) {//TODO
+    // this.form.setForm(rule, 'ADD');
   }
 
   //delete logic
 
-  deleteId: number = -1;
+  deleteModal: boolean = false;
 
   deleteError: string = null;
 
-  showDeleteModal(id: number) {
+  showDeleteModal(rule: Rule) {
     this.deleteError = null;
-    this.deleteId = id;
+    this.selectedRule = rule;
+    this.deleteModal = true;
   }
 
   hideDeleteModal() {
-    this.deleteId = -1;
+    this.deleteModal = false;
+    this.selectedRule = null;
   }
 
   deleteEvent() {
     this.deleteError = null;
-    this.rulesService.deleteRule(this.deleteId).subscribe(
+    this.rulesService.deleteRule(this.selectedRule.id).subscribe(
       res => {
-        for (let i = 0; i < this.eventList.length; i++) {
-          if (this.eventList[i].id == this.deleteId) {
-            this.eventList.splice(i, 1);
-          }
-        }
-        this.eventsOutput.emit(this.eventList);
+        this.wizardService.deleteEventRule(this.selectedRule.id);
         this.hideDeleteModal();
       },
       err => {

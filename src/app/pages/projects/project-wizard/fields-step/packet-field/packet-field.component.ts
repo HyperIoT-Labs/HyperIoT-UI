@@ -24,7 +24,6 @@ export class PacketFieldComponent implements OnInit, OnChanges {
 
   @Input() currentPacket: HPacket;
 
-  @Input() hPackets: HPacket[] = [];
 
   @ViewChild('treeView', { static: false }) treeView: HytTreeViewEditableComponent;
 
@@ -62,10 +61,6 @@ export class PacketFieldComponent implements OnInit, OnChanges {
 
   errors: HYTError[] = [];
 
-  @Output() hPacketsOutput = new EventEmitter<HPacket[]>();
-
-  formDeviceActive: boolean = false;
-
   constructor(
     private fb: FormBuilder,
     private hPacketService: HpacketsService,
@@ -75,20 +70,20 @@ export class PacketFieldComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.fieldForm = this.fb.group({});
+    this.packetFieldService.treeFields$.subscribe(
+      res => {
+        this.packetTree = [...this.createPacketTree(res)];
+        if (this.treeView)
+          this.treeView.refresh(this.packetTree, this.currentPacket.name);
+        this.resetForm('ADD');
+        this.pageStatus = PageStatusEnum.Submitted;
+      }
+    )
   }
 
   ngOnChanges() {
     if (this.currentPacket && this.currentPacket.id && !this.packetFieldService.checkPacket(this.currentPacket)) {
       this.packetFieldService.setPacket(this.currentPacket);
-      this.packetFieldService.treeFields$.subscribe(
-        res => {
-          this.packetTree = [...this.createPacketTree(res)];
-          if (this.treeView)
-            this.treeView.refresh(this.packetTree, this.currentPacket.name);
-          this.resetForm('ADD');
-          this.pageStatus = PageStatusEnum.Submitted;
-        }
-      )
       this.packetFieldService.getTreeFields();
     }
   }
@@ -129,10 +124,6 @@ export class PacketFieldComponent implements OnInit, OnChanges {
     this.hPacketService.addHPacketField(this.currentPacket.id, field).subscribe(
       res => {
         this.packetFieldService.getTreeFields();
-        for (let i = 0; i < this.hPackets.length; i++)
-          if (this.hPackets[i].id == res.id)
-            this.hPackets[i] = res;
-        this.hPacketsOutput.emit(this.hPackets);
       },
       err => {
         this.pageStatus = PageStatusEnum.Error;
@@ -169,10 +160,6 @@ export class PacketFieldComponent implements OnInit, OnChanges {
 
     this.hPacketService.updateHPacketField(this.currentPacket.id, field).subscribe(
       res => {
-        for (let i = 0; i < this.hPackets.length; i++)
-          if (this.hPackets[i].id == res.id)
-            this.hPackets[i] = res;
-        this.hPacketsOutput.emit(this.hPackets);
         this.packetFieldService.getTreeFields();
       },
       err => {
@@ -226,10 +213,6 @@ export class PacketFieldComponent implements OnInit, OnChanges {
   deleteField() {
     this.hPacketService.deleteHPacketField(this.currentPacket.id, this.deleteFieldId).subscribe(
       res => {
-        for (let i = 0; i < this.hPackets.length; i++)
-          if (this.hPackets[i].id == res.id)
-            this.hPackets[i] = res;
-        this.hPacketsOutput.emit(this.hPackets);
         this.packetFieldService.getTreeFields();
       },
       err => { }

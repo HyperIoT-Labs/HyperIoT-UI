@@ -1,9 +1,10 @@
-import { Component, OnInit, ElementRef, ViewChild, EventEmitter, Input, Output } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, EventEmitter, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { AssetTag, AssetstagsService, HProject } from '@hyperiot/core';
 import { MatChipInputEvent } from '@angular/material';
 import { startWith, map } from 'rxjs/operators';
+import { ProjectWizardService } from 'src/app/services/projectWizard/project-wizard.service';
 
 export enum TagStatus {
   Default = 0,
@@ -18,8 +19,6 @@ export enum TagStatus {
 })
 export class AssetTagComponent implements OnInit {
 
-  @Input() project: HProject;
-
   selectedTags: number[] = [];
 
   tagStatus: TagStatus = TagStatus.Default;
@@ -27,6 +26,7 @@ export class AssetTagComponent implements OnInit {
   @Output() tagIds: EventEmitter<number[]> = new EventEmitter<number[]>();
 
   constructor(
+    private wizardService: ProjectWizardService,
     private assetsTagService: AssetstagsService,
   ) { }
 
@@ -73,7 +73,7 @@ export class AssetTagComponent implements OnInit {
           name: event.value,
           owner: {
             ownerResourceName: 'it.acsoftware.hyperiot.hproject',
-            ownerResourceId: this.project.id
+            ownerResourceId: this.wizardService.getHProject().id
           },
           entityVersion: 1
         }

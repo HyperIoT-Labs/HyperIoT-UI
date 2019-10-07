@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
-import { HProject, HPacket, Rule, RulesService, HpacketsService } from '@hyperiot/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { HPacket, Rule, RulesService, HpacketsService } from '@hyperiot/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { SelectOption } from '@hyperiot/components';
 import { RuleDefinitionComponent } from '../../rule-definition/rule-definition.component';
@@ -7,6 +7,7 @@ import { HYTError } from 'src/app/services/errorHandler/models/models';
 import { ProjectWizardHttpErrorHandlerService } from 'src/app/services/errorHandler/project-wizard-http-error-handler.service';
 import { PageStatusEnum } from '../../model/pageStatusEnum';
 import { AssetTagComponent } from '../../asset-tag/asset-tag.component';
+import { ProjectWizardService } from 'src/app/services/projectWizard/project-wizard.service';
 
 @Component({
   selector: 'hyt-packet-enrichment',
@@ -15,11 +16,7 @@ import { AssetTagComponent } from '../../asset-tag/asset-tag.component';
 })
 export class PacketEnrichmentComponent implements OnInit {
 
-  @Input() hProject: HProject;
-
   @Input() currentPacket: HPacket;
-
-  @Input() hPackets: HPacket[] = [];
 
   @ViewChild('ruleDef', { static: false }) ruleDefinitionComponent: RuleDefinitionComponent;
 
@@ -30,24 +27,17 @@ export class PacketEnrichmentComponent implements OnInit {
   PageStatus = PageStatusEnum;
   pageStatus: PageStatusEnum = PageStatusEnum.Default;
 
-  errors: HYTError[] = [];
-
   enrichmentRules: SelectOption[] = [
     { value: JSON.stringify({ actionName: "AddCategoryRuleAction", ruleId: 0, categoryIds: null }), label: 'Categories' },
     { value: JSON.stringify({ actionName: "AddTagRuleAction", ruleId: 0, tagIds: null }), label: 'Tags' },
     { value: JSON.stringify({ actionName: "ValidateHPacketRuleAction", ruleId: 0 }), label: 'Validation' }
   ]
 
-  ruleList: Rule[] = [];
-
-  @Output() rulesOutput = new EventEmitter<Rule[]>();
-
-  @Output() hPacketsOutput = new EventEmitter<HPacket[]>();
-
   constructor(
     private fb: FormBuilder,
     private rulesService: RulesService,
     private packetService: HpacketsService,
+    private wizardService: ProjectWizardService,
     private errorHandler: ProjectWizardHttpErrorHandlerService
   ) { }
 
@@ -79,7 +69,7 @@ export class PacketEnrichmentComponent implements OnInit {
       name: this.enrichmentForm.value['rule-name'],
       ruleDefinition: this.ruleDefinitionComponent.buildRuleDefinition(),
       description: this.enrichmentForm.value['rule-description'],
-      project: this.hProject,
+      project: this.wizardService.getHProject(),
       packet: this.currentPacket,
       jsonActions: jActionStr,
       type: 'ENRICHMENT',
@@ -88,8 +78,7 @@ export class PacketEnrichmentComponent implements OnInit {
 
     this.rulesService.saveRule(rule).subscribe(
       res => {
-        this.ruleList.push(res);
-        this.rulesOutput.emit(this.ruleList);
+        this.wizardService.addEnrichmentRule(res);
         this.pageStatus = PageStatusEnum.Submitted;
       },
       err => {
@@ -109,8 +98,6 @@ export class PacketEnrichmentComponent implements OnInit {
       this.currentPacket.tagIds = this.assetTags;
       this.packetService.updateHPacket(this.currentPacket).subscribe(
         (res: HPacket) => {
-          this.hPackets.find(x => x.id == this.currentPacket.id).tagIds = res.tagIds;
-          this.hPacketsOutput.emit(this.hPackets);
         }
       )
     }
@@ -118,8 +105,6 @@ export class PacketEnrichmentComponent implements OnInit {
       this.currentPacket.categoryIds = this.assetCategories;
       this.packetService.updateHPacket(this.currentPacket).subscribe(
         (res: HPacket) => {
-          this.hPackets.find(x => x.id == this.currentPacket.id).categoryIds = res.categoryIds;
-          this.hPacketsOutput.emit(this.hPackets);
         }
       )
     }
@@ -134,6 +119,10 @@ export class PacketEnrichmentComponent implements OnInit {
       ((this.ruleDefinitionComponent) ? this.ruleDefinitionComponent.isInvalid() : true)
     )
   }
+
+  //error logic
+
+  errors: HYTError[] = [];
 
   getError(field: string): string {
     return (this.errors.find(x => x.container == field)) ? this.errors.find(x => x.container == field).message : null;

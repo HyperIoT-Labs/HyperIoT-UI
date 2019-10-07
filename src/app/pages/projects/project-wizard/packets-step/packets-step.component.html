@@ -2,107 +2,19 @@
 
   <div class="col-md-10">
 
-    <form class="packet-form" [formGroup]="packetForm" autocomplete="on">
-
-      <div class="row">
-        <div class="col-md-6 container-form-field">
-          <hyt-input-text [form]="packetForm" formControlName="hpacket-name" name="hpacket-name" [isRequired]="true"
-            placeholder="Packet name" [injectedErrorMsg]="getError('hpacket-name')">
-          </hyt-input-text> <!-- Field Name -->
-        </div>
-        <div class="col-md-6 container-form-field">
-          <hyt-select [form]="packetForm" [options]="devicesOptions" formControlName="hpacket-device"
-            name="hpacket-device" [isRequired]="true" label="HYT_device">
-          </hyt-select> <!-- Field Packet -->
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-md-4 container-form-field">
-          Typology
-          <hyt-radio-button [form]="packetForm" [options]="typologyOptions" formControlName="hpacket-type"
-            name="hpacket-type" [verticalAlign]="true">
-          </hyt-radio-button>
-        </div> <!-- Field Typology -->
-        <div class="col-md-4 container-form-field">
-          Format
-          <hyt-radio-button [form]="packetForm" [options]="formatOptions" formControlName="hpacket-format"
-            name="hpacket-format" [verticalAlign]="true">
-          </hyt-radio-button>
-        </div> <!-- Field Format -->
-        <div class="col-md-4 container-form-field">
-          Serialization
-          <hyt-radio-button [form]="packetForm" [options]="serializationOptions" formControlName="hpacket-serialization"
-            name="hpacket-serialization" [verticalAlign]="true">
-          </hyt-radio-button>
-        </div> <!-- Field Serialization -->
-      </div>
-
-      <div class="row">
-        <div class="col-md-6 container-form-field">
-          <hyt-input-text [form]="packetForm" formControlName="hpacketTimeStamp" name="hpacketTimeStamp"
-            [isRequired]="true" placeholder="Timestamp" [injectedErrorMsg]="getError('hpacketTimeStamp')">
-          </hyt-input-text> <!-- Field TimeStamp -->
-        </div>
-        <div class="col-md-6 container-form-field">
-          <hyt-input-text [form]="packetForm" formControlName="hpacketTimeStampFormat" name="hpacketTimeStampFormat"
-            [isRequired]="true" placeholder="Timestamp format" [injectedErrorMsg]="getError('hpacketTimeStampFormat')">
-          </hyt-input-text> <!-- Field TimeStampFormat -->
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-md-12 container-form-field">
-          <hyt-select [form]="packetForm" [options]="trafficPlanOptions" formControlName="packetTrafficPlan"
-            name="packetTrafficPlan" [isRequired]="true" label="HYT_trafficPlan">
-          </hyt-select> <!-- Field Traffic Plan -->
-        </div>
-      </div>
-
-      <div class="container-form-field errorMessage">
-        <ng-container *ngIf="getError('general')">
-          {{getError('general')}}
-        </ng-container>
-      </div> <!-- Error Box -->
-
-      <hyt-button id="packet-form-submit-button" [isDisabled]="invalid() || pageStatus == PageStatus.Loading"
-        (clickFn)="createPacket()" type="submit">
-        Add Packet
-      </hyt-button>
-
-    </form>
+    <hyt-packets-form #packetsForm (savePacket)="savePacket()" (updatePacket)="updatePacket()">
+    </hyt-packets-form>
 
   </div>
 
   <div class="col-md-2">
 
-    <div class="row">
-
-      <div class="col-md-12">
-        PACKETS
-        <table>
-          <tr>
-            <th><b>ID</b></th>
-            <th><b>NOME</b></th>
-            <!-- <th><b>M</b></th>
-            <th><b>D</b></th> -->
-            <th><b>X</b></th>
-          </tr>
-          <tr *ngFor="let pac of packetsList">
-            <td>{{pac.id}}</td>
-            <td>{{pac.name}}</td>
-            <!-- <td (click)="copyData(pac, 'UPDATE')">M</td> -->
-            <!-- <td (click)="copyData(pac, 'ADD')">D</td> -->
-            <td (click)="showDeleteModal(pac.id)">X</td>
-          </tr>
-        </table>
-      </div>
-
-    </div>
+    <hyt-packets-hint-column (updatePacket)="tableUpdatePacket($event)" (copyPacket)="tableCopyPacket($event)"
+      (deletePacket)="showDeleteModal($event)"></hyt-packets-hint-column>
 
   </div>
 
-  <hyt-modal [mOpen]="deleteId!=-1">
+  <hyt-modal [mOpen]="deleteModal">
     <div class="alignCenter">
       Sei sicuro di voler eliminare il pacchetto?
       <hr>

@@ -1,0 +1,81 @@
+<form class="device-form" [formGroup]="deviceForm" autocomplete="on">
+
+  <div class="row">
+
+    <div class="col-md-6">
+
+      <div class="container-form-field">
+        <hyt-input-text [form]="deviceForm" formControlName="hdevice-devicename" name="hdevice-devicename"
+          [isRequired]="true" placeholder="HYT_deviceName" [injectedErrorMsg]="getError('hdevice-devicename')">
+        </hyt-input-text>
+      </div> <!-- Field Name -->
+
+      <div class="container-form-field">
+        <hyt-input-text [form]="deviceForm" formControlName="hdevice-model" name="hdevice-model" placeholder="HYT_model"
+          [injectedErrorMsg]="getError('hdevice-model')">
+        </hyt-input-text>
+      </div> <!-- Field Model -->
+
+      <div class="container-form-field">
+        <hyt-input-text [form]="deviceForm" formControlName="hdevice-firmwareversion" name="hdevice-firmwareversion"
+          placeholder="HYT_firmwareVersion" [injectedErrorMsg]="getError('hdevice-firmwareversion')">
+        </hyt-input-text>
+      </div> <!-- Field Firmware Version -->
+
+      <div class="container-form-field">
+        <hyt-input-text [form]="deviceForm" formControlName="hdevice-password" name="hdevice-password"
+          [isRequired]="true" [isPassword]="true" i18n-placeholder="@@HYT_password" placeholder="HYT_password"
+          type="password" [injectedErrorMsg]="getError('hdevice-password')">
+        </hyt-input-text>
+      </div> <!-- Field Password -->
+
+      <div class="container-form-field">
+        <hyt-input-text [form]="deviceForm" formControlName="hdevice-passwordConfirm" name="hdevice-passwordConfirm"
+          [isRequired]="true" i18n-placeholder="@@HYT_passwordConfirm" placeholder="HYT_passwordConfirm" type="password"
+          [injectedErrorMsg]="getError('hdevice-passwordConfirm')">
+        </hyt-input-text>
+      </div> <!-- Field Confirm Password -->
+
+    </div>
+
+    <div class="col-md-6">
+
+      <div class="container-form-field">
+        <hyt-input-text [form]="deviceForm" formControlName="hdevice-brand" name="hdevice-brand" placeholder="HYT_brand"
+          [injectedErrorMsg]="getError('hdevice-brand')">
+        </hyt-input-text>
+      </div> <!-- Field Brand -->
+
+      <div class="container-form-field">
+        <hyt-input-text [form]="deviceForm" formControlName="hdevice-softwareversion" name="hdevice-softwareversion"
+          placeholder="HYT_softwareVersion" [injectedErrorMsg]="getError('hdevice-softwareversion')">
+        </hyt-input-text>
+      </div> <!-- Field Software Version -->
+
+      <div class="container-form-field">
+        <hyt-text-area [form]="deviceForm" formControlName="hdevice-description" name="hdevice-description"
+          placeholder="HYT_description">
+        </hyt-text-area>
+      </div> <!-- Field Description -->
+
+    </div>
+
+  </div>
+
+  <div class="container-form-field errorMessage">
+    <ng-container *ngIf="getError('general')">
+      {{getError('general')}}
+    </ng-container>
+  </div> <!-- Error Box -->
+
+  <hyt-button *ngIf="submitType == 'ADD'" id="device-form-submit-button"
+    [isDisabled]="invalid() || pageStatus == PageStatus.Loading" (clickFn)="postDevice()" type="submit">
+    Add device
+  </hyt-button>
+
+  <hyt-button *ngIf="submitType == 'UPDATE'" id="device-form-submit-button"
+    [isDisabled]="invalid() || pageStatus == PageStatus.Loading" (clickFn)="putDevice()" type="submit">
+    Update device
+  </hyt-button>
+
+</form>

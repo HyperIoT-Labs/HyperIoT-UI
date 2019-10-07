@@ -4,6 +4,7 @@ import { HProject, HprojectsService } from '@hyperiot/core';
 import { ProjectWizardHttpErrorHandlerService } from 'src/app/services/errorHandler/project-wizard-http-error-handler.service';
 import { HYTError } from 'src/app/services/errorHandler/models/models';
 import { PageStatusEnum } from '../model/pageStatusEnum'
+import { ProjectWizardService } from 'src/app/services/projectWizard/project-wizard.service';
 
 @Component({
   selector: 'hyt-project-step',
@@ -26,6 +27,7 @@ export class ProjectStepComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private hProjectService: HprojectsService,
+    private projectWizardService: ProjectWizardService,
     private errorHandler: ProjectWizardHttpErrorHandlerService
   ) { }
 
@@ -45,6 +47,7 @@ export class ProjectStepComponent implements OnInit {
   projectObs = {
     next: (res) => {
       this.hProject = res;
+      this.projectWizardService.setHProject(this.hProject);
       this.projectOutput.emit(this.hProject);
       this.pageStatus = PageStatusEnum.Submitted;
     },
