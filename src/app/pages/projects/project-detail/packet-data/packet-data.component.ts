@@ -21,16 +21,16 @@ export class PacketDataComponent extends ProjectDetailEntity implements OnDestro
   deviceName: '---';
 
   typeOptions: Option[] = Object.keys(HPacket.TypeEnum)
-    .map((k) => { return {label: k, value: k} });
+    .map((k) => ({label: k, value: k}));
 
   serializationOptions: Option[] = Object.keys(HPacket.SerializationEnum)
-    .map((k) => { return {label: k, value: k} });
+    .map((k) => ({label: k, value: k}));
 
   formatOptions: Option[] = Object.keys(HPacket.FormatEnum)
-    .map((k) => { return {label: k, value: k} });
+    .map((k) => ({label: k, value: k}));
 
   trafficPlanOptions: Option[] = Object.keys(HPacket.TrafficPlanEnum)
-    .map((k) => { return {label: k, value: k} });
+    .map((k) => ({label: k, value: k}));
 
   private routerSubscription: Subscription;
 
