@@ -79,6 +79,10 @@ export class ProjectDetailComponent implements OnInit {
     this.openDeleteDialog();
   }
 
+  onCancelClick() {
+    this.currentEntity.cancel();
+  }
+
   onSummaryItemClick(rule: Rule) {
     console.log('clicked rule', rule);
   }
@@ -247,7 +251,7 @@ export class ProjectDetailComponent implements OnInit {
       });
     });
   }
-  
+
   openDeleteDialog() {
     const dialogRef = this.dialog.open(DeleteConfirmDialogComponent, {
       data: {title: 'Delete item?', message: 'This operation cannot be undone.'}

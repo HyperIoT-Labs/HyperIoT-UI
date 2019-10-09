@@ -19,6 +19,7 @@ export abstract class ProjectDetailEntity implements OnInit {
     projectHost: ProjectDetailComponent;
 
     hideDelete = false;
+    showCancel = false;
 
     form: FormGroup;
     private originalValue: string;
@@ -50,6 +51,7 @@ export abstract class ProjectDetailEntity implements OnInit {
 
     save(successCallback: any, errorCallback: any): void { }
     delete(successCallback: any, errorCallback: any): void { }
+    cancel(): void { }
 
     isValid(): boolean {
         let valid = true;

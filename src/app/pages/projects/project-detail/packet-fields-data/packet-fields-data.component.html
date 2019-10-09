@@ -8,14 +8,14 @@
         (addFn)="addField($event)"
         (removeFn)="removeField($event)"
         (editFn)="editField($event)"
-        (cancelFn)="cancelField()">
+        (cancelFn)="cancelField($event)">
     </hyt-tree-view-editable>
 
     <form [formGroup]="form" class="flex-fill mt-4" [ngClass]="{hidden: currentField == null}">
 
         <div class="d-flex flex-row align-items-start justify-content-around">
 
-            <div class="d-flex flex-column align-items-start justify-content-stretch">
+            <div class="mr-2 d-flex flex-fill flex-column align-items-stretch justify-content-stretch">
                 <hyt-input-text [form]="form" name="fieldName"
                     [isRequired]="true"
                     placeholder="HYT_fieldName"
@@ -28,7 +28,7 @@
                 </hyt-text-area>
             </div>
         
-            <div class="d-flex flex-column align-items-start justify-content-stretch">
+            <div class="ml-2 d-flex flex-fill flex-column align-items-end justify-content-stretch">
                         
                 <hyt-select [form]="form" name="fieldType"
                     [options]="fieldTypeOptions"
@@ -36,7 +36,7 @@
                     hintMessage="Select field type.">
                 </hyt-select>
                 <div class="d-flex flex-column">
-                    <label>Level of multiplicy</label>
+                    <strong>Multiplicy</strong>
                     <hyt-radio-button [form]="form" name="fieldMultiplicity"
                         [options]="fieldMultiplicityOptions"
                         [verticalAlign]="true">
