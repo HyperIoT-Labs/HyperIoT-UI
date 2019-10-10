@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EnrichmentStepComponent } from './enrichment-step.component';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('EnrichmentStepComponent', () => {
   let component: EnrichmentStepComponent;
@@ -8,7 +9,8 @@ describe('EnrichmentStepComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EnrichmentStepComponent ]
+      declarations: [ EnrichmentStepComponent ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));

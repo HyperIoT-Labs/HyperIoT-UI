@@ -19,6 +19,7 @@ export abstract class ProjectDetailEntity implements OnInit {
     projectHost: ProjectDetailComponent;
 
     hideDelete = false;
+    showCancel = false;
 
     form: FormGroup;
     private originalValue: string;
@@ -38,6 +39,70 @@ export abstract class ProjectDetailEntity implements OnInit {
     }
 
     ngOnInit() {
+        this.buildHintMessages();
+    }
+
+    canDeactivate(): Observable<any> | boolean {
+        if (this.isDirty()) {
+            return this.projectHost.openSaveDialog();
+        }
+        return true;
+    }
+
+    save(successCallback: any, errorCallback: any): void { }
+    delete(successCallback: any, errorCallback: any): void { }
+    cancel(): void { }
+
+    isValid(): boolean {
+        let valid = true;
+        Object.keys(this.form.controls).forEach((field) => {
+            valid = valid && this.form.get(field).valid;
+        });
+        return valid;
+    }
+    isDirty(): boolean {
+        return JSON.stringify(this.form.value) !== this.originalValue;
+    }
+
+    getError(field) {
+        const err = this.validationError.find((e) => e.field === field);
+        return err && err.message;
+    }
+    setErrors(err) {
+        if (err.error && err.error.validationErrors) {
+            this.validationError = err.error.validationErrors;
+            this.validationError.map((e) => {
+                this.form.get(e.field).setErrors({
+                    validateInjectedError: {
+                        valid: false
+                    }
+                });
+            });
+            this.loadingStatus = LoadingStatusEnum.Ready;
+        } else {
+            this.loadingStatus = LoadingStatusEnum.Error;
+        }
+    }
+    resetErrors() {
+        this.validationError = [];
+    }
+
+    resetForm() {
+        this.originalValue = JSON.stringify(this.form.value, this.circularFix);
+        this.buildHintMessages();
+    }
+
+    treeView() {
+        return {
+            refresh: this.projectHost.refresh.bind(this.projectHost),
+            focus: (node: { id: any, type?: 'packet-events' | 'packet-statistics' | 'packet-enrichments' | 'packet-fields' | 'packet' | 'device' | 'project' | '' }) =>
+                this.projectHost.focus(node),
+            updateNode: (nodeData: { id: any, type?: string, name: string }) =>
+                this.projectHost && this.projectHost.updateNode(nodeData)
+        };
+    }
+
+    private buildHintMessages() {
         const hintElements =
             (this.formView.nativeElement as Element)
                 .querySelectorAll('[hintMessage]');
@@ -62,64 +127,6 @@ export abstract class ProjectDetailEntity implements OnInit {
             // TODO: remove listeners on ngOnDestroy()
             // TODO: remove listeners on ngOnDestroy()
         });
-    }
-
-    canDeactivate(): Observable<any> | boolean {
-        if (this.isDirty()) {
-            return this.projectHost.openSaveDialog();
-        }
-        return true;
-    }
-
-    save(successCallback: any, errorCallback: any): void { }
-    delete(successCallback: any, errorCallback: any): void { }
-
-    isValid(): boolean {
-        let valid = true;
-        Object.keys(this.form.controls).forEach((field) => {
-            valid = valid && this.form.get(field).valid;
-        });
-        return valid;
-    }
-    isDirty(): boolean {
-        return JSON.stringify(this.form.value) !== this.originalValue;
-    }
-    getError(field) {
-        const err = this.validationError.find((e) => e.field === field);
-        return err && err.message;
-    }
-
-    setErrors(err) {
-        if (err.error && err.error.validationErrors) {
-            this.validationError = err.error.validationErrors;
-            this.validationError.map((e) => {
-                this.form.get(e.field).setErrors({
-                    validateInjectedError: {
-                        valid: false
-                    }
-                });
-            });
-            this.loadingStatus = LoadingStatusEnum.Ready;
-        } else {
-            this.loadingStatus = LoadingStatusEnum.Error;
-        }
-    }
-    resetErrors() {
-        this.validationError = [];
-    }
-
-    resetForm() {
-        this.originalValue = JSON.stringify(this.form.value, this.circularFix);
-    }
-
-    treeView() {
-        return {
-            refresh: this.projectHost.refresh.bind(this.projectHost),
-            focus: (node: { id: any, type?: 'packet-events' | 'packet-statistics' | 'packet-enrichments' | 'packet-fields' | 'packet' | 'device' | 'project' | '' }) =>
-                this.projectHost.focus(node),
-            updateNode: (nodeData: { id: any, type?: string, name: string }) =>
-                this.projectHost && this.projectHost.updateNode(nodeData)
-        };
     }
 
     protected circularFix = (key: any, value: any) => {

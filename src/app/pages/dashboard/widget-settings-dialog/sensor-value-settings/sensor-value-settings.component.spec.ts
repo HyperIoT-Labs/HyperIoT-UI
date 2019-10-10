@@ -1,14 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SensorValueSettingsComponent } from './sensor-value-settings.component';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
+import { NgForm } from '@angular/forms';
 
 describe('SensorValueSettingsComponent', () => {
   let component: SensorValueSettingsComponent;
   let fixture: ComponentFixture<SensorValueSettingsComponent>;
+  let settingsForm: NgForm;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SensorValueSettingsComponent ]
+      declarations: [ SensorValueSettingsComponent ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
+      providers: [{provide: NgForm, useValue: settingsForm}]
     })
     .compileComponents();
   }));

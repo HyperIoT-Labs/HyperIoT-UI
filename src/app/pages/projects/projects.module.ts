@@ -47,6 +47,8 @@ import { PacketEventComponent } from './project-wizard/events-step/packet-event/
 import { GenericSummaryListComponent } from './project-detail/generic-summary-list/generic-summary-list.component';
 import { PacketsFormComponent } from './project-wizard/packets-step/packets-form/packets-form.component';
 import { PacketsHintColumnComponent } from './project-wizard/packets-step/packets-hint-column/packets-hint-column.component';
+import { ProjectHintColumnComponent } from './project-wizard/project-step/project-hint-column/project-hint-column.component';
+import { ProjectFormComponent } from './project-wizard/project-step/project-form/project-form.component';
 
 @NgModule({
   declarations: [
@@ -85,7 +87,9 @@ import { PacketsHintColumnComponent } from './project-wizard/packets-step/packet
     PacketEventComponent,
     GenericSummaryListComponent,
     PacketsFormComponent,
-    PacketsHintColumnComponent
+    PacketsHintColumnComponent,
+    ProjectHintColumnComponent,
+    ProjectFormComponent
   ],
   imports: [
     MatIconModule,
