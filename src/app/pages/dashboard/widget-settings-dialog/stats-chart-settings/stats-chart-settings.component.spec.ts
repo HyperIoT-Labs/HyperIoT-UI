@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { StatsChartSettingsComponent } from './stats-chart-settings.component';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('StatsChartSettingsComponent', () => {
   let component: StatsChartSettingsComponent;
@@ -8,7 +9,8 @@ describe('StatsChartSettingsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ StatsChartSettingsComponent ]
+      declarations: [ StatsChartSettingsComponent ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));

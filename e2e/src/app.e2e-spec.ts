@@ -4,18 +4,18 @@ import { browser, logging, element, by } from 'protractor';
 describe('Authentication Page', () => {
   let page: AppPage;
 
-  // beforeAll(() => {
-    
-
-  //   browser.driver.manage().window().maximize();
-  //   browser.waitForAngularEnabled(false);
-  //   browser.sleep(500);
-
-  //   page.navigateTo();
-  // });
-
-  beforeEach(()=>{
+  beforeAll(() => {
     page = new AppPage();
+
+    browser.driver.manage().window().maximize();
+    browser.waitForAngularEnabled(false);
+    browser.sleep(500);
+
+    page.navigateTo();
+  });
+
+  beforeEach(() => {
+
     // page.editUserName.clear();
     // page.editPwd.clear();
   });
@@ -41,12 +41,10 @@ describe('Authentication Page', () => {
     page.enterUserName('ciao');
     browser.sleep(500);
     page.enterPwd('mondo');
-    browser.sleep(2000);
-    //expect(page.loginButton.getAttribute('ng-reflect-is-disabled')).toBe('false');
     browser.sleep(500);
     page.getLoginBtn().click();
     browser.sleep(2000);
-    expect(element(by.className('errorMessage')).getText()).toContain('Error executing your request');
+    expect(element(by.className('errorMessage')).getText()).toContain('Service temporarily unavaiable');
     browser.sleep(1000);
     page.editUserName.clear();
     browser.sleep(500);
@@ -54,19 +52,32 @@ describe('Authentication Page', () => {
     browser.sleep(500);
   });
 
-  it('should set credentials to storage if "Remember me" is selected', () => {
+  it('should perform a correct login', () => {
     page.enterUserName('mirko');
     browser.sleep(500);
-    page.enterPwd('Hotrovato1lavoro!');
+    page.enterPwd('ciao!Hello1');
     browser.sleep(500);
     page.rememberMe.click();
-    browser.sleep(1000);
-    page.getLoginBtn().click();
     browser.sleep(500);
-    var storedCredentials = browser.executeScript("return window.localStorage.getItem('userInfo');");
-    browser.sleep(1000);
-    expect(storedCredentials).toContain('mirko');
+    page.getLoginBtn().click();
+    browser.sleep(5000);
+    // expect(browser.getCurrentUrl()).toContain('dashboard');
+    // browser.sleep(5000);
   });
+
+  // it('should set credentials to storage if "Remember me" is selected', () => {
+  //   page.enterUserName('mirko');
+  //   browser.sleep(500);
+  //   page.enterPwd('ciao!Hello1');
+  //   browser.sleep(500);
+  //   page.rememberMe.click();
+  //   browser.sleep(1000);
+  //   page.getLoginBtn().click();
+  //   browser.sleep(500);
+  //   var storedCredentials = browser.executeScript("JSON.parse(localStorage.getItem('user'));");
+  //   browser.sleep(1000);
+  //   expect(storedCredentials).toBeTruthy();
+  // });
 
   // afterEach(async () => {
   //   // Assert that there are no errors emitted from the browser

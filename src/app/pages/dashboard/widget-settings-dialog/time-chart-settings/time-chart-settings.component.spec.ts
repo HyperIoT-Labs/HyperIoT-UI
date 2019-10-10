@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TimeChartSettingsComponent } from './time-chart-settings.component';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('TimeChartSettingsComponent', () => {
   let component: TimeChartSettingsComponent;
@@ -8,7 +9,8 @@ describe('TimeChartSettingsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TimeChartSettingsComponent ]
+      declarations: [ TimeChartSettingsComponent ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));

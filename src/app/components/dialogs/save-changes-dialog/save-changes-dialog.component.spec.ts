@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SaveChangesDialogComponent } from './save-changes-dialog.component';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('SaveChangesDialogComponent', () => {
   let component: SaveChangesDialogComponent;
@@ -8,7 +9,8 @@ describe('SaveChangesDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SaveChangesDialogComponent ]
+      declarations: [ SaveChangesDialogComponent ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));

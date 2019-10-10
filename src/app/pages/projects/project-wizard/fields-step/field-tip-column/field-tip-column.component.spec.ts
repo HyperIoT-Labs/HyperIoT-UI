@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FieldTipColumnComponent } from './field-tip-column.component';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('FieldTipColumnComponent', () => {
   let component: FieldTipColumnComponent;
@@ -8,7 +9,8 @@ describe('FieldTipColumnComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FieldTipColumnComponent ]
+      declarations: [ FieldTipColumnComponent ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));

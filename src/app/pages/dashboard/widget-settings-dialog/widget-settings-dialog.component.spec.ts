@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { WidgetSettingsDialogComponent } from './widget-settings-dialog.component';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('WidgetSettingsDialogComponent', () => {
   let component: WidgetSettingsDialogComponent;
@@ -8,7 +9,8 @@ describe('WidgetSettingsDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ WidgetSettingsDialogComponent ]
+      declarations: [ WidgetSettingsDialogComponent ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));
