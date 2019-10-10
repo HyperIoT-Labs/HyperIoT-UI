@@ -32,6 +32,8 @@ export class AddWidgetDialogComponent implements OnInit, OnDestroy {
   @Input() id: string;
   private element: any;
 
+  dialogDataState = 0;
+
   constructor(
     private viewContainer: ElementRef,
     private activatedRoute: ActivatedRoute,
@@ -82,7 +84,7 @@ export class AddWidgetDialogComponent implements OnInit, OnDestroy {
 
   // open modal
   open(): void {
-    this.element.style.display = 'block';
+    this.element.classList.add('open');
     document.body.classList.add('hyt-modal-open');
 
     // this.viewContainer.nativeElement.style.display = '';
@@ -90,22 +92,31 @@ export class AddWidgetDialogComponent implements OnInit, OnDestroy {
     this.selectedWidgets = [];
     // get widget list
     this.dashboardConfigService.getWidgetList()
-      .subscribe((wl: any[]) => {
-        // set initial quantity
-        wl.map((w) => w.count = 0);
-        this.widgetList = wl;
-        // get category list
-        this.dashboardConfigService.getWidgetCategoryList()
-          .subscribe((cl) => {
-            this.widgetCategoryList = cl;
-            this.onCategorySelect(this.widgetCategoryList[0]);
-          });
+    .subscribe((wl: any[]) => {
+      // set initial quantity
+      wl.map((w) => w.count = 0);
+      this.widgetList = wl;
+      // get category list
+      this.dashboardConfigService.getWidgetCategoryList()
+      .subscribe(
+        (cl) => {
+          this.widgetCategoryList = cl;
+          this.onCategorySelect(this.widgetCategoryList[0]);
+        },
+        error => {
+
       });
+
+      this.dialogDataState = 1;
+    },
+    error=> {
+      this.dialogDataState = -1;
+    });
   }
 
   // close modal
   close(): void {
-    this.element.style.display = 'none';
+    this.element.classList.remove('open');
     document.body.classList.remove('hyt-modal-open');
   }
 

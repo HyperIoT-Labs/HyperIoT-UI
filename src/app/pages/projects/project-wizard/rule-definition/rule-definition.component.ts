@@ -72,8 +72,10 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
 
   ngOnChanges() {
     this.fieldOptions = [];
-    if (this.hPacket)
+    if (this.hPacket) {
+      this.fieldFlatList = [];
       this.extractField(this.hPacket.fields, '');
+    }
     for (let el of this.fieldFlatList)
       this.fieldOptions.push({ value: el.label, label: el.field.name });
   }

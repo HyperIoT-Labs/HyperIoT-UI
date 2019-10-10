@@ -1,0 +1,16 @@
+<div *ngIf="_summaryList && _summaryList.list.length > 0" class="d-flex flex-row justify-content-start align-items-stretch">
+    <header class="flex-fill">
+        {{_summaryList.title}}
+    </header>
+</div>
+<div *ngFor="let item of _summaryList.list" (click)="onItemClick(item)" class="item d-flex flex-row justify-content-start align-items-stretch">
+    <div class="icon d-flex flex-column justify-content-center align-items-center">
+        <mat-icon>double_arrow</mat-icon>
+    </div>
+    <div class="row-content" class="flex-fill">
+        <div class="row-fields d-flex flex-column justify-content-start align-items-stretch">
+            <div class="field-name truncate">{{item.name}}</div>
+            <div class="field-description truncate">{{item.description}}</div>
+        </div>
+    </div>
+</div>

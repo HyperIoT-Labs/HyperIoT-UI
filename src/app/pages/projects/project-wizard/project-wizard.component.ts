@@ -1,7 +1,8 @@
-import { Component, OnInit, ViewChild, Injectable, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewChild, Injectable } from '@angular/core';
 import { HProject, HDevice, HPacket, Rule } from '@hyperiot/core';
 import { Router, CanDeactivate } from '@angular/router';
 import { Subject } from 'rxjs';
+import { ProjectWizardService } from 'src/app/services/projectWizard/project-wizard.service';
 
 @Injectable({
   providedIn: 'root',
@@ -27,7 +28,7 @@ export class ProjectWizardComponent implements OnInit {
   @ViewChild('stepper', { static: false }) stepper;
 
   hProject: HProject;
-  hDevices: HDevice[] = [];
+  // hDevices: HDevice[] = [];
   hPackets: HPacket[] = [];
   rules: Rule[] = [];
   events: Rule[] = [];
@@ -44,10 +45,34 @@ export class ProjectWizardComponent implements OnInit {
   finishOpen: boolean = false;
 
   constructor(
-    private router: Router
+    private router: Router,
+    private wizardService: ProjectWizardService
   ) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.wizardService.hDevices$.subscribe(
+      (res: HDevice[]) => {
+        if (res && res.length != 0)
+          this.devicesValidated = true;
+        else
+          this.devicesValidated = false;
+      }
+    );
+    this.wizardService.hPackets$.subscribe(
+      (res: HPacket[]) => {
+        if (res && res.length != 0)
+          this.packetsValidated = true;
+        else
+          this.packetsValidated = false;
+        let pez = false;
+        for (let i = 0; i < res.length; i++) {
+          if (res[i].fields.length != 0)
+            pez = true;
+        }
+        this.fieldsValidated = pez;
+      }
+    );
+  }
 
   updateProject(proj: HProject) {
     if (proj) {
@@ -57,29 +82,6 @@ export class ProjectWizardComponent implements OnInit {
     setTimeout(() => {
       this.stepper.next();
     }, 0);
-  }
-
-  updateDevices(dev: HDevice[]) {
-    this.hDevices = [...dev];
-    this.devicesValidated = this.hDevices.length != 0;
-  }
-
-  updatePackets(pac: HPacket[]) {
-    this.hPackets = [...pac];
-    this.packetsValidated = this.hPackets.length != 0;
-  }
-
-  updatePacketFields(pac: HPacket[]) {
-    this.hPackets = [...pac];
-    this.fieldsValidated = this.hPackets[0].fields.length != 0;
-  }
-
-  updateRules(enr: Rule[]) {
-    this.rules = [...enr];
-  }
-
-  updateEvents(events: Rule[]) {
-    this.events = [...events];
   }
 
   openOptionModal() {
@@ -113,6 +115,10 @@ export class ProjectWizardComponent implements OnInit {
 
   goToProjectWizard() {
     this.router.navigate(['/projects']);
+  }
+
+  stepChanged(event) {
+    this.wizardService.stepChanged(event.selectedIndex);
   }
 
   //Deactivation logic

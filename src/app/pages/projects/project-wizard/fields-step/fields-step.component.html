@@ -2,12 +2,9 @@
 
   <div class="col-md-10">
 
-    <hyt-packet-select [hDevices]="hDevices" [hPackets]="hPackets" (currentPacket)="packetChanged($event)">
-    </hyt-packet-select>
+    <hyt-packet-select (currentPacket)="packetChanged($event)"></hyt-packet-select>
 
-    <hyt-packet-field [currentPacket]="currentPacket" [hPackets]="hPackets"
-      (hPacketsOutput)="packetsOutputChanged($event)">
-    </hyt-packet-field>
+    <hyt-packet-field [currentPacket]="currentPacket"></hyt-packet-field>
 
 
   </div>

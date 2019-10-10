@@ -1,5 +1,5 @@
-import { Component, Input, EventEmitter, Output, OnChanges } from '@angular/core';
-import { HPacket, HDevice } from '@hyperiot/core';
+import { Component } from '@angular/core';
+import { HPacket } from '@hyperiot/core';
 
 
 enum FormStatusEnum {
@@ -14,27 +14,12 @@ enum FormStatusEnum {
   templateUrl: './fields-step.component.html',
   styleUrls: ['./fields-step.component.scss']
 })
-export class FieldsStepComponent implements OnChanges {
-
-  @Input() hDevices: HDevice[] = [];
+export class FieldsStepComponent {
 
   currentPacket: HPacket;
 
-  @Input() hPackets: HPacket[] = [];
-
-  @Output() hPacketsOutput = new EventEmitter<HPacket[]>();
-
-  ngOnChanges() {
-    this.hDevices = [...this.hDevices];
-    this.hPackets = [...this.hPackets];
-  }
-
   packetChanged(event) {
     this.currentPacket = event;
-  }
-
-  packetsOutputChanged(event) {
-    this.hPacketsOutput.emit(event);
   }
 
 }

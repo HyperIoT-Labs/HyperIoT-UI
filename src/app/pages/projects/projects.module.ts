@@ -10,6 +10,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule, MatButtonModule, MatRadioModule, MatProgressSpinnerModule, MatProgressBarModule } from '@angular/material';
 
 import { DevicesStepComponent } from './project-wizard/devices-step/devices-step.component';
+import { DevicesFormComponent } from './project-wizard/devices-step/devices-form/devices-form.component';
+import { DevicesHintColumnComponent } from './project-wizard/devices-step/devices-hint-column/devices-hint-column.component';
 import { EventsStepComponent } from './project-wizard/events-step/events-step.component';
 import { FieldsStepComponent } from './project-wizard/fields-step/fields-step.component';
 import { PacketsStepComponent } from './project-wizard/packets-step/packets-step.component';
@@ -35,12 +37,18 @@ import { PacketFieldsDataComponent } from './project-detail/packet-fields-data/p
 import { PacketEnrichmentsDataComponent } from './project-detail/packet-enrichments-data/packet-enrichments-data.component';
 import { PacketStatisticsDataComponent } from './project-detail/packet-statistics-data/packet-statistics-data.component';
 import { PacketEventsDataComponent } from './project-detail/packet-events-data/packet-events-data.component';
-import { PacketSelectComponent } from './project-wizard/fields-step/packet-select/packet-select.component';
+import { PacketSelectComponent } from './project-wizard/packet-select/packet-select.component';
 import { PacketFieldComponent } from './project-wizard/fields-step/packet-field/packet-field.component';
 import { FieldTipColumnComponent } from './project-wizard/fields-step/field-tip-column/field-tip-column.component';
-import { PacketEnrichmentsListComponent } from './project-detail/packet-enrichments-list/packet-enrichments-list.component';
-
-import { PacketEnrichmentsService } from '../../services/packet-enrichments.service';
+import { PacketEnrichmentComponent } from './project-wizard/enrichment-step/packet-enrichment/packet-enrichment.component';
+import { EnrichmentTipColumnComponent } from './project-wizard/enrichment-step/enrichment-tip-column/enrichment-tip-column.component';
+import { EventTipColumnComponent } from './project-wizard/events-step/event-tip-column/event-tip-column.component';
+import { PacketEventComponent } from './project-wizard/events-step/packet-event/packet-event.component';
+import { GenericSummaryListComponent } from './project-detail/generic-summary-list/generic-summary-list.component';
+import { PacketsFormComponent } from './project-wizard/packets-step/packets-form/packets-form.component';
+import { PacketsHintColumnComponent } from './project-wizard/packets-step/packets-hint-column/packets-hint-column.component';
+import { ProjectHintColumnComponent } from './project-wizard/project-step/project-hint-column/project-hint-column.component';
+import { ProjectFormComponent } from './project-wizard/project-step/project-form/project-form.component';
 
 @NgModule({
   declarations: [
@@ -58,6 +66,8 @@ import { PacketEnrichmentsService } from '../../services/packet-enrichments.serv
     ProjectDetailComponent,
     ProjectDataComponent,
     DeviceDataComponent,
+    DevicesFormComponent,
+    DevicesHintColumnComponent,
     PacketDataComponent,
     EventMailComponent,
     AssetCategoryComponent,
@@ -71,7 +81,15 @@ import { PacketEnrichmentsService } from '../../services/packet-enrichments.serv
     PacketSelectComponent,
     PacketFieldComponent,
     FieldTipColumnComponent,
-    PacketEnrichmentsListComponent
+    PacketEnrichmentComponent,
+    EnrichmentTipColumnComponent,
+    EventTipColumnComponent,
+    PacketEventComponent,
+    GenericSummaryListComponent,
+    PacketsFormComponent,
+    PacketsHintColumnComponent,
+    ProjectHintColumnComponent,
+    ProjectFormComponent
   ],
   imports: [
     MatIconModule,
@@ -88,9 +106,6 @@ import { PacketEnrichmentsService } from '../../services/packet-enrichments.serv
     MatChipsModule,
     MatAutocompleteModule,
     MatInputModule
-  ],
-  providers: [
-    PacketEnrichmentsService
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA

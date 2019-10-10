@@ -61,13 +61,24 @@
                     <span>Delete</span>
                 </hyt-button>
 
+                <hyt-button 
+                    [ngClass]="{hidden: currentEntity && !currentEntity.showCancel}"
+                    id="cancel-btn"
+                    (clickFn)="onCancelClick()">
+                    <mat-icon>undo</mat-icon>
+                    <span>Cancel</span>
+                </hyt-button>
+
             </div>
 
             <div *ngIf="hintVisible" class="info-message m-2 mt-4 d-flex flex-row"> 
                 <span class="text p-2 flex-grow-1">{{hintMessage}}</span>
                 <mat-icon class="">info</mat-icon> <!-- mt-2 mr-2 -->
             </div>
-            
+
+            <hyt-generic-summary-list *ngIf="currentEntity && currentEntity.summaryList"
+                [summaryList]="currentEntity.summaryList" (itemClick)="onSummaryItemClick($event)"></hyt-generic-summary-list>
+
         </div>
 
     </div>

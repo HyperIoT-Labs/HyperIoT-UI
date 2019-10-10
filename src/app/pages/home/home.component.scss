@@ -1,0 +1,94 @@
+#home-page {
+
+    font-family: "Exo";
+    font-size: 1em;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 15px;
+    
+    .header {
+        border-bottom: 1px solid #008aff;
+        min-height: 50px;
+    
+        .breadcrumb {
+          font-weight: 400;
+          font-size: 1.2em;
+          line-height: 48px;
+          vertical-align: middle;
+    
+          span {
+    
+            &.icon-hyt_projectSolo {
+              font-size: 1.8em;
+              vertical-align: middle;
+              margin-right: 3px;
+              color: #bec3c7;        
+            }
+    
+          }
+    
+          a {
+            color: #000000;
+          }
+    
+        }
+    
+    }
+
+    #container-home {
+        margin-top: 48px;
+
+        #welcome-message {
+            text-align: center;
+
+            h3 {
+                &#welcome-title {
+                    font-size: 2.2em;
+                    text-transform: uppercase;
+                    color: #0d416d;
+                    margin-bottom: 0px;
+                }
+            }
+
+            h4 {
+                &#welcome-subtitle {
+                    font-size: 1.1em;
+                    color: #2d82cb;
+                    margin-bottom: 60px;
+                    font-style: italic;
+                }
+            }
+        }
+
+        #btn-no-home {
+            text-align: center;
+
+            hyt-button {
+
+                &#go-to-projects {
+                  margin-top: 2px;
+                  
+                  button.mat-raised-button {
+                    background-color: #0d416d;
+                    color: #fff;
+                    font-family: "Exo";
+                    font-size: 1.2em;
+                    font-weight: 400;
+                    text-transform: uppercase;
+                    line-height: 45px;
+        
+                    &:hover {
+                      background-color: #105f99;
+                      box-shadow: none;
+                    }
+        
+                  }
+        
+                }
+        
+            }
+        }
+
+    }
+
+}

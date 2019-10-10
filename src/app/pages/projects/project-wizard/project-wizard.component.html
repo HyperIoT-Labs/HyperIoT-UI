@@ -1,13 +1,14 @@
 <div id="container-project-wizard">
 
   <div class="header d-flex flex-row justify-content-stretch">
-    
+
     <div class="breadcrumb flex-grow-1">
-      <span class="hyt-icon icon-hyt_projectSolo"></span> <a [routerLink]="['/']">Home</a> > <strong>Projects Wizard</strong> 
+      <span class="hyt-icon icon-hyt_projectSolo"></span> <a [routerLink]="['/']">Home</a> > <strong>Projects
+        Wizard</strong>
     </div>
 
   </div>
-  
+
   <div id="container-steps" class="row">
 
     <ng-template #projectTemplate>
@@ -16,21 +17,19 @@
     </ng-template>
 
     <ng-template #devicesTemplate>
-      <hyt-devices-step [hProject]=" hProject" (hDevicesOutput)="updateDevices($event)">
-      </hyt-devices-step>
+      <hyt-devices-step></hyt-devices-step>
       <hyt-button (clickFn)="stepper.previous()">Back</hyt-button>
       <hyt-button [isDisabled]="!devicesValidated" (clickFn)="stepper.next()">Next</hyt-button>
     </ng-template>
 
     <ng-template #packetsTemplate>
-      <hyt-packets-step [hDevices]="hDevices" (hPacketsOutput)="updatePackets($event)"></hyt-packets-step>
+      <hyt-packets-step></hyt-packets-step>
       <hyt-button (clickFn)="stepper.previous()">Back</hyt-button>
       <hyt-button [isDisabled]="!packetsValidated" (clickFn)="stepper.next()">Next</hyt-button>
     </ng-template>
 
     <ng-template #fieldsTemplate>
-      <hyt-fields-step [hDevices]="hDevices" (hPacketsOutput)="updatePacketFields($event)" [hPackets]="hPackets">
-      </hyt-fields-step>
+      <hyt-fields-step></hyt-fields-step>
       <hyt-button (clickFn)="stepper.previous()">Back</hyt-button>
       <hyt-button
         (clickFn)="(fieldsValidated == true && enrichmentValidated == false)? openOptionModal() : stepper.next()">Next
@@ -38,8 +37,7 @@
     </ng-template>
 
     <ng-template #enrichmentTemplate>
-      <hyt-enrichment-step [hProject]="hProject" [hDevices]="hDevices" [hPackets]="hPackets"
-        (rulesOutput)="updateRules($event)" (hPacketsOutput)="updatePackets($event)"></hyt-enrichment-step>
+      <hyt-enrichment-step></hyt-enrichment-step>
       <hyt-button (clickFn)="stepper.previous()">Back</hyt-button>
       <hyt-button (clickFn)="stepper.next()">Next</hyt-button>
     </ng-template>
@@ -51,14 +49,13 @@
     </ng-template>
 
     <ng-template #eventsTemplate>
-      <hyt-events-step [hProject]="hProject" [hDevices]="hDevices" [hPackets]="hPackets"
-        (eventsOutput)="updateEvents($event)"></hyt-events-step>
+      <hyt-events-step></hyt-events-step>
       <hyt-button (clickFn)="stepper.previous()">Back</hyt-button>
       <hyt-button (clickFn)="openOptionModal()">Next</hyt-button>
     </ng-template>
 
 
-    <hyt-stepper #stepper [isLinear]="true" style="width: 100%"
+    <hyt-stepper #stepper (selectionChange)="stepChanged($event)" [isLinear]="false" style="width: 100%"
       [stepArray]="[ projectTemplate, devicesTemplate, packetsTemplate, fieldsTemplate, enrichmentTemplate, statisticsTemplate, eventsTemplate ]"
       [labelArray]="[ 'Projects', 'Devices', 'Packets', 'Fields', 'Enrichment', 'Statistics', 'Events' ]"
       [completedArray]="[ projectValidated, devicesValidated, packetsValidated, fieldsValidated, enrichmentValidated, statisticsValidated, eventsValidated ]">
@@ -139,7 +136,7 @@
                     <td>Devices
                       <hr>
                       <ul>
-                        <li *ngFor="let el of hDevices">{{el.deviceName}}</li>
+                        <!-- <li *ngFor="let el of hDevices">{{el.deviceName}}</li>TODO -->
                       </ul>
                     </td>
                   </tr>

@@ -1,10 +1,9 @@
-import { Component, OnInit, ViewEncapsulation, Input, Output, EventEmitter } from '@angular/core';
-import { HDevice, HProject, HdevicesService } from '@hyperiot/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
-import { HYTError } from 'src/app/services/errorHandler/models/models';
+import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
+import { HdevicesService, HDevice } from '@hyperiot/core';
 import { ProjectWizardHttpErrorHandlerService } from 'src/app/services/errorHandler/project-wizard-http-error-handler.service';
+import { ProjectWizardService } from 'src/app/services/projectWizard/project-wizard.service';
+import { DevicesFormComponent } from './devices-form/devices-form.component';
 import { PageStatusEnum } from '../model/pageStatusEnum';
-import { fadeAnimation } from 'src/app/pages/authentication/route-animation';
 
 @Component({
   selector: 'hyt-devices-step',
@@ -12,60 +11,47 @@ import { fadeAnimation } from 'src/app/pages/authentication/route-animation';
   styleUrls: ['./devices-step.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class DevicesStepComponent implements OnInit {
+export class DevicesStepComponent {
 
-  @Input() hProject: HProject;
+  selectedDevice: HDevice;
 
-  deviceForm: FormGroup;
-
-  PageStatus = PageStatusEnum;
-  pageStatus: PageStatusEnum = PageStatusEnum.Default;
-
-  devicesList: HDevice[] = [];
-
-  @Output() hDevicesOutput = new EventEmitter<HDevice[]>();
+  @ViewChild('devicesForm', { static: false }) form: DevicesFormComponent;
 
   constructor(
-    private fb: FormBuilder,
     private hDeviceService: HdevicesService,
+    private wizardService: ProjectWizardService,
     private errorHandler: ProjectWizardHttpErrorHandlerService
   ) { }
 
-  ngOnInit() {
-    this.deviceForm = this.fb.group({});
-  }
+  saveDevice() {
 
-  createDevice() {
-
-    this.pageStatus = PageStatusEnum.Loading;
-    this.errors = [];
+    this.form.pageStatus = PageStatusEnum.Loading;
 
     let hDevice: HDevice = {
       entityVersion: 1,
-      deviceName: this.deviceForm.value['hdevice-devicename'],
-      brand: this.deviceForm.value['hdevice-brand'],
-      model: this.deviceForm.value['hdevice-model'],
-      softwareVersion: this.deviceForm.value['hdevice-softwareversion'],
-      firmwareVersion: this.deviceForm.value['hdevice-firmwareversion'],
-      description: this.deviceForm.value['hdevice-description'],
-      password: this.deviceForm.value['hdevice-password'],
-      passwordConfirm: this.deviceForm.value['hdevice-passwordConfirm'],
-      project: { id: this.hProject.id, entityVersion: 1 }
+      deviceName: this.form.deviceForm.value['hdevice-devicename'],
+      brand: this.form.deviceForm.value['hdevice-brand'],
+      model: this.form.deviceForm.value['hdevice-model'],
+      softwareVersion: this.form.deviceForm.value['hdevice-softwareversion'],
+      firmwareVersion: this.form.deviceForm.value['hdevice-firmwareversion'],
+      description: this.form.deviceForm.value['hdevice-description'],
+      password: this.form.deviceForm.value['hdevice-password'],
+      passwordConfirm: this.form.deviceForm.value['hdevice-passwordConfirm'],
+      project: { id: this.wizardService.getHProject().id, entityVersion: this.wizardService.getHProject().entityVersion }
     }
 
     this.hDeviceService.saveHDevice(hDevice).subscribe(
       (res: HDevice) => {
-        this.deviceForm.reset();
-        this.devicesList.push(res);
-        this.hDevicesOutput.emit(this.devicesList);
-        this.pageStatus = PageStatusEnum.Submitted;
+        this.form.resetForm('ADD');
+        this.form.pageStatus = PageStatusEnum.Submitted;
+        this.wizardService.addDevice(res);
       },
       err => {
-        this.pageStatus = PageStatusEnum.Error;
-        this.errors = this.errorHandler.handleCreateHDevice(err);
-        this.errors.forEach(e => {
+        this.form.pageStatus = PageStatusEnum.Error;
+        this.form.errors = this.errorHandler.handleCreateHDevice(err);
+        this.form.errors.forEach(e => {
           if (e.container != 'general')
-            this.deviceForm.get(e.container).setErrors({
+            this.form.deviceForm.get(e.container).setErrors({
               validateInjectedError: {
                 valid: false
               }
@@ -73,55 +59,71 @@ export class DevicesStepComponent implements OnInit {
         })
       }
     )
-
   }
 
-  invalid() {
-    return (
-      this.deviceForm.get('hdevice-devicename').invalid ||
-      this.deviceForm.get('hdevice-brand').invalid ||
-      this.deviceForm.get('hdevice-model').invalid ||
-      this.deviceForm.get('hdevice-softwareversion').invalid ||
-      this.deviceForm.get('hdevice-firmwareversion').invalid ||
-      this.deviceForm.get('hdevice-description').invalid ||
-      this.deviceForm.get('hdevice-password').invalid ||
-      this.deviceForm.get('hdevice-passwordConfirm').invalid
+  updateDevice() {
+
+    this.form.pageStatus = PageStatusEnum.Loading;
+
+    this.selectedDevice.deviceName = this.form.deviceForm.value['hdevice-devicename'];
+    this.selectedDevice.brand = this.form.deviceForm.value['hdevice-brand'];
+    this.selectedDevice.model = this.form.deviceForm.value['hdevice-model'];
+    this.selectedDevice.softwareVersion = this.form.deviceForm.value['hdevice-softwareversion'];
+    this.selectedDevice.firmwareVersion = this.form.deviceForm.value['hdevice-firmwareversion'];
+    this.selectedDevice.description = this.form.deviceForm.value['hdevice-description'];
+
+    this.hDeviceService.updateHDevice(this.selectedDevice).subscribe(
+      res => {
+        this.form.resetForm('ADD');
+        this.form.pageStatus = PageStatusEnum.Submitted;
+        this.wizardService.updateDevice(res);
+      },
+      err => {
+        this.form.pageStatus = PageStatusEnum.Error;
+        this.form.errors = this.errorHandler.handleCreateHDevice(err);
+        this.form.errors.forEach(e => {
+          if (e.container != 'general')
+            this.form.deviceForm.get(e.container).setErrors({
+              validateInjectedError: {
+                valid: false
+              }
+            });
+        })
+      }
     )
   }
 
-  //error logic
+  tableUpdateDevice(device: HDevice) {
+    this.selectedDevice = device;
+    this.form.setForm(device, 'UPDATE');
+  }
 
-  errors: HYTError[] = [];
-
-  getError(field: string): string {
-    return (this.errors.find(x => x.container == field)) ? this.errors.find(x => x.container == field).message : null;
+  tableCopyDevice(device: HDevice) {
+    this.form.setForm(device, 'ADD');
   }
 
   //delete logic
 
-  deleteId: number = -1;
+  deleteModal: boolean = false;
 
   deleteError: string = null;
 
-  showDeleteModal(id: number) {
+  showDeleteModal(device: HDevice) {
     this.deleteError = null;
-    this.deleteId = id;
+    this.selectedDevice = device;
+    this.deleteModal = true;
   }
 
   hideDeleteModal() {
-    this.deleteId = -1;
+    this.deleteModal = false;
+    this.selectedDevice = null;
   }
 
   deleteDevice() {
     this.deleteError = null;
-    this.hDeviceService.deleteHDevice(this.deleteId).subscribe(
+    this.hDeviceService.deleteHDevice(this.selectedDevice.id).subscribe(
       res => {
-        for (let i = 0; i < this.devicesList.length; i++) {
-          if (this.devicesList[i].id == this.deleteId) {
-            this.devicesList.splice(i, 1);
-          }
-        }
-        this.hDevicesOutput.emit(this.devicesList);
+        this.wizardService.deleteDevice(this.selectedDevice.id);
         this.hideDeleteModal();
       },
       err => {
@@ -129,6 +131,5 @@ export class DevicesStepComponent implements OnInit {
       }
     );
   }
-
 
 }

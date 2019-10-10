@@ -1,6 +1,11 @@
-import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, Input, ViewEncapsulation, Output, EventEmitter } from '@angular/core';
 
-import { HProject } from '@hyperiot/core';
+import { HProject, HprojectsService } from '@hyperiot/core';
+import { MatDialog } from '@angular/material';
+import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
+
+
+
 
 @Component({
   selector: 'hyt-project-card',
@@ -11,12 +16,13 @@ import { HProject } from '@hyperiot/core';
 
 export class ProjectCardComponent implements OnInit {
   @Input() project: HProject;
+  @Output() refreshView = new EventEmitter<object>();
   isActive = false;
   deviceCount = 0;
   rulesCount = 0;
   activeTimeout;
 
-  constructor() { }
+  constructor( private dialog: MatDialog, private projectService: HprojectsService ) { }
 
   ngOnInit() {
     /* Find All Device */
@@ -26,6 +32,8 @@ export class ProjectCardComponent implements OnInit {
     this.rulesCount = this.project.rulesCount;
   }
 
+
+
   setActive(active) {
     if (this.activeTimeout) {
       clearTimeout(this.activeTimeout);
@@ -34,7 +42,46 @@ export class ProjectCardComponent implements OnInit {
   }
 
   deleteProject() {
-    confirm('Do you want to delete the project?');
+    this.openDeleteDialog();
+  }
+
+  openDeleteDialog(){
+
+    const dialogRef = this.dialog.open(DeleteConfirmDialogComponent, {
+      data: {title: 'Are you sure you want to delete the project?', message: 'This operation cannot be undone.'}
+    });
+
+    dialogRef.afterClosed().subscribe(
+      (result) => {
+
+        if(result === 'delete'){
+          
+          this.projectService.deleteHProject(this.project.id).subscribe(
+            (res) => {
+              this.toRefreshView('success', 'The project was successfully deleted');
+              
+            },
+            (err) => {
+              this.toRefreshView('error', 'An error occurred while deleting the project');
+              console.log(this.project);
+              console.log('ERRORE CANCELLAZIONE\n', err)
+            }
+
+          );
+
+        } 
+
+      },
+      (err) => {
+        console.log('Errore nell\' AFTER CLOSED del DIALOG di MATERIAL \n', err);
+      }
+
+    );
+
+  }
+
+  toRefreshView(typeMsg: string, valueMsg: string) {
+    this.refreshView.emit({type: typeMsg, value: valueMsg});
   }
 
 }

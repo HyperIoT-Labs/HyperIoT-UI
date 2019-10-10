@@ -31,6 +31,8 @@ export class WidgetSettingsDialogComponent implements OnInit, OnDestroy {
   @Input() id: string;
   private element: any;
 
+  dialogDataState = 0;
+
   constructor(
     private viewContainer: ElementRef,
     private activatedRoute: ActivatedRoute,
@@ -83,14 +85,14 @@ export class WidgetSettingsDialogComponent implements OnInit, OnDestroy {
 
   // open modal
   open(): void {
-    this.element.style.display = 'block';
+    this.element.classList.add('open');
     document.body.classList.add('hyt-modal-open');
     this.modalIsOpen = true;
   }
 
   // close modal
   close(event?): void {
-    this.element.style.display = 'none';
+    this.element.classList.remove('open');
     document.body.classList.remove('hyt-modal-open');
     this.modalIsOpen = false;
   }

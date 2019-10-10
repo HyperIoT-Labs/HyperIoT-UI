@@ -2,88 +2,32 @@
 
   <div class="col-md-10">
 
-    <form class="events-form" [formGroup]="eventsForm" autocomplete="on">
+    <div class="row">
 
-      <div class="row">
-        <div class="col-md-6 container-form-field">
-          <hyt-input-text [form]="eventsForm" formControlName="rule-name" name="rule-name" [isRequired]="true"
-            placeholder="HYT_eventName" [injectedErrorMsg]="getError('rule-name')">
-          </hyt-input-text>
-        </div> <!-- Field Name -->
-        <div class="col-md-6 container-form-field">
-          <hyt-text-area [form]="eventsForm" formControlName="rule-description" name="rule-description"
-            placeholder="HYT_description">
-          </hyt-text-area>
-        </div> <!-- Field RuleDescription -->
+      <div class="col-md-12">
+
+        <hyt-packet-select (currentPacket)="packetChanged($event)"></hyt-packet-select>
+
       </div>
 
-      <div class="row">
-        <div class="col-md-6 container-form-field">
-          <hyt-select [form]="eventsForm" [options]="devicesOptions" (changeFn)="deviceChanged($event)"
-            formControlName="eventDevice" name="eventDevice" [isRequired]="true" label="HYT_device">
-          </hyt-select>
-        </div> <!-- Field Device -->
-        <div class="col-md-6 container-form-field">
-          <hyt-select [form]="eventsForm" [options]="packetsOptions" (changeFn)="packetChanged($event)"
-            formControlName="eventPacket" name="eventPacket" [isRequired]="true" label="HYT_packet" [disabled]="false">
-          </hyt-select>
-        </div> <!-- Field Packet -->
+      <div class="col-md-12">
+
+        <hyt-packet-event [currentPacket]="currentPacket"></hyt-packet-event>
+
       </div>
 
-      <div class="row">
-        <div class="col-md-12 container-form-field center">
-          OUTPUT DATA
-          <br>
-          <hyt-radio-button [form]="eventsForm" [options]="outputOptions" formControlName="eventOutput"
-            name="eventOutput">
-          </hyt-radio-button>
-        </div> <!-- Field Oputput -->
-      </div>
-
-      <div class="row">
-        <div class="col-md-12 container-form-field">
-          <hyt-rule-definition #eventDef [hPacket]="currentPacket"></hyt-rule-definition>
-        </div> <!-- Field RuleDefinition -->
-      </div>
-
-      <hyt-event-mail #eventMail></hyt-event-mail>
-
-      <br>
-
-      <div class="container-form-field errorMessage">
-        <ng-container *ngIf="getError('general')">
-          {{getError('general')}}
-        </ng-container>
-      </div> <!-- Error Box -->
-
-      <hyt-button id="event-form-submit-button" [isDisabled]="invalid() || pageStatus == PageStatus.Loading"
-        (clickFn)="createEvent()" type="submit">
-        Add Event
-      </hyt-button>
-
-    </form>
+    </div>
 
   </div>
 
   <div class="col-md-2">
-    EVENTS
-    <table>
-      <tr>
-        <th><b>X</b></th>
-        <th><b>ID</b></th>
-        <th><b>NOME</b></th>
-      </tr>
-      <tr *ngFor="let eve of eventList">
-        <td (click)="showDeleteModal(eve.id)">
-          X
-        </td>
-        <td>{{eve.id}}</td>
-        <td>{{eve.name}}</td>
-      </tr>
-    </table>
+
+    <hyt-event-tip-column (copyEventRule)="tableCopyRule($event)" (updateEventRule)="tableUpdateRule($event)"
+      (deleteEventRule)="showDeleteModal($event)"></hyt-event-tip-column>
+
   </div>
 
-  <hyt-modal [mOpen]="deleteId!=-1">
+  <hyt-modal [mOpen]="deleteModal">
     <div class="alignCenter">
       Sei sicuro di voler eliminare l'evento?
       <hr>

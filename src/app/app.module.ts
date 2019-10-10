@@ -36,6 +36,7 @@ import { ProjectsModule } from './pages/projects/projects.module';
 import { CanDeactivateGuard } from './components/CanDeactivateGuard';
 import { SaveChangesDialogComponent } from './components/dialogs/save-changes-dialog/save-changes-dialog.component';
 import { DeleteConfirmDialogComponent } from './components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
+import { HomeComponent } from './pages/home/home.component';
 
 export class MyUrlSerializer extends DefaultUrlSerializer implements UrlSerializer  {
   /** Converts a `UrlTree` into a url */
@@ -63,7 +64,8 @@ export function apiConfigFactory(): Configuration {
     AccountButtonComponent,
     ProfileComponent,
     SaveChangesDialogComponent,
-    DeleteConfirmDialogComponent
+    DeleteConfirmDialogComponent,
+    HomeComponent
   ],
   // dynamically created components
   entryComponents: [
