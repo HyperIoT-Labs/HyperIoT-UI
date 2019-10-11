@@ -28,10 +28,10 @@ export class ProjectWizardComponent implements OnInit {
   @ViewChild('stepper', { static: false }) stepper;
 
   hProject: HProject;
-  // hDevices: HDevice[] = [];
+  hDevices: HDevice[] = [];
   hPackets: HPacket[] = [];
-  rules: Rule[] = [];
-  events: Rule[] = [];
+  enrichmentRules: Rule[] = [];
+  eventRules: Rule[] = [];
 
   projectValidated: boolean = false;
   devicesValidated: boolean = false;
@@ -52,6 +52,7 @@ export class ProjectWizardComponent implements OnInit {
   ngOnInit() {
     this.wizardService.hDevices$.subscribe(
       (res: HDevice[]) => {
+        this.hDevices = [...res];
         if (res && res.length != 0)
           this.devicesValidated = true;
         else
@@ -60,6 +61,7 @@ export class ProjectWizardComponent implements OnInit {
     );
     this.wizardService.hPackets$.subscribe(
       (res: HPacket[]) => {
+        this.hPackets = [...res];
         if (res && res.length != 0){
           this.packetsValidated = true;
           this.fieldsValidated = true;
@@ -68,6 +70,16 @@ export class ProjectWizardComponent implements OnInit {
           this.packetsValidated = false;
           this.fieldsValidated = false;
         }
+      }
+    );
+    this.wizardService.enrichmentRules$.subscribe(
+      (res: Rule[]) => {
+        this.enrichmentRules = [...res];
+      }
+    );
+    this.wizardService.eventRules$.subscribe(
+      (res: Rule[]) => {
+        this.eventRules = [...res];
       }
     );
   }
