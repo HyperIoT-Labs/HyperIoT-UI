@@ -1,22 +1,22 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PacketFieldComponent } from './packet-field.component';
+import { PacketEnrichmentsListComponent } from './packet-enrichments-list.component';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 
-describe('PacketFieldComponent', () => {
-  let component: PacketFieldComponent;
-  let fixture: ComponentFixture<PacketFieldComponent>;
+describe('PacketEnrichmentsListComponent', () => {
+  let component: PacketEnrichmentsListComponent;
+  let fixture: ComponentFixture<PacketEnrichmentsListComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PacketFieldComponent ],
+      declarations: [ PacketEnrichmentsListComponent ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PacketFieldComponent);
+    fixture = TestBed.createComponent(PacketEnrichmentsListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

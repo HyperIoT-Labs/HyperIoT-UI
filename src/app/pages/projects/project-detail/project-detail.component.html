@@ -61,6 +61,14 @@
                     <span>Delete</span>
                 </hyt-button>
 
+                <hyt-button 
+                    [ngClass]="{hidden: currentEntity && !currentEntity.showCancel}"
+                    id="cancel-btn"
+                    (clickFn)="onCancelClick()">
+                    <mat-icon>undo</mat-icon>
+                    <span>Cancel</span>
+                </hyt-button>
+
             </div>
 
             <div *ngIf="hintVisible" class="info-message m-2 mt-4 d-flex flex-row"> 

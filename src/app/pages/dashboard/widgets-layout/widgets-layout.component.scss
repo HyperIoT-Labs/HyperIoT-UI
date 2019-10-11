@@ -17,7 +17,9 @@ gridster.mobile {
     overflow-y: hidden;
 }
 gridster-item {
-    background: transparent;
+  background: transparent;
+  box-shadow: rgb(0, 0, 0) 0px 0px 11px -4px;
+  border-radius: 4px;
 }
 
 label {

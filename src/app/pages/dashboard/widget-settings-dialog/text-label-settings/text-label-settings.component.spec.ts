@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TextLabelSettingsComponent } from './text-label-settings.component';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('TextLabelSettingsComponent', () => {
   let component: TextLabelSettingsComponent;
@@ -8,7 +9,8 @@ describe('TextLabelSettingsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TextLabelSettingsComponent ]
+      declarations: [ TextLabelSettingsComponent ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));

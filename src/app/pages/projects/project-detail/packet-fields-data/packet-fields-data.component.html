@@ -1,10 +1,72 @@
 <h2 id="title-fields">Fields</h2>
 
-<form [formGroup]="form">
+<div class="content d-flex flex-column align-items-center justify-content-stretch">
 
-    <hyt-packet-field
-        [currentPacket]="packet"
-        [hPackets]="packetList"
-        (hPacketsOutput)="packetsOutputChanged($event)"></hyt-packet-field>
+    <hyt-tree-view-editable *ngIf="packet" class="flex-fill" #treeViewFields
+        [deviceName]="packet.name"
+        [treeData]="packetTree"
+        (addFn)="addField($event)"
+        (removeFn)="removeField($event)"
+        (editFn)="editField($event)"
+        (cancelFn)="cancelField($event)">
+    </hyt-tree-view-editable>
 
-</form>
+    <form [formGroup]="form" class="flex-fill mt-4" [ngClass]="{hidden: currentField == null}">
+
+        <div class="d-flex flex-row align-items-start justify-content-around">
+
+            <div class="mr-2 d-flex flex-fill flex-column align-items-stretch justify-content-stretch">
+                <hyt-input-text [form]="form" name="fieldName"
+                    [isRequired]="true"
+                    placeholder="HYT_fieldName"
+                    [injectedErrorMsg]="getError('fieldName')"
+                    hintMessage="Enter the field name.">
+                </hyt-input-text>
+                <hyt-text-area [form]="form" name="fieldDescription" class="flex-fill"
+                    placeholder="HYT_fieldDescription"
+                    hintMessage="Enter the field description.">
+                </hyt-text-area>
+            </div>
+        
+            <div class="ml-2 d-flex flex-fill flex-column align-items-end justify-content-stretch">
+                        
+                <hyt-select [form]="form" name="fieldType"
+                    [options]="fieldTypeOptions"
+                    [isRequired]="true" label="HYT_fieldType"
+                    hintMessage="Select field type.">
+                </hyt-select>
+                <div class="d-flex flex-column">
+                    <strong>Multiplicy</strong>
+                    <hyt-radio-button [form]="form" name="fieldMultiplicity"
+                        [options]="fieldMultiplicityOptions"
+                        [verticalAlign]="true">
+                    </hyt-radio-button>
+                </div>
+            
+            </div>
+        
+        </div>
+
+    </form>
+
+
+    <!-- TODO: This HTML block is repeated
+               across all 'entity' components,
+               consider making a component out of it -->
+    <div *ngIf="loadingStatus !== LoadingStatus.Ready" class="overlay d-flex flex-column align-items-center justify-content-center">
+        <h4 *ngIf="loadingStatus === LoadingStatus.Loading">Loading project data...</h4>
+        <div *ngIf="loadingStatus === LoadingStatus.Error" class="d-flex flex-column justify-content-center">
+            <h4>An error has occurred =/</h4>
+            <button mat-stroked-button (click)="loadingStatus = LoadingStatus.Ready">
+                <span>Close</span>
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+        <h4 *ngIf="loadingStatus === LoadingStatus.Saving">Saving project data...</h4>
+        <mat-progress-bar
+            *ngIf="loadingStatus === LoadingStatus.Loading || loadingStatus === LoadingStatus.Saving"
+            mode="query"></mat-progress-bar>
+    </div>
+
+</div>
+

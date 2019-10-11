@@ -6,7 +6,7 @@
             <div 
                 id="img-box" 
                 style="
-                    background-image: url('./../../../../assets/images/account/aristide-cittadino.jpg');
+                    background-image: url('./../../../../assets/images/account/mirkoPicture.jpg');
                     background-size: cover;
                 "
             >
@@ -24,8 +24,8 @@
                 </div>
             </div>
 
-            <h3 id="name-profile">Aristide Citizen</h3>
-            <h4 id="username-profile">MyUsername</h4>
+            <h3 id="name-profile">{{user.name}} {{user.lastname}}</h3>
+            <h4 id="username-profile">{{user.username}}</h4>
         </div>
     </div> <!-- End Row Box Photo -->
 
@@ -141,22 +141,34 @@
 
             </div> <!-- End Row Summary Plan -->
 
-            <div id="row-upgrade-plan" class="row">
+            <!-- <div id="row-upgrade-plan" class="row">
 
                 <div id="info-msg-upgrade" class="col-12">
                     You can upgrade your plan at any time
                     <hyt-button 
                         id="upgrade-plane-btn" 
                     >
-                    Upgrade Plane Now!
+                    Upgrade Plan Now!
                     </hyt-button>
                 </div>
 
-            </div> <!-- End Row Upgrade Plan -->
+            </div> End Row Upgrade Plan -->
 
         </div>
 
     </div> <!-- End Row Box Plan -->
+
+    <div *ngIf="wentWrong" class="row" (click)="updatePassword()">
+        <p style="color:red;">{{errMsg}}</p>
+    </div>
+
+    <div *ngIf="passwordChanged" class="row" (click)="updatePassword()">
+        <p style="color:green;">{{succesMsgPwd}}</p>
+    </div>
+
+    <div *ngIf="personalInfoUpdated" class="row" (click)="updatePersonalInfo()">
+        <p style="color:green;">{{successMsg}}</p>
+    </div>
 
     <div id="row-box-details" class="row row-box">
 
@@ -176,7 +188,7 @@
 
                 <div id="container-form-details" class="col-12">
 
-                    <form #pif="ngForm" id="form-details" [formGroup]="personalInfoForm" (ngSubmit)="updatePersonalInfo()"> 
+                    <form #pif="ngForm" id="form-details" [formGroup]="personalInfoForm" (ngSubmit)="updatePersonalInfo()" (keydown)="keyDownFunction($event)"> 
 
                         <div class="row row-field-details">
 
@@ -188,6 +200,8 @@
                                     name="username"
                                     [isRequired]="true"
                                     placeholder="Username"
+                                    [fieldValue]="user.username"
+                                    [disabled]="true"
                                 >
                                 </hyt-input-text>
                                 <!-- [injectedErrorMsg]="error" -->
@@ -202,7 +216,8 @@
                                     name="email"
                                     [isEmail]="true"
                                     [isRequired]="true"
-                                    placeholder="Email" 
+                                    placeholder="Email"
+                                    [fieldValue]="user.email"
                                 >
                                 </hyt-input-text>
                                 <!-- [injectedErrorMsg]="error" -->
@@ -216,7 +231,8 @@
                                     formControlName="name"
                                     name="name"
                                     [isRequired]="true"
-                                    placeholder="Name"  
+                                    placeholder="Name"
+                                    [fieldValue]="user.name"  
                                 >
                                 </hyt-input-text>
                                 <!-- [injectedErrorMsg]="error" -->
@@ -230,7 +246,8 @@
                                     formControlName="lastname"
                                     name="lastname"
                                     [isRequired]="true"
-                                    placeholder="Lastname"  
+                                    placeholder="Lastname"
+                                    [fieldValue]="user.lastname"
                                 >
                                 </hyt-input-text>
                                 <!-- [injectedErrorMsg]="error" -->
@@ -239,8 +256,9 @@
 
                             <div class="container-form-field col-12 btn-form-account">
                                 <hyt-button 
+                                    id="update-info-btn" 
                                     type="submit"
-                                    [isDisabled]="notValid() || loading || personalInfoUpdated"
+                                    [isDisabled]="notValidPif() || loading "
                                 >
                                 Update Personal Info
                                 </hyt-button>
@@ -272,7 +290,7 @@
 
                 <div id="container-form-password" class="col-12">
 
-                    <form #cpf="ngForm" id="form-password" [formGroup]="changePasswordForm" (ngSubmit)="updatePassword()">
+                    <form #cpf="ngForm" id="form-password" [formGroup]="changePasswordForm" (ngSubmit)="updatePassword()" (keydown)="keyDownFunction($event)">
                     <!--form id="form-password"-->
 
                         <div class="row row-field-password">
@@ -287,6 +305,7 @@
                                     placeholder="Old Password"
                                     [injectedErrorMsg]="error" 
                                     type="password"
+                                    [isPassword]="true"
                                 >
                                 </hyt-input-text>
 
@@ -325,11 +344,10 @@
 
                             <div class="container-form-field col-12 btn-form-account">
                                 <hyt-button 
-                                    id="change-password-btn" 
+                                    id ="change-password-btn" 
                                     type="submit"
-                                >
-                                Change Password
-                                </hyt-button>
+                                    [isDisabled]="notValidCpf() || loading || passwordChanged"
+                                >Change Password</hyt-button>
                             </div> <!-- Container Change Password Button -->
 
                         </div>

@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PacketEventsDataComponent } from './packet-events-data.component';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('PacketEventsDataComponent', () => {
   let component: PacketEventsDataComponent;
@@ -8,7 +9,8 @@ describe('PacketEventsDataComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PacketEventsDataComponent ]
+      declarations: [ PacketEventsDataComponent ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));

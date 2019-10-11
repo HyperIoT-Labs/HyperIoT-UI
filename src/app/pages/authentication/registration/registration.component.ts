@@ -61,7 +61,6 @@ export class RegistrationComponent implements OnInit {
 
     this.hUserService.register(user).subscribe(
       res => {
-        this.logger.debug('user:', res);
         this.registrationSucceeded = true;
         this.loading = false;
       },
