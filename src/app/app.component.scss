@@ -32,6 +32,10 @@ html {
 
     &.hyt-modal-open {
       overflow: hidden;
+
+      .cdk-overlay-container {
+        z-index: 1010;
+      }
     }
 
     #hyt-container {
@@ -95,7 +99,7 @@ html {
         opacity: 0;
   
         /* z-index must be higher than .hyt-modal-background */
-        z-index: 10004;
+        z-index: 1004;
         
         /* enables scrolling for tall modals */
         overflow: auto;
@@ -119,6 +123,8 @@ html {
           /* margin exposes part of the modal background */
           // margin: 40px;
         }
+
+
 
       }
 
