@@ -70,7 +70,6 @@ export class DashboardConfigService {
     addDashboardWidget(dashboardId: number, widget: any) {
         // creates a copy of widget object and
         // remove redundant properties
-        delete widget.id;
         const dashboardWidget: DashboardWidgetPlus = {
             dashboard: { id: dashboardId, entityVersion: null },
             widgetConf: JSON.stringify(widget),

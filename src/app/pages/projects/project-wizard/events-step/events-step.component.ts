@@ -1,6 +1,5 @@
-import { Component, Input, EventEmitter, Output, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { RulesService, HPacket, Rule } from '@hyperiot/core';
-import { PacketEventComponent } from './packet-event/packet-event.component';
 import { ProjectWizardService } from 'src/app/services/projectWizard/project-wizard.service';
 
 

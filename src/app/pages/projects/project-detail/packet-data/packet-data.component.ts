@@ -81,6 +81,10 @@ export class PacketDataComponent extends ProjectDetailEntity implements OnDestro
         .setValue(p.timestampFormat);
       this.form.get('hpacket-trafficplan')
         .setValue(p.trafficPlan);
+      this.form.get('hpacket-mqttUrl')
+        .setValue('tcp://karaf-activemq-mqtt-test.hyperiot.cloud');
+      this.form.get('hpacket-mqttTopic')
+        .setValue('/v1/devices/' + p.device.id + p.id);
       this.resetForm();
       this.treeView().focus({id: p.id, type: 'packet'});
       this.loadingStatus = LoadingStatusEnum.Ready;
@@ -88,6 +92,7 @@ export class PacketDataComponent extends ProjectDetailEntity implements OnDestro
       this.loadingStatus = LoadingStatusEnum.Error;
     });
   }
+
   private savePacket(successCallback?, errorCallback?) {
     this.loadingStatus = LoadingStatusEnum.Saving;
     this.resetErrors();

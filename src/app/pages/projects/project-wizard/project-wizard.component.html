@@ -55,7 +55,7 @@
     </ng-template>
 
 
-    <hyt-stepper #stepper (selectionChange)="stepChanged($event)" [isLinear]="false" style="width: 100%"
+    <hyt-stepper #stepper (selectionChange)="stepChanged($event)" [isLinear]="true" style="width: 100%"
       [stepArray]="[ projectTemplate, devicesTemplate, packetsTemplate, fieldsTemplate, enrichmentTemplate, statisticsTemplate, eventsTemplate ]"
       [labelArray]="[ 'Projects', 'Devices', 'Packets', 'Fields', 'Enrichment', 'Statistics', 'Events' ]"
       [completedArray]="[ projectValidated, devicesValidated, packetsValidated, fieldsValidated, enrichmentValidated, statisticsValidated, eventsValidated ]">

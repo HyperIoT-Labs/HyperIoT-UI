@@ -3,17 +3,17 @@
   <div class="row">
     <div class="col-md-4 container-form-field">
       <hyt-input-text [form]="enrichmentForm" formControlName="rule-name" name="rule-name" [isRequired]="true"
-        placeholder="HYT_ruleName" [injectedErrorMsg]="getError('rule-name')">
+        placeholder="Name" [injectedErrorMsg]="getError('rule-name')">
       </hyt-input-text>
     </div> <!-- Field Name -->
     <div class="col-md-4 container-form-field">
       <hyt-select [form]="enrichmentForm" [options]="enrichmentRules" (changeFn)="enrichmentTypeChanged($event)"
-        formControlName="enrichmentRule" name="enrichmentRule" [isRequired]="true" label="HYT_enrichmentRule">
+        formControlName="enrichmentRule" name="enrichmentRule" [isRequired]="true" label="Rule Type">
       </hyt-select>
     </div> <!-- Field RuleType -->
     <div class="col-md-4 container-form-field">
       <hyt-text-area [form]="enrichmentForm" formControlName="rule-description" name="rule-description"
-        placeholder="HYT_description">
+        placeholder="Description">
       </hyt-text-area>
     </div> <!-- Field RuleDescription -->
   </div>

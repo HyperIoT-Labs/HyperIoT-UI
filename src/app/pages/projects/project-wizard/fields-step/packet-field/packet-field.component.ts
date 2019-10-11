@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, ViewChild } from '@angular/core';
 import { HPacket, HPacketField, HpacketsService } from '@hyperiot/core';
 import { HytTreeViewEditableComponent, Node } from '@hyperiot/components/lib/hyt-tree-view-editable/hyt-tree-view-editable.component';
 import { FormGroup, FormBuilder } from '@angular/forms';
@@ -211,7 +211,7 @@ export class PacketFieldComponent implements OnInit, OnChanges {
   }
 
   deleteField() {
-    this.hPacketService.deleteHPacketField(this.currentPacket.id, this.deleteFieldId).subscribe(
+    this.hPacketService.deleteHPacketField(this.deleteFieldId).subscribe(
       res => {
         this.packetFieldService.getTreeFields();
       },

@@ -6,19 +6,19 @@
 
       <div class="container-form-field">
         <hyt-input-text [form]="deviceForm" formControlName="hdevice-devicename" name="hdevice-devicename"
-          [isRequired]="true" placeholder="HYT_deviceName" [injectedErrorMsg]="getError('hdevice-devicename')">
+          [isRequired]="true" placeholder="Name" [injectedErrorMsg]="getError('hdevice-devicename')">
         </hyt-input-text>
       </div> <!-- Field Name -->
 
       <div class="container-form-field">
-        <hyt-input-text [form]="deviceForm" formControlName="hdevice-model" name="hdevice-model" placeholder="HYT_model"
+        <hyt-input-text [form]="deviceForm" formControlName="hdevice-model" name="hdevice-model" placeholder="Model"
           [injectedErrorMsg]="getError('hdevice-model')">
         </hyt-input-text>
       </div> <!-- Field Model -->
 
       <div class="container-form-field">
         <hyt-input-text [form]="deviceForm" formControlName="hdevice-firmwareversion" name="hdevice-firmwareversion"
-          placeholder="HYT_firmwareVersion" [injectedErrorMsg]="getError('hdevice-firmwareversion')">
+          placeholder="Firmware Version" [injectedErrorMsg]="getError('hdevice-firmwareversion')">
         </hyt-input-text>
       </div> <!-- Field Firmware Version -->
 
@@ -41,20 +41,20 @@
     <div class="col-md-6">
 
       <div class="container-form-field">
-        <hyt-input-text [form]="deviceForm" formControlName="hdevice-brand" name="hdevice-brand" placeholder="HYT_brand"
+        <hyt-input-text [form]="deviceForm" formControlName="hdevice-brand" name="hdevice-brand" placeholder="Brand"
           [injectedErrorMsg]="getError('hdevice-brand')">
         </hyt-input-text>
       </div> <!-- Field Brand -->
 
       <div class="container-form-field">
         <hyt-input-text [form]="deviceForm" formControlName="hdevice-softwareversion" name="hdevice-softwareversion"
-          placeholder="HYT_softwareVersion" [injectedErrorMsg]="getError('hdevice-softwareversion')">
+          placeholder="Software Version" [injectedErrorMsg]="getError('hdevice-softwareversion')">
         </hyt-input-text>
       </div> <!-- Field Software Version -->
 
       <div class="container-form-field">
         <hyt-text-area [form]="deviceForm" formControlName="hdevice-description" name="hdevice-description"
-          placeholder="HYT_description">
+          placeholder="Description">
         </hyt-text-area>
       </div> <!-- Field Description -->
 

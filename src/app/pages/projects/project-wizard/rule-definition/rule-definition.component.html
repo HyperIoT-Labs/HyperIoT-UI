@@ -10,19 +10,19 @@
 
           <div class="col-md-3 container-form-field">
             <hyt-select [form]="ruleForm.form" [options]="fieldOptions" formControlName="ruleField" name="ruleField"
-              [isRequired]="true" placeholder="HYT_field" (changeFn)="fieldChanged($event, i)">
+              [isRequired]="true" placeholder="Field" (changeFn)="fieldChanged($event, i)">
             </hyt-select>
           </div> <!-- Field Field -->
 
           <div class="col-md-3 container-form-field">
             <hyt-select [form]="ruleForm.form" [options]="ruleForm.conditionOptions" formControlName="ruleCondition"
-              name="ruleCondition" [isRequired]="true" placeholder="HYT_condition">
+              name="ruleCondition" [isRequired]="true" placeholder="Condition">
             </hyt-select>
           </div> <!-- Field Condition -->
 
           <div class="col-md-3 container-form-field">
             <hyt-input-text *ngIf="ruleForm.compareWith" [form]="ruleForm.form" formControlName="ruleValue"
-              name="ruleValue" [isRequired]="true" placeholder="HYT_value">
+              name="ruleValue" [isRequired]="true" placeholder="Value">
             </hyt-input-text>
           </div> <!-- Field Value -->
 

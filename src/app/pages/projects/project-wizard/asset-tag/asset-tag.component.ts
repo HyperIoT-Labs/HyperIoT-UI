@@ -1,7 +1,7 @@
 import { Component, OnInit, ElementRef, ViewChild, EventEmitter, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { AssetTag, AssetstagsService, HProject } from '@hyperiot/core';
+import { AssetTag, AssetstagsService } from '@hyperiot/core';
 import { MatChipInputEvent } from '@angular/material';
 import { startWith, map } from 'rxjs/operators';
 import { ProjectWizardService } from 'src/app/services/projectWizard/project-wizard.service';

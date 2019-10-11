@@ -53,6 +53,19 @@ export class ProjectWizardHttpErrorHandlerService extends HttpErrorHandlerServic
             ];
             break;
           }
+          case 'it.acsoftware.hyperiot.base.exception.HyperIoTScreenNameAlreadyExistsException': {
+            return [
+              {
+                message: 'This name is already used by another device',
+                container: 'hdevice-devicename'
+              },
+              {
+                message: 'The device name is already used by another device',
+                container: 'general'
+              }
+            ];
+            break;
+          }
           case 'it.acsoftware.hyperiot.base.exception.HyperIoTValidationException': {
             var errors: HYTError[] = [];
             errors.length
