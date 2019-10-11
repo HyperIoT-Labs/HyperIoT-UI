@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EventsLogSettingsComponent } from './events-log-settings.component';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('EventsLogSettingsComponent', () => {
   let component: EventsLogSettingsComponent;
@@ -8,7 +9,8 @@ describe('EventsLogSettingsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EventsLogSettingsComponent ]
+      declarations: [ EventsLogSettingsComponent ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));

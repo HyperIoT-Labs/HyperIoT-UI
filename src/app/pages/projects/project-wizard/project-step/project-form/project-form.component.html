@@ -1,0 +1,40 @@
+<form class="project-form" [formGroup]="projectForm" autocomplete="on">
+
+  <div class="container-form-field">
+
+    <hyt-input-text [form]="projectForm" formControlName="projectName" name="projectName" [isRequired]="true"
+      placeholder="Name" [injectedErrorMsg]="getError('projectName')">
+    </hyt-input-text>
+
+  </div> <!-- Field projectName -->
+
+  <div class="container-form-field">
+
+    <hyt-text-area [form]="projectForm" formControlName="projectDescription" name="projectDescription"
+      placeholder="Description">
+    </hyt-text-area>
+
+  </div> <!-- Field HYT_projectDescription -->
+
+  <div class="container-form-field errorMessage">
+    <ng-container *ngIf="getError('general')">
+      {{getError('general')}}
+    </ng-container>
+  </div> <!-- Error Box -->
+
+  <div id="container-btn-step" class="row">
+
+    <div id="container-btn-prev" class="col-6"></div>
+
+    <div id="container-btn-next" class="col-6">
+
+      <hyt-button id="project-form-submit-button" [isDisabled]="invalid() || pageStatus == PageStatus.Loading"
+        (clickFn)="submitProject()" type="submit">
+        Next <span class="icon-hyt_caretUp hyt-rotale-right"></span>
+      </hyt-button>
+
+    </div>
+
+  </div> <!-- End Row Btn Prev Next -->
+
+</form>

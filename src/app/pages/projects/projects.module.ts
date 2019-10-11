@@ -10,6 +10,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule, MatButtonModule, MatRadioModule, MatProgressSpinnerModule, MatProgressBarModule } from '@angular/material';
 
 import { DevicesStepComponent } from './project-wizard/devices-step/devices-step.component';
+import { DevicesFormComponent } from './project-wizard/devices-step/devices-form/devices-form.component';
+import { DevicesHintColumnComponent } from './project-wizard/devices-step/devices-hint-column/devices-hint-column.component';
 import { EventsStepComponent } from './project-wizard/events-step/events-step.component';
 import { FieldsStepComponent } from './project-wizard/fields-step/fields-step.component';
 import { PacketsStepComponent } from './project-wizard/packets-step/packets-step.component';
@@ -43,6 +45,10 @@ import { EnrichmentTipColumnComponent } from './project-wizard/enrichment-step/e
 import { EventTipColumnComponent } from './project-wizard/events-step/event-tip-column/event-tip-column.component';
 import { PacketEventComponent } from './project-wizard/events-step/packet-event/packet-event.component';
 import { GenericSummaryListComponent } from './project-detail/generic-summary-list/generic-summary-list.component';
+import { PacketsFormComponent } from './project-wizard/packets-step/packets-form/packets-form.component';
+import { PacketsHintColumnComponent } from './project-wizard/packets-step/packets-hint-column/packets-hint-column.component';
+import { ProjectHintColumnComponent } from './project-wizard/project-step/project-hint-column/project-hint-column.component';
+import { ProjectFormComponent } from './project-wizard/project-step/project-form/project-form.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +66,8 @@ import { GenericSummaryListComponent } from './project-detail/generic-summary-li
     ProjectDetailComponent,
     ProjectDataComponent,
     DeviceDataComponent,
+    DevicesFormComponent,
+    DevicesHintColumnComponent,
     PacketDataComponent,
     EventMailComponent,
     AssetCategoryComponent,
@@ -77,7 +85,11 @@ import { GenericSummaryListComponent } from './project-detail/generic-summary-li
     EnrichmentTipColumnComponent,
     EventTipColumnComponent,
     PacketEventComponent,
-    GenericSummaryListComponent
+    GenericSummaryListComponent,
+    PacketsFormComponent,
+    PacketsHintColumnComponent,
+    ProjectHintColumnComponent,
+    ProjectFormComponent
   ],
   imports: [
     MatIconModule,

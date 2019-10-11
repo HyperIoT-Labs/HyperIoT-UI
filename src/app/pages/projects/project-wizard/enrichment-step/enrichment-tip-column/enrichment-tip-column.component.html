@@ -1,1 +1,15 @@
-<p>enrichment-tip-column works!</p>
+ENRICHMENT DATA
+<table>
+  <tr>
+    <th><b>NOME</b></th>
+    <th><b>M</b></th>
+    <th><b>D</b></th>
+    <th><b>X</b></th>
+  </tr>
+  <tr *ngFor="let enr of enrichmentRules">
+    <td>{{enr.name}}</td>
+    <td (click)="update(enr)">M</td>
+    <td (click)="copy(enr)">D</td>
+    <td (click)="delete(enr)">X</td>
+  </tr>
+</table>

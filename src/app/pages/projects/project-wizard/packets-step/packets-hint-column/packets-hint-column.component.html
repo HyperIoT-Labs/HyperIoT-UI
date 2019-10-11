@@ -1,0 +1,22 @@
+<div id="packets-hint">
+
+  <div id="title">PACKETS</div>
+
+  <table *ngIf="tableStatus == 1" id="tablePacket">
+    <tr>
+      <th><b>ID</b></th>
+      <th><b>NOME</b></th>
+      <th><b>M</b></th>
+      <th><b>D</b></th>
+      <th><b>X</b></th>
+    </tr>
+    <tr *ngFor="let pac of packetsList">
+      <td>{{pac.id}}</td>
+      <td>{{pac.name}}</td>
+      <td (click)="update(pac)">M</td>
+      <td (click)="copy(pac)">D</td>
+      <td (click)="delete(pac)">X</td>
+    </tr>
+  </table>
+
+</div>

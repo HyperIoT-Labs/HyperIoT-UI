@@ -1,1 +1,15 @@
-<p>event-tip-column works!</p>
+EVENTS DATA
+<table>
+  <tr>
+    <th><b>NOME</b></th>
+    <th><b>M</b></th>
+    <th><b>D</b></th>
+    <th><b>X</b></th>
+  </tr>
+  <tr *ngFor="let eve of eventRules">
+    <td>{{eve.name}}</td>
+    <td (click)="update(eve)">M</td>
+    <td (click)="copy(eve)">D</td>
+    <td (click)="delete(eve)">X</td>
+  </tr>
+</table>

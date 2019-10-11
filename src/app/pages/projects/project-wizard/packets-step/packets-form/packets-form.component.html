@@ -1,0 +1,74 @@
+<form class="packet-form" [formGroup]="packetForm" autocomplete="on">
+
+  <div class="row">
+    <div class="col-md-6 container-form-field">
+      <hyt-input-text [form]="packetForm" formControlName="hpacket-name" name="hpacket-name" [isRequired]="true"
+        placeholder="Packet name" [injectedErrorMsg]="getError('hpacket-name')">
+      </hyt-input-text> <!-- Field Name -->
+    </div>
+    <div class="col-md-6 container-form-field">
+      <hyt-select [form]="packetForm" [options]="devicesOptions" formControlName="hpacket-device" name="hpacket-device"
+        [isRequired]="true" label="Device">
+      </hyt-select> <!-- Field Packet -->
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4 container-form-field">
+      Typology
+      <hyt-radio-button [form]="packetForm" [options]="typologyOptions" formControlName="hpacket-type"
+        name="hpacket-type" [verticalAlign]="true">
+      </hyt-radio-button>
+    </div> <!-- Field Typology -->
+    <div class="col-md-4 container-form-field">
+      Format
+      <hyt-radio-button [form]="packetForm" [options]="formatOptions" formControlName="hpacket-format"
+        name="hpacket-format" [verticalAlign]="true">
+      </hyt-radio-button>
+    </div> <!-- Field Format -->
+    <div class="col-md-4 container-form-field">
+      Serialization
+      <hyt-radio-button [form]="packetForm" [options]="serializationOptions" formControlName="hpacket-serialization"
+        name="hpacket-serialization" [verticalAlign]="true">
+      </hyt-radio-button>
+    </div> <!-- Field Serialization -->
+  </div>
+
+  <div class="row">
+    <div class="col-md-6 container-form-field">
+      <hyt-input-text [form]="packetForm" formControlName="hpacketTimeStamp" name="hpacketTimeStamp" [isRequired]="true"
+        placeholder="Timestamp" [injectedErrorMsg]="getError('hpacketTimeStamp')">
+      </hyt-input-text> <!-- Field TimeStamp -->
+    </div>
+    <div class="col-md-6 container-form-field">
+      <hyt-input-text [form]="packetForm" formControlName="hpacketTimeStampFormat" name="hpacketTimeStampFormat"
+        [isRequired]="true" placeholder="Timestamp format" [injectedErrorMsg]="getError('hpacketTimeStampFormat')">
+      </hyt-input-text> <!-- Field TimeStampFormat -->
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12 container-form-field">
+      <hyt-select [form]="packetForm" [options]="trafficPlanOptions" formControlName="packetTrafficPlan"
+        name="packetTrafficPlan" [isRequired]="true" label="Traffic Plan">
+      </hyt-select> <!-- Field Traffic Plan -->
+    </div>
+  </div>
+
+  <div class="container-form-field errorMessage">
+    <ng-container *ngIf="getError('general')">
+      {{getError('general')}}
+    </ng-container>
+  </div> <!-- Error Box -->
+
+  <hyt-button *ngIf="submitType == 'ADD'" id="packet-form-submit-button"
+    [isDisabled]="invalid() || pageStatus == PageStatus.Loading" (clickFn)="postPacket()" type="submit">
+    Add Packet
+  </hyt-button>
+
+  <hyt-button *ngIf="submitType == 'UPDATE'" id="packet-form-submit-button"
+    [isDisabled]="invalid() || pageStatus == PageStatus.Loading" (clickFn)="putPacket()" type="submit">
+    Update Packet
+  </hyt-button>
+
+</form>

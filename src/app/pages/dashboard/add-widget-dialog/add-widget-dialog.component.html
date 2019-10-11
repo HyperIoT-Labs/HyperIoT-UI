@@ -13,26 +13,25 @@
             <div class="category-list">
     
                 <button class="category-item"
-                    disabled={{category.disabled}}
-                    [ngClass]="{selected: category === selectedCategory}"
-                    *ngFor="let category of widgetCategoryList"
-                    (click)="onCategorySelect(category)">
-                    <!-- <img src="assets/widgets/images/{{category.icon}}"> -->
-                    <span class="hyt-icon {{category.fontIcon}}"></span>
-                    <div class="cat-name">{{category.name}}</div>
+                    [disabled]="!(category.value.name=='all' || widgetsByCategory[category.key].length != 0)"
+                    [ngClass]="{selected: category.value === selectedCategory}"
+                    *ngFor="let category of widgetCategoryList | keyvalue:orderById"
+                    (click)="onCategorySelect(category.value)">
+                    <span class="hyt-icon {{category.value.fontIcon}}"></span>
+                    <div class="cat-name">{{category.value.name}}</div>
                 </button> 
                 
             </div>
     
             <div class="widget-list" *ngIf="selectedCategory != null">
-    
+
                 <div class="widget-item"
-                    *ngFor="let widget of categorydWidgets"
+                    *ngFor="let widget of filteredWidgets"
                     [ngClass]="{selected: widget.count > 0}"
                     (click)="currentWidget = widget"
                     >
-                    <header class="widget-name">{{ widget.name }}</header>
-                    <img *ngIf="widget.info && widget.info.icon" [src]="widget.info.icon">
+                    <div class="widget-name">{{ widget.name }}</div>
+                    <img *ngIf="widget.image" [src]="widget.image">
                     <input type="number" class="item-count"
                         title="HYT_widget_add_quantity" i18n-title="@@addWidgetDialog-add-quantity"
                         min="0" max="{{widgetAddMax}}"
@@ -43,17 +42,18 @@
                 </div>
     
             </div>
+
     
             <div class="widget-info">
     
                 <div id="info" *ngIf="currentWidget != null">
                     <h3>{{ currentWidget.name }}</h3>
-                    <div *ngIf="currentWidget.info && currentWidget.info.preview">
-                        <img [src]="currentWidget.info.preview" width="100%">
+                    <div *ngIf="currentWidget.preView">
+                        <img [src]="currentWidget.preView" width="100%">
                     </div>
-                    <div *ngIf="currentWidget.info && currentWidget.info.rating">
+                    <div>
                         <star-rating
-                            [value]="currentWidget.info.rating"
+                            [value]="currentWidget.avgRating || 0"
                             checkedcolor="gold"
                             uncheckedcolor="gray"
                             size="32px"
@@ -63,19 +63,11 @@
                     </div>
                     <label i18n="@@addWidgetDialog-info-type">HYT_widget_info_type</label>
                     <p>
-                        {{ currentWidget.type }}
+                        {{ selectedCategory.name }}
                     </p>
-                    <div *ngIf="currentWidget.info">
+                    <div>
                         <label i18n="@@addWidgetDialog-info-description">Description</label>
-                        <p>
-                            {{ currentWidget.type }}
-                        </p>
-                        <div *ngIf="currentWidget.info">
-                            <label i18n="@@addWidgetDialog-info-description">Description</label>
-                            <p>
-                                {{ currentWidget.info.description }}
-                            </p>
-                        </div>
+                        <p>{{ currentWidget.description }}</p>
                     </div>
     
                 </div>

@@ -1,10 +1,8 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
-import { HDevice, HpacketsService, HPacket } from '@hyperiot/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
-import { SelectOption } from '@hyperiot/components/lib/hyt-select/hyt-select.component';
-import { Option } from '@hyperiot/components/lib/hyt-radio-button/hyt-radio-button.component';
-import { HYTError } from 'src/app/services/errorHandler/models/models';
+import { Component, ViewChild } from '@angular/core';
+import { HpacketsService, HPacket } from '@hyperiot/core';
 import { ProjectWizardHttpErrorHandlerService } from 'src/app/services/errorHandler/project-wizard-http-error-handler.service';
+import { ProjectWizardService } from 'src/app/services/projectWizard/project-wizard.service';
+import { PacketsFormComponent } from './packets-form/packets-form.component';
 import { PageStatusEnum } from '../model/pageStatusEnum';
 
 @Component({
@@ -12,97 +10,48 @@ import { PageStatusEnum } from '../model/pageStatusEnum';
   templateUrl: './packets-step.component.html',
   styleUrls: ['./packets-step.component.scss']
 })
-export class PacketsStepComponent implements OnInit, OnChanges {
+export class PacketsStepComponent {
 
-  @Input() hDevices: HDevice[] = [];
+  selectedPacket: HPacket;
 
-  devicesOptions: SelectOption[] = [];
-
-  errors: HYTError[] = [];
-
-  typologyOptions: Option[] = [
-    { value: 'INPUT', label: 'Input', checked: true },
-    { value: 'OUTPUT', label: 'Output' },
-    { value: 'IO', label: 'I/O' }
-  ];
-
-  formatOptions: Option[] = [
-    { value: 'JSON', label: 'json', checked: true },
-    { value: 'XML', label: 'xml' },
-    { value: 'CSV', label: 'csv' }
-  ];
-
-  serializationOptions: Option[] = [
-    { value: 'NONE', label: 'none', checked: true },
-    { value: 'AVRO', label: 'avro' }
-  ];
-
-  trafficPlanOptions: SelectOption[] = [
-    { value: 'LOW', label: 'Low' },
-    { value: 'MEDIUM', label: 'Medium' },
-    { value: 'HIGH', label: 'High' },
-    { value: 'INTENSIVE', label: 'Intensive' },
-  ];
-
-  packetForm: FormGroup;
-
-  PageStatus = PageStatusEnum;
-  pageStatus: PageStatusEnum = PageStatusEnum.Default;
-
-  packetsList: HPacket[] = [];
-
-  @Output() hPacketsOutput = new EventEmitter<HPacket[]>();
-
-  formDeviceActive: boolean = false;
+  @ViewChild('packetsForm', { static: false }) form: PacketsFormComponent;
 
   constructor(
-    private fb: FormBuilder,
+    private wizardService: ProjectWizardService,
     private hPacketService: HpacketsService,
     private errorHandler: ProjectWizardHttpErrorHandlerService
   ) { }
 
-  ngOnInit() {
-    this.packetForm = this.fb.group({});
-  }
+  savePacket() {
 
-  ngOnChanges() {
-    this.devicesOptions = [];
-    for (let el of this.hDevices)
-      this.devicesOptions.push({ value: el.id.toString(), label: el.deviceName });
-  }
-
-  createPacket() {
-
-    this.pageStatus = PageStatusEnum.Loading;
-
-    this.errors = [];
+    this.form.pageStatus = PageStatusEnum.Loading;
 
     let hPacket: HPacket = {
       entityVersion: 1,
-      name: this.packetForm.value['hpacket-name'],
-      type: this.packetForm.value['hpacket-type'],
-      format: this.packetForm.value['hpacket-format'],
-      serialization: this.packetForm.value['hpacket-serialization'],
+      name: this.form.packetForm.value['hpacket-name'],
+      type: this.form.packetForm.value['hpacket-type'],
+      format: this.form.packetForm.value['hpacket-format'],
+      serialization: this.form.packetForm.value['hpacket-serialization'],
       fields: [],
-      trafficPlan: this.packetForm.value['packetTrafficPlan'],
-      timestampField: this.packetForm.value['hpacketTimeStamp'], //'timestampField',
-      timestampFormat: this.packetForm.value['hpacketTimeStampFormat'], //'dd/MM/yyyy HH.mmZ',
+      trafficPlan: this.form.packetForm.value['packetTrafficPlan'],
+      timestampField: this.form.packetForm.value['hpacketTimeStamp'], //'timestampField',
+      timestampFormat: this.form.packetForm.value['hpacketTimeStampFormat'], //'dd/MM/yyyy HH.mmZ',
       version: '1',
-      device: { entityVersion: 1, id: this.packetForm.value['hpacket-device'] }
+      device: { id: this.form.packetForm.value['hpacket-device'].id, entityVersion: this.form.packetForm.value['hpacket-device'].entityVersion }
     }
 
     this.hPacketService.saveHPacket(hPacket).subscribe(
       res => {
-        this.packetsList.push(res);
-        this.hPacketsOutput.emit(this.packetsList);
-        this.pageStatus = PageStatusEnum.Submitted;
+        this.form.resetForm('ADD');
+        this.form.pageStatus = PageStatusEnum.Submitted;
+        this.wizardService.addPacket(res);
       },
       err => {
-        this.pageStatus = PageStatusEnum.Error;
-        this.errors = this.errorHandler.handleCreatePacket(err);
-        this.errors.forEach(e => {
+        this.form.pageStatus = PageStatusEnum.Error;
+        this.form.errors = this.errorHandler.handleCreatePacket(err);
+        this.form.errors.forEach(e => {
           if (e.container != 'general')
-            this.packetForm.get(e.container).setErrors({
+            this.form.packetForm.get(e.container).setErrors({
               validateInjectedError: {
                 valid: false
               }
@@ -112,48 +61,71 @@ export class PacketsStepComponent implements OnInit, OnChanges {
     )
   }
 
-  invalid() {
-    return (
-      this.packetForm.get('hpacket-name').invalid ||
-      this.packetForm.get('hpacket-device').invalid ||
-      this.packetForm.get('hpacket-type').invalid ||
-      this.packetForm.get('hpacket-format').invalid ||
-      this.packetForm.get('hpacket-serialization').invalid ||
-      this.packetForm.get('packetTrafficPlan').invalid ||
-      this.packetForm.get('hpacketTimeStamp').invalid ||
-      this.packetForm.get('hpacketTimeStampFormat').invalid
+  updatePacket() {
+
+    this.form.pageStatus = PageStatusEnum.Loading;
+
+    this.selectedPacket.name = this.form.packetForm.value['hpacket-name'];
+    this.selectedPacket.type = this.form.packetForm.value['hpacket-type'];
+    this.selectedPacket.format = this.form.packetForm.value['hpacket-format'];
+    this.selectedPacket.serialization = this.form.packetForm.value['hpacket-serialization'];
+    this.selectedPacket.trafficPlan = this.form.packetForm.value['packetTrafficPlan'];
+    this.selectedPacket.timestampField = this.form.packetForm.value['hpacketTimeStamp'];
+    this.selectedPacket.timestampFormat = this.form.packetForm.value['hpacketTimeStampFormat'];
+    this.selectedPacket.device = { id: this.form.packetForm.value['hpacket-device'].id, entityVersion: this.form.packetForm.value['hpacket-device'].entityVersion };
+
+    this.hPacketService.updateHPacket(this.selectedPacket).subscribe(
+      res => {
+        this.form.resetForm('ADD');
+        this.form.pageStatus = PageStatusEnum.Submitted;
+        this.wizardService.updatePacket(res);
+      },
+      err => {
+        this.form.pageStatus = PageStatusEnum.Error;
+        this.form.errors = this.errorHandler.handleCreatePacket(err);
+        this.form.errors.forEach(e => {
+          if (e.container != 'general')
+            this.form.packetForm.get(e.container).setErrors({
+              validateInjectedError: {
+                valid: false
+              }
+            });
+        })
+      }
     )
   }
 
-  getError(field: string): string {
-    return (this.errors.find(x => x.container == field)) ? this.errors.find(x => x.container == field).message : null;
+  tableUpdatePacket(packet: HPacket) {
+    this.selectedPacket = packet;
+    this.form.setForm(packet, 'UPDATE');
+  }
+
+  tableCopyPacket(packet: HPacket) {
+    this.form.setForm(packet, 'ADD');
   }
 
   //delete logic
 
-  deleteId: number = -1;
+  deleteModal: boolean = false;
 
   deleteError: string = null;
 
-  showDeleteModal(id: number) {
+  showDeleteModal(packet: HPacket) {
     this.deleteError = null;
-    this.deleteId = id;
+    this.selectedPacket = packet;
+    this.deleteModal = true;
   }
 
   hideDeleteModal() {
-    this.deleteId = -1;
+    this.deleteModal = false;
+    this.selectedPacket = null;
   }
 
   deletePacket() {
     this.deleteError = null;
-    this.hPacketService.deleteHPacket(this.deleteId).subscribe(
+    this.hPacketService.deleteHPacket(this.selectedPacket.id).subscribe(
       res => {
-        for (let i = 0; i < this.packetsList.length; i++) {
-          if (this.packetsList[i].id == this.deleteId) {
-            this.packetsList.splice(i, 1);
-          }
-        }
-        this.hPacketsOutput.emit(this.packetsList);
+        this.wizardService.deletePacket(this.selectedPacket.id);
         this.hideDeleteModal();
       },
       err => {

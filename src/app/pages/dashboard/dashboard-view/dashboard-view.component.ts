@@ -1,12 +1,8 @@
-import { Component, OnInit, ViewChild, Input, HostListener } from '@angular/core';
-import { ActivatedRoute, Router, OutletContext } from '@angular/router';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { WidgetsLayoutComponent } from '../widgets-layout/widgets-layout.component';
-import { AddWidgetDialogComponent } from '../add-widget-dialog/add-widget-dialog.component';
-import { WidgetSettingsDialogComponent } from '../widget-settings-dialog/widget-settings-dialog.component';
-import { DashboardConfigService } from '../dashboard-config.service';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 import { HytModalConfService } from 'src/app/services/hyt-modal-conf.service';
 
 @Component({

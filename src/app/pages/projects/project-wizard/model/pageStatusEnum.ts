@@ -4,3 +4,9 @@ export enum PageStatusEnum {
     Loading = 1,
     Submitted = 2
 }
+
+export enum TableStatusEnum {
+    Loading = 0,
+    Error = -1,
+    Ok = 1,
+}

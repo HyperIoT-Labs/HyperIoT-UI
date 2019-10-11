@@ -4,15 +4,15 @@
     <div class="row">
       <div class="col-md-4 container-form-field">
         <hyt-input-text [form]="mailForm" formControlName="mailRecipient" name="mailRecipient" [isRequired]="true"
-          placeholder="HYT_mail_to">
+          placeholder="Mail to">
         </hyt-input-text>
       </div> <!-- Mail Recipient -->
       <div class="col-md-4 container-form-field">
-        <hyt-input-text [form]="mailForm" formControlName="mailCC" name="mailCC" placeholder="HYT_mail_cc">
+        <hyt-input-text [form]="mailForm" formControlName="mailCC" name="mailCC" placeholder="Mail CC">
         </hyt-input-text>
       </div> <!-- Mail CC -->
       <div class="col-md-4 container-form-field">
-        <hyt-input-text [form]="mailForm" formControlName="mailObject" name="mailObject" placeholder="HYT_mail_object">
+        <hyt-input-text [form]="mailForm" formControlName="mailObject" name="mailObject" placeholder="Mail Object">
         </hyt-input-text>
       </div> <!-- Mail Object -->
     </div>
@@ -20,7 +20,7 @@
     <div class="row">
       <div class="col-md-12 container-form-field">
         <hyt-text-area id="mailBody" [form]="mailForm" formControlName="mailBody" name="mailBody"
-          placeholder="HYT_mail_body">
+          placeholder="Mail Body">
         </hyt-text-area>
       </div> <!-- Mail Body -->
     </div>

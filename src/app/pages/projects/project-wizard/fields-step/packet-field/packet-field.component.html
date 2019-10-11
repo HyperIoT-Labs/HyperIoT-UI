@@ -19,7 +19,7 @@
 
         <div class="container-form-field">
           <hyt-input-text [form]="fieldForm" formControlName="fieldName" name="fieldName" [isRequired]="true"
-            placeholder="HYT_fieldName" [injectedErrorMsg]="getError('fieldName')">
+            placeholder="Name" [injectedErrorMsg]="getError('fieldName')">
           </hyt-input-text>
         </div> <!-- Field Name -->
 
@@ -32,13 +32,13 @@
 
         <div class="container-form-field">
           <hyt-select [form]="fieldForm" [options]="typeOptions" formControlName="fieldType" name="fieldType"
-            [isRequired]="true" label="HYT_fieldType">
+            [isRequired]="true" label="Type">
           </hyt-select>
         </div> <!-- Field Type -->
 
         <div class="container-form-field">
           <hyt-text-area [form]="fieldForm" formControlName="fieldDescription" name="fieldDescription"
-            placeholder="HYT_fieldDescription">
+            placeholder="Description">
           </hyt-text-area>
         </div> <!-- Field Description -->
 

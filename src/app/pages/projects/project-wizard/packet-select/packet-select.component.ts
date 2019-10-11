@@ -1,63 +1,65 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { SelectOption } from '@hyperiot/components';
 import { HDevice, HPacket, HpacketsService } from '@hyperiot/core';
+import { ProjectWizardService } from 'src/app/services/projectWizard/project-wizard.service';
 
 @Component({
   selector: 'hyt-packet-select',
   templateUrl: './packet-select.component.html',
   styleUrls: ['./packet-select.component.scss']
 })
-export class PacketSelectComponent implements OnInit, OnChanges {
+export class PacketSelectComponent implements OnInit {
 
-  @Input() hDevices: HDevice[] = [];
-
-  @Input() hPackets: HPacket[] = [];
-
-  currentDevice: HDevice;
+  hPackets: HPacket[] = [];
 
   @Output() currentPacket = new EventEmitter<HPacket>();
 
   selectForm: FormGroup;
 
   devicesOptions: SelectOption[] = [];
-  devicesLastLength: number = 0; //TODO <- update onchange device/packets logic
   packetsOptions: SelectOption[] = [];
-  packetsLastLength: number = 0; //TODO <- update onchange device/packets logic
 
   constructor(
     private fb: FormBuilder,
+    private wizardService: ProjectWizardService,
     private hPacketService: HpacketsService
   ) { }
 
   ngOnInit() {
     this.selectForm = this.fb.group({});
-  }
-
-  ngOnChanges() {
-    if (this.devicesLastLength != this.hDevices.length || this.packetsLastLength != this.hPackets.length) {//TODO <- update onchange device/packets logic
-      this.devicesLastLength = this.hDevices.length;
-      this.packetsLastLength = this.hPackets.length;
-      if (this.selectForm)
+    this.wizardService.hDevices$.subscribe(
+      (res: HDevice[]) => {
         this.selectForm.reset();
-      this.devicesOptions = [];
-      this.packetsOptions = [];
-      this.currentPacket.emit(null);
-      for (let el of this.hDevices)
-        this.devicesOptions.push({ value: el.id.toString(), label: el.deviceName })
-    }
+        this.devicesOptions = [];
+        this.packetsOptions = [];
+        this.currentPacket.emit(null);
+        for (let el of res)
+          this.devicesOptions.push({ value: el, label: el.deviceName });
+      }
+    );
+    this.wizardService.hPackets$.subscribe(
+      (res: HPacket[]) => {
+        this.hPackets = res;
+        this.selectForm.reset();
+        this.packetsOptions = [];
+        this.currentPacket.emit(null);
+      }
+    );
   }
 
   deviceChanged(event) {
     this.packetsOptions = [];
+    this.selectForm.patchValue({
+      selectPacket: null
+    });
     this.currentPacket.emit(null);
-    this.currentDevice = this.hDevices.find(x => x.id == event.value);
-    this.hPackets.filter(p => p.device.id == this.currentDevice.id).forEach(p => this.packetsOptions.push({ value: p.id.toString(), label: p.name }));
+    this.hPackets.filter(p => p.device.id == event.value.id).forEach(p => this.packetsOptions.push({ value: p, label: p.name }));
   }
 
   packetChanged(event) {
-    this.hPacketService.findHPacket(event.value).subscribe(
-      res => this.currentPacket.emit(res)
+    this.hPacketService.findHPacket(event.value.id).subscribe(
+      res => this.currentPacket.emit(res)//TODO THIS REQUEST IS TO UPDATE PACKET FIELD FOR ENRICHMENT AND EVENT. BEST SOLUTION IS TO ADD, UPDATE OR DELETE FIELDS MANUALLY ON WIZARDSERVICE.
     )
   }
 

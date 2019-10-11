@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RuleDefinitionComponent } from './rule-definition.component';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('RuleDefinitionComponent', () => {
   let component: RuleDefinitionComponent;
@@ -8,7 +9,8 @@ describe('RuleDefinitionComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RuleDefinitionComponent ]
+      declarations: [ RuleDefinitionComponent ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));

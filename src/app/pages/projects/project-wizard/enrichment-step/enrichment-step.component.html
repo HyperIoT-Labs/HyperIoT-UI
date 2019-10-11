@@ -6,15 +6,14 @@
 
       <div class="col-md-12">
 
-        <hyt-packet-select [hDevices]="hDevices" [hPackets]="hPackets" (currentPacket)="packetChanged($event)">
+        <hyt-packet-select (currentPacket)="packetChanged($event)">
         </hyt-packet-select>
 
       </div>
 
       <div class="col-md-12">
 
-        <hyt-packet-enrichment [hProject]="hProject" [hPackets]="hPackets" [currentPacket]="currentPacket"
-          (hPacketsOutput)="packetsOutputChanged($event)" (rulesOutput)="rulesChanged($event)">
+        <hyt-packet-enrichment [currentPacket]="currentPacket">
         </hyt-packet-enrichment>
 
       </div>
@@ -24,34 +23,13 @@
   </div>
 
   <div class="col-md-2">
-
-    <div class="row">
-
-      <div class="col-md-12">
-        ENRICHMENT DATA
-        <table>
-          <tr>
-            <th><b>X</b></th>
-            <th><b>ID</b></th>
-            <th><b>NOME</b></th>
-            <th><b>PACKET</b></th>
-          </tr>
-          <tr *ngFor="let enr of ruleList">
-            <td (click)="showDeleteModal(enr.id)">
-              X
-            </td>
-            <td>{{enr.id}}</td>
-            <td>{{enr.name}}</td>
-            <td>{{enr.packet.id}}</td>
-          </tr>
-        </table>
-      </div>
-
-    </div>
+    <hyt-enrichment-tip-column (copyEnrichmentRule)="tableCopyRule($event)"
+      (updateEnrichmentRule)="tableUpdateRule($event)" (deleteEnrichmentRule)="showDeleteModal($event)">
+    </hyt-enrichment-tip-column>
 
   </div>
 
-  <hyt-modal [mOpen]="deleteId!=-1">
+  <hyt-modal [mOpen]="deleteModal">
     <div class="alignCenter">
       Sei sicuro di voler eliminare il device?
       <hr>

@@ -17,21 +17,19 @@
     </ng-template>
 
     <ng-template #devicesTemplate>
-      <hyt-devices-step [hProject]=" hProject" (hDevicesOutput)="updateDevices($event)">
-      </hyt-devices-step>
+      <hyt-devices-step></hyt-devices-step>
       <hyt-button (clickFn)="stepper.previous()">Back</hyt-button>
       <hyt-button [isDisabled]="!devicesValidated" (clickFn)="stepper.next()">Next</hyt-button>
     </ng-template>
 
     <ng-template #packetsTemplate>
-      <hyt-packets-step [hDevices]="hDevices" (hPacketsOutput)="updatePackets($event)"></hyt-packets-step>
+      <hyt-packets-step></hyt-packets-step>
       <hyt-button (clickFn)="stepper.previous()">Back</hyt-button>
       <hyt-button [isDisabled]="!packetsValidated" (clickFn)="stepper.next()">Next</hyt-button>
     </ng-template>
 
     <ng-template #fieldsTemplate>
-      <hyt-fields-step [hDevices]="hDevices" (hPacketsOutput)="updatePacketFields($event)" [hPackets]="hPackets">
-      </hyt-fields-step>
+      <hyt-fields-step></hyt-fields-step>
       <hyt-button (clickFn)="stepper.previous()">Back</hyt-button>
       <hyt-button
         (clickFn)="(fieldsValidated == true && enrichmentValidated == false)? openOptionModal() : stepper.next()">Next
@@ -39,8 +37,7 @@
     </ng-template>
 
     <ng-template #enrichmentTemplate>
-      <hyt-enrichment-step [hProject]="hProject" [hDevices]="hDevices" [hPackets]="hPackets"
-        (rulesOutput)="updateRules($event)" (hPacketsOutput)="updatePackets($event)"></hyt-enrichment-step>
+      <hyt-enrichment-step></hyt-enrichment-step>
       <hyt-button (clickFn)="stepper.previous()">Back</hyt-button>
       <hyt-button (clickFn)="stepper.next()">Next</hyt-button>
     </ng-template>
@@ -52,14 +49,13 @@
     </ng-template>
 
     <ng-template #eventsTemplate>
-      <hyt-events-step [hProject]="hProject" [hDevices]="hDevices" [hPackets]="hPackets"
-        (eventsOutput)="updateEvents($event)"></hyt-events-step>
+      <hyt-events-step></hyt-events-step>
       <hyt-button (clickFn)="stepper.previous()">Back</hyt-button>
       <hyt-button (clickFn)="openOptionModal()">Next</hyt-button>
     </ng-template>
 
 
-    <hyt-stepper #stepper [isLinear]="false" style="width: 100%"
+    <hyt-stepper #stepper (selectionChange)="stepChanged($event)" [isLinear]="true" style="width: 100%"
       [stepArray]="[ projectTemplate, devicesTemplate, packetsTemplate, fieldsTemplate, enrichmentTemplate, statisticsTemplate, eventsTemplate ]"
       [labelArray]="[ 'Projects', 'Devices', 'Packets', 'Fields', 'Enrichment', 'Statistics', 'Events' ]"
       [completedArray]="[ projectValidated, devicesValidated, packetsValidated, fieldsValidated, enrichmentValidated, statisticsValidated, eventsValidated ]">
@@ -140,7 +136,7 @@
                     <td>Devices
                       <hr>
                       <ul>
-                        <li *ngFor="let el of hDevices">{{el.deviceName}}</li>
+                        <li *ngFor="let el of wizardService.hDevices">{{el.deviceName}}</li>
                       </ul>
                     </td>
                   </tr>
@@ -149,7 +145,7 @@
                     <td>Packets
                       <hr>
                       <ul>
-                        <li *ngFor="let el of hPackets">{{el.name}}</li>
+                        <li *ngFor="let el of wizardService.hPackets">{{el.name}}</li>
                       </ul>
                     </td>
                   </tr>
@@ -162,7 +158,7 @@
                     <td>Enrichment
                       <hr>
                       <ul>
-                        <li *ngFor="let el of rules">{{el.name}}</li>
+                        <li *ngFor="let el of wizardService.enrichmentRules">{{el.name}}</li>
                       </ul>
                     </td>
                   </tr>
@@ -177,7 +173,7 @@
                     <td>Events
                       <hr>
                       <ul>
-                        <li *ngFor="let el of events">{{el.name}}</li>
+                        <li *ngFor="let el of wizardService.eventRules">{{el.name}}</li>
                       </ul>
                     </td>
                   </tr>
