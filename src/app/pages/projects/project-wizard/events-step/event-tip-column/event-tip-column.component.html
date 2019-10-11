@@ -1,14 +1,12 @@
 EVENTS DATA
 <table>
   <tr>
-    <th><b>ID</b></th>
     <th><b>NOME</b></th>
     <th><b>M</b></th>
     <th><b>D</b></th>
     <th><b>X</b></th>
   </tr>
   <tr *ngFor="let eve of eventRules">
-    <td>{{eve.id}}</td>
     <td>{{eve.name}}</td>
     <td (click)="update(eve)">M</td>
     <td (click)="copy(eve)">D</td>

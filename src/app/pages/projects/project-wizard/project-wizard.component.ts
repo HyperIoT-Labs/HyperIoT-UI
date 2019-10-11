@@ -60,16 +60,14 @@ export class ProjectWizardComponent implements OnInit {
     );
     this.wizardService.hPackets$.subscribe(
       (res: HPacket[]) => {
-        if (res && res.length != 0)
+        if (res && res.length != 0){
           this.packetsValidated = true;
-        else
-          this.packetsValidated = false;
-        let pez = false;
-        for (let i = 0; i < res.length; i++) {
-          if (res[i].fields.length != 0)
-            pez = true;
+          this.fieldsValidated = true;
         }
-        this.fieldsValidated = pez;
+        else{
+          this.packetsValidated = false;
+          this.fieldsValidated = false;
+        }
       }
     );
   }
