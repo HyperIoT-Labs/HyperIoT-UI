@@ -25,7 +25,7 @@
             height:100%;
             left:0;
             // width:60px;
-            z-index:1000;
+            z-index:1001;
             background-color: #ffffff;
     
             ul {
@@ -77,17 +77,13 @@
                 border-bottom: 1px solid #e5e5e5;
                 transition: width 0.1s ease-in-out;
 
-                &:hover,
-                &.active {
-
-                    a {
-                        color:#fff;
-                        background-color:#5fa2db;
-                    }
-
+                &.selected {
+                    color:#0d59c5;
+                    border-bottom: solid 1px #17a4fa;
+                    background-color: #e6f0ff;
                 }
 
-                &:hover {
+                &:hover:not(.selected) {
                     border-color: #3b9aff;
                     border-right: 1px solid #e5e5e5;
 
@@ -100,7 +96,7 @@
                 &:active {
                     background-color: #5fa2db;
                 }
-    
+
                 a {
                     position:relative;
                     display:table;

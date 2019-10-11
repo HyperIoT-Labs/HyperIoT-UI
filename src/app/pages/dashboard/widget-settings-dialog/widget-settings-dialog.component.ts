@@ -85,9 +85,11 @@ export class WidgetSettingsDialogComponent implements OnInit, OnDestroy {
 
   // open modal
   open(): void {
+    this.dialogDataState = 0;
     this.element.classList.add('open');
     document.body.classList.add('hyt-modal-open');
     this.modalIsOpen = true;
+    this.dialogDataState = 1;
   }
 
   // close modal

@@ -2,14 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { map, catchError } from 'rxjs/operators';
-import { Subject, forkJoin, of } from 'rxjs';
+import { Subject, forkJoin, of, Observable } from 'rxjs';
 
 import {
     DashboardwidgetsService,
     DashboardsService,
     DashboardWidget,
     HprojectsService,
-    Dashboard
+    Dashboard,
+    StormService
 } from '@hyperiot/core';
 import { DashboardWidgetPlus } from 'src/app/models/dashboard-models';
 
@@ -24,6 +25,7 @@ export class DashboardConfigService {
         private dashboardService: DashboardsService,
         private dashboardWidgetService: DashboardwidgetsService,
         private hProjectService: HprojectsService,
+        private sotrmService: StormService,
         private http: HttpClient
     ) { }
 
@@ -149,4 +151,13 @@ export class DashboardConfigService {
     getWidgetList() {
         return this.http.get(this.widgetListUrl);
     }
+
+    postRecordingStateOn(projectId: number) {
+        return this.sotrmService.activateProjectTopology(projectId);
+    }
+
+    postRecordingStateOff(projectId: number) {
+        return this.sotrmService.deactivateProjectTopology(projectId);
+    }
+
 }

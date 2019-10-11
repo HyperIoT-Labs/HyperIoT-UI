@@ -39,7 +39,6 @@
                 margin-left: auto;
                 margin-right: auto;
                 border-radius: 8px;
-                cursor: pointer;
 
                 &.on {
                     border: 0.5px solid #00800078;
@@ -57,6 +56,7 @@
 
                     &#icon-recording {
                         margin-right: 10px;
+                        cursor: pointer;
 
                         svg {
                             width: 20px;
@@ -84,6 +84,36 @@
 
                 }
 
+                #reload-btn {
+                    float: right;
+                    text-align: center;
+                    cursor: pointer;
+                    text-transform: uppercase;
+
+                    &:hover {
+                        color: #008aff;
+                    }
+
+                    span {
+                        display: block;
+                        font-size: 1.5em;
+                        margin-bottom: 0.15em;
+
+                        &.reloading {
+                            animation-duration: 1.5s;
+                            animation-name: recording;
+                            animation-iteration-count: infinite;
+                        }
+                    }
+
+                    p {
+                        margin-bottom: 0;
+                        margin-top: -5px;
+                        font-size: .8em;
+                    }
+
+                }
+
             }
 
         }
@@ -99,14 +129,21 @@
 
             .left-tools {
 
+                .dash-container-btn {
+                    margin: 1px;
+                    padding:2px;
+                    align-content: center;
+                }
+
                 #signal-btn,
-                #play-btn,
-                #recording-btn {
+                #play-btn {
                     float: left;
-                    margin: .3em 1.2em .3em 1.2em;
+                    margin: 0.3em 0.3em 0.3em 0.3em;
                     text-align: center;
                     cursor: pointer;
                     text-transform: uppercase;
+                    width: 4em;
+                    height: 4em;
 
                     &:hover {
                         color: #008aff;
@@ -123,19 +160,6 @@
                         font-size: .8em;
                     }
 
-                }
-
-                #recording-btn {
-                    span {
-                        font-size: 1.95em;
-                        margin-bottom: 0.15em;
-
-                        &.recording {
-                            animation-duration: 1.5s;
-                            animation-name: recording;
-                            animation-iteration-count: infinite;
-                        }
-                    }
                 }
 
             }
