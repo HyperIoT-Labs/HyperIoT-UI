@@ -32,6 +32,8 @@ import { TimeChartSettingsComponent } from './widget-settings-dialog/time-chart-
 import { MyTelInputComponent } from '../../test/my-tel-input/my-tel-input.component';
 import { from } from 'rxjs';
 import { DashboardComponent } from './dashboard.component';
+import { ConfirmRecordingActionComponent } from './modals/confirm-recording-action/confirm-recording-action.component';
+import { InfoRecordingActionComponent } from './modals/info-recording-action/info-recording-action.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +50,9 @@ import { DashboardComponent } from './dashboard.component';
     TextLabelSettingsComponent,
     TimeChartSettingsComponent,
     MyTelInputComponent,
-    DashboardComponent
+    DashboardComponent,
+    ConfirmRecordingActionComponent,
+    InfoRecordingActionComponent
   ],
   imports: [
     CommonModule,

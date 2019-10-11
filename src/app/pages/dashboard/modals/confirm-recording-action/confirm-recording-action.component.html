@@ -1,0 +1,31 @@
+<div class="hyt-modal">
+
+    <div class="dialog hyt-modal-body">
+
+        <div class="action-header">
+            <h2>Data recording</h2>
+        </div>
+
+        <div class="dialog-body">
+            <!-- <span class="hyt-icon icon-hyt_warnT"></span> -->
+            <p>
+                Sure to perform this action?
+            </p>
+        </div>
+
+        <footer class="d-flex flex-row align-items-center justify-content-end">
+            <hyt-button class="action-button-confirm" (clickFn)="confirm($event)">
+                <mat-icon>check</mat-icon>
+                <span i18n="@@widgetSettingsDialog-btn-apply">HYT_widget_settings_apply</span>
+            </hyt-button>
+            <hyt-button class="action-button-close" (clickFn)="cancel($event)">
+                <mat-icon>close</mat-icon>
+                <span i18n="@@widgetSettingsDialog-btn-cancel">HYT_widget_settings_cancel</span>
+            </hyt-button>
+        </footer>
+        
+    </div>
+    
+</div>
+    
+<div class="hyt-modal-background"></div>

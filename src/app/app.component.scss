@@ -1,36 +1,66 @@
 html {
-  box-sizing: border-box;
+  // box-sizing: border-box;
   height: 100%;
-  position: relative;
+  // position: relative;
+
+  /* width */
+  ::-webkit-scrollbar {
+    width: .4em;
+    height: .5em;
+    z-index: 1;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #5F87EF;
+
+    /* Handle on hover */
+    &:hover {
+      background: rgb(70, 104, 192); 
+    }
+  }
 
   body {
     height: 100%;
-    position: relative;
-    overflow: hidden;
+    // position: relative;
+    // overflow: hidden;
+
+    &.hyt-modal-open {
+      overflow: hidden;
+    }
 
     #hyt-container {
-      position: relative;
-      height: 100%;
+      // position: relative;
+      // height: 100%;
 
       #hyt-container-topbar {
+        // z-index: 1;
+        // width: 100%;
         position: fixed;
-        z-index: 1;
-        width: 100%;
+        z-index: 1002;
+        top: 0;
+        right: 0;
+        left: 0;
       }
       
       #hyt-container-nav {
-        position: fixed;
-        height: 100%;
+        position: relative;
+        min-height: 100%;
         width: 100%;
 
         #hyt-container-router {
         
           &.container-fluid {
             position: relative;
-            padding-left: 64px;
+            padding-left: 60px;
             padding-right: 0;
             top: 64px;
-            padding-bottom: 100px;
+            padding-bottom: 64px;
             overflow: auto;
             height: 100%;
           }
@@ -49,7 +79,9 @@ html {
     /* MODAL STYLES
     -------------------------------*/
     hyt-add-widget-dialog,
-    hyt-widget-settings-dialog {
+    hyt-widget-settings-dialog,
+    hyt-info-recording-action,
+    hyt-confirm-recording-action {
       /* modals are hidden by default */
       display: none;
 
@@ -63,7 +95,7 @@ html {
         opacity: 0;
   
         /* z-index must be higher than .hyt-modal-background */
-        z-index: 999;
+        z-index: 10004;
         
         /* enables scrolling for tall modals */
         overflow: auto;
@@ -103,7 +135,7 @@ html {
         opacity: 0;
 
         /* z-index must be below .hyt-modal and above everything else  */
-        z-index: 900;
+        z-index: 1003;
 
         -webkit-animation-name: modalOpacity; /* Safari 4.0 - 8.0 */
         -webkit-animation-duration: .4s; /* Safari 4.0 - 8.0 */
@@ -165,10 +197,12 @@ html {
   
     }
   
-    hyt-widget-settings-dialog {
+    hyt-widget-settings-dialog,
+    hyt-info-recording-action,
+    hyt-confirm-recording-action {
       /* modals are hidden by default */
   
-      .hyt-modal { 
+      .hyt-modal-body { 
         top: 10%;
         left: 50%;
         width: 800px;
@@ -176,6 +210,7 @@ html {
       }
   
     }
+
   
   }
 

@@ -20,6 +20,7 @@ export class DashboardViewComponent implements OnInit {
   
   @Input() dashboardId: string;
   @Input() dashboardType: any;
+  @Input() dashboardWidgets;
 
   bool: boolean = false;
 

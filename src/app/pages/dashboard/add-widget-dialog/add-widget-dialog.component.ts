@@ -84,6 +84,7 @@ export class AddWidgetDialogComponent implements OnInit, OnDestroy {
 
   // open modal
   open(): void {
+    this.dialogDataState = 0,
     this.element.classList.add('open');
     document.body.classList.add('hyt-modal-open');
 

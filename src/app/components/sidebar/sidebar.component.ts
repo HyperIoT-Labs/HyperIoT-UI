@@ -8,9 +8,21 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 })
 export class SidebarComponent implements OnInit {
 
+  lastSelectedElement;
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  click(event) {
+
+    if(this.lastSelectedElement)
+      this.lastSelectedElement.classList.remove("selected")
+
+    event.classList.add("selected")
+
+    this.lastSelectedElement = event;
   }
 
 }

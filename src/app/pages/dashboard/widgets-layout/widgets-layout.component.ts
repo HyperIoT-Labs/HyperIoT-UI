@@ -12,14 +12,15 @@ import {
 
 import {
   DataStreamService,
-  Dashboard
+  Dashboard,
+  DashboardWidget
 } from '@hyperiot/core';
 
 import { DashboardConfigService } from '../dashboard-config.service';
 import { HytModalConfService } from 'src/app/services/hyt-modal-conf.service';
 import { WidgetSettingsDialogComponent } from '../widget-settings-dialog/widget-settings-dialog.component';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Subject, Observable } from 'rxjs';
+import { takeUntil, map } from 'rxjs/operators';
 
 enum PageStatus {
   Loading = 0,
@@ -37,6 +38,8 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
   @ViewChild(WidgetSettingsDialogComponent, { static: true }) widgetSetting: WidgetSettingsDialogComponent;
   @Input() options: GridsterConfig;
   @Input() dashboardId: number | string;
+
+  @Input() widgets;
 
   dashboard: Array<GridsterItem>;
   dashboardEntity: Dashboard;
@@ -97,6 +100,70 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    this.setOptions();
+
+    this.dashboard = [];
+
+    this.configService.getDashboard(+this.dashboardId)
+    .pipe(takeUntil(this.ngUnsubscribe))
+    .subscribe(
+      (d) => {
+        this.dashboardEntity = d;
+        this.dashboardType = this.dashboardEntity.dashboardType
+        this.projectId = this.dashboardEntity.hproject.id;
+        // connect to data upstream
+        this.dataStreamService.connect(this.projectId);
+        // get dashboard config
+
+        this.getWidgetsMapped(this.widgets)
+        .pipe(takeUntil(this.ngUnsubscribe))
+        .subscribe(
+          (dashboardConfig: Array<GridsterItem>) => {
+            this.dashboard = dashboardConfig;
+            this.originalDashboard = JSON.parse(JSON.stringify(dashboardConfig));
+            this.pageStatus = PageStatus.Standard;
+          }
+        );
+
+        // this.configService.getConfig(this.projectId, this.dashboardId).pipe(takeUntil(this.ngUnsubscribe)).subscribe((dashboardConfig: Array<GridsterItem>) => {
+          // this.dashboard = dashboardConfig;
+          // console.log(this.dashboard)
+          // this.originalDashboard = JSON.parse(JSON.stringify(dashboardConfig));
+          // this.pageStatus = PageStatus.Standard;
+        // });
+        
+      },
+      error => {
+        console.error(error);
+        this.pageStatus = PageStatus.Error;
+      }
+    );
+
+    // window.onbeforeunload = () => {
+    //   this.saveDashboard();
+    //   console.log("saviiiing")
+    //   // localStorage.setItem("DASHBOARDTOSAVE",this.dashboardId+"_"+JSON.stringify(this.dashboard))
+    // };
+
+    window.addEventListener('beforeunload', (e) => {
+      this.saveDashboard();
+    });
+  }
+
+  ngOnDestroy() {
+
+    if(this.autoSaveTimeout)
+      clearTimeout(this.autoSaveTimeout);
+
+    if(this.ngUnsubscribe)
+      this.ngUnsubscribe.next();
+
+    this.saveDashboard();
+
+    this.dataStreamService.disconnect();
+  }
+
+  setOptions() {
     this.options = {
       gridSizeChangedCallback: this.onGridSizeChanged.bind(this),
       itemChangeCallback: this.onItemChange.bind(this),
@@ -144,53 +211,28 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
     this.cellSize = this.getResponsiveCellSize(); /* 160 misura base */
     this.options.fixedColWidth = this.cellSize;
     this.options.fixedRowHeight = this.cellSize / 2;
-
-    this.dashboard = [];
-    this.configService.getDashboard(+this.dashboardId)
-    .pipe(takeUntil(this.ngUnsubscribe))
-    .subscribe(
-      (d) => {
-        this.dashboardEntity = d;
-        this.dashboardType = this.dashboardEntity.dashboardType
-        this.projectId = this.dashboardEntity.hproject.id;
-        // connect to data upstream
-        this.dataStreamService.connect(this.projectId);
-        // get dashboard config
-        this.configService.getConfig(this.projectId, this.dashboardId).pipe(takeUntil(this.ngUnsubscribe)).subscribe((dashboardConfig: Array<GridsterItem>) => {
-          this.dashboard = dashboardConfig;
-          this.originalDashboard = JSON.parse(JSON.stringify(dashboardConfig));
-          this.pageStatus = PageStatus.Standard;
-        });
-        
-      },
-      error => {
-        console.error(error);
-        this.pageStatus = PageStatus.Error;
-      }
-    );
-
-    // window.onbeforeunload = () => {
-    //   this.saveDashboard();
-    //   console.log("saviiiing")
-    //   // localStorage.setItem("DASHBOARDTOSAVE",this.dashboardId+"_"+JSON.stringify(this.dashboard))
-    // };
-
-    window.addEventListener('beforeunload', (e) => {
-      this.saveDashboard();
-    });
   }
 
-  ngOnDestroy() {
+  getWidgetsMapped(widgets: any): Observable<any>{
+    const obs: Observable<any> = new Observable(subscriber => {
+      subscriber.next(widgets)
+    });
 
-    if(this.autoSaveTimeout)
-      clearTimeout(this.autoSaveTimeout);
-
-    if(this.ngUnsubscribe)
-      this.ngUnsubscribe.next();
-
-    this.saveDashboard();
-
-    this.dataStreamService.disconnect();
+    return obs.pipe(map(
+      (data: any[]) => {
+        const config = [];
+        // Normalize data received from server
+        data.map((w: DashboardWidget) => {
+            const widget = JSON.parse(w.widgetConf);
+            widget.projectId = +this.projectId;
+            widget.id = w.id;
+            widget.entityVersion = w.entityVersion;
+            config.push(widget);
+        });
+        return config;
+      },
+      error => console.error(error)
+    ))
   }
 
   activeAutoSave() {
@@ -265,48 +307,38 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
       this.ngUnsubscribe.next();
   }
 
-  lastWindowSize: number;
+  lastWindowSize;
 
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
     const columns = this.getResponsiveColumns();
     const cell = this.getResponsiveCellSize();
-    
-    // setInterval(()=>{
-    //   if(this.lastWindowSize != event.timeStamp) {
-    //     this.pageStatus = PageStatus.Loading;
-
-    //     if (columns !== this.options.maxCols || cell !== this.options.maxCellSize) {
-    //       console.log("a")
-    //       this.options.maxCols = columns;
-    //       if (this.options.maxCols > 1) {
-    //         this.options.mobileBreakpoint = 0;
-    //       }
-    //       this.options.api.optionsChanged();
-  
-    //     }
-    //     this.lastWindowSize = event.timeStamp;
-    //   } else {
-    //     this.pageStatus = PageStatus.Standard;
-    //   }
-    // }, 100)
-
-
     if (columns !== this.options.maxCols || cell !== this.options.maxCellSize) {
 
-      // TODO: Angular-Gridster2 won't apply maxCols option on change (bug??)
-      this.options.maxCols = columns;
-      if (this.options.maxCols > 1) {
-        this.options.mobileBreakpoint = 0;
-      }
-      this.options.api.optionsChanged();
+      if(this.lastWindowSize)
+        clearTimeout(this.lastWindowSize)
 
-      // this.pageStatus = PageStatus.Loading;
-      // setTimeout(()=> {
-      //   this.pageStatus = PageStatus.Standard;
-      // }, 100)
+      this.pageStatus = PageStatus.Loading;
+      this.lastWindowSize = setTimeout(()=>{
       
+
+        this.ngOnInit();
+        // this.pageStatus = PageStatus.Standard;
+
+      }, 500)
+
     }
+
+    // if (columns !== this.options.maxCols || cell !== this.options.maxCellSize) {
+
+    //   // TODO: Angular-Gridster2 won't apply maxCols option on change (bug??)
+    //   this.options.maxCols = columns;
+    //   if (this.options.maxCols > 1) {
+    //     this.options.mobileBreakpoint = 0;
+    //   }
+    //   this.options.api.optionsChanged();
+
+    // }
   }
 
   // Gridster events/methods

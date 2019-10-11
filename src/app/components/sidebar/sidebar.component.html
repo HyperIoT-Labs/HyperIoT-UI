@@ -3,7 +3,7 @@
     <nav class="main-menu">
         <ul>
 
-            <li class="has-subnav">
+            <li #home class="has-subnav" (click)="click(home)">
                 <a routerLink="/">
                     <span class="hyt-icon icon-hyt_home"></span>
                     <span class="nav-text">
@@ -12,7 +12,7 @@
                 </a>
             </li>
 
-            <li class="has-subnav">
+            <li #projects class="has-subnav" (click)="click(projects)">
                 <a routerLink="/projects">
                     <span class="hyt-icon icon-hyt_projects"></span>
                     <span class="nav-text">
@@ -21,7 +21,7 @@
                 </a>
             </li>
 
-            <li class="has-subnav">
+            <li #dashboards class="has-subnav" (click)="click(dashboards)">
                 <a routerLink="/dashboards">
                     <span class="hyt-icon icon-hyt_dash"></span>
                     <span class="nav-text">
