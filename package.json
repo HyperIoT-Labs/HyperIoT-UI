@@ -30,7 +30,7 @@
     "@angular/router": "^8.1.3",
     "@hyperiot/components": "0.0.39",
     "@hyperiot/core": "^0.4.3",
-    "@hyperiot/widgets": "0.0.16",
+    "@hyperiot/widgets": "0.0.17",
     "@ngx-translate/i18n-polyfill": "^1.0.0",
     "angular-gridster2": "^8.0.0",
     "angular-plotly.js": "^1.3.2",
