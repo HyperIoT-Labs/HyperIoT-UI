@@ -173,7 +173,7 @@ export class AddWidgetDialogComponent implements OnInit, OnDestroy {
       dataTableUrl: '',
       config: w.baseConfig
     }))
-    this.addWidgets.emit(this.selectedWidgets);
+    this.addWidgets.emit(widgetOutput);
     this.close();
   }
 
