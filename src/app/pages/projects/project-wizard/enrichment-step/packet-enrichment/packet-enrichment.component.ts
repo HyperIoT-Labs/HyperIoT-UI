@@ -147,4 +147,5 @@ export class PacketEnrichmentComponent implements OnInit {
   updateAssetCategory(event) {
     this.assetCategories = event;
   }
+  
 }

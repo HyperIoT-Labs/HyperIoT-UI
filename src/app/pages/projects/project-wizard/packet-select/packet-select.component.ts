@@ -33,9 +33,9 @@ export class PacketSelectComponent implements OnInit {
         this.selectForm.reset();
         this.devicesOptions = [];
         this.packetsOptions = [];
-        this.currentPacket.emit(null);
         for (let el of res)
           this.devicesOptions.push({ value: el, label: el.deviceName });
+        this.autoSelect();
       }
     );
     this.wizardService.hPackets$.subscribe(
@@ -43,9 +43,18 @@ export class PacketSelectComponent implements OnInit {
         this.hPackets = res;
         this.selectForm.reset();
         this.packetsOptions = [];
-        this.currentPacket.emit(null);
+        this.autoSelect();
       }
     );
+  }
+
+  autoSelect() {
+    if (this.devicesOptions.length != 0) {
+      this.selectForm.get('selectDevice').setValue(this.devicesOptions[0].value);
+      this.deviceChanged(this.devicesOptions[0]);
+    }
+    else
+      this.currentPacket.emit(null);
   }
 
   deviceChanged(event) {
@@ -55,6 +64,11 @@ export class PacketSelectComponent implements OnInit {
     });
     this.currentPacket.emit(null);
     this.hPackets.filter(p => p.device.id == event.value.id).forEach(p => this.packetsOptions.push({ value: p, label: p.name }));
+    if (this.packetsOptions.length != 0) {
+      this.selectForm.get('selectPacket').setValue(this.packetsOptions[0].value);
+      this.packetChanged(this.packetsOptions[0]);
+    }
+
   }
 
   packetChanged(event) {

@@ -54,7 +54,7 @@ export class DashboardConfigService {
     }
 
     getProjectsList() {
-        return this.hProjectService.cardsView();
+        return this.hProjectService.findAllHProject();
     }
 
     getDashboardList() {

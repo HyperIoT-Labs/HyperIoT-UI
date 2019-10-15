@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { Option } from '@hyperiot/components/lib/hyt-radio-button/hyt-radio-button.component';
 import { SelectOption } from '@hyperiot/components';
 import { PageStatusEnum } from '../model/pageStatusEnum';
+import { RulesService } from '@hyperiot/core';
 
 @Component({
   selector: 'hyt-statistics-step',
@@ -27,13 +28,7 @@ export class StatisticsStepComponent implements OnInit {
     { value: '5', label: 'Regression' },
     { value: '6', label: 'String' },
     { value: '7', label: 'Variance' }
-  ]
-
-  sourceDataOptions: Option[] = [
-    { value: '0', label: 'PACKET', checked: true },
-    { value: '1', label: 'CATEGORIES' },
-    { value: '2', label: 'TAGS' }
-  ]
+  ];
 
   timeRangeOptions: SelectOption[] = [
     { value: '0', label: 'Hours' },
@@ -44,14 +39,24 @@ export class StatisticsStepComponent implements OnInit {
     { value: '6', label: 'Four-monthly' },
     { value: '7', label: 'Half yearly' },
     { value: '8', label: 'Annual' }
-  ]
+  ];
+
+  enrichmentRules: SelectOption[] = [
+    { value: JSON.stringify({ actionName: "AddCategoryRuleAction", ruleId: 0, categoryIds: null }), label: 'Categories' },
+    { value: JSON.stringify({ actionName: "AddTagRuleAction", ruleId: 0, tagIds: null }), label: 'Tags' },
+    { value: JSON.stringify({ actionName: "ValidateHPacketRuleAction", ruleId: 0 }), label: 'Packet' }//TODO actionName is wrong
+  ];
 
   constructor(
+    private rulesService: RulesService,
     private fb: FormBuilder
   ) { }
 
   ngOnInit() {
     this.statisticsForm = this.fb.group({});
+    this.rulesService.findAllRuleActions('ENRICHMENT').subscribe(
+      res => { }//TODO //this.enrichmentRules = res
+    )
   }
 
   createStatistic() {
@@ -66,6 +71,29 @@ export class StatisticsStepComponent implements OnInit {
 
   getError(field: string): string {
     return (this.errors.find(x => x.container == field)) ? this.errors.find(x => x.container == field).message : null;
+  }
+
+  enrichmentType: string = '';
+
+  enrichmentTypeChanged(event) {
+    if (event.value)
+      this.enrichmentType = JSON.parse(event.value).actionName;
+  }
+
+  //Tags
+
+  assetTags: number[] = [];
+
+  updateAssetTag(event) {
+    this.assetTags = event;
+  }
+
+  //Category
+
+  assetCategories: number[] = [];
+
+  updateAssetCategory(event) {
+    this.assetCategories = event;
   }
 
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, AfterViewInit } from '@angular/core';
 import { SelectOption, Option } from '@hyperiot/components';
 import { ProjectWizardService } from 'src/app/services/projectWizard/project-wizard.service';
 import { HDevice, HPacket } from '@hyperiot/core';
@@ -22,6 +22,8 @@ export class PacketsFormComponent implements OnInit {
   @Output() updatePacket = new EventEmitter();
 
   devicesOptions: SelectOption[] = [];
+
+  currentDeviceValue: HDevice;
 
   PageStatus = PageStatusEnum;
   pageStatus: PageStatusEnum = PageStatusEnum.Default;
@@ -62,6 +64,7 @@ export class PacketsFormComponent implements OnInit {
         this.devicesOptions = [];
         for (let el of res)
           this.devicesOptions.push({ value: el, label: el.deviceName });
+        this.packetForm.get('hpacket-device').setValue((this.devicesOptions.length != 0) ? this.devicesOptions[0].value : null);
       }
     )
   }
@@ -113,6 +116,13 @@ export class PacketsFormComponent implements OnInit {
     this.submitType = type;
     this.errors = [];
     this.packetForm.reset();
+    this.packetForm.get('hpacketTimeStamp').setValue('timestamp');
+    this.packetForm.get('hpacketTimeStampFormat').setValue('dd/MM/yyyy HH.mmZ');
+    this.packetForm.get('hpacket-type').setValue('INPUT');
+    this.packetForm.get('hpacket-format').setValue('JSON');
+    this.packetForm.get('hpacket-serialization').setValue('NONE');
+    this.packetForm.get('hpacket-device').setValue((this.devicesOptions.length != 0) ? this.devicesOptions[0].value : null);
+    this.packetForm.get('packetTrafficPlan').setValue('MEDIUM');
   }
 
 }

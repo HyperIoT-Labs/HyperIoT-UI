@@ -37,12 +37,12 @@
   <div class="row">
     <div class="col-md-6 container-form-field">
       <hyt-input-text [form]="packetForm" formControlName="hpacketTimeStamp" name="hpacketTimeStamp" [isRequired]="true"
-        placeholder="Timestamp" [injectedErrorMsg]="getError('hpacketTimeStamp')">
+        placeholder="Timestamp" [injectedErrorMsg]="getError('hpacketTimeStamp')" [fieldValue]="'timestamp'">
       </hyt-input-text> <!-- Field TimeStamp -->
     </div>
     <div class="col-md-6 container-form-field">
       <hyt-input-text [form]="packetForm" formControlName="hpacketTimeStampFormat" name="hpacketTimeStampFormat"
-        [isRequired]="true" placeholder="Timestamp format" [injectedErrorMsg]="getError('hpacketTimeStampFormat')">
+        [isRequired]="true" placeholder="Timestamp format" [injectedErrorMsg]="getError('hpacketTimeStampFormat')" [fieldValue]="'dd/MM/yyyy HH.mmZ'">
       </hyt-input-text> <!-- Field TimeStampFormat -->
     </div>
   </div>
@@ -50,7 +50,7 @@
   <div class="row">
     <div class="col-md-12 container-form-field">
       <hyt-select [form]="packetForm" [options]="trafficPlanOptions" formControlName="packetTrafficPlan"
-        name="packetTrafficPlan" [isRequired]="true" label="Traffic Plan">
+        name="packetTrafficPlan" [isRequired]="true" label="Traffic Plan" [selected]="'MEDIUM'">
       </hyt-select> <!-- Field Traffic Plan -->
     </div>
   </div>

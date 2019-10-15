@@ -125,7 +125,6 @@ export class AddWidgetDialogComponent implements OnInit, OnDestroy {
               widgetCategory: el.widgetCategory
             })
           }
-
         }
         this.onCategorySelect(this.widgetCategoryList['ALL']);
         this.dialogDataState = 1;

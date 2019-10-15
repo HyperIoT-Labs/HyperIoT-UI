@@ -44,7 +44,7 @@
 
                     <div class="col-6 right-tools">
 
-                        <hyt-select *ngIf="pageStatus == 1" [label]="'Select a project'" name="project" [options]="hProjectListOptions" [selected]="idProjectSelected" (changeFn)="onSelectChange($event)" [disabled]="false"></hyt-select>
+                        <hyt-select [label]="'Select a project'" name="project" [options]="hProjectListOptions" [selected]="idProjectSelected" (changeFn)="onSelectChange($event)" [disabled]="false"></hyt-select>
 
                         <div id="add-widget-btn" *ngIf="pageStatus == PageStatus.Standard" (click)="openModal('hyt-modal-add-widgets')">
                             <!-- <a [routerLink]="[{outlets: { modal: [ 'widgets' ] }}]"> -->
