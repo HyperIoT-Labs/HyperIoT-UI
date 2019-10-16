@@ -4,7 +4,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { Option } from '@hyperiot/components/lib/hyt-radio-button/hyt-radio-button.component';
 import { SelectOption } from '@hyperiot/components';
 import { PageStatusEnum } from '../model/pageStatusEnum';
-import { RulesService } from '@hyperiot/core';
+import { RulesService, HPacket } from '@hyperiot/core';
 
 @Component({
   selector: 'hyt-statistics-step',
@@ -12,6 +12,8 @@ import { RulesService } from '@hyperiot/core';
   styleUrls: ['./statistics-step.component.scss']
 })
 export class StatisticsStepComponent implements OnInit {
+
+  currentPacket: HPacket;
 
   statisticsForm: FormGroup;
 
@@ -94,6 +96,10 @@ export class StatisticsStepComponent implements OnInit {
 
   updateAssetCategory(event) {
     this.assetCategories = event;
+  }
+
+  packetChanged(event) {
+    this.currentPacket = event;
   }
 
 }
