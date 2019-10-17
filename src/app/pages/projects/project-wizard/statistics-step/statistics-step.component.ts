@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HYTError } from 'src/app/services/errorHandler/models/models';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { Option } from '@hyperiot/components/lib/hyt-radio-button/hyt-radio-button.component';
 import { SelectOption } from '@hyperiot/components';
 import { PageStatusEnum } from '../model/pageStatusEnum';
 import { RulesService, HPacket } from '@hyperiot/core';

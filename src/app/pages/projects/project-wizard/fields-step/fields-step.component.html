@@ -2,7 +2,7 @@
 
   <div class="col-md-10">
 
-    <hyt-packet-select (currentPacket)="packetChanged($event)"></hyt-packet-select>
+    <hyt-pw-packet-select (currentPacket)="packetChanged($event)" [packetSelectId]="0"></hyt-pw-packet-select>
 
     <hyt-packet-field [currentPacket]="currentPacket"></hyt-packet-field>
 

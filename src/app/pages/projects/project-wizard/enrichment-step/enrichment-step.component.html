@@ -6,8 +6,8 @@
 
       <div class="col-md-12">
 
-        <hyt-packet-select (currentPacket)="packetChanged($event)">
-        </hyt-packet-select>
+        <hyt-pw-packet-select (currentPacket)="packetChanged($event)" [packetSelectId]="1">
+        </hyt-pw-packet-select>
 
       </div>
 
@@ -41,5 +41,3 @@
   </hyt-modal>
 
 </div>
-
-<!-- <button (click)="ok()">OK</button> -->

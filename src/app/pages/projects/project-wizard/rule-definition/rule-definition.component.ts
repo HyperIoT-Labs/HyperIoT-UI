@@ -3,6 +3,7 @@ import { HPacket, HPacketField } from '@hyperiot/core';
 import { SelectOption } from '@hyperiot/components';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Option } from '@hyperiot/components/lib/hyt-radio-button/hyt-radio-button.component';
+import { ProjectWizardService } from 'src/app/services/projectWizard/project-wizard.service';
 
 interface RuleForm {
   form: FormGroup;
@@ -22,7 +23,7 @@ interface FieldList {
 })
 export class RuleDefinitionComponent implements OnInit, OnChanges {
 
-  @Input() hPacket: HPacket;
+  @Input() currentPacket: HPacket;
 
   fieldOptions: SelectOption[] = [];
 
@@ -48,15 +49,20 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
   ]
 
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private wizardService: ProjectWizardService
   ) { }
 
   ngOnInit() {
-    this.ruleForms.push({
+    this.resetRuleDefinition();
+  }
+
+  resetRuleDefinition(){
+    this.ruleForms = [({
       form: this.fb.group({}),
       conditionOptions: [],
       compareWith: false
-    })
+    })];
   }
 
   fieldFlatList: FieldList[] = [];
@@ -67,17 +73,21 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
       this.fieldFlatList.push({ field: f, label: fieldName });
       if (f.innerFields)
         this.extractField(f.innerFields, fieldName);
-    })
+    });
   }
 
   ngOnChanges() {
+    this.resetRuleDefinition();
+    let fieldList: HPacketField[] = [];
+    console.warn(this.currentPacket);
+    if (this.currentPacket && this.currentPacket.id)
+      fieldList = this.wizardService.treefy(this.currentPacket.fields);
     this.fieldOptions = [];
-    if (this.hPacket) {
-      this.fieldFlatList = [];
-      this.extractField(this.hPacket.fields, '');
-    }
+    this.fieldFlatList = [];
+    this.extractField(fieldList, '');
     for (let el of this.fieldFlatList)
       this.fieldOptions.push({ value: el.label, label: el.field.name });
+    this.fieldOptions = [...this.fieldOptions];
   }
 
   addCondition(index) {
@@ -97,10 +107,10 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
   buildRuleDefinition() {
     let rd = '';
     for (let k = 0; k < this.ruleForms.length; k++) {
-      let element: string = (this.hPacket && this.ruleForms[k].form.value.ruleField) ? this.hPacket.name + this.ruleForms[k].form.value.ruleField : '';
+      let element: string = (this.currentPacket && this.ruleForms[k].form.value.ruleField) ? this.currentPacket.name + this.ruleForms[k].form.value.ruleField : '';
       let condition: string = (this.ruleForms[k].form.value.ruleCondition) ? ' ' + this.ruleForms[k].form.value.ruleCondition : '';
       let valueRule: string = (this.ruleForms[k].form.value.ruleValue) ? ' ' + this.ruleForms[k].form.value.ruleValue : '';
-      let joinRule: string = (this.ruleForms[k].form.value.ruleJoin) ? this.ruleForms[k].form.value.ruleJoin.value : '';
+      let joinRule: string = (this.ruleForms[k].form.value.ruleJoin) ? this.ruleForms[k].form.value.ruleJoin : '';
       rd += element + condition + valueRule + joinRule;
     }
     return rd;
