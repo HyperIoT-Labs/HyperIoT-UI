@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { HProject, HprojectsService } from '@hyperiot/core';
 import { ProjectWizardHttpErrorHandlerService } from 'src/app/services/errorHandler/project-wizard-http-error-handler.service';
@@ -28,7 +29,8 @@ export class ProjectFormComponent implements OnInit {
     private fb: FormBuilder,
     private hProjectService: HprojectsService,
     private errorHandler: ProjectWizardHttpErrorHandlerService,
-    private wizardService: ProjectWizardService
+    private wizardService: ProjectWizardService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -80,11 +82,17 @@ export class ProjectFormComponent implements OnInit {
 
     this.pageStatus = PageStatusEnum.Loading;
     this.errors = [];
+    let currentUser;
+
+    if (localStorage.getItem('user'))
+      currentUser = JSON.parse(localStorage.getItem('user'));
+    else
+      this.router.navigate(['/auth/login']);
 
     this.hProject = {
       name: this.projectForm.value.projectName,
       description: this.projectForm.value.projectDescription,
-      user: { id: JSON.parse(localStorage.getItem('user')).id, entityVersion: 1 },
+      user: { id: currentUser.id, entityVersion: currentUser.entityVersion },
       entityVersion: 1
     }
 
@@ -101,6 +109,10 @@ export class ProjectFormComponent implements OnInit {
       this.projectForm.get('projectName').invalid ||
       this.projectForm.get('projectDescription').invalid
     )
+  }
+
+  updateHint(event: string) {
+    this.wizardService.updateHint(event, 0);
   }
 
 }

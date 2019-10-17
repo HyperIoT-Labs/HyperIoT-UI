@@ -31,7 +31,7 @@ export class LoggedInGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):
     Observable<boolean> | Promise<boolean> | boolean {
-    if (this.cookieService.check('HIT-AUTH')) {
+    if (this.cookieService.check('HIT-AUTH') && localStorage.getItem('user') && localStorage.getItem('userInfo')) {
       return true;
     }
     this.router.navigate(['/auth/login'], { state: { returnUrl: state.url } });

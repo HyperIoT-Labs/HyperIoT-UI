@@ -125,6 +125,7 @@ export class PacketsStepComponent {
     this.deleteError = null;
     this.hPacketService.deleteHPacket(this.selectedPacket.id).subscribe(
       res => {
+        this.form.resetForm('ADD');
         this.wizardService.deletePacket(this.selectedPacket.id);
         this.hideDeleteModal();
       },
