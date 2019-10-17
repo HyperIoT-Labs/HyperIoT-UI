@@ -41,6 +41,9 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
     constructor(public settingsForm: NgForm) { }
 
     ngOnInit() {
+        if (this.widget.config == null)
+            this.widget.config = {};
+
         if (this.widget.config.seriesConfig == null || this.widget.config.seriesConfig.length === 0) {
             Object.assign(this.widget.config, this.defaultConfig);
         }
