@@ -4,6 +4,7 @@ import { SelectOption } from '@hyperiot/components';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Option } from '@hyperiot/components/lib/hyt-radio-button/hyt-radio-button.component';
 import { ProjectWizardService } from 'src/app/services/projectWizard/project-wizard.service';
+import { I18n } from '@ngx-translate/i18n-polyfill';
 
 interface RuleForm {
   form: FormGroup;
@@ -30,27 +31,28 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
   ruleForms: RuleForm[] = [];
 
   allConditionOptions = [
-    { value: '>', label: '(>) Greater', type: ['OBJECT', 'INTEGER', 'DOUBLE', 'FLOAT', 'DATE'] },
-    { value: '>=', label: '(>=) Greater / Equal', type: ['OBJECT', 'INTEGER', 'DOUBLE', 'FLOAT', 'DATE'] },
-    { value: '<', label: '(<) Lower', type: ['OBJECT', 'INTEGER', 'DOUBLE', 'FLOAT', 'DATE'] },
-    { value: '<=', label: '(<=) Lower / Equal', type: ['OBJECT', 'INTEGER', 'DOUBLE', 'FLOAT', 'DATE'] },
-    { value: '=', label: '(=) Equal', type: ['OBJECT', 'INTEGER', 'DOUBLE', 'FLOAT', 'DATE', 'TEXT'] },
-    { value: '!=', label: '(!=) Different', type: ['OBJECT', 'INTEGER', 'DOUBLE', 'FLOAT', 'DATE', 'TEXT'] },
-    { value: '()', label: '(()) Like', type: ['OBJECT', 'INTEGER', 'DOUBLE', 'FLOAT', 'BOOLEAN', 'DATE'] },
-    { value: 'isTrue', label: 'isTrue', type: ['OBJECT', 'BOOLEAN'] },
-    { value: 'isFalse', label: 'isFalse', type: ['OBJECT', 'BOOLEAN'] }
+    { value: '>', label: this.i18n('HYT_(>)_greater'), type: ['OBJECT', 'INTEGER', 'DOUBLE', 'FLOAT', 'DATE'] },
+    { value: '>=', label: this.i18n('HYT_(>=)_greater_equal'), type: ['OBJECT', 'INTEGER', 'DOUBLE', 'FLOAT', 'DATE'] },
+    { value: '<', label: this.i18n('HYT_(<)_lower'), type: ['OBJECT', 'INTEGER', 'DOUBLE', 'FLOAT', 'DATE'] },
+    { value: '<=', label: this.i18n('HYT_(<=)_lower_equal'), type: ['OBJECT', 'INTEGER', 'DOUBLE', 'FLOAT', 'DATE'] },
+    { value: '=', label: this.i18n('HYT_(==)_equal'), type: ['OBJECT', 'INTEGER', 'DOUBLE', 'FLOAT', 'DATE', 'TEXT'] },
+    { value: '!=', label: this.i18n('HYT_(!=)_different'), type: ['OBJECT', 'INTEGER', 'DOUBLE', 'FLOAT', 'DATE', 'TEXT'] },
+    { value: '()', label: this.i18n('HYT_(())_like'), type: ['OBJECT', 'INTEGER', 'DOUBLE', 'FLOAT', 'BOOLEAN', 'DATE'] },
+    { value: 'isTrue', label: this.i18n('HYT_is_true'), type: ['OBJECT', 'BOOLEAN'] },
+    { value: 'isFalse', label: this.i18n('HYT_is_false'), type: ['OBJECT', 'BOOLEAN'] }
   ]
 
   comared: boolean = true;
 
   joinOptions: Option[] = [
-    { value: ' AND ', label: 'AND', checked: false },
-    { value: ' OR ', label: 'OR', checked: false }
+    { value: ' AND ', label: this.i18n('HYT_AND'), checked: false },
+    { value: ' OR ', label: this.i18n('HYT_OR'), checked: false }
   ]
 
   constructor(
     private fb: FormBuilder,
-    private wizardService: ProjectWizardService
+    private wizardService: ProjectWizardService,
+    private i18n: I18n
   ) { }
 
   ngOnInit() {

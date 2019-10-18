@@ -87,6 +87,10 @@
                <context context-type="linenumber">6</context>
             </context-group>
             <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/statistics-step/statistics-step.component.html</context>
+               <context context-type="linenumber">20</context>
+            </context-group>
+            <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-wizard/fields-step/packet-field/packet-field.component.html</context>
                <context context-type="linenumber">22</context>
             </context-group>
@@ -144,7 +148,7 @@
             </context-group>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/projects.component.html</context>
-               <context context-type="linenumber">124</context>
+               <context context-type="linenumber">123</context>
             </context-group>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-wizard/fields-step/packet-field/packet-field.component.html</context>
@@ -501,7 +505,7 @@
             </context-group>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-wizard/project-wizard.component.html</context>
-               <context context-type="linenumber">184</context>
+               <context context-type="linenumber">186</context>
             </context-group>
          </trans-unit>
          <trans-unit id="HYT_statistics_definition_long" datatype="html">
@@ -519,7 +523,7 @@
             </context-group>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-wizard/project-wizard.component.html</context>
-               <context context-type="linenumber">191</context>
+               <context context-type="linenumber">193</context>
             </context-group>
          </trans-unit>
          <trans-unit id="HYT_events_definition_long" datatype="html">
@@ -529,95 +533,102 @@
                <context context-type="linenumber">115</context>
             </context-group>
          </trans-unit>
+         <trans-unit id="HYT_finish" datatype="html">
+            <source>HYT_finish</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/project-wizard.component.html</context>
+               <context context-type="linenumber">122</context>
+            </context-group>
+         </trans-unit>
          <trans-unit id="HYT_congratulations" datatype="html">
             <source>HYT_congratulations</source>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-wizard/project-wizard.component.html</context>
-               <context context-type="linenumber">131</context>
+               <context context-type="linenumber">133</context>
             </context-group>
          </trans-unit>
          <trans-unit id="HYT_pw_finsh" datatype="html">
             <source>HYT_pw_finsh</source>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-wizard/project-wizard.component.html</context>
-               <context context-type="linenumber">136</context>
+               <context context-type="linenumber">138</context>
             </context-group>
          </trans-unit>
          <trans-unit id="HYT_project" datatype="html">
             <source>HYT_project</source>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-wizard/project-wizard.component.html</context>
-               <context context-type="linenumber">143</context>
+               <context context-type="linenumber">145</context>
             </context-group>
          </trans-unit>
          <trans-unit id="HYT_devices" datatype="html">
             <source>HYT_devices</source>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-wizard/project-wizard.component.html</context>
-               <context context-type="linenumber">150</context>
+               <context context-type="linenumber">152</context>
             </context-group>
          </trans-unit>
          <trans-unit id="HYT_packets" datatype="html">
             <source>HYT_packets</source>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-wizard/project-wizard.component.html</context>
-               <context context-type="linenumber">160</context>
+               <context context-type="linenumber">162</context>
             </context-group>
          </trans-unit>
          <trans-unit id="HYT_enrichment" datatype="html">
             <source>HYT_enrichment</source>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-wizard/project-wizard.component.html</context>
-               <context context-type="linenumber">174</context>
+               <context context-type="linenumber">176</context>
             </context-group>
          </trans-unit>
          <trans-unit id="HYT_go_to_project_list" datatype="html">
             <source>HYT_go_to_project_list</source>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-wizard/project-wizard.component.html</context>
-               <context context-type="linenumber">203</context>
+               <context context-type="linenumber">205</context>
             </context-group>
          </trans-unit>
          <trans-unit id="HYT_go_to_project_list_long" datatype="html">
             <source>HYT_go_to_project_list_long</source>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-wizard/project-wizard.component.html</context>
-               <context context-type="linenumber">205</context>
+               <context context-type="linenumber">207</context>
             </context-group>
          </trans-unit>
          <trans-unit id="HYT_go_to_dashboard" datatype="html">
             <source>HYT_go_to_dashboard</source>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-wizard/project-wizard.component.html</context>
-               <context context-type="linenumber">210</context>
+               <context context-type="linenumber">212</context>
             </context-group>
          </trans-unit>
          <trans-unit id="HYT_go_to_dashboard_long" datatype="html">
             <source>HYT_go_to_dashboard_long</source>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-wizard/project-wizard.component.html</context>
-               <context context-type="linenumber">212</context>
+               <context context-type="linenumber">214</context>
             </context-group>
          </trans-unit>
          <trans-unit id="HYT_pw_deactivation_modal" datatype="html">
             <source>HYT_pw_deactivation_modal</source>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-wizard/project-wizard.component.html</context>
-               <context context-type="linenumber">222</context>
+               <context context-type="linenumber">224</context>
             </context-group>
          </trans-unit>
          <trans-unit id="HYT_OK" datatype="html">
             <source>HYT_OK</source>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-wizard/project-wizard.component.html</context>
-               <context context-type="linenumber">226</context>
+               <context context-type="linenumber">228</context>
             </context-group>
          </trans-unit>
          <trans-unit id="HYT_CANCEL" datatype="html">
             <source>HYT_CANCEL</source>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-wizard/project-wizard.component.html</context>
-               <context context-type="linenumber">229</context>
+               <context context-type="linenumber">231</context>
             </context-group>
          </trans-unit>
          <trans-unit id="HYT_add_new_project" datatype="html">
@@ -638,28 +649,28 @@
             <source>HYT_no_project_found</source>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/projects.component.html</context>
-               <context context-type="linenumber">83</context>
+               <context context-type="linenumber">82</context>
             </context-group>
          </trans-unit>
          <trans-unit id="HYT_no_project" datatype="html">
             <source>HYT_no_project</source>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/projects.component.html</context>
-               <context context-type="linenumber">106</context>
+               <context context-type="linenumber">105</context>
             </context-group>
          </trans-unit>
          <trans-unit id="HYT_add_project_button_hint" datatype="html">
             <source>HYT_add_project_button_hint</source>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/projects.component.html</context>
-               <context context-type="linenumber">107</context>
+               <context context-type="linenumber">106</context>
             </context-group>
          </trans-unit>
          <trans-unit id="HYT_create_first_project" datatype="html">
             <source>HYT_create_first_project</source>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/projects.component.html</context>
-               <context context-type="linenumber">113</context>
+               <context context-type="linenumber">112</context>
             </context-group>
          </trans-unit>
          <trans-unit id="HYT_field" datatype="html">
@@ -695,6 +706,10 @@
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-wizard/enrichment-step/packet-enrichment/packet-enrichment.component.html</context>
                <context context-type="linenumber">13</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/statistics-step/statistics-step.component.html</context>
+               <context context-type="linenumber">49</context>
             </context-group>
          </trans-unit>
          <trans-unit id="HYT_add_rule" datatype="html">
@@ -869,6 +884,38 @@
                <context context-type="linenumber">77</context>
             </context-group>
          </trans-unit>
+         <trans-unit id="HYT_algorithm" datatype="html">
+            <source>HYT_algorithm</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/statistics-step/statistics-step.component.html</context>
+               <context context-type="linenumber">26</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_packet" datatype="html">
+            <source>HYT_packet</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/statistics-step/statistics-step.component.html</context>
+               <context context-type="linenumber">42</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/packet-select/packet-select.component.html</context>
+               <context context-type="linenumber">13</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_time_range" datatype="html">
+            <source>HYT_time_range</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/statistics-step/statistics-step.component.html</context>
+               <context context-type="linenumber">55</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_add_statistics" datatype="html">
+            <source>HYT_add_statistics</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/statistics-step/statistics-step.component.html</context>
+               <context context-type="linenumber">85</context>
+            </context-group>
+         </trans-unit>
          <trans-unit id="HYT_delete_enrichment_confirm" datatype="html">
             <source>HYT_delete_enrichment_confirm</source>
             <context-group purpose="location">
@@ -956,13 +1003,6 @@
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-wizard/events-step/event-mail/selectable-text/selectable-text.component.html</context>
                <context context-type="linenumber">1</context>
-            </context-group>
-         </trans-unit>
-         <trans-unit id="HYT_packet" datatype="html">
-            <source>HYT_packet</source>
-            <context-group purpose="location">
-               <context context-type="sourcefile">src/app/pages/projects/project-wizard/packet-select/packet-select.component.html</context>
-               <context context-type="linenumber">13</context>
             </context-group>
          </trans-unit>
          <trans-unit id="HYT_level_of_multiplicity" datatype="html">
@@ -1082,6 +1122,434 @@
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-wizard/project-step/project-hint-column/project-hint-column.component.html</context>
                <context context-type="linenumber">7</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="8126b41efefe3d94395d91927cf56424623d84e0" datatype="html">
+            <source>HYT_categories</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/enrichment-step/packet-enrichment/packet-enrichment.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/statistics-step/statistics-step.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="515a2d2109e5478338c3ea75f31172a7639dc832" datatype="html">
+            <source>HYT_tags</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/enrichment-step/packet-enrichment/packet-enrichment.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/statistics-step/statistics-step.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="50b9029a100e947ba5adc7db263b6302da224889" datatype="html">
+            <source>HYT_validation</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/enrichment-step/packet-enrichment/packet-enrichment.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="02cb6c3cb9666dd3e03574a667bfbbd9a68ad14f" datatype="html">
+            <source>HYT_name_of_device</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/events-step/event-mail/event-mail.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="b56de836372ed80f55d206482d225412ab472430" datatype="html">
+            <source>HYT_name_of_packet</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/events-step/event-mail/event-mail.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="a752c6e3ad3ddb536ea23e36efd3780793f5977a" datatype="html">
+            <source>HYT_name_of_field</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/events-step/event-mail/event-mail.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="5fe3c1973f971496b4be414ceba660291e2c41ce" datatype="html">
+            <source>HYT_name_of_event_mail</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/events-step/event-mail/event-mail.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="a4ef31d7970202b066ed63341121d201528173d0" datatype="html">
+            <source>HYT_SEND_MAIL</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/events-step/packet-event/packet-event.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="07827d3ce0175f4f52c335b41e9c116603acc62b" datatype="html">
+            <source>HYT_single</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/fields-step/packet-field/packet-field.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="078430796f56ed14c08236ef7ba12edf2d61884d" datatype="html">
+            <source>HYT_array</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/fields-step/packet-field/packet-field.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="b8fc0f113259c2158b780496cef09f544c208e87" datatype="html">
+            <source>HYT_matrix</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/fields-step/packet-field/packet-field.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="214bb2bc83407988555a6ee2bc52f402010da72f" datatype="html">
+            <source>HYT_object</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/fields-step/packet-field/packet-field.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="eab50b68faca947d0b344be24f4f568c6b2cd16c" datatype="html">
+            <source>HYT_integer</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/fields-step/packet-field/packet-field.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="46cfe24f98c1076971f8eed976b9f80c4b3d3dbf" datatype="html">
+            <source>HYT_double</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/fields-step/packet-field/packet-field.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="6917681531931a38547aca4497b54f5d9c040a4a" datatype="html">
+            <source>HYT_float</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/fields-step/packet-field/packet-field.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="b54202700b9bba61868cdd67d6e71fd8fc1c9c9a" datatype="html">
+            <source>HYT_boolean</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/fields-step/packet-field/packet-field.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="8dad0f6bdd6caf97984cf1d4476723138bb00057" datatype="html">
+            <source>HYT_date</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/fields-step/packet-field/packet-field.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="286648be5979e0d30ea85e17d627285b31a44913" datatype="html">
+            <source>HYT_text</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/fields-step/packet-field/packet-field.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="f89e9af0f29b9d98528965480c1269227e6c527a" datatype="html">
+            <source>HYT_timestamp</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/fields-step/packet-field/packet-field.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="3a3c4d9f991cfcf8eb73d17b0f5f72f959c2d614" datatype="html">
+            <source>HYT_category</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/fields-step/packet-field/packet-field.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="8bee0ba9bfc8b049c387cf8aed603b40a17ccf85" datatype="html">
+            <source>HYT_tag</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/fields-step/packet-field/packet-field.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="8aa1bb5fcb59e2984b099cd619dc86e89c1119e5" datatype="html">
+            <source>HYT_input</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/packets-step/packets-form/packets-form.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="b489ba3fb475960939eef3d54a92bc87bd4048f0" datatype="html">
+            <source>HYT_output</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/packets-step/packets-form/packets-form.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="fa8c5133c3587d7d4bf342a4c7fd1b2e7f295e32" datatype="html">
+            <source>HYT_i_o</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/packets-step/packets-form/packets-form.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="bdaa691bbeb8ffdb97e7bb7555b2ffffaac81315" datatype="html">
+            <source>HYT_json</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/packets-step/packets-form/packets-form.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="33583e883192818e4c2157f9a15b794b0bcde8d8" datatype="html">
+            <source>HYT_xml</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/packets-step/packets-form/packets-form.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="8e2a5100d4f526968a55c3a0ca7a845919a4f64a" datatype="html">
+            <source>HYT_csv</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/packets-step/packets-form/packets-form.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="f9e2a67c1c3e45335f61f075698590408410cdf1" datatype="html">
+            <source>HYT_none</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/packets-step/packets-form/packets-form.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="1a8c45b8801b88fa3f32e00105685ba36d44d399" datatype="html">
+            <source>HYT_avro</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/packets-step/packets-form/packets-form.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="3ca0013d4d6248dd1044a941ab7c96f9597ae94a" datatype="html">
+            <source>HYT_low</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/packets-step/packets-form/packets-form.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="49592ee9899086f71660b30a2cac3907e5796207" datatype="html">
+            <source>HYT_medium</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/packets-step/packets-form/packets-form.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="c4b164b9580eb0a0d4169194ab77fc1b6446af15" datatype="html">
+            <source>HYT_high</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/packets-step/packets-form/packets-form.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="9f8c4d3c72826d8e7a737e92d5f0ce283904b92a" datatype="html">
+            <source>HYT_intensive</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/packets-step/packets-form/packets-form.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="361ef7bb52b337b9a8e41f33e9329ac7606254ed" datatype="html">
+            <source>HYT_(&gt;)_greater</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/rule-definition/rule-definition.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="ea3df980897ff3d62e2e36c1b57a5ab0539442a4" datatype="html">
+            <source>HYT_(&gt;=)_greater_equal</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/rule-definition/rule-definition.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="55761bdb29eea4196dca82024d37dd4c86797e27" datatype="html">
+            <source>HYT_(&lt;)_lower</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/rule-definition/rule-definition.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="0c666596875be91136124a0fc9549fec9d309d3b" datatype="html">
+            <source>HYT_(&lt;=)_lower_equal</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/rule-definition/rule-definition.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="98ccbc292e89991c41a3bbca6731f6778e9b8afb" datatype="html">
+            <source>HYT_(==)_equal</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/rule-definition/rule-definition.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="6547b5557dfe061189e3abf3fab01fa73082d360" datatype="html">
+            <source>HYT_(!=)_different</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/rule-definition/rule-definition.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="75df2c70950bf6f42d6d4f04d0664a8c8152e16f" datatype="html">
+            <source>HYT_(())_like</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/rule-definition/rule-definition.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="521dd096c2aca9aca6b2d33898e97c86f5fc1c7e" datatype="html">
+            <source>HYT_is_true</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/rule-definition/rule-definition.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="8d1c5a6839fa904a02cffbc035ee6fe46451299a" datatype="html">
+            <source>HYT_is_false</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/rule-definition/rule-definition.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="10853f599d0e1c44a9189e7b072ed74b910a5581" datatype="html">
+            <source>HYT_AND</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/rule-definition/rule-definition.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="973c0194d00198076544a904b0d06aec4682175a" datatype="html">
+            <source>HYT_OR</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/rule-definition/rule-definition.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="fdecf521a6288a2793958c805a767c97e775d464" datatype="html">
+            <source>HYT_average</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/statistics-step/statistics-step.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="11bca84b4bc7e1a1af53cc93169f9576902b6c7a" datatype="html">
+            <source>HYT_media_2_fields</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/statistics-step/statistics-step.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="aeec995c83d2cf6db4ad51a6179a92f90ad8c20e" datatype="html">
+            <source>HYT_media_3_fields</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/statistics-step/statistics-step.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="d409cdf3634f6182fb7c1dcbff39bfeea8277c00" datatype="html">
+            <source>HYT_predective</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/statistics-step/statistics-step.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="fed593dd597272ad1129a26f3067db6008174c0f" datatype="html">
+            <source>HYT_regression</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/statistics-step/statistics-step.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="195f22be4baaed63095111cd2d1867711cba7f50" datatype="html">
+            <source>HYT_string</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/statistics-step/statistics-step.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="69e0fce72ad782eda811fb14caf341dac70d1caa" datatype="html">
+            <source>HYT_variance</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/statistics-step/statistics-step.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="5f960cb517e5327ecaf04bf21d5d8b7c1d020818" datatype="html">
+            <source>HYT_hours</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/statistics-step/statistics-step.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="056f51a779cf3262260d75bfebb2dc774a040544" datatype="html">
+            <source>HYT_daily</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/statistics-step/statistics-step.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="bae3a18fe67b17b9f75e5b86e62043aa6a4a22b4" datatype="html">
+            <source>HYT_weekly</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/statistics-step/statistics-step.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="3f091f9b091ffeab60225cf7fe5f0ad214ce4ac7" datatype="html">
+            <source>HYT_monthly</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/statistics-step/statistics-step.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="7379922aa9f5521280de78498438be9078932be4" datatype="html">
+            <source>HYT_quarterly</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/statistics-step/statistics-step.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="302d735fdb036f5c507981882828425760b0f5ff" datatype="html">
+            <source>HYT_four_monthly</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/statistics-step/statistics-step.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="5626160b605195567f4afe7dc56fc3c996b86577" datatype="html">
+            <source>HYT_half_yearly</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/statistics-step/statistics-step.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="8e93111811b8d333a0486565689250bb54cbd552" datatype="html">
+            <source>HYT_annual</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/statistics-step/statistics-step.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="15b8c4db6ff33e499a33b67d495576359e407461" datatype="html">
+            <source>HYT_packet</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/statistics-step/statistics-step.component.ts</context>
+               <context context-type="linenumber">1</context>
             </context-group>
          </trans-unit>
          <trans-unit id="a04ce575c9895b8cb4283b493a2703883520710a" datatype="html">

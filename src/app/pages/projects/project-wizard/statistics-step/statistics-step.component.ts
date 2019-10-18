@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { SelectOption } from '@hyperiot/components';
 import { PageStatusEnum } from '../model/pageStatusEnum';
 import { RulesService, HPacket } from '@hyperiot/core';
+import { I18n } from '@ngx-translate/i18n-polyfill';
 
 @Component({
   selector: 'hyt-statistics-step',
@@ -22,35 +23,36 @@ export class StatisticsStepComponent implements OnInit {
   errors: HYTError[] = [];
 
   algorithmOptions: SelectOption[] = [
-    { value: '0', label: 'Average' },
-    { value: '1', label: 'Media 2 Fields' },
-    { value: '3', label: 'Media 3 Fields' },
-    { value: '4', label: 'Predective' },
-    { value: '5', label: 'Regression' },
-    { value: '6', label: 'String' },
-    { value: '7', label: 'Variance' }
+    { value: '0', label: this.i18n('HYT_average') },
+    { value: '1', label: this.i18n('HYT_media_2_fields') },
+    { value: '3', label: this.i18n('HYT_media_3_fields') },
+    { value: '4', label: this.i18n('HYT_predective') },
+    { value: '5', label: this.i18n('HYT_regression') },
+    { value: '6', label: this.i18n('HYT_string') },
+    { value: '7', label: this.i18n('HYT_variance') }
   ];
 
   timeRangeOptions: SelectOption[] = [
-    { value: '0', label: 'Hours' },
-    { value: '1', label: 'Daily' },
-    { value: '3', label: 'Weekly' },
-    { value: '4', label: 'Monthly' },
-    { value: '5', label: 'Quarterly' },
-    { value: '6', label: 'Four-monthly' },
-    { value: '7', label: 'Half yearly' },
-    { value: '8', label: 'Annual' }
+    { value: '0', label: this.i18n('HYT_hours') },
+    { value: '1', label: this.i18n('HYT_daily') },
+    { value: '3', label: this.i18n('HYT_weekly') },
+    { value: '4', label: this.i18n('HYT_monthly') },
+    { value: '5', label: this.i18n('HYT_quarterly') },
+    { value: '6', label: this.i18n('HYT_four_monthly') },
+    { value: '7', label: this.i18n('HYT_half_yearly') },
+    { value: '8', label: this.i18n('HYT_annual') }
   ];
 
   enrichmentRules: SelectOption[] = [
-    { value: JSON.stringify({ actionName: "AddCategoryRuleAction", ruleId: 0, categoryIds: null }), label: 'Categories' },
-    { value: JSON.stringify({ actionName: "AddTagRuleAction", ruleId: 0, tagIds: null }), label: 'Tags' },
-    { value: JSON.stringify({ actionName: "ValidateHPacketRuleAction", ruleId: 0 }), label: 'Packet' }//TODO actionName is wrong
+    { value: JSON.stringify({ actionName: "AddCategoryRuleAction", ruleId: 0, categoryIds: null }), label: this.i18n('HYT_categories') },
+    { value: JSON.stringify({ actionName: "AddTagRuleAction", ruleId: 0, tagIds: null }), label: this.i18n('HYT_tags') },
+    { value: JSON.stringify({ actionName: "ValidateHPacketRuleAction", ruleId: 0 }), label: this.i18n('HYT_packet') }//TODO actionName is wrong
   ];
 
   constructor(
     private rulesService: RulesService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private i18n: I18n
   ) { }
 
   ngOnInit() {

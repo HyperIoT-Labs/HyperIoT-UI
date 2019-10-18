@@ -8,6 +8,7 @@ import { ProjectWizardHttpErrorHandlerService } from 'src/app/services/errorHand
 import { PageStatusEnum } from '../../model/pageStatusEnum';
 import { AssetTagComponent } from '../../asset-tag/asset-tag.component';
 import { ProjectWizardService } from 'src/app/services/projectWizard/project-wizard.service';
+import { I18n } from '@ngx-translate/i18n-polyfill';
 
 @Component({
   selector: 'hyt-packet-enrichment',
@@ -28,9 +29,9 @@ export class PacketEnrichmentComponent implements OnInit {
   pageStatus: PageStatusEnum = PageStatusEnum.Default;
 
   enrichmentRules: SelectOption[] = [
-    { value: JSON.stringify({ actionName: "AddCategoryRuleAction", ruleId: 0, categoryIds: null }), label: 'Categories' },
-    { value: JSON.stringify({ actionName: "AddTagRuleAction", ruleId: 0, tagIds: null }), label: 'Tags' },
-    { value: JSON.stringify({ actionName: "ValidateHPacketRuleAction", ruleId: 0 }), label: 'Validation' }
+    { value: JSON.stringify({ actionName: "AddCategoryRuleAction", ruleId: 0, categoryIds: null }), label: this.i18n('HYT_categories') },
+    { value: JSON.stringify({ actionName: "AddTagRuleAction", ruleId: 0, tagIds: null }), label: this.i18n('HYT_tags') },
+    { value: JSON.stringify({ actionName: "ValidateHPacketRuleAction", ruleId: 0 }), label: this.i18n('HYT_validation') }
   ]
 
   constructor(
@@ -38,7 +39,8 @@ export class PacketEnrichmentComponent implements OnInit {
     private rulesService: RulesService,
     private packetService: HpacketsService,
     private wizardService: ProjectWizardService,
-    private errorHandler: ProjectWizardHttpErrorHandlerService
+    private errorHandler: ProjectWizardHttpErrorHandlerService,
+    private i18n: I18n
   ) { }
 
   ngOnInit() {

@@ -86,6 +86,8 @@ HYT_events
 Eventi
 HYT_events_definition_long
 Lunga definizione di eventi. Lunga definizione di eventi. Lunga definizione di eventi. Lunga definizione di eventi. Lunga definizione di eventi. Lunga definizione di eventi. Lunga definizione di eventi. 
+HYT_finish
+Finisci
 HYT_congratulations
 Congratulazioni
 HYT_pw_finsh
@@ -174,12 +176,20 @@ HYT_add_packet
 Aggiungi pacchetto
 HYT_update_packet
 Aggiorna pacchetto
+HYT_algorithm
+Algoritmo
+HYT_packet
+Pacchetto
+HYT_time_range
+Tempo
+HYT_add_statistics
+Aggiungi statistica
 HYT_delete_enrichment_confirm
 Questa azione eliminerà la regola di arricchimento. Vuoi procedere?
 HYT_string_device
-Dispositiv{{ deviceCount > 1 ? 'i' : 'o' }}
+Dispositiv{{ deviceCount == 1 ? 'o' : 'i' }}
 HYT_string_rule
-Regol{{ rulesCount > 1 ? 'e' : 'a' }}
+Regol{{ rulesCount == 1 ? 'a' : 'e' }}
 HYT_DEVICES
 DISPOSITIVI
 HYT_device_definition_long
@@ -196,8 +206,6 @@ HYT_mail_body
 Corpo della mail
 HYT_definition_of_terms
 Definizione dei termini
-HYT_packet
-Pacchetto
 HYT_level_of_multiplicity
 Livello di moltiplicità
 HYT_save_field
@@ -232,6 +240,124 @@ HYT_PROJECT
 PROGETTO
 HYT_project_definition_long
 definizione progetto lunga. definizione progetto lunga. definizione progetto lunga. definizione progetto lunga. definizione progetto lunga. definizione progetto lunga. definizione progetto lunga. definizione progetto lunga. 
+HYT_categories
+Categorie
+HYT_tags
+Tags
+HYT_validation
+Validazione
+HYT_name_of_device
+Nome del device
+HYT_name_of_packet
+Nome del pacchetto
+HYT_name_of_field
+Nome del campo
+HYT_name_of_event_mail
+Nome dell'evento mail
+HYT_SEND_MAIL
+MANDA MAIL
+HYT_single
+Singolo
+HYT_array
+Array
+HYT_matrix
+Matrice
+HYT_object
+Oggetto
+HYT_integer
+Intero
+HYT_double
+Double
+HYT_float
+Float
+HYT_boolean
+Booleano
+HYT_date
+Data
+HYT_text
+Testo
+HYT_timestamp
+Timestamp
+HYT_category
+Categoria
+HYT_tag
+Tag
+HYT_input
+Input
+HYT_output
+Output
+HYT_i_o
+I/O
+HYT_json
+Json
+HYT_xml
+Xml
+HYT_csv
+Csv
+HYT_none
+None
+HYT_avro
+Avro
+HYT_low
+Basso
+HYT_medium
+Medio
+HYT_high
+Alto
+HYT_intensive
+Intenso
+HYT_(&gt;)_greater
+(>) Maggiore
+HYT_(&gt;=)_greater_equal
+(>=) Maggiore/Uguale
+HYT_(&lt;)_lower
+(<) Minore
+HYT_(&lt;=)_lower_equal
+(<=) Minore/Uguale
+HYT_(==)_equal
+(=) Uguale
+HYT_(!=)_different
+(!=) Diverso
+HYT_(())_like
+(()) Like
+HYT_is_true
+è vero
+HYT_is_false
+è falso
+HYT_AND
+AND
+HYT_OR
+OR
+HYT_average
+Media
+HYT_media_2_fields
+Media 2 campi
+HYT_media_3_fields
+Media 3 campi
+HYT_predective
+Predittivo
+HYT_regression
+Regressione
+HYT_string
+Stringa
+HYT_variance
+Varianza
+HYT_hours
+Orario
+HYT_daily
+Quotidiano
+HYT_weekly
+Settimanale
+HYT_monthly
+Mensile
+HYT_quarterly
+Trimestrale
+HYT_four_monthly
+Quadrimestrale
+HYT_half_yearly
+Semestrale
+HYT_annual
+Annuale
 HYT_duplicate_entity
 già in uso
 HYT_unknown_error

@@ -7,6 +7,7 @@ import { Option, SelectOption } from '@hyperiot/components';
 import { HYTError } from 'src/app/services/errorHandler/models/models';
 import { ProjectWizardHttpErrorHandlerService } from 'src/app/services/errorHandler/project-wizard-http-error-handler.service';
 import { ProjectWizardService } from 'src/app/services/projectWizard/project-wizard.service';
+import { I18n } from '@ngx-translate/i18n-polyfill';
 
 enum FormStatusEnum {
   SelectAction = 0,
@@ -41,22 +42,22 @@ export class PacketFieldComponent implements OnInit, OnChanges {
   formStatus: FormStatusEnum = FormStatusEnum.SelectAction;
 
   multiplicityOptions: Option[] = [
-    { value: 'SINGLE', label: 'Single', checked: true },
-    { value: 'ARRAY', label: 'Array' },
-    { value: 'MATRIX', label: 'Matrix' }
+    { value: 'SINGLE', label: this.i18n('HYT_single'), checked: true },
+    { value: 'ARRAY', label: this.i18n('HYT_array') },
+    { value: 'MATRIX', label: this.i18n('HYT_matrix') }
   ];
 
   typeOptions: SelectOption[] = [
-    { value: 'OBJECT', label: 'OBJECT' },
-    { value: 'INTEGER', label: 'INTEGER' },
-    { value: 'DOUBLE', label: 'DOUBLE' },
-    { value: 'FLOAT', label: 'FLOAT' },
-    { value: 'BOOLEAN', label: 'BOOLEAN' },
-    { value: 'DATE', label: 'DATE' },
-    { value: 'TEXT', label: 'TEXT' },
-    { value: 'TIMESTAMP', label: 'TIMESTAMP' },
-    { value: 'CATEGORY', label: 'CATEGORY' },
-    { value: 'TAG', label: 'TAG' }
+    { value: 'OBJECT', label: this.i18n('HYT_object') },
+    { value: 'INTEGER', label: this.i18n('HYT_integer') },
+    { value: 'DOUBLE', label: this.i18n('HYT_double') },
+    { value: 'FLOAT', label: this.i18n('HYT_float') },
+    { value: 'BOOLEAN', label: this.i18n('HYT_boolean') },
+    { value: 'DATE', label: this.i18n('HYT_date') },
+    { value: 'TEXT', label: this.i18n('HYT_text') },
+    { value: 'TIMESTAMP', label: this.i18n('HYT_timestamp') },
+    { value: 'CATEGORY', label: this.i18n('HYT_category') },
+    { value: 'TAG', label: this.i18n('HYT_tag') }
   ];
 
   errors: HYTError[] = [];
@@ -65,7 +66,8 @@ export class PacketFieldComponent implements OnInit, OnChanges {
     private fb: FormBuilder,
     private hPacketService: HpacketsService,
     private errorHandler: ProjectWizardHttpErrorHandlerService,
-    private wizardService: ProjectWizardService
+    private wizardService: ProjectWizardService,
+    private i18n: I18n
   ) { }
 
   ngOnInit() {

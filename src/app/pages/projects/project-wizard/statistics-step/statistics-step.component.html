@@ -17,13 +17,13 @@
 
           <div class="container-form-field">
             <hyt-input-text [form]="statisticsForm" formControlName="statisticsName" name="statisticsName"
-              [isRequired]="true" placeholder="Name">
+              [isRequired]="true" i18n-placeholder="@@HYT_name" placeholder="HYT_name">
             </hyt-input-text>
           </div> <!-- Field Name -->
 
           <div class="container-form-field">
             <hyt-select [form]="statisticsForm" [options]="algorithmOptions" formControlName="statisticsAlgorithm"
-              name="statisticsAlgorithm" [isRequired]="true" label="Algorithm">
+              name="statisticsAlgorithm" [isRequired]="true" i18n-label="@@HYT_algorithm" label="HYT_algorithm">
             </hyt-select> <!-- Field Algorithm -->
           </div>
 
@@ -39,19 +39,20 @@
 
           <div class="container-form-field">
             <hyt-input-text [form]="statisticsForm" formControlName="statisticsPacket" name="statisticsPacket"
-              placeholder="Packet">
+              i18n-placeholder="@@HYT_packet" placeholder="HYT_packet">
             </hyt-input-text> <!-- Field Packet -->
           </div>
 
           <div class="container-form-field">
             <hyt-select [form]="statisticsForm" [options]="enrichmentRules" (changeFn)="enrichmentTypeChanged($event)"
-              formControlName="statisticsSourceData" name="statisticsSourceData" [isRequired]="true" label="Rule Type">
+              formControlName="statisticsSourceData" name="statisticsSourceData" [isRequired]="true"
+              i18n-label="@@HYT_rule_type" label="HYT_rule_type">
             </hyt-select> <!-- Field Sourde Data -->
           </div>
 
           <div class="container-form-field">
             <hyt-select [form]="statisticsForm" [options]="timeRangeOptions" formControlName="statisticsTimeRange"
-              name="statisticsTimeRange" [isRequired]="true" label="Time Range">
+              name="statisticsTimeRange" [isRequired]="true" i18n-label="@@HYT_time_range" label="HYT_time_range">
             </hyt-select> <!-- Field Time Range -->
           </div>
 
@@ -81,7 +82,7 @@
 
       <hyt-button id="statistics-form-submit-button" [isDisabled]="invalid() || pageStatus == PageStatus.Loading"
         (clickFn)="createStatistic()" type="submit">
-        Add Statistic
+        <ng-container i18n="@@HYT_add_statistics">HYT_add_statistics</ng-container>
       </hyt-button>
 
     </form>

@@ -8,6 +8,7 @@ import { Option } from '@hyperiot/components/lib/hyt-radio-button/hyt-radio-butt
 import { PageStatusEnum } from '../../model/pageStatusEnum';
 import { EventMailComponent } from '../event-mail/event-mail.component';
 import { ProjectWizardService } from 'src/app/services/projectWizard/project-wizard.service';
+import { I18n } from '@ngx-translate/i18n-polyfill';
 
 @Component({
   selector: 'hyt-packet-event',
@@ -30,7 +31,7 @@ export class PacketEventComponent implements OnInit {
 
 
   outputOptions: Option[] = [
-    { value: 'SendMailAction', label: 'SEND MAIL', checked: true }
+    { value: 'SendMailAction', label: this.i18n('HYT_SEND_MAIL'), checked: true }
     // { value: '', label: 'START STATISTIC' }
   ]
 
@@ -38,7 +39,8 @@ export class PacketEventComponent implements OnInit {
     private fb: FormBuilder,
     private rulesService: RulesService,
     private wizardService: ProjectWizardService,
-    private errorHandler: ProjectWizardHttpErrorHandlerService
+    private errorHandler: ProjectWizardHttpErrorHandlerService,
+    private i18n:I18n
   ) { }
 
   ngOnInit() {

@@ -5,6 +5,7 @@ import { HDevice, HPacket } from '@hyperiot/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { HYTError } from 'src/app/services/errorHandler/models/models';
 import { PageStatusEnum } from '../../model/pageStatusEnum';
+import { I18n } from '@ngx-translate/i18n-polyfill';
 
 @Component({
   selector: 'hyt-packets-form',
@@ -29,32 +30,33 @@ export class PacketsFormComponent implements OnInit {
   pageStatus: PageStatusEnum = PageStatusEnum.Default;
 
   typologyOptions: Option[] = [
-    { value: 'INPUT', label: 'Input', checked: true },
-    { value: 'OUTPUT', label: 'Output' },
-    { value: 'IO', label: 'I/O' }
+    { value: 'INPUT', label: this.i18n('HYT_input'), checked: true },
+    { value: 'OUTPUT', label: this.i18n('HYT_output') },
+    { value: 'IO', label: this.i18n('HYT_i_o') }
   ];
 
   formatOptions: Option[] = [
-    { value: 'JSON', label: 'json', checked: true },
-    { value: 'XML', label: 'xml' },
-    { value: 'CSV', label: 'csv' }
+    { value: 'JSON', label: this.i18n('HYT_json'), checked: true },
+    { value: 'XML', label: this.i18n('HYT_xml') },
+    { value: 'CSV', label: this.i18n('HYT_csv') }
   ];
 
   serializationOptions: Option[] = [
-    { value: 'NONE', label: 'none', checked: true },
-    { value: 'AVRO', label: 'avro' }
+    { value: 'NONE', label: this.i18n('HYT_none'), checked: true },
+    { value: 'AVRO', label: this.i18n('HYT_avro') }
   ];
 
   trafficPlanOptions: SelectOption[] = [
-    { value: 'LOW', label: 'Low' },
-    { value: 'MEDIUM', label: 'Medium' },
-    { value: 'HIGH', label: 'High' },
-    { value: 'INTENSIVE', label: 'Intensive' },
+    { value: 'LOW', label: this.i18n('HYT_low') },
+    { value: 'MEDIUM', label: this.i18n('HYT_medium') },
+    { value: 'HIGH', label: this.i18n('HYT_high') },
+    { value: 'INTENSIVE', label: this.i18n('HYT_intensive') },
   ];
 
   constructor(
     private fb: FormBuilder,
-    private wizardService: ProjectWizardService
+    private wizardService: ProjectWizardService,
+    private i18n: I18n
   ) { }
 
   ngOnInit() {
