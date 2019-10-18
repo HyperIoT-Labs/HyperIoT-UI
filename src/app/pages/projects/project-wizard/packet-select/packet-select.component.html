@@ -4,13 +4,13 @@
 
     <div class="col-md-3 container-form-field">
       <hyt-select [form]="selectForm" formControlName="selectDevice" name="selectDevice" [options]="devicesOptions"
-        label="Device" (changeFn)="deviceChanged($event)">
+        i18n-label="@@HYT_device" label="HYT_device" (changeFn)="deviceChanged($event)">
       </hyt-select>
     </div> <!-- Select Device -->
 
     <div class="col-md-3 container-form-field">
       <hyt-select [form]="selectForm" formControlName="selectPacket" name="selectPacket" [options]="packetsOptions"
-        label="Packet" (changeFn)="packetChanged($event)" [disabled]="false">
+        i18n-label="@@HYT_packet" label="HYT_packet" (changeFn)="packetChanged($event)" [disabled]="false">
       </hyt-select>
     </div> <!-- Select Packet -->
 

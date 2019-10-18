@@ -1,7 +1,15 @@
-ENRICHMENT DATA
+<mat-expansion-panel [expanded]="true">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      <b i18n="@@HYT_ENRICHMENT">HYT_ENRICHMENT</b>
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+  <p i18n="@@HYT_enrichment_definition_long">HYT_enrichment_definition_long</p>
+</mat-expansion-panel>
+
 <table>
   <tr>
-    <th><b>NOME</b></th>
+    <th><b i18n="@@HYT_NAME">HYT_NAME</b></th>
     <th><b>M</b></th>
     <th><b>D</b></th>
     <th><b>X</b></th>
@@ -13,3 +21,8 @@ ENRICHMENT DATA
     <td (click)="delete(enr)">X</td>
   </tr>
 </table>
+
+<div *ngIf="hintVisible" class="info-message">
+  <span class="text">{{hintMessage}}</span>
+  <mat-icon class="">info</mat-icon>
+</div>

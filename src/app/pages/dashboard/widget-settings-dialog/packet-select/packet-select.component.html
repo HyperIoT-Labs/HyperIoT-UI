@@ -8,8 +8,7 @@
                 <mat-select [(ngModel)]="selectedPacket" [compareWith]="packetCompare"
                     (ngModelChange)="onPacketChange()" name="packet-select"
                     placeholder="HYT_widget_settings_select_packet"
-                    i18n-placeholder="@@widgetSettingsDialog/packet-lbl-type"
-                    required disableRipple>
+                    i18n-placeholder="@@HYT_widget_settings_select_packet" required disableRipple>
                     <mat-option *ngFor="let packet of projectPackets" [value]="packet" selected>
                         {{packet.name}}
                         ({{packet.id}})
@@ -29,14 +28,13 @@
                 <mat-select [(ngModel)]="selectedFields" [multiple]="multiPacketSelect"
                     (ngModelChange)="onPacketFieldChange($event)" name="field-select"
                     placeholder="HYT_widget_settings_select_fields"
-                    i18n-placeholder="@@widgetSettingsDialog/packet-lbl-fields"
-                    required disableRipple>
+                    i18n-placeholder="@@HYT_widget_settings_select_fields" required disableRipple>
                     <mat-option *ngFor="let field of selectedPacket.fields" [value]="field" selected>
                         {{field.name}}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
-    
+
         </div>
 
     </ng-container>

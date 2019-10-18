@@ -123,6 +123,7 @@ export class DevicesStepComponent {
     this.deleteError = null;
     this.hDeviceService.deleteHDevice(this.selectedDevice.id).subscribe(
       res => {
+        this.form.resetForm('ADD');
         this.wizardService.deleteDevice(this.selectedDevice.id);
         this.hideDeleteModal();
       },

@@ -1,185 +1,1250 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-  <file source-language="en" datatype="plaintext" original="ng2.template">
-    <body>
-      <trans-unit id="HYT_username" datatype="html">
-        <source>HYT_username</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/pages/authentication/registration/registration.component.html</context>
-          <context context-type="linenumber">43</context>
-        </context-group>
-      </trans-unit>
-
-      <trans-unit id="HYT_username_or_email" datatype="html">
-        <source>HYT_username_or_email</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/pages/authentication/login/login.component.html</context>
-          <context context-type="linenumber">33</context>
-        </context-group>
-      </trans-unit>
-
-      <trans-unit id="HYT_password" datatype="html">
-        <source>HYT_password</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/pages/authentication/login/login.component.html</context>
-          <context context-type="linenumber">41</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/pages/authentication/registration/registration.component.html</context>
-          <context context-type="linenumber">55</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="HYT_registration" datatype="html">
-        <source>HYT_registration</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/pages/authentication/registration/registration.component.html</context>
-          <context context-type="linenumber">21</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="HYT_name" datatype="html">
-        <source>HYT_name</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/pages/authentication/registration/registration.component.html</context>
-          <context context-type="linenumber">31</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="HYT_surname" datatype="html">
-        <source>HYT_surname</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/pages/authentication/registration/registration.component.html</context>
-          <context context-type="linenumber">37</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="HYT_email" datatype="html">
-        <source>HYT_email</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/pages/authentication/registration/registration.component.html</context>
-          <context context-type="linenumber">49</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="HYT_passwordConfirm" datatype="html">
-        <source>HYT_passwordConfirm</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/pages/authentication/registration/registration.component.html</context>
-          <context context-type="linenumber">63</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="HYT_registration_button" datatype="html">
-        <source>HYT_registration_button</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/pages/authentication/registration/registration.component.html</context>
-          <context context-type="linenumber">81</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="HYT_registration_form_ok" datatype="html">
-        <source>HYT_registration_form_ok
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/pages/authentication/registration/registration.component.html</context>
-          <context context-type="linenumber">85</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="6ab904593389e6b2cef07dbdd8176dfe41662bc1" datatype="html">
-        <source>HYT_server_error_500</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/services/authentication-http-error-handler.service.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/services/authentication-http-error-handler.service.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/services/authentication-http-error-handler.service.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="a7ab86c6bc245dc3e54a80f23afb53728fab8167" datatype="html">
-        <source>HYT_offline_504</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/services/authentication-http-error-handler.service.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/services/authentication-http-error-handler.service.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/services/authentication-http-error-handler.service.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="a04ce575c9895b8cb4283b493a2703883520710a" datatype="html">
-        <source>HYT_duplicate_entity</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/services/authentication-http-error-handler.service.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="a48a62b370f07697e5532c369fa4e1e400f53b40" datatype="html">
-        <source>HYT_unknown_error</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/services/authentication-http-error-handler.service.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/services/authentication-http-error-handler.service.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/services/authentication-http-error-handler.service.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="f8e19291bb0f5e04beab8ca91700587fe9d3b9b3" datatype="html">
-        <source>HYT_wrong_user_or_password</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/services/authentication-http-error-handler.service.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="96b015a8cb3d48869109e5ce0b72af06d2bf9031" datatype="html">
-        <source>HYT_field_required</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">C:/Users/Gabriele Losiczko/HyperIoT/HyperIoT-component/projects/hyperiot-components/src/lib/hyt-input/hyt-input.component.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="caa12f28e24ab3f2fe27e9123a59c2e0aa5a57c6" datatype="html">
-        <source>HYT_valid_email</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">C:/Users/Gabriele Losiczko/HyperIoT/HyperIoT-component/projects/hyperiot-components/src/lib/hyt-input/hyt-input.component.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="33c9ece659dd5c0489ef586aae0136c6c480bb19" datatype="html">
-        <source>HYT_min_length</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">C:/Users/Gabriele Losiczko/HyperIoT/HyperIoT-component/projects/hyperiot-components/src/lib/hyt-input/hyt-input.component.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="099248b4e8ef7f4dfb63ac0a0815c387b95bf564" datatype="html">
-        <source>HYT_min_one_number</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">C:/Users/Gabriele Losiczko/HyperIoT/HyperIoT-component/projects/hyperiot-components/src/lib/hyt-input/hyt-input.component.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="88e4d8c0ae5f7fb56559746c5f537ed55f114e4b" datatype="html">
-        <source>HYT_upper_case</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">C:/Users/Gabriele Losiczko/HyperIoT/HyperIoT-component/projects/hyperiot-components/src/lib/hyt-input/hyt-input.component.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="e75c1bdd7a657e3e31ef4323632c18c18cc0db9e" datatype="html">
-        <source>HYT_special_char</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">C:/Users/Gabriele Losiczko/HyperIoT/HyperIoT-component/projects/hyperiot-components/src/lib/hyt-input/hyt-input.component.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-    </body>
-  </file>
+   <file source-language="en" datatype="plaintext" original="ng2.template">
+      <body>
+         <trans-unit id="widgetsToolbar-title-settings" datatype="html">
+            <source>HYT_toolbar_settings</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">node_modules/@hyperiot/widgets/lib/common-toolbar/common-toolbar.component.d.ts</context>
+               <context context-type="linenumber">16</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="widgetsToolbar-title-refresh" datatype="html">
+            <source>HYT_toolbar_refresh</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">node_modules/@hyperiot/widgets/lib/common-toolbar/common-toolbar.component.d.ts</context>
+               <context context-type="linenumber">21</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="widgetsToolbar-title-close" datatype="html">
+            <source>HYT_toolbar_close</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">node_modules/@hyperiot/widgets/lib/common-toolbar/common-toolbar.component.d.ts</context>
+               <context context-type="linenumber">26</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="widgetsToolbar-title-move" datatype="html">
+            <source>HYT_toolbar_move</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">node_modules/@hyperiot/widgets/lib/common-toolbar/common-toolbar.component.d.ts</context>
+               <context context-type="linenumber">31</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="widgetsCommon-msg-notconfigured" datatype="html">
+            <source>HYT_common_not_configured</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">node_modules/@hyperiot/widgets/lib/sensor-value/sensor-value.component.d.ts</context>
+               <context context-type="linenumber">29</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">node_modules/@hyperiot/widgets/lib/stats-chart/stats-chart.component.d.ts</context>
+               <context context-type="linenumber">24</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">node_modules/@hyperiot/widgets/lib/time-chart/time-chart.component.d.ts</context>
+               <context context-type="linenumber">23</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">node_modules/@hyperiot/widgets/lib/gauge-value/gauge-value.component.d.ts</context>
+               <context context-type="linenumber">23</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_widget_settings_title" datatype="html">
+            <source>HYT_widget_settings_title</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/dashboard/widget-settings-dialog/widget-settings-dialog.component.html</context>
+               <context context-type="linenumber">7</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/dashboard/widget-settings-dialog/widget-settings-dialog.component.html</context>
+               <context context-type="linenumber">12</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/dashboard/widget-settings-dialog/widget-settings-dialog.component.html</context>
+               <context context-type="linenumber">79</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_name" datatype="html">
+            <source>HYT_name</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/dashboard/widget-settings-dialog/widget-settings-dialog.component.html</context>
+               <context context-type="linenumber">20</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/authentication/registration/registration.component.html</context>
+               <context context-type="linenumber">36</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/enrichment-step/packet-enrichment/packet-enrichment.component.html</context>
+               <context context-type="linenumber">6</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/devices-step/devices-form/devices-form.component.html</context>
+               <context context-type="linenumber">9</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/packets-step/packets-form/packets-form.component.html</context>
+               <context context-type="linenumber">6</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/fields-step/packet-field/packet-field.component.html</context>
+               <context context-type="linenumber">22</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/events-step/packet-event/packet-event.component.html</context>
+               <context context-type="linenumber">6</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/project-step/project-form/project-form.component.html</context>
+               <context context-type="linenumber">6</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_type" datatype="html">
+            <source>HYT_type</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/dashboard/widget-settings-dialog/widget-settings-dialog.component.html</context>
+               <context context-type="linenumber">26</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/fields-step/packet-field/packet-field.component.html</context>
+               <context context-type="linenumber">36</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_apply" datatype="html">
+            <source>HYT_apply</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/dashboard/widget-settings-dialog/widget-settings-dialog.component.html</context>
+               <context context-type="linenumber">68</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_cancel" datatype="html">
+            <source>HYT_cancel</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/dashboard/widget-settings-dialog/widget-settings-dialog.component.html</context>
+               <context context-type="linenumber">72</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/dashboard/add-widget-dialog/add-widget-dialog.component.html</context>
+               <context context-type="linenumber">71</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_error_occurred_long" datatype="html">
+            <source>HYT_error_occurred_long</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/dashboard/widget-settings-dialog/widget-settings-dialog.component.html</context>
+               <context context-type="linenumber">81</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/dashboard/add-widget-dialog/add-widget-dialog.component.html</context>
+               <context context-type="linenumber">84</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/dashboard/dashboard.component.html</context>
+               <context context-type="linenumber">115</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/projects.component.html</context>
+               <context context-type="linenumber">124</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/fields-step/packet-field/packet-field.component.html</context>
+               <context context-type="linenumber">69</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_no_widget_in_dashboard" datatype="html">
+            <source>HYT_no_widget_in_dashboard</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/dashboard/widgets-layout/widgets-layout.component.html</context>
+               <context context-type="linenumber">30</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_start_adding_widget" datatype="html">
+            <source>HYT_start_adding_widget</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/dashboard/widgets-layout/widgets-layout.component.html</context>
+               <context context-type="linenumber">31</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_widget_add_widget" datatype="html">
+            <source>HYT_widget_add_widget</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/dashboard/add-widget-dialog/add-widget-dialog.component.html</context>
+               <context context-type="linenumber">6</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/dashboard/add-widget-dialog/add-widget-dialog.component.html</context>
+               <context context-type="linenumber">11</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_widget_add_quantity" datatype="html">
+            <source>HYT_widget_add_quantity</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/dashboard/add-widget-dialog/add-widget-dialog.component.html</context>
+               <context context-type="linenumber">32</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_widget_info_type" datatype="html">
+            <source>HYT_widget_info_type</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/dashboard/add-widget-dialog/add-widget-dialog.component.html</context>
+               <context context-type="linenumber">54</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_description" datatype="html">
+            <source>HYT_description</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/dashboard/add-widget-dialog/add-widget-dialog.component.html</context>
+               <context context-type="linenumber">59</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/enrichment-step/packet-enrichment/packet-enrichment.component.html</context>
+               <context context-type="linenumber">18</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/devices-step/devices-form/devices-form.component.html</context>
+               <context context-type="linenumber">67</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/fields-step/packet-field/packet-field.component.html</context>
+               <context context-type="linenumber">42</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/events-step/packet-event/packet-event.component.html</context>
+               <context context-type="linenumber">12</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/project-step/project-form/project-form.component.html</context>
+               <context context-type="linenumber">15</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_widget_info_intro" datatype="html">
+            <source>HYT_widget_info_intro</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/dashboard/add-widget-dialog/add-widget-dialog.component.html</context>
+               <context context-type="linenumber">65</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_add" datatype="html">
+            <source>HYT_add</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/dashboard/add-widget-dialog/add-widget-dialog.component.html</context>
+               <context context-type="linenumber">75</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_add_widget" datatype="html">
+            <source>HYT_add_widget</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/dashboard/add-widget-dialog/add-widget-dialog.component.html</context>
+               <context context-type="linenumber">82</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_widget_settings_select_packet" datatype="html">
+            <source>HYT_widget_settings_select_packet</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/dashboard/widget-settings-dialog/packet-select/packet-select.component.html</context>
+               <context context-type="linenumber">10</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_widget_settings_select_fields" datatype="html">
+            <source>HYT_widget_settings_select_fields</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/dashboard/widget-settings-dialog/packet-select/packet-select.component.html</context>
+               <context context-type="linenumber">30</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_add_a_widget" datatype="html">
+            <source>HYT_add_a_widget</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/dashboard/dashboard.component.html</context>
+               <context context-type="linenumber">63</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_page_is_loading" datatype="html">
+            <source>HYT_page_is_loading</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/dashboard/dashboard.component.html</context>
+               <context context-type="linenumber">82</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/projects.component.html</context>
+               <context context-type="linenumber">22</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_no_dashboard_yet" datatype="html">
+            <source>HYT_no_dashboard_yet</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/dashboard/dashboard.component.html</context>
+               <context context-type="linenumber">103</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_widget_settings_apply" datatype="html">
+            <source>HYT_widget_settings_apply</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/dashboard/modals/confirm-recording-action/confirm-recording-action.component.html</context>
+               <context context-type="linenumber">19</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_widget_settings_cancel" datatype="html">
+            <source>HYT_widget_settings_cancel</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/dashboard/modals/confirm-recording-action/confirm-recording-action.component.html</context>
+               <context context-type="linenumber">23</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_data_recording" datatype="html">
+            <source>HYT_data_recording</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/dashboard/modals/info-recording-action/info-recording-action.component.html</context>
+               <context context-type="linenumber">6</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_attention" datatype="html">
+            <source>HYT_attention</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/dashboard/modals/info-recording-action/info-recording-action.component.html</context>
+               <context context-type="linenumber">10</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_dashboard_end_registration" datatype="html">
+            <source>HYT_dashboard_end_registration</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/dashboard/modals/info-recording-action/info-recording-action.component.html</context>
+               <context context-type="linenumber">12</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_next" datatype="html">
+            <source>HYT_next</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/dashboard/modals/info-recording-action/info-recording-action.component.html</context>
+               <context context-type="linenumber">18</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/project-wizard.component.html</context>
+               <context context-type="linenumber">25</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/project-wizard.component.html</context>
+               <context context-type="linenumber">35</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/project-wizard.component.html</context>
+               <context context-type="linenumber">46</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/project-wizard.component.html</context>
+               <context context-type="linenumber">56</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/project-wizard.component.html</context>
+               <context context-type="linenumber">66</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/project-wizard.component.html</context>
+               <context context-type="linenumber">76</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/project-step/project-form/project-form.component.html</context>
+               <context context-type="linenumber">35</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_back" datatype="html">
+            <source>HYT_back</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/dashboard/modals/info-recording-action/info-recording-action.component.html</context>
+               <context context-type="linenumber">22</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/project-wizard.component.html</context>
+               <context context-type="linenumber">22</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/project-wizard.component.html</context>
+               <context context-type="linenumber">32</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/project-wizard.component.html</context>
+               <context context-type="linenumber">42</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/project-wizard.component.html</context>
+               <context context-type="linenumber">53</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/project-wizard.component.html</context>
+               <context context-type="linenumber">63</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/project-wizard.component.html</context>
+               <context context-type="linenumber">73</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_password" datatype="html">
+            <source>HYT_password</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/authentication/password-reset/password-reset.component.html</context>
+               <context context-type="linenumber">26</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/authentication/login/login.component.html</context>
+               <context context-type="linenumber">46</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/authentication/registration/registration.component.html</context>
+               <context context-type="linenumber">62</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/devices-step/devices-form/devices-form.component.html</context>
+               <context context-type="linenumber">32</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_passwordConfirm" datatype="html">
+            <source>HYT_passwordConfirm</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/authentication/password-reset/password-reset.component.html</context>
+               <context context-type="linenumber">35</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_username_or_email" datatype="html">
+            <source>HYT_username_or_email</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/authentication/login/login.component.html</context>
+               <context context-type="linenumber">38</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_registration" datatype="html">
+            <source>HYT_registration</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/authentication/registration/registration.component.html</context>
+               <context context-type="linenumber">26</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_surname" datatype="html">
+            <source>HYT_surname</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/authentication/registration/registration.component.html</context>
+               <context context-type="linenumber">42</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_username" datatype="html">
+            <source>HYT_username</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/authentication/registration/registration.component.html</context>
+               <context context-type="linenumber">48</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_email" datatype="html">
+            <source>HYT_email</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/authentication/registration/registration.component.html</context>
+               <context context-type="linenumber">55</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/authentication/password-recovery/password-recovery.component.html</context>
+               <context context-type="linenumber">24</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_password_confirm" datatype="html">
+            <source>HYT_password_confirm</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/authentication/registration/registration.component.html</context>
+               <context context-type="linenumber">70</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/devices-step/devices-form/devices-form.component.html</context>
+               <context context-type="linenumber">40</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_registration_button" datatype="html">
+            <source>HYT_registration_button</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/authentication/registration/registration.component.html</context>
+               <context context-type="linenumber">89</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_registration_form_ok" datatype="html">
+            <source>HYT_registration_form_ok</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/authentication/registration/registration.component.html</context>
+               <context context-type="linenumber">112</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_choose_how_proceed" datatype="html">
+            <source>HYT_choose_how_proceed</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/project-wizard.component.html</context>
+               <context context-type="linenumber">91</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_enrichment_data" datatype="html">
+            <source>HYT_enrichment_data</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/project-wizard.component.html</context>
+               <context context-type="linenumber">99</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_enrichment_definition_long" datatype="html">
+            <source>HYT_enrichment_definition_long</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/project-wizard.component.html</context>
+               <context context-type="linenumber">101</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/enrichment-step/enrichment-tip-column/enrichment-tip-column.component.html</context>
+               <context context-type="linenumber">7</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_statistics" datatype="html">
+            <source>HYT_statistics</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/project-wizard.component.html</context>
+               <context context-type="linenumber">106</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/project-wizard.component.html</context>
+               <context context-type="linenumber">184</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_statistics_definition_long" datatype="html">
+            <source>HYT_statistics_definition_long</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/project-wizard.component.html</context>
+               <context context-type="linenumber">108</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_events" datatype="html">
+            <source>HYT_events</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/project-wizard.component.html</context>
+               <context context-type="linenumber">113</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/project-wizard.component.html</context>
+               <context context-type="linenumber">191</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_events_definition_long" datatype="html">
+            <source>HYT_events_definition_long</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/project-wizard.component.html</context>
+               <context context-type="linenumber">115</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_congratulations" datatype="html">
+            <source>HYT_congratulations</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/project-wizard.component.html</context>
+               <context context-type="linenumber">131</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_pw_finsh" datatype="html">
+            <source>HYT_pw_finsh</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/project-wizard.component.html</context>
+               <context context-type="linenumber">136</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_project" datatype="html">
+            <source>HYT_project</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/project-wizard.component.html</context>
+               <context context-type="linenumber">143</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_devices" datatype="html">
+            <source>HYT_devices</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/project-wizard.component.html</context>
+               <context context-type="linenumber">150</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_packets" datatype="html">
+            <source>HYT_packets</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/project-wizard.component.html</context>
+               <context context-type="linenumber">160</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_enrichment" datatype="html">
+            <source>HYT_enrichment</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/project-wizard.component.html</context>
+               <context context-type="linenumber">174</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_go_to_project_list" datatype="html">
+            <source>HYT_go_to_project_list</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/project-wizard.component.html</context>
+               <context context-type="linenumber">203</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_go_to_project_list_long" datatype="html">
+            <source>HYT_go_to_project_list_long</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/project-wizard.component.html</context>
+               <context context-type="linenumber">205</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_go_to_dashboard" datatype="html">
+            <source>HYT_go_to_dashboard</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/project-wizard.component.html</context>
+               <context context-type="linenumber">210</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_go_to_dashboard_long" datatype="html">
+            <source>HYT_go_to_dashboard_long</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/project-wizard.component.html</context>
+               <context context-type="linenumber">212</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_pw_deactivation_modal" datatype="html">
+            <source>HYT_pw_deactivation_modal</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/project-wizard.component.html</context>
+               <context context-type="linenumber">222</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_OK" datatype="html">
+            <source>HYT_OK</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/project-wizard.component.html</context>
+               <context context-type="linenumber">226</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_CANCEL" datatype="html">
+            <source>HYT_CANCEL</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/project-wizard.component.html</context>
+               <context context-type="linenumber">229</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_add_new_project" datatype="html">
+            <source>HYT_add_new_project</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/projects.component.html</context>
+               <context context-type="linenumber">12</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_project_list" datatype="html">
+            <source>HYT_project_list</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/projects.component.html</context>
+               <context context-type="linenumber">36</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_no_project_found" datatype="html">
+            <source>HYT_no_project_found</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/projects.component.html</context>
+               <context context-type="linenumber">83</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_no_project" datatype="html">
+            <source>HYT_no_project</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/projects.component.html</context>
+               <context context-type="linenumber">106</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_add_project_button_hint" datatype="html">
+            <source>HYT_add_project_button_hint</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/projects.component.html</context>
+               <context context-type="linenumber">107</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_create_first_project" datatype="html">
+            <source>HYT_create_first_project</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/projects.component.html</context>
+               <context context-type="linenumber">113</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_field" datatype="html">
+            <source>HYT_field</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/rule-definition/rule-definition.component.html</context>
+               <context context-type="linenumber">13</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_condition" datatype="html">
+            <source>HYT_condition</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/rule-definition/rule-definition.component.html</context>
+               <context context-type="linenumber">20</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_value" datatype="html">
+            <source>HYT_value</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/rule-definition/rule-definition.component.html</context>
+               <context context-type="linenumber">26</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_remove" datatype="html">
+            <source>HYT_remove</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/rule-definition/rule-definition.component.html</context>
+               <context context-type="linenumber">38</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_rule_type" datatype="html">
+            <source>HYT_rule_type</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/enrichment-step/packet-enrichment/packet-enrichment.component.html</context>
+               <context context-type="linenumber">13</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_add_rule" datatype="html">
+            <source>HYT_add_rule</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/enrichment-step/packet-enrichment/packet-enrichment.component.html</context>
+               <context context-type="linenumber">53</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_model" datatype="html">
+            <source>HYT_model</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/devices-step/devices-form/devices-form.component.html</context>
+               <context context-type="linenumber">17</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_firmware_version" datatype="html">
+            <source>HYT_firmware_version</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/devices-step/devices-form/devices-form.component.html</context>
+               <context context-type="linenumber">24</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_brand" datatype="html">
+            <source>HYT_brand</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/devices-step/devices-form/devices-form.component.html</context>
+               <context context-type="linenumber">52</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_software_version" datatype="html">
+            <source>HYT_software_version</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/devices-step/devices-form/devices-form.component.html</context>
+               <context context-type="linenumber">59</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_add_device" datatype="html">
+            <source>HYT_add_device</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/devices-step/devices-form/devices-form.component.html</context>
+               <context context-type="linenumber">84</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_update_device" datatype="html">
+            <source>HYT_update_device</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/devices-step/devices-form/devices-form.component.html</context>
+               <context context-type="linenumber">89</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_delete_device_confirm" datatype="html">
+            <source>HYT_delete_device_confirm</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/devices-step/devices-step.component.html</context>
+               <context context-type="linenumber">18</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/packets-step/packets-step.component.html</context>
+               <context context-type="linenumber">19</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_yes" datatype="html">
+            <source>HYT_yes</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/devices-step/devices-step.component.html</context>
+               <context context-type="linenumber">21</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/packets-step/packets-step.component.html</context>
+               <context context-type="linenumber">22</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/enrichment-step/enrichment-step.component.html</context>
+               <context context-type="linenumber">37</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/fields-step/packet-field/packet-field.component.html</context>
+               <context context-type="linenumber">90</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_no" datatype="html">
+            <source>HYT_no</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/devices-step/devices-step.component.html</context>
+               <context context-type="linenumber">24</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/packets-step/packets-step.component.html</context>
+               <context context-type="linenumber">25</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/enrichment-step/enrichment-step.component.html</context>
+               <context context-type="linenumber">40</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/fields-step/packet-field/packet-field.component.html</context>
+               <context context-type="linenumber">93</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_delete_event_confirm" datatype="html">
+            <source>HYT_delete_event_confirm</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/events-step/events-step.component.html</context>
+               <context context-type="linenumber">32</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_device" datatype="html">
+            <source>HYT_device</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/packets-step/packets-form/packets-form.component.html</context>
+               <context context-type="linenumber">12</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/packet-select/packet-select.component.html</context>
+               <context context-type="linenumber">7</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_typology" datatype="html">
+            <source>HYT_typology</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/packets-step/packets-form/packets-form.component.html</context>
+               <context context-type="linenumber">19</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_format" datatype="html">
+            <source>HYT_format</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/packets-step/packets-form/packets-form.component.html</context>
+               <context context-type="linenumber">25</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_serialization" datatype="html">
+            <source>HYT_serialization</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/packets-step/packets-form/packets-form.component.html</context>
+               <context context-type="linenumber">31</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_timestamp" datatype="html">
+            <source>HYT_timestamp</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/packets-step/packets-form/packets-form.component.html</context>
+               <context context-type="linenumber">41</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_timestamp_format" datatype="html">
+            <source>HYT_timestamp_format</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/packets-step/packets-form/packets-form.component.html</context>
+               <context context-type="linenumber">48</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_traffic_plan" datatype="html">
+            <source>HYT_traffic_plan</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/packets-step/packets-form/packets-form.component.html</context>
+               <context context-type="linenumber">58</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_add_packet" datatype="html">
+            <source>HYT_add_packet</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/packets-step/packets-form/packets-form.component.html</context>
+               <context context-type="linenumber">72</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_update_packet" datatype="html">
+            <source>HYT_update_packet</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/packets-step/packets-form/packets-form.component.html</context>
+               <context context-type="linenumber">77</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_delete_enrichment_confirm" datatype="html">
+            <source>HYT_delete_enrichment_confirm</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/enrichment-step/enrichment-step.component.html</context>
+               <context context-type="linenumber">34</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="projectCard-string-device" datatype="html">
+            <source>HYT_string_device</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-card/project-card.component.html</context>
+               <context context-type="linenumber">27</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="projectCard-string-rule" datatype="html">
+            <source>HYT_string_rule</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-card/project-card.component.html</context>
+               <context context-type="linenumber">33</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_DEVICES" datatype="html">
+            <source>HYT_DEVICES</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/devices-step/devices-hint-column/devices-hint-column.component.html</context>
+               <context context-type="linenumber">4</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_device_definition_long" datatype="html">
+            <source>HYT_device_definition_long</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/devices-step/devices-hint-column/devices-hint-column.component.html</context>
+               <context context-type="linenumber">7</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_NAME" datatype="html">
+            <source>HYT_NAME</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/devices-step/devices-hint-column/devices-hint-column.component.html</context>
+               <context context-type="linenumber">14</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/enrichment-step/enrichment-tip-column/enrichment-tip-column.component.html</context>
+               <context context-type="linenumber">12</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/events-step/event-tip-column/event-tip-column.component.html</context>
+               <context context-type="linenumber">12</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/packets-step/packets-hint-column/packets-hint-column.component.html</context>
+               <context context-type="linenumber">14</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_mail_to" datatype="html">
+            <source>HYT_mail_to</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/events-step/event-mail/event-mail.component.html</context>
+               <context context-type="linenumber">7</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_mail_cc" datatype="html">
+            <source>HYT_mail_cc</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/events-step/event-mail/event-mail.component.html</context>
+               <context context-type="linenumber">13</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_mail_object" datatype="html">
+            <source>HYT_mail_object</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/events-step/event-mail/event-mail.component.html</context>
+               <context context-type="linenumber">18</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_mail_body" datatype="html">
+            <source>HYT_mail_body</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/events-step/event-mail/event-mail.component.html</context>
+               <context context-type="linenumber">27</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_definition_of_terms" datatype="html">
+            <source>HYT_definition_of_terms</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/events-step/event-mail/selectable-text/selectable-text.component.html</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_packet" datatype="html">
+            <source>HYT_packet</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/packet-select/packet-select.component.html</context>
+               <context context-type="linenumber">13</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_level_of_multiplicity" datatype="html">
+            <source>HYT_level_of_multiplicity</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/fields-step/packet-field/packet-field.component.html</context>
+               <context context-type="linenumber">28</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_save_field" datatype="html">
+            <source>HYT_save_field</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/fields-step/packet-field/packet-field.component.html</context>
+               <context context-type="linenumber">55</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_update_field" datatype="html">
+            <source>HYT_update_field</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/fields-step/packet-field/packet-field.component.html</context>
+               <context context-type="linenumber">60</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_add_select_field_treeview" datatype="html">
+            <source>HYT_add_select_field_treeview</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/fields-step/packet-field/packet-field.component.html</context>
+               <context context-type="linenumber">67</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_saving_field" datatype="html">
+            <source>HYT_saving_field</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/fields-step/packet-field/packet-field.component.html</context>
+               <context context-type="linenumber">73</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_delete_field_confirm" datatype="html">
+            <source>HYT_delete_field_confirm</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/fields-step/packet-field/packet-field.component.html</context>
+               <context context-type="linenumber">86</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_FIELDS" datatype="html">
+            <source>HYT_FIELDS</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/fields-step/field-tip-column/field-tip-column.component.html</context>
+               <context context-type="linenumber">4</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_field_definition_long" datatype="html">
+            <source>HYT_field_definition_long</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/fields-step/field-tip-column/field-tip-column.component.html</context>
+               <context context-type="linenumber">7</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_ENRICHMENT" datatype="html">
+            <source>HYT_ENRICHMENT</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/enrichment-step/enrichment-tip-column/enrichment-tip-column.component.html</context>
+               <context context-type="linenumber">4</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_EVENTS" datatype="html">
+            <source>HYT_EVENTS</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/events-step/event-tip-column/event-tip-column.component.html</context>
+               <context context-type="linenumber">4</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_event_definition_long" datatype="html">
+            <source>HYT_event_definition_long</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/events-step/event-tip-column/event-tip-column.component.html</context>
+               <context context-type="linenumber">7</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_output_data" datatype="html">
+            <source>HYT_output_data</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/events-step/packet-event/packet-event.component.html</context>
+               <context context-type="linenumber">20</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_add_event" datatype="html">
+            <source>HYT_add_event</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/events-step/packet-event/packet-event.component.html</context>
+               <context context-type="linenumber">45</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_PACKETS" datatype="html">
+            <source>HYT_PACKETS</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/packets-step/packets-hint-column/packets-hint-column.component.html</context>
+               <context context-type="linenumber">4</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_packet_definition_long" datatype="html">
+            <source>HYT_packet_definition_long</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/packets-step/packets-hint-column/packets-hint-column.component.html</context>
+               <context context-type="linenumber">7</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_PROJECT" datatype="html">
+            <source>HYT_PROJECT</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/project-step/project-hint-column/project-hint-column.component.html</context>
+               <context context-type="linenumber">4</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_project_definition_long" datatype="html">
+            <source>HYT_project_definition_long</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/project-step/project-hint-column/project-hint-column.component.html</context>
+               <context context-type="linenumber">7</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="a04ce575c9895b8cb4283b493a2703883520710a" datatype="html">
+            <source>HYT_duplicate_entity</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/services/errorHandler/authentication-http-error-handler.service.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/services/errorHandler/project-wizard-http-error-handler.service.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/services/errorHandler/project-wizard-http-error-handler.service.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/services/errorHandler/project-wizard-http-error-handler.service.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/services/errorHandler/project-wizard-http-error-handler.service.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/services/errorHandler/project-wizard-http-error-handler.service.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="a48a62b370f07697e5532c369fa4e1e400f53b40" datatype="html">
+            <source>HYT_unknown_error</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/services/errorHandler/authentication-http-error-handler.service.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/services/errorHandler/http-error-handler.service.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/services/errorHandler/project-wizard-http-error-handler.service.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/services/errorHandler/project-wizard-http-error-handler.service.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/services/errorHandler/project-wizard-http-error-handler.service.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/services/errorHandler/project-wizard-http-error-handler.service.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="f8e19291bb0f5e04beab8ca91700587fe9d3b9b3" datatype="html">
+            <source>HYT_wrong_user_or_password</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/services/errorHandler/authentication-http-error-handler.service.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="c38d0be8103d89408242396a002576c0b2d8fec3" datatype="html">
+            <source>HYT_service_temporarily_unavaiable</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/services/errorHandler/http-error-handler.service.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/services/errorHandler/http-error-handler.service.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="6ab904593389e6b2cef07dbdd8176dfe41662bc1" datatype="html">
+            <source>HYT_server_error_500</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/services/errorHandler/http-error-handler.service.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="96b015a8cb3d48869109e5ce0b72af06d2bf9031" datatype="html">
+            <source>HYT_field_required</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">projects/hyperiot-components/src/lib/hyt-input-template/hyt-input-template.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">projects/hyperiot-components/src/lib/hyt-input-template/hyt-input-template.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">projects/hyperiot-components/src/lib/hyt-input/hyt-input.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">projects/hyperiot-components/src/lib/hyt-input/hyt-input.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">projects/hyperiot-components/src/lib/hyt-radio-button/hyt-radio-button.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">projects/hyperiot-components/src/lib/hyt-radio-button/hyt-radio-button.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="caa12f28e24ab3f2fe27e9123a59c2e0aa5a57c6" datatype="html">
+            <source>HYT_valid_email</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">projects/hyperiot-components/src/lib/hyt-input-template/hyt-input-template.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">projects/hyperiot-components/src/lib/hyt-input/hyt-input.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="33c9ece659dd5c0489ef586aae0136c6c480bb19" datatype="html">
+            <source>HYT_min_length</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">projects/hyperiot-components/src/lib/hyt-input-template/hyt-input-template.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">projects/hyperiot-components/src/lib/hyt-input/hyt-input.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="099248b4e8ef7f4dfb63ac0a0815c387b95bf564" datatype="html">
+            <source>HYT_min_one_number</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">projects/hyperiot-components/src/lib/hyt-input-template/hyt-input-template.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">projects/hyperiot-components/src/lib/hyt-input/hyt-input.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="88e4d8c0ae5f7fb56559746c5f537ed55f114e4b" datatype="html">
+            <source>HYT_upper_case</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">projects/hyperiot-components/src/lib/hyt-input-template/hyt-input-template.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">projects/hyperiot-components/src/lib/hyt-input/hyt-input.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="e75c1bdd7a657e3e31ef4323632c18c18cc0db9e" datatype="html">
+            <source>HYT_special_char</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">projects/hyperiot-components/src/lib/hyt-input-template/hyt-input-template.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">projects/hyperiot-components/src/lib/hyt-input/hyt-input.component.ts</context>
+               <context context-type="linenumber">1</context>
+            </context-group>
+         </trans-unit>
+      </body>
+   </file>
 </xliff>

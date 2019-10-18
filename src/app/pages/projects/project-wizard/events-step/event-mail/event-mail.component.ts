@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { SelectableText } from './selectableText';
+import { ProjectWizardService } from 'src/app/services/projectWizard/project-wizard.service';
 
 @Component({
   selector: 'hyt-event-mail',
@@ -12,7 +13,8 @@ export class EventMailComponent implements OnInit {
   mailForm: FormGroup;
 
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private wizardService: ProjectWizardService
   ) { }
 
   buildMail() {
@@ -44,6 +46,10 @@ export class EventMailComponent implements OnInit {
       mailBody: this.mailForm.value['mailBody'] + event
     });
     (<HTMLElement>document.querySelector('#mailBody.hyt-input.mat-input-element')).focus();
+  }
+
+  updateHint(event: string) {
+    this.wizardService.updateHint(event, 6);
   }
 
 }

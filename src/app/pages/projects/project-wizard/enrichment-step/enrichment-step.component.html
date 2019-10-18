@@ -1,6 +1,6 @@
 <div id="enrichment-step" class="row">
 
-  <div class="col-md-10">
+  <div class="col-md-9">
 
     <div class="row">
 
@@ -22,7 +22,7 @@
 
   </div>
 
-  <div class="col-md-2">
+  <div class="col-md-3">
     <hyt-enrichment-tip-column (copyEnrichmentRule)="tableCopyRule($event)"
       (updateEnrichmentRule)="tableUpdateRule($event)" (deleteEnrichmentRule)="showDeleteModal($event)">
     </hyt-enrichment-tip-column>
@@ -31,10 +31,14 @@
 
   <hyt-modal [mOpen]="deleteModal">
     <div class="alignCenter">
-      Sei sicuro di voler eliminare il device?
+      <p i18n="@@HYT_delete_enrichment_confirm">HYT_delete_enrichment_confirm</p>
       <hr>
-      <button (click)="deleteRule()">Sì</button>
-      <button (click)="hideDeleteModal()">No</button>
+      <button (click)="deleteRule()">
+        <ng-container i18n="@@HYT_yes">HYT_yes</ng-container>
+      </button>
+      <button (click)="hideDeleteModal()">
+          <ng-container i18n="@@HYT_no">HYT_no</ng-container>
+      </button>
       <br>
       <div *ngIf="deleteError">{{deleteError}}</div>
     </div>

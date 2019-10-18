@@ -1,0 +1,12 @@
+HYT_field_required
+This field is mandatory
+HYT_valid_email
+Please enter a valid email address
+HYT_min_length
+At least 8 character length
+HYT_min_one_number
+At least one number
+HYT_upper_case
+At least one uppercase character
+HYT_special_char
+At least one special character

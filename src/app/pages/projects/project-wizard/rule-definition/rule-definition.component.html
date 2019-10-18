@@ -10,19 +10,20 @@
 
           <div class="col-md-3 container-form-field">
             <hyt-select [form]="ruleForm.form" [options]="fieldOptions" formControlName="ruleField" name="ruleField"
-              [isRequired]="true" placeholder="Field" (changeFn)="fieldChanged($event, i)">
+              [isRequired]="true" i18n-label="@@HYT_field" label="HYT_field"
+              (changeFn)="fieldChanged($event, i)">
             </hyt-select>
           </div> <!-- Field Field -->
 
           <div class="col-md-3 container-form-field">
             <hyt-select [form]="ruleForm.form" [options]="ruleForm.conditionOptions" formControlName="ruleCondition"
-              name="ruleCondition" [isRequired]="true" placeholder="Condition">
+              name="ruleCondition" [isRequired]="true" i18n-label="@@HYT_condition" label="HYT_condition">
             </hyt-select>
           </div> <!-- Field Condition -->
 
           <div class="col-md-3 container-form-field">
             <hyt-input-text *ngIf="ruleForm.compareWith" [form]="ruleForm.form" formControlName="ruleValue"
-              name="ruleValue" [isRequired]="true" placeholder="Value">
+              name="ruleValue" [isRequired]="true" i18n-placeholder="@@HYT_value" placeholder="HYT_value">
             </hyt-input-text>
           </div> <!-- Field Value -->
 
@@ -33,7 +34,8 @@
           </div> <!-- Field Join -->
 
           <div class="col-md-1 container-form-field">
-            <hyt-button *ngIf="i!=0" (clickFn)="removeCondition(i)">Remove
+            <hyt-button *ngIf="i!=0" (clickFn)="removeCondition(i)">
+              <ng-container i18n="@@HYT_remove">HYT_remove</ng-container>
             </hyt-button>
           </div>
 

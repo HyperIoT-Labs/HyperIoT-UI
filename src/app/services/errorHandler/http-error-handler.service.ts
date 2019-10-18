@@ -16,7 +16,7 @@ export class HttpErrorHandlerService {
       case 404: {
         return [
           {
-            message: 'Service temporarily unavaiable',
+            message: this.i18n('HYT_service_temporarily_unavaiable'),
             container: 'general'
           }
         ];
@@ -34,7 +34,7 @@ export class HttpErrorHandlerService {
       case 504: {
         return [
           {
-            message: this.i18n('Service temporarily unavaiable'),
+            message: this.i18n('HYT_service_temporarily_unavaiable'),
             container: 'general'
           }
         ];

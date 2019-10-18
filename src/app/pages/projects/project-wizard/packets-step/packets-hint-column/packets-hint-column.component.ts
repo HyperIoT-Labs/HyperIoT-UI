@@ -21,17 +21,26 @@ export class PacketsHintColumnComponent implements OnInit {
   tableStatus: TableStatusEnum = TableStatusEnum.Loading;
 
   constructor(
-    private projectWizardService: ProjectWizardService
+    private wizardService: ProjectWizardService
   ) { }
 
   ngOnInit() {
-    this.projectWizardService.hPackets$.subscribe(
+    this.wizardService.hPackets$.subscribe(
       res => {
         this.packetsList = res;
         this.tableStatus = TableStatusEnum.Ok;
       },
       err => this.tableStatus = TableStatusEnum.Error
-    )
+    );
+    this.wizardService.hint$[2].subscribe(
+      res => {
+        if (res)
+          this.showHintMessage(res);
+        else {
+          this.hideHintMessage();
+        }
+      }
+    );
   }
 
   copy(data) {
@@ -42,6 +51,17 @@ export class PacketsHintColumnComponent implements OnInit {
   }
   delete(data) {
     this.deletePacket.emit(data);
+  }
+
+  hintMessage = '';
+  hintVisible = false;
+
+  showHintMessage(message: string) {
+    this.hintMessage = message;
+    this.hintVisible = true;
+  }
+  hideHintMessage() {
+    this.hintVisible = false;
   }
 
 }

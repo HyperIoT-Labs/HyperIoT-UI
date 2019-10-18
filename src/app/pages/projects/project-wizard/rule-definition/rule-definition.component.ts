@@ -57,7 +57,7 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
     this.resetRuleDefinition();
   }
 
-  resetRuleDefinition(){
+  resetRuleDefinition() {
     this.ruleForms = [({
       form: this.fb.group({}),
       conditionOptions: [],

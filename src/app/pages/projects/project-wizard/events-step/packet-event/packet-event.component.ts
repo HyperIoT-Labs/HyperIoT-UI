@@ -119,4 +119,8 @@ export class PacketEventComponent implements OnInit {
     return (this.errors.find(x => x.container == field)) ? this.errors.find(x => x.container == field).message : null;
   }
 
+  updateHint(event: string) {
+    this.wizardService.updateHint(event, 6);
+  }
+
 }

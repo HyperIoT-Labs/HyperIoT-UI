@@ -111,4 +111,8 @@ export class ProjectFormComponent implements OnInit {
     )
   }
 
+  updateHint(event: string) {
+    this.wizardService.updateHint(event, 0);
+  }
+
 }

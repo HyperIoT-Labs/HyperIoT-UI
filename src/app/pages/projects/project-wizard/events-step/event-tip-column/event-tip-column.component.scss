@@ -1,0 +1,20 @@
+.info-message {
+    background-color: whitesmoke;
+    border-radius: 5px;
+    padding: 10px 5px;
+    color: #0956b6;
+    font-size: 0.9em;
+    position: relative;
+
+    mat-icon {
+      color: #757575;
+      position: absolute;
+      top: -11px;
+      right: -6px;
+    }
+
+  }
+
+  .alignCenter {
+    text-align: center;
+  }

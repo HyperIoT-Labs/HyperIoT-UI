@@ -3,17 +3,20 @@
   <div class="row">
     <div class="col-md-4 container-form-field">
       <hyt-input-text [form]="enrichmentForm" formControlName="rule-name" name="rule-name" [isRequired]="true"
-        placeholder="Name" [injectedErrorMsg]="getError('rule-name')">
+        i18n-placeholder="@@HYT_name" placeholder="HYT_name" [injectedErrorMsg]="getError('rule-name')"
+        [externalHint]="'Enter the rule name'" (outHint)="updateHint($event)">
       </hyt-input-text>
     </div> <!-- Field Name -->
     <div class="col-md-4 container-form-field">
       <hyt-select [form]="enrichmentForm" [options]="enrichmentRules" (changeFn)="enrichmentTypeChanged($event)"
-        formControlName="enrichmentRule" name="enrichmentRule" [isRequired]="true" label="Rule Type">
+        formControlName="enrichmentRule" name="enrichmentRule" [isRequired]="true" i18n-label="@@HYT_rule_type"
+        label="HYT_rule_type">
       </hyt-select>
     </div> <!-- Field RuleType -->
     <div class="col-md-4 container-form-field">
       <hyt-text-area [form]="enrichmentForm" formControlName="rule-description" name="rule-description"
-        placeholder="Description">
+        i18n-placeholder="@@HYT_description" placeholder="HYT_description"
+        [externalHint]="'Enter the rule description. (max...)'" (outHint)="updateHint($event)">
       </hyt-text-area>
     </div> <!-- Field RuleDescription -->
   </div>
@@ -47,7 +50,7 @@
 
   <hyt-button id="rule-form-submit-button" [isDisabled]="invalid() || pageStatus == PageStatus.Loading"
     (clickFn)="createRule()" type="submit">
-    Add Rule
+    <ng-container i18n="@@HYT_add_rule">HYT_add_rule</ng-container>
   </hyt-button>
 
 </form>

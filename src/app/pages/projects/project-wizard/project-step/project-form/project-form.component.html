@@ -3,7 +3,8 @@
   <div class="container-form-field">
 
     <hyt-input-text [form]="projectForm" formControlName="projectName" name="projectName" [isRequired]="true"
-      placeholder="Name" [injectedErrorMsg]="getError('projectName')">
+      i18n-placeholder="@@HYT_name" placeholder="HYT_name" [injectedErrorMsg]="getError('projectName')"
+      [externalHint]="'Enter the project name.'" (outHint)="updateHint($event)">
     </hyt-input-text>
 
   </div> <!-- Field projectName -->
@@ -11,7 +12,8 @@
   <div class="container-form-field">
 
     <hyt-text-area [form]="projectForm" formControlName="projectDescription" name="projectDescription"
-      placeholder="Description">
+      i18n-placeholder="@@HYT_description" placeholder="HYT_description"
+      [externalHint]="'Enter the project description.'" (outHint)="updateHint($event)">
     </hyt-text-area>
 
   </div> <!-- Field HYT_projectDescription -->
@@ -30,7 +32,8 @@
 
       <hyt-button id="project-form-submit-button" [isDisabled]="invalid() || pageStatus == PageStatus.Loading"
         (clickFn)="submitProject()" type="submit">
-        Next <span class="icon-hyt_caretUp hyt-rotale-right"></span>
+        <ng-container i18n="@@HYT_next">HYT_next</ng-container>
+        <span class="icon-hyt_caretUp hyt-rotale-right"></span>
       </hyt-button>
 
     </div>

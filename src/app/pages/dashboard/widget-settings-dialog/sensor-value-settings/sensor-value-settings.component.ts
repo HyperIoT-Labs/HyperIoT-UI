@@ -11,17 +11,25 @@ import { PacketSelectComponent } from '../packet-select/packet-select.component'
   styleUrls: ['./sensor-value-settings.component.css']
 })
 export class SensorValueSettingsComponent implements OnInit, OnDestroy {
-  @ViewChild(PacketSelectComponent, {static: true}) packetSelect: PacketSelectComponent;
+  @ViewChild(PacketSelectComponent, { static: true }) packetSelect: PacketSelectComponent;
   @Input() modalApply: Subject<any>;
   @Input() widget;
+  selectedFields = [];
+  private defaultConfig = {};
 
   constructor(public settingsForm: NgForm) { }
 
   ngOnInit() {
+    if (this.widget.config == null)
+      this.widget.config = {};
+
+    if (this.widget.config.seriesConfig == null || this.widget.config.seriesConfig.length === 0) {
+      Object.assign(this.widget.config, this.defaultConfig);
+    }
     this.modalApply.subscribe((event) => {
-        if (event === 'apply') {
-          this.apply();
-        }
+      if (event === 'apply') {
+        this.apply();
+      }
     });
   }
   ngOnDestroy() {
@@ -30,6 +38,11 @@ export class SensorValueSettingsComponent implements OnInit, OnDestroy {
 
   apply() {
     this.packetSelect.apply();
+  }
+
+
+  onSelectedFieldsChange(fields) {
+    this.selectedFields = fields;
   }
 
 }

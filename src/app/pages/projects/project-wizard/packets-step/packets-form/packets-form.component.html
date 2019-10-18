@@ -3,31 +3,32 @@
   <div class="row">
     <div class="col-md-6 container-form-field">
       <hyt-input-text [form]="packetForm" formControlName="hpacket-name" name="hpacket-name" [isRequired]="true"
-        placeholder="Packet name" [injectedErrorMsg]="getError('hpacket-name')">
+        i18n-placeholder="@@HYT_name" placeholder="HYT_name" [injectedErrorMsg]="getError('hpacket-name')"
+        [externalHint]="'Enter the packet name. Packet name should...'" (outHint)="updateHint($event)">
       </hyt-input-text> <!-- Field Name -->
     </div>
     <div class="col-md-6 container-form-field">
       <hyt-select [form]="packetForm" [options]="devicesOptions" formControlName="hpacket-device" name="hpacket-device"
-        [isRequired]="true" label="Device">
+        [isRequired]="true" i18n-label="@@HYT_device" label="HYT_device">
       </hyt-select> <!-- Field Packet -->
     </div>
   </div>
 
   <div class="row">
     <div class="col-md-4 container-form-field">
-      Typology
+      <ng-container i18n="@@HYT_typology">HYT_typology</ng-container>
       <hyt-radio-button [form]="packetForm" [options]="typologyOptions" formControlName="hpacket-type"
         name="hpacket-type" [verticalAlign]="true">
       </hyt-radio-button>
     </div> <!-- Field Typology -->
     <div class="col-md-4 container-form-field">
-      Format
+      <ng-container i18n="@@HYT_format">HYT_format</ng-container>
       <hyt-radio-button [form]="packetForm" [options]="formatOptions" formControlName="hpacket-format"
         name="hpacket-format" [verticalAlign]="true">
       </hyt-radio-button>
     </div> <!-- Field Format -->
     <div class="col-md-4 container-form-field">
-      Serialization
+      <ng-container i18n="@@HYT_serialization">HYT_serialization</ng-container>
       <hyt-radio-button [form]="packetForm" [options]="serializationOptions" formControlName="hpacket-serialization"
         name="hpacket-serialization" [verticalAlign]="true">
       </hyt-radio-button>
@@ -37,12 +38,16 @@
   <div class="row">
     <div class="col-md-6 container-form-field">
       <hyt-input-text [form]="packetForm" formControlName="hpacketTimeStamp" name="hpacketTimeStamp" [isRequired]="true"
-        placeholder="Timestamp" [injectedErrorMsg]="getError('hpacketTimeStamp')" [fieldValue]="'timestamp'">
+        i18n-placeholder="@@HYT_timestamp" placeholder="HYT_timestamp" [injectedErrorMsg]="getError('hpacketTimeStamp')"
+        [fieldValue]="'timestamp'" [externalHint]="'Choose the timestamp field name. Timestamp is...'"
+        (outHint)="updateHint($event)">
       </hyt-input-text> <!-- Field TimeStamp -->
     </div>
     <div class="col-md-6 container-form-field">
       <hyt-input-text [form]="packetForm" formControlName="hpacketTimeStampFormat" name="hpacketTimeStampFormat"
-        [isRequired]="true" placeholder="Timestamp format" [injectedErrorMsg]="getError('hpacketTimeStampFormat')" [fieldValue]="'dd/MM/yyyy HH.mmZ'">
+        [isRequired]="true" i18n-placeholder="@@HYT_timestamp_format" placeholder="HYT_timestamp_format"
+        [injectedErrorMsg]="getError('hpacketTimeStampFormat')" [fieldValue]="'dd/MM/yyyy HH.mmZ'"
+        [externalHint]="'Choose the timestamp format. For example...'" (outHint)="updateHint($event)">
       </hyt-input-text> <!-- Field TimeStampFormat -->
     </div>
   </div>
@@ -50,7 +55,8 @@
   <div class="row">
     <div class="col-md-12 container-form-field">
       <hyt-select [form]="packetForm" [options]="trafficPlanOptions" formControlName="packetTrafficPlan"
-        name="packetTrafficPlan" [isRequired]="true" label="Traffic Plan" [selected]="'MEDIUM'">
+        name="packetTrafficPlan" [isRequired]="true" i18n-label="@@HYT_traffic_plan" label="HYT_traffic_plan"
+        [selected]="'MEDIUM'">
       </hyt-select> <!-- Field Traffic Plan -->
     </div>
   </div>
@@ -63,12 +69,12 @@
 
   <hyt-button *ngIf="submitType == 'ADD'" id="packet-form-submit-button"
     [isDisabled]="invalid() || pageStatus == PageStatus.Loading" (clickFn)="postPacket()" type="submit">
-    Add Packet
+    <ng-container i18n="@@HYT_add_packet">HYT_add_packet</ng-container>
   </hyt-button>
 
   <hyt-button *ngIf="submitType == 'UPDATE'" id="packet-form-submit-button"
     [isDisabled]="invalid() || pageStatus == PageStatus.Loading" (clickFn)="putPacket()" type="submit">
-    Update Packet
+    <ng-container i18n="@@HYT_update_packet">HYT_update_packet</ng-container>
   </hyt-button>
 
 </form>

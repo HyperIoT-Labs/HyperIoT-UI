@@ -1,6 +1,6 @@
 <div id="events-step" class="row">
 
-  <div class="col-md-10">
+  <div class="col-md-9">
 
     <div class="row">
 
@@ -20,7 +20,7 @@
 
   </div>
 
-  <div class="col-md-2">
+  <div class="col-md-3">
 
     <hyt-event-tip-column (copyEventRule)="tableCopyRule($event)" (updateEventRule)="tableUpdateRule($event)"
       (deleteEventRule)="showDeleteModal($event)"></hyt-event-tip-column>
@@ -29,7 +29,7 @@
 
   <hyt-modal [mOpen]="deleteModal">
     <div class="alignCenter">
-      Sei sicuro di voler eliminare l'evento?
+      <p i18n="@@HYT_delete_event_confirm">HYT_delete_event_confirm</p>
       <hr>
       <button (click)="deleteEvent()">Sì</button>
       <button (click)="hideDeleteModal()">No</button>

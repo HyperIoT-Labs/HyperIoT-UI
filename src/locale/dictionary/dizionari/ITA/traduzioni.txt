@@ -1,0 +1,266 @@
+HYT_widget_settings_title
+Impostazioni Widget
+HYT_name
+Nome
+HYT_type
+Tipo
+HYT_apply
+Applica
+HYT_cancel
+Annulla
+HYT_error_occurred_long
+Si è verificato un errore. Contatta l'amministratore
+HYT_no_widget_in_dashboard
+Non ci sono widget in questa dashboard
+HYT_start_adding_widget
+Comincia ad aggiungere widget
+HYT_widget_add_widget
+Aggiungi un widget
+HYT_widget_add_quantity
+Quantità
+HYT_widget_info_type
+Tipo
+HYT_description
+Descrizione
+HYT_widget_info_intro
+Seleziona uno o più widget da aggiungere alla dashboard.. etc.. etc...
+HYT_add
+Aggiungi
+HYT_add_widget
+Aggiungi widget
+HYT_widget_settings_select_packet
+Seleziona pacchetto
+HYT_widget_settings_select_fields
+Seleziona {multiPacketSelect?1:0, plural, =0 {campo} other {campi}}
+HYT_add_a_widget
+Aggiungi un widget
+HYT_page_is_loading
+Pagina in caricamento...
+HYT_no_dashboard_yet
+Non hai ancora configurato nessuna dashboard
+HYT_widget_settings_apply
+Applica
+HYT_widget_settings_cancel
+Annulla
+HYT_data_recording
+Registrazione dati
+HYT_attention
+Attenzione!
+HYT_dashboard_end_registration
+Procedendo con questa azione disabiliterai la registrazione dei dati che non saranno salvati fino alla riabilitazione di questa proprietà
+HYT_next
+Avanti
+HYT_back
+Indietro
+HYT_password
+Passwod
+HYT_passwordConfirm
+Conferma password
+HYT_username_or_email
+Username o email
+HYT_registration
+Registrazione
+HYT_surname
+Cognome
+HYT_username
+Username
+HYT_email
+Email
+HYT_password_confirm
+Conferma password
+HYT_registration_button
+Registrati
+HYT_registration_form_ok
+Controlla la tua casella email. Ti abbiamo inviato una mail per completare la registrazione
+HYT_choose_how_proceed
+Scegli come procedere
+HYT_enrichment_data
+Arricchimento dati
+HYT_enrichment_definition_long
+Lunga definizione di arricchimento dati. Lunga definizione di arricchimento dati. Lunga definizione di arricchimento dati. Lunga definizione di arricchimento dati. Lunga definizione di arricchimento dati.
+HYT_statistics
+Statistiche
+HYT_statistics_definition_long
+Lunga definizione di statistiche. Lunga definizione di statistiche. Lunga definizione di statistiche. Lunga definizione di statistiche. Lunga definizione di statistiche. Lunga definizione di statistiche. Lunga definizione di statistiche. 
+HYT_events
+Eventi
+HYT_events_definition_long
+Lunga definizione di eventi. Lunga definizione di eventi. Lunga definizione di eventi. Lunga definizione di eventi. Lunga definizione di eventi. Lunga definizione di eventi. Lunga definizione di eventi. 
+HYT_congratulations
+Congratulazioni
+HYT_pw_finsh
+Hai finito di configurare il tuo progetto
+HYT_project
+Progetto
+HYT_devices
+Dispositivi
+HYT_packets
+Pacchetti
+HYT_enrichment
+Arricchimento
+HYT_go_to_project_list
+Vai alla lista progetti
+HYT_go_to_project_list_long
+Vai alla lista progetti lunga definizione. Vai alla lista progetti lunga definizione. Vai alla lista progetti lunga definizione. Vai alla lista progetti lunga definizione. Vai alla lista progetti lunga definizione. 
+HYT_go_to_dashboard
+Vai alla dashboard
+HYT_go_to_dashboard_long
+Vai alla dashboard lunga definizione. Vai alla dashboard lunga definizione. Vai alla dashboard lunga definizione. Vai alla dashboard lunga definizione. Vai alla dashboard lunga definizione. Vai alla dashboard lunga definizione. 
+HYT_pw_deactivation_modal
+Se esci dalla pagina perderai tutte le modifiche non salvate
+HYT_OK
+OK
+HYT_CANCEL
+ANNULLA
+HYT_add_new_project
+Aggiungi un progetto
+HYT_project_list
+Lista progetti
+HYT_no_project_found
+Nessun progetto trovato che soddisfi la ricerca
+HYT_no_project
+Non ci sono progetti
+HYT_add_project_button_hint
+Per aggiungere un progetto clicca il bottone qui sotto
+HYT_create_first_project
+Crea il tuo primo progetto
+HYT_field
+Campo
+HYT_condition
+Condizione
+HYT_value
+Valore
+HYT_remove
+Rimuovi
+HYT_rule_type
+Tipo regola
+HYT_add_rule
+Aggiungi regola
+HYT_model
+Modello
+HYT_firmware_version
+Versione firmware
+HYT_brand
+Marca
+HYT_software_version
+Versione software
+HYT_add_device
+Aggiungi device
+HYT_update_device
+Aggiorna device
+HYT_delete_device_confirm
+Questa azione eliminerà il dispositivo e tutti i suoi eventuali pacchetti. Vuoi procedere?
+HYT_yes
+Sì
+HYT_no
+No
+HYT_delete_event_confirm
+Questa azione eliminerà l'evento. Vuoi procedere?
+HYT_device
+Dispositivo
+HYT_typology
+Tipo
+HYT_format
+Formato
+HYT_serialization
+Serializzazione
+HYT_timestamp
+Timestamp
+HYT_timestamp_format
+Formato timestamp
+HYT_traffic_plan
+Piano traffico
+HYT_add_packet
+Aggiungi pacchetto
+HYT_update_packet
+Aggiorna pacchetto
+HYT_delete_enrichment_confirm
+Questa azione eliminerà la regola di arricchimento. Vuoi procedere?
+HYT_string_device
+Dispositiv{{ deviceCount > 1 ? 'i' : 'o' }}
+HYT_string_rule
+Regol{{ rulesCount > 1 ? 'e' : 'a' }}
+HYT_DEVICES
+DISPOSITIVI
+HYT_device_definition_long
+definizione dispositvo lunga. definizione dispositvo lunga. definizione dispositvo lunga. definizione dispositvo lunga. definizione dispositvo lunga. definizione dispositvo lunga. definizione dispositvo lunga. 
+HYT_NAME
+NOME
+HYT_mail_to
+Destinatari
+HYT_mail_cc
+Copia
+HYT_mail_object
+Oggetto
+HYT_mail_body
+Corpo della mail
+HYT_definition_of_terms
+Definizione dei termini
+HYT_packet
+Pacchetto
+HYT_level_of_multiplicity
+Livello di moltiplicità
+HYT_save_field
+Salva campo
+HYT_update_field
+Aggiorna campo
+HYT_add_select_field_treeview
+Aggiungi o seleziona un campo dalla treeview
+HYT_saving_field
+Salvataggio campo...
+HYT_delete_field_confirm
+Questa azione eliminerà il campo e tutti i suoi eventuali campi interni. Vuoi procedere?
+HYT_FIELDS
+CAMPI
+HYT_field_definition_long
+definizione field lunga. definizione field lunga. definizione field lunga. definizione field lunga. definizione field lunga. definizione field lunga. definizione field lunga. 
+HYT_ENRICHMENT
+ARRICCHIMENTO
+HYT_EVENTS
+EVENTI
+HYT_event_definition_long
+definizione eventi lunga. definizione eventi lunga. definizione eventi lunga. definizione eventi lunga. definizione eventi lunga. definizione eventi lunga. definizione eventi lunga. 
+HYT_output_data
+Output evento
+HYT_add_event
+Aggiungi evento
+HYT_PACKETS
+PACCHETTI
+HYT_packet_definition_long
+definizione pacchetti lunga. definizione pacchetti lunga. definizione pacchetti lunga. definizione pacchetti lunga. definizione pacchetti lunga. definizione pacchetti lunga. definizione pacchetti lunga. 
+HYT_PROJECT
+PROGETTO
+HYT_project_definition_long
+definizione progetto lunga. definizione progetto lunga. definizione progetto lunga. definizione progetto lunga. definizione progetto lunga. definizione progetto lunga. definizione progetto lunga. definizione progetto lunga. 
+HYT_duplicate_entity
+già in uso
+HYT_unknown_error
+Errore nell'esecuzione della richiesta
+HYT_wrong_user_or_password
+Username o password errati
+HYT_service_temporarily_unavaiable
+Servizio temporaneamente non disponibile
+HYT_server_error_500
+Errore interno al server
+HYT_toolbar_settings
+Impostazioni
+HYT_toolbar_refresh
+Aggiorna
+HYT_toolbar_close
+Chiudi
+HYT_toolbar_move
+Sposta
+HYT_common_not_configured
+Premi il pulsante 'Impostazioni' per configurare il widget.
+HYT_field_required
+Il campo è obbligatorio
+HYT_valid_email
+Inserire un indirizzo email valido
+HYT_min_length
+Almeno 8 caratteri
+HYT_min_one_number
+Alemno un numero
+HYT_upper_case
+Almeno un carattere maiuscolo
+HYT_special_char
+Almeno un carattere speciale

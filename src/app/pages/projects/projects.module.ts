@@ -7,7 +7,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { MatIconModule } from '@angular/material/icon';
-import { MatCardModule, MatButtonModule, MatRadioModule, MatProgressSpinnerModule, MatProgressBarModule } from '@angular/material';
+import { MatCardModule, MatButtonModule, MatProgressSpinnerModule, MatProgressBarModule } from '@angular/material';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 import { DevicesStepComponent } from './project-wizard/devices-step/devices-step.component';
 import { DevicesFormComponent } from './project-wizard/devices-step/devices-form/devices-form.component';
@@ -95,7 +96,6 @@ import { ProjectFormComponent } from './project-wizard/project-step/project-form
     MatIconModule,
     MatButtonModule,
     MatCardModule,
-    MatRadioModule,
     MatProgressSpinnerModule,
     MatProgressBarModule,
     CommonModule,
@@ -105,7 +105,8 @@ import { ProjectFormComponent } from './project-wizard/project-step/project-form
     RouterModule,
     MatChipsModule,
     MatAutocompleteModule,
-    MatInputModule
+    MatInputModule,
+    MatExpansionModule
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA

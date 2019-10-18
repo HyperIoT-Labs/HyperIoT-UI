@@ -1,17 +1,22 @@
-<div id="container-hints">
+<mat-expansion-panel [expanded]="true">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      <b i18n="@@HYT_DEVICES">HYT_DEVICES</b>
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+  <p i18n="@@HYT_device_definition_long">HYT_device_definition_long</p>
+</mat-expansion-panel>
 
-  <h3 id="title-area">DEVICES</h3>
+<div id="container-hints">
 
   <table *ngIf="tableStatus == 1" id="tableDevice">
     <tr>
-      <th><b>ID</b></th>
-      <th><b>NOME</b></th>
+      <th><b i18n="@@HYT_NAME">HYT_NAME</b></th>
       <th><b>M</b></th>
       <th><b>D</b></th>
       <th><b>X</b></th>
     </tr>
     <tr *ngFor="let dev of devicesList">
-      <td>{{dev.id}}</td>
       <td>{{dev.deviceName}}</td>
       <td (click)="update(dev)">M</td>
       <td (click)="copy(dev)">D</td>
@@ -79,3 +84,8 @@
 -->
 
 </div> <!-- END CONTAINER HINTS -->
+
+<div *ngIf="hintVisible" class="info-message">
+  <span class="text">{{hintMessage}}</span>
+  <mat-icon class="">info</mat-icon>
+</div>

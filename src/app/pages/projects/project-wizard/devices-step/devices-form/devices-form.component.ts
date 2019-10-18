@@ -3,6 +3,7 @@ import { HDevice, HdevicesService } from '@hyperiot/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { HYTError } from 'src/app/services/errorHandler/models/models';
 import { PageStatusEnum } from '../../model/pageStatusEnum';
+import { ProjectWizardService } from 'src/app/services/projectWizard/project-wizard.service';
 
 @Component({
   selector: 'hyt-devices-form',
@@ -24,7 +25,7 @@ export class DevicesFormComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private hDeviceService: HdevicesService,
+    private wizardService: ProjectWizardService
   ) { }
 
   ngOnInit() {
@@ -86,6 +87,10 @@ export class DevicesFormComponent implements OnInit {
     }
     this.errors = [];
     this.deviceForm.reset();
+  }
+
+  updateHint(event: string) {
+    this.wizardService.updateHint(event, 1);
   }
 
 }

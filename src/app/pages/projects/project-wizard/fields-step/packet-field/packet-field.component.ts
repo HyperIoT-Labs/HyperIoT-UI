@@ -72,11 +72,11 @@ export class PacketFieldComponent implements OnInit, OnChanges {
     this.fieldForm = this.fb.group({});
   }
 
-  updateTree(){
+  updateTree() {
     let apacketTree = [...this.createPacketTree(this.wizardService.treefyById(this.currentPacket.id))];
     if (this.treeView)
       this.treeView.refresh(apacketTree, this.currentPacket.name);
-    else 
+    else
       this.packetTree = [...apacketTree];
     this.resetForm('ADD');
     this.pageStatus = PageStatusEnum.Submitted;
@@ -265,6 +265,10 @@ export class PacketFieldComponent implements OnInit, OnChanges {
     this.formStatus = FormStatusEnum.SelectAction;
     if (this.fieldForm)
       this.fieldForm.reset();
+  }
+
+  updateHint(event: string) {
+    this.wizardService.updateHint(event, 3);
   }
 
 }

@@ -66,8 +66,8 @@
 
               <div class="container-form-field">
                 <hyt-input-text [form]="registrationForm" formControlName="huser-passwordConfirm"
-                  name="huser-passwordConfirm" [isRequired]="true" i18n-placeholder="@@HYT_passwordConfirm"
-                  placeholder="HYT_passwordConfirm" [injectedErrorMsg]="getError('huser-passwordConfirm')"
+                  name="huser-passwordConfirm" [isRequired]="true" i18n-placeholder="@@HYT_password_confirm"
+                  placeholder="HYT_password_confirm" [injectedErrorMsg]="getError('huser-passwordConfirm')"
                   type="password" confirmPassword="huser-password">
                 </hyt-input-text>
               </div> <!-- Field Repeat Password -->
@@ -89,29 +89,27 @@
                   <ng-container i18n="@@HYT_registration_button">HYT_registration_button</ng-container>
                 </hyt-button>
               </div> <!-- Container Button -->
-              
+
               <ng-container *ngIf="!registrationSucceeded && loading">
-                  <div class="sk-circle">
-                    <div class="sk-circle1 sk-child"></div>
-                    <div class="sk-circle2 sk-child"></div>
-                    <div class="sk-circle3 sk-child"></div>
-                    <div class="sk-circle4 sk-child"></div>
-                    <div class="sk-circle5 sk-child"></div>
-                    <div class="sk-circle6 sk-child"></div>
-                    <div class="sk-circle7 sk-child"></div>
-                    <div class="sk-circle8 sk-child"></div>
-                    <div class="sk-circle9 sk-child"></div>
-                    <div class="sk-circle10 sk-child"></div>
-                    <div class="sk-circle11 sk-child"></div>
-                    <div class="sk-circle12 sk-child"></div>
-                  </div>
+                <div class="sk-circle">
+                  <div class="sk-circle1 sk-child"></div>
+                  <div class="sk-circle2 sk-child"></div>
+                  <div class="sk-circle3 sk-child"></div>
+                  <div class="sk-circle4 sk-child"></div>
+                  <div class="sk-circle5 sk-child"></div>
+                  <div class="sk-circle6 sk-child"></div>
+                  <div class="sk-circle7 sk-child"></div>
+                  <div class="sk-circle8 sk-child"></div>
+                  <div class="sk-circle9 sk-child"></div>
+                  <div class="sk-circle10 sk-child"></div>
+                  <div class="sk-circle11 sk-child"></div>
+                  <div class="sk-circle12 sk-child"></div>
+                </div>
               </ng-container>
-              
+
               <ng-container *ngIf="registrationSucceeded">
 
-                <div id="successMessage" i18n="@@HYT_registration_form_ok">
-                    HYT_registration_form_ok
-                </div>
+                <div id="successMessage" i18n="@@HYT_registration_form_ok">HYT_registration_form_ok</div>
 
               </ng-container> <!-- *ngIf="registrationSucceeded" -->
 

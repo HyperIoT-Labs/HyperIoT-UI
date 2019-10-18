@@ -1,19 +1,26 @@
 <div id="dashboard-page">
 
     <div class="header d-flex flex-row justify-content-stretch">
-        
+
         <div class="breadcrumb flex-grow-1">
             <a [routerLink]="['/']">Home</a> > <strong>Dashboard</strong>
         </div>
-    
+
     </div>
-    
+
     <div id="container-dashboard" [ngSwitch]="pageStatus">
 
         <div id="row-recording" class="row">
             <div class="col-12 recording {{(dataRecordingIsOn)?'on':'off'}}">
-                <span id="icon-recording" class="{{(dataRecordingIsOn)?'recOn':'recOff'}}" (click)="openRecordingActionModal()">
-                    <svg xmlns="http://www.w3.org/2000/svg" id="Capa_1" enable-background="new 0 0 515.556 515.556" height="512" viewBox="0 0 515.556 515.556" width="512"><path d="m257.778 0c-142.137 0-257.778 115.641-257.778 257.778s115.641 257.778 257.778 257.778 257.778-115.641 257.778-257.778-115.642-257.778-257.778-257.778zm0 451.111c-106.61 0-193.333-86.723-193.333-193.333s86.723-193.334 193.333-193.334 193.333 86.723 193.333 193.333-86.723 193.334-193.333 193.334z"/><path d="m257.778 128.889c-71.068 0-128.889 57.805-128.889 128.889s57.821 128.889 128.889 128.889 128.889-57.805 128.889-128.889-57.821-128.889-128.889-128.889z"/></svg>
+                <span id="icon-recording" class="{{(dataRecordingIsOn)?'recOn':'recOff'}}"
+                    (click)="openRecordingActionModal()">
+                    <svg xmlns="http://www.w3.org/2000/svg" id="Capa_1" enable-background="new 0 0 515.556 515.556"
+                        height="512" viewBox="0 0 515.556 515.556" width="512">
+                        <path
+                            d="m257.778 0c-142.137 0-257.778 115.641-257.778 257.778s115.641 257.778 257.778 257.778 257.778-115.641 257.778-257.778-115.642-257.778-257.778-257.778zm0 451.111c-106.61 0-193.333-86.723-193.333-193.333s86.723-193.334 193.333-193.334 193.333 86.723 193.333 193.333-86.723 193.334-193.333 193.334z" />
+                        <path
+                            d="m257.778 128.889c-71.068 0-128.889 57.805-128.889 128.889s57.821 128.889 128.889 128.889 128.889-57.805 128.889-128.889-57.821-128.889-128.889-128.889z" />
+                    </svg>
                 </span>
                 {{(dataRecordingIsOn)?'Data recording on':'Data recording off'}}
                 <div id="reload-btn" (click)="openModal('hyt-modal-reload-recording-confirm')">
@@ -30,7 +37,8 @@
                     <div class="col-6 left-tools">
 
                         <div id="signal-btn" (click)="changeSignalState($event)">
-                            <span class="hyt-icon {{(signalIsOn)?'icon-hyt_wifiOnFilled':'icon-hyt_wifiOffFilled'}}"></span>
+                            <span
+                                class="hyt-icon {{(signalIsOn)?'icon-hyt_wifiOnFilled':'icon-hyt_wifiOffFilled'}}"></span>
                             <p>{{(signalIsOn)?'Online':'Offline'}}</p>
                         </div>
 
@@ -44,12 +52,15 @@
 
                     <div class="col-6 right-tools">
 
-                        <hyt-select *ngIf="pageStatus == 1" [label]="'Select a project'" name="project" [options]="hProjectListOptions" [selected]="idProjectSelected" (changeFn)="onSelectChange($event)" [disabled]="false"></hyt-select>
+                        <hyt-select *ngIf="pageStatus == 1" [label]="'Select a project'" name="project"
+                            [options]="hProjectListOptions" [selected]="idProjectSelected"
+                            (changeFn)="onSelectChange($event)" [disabled]="false"></hyt-select>
 
-                        <div id="add-widget-btn" *ngIf="pageStatus == PageStatus.Standard" (click)="openModal('hyt-modal-add-widgets')">
+                        <div id="add-widget-btn" *ngIf="pageStatus == PageStatus.Standard"
+                            (click)="openModal('hyt-modal-add-widgets')">
                             <!-- <a [routerLink]="[{outlets: { modal: [ 'widgets' ] }}]"> -->
-                                <span class="hyt-icon icon-hyt_widgetPlus"></span>
-                                <p>Add a widget</p>
+                            <span class="hyt-icon icon-hyt_widgetPlus"></span>
+                            <p i18n="@@HYT_add_a_widget">HYT_add_a_widget</p>
                             <!-- </a> -->
                         </div>
 
@@ -65,29 +76,31 @@
             </div>
         </div>
 
-        <div id="loadingStatus" *ngSwitchCase="PageStatus.Loading" class="row align-items-center justify-content-center">
+        <div id="loadingStatus" *ngSwitchCase="PageStatus.Loading"
+            class="row align-items-center justify-content-center">
             <div class="mt-5 d-flex flex-column">
-                <h2>Page is loading...</h2>
+                <h2 i18n="@@HYT_page_is_loading">HYT_page_is_loading</h2>
             </div>
         </div>
 
         <div id="standardStatus" *ngSwitchCase="PageStatus.Standard" class="row">
-        <!-- Standard -->
+            <!-- Standard -->
 
             <div id="container-box-dashboard" class="col-12">
-                <hyt-dashboard-view [dashboardId]="currentDashboardId" [dashboardType]="currentDashboardType" [dashboardWidgets]="currentDashboard[0].widgets"></hyt-dashboard-view>
+                <hyt-dashboard-view [dashboardId]="currentDashboardId" [dashboardType]="currentDashboardType"
+                    [dashboardWidgets]="currentDashboard[0].widgets"></hyt-dashboard-view>
             </div>
 
         </div>
 
         <div id="newStatus" *ngSwitchCase="PageStatus.New" class="row align-items-center justify-content-center">
-        <!-- New -->
+            <!-- New -->
 
             <div class="mt-5 no-dashboards">
 
                 <div id="content-no-dashboards" class="col-md-12">
                     <i class="fa fa-bar-chart-o"></i>
-                    <h3 id="title-no-dashboards">You have not configured any dashboards.</h3>
+                    <h3 id="title-no-dashboards" i18n="@@HYT_no_dashboard_yet">HYT_no_dashboard_yet</h3>
                     <!-- <h4 id="subtitle-no-dashboards">Start adding widgets.</h4> -->
                 </div>
 
@@ -99,7 +112,7 @@
 
         <div id="errorStatus" *ngSwitchCase="PageStatus.Error" class="row align-items-center justify-content-center">
             <div class="mt-5 d-flex flex-column align-items-center justify-content-center">
-                <h2>An error has occurred, contact the administrator.</h2>
+                <h2 i18n="@@HYT_error_occurred_long">HYT_error_occurred_long</h2>
             </div>
         </div>
 
@@ -111,8 +124,11 @@
 
 </div>
 
-<hyt-confirm-recording-action id="hyt-modal-recording-confirm-action" (modalClose)="changeRecordingState($event)"></hyt-confirm-recording-action>
+<hyt-confirm-recording-action id="hyt-modal-recording-confirm-action" (modalClose)="changeRecordingState($event)">
+</hyt-confirm-recording-action>
 
-<hyt-info-recording-action id="hyt-modal-recording-info-action" (modalClose)="infoRecordingState($event)"></hyt-info-recording-action>
+<hyt-info-recording-action id="hyt-modal-recording-info-action" (modalClose)="infoRecordingState($event)">
+</hyt-info-recording-action>
 
-<hyt-confirm-recording-action id="hyt-modal-reload-recording-confirm" (modalClose)="reloadRecording($event)"></hyt-confirm-recording-action>
+<hyt-confirm-recording-action id="hyt-modal-reload-recording-confirm" (modalClose)="reloadRecording($event)">
+</hyt-confirm-recording-action>

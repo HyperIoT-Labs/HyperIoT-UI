@@ -125,4 +125,8 @@ export class PacketsFormComponent implements OnInit {
     this.packetForm.get('packetTrafficPlan').setValue('MEDIUM');
   }
 
+  updateHint(event: string) {
+    this.wizardService.updateHint(event, 2);
+  }
+
 }

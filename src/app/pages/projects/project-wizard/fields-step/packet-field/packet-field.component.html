@@ -19,12 +19,13 @@
 
         <div class="container-form-field">
           <hyt-input-text [form]="fieldForm" formControlName="fieldName" name="fieldName" [isRequired]="true"
-            placeholder="Name" [injectedErrorMsg]="getError('fieldName')">
+            i18n-placeholder="@@HYT_name" placeholder="HYT_name" [injectedErrorMsg]="getError('fieldName')"
+            [externalHint]="'Enter the field name. Field name...'" (outHint)="updateHint($event)">
           </hyt-input-text>
         </div> <!-- Field Name -->
 
         <div class="container-form-field">
-          LEVEL OF MULTIPLICITY
+          <ng-container i18n="@@HYT_level_of_multiplicity">HYT_level_of_multiplicity</ng-container>
           <hyt-radio-button [form]="fieldForm" formControlName="fieldMultiplicity" name="fieldMultiplicity"
             [options]="multiplicityOptions" [verticalAlign]="true">
           </hyt-radio-button>
@@ -32,13 +33,14 @@
 
         <div class="container-form-field">
           <hyt-select [form]="fieldForm" [options]="typeOptions" formControlName="fieldType" name="fieldType"
-            [isRequired]="true" label="Type">
+            [isRequired]="true" i18n-label="@@HYT_type" label="HYT_type">
           </hyt-select>
         </div> <!-- Field Type -->
 
         <div class="container-form-field">
           <hyt-text-area [form]="fieldForm" formControlName="fieldDescription" name="fieldDescription"
-            placeholder="Description">
+            i18n-placeholder="@@HYT_description" placeholder="HYT_description"
+            [externalHint]="'Enter the field description. (max...)'" (outHint)="updateHint($event)">
           </hyt-text-area>
         </div> <!-- Field Description -->
 
@@ -50,24 +52,25 @@
 
         <hyt-button *ngIf="submitType=='ADD'" id="field-form-submit-button"
           [isDisabled]="invalid() || pageStatus == PageStatus.Loading" (clickFn)="createField()" type="submit">
-          Save Field
+          <ng-container i18n="@@HYT_save_field">HYT_save_field</ng-container>
         </hyt-button>
 
         <hyt-button *ngIf="submitType=='UPDATE'" id="field-form-submit-button-2"
           [isDisabled]="invalid() || pageStatus == PageStatus.Loading" (clickFn)="updateField()" type="submit">
-          Update Field
+          <ng-container i18n="@@HYT_update_field">HYT_update_field</ng-container>
         </hyt-button>
 
       </form>
 
       <div *ngIf="formStatus != 1" class="overlay d-flex flex-column align-items-center justify-content-center">
 
-        <h4 *ngIf="formStatus == 0">Please, add or select a field in the treeview</h4>
+        <h4 *ngIf="formStatus == 0" i18n="@@HYT_add_select_field_treeview">HYT_add_select_field_treeview</h4>
         <div *ngIf="formStatus == -1" class="d-flex flex-column justify-content-center">
-          <h4>An error has occurred</h4>
+          <h4 i18n="@@HYT_error_occurred_long">HYT_error_occurred_long</h4>
+          <!-- An error has occurred -->
         </div>
         <div *ngIf="formStatus == 2">
-          <h4>Saving field...</h4>
+          <h4 i18n="@@HYT_saving_field">HYT_saving_field</h4>
           <mat-progress-bar mode="query"></mat-progress-bar>
         </div>
 
@@ -80,9 +83,14 @@
 
 <hyt-modal [mOpen]="deleteModal">
   <div class="center">
-    You are about to delete the selected object and its children. Are you sure?
+    <p i18n="@@HYT_delete_field_confirm">HYT_delete_field_confirm</p>
+    <!-- You are about to delete the selected object and its children. Are you sure? -->
     <hr>
-    <button (click)="confDelete(true)">Yes</button>
-    <button (click)="confDelete(false)">No</button>
+    <button (click)="confDelete(true)">
+      <ng-container i18n="@@HYT_yes">HYT_yes</ng-container>
+    </button>
+    <button (click)="confDelete(false)">
+      <ng-container i18n="@@HYT_no">HYT_no</ng-container>
+    </button>
   </div>
 </hyt-modal>

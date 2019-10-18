@@ -21,17 +21,26 @@ export class EnrichmentTipColumnComponent implements OnInit {
   tableStatus: TableStatusEnum = TableStatusEnum.Loading;
 
   constructor(
-    private projectWizardService: ProjectWizardService
+    private wizardService: ProjectWizardService
   ) { }
 
   ngOnInit() {
-    this.projectWizardService.enrichmentRules$.subscribe(
+    this.wizardService.enrichmentRules$.subscribe(
       (res: Rule[]) => {
         this.enrichmentRules = res;
         this.tableStatus = TableStatusEnum.Ok;
       },
       err => this.tableStatus = TableStatusEnum.Error
-    )
+    );
+    this.wizardService.hint$[4].subscribe(
+      res => {
+        if (res)
+          this.showHintMessage(res);
+        else {
+          this.hideHintMessage();
+        }
+      }
+    );
   }
 
   copy(data) {
@@ -42,6 +51,17 @@ export class EnrichmentTipColumnComponent implements OnInit {
   }
   delete(data) {
     this.deleteEnrichmentRule.emit(data);
+  }
+
+  hintMessage = '';
+  hintVisible = false;
+
+  showHintMessage(message: string) {
+    this.hintMessage = message;
+    this.hintVisible = true;
+  }
+  hideHintMessage() {
+    this.hintVisible = false;
   }
 
 }

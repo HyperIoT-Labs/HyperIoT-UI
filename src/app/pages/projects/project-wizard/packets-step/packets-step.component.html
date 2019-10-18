@@ -1,13 +1,13 @@
 <div id="packets-step" class="row">
 
-  <div class="col-md-10">
+  <div class="col-md-9">
 
     <hyt-packets-form #packetsForm (savePacket)="savePacket()" (updatePacket)="updatePacket()">
     </hyt-packets-form>
 
   </div>
 
-  <div class="col-md-2">
+  <div class="col-md-3">
 
     <hyt-packets-hint-column (updatePacket)="tableUpdatePacket($event)" (copyPacket)="tableCopyPacket($event)"
       (deletePacket)="showDeleteModal($event)"></hyt-packets-hint-column>
@@ -16,10 +16,14 @@
 
   <hyt-modal [mOpen]="deleteModal">
     <div class="alignCenter">
-      Sei sicuro di voler eliminare il pacchetto?
+      <p i18n="@@HYT_delete_device_confirm">HYT_delete_packet_confirm</p>
       <hr>
-      <button (click)="deletePacket()">Sì</button>
-      <button (click)="hideDeleteModal()">No</button>
+      <button (click)="deletePacket()">
+        <p i18n="@@HYT_yes">HYT_yes</p>
+      </button>
+      <button (click)="hideDeleteModal()">
+        <p i18n="@@HYT_no">HYT_no</p>
+      </button>
       <br>
       <div *ngIf="deleteError">{{deleteError}}</div>
     </div>

@@ -3,30 +3,28 @@
     <div class="dialog hyt-modal-body">
 
         <div class="info-header">
-            <h2>Data recording</h2>
+            <h2 i18n="@@HYT_data_recording">HYT_data_recording</h2>
         </div>
 
         <div class="dialog-body">
-            <h3>Attention!</h3>
+            <h3 i18n="@@HYT_attention">HYT_attention</h3>
             <!-- <span class="hyt-icon icon-hyt_info"></span> -->
-            <p>
-                Proceeding with this action you will disable the registration of the data and they will not be stored until the rehabilitation of this property
-            </p>
+            <p i18n="@@HYT_dashboard_end_registration">HYT_dashboard_end_registration</p>
         </div>
 
         <footer class="d-flex flex-row align-items-center justify-content-end">
             <hyt-button class="info-button-confirm" (clickFn)="next($event)">
                 <mat-icon>check</mat-icon>
-                <span >Next</span>
+                <span i18n="@@HYT_next">HYT_next</span>
             </hyt-button>
             <hyt-button class="info-button-close" (clickFn)="back($event)">
                 <mat-icon>close</mat-icon>
-                <span >Back</span>
+                <span i18n="@@HYT_back">HYT_back</span>
             </hyt-button>
         </footer>
-        
+
     </div>
-    
+
 </div>
-    
+
 <div class="hyt-modal-background"></div>

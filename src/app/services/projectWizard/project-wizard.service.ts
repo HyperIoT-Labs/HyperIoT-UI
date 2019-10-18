@@ -37,6 +37,8 @@ export class ProjectWizardService {
 
   autoSelect$: Subject<void>[] = [new Subject<void>(), new Subject<void>(), new Subject<void>(), new Subject<void>()];
 
+  hint$: Subject<string>[] = [new Subject<string>(), new Subject<string>(), new Subject<string>(), new Subject<string>(), new Subject<string>(), new Subject<string>(), new Subject<string>()];//TODO find better solution for hint (maybe just one hint column)
+
   treefy(fieldList: HPacketField[]): HPacketField[] {
     let treefiedFields = [];
     fieldList.forEach(x => {
@@ -174,6 +176,10 @@ export class ProjectWizardService {
         this.eventRules.splice(k, 1);
     }
     this.eventRules$.next(this.eventRules);
+  }
+
+  updateHint(hint: string, stepId: number) {
+    this.hint$[stepId].next(hint);
   }
 
   stepChanged(id: number): void {

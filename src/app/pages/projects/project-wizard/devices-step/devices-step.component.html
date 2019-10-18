@@ -1,12 +1,12 @@
 <div id="devices-step" class="row">
 
-  <div class="col-md-10">
+  <div class="col-md-9">
 
     <hyt-devices-form #devicesForm (saveDevice)="saveDevice()" (updateDevice)="updateDevice()"></hyt-devices-form>
 
   </div>
 
-  <div class="col-md-2">
+  <div class="col-md-3">
 
     <hyt-devices-hint-column (updateDevice)="tableUpdateDevice($event)" (copyDevice)="tableCopyDevice($event)"
       (deleteDevice)="showDeleteModal($event)"></hyt-devices-hint-column>
@@ -15,10 +15,14 @@
 
   <hyt-modal [mOpen]="deleteModal">
     <div class="alignCenter">
-      Sei sicuro di voler eliminare il device?
+      <p i18n="@@HYT_delete_device_confirm">HYT_delete_device_confirm</p>
       <hr>
-      <button (click)="deleteDevice()">Sì</button>
-      <button (click)="hideDeleteModal()">No</button>
+      <button (click)="deleteDevice()">
+        <p i18n="@@HYT_yes">HYT_yes</p>
+      </button>
+      <button (click)="hideDeleteModal()">
+        <p i18n="@@HYT_no">HYT_no</p>
+      </button>
       <br>
       <div *ngIf="deleteError">{{deleteError}}</div>
     </div>

@@ -18,40 +18,63 @@
 
     <ng-template #devicesTemplate>
       <hyt-devices-step></hyt-devices-step>
-      <hyt-button (clickFn)="stepper.previous()">Back</hyt-button>
-      <hyt-button [isDisabled]="!devicesValidated" (clickFn)="stepper.next()">Next</hyt-button>
+      <hyt-button (clickFn)="stepper.previous()">
+        <ng-container i18n="@@HYT_back">HYT_back</ng-container>
+      </hyt-button>
+      <hyt-button [isDisabled]="!devicesValidated" (clickFn)="stepper.next()">
+        <ng-container i18n="@@HYT_next">HYT_next</ng-container>
+      </hyt-button>
     </ng-template>
 
     <ng-template #packetsTemplate>
       <hyt-packets-step></hyt-packets-step>
-      <hyt-button (clickFn)="stepper.previous()">Back</hyt-button>
-      <hyt-button [isDisabled]="!packetsValidated" (clickFn)="stepper.next()">Next</hyt-button>
+      <hyt-button (clickFn)="stepper.previous()">
+        <ng-container i18n="@@HYT_back">HYT_back</ng-container>
+      </hyt-button>
+      <hyt-button [isDisabled]="!packetsValidated" (clickFn)="stepper.next()">
+        <ng-container i18n="@@HYT_next">HYT_next</ng-container>
+      </hyt-button>
     </ng-template>
 
     <ng-template #fieldsTemplate>
       <hyt-fields-step></hyt-fields-step>
-      <hyt-button (clickFn)="stepper.previous()">Back</hyt-button>
+      <hyt-button (clickFn)="stepper.previous()">
+        <ng-container i18n="@@HYT_back">HYT_back</ng-container>
+      </hyt-button>
       <hyt-button
-        (clickFn)="(fieldsValidated == true && enrichmentValidated == false)? openOptionModal() : stepper.next()">Next
+        (clickFn)="(fieldsValidated == true && enrichmentValidated == false)? openOptionModal() : stepper.next()">
+        <ng-container i18n="@@HYT_next">HYT_next</ng-container>
       </hyt-button>
     </ng-template>
 
     <ng-template #enrichmentTemplate>
       <hyt-enrichment-step></hyt-enrichment-step>
-      <hyt-button (clickFn)="stepper.previous()">Back</hyt-button>
-      <hyt-button (clickFn)="stepper.next()">Next</hyt-button>
+      <hyt-button (clickFn)="stepper.previous()">
+        <ng-container i18n="@@HYT_back">HYT_back</ng-container>
+      </hyt-button>
+      <hyt-button (clickFn)="stepper.next()">
+        <ng-container i18n="@@HYT_next">HYT_next</ng-container>
+      </hyt-button>
     </ng-template>
 
     <ng-template #statisticsTemplate>
       <hyt-statistics-step></hyt-statistics-step>
-      <hyt-button (clickFn)="stepper.previous()">Back</hyt-button>
-      <hyt-button (clickFn)="stepper.next()">Next</hyt-button>
+      <hyt-button (clickFn)="stepper.previous()">
+        <ng-container i18n="@@HYT_back">HYT_back</ng-container>
+      </hyt-button>
+      <hyt-button (clickFn)="stepper.next()">
+        <ng-container i18n="@@HYT_next">HYT_next</ng-container>
+      </hyt-button>
     </ng-template>
 
     <ng-template #eventsTemplate>
       <hyt-events-step></hyt-events-step>
-      <hyt-button (clickFn)="stepper.previous()">Back</hyt-button>
-      <hyt-button (clickFn)="openOptionModal()">Next</hyt-button>
+      <hyt-button (clickFn)="stepper.previous()">
+        <ng-container i18n="@@HYT_back">HYT_back</ng-container>
+      </hyt-button>
+      <hyt-button (clickFn)="openOptionModal()">
+        <ng-container i18n="@@HYT_next">HYT_next</ng-container>
+      </hyt-button>
     </ng-template>
 
 
@@ -65,7 +88,7 @@
       <div class="center">
         <div class="row">
           <div class="col-md-12">
-            Choose how to proceed
+            <ng-container i18n="@@HYT_choose_how_proceed">HYT_choose_how_proceed</ng-container>
             <button (click)="closeOptionModal()">X</button>
           </div>
         </div>
@@ -73,35 +96,23 @@
           <div class="col-md-4">
             <img src="assets/projects/icons/monitor.png" (click)="goToStepByIndex(4)">
             <br>
-            <b>Enrichment data</b>
+            <b i18n="@@HYT_enrichment_data">HYT_enrichment_data</b>
             <br>
-            Sed eu imperdiet mauris. Nullam iaculis leo eget justo sodales sagittis. Morbi purus lorem, luctus id lectus
-            ac, pulvinar fermentum nisl. Nulla sit amet accumsan libero, vitae molestie velit. Nulla non pretium magna,
-            et pulvinar felis. Fusce semper augue at odio ornare, sit amet pharetra tellus scelerisque. Cras sed
-            accumsan libero. Aliquam sed congue diam. Donec imperdiet faucibus risus sit amet mattis. Ut auctor mattis
-            mauris.
+            <p i18n="@@HYT_enrichment_definition_long">HYT_enrichment_definition_long</p>
           </div>
           <div class="col-md-4">
             <img src="assets/projects/icons/monitor.png" (click)="goToStepByIndex(5)">
             <br>
-            <b>Statistic</b>
+            <b i18n="@@HYT_statistics">HYT_statistics</b>
             <br>
-            Morbi tincidunt eget augue vitae iaculis. Mauris sed sapien fringilla, scelerisque urna consectetur, aliquam
-            erat. Curabitur rhoncus, tellus eu feugiat dictum, elit leo tincidunt arcu, sed tristique mauris nisi
-            fermentum dui. Ut elementum, libero ac vehicula pretium, quam nunc pulvinar est, vitae sagittis metus leo
-            eleifend ex. Sed id aliquam risus. Vestibulum at mi ac nisl ullamcorper sagittis at at erat. Nam ut mi
-            convallis eros dictum faucibus ac et mauris. Vestibulum vulputate felis ut semper ullamcorper
+            <p i18n="@@HYT_statistics_definition_long">HYT_statistics_definition_long</p>
           </div>
           <div class="col-md-4">
             <img src="assets/projects/icons/monitor.png" (click)="goToStepByIndex(6)">
             <br>
-            <b>Events</b>
+            <b i18n="@@HYT_events">HYT_events</b>
             <br>
-            Sed magna mi, ultricies et dignissim a, sagittis elementum ligula. Proin tempus, justo non venenatis
-            molestie, ligula mi pretium odio, varius fringilla nisi mauris a massa. Fusce tempor lectus in laoreet
-            convallis. Nulla non felis nec diam pulvinar mattis. Mauris feugiat feugiat ultrices. Suspendisse potenti.
-            Praesent fringilla felis ut risus tristique, ut ullamcorper massa malesuada. Ut volutpat aliquam turpis
-            vitae porttitor. Suspendisse dapibus lobortis purus, id egestas mauris porttitor ac.
+            <p i18n="@@HYT_events_definition_long">HYT_events_definition_long</p>
           </div>
         </div>
         <hr>
@@ -117,23 +128,26 @@
       <div class="center">
         <div class="row">
           <div class="col-md-12">
-            Congratulations
+            <ng-container i18n="@@HYT_congratulations">HYT_congratulations</ng-container>
           </div>
         </div>
         <div class="row">
           <div class="col-md-12">
-            You have finished configuring your project
+            <p i18n="@@HYT_pw_finsh">HYT_pw_finsh</p>
             <div class="row">
               <div class="col-md-6">
                 <table id="tableSummary">
                   <tr>
                     <td><img src="assets/projects/icons/monitor.png"></td>
-                    <td>Projects
-                      <hr>{{(hProject)?hProject.name:''}}</td>
+                    <td>
+                      <ng-container i18n="@@HYT_project">HYT_project</ng-container>
+                      <hr>{{(hProject)?hProject.name:''}}
+                    </td>
                   </tr>
                   <tr>
                     <td><img src="assets/projects/icons/monitor.png"></td>
-                    <td>Devices
+                    <td>
+                      <ng-container i18n="@@HYT_devices">HYT_devices</ng-container>
                       <hr>
                       <ul>
                         <li *ngFor="let el of hDevices">{{el.deviceName}}</li>
@@ -142,7 +156,8 @@
                   </tr>
                   <tr>
                     <td><img src="assets/projects/icons/monitor.png"></td>
-                    <td>Packets
+                    <td>
+                      <ng-container i18n="@@HYT_packets">HYT_packets</ng-container>
                       <hr>
                       <ul>
                         <li *ngFor="let el of hPackets">{{el.name}}</li>
@@ -155,7 +170,8 @@
                   </tr> -->
                   <tr>
                     <td><img src="assets/projects/icons/monitor.png"></td>
-                    <td>Enrichment
+                    <td>
+                      <ng-container i18n="@@HYT_enrichment">HYT_enrichment</ng-container>
                       <hr>
                       <ul>
                         <li *ngFor="let el of enrichmentRules">{{el.name}}</li>
@@ -164,13 +180,15 @@
                   </tr>
                   <tr>
                     <td><img src="assets/projects/icons/monitor.png"></td>
-                    <td>Statistics
+                    <td>
+                      <ng-container i18n="@@HYT_statistics">HYT_statistics</ng-container>
                       <hr>
                     </td>
                   </tr>
                   <tr>
                     <td><img src="assets/projects/icons/monitor.png"></td>
-                    <td>Events
+                    <td>
+                      <ng-container i18n="@@HYT_events">HYT_events</ng-container>
                       <hr>
                       <ul>
                         <li *ngFor="let el of eventRules">{{el.name}}</li>
@@ -182,27 +200,16 @@
               <div class="col-md-3">
                 <img src="assets/projects/icons/monitor.png" (click)="goToProjectWizard()">
                 <br>
-                <b>Go To Project List</b>
+                <b i18n="@@HYT_go_to_project_list">HYT_go_to_project_list</b>
                 <br>
-                Morbi tincidunt eget augue vitae iaculis. Mauris sed sapien fringilla, scelerisque urna consectetur,
-                aliquam
-                erat. Curabitur rhoncus, tellus eu feugiat dictum, elit leo tincidunt arcu, sed tristique mauris nisi
-                fermentum dui. Ut elementum, libero ac vehicula pretium, quam nunc pulvinar est, vitae sagittis metus
-                leo
-                eleifend ex. Sed id aliquam risus. Vestibulum at mi ac nisl ullamcorper sagittis at at erat. Nam ut mi
-                convallis eros dictum faucibus ac et mauris. Vestibulum vulputate felis ut semper ullamcorper
+                <p i18n="@@HYT_go_to_project_list_long">HYT_go_to_project_list_long</p>
               </div>
               <div class="col-md-3">
                 <img src="assets/projects/icons/monitor.png" (click)="goToDashboard()">
                 <br>
-                <b>Go To Dashboard</b>
+                <b i18n="@@HYT_go_to_dashboard">HYT_go_to_dashboard</b>
                 <br>
-                Sed magna mi, ultricies et dignissim a, sagittis elementum ligula. Proin tempus, justo non venenatis
-                molestie, ligula mi pretium odio, varius fringilla nisi mauris a massa. Fusce tempor lectus in laoreet
-                convallis. Nulla non felis nec diam pulvinar mattis. Mauris feugiat feugiat ultrices. Suspendisse
-                potenti.
-                Praesent fringilla felis ut risus tristique, ut ullamcorper massa malesuada. Ut volutpat aliquam turpis
-                vitae porttitor. Suspendisse dapibus lobortis purus, id egestas mauris porttitor ac.
+                <p i18n="@@HYT_go_to_dashboard_long">HYT_go_to_dashboard_long</p>
               </div>
             </div>
           </div>
@@ -212,11 +219,15 @@
 
     <hyt-modal [mOpen]="deactivateModal">
       <div class="center">
-        Se esci dalla pagina perderai tutte le modifiche non salvate
+        <p i18n="@@HYT_pw_deactivation_modal">HYT_pw_deactivation_modal</p>
         <br>
         <br>
-        <hyt-button (clickFn)="deactivate(true)">OK</hyt-button>
-        <hyt-button (clickFn)="deactivate(false)">ANNULLA</hyt-button>
+        <hyt-button (clickFn)="deactivate(true)">
+          <ng-container i18n="@@HYT_OK">HYT_OK</ng-container>
+        </hyt-button>
+        <hyt-button (clickFn)="deactivate(false)">
+          <ng-container i18n="@@HYT_CANCEL">HYT_CANCEL</ng-container>
+        </hyt-button>
       </div>
     </hyt-modal>
 

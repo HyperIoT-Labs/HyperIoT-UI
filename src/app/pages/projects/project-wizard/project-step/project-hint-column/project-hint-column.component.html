@@ -1,4 +1,13 @@
-<div class="info-message">
-  <span class="text">Messaggio di Info</span>
+<mat-expansion-panel [expanded]="true">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      <b i18n="@@HYT_PROJECT">HYT_PROJECT</b>
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+  <p i18n="@@HYT_project_definition_long">HYT_project_definition_long</p>
+</mat-expansion-panel>
+
+<div *ngIf="hintVisible" class="info-message">
+  <span class="text">{{hintMessage}}</span>
   <mat-icon class="">info</mat-icon>
 </div>

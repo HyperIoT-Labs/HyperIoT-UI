@@ -11,31 +11,29 @@
 
 <gridster *ngIf="dashboard.length > 0 && pageStatus == 1" [options]="options">
 
-  <gridster-item 
-    [item]="item" 
-    *ngFor="let item of dashboard">
+  <gridster-item [item]="item" *ngFor="let item of dashboard">
 
-      <hyt-dynamic-widget
-        [widget]="item"
-        (widgetAction)="onWidgetAction($event)"></hyt-dynamic-widget>
+    <hyt-dynamic-widget [widget]="item" (widgetAction)="onWidgetAction($event)"></hyt-dynamic-widget>
 
   </gridster-item>
 
 </gridster>
 
-<div *ngIf="dashboard.length == 0 && pageStatus == 1" id="no-widgets-container" class="row align-items-center justify-content-center" >
+<div *ngIf="dashboard.length == 0 && pageStatus == 1" id="no-widgets-container"
+  class="row align-items-center justify-content-center">
 
   <div class="mt-5 no-widgets">
 
     <div class="col-md-12">
       <i class="fa fa-bar-chart-o"></i>
       <h2>Sei in {{ dashboardType }}</h2>
-      <h3 id="title-no-widgets">You have no widgets in this dashboard.</h3>
-      <h4 id="subtitle-no-widgets">Start adding widgets.</h4>
+      <h3 id="title-no-widgets" i18n="@@HYT_no_widget_in_dashboard">HYT_no_widget_in_dashboard</h3>
+      <h4 id="subtitle-no-widgets" i18n="@@HYT_start_adding_widget">HYT_start_adding_widget</h4>
     </div>
 
   </div>
 
 </div>
 
-<hyt-widget-settings-dialog  id="hyt-modal-widget-setting" (modalClose)="onWidgetSettingClose($event)" [widgetId]="currentWidgetIdSetting"></hyt-widget-settings-dialog>
+<hyt-widget-settings-dialog id="hyt-modal-widget-setting" (modalClose)="onWidgetSettingClose($event)"
+  [widgetId]="currentWidgetIdSetting"></hyt-widget-settings-dialog>

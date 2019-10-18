@@ -6,33 +6,40 @@
 
       <div class="container-form-field">
         <hyt-input-text [form]="deviceForm" formControlName="hdevice-devicename" name="hdevice-devicename"
-          [isRequired]="true" placeholder="Name" [injectedErrorMsg]="getError('hdevice-devicename')">
+          [isRequired]="true" i18n-placeholder="@@HYT_name" placeholder="HYT_name"
+          [injectedErrorMsg]="getError('hdevice-devicename')" [externalHint]="'Enter the device name.'"
+          (outHint)="updateHint($event)">
         </hyt-input-text>
       </div> <!-- Field Name -->
 
       <div class="container-form-field">
-        <hyt-input-text [form]="deviceForm" formControlName="hdevice-model" name="hdevice-model" placeholder="Model"
-          [injectedErrorMsg]="getError('hdevice-model')">
+        <hyt-input-text [form]="deviceForm" formControlName="hdevice-model" name="hdevice-model"
+          i18n-placeholder="@@HYT_model" placeholder="HYT_model" [injectedErrorMsg]="getError('hdevice-model')"
+          [externalHint]="'Enter the device model. The model is...'" (outHint)="updateHint($event)">
         </hyt-input-text>
       </div> <!-- Field Model -->
 
       <div class="container-form-field">
         <hyt-input-text [form]="deviceForm" formControlName="hdevice-firmwareversion" name="hdevice-firmwareversion"
-          placeholder="Firmware Version" [injectedErrorMsg]="getError('hdevice-firmwareversion')">
+          i18n-placeholder="@@HYT_firmware_version" placeholder="HYT_firmware_version"
+          [injectedErrorMsg]="getError('hdevice-firmwareversion')"
+          [externalHint]="'Enter the firmware version. The firmware version is...'" (outHint)="updateHint($event)">
         </hyt-input-text>
       </div> <!-- Field Firmware Version -->
 
       <div class="container-form-field">
         <hyt-input-text [form]="deviceForm" formControlName="hdevice-password" name="hdevice-password"
           [isRequired]="true" [isPassword]="true" i18n-placeholder="@@HYT_password" placeholder="HYT_password"
-          type="password" [injectedErrorMsg]="getError('hdevice-password')">
+          type="password" [injectedErrorMsg]="getError('hdevice-password')"
+          [externalHint]="'Enter a password. Password rules...'" (outHint)="updateHint($event)">
         </hyt-input-text>
       </div> <!-- Field Password -->
 
       <div class="container-form-field">
         <hyt-input-text [form]="deviceForm" formControlName="hdevice-passwordConfirm" name="hdevice-passwordConfirm"
-          [isRequired]="true" i18n-placeholder="@@HYT_passwordConfirm" placeholder="HYT_passwordConfirm" type="password"
-          [injectedErrorMsg]="getError('hdevice-passwordConfirm')">
+          [isRequired]="true" i18n-placeholder="@@HYT_password_confirm" placeholder="HYT_password_confirm"
+          type="password" [injectedErrorMsg]="getError('hdevice-passwordConfirm')"
+          [externalHint]="'Confirm password. Password must match.'" (outHint)="updateHint($event)">
         </hyt-input-text>
       </div> <!-- Field Confirm Password -->
 
@@ -41,20 +48,24 @@
     <div class="col-md-6">
 
       <div class="container-form-field">
-        <hyt-input-text [form]="deviceForm" formControlName="hdevice-brand" name="hdevice-brand" placeholder="Brand"
-          [injectedErrorMsg]="getError('hdevice-brand')">
+        <hyt-input-text [form]="deviceForm" formControlName="hdevice-brand" name="hdevice-brand"
+          i18n-placeholder="@@HYT_brand" placeholder="HYT_brand" [injectedErrorMsg]="getError('hdevice-brand')"
+          [externalHint]="'Enter the brand. Brand is...'" (outHint)="updateHint($event)">
         </hyt-input-text>
       </div> <!-- Field Brand -->
 
       <div class="container-form-field">
         <hyt-input-text [form]="deviceForm" formControlName="hdevice-softwareversion" name="hdevice-softwareversion"
-          placeholder="Software Version" [injectedErrorMsg]="getError('hdevice-softwareversion')">
+          i18n-placeholder="@@HYT_software_version" placeholder="HYT_software_version"
+          [injectedErrorMsg]="getError('hdevice-softwareversion')"
+          [externalHint]="'Enter the software version. Software version is...'" (outHint)="updateHint($event)">
         </hyt-input-text>
       </div> <!-- Field Software Version -->
 
       <div class="container-form-field">
         <hyt-text-area [form]="deviceForm" formControlName="hdevice-description" name="hdevice-description"
-          placeholder="Description">
+          i18n-placeholder="@@HYT_description" placeholder="HYT_description"
+          [externalHint]="'Enter the device description. (Max lenght:...)'" (outHint)="updateHint($event)">
         </hyt-text-area>
       </div> <!-- Field Description -->
 
@@ -70,12 +81,12 @@
 
   <hyt-button *ngIf="submitType == 'ADD'" id="device-form-submit-button"
     [isDisabled]="invalid() || pageStatus == PageStatus.Loading" (clickFn)="postDevice()" type="submit">
-    Add device
+    <ng-container i18n="@@HYT_add_device">HYT_add_device</ng-container>
   </hyt-button>
 
   <hyt-button *ngIf="submitType == 'UPDATE'" id="device-form-submit-button"
     [isDisabled]="invalid() || pageStatus == PageStatus.Loading" (clickFn)="putDevice()" type="submit">
-    Update device
+    <ng-container i18n="@@HYT_update_device">HYT_update_device</ng-container>
   </hyt-button>
 
 </form>
