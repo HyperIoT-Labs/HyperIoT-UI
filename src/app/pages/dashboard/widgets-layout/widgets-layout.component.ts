@@ -37,7 +37,7 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
   @ViewChild(GridsterComponent, { static: true }) gridster: GridsterComponent;
   @ViewChild(WidgetSettingsDialogComponent, { static: true }) widgetSetting: WidgetSettingsDialogComponent;
   @Input() options: GridsterConfig;
-  @Input() dashboardId: number | string;
+  @Input() dashboardValue: Dashboard;
 
   @Input() widgets;
 
@@ -104,40 +104,35 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
 
     this.dashboard = [];
 
-    this.configService.getDashboard(+this.dashboardId)
-    .pipe(takeUntil(this.ngUnsubscribe))
-    .subscribe(
-      (d) => {
-        this.dashboardEntity = d;
-        this.dashboardType = this.dashboardEntity.dashboardType
-        this.projectId = this.dashboardEntity.hproject.id;
-        // connect to data upstream
-        this.dataStreamService.connect(this.projectId);
-        // get dashboard config
+    if(this.dashboardValue){
+      this.dashboardEntity = this.dashboardValue;
+      this.dashboardType = this.dashboardEntity.dashboardType
+      this.projectId = this.dashboardEntity.hproject.id;
+      // connect to data upstream
+      this.dataStreamService.connect(this.projectId);
+      // get dashboard config
 
-        this.getWidgetsMapped(this.widgets)
-        .pipe(takeUntil(this.ngUnsubscribe))
-        .subscribe(
-          (dashboardConfig: Array<GridsterItem>) => {
-            this.dashboard = dashboardConfig;
-            this.originalDashboard = JSON.parse(JSON.stringify(dashboardConfig));
-            this.pageStatus = PageStatus.Standard;
-          }
-        );
+      this.getWidgetsMapped(this.widgets)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (dashboardConfig: Array<GridsterItem>) => {
+          this.dashboard = dashboardConfig;
+          this.originalDashboard = JSON.parse(JSON.stringify(dashboardConfig));
+          this.pageStatus = PageStatus.Standard;
+        }
+      );
 
-        // this.configService.getConfig(this.projectId, this.dashboardId).pipe(takeUntil(this.ngUnsubscribe)).subscribe((dashboardConfig: Array<GridsterItem>) => {
-          // this.dashboard = dashboardConfig;
-          // console.log(this.dashboard)
-          // this.originalDashboard = JSON.parse(JSON.stringify(dashboardConfig));
-          // this.pageStatus = PageStatus.Standard;
-        // });
-        
-      },
-      error => {
-        console.error(error);
-        this.pageStatus = PageStatus.Error;
-      }
-    );
+      // this.configService.getConfig(this.projectId, this.dashboardId).pipe(takeUntil(this.ngUnsubscribe)).subscribe((dashboardConfig: Array<GridsterItem>) => {
+        // this.dashboard = dashboardConfig;
+        // console.log(this.dashboard)
+        // this.originalDashboard = JSON.parse(JSON.stringify(dashboardConfig));
+        // this.pageStatus = PageStatus.Standard;
+      // });
+    }
+    else{
+      console.error('error');
+      this.pageStatus = PageStatus.Error;
+    }
 
     // window.onbeforeunload = () => {
     //   this.saveDashboard();
@@ -386,7 +381,7 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
       const widget = JSON.parse(JSON.stringify(widgetTemplate));
       delete widget.count;
       this.configService
-        .addDashboardWidget(+this.dashboardId, widget)
+        .addDashboardWidget(+this.dashboardValue.id, widget)
         .pipe(takeUntil(this.ngUnsubscribe))
         .subscribe((w) => {
           // TODO: handle errors
@@ -398,7 +393,7 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
   }
 
   saveDashboard() {
-    this.configService.putConfig(+this.dashboardId, this.dashboard)
+    this.configService.putConfig(+this.dashboardValue.id, this.dashboard)
     .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((res) => {
         if (res && res.status_code === 200) {

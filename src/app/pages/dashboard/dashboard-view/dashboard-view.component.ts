@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { WidgetsLayoutComponent } from '../widgets-layout/widgets-layout.component';
 import { Subject } from 'rxjs';
 import { HytModalConfService } from 'src/app/services/hyt-modal-conf.service';
+import { Dashboard } from '@hyperiot/core';
 
 @Component({
   selector: 'hyt-dashboard-view',
@@ -14,7 +15,7 @@ export class DashboardViewComponent implements OnInit {
   @ViewChild(WidgetsLayoutComponent, { static: false })
   dashboardLayout: WidgetsLayoutComponent;
   
-  @Input() dashboardId: string;
+  @Input() dashboard: Dashboard;
   @Input() dashboardType: any;
   @Input() dashboardWidgets;
 

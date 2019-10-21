@@ -87,8 +87,8 @@
             <!-- Standard -->
 
             <div id="container-box-dashboard" class="col-12">
-                <hyt-dashboard-view [dashboardId]="currentDashboardId" [dashboardType]="currentDashboardType"
-                    [dashboardWidgets]="currentDashboard[0].widgets"></hyt-dashboard-view>
+                <hyt-dashboard-view [dashboard]="currentDashboard" [dashboardType]="currentDashboardType"
+                    [dashboardWidgets]="currentDashboard.widgets"></hyt-dashboard-view>
             </div>
 
         </div>
@@ -104,7 +104,7 @@
                     <!-- <h4 id="subtitle-no-dashboards">Start adding widgets.</h4> -->
                 </div>
 
-                <hyt-dashboard-view [dashboardId]="currentDashboardId"></hyt-dashboard-view>
+                <hyt-dashboard-view [dashboard]="currentDashboard"></hyt-dashboard-view>
 
             </div> <!-- End No Projects Row -->
 

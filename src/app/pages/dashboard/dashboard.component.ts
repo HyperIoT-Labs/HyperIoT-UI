@@ -102,11 +102,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
             this.dashboardConfigService.getRealtimeDashboardFromProject(this.idProjectSelected)
               .pipe(takeUntil(this.ngUnsubscribe))
               .subscribe(
-                res => {
+                (res: Dashboard[]) => {
                   try {
-                    this.currentDashboard = res;
-
-                    this.currentDashboardId = this.currentDashboard[0].id;
+                    this.currentDashboard = res[0];
+                    this.currentDashboardId = this.currentDashboard.id;
                     this.pageStatus = PageStatus.Standard;
                   } catch (error) {
                     console.error(error)
@@ -148,10 +147,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.dashboardConfigService.getRealtimeDashboardFromProject(event.value)
     .pipe(takeUntil(this.ngUnsubscribe))
     .subscribe(
-      res => {
+      (res: Dashboard[]) => {
         try {
-          this.currentDashboard = res;
-          this.currentDashboardId = this.currentDashboard[0].id;
+          this.currentDashboard = res[0];
+          this.currentDashboardId = this.currentDashboard.id;
           this.pageStatus = PageStatus.Standard;
         } catch (error) {
           this.pageStatus = PageStatus.New;
@@ -170,9 +169,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.dashboardConfigService.getOfflineDashboardFromProject(this.idProjectSelected)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
-        res => {
-          this.currentDashboard = res;
-          this.currentDashboardId = this.currentDashboard[0].id;
+        (res: Dashboard[]) => {
+          this.currentDashboard = res[0];
+          this.currentDashboardId = this.currentDashboard.id;
           this.pageStatus = PageStatus.Standard;
         },
         error => {
@@ -185,10 +184,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.dashboardConfigService.getRealtimeDashboardFromProject(this.idProjectSelected)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
-        res => {
+        (res: Dashboard[]) => {
           try {
-            this.currentDashboard = res;
-            this.currentDashboardId = this.currentDashboard[0].id;
+            this.currentDashboard = res[0];
+            this.currentDashboardId = this.currentDashboard.id;
             this.pageStatus = PageStatus.Standard;
           } catch (error) {
             this.pageStatus = PageStatus.New;

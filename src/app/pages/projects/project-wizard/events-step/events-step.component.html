@@ -31,8 +31,12 @@
     <div class="alignCenter">
       <p i18n="@@HYT_delete_event_confirm">HYT_delete_event_confirm</p>
       <hr>
-      <button (click)="deleteEvent()">Sì</button>
-      <button (click)="hideDeleteModal()">No</button>
+      <button (click)="deleteEvent()">
+        <p i18n="@@HYT_yes">HYT_yes</p>
+      </button>
+      <button (click)="hideDeleteModal()">
+        <p i18n="@@HYT_no">HYT_no</p>
+      </button>
       <br>
       <div *ngIf="deleteError">{{deleteError}}</div>
     </div>

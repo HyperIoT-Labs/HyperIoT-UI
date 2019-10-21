@@ -50,12 +50,12 @@
           </ng-container>
         </div> <!-- Error Box -->
 
-        <hyt-button *ngIf="submitType=='ADD'" id="field-form-submit-button"
+        <hyt-button *ngIf="submitType=='ADD'" id="field-form-add-button"
           [isDisabled]="invalid() || pageStatus == PageStatus.Loading" (clickFn)="createField()" type="submit">
           <ng-container i18n="@@HYT_save_field">HYT_save_field</ng-container>
         </hyt-button>
 
-        <hyt-button *ngIf="submitType=='UPDATE'" id="field-form-submit-button-2"
+        <hyt-button *ngIf="submitType=='UPDATE'" id="field-form-update-button"
           [isDisabled]="invalid() || pageStatus == PageStatus.Loading" (clickFn)="updateField()" type="submit">
           <ng-container i18n="@@HYT_update_field">HYT_update_field</ng-container>
         </hyt-button>

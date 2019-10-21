@@ -48,9 +48,15 @@
     </ng-container>
   </div> <!-- Error Box -->
 
-  <hyt-button id="rule-form-submit-button" [isDisabled]="invalid() || pageStatus == PageStatus.Loading"
-    (clickFn)="createRule()" type="submit">
+  <hyt-button *ngIf="submitType == 'ADD'" id="rule-form-add-button"
+    [isDisabled]="invalid() || pageStatus == PageStatus.Loading" (clickFn)="createRule()" type="submit">
     <ng-container i18n="@@HYT_add_rule">HYT_add_rule</ng-container>
+  </hyt-button>
+
+  <hyt-button *ngIf="submitType == 'UPDATE'" id="rule-form-update-button"
+    [isDisabled]="invalid() || pageStatus == PageStatus.Loading" (clickFn)="updateRule()" type="submit">
+    <!-- <ng-container i18n="@@HYT_add_rule">HYT_add_rule</ng-container> -->
+    _update_Rule_
   </hyt-button>
 
 </form>

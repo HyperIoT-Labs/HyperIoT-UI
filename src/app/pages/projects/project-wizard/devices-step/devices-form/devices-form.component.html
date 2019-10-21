@@ -79,12 +79,12 @@
     </ng-container>
   </div> <!-- Error Box -->
 
-  <hyt-button *ngIf="submitType == 'ADD'" id="device-form-submit-button"
+  <hyt-button *ngIf="submitType == 'ADD'" id="device-form-add-button"
     [isDisabled]="invalid() || pageStatus == PageStatus.Loading" (clickFn)="postDevice()" type="submit">
     <ng-container i18n="@@HYT_add_device">HYT_add_device</ng-container>
   </hyt-button>
 
-  <hyt-button *ngIf="submitType == 'UPDATE'" id="device-form-submit-button"
+  <hyt-button *ngIf="submitType == 'UPDATE'" id="device-form-update-button"
     [isDisabled]="invalid() || pageStatus == PageStatus.Loading" (clickFn)="putDevice()" type="submit">
     <ng-container i18n="@@HYT_update_device">HYT_update_device</ng-container>
   </hyt-button>

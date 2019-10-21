@@ -17,6 +17,8 @@ import { I18n } from '@ngx-translate/i18n-polyfill';
 })
 export class PacketEventComponent implements OnInit {
 
+  submitType: string = 'ADD';
+
   @Input() currentPacket: HPacket;
 
   @ViewChild('eventDef', { static: false }) ruleDefinitionComponent: RuleDefinitionComponent;
