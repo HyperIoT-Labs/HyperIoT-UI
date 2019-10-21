@@ -77,5 +77,11 @@
     "logLevel": "debug",
     "ws": true,
     "changeOrigin": true
+  },
+  "/hyperiot/storm/*": {
+    "target": "http://localhost:8181",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
   }
 }
