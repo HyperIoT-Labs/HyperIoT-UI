@@ -105,6 +105,10 @@ export class PacketEventComponent implements OnInit {
 
   }
 
+  updateEvent(){
+    
+  }
+
   invalid(): boolean {
     return (
       this.eventsForm.get('rule-name').invalid ||

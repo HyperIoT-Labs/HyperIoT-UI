@@ -115,6 +115,10 @@ export class PacketEnrichmentComponent implements OnInit {
 
   }
 
+  updateRule(){
+    
+  }
+
   invalid(): boolean {
     return (
       this.enrichmentForm.get('rule-name').invalid ||
