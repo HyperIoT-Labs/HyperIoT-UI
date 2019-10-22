@@ -3,6 +3,8 @@ import { HProject, HDevice, HPacket, Rule } from '@hyperiot/core';
 import { Router, CanDeactivate } from '@angular/router';
 import { Subject } from 'rxjs';
 import { ProjectWizardService } from 'src/app/services/projectWizard/project-wizard.service';
+import { ProjectDetailEntity } from '../project-detail/project-detail-entity';
+import { ProjectDataComponent } from '../project-detail/project-data/project-data.component';
 
 @Injectable({
   providedIn: 'root',
@@ -27,6 +29,9 @@ export class ProjectWizardComponent implements OnInit {
 
   @ViewChild('stepper', { static: false }) stepper;
 
+  @ViewChild('projectData', {static: false})
+  projectData: ProjectDataComponent;
+
   hProject: HProject;
   hDevices: HDevice[] = [];
   hPackets: HPacket[] = [];
@@ -43,6 +48,8 @@ export class ProjectWizardComponent implements OnInit {
 
   ovpOpen: boolean = false;
   finishOpen: boolean = false;
+
+  currentForm: ProjectDetailEntity;
 
   constructor(
     private router: Router,
@@ -82,6 +89,27 @@ export class ProjectWizardComponent implements OnInit {
         this.eventRules = [...res];
       }
     );
+  }
+
+  onSaveClick(e) {
+    console.log('saveClick', e);
+    this.projectData.save((project) => {
+      // TODO: ...
+      console.log('ok project saved', project);
+    }, (error) =>{
+      // TODO: ...
+    });
+  }
+  onEntityEvent(data: any) {
+    console.log(data);
+    switch (data.type) {
+      case 'hint:show':
+        console.log('should show hint', data.message);
+        break;
+      case 'hint:hide':
+          console.log('should hide hint');
+          break;
+    }
   }
 
   updateProject(proj: HProject) {
@@ -128,6 +156,7 @@ export class ProjectWizardComponent implements OnInit {
   }
 
   stepChanged(event) {
+    // TODO: set currentForm...
     this.wizardService.stepChanged(event.selectedIndex);
   }
 

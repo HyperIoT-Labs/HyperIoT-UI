@@ -4,8 +4,9 @@ import { Observable } from 'rxjs';
 
 import { ProjectDetailComponent } from './project-detail.component';
 import { MatRadioChange } from '@angular/material';
-import { ElementRef, ViewChild, OnInit } from '@angular/core';
+import { ElementRef, ViewChild, OnInit, Output, EventEmitter } from '@angular/core';
 import { SummaryList } from './generic-summary-list/generic-summary-list.component';
+import { Router } from '@angular/router';
 
 export enum LoadingStatusEnum {
     Ready,
@@ -15,6 +16,7 @@ export enum LoadingStatusEnum {
 }
 
 export abstract class ProjectDetailEntity implements OnInit {
+    @Output() entityEvent = new EventEmitter<any>();
     isProjectEntity = true;
     projectHost: ProjectDetailComponent;
 
@@ -117,10 +119,17 @@ export abstract class ProjectDetailEntity implements OnInit {
             }
             el = tmp;
             el.addEventListener('focus', () => {
-                this.projectHost.showHintMessage(message);
+                this.entityEvent.emit({
+                    type: 'hint:show',
+                    message
+                });
+                //this.projectHost.showHintMessage(message);
             });
             el.addEventListener('blur', () => {
-                this.projectHost.hideHintMessage();
+                this.entityEvent.emit({
+                    type: 'hint:hide'
+                });
+                //this.projectHost.hideHintMessage();
             });
             // TODO: remove listeners on ngOnDestroy()
             // TODO: remove listeners on ngOnDestroy()
@@ -135,5 +144,15 @@ export abstract class ProjectDetailEntity implements OnInit {
             return value.value || value;
         }
         return value;
+    }
+
+    protected getUser = () => {
+      let currentUser;
+      if (localStorage.getItem('user')) {
+        currentUser = JSON.parse(localStorage.getItem('user'));
+      } else {
+        // TODO: this.router.navigate(['/auth/login']);
+      }
+      return { id: currentUser.id, entityVersion: currentUser.entityVersion };
     }
 }

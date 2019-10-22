@@ -69,16 +69,26 @@ export class ProjectDataComponent extends ProjectDetailEntity implements OnDestr
     let p = this.project;
     p.name = this.form.get('hproject-name').value;
     p.description = this.form.get('hproject-description').value;
-    this.hProjectService.updateHProject(p).subscribe((res) => {
+    p.user = this.getUser();
+    p.entityVersion = 1;
+    const responseHandler = (res) => {
       this.project = p = res;
       this.resetForm();
-      this.treeView().updateNode({id: p.id, name: p.name});
+      // this.treeView().updateNode({id: p.id, name: p.name});
       this.loadingStatus = LoadingStatusEnum.Ready;
       successCallback && successCallback(res);
-    }, (err) => {
-      this.setErrors(err);
-      errorCallback && errorCallback(err);
-    });
+    };
+    if (p.id) {
+      this.hProjectService.updateHProject(p).subscribe(responseHandler, (err) => {
+        this.setErrors(err);
+        errorCallback && errorCallback(err);
+      });
+    } else {
+      this.hProjectService.saveHProject(p).subscribe(responseHandler, (err) => {
+        this.setErrors(err);
+        errorCallback && errorCallback(err);
+      });
+    }
   }
   private deleteProject(successCallback?, errorCallback?) {
     this.loadingStatus = LoadingStatusEnum.Saving;
@@ -93,3 +103,4 @@ export class ProjectDataComponent extends ProjectDetailEntity implements OnDestr
     });
   }
 }
+

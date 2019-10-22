@@ -12,8 +12,15 @@
   <div id="container-steps" class="row">
 
     <ng-template #projectTemplate>
+
+      <hyt-project-data #projectData
+        (entityEvent)="onEntityEvent($event)"></hyt-project-data>
+      <!--
+
       <hyt-project-step (projectOutput)="updateProject($event)">
       </hyt-project-step>
+
+      -->
     </ng-template>
 
     <ng-template #devicesTemplate>
@@ -78,7 +85,7 @@
     </ng-template>
 
 
-    <hyt-stepper #stepper (selectionChange)="stepChanged($event)" [isLinear]="true" style="width: 100%"
+    <hyt-stepper #stepper (selectionChange)="stepChanged($event)" [isLinear]="false" style="width: 100%"
       [stepArray]="[ projectTemplate, devicesTemplate, packetsTemplate, fieldsTemplate, enrichmentTemplate, statisticsTemplate, eventsTemplate ]"
       [labelArray]="[ 'Projects', 'Devices', 'Packets', 'Fields', 'Enrichment', 'Statistics', 'Events' ]"
       [completedArray]="[ projectValidated, devicesValidated, packetsValidated, fieldsValidated, enrichmentValidated, statisticsValidated, eventsValidated ]">
@@ -234,4 +241,17 @@
     </hyt-modal>
 
   </div>
+
+  <hyt-button (clickFn)="stepper.previous()">
+    <ng-container i18n="@@HYT_back">HYT_back</ng-container>
+  </hyt-button>
+  <hyt-button (clickFn)="stepper.next()">
+    <ng-container i18n="@@HYT_next">HYT_next</ng-container>
+  </hyt-button>
+
+  <hyt-button (click)="onSaveClick($event)">
+    <ng-container>Salva</ng-container>
+  </hyt-button>
+  
+
 </div>

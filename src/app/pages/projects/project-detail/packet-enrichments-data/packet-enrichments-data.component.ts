@@ -62,8 +62,8 @@ export class PacketEnrichmentsDataComponent extends ProjectDetailEntity implemen
     this.resetForm();
   }
 
-  onRulesOutput(rule: Rule) {
-    console.log('rulesOutput', rule);
+  onRuleAdded(rule: Rule) {
+    console.log('ruleAdded', rule);
     // refresh buond data
     this.loadData();
   }

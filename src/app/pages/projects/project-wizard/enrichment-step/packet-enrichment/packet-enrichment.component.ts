@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, EventEmitter, Output } from '@angular/core';
 import { HPacket, Rule, RulesService, HpacketsService } from '@hyperiot/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { SelectOption } from '@hyperiot/components';
@@ -16,6 +16,7 @@ import { I18n } from '@ngx-translate/i18n-polyfill';
   styleUrls: ['./packet-enrichment.component.scss']
 })
 export class PacketEnrichmentComponent implements OnInit {
+  @Output() ruleAdded = new EventEmitter<any>();
 
   submitType: string = 'ADD';
 
@@ -84,6 +85,7 @@ export class PacketEnrichmentComponent implements OnInit {
       res => {
         this.wizardService.addEnrichmentRule(res);
         this.pageStatus = PageStatusEnum.Submitted;
+        this.ruleAdded.emit(res);
       },
       err => {
         this.pageStatus = PageStatusEnum.Error;
