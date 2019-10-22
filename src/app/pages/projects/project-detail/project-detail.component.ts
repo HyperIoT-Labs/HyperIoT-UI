@@ -63,6 +63,16 @@ export class ProjectDetailComponent implements OnInit {
     if (childComponent.isProjectEntity) {
       this.currentEntity = childComponent;
       this.currentEntity.projectHost = this;
+      this.currentEntity.entityEvent.subscribe((data) => {
+        switch (data.type) {
+          case 'hint:show':
+            this.showHintMessage(data.message);
+            break;
+          case 'hint:hide':
+            this.hideHintMessage();
+            break;
+        }
+      });
     }
   }
 

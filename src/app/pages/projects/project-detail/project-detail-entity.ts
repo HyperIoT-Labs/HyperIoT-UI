@@ -113,9 +113,6 @@ export abstract class ProjectDetailEntity implements OnInit {
             let tmp = el.querySelector('.hyt-input,mat-select');
             if (tmp == null) {
                 return;
-                //tmp = el.closest('.mat-radio-group,.radio-options');
-                //console.log('2', tmp)
-                //if (tmp == null) return;
             }
             el = tmp;
             el.addEventListener('focus', () => {
@@ -123,13 +120,11 @@ export abstract class ProjectDetailEntity implements OnInit {
                     type: 'hint:show',
                     message
                 });
-                //this.projectHost.showHintMessage(message);
             });
             el.addEventListener('blur', () => {
                 this.entityEvent.emit({
                     type: 'hint:hide'
                 });
-                //this.projectHost.hideHintMessage();
             });
             // TODO: remove listeners on ngOnDestroy()
             // TODO: remove listeners on ngOnDestroy()
