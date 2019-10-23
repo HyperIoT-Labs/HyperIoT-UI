@@ -6,14 +6,15 @@
 
       <div class="col-md-12">
 
-        <hyt-pw-packet-select (currentPacket)="packetChanged($event)" [packetSelectId]="1">
+        <hyt-pw-packet-select #packetSelect (currentPacket)="packetChanged($event)" [packetSelectId]="1">
         </hyt-pw-packet-select>
 
       </div>
 
       <div class="col-md-12">
 
-        <hyt-packet-enrichment [currentPacket]="currentPacket">
+        <hyt-packet-enrichment #enrichmentForm [currentPacket]="currentPacket" (saveRule)="saveRule()"
+          (updateRule)="updateRule()">
         </hyt-packet-enrichment>
 
       </div>
@@ -26,7 +27,6 @@
     <hyt-enrichment-tip-column (copyEnrichmentRule)="tableCopyRule($event)"
       (updateEnrichmentRule)="tableUpdateRule($event)" (deleteEnrichmentRule)="showDeleteModal($event)">
     </hyt-enrichment-tip-column>
-
   </div>
 
   <hyt-modal [mOpen]="deleteModal">
@@ -37,7 +37,7 @@
         <ng-container i18n="@@HYT_yes">HYT_yes</ng-container>
       </button>
       <button (click)="hideDeleteModal()">
-          <ng-container i18n="@@HYT_no">HYT_no</ng-container>
+        <ng-container i18n="@@HYT_no">HYT_no</ng-container>
       </button>
       <br>
       <div *ngIf="deleteError">{{deleteError}}</div>

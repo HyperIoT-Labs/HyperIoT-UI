@@ -13,8 +13,7 @@
 
     <ng-template #projectTemplate>
 
-      <hyt-project-data #projectData
-        (entityEvent)="onEntityEvent($event)"></hyt-project-data>
+      <hyt-project-data #projectData (entityEvent)="onEntityEvent($event)"></hyt-project-data>
       <!--
 
       <hyt-project-step (projectOutput)="updateProject($event)">
@@ -24,23 +23,11 @@
     </ng-template>
 
     <ng-template #devicesTemplate>
-      <hyt-devices-step></hyt-devices-step>
-      <hyt-button (clickFn)="stepper.previous()">
-        <ng-container i18n="@@HYT_back">HYT_back</ng-container>
-      </hyt-button>
-      <hyt-button [isDisabled]="!devicesValidated" (clickFn)="stepper.next()">
-        <ng-container i18n="@@HYT_next">HYT_next</ng-container>
-      </hyt-button>
+      <hyt-device-data #devicesData (entityEvent)="onEntityEvent($event)"></hyt-device-data>
     </ng-template>
 
     <ng-template #packetsTemplate>
-      <hyt-packets-step></hyt-packets-step>
-      <hyt-button (clickFn)="stepper.previous()">
-        <ng-container i18n="@@HYT_back">HYT_back</ng-container>
-      </hyt-button>
-      <hyt-button [isDisabled]="!packetsValidated" (clickFn)="stepper.next()">
-        <ng-container i18n="@@HYT_next">HYT_next</ng-container>
-      </hyt-button>
+      <hyt-packet-data #packetsData (entityEvent)="onEntityEvent($event)"></hyt-packet-data>
     </ng-template>
 
     <ng-template #fieldsTemplate>
@@ -84,12 +71,23 @@
       </hyt-button>
     </ng-template>
 
+    <div class="col-md-10">
+      <hyt-stepper #stepper (selectionChange)="stepChanged($event)" [isLinear]="false" style="width: 100%"
+        [stepArray]="[ projectTemplate, devicesTemplate, packetsTemplate, fieldsTemplate, enrichmentTemplate, statisticsTemplate, eventsTemplate ]"
+        [labelArray]="[ 'Projects', 'Devices', 'Packets', 'Fields', 'Enrichment', 'Statistics', 'Events' ]"
+        [completedArray]="[ projectValidated, devicesValidated, packetsValidated, fieldsValidated, enrichmentValidated, statisticsValidated, eventsValidated ]">
+      </hyt-stepper>
+    </div>
 
-    <hyt-stepper #stepper (selectionChange)="stepChanged($event)" [isLinear]="false" style="width: 100%"
-      [stepArray]="[ projectTemplate, devicesTemplate, packetsTemplate, fieldsTemplate, enrichmentTemplate, statisticsTemplate, eventsTemplate ]"
-      [labelArray]="[ 'Projects', 'Devices', 'Packets', 'Fields', 'Enrichment', 'Statistics', 'Events' ]"
-      [completedArray]="[ projectValidated, devicesValidated, packetsValidated, fieldsValidated, enrichmentValidated, statisticsValidated, eventsValidated ]">
-    </hyt-stepper>
+    <div class="col-md-2">
+      <!-- <div *ngIf="hintVisible" class="info-message m-2 mt-4 d-flex flex-row"> -->
+      <!-- <span class="text p-2 flex-grow-1">{{hintMessage}}</span> -->
+      <!-- <mat-icon class="">info</mat-icon> mt-2 mr-2 -->
+      <!-- </div> -->
+
+      <!-- <hyt-generic-summary-list *ngIf="currentEntity && currentEntity.summaryList"
+        [summaryList]="currentEntity.summaryList" (itemClick)="onSummaryItemClick($event)"></hyt-generic-summary-list> -->
+    </div>
 
     <hyt-modal id="optionsModal" [mOpen]="ovpOpen">
       <div class="center">
@@ -252,6 +250,6 @@
   <hyt-button (click)="onSaveClick($event)">
     <ng-container>Salva</ng-container>
   </hyt-button>
-  
+
 
 </div>

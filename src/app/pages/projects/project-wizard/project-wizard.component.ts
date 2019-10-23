@@ -5,6 +5,7 @@ import { Subject } from 'rxjs';
 import { ProjectWizardService } from 'src/app/services/projectWizard/project-wizard.service';
 import { ProjectDetailEntity } from '../project-detail/project-detail-entity';
 import { ProjectDataComponent } from '../project-detail/project-data/project-data.component';
+import { DeviceDataComponent } from '../project-detail/device-data/device-data.component';
 
 @Injectable({
   providedIn: 'root',
@@ -29,8 +30,16 @@ export class ProjectWizardComponent implements OnInit {
 
   @ViewChild('stepper', { static: false }) stepper;
 
+  currentForm: ProjectDetailEntity;
+
   @ViewChild('projectData', {static: false})
   projectData: ProjectDataComponent;
+
+  @ViewChild('devicesData', {static: false})
+  devicesData: DeviceDataComponent;
+
+  @ViewChild('packetsData', {static: false})
+  packetsData: DeviceDataComponent;
 
   hProject: HProject;
   hDevices: HDevice[] = [];
@@ -48,8 +57,6 @@ export class ProjectWizardComponent implements OnInit {
 
   ovpOpen: boolean = false;
   finishOpen: boolean = false;
-
-  currentForm: ProjectDetailEntity;
 
   constructor(
     private router: Router,
@@ -91,11 +98,48 @@ export class ProjectWizardComponent implements OnInit {
     );
   }
 
+  stepChanged(event) {
+    console.log(event);
+
+    //setting current form...
+    switch (event.selectedIndex) {
+      case 0: {
+        this.currentForm = this.projectData;
+        break;
+      }
+      case 1: {
+        this.currentForm = this.devicesData;
+        break;
+      }
+      case 2: {
+        this.currentForm = this.packetsData;
+        break;
+      }
+      case 3: {
+        break;
+      }
+      case 4: {
+        break;
+      }
+      case 5: {
+        break;
+      }
+      case 6: {
+        break;
+      }
+      default: {
+        console.log("error");
+      }
+    }
+
+    // this.wizardService.stepChanged(event.selectedIndex);
+  }
+
   onSaveClick(e) {
     console.log('saveClick', e);
-    this.projectData.save((project) => {
+    this.currentForm.save((ent) => {
       // TODO: ...
-      console.log('ok project saved', project);
+      console.log('entity saved', ent);
     }, (error) =>{
       // TODO: ...
     });
@@ -153,11 +197,6 @@ export class ProjectWizardComponent implements OnInit {
 
   goToProjectWizard() {
     this.router.navigate(['/projects']);
-  }
-
-  stepChanged(event) {
-    // TODO: set currentForm...
-    this.wizardService.stepChanged(event.selectedIndex);
   }
 
   //Deactivation logic

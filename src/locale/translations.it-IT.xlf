@@ -90,6 +90,10 @@
                <context context-type="linenumber">9</context>
             </context-group>
             <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/events-step/packet-event/packet-event.component.html</context>
+               <context context-type="linenumber">6</context>
+            </context-group>
+            <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-wizard/packets-step/packets-form/packets-form.component.html</context>
                <context context-type="linenumber">6</context>
             </context-group>
@@ -100,10 +104,6 @@
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-wizard/fields-step/packet-field/packet-field.component.html</context>
                <context context-type="linenumber">22</context>
-            </context-group>
-            <context-group purpose="location">
-               <context context-type="sourcefile">src/app/pages/projects/project-wizard/events-step/packet-event/packet-event.component.html</context>
-               <context context-type="linenumber">6</context>
             </context-group>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-wizard/project-step/project-form/project-form.component.html</context>
@@ -226,12 +226,12 @@
                <context context-type="linenumber">67</context>
             </context-group>
             <context-group purpose="location">
-               <context context-type="sourcefile">src/app/pages/projects/project-wizard/fields-step/packet-field/packet-field.component.html</context>
-               <context context-type="linenumber">42</context>
-            </context-group>
-            <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-wizard/events-step/packet-event/packet-event.component.html</context>
                <context context-type="linenumber">12</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/fields-step/packet-field/packet-field.component.html</context>
+               <context context-type="linenumber">42</context>
             </context-group>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-wizard/project-step/project-form/project-form.component.html</context>
@@ -794,6 +794,14 @@
                <context context-type="linenumber">53</context>
             </context-group>
          </trans-unit>
+         <trans-unit id="HYT_update_Rule" datatype="html">
+            <source>HYT_update_Rule</source>
+            <target>Aggiorna regola</target>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/enrichment-step/packet-enrichment/packet-enrichment.component.html</context>
+               <context context-type="linenumber">58</context>
+            </context-group>
+         </trans-unit>
          <trans-unit id="HYT_model" datatype="html">
             <source>HYT_model</source>
             <target>Modello</target>
@@ -862,12 +870,16 @@
                <context context-type="linenumber">21</context>
             </context-group>
             <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/events-step/events-step.component.html</context>
+               <context context-type="linenumber">36</context>
+            </context-group>
+            <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-wizard/packets-step/packets-step.component.html</context>
                <context context-type="linenumber">22</context>
             </context-group>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-wizard/enrichment-step/enrichment-step.component.html</context>
-               <context context-type="linenumber">37</context>
+               <context context-type="linenumber">36</context>
             </context-group>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-wizard/fields-step/packet-field/packet-field.component.html</context>
@@ -882,16 +894,100 @@
                <context context-type="linenumber">24</context>
             </context-group>
             <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/events-step/events-step.component.html</context>
+               <context context-type="linenumber">39</context>
+            </context-group>
+            <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-wizard/packets-step/packets-step.component.html</context>
                <context context-type="linenumber">25</context>
             </context-group>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-wizard/enrichment-step/enrichment-step.component.html</context>
-               <context context-type="linenumber">40</context>
+               <context context-type="linenumber">39</context>
             </context-group>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-wizard/fields-step/packet-field/packet-field.component.html</context>
                <context context-type="linenumber">93</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_mail_to" datatype="html">
+            <source>HYT_mail_to</source>
+            <target>Destinatari</target>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/events-step/packet-event/event-mail/event-mail.component.html</context>
+               <context context-type="linenumber">7</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_mail_cc" datatype="html">
+            <source>HYT_mail_cc</source>
+            <target>Copia</target>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/events-step/packet-event/event-mail/event-mail.component.html</context>
+               <context context-type="linenumber">13</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_mail_object" datatype="html">
+            <source>HYT_mail_object</source>
+            <target>Oggetto</target>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/events-step/packet-event/event-mail/event-mail.component.html</context>
+               <context context-type="linenumber">18</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_mail_body" datatype="html">
+            <source>HYT_mail_body</source>
+            <target>Corpo della mail</target>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/events-step/packet-event/event-mail/event-mail.component.html</context>
+               <context context-type="linenumber">27</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_output_data" datatype="html">
+            <source>HYT_output_data</source>
+            <target>Output evento</target>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/events-step/packet-event/packet-event.component.html</context>
+               <context context-type="linenumber">20</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_add_event" datatype="html">
+            <source>HYT_add_event</source>
+            <target>Aggiungi evento</target>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/events-step/packet-event/packet-event.component.html</context>
+               <context context-type="linenumber">45</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_update_event" datatype="html">
+            <source>HYT_update_event</source>
+            <target>Aggiorna evento</target>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/events-step/packet-event/packet-event.component.html</context>
+               <context context-type="linenumber">50</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_device" datatype="html">
+            <source>HYT_device</source>
+            <target>Dispositivo</target>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/packet-select/packet-select.component.html</context>
+               <context context-type="linenumber">7</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/packets-step/packets-form/packets-form.component.html</context>
+               <context context-type="linenumber">12</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_packet" datatype="html">
+            <source>HYT_packet</source>
+            <target>Pacchetto</target>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/packet-select/packet-select.component.html</context>
+               <context context-type="linenumber">13</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/statistics-step/statistics-step.component.html</context>
+               <context context-type="linenumber">42</context>
             </context-group>
          </trans-unit>
          <trans-unit id="HYT_delete_event_confirm" datatype="html">
@@ -899,19 +995,7 @@
             <target>Questa azione eliminerà l'evento. Vuoi procedere?</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-wizard/events-step/events-step.component.html</context>
-               <context context-type="linenumber">32</context>
-            </context-group>
-         </trans-unit>
-         <trans-unit id="HYT_device" datatype="html">
-            <source>HYT_device</source>
-            <target>Dispositivo</target>
-            <context-group purpose="location">
-               <context context-type="sourcefile">src/app/pages/projects/project-wizard/packets-step/packets-form/packets-form.component.html</context>
-               <context context-type="linenumber">12</context>
-            </context-group>
-            <context-group purpose="location">
-               <context context-type="sourcefile">src/app/pages/projects/project-wizard/packet-select/packet-select.component.html</context>
-               <context context-type="linenumber">7</context>
+               <context context-type="linenumber">33</context>
             </context-group>
          </trans-unit>
          <trans-unit id="HYT_typology" datatype="html">
@@ -986,18 +1070,6 @@
                <context context-type="linenumber">26</context>
             </context-group>
          </trans-unit>
-         <trans-unit id="HYT_packet" datatype="html">
-            <source>HYT_packet</source>
-            <target>Pacchetto</target>
-            <context-group purpose="location">
-               <context context-type="sourcefile">src/app/pages/projects/project-wizard/statistics-step/statistics-step.component.html</context>
-               <context context-type="linenumber">42</context>
-            </context-group>
-            <context-group purpose="location">
-               <context context-type="sourcefile">src/app/pages/projects/project-wizard/packet-select/packet-select.component.html</context>
-               <context context-type="linenumber">13</context>
-            </context-group>
-         </trans-unit>
          <trans-unit id="HYT_time_range" datatype="html">
             <source>HYT_time_range</source>
             <target>Tempo</target>
@@ -1019,7 +1091,7 @@
             <target>Questa azione eliminerà la regola di arricchimento. Vuoi procedere?</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-wizard/enrichment-step/enrichment-step.component.html</context>
-               <context context-type="linenumber">34</context>
+               <context context-type="linenumber">33</context>
             </context-group>
          </trans-unit>
          <trans-unit id="projectCard-string-device" datatype="html">
@@ -1074,43 +1146,11 @@
                <context context-type="linenumber">14</context>
             </context-group>
          </trans-unit>
-         <trans-unit id="HYT_mail_to" datatype="html">
-            <source>HYT_mail_to</source>
-            <target>Destinatari</target>
-            <context-group purpose="location">
-               <context context-type="sourcefile">src/app/pages/projects/project-wizard/events-step/event-mail/event-mail.component.html</context>
-               <context context-type="linenumber">7</context>
-            </context-group>
-         </trans-unit>
-         <trans-unit id="HYT_mail_cc" datatype="html">
-            <source>HYT_mail_cc</source>
-            <target>Copia</target>
-            <context-group purpose="location">
-               <context context-type="sourcefile">src/app/pages/projects/project-wizard/events-step/event-mail/event-mail.component.html</context>
-               <context context-type="linenumber">13</context>
-            </context-group>
-         </trans-unit>
-         <trans-unit id="HYT_mail_object" datatype="html">
-            <source>HYT_mail_object</source>
-            <target>Oggetto</target>
-            <context-group purpose="location">
-               <context context-type="sourcefile">src/app/pages/projects/project-wizard/events-step/event-mail/event-mail.component.html</context>
-               <context context-type="linenumber">18</context>
-            </context-group>
-         </trans-unit>
-         <trans-unit id="HYT_mail_body" datatype="html">
-            <source>HYT_mail_body</source>
-            <target>Corpo della mail</target>
-            <context-group purpose="location">
-               <context context-type="sourcefile">src/app/pages/projects/project-wizard/events-step/event-mail/event-mail.component.html</context>
-               <context context-type="linenumber">27</context>
-            </context-group>
-         </trans-unit>
          <trans-unit id="HYT_definition_of_terms" datatype="html">
             <source>HYT_definition_of_terms</source>
             <target>Definizione dei termini</target>
             <context-group purpose="location">
-               <context context-type="sourcefile">src/app/pages/projects/project-wizard/events-step/event-mail/selectable-text/selectable-text.component.html</context>
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/events-step/packet-event/event-mail/selectable-text/selectable-text.component.html</context>
                <context context-type="linenumber">1</context>
             </context-group>
          </trans-unit>
@@ -1202,22 +1242,6 @@
                <context context-type="linenumber">7</context>
             </context-group>
          </trans-unit>
-         <trans-unit id="HYT_output_data" datatype="html">
-            <source>HYT_output_data</source>
-            <target>Output evento</target>
-            <context-group purpose="location">
-               <context context-type="sourcefile">src/app/pages/projects/project-wizard/events-step/packet-event/packet-event.component.html</context>
-               <context context-type="linenumber">20</context>
-            </context-group>
-         </trans-unit>
-         <trans-unit id="HYT_add_event" datatype="html">
-            <source>HYT_add_event</source>
-            <target>Aggiungi evento</target>
-            <context-group purpose="location">
-               <context context-type="sourcefile">src/app/pages/projects/project-wizard/events-step/packet-event/packet-event.component.html</context>
-               <context context-type="linenumber">45</context>
-            </context-group>
-         </trans-unit>
          <trans-unit id="HYT_PACKETS" datatype="html">
             <source>HYT_PACKETS</source>
             <target>PACCHETTI</target>
@@ -1286,7 +1310,7 @@
             <source>HYT_name_of_device</source>
             <target>Nome del device</target>
             <context-group purpose="location">
-               <context context-type="sourcefile">src/app/pages/projects/project-wizard/events-step/event-mail/event-mail.component.ts</context>
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/events-step/packet-event/event-mail/event-mail.component.ts</context>
                <context context-type="linenumber">1</context>
             </context-group>
          </trans-unit>
@@ -1294,7 +1318,7 @@
             <source>HYT_name_of_packet</source>
             <target>Nome del pacchetto</target>
             <context-group purpose="location">
-               <context context-type="sourcefile">src/app/pages/projects/project-wizard/events-step/event-mail/event-mail.component.ts</context>
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/events-step/packet-event/event-mail/event-mail.component.ts</context>
                <context context-type="linenumber">1</context>
             </context-group>
          </trans-unit>
@@ -1302,7 +1326,7 @@
             <source>HYT_name_of_field</source>
             <target>Nome del campo</target>
             <context-group purpose="location">
-               <context context-type="sourcefile">src/app/pages/projects/project-wizard/events-step/event-mail/event-mail.component.ts</context>
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/events-step/packet-event/event-mail/event-mail.component.ts</context>
                <context context-type="linenumber">1</context>
             </context-group>
          </trans-unit>
@@ -1310,7 +1334,7 @@
             <source>HYT_name_of_event_mail</source>
             <target>Nome dell'evento mail</target>
             <context-group purpose="location">
-               <context context-type="sourcefile">src/app/pages/projects/project-wizard/events-step/event-mail/event-mail.component.ts</context>
+               <context context-type="sourcefile">src/app/pages/projects/project-wizard/events-step/packet-event/event-mail/event-mail.component.ts</context>
                <context context-type="linenumber">1</context>
             </context-group>
          </trans-unit>

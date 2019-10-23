@@ -40,15 +40,14 @@
     </ng-container>
   </div> <!-- Error Box -->
 
-  <hyt-button *ngIf="submitType == 'ADD'" id="event-form-add-button" [isDisabled]="invalid() || pageStatus == PageStatus.Loading"
-    (clickFn)="createEvent()" type="submit">
+  <hyt-button *ngIf="submitType == 'ADD'" id="event-form-add-button"
+    [isDisabled]="invalid() || pageStatus == PageStatus.Loading" (clickFn)="postEvent()" type="submit">
     <ng-container i18n="@@HYT_add_event">HYT_add_event</ng-container>
   </hyt-button>
 
   <hyt-button *ngIf="submitType == 'UPDATE'" id="event-form-update-button"
-    [isDisabled]="invalid() || pageStatus == PageStatus.Loading" (clickFn)="updateEvent()" type="submit">
-    <!-- <ng-container i18n="@@HYT_add_rule">HYT_add_rule</ng-container> -->
-    _update_event_
+    [isDisabled]="invalid() || pageStatus == PageStatus.Loading" (clickFn)="putEvent()" type="submit">
+    <ng-container i18n="@@HYT_update_event">HYT_update_event</ng-container>
   </hyt-button>
 
 </form>

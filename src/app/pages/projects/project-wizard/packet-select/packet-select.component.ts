@@ -41,12 +41,13 @@ export class PacketSelectComponent implements OnInit {
     );
   }
 
-  autoSelect() {
+  autoSelect(): void {
+    this.unfreezeSelection();
     this.selectForm.get('selectDevice').setValue(this.devicesOptions[0].value);
     this.deviceChanged(this.devicesOptions[0]);
   }
 
-  deviceChanged(event) {
+  deviceChanged(event): void {
     this.selectedDevice = event.value;
     this.packetsOptions = [];
     this.selectForm.patchValue({
@@ -58,9 +59,31 @@ export class PacketSelectComponent implements OnInit {
     this.packetChanged(this.packetsOptions[0]);
   }
 
-  packetChanged(event) {
+  packetChanged(event): void {
     this.selectedPacket = event.value;
     this.currentPacket.emit(this.selectedPacket);
+  }
+
+  setPacket(packet: HPacket): void {
+    console.log(this.devicesOptions);
+    let device = this.devicesOptions.find(x => x.value.id == packet.device.id).value;
+    this.selectedDevice = device;
+    this.selectForm.get('selectDevice').setValue(device);
+    this.packetsOptions = [];
+    this.wizardService.hPackets.filter(p => p.device.id == this.selectedDevice.id).forEach(p => this.packetsOptions.push({ value: p, label: p.name }));
+    console.log(this.packetsOptions);
+    let pack = this.packetsOptions.find(y => y.value.id == packet.id).value;
+    this.selectForm.get('selectPacket').setValue(pack);
+  }
+
+  freezeSelection() {
+    this.selectForm.get('selectDevice').disable();
+    this.selectForm.get('selectPacket').disable();
+  }
+
+  unfreezeSelection() {
+    this.selectForm.get('selectDevice').enable();
+    this.selectForm.get('selectPacket').enable();
   }
 
 }

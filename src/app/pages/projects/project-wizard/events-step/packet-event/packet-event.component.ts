@@ -6,7 +6,7 @@ import { RuleDefinitionComponent } from '../../rule-definition/rule-definition.c
 import { HYTError } from 'src/app/services/errorHandler/models/models';
 import { Option } from '@hyperiot/components/lib/hyt-radio-button/hyt-radio-button.component';
 import { PageStatusEnum } from '../../model/pageStatusEnum';
-import { EventMailComponent } from '../event-mail/event-mail.component';
+import { EventMailComponent } from './event-mail/event-mail.component';
 import { ProjectWizardService } from 'src/app/services/projectWizard/project-wizard.service';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 
@@ -22,9 +22,11 @@ export class PacketEventComponent implements OnInit {
   @Input() currentPacket: HPacket;
 
   @ViewChild('eventDef', { static: false }) ruleDefinitionComponent: RuleDefinitionComponent;
-  @ViewChild('eventMail', { static: false }) EventMailComponent: EventMailComponent;
+  @ViewChild('eventMail', { static: false }) eventMailComponent: EventMailComponent;
 
-  @Output() eventsOutput = new EventEmitter<Rule[]>();
+  @Output() saveEvent = new EventEmitter();
+
+  @Output() updateEvent = new EventEmitter();
 
   eventsForm: FormGroup;
 
@@ -42,71 +44,26 @@ export class PacketEventComponent implements OnInit {
     private rulesService: RulesService,
     private wizardService: ProjectWizardService,
     private errorHandler: ProjectWizardHttpErrorHandlerService,
-    private i18n:I18n
+    private i18n: I18n
   ) { }
 
   ngOnInit() {
     this.eventsForm = this.fb.group({});
     this.rulesService.findAllRuleActions('EVENT').subscribe(
-      res => { }//TODO //this.outputOptions = res
-    )
-  }
-
-  createEvent() {
-
-    this.pageStatus = PageStatusEnum.Loading;
-
-    this.errors = [];
-
-    var jActionStr: string = '';
-
-    if (this.eventsForm.value['eventOutput'] == 'SendMailAction') {
-      let mail = this.EventMailComponent.buildMail();
-      let act = {
-        actionName: 'events.SendMailAction',
-        recipients: mail.mailRecipient,
-        ccRecipients: mail.mailCC,
-        subject: mail.mailObject,
-        body: mail.mailBody
-      }
-      var jActions = [JSON.stringify(act)];
-      jActionStr = JSON.stringify(jActions);
-    }
-
-    let rule: Rule = {
-      name: this.eventsForm.value['rule-name'],
-      ruleDefinition: this.ruleDefinitionComponent.buildRuleDefinition(),
-      description: this.eventsForm.value['rule-description'],
-      project: this.wizardService.getHProject(),
-      packet: this.currentPacket,
-      jsonActions: jActionStr,
-      type: 'EVENT',
-      entityVersion: 1
-    }
-
-    this.rulesService.saveRule(rule).subscribe(
       res => {
-        this.wizardService.addEventRule(rule);
-        this.pageStatus = PageStatusEnum.Submitted;
-      },
-      err => {
-        this.pageStatus = PageStatusEnum.Error;
-        this.errors = this.errorHandler.handleCreateRule(err);
-        this.errors.forEach(e => {
-          if (e.container != 'general')
-            this.eventsForm.get(e.container).setErrors({
-              validateInjectedError: {
-                valid: false
-              }
-            });
-        })
-      }
+        console.log(res);
+      }//TODO //this.outputOptions = res
     )
-
   }
 
-  updateEvent(){
-    
+  postEvent() {
+    this.errors = [];
+    this.saveEvent.emit();
+  }
+
+  putEvent() {
+    this.errors = [];
+    this.updateEvent.emit();
   }
 
   invalid(): boolean {
@@ -115,8 +72,26 @@ export class PacketEventComponent implements OnInit {
       this.eventsForm.get('rule-description').invalid ||
       this.eventsForm.get('eventOutput').invalid ||
       this.ruleDefinitionComponent.isInvalid() ||
-      this.EventMailComponent.isInvalid()
+      this.eventMailComponent.isInvalid()
     )
+  }
+
+  setForm(data: Rule, type: string) {
+    console.log(data)
+    this.resetForm(type);
+    this.ruleDefinitionComponent.setRuleDefinition(data.ruleDefinition);
+    this.eventMailComponent.setMail(JSON.parse(data.jsonActions));
+    this.eventsForm.get('rule-description').setValue(data.description);
+    this.eventsForm.get('rule-name').setValue((type == 'UPDATE') ? data.name : data.name + 'Copy');
+    this.eventsForm.get('eventOutput').setValue('SendMailAction');//TODO add logic (if new output)
+  }
+
+  resetForm(type: string) {
+    this.submitType = type;
+    this.errors = [];
+    this.ruleDefinitionComponent.resetRuleDefinition();
+    this.eventMailComponent.reset();
+    this.eventsForm.reset();
   }
 
   //error logic
