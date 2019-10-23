@@ -87,26 +87,25 @@
         </div>
 
         <div class="mt-4 d-flex flex-column flex-md-row flex-wrap">
-
             <div class="pr-md-3 flex-fill">
-
-                <hyt-input-text placeholder="MQTT URL" [form]="form" name="hpacket-mqttUrl" [disabled]="true">
+                <hyt-input-text
+                    placeholder="MQTT URL"
+                    name="hpacket-mqttUrl"
+                    disabled="true"
+                    [fieldValue]="mqttUrl">
                 </hyt-input-text>
-
             </div>
-
         </div>
-
         <div class="mt-4 d-flex flex-column flex-md-row flex-wrap">
-
-                <div class="pr-md-3 flex-fill">
-    
-                    <hyt-input-text placeholder="MQTT TOPIC" [form]="form" name="hpacket-mqttTopic" [disabled]="true">
-                    </hyt-input-text>
-    
-                </div>
-    
+            <div class="pr-md-3 flex-fill">
+                <hyt-input-text
+                    placeholder="MQTT TOPIC"
+                    name="hpacket-mqttTopic"
+                    disabled="true"
+                    [fieldValue]="mqttTopic">
+                </hyt-input-text>
             </div>
+        </div>
 
     </form>
 

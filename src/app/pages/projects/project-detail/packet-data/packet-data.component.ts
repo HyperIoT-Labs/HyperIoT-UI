@@ -20,6 +20,9 @@ export class PacketDataComponent extends ProjectDetailEntity implements OnDestro
   packet: HPacket = {} as HPacket;
   deviceName: '---';
 
+  mqttUrl = '';
+  mqttTopic = '';
+
   typeOptions: Option[] = Object.keys(HPacket.TypeEnum)
     .map((k) => ({label: k, value: k}));
 
@@ -81,10 +84,10 @@ export class PacketDataComponent extends ProjectDetailEntity implements OnDestro
         .setValue(p.timestampFormat);
       this.form.get('hpacket-trafficplan')
         .setValue(p.trafficPlan);
-      this.form.get('hpacket-mqttUrl')
-        .setValue('tcp://karaf-activemq-mqtt-test.hyperiot.cloud');
-      this.form.get('hpacket-mqttTopic')
-        .setValue('/v1/devices/' + p.device.id + '/' + p.id);
+      // update static data (not part of this form)
+      this.mqttUrl = 'tcp://karaf-activemq-mqtt-test.hyperiot.cloud';
+      this.mqttTopic = '/v1/devices/' + p.device.id + '/' + p.id;
+      // reset form
       this.resetForm();
       this.treeView().focus({id: p.id, type: 'packet'});
       this.loadingStatus = LoadingStatusEnum.Ready;
