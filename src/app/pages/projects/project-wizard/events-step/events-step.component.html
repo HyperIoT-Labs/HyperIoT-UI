@@ -6,13 +6,15 @@
 
       <div class="col-md-12">
 
-        <hyt-pw-packet-select (currentPacket)="packetChanged($event)" [packetSelectId]="3"></hyt-pw-packet-select>
+        <hyt-pw-packet-select #packetSelect (currentPacket)="packetChanged($event)" [packetSelectId]="3">
+        </hyt-pw-packet-select>
 
       </div>
 
       <div class="col-md-12">
 
-        <hyt-packet-event [currentPacket]="currentPacket"></hyt-packet-event>
+        <hyt-packet-event #eventForm [currentPacket]="currentPacket" (saveEvent)="saveEvent()"
+          (updateEvent)="updateEvent()"></hyt-packet-event>
 
       </div>
 

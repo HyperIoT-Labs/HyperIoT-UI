@@ -19,7 +19,7 @@ export class EventMailComponent implements OnInit {
     private i18n: I18n
   ) { }
 
-  buildMail() {
+  buildMail(): any {
     return {
       mailRecipient: this.mailForm.value['mailRecipient'],
       mailCC: this.mailForm.value['mailCC'],
@@ -32,7 +32,7 @@ export class EventMailComponent implements OnInit {
     this.mailForm = this.fb.group({});
   }
 
-  isInvalid() {
+  isInvalid(): boolean {
     return this.mailForm.get('mailRecipient').invalid;
   }
 
@@ -43,14 +43,27 @@ export class EventMailComponent implements OnInit {
     { placeholder: '[$DATA_EVENT$]', description: this.i18n('HYT_name_of_event_mail') }
   ];
 
-  addPlaceHolder(event) {
+  setMail(dataArr): void {
+    let data = JSON.parse(dataArr[0]);
+    console.log(data)
+    this.mailForm.get('mailRecipient').setValue(data.recipients);
+    this.mailForm.get('mailCC').setValue(data.ccRecipients);
+    this.mailForm.get('mailObject').setValue(data.subject);
+    this.mailForm.get('mailBody').setValue(data.body);
+  }
+
+  reset(): void {
+    this.mailForm.reset();
+  }
+
+  addPlaceHolder(event): void {
     this.mailForm.patchValue({
       mailBody: this.mailForm.value['mailBody'] + event
     });
     (<HTMLElement>document.querySelector('#mailBody.hyt-input.mat-input-element')).focus();
   }
 
-  updateHint(event: string) {
+  updateHint(event: string): void {
     this.wizardService.updateHint(event, 6);
   }
 

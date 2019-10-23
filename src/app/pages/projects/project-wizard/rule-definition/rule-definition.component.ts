@@ -42,8 +42,6 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
     { value: 'isFalse', label: this.i18n('HYT_is_false'), type: ['OBJECT', 'BOOLEAN'] }
   ]
 
-  comared: boolean = true;
-
   joinOptions: Option[] = [
     { value: ' AND ', label: this.i18n('HYT_AND'), checked: false },
     { value: ' OR ', label: this.i18n('HYT_OR'), checked: false }
@@ -59,7 +57,7 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
     this.resetRuleDefinition();
   }
 
-  resetRuleDefinition() {
+  resetRuleDefinition(): void {
     this.ruleForms = [({
       form: this.fb.group({}),
       conditionOptions: [],
@@ -81,12 +79,11 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
   ngOnChanges() {
     this.resetRuleDefinition();
     let fieldList: HPacketField[] = [];
-    console.warn(this.currentPacket);
     if (this.currentPacket && this.currentPacket.id)
       fieldList = this.wizardService.treefy(this.currentPacket.fields);
     this.fieldOptions = [];
     this.fieldFlatList = [];
-    this.extractField(fieldList, '');
+    this.extractField(fieldList, 'packet');
     for (let el of this.fieldFlatList)
       this.fieldOptions.push({ value: el.label, label: el.field.name });
     this.fieldOptions = [...this.fieldOptions];
@@ -106,10 +103,10 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
     this.ruleForms[this.ruleForms.length - 1].form.get('ruleJoin').setValue(null);
   }
 
-  buildRuleDefinition() {
+  buildRuleDefinition(): string {
     let rd = '';
     for (let k = 0; k < this.ruleForms.length; k++) {
-      let element: string = (this.currentPacket && this.ruleForms[k].form.value.ruleField) ? this.currentPacket.name + this.ruleForms[k].form.value.ruleField : '';
+      let element: string = (this.ruleForms[k].form.value.ruleField) ? this.ruleForms[k].form.value.ruleField : '';
       let condition: string = (this.ruleForms[k].form.value.ruleCondition) ? ' ' + this.ruleForms[k].form.value.ruleCondition : '';
       let valueRule: string = (this.ruleForms[k].form.value.ruleValue) ? ' ' + this.ruleForms[k].form.value.ruleValue : '';
       let joinRule: string = (this.ruleForms[k].form.value.ruleJoin) ? this.ruleForms[k].form.value.ruleJoin : '';
@@ -126,7 +123,7 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
       if (x.type.includes(type))
         this.ruleForms[index].conditionOptions.push({ value: x.value, label: x.label })
     })
-    this.ruleForms[index].compareWith = (type == 'BOOLEAN') ? false : true;
+    this.ruleForms[index].compareWith = type != 'BOOLEAN';
   }
 
   isFormInvalid(k: number): boolean {
@@ -140,11 +137,52 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
     )
   }
 
-  isInvalid() {
+  isInvalid(): boolean {
     for (let k = 0; k < this.ruleForms.length; k++)
       if (this.isFormInvalid(k))
         return true;
     return false;
+  }
+
+  setRuleDefinition(ruleDefinition: string): void {
+    setTimeout(() => {
+      if (ruleDefinition && ruleDefinition.length != 0) {
+        this.ruleForms = [];
+        let ruleArray: string[] = ruleDefinition.split(/(?<= AND )|(?<= OR )/);
+
+        for (let k = 0; k < ruleArray.length; k++) {
+          let splitted: string[] = ruleArray[k].split(' ');
+
+          console.log(this.fieldFlatList);
+
+          let actualField: HPacketField = this.fieldFlatList.find(x => x.label == splitted[0]).field;
+
+          let conditionOptions = [];
+          this.allConditionOptions.forEach(x => {
+            if (x.type.includes(actualField.type))
+              conditionOptions.push({ value: x.value, label: x.label })
+          })
+
+          this.ruleForms.push({
+            form: this.fb.group({}),
+            conditionOptions: conditionOptions,
+            compareWith: actualField.type != 'BOOLEAN'
+          });
+
+          setTimeout(() => {
+            this.ruleForms[k].form.get('ruleField').setValue(this.fieldOptions.find(x => x.value == splitted[0]).value);
+            this.ruleForms[k].form.get('ruleCondition').setValue(splitted[1]);
+            if (this.ruleForms[k].compareWith) {
+              this.ruleForms[k].form.get('ruleValue').setValue(splitted[2]);
+              this.ruleForms[k].form.get('ruleJoin').setValue(' ' + splitted[3] + ' ' || null);
+            }
+            else
+              this.ruleForms[k].form.get('ruleJoin').setValue(' ' + splitted[2] + ' ' || null);
+          }, 0);
+        }
+
+      }
+    }, 0);
   }
 
 }

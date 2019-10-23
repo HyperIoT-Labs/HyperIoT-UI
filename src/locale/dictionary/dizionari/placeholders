@@ -68,6 +68,7 @@ HYT_value
 HYT_remove
 HYT_rule_type
 HYT_add_rule
+HYT_update_Rule
 HYT_model
 HYT_firmware_version
 HYT_brand
@@ -115,6 +116,7 @@ HYT_EVENTS
 HYT_event_definition_long
 HYT_output_data
 HYT_add_event
+HYT_update_event
 HYT_PACKETS
 HYT_packet_definition_long
 HYT_PROJECT

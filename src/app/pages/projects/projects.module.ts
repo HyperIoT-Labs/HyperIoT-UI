@@ -26,14 +26,14 @@ import { ProjectDetailComponent } from './project-detail/project-detail.componen
 import { ProjectDataComponent } from './project-detail/project-data/project-data.component';
 import { DeviceDataComponent } from './project-detail/device-data/device-data.component';
 import { PacketDataComponent } from './project-detail/packet-data/packet-data.component';
-import { EventMailComponent } from './project-wizard/events-step/event-mail/event-mail.component';
+import { EventMailComponent } from './project-wizard/events-step/packet-event/event-mail/event-mail.component';
 
 import { MatChipsModule } from '@angular/material/chips';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
 import { AssetCategoryComponent } from './project-wizard/asset-category/asset-category.component';
 import { AssetTagComponent } from './project-wizard/asset-tag/asset-tag.component';
-import { SelectableTextComponent } from './project-wizard/events-step/event-mail/selectable-text/selectable-text.component';
+import { SelectableTextComponent } from './project-wizard/events-step/packet-event/event-mail/selectable-text/selectable-text.component';
 import { PacketFieldsDataComponent } from './project-detail/packet-fields-data/packet-fields-data.component';
 import { PacketEnrichmentsDataComponent } from './project-detail/packet-enrichments-data/packet-enrichments-data.component';
 import { PacketStatisticsDataComponent } from './project-detail/packet-statistics-data/packet-statistics-data.component';

@@ -4,14 +4,13 @@
 
     <div class="col-md-12">
 
-      <form class="ruleDefinition-form" [formGroup]="ruleForm.form" autocomplete="on">
+      <form id="ruleForm" class="ruleDefinition-form" [formGroup]="ruleForm.form" autocomplete="on">
 
         <div class="row">
 
           <div class="col-md-3 container-form-field">
             <hyt-select [form]="ruleForm.form" [options]="fieldOptions" formControlName="ruleField" name="ruleField"
-              [isRequired]="true" i18n-label="@@HYT_field" label="HYT_field"
-              (changeFn)="fieldChanged($event, i)">
+              [isRequired]="true" i18n-label="@@HYT_field" label="HYT_field" (changeFn)="fieldChanged($event, i)">
             </hyt-select>
           </div> <!-- Field Field -->
 

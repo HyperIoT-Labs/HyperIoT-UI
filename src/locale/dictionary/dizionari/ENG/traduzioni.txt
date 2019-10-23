@@ -138,6 +138,8 @@ HYT_rule_type
 Rule type
 HYT_add_rule
 Add rule
+HYT_update_Rule
+Update rule
 HYT_model
 Model
 HYT_firmware_version
@@ -232,6 +234,8 @@ HYT_output_data
 Event output
 HYT_add_event
 Add event
+HYT_update_event
+Update event
 HYT_PACKETS
 PACKETS
 HYT_packet_definition_long
