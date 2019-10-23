@@ -23,11 +23,14 @@
     </ng-template>
 
     <ng-template #devicesTemplate>
-      <hyt-device-data #devicesData (entityEvent)="onEntityEvent($event)"></hyt-device-data>
+      <hyt-device-data #devicesData [currentProject]="currentProject" (entityEvent)="onEntityEvent($event)">
+      </hyt-device-data>
     </ng-template>
 
     <ng-template #packetsTemplate>
-      <hyt-packet-data #packetsData (entityEvent)="onEntityEvent($event)"></hyt-packet-data>
+      <hyt-device-select [hDevices]="hDevices" (selectedDevice)="deviceChanged($event)"></hyt-device-select>
+      <hyt-packet-data #packetsData [currentDevice]="currentDevice" (entityEvent)="onEntityEvent($event)">
+      </hyt-packet-data>
     </ng-template>
 
     <ng-template #fieldsTemplate>
@@ -247,9 +250,12 @@
     <ng-container i18n="@@HYT_next">HYT_next</ng-container>
   </hyt-button>
 
-  <hyt-button (click)="onSaveClick($event)">
-    <ng-container>Salva</ng-container>
+  <hyt-button *ngIf="currentForm" (clickFn)="onSaveClick($event)"
+    [isDisabled]="currentForm && (!currentForm.isValid() || !currentForm.isDirty())">
+    <ng-container *ngIf="currentForm && currentForm.submitMethod == 0">Salva</ng-container>
+    <!-- @I18N@ -->
+    <ng-container *ngIf="currentForm && currentForm.submitMethod == 1">Aggiorna</ng-container>
+    <!-- @I18N@ -->
   </hyt-button>
-
 
 </div>

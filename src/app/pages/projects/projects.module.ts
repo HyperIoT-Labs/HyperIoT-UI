@@ -50,6 +50,7 @@ import { PacketsFormComponent } from './project-wizard/packets-step/packets-form
 import { PacketsHintColumnComponent } from './project-wizard/packets-step/packets-hint-column/packets-hint-column.component';
 import { ProjectHintColumnComponent } from './project-wizard/project-step/project-hint-column/project-hint-column.component';
 import { ProjectFormComponent } from './project-wizard/project-step/project-form/project-form.component';
+import { DeviceSelectComponent } from './project-wizard/device-select/device-select.component';
 
 @NgModule({
   declarations: [
@@ -90,7 +91,8 @@ import { ProjectFormComponent } from './project-wizard/project-step/project-form
     PacketsFormComponent,
     PacketsHintColumnComponent,
     ProjectHintColumnComponent,
-    ProjectFormComponent
+    ProjectFormComponent,
+    DeviceSelectComponent
   ],
   imports: [
     MatIconModule,
