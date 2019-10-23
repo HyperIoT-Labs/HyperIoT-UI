@@ -59,7 +59,10 @@ export class PacketEventsDataComponent extends ProjectDetailEntity implements On
     this.hPacketService.findHPacket(this.packetId).subscribe((p: HPacket) => {
       this.packet = p;
       this.project = p.device.project;
-      this.treeView().focus({id: p.id, type: 'packet-events'});
+      this.entityEvent.emit({
+        event: 'treeview:focus',
+        id: p.id, type: 'packet-events'
+      });
       // update rules summary list (on the right side)
       this.rulesService.findAllRuleByPacketId(this.packet.id).subscribe((rules: Rule[]) => {
         this.summaryList = {

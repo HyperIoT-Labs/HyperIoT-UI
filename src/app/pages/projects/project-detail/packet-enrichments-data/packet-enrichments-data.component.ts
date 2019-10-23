@@ -91,7 +91,10 @@ export class PacketEnrichmentsDataComponent extends ProjectDetailEntity implemen
             };
           });
       });
-      this.treeView().focus({id: p.id, type: 'packet-enrichments'});
+      this.entityEvent.emit({
+        event: 'treeview:focus',
+        id: p.id, type: 'packet-enrichments'
+      });
     });
   }
 }

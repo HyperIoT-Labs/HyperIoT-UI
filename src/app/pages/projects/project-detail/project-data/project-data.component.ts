@@ -74,7 +74,10 @@ export class ProjectDataComponent extends ProjectDetailEntity implements OnDestr
     const responseHandler = (res) => {
       this.project = p = res;
       this.resetForm();
-      // this.treeView().updateNode({id: p.id, name: p.name});
+      this.entityEvent.emit({
+        event: 'treeview:update',
+        id: p.id, name: p.name
+      });
       this.loadingStatus = LoadingStatusEnum.Ready;
       successCallback && successCallback(res);
     };

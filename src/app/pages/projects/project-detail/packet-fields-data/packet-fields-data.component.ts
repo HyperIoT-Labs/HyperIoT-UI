@@ -105,7 +105,10 @@ export class PacketFieldsDataComponent extends ProjectDetailEntity implements On
   private loadData() {
     this.hPacketService.findHPacket(this.packetId).subscribe((p: HPacket) => {
       this.packet = p;
-      this.treeView().focus({ id: p.id, type: 'packet-fields' });
+      this.entityEvent.emit({
+        event: 'treeview:focus',
+        id: p.id, type: 'packet-fields'
+      });
       this.hPacketService.findTreeFields(this.packetId).subscribe(res => {
         this.packetTree = this.createFieldsTree(res);
         if (this.treeViewFields) {

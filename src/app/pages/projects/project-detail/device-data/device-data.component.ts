@@ -65,7 +65,10 @@ export class DeviceDataComponent extends ProjectDetailEntity implements OnDestro
       this.form.get('hdevice-description')
         .setValue(d.description);
       this.resetForm();
-      this.treeView().focus({ id: d.id, type: 'device' });
+      this.entityEvent.emit({
+        event: 'treeview:focus',
+        id: d.id, type: 'device'
+      });
       this.loadingStatus = LoadingStatusEnum.Ready;
     }, (err) => {
       this.loadingStatus = LoadingStatusEnum.Error;
@@ -85,7 +88,12 @@ export class DeviceDataComponent extends ProjectDetailEntity implements OnDestro
     this.hDeviceService.updateHDevice(d).subscribe((res) => {
       this.device = d = res;
       this.resetForm();
-      this.treeView().updateNode({ id: d.id, type: 'device', name: d.deviceName });
+      this.entityEvent.emit({
+        event: 'treeview:update',
+        id: d.id,
+        type: 'device',
+        name: d.deviceName
+      });
       this.loadingStatus = LoadingStatusEnum.Ready;
       successCallback && successCallback(res);
     }, (err) => {
@@ -96,7 +104,7 @@ export class DeviceDataComponent extends ProjectDetailEntity implements OnDestro
   private deleteDevice(successCallback?, errorCallback?) {
     this.loadingStatus = LoadingStatusEnum.Saving;
     this.hDeviceService.deleteHDevice(this.device.id).subscribe((res) => {
-      this.treeView().refresh();
+      this.entityEvent.emit({event: 'treeview:refresh'});
       successCallback && successCallback(res);
       this.loadingStatus = LoadingStatusEnum.Ready;
       // navigate to project page when a device is deleted

@@ -62,9 +62,20 @@ export class ProjectDetailComponent implements OnInit {
   onActivate(childComponent: ProjectDetailEntity) {
     if (childComponent.isProjectEntity) {
       this.currentEntity = childComponent;
-      this.currentEntity.projectHost = this;
+      this.currentEntity.unsavedChangesCallback = () => {
+        return this.openSaveDialog();
+      };
       this.currentEntity.entityEvent.subscribe((data) => {
-        switch (data.type) {
+        switch (data.event) {
+          case 'treeview:refresh':
+            this.refresh();
+            break;
+          case 'treeview:focus':
+            this.focus(data);
+            break;
+          case 'treeview:update':
+            this.updateNode(data);
+            break;
           case 'hint:show':
             this.showHintMessage(data.message);
             break;

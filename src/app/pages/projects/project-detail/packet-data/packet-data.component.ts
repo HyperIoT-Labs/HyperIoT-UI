@@ -89,7 +89,10 @@ export class PacketDataComponent extends ProjectDetailEntity implements OnDestro
       this.mqttTopic = '/v1/devices/' + p.device.id + '/' + p.id;
       // reset form
       this.resetForm();
-      this.treeView().focus({id: p.id, type: 'packet'});
+      this.entityEvent.emit({
+        event: 'treeview:focus',
+        id: p.id, type: 'packet'
+      });
       this.loadingStatus = LoadingStatusEnum.Ready;
     }, (err) => {
       this.loadingStatus = LoadingStatusEnum.Error;
@@ -110,7 +113,10 @@ export class PacketDataComponent extends ProjectDetailEntity implements OnDestro
     this.hPacketService.updateHPacket(p).subscribe((res) => {
       this.packet = p = res;
       this.resetForm();
-      this.treeView().updateNode({id: p.id, type: 'packet', name: p.name});
+      this.entityEvent.emit({
+        event: 'treeview:update',
+        id: p.id, type: 'packet', name: p.name
+      });
       this.loadingStatus = LoadingStatusEnum.Ready;
       successCallback && successCallback(res);
     }, (err) => {
@@ -128,7 +134,7 @@ export class PacketDataComponent extends ProjectDetailEntity implements OnDestro
         '/projects', this.packet.device.project.id,
         {outlets: { projectDetails: ['device', this.packet.device.id] }}
       ]);
-      this.treeView().refresh();
+      this.entityEvent.emit({event: 'treeview:refresh'});
     }, (err) => {
       errorCallback && errorCallback(err);
       this.loadingStatus = LoadingStatusEnum.Error;

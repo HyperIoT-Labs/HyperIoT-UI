@@ -2,11 +2,9 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 
 import { Observable } from 'rxjs';
 
-import { ProjectDetailComponent } from './project-detail.component';
 import { MatRadioChange } from '@angular/material';
 import { ElementRef, ViewChild, OnInit, Output, EventEmitter } from '@angular/core';
 import { SummaryList } from './generic-summary-list/generic-summary-list.component';
-import { Router } from '@angular/router';
 
 export enum LoadingStatusEnum {
     Ready,
@@ -18,7 +16,6 @@ export enum LoadingStatusEnum {
 export abstract class ProjectDetailEntity implements OnInit {
     @Output() entityEvent = new EventEmitter<any>();
     isProjectEntity = true;
-    projectHost: ProjectDetailComponent;
 
     hideDelete = false;
     showCancel = false;
@@ -31,6 +28,8 @@ export abstract class ProjectDetailEntity implements OnInit {
 
     LoadingStatus = LoadingStatusEnum;
     loadingStatus = LoadingStatusEnum.Ready;
+
+    unsavedChangesCallback;
 
     constructor(
         public formBuilder: FormBuilder,
@@ -45,8 +44,8 @@ export abstract class ProjectDetailEntity implements OnInit {
     }
 
     canDeactivate(): Observable<any> | boolean {
-        if (this.isDirty()) {
-            return this.projectHost.openSaveDialog();
+        if (this.isDirty() && typeof this.unsavedChangesCallback === 'function') {
+            return this.unsavedChangesCallback();
         }
         return true;
     }
@@ -94,16 +93,6 @@ export abstract class ProjectDetailEntity implements OnInit {
         this.buildHintMessages();
     }
 
-    treeView() {
-        return {
-            refresh: this.projectHost.refresh.bind(this.projectHost),
-            focus: (node: { id: any, type?: 'packet-events' | 'packet-statistics' | 'packet-enrichments' | 'packet-fields' | 'packet' | 'device' | 'project' | '' }) =>
-                this.projectHost.focus(node),
-            updateNode: (nodeData: { id: any, type?: string, name: string }) =>
-                this.projectHost && this.projectHost.updateNode(nodeData)
-        };
-    }
-
     private buildHintMessages() {
         const hintElements =
             (this.formView.nativeElement as Element)
@@ -117,13 +106,13 @@ export abstract class ProjectDetailEntity implements OnInit {
             el = tmp;
             el.addEventListener('focus', () => {
                 this.entityEvent.emit({
-                    type: 'hint:show',
+                    event: 'hint:show',
                     message
                 });
             });
             el.addEventListener('blur', () => {
                 this.entityEvent.emit({
-                    type: 'hint:hide'
+                    event: 'hint:hide'
                 });
             });
             // TODO: remove listeners on ngOnDestroy()
@@ -145,8 +134,6 @@ export abstract class ProjectDetailEntity implements OnInit {
       let currentUser;
       if (localStorage.getItem('user')) {
         currentUser = JSON.parse(localStorage.getItem('user'));
-      } else {
-        // TODO: this.router.navigate(['/auth/login']);
       }
       return { id: currentUser.id, entityVersion: currentUser.entityVersion };
     }

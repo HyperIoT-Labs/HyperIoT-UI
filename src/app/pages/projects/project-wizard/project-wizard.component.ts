@@ -102,7 +102,7 @@ export class ProjectWizardComponent implements OnInit {
   }
   onEntityEvent(data: any) {
     console.log(data);
-    switch (data.type) {
+    switch (data.event) {
       case 'hint:show':
         console.log('should show hint', data.message);
         break;
