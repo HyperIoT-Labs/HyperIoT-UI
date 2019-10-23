@@ -1,9 +1,9 @@
-import { Component, OnInit, ViewChild, Injectable } from '@angular/core';
-import { HProject, HDevice, HPacket, Rule } from '@hyperiot/core';
+import { Component, OnInit, ViewChild, Injectable, AfterViewInit } from '@angular/core';
+import { HProject, HDevice, HPacket, Rule, HdevicesClientModule } from '@hyperiot/core';
 import { Router, CanDeactivate } from '@angular/router';
 import { Subject } from 'rxjs';
 import { ProjectWizardService } from 'src/app/services/projectWizard/project-wizard.service';
-import { ProjectDetailEntity } from '../project-detail/project-detail-entity';
+import { ProjectDetailEntity, SubmitMethod } from '../project-detail/project-detail-entity';
 import { ProjectDataComponent } from '../project-detail/project-data/project-data.component';
 import { DeviceDataComponent } from '../project-detail/device-data/device-data.component';
 
@@ -12,7 +12,7 @@ import { DeviceDataComponent } from '../project-detail/device-data/device-data.c
 })
 export class ProjectWizardCanDeactivate implements CanDeactivate<ProjectWizardComponent>{
   canDeactivate(com: ProjectWizardComponent) {
-    if (com.hProject == null || com.finishOpen)
+    if (com.currentProject == null || com.finishOpen)
       return true;
     else {
       com.deactivateModal = true;
@@ -26,22 +26,23 @@ export class ProjectWizardCanDeactivate implements CanDeactivate<ProjectWizardCo
   templateUrl: './project-wizard.component.html',
   styleUrls: ['./project-wizard.component.scss']
 })
-export class ProjectWizardComponent implements OnInit {
+export class ProjectWizardComponent implements OnInit, AfterViewInit {
 
   @ViewChild('stepper', { static: false }) stepper;
 
   currentForm: ProjectDetailEntity;
 
-  @ViewChild('projectData', {static: false})
+  @ViewChild('projectData', { static: false })
   projectData: ProjectDataComponent;
 
-  @ViewChild('devicesData', {static: false})
+  @ViewChild('devicesData', { static: false })
   devicesData: DeviceDataComponent;
 
-  @ViewChild('packetsData', {static: false})
+  @ViewChild('packetsData', { static: false })
   packetsData: DeviceDataComponent;
 
-  hProject: HProject;
+  currentProject: HProject;
+  currentDevice: HDevice;
   hDevices: HDevice[] = [];
   hPackets: HPacket[] = [];
   enrichmentRules: Rule[] = [];
@@ -76,11 +77,11 @@ export class ProjectWizardComponent implements OnInit {
     this.wizardService.hPackets$.subscribe(
       (res: HPacket[]) => {
         this.hPackets = [...res];
-        if (res && res.length != 0){
+        if (res && res.length != 0) {
           this.packetsValidated = true;
           this.fieldsValidated = true;
         }
-        else{
+        else {
           this.packetsValidated = false;
           this.fieldsValidated = false;
         }
@@ -96,6 +97,12 @@ export class ProjectWizardComponent implements OnInit {
         this.eventRules = [...res];
       }
     );
+  }
+
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.currentForm = this.projectData;
+    }, 0);
   }
 
   stepChanged(event) {
@@ -138,9 +145,20 @@ export class ProjectWizardComponent implements OnInit {
   onSaveClick(e) {
     console.log('saveClick', e);
     this.currentForm.save((ent) => {
-      // TODO: ...
+      if (this.currentForm == this.projectData){
+        this.currentForm.submitMethod = SubmitMethod.Put;
+        this.currentProject = ent;
+      }
+      else if (this.currentForm == this.devicesData){
+        this.hDevices.push(ent);
+        this.hDevices = [...this.hDevices];
+      } 
+      else if (this.currentForm == this.packetsData){
+        this.hPackets.push(ent);
+        this.hPackets = [...this.hPackets];
+      }
       console.log('entity saved', ent);
-    }, (error) =>{
+    }, (error) => {
       // TODO: ...
     });
   }
@@ -151,14 +169,19 @@ export class ProjectWizardComponent implements OnInit {
         console.log('should show hint', data.message);
         break;
       case 'hint:hide':
-          console.log('should hide hint');
-          break;
+        console.log('should hide hint');
+        break;
     }
+  }
+
+  deviceChanged(event): void {
+    console.log(event);
+    this.currentDevice = event
   }
 
   updateProject(proj: HProject) {
     if (proj) {
-      this.hProject = proj;
+      this.currentProject = proj;
       this.projectValidated = true;
     }
     setTimeout(() => {

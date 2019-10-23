@@ -1,12 +1,12 @@
-import { Component, OnDestroy, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnDestroy, ElementRef, ViewChild, Input } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 
 import { Subscription } from 'rxjs';
 
-import { HdevicesService, HDevice } from '@hyperiot/core';
+import { HdevicesService, HDevice, HProject } from '@hyperiot/core';
 
-import { ProjectDetailEntity, LoadingStatusEnum } from '../project-detail-entity';
+import { ProjectDetailEntity, LoadingStatusEnum, SubmitMethod } from '../project-detail-entity';
 
 @Component({
   selector: 'hyt-device-data',
@@ -14,6 +14,10 @@ import { ProjectDetailEntity, LoadingStatusEnum } from '../project-detail-entity
   styleUrls: ['./device-data.component.scss']
 })
 export class DeviceDataComponent extends ProjectDetailEntity implements OnDestroy {
+
+  @Input()
+  currentProject: HProject;
+
   deviceId: number;
   device: HDevice = {} as HDevice;
 
@@ -28,6 +32,7 @@ export class DeviceDataComponent extends ProjectDetailEntity implements OnDestro
   ) {
     super(formBuilder, formView);
     this.routerSubscription = this.router.events.subscribe((rl) => {
+      this.submitMethod = SubmitMethod.Put;
       if (rl instanceof NavigationEnd) {
         this.deviceId = activatedRoute.snapshot.params.deviceId;
         this.loadDevice();
@@ -78,33 +83,60 @@ export class DeviceDataComponent extends ProjectDetailEntity implements OnDestro
   private saveDevice(successCallback?, errorCallback?) {
     this.loadingStatus = LoadingStatusEnum.Saving;
     this.resetErrors();
-    let d = this.device;
-    d.deviceName = this.form.get('hdevice-devicename').value;
-    d.description = this.form.get('hdevice-description').value;
-    d.brand = this.form.get('hdevice-brand').value;
-    d.model = this.form.get('hdevice-model').value;
-    d.firmwareVersion = this.form.get('hdevice-firmwareversion').value;
-    d.softwareVersion = this.form.get('hdevice-softwareversion').value;
-    this.hDeviceService.updateHDevice(d).subscribe((res) => {
-      this.device = d = res;
-      this.resetForm();
+
+    const responseHandler = (res) => {
+      this.device = res;
+      if (this.submitMethod == SubmitMethod.Post)
+        this.cleanForm();
+      else
+        this.resetForm();
       this.entityEvent.emit({
         event: 'treeview:update',
-        id: d.id,
+        id: this.device.id,
         type: 'device',
-        name: d.deviceName
+        name: this.device.deviceName
       });
       this.loadingStatus = LoadingStatusEnum.Ready;
       successCallback && successCallback(res);
-    }, (err) => {
-      this.setErrors(err);
-      errorCallback && errorCallback(err);
-    });
+    };
+
+    if (this.submitMethod == SubmitMethod.Post) {
+      let d: HDevice = {
+        entityVersion: 1,
+        deviceName: this.form.get('hdevice-devicename').value,
+        description: this.form.get('hdevice-description').value,
+        brand: this.form.get('hdevice-brand').value,
+        model: this.form.get('hdevice-model').value,
+        firmwareVersion: this.form.get('hdevice-firmwareversion').value,
+        softwareVersion: this.form.get('hdevice-softwareversion').value,
+        password: this.form.value['hdevice-password'],
+        passwordConfirm: this.form.value['hdevice-passwordConfirm'],
+        project: { id: this.currentProject.id, entityVersion: this.currentProject.entityVersion }
+      }
+      this.hDeviceService.saveHDevice(d).subscribe(responseHandler, (err) => {
+        this.setErrors(err);
+        errorCallback && errorCallback(err);
+      });
+    }
+    else {
+      let d = this.device;
+      d.deviceName = this.form.get('hdevice-devicename').value;
+      d.description = this.form.get('hdevice-description').value;
+      d.brand = this.form.get('hdevice-brand').value;
+      d.model = this.form.get('hdevice-model').value;
+      d.firmwareVersion = this.form.get('hdevice-firmwareversion').value;
+      d.softwareVersion = this.form.get('hdevice-softwareversion').value;
+      this.hDeviceService.updateHDevice(d).subscribe(responseHandler, (err) => {
+        this.setErrors(err);
+        errorCallback && errorCallback(err);
+      });
+    }
+
   }
   private deleteDevice(successCallback?, errorCallback?) {
     this.loadingStatus = LoadingStatusEnum.Saving;
     this.hDeviceService.deleteHDevice(this.device.id).subscribe((res) => {
-      this.entityEvent.emit({event: 'treeview:refresh'});
+      this.entityEvent.emit({ event: 'treeview:refresh' });
       successCallback && successCallback(res);
       this.loadingStatus = LoadingStatusEnum.Ready;
       // navigate to project page when a device is deleted

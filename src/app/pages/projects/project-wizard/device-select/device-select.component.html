@@ -1,0 +1,14 @@
+<form class="field-form" [formGroup]="selectForm" autocomplete="on">
+
+    <div class="row">
+
+        <div class="col-md-3 container-form-field">
+            <hyt-select [form]="selectForm" formControlName="selectDevice" name="selectDevice"
+                [options]="devicesOptions" i18n-label="@@HYT_device" label="HYT_device"
+                (changeFn)="deviceChanged($event)">
+            </hyt-select>
+        </div> <!-- Select Device -->
+
+    </div>
+
+</form>

@@ -12,6 +12,10 @@ export enum LoadingStatusEnum {
     Saving,
     Error
 }
+export enum SubmitMethod  {
+    Post,
+    Put
+}
 
 export abstract class ProjectDetailEntity implements OnInit {
     @Output() entityEvent = new EventEmitter<any>();
@@ -23,6 +27,8 @@ export abstract class ProjectDetailEntity implements OnInit {
     form: FormGroup;
     private originalValue: string;
     private validationError = [];
+
+    submitMethod : SubmitMethod = SubmitMethod.Post;
 
     summaryList: SummaryList;
 
@@ -93,6 +99,10 @@ export abstract class ProjectDetailEntity implements OnInit {
         this.buildHintMessages();
     }
 
+    cleanForm() {
+        this.form.reset();
+    }
+
     private buildHintMessages() {
         const hintElements =
             (this.formView.nativeElement as Element)
@@ -131,10 +141,10 @@ export abstract class ProjectDetailEntity implements OnInit {
     }
 
     protected getUser = () => {
-      let currentUser;
-      if (localStorage.getItem('user')) {
-        currentUser = JSON.parse(localStorage.getItem('user'));
-      }
-      return { id: currentUser.id, entityVersion: currentUser.entityVersion };
+        let currentUser;
+        if (localStorage.getItem('user')) {
+            currentUser = JSON.parse(localStorage.getItem('user'));
+        }
+        return { id: currentUser.id, entityVersion: currentUser.entityVersion };
     }
 }
