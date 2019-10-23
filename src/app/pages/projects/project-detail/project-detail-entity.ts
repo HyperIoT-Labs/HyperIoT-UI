@@ -12,7 +12,7 @@ export enum LoadingStatusEnum {
     Saving,
     Error
 }
-export enum SubmitMethod  {
+export enum SubmitMethod {
     Post,
     Put
 }
@@ -28,7 +28,9 @@ export abstract class ProjectDetailEntity implements OnInit {
     private originalValue: string;
     private validationError = [];
 
-    submitMethod : SubmitMethod = SubmitMethod.Post;
+    submitMethod: SubmitMethod = SubmitMethod.Post;
+
+    longDefinition: string = 'entity long definition';
 
     summaryList: SummaryList;
 

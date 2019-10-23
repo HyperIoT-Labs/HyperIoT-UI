@@ -52,3 +52,28 @@
   }
 
 }
+
+.info-message {
+  // @include mat-elevation(4);
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  background: whitesmoke;
+  font-size: .9em;
+
+  & mat-icon {
+      color: #969696;
+      font-size: 1.5em;
+      margin-top: -5px;
+      margin-right: -6px;
+  }
+
+  & .text {
+      margin: 0; padding: 0;
+      padding-left: 4px;
+      padding-right: 4px;
+      vertical-align: top;
+      line-height: 20px;
+      color: #0047a0;
+  }
+}

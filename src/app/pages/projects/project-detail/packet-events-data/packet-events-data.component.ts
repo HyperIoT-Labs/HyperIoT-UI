@@ -31,6 +31,7 @@ export class PacketEventsDataComponent extends ProjectDetailEntity implements On
     private router: Router
   ) {
     super(formBuilder, formView);
+    this.longDefinition = 'events long definition';//@I18N@
     this.hideDelete = true; // hide 'Delete' button
     this.routerSubscription = this.router.events.subscribe((rl) => {
       if (rl instanceof NavigationEnd) {

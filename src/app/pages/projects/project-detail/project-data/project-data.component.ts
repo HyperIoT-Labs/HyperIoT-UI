@@ -27,6 +27,7 @@ export class ProjectDataComponent extends ProjectDetailEntity implements OnDestr
     private router: Router
   ) {
     super(formBuilder, formView);
+    this.longDefinition = 'project long definition';//@I18N@
     this.routerSubscription = this.router.events.subscribe((rl) => {
       this.submitMethod = SubmitMethod.Put;
       if (rl instanceof NavigationEnd) {

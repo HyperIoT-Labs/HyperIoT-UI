@@ -49,6 +49,8 @@ export class PacketDataComponent extends ProjectDetailEntity implements OnDestro
     private router: Router
   ) {
     super(formBuilder, formView);
+    console.log("init");
+    this.longDefinition = 'packet long definition';//@I18N@
     this.routerSubscription = this.router.events.subscribe((rl) => {
       this.submitMethod = SubmitMethod.Put;
       if (rl instanceof NavigationEnd) {

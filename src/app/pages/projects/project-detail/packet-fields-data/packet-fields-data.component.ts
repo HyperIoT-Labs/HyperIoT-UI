@@ -45,6 +45,7 @@ export class PacketFieldsDataComponent extends ProjectDetailEntity implements On
     private dialog: MatDialog
   ) {
     super(formBuilder, formView);
+    this.longDefinition = 'fields long definition';//@I18N@
     this.hideDelete = true;
     this.routerSubscription = this.router.events.subscribe((rl) => {
       if (rl instanceof NavigationEnd) {

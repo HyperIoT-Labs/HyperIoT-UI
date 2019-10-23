@@ -31,6 +31,7 @@ export class DeviceDataComponent extends ProjectDetailEntity implements OnDestro
     private router: Router
   ) {
     super(formBuilder, formView);
+    this.longDefinition = 'device long definition';//@I18N@
     this.routerSubscription = this.router.events.subscribe((rl) => {
       this.submitMethod = SubmitMethod.Put;
       if (rl instanceof NavigationEnd) {

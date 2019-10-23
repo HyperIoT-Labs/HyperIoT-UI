@@ -82,14 +82,29 @@
       </hyt-stepper>
     </div>
 
-    <div class="col-md-2">
-      <!-- <div *ngIf="hintVisible" class="info-message m-2 mt-4 d-flex flex-row"> -->
-      <!-- <span class="text p-2 flex-grow-1">{{hintMessage}}</span> -->
-      <!-- <mat-icon class="">info</mat-icon> mt-2 mr-2 -->
-      <!-- </div> -->
+    <div id="hint-column" class="col-md-2">
 
-      <!-- <hyt-generic-summary-list *ngIf="currentEntity && currentEntity.summaryList"
-        [summaryList]="currentEntity.summaryList" (itemClick)="onSummaryItemClick($event)"></hyt-generic-summary-list> -->
+      <div *ngIf="currentForm">
+        <mat-expansion-panel [expanded]="true">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <b>ENTITY NAME</b>
+              <!--TODO with @I18N@-->
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <p>{{currentForm.longDefinition}}</p>
+        </mat-expansion-panel>
+      </div>
+
+      <hyt-generic-summary-list *ngIf="currentForm && currentForm.summaryList" [summaryList]="currentForm.summaryList"
+        (itemClick)="onSummaryItemClick($event)"></hyt-generic-summary-list>
+
+      <div *ngIf="hintVisible" class="info-message m-2 mt-4 d-flex flex-row">
+        <span class="text p-2 flex-grow-1">{{hintMessage}}</span>
+        <mat-icon class="">info</mat-icon>
+        <!--mt-2 mr-2-->
+      </div>
+
     </div>
 
     <hyt-modal id="optionsModal" [mOpen]="ovpOpen">
@@ -151,7 +166,7 @@
                     <td><img src="assets/projects/icons/monitor.png"></td>
                     <td>
                       <ng-container i18n="@@HYT_project">HYT_project</ng-container>
-                      <hr>{{(hProject)?hProject.name:''}}
+                      <hr>{{(currentProject)?currentProject.name:''}}
                     </td>
                   </tr>
                   <tr>

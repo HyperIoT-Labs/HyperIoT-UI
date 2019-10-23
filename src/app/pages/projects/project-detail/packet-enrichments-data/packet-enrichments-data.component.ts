@@ -35,6 +35,7 @@ export class PacketEnrichmentsDataComponent extends ProjectDetailEntity implemen
     private router: Router
   ) {
     super(formBuilder, formView);
+    this.longDefinition = 'enrichment long definition';//@I18N@
     this.hideDelete = true; // hide 'Delete' button
     this.routerSubscription = this.router.events.subscribe((rl) => {
       if (rl instanceof NavigationEnd) {

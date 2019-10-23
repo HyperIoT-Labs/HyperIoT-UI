@@ -24,6 +24,7 @@ export class PacketStatisticsDataComponent extends ProjectDetailEntity implement
     private router: Router
   ) {
     super(formBuilder, formView);
+    this.longDefinition = 'statistics long definition';//@I18N@
     this.hideDelete = true; // hide 'Delete' button
     this.routerSubscription = this.router.events.subscribe((rl) => {
       if (rl instanceof NavigationEnd) {

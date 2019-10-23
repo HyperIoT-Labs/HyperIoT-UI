@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, Injectable, AfterViewInit } from '@angular/core';
-import { HProject, HDevice, HPacket, Rule, HdevicesClientModule } from '@hyperiot/core';
+import { HProject, HDevice, HPacket, Rule } from '@hyperiot/core';
 import { Router, CanDeactivate } from '@angular/router';
 import { Subject } from 'rxjs';
 import { ProjectWizardService } from 'src/app/services/projectWizard/project-wizard.service';
@@ -100,10 +100,13 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    setTimeout(() => {
+    setTimeout(() => {//TODO...setimeout 0 to avoid 'expression changed after view checked'
       this.currentForm = this.projectData;
     }, 0);
   }
+
+  hintMessage = '';
+  hintVisible = false;
 
   stepChanged(event) {
     console.log(event);
@@ -143,40 +146,61 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
   }
 
   onSaveClick(e) {
-    console.log('saveClick', e);
     this.currentForm.save((ent) => {
-      if (this.currentForm == this.projectData){
+      if (this.currentForm == this.projectData) {
         this.currentForm.submitMethod = SubmitMethod.Put;
         this.currentProject = ent;
       }
-      else if (this.currentForm == this.devicesData){
+      else if (this.currentForm == this.devicesData) {
         this.hDevices.push(ent);
         this.hDevices = [...this.hDevices];
-      } 
-      else if (this.currentForm == this.packetsData){
+        this.currentForm.summaryList = {
+          title: 'Devices',
+          list: this.hDevices.filter((d) => {
+            return { name: d.deviceName, description: d.description, item: d };
+          }) as any
+        };
+      }
+      else if (this.currentForm == this.packetsData) {
         this.hPackets.push(ent);
         this.hPackets = [...this.hPackets];
+        this.currentForm.summaryList = {
+          title: 'Packets',
+          list: this.hPackets.filter((p) => {
+            return { name: p.name, item: p };
+          }) as any
+        };
       }
-      console.log('entity saved', ent);
     }, (error) => {
       // TODO: ...
     });
   }
   onEntityEvent(data: any) {
-    console.log(data);
     switch (data.event) {
       case 'hint:show':
-        console.log('should show hint', data.message);
+        this.showHintMessage(data.message);
         break;
       case 'hint:hide':
-        console.log('should hide hint');
+        this.hideHintMessage();
         break;
     }
   }
 
-  deviceChanged(event): void {
+  showHintMessage(message: string): void {
+    this.hintMessage = message;
+    this.hintVisible = true;
+  }
+  hideHintMessage(): void {
+    this.hintVisible = false;
+  }
+
+
+  onSummaryItemClick(event): void {
     console.log(event);
-    this.currentDevice = event
+  }
+
+  deviceChanged(event): void {
+    this.currentDevice = event;
   }
 
   updateProject(proj: HProject) {

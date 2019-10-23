@@ -25,7 +25,6 @@ export class DeviceSelectComponent implements OnChanges {
   }
 
   ngOnChanges(): void {
-    console.log(this.hDevices);
     this.devicesOptions = [];
     this.hDevices.forEach(device => {
       this.devicesOptions.push({
@@ -36,12 +35,18 @@ export class DeviceSelectComponent implements OnChanges {
     this.autoSelect();
   }
 
-  deviceChanged(event){
+  deviceChanged(event): void {
+    console.log(event)
     this.selectedDevice.emit(event.value);
   }
 
-  autoSelect() {
-    //TODO...
+  autoSelect(): void {
+    if (this.devicesOptions.length != 0) {
+      this.selectForm.get('selectDevice').setValue(this.devicesOptions[0].value);
+      this.deviceChanged(this.devicesOptions[0]);
+    }
+    else
+      this.selectedDevice.emit(null);
   }
 
 }
