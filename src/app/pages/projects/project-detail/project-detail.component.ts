@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { Observable, zip, Observer } from 'rxjs';
 
-import { HprojectsService, HProject, HdevicesService, HDevice, HpacketsService, HPacket, HPacketField, Rule } from '@hyperiot/core';
+import { HprojectsService, HProject, HdevicesService, HDevice, HpacketsService, HPacket, Rule } from '@hyperiot/core';
 import { TreeDataNode } from '@hyperiot/components';
 
 import { HytTreeViewProjectComponent } from '@hyperiot/components/lib/hyt-tree-view-project/hyt-tree-view-project.component';
@@ -11,7 +11,7 @@ import { ProjectDetailEntity } from './project-detail-entity';
 import { MatDialog } from '@angular/material';
 import { SaveChangesDialogComponent } from 'src/app/components/dialogs/save-changes-dialog/save-changes-dialog.component';
 import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
-import { PacketEnrichmentsDataComponent } from './packet-enrichments-data/packet-enrichments-data.component';
+import { SummaryList } from './generic-summary-list/generic-summary-list.component';
 
 enum TreeStatusEnum {
   Ready,
@@ -44,6 +44,8 @@ export class ProjectDetailComponent implements OnInit {
   projectName: string;
   validationErrors: [];
 
+  testSummaryList = new SummaryList();
+
   constructor(
     private hProjectService: HprojectsService,
     private hDeviceService: HdevicesService,
@@ -51,7 +53,17 @@ export class ProjectDetailComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private dialog: MatDialog
-  ) { }
+  ) {
+    this.testSummaryList.title = 'Test summary list';
+    this.testSummaryList.list = [
+      { name: 'pippo-1', description: 'description-1', item: null },
+      { name: 'pippo-2', description: 'description-2', item: null },
+      { name: 'pippo-3', description: 'description-3', item: null },
+      { name: 'pippo-4', description: 'description-4', item: null },
+      { name: 'pippo-5', description: 'description-5', item: null },
+      { name: 'pippo-6', description: 'description-6', item: null },
+    ];
+  }
 
   ngOnInit() {
     this.projectId = this.activatedRoute.snapshot.params.projectId;

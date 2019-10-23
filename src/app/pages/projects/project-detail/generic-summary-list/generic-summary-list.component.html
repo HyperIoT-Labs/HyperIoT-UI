@@ -3,7 +3,9 @@
         {{_summaryList.title}}
     </header>
 </div>
-<div *ngFor="let item of _summaryList.list" (click)="onItemClick(item)" class="item d-flex flex-row justify-content-start align-items-stretch">
+<div *ngFor="let item of _summaryList.list" (click)="onItemClick(item)"
+    [matMenuTriggerFor]="itemMenu"
+    class="item d-flex flex-row justify-content-start align-items-stretch">
     <div class="icon d-flex flex-column justify-content-center align-items-center">
         <mat-icon>double_arrow</mat-icon>
     </div>
@@ -14,3 +16,18 @@
         </div>
     </div>
 </div>
+<mat-menu #itemMenu="matMenu">
+    <label class="menu-title" *ngIf="selectedItem">{{selectedItem.name}}</label>
+    <button mat-menu-item (click)="onEditOptionClick()">
+        <mat-icon>edit</mat-icon>
+        <span>Edit</span>
+    </button>
+    <button mat-menu-item (click)="onDuplicateOptionClick()">
+        <mat-icon>file_copy</mat-icon>
+        <span>Duplicate</span>
+    </button>
+    <button mat-menu-item (click)="onDeleteOptionClick()">
+        <mat-icon>close</mat-icon>
+        <span>Delete</span>
+    </button>
+</mat-menu>

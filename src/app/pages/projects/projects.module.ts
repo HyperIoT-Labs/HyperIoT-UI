@@ -7,7 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { MatIconModule } from '@angular/material/icon';
-import { MatCardModule, MatButtonModule, MatProgressSpinnerModule, MatProgressBarModule } from '@angular/material';
+import { MatCardModule, MatButtonModule, MatProgressSpinnerModule, MatProgressBarModule, MatMenuModule } from '@angular/material';
 import { MatExpansionModule } from '@angular/material/expansion';
 
 import { DevicesStepComponent } from './project-wizard/devices-step/devices-step.component';
@@ -98,6 +98,7 @@ import { ProjectFormComponent } from './project-wizard/project-step/project-form
     MatCardModule,
     MatProgressSpinnerModule,
     MatProgressBarModule,
+    MatMenuModule,
     CommonModule,
     HyperiotComponentsModule,
     FormsModule,
