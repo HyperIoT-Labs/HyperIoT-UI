@@ -6,6 +6,7 @@ import { ProjectWizardService } from 'src/app/services/projectWizard/project-wiz
 import { ProjectDetailEntity, SubmitMethod } from '../project-detail/project-detail-entity';
 import { ProjectDataComponent } from '../project-detail/project-data/project-data.component';
 import { DeviceDataComponent } from '../project-detail/device-data/device-data.component';
+import { DeviceSelectComponent } from './device-select/device-select.component';
 
 @Injectable({
   providedIn: 'root',
@@ -40,6 +41,9 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
 
   @ViewChild('packetsData', { static: false })
   packetsData: DeviceDataComponent;
+
+  @ViewChild('deviceSelect', { static: false })
+  deviceSelect: DeviceSelectComponent;
 
   currentProject: HProject;
   currentDevice: HDevice;
@@ -147,29 +151,49 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
 
   onSaveClick(e) {
     this.currentForm.save((ent) => {
+
       if (this.currentForm == this.projectData) {
         this.currentForm.submitMethod = SubmitMethod.Put;
         this.currentProject = ent;
       }
+
       else if (this.currentForm == this.devicesData) {
-        this.hDevices.push(ent);
-        this.hDevices = [...this.hDevices];
+        this.currentForm.cleanForm();
+        if (this.currentForm.submitMethod == SubmitMethod.Post) {
+          this.hDevices.push(ent);
+          this.hDevices = [...this.hDevices];
+        }
+        else {
+          let dev = this.hDevices.find(x => x.id == ent.id);
+          this.hDevices[this.hDevices.indexOf(dev)] = ent;
+          this.hDevices = [...this.hDevices];
+        }
         this.currentForm.summaryList = {
           title: 'Devices',
-          list: this.hDevices.filter((d) => {
+          list: this.hDevices.map((d) => {
             return { name: d.deviceName, description: d.description, item: d };
           }) as any
         };
       }
+
       else if (this.currentForm == this.packetsData) {
-        this.hPackets.push(ent);
-        this.hPackets = [...this.hPackets];
+        this.currentForm.cleanForm();
+        if (this.currentForm.submitMethod == SubmitMethod.Post) {
+          this.hPackets.push(ent);
+          this.hPackets = [...this.hPackets];
+        }
+        else {
+          let pac = this.hPackets.find(x => x.id == ent.id);
+          this.hPackets[this.hPackets.indexOf(pac)] = ent;
+          this.hPackets = [...this.hPackets];
+        }
         this.currentForm.summaryList = {
           title: 'Packets',
-          list: this.hPackets.filter((p) => {
-            return { name: p.name, item: p };
+          list: this.hPackets.map((p) => {
+            return { name: p.name, description: p.trafficPlan, item: p };
           }) as any
         };
+
       }
     }, (error) => {
       // TODO: ...
@@ -196,7 +220,61 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
 
 
   onSummaryItemClick(event): void {
-    console.log(event);
+  }
+
+  menuAction(event): void {
+    switch (event.action) {
+      case 'edit':
+        if (this.currentForm == this.packetsData)
+          this.deviceSelect.selectSpecific(event.item.device.id);
+        this.currentForm.id = event.item.id;
+        this.currentForm.submitMethod = SubmitMethod.Put;
+        this.currentForm.load();
+        break;
+      case 'duplicate':
+        if (this.currentForm == this.packetsData)
+          this.deviceSelect.selectSpecific(event.item.device.id);
+        this.currentForm.id = event.item.id;
+        this.currentForm.submitMethod = SubmitMethod.Post;
+        this.currentForm.load();
+        break;
+      case 'delete':
+        this.currentForm.id = event.item.id;
+        this.currentForm.delete((del) => {
+
+          if (this.currentForm == this.devicesData) {
+            for (let k = 0; k < this.hDevices.length; k++) {
+              if (this.hDevices[k].id == event.item.id)
+                this.hDevices.splice(k, 1);
+            }
+            this.hDevices = [...this.hDevices];
+            this.currentForm.summaryList = {
+              title: 'Devices',
+              list: this.hDevices.map((d) => {
+                return { name: d.deviceName, description: d.description, item: d };
+              }) as any
+            };
+          }
+
+          else if (this.currentForm == this.packetsData) {
+            for (let k = 0; k < this.hPackets.length; k++) {
+              if (this.hPackets[k].id == event.item.id)
+                this.hPackets.splice(k, 1);
+            }
+            this.hPackets = [...this.hPackets];
+            this.currentForm.summaryList = {
+              title: 'Packets',
+              list: this.hPackets.map((p) => {
+                return { name: p.name, description: p.trafficPlan, item: p };
+              }) as any
+            };
+          }
+
+        }, (err) => {
+          // TODO: ...
+        });
+        break;
+    }
   }
 
   deviceChanged(event): void {

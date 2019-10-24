@@ -14,7 +14,6 @@ import { ProjectDetailEntity, LoadingStatusEnum, SubmitMethod } from '../project
   styleUrls: ['./project-data.component.scss']
 })
 export class ProjectDataComponent extends ProjectDetailEntity implements OnDestroy {
-  projectId: number;
   project: HProject = {} as HProject;
 
   private routerSubscription: Subscription;
@@ -31,8 +30,8 @@ export class ProjectDataComponent extends ProjectDetailEntity implements OnDestr
     this.routerSubscription = this.router.events.subscribe((rl) => {
       this.submitMethod = SubmitMethod.Put;
       if (rl instanceof NavigationEnd) {
-        this.projectId = this.activatedRoute.snapshot.params.projectId;
-        this.loadProject();
+        this.id = this.activatedRoute.snapshot.params.projectId;
+        this.load();
       }
     });
   }
@@ -49,9 +48,9 @@ export class ProjectDataComponent extends ProjectDetailEntity implements OnDestr
     this.deleteProject(successCallback, errorCallback);
   }
 
-  private loadProject() {
+  load() {
     this.loadingStatus = LoadingStatusEnum.Loading;
-    this.hProjectService.findHProject(this.projectId).subscribe((p: HProject) => {
+    this.hProjectService.findHProject(this.id).subscribe((p: HProject) => {
       this.project = p;
       // update form data
       this.form.get('hproject-name')

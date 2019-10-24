@@ -28,7 +28,7 @@
     </ng-template>
 
     <ng-template #packetsTemplate>
-      <hyt-device-select [hDevices]="hDevices" (selectedDevice)="deviceChanged($event)"></hyt-device-select>
+      <hyt-device-select #deviceSelect [hDevices]="hDevices" (selectedDevice)="deviceChanged($event)"></hyt-device-select>
       <hyt-packet-data #packetsData [currentDevice]="currentDevice" (entityEvent)="onEntityEvent($event)">
       </hyt-packet-data>
     </ng-template>
@@ -97,7 +97,7 @@
       </div>
 
       <hyt-generic-summary-list *ngIf="currentForm && currentForm.summaryList" [summaryList]="currentForm.summaryList"
-        (itemClick)="onSummaryItemClick($event)"></hyt-generic-summary-list>
+        (itemClick)="onSummaryItemClick($event)" (menuAction)="menuAction($event)"></hyt-generic-summary-list>
 
       <div *ngIf="hintVisible" class="info-message m-2 mt-4 d-flex flex-row">
         <span class="text p-2 flex-grow-1">{{hintMessage}}</span>

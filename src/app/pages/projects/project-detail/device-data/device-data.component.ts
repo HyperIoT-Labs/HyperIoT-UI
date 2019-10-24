@@ -18,7 +18,6 @@ export class DeviceDataComponent extends ProjectDetailEntity implements OnDestro
   @Input()
   currentProject: HProject;
 
-  deviceId: number;
   device: HDevice = {} as HDevice;
 
   private routerSubscription: Subscription;
@@ -35,8 +34,8 @@ export class DeviceDataComponent extends ProjectDetailEntity implements OnDestro
     this.routerSubscription = this.router.events.subscribe((rl) => {
       this.submitMethod = SubmitMethod.Put;
       if (rl instanceof NavigationEnd) {
-        this.deviceId = activatedRoute.snapshot.params.deviceId;
-        this.loadDevice();
+        this.id = activatedRoute.snapshot.params.deviceId;
+        this.load();
       }
     });
   }
@@ -53,9 +52,9 @@ export class DeviceDataComponent extends ProjectDetailEntity implements OnDestro
     this.deleteDevice(successCallback, errorCallback);
   }
 
-  private loadDevice() {
+  load() {
     this.loadingStatus = LoadingStatusEnum.Loading;
-    this.hDeviceService.findHDevice(this.deviceId).subscribe((d: HDevice) => {
+    this.hDeviceService.findHDevice(this.id).subscribe((d: HDevice) => {
       this.device = d;
       // update form data
       this.form.get('hdevice-devicename')
@@ -87,10 +86,7 @@ export class DeviceDataComponent extends ProjectDetailEntity implements OnDestro
 
     const responseHandler = (res) => {
       this.device = res;
-      if (this.submitMethod == SubmitMethod.Post)
-        this.cleanForm();
-      else
-        this.resetForm();
+      this.resetForm();
       this.entityEvent.emit({
         event: 'treeview:update',
         id: this.device.id,
