@@ -73,11 +73,15 @@ export class PacketEnrichmentComponent implements OnInit {
     var jActions = [this.enrichmentForm.value['enrichmentRule']];
     var jActionStr: string = JSON.stringify(jActions);
 
+    const project = this.currentPacket.device.project;
     let rule: Rule = {
       name: this.enrichmentForm.value['rule-name'],
       ruleDefinition: this.ruleDefinitionComponent.buildRuleDefinition(),
       description: this.enrichmentForm.value['rule-description'],
-      project: { id: this.wizardService.getHProject().id, entityVersion: this.wizardService.getHProject().entityVersion },
+      project: {
+        id: project.id,
+        entityVersion: project.entityVersion
+      },
       packet: this.currentPacket,
       jsonActions: jActionStr,
       type: 'ENRICHMENT',
