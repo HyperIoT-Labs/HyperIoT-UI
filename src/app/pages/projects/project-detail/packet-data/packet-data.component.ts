@@ -50,7 +50,7 @@ export class PacketDataComponent extends ProjectDetailEntity implements OnDestro
   ) {
     super(formBuilder, formView);
     console.log("init");
-    this.longDefinition = 'packet long definition';//@I18N@
+    this.longDefinition = 'packet long definition'; //@I18N@
     this.routerSubscription = this.router.events.subscribe((rl) => {
       this.submitMethod = SubmitMethod.Put;
       if (rl instanceof NavigationEnd) {
@@ -164,11 +164,14 @@ export class PacketDataComponent extends ProjectDetailEntity implements OnDestro
     this.hPacketService.deleteHPacket(this.packet.id).subscribe((res) => {
       successCallback && successCallback(res);
       this.loadingStatus = LoadingStatusEnum.Ready;
-      // Navigate to parent node (device page)
-      this.router.navigate([
-        '/projects', this.packet.device.project.id,
-        { outlets: { projectDetails: ['device', this.packet.device.id] } }
-      ]);
+      // request navigate to parent node (device page)
+      this.entityEvent.emit({
+        event: 'entity:delete',
+        exitRoute: [
+          '/projects', this.packet.device.project.id,
+          { outlets: { projectDetails: ['device', this.packet.device.id] } }
+        ]
+      });
       this.entityEvent.emit({ event: 'treeview:refresh' });
     }, (err) => {
       errorCallback && errorCallback(err);

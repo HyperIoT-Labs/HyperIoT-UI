@@ -140,8 +140,11 @@ export class DeviceDataComponent extends ProjectDetailEntity implements OnDestro
       this.entityEvent.emit({ event: 'treeview:refresh' });
       successCallback && successCallback(res);
       this.loadingStatus = LoadingStatusEnum.Ready;
-      // navigate to project page when a device is deleted
-      this.router.navigate(['/projects', this.device.project.id]);
+      // request navigate to project page when a device is deleted
+      this.entityEvent.emit({
+        event: 'entity:delete',
+        exitRoute: ['/projects', this.device.project.id]
+      });
     }, (err) => {
       errorCallback && errorCallback(err);
       this.loadingStatus = LoadingStatusEnum.Error;

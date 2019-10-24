@@ -94,6 +94,11 @@ export class ProjectDetailComponent implements OnInit {
           case 'hint:hide':
             this.hideHintMessage();
             break;
+          case 'entity:delete':
+            if (data.exitRoute) {
+              this.router.navigate(data.exitRoute);
+            }
+            break;
         }
       });
     }

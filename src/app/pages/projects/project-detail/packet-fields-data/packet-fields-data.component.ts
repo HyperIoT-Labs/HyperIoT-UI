@@ -174,7 +174,6 @@ export class PacketFieldsDataComponent extends ProjectDetailEntity implements On
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result === 'delete') {
-console.log('DELETE', fieldId);
         this.hPacketService.deleteHPacketField(fieldId).subscribe(
           res => {
             console.log(res)

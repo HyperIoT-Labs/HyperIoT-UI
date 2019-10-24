@@ -107,8 +107,11 @@ export class ProjectDataComponent extends ProjectDetailEntity implements OnDestr
     this.hProjectService.deleteHProject(this.project.id).subscribe((res) => {
       this.loadingStatus = LoadingStatusEnum.Ready;
       successCallback && successCallback(res);
-      // navigate to project list when the project itself is deleted
-      this.router.navigate(['/projects']);
+      // request navigate to project list when the project itself is deleted
+      this.entityEvent.emit({
+        event: 'entity:delete',
+        exitRoute: ['/projects']
+      });
     }, (err) => {
       this.loadingStatus = LoadingStatusEnum.Error;
       errorCallback && errorCallback(err);
