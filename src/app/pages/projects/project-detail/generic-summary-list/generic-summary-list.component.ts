@@ -2,7 +2,13 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 export class SummaryList {
   title: string;
-  list: { name: string, description: string, item: any }[];
+  list: SummaryListItem[];
+}
+export class SummaryListItem {
+  index = 0;
+  name: string;
+  description: string;
+  data: any;
 }
 
 @Component({
@@ -11,7 +17,7 @@ export class SummaryList {
   styleUrls: ['./generic-summary-list.component.scss']
 })
 export class GenericSummaryListComponent {
-  @Output() itemClick = new EventEmitter<any>();
+  @Output() itemClick = new EventEmitter<SummaryListItem>();
   @Output() menuAction = new EventEmitter<{
     action: 'edit' | 'duplicate' | 'delete',
     item: any
@@ -23,13 +29,13 @@ export class GenericSummaryListComponent {
     this._summaryList = summary;
   }
 
-  selectedItem;
+  selectedItem: SummaryListItem;
 
   constructor(
   ) { }
 
-  onItemClick(item: any) {
-    console.log(item)
+  onItemClick(i: number, item: SummaryListItem) {
+    item.index = i;
     this.selectedItem = item;
     this.itemClick.emit(item);
   }
