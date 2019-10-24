@@ -3,7 +3,7 @@
         {{_summaryList.title}}
     </header>
 </div>
-<div *ngFor="let item of _summaryList.list" (click)="onItemClick(item)"
+<div *ngFor="let item of _summaryList.list" (click)="onItemClick(item.item)"
     [matMenuTriggerFor]="itemMenu"
     class="item d-flex flex-row justify-content-start align-items-stretch">
     <div class="icon d-flex flex-column justify-content-center align-items-center">
