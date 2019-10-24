@@ -12,10 +12,6 @@ export enum LoadingStatusEnum {
     Saving,
     Error
 }
-export enum SubmitMethod {
-    Post,
-    Put
-}
 
 export abstract class ProjectDetailEntity implements OnInit {
     @Output() entityEvent = new EventEmitter<any>();
@@ -29,8 +25,6 @@ export abstract class ProjectDetailEntity implements OnInit {
     form: FormGroup;
     private originalValue: string;
     private validationError = [];
-
-    submitMethod: SubmitMethod = SubmitMethod.Post;
 
     longDefinition: string = 'entity long definition';
 

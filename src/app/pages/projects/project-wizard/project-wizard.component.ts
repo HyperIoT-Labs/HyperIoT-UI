@@ -3,10 +3,11 @@ import { HProject, HDevice, HPacket, Rule } from '@hyperiot/core';
 import { Router, CanDeactivate } from '@angular/router';
 import { Subject } from 'rxjs';
 import { ProjectWizardService } from 'src/app/services/projectWizard/project-wizard.service';
-import { ProjectDetailEntity, SubmitMethod } from '../project-detail/project-detail-entity';
+import { ProjectDetailEntity } from '../project-detail/project-detail-entity';
 import { ProjectDataComponent } from '../project-detail/project-data/project-data.component';
 import { DeviceDataComponent } from '../project-detail/device-data/device-data.component';
 import { DeviceSelectComponent } from './device-select/device-select.component';
+import { PacketFieldsDataComponent } from '../project-detail/packet-fields-data/packet-fields-data.component';
 
 @Injectable({
   providedIn: 'root',
@@ -44,6 +45,9 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
 
   @ViewChild('deviceSelect', { static: false })
   deviceSelect: DeviceSelectComponent;
+
+  @ViewChild('fieldsData', { static: false })
+  fieldsData: PacketFieldsDataComponent;
 
   currentProject: HProject;
   currentDevice: HDevice;
@@ -130,6 +134,7 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
         break;
       }
       case 3: {
+        this.currentForm = this.fieldsData;
         break;
       }
       case 4: {
@@ -153,13 +158,12 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
     this.currentForm.save((ent) => {
 
       if (this.currentForm == this.projectData) {
-        this.currentForm.submitMethod = SubmitMethod.Put;
         this.currentProject = ent;
       }
 
       else if (this.currentForm == this.devicesData) {
         this.currentForm.cleanForm();
-        if (this.currentForm.submitMethod == SubmitMethod.Post) {
+        if (!this.currentForm.id) {
           this.hDevices.push(ent);
           this.hDevices = [...this.hDevices];
         }
@@ -178,7 +182,7 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
 
       else if (this.currentForm == this.packetsData) {
         this.currentForm.cleanForm();
-        if (this.currentForm.submitMethod == SubmitMethod.Post) {
+        if (!this.currentForm.id) {
           this.hPackets.push(ent);
           this.hPackets = [...this.hPackets];
         }
@@ -228,14 +232,12 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
         if (this.currentForm == this.packetsData)
           this.deviceSelect.selectSpecific(event.item.device.id);
         this.currentForm.id = event.item.id;
-        this.currentForm.submitMethod = SubmitMethod.Put;
         this.currentForm.load();
         break;
       case 'duplicate':
         if (this.currentForm == this.packetsData)
           this.deviceSelect.selectSpecific(event.item.device.id);
         this.currentForm.id = event.item.id;
-        this.currentForm.submitMethod = SubmitMethod.Post;
         this.currentForm.load();
         break;
       case 'delete':
@@ -279,6 +281,21 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
 
   deviceChanged(event): void {
     this.currentDevice = event;
+  }
+
+  fieldCurrentPacket: HPacket;
+  fieldPacketChanged(event):void {
+    this.fieldCurrentPacket = event;
+  }
+
+  enrichmentCurrentPacket: HPacket;
+  enrichmentPacketChanged(event):void {
+    this.enrichmentCurrentPacket = event;
+  }
+
+  eventCurrentPacket: HPacket;
+  eeventPacketChanged(event):void {
+    this.eventCurrentPacket = event;
   }
 
   updateProject(proj: HProject) {

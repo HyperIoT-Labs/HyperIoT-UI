@@ -34,14 +34,16 @@
     </ng-template>
 
     <ng-template #fieldsTemplate>
-      <hyt-fields-step></hyt-fields-step>
+      <hyt-pw-packet-select [hDevices]="hDevices" [hPackets]="hPackets" (currentPacket)="fieldPacketChanged($event)"></hyt-pw-packet-select>
+      <hyt-packet-fields-data #fieldsData (currentPacket)="fieldCurrentPacket"></hyt-packet-fields-data>
+      <!-- <hyt-fields-step></hyt-fields-step>
       <hyt-button (clickFn)="stepper.previous()">
         <ng-container i18n="@@HYT_back">HYT_back</ng-container>
       </hyt-button>
       <hyt-button
         (clickFn)="(fieldsValidated == true && enrichmentValidated == false)? openOptionModal() : stepper.next()">
         <ng-container i18n="@@HYT_next">HYT_next</ng-container>
-      </hyt-button>
+      </hyt-button> -->
     </ng-template>
 
     <ng-template #enrichmentTemplate>

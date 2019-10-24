@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs';
 
 import { HprojectsService, HProject } from '@hyperiot/core';
 
-import { ProjectDetailEntity, LoadingStatusEnum, SubmitMethod } from '../project-detail-entity';
+import { ProjectDetailEntity, LoadingStatusEnum } from '../project-detail-entity';
 
 @Component({
   selector: 'hyt-project-data',
@@ -28,7 +28,6 @@ export class ProjectDataComponent extends ProjectDetailEntity implements OnDestr
     super(formBuilder, formView);
     this.longDefinition = 'project long definition';//@I18N@
     this.routerSubscription = this.router.events.subscribe((rl) => {
-      this.submitMethod = SubmitMethod.Put;
       if (rl instanceof NavigationEnd) {
         this.id = this.activatedRoute.snapshot.params.projectId;
         this.load();

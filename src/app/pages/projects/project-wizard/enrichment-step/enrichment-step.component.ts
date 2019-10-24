@@ -32,41 +32,7 @@ export class EnrichmentStepComponent {
 
   saveRule() {
 
-    this.form.pageStatus = PageStatusEnum.Loading;
-
-    var jActions = [this.form.enrichmentForm.value['enrichmentRule']];
-    var jActionStr: string = JSON.stringify(jActions);
-
-    let rule: Rule = {
-      name: this.form.enrichmentForm.value['rule-name'],
-      ruleDefinition: this.form.ruleDefinitionComponent.buildRuleDefinition(),
-      description: this.form.enrichmentForm.value['rule-description'],
-      project: { id: this.wizardService.getHProject().id, entityVersion: this.wizardService.getHProject().entityVersion },
-      packet: this.form.currentPacket,
-      jsonActions: jActionStr,
-      type: 'ENRICHMENT',
-      entityVersion: 1
-    }
-
-    this.rulesService.saveRule(rule).subscribe(
-      res => {
-        this.form.resetForm('ADD');
-        this.wizardService.addEnrichmentRule(res);
-        this.form.pageStatus = PageStatusEnum.Submitted;
-      },
-      err => {
-        this.form.pageStatus = PageStatusEnum.Error;
-        this.form.errors = this.errorHandler.handleCreateRule(err);
-        this.form.errors.forEach(e => {
-          if (e.container != 'general')
-            this.form.enrichmentForm.get(e.container).setErrors({
-              validateInjectedError: {
-                valid: false
-              }
-            });
-        })
-      }
-    )
+    
 
   }
 

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnDestroy, ViewChild, ElementRef, Input, OnChanges } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 
@@ -18,11 +18,13 @@ import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-
   templateUrl: './packet-fields-data.component.html',
   styleUrls: ['./packet-fields-data.component.scss']
 })
-export class PacketFieldsDataComponent extends ProjectDetailEntity implements OnDestroy {
+export class PacketFieldsDataComponent extends ProjectDetailEntity implements OnDestroy, OnChanges {
   @ViewChild('treeViewFields', { static: false }) treeViewFields: HytTreeViewEditableComponent;
   private routerSubscription: Subscription;
   private activatedRouteSubscription: Subscription;
-  private packetId: number;
+
+  @Input()
+  packetId: number;
 
   fieldMultiplicityOptions: Option[] = Object.keys(HPacketField.MultiplicityEnum)
     .map((k) => ({ label: k, value: k }));
@@ -58,6 +60,13 @@ export class PacketFieldsDataComponent extends ProjectDetailEntity implements On
       this.packetId = +(activatedRoute.snapshot.params.packetId);
       this.loadData();
     });
+  }
+
+  ngOnChanges() {
+    if (this.packetId) {
+      console.log("LOADING....")
+      this.loadData();
+    }
   }
 
   ngOnDestroy() {
@@ -129,7 +138,7 @@ export class PacketFieldsDataComponent extends ProjectDetailEntity implements On
       lom: pf.multiplicity,
       type: pf.type,
       children: (pf.type === HPacketField.TypeEnum.OBJECT)
-                ? this.createFieldsTree(pf.innerFields) : null
+        ? this.createFieldsTree(pf.innerFields) : null
     }));
   }
 
@@ -170,7 +179,7 @@ export class PacketFieldsDataComponent extends ProjectDetailEntity implements On
 
   private openDeleteDialog(fieldId: number) {
     const dialogRef = this.dialog.open(DeleteConfirmDialogComponent, {
-      data: {title: 'Delete item?', message: 'This operation cannot be undone.'}
+      data: { title: 'Delete item?', message: 'This operation cannot be undone.' }
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result === 'delete') {
