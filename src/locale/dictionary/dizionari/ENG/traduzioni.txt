@@ -53,7 +53,7 @@ Next
 HYT_back
 Back
 HYT_password
-Passwod
+Password
 HYT_passwordConfirm
 Confirm password
 HYT_username_or_email

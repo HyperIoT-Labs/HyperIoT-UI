@@ -20,7 +20,6 @@ export class PacketDataComponent extends ProjectDetailEntity implements OnDestro
   @Input()
   currentDevice: HDevice;
 
-  packetId: number;
   packet: HPacket = {} as HPacket;
   deviceName: '---';
 
@@ -54,8 +53,8 @@ export class PacketDataComponent extends ProjectDetailEntity implements OnDestro
     this.routerSubscription = this.router.events.subscribe((rl) => {
       this.submitMethod = SubmitMethod.Put;
       if (rl instanceof NavigationEnd) {
-        this.packetId = this.activatedRoute.snapshot.params.packetId;
-        this.loadPacket();
+        this.id = this.activatedRoute.snapshot.params.packetId;
+        this.load();
       }
     });
   }
@@ -72,9 +71,9 @@ export class PacketDataComponent extends ProjectDetailEntity implements OnDestro
     this.deletePacket(successCallback, errorCallback);
   }
 
-  private loadPacket() {
+  load() {
     this.loadingStatus = LoadingStatusEnum.Loading;
-    this.hPacketService.findHPacket(this.packetId).subscribe((p: HPacket) => {
+    this.hPacketService.findHPacket(this.id).subscribe((p: HPacket) => {
       this.packet = p;
       // update form data
       this.form.get('hpacket-name')

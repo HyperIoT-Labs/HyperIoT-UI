@@ -49,4 +49,11 @@ export class DeviceSelectComponent implements OnChanges {
       this.selectedDevice.emit(null);
   }
 
+  selectSpecific(deviceId: number): void {
+    console.log(deviceId)
+    let so: SelectOption = this.devicesOptions.find(x => x.value.id == deviceId);
+    this.selectForm.get('selectDevice').setValue(so.value);
+    this.deviceChanged(so);
+  }
+
 }

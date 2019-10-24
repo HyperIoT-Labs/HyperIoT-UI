@@ -21,6 +21,8 @@ export abstract class ProjectDetailEntity implements OnInit {
     @Output() entityEvent = new EventEmitter<any>();
     isProjectEntity = true;
 
+    id: number;
+
     hideDelete = false;
     showCancel = false;
 
@@ -58,16 +60,17 @@ export abstract class ProjectDetailEntity implements OnInit {
         return true;
     }
 
+    load(): void { }
     save(successCallback: any, errorCallback: any): void { }
     delete(successCallback: any, errorCallback: any): void { }
     cancel(): void { }
 
     isValid(): boolean {
-        let valid = true;
+        let invalid = false;
         Object.keys(this.form.controls).forEach((field) => {
-            valid = valid && this.form.get(field).valid;
+            invalid = invalid || this.form.get(field).invalid;
         });
-        return valid;
+        return !invalid;
     }
     isDirty(): boolean {
         return JSON.stringify(this.form.value) !== this.originalValue;
