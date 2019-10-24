@@ -70,7 +70,7 @@ export class PacketEventsDataComponent extends ProjectDetailEntity implements On
           title: 'Events Data',
           list: rules.filter((i) => {
             if (i.type === Rule.TypeEnum.EVENT) {
-              return { name: i.name, description: i.description, item: i };
+              return { name: i.name, description: i.description, data: i };
             }
           }) as any
         };

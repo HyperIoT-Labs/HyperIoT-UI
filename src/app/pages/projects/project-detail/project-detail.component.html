@@ -77,7 +77,9 @@
             </div>
 
             <hyt-generic-summary-list *ngIf="currentEntity && currentEntity.summaryList"
-                [summaryList]="currentEntity.summaryList" (itemClick)="onSummaryItemClick($event)"></hyt-generic-summary-list>
+                [summaryList]="currentEntity.summaryList"
+                (itemClick)="onSummaryItemClick($event)"
+                (menuAction)="onSummaryMenuClick($event)"></hyt-generic-summary-list>
 
         </div>
 

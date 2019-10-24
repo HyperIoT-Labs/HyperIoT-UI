@@ -35,7 +35,7 @@ export class GenericSummaryListComponent {
   ) { }
 
   onItemClick(i: number, item: SummaryListItem) {
-    item.index = i;
+    //item.index = i;
     this.selectedItem = item;
     this.itemClick.emit(item);
   }

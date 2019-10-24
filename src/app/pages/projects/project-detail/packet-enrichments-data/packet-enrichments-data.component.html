@@ -8,7 +8,7 @@
 </div>
 
 <hyt-packet-enrichment
-    *ngIf="editMode && packet"
+    [ngClass]="{hidden: !editMode || !packet}"
     [hProject]="project"
     [hPackets]="packetList"
     [currentPacket]="packet"

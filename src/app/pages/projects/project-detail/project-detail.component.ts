@@ -11,7 +11,8 @@ import { ProjectDetailEntity } from './project-detail-entity';
 import { MatDialog } from '@angular/material';
 import { SaveChangesDialogComponent } from 'src/app/components/dialogs/save-changes-dialog/save-changes-dialog.component';
 import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
-import { SummaryList, SummaryListItem } from './generic-summary-list/generic-summary-list.component';
+import { SummaryListItem } from './generic-summary-list/generic-summary-list.component';
+import { PacketEnrichmentsDataComponent } from './packet-enrichments-data/packet-enrichments-data.component';
 
 enum TreeStatusEnum {
   Ready,
@@ -109,8 +110,18 @@ export class ProjectDetailComponent implements OnInit {
     this.currentEntity.cancel();
   }
 
-  onSummaryItemClick(item: SummaryListItem) {
+  onSummaryItemClick(item: any) {
     console.log('clicked summary item', item);
+  }
+  onSummaryMenuClick(e) {
+    switch (e.action) {
+      case 'edit':
+        if (this.currentEntity instanceof PacketEnrichmentsDataComponent) {
+          (this.currentEntity as PacketEnrichmentsDataComponent)
+            .edit(e.item);
+        }
+        break;
+    }
   }
 
   refresh() {

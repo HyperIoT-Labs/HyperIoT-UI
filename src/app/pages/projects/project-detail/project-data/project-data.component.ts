@@ -67,35 +67,28 @@ export class ProjectDataComponent extends ProjectDetailEntity implements OnDestr
   private saveProject(successCallback?, errorCallback?) {
     this.loadingStatus = LoadingStatusEnum.Saving;
     this.resetErrors();
-
+    let p = this.project;
+    p.name = this.form.get('hproject-name').value;
+    p.description = this.form.get('hproject-description').value;
+    p.user = this.getUser();
     const responseHandler = (res) => {
-      this.project = res;
+      this.project = p = res;
       this.resetForm();
       this.entityEvent.emit({
         event: 'treeview:update',
-        id: this.project.id, name: this.project.name
+        id: p.id, name: p.name
       });
       this.loadingStatus = LoadingStatusEnum.Ready;
       successCallback && successCallback(res);
     };
-
-    if (this.submitMethod == SubmitMethod.Post) {
-      let p: HProject = {
-        entityVersion: 1,
-        name: this.form.get('hproject-name').value,
-        description: this.form.get('hproject-description').value,
-        user: this.getUser()
-      }
-      this.hProjectService.saveHProject(p).subscribe(responseHandler, (err) => {
+    if (p.id) {
+      this.hProjectService.updateHProject(p).subscribe(responseHandler, (err) => {
         this.setErrors(err);
         errorCallback && errorCallback(err);
       });
-    }
-    else {
-      let p = this.project;
-      p.name = this.form.get('hproject-name').value;
-      p.description = this.form.get('hproject-description').value;
-      this.hProjectService.updateHProject(p).subscribe(responseHandler, (err) => {
+    } else {
+      p.entityVersion = 1;
+      this.hProjectService.saveHProject(p).subscribe(responseHandler, (err) => {
         this.setErrors(err);
         errorCallback && errorCallback(err);
       });

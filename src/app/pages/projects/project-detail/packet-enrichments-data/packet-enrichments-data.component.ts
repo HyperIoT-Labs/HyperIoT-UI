@@ -69,6 +69,11 @@ export class PacketEnrichmentsDataComponent extends ProjectDetailEntity implemen
     this.loadData();
   }
 
+  edit(rule: Rule) {
+    this.editMode = true;
+    this.enrichmentComponent.setForm(rule, rule.type);
+  }
+
   loadData() {
     this.summaryList = null;
     this.packetService.findHPacket(this.packetId).subscribe((p: HPacket) => {
@@ -86,7 +91,7 @@ export class PacketEnrichmentsDataComponent extends ProjectDetailEntity implemen
               title: 'Enrichments Data',
               list: rules.filter((i) => {
                 if (i.type === Rule.TypeEnum.ENRICHMENT) {
-                  return { name: i.name, description: i.description, item: i };
+                  return { name: i.name, description: i.description, data: i };
                 }
               }) as any
             };
