@@ -8,6 +8,7 @@ import { PageStatusEnum } from '../../model/pageStatusEnum';
 import { AssetTagComponent } from '../../asset-tag/asset-tag.component';
 import { ProjectWizardService } from 'src/app/services/projectWizard/project-wizard.service';
 import { I18n } from '@ngx-translate/i18n-polyfill';
+import { ProjectWizardHttpErrorHandlerService } from 'src/app/services/errorHandler/project-wizard-http-error-handler.service';
 
 @Component({
   selector: 'hyt-packet-enrichment',
@@ -44,6 +45,7 @@ export class PacketEnrichmentComponent implements OnInit {
     private rulesService: RulesService,
     private packetService: HpacketsService,
     private wizardService: ProjectWizardService,
+    private errorHandler: ProjectWizardHttpErrorHandlerService,
     private i18n: I18n
   ) { }
 
@@ -65,7 +67,42 @@ export class PacketEnrichmentComponent implements OnInit {
   postRule() {
 
     this.errors = [];
-    this.saveRule.emit();
+
+    this.pageStatus = PageStatusEnum.Loading;
+
+    var jActions = [this.enrichmentForm.value['enrichmentRule']];
+    var jActionStr: string = JSON.stringify(jActions);
+
+    let rule: Rule = {
+      name: this.enrichmentForm.value['rule-name'],
+      ruleDefinition: this.ruleDefinitionComponent.buildRuleDefinition(),
+      description: this.enrichmentForm.value['rule-description'],
+      project: { id: this.wizardService.getHProject().id, entityVersion: this.wizardService.getHProject().entityVersion },
+      packet: this.currentPacket,
+      jsonActions: jActionStr,
+      type: 'ENRICHMENT',
+      entityVersion: 1
+    }
+
+    this.rulesService.saveRule(rule).subscribe(
+      res => {
+        this.resetForm('ADD');
+        this.wizardService.addEnrichmentRule(res);
+        this.pageStatus = PageStatusEnum.Submitted;
+      },
+      err => {
+        this.pageStatus = PageStatusEnum.Error;
+        this.errors = this.errorHandler.handleCreateRule(err);
+        this.errors.forEach(e => {
+          if (e.container != 'general')
+            this.enrichmentForm.get(e.container).setErrors({
+              validateInjectedError: {
+                valid: false
+              }
+            });
+        })
+      }
+    )
 
     if (this.enrichmentType == 'AddTagRuleAction') {
       this.currentPacket.tagIds = this.assetTags;
