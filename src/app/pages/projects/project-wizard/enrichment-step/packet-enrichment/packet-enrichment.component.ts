@@ -9,7 +9,6 @@ import { AssetTagComponent } from '../../asset-tag/asset-tag.component';
 import { ProjectWizardService } from 'src/app/services/projectWizard/project-wizard.service';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { ProjectWizardHttpErrorHandlerService } from 'src/app/services/errorHandler/project-wizard-http-error-handler.service';
-import { ProjectDetailEntity } from '../../../project-detail/project-detail-entity';
 
 @Component({
   selector: 'hyt-packet-enrichment',
