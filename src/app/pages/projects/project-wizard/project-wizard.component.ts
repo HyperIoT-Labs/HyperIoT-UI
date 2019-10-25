@@ -3,9 +3,10 @@ import { HProject, HDevice, HPacket, Rule } from '@hyperiot/core';
 import { Router, CanDeactivate } from '@angular/router';
 import { Subject } from 'rxjs';
 import { ProjectWizardService } from 'src/app/services/projectWizard/project-wizard.service';
-import { ProjectDetailEntity } from '../project-detail/project-detail-entity';
-import { ProjectDataComponent } from '../project-detail/project-data/project-data.component';
-import { DeviceDataComponent } from '../project-detail/device-data/device-data.component';
+import { ProjectFormEntity } from '../project-forms/project-form-entity';
+import { ProjectDataComponent } from '../project-forms/project-data/project-data.component';
+import { DeviceDataComponent } from '../project-forms/device-data/device-data.component';
+import { PacketDataComponent } from '../project-forms/packet-data/packet-data.component';
 import { DeviceSelectComponent } from './device-select/device-select.component';
 import { PacketFieldsDataComponent } from '../project-forms/packet-fields-data/packet-fields-data.component';
 import { SummaryListItem } from '../project-detail/generic-summary-list/generic-summary-list.component';
@@ -33,7 +34,7 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
 
   @ViewChild('stepper', { static: false }) stepper;
 
-  currentForm: ProjectDetailEntity;
+  currentForm: ProjectFormEntity;
 
   @ViewChild('projectData', { static: false })
   projectData: ProjectDataComponent;
@@ -42,7 +43,7 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
   devicesData: DeviceDataComponent;
 
   @ViewChild('packetsData', { static: false })
-  packetsData: DeviceDataComponent;
+  packetsData: PacketDataComponent;
 
   @ViewChild('deviceSelect', { static: false })
   deviceSelect: DeviceSelectComponent;
@@ -135,7 +136,7 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
         break;
       }
       case 3: {
-        this.currentForm = this.fieldsData;
+        // this.currentForm = this.fieldsData;
         break;
       }
       case 4: {
@@ -155,19 +156,25 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
     // this.wizardService.stepChanged(event.selectedIndex);
   }
 
+  button(){
+    console.log(this.currentForm.entity);
+    console.log(this.currentForm.entity.id);
+  }
+
   onSaveClick(e) {
     this.currentForm.save((ent) => {
 
       if (this.currentForm == this.projectData) {
         this.currentProject = ent;
-        this.currentForm.id = ent.id;
       }
 
       else if (this.currentForm == this.devicesData) {
+        this.currentForm.entity = {};
         this.currentForm.cleanForm();
-        if (!this.currentForm.id) {
+        if (!this.currentForm.entity.id) {
           this.hDevices.push(ent);
           this.hDevices = [...this.hDevices];
+          console.log(this.hDevices);
         }
         else {
           let dev = this.hDevices.find(x => x.id == ent.id);
@@ -184,8 +191,9 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
       }
 
       else if (this.currentForm == this.packetsData) {
+        this.currentForm.entity = {};
         this.currentForm.cleanForm();
-        if (!this.currentForm.id) {
+        if (!this.currentForm.entity.id) {
           this.hPackets.push(ent);
           this.hPackets = [...this.hPackets];
         }
@@ -202,6 +210,9 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
         };
 
       }
+
+      // this.currentForm.entity.id = null;
+
     }, (error) => {
       // TODO: ...
     });
@@ -235,6 +246,7 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
       case 'edit':
         if (this.currentForm == this.packetsData)
           this.deviceSelect.selectSpecific(event.item.data.device.id);
+        this.currentForm.entity.id = event.item.data.id;
         this.currentForm.edit(event.item.data);
         break;
       case 'duplicate':
@@ -243,7 +255,7 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
         this.currentForm.clone(event.item.data);
         break;
       case 'delete':
-        this.currentForm.id = event.item.data.id;
+        this.currentForm.entity.id = event.item.data.id;
         this.currentForm.delete((del) => {
 
           if (this.currentForm == this.devicesData) {
@@ -287,7 +299,11 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
 
   fieldCurrentPacket: HPacket;
   fieldPacketChanged(event): void {
-    this.fieldCurrentPacket = event;
+    this.fieldCurrentPacket = event.id;
+    if (this.fieldsData.packetId){
+      console.log("asdfasdf")
+      //this.fieldsData.loadData();
+    }
   }
 
   enrichmentCurrentPacket: HPacket;

@@ -76,10 +76,10 @@ export class DeviceDataComponent extends ProjectFormEntity implements OnDestroy 
   }
 
   clone(entity?: HDevice): HDevice {
-    const device = entity || this.entity;
+    const device = {...entity} || this.entity;
     device.id = 0;
     device.entityVersion = 1;
-    device.deviceName = `${device.deviceName}(copy)`;
+    device.deviceName = `${device.deviceName}Copy`;
     this.edit(device);
     return device;
 }

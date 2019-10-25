@@ -35,8 +35,8 @@
 
     <ng-template #fieldsTemplate>
       <hyt-pw-packet-select [hDevices]="hDevices" [hPackets]="hPackets" (currentPacket)="fieldPacketChanged($event)"></hyt-pw-packet-select>
-      <hyt-packet-fields-data #fieldsData (currentPacket)="fieldCurrentPacket"></hyt-packet-fields-data>
-      <hyt-button
+      <hyt-packet-fields-data #fieldsData [packetId]="fieldCurrentPacket"></hyt-packet-fields-data>
+      <!-- <hyt-button
         (clickFn)="(fieldsValidated == true && enrichmentValidated == false)? openOptionModal() : stepper.next()">
         <ng-container i18n="@@HYT_next">HYT_next</ng-container>
       </hyt-button> -->
@@ -249,10 +249,12 @@
 
   <hyt-button *ngIf="currentForm" (clickFn)="onSaveClick($event)"
     [isDisabled]="currentForm && (!currentForm.isValid() || !currentForm.isDirty())">
-    <ng-container *ngIf="currentForm && !currentForm.id">Salva</ng-container>
+    <ng-container *ngIf="currentForm && !currentForm.entity.id">Salva</ng-container>
     <!-- @I18N@ -->
-    <ng-container *ngIf="currentForm && currentForm.id">Aggiorna</ng-container>
+    <ng-container *ngIf="currentForm && currentForm.entity.id">Aggiorna</ng-container>
     <!-- @I18N@ -->
   </hyt-button>
 
 </div>
+
+<button (click)="button()">button</button>
