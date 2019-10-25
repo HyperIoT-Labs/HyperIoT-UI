@@ -15,7 +15,6 @@ import { DevicesFormComponent } from './project-wizard/devices-step/devices-form
 import { DevicesHintColumnComponent } from './project-wizard/devices-step/devices-hint-column/devices-hint-column.component';
 import { EventsStepComponent } from './project-wizard/events-step/events-step.component';
 import { FieldsStepComponent } from './project-wizard/fields-step/fields-step.component';
-import { PacketsStepComponent } from './project-wizard/packets-step/packets-step.component';
 import { ProjectStepComponent } from './project-wizard/project-step/project-step.component';
 import { StatisticsStepComponent } from './project-wizard/statistics-step/statistics-step.component';
 import { EnrichmentStepComponent } from './project-wizard/enrichment-step/enrichment-step.component';
@@ -47,7 +46,6 @@ import { EnrichmentTipColumnComponent } from './project-wizard/enrichment-step/e
 import { EventTipColumnComponent } from './project-wizard/events-step/event-tip-column/event-tip-column.component';
 import { PacketEventComponent } from './project-wizard/events-step/packet-event/packet-event.component';
 import { GenericSummaryListComponent } from './project-detail/generic-summary-list/generic-summary-list.component';
-import { PacketsHintColumnComponent } from './project-wizard/packets-step/packets-hint-column/packets-hint-column.component';
 import { ProjectHintColumnComponent } from './project-wizard/project-step/project-hint-column/project-hint-column.component';
 import { DeviceSelectComponent } from './project-wizard/device-select/device-select.component';
 
@@ -58,7 +56,6 @@ import { DeviceSelectComponent } from './project-wizard/device-select/device-sel
     DevicesStepComponent,
     EventsStepComponent,
     FieldsStepComponent,
-    PacketsStepComponent,
     ProjectStepComponent,
     StatisticsStepComponent,
     EnrichmentStepComponent,
@@ -87,7 +84,6 @@ import { DeviceSelectComponent } from './project-wizard/device-select/device-sel
     EventTipColumnComponent,
     PacketEventComponent,
     GenericSummaryListComponent,
-    PacketsHintColumnComponent,
     ProjectHintColumnComponent,
     DeviceSelectComponent
   ],
