@@ -109,7 +109,7 @@ export class DeviceDataComponent extends ProjectFormEntity implements OnDestroy 
       successCallback && successCallback(res);
     };
 
-    if (this.id) {
+    if (d.id) {
       this.hDeviceService.updateHDevice(d).subscribe(responseHandler, (err) => {
         this.setErrors(err);
         errorCallback && errorCallback(err);
