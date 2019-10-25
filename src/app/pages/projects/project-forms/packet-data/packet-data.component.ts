@@ -103,7 +103,7 @@ export class PacketDataComponent extends ProjectFormEntity implements OnDestroy 
     this.loadingStatus = LoadingStatusEnum.Saving;
     this.resetErrors();
 
-    let p = this.entity;
+    const p = this.entity;
     p.name = this.form.value['hpacket-name'];
     p.type = this.form.value['hpacket-type'];
     p.format = this.form.value['hpacket-format'];
@@ -112,6 +112,7 @@ export class PacketDataComponent extends ProjectFormEntity implements OnDestroy 
     p.timestampField = this.form.value['hpacket-timestampfield'];
     p.timestampFormat = this.form.value['hpacket-timestampformat'];
 
+    const wasNew = this.isNew();
     const responseHandler = (res) => {
       this.entity = res;
       this.resetForm();
@@ -120,7 +121,7 @@ export class PacketDataComponent extends ProjectFormEntity implements OnDestroy 
         id: this.entity.id, type: 'packet', name: this.entity.name
       });
       this.loadingStatus = LoadingStatusEnum.Ready;
-      successCallback && successCallback(res);
+      successCallback && successCallback(res, wasNew);
     };
 
     if (p.id) {

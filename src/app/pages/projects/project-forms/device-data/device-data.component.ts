@@ -88,7 +88,7 @@ export class DeviceDataComponent extends ProjectFormEntity implements OnDestroy 
     this.loadingStatus = LoadingStatusEnum.Saving;
     this.resetErrors();
 
-    let d = this.entity;
+    const d = this.entity;
     d.deviceName = this.form.get('hdevice-devicename').value;
     d.description = this.form.get('hdevice-description').value;
     d.brand = this.form.get('hdevice-brand').value;
@@ -96,6 +96,7 @@ export class DeviceDataComponent extends ProjectFormEntity implements OnDestroy 
     d.firmwareVersion = this.form.get('hdevice-firmwareversion').value;
     d.softwareVersion = this.form.get('hdevice-softwareversion').value;
 
+    const wasNew = this.isNew();
     const responseHandler = (res) => {
       this.entity = res;
       this.resetForm();
@@ -106,7 +107,7 @@ export class DeviceDataComponent extends ProjectFormEntity implements OnDestroy 
         name: this.entity.deviceName
       });
       this.loadingStatus = LoadingStatusEnum.Ready;
-      successCallback && successCallback(res);
+      successCallback && successCallback(res, wasNew);
     };
 
     if (d.id) {

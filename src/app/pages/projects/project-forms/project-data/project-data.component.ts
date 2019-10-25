@@ -70,6 +70,7 @@ export class ProjectDataComponent extends ProjectFormEntity implements OnDestroy
     p.name = this.form.get('hproject-name').value;
     p.description = this.form.get('hproject-description').value;
     p.user = this.getUser();
+    const wasNew = this.isNew();
     const responseHandler = (res) => {
       this.entity = p = res;
       this.resetForm();
@@ -78,7 +79,7 @@ export class ProjectDataComponent extends ProjectFormEntity implements OnDestroy
         id: p.id, name: p.name
       });
       this.loadingStatus = LoadingStatusEnum.Ready;
-      successCallback && successCallback(res);
+      successCallback && successCallback(res, wasNew);
     };
     if (p.id) {
       this.hProjectService.updateHProject(p).subscribe(responseHandler, (err) => {

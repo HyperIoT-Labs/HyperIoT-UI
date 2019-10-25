@@ -23,7 +23,7 @@ export abstract class ProjectFormEntity implements OnInit {
     private originalValue: string;
     private validationError = [];
 
-    // the following 4 fields should implemented by a specific interface
+    // the following 5 fields should implemented by a specific interface
     isProjectEntity = true;
     hideDelete = false;
     showCancel = false;
@@ -58,6 +58,9 @@ export abstract class ProjectFormEntity implements OnInit {
     save(successCallback: any, errorCallback: any): void { }
     delete(successCallback: any, errorCallback: any): void { }
     cancel(): void { }
+    isNew() {
+        return !this.entity || !this.entity.id;
+    }
 
     edit(entity?: any) {
         if (entity) {
@@ -127,7 +130,7 @@ export abstract class ProjectFormEntity implements OnInit {
                 .querySelectorAll('[hintMessage]');
         hintElements.forEach((el: Element) => {
             const message = el.getAttribute('hintMessage');
-            let tmp = el.querySelector('.hyt-input,mat-select');
+            const tmp = el.querySelector('.hyt-input,mat-select');
             if (tmp == null) {
                 return;
             }
