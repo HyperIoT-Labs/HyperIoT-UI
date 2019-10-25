@@ -145,7 +145,6 @@ export class PacketDataComponent extends ProjectFormEntity implements OnDestroy 
   private deletePacket(successCallback?, errorCallback?) {
     this.loadingStatus = LoadingStatusEnum.Saving;
     this.hPacketService.deleteHPacket(this.entity.id).subscribe((res) => {
-      successCallback && successCallback(res);
       this.loadingStatus = LoadingStatusEnum.Ready;
       // request navigate to parent node (device page)
       this.entityEvent.emit({
@@ -156,6 +155,7 @@ export class PacketDataComponent extends ProjectFormEntity implements OnDestroy 
         ]
       });
       this.entityEvent.emit({ event: 'treeview:refresh' });
+      successCallback && successCallback(res);
     }, (err) => {
       errorCallback && errorCallback(err);
       this.loadingStatus = LoadingStatusEnum.Error;
