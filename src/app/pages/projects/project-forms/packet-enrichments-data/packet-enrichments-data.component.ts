@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs';
 import { HpacketsService, HPacket, HDevice, HProject, Rule, RulesService } from '@hyperiot/core';
 import { FormBuilder } from '@angular/forms';
 import { ProjectFormEntity } from '../project-form-entity';
-import { PacketEnrichmentComponent } from '../../project-wizard/enrichment-step/packet-enrichment/packet-enrichment.component';
+import { PacketEnrichmentComponent } from '../../project-forms/packet-enrichments-data/packet-enrichment/packet-enrichment.component';
 
 @Component({
   selector: 'hyt-packet-enrichments-data',

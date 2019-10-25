@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { HPacket, Rule, RulesService } from '@hyperiot/core';
 import { ProjectWizardService } from 'src/app/services/projectWizard/project-wizard.service';
-import { PacketEnrichmentComponent } from './packet-enrichment/packet-enrichment.component';
+import { PacketEnrichmentComponent } from '../../project-forms/packet-enrichments-data/packet-enrichment/packet-enrichment.component';
 import { PacketSelectComponent } from '../packet-select/packet-select.component';
 import { PageStatusEnum } from '../model/pageStatusEnum';
 import { ProjectWizardHttpErrorHandlerService } from 'src/app/services/errorHandler/project-wizard-http-error-handler.service';

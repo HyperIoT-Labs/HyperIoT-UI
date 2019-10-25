@@ -4,9 +4,9 @@ import { Router, CanDeactivate } from '@angular/router';
 import { Subject } from 'rxjs';
 import { ProjectWizardService } from 'src/app/services/projectWizard/project-wizard.service';
 import { ProjectFormEntity } from '../project-forms/project-form-entity';
-import { ProjectDataComponent } from '../project-forms/project-form/project-form.component';
-import { DeviceDataComponent } from '../project-forms/device-form/device-form.component';
-import { PacketDataComponent } from '../project-forms/packet-form/packet-form.component';
+import { ProjectFormComponent } from '../project-forms/project-form/project-form.component';
+import { DeviceFormComponent } from '../project-forms/device-form/device-form.component';
+import { PacketFormComponent } from '../project-forms/packet-form/packet-form.component';
 import { DeviceSelectComponent } from './device-select/device-select.component';
 import { PacketFieldsDataComponent } from '../project-forms/packet-fields-data/packet-fields-data.component';
 import { SummaryListItem } from '../project-detail/generic-summary-list/generic-summary-list.component';
@@ -37,13 +37,13 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
   currentForm: ProjectFormEntity;
 
   @ViewChild('projectData', { static: false })
-  projectData: ProjectDataComponent;
+  projectData: ProjectFormComponent;
 
   @ViewChild('devicesData', { static: false })
-  devicesData: DeviceDataComponent;
+  devicesData: DeviceFormComponent;
 
   @ViewChild('packetsData', { static: false })
-  packetsData: PacketDataComponent;
+  packetsData: PacketFormComponent;
 
   @ViewChild('deviceSelect', { static: false })
   deviceSelect: DeviceSelectComponent;

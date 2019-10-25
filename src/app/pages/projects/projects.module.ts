@@ -19,7 +19,7 @@ import { PacketsStepComponent } from './project-wizard/packets-step/packets-step
 import { ProjectStepComponent } from './project-wizard/project-step/project-step.component';
 import { StatisticsStepComponent } from './project-wizard/statistics-step/statistics-step.component';
 import { EnrichmentStepComponent } from './project-wizard/enrichment-step/enrichment-step.component';
-import { RuleDefinitionComponent } from './project-wizard/rule-definition/rule-definition.component';
+import { RuleDefinitionComponent } from './project-forms/packet-enrichments-data/rule-definition/rule-definition.component';
 
 import { ProjectCardComponent } from './project-card/project-card.component';
 import { ProjectDetailComponent } from './project-detail/project-detail.component';
@@ -33,7 +33,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
 import { AssetCategoryComponent } from './project-wizard/asset-category/asset-category.component';
-import { AssetTagComponent } from './project-wizard/asset-tag/asset-tag.component';
+import { AssetTagComponent } from './project-forms/packet-enrichments-data/asset-tag/asset-tag.component';
 import { SelectableTextComponent } from './project-wizard/events-step/packet-event/event-mail/selectable-text/selectable-text.component';
 import { PacketFieldsDataComponent } from './project-forms/packet-fields-data/packet-fields-data.component';
 import { PacketEnrichmentsDataComponent } from './project-forms/packet-enrichments-data/packet-enrichments-data.component';
@@ -42,7 +42,7 @@ import { PacketEventsDataComponent } from './project-forms/packet-events-data/pa
 import { PacketSelectComponent } from './project-wizard/packet-select/packet-select.component';
 import { PacketFieldComponent } from './project-wizard/fields-step/packet-field/packet-field.component';
 import { FieldTipColumnComponent } from './project-wizard/fields-step/field-tip-column/field-tip-column.component';
-import { PacketEnrichmentComponent } from './project-wizard/enrichment-step/packet-enrichment/packet-enrichment.component';
+import { PacketEnrichmentComponent } from './project-forms/packet-enrichments-data/packet-enrichment/packet-enrichment.component';
 import { EnrichmentTipColumnComponent } from './project-wizard/enrichment-step/enrichment-tip-column/enrichment-tip-column.component';
 import { EventTipColumnComponent } from './project-wizard/events-step/event-tip-column/event-tip-column.component';
 import { PacketEventComponent } from './project-wizard/events-step/packet-event/packet-event.component';
