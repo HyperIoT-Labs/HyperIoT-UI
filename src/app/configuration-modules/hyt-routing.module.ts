@@ -18,10 +18,10 @@ import { DeviceDataComponent } from '../pages/projects/project-forms/device-data
 import { PacketDataComponent } from '../pages/projects/project-forms/packet-data/packet-data.component';
 import { CanDeactivateGuard } from '../components/CanDeactivateGuard';
 import { DashboardComponent } from '../pages/dashboard/dashboard.component';
-import { PacketFieldsDataComponent } from '../pages/projects/project-detail/packet-fields-data/packet-fields-data.component';
-import { PacketEnrichmentsDataComponent } from '../pages/projects/project-detail/packet-enrichments-data/packet-enrichments-data.component';
-import { PacketStatisticsDataComponent } from '../pages/projects/project-detail/packet-statistics-data/packet-statistics-data.component';
-import { PacketEventsDataComponent } from '../pages/projects/project-detail/packet-events-data/packet-events-data.component';
+import { PacketFieldsDataComponent } from '../pages/projects/project-forms/packet-fields-data/packet-fields-data.component';
+import { PacketEnrichmentsDataComponent } from '../pages/projects/project-forms/packet-enrichments-data/packet-enrichments-data.component';
+import { PacketStatisticsDataComponent } from '../pages/projects/project-forms/packet-statistics-data/packet-statistics-data.component';
+import { PacketEventsDataComponent } from '../pages/projects/project-forms/packet-events-data/packet-events-data.component';
 import { HomeComponent } from '../pages/home/home.component';
 
 @Injectable()

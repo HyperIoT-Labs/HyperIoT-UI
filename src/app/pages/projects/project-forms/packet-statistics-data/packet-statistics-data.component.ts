@@ -4,7 +4,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { HpacketsService } from '@hyperiot/core';
-import { ProjectDetailEntity } from '../project-detail-entity';
+import { ProjectFormEntity } from '../project-form-entity';
 import { FormBuilder } from '@angular/forms';
 
 @Component({
@@ -12,7 +12,7 @@ import { FormBuilder } from '@angular/forms';
   templateUrl: './packet-statistics-data.component.html',
   styleUrls: ['./packet-statistics-data.component.scss']
 })
-export class PacketStatisticsDataComponent extends ProjectDetailEntity implements OnDestroy {
+export class PacketStatisticsDataComponent extends ProjectFormEntity implements OnDestroy {
   private routerSubscription: Subscription;
   private packetId: number;
 

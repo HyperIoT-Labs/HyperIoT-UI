@@ -7,7 +7,7 @@ import { HprojectsService, HProject, HdevicesService, HDevice, HpacketsService, 
 import { TreeDataNode } from '@hyperiot/components';
 
 import { HytTreeViewProjectComponent } from '@hyperiot/components/lib/hyt-tree-view-project/hyt-tree-view-project.component';
-import { ProjectDetailEntity } from './project-detail-entity';
+import { ProjectFormEntity } from '../project-forms/project-form-entity';
 import { MatDialog } from '@angular/material';
 import { SaveChangesDialogComponent } from 'src/app/components/dialogs/save-changes-dialog/save-changes-dialog.component';
 import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
@@ -37,6 +37,8 @@ export class ProjectDetailComponent implements OnInit {
   treeData: TreeDataNode[] = [];
   currentNode;
 
+  currentEntity: ProjectFormEntity = null;
+
   private focusTimeout: any = null;
   private projectId: 0;
 
@@ -57,8 +59,7 @@ export class ProjectDetailComponent implements OnInit {
     this.refresh();
   }
 
-  currentEntity: ProjectDetailEntity = null;
-  onActivate(childComponent: ProjectDetailEntity) {
+  onActivate(childComponent: ProjectFormEntity) {
     if (childComponent.isProjectEntity) {
       this.currentEntity = childComponent;
       this.currentEntity.unsavedChangesCallback = () => {

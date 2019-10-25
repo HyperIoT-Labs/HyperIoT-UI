@@ -5,16 +5,16 @@ import { Subscription } from 'rxjs';
 
 import { HpacketsService, HPacket, HDevice, HProject, Rule, RulesService } from '@hyperiot/core';
 import { FormBuilder } from '@angular/forms';
-import { ProjectDetailEntity } from '../project-detail-entity';
+import { ProjectFormEntity } from '../project-form-entity';
 import { PacketEnrichmentComponent } from '../../project-wizard/enrichment-step/packet-enrichment/packet-enrichment.component';
-import { SummaryList } from '../generic-summary-list/generic-summary-list.component';
+import { SummaryList } from '../../project-detail/generic-summary-list/generic-summary-list.component';
 
 @Component({
   selector: 'hyt-packet-enrichments-data',
   templateUrl: './packet-enrichments-data.component.html',
   styleUrls: ['./packet-enrichments-data.component.scss']
 })
-export class PacketEnrichmentsDataComponent extends ProjectDetailEntity implements OnDestroy {
+export class PacketEnrichmentsDataComponent extends ProjectFormEntity implements OnDestroy {
   @ViewChild(PacketEnrichmentComponent, {static: true}) enrichmentComponent: PacketEnrichmentComponent;
   private routerSubscription: Subscription;
   private activatedRouteSubscription: Subscription;

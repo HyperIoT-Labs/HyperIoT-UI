@@ -7,7 +7,7 @@ import { ProjectDetailEntity } from '../project-detail/project-detail-entity';
 import { ProjectDataComponent } from '../project-detail/project-data/project-data.component';
 import { DeviceDataComponent } from '../project-detail/device-data/device-data.component';
 import { DeviceSelectComponent } from './device-select/device-select.component';
-import { PacketFieldsDataComponent } from '../project-detail/packet-fields-data/packet-fields-data.component';
+import { PacketFieldsDataComponent } from '../project-forms/packet-fields-data/packet-fields-data.component';
 import { SummaryListItem } from '../project-detail/generic-summary-list/generic-summary-list.component';
 
 @Injectable({

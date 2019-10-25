@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 
 import { MatRadioChange } from '@angular/material';
 import { ElementRef, ViewChild, OnInit, Output, EventEmitter } from '@angular/core';
+import { SummaryList } from '../project-detail/generic-summary-list/generic-summary-list.component';
 
 export enum LoadingStatusEnum {
     Ready,
@@ -27,6 +28,7 @@ export abstract class ProjectFormEntity implements OnInit {
     hideDelete = false;
     showCancel = false;
     longDefinition = 'entity long definition';
+    summaryList: SummaryList;
 
     LoadingStatus = LoadingStatusEnum;
     loadingStatus = LoadingStatusEnum.Ready;

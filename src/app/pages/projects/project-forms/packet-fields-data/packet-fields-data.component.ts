@@ -5,11 +5,10 @@ import { FormBuilder } from '@angular/forms';
 import { Subscription, Observable } from 'rxjs';
 
 import { HpacketsService, HPacket, HPacketField } from '@hyperiot/core';
-import { ProjectDetailEntity, LoadingStatusEnum } from '../project-detail-entity';
+import { ProjectFormEntity, LoadingStatusEnum } from '../project-form-entity';
 
 import { Option } from '@hyperiot/components';
 import { Node, HytTreeViewEditableComponent } from '@hyperiot/components/lib/hyt-tree-view-editable/hyt-tree-view-editable.component';
-import { PacketFieldService } from 'src/app/services/projectWizard/packet-field.service';
 import { MatDialog } from '@angular/material';
 import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
 
@@ -18,7 +17,7 @@ import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-
   templateUrl: './packet-fields-data.component.html',
   styleUrls: ['./packet-fields-data.component.scss']
 })
-export class PacketFieldsDataComponent extends ProjectDetailEntity implements OnDestroy, OnChanges {
+export class PacketFieldsDataComponent extends ProjectFormEntity implements OnDestroy, OnChanges {
   @ViewChild('treeViewFields', { static: false }) treeViewFields: HytTreeViewEditableComponent;
   private routerSubscription: Subscription;
   private activatedRouteSubscription: Subscription;
