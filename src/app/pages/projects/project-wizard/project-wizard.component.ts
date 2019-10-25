@@ -159,6 +159,7 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
 
       if (this.currentForm == this.projectData) {
         this.currentProject = ent;
+        this.currentForm.id = ent.id;
       }
 
       else if (this.currentForm == this.devicesData) {
