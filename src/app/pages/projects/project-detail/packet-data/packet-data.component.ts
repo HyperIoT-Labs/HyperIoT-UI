@@ -16,7 +16,6 @@ import { ProjectDetailEntity, LoadingStatusEnum } from '../project-detail-entity
   styleUrls: ['./packet-data.component.scss']
 })
 export class PacketDataComponent extends ProjectDetailEntity implements OnDestroy {
-
   entity: HPacket = {} as HPacket;
   entityFormMap = {
     'hpacket-name': 'name',
@@ -31,6 +30,7 @@ export class PacketDataComponent extends ProjectDetailEntity implements OnDestro
   @Input()
   currentDevice: HDevice;
 
+  id: number; // <-- this could be made private
   deviceName: '---';
 
   mqttUrl = '';

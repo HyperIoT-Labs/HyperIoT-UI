@@ -11,8 +11,6 @@ import { ProjectDetailEntity } from './project-detail-entity';
 import { MatDialog } from '@angular/material';
 import { SaveChangesDialogComponent } from 'src/app/components/dialogs/save-changes-dialog/save-changes-dialog.component';
 import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
-import { SummaryListItem } from './generic-summary-list/generic-summary-list.component';
-import { PacketEnrichmentsDataComponent } from './packet-enrichments-data/packet-enrichments-data.component';
 
 enum TreeStatusEnum {
   Ready,

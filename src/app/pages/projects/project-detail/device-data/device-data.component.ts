@@ -24,6 +24,8 @@ export class DeviceDataComponent extends ProjectDetailEntity implements OnDestro
     'hdevice-description': 'description'
   };
 
+  id: number; // <-- this could be made private
+
   @Input()
   currentProject: HProject;
 

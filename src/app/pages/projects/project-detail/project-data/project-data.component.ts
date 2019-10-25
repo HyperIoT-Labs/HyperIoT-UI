@@ -14,10 +14,13 @@ import { ProjectDetailEntity, LoadingStatusEnum } from '../project-detail-entity
   styleUrls: ['./project-data.component.scss']
 })
 export class ProjectDataComponent extends ProjectDetailEntity implements OnDestroy {
+  entity = {} as HProject;
   entityFormMap = {
     'hproject-name': 'name',
     'hproject-description': 'description'
   };
+
+  id: number; // <-- this could be made private
   private routerSubscription: Subscription;
 
   constructor(

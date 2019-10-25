@@ -18,7 +18,6 @@ export abstract class ProjectDetailEntity implements OnInit {
 
     entity: any;
     entityFormMap: any;
-    id: number;
 
     form: FormGroup;
     private originalValue: string;
