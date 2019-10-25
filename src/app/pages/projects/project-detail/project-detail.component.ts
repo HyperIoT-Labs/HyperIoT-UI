@@ -114,11 +114,21 @@ export class ProjectDetailComponent implements OnInit {
     console.log('clicked summary item', item);
   }
   onSummaryMenuClick(e) {
+    const rule = Object.assign({}, e.item as Rule);
     switch (e.action) {
       case 'edit':
         if (this.currentEntity instanceof PacketEnrichmentsDataComponent) {
           (this.currentEntity as PacketEnrichmentsDataComponent)
-            .edit(e.item);
+            .edit(rule);
+        }
+        break;
+      case 'duplicate':
+        rule.id = 0;
+        rule.entityVersion = 1;
+        rule.name += ' (Copy)';
+        if (this.currentEntity instanceof PacketEnrichmentsDataComponent) {
+          (this.currentEntity as PacketEnrichmentsDataComponent)
+            .edit(rule);
         }
         break;
     }
