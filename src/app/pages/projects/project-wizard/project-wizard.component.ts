@@ -174,6 +174,7 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
           this.hDevices[this.hDevices.indexOf(dev)] = ent;
           this.hDevices = [...this.hDevices];
         }
+        console.log(this.hDevices);
         this.currentForm.summaryList = {
           title: 'Devices',
           list: this.hDevices.map((d) => {
@@ -234,14 +235,12 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
       case 'edit':
         if (this.currentForm == this.packetsData)
           this.deviceSelect.selectSpecific(event.item.data.device.id);
-        this.currentForm.id = event.item.data.id;
-        this.currentForm.load();
+        this.currentForm.edit(event.item.data);
         break;
       case 'duplicate':
         if (this.currentForm == this.packetsData)
           this.deviceSelect.selectSpecific(event.item.data.device.id);
-        this.currentForm.id = event.item.data.id;
-        this.currentForm.load();
+        this.currentForm.clone(event.item.data);
         break;
       case 'delete':
         this.currentForm.id = event.item.data.id;
@@ -287,17 +286,17 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
   }
 
   fieldCurrentPacket: HPacket;
-  fieldPacketChanged(event):void {
+  fieldPacketChanged(event): void {
     this.fieldCurrentPacket = event;
   }
 
   enrichmentCurrentPacket: HPacket;
-  enrichmentPacketChanged(event):void {
+  enrichmentPacketChanged(event): void {
     this.enrichmentCurrentPacket = event;
   }
 
   eventCurrentPacket: HPacket;
-  eventPacketChanged(event):void {
+  eventPacketChanged(event): void {
     this.eventCurrentPacket = event;
   }
 

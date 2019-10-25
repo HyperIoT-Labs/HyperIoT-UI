@@ -16,7 +16,7 @@ export enum LoadingStatusEnum {
 export abstract class ProjectDetailEntity implements OnInit {
     @Output() entityEvent = new EventEmitter<any>();
 
-    entity: any;
+    entity: any = {};
     entityFormMap: any;
     id: number;
 

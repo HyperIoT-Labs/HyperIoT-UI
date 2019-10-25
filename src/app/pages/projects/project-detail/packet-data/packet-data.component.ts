@@ -123,7 +123,7 @@ export class PacketDataComponent extends ProjectDetailEntity implements OnDestro
       successCallback && successCallback(res);
     };
 
-    if (p.id) {
+    if (this.id) {
       this.hPacketService.updateHPacket(p).subscribe(responseHandler, (err) => {
         this.setErrors(err);
         errorCallback && errorCallback(err);

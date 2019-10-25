@@ -107,7 +107,7 @@ export class DeviceDataComponent extends ProjectDetailEntity implements OnDestro
       successCallback && successCallback(res);
     };
 
-    if (d.id) {
+    if (this.id) {
       this.hDeviceService.updateHDevice(d).subscribe(responseHandler, (err) => {
         this.setErrors(err);
         errorCallback && errorCallback(err);
