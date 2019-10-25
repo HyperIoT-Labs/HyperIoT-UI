@@ -1,22 +1,22 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PacketDataComponent } from './packet-data.component';
+import { RuleDefinitionComponent } from './rule-definition.component';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 
-describe('PacketDataComponent', () => {
-  let component: PacketDataComponent;
-  let fixture: ComponentFixture<PacketDataComponent>;
+describe('RuleDefinitionComponent', () => {
+  let component: RuleDefinitionComponent;
+  let fixture: ComponentFixture<RuleDefinitionComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PacketDataComponent ],
+      declarations: [ RuleDefinitionComponent ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PacketDataComponent);
+    fixture = TestBed.createComponent(RuleDefinitionComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

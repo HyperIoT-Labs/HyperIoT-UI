@@ -1,22 +1,22 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DeviceDataComponent } from './device-data.component';
+import { DeviceFormComponent } from './device-form.component';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 
-describe('DeviceDataComponent', () => {
-  let component: DeviceDataComponent;
-  let fixture: ComponentFixture<DeviceDataComponent>;
+describe('DeviceFormComponent', () => {
+  let component: DeviceFormComponent;
+  let fixture: ComponentFixture<DeviceFormComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DeviceDataComponent ],
+      declarations: [ DeviceFormComponent ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DeviceDataComponent);
+    fixture = TestBed.createComponent(DeviceFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

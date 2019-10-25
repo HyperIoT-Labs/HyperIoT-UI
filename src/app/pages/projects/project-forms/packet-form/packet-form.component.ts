@@ -11,11 +11,11 @@ import { Option } from '@hyperiot/components';
 import { ProjectFormEntity, LoadingStatusEnum } from '../project-form-entity';
 
 @Component({
-  selector: 'hyt-packet-data',
-  templateUrl: './packet-data.component.html',
-  styleUrls: ['./packet-data.component.scss']
+  selector: 'hyt-packet-form',
+  templateUrl: './packet-form.component.html',
+  styleUrls: ['./packet-form.component.scss']
 })
-export class PacketDataComponent extends ProjectFormEntity implements OnDestroy {
+export class PacketFormComponent extends ProjectFormEntity implements OnDestroy {
   entity: HPacket = {} as HPacket;
   entityFormMap = {
     'hpacket-name': 'name',

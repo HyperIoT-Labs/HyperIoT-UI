@@ -7,7 +7,6 @@ import { HpacketsService, HPacket, HDevice, HProject, Rule, RulesService } from 
 import { FormBuilder } from '@angular/forms';
 import { ProjectFormEntity } from '../project-form-entity';
 import { PacketEnrichmentComponent } from '../../project-wizard/enrichment-step/packet-enrichment/packet-enrichment.component';
-import { SummaryList } from '../../project-detail/generic-summary-list/generic-summary-list.component';
 
 @Component({
   selector: 'hyt-packet-enrichments-data',

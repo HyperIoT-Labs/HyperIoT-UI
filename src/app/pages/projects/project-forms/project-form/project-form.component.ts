@@ -9,11 +9,11 @@ import { HprojectsService, HProject } from '@hyperiot/core';
 import { ProjectFormEntity, LoadingStatusEnum } from '../project-form-entity';
 
 @Component({
-  selector: 'hyt-project-data',
-  templateUrl: './project-data.component.html',
-  styleUrls: ['./project-data.component.scss']
+  selector: 'hyt-project-form',
+  templateUrl: './project-form.component.html',
+  styleUrls: ['./project-form.component.scss']
 })
-export class ProjectDataComponent extends ProjectFormEntity implements OnDestroy {
+export class ProjectFormComponent extends ProjectFormEntity implements OnDestroy {
   entity = {} as HProject;
   entityFormMap = {
     'hproject-name': 'name',

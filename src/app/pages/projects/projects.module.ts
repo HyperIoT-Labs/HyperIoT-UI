@@ -23,9 +23,9 @@ import { RuleDefinitionComponent } from './project-wizard/rule-definition/rule-d
 
 import { ProjectCardComponent } from './project-card/project-card.component';
 import { ProjectDetailComponent } from './project-detail/project-detail.component';
-import { ProjectDataComponent } from './project-forms/project-data/project-data.component';
-import { DeviceDataComponent } from './project-forms/device-data/device-data.component';
-import { PacketDataComponent } from './project-forms/packet-data/packet-data.component';
+import { ProjectFormComponent } from './project-forms/project-form/project-form.component';
+import { DeviceFormComponent } from './project-forms/device-form/device-form.component';
+import { PacketFormComponent } from './project-forms/packet-form/packet-form.component';
 
 import { EventMailComponent } from './project-wizard/events-step/packet-event/event-mail/event-mail.component';
 
@@ -47,10 +47,8 @@ import { EnrichmentTipColumnComponent } from './project-wizard/enrichment-step/e
 import { EventTipColumnComponent } from './project-wizard/events-step/event-tip-column/event-tip-column.component';
 import { PacketEventComponent } from './project-wizard/events-step/packet-event/packet-event.component';
 import { GenericSummaryListComponent } from './project-detail/generic-summary-list/generic-summary-list.component';
-import { PacketsFormComponent } from './project-wizard/packets-step/packets-form/packets-form.component';
 import { PacketsHintColumnComponent } from './project-wizard/packets-step/packets-hint-column/packets-hint-column.component';
 import { ProjectHintColumnComponent } from './project-wizard/project-step/project-hint-column/project-hint-column.component';
-import { ProjectFormComponent } from './project-wizard/project-step/project-form/project-form.component';
 import { DeviceSelectComponent } from './project-wizard/device-select/device-select.component';
 
 @NgModule({
@@ -67,11 +65,11 @@ import { DeviceSelectComponent } from './project-wizard/device-select/device-sel
     ProjectCardComponent,
     RuleDefinitionComponent,
     ProjectDetailComponent,
-    ProjectDataComponent,
-    DeviceDataComponent,
+    ProjectFormComponent,
+    DeviceFormComponent,
+    PacketFormComponent,
     DevicesFormComponent,
     DevicesHintColumnComponent,
-    PacketDataComponent,
     EventMailComponent,
     AssetCategoryComponent,
     AssetTagComponent,
@@ -89,10 +87,8 @@ import { DeviceSelectComponent } from './project-wizard/device-select/device-sel
     EventTipColumnComponent,
     PacketEventComponent,
     GenericSummaryListComponent,
-    PacketsFormComponent,
     PacketsHintColumnComponent,
     ProjectHintColumnComponent,
-    ProjectFormComponent,
     DeviceSelectComponent
   ],
   imports: [

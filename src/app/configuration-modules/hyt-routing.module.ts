@@ -13,9 +13,9 @@ import { ProjectWizardComponent, ProjectWizardCanDeactivate } from '../pages/pro
 import { ProjectsComponent } from '../pages/projects/projects.component';
 import { ProfileComponent } from '../pages/account/profile/profile.component';
 import { ProjectDetailComponent } from '../pages/projects/project-detail/project-detail.component';
-import { ProjectDataComponent } from '../pages/projects/project-forms/project-data/project-data.component';
-import { DeviceDataComponent } from '../pages/projects/project-forms/device-data/device-data.component';
-import { PacketDataComponent } from '../pages/projects/project-forms/packet-data/packet-data.component';
+import { ProjectFormComponent } from '../pages/projects/project-forms/project-form/project-form.component';
+import { DeviceFormComponent } from '../pages/projects/project-forms/device-form/device-form.component';
+import { PacketFormComponent } from '../pages/projects/project-forms/packet-form/packet-form.component';
 import { CanDeactivateGuard } from '../components/CanDeactivateGuard';
 import { DashboardComponent } from '../pages/dashboard/dashboard.component';
 import { PacketFieldsDataComponent } from '../pages/projects/project-forms/packet-fields-data/packet-fields-data.component';
@@ -118,19 +118,19 @@ const hyperiotRoutes: Routes = [
       {
         canDeactivate: [CanDeactivateGuard],
         path: '',
-        component: ProjectDataComponent,
+        component: ProjectFormComponent,
         outlet: 'projectDetails'
       },
       {
         canDeactivate: [CanDeactivateGuard],
         path: 'device/:deviceId',
-        component: DeviceDataComponent,
+        component: DeviceFormComponent,
         outlet: 'projectDetails'
       },
       {
         canDeactivate: [CanDeactivateGuard],
         path: 'packet/:packetId',
-        component: PacketDataComponent,
+        component: PacketFormComponent,
         outlet: 'projectDetails'
       },
       {

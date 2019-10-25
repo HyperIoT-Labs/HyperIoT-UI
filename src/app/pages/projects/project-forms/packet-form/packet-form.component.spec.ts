@@ -1,22 +1,22 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ProjectDataComponent } from './project-data.component';
+import { PacketFormComponent } from './packet-form.component';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 
-describe('ProjectDataComponent', () => {
-  let component: ProjectDataComponent;
-  let fixture: ComponentFixture<ProjectDataComponent>;
+describe('PacketFormComponent', () => {
+  let component: PacketFormComponent;
+  let fixture: ComponentFixture<PacketFormComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ProjectDataComponent ],
+      declarations: [ PacketFormComponent ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ProjectDataComponent);
+    fixture = TestBed.createComponent(PacketFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

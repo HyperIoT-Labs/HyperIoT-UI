@@ -9,11 +9,11 @@ import { HdevicesService, HDevice, HProject } from '@hyperiot/core';
 import { ProjectFormEntity, LoadingStatusEnum } from '../project-form-entity';
 
 @Component({
-  selector: 'hyt-device-data',
-  templateUrl: './device-data.component.html',
-  styleUrls: ['./device-data.component.scss']
+  selector: 'hyt-device-form',
+  templateUrl: './device-form.component.html',
+  styleUrls: ['./device-form.component.scss']
 })
-export class DeviceDataComponent extends ProjectFormEntity implements OnDestroy {
+export class DeviceFormComponent extends ProjectFormEntity implements OnDestroy {
   entity: HDevice = {} as HDevice;
   entityFormMap = {
     'hdevice-devicename': 'deviceName',

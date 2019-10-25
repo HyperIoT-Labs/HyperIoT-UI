@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PacketsFormComponent } from './packets-form.component';
+import { PacketEnrichmentComponent } from './packet-enrichment.component';
 
-describe('PacketsFormComponent', () => {
-  let component: PacketsFormComponent;
-  let fixture: ComponentFixture<PacketsFormComponent>;
+describe('PacketEnrichmentComponent', () => {
+  let component: PacketEnrichmentComponent;
+  let fixture: ComponentFixture<PacketEnrichmentComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PacketsFormComponent ]
+      declarations: [ PacketEnrichmentComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PacketsFormComponent);
+    fixture = TestBed.createComponent(PacketEnrichmentComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
