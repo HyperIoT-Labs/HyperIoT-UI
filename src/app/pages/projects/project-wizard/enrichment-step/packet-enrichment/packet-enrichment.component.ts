@@ -9,13 +9,14 @@ import { AssetTagComponent } from '../../asset-tag/asset-tag.component';
 import { ProjectWizardService } from 'src/app/services/projectWizard/project-wizard.service';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { ProjectWizardHttpErrorHandlerService } from 'src/app/services/errorHandler/project-wizard-http-error-handler.service';
+import { ProjectDetailEntity } from '../../../project-detail/project-detail-entity';
 
 @Component({
   selector: 'hyt-packet-enrichment',
   templateUrl: './packet-enrichment.component.html',
   styleUrls: ['./packet-enrichment.component.scss']
 })
-export class PacketEnrichmentComponent implements OnInit {
+export class PacketEnrichmentComponent /* extends ProjectDetailEntity*/ implements OnInit {
 
   submitType: string = 'ADD';
 
@@ -143,7 +144,7 @@ export class PacketEnrichmentComponent implements OnInit {
     this.resetForm(type);
     this.ruleDefinitionComponent.setRuleDefinition(data.ruleDefinition);
     this.enrichmentForm.get('rule-description').setValue(data.description);
-    this.enrichmentForm.get('rule-name').setValue((type == 'UPDATE') ? data.name : data.name + 'Copy');
+    this.enrichmentForm.get('rule-name').setValue(data.name);
     this.enrichmentForm.get('enrichmentRule').setValue(JSON.parse(data.jsonActions)[0] || null);
   }
 

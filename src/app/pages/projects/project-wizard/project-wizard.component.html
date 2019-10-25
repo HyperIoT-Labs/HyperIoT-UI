@@ -269,9 +269,9 @@
 
   <hyt-button *ngIf="currentForm" (clickFn)="onSaveClick($event)"
     [isDisabled]="currentForm && (!currentForm.isValid() || !currentForm.isDirty())">
-    <ng-container *ngIf="currentForm && currentForm.submitMethod == 0">Salva</ng-container>
+    <ng-container *ngIf="currentForm && !currentForm.id">Salva</ng-container>
     <!-- @I18N@ -->
-    <ng-container *ngIf="currentForm && currentForm.submitMethod == 1">Aggiorna</ng-container>
+    <ng-container *ngIf="currentForm && currentForm.id">Aggiorna</ng-container>
     <!-- @I18N@ -->
   </hyt-button>
 
