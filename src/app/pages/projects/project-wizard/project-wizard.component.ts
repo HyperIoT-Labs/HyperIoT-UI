@@ -156,13 +156,27 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
     // this.wizardService.stepChanged(event.selectedIndex);
   }
 
-  button(){
-    console.log(this.currentForm.entity);
-    console.log(this.currentForm.entity.id);
+  updateList(ent: any, entityList: any[]): any[] {
+    let fin = entityList.find(x => x.id == ent.id);
+    if (fin) {
+      const en = this.hDevices.find(x => x.id == ent.id);
+      entityList[this.hDevices.indexOf(en)] = ent;
+    }
+    else
+      entityList.push(ent);
+    return entityList;
+  }
+
+  deleteFromList(entId: number, entityList: any[]) {
+    for (let k = 0; k < entityList.length; k++) {
+      if (entityList[k].id == entId)
+        entityList.splice(k, 1);
+    }
+    return entityList;
   }
 
   onSaveClick(e) {
-    this.currentForm.save((ent) => {
+    this.currentForm.save((ent, isNew) => {
 
       if (this.currentForm == this.projectData) {
         this.currentProject = ent;
@@ -171,17 +185,7 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
       else if (this.currentForm == this.devicesData) {
         this.currentForm.entity = {};
         this.currentForm.cleanForm();
-        if (!this.currentForm.entity.id) {
-          this.hDevices.push(ent);
-          this.hDevices = [...this.hDevices];
-          console.log(this.hDevices);
-        }
-        else {
-          let dev = this.hDevices.find(x => x.id == ent.id);
-          this.hDevices[this.hDevices.indexOf(dev)] = ent;
-          this.hDevices = [...this.hDevices];
-        }
-        console.log(this.hDevices);
+        this.hDevices = [...this.updateList(ent, this.hDevices)];
         this.currentForm.summaryList = {
           title: 'Devices',
           list: this.hDevices.map((d) => {
@@ -193,15 +197,7 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
       else if (this.currentForm == this.packetsData) {
         this.currentForm.entity = {};
         this.currentForm.cleanForm();
-        if (!this.currentForm.entity.id) {
-          this.hPackets.push(ent);
-          this.hPackets = [...this.hPackets];
-        }
-        else {
-          let pac = this.hPackets.find(x => x.id == ent.id);
-          this.hPackets[this.hPackets.indexOf(pac)] = ent;
-          this.hPackets = [...this.hPackets];
-        }
+        this.hPackets = [...this.updateList(ent, this.hPackets)];
         this.currentForm.summaryList = {
           title: 'Packets',
           list: this.hPackets.map((p) => {
@@ -255,15 +251,12 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
         this.currentForm.clone(event.item.data);
         break;
       case 'delete':
-        this.currentForm.entity.id = event.item.data.id;
+        console.log(this.currentForm.entity);
+        this.currentForm.entity = event.item.data;
         this.currentForm.delete((del) => {
 
           if (this.currentForm == this.devicesData) {
-            for (let k = 0; k < this.hDevices.length; k++) {
-              if (this.hDevices[k].id == event.item.data.id)
-                this.hDevices.splice(k, 1);
-            }
-            this.hDevices = [...this.hDevices];
+            this.hDevices = [...this.deleteFromList(event.item.data.id, this.hDevices)];
             this.currentForm.summaryList = {
               title: 'Devices',
               list: this.hDevices.map((d) => {
@@ -273,11 +266,7 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
           }
 
           else if (this.currentForm == this.packetsData) {
-            for (let k = 0; k < this.hPackets.length; k++) {
-              if (this.hPackets[k].id == event.item.data.id)
-                this.hPackets.splice(k, 1);
-            }
-            this.hPackets = [...this.hPackets];
+            this.hPackets = [...this.deleteFromList(event.item.data.id, this.hPackets)];
             this.currentForm.summaryList = {
               title: 'Packets',
               list: this.hPackets.map((p) => {
@@ -285,6 +274,8 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
               }) as SummaryListItem[]
             };
           }
+
+          this.currentForm.entity = {};
 
         }, (err) => {
           // TODO: ...
@@ -300,7 +291,7 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
   fieldCurrentPacket: HPacket;
   fieldPacketChanged(event): void {
     this.fieldCurrentPacket = event.id;
-    if (this.fieldsData.packetId){
+    if (this.fieldsData.packetId) {
       console.log("asdfasdf")
       //this.fieldsData.loadData();
     }

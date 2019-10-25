@@ -132,13 +132,13 @@ export class DeviceFormComponent extends ProjectFormEntity implements OnDestroy 
     this.loadingStatus = LoadingStatusEnum.Saving;
     this.hDeviceService.deleteHDevice(this.entity.id).subscribe((res) => {
       this.entityEvent.emit({ event: 'treeview:refresh' });
-      successCallback && successCallback(res);
       this.loadingStatus = LoadingStatusEnum.Ready;
       // request navigate to project page when a device is deleted
       this.entityEvent.emit({
         event: 'entity:delete',
         exitRoute: ['/projects', this.entity.project.id]
       });
+      successCallback && successCallback(res);
     }, (err) => {
       errorCallback && errorCallback(err);
       this.loadingStatus = LoadingStatusEnum.Error;
