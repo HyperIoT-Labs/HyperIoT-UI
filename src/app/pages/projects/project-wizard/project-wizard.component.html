@@ -36,10 +36,6 @@
     <ng-template #fieldsTemplate>
       <hyt-pw-packet-select [hDevices]="hDevices" [hPackets]="hPackets" (currentPacket)="fieldPacketChanged($event)"></hyt-pw-packet-select>
       <hyt-packet-fields-data #fieldsData (currentPacket)="fieldCurrentPacket"></hyt-packet-fields-data>
-      <!-- <hyt-fields-step></hyt-fields-step>
-      <hyt-button (clickFn)="stepper.previous()">
-        <ng-container i18n="@@HYT_back">HYT_back</ng-container>
-      </hyt-button>
       <hyt-button
         (clickFn)="(fieldsValidated == true && enrichmentValidated == false)? openOptionModal() : stepper.next()">
         <ng-container i18n="@@HYT_next">HYT_next</ng-container>
@@ -47,33 +43,17 @@
     </ng-template>
 
     <ng-template #enrichmentTemplate>
-      <hyt-enrichment-step></hyt-enrichment-step>
-      <hyt-button (clickFn)="stepper.previous()">
-        <ng-container i18n="@@HYT_back">HYT_back</ng-container>
-      </hyt-button>
-      <hyt-button (clickFn)="stepper.next()">
-        <ng-container i18n="@@HYT_next">HYT_next</ng-container>
-      </hyt-button>
+        <hyt-pw-packet-select [hDevices]="hDevices" [hPackets]="hPackets" (currentPacket)="enrichmentPacketChanged($event)"></hyt-pw-packet-select>
     </ng-template>
 
     <ng-template #statisticsTemplate>
-      <hyt-statistics-step></hyt-statistics-step>
-      <hyt-button (clickFn)="stepper.previous()">
-        <ng-container i18n="@@HYT_back">HYT_back</ng-container>
-      </hyt-button>
-      <hyt-button (clickFn)="stepper.next()">
-        <ng-container i18n="@@HYT_next">HYT_next</ng-container>
-      </hyt-button>
     </ng-template>
 
     <ng-template #eventsTemplate>
-      <hyt-events-step></hyt-events-step>
-      <hyt-button (clickFn)="stepper.previous()">
-        <ng-container i18n="@@HYT_back">HYT_back</ng-container>
-      </hyt-button>
-      <hyt-button (clickFn)="openOptionModal()">
+        <hyt-pw-packet-select [hDevices]="hDevices" [hPackets]="hPackets" (currentPacket)="eventPacketChanged($event)"></hyt-pw-packet-select>
+      <!-- <hyt-button (clickFn)="openOptionModal()">
         <ng-container i18n="@@HYT_next">HYT_next</ng-container>
-      </hyt-button>
+      </hyt-button> -->
     </ng-template>
 
     <div class="col-md-10">

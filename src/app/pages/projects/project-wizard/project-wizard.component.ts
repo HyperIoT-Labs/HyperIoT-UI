@@ -8,6 +8,7 @@ import { ProjectDataComponent } from '../project-detail/project-data/project-dat
 import { DeviceDataComponent } from '../project-detail/device-data/device-data.component';
 import { DeviceSelectComponent } from './device-select/device-select.component';
 import { PacketFieldsDataComponent } from '../project-detail/packet-fields-data/packet-fields-data.component';
+import { SummaryListItem } from '../project-detail/generic-summary-list/generic-summary-list.component';
 
 @Injectable({
   providedIn: 'root',
@@ -173,11 +174,12 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
           this.hDevices[this.hDevices.indexOf(dev)] = ent;
           this.hDevices = [...this.hDevices];
         }
+        console.log(this.hDevices);
         this.currentForm.summaryList = {
           title: 'Devices',
           list: this.hDevices.map((d) => {
-            return { name: d.deviceName, description: d.description, item: d };
-          }) as any
+            return { name: d.deviceName, description: d.description, data: d };
+          }) as SummaryListItem[]
         };
       }
 
@@ -195,8 +197,8 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
         this.currentForm.summaryList = {
           title: 'Packets',
           list: this.hPackets.map((p) => {
-            return { name: p.name, description: p.trafficPlan, item: p };
-          }) as any
+            return { name: p.name, description: p.trafficPlan, data: p };
+          }) as SummaryListItem[]
         };
 
       }
@@ -228,48 +230,47 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
   }
 
   menuAction(event): void {
+    console.log(event.item)
     switch (event.action) {
       case 'edit':
         if (this.currentForm == this.packetsData)
-          this.deviceSelect.selectSpecific(event.item.device.id);
-        this.currentForm.id = event.item.id;
-        this.currentForm.load();
+          this.deviceSelect.selectSpecific(event.item.data.device.id);
+        this.currentForm.edit(event.item.data);
         break;
       case 'duplicate':
         if (this.currentForm == this.packetsData)
-          this.deviceSelect.selectSpecific(event.item.device.id);
-        this.currentForm.id = event.item.id;
-        this.currentForm.load();
+          this.deviceSelect.selectSpecific(event.item.data.device.id);
+        this.currentForm.clone(event.item.data);
         break;
       case 'delete':
-        this.currentForm.id = event.item.id;
+        this.currentForm.id = event.item.data.id;
         this.currentForm.delete((del) => {
 
           if (this.currentForm == this.devicesData) {
             for (let k = 0; k < this.hDevices.length; k++) {
-              if (this.hDevices[k].id == event.item.id)
+              if (this.hDevices[k].id == event.item.data.id)
                 this.hDevices.splice(k, 1);
             }
             this.hDevices = [...this.hDevices];
             this.currentForm.summaryList = {
               title: 'Devices',
               list: this.hDevices.map((d) => {
-                return { name: d.deviceName, description: d.description, item: d };
-              }) as any
+                return { name: d.deviceName, description: d.description, data: d };
+              }) as SummaryListItem[]
             };
           }
 
           else if (this.currentForm == this.packetsData) {
             for (let k = 0; k < this.hPackets.length; k++) {
-              if (this.hPackets[k].id == event.item.id)
+              if (this.hPackets[k].id == event.item.data.id)
                 this.hPackets.splice(k, 1);
             }
             this.hPackets = [...this.hPackets];
             this.currentForm.summaryList = {
               title: 'Packets',
               list: this.hPackets.map((p) => {
-                return { name: p.name, description: p.trafficPlan, item: p };
-              }) as any
+                return { name: p.name, description: p.trafficPlan, data: p };
+              }) as SummaryListItem[]
             };
           }
 
@@ -285,17 +286,17 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
   }
 
   fieldCurrentPacket: HPacket;
-  fieldPacketChanged(event):void {
+  fieldPacketChanged(event): void {
     this.fieldCurrentPacket = event;
   }
 
   enrichmentCurrentPacket: HPacket;
-  enrichmentPacketChanged(event):void {
+  enrichmentPacketChanged(event): void {
     this.enrichmentCurrentPacket = event;
   }
 
   eventCurrentPacket: HPacket;
-  eeventPacketChanged(event):void {
+  eventPacketChanged(event): void {
     this.eventCurrentPacket = event;
   }
 
