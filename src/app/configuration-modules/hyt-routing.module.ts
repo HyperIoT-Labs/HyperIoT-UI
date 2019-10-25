@@ -13,9 +13,9 @@ import { ProjectWizardComponent, ProjectWizardCanDeactivate } from '../pages/pro
 import { ProjectsComponent } from '../pages/projects/projects.component';
 import { ProfileComponent } from '../pages/account/profile/profile.component';
 import { ProjectDetailComponent } from '../pages/projects/project-detail/project-detail.component';
-import { ProjectDataComponent } from '../pages/projects/project-detail/project-data/project-data.component';
-import { DeviceDataComponent } from '../pages/projects/project-detail/device-data/device-data.component';
-import { PacketDataComponent } from '../pages/projects/project-detail/packet-data/packet-data.component';
+import { ProjectDataComponent } from '../pages/projects/project-forms/project-data/project-data.component';
+import { DeviceDataComponent } from '../pages/projects/project-forms/device-data/device-data.component';
+import { PacketDataComponent } from '../pages/projects/project-forms/packet-data/packet-data.component';
 import { CanDeactivateGuard } from '../components/CanDeactivateGuard';
 import { DashboardComponent } from '../pages/dashboard/dashboard.component';
 import { PacketFieldsDataComponent } from '../pages/projects/project-detail/packet-fields-data/packet-fields-data.component';

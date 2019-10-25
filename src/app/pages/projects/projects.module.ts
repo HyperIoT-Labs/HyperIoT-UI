@@ -23,9 +23,10 @@ import { RuleDefinitionComponent } from './project-wizard/rule-definition/rule-d
 
 import { ProjectCardComponent } from './project-card/project-card.component';
 import { ProjectDetailComponent } from './project-detail/project-detail.component';
-import { ProjectDataComponent } from './project-detail/project-data/project-data.component';
-import { DeviceDataComponent } from './project-detail/device-data/device-data.component';
-import { PacketDataComponent } from './project-detail/packet-data/packet-data.component';
+import { ProjectDataComponent } from './project-forms/project-data/project-data.component';
+import { DeviceDataComponent } from './project-forms/device-data/device-data.component';
+import { PacketDataComponent } from './project-forms/packet-data/packet-data.component';
+
 import { EventMailComponent } from './project-wizard/events-step/packet-event/event-mail/event-mail.component';
 
 import { MatChipsModule } from '@angular/material/chips';

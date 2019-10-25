@@ -8,14 +8,14 @@ import { FormBuilder } from '@angular/forms';
 import { HPacket, HpacketsService, HDevice } from '@hyperiot/core';
 import { Option } from '@hyperiot/components';
 
-import { ProjectDetailEntity, LoadingStatusEnum } from '../project-detail-entity';
+import { ProjectFormEntity, LoadingStatusEnum } from '../project-form-entity';
 
 @Component({
   selector: 'hyt-packet-data',
   templateUrl: './packet-data.component.html',
   styleUrls: ['./packet-data.component.scss']
 })
-export class PacketDataComponent extends ProjectDetailEntity implements OnDestroy {
+export class PacketDataComponent extends ProjectFormEntity implements OnDestroy {
   entity: HPacket = {} as HPacket;
   entityFormMap = {
     'hpacket-name': 'name',

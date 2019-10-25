@@ -6,14 +6,14 @@ import { Subscription } from 'rxjs';
 
 import { HprojectsService, HProject } from '@hyperiot/core';
 
-import { ProjectDetailEntity, LoadingStatusEnum } from '../project-detail-entity';
+import { ProjectFormEntity, LoadingStatusEnum } from '../project-form-entity';
 
 @Component({
   selector: 'hyt-project-data',
   templateUrl: './project-data.component.html',
   styleUrls: ['./project-data.component.scss']
 })
-export class ProjectDataComponent extends ProjectDetailEntity implements OnDestroy {
+export class ProjectDataComponent extends ProjectFormEntity implements OnDestroy {
   entity = {} as HProject;
   entityFormMap = {
     'hproject-name': 'name',

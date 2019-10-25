@@ -6,14 +6,14 @@ import { Subscription } from 'rxjs';
 
 import { HdevicesService, HDevice, HProject } from '@hyperiot/core';
 
-import { ProjectDetailEntity, LoadingStatusEnum } from '../project-detail-entity';
+import { ProjectFormEntity, LoadingStatusEnum } from '../project-form-entity';
 
 @Component({
   selector: 'hyt-device-data',
   templateUrl: './device-data.component.html',
   styleUrls: ['./device-data.component.scss']
 })
-export class DeviceDataComponent extends ProjectDetailEntity implements OnDestroy {
+export class DeviceDataComponent extends ProjectFormEntity implements OnDestroy {
   entity: HDevice = {} as HDevice;
   entityFormMap = {
     'hdevice-devicename': 'deviceName',
