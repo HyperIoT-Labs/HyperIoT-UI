@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs';
 
 import { HdevicesService, HDevice, HProject } from '@hyperiot/core';
 
-import { ProjectDetailEntity, LoadingStatusEnum, SubmitMethod } from '../project-detail-entity';
+import { ProjectDetailEntity, LoadingStatusEnum } from '../project-detail-entity';
 
 @Component({
   selector: 'hyt-device-data',
@@ -32,7 +32,6 @@ export class DeviceDataComponent extends ProjectDetailEntity implements OnDestro
     super(formBuilder, formView);
     this.longDefinition = 'device long definition';//@I18N@
     this.routerSubscription = this.router.events.subscribe((rl) => {
-      this.submitMethod = SubmitMethod.Put;
       if (rl instanceof NavigationEnd) {
         this.id = activatedRoute.snapshot.params.deviceId;
         this.load();
@@ -84,6 +83,14 @@ export class DeviceDataComponent extends ProjectDetailEntity implements OnDestro
     this.loadingStatus = LoadingStatusEnum.Saving;
     this.resetErrors();
 
+    let d = this.device;
+    d.deviceName = this.form.get('hdevice-devicename').value;
+    d.description = this.form.get('hdevice-description').value;
+    d.brand = this.form.get('hdevice-brand').value;
+    d.model = this.form.get('hdevice-model').value;
+    d.firmwareVersion = this.form.get('hdevice-firmwareversion').value;
+    d.softwareVersion = this.form.get('hdevice-softwareversion').value;
+
     const responseHandler = (res) => {
       this.device = res;
       this.resetForm();
@@ -97,33 +104,18 @@ export class DeviceDataComponent extends ProjectDetailEntity implements OnDestro
       successCallback && successCallback(res);
     };
 
-    if (this.submitMethod == SubmitMethod.Post) {
-      let d: HDevice = {
-        entityVersion: 1,
-        deviceName: this.form.get('hdevice-devicename').value,
-        description: this.form.get('hdevice-description').value,
-        brand: this.form.get('hdevice-brand').value,
-        model: this.form.get('hdevice-model').value,
-        firmwareVersion: this.form.get('hdevice-firmwareversion').value,
-        softwareVersion: this.form.get('hdevice-softwareversion').value,
-        password: this.form.value['hdevice-password'],
-        passwordConfirm: this.form.value['hdevice-passwordConfirm'],
-        project: { id: this.currentProject.id, entityVersion: this.currentProject.entityVersion }
-      }
-      this.hDeviceService.saveHDevice(d).subscribe(responseHandler, (err) => {
+    if (d.id) {
+      this.hDeviceService.updateHDevice(d).subscribe(responseHandler, (err) => {
         this.setErrors(err);
         errorCallback && errorCallback(err);
       });
     }
     else {
-      let d = this.device;
-      d.deviceName = this.form.get('hdevice-devicename').value;
-      d.description = this.form.get('hdevice-description').value;
-      d.brand = this.form.get('hdevice-brand').value;
-      d.model = this.form.get('hdevice-model').value;
-      d.firmwareVersion = this.form.get('hdevice-firmwareversion').value;
-      d.softwareVersion = this.form.get('hdevice-softwareversion').value;
-      this.hDeviceService.updateHDevice(d).subscribe(responseHandler, (err) => {
+      d.entityVersion = 1;
+      d.password = this.form.value['hdevice-password'];
+      d.passwordConfirm = this.form.value['hdevice-passwordConfirm'];
+      d.project = { id: this.currentProject.id, entityVersion: this.currentProject.entityVersion };
+      this.hDeviceService.saveHDevice(d).subscribe(responseHandler, (err) => {
         this.setErrors(err);
         errorCallback && errorCallback(err);
       });

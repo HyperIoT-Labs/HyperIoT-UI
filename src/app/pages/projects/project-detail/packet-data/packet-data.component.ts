@@ -8,7 +8,7 @@ import { FormBuilder } from '@angular/forms';
 import { HPacket, HpacketsService, HDevice } from '@hyperiot/core';
 import { Option } from '@hyperiot/components';
 
-import { ProjectDetailEntity, LoadingStatusEnum, SubmitMethod } from '../project-detail-entity';
+import { ProjectDetailEntity, LoadingStatusEnum } from '../project-detail-entity';
 
 @Component({
   selector: 'hyt-packet-data',
@@ -51,7 +51,6 @@ export class PacketDataComponent extends ProjectDetailEntity implements OnDestro
     console.log("init");
     this.longDefinition = 'packet long definition'; //@I18N@
     this.routerSubscription = this.router.events.subscribe((rl) => {
-      this.submitMethod = SubmitMethod.Put;
       if (rl instanceof NavigationEnd) {
         this.id = this.activatedRoute.snapshot.params.packetId;
         this.load();
@@ -109,12 +108,18 @@ export class PacketDataComponent extends ProjectDetailEntity implements OnDestro
     this.loadingStatus = LoadingStatusEnum.Saving;
     this.resetErrors();
 
+    let p = this.packet;
+    p.name = this.form.value['hpacket-name'];
+    p.type = this.form.value['hpacket-type'];
+    p.format = this.form.value['hpacket-format'];
+    p.serialization = this.form.value['hpacket-serialization'];
+    p.trafficPlan = this.form.value['hpacket-trafficplan'];
+    p.timestampField = this.form.value['hpacket-timestampfield'];
+    p.timestampFormat = this.form.value['hpacket-timestampformat'];
+
     const responseHandler = (res) => {
       this.packet = res;
-      if (this.submitMethod == SubmitMethod.Post)
-        this.cleanForm();
-      else
-        this.resetForm();
+      this.resetForm();
       this.entityEvent.emit({
         event: 'treeview:update',
         id: this.packet.id, type: 'packet', name: this.packet.name
@@ -123,35 +128,18 @@ export class PacketDataComponent extends ProjectDetailEntity implements OnDestro
       successCallback && successCallback(res);
     };
 
-    if (this.submitMethod == SubmitMethod.Post) {
-      let p: HPacket = {
-        entityVersion: 1,
-        name: this.form.value['hpacket-name'],
-        type: this.form.value['hpacket-type'],
-        format: this.form.value['hpacket-format'],
-        serialization: this.form.value['hpacket-serialization'],
-        fields: [],
-        trafficPlan: this.form.value['hpacket-trafficplan'],
-        timestampField: this.form.value['hpacket-timestampfield'], //'timestampField',
-        timestampFormat: this.form.value['hpacket-timestampformat'], //'dd/MM/yyyy HH.mmZ',
-        version: '1',
-        device: { id: this.currentDevice.id, entityVersion: this.currentDevice.entityVersion }
-      }
-      this.hPacketService.saveHPacket(p).subscribe(responseHandler, (err) => {
+    if (p.id) {
+      this.hPacketService.updateHPacket(p).subscribe(responseHandler, (err) => {
         this.setErrors(err);
         errorCallback && errorCallback(err);
       });
     }
     else {
-      let p = this.packet;
-      p.name = this.form.get('hpacket-name').value;
-      p.type = this.form.get('hpacket-type').value;
-      p.serialization = this.form.get('hpacket-serialization').value;
-      p.format = this.form.get('hpacket-format').value;
-      p.timestampField = this.form.get('hpacket-timestampfield').value;
-      p.timestampFormat = this.form.get('hpacket-timestampformat').value;
-      p.trafficPlan = this.form.get('hpacket-trafficplan').value;
-      this.hPacketService.updateHPacket(p).subscribe(responseHandler, (err) => {
+      p.entityVersion = 1;
+      p.version = '1';
+      p.fields = [];
+      p.device = { id: this.currentDevice.id, entityVersion: this.currentDevice.entityVersion };
+      this.hPacketService.saveHPacket(p).subscribe(responseHandler, (err) => {
         this.setErrors(err);
         errorCallback && errorCallback(err);
       });

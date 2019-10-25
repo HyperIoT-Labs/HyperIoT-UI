@@ -56,13 +56,13 @@
                     [injectedErrorMsg]="getError('hdevice-firmwareversion')"
                     hintMessage="Enter the device firmware version."
                     [form]="form"></hyt-input-text>
-                <hyt-input-text [form]="form" name="hdevice-password" [disabled]="submitMethod != 0"
-                    [isRequired]="submitMethod == 0" [isPassword]="true" i18n-placeholder="@@HYT_password" placeholder="HYT_password"
+                <hyt-input-text [form]="form" name="hdevice-password" [disabled]="id"
+                    [isRequired]="id" [isPassword]="true" i18n-placeholder="@@HYT_password" placeholder="HYT_password"
                     type="password" [injectedErrorMsg]="getError('hdevice-password')"
                     hintMessage="Enter the device password.">
                 </hyt-input-text>
-                <hyt-input-text [form]="form" name="hdevice-passwordConfirm" [disabled]="submitMethod != 0"
-                    [isRequired]="submitMethod == 0" i18n-placeholder="@@HYT_password_confirm" placeholder="HYT_password_confirm"
+                <hyt-input-text [form]="form" name="hdevice-passwordConfirm" [disabled]="id"
+                    [isRequired]="id" i18n-placeholder="@@HYT_password_confirm" placeholder="HYT_password_confirm"
                     type="password" [injectedErrorMsg]="getError('hdevice-passwordConfirm')"
                     hintMessage="Confirm device password.">
                 </hyt-input-text>
