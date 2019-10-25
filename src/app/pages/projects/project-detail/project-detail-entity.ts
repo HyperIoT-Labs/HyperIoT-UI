@@ -74,7 +74,7 @@ export abstract class ProjectDetailEntity implements OnInit {
         const cloned = entity || this.entity;
         cloned.id = 0;
         cloned.entityVersion = 1;
-        cloned.name = `${cloned.name} (copy)`;
+        cloned.name = `${cloned.name}(copy)`;
         this.edit(cloned);
         return cloned;
     }

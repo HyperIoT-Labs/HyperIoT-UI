@@ -73,6 +73,15 @@ export class DeviceDataComponent extends ProjectDetailEntity implements OnDestro
     });
   }
 
+  clone(entity?: HDevice): HDevice {
+    const device = entity || this.entity;
+    device.id = 0;
+    device.entityVersion = 1;
+    device.deviceName = `${device.deviceName}(copy)`;
+    this.edit(device);
+    return device;
+}
+
   private saveDevice(successCallback?, errorCallback?) {
     this.loadingStatus = LoadingStatusEnum.Saving;
     this.resetErrors();
