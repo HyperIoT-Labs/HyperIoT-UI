@@ -14,12 +14,14 @@ import { ProjectDetailEntity, LoadingStatusEnum } from '../project-detail-entity
   styleUrls: ['./project-data.component.scss']
 })
 export class ProjectDataComponent extends ProjectDetailEntity implements OnDestroy {
-  project: HProject = {} as HProject;
-
+  entityFormMap = {
+    'hproject-name': 'name',
+    'hproject-description': 'description'
+  };
   private routerSubscription: Subscription;
 
   constructor(
-    formBuilder: FormBuilder,
+    public formBuilder: FormBuilder,
     @ViewChild('form', { static: true }) formView: ElementRef,
     private hProjectService: HprojectsService,
     private activatedRoute: ActivatedRoute,
@@ -30,7 +32,7 @@ export class ProjectDataComponent extends ProjectDetailEntity implements OnDestr
     this.routerSubscription = this.router.events.subscribe((rl) => {
       if (rl instanceof NavigationEnd) {
         this.id = this.activatedRoute.snapshot.params.projectId;
-        this.load();
+        if (this.id) this.load();
       }
     });
   }
@@ -50,13 +52,8 @@ export class ProjectDataComponent extends ProjectDetailEntity implements OnDestr
   load() {
     this.loadingStatus = LoadingStatusEnum.Loading;
     this.hProjectService.findHProject(this.id).subscribe((p: HProject) => {
-      this.project = p;
-      // update form data
-      this.form.get('hproject-name')
-        .setValue(p.name);
-      this.form.get('hproject-description')
-        .setValue(p.description);
-      this.resetForm();
+      this.entity = p;
+      this.edit();
       this.loadingStatus = LoadingStatusEnum.Ready;
     }, (err) => {
       this.loadingStatus = LoadingStatusEnum.Error;
@@ -66,12 +63,12 @@ export class ProjectDataComponent extends ProjectDetailEntity implements OnDestr
   private saveProject(successCallback?, errorCallback?) {
     this.loadingStatus = LoadingStatusEnum.Saving;
     this.resetErrors();
-    let p = this.project;
+    let p = this.entity;
     p.name = this.form.get('hproject-name').value;
     p.description = this.form.get('hproject-description').value;
     p.user = this.getUser();
     const responseHandler = (res) => {
-      this.project = p = res;
+      this.entity = p = res;
       this.resetForm();
       this.entityEvent.emit({
         event: 'treeview:update',
@@ -95,7 +92,7 @@ export class ProjectDataComponent extends ProjectDetailEntity implements OnDestr
   }
   private deleteProject(successCallback?, errorCallback?) {
     this.loadingStatus = LoadingStatusEnum.Saving;
-    this.hProjectService.deleteHProject(this.project.id).subscribe((res) => {
+    this.hProjectService.deleteHProject(this.entity.id).subscribe((res) => {
       this.loadingStatus = LoadingStatusEnum.Ready;
       successCallback && successCallback(res);
       // request navigate to project list when the project itself is deleted

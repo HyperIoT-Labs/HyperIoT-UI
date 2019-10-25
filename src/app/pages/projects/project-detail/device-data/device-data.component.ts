@@ -14,16 +14,22 @@ import { ProjectDetailEntity, LoadingStatusEnum } from '../project-detail-entity
   styleUrls: ['./device-data.component.scss']
 })
 export class DeviceDataComponent extends ProjectDetailEntity implements OnDestroy {
+  entity: HDevice = {} as HDevice;
+  entityFormMap = {
+    'hdevice-devicename': 'deviceName',
+    'hdevice-brand': 'brand',
+    'hdevice-model': 'model',
+    'hdevice-firmwareversion': 'firmwareVersion',
+    'hdevice-softwareversion': 'softwareVersion',
+    'hdevice-description': 'description'
+  };
 
   @Input()
   currentProject: HProject;
 
-  device: HDevice = {} as HDevice;
-
   private routerSubscription: Subscription;
-
   constructor(
-    formBuilder: FormBuilder,
+    public formBuilder: FormBuilder,
     @ViewChild('form', { static: true }) formView: ElementRef,
     private hDeviceService: HdevicesService,
     private activatedRoute: ActivatedRoute,
@@ -54,21 +60,9 @@ export class DeviceDataComponent extends ProjectDetailEntity implements OnDestro
   load() {
     this.loadingStatus = LoadingStatusEnum.Loading;
     this.hDeviceService.findHDevice(this.id).subscribe((d: HDevice) => {
-      this.device = d;
+      this.entity = d;
       // update form data
-      this.form.get('hdevice-devicename')
-        .setValue(d.deviceName);
-      this.form.get('hdevice-brand')
-        .setValue(d.brand);
-      this.form.get('hdevice-model')
-        .setValue(d.model);
-      this.form.get('hdevice-firmwareversion')
-        .setValue(d.firmwareVersion);
-      this.form.get('hdevice-softwareversion')
-        .setValue(d.softwareVersion);
-      this.form.get('hdevice-description')
-        .setValue(d.description);
-      this.resetForm();
+      this.edit();
       this.entityEvent.emit({
         event: 'treeview:focus',
         id: d.id, type: 'device'
@@ -83,7 +77,7 @@ export class DeviceDataComponent extends ProjectDetailEntity implements OnDestro
     this.loadingStatus = LoadingStatusEnum.Saving;
     this.resetErrors();
 
-    let d = this.device;
+    let d = this.entity;
     d.deviceName = this.form.get('hdevice-devicename').value;
     d.description = this.form.get('hdevice-description').value;
     d.brand = this.form.get('hdevice-brand').value;
@@ -92,13 +86,13 @@ export class DeviceDataComponent extends ProjectDetailEntity implements OnDestro
     d.softwareVersion = this.form.get('hdevice-softwareversion').value;
 
     const responseHandler = (res) => {
-      this.device = res;
+      this.entity = res;
       this.resetForm();
       this.entityEvent.emit({
         event: 'treeview:update',
-        id: this.device.id,
+        id: this.entity.id,
         type: 'device',
-        name: this.device.deviceName
+        name: this.entity.deviceName
       });
       this.loadingStatus = LoadingStatusEnum.Ready;
       successCallback && successCallback(res);
@@ -124,14 +118,14 @@ export class DeviceDataComponent extends ProjectDetailEntity implements OnDestro
   }
   private deleteDevice(successCallback?, errorCallback?) {
     this.loadingStatus = LoadingStatusEnum.Saving;
-    this.hDeviceService.deleteHDevice(this.device.id).subscribe((res) => {
+    this.hDeviceService.deleteHDevice(this.entity.id).subscribe((res) => {
       this.entityEvent.emit({ event: 'treeview:refresh' });
       successCallback && successCallback(res);
       this.loadingStatus = LoadingStatusEnum.Ready;
       // request navigate to project page when a device is deleted
       this.entityEvent.emit({
         event: 'entity:delete',
-        exitRoute: ['/projects', this.device.project.id]
+        exitRoute: ['/projects', this.entity.project.id]
       });
     }, (err) => {
       errorCallback && errorCallback(err);

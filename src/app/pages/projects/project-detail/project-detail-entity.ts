@@ -15,19 +15,20 @@ export enum LoadingStatusEnum {
 
 export abstract class ProjectDetailEntity implements OnInit {
     @Output() entityEvent = new EventEmitter<any>();
-    isProjectEntity = true;
 
+    entity: any;
+    entityFormMap: any;
     id: number;
-
-    hideDelete = false;
-    showCancel = false;
 
     form: FormGroup;
     private originalValue: string;
     private validationError = [];
 
-    longDefinition: string = 'entity long definition';
-
+    // the following 4 fields should implemented by a specific interface
+    isProjectEntity = true;
+    hideDelete = false;
+    showCancel = false;
+    longDefinition = 'entity long definition';
     summaryList: SummaryList;
 
     LoadingStatus = LoadingStatusEnum;
@@ -58,6 +59,24 @@ export abstract class ProjectDetailEntity implements OnInit {
     save(successCallback: any, errorCallback: any): void { }
     delete(successCallback: any, errorCallback: any): void { }
     cancel(): void { }
+
+    edit(entity?: any) {
+        if (entity) {
+            this.entity = entity;
+        }
+        Object.keys(this.entityFormMap).forEach((key) => {
+            this.form.get(key)
+                .setValue(this.entity[this.entityFormMap[key]]);
+        });
+        this.resetForm();
+    }
+    clone(entity?: any): any {
+        const cloned = entity || this.entity;
+        cloned.id = 0;
+        cloned.entityVersion = 1;
+        cloned.name = `${cloned.name} (copy)`;
+        return cloned;
+    }
 
     isValid(): boolean {
         let invalid = false;

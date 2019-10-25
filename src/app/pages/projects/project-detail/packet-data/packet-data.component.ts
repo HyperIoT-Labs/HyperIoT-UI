@@ -17,10 +17,20 @@ import { ProjectDetailEntity, LoadingStatusEnum } from '../project-detail-entity
 })
 export class PacketDataComponent extends ProjectDetailEntity implements OnDestroy {
 
+  entity: HPacket = {} as HPacket;
+  entityFormMap = {
+    'hpacket-name': 'name',
+    'hpacket-type': 'type',
+    'hpacket-serialization': 'serialization',
+    'hpacket-format': 'format',
+    'hpacket-timestampfield': 'timestampField',
+    'hpacket-timestampformat': 'timestampFormat',
+    'hpacket-trafficplan': 'trafficPlan'
+  };
+
   @Input()
   currentDevice: HDevice;
 
-  packet: HPacket = {} as HPacket;
   deviceName: '---';
 
   mqttUrl = '';
@@ -48,7 +58,6 @@ export class PacketDataComponent extends ProjectDetailEntity implements OnDestro
     private router: Router
   ) {
     super(formBuilder, formView);
-    console.log("init");
     this.longDefinition = 'packet long definition'; //@I18N@
     this.routerSubscription = this.router.events.subscribe((rl) => {
       if (rl instanceof NavigationEnd) {
@@ -73,27 +82,13 @@ export class PacketDataComponent extends ProjectDetailEntity implements OnDestro
   load() {
     this.loadingStatus = LoadingStatusEnum.Loading;
     this.hPacketService.findHPacket(this.id).subscribe((p: HPacket) => {
-      this.packet = p;
+      this.entity = p;
       // update form data
-      this.form.get('hpacket-name')
-        .setValue(p.name);
-      this.form.get('hpacket-type')
-        .setValue(p.type);
-      this.form.get('hpacket-serialization')
-        .setValue(p.serialization);
-      this.form.get('hpacket-format')
-        .setValue(p.format);
-      this.form.get('hpacket-timestampfield')
-        .setValue(p.timestampField);
-      this.form.get('hpacket-timestampformat')
-        .setValue(p.timestampFormat);
-      this.form.get('hpacket-trafficplan')
-        .setValue(p.trafficPlan);
+      this.edit();
       // update static data (not part of this form)
       this.mqttUrl = 'tcp://karaf-activemq-mqtt-test.hyperiot.cloud';
       this.mqttTopic = '/v1/devices/' + p.device.id + '/' + p.id;
-      // reset form
-      this.resetForm();
+      // emit event for updating UI
       this.entityEvent.emit({
         event: 'treeview:focus',
         id: p.id, type: 'packet'
@@ -108,7 +103,7 @@ export class PacketDataComponent extends ProjectDetailEntity implements OnDestro
     this.loadingStatus = LoadingStatusEnum.Saving;
     this.resetErrors();
 
-    let p = this.packet;
+    let p = this.entity;
     p.name = this.form.value['hpacket-name'];
     p.type = this.form.value['hpacket-type'];
     p.format = this.form.value['hpacket-format'];
@@ -118,11 +113,11 @@ export class PacketDataComponent extends ProjectDetailEntity implements OnDestro
     p.timestampFormat = this.form.value['hpacket-timestampformat'];
 
     const responseHandler = (res) => {
-      this.packet = res;
+      this.entity = res;
       this.resetForm();
       this.entityEvent.emit({
         event: 'treeview:update',
-        id: this.packet.id, type: 'packet', name: this.packet.name
+        id: this.entity.id, type: 'packet', name: this.entity.name
       });
       this.loadingStatus = LoadingStatusEnum.Ready;
       successCallback && successCallback(res);
@@ -148,15 +143,15 @@ export class PacketDataComponent extends ProjectDetailEntity implements OnDestro
 
   private deletePacket(successCallback?, errorCallback?) {
     this.loadingStatus = LoadingStatusEnum.Saving;
-    this.hPacketService.deleteHPacket(this.packet.id).subscribe((res) => {
+    this.hPacketService.deleteHPacket(this.entity.id).subscribe((res) => {
       successCallback && successCallback(res);
       this.loadingStatus = LoadingStatusEnum.Ready;
       // request navigate to parent node (device page)
       this.entityEvent.emit({
         event: 'entity:delete',
         exitRoute: [
-          '/projects', this.packet.device.project.id,
-          { outlets: { projectDetails: ['device', this.packet.device.id] } }
+          '/projects', this.entity.device.project.id,
+          { outlets: { projectDetails: ['device', this.entity.device.id] } }
         ]
       });
       this.entityEvent.emit({ event: 'treeview:refresh' });
