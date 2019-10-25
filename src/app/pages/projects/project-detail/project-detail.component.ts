@@ -114,14 +114,13 @@ export class ProjectDetailComponent implements OnInit {
     console.log('clicked summary item', item);
   }
   onSummaryMenuClick(e) {
-    let rule = Object.assign({}, e.item as Rule);
+    const rule = Object.assign({}, e.item as Rule);
     switch (e.action) {
       case 'edit':
         this.currentEntity.edit(rule);
         break;
       case 'duplicate':
-        rule = this.currentEntity.clone(rule);
-        this.currentEntity.edit(rule);
+        this.currentEntity.clone(rule);
         break;
     }
   }
