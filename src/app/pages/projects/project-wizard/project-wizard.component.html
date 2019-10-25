@@ -13,7 +13,7 @@
 
     <ng-template #projectTemplate>
 
-      <hyt-project-data #projectData (entityEvent)="onEntityEvent($event)"></hyt-project-data>
+      <hyt-project-form #projectData (entityEvent)="onEntityEvent($event)"></hyt-project-form>
       <!--
 
       <hyt-project-step (projectOutput)="updateProject($event)">
@@ -23,15 +23,15 @@
     </ng-template>
 
     <ng-template #devicesTemplate>
-      <hyt-device-data #devicesData [currentProject]="currentProject" (entityEvent)="onEntityEvent($event)">
-      </hyt-device-data>
+      <hyt-device-form #devicesData [currentProject]="currentProject" (entityEvent)="onEntityEvent($event)">
+      </hyt-device-form>
     </ng-template>
 
     <ng-template #packetsTemplate>
       <hyt-device-select #deviceSelect [hDevices]="hDevices" (selectedDevice)="deviceChanged($event)">
       </hyt-device-select>
-      <hyt-packet-data #packetsData [currentDevice]="currentDevice" (entityEvent)="onEntityEvent($event)">
-      </hyt-packet-data>
+      <hyt-packet-form #packetsData [currentDevice]="currentDevice" (entityEvent)="onEntityEvent($event)">
+      </hyt-packet-form>
     </ng-template>
 
     <ng-template #fieldsTemplate>
