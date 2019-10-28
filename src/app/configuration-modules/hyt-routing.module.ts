@@ -21,7 +21,7 @@ import { DashboardComponent } from '../pages/dashboard/dashboard.component';
 import { PacketFieldsFormComponent } from '../pages/projects/project-forms/packet-fields-form/packet-fields-form.component';
 import { PacketEnrichmentsDataComponent } from '../pages/projects/project-forms/packet-enrichments-data/packet-enrichments-data.component';
 import { PacketStatisticsFormComponent } from '../pages/projects/project-forms/packet-statistics-form/packet-statistics-form.component';
-import { PacketEventsDataComponent } from '../pages/projects/project-forms/packet-events-data/packet-events-data.component';
+import { PacketEventsFormComponent } from '../pages/projects/project-forms/packet-events-form/packet-events-form.component';
 import { HomeComponent } from '../pages/home/home.component';
 
 @Injectable()
@@ -154,7 +154,7 @@ const hyperiotRoutes: Routes = [
       {
         canDeactivate: [CanDeactivateGuard],
         path: 'packet-events/:packetId',
-        component: PacketEventsDataComponent,
+        component: PacketEventsFormComponent,
         outlet: 'projectDetails'
       }
     ],

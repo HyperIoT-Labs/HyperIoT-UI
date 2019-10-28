@@ -18,7 +18,7 @@ import { PacketEnrichmentsDataComponent } from './project-forms/packet-enrichmen
 import { RuleDefinitionComponent } from './project-forms/rule-definition/rule-definition.component';
 import { PacketEnrichmentComponent } from './project-forms/packet-enrichments-data/packet-enrichment/packet-enrichment.component';
 import { PacketStatisticsFormComponent } from './project-forms/packet-statistics-form/packet-statistics-form.component';
-import { PacketEventsDataComponent } from './project-forms/packet-events-data/packet-events-data.component';
+import { PacketEventsFormComponent } from './project-forms/packet-events-form/packet-events-form.component';
 import { AssetCategoryComponent } from './project-forms/packet-enrichments-data/asset-category/asset-category.component';
 import { AssetTagComponent } from './project-forms/packet-enrichments-data/asset-tag/asset-tag.component';
 
@@ -39,9 +39,9 @@ import { EnrichmentTipColumnComponent } from './project-wizard/enrichment-step/e
 import { StatisticsStepComponent } from './project-wizard/statistics-step/statistics-step.component';
 import { EventsStepComponent } from './project-wizard/events-step/events-step.component';
 import { PacketEventComponent } from './project-wizard/events-step/packet-event/packet-event.component';
-import { EventMailComponent } from './project-wizard/events-step/packet-event/event-mail/event-mail.component';
+import { EventMailComponent } from './project-forms/packet-events-form/event-mail/event-mail.component';
 import { EventTipColumnComponent } from './project-wizard/events-step/event-tip-column/event-tip-column.component';
-import { SelectableTextComponent } from './project-wizard/events-step/packet-event/event-mail/selectable-text/selectable-text.component';
+import { SelectableTextComponent } from './project-forms/packet-events-form/event-mail/selectable-text/selectable-text.component';
 
 @NgModule({
   declarations: [
@@ -63,7 +63,7 @@ import { SelectableTextComponent } from './project-wizard/events-step/packet-eve
     PacketFieldsFormComponent,
     PacketEnrichmentsDataComponent,
     PacketStatisticsFormComponent,
-    PacketEventsDataComponent,
+    PacketEventsFormComponent,
     SelectableTextComponent,
     PacketSelectComponent,
     PacketEnrichmentComponent,

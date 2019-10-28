@@ -1,0 +1,59 @@
+<h2 id="title-events">Events</h2>
+
+<div *ngIf="!editMode" class="d-flex flex-column align-items-center justify-content-center">
+    <hyt-button (clickFn)="onAddClick()">
+        <mat-icon>add</mat-icon>
+        <span>Add event</span>
+    </hyt-button>
+</div>
+
+<div *ngIf="editMode && packet">
+    <form class="events-form" [formGroup]="form" autocomplete="on">
+
+        <div class="row">
+          <div class="col-md-6 container-form-field">
+            <hyt-input-text [form]="form" name="rule-name" [isRequired]="true"
+              i18n-placeholder="@@HYT_name" placeholder="HYT_name" [injectedErrorMsg]="getError('rule-name')"
+              hintMessage="Enter the event name">
+            </hyt-input-text>
+          </div> <!-- Field Name -->
+          <div class="col-md-6 container-form-field">
+            <hyt-text-area [form]="form" name="rule-description"
+              i18n-placeholder="@@HYT_description" placeholder="HYT_description"
+              hintMessage="Enter the event description">
+            </hyt-text-area>
+          </div> <!-- Field RuleDescription -->
+        </div>
+      
+        <div class="row">
+          <div class="col-md-12 container-form-field center">
+            <ng-container i18n="@@HYT_output_data">HYT_output_data</ng-container>
+            <br>
+            <hyt-radio-button [form]="form" [options]="outputOptions" name="eventOutput">
+            </hyt-radio-button>
+          </div> <!-- Field Oputput -->
+        </div>
+      
+        <div class="row">
+          <div class="col-md-12 container-form-field">
+            <hyt-rule-definition #eventDef [currentPacket]="packet"></hyt-rule-definition>
+          </div> <!-- Field RuleDefinition -->
+        </div>
+      
+        <hyt-event-mail #eventMail></hyt-event-mail>
+      
+        <br>
+      
+        <div class="container-form-field errorMessage">
+          <ng-container *ngIf="getError('general')">
+            {{getError('general')}}
+          </ng-container>
+        </div> <!-- Error Box -->
+      
+      </form>
+</div>
+
+<!-- <hyt-packet-event
+    *ngIf="editMode && packet"
+    [hProject]="project"
+    [currentPacket]="packet"></hyt-packet-event> -->

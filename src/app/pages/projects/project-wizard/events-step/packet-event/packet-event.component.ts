@@ -6,7 +6,7 @@ import { RuleDefinitionComponent } from '../../../project-forms/rule-definition/
 import { HYTError } from 'src/app/services/errorHandler/models/models';
 import { Option } from '@hyperiot/components/lib/hyt-radio-button/hyt-radio-button.component';
 import { PageStatusEnum } from '../../model/pageStatusEnum';
-import { EventMailComponent } from './event-mail/event-mail.component';
+import { EventMailComponent } from '../../../project-forms/packet-events-form/event-mail/event-mail.component';
 import { ProjectWizardService } from 'src/app/services/projectWizard/project-wizard.service';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 

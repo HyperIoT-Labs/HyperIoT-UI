@@ -1,22 +1,22 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PacketEventsDataComponent } from './packet-events-data.component';
+import { PacketEventsFormComponent } from './packet-events-form.component';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 
-describe('PacketEventsDataComponent', () => {
-  let component: PacketEventsDataComponent;
-  let fixture: ComponentFixture<PacketEventsDataComponent>;
+describe('PacketEventsFormComponent', () => {
+  let component: PacketEventsFormComponent;
+  let fixture: ComponentFixture<PacketEventsFormComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PacketEventsDataComponent ],
+      declarations: [ PacketEventsFormComponent ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PacketEventsDataComponent);
+    fixture = TestBed.createComponent(PacketEventsFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

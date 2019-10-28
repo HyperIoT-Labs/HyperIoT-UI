@@ -153,11 +153,11 @@ export class DashboardConfigService {
     }
 
     postRecordingStateOn(projectId: number) {
-        return this.sotrmService.activateProjectTopology(projectId);
+        return this.sotrmService.submitProjectTopology(projectId);
     }
 
     postRecordingStateOff(projectId: number) {
-        return this.sotrmService.deactivateProjectTopology(projectId);
+        return this.sotrmService.deactivateTopology(projectId);
     }
 
 }
