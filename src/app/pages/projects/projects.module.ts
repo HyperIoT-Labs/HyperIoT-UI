@@ -34,7 +34,7 @@ import { MatInputModule } from '@angular/material/input';
 import { AssetCategoryComponent } from './project-wizard/asset-category/asset-category.component';
 import { AssetTagComponent } from './project-forms/packet-enrichments-data/asset-tag/asset-tag.component';
 import { SelectableTextComponent } from './project-wizard/events-step/packet-event/event-mail/selectable-text/selectable-text.component';
-import { PacketFieldsDataComponent } from './project-forms/packet-fields-data/packet-fields-data.component';
+import { PacketFieldsFormComponent } from './project-forms/packet-fields-form/packet-fields-form.component';
 import { PacketEnrichmentsDataComponent } from './project-forms/packet-enrichments-data/packet-enrichments-data.component';
 import { PacketStatisticsDataComponent } from './project-forms/packet-statistics-data/packet-statistics-data.component';
 import { PacketEventsDataComponent } from './project-forms/packet-events-data/packet-events-data.component';
@@ -71,7 +71,7 @@ import { DeviceSelectComponent } from './project-wizard/device-select/device-sel
     AssetCategoryComponent,
     AssetTagComponent,
     SelectableTextComponent,
-    PacketFieldsDataComponent,
+    PacketFieldsFormComponent,
     PacketEnrichmentsDataComponent,
     PacketStatisticsDataComponent,
     PacketEventsDataComponent,

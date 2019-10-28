@@ -1,14 +1,14 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PacketFieldsDataComponent } from './packet-fields-data.component';
+import { PacketFieldsFormComponent } from './packet-fields-form.component';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { HpacketsService } from '@hyperiot/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-describe('PacketFieldsDataComponent', () => {
-  let component: PacketFieldsDataComponent;
-  let fixture: ComponentFixture<PacketFieldsDataComponent>;
+describe('PacketFieldsFormComponent', () => {
+  let component: PacketFieldsFormComponent;
+  let fixture: ComponentFixture<PacketFieldsFormComponent>;
   let formBuilder: FormBuilder;
   let hPacketService: HpacketsService;
   let activatedRoute: ActivatedRoute;
@@ -16,7 +16,7 @@ describe('PacketFieldsDataComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [PacketFieldsDataComponent],
+      declarations: [PacketFieldsFormComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
       providers: [{provide: FormBuilder, useValue: formBuilder},
         {provide: HpacketsService, useValue: hPacketService}, 
@@ -27,7 +27,7 @@ describe('PacketFieldsDataComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PacketFieldsDataComponent);
+    fixture = TestBed.createComponent(PacketFieldsFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

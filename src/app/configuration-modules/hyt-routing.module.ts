@@ -18,7 +18,7 @@ import { DeviceFormComponent } from '../pages/projects/project-forms/device-form
 import { PacketFormComponent } from '../pages/projects/project-forms/packet-form/packet-form.component';
 import { CanDeactivateGuard } from '../components/CanDeactivateGuard';
 import { DashboardComponent } from '../pages/dashboard/dashboard.component';
-import { PacketFieldsDataComponent } from '../pages/projects/project-forms/packet-fields-data/packet-fields-data.component';
+import { PacketFieldsFormComponent } from '../pages/projects/project-forms/packet-fields-form/packet-fields-form.component';
 import { PacketEnrichmentsDataComponent } from '../pages/projects/project-forms/packet-enrichments-data/packet-enrichments-data.component';
 import { PacketStatisticsDataComponent } from '../pages/projects/project-forms/packet-statistics-data/packet-statistics-data.component';
 import { PacketEventsDataComponent } from '../pages/projects/project-forms/packet-events-data/packet-events-data.component';
@@ -136,7 +136,7 @@ const hyperiotRoutes: Routes = [
       {
         canDeactivate: [CanDeactivateGuard],
         path: 'packet-fields/:packetId',
-        component: PacketFieldsDataComponent,
+        component: PacketFieldsFormComponent,
         outlet: 'projectDetails'
       },
       {

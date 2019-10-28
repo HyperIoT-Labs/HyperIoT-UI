@@ -13,11 +13,11 @@ import { MatDialog } from '@angular/material';
 import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
 
 @Component({
-  selector: 'hyt-packet-fields-data',
-  templateUrl: './packet-fields-data.component.html',
-  styleUrls: ['./packet-fields-data.component.scss']
+  selector: 'hyt-packet-fields-form',
+  templateUrl: './packet-fields-form.component.html',
+  styleUrls: ['./packet-fields-form.component.scss']
 })
-export class PacketFieldsDataComponent extends ProjectFormEntity implements OnDestroy, OnChanges {
+export class PacketFieldsFormComponent extends ProjectFormEntity implements OnDestroy, OnChanges {
   @ViewChild('treeViewFields', { static: false }) treeViewFields: HytTreeViewEditableComponent;
   private routerSubscription: Subscription;
   private activatedRouteSubscription: Subscription;
