@@ -19,7 +19,7 @@ import { PacketFormComponent } from '../pages/projects/project-forms/packet-form
 import { CanDeactivateGuard } from '../components/CanDeactivateGuard';
 import { DashboardComponent } from '../pages/dashboard/dashboard.component';
 import { PacketFieldsFormComponent } from '../pages/projects/project-forms/packet-fields-form/packet-fields-form.component';
-import { PacketEnrichmentsDataComponent } from '../pages/projects/project-forms/packet-enrichments-data/packet-enrichments-data.component';
+import { PacketEnrichmentFormComponent } from '../pages/projects/project-forms/packet-enrichment-form/packet-enrichment-form.component';
 import { PacketStatisticsFormComponent } from '../pages/projects/project-forms/packet-statistics-form/packet-statistics-form.component';
 import { PacketEventsFormComponent } from '../pages/projects/project-forms/packet-events-form/packet-events-form.component';
 import { HomeComponent } from '../pages/home/home.component';
@@ -142,7 +142,7 @@ const hyperiotRoutes: Routes = [
       {
         canDeactivate: [CanDeactivateGuard],
         path: 'packet-enrichments/:packetId',
-        component: PacketEnrichmentsDataComponent,
+        component: PacketEnrichmentFormComponent,
         outlet: 'projectDetails'
       },
       {
