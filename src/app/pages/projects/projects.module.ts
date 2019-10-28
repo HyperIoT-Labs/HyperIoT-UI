@@ -14,13 +14,12 @@ import { ProjectFormComponent } from './project-forms/project-form/project-form.
 import { DeviceFormComponent } from './project-forms/device-form/device-form.component';
 import { PacketFormComponent } from './project-forms/packet-form/packet-form.component';
 import { PacketFieldsFormComponent } from './project-forms/packet-fields-form/packet-fields-form.component';
-import { PacketEnrichmentsDataComponent } from './project-forms/packet-enrichments-data/packet-enrichments-data.component';
+import { PacketEnrichmentFormComponent } from './project-forms/packet-enrichment-form/packet-enrichment-form.component';
 import { RuleDefinitionComponent } from './project-forms/rule-definition/rule-definition.component';
-import { PacketEnrichmentComponent } from './project-forms/packet-enrichments-data/packet-enrichment/packet-enrichment.component';
 import { PacketStatisticsFormComponent } from './project-forms/packet-statistics-form/packet-statistics-form.component';
 import { PacketEventsDataComponent } from './project-forms/packet-events-data/packet-events-data.component';
-import { AssetCategoryComponent } from './project-forms/packet-enrichments-data/asset-category/asset-category.component';
-import { AssetTagComponent } from './project-forms/packet-enrichments-data/asset-tag/asset-tag.component';
+import { AssetCategoryComponent } from './project-forms/packet-enrichment-form/asset-category/asset-category.component';
+import { AssetTagComponent } from './project-forms/packet-enrichment-form/asset-tag/asset-tag.component';
 
 import { ProjectWizardComponent, ProjectWizardCanDeactivate } from './project-wizard/project-wizard.component';
 import { DeviceSelectComponent } from './project-wizard/device-select/device-select.component';
@@ -61,12 +60,11 @@ import { SelectableTextComponent } from './project-wizard/events-step/packet-eve
     AssetTagComponent,
     SelectableTextComponent,
     PacketFieldsFormComponent,
-    PacketEnrichmentsDataComponent,
+    PacketEnrichmentFormComponent,
     PacketStatisticsFormComponent,
     PacketEventsDataComponent,
     SelectableTextComponent,
     PacketSelectComponent,
-    PacketEnrichmentComponent,
     EnrichmentTipColumnComponent,
     EventTipColumnComponent,
     PacketEventComponent,

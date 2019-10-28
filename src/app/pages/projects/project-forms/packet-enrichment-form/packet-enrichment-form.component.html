@@ -1,20 +1,20 @@
-<form class="enrichment-form" [formGroup]="enrichmentForm" autocomplete="on">
+<form class="enrichment-form" [formGroup]="form" autocomplete="on">
 
   <div class="row">
     <div class="col-md-4 container-form-field">
-      <hyt-input-text [form]="enrichmentForm" formControlName="rule-name" name="rule-name" [isRequired]="true"
+      <hyt-input-text [form]="form" formControlName="rule-name" name="rule-name" [isRequired]="true"
         i18n-placeholder="@@HYT_name" placeholder="HYT_name" [injectedErrorMsg]="getError('rule-name')"
         [externalHint]="'Enter the rule name'" (outHint)="updateHint($event)">
       </hyt-input-text>
     </div> <!-- Field Name -->
     <div class="col-md-4 container-form-field">
-      <hyt-select [form]="enrichmentForm" [options]="enrichmentRules" (changeFn)="enrichmentTypeChanged($event)"
+      <hyt-select [form]="form" [options]="enrichmentRules" (changeFn)="enrichmentTypeChanged($event)"
         formControlName="enrichmentRule" name="enrichmentRule" [isRequired]="true" i18n-label="@@HYT_rule_type"
         label="HYT_rule_type">
       </hyt-select>
     </div> <!-- Field RuleType -->
     <div class="col-md-4 container-form-field">
-      <hyt-text-area [form]="enrichmentForm" formControlName="rule-description" name="rule-description"
+      <hyt-text-area [form]="form" formControlName="rule-description" name="rule-description"
         i18n-placeholder="@@HYT_description" placeholder="HYT_description"
         [externalHint]="'Enter the rule description. (max...)'" (outHint)="updateHint($event)">
       </hyt-text-area>
@@ -23,21 +23,21 @@
 
   <div class="row">
     <div class="col-md-12 container-form-field">
-      <hyt-rule-definition *ngIf="currentPacket" #ruleDef [currentPacket]="currentPacket">
+      <hyt-rule-definition *ngIf="packet" #ruleDef [currentPacket]="packet">
       </hyt-rule-definition>
     </div> <!-- Field RuleDefinition -->
   </div>
-
+[[[ {{ enrichmentType }} ]]]
   <div *ngIf="enrichmentType=='AddTagRuleAction'" class="row">
     <div class="col-md-12 center">
-      <hyt-asset-tag [packet]="currentPacket" (tagIds)="updateAssetTag($event)">
+      <hyt-asset-tag [packet]="packet" (tagIds)="updateAssetTag($event)">
       </hyt-asset-tag>
     </div>
   </div>
 
   <div *ngIf="enrichmentType=='AddCategoryRuleAction'" class="row">
     <div class="col-md-12 center">
-      <hyt-asset-category [packet]="currentPacket" (categoryIds)="updateAssetCategory($event)">
+      <hyt-asset-category [packet]="packet" (categoryIds)="updateAssetCategory($event)">
       </hyt-asset-category>
     </div>
   </div>
