@@ -174,10 +174,10 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
             this.ruleForms[k].form.get('ruleCondition').setValue(splitted[1]);
             if (this.ruleForms[k].compareWith) {
               this.ruleForms[k].form.get('ruleValue').setValue(splitted[2]);
-              this.ruleForms[k].form.get('ruleJoin').setValue(' ' + splitted[3] + ' ' || null);
+              this.ruleForms[k].form.get('ruleJoin').setValue((splitted[3]) ? ' ' + splitted[3] + ' ' : null);
             }
             else
-              this.ruleForms[k].form.get('ruleJoin').setValue(' ' + splitted[2] + ' ' || null);
+              this.ruleForms[k].form.get('ruleJoin').setValue((splitted[2]) ? ' ' + splitted[2] + ' ' : null);
           }, 0);
         }
 
