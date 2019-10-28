@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild, Injectable, AfterViewInit } from '@angula
 import { HProject, HDevice, HPacket, Rule, HdevicesService, HpacketsService } from '@hyperiot/core';
 import { Router, CanDeactivate } from '@angular/router';
 import { Subject } from 'rxjs';
-import { ProjectWizardService } from 'src/app/services/projectWizard/project-wizard.service';
 import { ProjectFormEntity } from '../project-forms/project-form-entity';
 import { ProjectFormComponent } from '../project-forms/project-form/project-form.component';
 import { DeviceFormComponent } from '../project-forms/device-form/device-form.component';

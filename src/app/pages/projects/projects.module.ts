@@ -18,6 +18,8 @@ import { PacketEnrichmentFormComponent } from './project-forms/packet-enrichment
 import { RuleDefinitionComponent } from './project-forms/rule-definition/rule-definition.component';
 import { PacketStatisticsFormComponent } from './project-forms/packet-statistics-form/packet-statistics-form.component';
 import { PacketEventsFormComponent } from './project-forms/packet-events-form/packet-events-form.component';
+import { EventMailComponent } from './project-forms/packet-events-form/event-mail/event-mail.component';
+import { SelectableTextComponent } from './project-forms/packet-events-form/event-mail/selectable-text/selectable-text.component';
 import { AssetCategoryComponent } from './project-forms/packet-enrichment-form/asset-category/asset-category.component';
 import { AssetTagComponent } from './project-forms/packet-enrichment-form/asset-tag/asset-tag.component';
 
@@ -32,23 +34,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule, MatButtonModule, MatProgressSpinnerModule, MatProgressBarModule, MatMenuModule } from '@angular/material';
 import { MatExpansionModule } from '@angular/material/expansion';
 
-//TO DO. Remove imports
-import { EnrichmentStepComponent } from './project-wizard/enrichment-step/enrichment-step.component';
-import { EnrichmentTipColumnComponent } from './project-wizard/enrichment-step/enrichment-tip-column/enrichment-tip-column.component';
-import { StatisticsStepComponent } from './project-wizard/statistics-step/statistics-step.component';
-import { EventsStepComponent } from './project-wizard/events-step/events-step.component';
-import { PacketEventComponent } from './project-wizard/events-step/packet-event/packet-event.component';
-import { EventMailComponent } from './project-forms/packet-events-form/event-mail/event-mail.component';
-import { EventTipColumnComponent } from './project-wizard/events-step/event-tip-column/event-tip-column.component';
-import { SelectableTextComponent } from './project-forms/packet-events-form/event-mail/selectable-text/selectable-text.component';
-
 @NgModule({
   declarations: [
     ProjectsComponent,
     ProjectWizardComponent,
-    EventsStepComponent,
-    StatisticsStepComponent,
-    EnrichmentStepComponent,
     ProjectCardComponent,
     RuleDefinitionComponent,
     ProjectDetailComponent,
@@ -65,9 +54,6 @@ import { SelectableTextComponent } from './project-forms/packet-events-form/even
     PacketEventsFormComponent,
     SelectableTextComponent,
     PacketSelectComponent,
-    EnrichmentTipColumnComponent,
-    EventTipColumnComponent,
-    PacketEventComponent,
     GenericSummaryListComponent,
     DeviceSelectComponent
   ],
