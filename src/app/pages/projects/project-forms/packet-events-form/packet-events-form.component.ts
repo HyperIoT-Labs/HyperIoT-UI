@@ -91,13 +91,18 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
   }
 
   edit(entity?: Rule) {
+    if (entity) {
+      this.entity = { ...entity };
+    }
+    delete this.entity.actions;
+    delete this.entity.parent;
     this.editMode = true;
     this.form.reset();
-    this.ruleDefinitionComponent.setRuleDefinition(entity.ruleDefinition);
-    this.eventMailComponent.setMail(JSON.parse(entity.jsonActions));
     this.form.get('rule-description').setValue(entity.description);
     this.form.get('rule-name').setValue(entity.name);
     this.form.get('eventOutput').setValue('SendMailAction');//TODO add logic (if new output)
+    this.ruleDefinitionComponent.setRuleDefinition(entity.ruleDefinition);
+    this.eventMailComponent.setMail(JSON.parse(entity.jsonActions));
   }
 
   clone(entity?: Rule): Rule {
