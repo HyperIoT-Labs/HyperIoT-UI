@@ -8,7 +8,7 @@ import { ProjectFormComponent } from '../project-forms/project-form/project-form
 import { DeviceFormComponent } from '../project-forms/device-form/device-form.component';
 import { PacketFormComponent } from '../project-forms/packet-form/packet-form.component';
 import { DeviceSelectComponent } from './device-select/device-select.component';
-import { PacketFieldsDataComponent } from '../project-forms/packet-fields-data/packet-fields-data.component';
+import { PacketFieldsFormComponent } from '../project-forms/packet-fields-form/packet-fields-form.component';
 import { SummaryListItem } from '../project-detail/generic-summary-list/generic-summary-list.component';
 
 @Injectable({
@@ -49,7 +49,7 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
   deviceSelect: DeviceSelectComponent;
 
   @ViewChild('fieldsData', { static: false })
-  fieldsData: PacketFieldsDataComponent;
+  fieldsData: PacketFieldsFormComponent;
 
   currentProject: HProject;
   currentDevice: HDevice;

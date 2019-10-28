@@ -20,7 +20,7 @@ import { CanDeactivateGuard } from '../components/CanDeactivateGuard';
 import { DashboardComponent } from '../pages/dashboard/dashboard.component';
 import { PacketFieldsFormComponent } from '../pages/projects/project-forms/packet-fields-form/packet-fields-form.component';
 import { PacketEnrichmentsDataComponent } from '../pages/projects/project-forms/packet-enrichments-data/packet-enrichments-data.component';
-import { PacketStatisticsDataComponent } from '../pages/projects/project-forms/packet-statistics-data/packet-statistics-data.component';
+import { PacketStatisticsFormComponent } from '../pages/projects/project-forms/packet-statistics-form/packet-statistics-form.component';
 import { PacketEventsDataComponent } from '../pages/projects/project-forms/packet-events-data/packet-events-data.component';
 import { HomeComponent } from '../pages/home/home.component';
 
@@ -148,7 +148,7 @@ const hyperiotRoutes: Routes = [
       {
         canDeactivate: [CanDeactivateGuard],
         path: 'packet-statistics/:packetId',
-        component: PacketStatisticsDataComponent,
+        component: PacketStatisticsFormComponent,
         outlet: 'projectDetails'
       },
       {

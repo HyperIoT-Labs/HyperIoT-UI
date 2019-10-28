@@ -1,17 +1,17 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PacketStatisticsDataComponent } from './packet-statistics-data.component';
+import { PacketStatisticsFormComponent } from './packet-statistics-form.component';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { HpacketsService } from '@hyperiot/core';
 
-describe('PacketStatisticsDataComponent', () => {
-  let component: PacketStatisticsDataComponent;
-  let fixture: ComponentFixture<PacketStatisticsDataComponent>;
+describe('PacketStatisticsFormComponent', () => {
+  let component: PacketStatisticsFormComponent;
+  let fixture: ComponentFixture<PacketStatisticsFormComponent>;
   let hPacketService: HpacketsService
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PacketStatisticsDataComponent ],
+      declarations: [ PacketStatisticsFormComponent ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
       providers: [
         { provide: HpacketsService, useValue: hPacketService }
@@ -21,7 +21,7 @@ describe('PacketStatisticsDataComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PacketStatisticsDataComponent);
+    fixture = TestBed.createComponent(PacketStatisticsFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

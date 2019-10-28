@@ -8,11 +8,11 @@ import { ProjectFormEntity } from '../project-form-entity';
 import { FormBuilder } from '@angular/forms';
 
 @Component({
-  selector: 'hyt-packet-statistics-data',
-  templateUrl: './packet-statistics-data.component.html',
-  styleUrls: ['./packet-statistics-data.component.scss']
+  selector: 'hyt-packet-statistics-form',
+  templateUrl: './packet-statistics-form.component.html',
+  styleUrls: ['./packet-statistics-form.component.scss']
 })
-export class PacketStatisticsDataComponent extends ProjectFormEntity implements OnDestroy {
+export class PacketStatisticsFormComponent extends ProjectFormEntity implements OnDestroy {
   private routerSubscription: Subscription;
   private packetId: number;
 

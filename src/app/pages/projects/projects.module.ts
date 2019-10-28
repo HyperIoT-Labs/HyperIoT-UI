@@ -36,7 +36,7 @@ import { AssetTagComponent } from './project-forms/packet-enrichments-data/asset
 import { SelectableTextComponent } from './project-wizard/events-step/packet-event/event-mail/selectable-text/selectable-text.component';
 import { PacketFieldsFormComponent } from './project-forms/packet-fields-form/packet-fields-form.component';
 import { PacketEnrichmentsDataComponent } from './project-forms/packet-enrichments-data/packet-enrichments-data.component';
-import { PacketStatisticsDataComponent } from './project-forms/packet-statistics-data/packet-statistics-data.component';
+import { PacketStatisticsFormComponent } from './project-forms/packet-statistics-form/packet-statistics-form.component';
 import { PacketEventsDataComponent } from './project-forms/packet-events-data/packet-events-data.component';
 import { PacketSelectComponent } from './project-wizard/packet-select/packet-select.component';
 import { PacketFieldComponent } from './project-wizard/fields-step/packet-field/packet-field.component';
@@ -73,7 +73,7 @@ import { DeviceSelectComponent } from './project-wizard/device-select/device-sel
     SelectableTextComponent,
     PacketFieldsFormComponent,
     PacketEnrichmentsDataComponent,
-    PacketStatisticsDataComponent,
+    PacketStatisticsFormComponent,
     PacketEventsDataComponent,
     SelectableTextComponent,
     PacketSelectComponent,
