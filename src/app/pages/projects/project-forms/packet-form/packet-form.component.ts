@@ -129,9 +129,9 @@ export class PacketFormComponent extends ProjectFormEntity implements OnDestroy 
       this.hPacketService.updateHPacket(p).subscribe(responseHandler, (err) => {
         this.setErrors(err);
         errorCallback && errorCallback(err);
+        this.loadingStatus = LoadingStatusEnum.Error;
       });
-    }
-    else {
+    } else {
       p.entityVersion = 1;
       p.version = '1';
       p.fields = [];
@@ -139,6 +139,7 @@ export class PacketFormComponent extends ProjectFormEntity implements OnDestroy 
       this.hPacketService.saveHPacket(p).subscribe(responseHandler, (err) => {
         this.setErrors(err);
         errorCallback && errorCallback(err);
+        this.loadingStatus = LoadingStatusEnum.Error;
       });
     }
   }

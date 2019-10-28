@@ -1,4 +1,4 @@
-<form class="enrichment-form" [formGroup]="form" autocomplete="on">
+<form class="container enrichment-form" [formGroup]="form" autocomplete="on">
 
   <div class="row">
     <div class="col-md-4 container-form-field">
@@ -42,20 +42,33 @@
     </div>
   </div>
 
-  <div class="container-form-field errorMessage">
-    <ng-container *ngIf="getError('general')">
-      {{getError('general')}}
-    </ng-container>
-  </div> <!-- Error Box -->
-
-  <hyt-button *ngIf="submitType == 'ADD'" id="rule-form-add-button"
-    [isDisabled]="invalid() || pageStatus == PageStatus.Loading" (clickFn)="postRule()" type="submit">
+  <hyt-button id="rule-form-add-button"
+    [isDisabled]="invalid() || loadingStatus == LoadingStatus.Loading" (clickFn)="postRule()" type="submit">
     <ng-container i18n="@@HYT_add_rule">HYT_add_rule</ng-container>
   </hyt-button>
 
-  <hyt-button *ngIf="submitType == 'UPDATE'" id="rule-form-update-button"
-    [isDisabled]="invalid() || pageStatus == PageStatus.Loading" (clickFn)="putRule()" type="submit">
+  <hyt-button id="rule-form-update-button"
+    [isDisabled]="invalid() || loadingStatus == LoadingStatus.Loading" (clickFn)="putRule()" type="submit">
     <ng-container i18n="@@HYT_update_Rule">HYT_update_Rule</ng-container>
   </hyt-button>
+
+
+  <!-- TODO: This HTML block is repeated
+    across all 'entity' components,
+    consider making a component out of it -->
+  <div *ngIf="loadingStatus !== LoadingStatus.Ready" class="overlay d-flex flex-column align-items-center justify-content-center">
+    <h4 *ngIf="loadingStatus === LoadingStatus.Loading">Loading project data...</h4>
+    <div *ngIf="loadingStatus === LoadingStatus.Error" class="d-flex flex-column justify-content-center">
+        <h4>An error has occurred =/</h4>
+        <button mat-stroked-button (click)="loadingStatus = LoadingStatus.Ready">
+            <span>Close</span>
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <h4 *ngIf="loadingStatus === LoadingStatus.Saving">Saving project data...</h4>
+    <mat-progress-bar
+        *ngIf="loadingStatus === LoadingStatus.Loading || loadingStatus === LoadingStatus.Saving"
+        mode="query"></mat-progress-bar>
+  </div>
 
 </form>

@@ -11,6 +11,7 @@ import { ProjectFormEntity } from '../project-forms/project-form-entity';
 import { MatDialog } from '@angular/material';
 import { SaveChangesDialogComponent } from 'src/app/components/dialogs/save-changes-dialog/save-changes-dialog.component';
 import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
+import { SummaryListItem } from './generic-summary-list/generic-summary-list.component';
 
 enum TreeStatusEnum {
   Ready,
@@ -109,11 +110,11 @@ export class ProjectDetailComponent implements OnInit {
     this.currentEntity.cancel();
   }
 
-  onSummaryItemClick(item: any) {
+  onSummaryItemClick(item: SummaryListItem) {
     console.log('clicked summary item', item);
   }
   onSummaryMenuClick(e) {
-    const rule = Object.assign({}, e.item as Rule);
+    const rule = Object.assign({}, e.item.data as Rule);
     switch (e.action) {
       case 'edit':
         this.currentEntity.edit(rule);
