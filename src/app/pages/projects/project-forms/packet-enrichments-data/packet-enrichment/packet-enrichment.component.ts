@@ -3,7 +3,7 @@ import { HPacket, Rule, RulesService, HpacketsService } from '@hyperiot/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { SelectOption } from '@hyperiot/components';
 import { HYTError } from 'src/app/services/errorHandler/models/models';
-import { RuleDefinitionComponent } from '../rule-definition/rule-definition.component';
+import { RuleDefinitionComponent } from '../../rule-definition/rule-definition.component';
 import { AssetTagComponent } from '../asset-tag/asset-tag.component';
 import { ProjectWizardService } from 'src/app/services/projectWizard/project-wizard.service';
 import { I18n } from '@ngx-translate/i18n-polyfill';

@@ -15,7 +15,7 @@ import { DeviceFormComponent } from './project-forms/device-form/device-form.com
 import { PacketFormComponent } from './project-forms/packet-form/packet-form.component';
 import { PacketFieldsFormComponent } from './project-forms/packet-fields-form/packet-fields-form.component';
 import { PacketEnrichmentsDataComponent } from './project-forms/packet-enrichments-data/packet-enrichments-data.component';
-import { RuleDefinitionComponent } from './project-forms/packet-enrichments-data/rule-definition/rule-definition.component';
+import { RuleDefinitionComponent } from './project-forms/rule-definition/rule-definition.component';
 import { PacketEnrichmentComponent } from './project-forms/packet-enrichments-data/packet-enrichment/packet-enrichment.component';
 import { PacketStatisticsFormComponent } from './project-forms/packet-statistics-form/packet-statistics-form.component';
 import { PacketEventsDataComponent } from './project-forms/packet-events-data/packet-events-data.component';
