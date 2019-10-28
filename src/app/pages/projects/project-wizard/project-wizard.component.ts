@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, Injectable, AfterViewInit } from '@angular/core';
-import { HProject, HDevice, HPacket, Rule } from '@hyperiot/core';
+import { HProject, HDevice, HPacket, Rule, HdevicesService, HpacketsService } from '@hyperiot/core';
 import { Router, CanDeactivate } from '@angular/router';
 import { Subject } from 'rxjs';
 import { ProjectWizardService } from 'src/app/services/projectWizard/project-wizard.service';
@@ -10,6 +10,7 @@ import { PacketFormComponent } from '../project-forms/packet-form/packet-form.co
 import { DeviceSelectComponent } from './device-select/device-select.component';
 import { PacketFieldsFormComponent } from '../project-forms/packet-fields-form/packet-fields-form.component';
 import { SummaryListItem } from '../project-detail/generic-summary-list/generic-summary-list.component';
+import { PacketSelectComponent } from './packet-select/packet-select.component';
 
 @Injectable({
   providedIn: 'root',
@@ -45,6 +46,9 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
   @ViewChild('packetsData', { static: false })
   packetsData: PacketFormComponent;
 
+  @ViewChild('fieldPacketSelect', { static: false })
+  fieldPacketSelect: PacketSelectComponent;
+
   @ViewChild('deviceSelect', { static: false })
   deviceSelect: DeviceSelectComponent;
 
@@ -58,9 +62,9 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
   enrichmentRules: Rule[] = [];
   eventRules: Rule[] = [];
 
-  projectValidated: boolean = false;
-  devicesValidated: boolean = false;
-  packetsValidated: boolean = false;
+  //projectValidated: boolean = false;
+  //devicesValidated: boolean = false;
+  //packetsValidated: boolean = false;
   fieldsValidated: boolean = false;
   enrichmentValidated: boolean = false;
   statisticsValidated: boolean = false;
@@ -71,42 +75,44 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
 
   constructor(
     private router: Router,
-    private wizardService: ProjectWizardService
+    //private wizardService: ProjectWizardService,
+    private hDevicesService: HdevicesService,
+    private hPacketsService: HpacketsService
   ) { }
 
   ngOnInit() {
-    this.wizardService.hDevices$.subscribe(
-      (res: HDevice[]) => {
-        this.hDevices = [...res];
-        if (res && res.length != 0)
-          this.devicesValidated = true;
-        else
-          this.devicesValidated = false;
-      }
-    );
-    this.wizardService.hPackets$.subscribe(
-      (res: HPacket[]) => {
-        this.hPackets = [...res];
-        if (res && res.length != 0) {
-          this.packetsValidated = true;
-          this.fieldsValidated = true;
-        }
-        else {
-          this.packetsValidated = false;
-          this.fieldsValidated = false;
-        }
-      }
-    );
-    this.wizardService.enrichmentRules$.subscribe(
-      (res: Rule[]) => {
-        this.enrichmentRules = [...res];
-      }
-    );
-    this.wizardService.eventRules$.subscribe(
-      (res: Rule[]) => {
-        this.eventRules = [...res];
-      }
-    );
+    // this.wizardService.hDevices$.subscribe(
+    //   (res: HDevice[]) => {
+    //     this.hDevices = [...res];
+    //     if (res && res.length != 0)
+    //       this.devicesValidated = true;
+    //     else
+    //       this.devicesValidated = false;
+    //   }
+    // );
+    // this.wizardService.hPackets$.subscribe(
+    //   (res: HPacket[]) => {
+    //     this.hPackets = [...res];
+    //     if (res && res.length != 0) {
+    //       this.packetsValidated = true;
+    //       this.fieldsValidated = true;
+    //     }
+    //     else {
+    //       this.packetsValidated = false;
+    //       this.fieldsValidated = false;
+    //     }
+    //   }
+    // );
+    // this.wizardService.enrichmentRules$.subscribe(
+    //   (res: Rule[]) => {
+    //     this.enrichmentRules = [...res];
+    //   }
+    // );
+    // this.wizardService.eventRules$.subscribe(
+    //   (res: Rule[]) => {
+    //     this.eventRules = [...res];
+    //   }
+    // );
   }
 
   ngAfterViewInit() {
@@ -119,8 +125,6 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
   hintVisible = false;
 
   stepChanged(event) {
-    console.log(event);
-
     //setting current form...
     switch (event.selectedIndex) {
       case 0: {
@@ -129,14 +133,17 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
       }
       case 1: {
         this.currentForm = this.devicesData;
+        this.getDevices();
         break;
       }
       case 2: {
         this.currentForm = this.packetsData;
+        this.getPackets();
         break;
       }
       case 3: {
-        // this.currentForm = this.fieldsData;
+        this.currentForm = this.fieldsData;
+        this.fieldPacketSelect.autoSelect();
         break;
       }
       case 4: {
@@ -152,15 +159,14 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
         console.log("error");
       }
     }
-
-    // this.wizardService.stepChanged(event.selectedIndex);
+    //this.wizardService.stepChanged(event.selectedIndex);
   }
 
   updateList(ent: any, entityList: any[]): any[] {
     let fin = entityList.find(x => x.id == ent.id);
     if (fin) {
-      const en = this.hDevices.find(x => x.id == ent.id);
-      entityList[this.hDevices.indexOf(en)] = ent;
+      const en = entityList.find(x => x.id == ent.id);
+      entityList[entityList.indexOf(en)] = ent;
     }
     else
       entityList.push(ent);
@@ -175,6 +181,24 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
     return entityList;
   }
 
+  updateDeviceTable(){
+    this.devicesData.summaryList = {
+      title: 'Devices',
+      list: this.hDevices.map((d) => {
+        return { name: d.deviceName, description: d.description, data: d };
+      }) as SummaryListItem[]
+    };
+  }
+
+  updatePacketTable(){
+    this.packetsData.summaryList = {
+      title: 'Packets',
+      list: this.hPackets.map((p) => {
+        return { name: p.name, description: p.trafficPlan, data: p };
+      }) as SummaryListItem[]
+    };
+  }
+
   onSaveClick(e) {
     this.currentForm.save((ent, isNew) => {
 
@@ -186,25 +210,14 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
         this.currentForm.entity = {};
         this.currentForm.cleanForm();
         this.hDevices = [...this.updateList(ent, this.hDevices)];
-        this.currentForm.summaryList = {
-          title: 'Devices',
-          list: this.hDevices.map((d) => {
-            return { name: d.deviceName, description: d.description, data: d };
-          }) as SummaryListItem[]
-        };
+        this.updateDeviceTable();
       }
 
       else if (this.currentForm == this.packetsData) {
         this.currentForm.entity = {};
         this.currentForm.cleanForm();
         this.hPackets = [...this.updateList(ent, this.hPackets)];
-        this.currentForm.summaryList = {
-          title: 'Packets',
-          list: this.hPackets.map((p) => {
-            return { name: p.name, description: p.trafficPlan, data: p };
-          }) as SummaryListItem[]
-        };
-
+        this.updatePacketTable();
       }
 
       // this.currentForm.entity.id = null;
@@ -232,7 +245,6 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
     this.hintVisible = false;
   }
 
-
   onSummaryItemClick(event): void {
   }
 
@@ -242,7 +254,6 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
       case 'edit':
         if (this.currentForm == this.packetsData)
           this.deviceSelect.selectSpecific(event.item.data.device.id);
-        this.currentForm.entity.id = event.item.data.id;
         this.currentForm.edit(event.item.data);
         break;
       case 'duplicate':
@@ -257,22 +268,12 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
 
           if (this.currentForm == this.devicesData) {
             this.hDevices = [...this.deleteFromList(event.item.data.id, this.hDevices)];
-            this.currentForm.summaryList = {
-              title: 'Devices',
-              list: this.hDevices.map((d) => {
-                return { name: d.deviceName, description: d.description, data: d };
-              }) as SummaryListItem[]
-            };
+            this.updateDeviceTable();
           }
 
           else if (this.currentForm == this.packetsData) {
             this.hPackets = [...this.deleteFromList(event.item.data.id, this.hPackets)];
-            this.currentForm.summaryList = {
-              title: 'Packets',
-              list: this.hPackets.map((p) => {
-                return { name: p.name, description: p.trafficPlan, data: p };
-              }) as SummaryListItem[]
-            };
+            this.updatePacketTable();
           }
 
           this.currentForm.entity = {};
@@ -290,10 +291,8 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
 
   fieldCurrentPacket: HPacket;
   fieldPacketChanged(event): void {
-    this.fieldCurrentPacket = event.id;
-    if (this.fieldsData.packetId) {
-      console.log("asdfasdf")
-      //this.fieldsData.loadData();
+    if(event){
+      this.fieldCurrentPacket = event.id;
     }
   }
 
@@ -307,15 +306,15 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
     this.eventCurrentPacket = event;
   }
 
-  updateProject(proj: HProject) {
-    if (proj) {
-      this.currentProject = proj;
-      this.projectValidated = true;
-    }
-    setTimeout(() => {
-      this.stepper.next();
-    }, 0);
-  }
+  // updateProject(proj: HProject) {
+  //   if (proj) {
+  //     this.currentProject = proj;
+  //     this.projectValidated = true;
+  //   }
+  //   setTimeout(() => {
+  //     this.stepper.next();
+  //   }, 0);
+  // }
 
   openOptionModal() {
     this.ovpOpen = true;
@@ -359,6 +358,29 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
   deactivate(cd: boolean): void {
     this.deactivateModal = false;
     this.canDeactivate$.next(cd);
+  }
+
+  //TODO... in service
+  getDevices(): void {
+    this.hDevicesService.findAllHDeviceByProjectId(this.currentProject.id).subscribe(
+      (res: HDevice[]) => {
+        this.hDevices = res;
+        this.updateDeviceTable();
+      }
+    )
+  }
+  //TODO... in service
+  getPackets(): void {
+    this.hPacketsService.findAllHPacketByProjectId(this.currentProject.id).subscribe(
+      (res: HPacket[]) => {
+        this.hPackets = res;
+        this.updatePacketTable();
+      }
+    )
+  }
+
+  button(){
+    console.log(this.fieldsData.currentField);
   }
 
 }

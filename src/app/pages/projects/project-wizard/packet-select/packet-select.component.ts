@@ -9,7 +9,7 @@ import { ProjectWizardService } from 'src/app/services/projectWizard/project-wiz
   templateUrl: './packet-select.component.html',
   styleUrls: ['./packet-select.component.scss']
 })
-export class PacketSelectComponent implements OnInit, OnChanges {
+export class PacketSelectComponent implements OnInit {
 
   @Input() hDevices: HDevice[] = [];
   @Input() hPackets: HPacket[] = [];
@@ -34,15 +34,8 @@ export class PacketSelectComponent implements OnInit, OnChanges {
     this.selectForm = this.fb.group({});
   }
 
-  ngOnChanges() {
-    if (this.selectForm && this.hDevices.length != 0 && this.hPackets.length != 0) {
-      console.log("okok")
-      this.devicesOptions = this.hDevices.map(dev => { return ({ value: dev, label: dev.deviceName }) });
-      this.autoSelect();
-    }
-  }
-
   autoSelect(): void {
+    this.devicesOptions = this.hDevices.map(dev => { return ({ value: dev, label: dev.deviceName }) });
     this.selectForm.get('selectDevice').setValue(this.devicesOptions[0].value);
     this.deviceChanged(this.devicesOptions[0]);
   }

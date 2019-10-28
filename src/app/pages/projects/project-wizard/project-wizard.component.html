@@ -12,19 +12,24 @@
   <div id="container-steps" class="row">
 
     <ng-template #projectTemplate>
-
       <hyt-project-form #projectData (entityEvent)="onEntityEvent($event)"></hyt-project-form>
-      <!--
-
-      <hyt-project-step (projectOutput)="updateProject($event)">
-      </hyt-project-step>
-
-      -->
+      <!-- TODO move out-->
+      <hyt-button [isDisabled]="!currentProject" (clickFn)="stepper.next()">
+        <ng-container i18n="@@HYT_next">HYT_next</ng-container>
+      </hyt-button>
     </ng-template>
 
     <ng-template #devicesTemplate>
       <hyt-device-form #devicesData [currentProject]="currentProject" (entityEvent)="onEntityEvent($event)">
       </hyt-device-form>
+      <!-- TODO move out-->
+      <hyt-button (clickFn)="stepper.previous()">
+        <ng-container i18n="@@HYT_back">HYT_back</ng-container>
+      </hyt-button>
+      <!-- TODO move out-->
+      <hyt-button [isDisabled]="hDevices.length == 0" (clickFn)="stepper.next()">
+        <ng-container i18n="@@HYT_next">HYT_next</ng-container>
+      </hyt-button>
     </ng-template>
 
     <ng-template #packetsTemplate>
@@ -32,16 +37,29 @@
       </hyt-device-select>
       <hyt-packet-form #packetsData [currentDevice]="currentDevice" (entityEvent)="onEntityEvent($event)">
       </hyt-packet-form>
+      <!-- TODO move out-->
+      <hyt-button (clickFn)="stepper.previous()">
+        <ng-container i18n="@@HYT_back">HYT_back</ng-container>
+      </hyt-button>
+      <!-- TODO move out-->
+      <hyt-button [isDisabled]="hPackets.length == 0" (clickFn)="stepper.next()">
+        <ng-container i18n="@@HYT_next">HYT_next</ng-container>
+      </hyt-button>
     </ng-template>
 
     <ng-template #fieldsTemplate>
-      <hyt-pw-packet-select [hDevices]="hDevices" [hPackets]="hPackets" (currentPacket)="fieldPacketChanged($event)">
+      <hyt-pw-packet-select #fieldPacketSelect [hDevices]="hDevices" [hPackets]="hPackets" (currentPacket)="fieldPacketChanged($event)">-
       </hyt-pw-packet-select>
       <hyt-packet-fields-form #fieldsData [packetId]="fieldCurrentPacket"></hyt-packet-fields-form>
-      <!-- <hyt-button
+      <!-- TODO move out-->
+      <hyt-button (clickFn)="stepper.previous()">
+        <ng-container i18n="@@HYT_back">HYT_back</ng-container>
+      </hyt-button>
+      <!-- TODO move out-->
+      <hyt-button
         (clickFn)="(fieldsValidated == true && enrichmentValidated == false)? openOptionModal() : stepper.next()">
         <ng-container i18n="@@HYT_next">HYT_next</ng-container>
-      </hyt-button> -->
+      </hyt-button>
     </ng-template>
 
     <ng-template #enrichmentTemplate>
@@ -61,10 +79,10 @@
     </ng-template>
 
     <div class="col-md-10">
-      <hyt-stepper #stepper (selectionChange)="stepChanged($event)" [isLinear]="false" style="width: 100%"
+      <hyt-stepper #stepper (selectionChange)="stepChanged($event)" [isLinear]="true" style="width: 100%"
         [stepArray]="[ projectTemplate, devicesTemplate, packetsTemplate, fieldsTemplate, enrichmentTemplate, statisticsTemplate, eventsTemplate ]"
         [labelArray]="[ 'Projects', 'Devices', 'Packets', 'Fields', 'Enrichment', 'Statistics', 'Events' ]"
-        [completedArray]="[ projectValidated, devicesValidated, packetsValidated, fieldsValidated, enrichmentValidated, statisticsValidated, eventsValidated ]">
+        [completedArray]="[ currentProject != null, hDevices.length != 0, hPackets.length != 0, fieldsValidated, enrichmentValidated, statisticsValidated, eventsValidated ]">
       </hyt-stepper>
     </div>
 
@@ -244,13 +262,6 @@
 
   </div>
 
-  <hyt-button (clickFn)="stepper.previous()">
-    <ng-container i18n="@@HYT_back">HYT_back</ng-container>
-  </hyt-button>
-  <hyt-button (clickFn)="stepper.next()">
-    <ng-container i18n="@@HYT_next">HYT_next</ng-container>
-  </hyt-button>
-
   <hyt-button *ngIf="currentForm" (clickFn)="onSaveClick($event)"
     [isDisabled]="currentForm && (!currentForm.isValid() || !currentForm.isDirty())">
     <!--TODO... fix ExpressionChangedAfterItHasBeenCheckedError (isDisabled)-->
@@ -261,3 +272,5 @@
   </hyt-button>
 
 </div>
+
+<button (click)="button()">button</button>
