@@ -111,6 +111,7 @@ export class PacketFormComponent extends ProjectFormEntity implements OnDestroy 
     p.trafficPlan = this.form.value['hpacket-trafficplan'];
     p.timestampField = this.form.value['hpacket-timestampfield'];
     p.timestampFormat = this.form.value['hpacket-timestampformat'];
+    //TODO p.device = ...
 
     const wasNew = this.isNew();
     const responseHandler = (res) => {

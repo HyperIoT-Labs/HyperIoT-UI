@@ -57,7 +57,8 @@ export class PacketFieldsFormComponent extends ProjectFormEntity implements OnDe
     this.activatedRouteSubscription = this.activatedRoute.params.subscribe(routeParams => {
       this.currentField = null;
       this.packetId = +(activatedRoute.snapshot.params.packetId);
-      this.loadData();
+      if (this.packetId)
+        this.loadData();
     });
   }
 
@@ -144,10 +145,10 @@ export class PacketFieldsFormComponent extends ProjectFormEntity implements OnDe
   private savePacket(successCallback, errorCallback) {
     this.loadingStatus = LoadingStatusEnum.Saving;
     this.resetErrors();
-    this.currentField.name = this.form.get('fieldName').value;
-    this.currentField.description = this.form.get('fieldDescription').value;
-    this.currentField.multiplicity = this.form.get('fieldMultiplicity').value;
-    this.currentField.type = this.form.get('fieldType').value;
+    this.currentField.name = this.form.get('hpacketfield-name').value;
+    this.currentField.description = this.form.get('hpacketfield-description').value;
+    this.currentField.multiplicity = this.form.get('hpacketfield-multiplicity').value;
+    this.currentField.type = this.form.get('hpacketfield-type').value;
     let saveObservable: Observable<any>;
     if (this.currentField.id > 0) {
       saveObservable = this.hPacketService
@@ -158,6 +159,7 @@ export class PacketFieldsFormComponent extends ProjectFormEntity implements OnDe
     }
     saveObservable.subscribe((res) => {
       this.currentField = null; // closes the field editing form
+      this.form.reset();
       this.showCancel = false;
       this.loadData(); // refresh data and treeview
       this.loadingStatus = LoadingStatusEnum.Ready;
@@ -169,10 +171,10 @@ export class PacketFieldsFormComponent extends ProjectFormEntity implements OnDe
   }
 
   private loadFormData() {
-    this.form.get('fieldName').setValue(this.currentField.name);
-    this.form.get('fieldDescription').setValue(this.currentField.description);
-    this.form.get('fieldMultiplicity').setValue(this.currentField.multiplicity);
-    this.form.get('fieldType').setValue(this.currentField.type);
+    this.form.get('hpacketfield-name').setValue(this.currentField.name);
+    this.form.get('hpacketfield-description').setValue(this.currentField.description);
+    this.form.get('hpacketfield-multiplicity').setValue(this.currentField.multiplicity);
+    this.form.get('hpacketfield-type').setValue(this.currentField.type);
     this.resetForm();
   }
 

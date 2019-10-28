@@ -16,28 +16,29 @@
         <div class="d-flex flex-row align-items-start justify-content-around">
 
             <div class="mr-2 d-flex flex-fill flex-column align-items-stretch justify-content-stretch">
-                <hyt-input-text [form]="form" name="fieldName"
+                <hyt-input-text [form]="form" name="hpacketfield-name"
                     [isRequired]="true"
                     placeholder="HYT_fieldName"
-                    [injectedErrorMsg]="getError('fieldName')"
+                    [injectedErrorMsg]="getError('hpacketfield-name')"
                     hintMessage="Enter the field name.">
                 </hyt-input-text>
-                <hyt-text-area [form]="form" name="fieldDescription" class="flex-fill"
+                <hyt-text-area [form]="form" name="hpacketfield-description" class="flex-fill"
                     placeholder="HYT_fieldDescription"
                     hintMessage="Enter the field description.">
                 </hyt-text-area>
             </div>
         
             <div class="ml-2 d-flex flex-fill flex-column align-items-end justify-content-stretch">
-                        
-                <hyt-select [form]="form" name="fieldType"
+
+                <hyt-select [form]="form" name="hpacketfield-type"
                     [options]="fieldTypeOptions"
                     [isRequired]="true" label="HYT_fieldType"
                     hintMessage="Select field type.">
                 </hyt-select>
                 <div class="d-flex flex-column">
                     <strong>Multiplicy</strong>
-                    <hyt-radio-button [form]="form" name="fieldMultiplicity"
+                    <hyt-radio-button [form]="form" name="hpacketfield-multiplicity"
+                        [isRequired]="true"
                         [options]="fieldMultiplicityOptions"
                         [verticalAlign]="true">
                     </hyt-radio-button>
