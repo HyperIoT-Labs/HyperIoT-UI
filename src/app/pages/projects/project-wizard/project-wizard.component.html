@@ -1,89 +1,91 @@
 <div id="container-project-wizard">
 
   <div class="header d-flex flex-row justify-content-stretch">
-
     <div class="breadcrumb flex-grow-1">
       <span class="hyt-icon icon-hyt_projectSolo"></span> <a [routerLink]="['/']">Home</a> > <strong>Projects
         Wizard</strong>
     </div>
-
   </div>
 
-  <div id="container-steps" class="row">
+  <div id="container-wizard" class="row">
 
-    <ng-template #projectTemplate>
-      <hyt-project-form #projectData (entityEvent)="onEntityEvent($event)"></hyt-project-form>
-      <!-- TODO move out-->
-      <hyt-button [isDisabled]="!currentProject" (clickFn)="stepper.next()">
-        <ng-container i18n="@@HYT_next">HYT_next</ng-container>
-      </hyt-button>
-    </ng-template>
+    <div id="container-steps" class="col-md-10">
 
-    <ng-template #devicesTemplate>
-      <hyt-device-form #devicesData [currentProject]="currentProject" (entityEvent)="onEntityEvent($event)">
-      </hyt-device-form>
-      <!-- TODO move out-->
-      <hyt-button (clickFn)="stepper.previous()">
-        <ng-container i18n="@@HYT_back">HYT_back</ng-container>
-      </hyt-button>
-      <!-- TODO move out-->
-      <hyt-button [isDisabled]="hDevices.length == 0" (clickFn)="stepper.next()">
-        <ng-container i18n="@@HYT_next">HYT_next</ng-container>
-      </hyt-button>
-    </ng-template>
+      <ng-template #projectTemplate>
+        <hyt-project-form #projectData (entityEvent)="onEntityEvent($event)"></hyt-project-form>
+      </ng-template>
 
-    <ng-template #packetsTemplate>
-      <hyt-device-select #deviceSelect [hDevices]="hDevices" (selectedDevice)="deviceChanged($event)">
-      </hyt-device-select>
-      <hyt-packet-form #packetsData [currentDevice]="currentDevice" (entityEvent)="onEntityEvent($event)">
-      </hyt-packet-form>
-      <!-- TODO move out-->
-      <hyt-button (clickFn)="stepper.previous()">
-        <ng-container i18n="@@HYT_back">HYT_back</ng-container>
-      </hyt-button>
-      <!-- TODO move out-->
-      <hyt-button [isDisabled]="hPackets.length == 0" (clickFn)="stepper.next()">
-        <ng-container i18n="@@HYT_next">HYT_next</ng-container>
-      </hyt-button>
-    </ng-template>
+      <ng-template #devicesTemplate>
+        <hyt-device-form #devicesData [currentProject]="currentProject" (entityEvent)="onEntityEvent($event)">
+        </hyt-device-form>
+      </ng-template>
 
-    <ng-template #fieldsTemplate>
-      <hyt-pw-packet-select #fieldPacketSelect [hDevices]="hDevices" [hPackets]="hPackets" (currentPacket)="fieldPacketChanged($event)">-
-      </hyt-pw-packet-select>
-      <hyt-packet-fields-form #fieldsData [packetId]="fieldCurrentPacket"></hyt-packet-fields-form>
-      <!-- TODO move out-->
-      <hyt-button (clickFn)="stepper.previous()">
-        <ng-container i18n="@@HYT_back">HYT_back</ng-container>
-      </hyt-button>
-      <!-- TODO move out-->
-      <hyt-button
-        (clickFn)="(fieldsValidated == true && enrichmentValidated == false)? openOptionModal() : stepper.next()">
-        <ng-container i18n="@@HYT_next">HYT_next</ng-container>
-      </hyt-button>
-    </ng-template>
+      <ng-template #packetsTemplate>
+        <hyt-device-select #deviceSelect [hDevices]="hDevices" (selectedDevice)="deviceChanged($event)">
+        </hyt-device-select>
+        <hyt-packet-form #packetsData [currentDevice]="currentDevice" (entityEvent)="onEntityEvent($event)">
+        </hyt-packet-form>
+      </ng-template>
 
-    <ng-template #enrichmentTemplate>
-      <hyt-pw-packet-select [hDevices]="hDevices" [hPackets]="hPackets"
-        (currentPacket)="enrichmentPacketChanged($event)"></hyt-pw-packet-select>
-    </ng-template>
+      <ng-template #fieldsTemplate>
+        <hyt-pw-packet-select #fieldPacketSelect [hDevices]="hDevices" [hPackets]="hPackets"
+          (currentPacket)="fieldPacketChanged($event)">-
+        </hyt-pw-packet-select>
+        <hyt-packet-fields-form #fieldsData [packetId]="fieldCurrentPacket"></hyt-packet-fields-form>
+      </ng-template>
 
-    <ng-template #statisticsTemplate>
-    </ng-template>
+      <ng-template #enrichmentTemplate>
+        <hyt-pw-packet-select [hDevices]="hDevices" [hPackets]="hPackets"
+          (currentPacket)="enrichmentPacketChanged($event)"></hyt-pw-packet-select>
+      </ng-template>
 
-    <ng-template #eventsTemplate>
-      <hyt-pw-packet-select [hDevices]="hDevices" [hPackets]="hPackets" (currentPacket)="eventPacketChanged($event)">
-      </hyt-pw-packet-select>
-      <!-- <hyt-button (clickFn)="openOptionModal()">
-        <ng-container i18n="@@HYT_next">HYT_next</ng-container>
-      </hyt-button> -->
-    </ng-template>
+      <ng-template #statisticsTemplate>
+      </ng-template>
 
-    <div class="col-md-10">
-      <hyt-stepper #stepper (selectionChange)="stepChanged($event)" [isLinear]="true" style="width: 100%"
-        [stepArray]="[ projectTemplate, devicesTemplate, packetsTemplate, fieldsTemplate, enrichmentTemplate, statisticsTemplate, eventsTemplate ]"
-        [labelArray]="[ 'Projects', 'Devices', 'Packets', 'Fields', 'Enrichment', 'Statistics', 'Events' ]"
-        [completedArray]="[ currentProject != null, hDevices.length != 0, hPackets.length != 0, fieldsValidated, enrichmentValidated, statisticsValidated, eventsValidated ]">
-      </hyt-stepper>
+      <ng-template #eventsTemplate>
+        <hyt-pw-packet-select [hDevices]="hDevices" [hPackets]="hPackets" (currentPacket)="eventPacketChanged($event)">
+        </hyt-pw-packet-select>
+        <!-- <hyt-button (clickFn)="openOptionModal()">
+                <ng-container i18n="@@HYT_next">HYT_next</ng-container>
+              </hyt-button> -->
+      </ng-template>
+
+      <div class="row">
+        <div class="col-md-12">
+          <hyt-stepper #stepper (selectionChange)="stepChanged($event)" [isLinear]="true" style="width: 100%"
+            [stepArray]="[ projectTemplate, devicesTemplate, packetsTemplate, fieldsTemplate, enrichmentTemplate, statisticsTemplate, eventsTemplate ]"
+            [labelArray]="[ 'Projects', 'Devices', 'Packets', 'Fields', 'Enrichment', 'Statistics', 'Events' ]"
+            [completedArray]="[ currentProject != null, hDevices.length != 0, hPackets.length != 0, fieldsValidated, enrichmentValidated, statisticsValidated, eventsValidated ]">
+          </hyt-stepper>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <hyt-button class="toRight" *ngIf="currentForm" (clickFn)="onSaveClick($event)"
+            [isDisabled]="currentForm && (!currentForm.isValid() || !currentForm.isDirty())">
+            <!--TODO... fix ExpressionChangedAfterItHasBeenCheckedError (isDisabled)-->
+            <ng-container *ngIf="currentForm && !currentForm.entity.id">Salva</ng-container>
+            <!-- @I18N@ -->
+            <ng-container *ngIf="currentForm && currentForm.entity.id">Aggiorna</ng-container>
+            <!-- @I18N@ -->
+          </hyt-button>
+          <div class="clear"></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <hyt-button *ngIf="currentStepIndex != 0" (clickFn)="stepper.previous()">
+            <ng-container i18n="@@HYT_back">HYT_back</ng-container>
+          </hyt-button>
+          <hyt-button class="toRight" [isDisabled]="isNextDisabled()" (clickFn)="stepper.next()">
+            <ng-container i18n="@@HYT_next">HYT_next</ng-container>
+          </hyt-button>
+          <div class="clear"></div>
+        </div>
+      </div>
+
     </div>
 
     <div id="hint-column" class="col-md-2">
@@ -111,166 +113,155 @@
 
     </div>
 
-    <hyt-modal id="optionsModal" [mOpen]="ovpOpen">
-      <div class="center">
-        <div class="row">
-          <div class="col-md-12">
-            <ng-container i18n="@@HYT_choose_how_proceed">HYT_choose_how_proceed</ng-container>
-            <button (click)="closeOptionModal()">X</button>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-4">
-            <img src="assets/projects/icons/monitor.png" (click)="goToStepByIndex(4)">
-            <br>
-            <b i18n="@@HYT_enrichment_data">HYT_enrichment_data</b>
-            <br>
-            <p i18n="@@HYT_enrichment_definition_long">HYT_enrichment_definition_long</p>
-          </div>
-          <div class="col-md-4">
-            <img src="assets/projects/icons/monitor.png" (click)="goToStepByIndex(5)">
-            <br>
-            <b i18n="@@HYT_statistics">HYT_statistics</b>
-            <br>
-            <p i18n="@@HYT_statistics_definition_long">HYT_statistics_definition_long</p>
-          </div>
-          <div class="col-md-4">
-            <img src="assets/projects/icons/monitor.png" (click)="goToStepByIndex(6)">
-            <br>
-            <b i18n="@@HYT_events">HYT_events</b>
-            <br>
-            <p i18n="@@HYT_events_definition_long">HYT_events_definition_long</p>
-          </div>
-        </div>
-        <hr>
-        <div class="row">
-          <div class="col-md-12">
-            <hyt-button (clickFn)="openFinishModal()">
-              <ng-container i18n="@@HYT_finish">HYT_finish</ng-container>
-            </hyt-button>
-          </div>
-        </div>
-      </div>
-    </hyt-modal>
-
-    <hyt-modal [mOpen]="finishOpen">
-      <div class="center">
-        <div class="row">
-          <div class="col-md-12">
-            <ng-container i18n="@@HYT_congratulations">HYT_congratulations</ng-container>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            <p i18n="@@HYT_pw_finsh">HYT_pw_finsh</p>
-            <div class="row">
-              <div class="col-md-6">
-                <table id="tableSummary">
-                  <tr>
-                    <td><img src="assets/projects/icons/monitor.png"></td>
-                    <td>
-                      <ng-container i18n="@@HYT_project">HYT_project</ng-container>
-                      <hr>{{(currentProject)?currentProject.name:''}}
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><img src="assets/projects/icons/monitor.png"></td>
-                    <td>
-                      <ng-container i18n="@@HYT_devices">HYT_devices</ng-container>
-                      <hr>
-                      <ul>
-                        <li *ngFor="let el of hDevices">{{el.deviceName}}</li>
-                      </ul>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><img src="assets/projects/icons/monitor.png"></td>
-                    <td>
-                      <ng-container i18n="@@HYT_packets">HYT_packets</ng-container>
-                      <hr>
-                      <ul>
-                        <li *ngFor="let el of hPackets">{{el.name}}</li>
-                      </ul>
-                    </td>
-                  </tr>
-                  <!-- <tr>
-                    <td><img src="assets/projects/icons/monitor.png"></td>
-                    <td>Fields<hr><ul><li *ngFor="el of hPackets">el.name</li></ul></td>
-                  </tr> -->
-                  <tr>
-                    <td><img src="assets/projects/icons/monitor.png"></td>
-                    <td>
-                      <ng-container i18n="@@HYT_enrichment">HYT_enrichment</ng-container>
-                      <hr>
-                      <ul>
-                        <li *ngFor="let el of enrichmentRules">{{el.name}}</li>
-                      </ul>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><img src="assets/projects/icons/monitor.png"></td>
-                    <td>
-                      <ng-container i18n="@@HYT_statistics">HYT_statistics</ng-container>
-                      <hr>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><img src="assets/projects/icons/monitor.png"></td>
-                    <td>
-                      <ng-container i18n="@@HYT_events">HYT_events</ng-container>
-                      <hr>
-                      <ul>
-                        <li *ngFor="let el of eventRules">{{el.name}}</li>
-                      </ul>
-                    </td>
-                  </tr>
-                </table>
-              </div>
-              <div class="col-md-3">
-                <img src="assets/projects/icons/monitor.png" (click)="goToProjectWizard()">
-                <br>
-                <b i18n="@@HYT_go_to_project_list">HYT_go_to_project_list</b>
-                <br>
-                <p i18n="@@HYT_go_to_project_list_long">HYT_go_to_project_list_long</p>
-              </div>
-              <div class="col-md-3">
-                <img src="assets/projects/icons/monitor.png" (click)="goToDashboard()">
-                <br>
-                <b i18n="@@HYT_go_to_dashboard">HYT_go_to_dashboard</b>
-                <br>
-                <p i18n="@@HYT_go_to_dashboard_long">HYT_go_to_dashboard_long</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </hyt-modal>
-
-    <hyt-modal [mOpen]="deactivateModal">
-      <div class="center">
-        <p i18n="@@HYT_pw_deactivation_modal">HYT_pw_deactivation_modal</p>
-        <br>
-        <br>
-        <hyt-button (clickFn)="deactivate(true)">
-          <ng-container i18n="@@HYT_OK">HYT_OK</ng-container>
-        </hyt-button>
-        <hyt-button (clickFn)="deactivate(false)">
-          <ng-container i18n="@@HYT_CANCEL">HYT_CANCEL</ng-container>
-        </hyt-button>
-      </div>
-    </hyt-modal>
-
   </div>
-
-  <hyt-button *ngIf="currentForm" (clickFn)="onSaveClick($event)"
-    [isDisabled]="currentForm && (!currentForm.isValid() || !currentForm.isDirty())">
-    <!--TODO... fix ExpressionChangedAfterItHasBeenCheckedError (isDisabled)-->
-    <ng-container *ngIf="currentForm && !currentForm.entity.id">Salva</ng-container>
-    <!-- @I18N@ -->
-    <ng-container *ngIf="currentForm && currentForm.entity.id">Aggiorna</ng-container>
-    <!-- @I18N@ -->
-  </hyt-button>
 
 </div>
 
-<button (click)="button()">button</button>
+<hyt-modal id="optionsModal" [mOpen]="ovpOpen">
+  <div class="center">
+    <div class="row">
+      <div class="col-md-12">
+        <ng-container i18n="@@HYT_choose_how_proceed">HYT_choose_how_proceed</ng-container>
+        <button (click)="closeOptionModal()">X</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <img src="assets/projects/icons/monitor.png" (click)="goToStepByIndex(4)">
+        <br>
+        <b i18n="@@HYT_enrichment_data">HYT_enrichment_data</b>
+        <br>
+        <p i18n="@@HYT_enrichment_definition_long">HYT_enrichment_definition_long</p>
+      </div>
+      <div class="col-md-4">
+        <img src="assets/projects/icons/monitor.png" (click)="goToStepByIndex(5)">
+        <br>
+        <b i18n="@@HYT_statistics">HYT_statistics</b>
+        <br>
+        <p i18n="@@HYT_statistics_definition_long">HYT_statistics_definition_long</p>
+      </div>
+      <div class="col-md-4">
+        <img src="assets/projects/icons/monitor.png" (click)="goToStepByIndex(6)">
+        <br>
+        <b i18n="@@HYT_events">HYT_events</b>
+        <br>
+        <p i18n="@@HYT_events_definition_long">HYT_events_definition_long</p>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-md-12">
+        <hyt-button (clickFn)="openFinishModal()">
+          <ng-container i18n="@@HYT_finish">HYT_finish</ng-container>
+        </hyt-button>
+      </div>
+    </div>
+  </div>
+</hyt-modal>
+
+<hyt-modal [mOpen]="finishOpen">
+  <div class="center">
+    <div class="row">
+      <div class="col-md-12">
+        <ng-container i18n="@@HYT_congratulations">HYT_congratulations</ng-container>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <p i18n="@@HYT_pw_finsh">HYT_pw_finsh</p>
+        <div class="row">
+          <div class="col-md-6">
+            <table id="tableSummary">
+              <tr>
+                <td><img src="assets/projects/icons/monitor.png"></td>
+                <td>
+                  <ng-container i18n="@@HYT_project">HYT_project</ng-container>
+                  <hr>{{(currentProject)?currentProject.name:''}}
+                </td>
+              </tr>
+              <tr>
+                <td><img src="assets/projects/icons/monitor.png"></td>
+                <td>
+                  <ng-container i18n="@@HYT_devices">HYT_devices</ng-container>
+                  <hr>
+                  <ul>
+                    <li *ngFor="let el of hDevices">{{el.deviceName}}</li>
+                  </ul>
+                </td>
+              </tr>
+              <tr>
+                <td><img src="assets/projects/icons/monitor.png"></td>
+                <td>
+                  <ng-container i18n="@@HYT_packets">HYT_packets</ng-container>
+                  <hr>
+                  <ul>
+                    <li *ngFor="let el of hPackets">{{el.name}}</li>
+                  </ul>
+                </td>
+              </tr>
+              <!-- <tr>
+                  <td><img src="assets/projects/icons/monitor.png"></td>
+                  <td>Fields<hr><ul><li *ngFor="el of hPackets">el.name</li></ul></td>
+                </tr> -->
+              <tr>
+                <td><img src="assets/projects/icons/monitor.png"></td>
+                <td>
+                  <ng-container i18n="@@HYT_enrichment">HYT_enrichment</ng-container>
+                  <hr>
+                  <ul>
+                    <li *ngFor="let el of enrichmentRules">{{el.name}}</li>
+                  </ul>
+                </td>
+              </tr>
+              <tr>
+                <td><img src="assets/projects/icons/monitor.png"></td>
+                <td>
+                  <ng-container i18n="@@HYT_statistics">HYT_statistics</ng-container>
+                  <hr>
+                </td>
+              </tr>
+              <tr>
+                <td><img src="assets/projects/icons/monitor.png"></td>
+                <td>
+                  <ng-container i18n="@@HYT_events">HYT_events</ng-container>
+                  <hr>
+                  <ul>
+                    <li *ngFor="let el of eventRules">{{el.name}}</li>
+                  </ul>
+                </td>
+              </tr>
+            </table>
+          </div>
+          <div class="col-md-3">
+            <img src="assets/projects/icons/monitor.png" (click)="goToProjectWizard()">
+            <br>
+            <b i18n="@@HYT_go_to_project_list">HYT_go_to_project_list</b>
+            <br>
+            <p i18n="@@HYT_go_to_project_list_long">HYT_go_to_project_list_long</p>
+          </div>
+          <div class="col-md-3">
+            <img src="assets/projects/icons/monitor.png" (click)="goToDashboard()">
+            <br>
+            <b i18n="@@HYT_go_to_dashboard">HYT_go_to_dashboard</b>
+            <br>
+            <p i18n="@@HYT_go_to_dashboard_long">HYT_go_to_dashboard_long</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</hyt-modal>
+
+<hyt-modal [mOpen]="deactivateModal">
+  <div class="center">
+    <p i18n="@@HYT_pw_deactivation_modal">HYT_pw_deactivation_modal</p>
+    <br>
+    <br>
+    <hyt-button (clickFn)="deactivate(true)">
+      <ng-container i18n="@@HYT_OK">HYT_OK</ng-container>
+    </hyt-button>
+    <hyt-button (clickFn)="deactivate(false)">
+      <ng-container i18n="@@HYT_CANCEL">HYT_CANCEL</ng-container>
+    </hyt-button>
+  </div>
+</hyt-modal>

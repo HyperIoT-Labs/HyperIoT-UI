@@ -123,7 +123,10 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
   hintMessage = '';
   hintVisible = false;
 
+  currentStepIndex: number = 0;
+
   stepChanged(event) {
+    this.currentStepIndex = event.selectedIndex;
     //setting current form...
     switch (event.selectedIndex) {
       case 0: {
@@ -180,7 +183,7 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
     return entityList;
   }
 
-  updateDeviceTable(){
+  updateDeviceTable() {
     this.devicesData.summaryList = {
       title: 'Devices',
       list: this.hDevices.map((d) => {
@@ -189,7 +192,7 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
     };
   }
 
-  updatePacketTable(){
+  updatePacketTable() {
     this.packetsData.summaryList = {
       title: 'Packets',
       list: this.hPackets.map((p) => {
@@ -290,7 +293,7 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
 
   fieldCurrentPacket: HPacket;
   fieldPacketChanged(event): void {
-    if(event){
+    if (event) {
       this.fieldCurrentPacket = event.id;
     }
   }
@@ -378,8 +381,24 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
     )
   }
 
-  button(){
-    console.log(this.fieldsData.currentField);
+  isNextDisabled(): boolean {
+    switch (this.currentStepIndex) {
+      case 0: {
+        return !this.currentProject;
+        break;
+      }
+      case 1: {
+        return this.hDevices.length == 0;
+        break;
+      }
+      case 2: {
+        return this.hPackets.length == 0;
+        break;
+      }
+      default: {
+        return false;
+      }
+    }
   }
 
-}
+  }
