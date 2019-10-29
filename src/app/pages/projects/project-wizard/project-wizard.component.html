@@ -31,11 +31,11 @@
         <hyt-pw-packet-select #fieldPacketSelect [hDevices]="hDevices" [hPackets]="hPackets"
           (currentPacket)="fieldPacketChanged($event)">-
         </hyt-pw-packet-select>
-        <hyt-packet-fields-form #fieldsData [packetId]="fieldCurrentPacket"></hyt-packet-fields-form>
+        <hyt-packet-fields-form #fieldsData [packetId]="fieldCurrentPacketId"></hyt-packet-fields-form>
       </ng-template>
 
       <ng-template #enrichmentTemplate>
-        <hyt-pw-packet-select [hDevices]="hDevices" [hPackets]="hPackets"
+        <hyt-pw-packet-select #enrichmentPacketSelect [hDevices]="hDevices" [hPackets]="hPackets"
           (currentPacket)="enrichmentPacketChanged($event)"></hyt-pw-packet-select>
       </ng-template>
 
@@ -43,8 +43,9 @@
       </ng-template>
 
       <ng-template #eventsTemplate>
-        <hyt-pw-packet-select [hDevices]="hDevices" [hPackets]="hPackets" (currentPacket)="eventPacketChanged($event)">
+        <hyt-pw-packet-select #eventPacketSelect [hDevices]="hDevices" [hPackets]="hPackets" (currentPacket)="eventPacketChanged($event)">
         </hyt-pw-packet-select>
+        <hyt-packet-events-form #eventsData [packetId]="eventCurrentPacketId" [project]="currentProject"></hyt-packet-events-form>
         <!-- <hyt-button (clickFn)="openOptionModal()">
                 <ng-container i18n="@@HYT_next">HYT_next</ng-container>
               </hyt-button> -->
@@ -55,7 +56,7 @@
           <hyt-stepper #stepper (selectionChange)="stepChanged($event)" [isLinear]="true" style="width: 100%"
             [stepArray]="[ projectTemplate, devicesTemplate, packetsTemplate, fieldsTemplate, enrichmentTemplate, statisticsTemplate, eventsTemplate ]"
             [labelArray]="[ 'Projects', 'Devices', 'Packets', 'Fields', 'Enrichment', 'Statistics', 'Events' ]"
-            [completedArray]="[ currentProject != null, hDevices.length != 0, hPackets.length != 0, fieldsValidated, enrichmentValidated, statisticsValidated, eventsValidated ]">
+            [completedArray]="[ currentProject != null, hDevices.length != 0, hPackets.length != 0, hPackets.length != 0 && hDevices.length != 0, hPackets.length != 0 && hDevices.length != 0, hPackets.length != 0 && hDevices.length != 0, hPackets.length != 0 && hDevices.length != 0 ]">
           </hyt-stepper>
         </div>
       </div>

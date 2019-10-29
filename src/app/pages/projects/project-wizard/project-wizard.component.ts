@@ -10,6 +10,7 @@ import { DeviceSelectComponent } from './device-select/device-select.component';
 import { PacketFieldsFormComponent } from '../project-forms/packet-fields-form/packet-fields-form.component';
 import { SummaryListItem } from '../project-detail/generic-summary-list/generic-summary-list.component';
 import { PacketSelectComponent } from './packet-select/packet-select.component';
+import { PacketEventsFormComponent } from '../project-forms/packet-events-form/packet-events-form.component';
 
 @Injectable({
   providedIn: 'root',
@@ -48,11 +49,20 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
   @ViewChild('fieldPacketSelect', { static: false })
   fieldPacketSelect: PacketSelectComponent;
 
+  @ViewChild('enrichmentPacketSelect', { static: false })
+  enrichmentPacketSelect: PacketSelectComponent;
+
   @ViewChild('deviceSelect', { static: false })
   deviceSelect: DeviceSelectComponent;
 
   @ViewChild('fieldsData', { static: false })
   fieldsData: PacketFieldsFormComponent;
+
+  @ViewChild('eventsData', { static: false })
+  eventsData: PacketEventsFormComponent;
+
+  @ViewChild('eventPacketSelect', { static: false })
+  eventPacketSelect: PacketSelectComponent;
 
   currentProject: HProject;
   currentDevice: HDevice;
@@ -117,6 +127,7 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     setTimeout(() => {//TODO...setimeout 0 to avoid 'expression changed after view checked'
       this.currentForm = this.projectData;
+      this.eventsData.editMode = true;
     }, 0);
   }
 
@@ -149,12 +160,15 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
         break;
       }
       case 4: {
+        this.enrichmentPacketSelect.autoSelect();
         break;
       }
       case 5: {
         break;
       }
       case 6: {
+        this.currentForm = this.eventsData;
+        this.eventPacketSelect.autoSelect();
         break;
       }
       default: {
@@ -220,6 +234,11 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
         this.currentForm.cleanForm();
         this.hPackets = [...this.updateList(ent, this.hPackets)];
         this.updatePacketTable();
+      }
+
+      else if (this.currentForm == this.eventsData) {
+        this.currentForm.entity = {};
+        this.currentForm.cleanForm();
       }
 
       // this.currentForm.entity.id = null;
@@ -291,21 +310,25 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
     this.currentDevice = event;
   }
 
-  fieldCurrentPacket: HPacket;
+  fieldCurrentPacketId: number;
   fieldPacketChanged(event): void {
     if (event) {
-      this.fieldCurrentPacket = event.id;
+      this.fieldCurrentPacketId = event.id;
     }
   }
 
-  enrichmentCurrentPacket: HPacket;
+  enrichmentCurrentPacketId: HPacket;
   enrichmentPacketChanged(event): void {
-    this.enrichmentCurrentPacket = event;
+    if (event) {
+      this.enrichmentCurrentPacketId = event.id;
+    }
   }
 
-  eventCurrentPacket: HPacket;
+  eventCurrentPacketId: HPacket;
   eventPacketChanged(event): void {
-    this.eventCurrentPacket = event;
+    if (event) {
+      this.eventCurrentPacketId = event.id;
+    }
   }
 
   // updateProject(proj: HProject) {
@@ -401,4 +424,4 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
     }
   }
 
-  }
+}
