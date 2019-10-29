@@ -64,7 +64,7 @@ export class PacketFieldsFormComponent extends ProjectFormEntity implements OnDe
 
   ngOnChanges() {
     if (this.packetId) {
-      console.log("LOADING....")
+      console.log("LOADING PACKET FIELD...")
       this.loadData();
     }
   }

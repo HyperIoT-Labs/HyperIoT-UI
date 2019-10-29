@@ -64,7 +64,7 @@ export abstract class ProjectFormEntity implements OnInit {
 
     edit(entity?: any) {
         if (entity) {
-            this.entity = {...entity};
+            this.entity = { ...entity };
         }
         Object.keys(this.entityFormMap).forEach((key) => {
             this.form.get(key)
@@ -73,7 +73,7 @@ export abstract class ProjectFormEntity implements OnInit {
         this.resetForm();
     }
     clone(entity?: any): any {
-        const cloned = {...entity} || this.entity;
+        const cloned = { ...entity } || this.entity;
         cloned.id = 0;
         cloned.entityVersion = 1;
         cloned.name = `${cloned.name} (copy)`;
@@ -122,7 +122,7 @@ export abstract class ProjectFormEntity implements OnInit {
         this.buildHintMessages();
     }
 
-    cleanForm() {
+    cleanForm(): void {
         this.form.reset();
     }
 

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, ViewChild, ElementRef, Input } from '@angular/core';
+import { Component, OnDestroy, ViewChild, ElementRef, Input, OnChanges } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 
 import { Subscription } from 'rxjs';
@@ -16,22 +16,22 @@ import { SummaryListItem } from '../../project-detail/generic-summary-list/gener
   templateUrl: './packet-events-form.component.html',
   styleUrls: ['./packet-events-form.component.scss']
 })
-export class PacketEventsFormComponent extends ProjectFormEntity implements OnDestroy {
+export class PacketEventsFormComponent extends ProjectFormEntity implements OnDestroy, OnChanges {
 
   entity: Rule = {} as Rule;
   entityFormMap = {
     'rule-name': 'name',
-    'rule-description': 'description'
-    //TODO...
-    // 'eventOutput': 'model',
+    'rule-description': 'description',
+    'eventOutput': ''
   };
 
   private routerSubscription: Subscription;
   private activatedRouteSubscription: Subscription;
-  private packetId: number;
 
   @Input()
-  packet: HPacket;
+  private packetId: number;
+
+  packet: HPacket = {} as HPacket;
 
   @Input()
   project: HProject = {} as HProject;
@@ -69,8 +69,16 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
     this.activatedRouteSubscription = this.activatedRoute.params.subscribe(routeParams => {
       this.editMode = false;
       this.packetId = +(activatedRoute.snapshot.params.packetId);
-      this.load();
+      if (this.packetId)
+        this.load();
     });
+  }
+
+  ngOnChanges() {
+    if (this.packetId) {
+      console.log("LOADING PACKET EVENT...")
+      this.load();
+    }
   }
 
   ngOnDestroy() {
@@ -97,7 +105,7 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
     delete this.entity.actions;
     delete this.entity.parent;
     this.editMode = true;
-    this.form.reset();
+    this.cleanForm();
     this.form.get('rule-description').setValue(entity.description);
     this.form.get('rule-name').setValue(entity.name);
     this.form.get('eventOutput').setValue('SendMailAction');//TODO add logic (if new output)
@@ -112,6 +120,12 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
     event.name = `${event.name}Copy`;
     this.edit(event);
     return event;
+  }
+
+  cleanForm() {
+    this.form.reset();
+    this.ruleDefinitionComponent.resetRuleDefinition();
+    this.eventMailComponent.reset();
   }
 
   load() {
@@ -188,6 +202,16 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
     this.loadingStatus = LoadingStatusEnum.Saving;
     this.rulesService.deleteRule(this.entity.id).subscribe((res) => {
       // this.entityEvent.emit({ event: 'treeview:refresh' });
+      this.rulesService.findAllRuleByPacketId(this.packet.id).subscribe((rules: Rule[]) => {
+        this.summaryList = {
+          title: 'Events Data',
+          list: rules
+            .filter(r => r.type === Rule.TypeEnum.EVENT)
+            .map(l => {
+              return { name: l.name, description: l.description, data: l };
+            }) as SummaryListItem[]
+        };
+      });
       this.editMode = false;
       this.loadingStatus = LoadingStatusEnum.Ready;
       successCallback && successCallback(res);
@@ -195,6 +219,14 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
       errorCallback && errorCallback(err);
       this.loadingStatus = LoadingStatusEnum.Error;
     });
+  }
+
+  isValid(): boolean {
+    return (this.editMode && this.ruleDefinitionComponent && this.eventMailComponent) ?
+      (super.isValid() &&
+        !this.ruleDefinitionComponent.isInvalid() &&
+        !this.eventMailComponent.isInvalid()
+      ) : false;
   }
 
 }

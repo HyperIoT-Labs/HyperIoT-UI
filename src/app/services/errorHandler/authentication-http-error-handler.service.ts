@@ -64,6 +64,15 @@ export class AuthenticationHttpErrorHandlerService extends HttpErrorHandlerServi
         ];
         break;
       }
+      case 403: {
+        return [
+          {
+            message: 'your account is not activated. Please activate your account with the activation link we send you by email', //@I18N@
+            container: 'general'
+          }
+        ];
+        break;
+      }
       default: {
         return this.handle(httpError);
       }
