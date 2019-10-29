@@ -12,6 +12,7 @@ import { MatDialog } from '@angular/material';
 import { SaveChangesDialogComponent } from 'src/app/components/dialogs/save-changes-dialog/save-changes-dialog.component';
 import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
 import { SummaryListItem } from './generic-summary-list/generic-summary-list.component';
+import { PacketEnrichmentFormComponent } from '../project-forms/packet-enrichment-form/packet-enrichment-form.component';
 
 enum TreeStatusEnum {
   Ready,
@@ -90,6 +91,10 @@ export class ProjectDetailComponent implements OnInit {
             break;
         }
       });
+      // handle type specific fields and methods
+      if (this.currentEntity instanceof PacketEnrichmentFormComponent) {
+        (this.currentEntity as PacketEnrichmentFormComponent).showCover = true;
+      }
     }
   }
 
@@ -111,7 +116,7 @@ export class ProjectDetailComponent implements OnInit {
   }
 
   onSummaryItemClick(item: SummaryListItem) {
-    console.log('clicked summary item', item);
+    //console.log('clicked summary item', item);
   }
   onSummaryMenuClick(e) {
     const rule = Object.assign({}, e.item.data as Rule);

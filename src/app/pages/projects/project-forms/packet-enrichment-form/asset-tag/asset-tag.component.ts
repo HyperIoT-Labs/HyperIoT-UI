@@ -73,7 +73,7 @@ export class AssetTagComponent implements OnInit {
           name: event.value,
           owner: {
             ownerResourceName: 'it.acsoftware.hyperiot.hproject',
-            ownerResourceId: this.wizardService.getHProject().id
+            ownerResourceId: 12
           },
           entityVersion: 1
         }

@@ -19,6 +19,7 @@ export class ProjectFormComponent extends ProjectFormEntity implements OnDestroy
     'hproject-name': 'name',
     'hproject-description': 'description'
   };
+  formTitle = 'Project';
 
   id: number; // <-- this could be made private
   private routerSubscription: Subscription;

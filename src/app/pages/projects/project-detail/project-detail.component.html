@@ -35,6 +35,7 @@
             <!-- END TreeView -->
 
             <div class="content pl-4 pr-4 flex-grow-1">
+                <h2 id="form-title" *ngIf="currentEntity && currentEntity.formTitle">{{ currentEntity.formTitle }}</h2>
                 <router-outlet
                     name="projectDetails"
                     (attach)="onActivate($event)"

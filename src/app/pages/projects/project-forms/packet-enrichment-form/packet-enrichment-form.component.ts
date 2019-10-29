@@ -25,6 +25,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
   @Input() packet: HPacket;
 
   entity = {} as Rule;
+  formTitle = 'Packet Enrichments';
 
   form: FormGroup;
 
@@ -43,6 +44,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
   assetCategories: number[] = [];
 
   editMode = false;
+  showCover = false;
 
   private routerSubscription: Subscription;
   private activatedRouteSubscription: Subscription;
@@ -85,14 +87,24 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
     this.saveRule(successCallback, errorCallback);
   }
   edit(rule: Rule) {
-    this.editMode = true;
-    this.setForm(rule);
+    if (this.canDeactivate()) { // TODO:   <--- this doesn't seem to work, subscribe return value (Observable)
+      this.showCancel = true;
+      this.editMode = true;
+      this.setForm(rule);
+    }
+  }
+  cancel() {
+    this.resetErrors();
+    this.resetForm();
+    this.editMode = false;
+    this.showCancel = false;
   }
 
   loadData() {
     this.summaryList = null;
     this.packetService.findHPacket(this.packetId).subscribe((p: HPacket) => {
       this.project = p.device.project;
+      console.log(JSON.stringify(this.project));
       this.packetService.findAllHPacketByProjectId(this.project.id)
         .subscribe((pl: HPacket[]) => {
           this.packetList = pl;
@@ -129,8 +141,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
     delete rule.actions;
     delete rule.parent;
     const responseHandler = (res) => {
-      this.entity = res;
-      this.resetForm();
+      this.setForm(res);
       this.updateSummaryList();
       this.loadingStatus = LoadingStatusEnum.Ready;
       successCallback && successCallback(res);
@@ -154,6 +165,10 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
     }
   }
 
+  onAddButtonClick() {
+    this.edit({ jsonActions: '[]' } as Rule);
+  }
+
   updateSummaryList() {
     this.rulesService.findAllRuleByPacketId(this.packet.id).subscribe((rules: Rule[]) => {
       this.summaryList = {
@@ -173,7 +188,18 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
     }
   }
 
+  isValid() {
+    return super.isValid() && !this.invalidRules();
+  }
+  isDirty() {
+    return this.editMode && (super.isDirty() || this.ruleDefinitionComponent.isDirty());
+  }
 
+  private invalidRules(): boolean {
+    return (
+      ((this.ruleDefinitionComponent) ? this.ruleDefinitionComponent.isInvalid() : true)
+    );
+  }
 
 // TODO: code below is still to be verified / refactored
 
@@ -264,14 +290,6 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
     //this.updateRule.emit();
   }
 
-  invalid(): boolean {
-    return (
-      this.form.get('rule-name').invalid ||
-      this.form.get('enrichmentRule').invalid ||
-      this.form.get('rule-description').invalid ||
-      ((this.ruleDefinitionComponent) ? this.ruleDefinitionComponent.isInvalid() : true)
-    );
-  }
 
   /*
   //error logic

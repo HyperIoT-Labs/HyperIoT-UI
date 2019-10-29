@@ -25,6 +25,7 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
     //TODO...
     // 'eventOutput': 'model',
   };
+  formTitle = 'Packet Events';
 
   private routerSubscription: Subscription;
   private activatedRouteSubscription: Subscription;
