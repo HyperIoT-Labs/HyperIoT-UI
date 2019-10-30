@@ -47,8 +47,10 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
     { value: ' OR ', label: this.i18n('HYT_OR'), checked: false }
   ]
 
+  private originalFormsValues = '';
+
   constructor(
-    private fb: FormBuilder,
+    public fb: FormBuilder,
     private wizardService: ProjectWizardService,
     private i18n: I18n
   ) { }
@@ -104,7 +106,7 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
   }
 
   buildRuleDefinition(): string {
-    let rd = '(';
+    let rd = '';
     for (let k = 0; k < this.ruleForms.length; k++) {
       let element: string = (this.ruleForms[k].form.value.ruleField) ? this.ruleForms[k].form.value.ruleField : '';
       let condition: string = (this.ruleForms[k].form.value.ruleCondition) ? ' ' + this.ruleForms[k].form.value.ruleCondition : '';
@@ -112,7 +114,7 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
       let joinRule: string = (this.ruleForms[k].form.value.ruleJoin) ? this.ruleForms[k].form.value.ruleJoin : '';
       rd += element + condition + valueRule + joinRule;
     }
-    return rd + ')';
+    return rd;
   }
 
   fieldChanged(event, index) {
@@ -137,10 +139,15 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
     )
   }
 
+  isDirty(): boolean {
+    return this.getJsonForms() !== this.originalFormsValues;
+  }
   isInvalid(): boolean {
-    for (let k = 0; k < this.ruleForms.length; k++)
-      if (this.isFormInvalid(k))
+    for (let k = 0; k < this.ruleForms.length; k++) {
+      if (this.isFormInvalid(k)) {
         return true;
+      }
+    }
     return false;
   }
 
@@ -178,6 +185,9 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
             }
             else
               this.ruleForms[k].form.get('ruleJoin').setValue((splitted[2]) ? ' ' + splitted[2] + ' ' : null);
+            if (k === this.ruleForms.length - 1) {
+              this.originalFormsValues = this.getJsonForms();
+            }
           }, 0);
         }
 
@@ -185,4 +195,9 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
     }, 0);
   }
 
+  private getJsonForms() {
+    let currentValue = '';
+    this.ruleForms.map((rf) => currentValue += JSON.stringify(rf.form.value));
+    return currentValue;
+  }
 }

@@ -18,6 +18,7 @@ export abstract class ProjectFormEntity implements OnInit {
 
     entity: any = {};
     entityFormMap: any;
+    formTitle = 'Project Form Entity';
 
     form: FormGroup;
     private originalValue: string;
@@ -70,7 +71,9 @@ export abstract class ProjectFormEntity implements OnInit {
             this.form.get(key)
                 .setValue(this.entity[this.entityFormMap[key]]);
         });
-        this.resetForm();
+        setTimeout(() => {
+            this.resetForm();
+        }, 500);
     }
     clone(entity?: any): any {
         const cloned = { ...entity } || this.entity;

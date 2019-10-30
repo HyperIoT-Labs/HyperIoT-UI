@@ -26,6 +26,7 @@ export class PacketFormComponent extends ProjectFormEntity implements OnDestroy 
     'hpacket-timestampformat': 'timestampFormat',
     'hpacket-trafficplan': 'trafficPlan'
   };
+  formTitle = 'Packet';
 
   @Input()
   currentDevice: HDevice;

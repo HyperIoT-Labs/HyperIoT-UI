@@ -1,12 +1,3 @@
-h2 {
-    &#title-project {
-        padding-left: 13px;
-        padding-right: 13px;
-        color: #0956b6;
-        font-size: 1.8em;
-    }
-}
-
 .container {
     position: relative;
 }
@@ -18,4 +9,7 @@ h2 {
 mat-progress-bar {
     max-width: 200px;
     margin: 8px;
+}
+.hidden {
+    display: none;
 }

@@ -23,6 +23,7 @@ export class DeviceFormComponent extends ProjectFormEntity implements OnDestroy 
     'hdevice-softwareversion': 'softwareVersion',
     'hdevice-description': 'description'
   };
+  formTitle = 'Device';
 
   id: number; // <-- this could be made private
 

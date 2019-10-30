@@ -37,6 +37,8 @@ export class PacketFieldsFormComponent extends ProjectFormEntity implements OnDe
 
   packetTree = [] as Node[];
 
+  formTitle = 'Packet Fields';
+
   constructor(
     formBuilder: FormBuilder,
     @ViewChild('form', { static: true }) formView: ElementRef,

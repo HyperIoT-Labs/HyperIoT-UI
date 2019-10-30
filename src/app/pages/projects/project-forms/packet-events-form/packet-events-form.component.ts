@@ -24,6 +24,7 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
     'rule-description': 'description',
     'eventOutput': ''
   };
+  formTitle = 'Packet Events';
 
   private routerSubscription: Subscription;
   private activatedRouteSubscription: Subscription;
