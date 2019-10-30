@@ -116,8 +116,7 @@ export class DeviceFormComponent extends ProjectFormEntity implements OnDestroy 
         this.setErrors(err);
         errorCallback && errorCallback(err);
       });
-    }
-    else {
+    } else {
       d.entityVersion = 1;
       d.password = this.form.value['hdevice-password'];
       d.passwordConfirm = this.form.value['hdevice-passwordConfirm'];

@@ -21,7 +21,7 @@ export abstract class ProjectFormEntity implements OnInit {
     formTitle = 'Project Form Entity';
 
     form: FormGroup;
-    private originalValue: string;
+    private originalValue = '{}';
     private validationError = [];
 
     // the following 5 fields should implemented by a specific interface
@@ -41,7 +41,7 @@ export abstract class ProjectFormEntity implements OnInit {
         @ViewChild('form', { static: true }) private formView: ElementRef
     ) {
         this.form = this.formBuilder.group({});
-        this.originalValue = JSON.stringify(this.form.value);
+        //this.originalValue = JSON.stringify(this.form.value);
     }
 
     ngOnInit() {
@@ -71,9 +71,9 @@ export abstract class ProjectFormEntity implements OnInit {
             this.form.get(key)
                 .setValue(this.entity[this.entityFormMap[key]]);
         });
-        setTimeout(() => {
-            this.resetForm();
-        }, 500);
+//        setTimeout(() => {
+        this.resetForm();
+//        }, 500);
     }
     clone(entity?: any): any {
         const cloned = { ...entity } || this.entity;
@@ -88,7 +88,7 @@ export abstract class ProjectFormEntity implements OnInit {
     isValid(): boolean {
         let invalid = false;
         Object.keys(this.form.controls).forEach((field) => {
-            invalid = invalid || this.form.get(field).invalid;
+            invalid = invalid || (this.form.get(field).invalid);
         });
         return !invalid;
     }

@@ -8,7 +8,7 @@ import { ProjectWizardService } from 'src/app/services/projectWizard/project-wiz
 import { I18n } from '@ngx-translate/i18n-polyfill';
 // TODO: find a bettere placement for PageStatusEnum
 import { ProjectFormEntity, LoadingStatusEnum } from '../project-form-entity';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { SummaryListItem } from '../../project-detail/generic-summary-list/generic-summary-list.component';
 
@@ -87,10 +87,20 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
     this.saveRule(successCallback, errorCallback);
   }
   edit(rule: Rule) {
-    if (this.canDeactivate()) { // TODO:   <--- this doesn't seem to work, subscribe return value (Observable)
+    const proceedWithEdit = () => {
       this.showCancel = true;
       this.editMode = true;
       this.setForm(rule);
+    };
+    const canDeactivate = this.canDeactivate();
+    if (typeof canDeactivate === 'boolean' && canDeactivate === true) {
+      proceedWithEdit();
+    } else {
+      (canDeactivate as Observable<any>).subscribe((res) => {
+        if (res) {
+          proceedWithEdit();
+        }
+      });
     }
   }
   cancel() {
@@ -225,50 +235,6 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
 
   postRule() {
 
-//    //this.errors = [];
-
-//    this.loadingStatus = LoadingStatusEnum.Saving;
-
-//    var jActions = [this.form.value['enrichmentRule']];
-//    var jActionStr: string = JSON.stringify(jActions);
-
-//    const project = this.packet.device.project;
-//    let rule: Rule = {
-//      name: this.form.value['rule-name'],
-//      ruleDefinition: this.ruleDefinitionComponent.buildRuleDefinition(),
-//      description: this.form.value['rule-description'],
-//      project: {
-//        id: project.id,
-//        entityVersion: project.entityVersion
-//      },
-//      packet: this.packet,
-//      jsonActions: jActionStr,
-//      type: 'ENRICHMENT',
-//      entityVersion: 1
-//    };
-
-//    this.rulesService.saveRule(rule).subscribe(
-//      res => {
-////this.resetForm('ADD');
-//        this.resetForm();
-//        this.wizardService.addEnrichmentRule(res);
-//        this.loadingStatus = LoadingStatusEnum.Ready;
-//      },
-//      err => {
-//        this.loadingStatus = LoadingStatusEnum.Error;
-/*        this.errors = this.errorHandler.handleCreateRule(err);
-        this.errors.forEach(e => {
-          if (e.container != 'general') {
-            this.form.get(e.container).setErrors({
-              validateInjectedError: {
-                valid: false
-              }
-            });
-          }
-        });*/
-//      }
-//    );
-
     if (this.enrichmentType == 'AddTagRuleAction') {
       this.packet.tagIds = this.assetTags;
       this.packetService.updateHPacket(this.packet).subscribe(
@@ -284,25 +250,6 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
     }
 
   }
-
-  putRule() {
-    //this.errors = [];
-    //this.updateRule.emit();
-  }
-
-
-  /*
-  //error logic
-
-  errors: HYTError[] = [];
-
-  getError(field: string): string {
-    return (this.errors.find(x => x.container == field)) ? this.errors.find(x => x.container == field).message : null;
-  }
-  isDeviceInserted() {
-    return (this.form.get('enrichmentDevice')) ? this.form.get('enrichmentDevice').invalid : true;
-  }
-  */
 
   //Tags
   updateAssetTag(event) {

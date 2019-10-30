@@ -44,19 +44,19 @@
 
         </div>
 
-        <div class="side-bar">
+        <div *ngIf="currentEntity" class="side-bar">
 
-            <div class="mt-4 d-flex flex-row justify-content-around">
+            <div class="mt-4 d-flex flex-row justify-content-between">
                 <hyt-button 
                     id="save-btn"
                     (clickFn)="onSaveClick()" 
-                    [isDisabled]="currentEntity && (!currentEntity.isValid() || !currentEntity.isDirty())">
+                    [isDisabled]="!currentEntity.isValid() || !currentEntity.isDirty()">
                     <mat-icon class="md-primary">save</mat-icon>
                     <span>Save</span>
                 </hyt-button>
 
                 <hyt-button 
-                    [ngClass]="{hidden: currentEntity && currentEntity.hideDelete}"
+                    [ngClass]="{hidden: currentEntity.hideDelete}"
                     id="delete-btn"
                     (clickFn)="onDeleteClick()">
                     <mat-icon>delete</mat-icon>
@@ -64,7 +64,7 @@
                 </hyt-button>
 
                 <hyt-button 
-                    [ngClass]="{hidden: currentEntity && !currentEntity.showCancel}"
+                    [ngClass]="{hidden: !currentEntity.showCancel}"
                     id="cancel-btn"
                     (clickFn)="onCancelClick()">
                     <mat-icon>undo</mat-icon>
@@ -78,7 +78,7 @@
                 <mat-icon class="">info</mat-icon> <!-- mt-2 mr-2 -->
             </div>
 
-            <hyt-generic-summary-list *ngIf="currentEntity && currentEntity.summaryList"
+            <hyt-generic-summary-list *ngIf="currentEntity.summaryList"
                 [summaryList]="currentEntity.summaryList"
                 (itemClick)="onSummaryItemClick($event)"
                 (menuAction)="onSummaryMenuClick($event)"></hyt-generic-summary-list>
