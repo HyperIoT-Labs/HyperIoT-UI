@@ -22,7 +22,7 @@ export abstract class ProjectFormEntity implements OnInit {
 
     form: FormGroup;
     private originalValue = '{}';
-    private validationError = [];
+    protected validationError = [];
 
     // the following 5 fields should implemented by a specific interface
     isProjectEntity = true;
@@ -103,7 +103,7 @@ export abstract class ProjectFormEntity implements OnInit {
             this.validationError = err.error.validationErrors;
             this.validationError.map((e) => {
                 // TODO: this is a temporary patch to deal
-                // TODO: with wrong field names in error response 
+                // TODO: with wrong field names in error response
                 if (this.entityFormMap) {
                     const keys = Object.keys(this.entityFormMap);
                     for (let k of keys) {

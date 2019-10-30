@@ -127,6 +127,14 @@ export class ProjectDetailComponent implements OnInit {
       case 'duplicate':
         this.currentEntity.clone(rule);
         break;
+      case 'delete':
+        this.currentEntity.edit(rule);
+        this.currentEntity.delete((success) => {
+          console.log('SUCCESS', success);
+        }, (error) => {
+          console.log('ERROR', error);
+        });
+        break;
     }
   }
 
