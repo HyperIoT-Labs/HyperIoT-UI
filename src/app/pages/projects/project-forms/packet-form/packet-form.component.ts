@@ -18,13 +18,34 @@ import { ProjectFormEntity, LoadingStatusEnum } from '../project-form-entity';
 export class PacketFormComponent extends ProjectFormEntity implements OnDestroy {
   entity: HPacket = {} as HPacket;
   entityFormMap = {
-    'hpacket-name': 'name',
-    'hpacket-type': 'type',
-    'hpacket-serialization': 'serialization',
-    'hpacket-format': 'format',
-    'hpacket-timestampfield': 'timestampField',
-    'hpacket-timestampformat': 'timestampFormat',
-    'hpacket-trafficplan': 'trafficPlan'
+    'hpacket-name': {
+      field: 'name',
+      default: null
+    },
+    'hpacket-type': {
+      field: 'type',
+      default: 'INPUT'
+    },
+    'hpacket-serialization': {
+      field: 'serialization',
+      default: 'AVRO'
+    },
+    'hpacket-format': {
+      field: 'format',
+      default: 'JSON'
+    },
+    'hpacket-timestampfield': {
+      field: 'timestampField',
+      default: 'timestamp'
+    },
+    'hpacket-timestampformat': {
+      field: 'timestampFormat',
+      default: 'dd/MM/yyyy hh.mmZ'
+    },
+    'hpacket-trafficplan': {
+      field: 'trafficPlan',
+      default: 'HIGH'
+    }
   };
   formTitle = 'Packet';
 
@@ -132,7 +153,8 @@ export class PacketFormComponent extends ProjectFormEntity implements OnDestroy 
         errorCallback && errorCallback(err);
         this.loadingStatus = LoadingStatusEnum.Error;
       });
-    } else {
+    }
+    else {
       p.entityVersion = 1;
       p.version = '1';
       p.fields = [];
