@@ -16,12 +16,30 @@ import { ProjectFormEntity, LoadingStatusEnum } from '../project-form-entity';
 export class DeviceFormComponent extends ProjectFormEntity implements OnDestroy {
   entity: HDevice = {} as HDevice;
   entityFormMap = {
-    'hdevice-devicename': 'deviceName',
-    'hdevice-brand': 'brand',
-    'hdevice-model': 'model',
-    'hdevice-firmwareversion': 'firmwareVersion',
-    'hdevice-softwareversion': 'softwareVersion',
-    'hdevice-description': 'description'
+    'hdevice-devicename': {
+      field: 'deviceName',
+      default: null
+    },
+    'hdevice-brand': {
+      field: 'brand',
+      default: null
+    },
+    'hdevice-model': {
+      field: 'model',
+      default: null
+    },
+    'hdevice-firmwareversion': {
+      field: 'firmwareVersion',
+      default: null
+    },
+    'hdevice-softwareversion': {
+      field: 'softwareVersion',
+      default: null
+    },
+    'hdevice-description': {
+      field: 'description',
+      default: null
+    }
   };
   formTitle = 'Device';
 
@@ -87,13 +105,13 @@ export class DeviceFormComponent extends ProjectFormEntity implements OnDestroy 
     super.edit(d);
   }
   clone(entity?: HDevice): HDevice {
-    const device = {...entity} || this.entity;
+    const device = { ...entity } || this.entity;
     device.id = 0;
     device.entityVersion = 1;
     device.deviceName = `${device.deviceName}Copy`;
     this.edit(device);
     return device;
-}
+  }
 
   private saveDevice(successCallback?, errorCallback?) {
     this.loadingStatus = LoadingStatusEnum.Saving;

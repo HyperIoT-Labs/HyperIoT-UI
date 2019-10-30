@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { Observable } from 'rxjs';
 
 import { MatRadioChange } from '@angular/material';
-import { ElementRef, ViewChild, OnInit, Output, EventEmitter } from '@angular/core';
+import { ElementRef, ViewChild, OnInit, Output, EventEmitter, AfterViewInit } from '@angular/core';
 import { SummaryList } from '../project-detail/generic-summary-list/generic-summary-list.component';
 
 export enum LoadingStatusEnum {
@@ -69,7 +69,7 @@ export abstract class ProjectFormEntity implements OnInit {
         }
         Object.keys(this.entityFormMap).forEach((key) => {
             this.form.get(key)
-                .setValue(this.entity[this.entityFormMap[key]]);
+                .setValue(this.entity[this.entityFormMap[key].field] || this.entityFormMap[key].default);
         });
         this.resetForm();
     }
@@ -95,7 +95,7 @@ export abstract class ProjectFormEntity implements OnInit {
     }
 
     getError(field) {
-        const err = this.validationError.find((e) => e.field === field);
+        const err = this.validationError.find((e) => e.field == field);
         return err && err.message;
     }
     setErrors(err) {
@@ -135,7 +135,9 @@ export abstract class ProjectFormEntity implements OnInit {
     }
 
     cleanForm(): void {
+        this.entity = {};
         this.form.reset();
+        this.edit();
     }
 
     private serialize() {

@@ -20,9 +20,18 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
 
   entity: Rule = {} as Rule;
   entityFormMap = {
-    'rule-name': 'name',
-    'rule-description': 'description',
-    'eventOutput': ''
+    'rule-name': {
+      field: 'name',
+      default: null
+    },
+    'rule-description': {
+      field: 'description',
+      default: null
+    },
+    'eventOutput': {
+      field: null,
+      default: 'SendMailAction'
+    }
   };
   formTitle = 'Packet Events';
 
@@ -98,31 +107,18 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
   }
 
   edit(entity?: Rule) {
-    if (entity) {
-      this.entity = { ...entity };
-    }
+    super.edit(entity);
     delete this.entity.actions;
     delete this.entity.parent;
     this.editMode = true;
-    this.cleanForm();
-    this.form.get('rule-description').setValue(entity.description);
-    this.form.get('rule-name').setValue(entity.name);
-    this.form.get('eventOutput').setValue('SendMailAction');//TODO add logic (if new output)
-    this.ruleDefinitionComponent.setRuleDefinition(entity.ruleDefinition);
-    this.eventMailComponent.setMail(JSON.parse(entity.jsonActions));
-  }
-
-  clone(entity?: Rule): Rule {
-    const event = { ...entity } || this.entity;
-    event.id = 0;
-    event.entityVersion = 1;
-    event.name = `${event.name}Copy`;
-    this.edit(event);
-    return event;
+    if (entity) {
+      this.ruleDefinitionComponent.setRuleDefinition(entity.ruleDefinition);
+      this.eventMailComponent.setMail(JSON.parse(entity.jsonActions));
+    }
   }
 
   cleanForm() {
-    this.form.reset();
+    super.cleanForm();
     this.ruleDefinitionComponent.resetRuleDefinition();
     this.eventMailComponent.reset();
   }

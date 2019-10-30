@@ -16,8 +16,14 @@ import { ProjectFormEntity, LoadingStatusEnum } from '../project-form-entity';
 export class ProjectFormComponent extends ProjectFormEntity implements OnDestroy {
   entity = {} as HProject;
   entityFormMap = {
-    'hproject-name': 'name',
-    'hproject-description': 'description'
+    'hproject-name': {
+      field: 'name',
+      default: null
+    },
+    'hproject-description': {
+      field: 'description',
+      default: null
+    }
   };
   formTitle = 'Project';
 
@@ -114,5 +120,33 @@ export class ProjectFormComponent extends ProjectFormEntity implements OnDestroy
       errorCallback && errorCallback(err);
     });
   }
-}
 
+  setErrors(err) {
+
+    if (err.error && err.error.type) {
+      switch (err.error.type) {
+        case 'it.acsoftware.hyperiot.base.exception.HyperIoTDuplicateEntityException': {
+          this.validationError = [{ "message": "Unavailable project name", "field": "hproject-name", "invalidValue": "" }];//@I18N@
+          this.form.get('hproject-name').setErrors({
+            validateInjectedError: {
+              valid: false
+            }
+          });
+          this.loadingStatus = LoadingStatusEnum.Ready;
+          break;
+        }
+        case 'it.acsoftware.hyperiot.base.exception.HyperIoTValidationException': {
+          super.setErrors(err);
+          break;
+        }
+        default: {
+          this.loadingStatus = LoadingStatusEnum.Error;
+        }
+      }
+    } else {
+      this.loadingStatus = LoadingStatusEnum.Error;
+    }
+
+  }
+
+}

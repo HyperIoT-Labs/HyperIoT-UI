@@ -21,6 +21,25 @@ export class PacketFieldsFormComponent extends ProjectFormEntity implements OnDe
   @ViewChild('treeViewFields', { static: false }) treeViewFields: HytTreeViewEditableComponent;
   private routerSubscription: Subscription;
   private activatedRouteSubscription: Subscription;
+  
+  entityFormMap = {
+    'hpacketfield-name': {
+      field: 'name',
+      default: null
+    },
+    'hpacketfield-description': {
+      field: 'description',
+      default: null
+    },
+    'hpacketfield-type': {
+      field: 'type',
+      default: null
+    },
+    'hpacketfield-multiplicity': {
+      field: 'multiplicity',
+      default: 'SINGLE'
+    }
+  };
 
   @Input()
   packetId: number;

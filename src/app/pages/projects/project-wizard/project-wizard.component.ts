@@ -33,7 +33,8 @@ export class ProjectWizardCanDeactivate implements CanDeactivate<ProjectWizardCo
 })
 export class ProjectWizardComponent implements OnInit, AfterViewInit {
 
-  @ViewChild('stepper', { static: false }) stepper;
+  @ViewChild('stepper', { static: false })
+  stepper;
 
   currentForm: ProjectFormEntity;
 
@@ -145,6 +146,9 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
         console.log("error");
       }
     }
+    console.log(this.currentForm.isDirty())
+    if (!this.currentForm.isDirty())
+      this.currentForm.edit();
     //this.wizardService.stepChanged(event.selectedIndex);
   }
 
@@ -193,21 +197,18 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
       }
 
       else if (this.currentForm == this.devicesForm) {
-        this.currentForm.entity = {};
         this.currentForm.cleanForm();
         this.hDevices = [...this.updateList(ent, this.hDevices)];
         this.updateDeviceTable();
       }
 
       else if (this.currentForm == this.packetsForm) {
-        this.currentForm.entity = {};
         this.currentForm.cleanForm();
         this.hPackets = [...this.updateList(ent, this.hPackets)];
         this.updatePacketTable();
       }
 
       else if (this.currentForm == this.eventsForm) {
-        this.currentForm.entity = {};
         this.currentForm.cleanForm();
       }
 
