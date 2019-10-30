@@ -75,7 +75,17 @@ export class DeviceFormComponent extends ProjectFormEntity implements OnDestroy 
       this.loadingStatus = LoadingStatusEnum.Error;
     });
   }
-
+  edit(d?: HDevice) {
+    // TODO: verify this...
+    if (this.entity.id) {
+      this.form.removeControl('hdevice-password');
+      this.form.removeControl('hdevice-passwordConfirm');
+    } else {
+      //this.form.addControl('hdevice-password');
+      //this.form.removeControl('hdevice-passwordConfirm');
+    }
+    super.edit(d);
+  }
   clone(entity?: HDevice): HDevice {
     const device = {...entity} || this.entity;
     device.id = 0;

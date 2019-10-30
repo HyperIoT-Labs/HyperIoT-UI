@@ -41,7 +41,7 @@ export abstract class ProjectFormEntity implements OnInit {
         @ViewChild('form', { static: true }) private formView: ElementRef
     ) {
         this.form = this.formBuilder.group({});
-        //this.originalValue = JSON.stringify(this.form.value);
+        //this.serialize();
     }
 
     ngOnInit() {
@@ -71,9 +71,7 @@ export abstract class ProjectFormEntity implements OnInit {
             this.form.get(key)
                 .setValue(this.entity[this.entityFormMap[key]]);
         });
-//        setTimeout(() => {
         this.resetForm();
-//        }, 500);
     }
     clone(entity?: any): any {
         const cloned = { ...entity } || this.entity;
@@ -88,12 +86,12 @@ export abstract class ProjectFormEntity implements OnInit {
     isValid(): boolean {
         let invalid = false;
         Object.keys(this.form.controls).forEach((field) => {
-            invalid = invalid || (this.form.get(field).invalid);
+            invalid = invalid || this.form.get(field).invalid;
         });
         return !invalid;
     }
     isDirty(): boolean {
-        return JSON.stringify(this.form.value) !== this.originalValue;
+        return this.serialize() !== this.originalValue;
     }
 
     getError(field) {
@@ -104,7 +102,18 @@ export abstract class ProjectFormEntity implements OnInit {
         if (err.error && err.error.validationErrors) {
             this.validationError = err.error.validationErrors;
             this.validationError.map((e) => {
-                console.log(e.field)
+                // TODO: this is a temporary patch to deal
+                // TODO: with wrong field names in error response 
+                if (this.entityFormMap) {
+                    const keys = Object.keys(this.entityFormMap);
+                    for (let k of keys) {
+                        if (this.entityFormMap[k] === e.field) {
+                            e.field = k;
+                            break;
+                        }
+                    }
+                }
+                // ^^^^^^
                 this.form.get(e.field).setErrors({
                     validateInjectedError: {
                         valid: false
@@ -121,12 +130,24 @@ export abstract class ProjectFormEntity implements OnInit {
     }
 
     resetForm() {
-        this.originalValue = JSON.stringify(this.form.value, this.circularFix);
+        this.originalValue = this.serialize();
         this.buildHintMessages();
     }
 
     cleanForm(): void {
         this.form.reset();
+    }
+
+    private serialize() {
+        const keys = Object.keys(this.form.value);
+        keys.sort((a, b) => {
+            return a > b ? 1 : (a === b ? 0 : -1);
+        });
+        const copy = {};
+        keys.forEach((k) => {
+            copy[k] = this.form.value[k];
+        });
+        return JSON.stringify(copy, this.circularFix);
     }
 
     private buildHintMessages() {
