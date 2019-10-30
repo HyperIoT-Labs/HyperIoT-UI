@@ -57,6 +57,10 @@ export class ProjectFormComponent extends ProjectFormEntity implements OnDestroy
     this.loadingStatus = LoadingStatusEnum.Loading;
     this.hProjectService.findHProject(this.id).subscribe((p: HProject) => {
       this.entity = p;
+      this.entityEvent.emit({
+        event: 'pw:project-loaded',
+        project: this.entity
+      });
       this.edit();
       this.loadingStatus = LoadingStatusEnum.Ready;
     }, (err) => {

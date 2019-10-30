@@ -55,12 +55,12 @@
                     hintMessage="Enter the device firmware version."
                     [form]="form"></hyt-input-text>
                 <hyt-input-text [form]="form" name="hdevice-password" [disabled]="entity.id"
-                    [isRequired]="entity.id" [isPassword]="true" i18n-placeholder="@@HYT_password" placeholder="HYT_password"
+                    [isRequired]="!entity.id" [isPassword]="true" i18n-placeholder="@@HYT_password" placeholder="HYT_password"
                     type="password" [injectedErrorMsg]="getError('hdevice-password')"
                     hintMessage="Enter the device password.">
                 </hyt-input-text>
                 <hyt-input-text [form]="form" name="hdevice-passwordConfirm" [disabled]="entity.id"
-                    [isRequired]="entity.id" i18n-placeholder="@@HYT_password_confirm" placeholder="HYT_password_confirm"
+                    [isRequired]="!entity.id" i18n-placeholder="@@HYT_password_confirm" placeholder="HYT_password_confirm"
                     type="password" [injectedErrorMsg]="getError('hdevice-passwordConfirm')"
                     hintMessage="Confirm device password.">
                 </hyt-input-text>

@@ -24,6 +24,10 @@
             <!-- BEGIN TreeView -->
             <div [ngStyle]="{display: treeStatus == TreeStatus.Ready ? '' : 'none'}" class="treeview pb-2 flex-grow-1 flex-sm-grow-0 flex-fill">
                 <hyt-tree-view-project #treeView (nodeClick)="onNodeClick($event)"></hyt-tree-view-project>
+                <div id="editInWizardContent">
+                    <hyt-button  (clickFn)="goToProjectWizard()">Edit in wizard</hyt-button>
+                </div>
+                <!--@I18N@-->
             </div>        
             <div *ngIf="treeStatus == TreeStatus.Loading || treeStatus == TreeStatus.LoadingComplete" class="treeview mt-2 d-flex flex-column align-items-center justify-content-center">
                 <h4>Loading project tree</h4>

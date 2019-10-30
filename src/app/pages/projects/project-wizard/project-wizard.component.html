@@ -2,8 +2,8 @@
 
   <div class="header d-flex flex-row justify-content-stretch">
     <div class="breadcrumb flex-grow-1">
-      <span class="hyt-icon icon-hyt_projectSolo"></span> <a [routerLink]="['/']">Home</a> > <strong>Projects
-        Wizard</strong>
+      <span class="hyt-icon icon-hyt_projectSolo"></span> <a [routerLink]="['/']">Home</a> >
+      <strong>Projects Wizard</strong>
     </div>
   </div>
 
@@ -12,18 +12,18 @@
     <div id="container-steps" class="col-md-10">
 
       <ng-template #projectTemplate>
-        <hyt-project-form #projectData (entityEvent)="onEntityEvent($event)"></hyt-project-form>
+        <hyt-project-form #projectForm (entityEvent)="onEntityEvent($event)"></hyt-project-form>
       </ng-template>
 
       <ng-template #devicesTemplate>
-        <hyt-device-form #devicesData [currentProject]="currentProject" (entityEvent)="onEntityEvent($event)">
+        <hyt-device-form #devicesForm [currentProject]="currentProject" (entityEvent)="onEntityEvent($event)">
         </hyt-device-form>
       </ng-template>
 
       <ng-template #packetsTemplate>
         <hyt-device-select #deviceSelect [hDevices]="hDevices" (selectedDevice)="deviceChanged($event)">
         </hyt-device-select>
-        <hyt-packet-form #packetsData [currentDevice]="currentDevice" (entityEvent)="onEntityEvent($event)">
+        <hyt-packet-form #packetsForm [currentDevice]="currentDevice" (entityEvent)="onEntityEvent($event)">
         </hyt-packet-form>
       </ng-template>
 
@@ -31,24 +31,24 @@
         <hyt-pw-packet-select #fieldPacketSelect [hDevices]="hDevices" [hPackets]="hPackets"
           (currentPacket)="fieldPacketChanged($event)">-
         </hyt-pw-packet-select>
-        <hyt-packet-fields-form #fieldsData [packetId]="fieldCurrentPacketId"></hyt-packet-fields-form>
+        <hyt-packet-fields-form #fieldsForm [packetId]="fieldCurrentPacketId"></hyt-packet-fields-form>
       </ng-template>
 
       <ng-template #enrichmentTemplate>
         <hyt-pw-packet-select #enrichmentPacketSelect [hDevices]="hDevices" [hPackets]="hPackets"
           (currentPacket)="enrichmentPacketChanged($event)"></hyt-pw-packet-select>
+          <hyt-packet-enrichment-form #enrichmentForm [packetId]="enrichmentCurrentPacketId"></hyt-packet-enrichment-form>
       </ng-template>
 
       <ng-template #statisticsTemplate>
       </ng-template>
 
       <ng-template #eventsTemplate>
-        <hyt-pw-packet-select #eventPacketSelect [hDevices]="hDevices" [hPackets]="hPackets" (currentPacket)="eventPacketChanged($event)">
+        <hyt-pw-packet-select #eventPacketSelect [hDevices]="hDevices" [hPackets]="hPackets"
+          (currentPacket)="eventPacketChanged($event)">
         </hyt-pw-packet-select>
-        <hyt-packet-events-form #eventsData [packetId]="eventCurrentPacketId" [project]="currentProject"></hyt-packet-events-form>
-        <!-- <hyt-button (clickFn)="openOptionModal()">
-                <ng-container i18n="@@HYT_next">HYT_next</ng-container>
-              </hyt-button> -->
+        <hyt-packet-events-form #eventsForm [packetId]="eventCurrentPacketId">
+        </hyt-packet-events-form>
       </ng-template>
 
       <div class="row">
@@ -56,7 +56,7 @@
           <hyt-stepper #stepper (selectionChange)="stepChanged($event)" [isLinear]="true" style="width: 100%"
             [stepArray]="[ projectTemplate, devicesTemplate, packetsTemplate, fieldsTemplate, enrichmentTemplate, statisticsTemplate, eventsTemplate ]"
             [labelArray]="[ 'Projects', 'Devices', 'Packets', 'Fields', 'Enrichment', 'Statistics', 'Events' ]"
-            [completedArray]="[ currentProject != null, hDevices.length != 0, hPackets.length != 0, hPackets.length != 0 && hDevices.length != 0, hPackets.length != 0 && hDevices.length != 0, hPackets.length != 0 && hDevices.length != 0, hPackets.length != 0 && hDevices.length != 0 ]">
+            [completedArray]="[ currentProject != null, hDevices.length != 0, hPackets.length != 0, packetInformationValidated, packetInformationValidated, packetInformationValidated, packetInformationValidated ]">
           </hyt-stepper>
         </div>
       </div>
@@ -64,11 +64,11 @@
       <div class="row">
         <div class="col-12">
           <hyt-button class="toRight" *ngIf="currentForm" (clickFn)="onSaveClick($event)"
-            [isDisabled]="currentForm && (!currentForm.isValid() || !currentForm.isDirty())">
+            [isDisabled]="!currentForm.isValid() || !currentForm.isDirty() || currentForm.loadingStatus != 0">
             <!--TODO... fix ExpressionChangedAfterItHasBeenCheckedError (isDisabled)-->
-            <ng-container *ngIf="currentForm && !currentForm.entity.id">Salva</ng-container>
+            <ng-container *ngIf="currentForm && !currentForm.entity.id">Save</ng-container>
             <!-- @I18N@ -->
-            <ng-container *ngIf="currentForm && currentForm.entity.id">Aggiorna</ng-container>
+            <ng-container *ngIf="currentForm && currentForm.entity.id">Update</ng-container>
             <!-- @I18N@ -->
           </hyt-button>
           <div class="clear"></div>
@@ -80,7 +80,7 @@
           <hyt-button *ngIf="currentStepIndex != 0" (clickFn)="stepper.previous()">
             <ng-container i18n="@@HYT_back">HYT_back</ng-container>
           </hyt-button>
-          <hyt-button class="toRight" [isDisabled]="isNextDisabled()" (clickFn)="stepper.next()">
+          <hyt-button class="toRight" [isDisabled]="isNextDisabled()" (clickFn)="(currentStepIndex == 3 && !packetInformationValidated || currentStepIndex == 6)? openOptionModal() : stepper.next()">
             <ng-container i18n="@@HYT_next">HYT_next</ng-container>
           </hyt-button>
           <div class="clear"></div>
@@ -128,21 +128,21 @@
     </div>
     <div class="row">
       <div class="col-md-4">
-        <img src="assets/projects/icons/monitor.png" (click)="goToStepByIndex(4)">
+        <img src="assets/projects/icons/monitor.png" (click)="stepper.changeStep(4); closeOptionModal();">
         <br>
         <b i18n="@@HYT_enrichment_data">HYT_enrichment_data</b>
         <br>
         <p i18n="@@HYT_enrichment_definition_long">HYT_enrichment_definition_long</p>
       </div>
       <div class="col-md-4">
-        <img src="assets/projects/icons/monitor.png" (click)="goToStepByIndex(5)">
+        <img src="assets/projects/icons/monitor.png" (click)="stepper.changeStep(5); closeOptionModal();">
         <br>
         <b i18n="@@HYT_statistics">HYT_statistics</b>
         <br>
         <p i18n="@@HYT_statistics_definition_long">HYT_statistics_definition_long</p>
       </div>
       <div class="col-md-4">
-        <img src="assets/projects/icons/monitor.png" (click)="goToStepByIndex(6)">
+        <img src="assets/projects/icons/monitor.png" (click)="stepper.changeStep(6); closeOptionModal();">
         <br>
         <b i18n="@@HYT_events">HYT_events</b>
         <br>
@@ -160,7 +160,7 @@
   </div>
 </hyt-modal>
 
-<hyt-modal [mOpen]="finishOpen">
+<hyt-modal id="finishModal" [mOpen]="finishOpen">
   <div class="center">
     <div class="row">
       <div class="col-md-12">

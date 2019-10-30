@@ -37,14 +37,14 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
 
   currentForm: ProjectFormEntity;
 
-  @ViewChild('projectData', { static: false })
-  projectData: ProjectFormComponent;
+  @ViewChild('projectForm', { static: false })
+  projectForm: ProjectFormComponent;
 
-  @ViewChild('devicesData', { static: false })
-  devicesData: DeviceFormComponent;
+  @ViewChild('devicesForm', { static: false })
+  devicesForm: DeviceFormComponent;
 
-  @ViewChild('packetsData', { static: false })
-  packetsData: PacketFormComponent;
+  @ViewChild('packetsForm', { static: false })
+  packetsForm: PacketFormComponent;
 
   @ViewChild('fieldPacketSelect', { static: false })
   fieldPacketSelect: PacketSelectComponent;
@@ -55,11 +55,14 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
   @ViewChild('deviceSelect', { static: false })
   deviceSelect: DeviceSelectComponent;
 
-  @ViewChild('fieldsData', { static: false })
-  fieldsData: PacketFieldsFormComponent;
+  @ViewChild('fieldsForm', { static: false })
+  fieldsForm: PacketFieldsFormComponent;
 
-  @ViewChild('eventsData', { static: false })
-  eventsData: PacketEventsFormComponent;
+  @ViewChild('enrichmentForm', { static: false })
+  enrichmentForm: PacketFieldsFormComponent;
+
+  @ViewChild('eventsForm', { static: false })
+  eventsForm: PacketEventsFormComponent;
 
   @ViewChild('eventPacketSelect', { static: false })
   eventPacketSelect: PacketSelectComponent;
@@ -71,63 +74,29 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
   enrichmentRules: Rule[] = [];
   eventRules: Rule[] = [];
 
-  //projectValidated: boolean = false;
-  //devicesValidated: boolean = false;
-  //packetsValidated: boolean = false;
-  fieldsValidated: boolean = false;
-  enrichmentValidated: boolean = false;
-  statisticsValidated: boolean = false;
-  eventsValidated: boolean = false;
+  packetInformationValidated: boolean = false;
 
   ovpOpen: boolean = false;
   finishOpen: boolean = false;
 
   constructor(
     private router: Router,
-    //private wizardService: ProjectWizardService,
     private hDevicesService: HdevicesService,
     private hPacketsService: HpacketsService
   ) { }
 
   ngOnInit() {
-    // this.wizardService.hDevices$.subscribe(
-    //   (res: HDevice[]) => {
-    //     this.hDevices = [...res];
-    //     if (res && res.length != 0)
-    //       this.devicesValidated = true;
-    //     else
-    //       this.devicesValidated = false;
-    //   }
-    // );
-    // this.wizardService.hPackets$.subscribe(
-    //   (res: HPacket[]) => {
-    //     this.hPackets = [...res];
-    //     if (res && res.length != 0) {
-    //       this.packetsValidated = true;
-    //       this.fieldsValidated = true;
-    //     }
-    //     else {
-    //       this.packetsValidated = false;
-    //       this.fieldsValidated = false;
-    //     }
-    //   }
-    // );
-    // this.wizardService.enrichmentRules$.subscribe(
-    //   (res: Rule[]) => {
-    //     this.enrichmentRules = [...res];
-    //   }
-    // );
-    // this.wizardService.eventRules$.subscribe(
-    //   (res: Rule[]) => {
-    //     this.eventRules = [...res];
-    //   }
-    // );
+
   }
 
   ngAfterViewInit() {
     setTimeout(() => {//TODO...setimeout 0 to avoid 'expression changed after view checked'
-      this.currentForm = this.projectData;
-      this.eventsData.editMode = true;
+      if (window.history.state.projectId) {
+        this.projectForm.id = window.history.state.projectId;
+        this.projectForm.load();
+      }
+      this.currentForm = this.projectForm;
+      this.eventsForm.editMode = true;
     }, 0);
   }
 
@@ -141,25 +110,26 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
     //setting current form...
     switch (event.selectedIndex) {
       case 0: {
-        this.currentForm = this.projectData;
+        this.currentForm = this.projectForm;
         break;
       }
       case 1: {
-        this.currentForm = this.devicesData;
+        this.currentForm = this.devicesForm;
         this.getDevices();
         break;
       }
       case 2: {
-        this.currentForm = this.packetsData;
+        this.currentForm = this.packetsForm;
         this.getPackets();
         break;
       }
       case 3: {
-        this.currentForm = this.fieldsData;
+        this.currentForm = this.fieldsForm;
         this.fieldPacketSelect.autoSelect();
         break;
       }
       case 4: {
+        this.currentForm = this.fieldsForm;
         this.enrichmentPacketSelect.autoSelect();
         break;
       }
@@ -167,7 +137,7 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
         break;
       }
       case 6: {
-        this.currentForm = this.eventsData;
+        this.currentForm = this.eventsForm;
         this.eventPacketSelect.autoSelect();
         break;
       }
@@ -198,7 +168,7 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
   }
 
   updateDeviceTable() {
-    this.devicesData.summaryList = {
+    this.devicesForm.summaryList = {
       title: 'Devices',
       list: this.hDevices.map((d) => {
         return { name: d.deviceName, description: d.description, data: d };
@@ -207,7 +177,7 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
   }
 
   updatePacketTable() {
-    this.packetsData.summaryList = {
+    this.packetsForm.summaryList = {
       title: 'Packets',
       list: this.hPackets.map((p) => {
         return { name: p.name, description: p.trafficPlan, data: p };
@@ -218,25 +188,25 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
   onSaveClick(e) {
     this.currentForm.save((ent, isNew) => {
 
-      if (this.currentForm == this.projectData) {
+      if (this.currentForm == this.projectForm) {
         this.currentProject = ent;
       }
 
-      else if (this.currentForm == this.devicesData) {
+      else if (this.currentForm == this.devicesForm) {
         this.currentForm.entity = {};
         this.currentForm.cleanForm();
         this.hDevices = [...this.updateList(ent, this.hDevices)];
         this.updateDeviceTable();
       }
 
-      else if (this.currentForm == this.packetsData) {
+      else if (this.currentForm == this.packetsForm) {
         this.currentForm.entity = {};
         this.currentForm.cleanForm();
         this.hPackets = [...this.updateList(ent, this.hPackets)];
         this.updatePacketTable();
       }
 
-      else if (this.currentForm == this.eventsData) {
+      else if (this.currentForm == this.eventsForm) {
         this.currentForm.entity = {};
         this.currentForm.cleanForm();
       }
@@ -255,6 +225,8 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
       case 'hint:hide':
         this.hideHintMessage();
         break;
+      case 'pw:project-loaded':
+        this.currentProject = data.project;
     }
   }
 
@@ -273,12 +245,12 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
     console.log(event.item)
     switch (event.action) {
       case 'edit':
-        if (this.currentForm == this.packetsData)
+        if (this.currentForm == this.packetsForm)
           this.deviceSelect.selectSpecific(event.item.data.device.id);
         this.currentForm.edit(event.item.data);
         break;
       case 'duplicate':
-        if (this.currentForm == this.packetsData)
+        if (this.currentForm == this.packetsForm)
           this.deviceSelect.selectSpecific(event.item.data.device.id);
         this.currentForm.clone(event.item.data);
         break;
@@ -287,12 +259,12 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
         this.currentForm.entity = event.item.data;
         this.currentForm.delete((del) => {
 
-          if (this.currentForm == this.devicesData) {
+          if (this.currentForm == this.devicesForm) {
             this.hDevices = [...this.deleteFromList(event.item.data.id, this.hDevices)];
             this.updateDeviceTable();
           }
 
-          else if (this.currentForm == this.packetsData) {
+          else if (this.currentForm == this.packetsForm) {
             this.hPackets = [...this.deleteFromList(event.item.data.id, this.hPackets)];
             this.updatePacketTable();
           }
@@ -331,21 +303,9 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
     }
   }
 
-  // updateProject(proj: HProject) {
-  //   if (proj) {
-  //     this.currentProject = proj;
-  //     this.projectValidated = true;
-  //   }
-  //   setTimeout(() => {
-  //     this.stepper.next();
-  //   }, 0);
-  // }
-
   openOptionModal() {
     this.ovpOpen = true;
-    this.enrichmentValidated = true;
-    this.statisticsValidated = true;
-    this.eventsValidated = true;
+    this.packetInformationValidated = true;
   }
 
   closeOptionModal() {
@@ -359,11 +319,6 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
 
   closeFinishModal() {
     this.finishOpen = false;
-  }
-
-  goToStepByIndex(index: number) {
-    this.stepper.changeStep(index);
-    this.closeOptionModal();
   }
 
   goToDashboard() {
@@ -422,6 +377,15 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
         return false;
       }
     }
+  }
+
+  nextFn() {
+    if (this.currentStepIndex == 3 && !this.packetInformationValidated)
+      this.openOptionModal();
+    else if (this.currentStepIndex == 6)
+      this.openOptionModal();
+    else
+      this.stepper.next();
   }
 
 }
