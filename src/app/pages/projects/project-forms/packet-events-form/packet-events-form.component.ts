@@ -32,8 +32,6 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
   private packetId: number;
 
   packet: HPacket = {} as HPacket;
-
-  @Input()
   project: HProject = {} as HProject;
 
   @ViewChild('eventDef', { static: false })

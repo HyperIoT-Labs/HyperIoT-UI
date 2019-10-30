@@ -1828,7 +1828,7 @@
          </trans-unit>
          <trans-unit id="c38d0be8103d89408242396a002576c0b2d8fec3" datatype="html">
             <source>HYT_service_temporarily_unavaiable</source>
-            <target>Service temporarilu unavaiable</target>
+            <target>Service temporarily unavaiable</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/services/errorHandler/http-error-handler.service.ts</context>
                <context context-type="linenumber">1</context>

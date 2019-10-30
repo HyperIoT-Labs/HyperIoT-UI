@@ -313,4 +313,8 @@ export class ProjectDetailComponent implements OnInit {
     this.hintVisible = false;
   }
 
+  goToProjectWizard() {
+    this.router.navigateByUrl('/project-wizard', { state: { projectId: this.projectId } });
+  }
+
 }

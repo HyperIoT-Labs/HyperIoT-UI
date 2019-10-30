@@ -30,25 +30,21 @@
 
   }
 
-  #container-steps {
-    margin-top: 40px;
+}
 
-    .center {
-      text-align: center;
-    }
+#finishModal {
+  margin-top: 40px;
 
-    #tableSummary {
-      width: 100%;
-    }
+  #tableSummary {
+    width: 100%;
+  }
 
-    #tableSummary tr:nth-child(even) {
-      background: rgb(220, 220, 220);
-    }
+  #tableSummary tr:nth-child(even) {
+    background: rgb(220, 220, 220);
+  }
 
-    #tableSummary tr:nth-child(odd) {
-      background: #fff;
-    }
-
+  #tableSummary tr:nth-child(odd) {
+    background: #fff;
   }
 
 }
@@ -87,4 +83,7 @@
 }
 .clear{
   clear: both;
+}
+.center{
+  text-align: center;
 }

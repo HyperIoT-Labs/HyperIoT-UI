@@ -369,6 +369,6 @@ Error executing your request
 HYT_wrong_user_or_password
 Wrong username or password
 HYT_service_temporarily_unavaiable
-Service temporarilu unavaiable
+Service temporarily unavaiable
 HYT_server_error_500
 Internal error
