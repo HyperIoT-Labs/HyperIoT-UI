@@ -128,8 +128,9 @@ export class ProjectDetailComponent implements OnInit {
         this.currentEntity.clone(rule);
         break;
       case 'delete':
-        this.currentEntity.edit(rule);
-        this.openDeleteDialog();
+        this.currentEntity.edit(rule, () => {
+          this.openDeleteDialog();
+        });
         break;
     }
   }

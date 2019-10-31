@@ -66,9 +66,9 @@
           <hyt-button class="toRight" *ngIf="currentForm" (clickFn)="onSaveClick($event)"
             [isDisabled]="!currentForm.isValid() || !currentForm.isDirty() || currentForm.loadingStatus != 0">
             <!--TODO... fix ExpressionChangedAfterItHasBeenCheckedError (isDisabled)-->
-            <ng-container *ngIf="currentForm && !currentForm.entity.id">Save</ng-container>
+            <ng-container *ngIf="currentForm && currentForm.isNew()">Save</ng-container>
             <!-- @I18N@ -->
-            <ng-container *ngIf="currentForm && currentForm.entity.id">Update</ng-container>
+            <ng-container *ngIf="currentForm && !currentForm.isNew()">Update</ng-container>
             <!-- @I18N@ -->
           </hyt-button>
           <div class="clear"></div>
@@ -103,8 +103,11 @@
         </mat-expansion-panel>
       </div>
 
-      <hyt-generic-summary-list *ngIf="currentForm && currentForm.summaryList" [summaryList]="currentForm.summaryList"
-        (itemClick)="onSummaryItemClick($event)" (menuAction)="menuAction($event)"></hyt-generic-summary-list>
+      <hyt-generic-summary-list *ngIf="currentForm && currentForm.summaryList"
+        [ngClass]="{ disabled: currentForm.isDirty() && !currentForm.isNew() }"
+        [summaryList]="currentForm.summaryList"
+        (itemClick)="onSummaryItemClick($event)"
+        (menuAction)="menuAction($event)"></hyt-generic-summary-list>
 
       <div *ngIf="hintVisible" class="info-message m-2 mt-4 d-flex flex-row">
         <span class="text p-2 flex-grow-1">{{hintMessage}}</span>
