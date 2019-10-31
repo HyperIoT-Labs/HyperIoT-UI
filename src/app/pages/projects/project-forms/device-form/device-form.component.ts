@@ -94,6 +94,7 @@ export class DeviceFormComponent extends ProjectFormEntity implements OnDestroy 
     });
   }
   edit(d?: HDevice) {
+    super.edit(d);
     // TODO: verify this...
     if (this.entity.id) {
       this.form.removeControl('hdevice-password');
@@ -102,7 +103,6 @@ export class DeviceFormComponent extends ProjectFormEntity implements OnDestroy 
       //this.form.addControl('hdevice-password');
       //this.form.removeControl('hdevice-passwordConfirm');
     }
-    super.edit(d);
   }
   clone(entity?: HDevice): HDevice {
     const device = { ...entity } || this.entity;

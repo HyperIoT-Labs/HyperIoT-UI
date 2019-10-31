@@ -7,9 +7,9 @@
             <div class="pr-md-3 flex-fill">
                 <hyt-input-text name="hdevice-devicename"
                     [form]="form"
+                    formControlName="hdevice-devicename"
                     errorPosition="bottom"
                     placeholder="Name"
-                    minlength="3"
                     patternz="[A-Za-z0-9_-]*"
                     [injectedErrorMsg]="getError('hdevice-devicename')"
                     hintMessage="Enter the device name."
@@ -18,6 +18,7 @@
             </div>
             <div class="pl-md-3 flex-fill">
                 <hyt-input-text name="hdevice-brand"
+                    formControlName="hdevice-brand"
                     placeholder="Brand"
                     [injectedErrorMsg]="getError('hdevice-brand')"
                     hintMessage="Enter the device brand."
@@ -31,6 +32,7 @@
 
             <div class="pr-md-3 flex-fill">
                 <hyt-input-text name="hdevice-model"
+                    formControlName="hdevice-model"
                     placeholder="Model"
                     [injectedErrorMsg]="getError('hdevice-model')"
                     hintMessage="Enter the device model."
@@ -38,6 +40,7 @@
             </div>
             <div class="pl-md-3 flex-fill">
                 <hyt-input-text name="hdevice-softwareversion"
+                    formControlName="hdevice-softwareversion"
                     placeholder="Software version"
                     [injectedErrorMsg]="getError('hdevice-softwareversion')"
                     hintMessage="Enter the device software version."
@@ -50,20 +53,23 @@
 
             <div class="pr-md-3 flex-fill">
                 <hyt-input-text name="hdevice-firmwareversion"
+                    formControlName="hdevice-firmwareversion"
                     placeholder="Firmware version"
                     [injectedErrorMsg]="getError('hdevice-firmwareversion')"
                     hintMessage="Enter the device firmware version."
                     [form]="form"></hyt-input-text>
                 <ng-container *ngIf="!entity.id">
                     <hyt-input-text [form]="form" name="hdevice-password"
+                        formControlName="hdevice-password"
                         [isRequired]="!entity.id" [isPassword]="true" i18n-placeholder="@@HYT_password" placeholder="HYT_password"
                         type="password" [injectedErrorMsg]="getError('hdevice-password')"
                         hintMessage="Enter the device password.">
                     </hyt-input-text>
                     <hyt-input-text [form]="form" name="hdevice-passwordConfirm"
+                        formControlName="hdevice-passwordConfirm"
                         [isRequired]="!entity.id" i18n-placeholder="@@HYT_password_confirm" placeholder="HYT_password_confirm"
                         type="password" [injectedErrorMsg]="getError('hdevice-passwordConfirm')"
-                        hintMessage="Confirm device password.">
+                        hintMessage="Confirm device password." >
                     </hyt-input-text>
                 </ng-container>
             </div>
