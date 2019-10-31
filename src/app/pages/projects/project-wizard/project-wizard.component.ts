@@ -10,6 +10,7 @@ import { DeviceSelectComponent } from './device-select/device-select.component';
 import { PacketFieldsFormComponent } from '../project-forms/packet-fields-form/packet-fields-form.component';
 import { SummaryListItem } from '../project-detail/generic-summary-list/generic-summary-list.component';
 import { PacketSelectComponent } from './packet-select/packet-select.component';
+import { PacketEnrichmentFormComponent } from '../project-forms/packet-enrichment-form/packet-enrichment-form.component';
 import { PacketEventsFormComponent } from '../project-forms/packet-events-form/packet-events-form.component';
 
 @Injectable({
@@ -60,7 +61,7 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
   fieldsForm: PacketFieldsFormComponent;
 
   @ViewChild('enrichmentForm', { static: false })
-  enrichmentForm: PacketFieldsFormComponent;
+  enrichmentForm: PacketEnrichmentFormComponent;
 
   @ViewChild('eventsForm', { static: false })
   eventsForm: PacketEventsFormComponent;
@@ -92,13 +93,23 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     setTimeout(() => {//TODO...setimeout 0 to avoid 'expression changed after view checked'
+    this.eventsForm.editMode = true;
+    this.enrichmentForm.editMode = true;
+    this.resetForms();
       if (window.history.state.projectId) {
         this.projectForm.id = window.history.state.projectId;
         this.projectForm.load();
       }
       this.currentForm = this.projectForm;
-      this.eventsForm.editMode = true;
     }, 0);
+  }
+
+  resetForms(){
+    //this.projectForm.edit();
+    //this.devicesForm.edit();
+    this.packetsForm.edit();
+    //this.enrichmentForm.edit();
+    //this.eventsForm.edit();
   }
 
   hintMessage = '';
@@ -130,7 +141,7 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
         break;
       }
       case 4: {
-        this.currentForm = this.fieldsForm;
+        this.currentForm = this.enrichmentForm;
         this.enrichmentPacketSelect.autoSelect();
         break;
       }
@@ -147,8 +158,8 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
       }
     }
     console.log(this.currentForm.isDirty())
-    if (!this.currentForm.isDirty())
-      this.currentForm.edit();
+    // if (!this.currentForm.isDirty())
+    //   this.currentForm.edit();
     //this.wizardService.stepChanged(event.selectedIndex);
   }
 
@@ -208,7 +219,7 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
         this.updatePacketTable();
       }
 
-      else if (this.currentForm == this.eventsForm) {
+      else if (this.currentForm == this.eventsForm || this.currentForm == this.enrichmentForm) {
         this.currentForm.cleanForm();
       }
 

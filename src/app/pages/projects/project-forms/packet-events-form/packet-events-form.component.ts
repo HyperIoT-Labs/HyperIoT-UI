@@ -1,7 +1,7 @@
 import { Component, OnDestroy, ViewChild, ElementRef, Input, OnChanges } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 
 import { HpacketsService, HPacket, HProject, RulesService, Rule } from '@hyperiot/core';
 import { ProjectFormEntity, LoadingStatusEnum } from '../project-form-entity';
@@ -106,14 +106,24 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
     this.resetForm();
   }
 
-  edit(entity?: Rule) {
-    super.edit(entity);
-    delete this.entity.actions;
-    delete this.entity.parent;
-    this.editMode = true;
-    if (entity) {
-      this.ruleDefinitionComponent.setRuleDefinition(entity.ruleDefinition);
-      this.eventMailComponent.setMail(JSON.parse(entity.jsonActions));
+  edit(rule?: Rule) {
+    const proceedWithEdit = () => {
+      super.edit(rule);
+      this.editMode = true;
+      if (rule) {
+        this.ruleDefinitionComponent.setRuleDefinition(rule.ruleDefinition);
+        this.eventMailComponent.setMail(JSON.parse(rule.jsonActions));
+      }
+    };
+    const canDeactivate = this.canDeactivate();
+    if (typeof canDeactivate === 'boolean' && canDeactivate === true) {
+      proceedWithEdit();
+    } else {
+      (canDeactivate as Observable<any>).subscribe((res) => {
+        if (res) {
+          proceedWithEdit();
+        }
+      });
     }
   }
 
@@ -128,16 +138,20 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
       this.packet = p;
       this.project = p.device.project;
       // update rules summary list (on the right side)
-      this.rulesService.findAllRuleByPacketId(this.packet.id).subscribe((rules: Rule[]) => {
-        this.summaryList = {
-          title: 'Events Data',
-          list: rules
-            .filter(r => r.type === Rule.TypeEnum.EVENT)
-            .map(l => {
-              return { name: l.name, description: l.description, data: l };
-            }) as SummaryListItem[]
-        };
-      });
+      this.updateSummaryList();
+    });
+  }
+
+  updateSummaryList() {
+    this.rulesService.findAllRuleByPacketId(this.packet.id).subscribe((rules: Rule[]) => {
+      this.summaryList = {
+        title: 'Events Data',
+        list: rules
+          .filter(r => r.type === Rule.TypeEnum.EVENT)
+          .map(l => {
+            return { name: l.name, description: l.description, data: l };
+          }) as SummaryListItem[]
+      };
     });
   }
 
@@ -160,19 +174,22 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
       jActionStr = JSON.stringify(jActions);
     }
 
-    const e = this.entity;
+    let e = this.entity;
     e.name = this.form.get('rule-name').value;
     e.description = this.form.get('rule-description').value;
     e.ruleDefinition = this.ruleDefinitionComponent.buildRuleDefinition();
     e.jsonActions = jActionStr;
-
+    delete e.actions;
+    delete e.parent;
     const wasNew = this.isNew();
     const responseHandler = (res) => {
       this.entity = res;
+      this.ruleDefinitionComponent.setRuleDefinition(res.ruleDefinition);
+      this.eventMailComponent.setMail(JSON.parse(res.jsonActions));
       this.resetForm();
+      this.updateSummaryList();
       this.loadingStatus = LoadingStatusEnum.Ready;
       successCallback && successCallback(res, wasNew);
-      this.load();
     };
 
     if (e.id) {
@@ -216,12 +233,44 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
     });
   }
 
+  isDirty() {
+    return this.editMode && (super.isDirty() || this.ruleDefinitionComponent.isDirty() || this.eventMailComponent.isDirty());
+  }
+
   isValid(): boolean {
     return (this.editMode && this.ruleDefinitionComponent && this.eventMailComponent) ?
       (super.isValid() &&
         !this.ruleDefinitionComponent.isInvalid() &&
         !this.eventMailComponent.isInvalid()
       ) : false;
+  }
+
+  setErrors(err) {
+
+    if (err.error && err.error.type) {
+      switch (err.error.type) {
+        case 'it.acsoftware.hyperiot.base.exception.HyperIoTDuplicateEntityException': {
+          this.validationError = [{ "message": "Unavailable event name", "field": "rule-name", "invalidValue": "" }];//@I18N@
+          this.form.get('rule-name').setErrors({
+            validateInjectedError: {
+              valid: false
+            }
+          });
+          this.loadingStatus = LoadingStatusEnum.Ready;
+          break;
+        }
+        case 'it.acsoftware.hyperiot.base.exception.HyperIoTValidationException': {
+          super.setErrors(err);
+          break;
+        }
+        default: {
+          this.loadingStatus = LoadingStatusEnum.Error;
+        }
+      }
+    } else {
+      this.loadingStatus = LoadingStatusEnum.Error;
+    }
+
   }
 
 }

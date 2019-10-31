@@ -13,6 +13,8 @@ export class EventMailComponent implements OnInit {
 
   mailForm: FormGroup;
 
+  private originalFormsValues = '';
+
   constructor(
     private fb: FormBuilder,
     private wizardService: ProjectWizardService,
@@ -45,11 +47,11 @@ export class EventMailComponent implements OnInit {
 
   setMail(dataArr): void {
     let data = JSON.parse(dataArr[0]);
-    console.log(data)
     this.mailForm.get('mailRecipient').setValue(data.recipients);
     this.mailForm.get('mailCC').setValue(data.ccRecipients);
     this.mailForm.get('mailObject').setValue(data.subject);
     this.mailForm.get('mailBody').setValue(data.body);
+    this.originalFormsValues = this.getJsonForms();
   }
 
   reset(): void {
@@ -65,6 +67,14 @@ export class EventMailComponent implements OnInit {
 
   updateHint(event: string): void {
     this.wizardService.updateHint(event, 6);
+  }
+
+  isDirty() {
+    return this.getJsonForms() !== this.originalFormsValues;
+  }
+
+  private getJsonForms(): string {
+    return JSON.stringify(this.mailForm.value);
   }
 
 }

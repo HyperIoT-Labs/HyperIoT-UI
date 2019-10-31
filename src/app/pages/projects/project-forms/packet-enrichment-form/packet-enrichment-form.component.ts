@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, ElementRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef, OnDestroy, OnChanges } from '@angular/core';
 import { HPacket, Rule, RulesService, HpacketsService, HProject } from '@hyperiot/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { SelectOption } from '@hyperiot/components';
@@ -17,12 +17,12 @@ import { SummaryListItem } from '../../project-detail/generic-summary-list/gener
   templateUrl: './packet-enrichment-form.component.html',
   styleUrls: ['./packet-enrichment-form.component.scss']
 })
-export class PacketEnrichmentFormComponent extends ProjectFormEntity implements OnInit, OnDestroy {
+export class PacketEnrichmentFormComponent extends ProjectFormEntity implements OnInit, OnDestroy, OnChanges {
 
   @ViewChild('ruleDef', { static: false }) ruleDefinitionComponent: RuleDefinitionComponent;
   @ViewChild('assetTag', { static: false }) assetTagComponent: AssetTagComponent;
 
-  @Input() packet: HPacket;
+  packet: HPacket;
 
   entity = {} as Rule;
   formTitle = 'Packet Enrichments';
@@ -48,6 +48,8 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
 
   private routerSubscription: Subscription;
   private activatedRouteSubscription: Subscription;
+
+  @Input()
   private packetId: number;
 
   constructor(
@@ -79,6 +81,14 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
 
   ngOnInit() {
   }
+
+  ngOnChanges() {
+    if (this.packetId) {
+      console.log("LOADING PACKET ENRICHMENT...")
+      this.loadData();
+    }
+  }
+
   ngOnDestroy() {
     this.activatedRouteSubscription.unsubscribe();
     this.routerSubscription.unsubscribe();
