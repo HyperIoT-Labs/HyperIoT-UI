@@ -41,10 +41,12 @@ export abstract class ProjectFormEntity implements OnInit {
         @ViewChild('form', { static: true }) private formView: ElementRef
     ) {
         this.form = this.formBuilder.group({});
-        //this.serialize();
     }
 
     ngOnInit() {
+        this.entity = {...this.newEntity()};
+        //this.serialize();
+        // build hint messages
         this.buildHintMessages();
     }
 
@@ -81,6 +83,19 @@ export abstract class ProjectFormEntity implements OnInit {
         this.edit(cloned);
         this.originalValue = '';
         return cloned;
+    }
+
+    newEntity() {
+        const entity = {};
+        // create default entity object
+        if (this.entityFormMap) {
+            const keys = Object.keys(this.entityFormMap);
+            keys.map((k) => {
+              const f = this.entityFormMap[k];
+              entity[f.field] = f.default;
+            });
+        }
+        return entity;
     }
 
     isValid(): boolean {
