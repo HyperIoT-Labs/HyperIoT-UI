@@ -81,9 +81,8 @@ export class DeviceFormComponent extends ProjectFormEntity implements OnDestroy 
   load() {
     this.loadingStatus = LoadingStatusEnum.Loading;
     this.hDeviceService.findHDevice(this.id).subscribe((d: HDevice) => {
-      this.entity = d;
       // update form data
-      this.edit();
+      this.edit(d);
       this.entityEvent.emit({
         event: 'treeview:focus',
         id: d.id, type: 'device'
