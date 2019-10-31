@@ -29,7 +29,7 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
       default: null
     },
     'eventOutput': {
-      field: null,
+      //field: null,
       default: 'SendMailAction'
     }
   };
@@ -103,7 +103,6 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
 
   onAddClick() {
     this.editMode = true;
-    this.resetForm();
   }
 
   edit(rule?: Rule) {
@@ -184,8 +183,6 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
     const wasNew = this.isNew();
     const responseHandler = (res) => {
       this.entity = res;
-      this.ruleDefinitionComponent.setRuleDefinition(res.ruleDefinition);
-      this.eventMailComponent.setMail(JSON.parse(res.jsonActions));
       this.resetForm();
       this.updateSummaryList();
       this.loadingStatus = LoadingStatusEnum.Ready;
@@ -243,6 +240,12 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
         !this.ruleDefinitionComponent.isInvalid() &&
         !this.eventMailComponent.isInvalid()
       ) : false;
+  }
+
+  resetForm(){
+    super.resetForm();
+    this.ruleDefinitionComponent.originalValueUpdate();
+    this.eventMailComponent.originalValueUpdate();
   }
 
   setErrors(err) {

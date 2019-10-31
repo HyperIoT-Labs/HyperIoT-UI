@@ -51,7 +51,7 @@ export class EventMailComponent implements OnInit {
     this.mailForm.get('mailCC').setValue(data.ccRecipients);
     this.mailForm.get('mailObject').setValue(data.subject);
     this.mailForm.get('mailBody').setValue(data.body);
-    this.originalFormsValues = this.getJsonForms();
+    this.originalValueUpdate();
   }
 
   reset(): void {
@@ -67,6 +67,10 @@ export class EventMailComponent implements OnInit {
 
   updateHint(event: string): void {
     this.wizardService.updateHint(event, 6);
+  }
+
+  originalValueUpdate(){
+    this.originalFormsValues = this.getJsonForms();
   }
 
   isDirty() {
