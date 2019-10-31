@@ -129,11 +129,7 @@ export class ProjectDetailComponent implements OnInit {
         break;
       case 'delete':
         this.currentEntity.edit(rule);
-        this.currentEntity.delete((success) => {
-          console.log('SUCCESS', success);
-        }, (error) => {
-          console.log('ERROR', error);
-        });
+        this.openDeleteDialog();
         break;
     }
   }
