@@ -65,7 +65,7 @@ export abstract class ProjectFormEntity implements OnInit {
         return !this.entity || !this.entity.id;
     }
 
-    edit(entity?: any) {
+    edit(entity?: any, readyCallback?) {
         if (entity) {
             this.entity = { ...entity };
         }

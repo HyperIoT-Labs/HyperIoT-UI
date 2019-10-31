@@ -87,11 +87,14 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
   save(successCallback, errorCallback) {
     this.saveRule(successCallback, errorCallback);
   }
-  edit(rule: Rule) {
+  edit(rule: Rule, readyCallback?) {
     const proceedWithEdit = () => {
       this.showCancel = true;
       this.editMode = true;
       this.setForm(rule);
+      if (readyCallback) {
+        readyCallback();
+      }
     };
     const canDeactivate = this.canDeactivate();
     if (typeof canDeactivate === 'boolean' && canDeactivate === true) {
