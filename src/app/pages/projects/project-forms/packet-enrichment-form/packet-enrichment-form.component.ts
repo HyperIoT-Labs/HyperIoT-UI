@@ -82,6 +82,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
 
   ngOnChanges() {
     if (this.packetId) {
+      this.cleanForm();
       console.log("LOADING PACKET ENRICHMENT...")
       this.loadData();
     }

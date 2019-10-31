@@ -84,6 +84,7 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
 
   ngOnChanges() {
     if (this.packetId) {
+      this.cleanForm();
       console.log("LOADING PACKET EVENT...")
       this.load();
     }
