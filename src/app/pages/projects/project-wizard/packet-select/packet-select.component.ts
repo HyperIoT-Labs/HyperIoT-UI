@@ -35,9 +35,13 @@ export class PacketSelectComponent implements OnInit {
   }
 
   autoSelect(): void {
-    this.devicesOptions = this.hDevices.map(dev => { return ({ value: dev, label: dev.deviceName }) });
-    this.selectForm.get('selectDevice').setValue(this.devicesOptions[0].value);
-    this.deviceChanged(this.devicesOptions[0]);
+    this.devicesOptions = this.hDevices.map(dev => { return ({ value: dev, label: dev.deviceName, disabled: this.hPackets.filter(p => p.device.id == dev.id).length == 0 }) });
+    let index = 0;
+    while(this.devicesOptions[index].disabled){
+      index++;
+    }
+    this.selectForm.get('selectDevice').setValue(this.devicesOptions[index].value);
+    this.deviceChanged(this.devicesOptions[index]);
   }
 
   deviceChanged(event): void {
@@ -48,8 +52,13 @@ export class PacketSelectComponent implements OnInit {
     });
     this.currentPacket.emit(null);
     this.packetsOptions = this.hPackets.filter(p => p.device.id == this.selectedDevice.id).map(pac => { return ({ value: pac, label: pac.name }) });
-    this.selectForm.get('selectPacket').setValue(this.packetsOptions[0].value);
-    this.packetChanged(this.packetsOptions[0]);
+    if(this.packetsOptions.length != 0){
+      this.selectForm.get('selectPacket').setValue(this.packetsOptions[0].value);
+      this.packetChanged(this.packetsOptions[0]);
+    }
+    else{
+      this.currentPacket.emit(null);
+    }
   }
 
   packetChanged(event): void {

@@ -55,8 +55,8 @@ export class PacketFormComponent extends ProjectFormEntity implements OnDestroy 
   id: number; // <-- this could be made private
   deviceName: '---';
 
-  mqttUrl = '';
-  mqttTopic = '';
+  mqttUrl;
+  mqttTopic;
 
   typeOptions: Option[] = Object.keys(HPacket.TypeEnum)
     .map((k) => ({ label: k, value: k }));

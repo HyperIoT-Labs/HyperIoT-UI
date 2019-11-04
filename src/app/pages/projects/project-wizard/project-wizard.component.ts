@@ -93,9 +93,9 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     setTimeout(() => {//TODO...setimeout 0 to avoid 'expression changed after view checked'
-    this.eventsForm.editMode = true;
-    this.enrichmentForm.editMode = true;
-    this.resetForms();
+      this.eventsForm.editMode = true;
+      this.enrichmentForm.editMode = true;
+      this.resetForms();
       if (window.history.state.projectId) {
         this.projectForm.id = window.history.state.projectId;
         this.projectForm.load();
@@ -104,12 +104,8 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
     }, 0);
   }
 
-  resetForms(){
-    //this.projectForm.edit();
-    //this.devicesForm.edit();
+  resetForms() {
     this.packetsForm.edit();
-    //this.enrichmentForm.edit();
-    //this.eventsForm.edit();
   }
 
   hintMessage = '';
@@ -219,11 +215,15 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
         this.updatePacketTable();
       }
 
-      else if (this.currentForm == this.eventsForm || this.currentForm == this.enrichmentForm) {
+      else if (this.currentForm == this.enrichmentForm) {
+        this.enrichmentRules = [...this.updateList(ent, this.enrichmentRules)];
         this.currentForm.cleanForm();
       }
 
-      // this.currentForm.entity.id = null;
+      else if (this.currentForm == this.eventsForm) {
+        this.eventRules = [...this.updateList(ent, this.eventRules)];
+        this.currentForm.cleanForm();
+      }
 
     }, (error) => {
       // TODO: ...
@@ -279,6 +279,14 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
           else if (this.currentForm == this.packetsForm) {
             this.hPackets = [...this.deleteFromList(event.item.data.id, this.hPackets)];
             this.updatePacketTable();
+          }
+
+          else if (this.currentForm == this.enrichmentForm) {
+            this.enrichmentRules = [...this.deleteFromList(event.item.data.id, this.enrichmentRules)];
+          }
+
+          else if (this.currentForm == this.eventsForm) {
+            this.eventRules = [...this.deleteFromList(event.item.data.id, this.eventRules)];
           }
 
           this.currentForm.entity = {};

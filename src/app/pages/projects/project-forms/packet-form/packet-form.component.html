@@ -84,7 +84,7 @@
 
         </div>
 
-        <div class="mt-4 d-flex flex-column flex-md-row flex-wrap">
+        <div *ngIf="mqttUrl" class="mt-4 d-flex flex-column flex-md-row flex-wrap">
             <div class="pr-md-3 flex-fill">
                 <hyt-input-text
                     placeholder="MQTT URL"
@@ -94,7 +94,7 @@
                 </hyt-input-text>
             </div>
         </div>
-        <div class="mt-4 d-flex flex-column flex-md-row flex-wrap">
+        <div *ngIf="mqttTopic" class="mt-4 d-flex flex-column flex-md-row flex-wrap">
             <div class="pr-md-3 flex-fill">
                 <hyt-input-text
                     placeholder="MQTT TOPIC"

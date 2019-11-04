@@ -133,7 +133,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
   }
 
   loadData() {
-    this.summaryList = null;
+    //this.summaryList = null;
     this.packetService.findHPacket(this.packetId).subscribe((p: HPacket) => {
       this.project = p.device.project;
       this.packetService.findAllHPacketByProjectId(this.project.id)
