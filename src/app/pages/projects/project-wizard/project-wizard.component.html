@@ -71,6 +71,9 @@
             <ng-container *ngIf="currentForm && !currentForm.isNew()">Update</ng-container>
             <!-- @I18N@ -->
           </hyt-button>
+          <hyt-button class="toRight" *ngIf="currentForm && currentForm.showCancel" (clickFn)="onCancelClick($event)">
+            Cancel
+          </hyt-button>
           <div class="clear"></div>
         </div>
       </div>
