@@ -78,14 +78,14 @@ export class PacketFieldsFormComponent extends ProjectFormEntity implements OnDe
     this.activatedRouteSubscription = this.activatedRoute.params.subscribe(routeParams => {
       this.currentField = null;
       this.packetId = +(activatedRoute.snapshot.params.packetId);
-      if (this.packetId)
+      if (this.packetId) {
         this.loadData();
+      }
     });
   }
 
   ngOnChanges() {
     if (this.packetId) {
-      console.log("LOADING PACKET FIELD...")
       this.loadData();
     }
   }
@@ -112,8 +112,8 @@ export class PacketFieldsFormComponent extends ProjectFormEntity implements OnDe
   // fields treeview methods
 
   addField(e) {
-    console.log('addField', e);
-    this.currentField = { parentField: e.data } as HPacketField;
+    this.currentField = this.newEntity() as HPacketField;
+    this.currentField.parentField = e.data;
     this.showCancel = true;
     this.loadFormData();
   }
