@@ -186,13 +186,17 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
             else
               this.ruleForms[k].form.get('ruleJoin').setValue((splitted[2]) ? ' ' + splitted[2] + ' ' : null);
             if (k === this.ruleForms.length - 1) {
-              this.originalFormsValues = this.getJsonForms();
+              this.originalValueUpdate();
             }
           }, 0);
         }
 
       }
     }, 0);
+  }
+
+  originalValueUpdate() {
+    this.originalFormsValues = this.getJsonForms();
   }
 
   private getJsonForms() {

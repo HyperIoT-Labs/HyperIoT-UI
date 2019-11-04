@@ -44,7 +44,7 @@ export abstract class ProjectFormEntity implements OnInit {
     }
 
     ngOnInit() {
-        this.entity = {...this.newEntity()};
+        this.entity = { ...this.newEntity() };
         //this.serialize();
         // build hint messages
         this.buildHintMessages();
@@ -91,8 +91,9 @@ export abstract class ProjectFormEntity implements OnInit {
         if (this.entityFormMap) {
             const keys = Object.keys(this.entityFormMap);
             keys.map((k) => {
-              const f = this.entityFormMap[k];
-              entity[f.field] = f.default;
+                const f = this.entityFormMap[k];
+                if (f.field)
+                    entity[f.field] = f.default;
             });
         }
         return entity;

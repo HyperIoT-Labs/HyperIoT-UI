@@ -4,7 +4,6 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { SelectOption } from '@hyperiot/components';
 import { RuleDefinitionComponent } from '../rule-definition/rule-definition.component';
 import { AssetTagComponent } from './asset-tag/asset-tag.component';
-import { ProjectWizardService } from 'src/app/services/projectWizard/project-wizard.service';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 // TODO: find a bettere placement for PageStatusEnum
 import { ProjectFormEntity, LoadingStatusEnum } from '../project-form-entity';
@@ -57,7 +56,6 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
     @ViewChild('form', { static: true }) formView: ElementRef,
     private rulesService: RulesService,
     private packetService: HpacketsService,
-    private wizardService: ProjectWizardService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private i18n: I18n
@@ -84,6 +82,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
 
   ngOnChanges() {
     if (this.packetId) {
+      this.cleanForm();
       console.log("LOADING PACKET ENRICHMENT...")
       this.loadData();
     }
@@ -143,7 +142,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
           this.packet = p;
           // update rules summary list (on the right side)
           this.updateSummaryList();
-      });
+        });
       this.entityEvent.emit({
         event: 'treeview:focus',
         id: p.id, type: 'packet-enrichments'
@@ -173,7 +172,8 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
     delete rule.actions;
     delete rule.parent;
     const responseHandler = (res) => {
-      this.setForm(res);
+      this.entity = res;
+      this.resetForm();
       this.updateSummaryList();
       this.loadingStatus = LoadingStatusEnum.Ready;
       successCallback && successCallback(res);
@@ -233,26 +233,34 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
     );
   }
 
-// TODO: code below is still to be verified / refactored
+  // TODO: code below is still to be verified / refactored
 
 
   setForm(data: Rule) {
-    this.entity = data;
-    let type = JSON.parse(data.jsonActions)[0] || null;
-    this.ruleDefinitionComponent.setRuleDefinition(data.ruleDefinition);
-    this.form.get('rule-description').setValue(data.description);
-    this.form.get('rule-name').setValue(data.name);
-    this.form.get('enrichmentRule').setValue(type);
-    type = JSON.parse(type);
-    this.enrichmentType = type ? type.actionName : null;
+    if (data) {
+      this.entity = data;
+      let type = JSON.parse(data.jsonActions)[0] || null;
+      this.ruleDefinitionComponent.setRuleDefinition(data.ruleDefinition);
+      this.form.get('rule-description').setValue(data.description);
+      this.form.get('rule-name').setValue(data.name);
+      this.form.get('enrichmentRule').setValue(type);
+      type = JSON.parse(type);
+      this.enrichmentType = type ? type.actionName : null;
+    }
     this.resetForm();
   }
 
   resetForm() {
     super.resetForm();
+    this.ruleDefinitionComponent.originalValueUpdate();
     //this.errors = [];
-    this.ruleDefinitionComponent.resetRuleDefinition();
+    //this.ruleDefinitionComponent.resetRuleDefinition();
     //this.form.reset();
+  }
+
+  cleanForm() {
+    super.cleanForm();
+    this.ruleDefinitionComponent.resetRuleDefinition();
   }
 
   postRule() {
@@ -283,8 +291,32 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
     this.assetCategories = event;
   }
 
-  updateHint(event: string) {
-    this.wizardService.updateHint(event, 4);
+  setErrors(err) {
+
+    if (err.error && err.error.type) {
+      switch (err.error.type) {
+        case 'it.acsoftware.hyperiot.base.exception.HyperIoTDuplicateEntityException': {
+          this.validationError = [{ "message": "Unavailable rule name", "field": "rule-name", "invalidValue": "" }];//@I18N@
+          this.form.get('rule-name').setErrors({
+            validateInjectedError: {
+              valid: false
+            }
+          });
+          this.loadingStatus = LoadingStatusEnum.Ready;
+          break;
+        }
+        case 'it.acsoftware.hyperiot.base.exception.HyperIoTValidationException': {
+          super.setErrors(err);
+          break;
+        }
+        default: {
+          this.loadingStatus = LoadingStatusEnum.Error;
+        }
+      }
+    } else {
+      this.loadingStatus = LoadingStatusEnum.Error;
+    }
+
   }
 
 }

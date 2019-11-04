@@ -7,7 +7,8 @@
     <div class="col-md-4 container-form-field">
       <hyt-input-text [form]="form" formControlName="rule-name" name="rule-name" [isRequired]="true"
         i18n-placeholder="@@HYT_name" placeholder="HYT_name" [injectedErrorMsg]="getError('rule-name')"
-        [externalHint]="'Enter the rule name'" (outHint)="updateHint($event)">
+        hintMessage="Enter the rule name">
+        <!--@I18N@-->
       </hyt-input-text>
     </div> <!-- Field Name -->
     <div class="col-md-4 container-form-field">
@@ -19,8 +20,9 @@
     <div class="col-md-4 container-form-field">
       <hyt-text-area [form]="form" formControlName="rule-description" name="rule-description"
         i18n-placeholder="@@HYT_description" placeholder="HYT_description"
-        [externalHint]="'Enter the rule description. (max...)'" (outHint)="updateHint($event)">
+        hintMessage="Enter the rule description. (max...)">
       </hyt-text-area>
+      <!--@I18N@-->
     </div> <!-- Field RuleDescription -->
   </div>
 
