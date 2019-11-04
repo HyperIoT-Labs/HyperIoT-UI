@@ -229,6 +229,9 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
       // TODO: ...
     });
   }
+  onCancelClick(e) {
+    this.currentForm.cancel();
+  }
   onEntityEvent(data: any) {
     switch (data.event) {
       case 'hint:show':
