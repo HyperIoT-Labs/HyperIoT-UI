@@ -37,7 +37,7 @@
       <ng-template #enrichmentTemplate>
         <hyt-pw-packet-select #enrichmentPacketSelect [hDevices]="hDevices" [hPackets]="hPackets"
           (currentPacket)="enrichmentPacketChanged($event)"></hyt-pw-packet-select>
-          <hyt-packet-enrichment-form #enrichmentForm [packetId]="enrichmentCurrentPacketId"></hyt-packet-enrichment-form>
+        <hyt-packet-enrichment-form #enrichmentForm [packetId]="enrichmentCurrentPacketId"></hyt-packet-enrichment-form>
       </ng-template>
 
       <ng-template #statisticsTemplate>
@@ -66,14 +66,12 @@
           <hyt-button class="toRight" *ngIf="currentForm" (clickFn)="onSaveClick($event)"
             [isDisabled]="!currentForm.isValid() || !currentForm.isDirty() || currentForm.loadingStatus != 0">
             <!--TODO... fix ExpressionChangedAfterItHasBeenCheckedError (isDisabled)-->
-            <ng-container *ngIf="currentForm && currentForm.isNew()">Save</ng-container>
-            <!-- @I18N@ -->
-            <ng-container *ngIf="currentForm && !currentForm.isNew()">Update</ng-container>
-            <!-- @I18N@ -->
+            <ng-container *ngIf="currentForm && currentForm.isNew()" i18n="@@HYT_save">HYT_save</ng-container>
+            <ng-container *ngIf="currentForm && !currentForm.isNew()" i18n="@@HYT_update">HYT_update</ng-container>
           </hyt-button>
-          <hyt-button class="toRight" *ngIf="currentForm && currentForm.showCancel" (clickFn)="onCancelClick($event)">
-            Cancel
-          </hyt-button>
+          <!-- <hyt-button class="toRight" *ngIf="currentForm && currentForm.showCancel" (clickFn)="onCancelClick($event)">
+              <ng-container i18n="@@HYT_cancel">HYT_cancel</ng-container>
+            </hyt-button> -->
           <div class="clear"></div>
         </div>
       </div>
@@ -83,7 +81,8 @@
           <hyt-button *ngIf="currentStepIndex != 0" (clickFn)="stepper.previous()">
             <ng-container i18n="@@HYT_back">HYT_back</ng-container>
           </hyt-button>
-          <hyt-button class="toRight" [isDisabled]="isNextDisabled()" (clickFn)="(currentStepIndex == 3 && !packetInformationValidated || currentStepIndex == 6)? openOptionModal() : stepper.next()">
+          <hyt-button class="toRight" [isDisabled]="isNextDisabled()"
+            (clickFn)="(currentStepIndex == 3 && !packetInformationValidated || currentStepIndex == 6)? openOptionModal() : stepper.next()">
             <ng-container i18n="@@HYT_next">HYT_next</ng-container>
           </hyt-button>
           <div class="clear"></div>
@@ -98,8 +97,7 @@
         <mat-expansion-panel [expanded]="true">
           <mat-expansion-panel-header>
             <mat-panel-title>
-              <b>ENTITY NAME</b>
-              <!--TODO with @I18N@-->
+              <b i18n="@@HYT_entity_name_M">HYT_entity_name_M</b>
             </mat-panel-title>
           </mat-expansion-panel-header>
           <p>{{currentForm.longDefinition}}</p>
@@ -107,10 +105,8 @@
       </div>
 
       <hyt-generic-summary-list *ngIf="currentForm && currentForm.summaryList"
-        [ngClass]="{ disabled: currentForm.isDirty() && !currentForm.isNew() }"
-        [summaryList]="currentForm.summaryList"
-        (itemClick)="onSummaryItemClick($event)"
-        (menuAction)="menuAction($event)"></hyt-generic-summary-list>
+        [ngClass]="{ disabled: currentForm.isDirty() && !currentForm.isNew() }" [summaryList]="currentForm.summaryList"
+        (itemClick)="onSummaryItemClick($event)" (menuAction)="menuAction($event)"></hyt-generic-summary-list>
 
       <div *ngIf="hintVisible" class="info-message m-2 mt-4 d-flex flex-row">
         <span class="text p-2 flex-grow-1">{{hintMessage}}</span>

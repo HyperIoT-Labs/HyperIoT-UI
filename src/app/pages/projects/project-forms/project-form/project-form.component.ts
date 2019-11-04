@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs';
 import { HprojectsService, HProject } from '@hyperiot/core';
 
 import { ProjectFormEntity, LoadingStatusEnum } from '../project-form-entity';
+import { I18n } from '@ngx-translate/i18n-polyfill';
 
 @Component({
   selector: 'hyt-project-form',
@@ -35,10 +36,11 @@ export class ProjectFormComponent extends ProjectFormEntity implements OnDestroy
     @ViewChild('form', { static: true }) formView: ElementRef,
     private hProjectService: HprojectsService,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private i18n: I18n
   ) {
     super(formBuilder, formView);
-    this.longDefinition = 'project long definition';//@I18N@
+    this.longDefinition = this.i18n('HYT_project_long_definition');
     this.routerSubscription = this.router.events.subscribe((rl) => {
       if (rl instanceof NavigationEnd) {
         this.id = this.activatedRoute.snapshot.params.projectId;
@@ -126,7 +128,7 @@ export class ProjectFormComponent extends ProjectFormEntity implements OnDestroy
     if (err.error && err.error.type) {
       switch (err.error.type) {
         case 'it.acsoftware.hyperiot.base.exception.HyperIoTDuplicateEntityException': {
-          this.validationError = [{ "message": "Unavailable project name", "field": "hproject-name", "invalidValue": "" }];//@I18N@
+          this.validationError = [{ "message": this.i18n("HYT_unavaiable_project_name"), "field": "hproject-name", "invalidValue": "" }];
           this.form.get('hproject-name').setErrors({
             validateInjectedError: {
               valid: false

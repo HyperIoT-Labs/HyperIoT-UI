@@ -87,6 +87,10 @@
                <context context-type="linenumber">8</context>
             </context-group>
             <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-forms/packet-fields-form/packet-fields-form.component.html</context>
+               <context context-type="linenumber">20</context>
+            </context-group>
+            <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/packet-enrichment-form/packet-enrichment-form.component.html</context>
                <context context-type="linenumber">9</context>
             </context-group>
@@ -104,6 +108,10 @@
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/packet-form/packet-form.component.html</context>
                <context context-type="linenumber">28</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-forms/packet-fields-form/packet-fields-form.component.html</context>
+               <context context-type="linenumber">38</context>
             </context-group>
          </trans-unit>
          <trans-unit id="HYT_apply" datatype="html">
@@ -202,6 +210,10 @@
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/device-form/device-form.component.html</context>
                <context context-type="linenumber">84</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-forms/packet-fields-form/packet-fields-form.component.html</context>
+               <context context-type="linenumber">26</context>
             </context-group>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/packet-enrichment-form/packet-enrichment-form.component.html</context>
@@ -433,6 +445,10 @@
                <context context-type="sourcefile">src/app/pages/projects/project-forms/packet-form/packet-form.component.html</context>
                <context context-type="linenumber">117</context>
             </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-forms/packet-fields-form/packet-fields-form.component.html</context>
+               <context context-type="linenumber">61</context>
+            </context-group>
          </trans-unit>
          <trans-unit id="HYT_project_detail_error_occurred" datatype="html">
             <source>HYT_project_detail_error_occurred</source>
@@ -447,6 +463,10 @@
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/packet-form/packet-form.component.html</context>
                <context context-type="linenumber">119</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-forms/packet-fields-form/packet-fields-form.component.html</context>
+               <context context-type="linenumber">63</context>
             </context-group>
          </trans-unit>
          <trans-unit id="HYT_close" datatype="html">
@@ -463,6 +483,10 @@
                <context context-type="sourcefile">src/app/pages/projects/project-forms/packet-form/packet-form.component.html</context>
                <context context-type="linenumber">121</context>
             </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-forms/packet-fields-form/packet-fields-form.component.html</context>
+               <context context-type="linenumber">65</context>
+            </context-group>
          </trans-unit>
          <trans-unit id="HYT_saving_project_data" datatype="html">
             <source>HYT_saving_project_data</source>
@@ -477,6 +501,10 @@
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/packet-form/packet-form.component.html</context>
                <context context-type="linenumber">125</context>
+            </context-group>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-forms/packet-fields-form/packet-fields-form.component.html</context>
+               <context context-type="linenumber">69</context>
             </context-group>
          </trans-unit>
          <trans-unit id="HYT_brand" datatype="html">
@@ -565,6 +593,13 @@
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-wizard/packet-select/packet-select.component.html</context>
                <context context-type="linenumber">7</context>
+            </context-group>
+         </trans-unit>
+         <trans-unit id="HYT_multiplicity" datatype="html">
+            <source>HYT_multiplicity</source>
+            <context-group purpose="location">
+               <context context-type="sourcefile">src/app/pages/projects/project-forms/packet-fields-form/packet-fields-form.component.html</context>
+               <context context-type="linenumber">42</context>
             </context-group>
          </trans-unit>
          <trans-unit id="HYT_packet" datatype="html">

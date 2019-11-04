@@ -5,7 +5,7 @@
         <div class="d-flex flex-column flex-md-row flex-wrap">
             <div class="pr-md-3 flex-fill">
 
-                <hyt-input-text name="hpacket-name" placeholder="Name" [form]="form"
+                <hyt-input-text name="hpacket-name" i18n-placeholder="@@HYT_name" placeholder="HYT_name" [form]="form"
                     [injectedErrorMsg]="getError('hpacket-name')" hintMessage="Enter the packet name."
                     errorPosition="bottom" minlength="3" isRequired="true">
                 </hyt-input-text>
@@ -14,7 +14,7 @@
             <div class="pl-md-3 flex-fill">
 
                 <div>
-                    <hyt-select [form]="form" label="Traffic plan" name="hpacket-trafficplan"
+                    <hyt-select [form]="form" i18n-label="@@HYT_traffic_plan" label="HYT_traffic_plan" name="hpacket-trafficplan"
                         [injectedErrorMsg]="getError('hpacket-trafficplan')" hintMessage="Select traffic plan."
                         isRequired="true" [options]="trafficPlanOptions"></hyt-select>
                 </div>
@@ -25,7 +25,7 @@
         <div class="d-flex flex-column flex-md-row flex-wrap">
             <div class="pr-md-3 flex-fill">
 
-                <label>Type</label>
+                <label i18n="@@HYT_type">HYT_type</label>
                 <div class="radio-options pl-2 pr-2">
                     <hyt-radio-button [form]="form" name="hpacket-type" [options]="typeOptions"
                         [injectedErrorMsg]="getError('hpacket-type')" hintMessage="Set the packet type.">
@@ -35,7 +35,7 @@
             </div>
             <div class="pl-md-3 flex-fill">
 
-                <label>Format</label>
+                <label i18n="@@HYT_format">HYT_format</label>
                 <div class="radio-options pl-2 pr-2">
                     <hyt-radio-button [form]="form" [injectedErrorMsg]="getError('hpacket-format')"
                         name="hpacket-format" [options]="formatOptions">
@@ -48,7 +48,7 @@
         <div class="d-flex flex-column flex-md-row flex-wrap">
             <div class="pr-md-3 flex-fill">
 
-                <label>Serialization</label>
+                <label i18n="@@HYT_serialization">HYT_serialization</label>
                 <div class="radio-options pl-2 pr-2">
                     <hyt-radio-button [form]="form" name="hpacket-serialization" [options]="serializationOptions"
                         [injectedErrorMsg]="getError('hpacket-serialization')">
@@ -65,7 +65,7 @@
 
             <div class="pr-md-3 flex-fill">
 
-                <hyt-input-text placeholder="Timestamp field" [form]="form" name="hpacket-timestampfield"
+                <hyt-input-text i18n-placeholder="@@HYT_timestamp_field" placeholder="HYT_timestamp_field" [form]="form" name="hpacket-timestampfield"
                     [injectedErrorMsg]="getError('hpacket-timestampfield')"
                     hintMessage="Enter the timestamp field name." errorPosition="bottom" minlength="1"
                     isRequired="true">
@@ -74,7 +74,7 @@
             </div>
             <div class="pl-md-3 flex-fill">
 
-                <hyt-input-text placeholder="Timestamp format" [form]="form" name="hpacket-timestampformat"
+                <hyt-input-text i18n-placeholder="@@HYT_timestamp_format" placeholder="HYT_timestamp_format" [form]="form" name="hpacket-timestampformat"
                     [injectedErrorMsg]="getError('hpacket-timestampformat')"
                     hintMessage="Enter the timestamp field format: eg. 'dd/MM/yyyy HH.mmZ'." errorPosition="bottom"
                     minlength="3" isRequired="true">
@@ -87,7 +87,8 @@
         <div *ngIf="mqttUrl" class="mt-4 d-flex flex-column flex-md-row flex-wrap">
             <div class="pr-md-3 flex-fill">
                 <hyt-input-text
-                    placeholder="MQTT URL"
+                    i18n-placeholder="@@HYT_mqtt_url"
+                    placeholder="HYT_mqtt_url"
                     name="hpacket-mqttUrl"
                     disabled="true"
                     [fieldValue]="mqttUrl">
@@ -97,7 +98,8 @@
         <div *ngIf="mqttTopic" class="mt-4 d-flex flex-column flex-md-row flex-wrap">
             <div class="pr-md-3 flex-fill">
                 <hyt-input-text
-                    placeholder="MQTT TOPIC"
+                    i18n-placeholder="@@HYT_mqtt_topic"
+                    placeholder="HYT_mqtt_topic"
                     name="hpacket-mqttTopic"
                     disabled="true"
                     [fieldValue]="mqttTopic">
@@ -112,15 +114,15 @@
                consider making a component out of it -->
     <div *ngIf="loadingStatus !== LoadingStatus.Ready"
         class="overlay d-flex flex-column align-items-center justify-content-center">
-        <h4 *ngIf="loadingStatus === LoadingStatus.Loading">Loading project data...</h4>
+        <h4 *ngIf="loadingStatus === LoadingStatus.Loading" i18n="@@HYT_loading_project_data">HYT_loading_project_data</h4>
         <div *ngIf="loadingStatus === LoadingStatus.Error" class="d-flex flex-column justify-content-center">
-            <h4>An error has occurred =/</h4>
+            <h4 i18n="@@HYT_project_detail_error_occurred">HYT_project_detail_error_occurred</h4>
             <button mat-stroked-button (click)="loadingStatus = LoadingStatus.Ready">
-                <span>Close</span>
+                <span i18n="@@HYT_close">HYT_close</span>
                 <mat-icon>close</mat-icon>
             </button>
         </div>
-        <h4 *ngIf="loadingStatus === LoadingStatus.Saving">Saving project data...</h4>
+        <h4 *ngIf="loadingStatus === LoadingStatus.Saving" i18n="@@HYT_saving_project_data">HYT_saving_project_data</h4>
         <mat-progress-bar *ngIf="loadingStatus === LoadingStatus.Loading || loadingStatus === LoadingStatus.Saving"
             mode="query"></mat-progress-bar>
     </div>

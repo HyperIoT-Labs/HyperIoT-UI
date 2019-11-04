@@ -61,7 +61,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
     private i18n: I18n
   ) {
     super(formBuilder, formView);
-    this.longDefinition = 'enrichment long definition';//@I18N@
+    this.longDefinition = this.i18n('HYT_enrichment_long_definition');
     this.hideDelete = true; // hide 'Delete' button
     this.routerSubscription = this.router.events.subscribe((rl) => {
       if (rl instanceof NavigationEnd) {
@@ -296,7 +296,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
     if (err.error && err.error.type) {
       switch (err.error.type) {
         case 'it.acsoftware.hyperiot.base.exception.HyperIoTDuplicateEntityException': {
-          this.validationError = [{ "message": "Unavailable rule name", "field": "rule-name", "invalidValue": "" }];//@I18N@
+          this.validationError = [{ "message": this.i18n('HYT_unavaiable_rule_name'), "field": "rule-name", "invalidValue": "" }];
           this.form.get('rule-name').setErrors({
             validateInjectedError: {
               valid: false

@@ -9,6 +9,7 @@ import { HPacket, HpacketsService, HDevice } from '@hyperiot/core';
 import { Option } from '@hyperiot/components';
 
 import { ProjectFormEntity, LoadingStatusEnum } from '../project-form-entity';
+import { I18n } from '@ngx-translate/i18n-polyfill';
 
 @Component({
   selector: 'hyt-packet-form',
@@ -77,10 +78,11 @@ export class PacketFormComponent extends ProjectFormEntity implements OnDestroy 
     @ViewChild('form', { static: true }) formView: ElementRef,
     private hPacketService: HpacketsService,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private i18n:I18n
   ) {
     super(formBuilder, formView);
-    this.longDefinition = 'packet long definition'; //@I18N@
+    this.longDefinition = this.i18n('HYT_packet_long_definition');
     this.routerSubscription = this.router.events.subscribe((rl) => {
       if (rl instanceof NavigationEnd) {
         this.id = this.activatedRoute.snapshot.params.packetId;
