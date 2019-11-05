@@ -30,7 +30,7 @@ export class PacketSelectComponent implements OnInit {
   @Input()
   multiPacketSelect: false;
 
-  private packetFieldsMapping: FieldMatrixConfiguration[];
+  public packetFieldsMapping: FieldMatrixConfiguration[];
 
   constructor(private packetService: HpacketsService, public settingsForm: NgForm) {
     this.multiPacketSelect = this.multiPacketSelect || false;

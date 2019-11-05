@@ -261,16 +261,24 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
     console.log(event.item)
     switch (event.action) {
       case 'edit':
-        if (this.currentForm == this.packetsForm)
+        if (this.currentForm == this.packetsForm){
           this.deviceSelect.selectSpecific(event.item.data.device.id);
+          this.deviceSelect.freezeSelection();
+        }
         this.currentForm.edit(event.item.data);
         break;
       case 'duplicate':
-        if (this.currentForm == this.packetsForm)
+        if (this.currentForm == this.packetsForm){
+          this.deviceSelect.unfreezeSelection();
           this.deviceSelect.selectSpecific(event.item.data.device.id);
+        }
         this.currentForm.clone(event.item.data);
         break;
       case 'delete':
+          if (this.currentForm == this.packetsForm){
+            this.deviceSelect.selectSpecific(event.item.data.device.id);
+            this.deviceSelect.freezeSelection();
+          }
         this.currentForm.edit(event.item.data, this.currentForm.openDeleteDialog((del) => {
           if (this.currentForm == this.devicesForm) {
             this.hDevices = [...this.deleteFromList(event.item.data.id, this.hDevices)];
@@ -279,6 +287,7 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
           else if (this.currentForm == this.packetsForm) {
             this.hPackets = [...this.deleteFromList(event.item.data.id, this.hPackets)];
             this.updatePacketTable();
+            this.deviceSelect.unfreezeSelection();
           }
           else if (this.currentForm == this.enrichmentForm) {
             this.enrichmentRules = [...this.deleteFromList(event.item.data.id, this.enrichmentRules)];

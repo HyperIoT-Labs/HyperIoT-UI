@@ -56,4 +56,12 @@ export class DeviceSelectComponent implements OnChanges {
     this.deviceChanged(so);
   }
 
+  freezeSelection() {
+    this.selectForm.get('selectDevice').disable();
+  }
+
+  unfreezeSelection() {
+    this.selectForm.get('selectDevice').enable();
+  }
+
 }
