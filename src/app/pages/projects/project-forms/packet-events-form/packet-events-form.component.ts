@@ -65,7 +65,7 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
     private rulesService: RulesService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private i18n:I18n
+    private i18n: I18n
   ) {
     super(formBuilder, formView);
     this.longDefinition = this.i18n('HYT_events_long_definition');
@@ -100,21 +100,22 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
   save(successCallback, errorCallback) {
     this.saveEvent(successCallback, errorCallback);
   }
-  delete(successCallback, errorCallback) {
-    this.deleteEvent(successCallback, errorCallback);
-  }
 
   onAddClick() {
     this.editMode = true;
   }
 
-  edit(rule?: Rule) {
+  edit(rule?: Rule, readyCallback?) {
     const proceedWithEdit = () => {
-      super.edit(rule);
+      this.showCancel = true;
       this.editMode = true;
+      super.edit(rule);
       if (rule) {
         this.ruleDefinitionComponent.setRuleDefinition(rule.ruleDefinition);
         this.eventMailComponent.setMail(JSON.parse(rule.jsonActions));
+      }
+      if (readyCallback) {
+        readyCallback();
       }
     };
     const canDeactivate = this.canDeactivate();
@@ -210,26 +211,19 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
     }
 
   }
-  private deleteEvent(successCallback?, errorCallback?) {
-    this.loadingStatus = LoadingStatusEnum.Saving;
+  cancel() {
+    this.resetErrors();
+    this.resetForm();
+    this.editMode = false;
+    this.showCancel = false;
+  }
+  delete(successCallback, errorCallback) {
     this.rulesService.deleteRule(this.entity.id).subscribe((res) => {
-      // this.entityEvent.emit({ event: 'treeview:refresh' });
-      this.rulesService.findAllRuleByPacketId(this.packet.id).subscribe((rules: Rule[]) => {
-        this.summaryList = {
-          title: 'Events Data',
-          list: rules
-            .filter(r => r.type === Rule.TypeEnum.EVENT)
-            .map(l => {
-              return { name: l.name, description: l.description, data: l };
-            }) as SummaryListItem[]
-        };
-      });
-      this.editMode = false;
-      this.loadingStatus = LoadingStatusEnum.Ready;
-      successCallback && successCallback(res);
+      this.cancel();
+      this.updateSummaryList();
+      if (successCallback) successCallback();
     }, (err) => {
-      errorCallback && errorCallback(err);
-      this.loadingStatus = LoadingStatusEnum.Error;
+      if (errorCallback) errorCallback();
     });
   }
 
@@ -245,7 +239,7 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
       ) : false;
   }
 
-  resetForm(){
+  resetForm() {
     super.resetForm();
     this.ruleDefinitionComponent.originalValueUpdate();
     this.eventMailComponent.originalValueUpdate();
