@@ -13,17 +13,21 @@
         <div id="head-welcome-box">
           Hello!
         </div>
+        <!--@I18N@-->
         <div id="body-welcome-box">
           We are happy to see you again!
+          <!--@I18N@-->
         </div>
         <div id="footer-welcome-box">
           Don't have an account?<br /><a routerLink="/auth/registration">Register Now</a> and Enjoy all our benefits!
         </div>
+        <!--@I18N@-->
       </div>
 
       <div id="column-login-form" class="col-md-6">
 
         <h3 id="login-title">Login to your Account</h3>
+        <!--@I18N@-->
 
         <div class="row">
 
@@ -52,6 +56,7 @@
               <div id="forgot-container" class="container-form-field">
 
                 <a routerLink="/auth/password-recovery">Forgot Password?</a>
+                <!--@I18N@-->
 
               </div> <!-- Container Forgot Password -->
 
@@ -60,6 +65,7 @@
                   Remember me
                 </mat-checkbox>
               </div> <!-- Container Remember Me -->
+              <!--@I18N@-->
 
               <div class="container-form-field errorMessage">
                 <ng-container *ngIf="error[2]">
@@ -73,6 +79,7 @@
                   Login
                 </hyt-button>
               </div> <!-- Container Button -->
+              <!--@I18N@-->
 
             </form> <!-- End Form -->
 
