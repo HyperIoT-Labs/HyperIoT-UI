@@ -57,6 +57,7 @@ export class LoginComponent implements OnInit {
 
   login() {
     this.loading = true;
+    this.error = [];
 
     if (this.loginForm.invalid) {
       return;
