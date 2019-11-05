@@ -1,11 +1,10 @@
-import { Component, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnDestroy, ViewChild, ElementRef, Injector } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 
 import { Subscription } from 'rxjs';
 
 import { HpacketsService } from '@hyperiot/core';
 import { ProjectFormEntity } from '../project-form-entity';
-import { FormBuilder } from '@angular/forms';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 
 @Component({
@@ -18,14 +17,14 @@ export class PacketStatisticsFormComponent extends ProjectFormEntity implements 
   private packetId: number;
 
   constructor(
-    formBuilder: FormBuilder,
+    injector: Injector,
     @ViewChild('form', { static: true }) formView: ElementRef,
     private hPacketService: HpacketsService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private i18n: I18n
   ) {
-    super(formBuilder, formView);
+    super(injector, formView);
     this.longDefinition = this.i18n('HYT_statistics_long_definition');
     this.hideDelete = true; // hide 'Delete' button
     this.routerSubscription = this.router.events.subscribe((rl) => {

@@ -1,7 +1,5 @@
-import { Component, OnDestroy, ElementRef, ViewChild, Input } from '@angular/core';
+import { Component, OnDestroy, ElementRef, ViewChild, Input, Injector } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
-import { FormBuilder } from '@angular/forms';
-
 import { Subscription } from 'rxjs';
 
 import { HdevicesService, HDevice, HProject } from '@hyperiot/core';
@@ -51,14 +49,14 @@ export class DeviceFormComponent extends ProjectFormEntity implements OnDestroy 
 
   private routerSubscription: Subscription;
   constructor(
-    public formBuilder: FormBuilder,
+    injector: Injector,
     @ViewChild('form', { static: true }) formView: ElementRef,
     private hDeviceService: HdevicesService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private i18n: I18n
   ) {
-    super(formBuilder, formView);
+    super(injector, formView);
     this.longDefinition = this.i18n('HYT_device_long_definition');
     this.routerSubscription = this.router.events.subscribe((rl) => {
       if (rl instanceof NavigationEnd) {
@@ -112,7 +110,7 @@ export class DeviceFormComponent extends ProjectFormEntity implements OnDestroy 
       this.loadingStatus = LoadingStatusEnum.Error;
     });
   }
-  edit(d?: HDevice) {
+  edit(d?: HDevice, readyCallback?) {
     // TODO: verify this...
     if (d && d.id) {
       this.form.removeControl('hdevice-password');
@@ -121,7 +119,7 @@ export class DeviceFormComponent extends ProjectFormEntity implements OnDestroy 
       //this.form.addControl('hdevice-password');
       //this.form.removeControl('hdevice-passwordConfirm');
     }
-    super.edit(d);
+    super.edit(d, readyCallback);
   }
   clone(entity?: HDevice): HDevice {
     const device = { ...entity } || this.entity;
@@ -183,7 +181,7 @@ export class DeviceFormComponent extends ProjectFormEntity implements OnDestroy 
       // request navigate to project page when a device is deleted
       this.entityEvent.emit({
         event: 'entity:delete',
-        exitRoute: ['/projects', this.entity.project.id]
+        //exitRoute: ['/projects', this.entity.project.id]
       });
       successCallback && successCallback(res);
     }, (err) => {

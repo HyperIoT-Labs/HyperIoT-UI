@@ -1,11 +1,10 @@
-import { Component, OnDestroy, ViewChild, ElementRef, Input, OnChanges } from '@angular/core';
+import { Component, OnDestroy, ViewChild, ElementRef, Input, OnChanges, Injector } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 
 import { Subscription, Observable } from 'rxjs';
 
 import { HpacketsService, HPacket, HProject, RulesService, Rule } from '@hyperiot/core';
 import { ProjectFormEntity, LoadingStatusEnum } from '../project-form-entity';
-import { FormBuilder } from '@angular/forms';
 import { RuleDefinitionComponent } from '../rule-definition/rule-definition.component';
 import { EventMailComponent } from './event-mail/event-mail.component';
 import { Option } from '@hyperiot/components';
@@ -56,10 +55,8 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
     // { value: '', label: 'START STATISTIC' }
   ]
 
-  editMode = false;
-
   constructor(
-    formBuilder: FormBuilder,
+    injector: Injector,
     @ViewChild('form', { static: true }) formView: ElementRef,
     private hPacketService: HpacketsService,
     private rulesService: RulesService,
@@ -67,7 +64,7 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
     private router: Router,
     private i18n: I18n
   ) {
-    super(formBuilder, formView);
+    super(injector, formView);
     this.longDefinition = this.i18n('HYT_events_long_definition');
     this.hideDelete = true; // hide 'Delete' button
     this.routerSubscription = this.router.events.subscribe((rl) => {
@@ -109,14 +106,11 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
     const proceedWithEdit = () => {
       this.showCancel = true;
       this.editMode = true;
-      super.edit(rule);
       if (rule) {
         this.ruleDefinitionComponent.setRuleDefinition(rule.ruleDefinition);
         this.eventMailComponent.setMail(JSON.parse(rule.jsonActions));
       }
-      if (readyCallback) {
-        readyCallback();
-      }
+      super.edit(rule, readyCallback);
     };
     const canDeactivate = this.canDeactivate();
     if (typeof canDeactivate === 'boolean' && canDeactivate === true) {
@@ -214,7 +208,6 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
   cancel() {
     this.resetErrors();
     this.resetForm();
-    this.editMode = false;
     this.showCancel = false;
   }
   delete(successCallback, errorCallback) {

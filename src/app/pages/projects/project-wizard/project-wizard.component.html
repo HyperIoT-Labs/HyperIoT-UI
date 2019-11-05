@@ -70,7 +70,7 @@
             <ng-container *ngIf="currentForm && currentForm.isNew()" i18n="@@HYT_save">HYT_save</ng-container>
             <ng-container *ngIf="currentForm && !currentForm.isNew()" i18n="@@HYT_update">HYT_update</ng-container>
           </hyt-button>
-          <hyt-button class="toRight" *ngIf="currentForm && currentForm.showCancel" (clickFn)="onCancelClick($event)">
+          <hyt-button class="toRight" *ngIf="currentForm && showCancel()" (clickFn)="onCancelClick($event)">
             <ng-container i18n="@@HYT_cancel">HYT_cancel</ng-container>
           </hyt-button>
           <div class="clear"></div>

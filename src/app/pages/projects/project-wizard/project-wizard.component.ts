@@ -12,6 +12,7 @@ import { SummaryListItem } from '../project-detail/generic-summary-list/generic-
 import { PacketSelectComponent } from './packet-select/packet-select.component';
 import { PacketEnrichmentFormComponent } from '../project-forms/packet-enrichment-form/packet-enrichment-form.component';
 import { PacketEventsFormComponent } from '../project-forms/packet-events-form/packet-events-form.component';
+import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
 
 @Injectable({
   providedIn: 'root',
@@ -260,43 +261,43 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
     console.log(event.item)
     switch (event.action) {
       case 'edit':
-        if (this.currentForm == this.packetsForm)
+        if (this.currentForm == this.packetsForm){
           this.deviceSelect.selectSpecific(event.item.data.device.id);
+          this.deviceSelect.freezeSelection();
+        }
         this.currentForm.edit(event.item.data);
         break;
       case 'duplicate':
-        if (this.currentForm == this.packetsForm)
+        if (this.currentForm == this.packetsForm){
+          this.deviceSelect.unfreezeSelection();
           this.deviceSelect.selectSpecific(event.item.data.device.id);
+        }
         this.currentForm.clone(event.item.data);
         break;
       case 'delete':
-        console.log(this.currentForm.entity);
-        this.currentForm.entity = event.item.data;
-        this.currentForm.delete((del) => {
-
+          if (this.currentForm == this.packetsForm){
+            this.deviceSelect.selectSpecific(event.item.data.device.id);
+            this.deviceSelect.freezeSelection();
+          }
+        this.currentForm.edit(event.item.data, this.currentForm.openDeleteDialog((del) => {
           if (this.currentForm == this.devicesForm) {
             this.hDevices = [...this.deleteFromList(event.item.data.id, this.hDevices)];
             this.updateDeviceTable();
           }
-
           else if (this.currentForm == this.packetsForm) {
             this.hPackets = [...this.deleteFromList(event.item.data.id, this.hPackets)];
             this.updatePacketTable();
+            this.deviceSelect.unfreezeSelection();
           }
-
           else if (this.currentForm == this.enrichmentForm) {
             this.enrichmentRules = [...this.deleteFromList(event.item.data.id, this.enrichmentRules)];
           }
-
           else if (this.currentForm == this.eventsForm) {
             this.eventRules = [...this.deleteFromList(event.item.data.id, this.eventRules)];
           }
-
+          this.currentForm.cleanForm();
           this.currentForm.entity = {};
-
-        }, (err) => {
-          // TODO: ...
-        });
+        }));
         break;
     }
   }
@@ -409,6 +410,10 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
       this.openOptionModal();
     else
       this.stepper.next();
+  }
+
+  showCancel(): boolean {
+    return this.currentForm instanceof PacketFieldsFormComponent;
   }
 
 }
