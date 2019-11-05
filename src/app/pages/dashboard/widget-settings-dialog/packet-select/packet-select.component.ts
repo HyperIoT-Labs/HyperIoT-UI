@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output, ViewEncapsulation } from '@angular/core';
 import { ControlContainer, NgForm } from '@angular/forms';
 
 import { HPacket, HPacketField, HpacketsService } from '@hyperiot/core';
@@ -8,6 +8,7 @@ export class FieldMatrixConfiguration {
   map: FieldMatrixMapItem[];
 }
 export class FieldMatrixMapItem {
+  coords: string;
   name: string;
   index: number;
 }
@@ -15,7 +16,8 @@ export class FieldMatrixMapItem {
 @Component({
   selector: 'hyt-packet-select',
   templateUrl: './packet-select.component.html',
-  styleUrls: ['./packet-select.component.css'],
+  styleUrls: ['./packet-select.component.scss'],
+  encapsulation: ViewEncapsulation.None,
   viewProviders: [ { provide: ControlContainer, useExisting: NgForm } ]
 })
 export class PacketSelectComponent implements OnInit {
@@ -30,7 +32,7 @@ export class PacketSelectComponent implements OnInit {
   @Input()
   multiPacketSelect: false;
 
-  private packetFieldsMapping: FieldMatrixConfiguration[];
+  packetFieldsMapping: FieldMatrixConfiguration[];
 
   constructor(private packetService: HpacketsService, public settingsForm: NgForm) {
     this.multiPacketSelect = this.multiPacketSelect || false;

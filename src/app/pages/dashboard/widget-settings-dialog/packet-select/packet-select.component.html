@@ -40,18 +40,32 @@
             <h3>Fields Mapping</h3>
             <div *ngFor="let fieldConfig of packetFieldsMapping">
                 <label>{{ fieldConfig.field.name }}</label>
-                <div class="d-flex flex-row align-items-center flex-wrap">
-                    <div *ngFor="let fieldMap of fieldConfig.map; let i = index" class="d-flex flex-row align-items-center">
-                        <label class="ml-5 mr-4"><h3 class="m-0 p-0">[{{ i }}]</h3></label>
+                <div class="d-flex flex-row align-items-center flex-wrap field-mapping ">
+                    <div *ngFor="let fieldMap of fieldConfig.map; let i = index"
+                        class="map-container m-2 p-2 d-flex flex-row align-items-center">
+
+                        <strong>[&nbsp;</strong>
+                        <hyt-input-template class="w-80"
+                            placeholder="Coordinates"
+                            pattern="[0-9]+(,[0-9]+)*"
+                            required
+                            [name]="'coords'+i"
+                            [(ngModel)]="fieldMap.coords"
+                            #name="ngModel"></hyt-input-template>
+                        <strong>&nbsp;]</strong>
+
                         <hyt-input-template
+                            class="w-80 ml-2"
+                            placeholder="Name"
+                            required
                             [name]="'name'+i"
                             [(ngModel)]="fieldMap.name"
-                            #name="ngModel"
-                            style="width: 60px;"></hyt-input-template>
-                        <hyt-button class="ml-4"
-                            (clickFn)="onDeleteFieldMapping(fieldConfig, i)">
-                            <mat-icon>close</mat-icon>
-                        </hyt-button>
+                            #name="ngModel"></hyt-input-template>
+
+                        <mat-icon class="map-remove"
+                                (click)="onDeleteFieldMapping(fieldConfig, i)"
+                                matRipple>remove_circle</mat-icon>
+
                     </div>
                 </div>
                 <hyt-button (clickFn)="onAddFieldMapping(fieldConfig)">
