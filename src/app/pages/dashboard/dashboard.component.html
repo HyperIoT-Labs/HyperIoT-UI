@@ -23,6 +23,7 @@
                     </svg>
                 </span>
                 {{(dataRecordingIsOn)?'Data recording on':'Data recording off'}}
+                <!--@I18N-->
                 <div id="reload-btn" (click)="openModal('hyt-modal-reload-recording-confirm')">
                     <span class="hyt-icon icon-hyt_reload {{(recordReloading)?'reloading':''}}"></span>
                 </div>
@@ -40,12 +41,14 @@
                             <span
                                 class="hyt-icon {{(signalIsOn)?'icon-hyt_wifiOnFilled':'icon-hyt_wifiOffFilled'}}"></span>
                             <p>{{(signalIsOn)?'Online':'Offline'}}</p>
+                            <!--@I18N-->
                         </div>
 
 
                         <div *ngIf="signalIsOn" id="play-btn" (click)="changeStreamState($event)">
                             <span class="hyt-icon {{(streamIsOn)?'icon-hyt_play':'icon-hyt_pause'}}"></span>
                             <p>{{(streamIsOn)?'Play':'Pause'}}</p>
+                            <!--@I18N-->
                         </div>
 
                     </div>

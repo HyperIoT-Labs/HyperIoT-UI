@@ -97,7 +97,7 @@ const hyperiotRoutes: Routes = [
     path: 'project-wizard',
     component: ProjectWizardComponent,
     canActivate: [LoggedInGuard],
-    canDeactivate: [ProjectWizardCanDeactivate],
+    // canDeactivate: [ProjectWizardCanDeactivate],
     data: {
       showToolBar: true,
     }

@@ -1,6 +1,8 @@
 <h2>Dashboard List</h2>
+<!--@I18N@-->
 
 <p *ngIf="dashboardList.length === 0">No dashboards found for this user</p>
+<!--@I18N@-->
 <ul>
     <ng-container *ngFor="let dashboard of dashboardList">
         <li><a [routerLink]="['/dashboards', dashboard.id]">

@@ -10,6 +10,7 @@ import { RuleDefinitionComponent } from '../rule-definition/rule-definition.comp
 import { EventMailComponent } from './event-mail/event-mail.component';
 import { Option } from '@hyperiot/components';
 import { SummaryListItem } from '../../project-detail/generic-summary-list/generic-summary-list.component';
+import { I18n } from '@ngx-translate/i18n-polyfill';
 
 @Component({
   selector: 'hyt-packet-events-form',
@@ -51,7 +52,7 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
   eventMailComponent: EventMailComponent;
 
   outputOptions: Option[] = [
-    { value: 'SendMailAction', label: 'SEND EMAIL', checked: true }//@I18N@
+    { value: 'SendMailAction', label: this.i18n('HYT_send_mail_M'), checked: true }
     // { value: '', label: 'START STATISTIC' }
   ]
 
@@ -63,10 +64,11 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
     private hPacketService: HpacketsService,
     private rulesService: RulesService,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private i18n: I18n
   ) {
     super(formBuilder, formView);
-    this.longDefinition = 'events long definition';//@I18N@
+    this.longDefinition = this.i18n('HYT_events_long_definition');
     this.hideDelete = true; // hide 'Delete' button
     this.routerSubscription = this.router.events.subscribe((rl) => {
       if (rl instanceof NavigationEnd) {
@@ -98,21 +100,22 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
   save(successCallback, errorCallback) {
     this.saveEvent(successCallback, errorCallback);
   }
-  delete(successCallback, errorCallback) {
-    this.deleteEvent(successCallback, errorCallback);
-  }
 
   onAddClick() {
     this.editMode = true;
   }
 
-  edit(rule?: Rule) {
+  edit(rule?: Rule, readyCallback?) {
     const proceedWithEdit = () => {
-      super.edit(rule);
+      this.showCancel = true;
       this.editMode = true;
+      super.edit(rule);
       if (rule) {
         this.ruleDefinitionComponent.setRuleDefinition(rule.ruleDefinition);
         this.eventMailComponent.setMail(JSON.parse(rule.jsonActions));
+      }
+      if (readyCallback) {
+        readyCallback();
       }
     };
     const canDeactivate = this.canDeactivate();
@@ -208,26 +211,19 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
     }
 
   }
-  private deleteEvent(successCallback?, errorCallback?) {
-    this.loadingStatus = LoadingStatusEnum.Saving;
+  cancel() {
+    this.resetErrors();
+    this.resetForm();
+    this.editMode = false;
+    this.showCancel = false;
+  }
+  delete(successCallback, errorCallback) {
     this.rulesService.deleteRule(this.entity.id).subscribe((res) => {
-      // this.entityEvent.emit({ event: 'treeview:refresh' });
-      this.rulesService.findAllRuleByPacketId(this.packet.id).subscribe((rules: Rule[]) => {
-        this.summaryList = {
-          title: 'Events Data',
-          list: rules
-            .filter(r => r.type === Rule.TypeEnum.EVENT)
-            .map(l => {
-              return { name: l.name, description: l.description, data: l };
-            }) as SummaryListItem[]
-        };
-      });
-      this.editMode = false;
-      this.loadingStatus = LoadingStatusEnum.Ready;
-      successCallback && successCallback(res);
+      this.cancel();
+      this.updateSummaryList();
+      if (successCallback) successCallback();
     }, (err) => {
-      errorCallback && errorCallback(err);
-      this.loadingStatus = LoadingStatusEnum.Error;
+      if (errorCallback) errorCallback();
     });
   }
 
@@ -243,7 +239,7 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
       ) : false;
   }
 
-  resetForm(){
+  resetForm() {
     super.resetForm();
     this.ruleDefinitionComponent.originalValueUpdate();
     this.eventMailComponent.originalValueUpdate();
@@ -254,7 +250,7 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
     if (err.error && err.error.type) {
       switch (err.error.type) {
         case 'it.acsoftware.hyperiot.base.exception.HyperIoTDuplicateEntityException': {
-          this.validationError = [{ "message": "Unavailable event name", "field": "rule-name", "invalidValue": "" }];//@I18N@
+          this.validationError = [{ "message": this.i18n('HYT_unavaiable_event_name'), "field": "rule-name", "invalidValue": "" }];
           this.form.get('rule-name').setErrors({
             validateInjectedError: {
               valid: false

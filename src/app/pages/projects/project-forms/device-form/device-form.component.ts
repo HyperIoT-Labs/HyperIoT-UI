@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs';
 import { HdevicesService, HDevice, HProject } from '@hyperiot/core';
 
 import { ProjectFormEntity, LoadingStatusEnum } from '../project-form-entity';
+import { I18n } from '@ngx-translate/i18n-polyfill';
 
 @Component({
   selector: 'hyt-device-form',
@@ -54,10 +55,11 @@ export class DeviceFormComponent extends ProjectFormEntity implements OnDestroy 
     @ViewChild('form', { static: true }) formView: ElementRef,
     private hDeviceService: HdevicesService,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private i18n: I18n
   ) {
     super(formBuilder, formView);
-    this.longDefinition = 'device long definition';//@I18N@
+    this.longDefinition = this.i18n('HYT_device_long_definition');
     this.routerSubscription = this.router.events.subscribe((rl) => {
       if (rl instanceof NavigationEnd) {
         this.id = activatedRoute.snapshot.params.deviceId;

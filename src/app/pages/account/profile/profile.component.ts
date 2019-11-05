@@ -41,12 +41,15 @@ export class ProfileComponent implements OnInit {
 
   /* This variable contains the string to display in case of error while trying to update personal information or change password. */
   errMsg = "something went wrong";
+  //@I18N@
 
   /* This variable contains the string to display when the personal information update is successful. */
   successMsg = "Personal information updated correctly"
+  //@I18N@
 
   /* This variable contains the string to display when the password change is successful. */
   succesMsgPwd = "Password changed correctly"
+  //@I18N@
 
   error: any;
 

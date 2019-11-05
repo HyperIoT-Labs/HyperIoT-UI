@@ -25,16 +25,19 @@
             <div [ngStyle]="{display: treeStatus == TreeStatus.Ready ? '' : 'none'}" class="treeview pb-2 flex-grow-1 flex-sm-grow-0 flex-fill">
                 <hyt-tree-view-project #treeView (nodeClick)="onNodeClick($event)"></hyt-tree-view-project>
                 <div id="editInWizardContent">
-                    <hyt-button  (clickFn)="goToProjectWizard()">Edit in wizard</hyt-button>
+                    <hyt-button (clickFn)="goToProjectWizard()">
+                        <ng-container i18n="@@HYT_edit_in_wizard">HYT_edit_in_wizard</ng-container>
+                    </hyt-button>
                 </div>
-                <!--@I18N@-->
             </div>        
             <div *ngIf="treeStatus == TreeStatus.Loading || treeStatus == TreeStatus.LoadingComplete" class="treeview mt-2 d-flex flex-column align-items-center justify-content-center">
                 <h4>Loading project tree</h4>
+                <!--@I18N-->
                 <mat-spinner></mat-spinner>
             </div>
             <div *ngIf="treeStatus == TreeStatus.Error" class="mt-2 treeview">
                 <h4>Error loading project tree</h4>
+                <!--@I18N-->
             </div>
             <!-- END TreeView -->
 
@@ -57,6 +60,7 @@
                     [isDisabled]="!currentEntity.isValid() || !currentEntity.isDirty()">
                     <mat-icon class="md-primary">save</mat-icon>
                     <span>Save</span>
+                    <!--@I18N-->
                 </hyt-button>
 
                 <hyt-button 
@@ -65,6 +69,7 @@
                     (clickFn)="onDeleteClick()">
                     <mat-icon>delete</mat-icon>
                     <span>Delete</span>
+                    <!--@I18N-->
                 </hyt-button>
 
                 <hyt-button 
@@ -73,6 +78,7 @@
                     (clickFn)="onCancelClick()">
                     <mat-icon>undo</mat-icon>
                     <span>Cancel</span>
+                    <!--@I18N-->
                 </hyt-button>
 
             </div>
