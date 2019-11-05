@@ -36,6 +36,30 @@
             </mat-form-field>
 
         </div>
+        <div *ngIf="packetFieldsMapping && packetFieldsMapping.length > 0 && multiPacketSelect">
+            <h3>Fields Mapping</h3>
+            <div *ngFor="let fieldConfig of packetFieldsMapping">
+                <label>{{ fieldConfig.field.name }}</label>
+                <div class="d-flex flex-row align-items-center flex-wrap">
+                    <div *ngFor="let fieldMap of fieldConfig.map; let i = index" class="d-flex flex-row align-items-center">
+                        <label class="ml-5 mr-4"><h3 class="m-0 p-0">[{{ i }}]</h3></label>
+                        <hyt-input-template
+                            [name]="'name'+i"
+                            [(ngModel)]="fieldMap.name"
+                            #name="ngModel"
+                            style="width: 60px;"></hyt-input-template>
+                        <hyt-button class="ml-4"
+                            (clickFn)="onDeleteFieldMapping(fieldConfig, i)">
+                            <mat-icon>close</mat-icon>
+                        </hyt-button>
+                    </div>
+                </div>
+                <hyt-button (clickFn)="onAddFieldMapping(fieldConfig)">
+                    <mat-icon>add</mat-icon>
+                    Add
+                </hyt-button>
+            </div>
+        </div>
 
     </ng-container>
 

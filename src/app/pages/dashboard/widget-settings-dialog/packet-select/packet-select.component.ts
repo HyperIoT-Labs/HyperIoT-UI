@@ -3,6 +3,15 @@ import { ControlContainer, NgForm } from '@angular/forms';
 
 import { HPacket, HPacketField, HpacketsService } from '@hyperiot/core';
 
+export class FieldMatrixConfiguration {
+  field: HPacketField;
+  map: FieldMatrixMapItem[];
+}
+export class FieldMatrixMapItem {
+  name: string;
+  index: number;
+}
+
 @Component({
   selector: 'hyt-packet-select',
   templateUrl: './packet-select.component.html',
@@ -20,6 +29,8 @@ export class PacketSelectComponent implements OnInit {
   projectPackets: HPacket[] = [];
   @Input()
   multiPacketSelect: false;
+
+  private packetFieldsMapping: FieldMatrixConfiguration[];
 
   constructor(private packetService: HpacketsService, public settingsForm: NgForm) {
     this.multiPacketSelect = this.multiPacketSelect || false;
@@ -41,11 +52,23 @@ export class PacketSelectComponent implements OnInit {
       if (nullIndex >= 0) {
         delete this.selectedFields[nullIndex];
       }
+      // fields mapping for current packet field
+      this.syncFieldMapping();
     } else {
       // single select
       this.selectedFields = $event;
     }
     this.selectedFieldsChange.emit(this.selectedFields);
+  }
+
+  onAddFieldMapping(fieldMatrix: FieldMatrixConfiguration) {
+    fieldMatrix.map.push(new FieldMatrixMapItem());
+  }
+  onDeleteFieldMapping(fieldMatrix: FieldMatrixConfiguration, mapIndex: number) {
+    fieldMatrix.map.splice(mapIndex, 1);
+  }
+  onFieldMappingChange(fieldMap: FieldMatrixMapItem, value: string) {
+    fieldMap.name = value;
   }
 
   apply() {
@@ -55,7 +78,8 @@ export class PacketSelectComponent implements OnInit {
       if (!this.multiPacketSelect) {
         this.selectedFields = [ this.selectedFields ];
       }
-      this.selectedFields.map((pf) => this.widget.config.packetFields.push(pf.name));
+      this.selectedFields.map((pf) => this.widget.config.packetFields.push(pf.id));
+      this.widget.config.packetFieldsMapping = this.packetFieldsMapping;
     }
   }
 
@@ -64,6 +88,8 @@ export class PacketSelectComponent implements OnInit {
   }
 
   loadPackets() {
+    this.packetFieldsMapping = this.widget.config.packetFieldsMapping ?
+        JSON.parse(JSON.stringify(this.widget.config.packetFieldsMapping)) : [];
     // fetch all packets
     this.packetService
       .findAllHPacketByProjectId(this.widget.projectId)
@@ -77,7 +103,7 @@ export class PacketSelectComponent implements OnInit {
               this.selectedPacket = packet;
               if (this.widget.config.packetFields) {
                 packet.fields.map((pf) => {
-                  if (this.widget.config.packetFields.indexOf(pf.name) !== -1) {
+                  if (this.widget.config.packetFields.indexOf(pf.id) !== -1) {
                     if (this.multiPacketSelect) {
                       this.selectedFields.push(pf);
                     } else {
@@ -89,6 +115,27 @@ export class PacketSelectComponent implements OnInit {
             });
         }
       });
+  }
+
+  private syncFieldMapping() {
+    if (!this.packetFieldsMapping) {
+      this.packetFieldsMapping = [];
+    }
+    const tempMap = [] as FieldMatrixConfiguration[];
+    this.selectedFields.map((pf: HPacketField) => {
+      if (pf.multiplicity == HPacketField.MultiplicityEnum.ARRAY) {
+        const fieldMapping = this.packetFieldsMapping.find((f) => f.field.id === pf.id);
+        if (!fieldMapping) {
+          const af = new FieldMatrixConfiguration();
+          af.field = pf;
+          af.map = [] as FieldMatrixMapItem[];
+          tempMap.push(af);
+        } else {
+          tempMap.push(fieldMapping);
+        }
+      }
+    });
+    this.packetFieldsMapping = tempMap;
   }
 
 }
