@@ -10,9 +10,9 @@ import { HytTreeViewProjectComponent } from '@hyperiot/components/lib/hyt-tree-v
 import { ProjectFormEntity } from '../project-forms/project-form-entity';
 import { MatDialog } from '@angular/material';
 import { SaveChangesDialogComponent } from 'src/app/components/dialogs/save-changes-dialog/save-changes-dialog.component';
-import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
 import { SummaryListItem } from './generic-summary-list/generic-summary-list.component';
 import { PacketEnrichmentFormComponent } from '../project-forms/packet-enrichment-form/packet-enrichment-form.component';
+import { PacketEventsFormComponent } from '../project-forms/packet-events-form/packet-events-form.component';
 
 enum TreeStatusEnum {
   Ready,
@@ -85,9 +85,9 @@ export class ProjectDetailComponent implements OnInit {
             this.hideHintMessage();
             break;
           case 'entity:delete':
-            if (data.exitRoute) {
-              this.router.navigate(data.exitRoute);
-            }
+            // if (data.exitRoute) {
+            this.router.navigate(['/projects/' + this.projectId]);
+            // }
             break;
         }
       });
@@ -108,7 +108,7 @@ export class ProjectDetailComponent implements OnInit {
   }
 
   onDeleteClick() {
-    this.openDeleteDialog();
+    this.currentEntity.openDeleteDialog();
   }
 
   onCancelClick() {
@@ -128,9 +128,9 @@ export class ProjectDetailComponent implements OnInit {
         this.currentEntity.clone(rule);
         break;
       case 'delete':
-        this.currentEntity.edit(rule, () => {
-          this.openDeleteDialog();
-        });
+        this.currentEntity.edit(rule, this.currentEntity.openDeleteDialog((del) => {
+          this.currentEntity.editMode = false;
+        }));
         break;
     }
   }
@@ -297,21 +297,6 @@ export class ProjectDetailComponent implements OnInit {
           observer.complete();
         }
       });
-    });
-  }
-
-  openDeleteDialog() {
-    const dialogRef = this.dialog.open(DeleteConfirmDialogComponent, {
-      data: {title: 'Delete item?', message: 'This operation cannot be undone.'}
-    });
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result === 'delete') {
-        this.currentEntity.delete((res) => {
-          // TODO: ...
-        }, (err) => {
-          // TODO: report error
-        });
-      }
     });
   }
 

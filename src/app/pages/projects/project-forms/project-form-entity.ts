@@ -2,9 +2,10 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 
 import { Observable } from 'rxjs';
 
-import { MatRadioChange } from '@angular/material';
-import { ElementRef, ViewChild, OnInit, Output, EventEmitter, AfterViewInit } from '@angular/core';
+import { MatRadioChange, MatDialog } from '@angular/material';
+import { ElementRef, ViewChild, OnInit, Output, EventEmitter, AfterViewInit, Injector } from '@angular/core';
 import { SummaryList } from '../project-detail/generic-summary-list/generic-summary-list.component';
+import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
 
 export enum LoadingStatusEnum {
     Ready,
@@ -26,6 +27,7 @@ export abstract class ProjectFormEntity implements OnInit {
 
     // the following 5 fields should implemented by a specific interface
     isProjectEntity = true;
+    editMode = false;
     hideDelete = false;
     showCancel = false;
     longDefinition = 'entity long definition';
@@ -36,10 +38,15 @@ export abstract class ProjectFormEntity implements OnInit {
 
     unsavedChangesCallback;
 
+    protected formBuilder: FormBuilder;
+    protected dialog: MatDialog;
+
     constructor(
-        public formBuilder: FormBuilder,
+        injector: Injector,
         @ViewChild('form', { static: true }) private formView: ElementRef
     ) {
+        this.formBuilder = injector.get(FormBuilder);
+        this.dialog = injector.get(MatDialog);
         this.form = this.formBuilder.group({});
     }
 
@@ -74,6 +81,9 @@ export abstract class ProjectFormEntity implements OnInit {
                 .setValue(this.entity[this.entityFormMap[key].field] || this.entityFormMap[key].default);
         });
         this.resetForm();
+        if (readyCallback) {
+            readyCallback();
+          }
     }
     clone(entity?: any): any {
         const cloned = { ...entity } || this.entity;
@@ -212,4 +222,17 @@ export abstract class ProjectFormEntity implements OnInit {
         }
         return { id: currentUser.id, entityVersion: currentUser.entityVersion };
     }
+
+    openDeleteDialog(successCallback?: any, errorCallback?: any) {
+        const dialogRef = this.dialog.open(DeleteConfirmDialogComponent, {
+            data: { title: 'Delete item?', message: 'This operation cannot be undone.' }
+            //@I18N@
+        });
+        dialogRef.afterClosed().subscribe((result) => {
+            if (result === 'delete') {
+                this.delete(successCallback, errorCallback);
+            }
+        });
+    }
+
 }

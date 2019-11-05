@@ -1,6 +1,5 @@
-import { Component, OnDestroy, ViewChild, ElementRef, Input, OnChanges } from '@angular/core';
+import { Component, OnDestroy, ViewChild, ElementRef, Input, OnChanges, Injector } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
-import { FormBuilder } from '@angular/forms';
 
 import { Subscription, Observable } from 'rxjs';
 
@@ -60,15 +59,14 @@ export class PacketFieldsFormComponent extends ProjectFormEntity implements OnDe
   formTitle = 'Packet Fields';
 
   constructor(
-    formBuilder: FormBuilder,
+    injector: Injector,
     @ViewChild('form', { static: true }) formView: ElementRef,
     private hPacketService: HpacketsService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private dialog: MatDialog,
     private i18n: I18n
   ) {
-    super(formBuilder, formView);
+    super(injector, formView);
     this.longDefinition = this.i18n('HYT_fields_long_definition');
     this.hideDelete = true;
     this.routerSubscription = this.router.events.subscribe((rl) => {
@@ -122,7 +120,7 @@ export class PacketFieldsFormComponent extends ProjectFormEntity implements OnDe
 
   removeField(e) {
     console.log('removeField', e);
-    this.openDeleteDialog(e.data.id);
+    this.openDelete(e.data.id);
   }
 
   editField(e) {
@@ -201,7 +199,7 @@ export class PacketFieldsFormComponent extends ProjectFormEntity implements OnDe
     this.resetForm();
   }
 
-  private openDeleteDialog(fieldId: number) {
+  private openDelete(fieldId: number) {
     const dialogRef = this.dialog.open(DeleteConfirmDialogComponent, {
       data: { title: 'Delete item?', message: 'This operation cannot be undone.' }
     });

@@ -1,9 +1,7 @@
-import { Component, OnDestroy, ViewChild, ElementRef, Input } from '@angular/core';
+import { Component, OnDestroy, ViewChild, ElementRef, Input, Injector } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 
 import { Subscription } from 'rxjs';
-
-import { FormBuilder } from '@angular/forms';
 
 import { HPacket, HpacketsService, HDevice } from '@hyperiot/core';
 import { Option } from '@hyperiot/components';
@@ -74,14 +72,14 @@ export class PacketFormComponent extends ProjectFormEntity implements OnDestroy 
   private routerSubscription: Subscription;
 
   constructor(
-    formBuilder: FormBuilder,
+    injector: Injector,
     @ViewChild('form', { static: true }) formView: ElementRef,
     private hPacketService: HpacketsService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private i18n:I18n
   ) {
-    super(formBuilder, formView);
+    super(injector, formView);
     this.longDefinition = this.i18n('HYT_packet_long_definition');
     this.routerSubscription = this.router.events.subscribe((rl) => {
       if (rl instanceof NavigationEnd) {
@@ -177,7 +175,7 @@ export class PacketFormComponent extends ProjectFormEntity implements OnDestroy 
       this.entityEvent.emit({
         event: 'entity:delete',
         exitRoute: [
-          '/projects', this.entity.device.project.id,
+          //'/projects', this.entity.device.project.id,
           { outlets: { projectDetails: ['device', this.entity.device.id] } }
         ]
       });

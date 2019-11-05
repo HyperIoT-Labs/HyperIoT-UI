@@ -1,4 +1,4 @@
-import { Component, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnDestroy, ViewChild, ElementRef, Injector } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 
@@ -32,14 +32,14 @@ export class ProjectFormComponent extends ProjectFormEntity implements OnDestroy
   private routerSubscription: Subscription;
 
   constructor(
-    public formBuilder: FormBuilder,
+    injector: Injector,
     @ViewChild('form', { static: true }) formView: ElementRef,
     private hProjectService: HprojectsService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private i18n: I18n
   ) {
-    super(formBuilder, formView);
+    super(injector, formView);
     this.longDefinition = this.i18n('HYT_project_long_definition');
     this.routerSubscription = this.router.events.subscribe((rl) => {
       if (rl instanceof NavigationEnd) {

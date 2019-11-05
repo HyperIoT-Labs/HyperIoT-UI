@@ -1,6 +1,6 @@
-import { Component, OnInit, Input, ViewChild, ElementRef, OnDestroy, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef, OnDestroy, OnChanges, Injector } from '@angular/core';
 import { HPacket, Rule, RulesService, HpacketsService, HProject } from '@hyperiot/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { SelectOption } from '@hyperiot/components';
 import { RuleDefinitionComponent } from '../rule-definition/rule-definition.component';
 import { AssetTagComponent } from './asset-tag/asset-tag.component';
@@ -42,7 +42,6 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
   assetTags: number[] = [];
   assetCategories: number[] = [];
 
-  editMode = false;
   showCover = false;
 
   private routerSubscription: Subscription;
@@ -52,7 +51,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
   private packetId: number;
 
   constructor(
-    public formBuilder: FormBuilder,
+    injector: Injector,
     @ViewChild('form', { static: true }) formView: ElementRef,
     private rulesService: RulesService,
     private packetService: HpacketsService,
@@ -60,7 +59,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
     private router: Router,
     private i18n: I18n
   ) {
-    super(formBuilder, formView);
+    super(injector, formView);
     this.longDefinition = this.i18n('HYT_enrichment_long_definition');
     this.hideDelete = true; // hide 'Delete' button
     this.routerSubscription = this.router.events.subscribe((rl) => {
@@ -119,7 +118,6 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
   cancel() {
     this.resetErrors();
     this.resetForm();
-    this.editMode = false;
     this.showCancel = false;
   }
   delete(successCallback, errorCallback) {
