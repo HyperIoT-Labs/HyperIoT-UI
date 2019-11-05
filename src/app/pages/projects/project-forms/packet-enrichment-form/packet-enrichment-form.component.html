@@ -1,5 +1,6 @@
 <div *ngIf="showCover && !editMode" class="d-flex flex-column justify-content-center align-items-center">
   <hyt-button (clickFn)="onAddButtonClick()">Add enrichment</hyt-button>
+   <!--@I18N@-->
 </div>
 <form [ngClass]="{ hidden: !editMode }" class="container enrichment-form" [formGroup]="form" autocomplete="on">
 
