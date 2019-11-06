@@ -66,10 +66,6 @@ export class EventMailComponent implements OnInit {
     (<HTMLElement>document.querySelector('#mailBody.hyt-input.mat-input-element')).focus();
   }
 
-  updateHint(event: string): void {
-    this.wizardService.updateHint(event, 6);
-  }
-
   originalValueUpdate(){
     this.originalFormsValues = this.getJsonForms();
   }

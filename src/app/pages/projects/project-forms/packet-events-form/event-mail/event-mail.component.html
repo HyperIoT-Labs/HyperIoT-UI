@@ -4,19 +4,17 @@
     <div class="row">
       <div class="col-md-4 container-form-field">
         <hyt-input-text [form]="mailForm" formControlName="mailRecipient" name="mailRecipient" [isRequired]="true"
-          i18n-placeholder="@@HYT_mail_to" placeholder="HYT_mail_to" [externalHint]="'Enter the mail Recipient'"
-          (outHint)="updateHint($event)">
+          i18n-placeholder="@@HYT_mail_to" placeholder="HYT_mail_to" hintMessage="'Enter the mail Recipient'">
         </hyt-input-text>
       </div> <!-- Mail Recipient -->
       <div class="col-md-4 container-form-field">
         <hyt-input-text [form]="mailForm" formControlName="mailCC" name="mailCC" i18n-placeholder="@@HYT_mail_cc"
-          placeholder="HYT_mail_cc" [externalHint]="'Enter the mail CC'" (outHint)="updateHint($event)">
+          placeholder="HYT_mail_cc" hintMessage="'Enter the mail CC'">
         </hyt-input-text>
       </div> <!-- Mail CC -->
       <div class="col-md-4 container-form-field">
         <hyt-input-text [form]="mailForm" formControlName="mailObject" name="mailObject"
-          i18n-placeholder="@@HYT_mail_object" placeholder="HYT_mail_object" [externalHint]="'Enter the mail object'"
-          (outHint)="updateHint($event)">
+          i18n-placeholder="@@HYT_mail_object" placeholder="HYT_mail_object" hintMessage="'Enter the mail object'">
         </hyt-input-text>
       </div> <!-- Mail Object -->
     </div>
@@ -24,8 +22,7 @@
     <div class="row">
       <div class="col-md-12 container-form-field">
         <hyt-text-area id="mailBody" [form]="mailForm" formControlName="mailBody" name="mailBody"
-          i18n-placeholder="@@HYT_mail_body" placeholder="HYT_mail_body" [externalHint]="'Enter the mail body'"
-          (outHint)="updateHint($event)">
+          i18n-placeholder="@@HYT_mail_body" placeholder="HYT_mail_body" hintMessage="'Enter the mail body'">
         </hyt-text-area>
       </div> <!-- Mail Body -->
     </div>
