@@ -154,7 +154,6 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
         console.log("error");
       }
     }
-    console.log(this.currentForm.isDirty())
     // if (!this.currentForm.isDirty())
     //   this.currentForm.edit();
     //this.wizardService.stepChanged(event.selectedIndex);
@@ -261,24 +260,24 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
     console.log(event.item)
     switch (event.action) {
       case 'edit':
-        if (this.currentForm == this.packetsForm){
+        if (this.currentForm == this.packetsForm) {
           this.deviceSelect.selectSpecific(event.item.data.device.id);
           this.deviceSelect.freezeSelection();
         }
         this.currentForm.edit(event.item.data);
         break;
       case 'duplicate':
-        if (this.currentForm == this.packetsForm){
+        if (this.currentForm == this.packetsForm) {
           this.deviceSelect.unfreezeSelection();
           this.deviceSelect.selectSpecific(event.item.data.device.id);
         }
         this.currentForm.clone(event.item.data);
         break;
       case 'delete':
-          if (this.currentForm == this.packetsForm){
-            this.deviceSelect.selectSpecific(event.item.data.device.id);
-            this.deviceSelect.freezeSelection();
-          }
+        if (this.currentForm == this.packetsForm) {
+          this.deviceSelect.selectSpecific(event.item.data.device.id);
+          this.deviceSelect.freezeSelection();
+        }
         this.currentForm.edit(event.item.data, this.currentForm.openDeleteDialog((del) => {
           if (this.currentForm == this.devicesForm) {
             this.hDevices = [...this.deleteFromList(event.item.data.id, this.hDevices)];
@@ -306,24 +305,23 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
     this.currentDevice = event;
   }
 
-  fieldCurrentPacketId: number;
   fieldPacketChanged(event): void {
     if (event) {
-      this.fieldCurrentPacketId = event.id;
+      this.fieldsForm.loadData(event.id);
     }
   }
 
-  enrichmentCurrentPacketId: HPacket;
   enrichmentPacketChanged(event): void {
     if (event) {
-      this.enrichmentCurrentPacketId = event.id;
+      this.enrichmentForm.cleanForm();
+      this.enrichmentForm.loadData(event.id);
     }
   }
 
-  eventCurrentPacketId: HPacket;
   eventPacketChanged(event): void {
     if (event) {
-      this.eventCurrentPacketId = event.id;
+      this.eventsForm.cleanForm();
+      this.eventsForm.loadData(event.id);
     }
   }
 

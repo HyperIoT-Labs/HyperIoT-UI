@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, ElementRef, OnDestroy, OnChanges, Injector } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef, OnDestroy, Injector } from '@angular/core';
 import { HPacket, Rule, RulesService, HpacketsService, HProject } from '@hyperiot/core';
 import { FormGroup } from '@angular/forms';
 import { SelectOption } from '@hyperiot/components';
@@ -16,7 +16,7 @@ import { SummaryListItem } from '../../project-detail/generic-summary-list/gener
   templateUrl: './packet-enrichment-form.component.html',
   styleUrls: ['./packet-enrichment-form.component.scss']
 })
-export class PacketEnrichmentFormComponent extends ProjectFormEntity implements OnInit, OnDestroy, OnChanges {
+export class PacketEnrichmentFormComponent extends ProjectFormEntity implements OnInit, OnDestroy {
 
   @ViewChild('ruleDef', { static: false }) ruleDefinitionComponent: RuleDefinitionComponent;
   @ViewChild('assetTag', { static: false }) assetTagComponent: AssetTagComponent;
@@ -47,7 +47,6 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
   private routerSubscription: Subscription;
   private activatedRouteSubscription: Subscription;
 
-  @Input()
   private packetId: number;
 
   constructor(
@@ -77,14 +76,6 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
   }
 
   ngOnInit() {
-  }
-
-  ngOnChanges() {
-    if (this.packetId) {
-      this.cleanForm();
-      console.log("LOADING PACKET ENRICHMENT...")
-      this.loadData();
-    }
   }
 
   ngOnDestroy() {
@@ -118,6 +109,8 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
   cancel() {
     this.resetErrors();
     this.resetForm();
+    this.editMode = false;
+    console.log(this.editMode);
     this.showCancel = false;
   }
   delete(successCallback, errorCallback) {
@@ -130,8 +123,8 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
     });
   }
 
-  loadData() {
-    //this.summaryList = null;
+  loadData(packetId?: number) {
+    if(packetId) this.packetId = packetId;
     this.packetService.findHPacket(this.packetId).subscribe((p: HPacket) => {
       this.project = p.device.project;
       this.packetService.findAllHPacketByProjectId(this.project.id)

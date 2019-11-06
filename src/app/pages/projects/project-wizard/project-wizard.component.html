@@ -31,13 +31,13 @@
         <hyt-pw-packet-select #fieldPacketSelect [hDevices]="hDevices" [hPackets]="hPackets"
           (currentPacket)="fieldPacketChanged($event)">-
         </hyt-pw-packet-select>
-        <hyt-packet-fields-form #fieldsForm [packetId]="fieldCurrentPacketId"></hyt-packet-fields-form>
+        <hyt-packet-fields-form #fieldsForm></hyt-packet-fields-form>
       </ng-template>
 
       <ng-template #enrichmentTemplate>
         <hyt-pw-packet-select #enrichmentPacketSelect [hDevices]="hDevices" [hPackets]="hPackets"
           (currentPacket)="enrichmentPacketChanged($event)"></hyt-pw-packet-select>
-        <hyt-packet-enrichment-form #enrichmentForm [packetId]="enrichmentCurrentPacketId"></hyt-packet-enrichment-form>
+        <hyt-packet-enrichment-form #enrichmentForm></hyt-packet-enrichment-form>
       </ng-template>
 
       <ng-template #statisticsTemplate>
@@ -47,8 +47,7 @@
         <hyt-pw-packet-select #eventPacketSelect [hDevices]="hDevices" [hPackets]="hPackets"
           (currentPacket)="eventPacketChanged($event)">
         </hyt-pw-packet-select>
-        <hyt-packet-events-form #eventsForm [packetId]="eventCurrentPacketId">
-        </hyt-packet-events-form>
+        <hyt-packet-events-form #eventsForm></hyt-packet-events-form>
       </ng-template>
 
       <div class="row">

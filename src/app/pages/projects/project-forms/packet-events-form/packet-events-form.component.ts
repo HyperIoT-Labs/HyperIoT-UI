@@ -1,4 +1,4 @@
-import { Component, OnDestroy, ViewChild, ElementRef, Input, OnChanges, Injector } from '@angular/core';
+import { Component, OnDestroy, ViewChild, ElementRef, Input, Injector } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 
 import { Subscription, Observable } from 'rxjs';
@@ -16,7 +16,7 @@ import { I18n } from '@ngx-translate/i18n-polyfill';
   templateUrl: './packet-events-form.component.html',
   styleUrls: ['./packet-events-form.component.scss']
 })
-export class PacketEventsFormComponent extends ProjectFormEntity implements OnDestroy, OnChanges {
+export class PacketEventsFormComponent extends ProjectFormEntity implements OnDestroy {
 
   entity: Rule = {} as Rule;
   entityFormMap = {
@@ -38,7 +38,6 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
   private routerSubscription: Subscription;
   private activatedRouteSubscription: Subscription;
 
-  @Input()
   private packetId: number;
 
   packet: HPacket = {} as HPacket;
@@ -70,23 +69,15 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
     this.routerSubscription = this.router.events.subscribe((rl) => {
       if (rl instanceof NavigationEnd) {
         this.packetId = +(activatedRoute.snapshot.params.packetId);
-        this.load();
+        this.loadData();
       }
     });
     this.activatedRouteSubscription = this.activatedRoute.params.subscribe(routeParams => {
       this.editMode = false;
       this.packetId = +(activatedRoute.snapshot.params.packetId);
       if (this.packetId)
-        this.load();
+        this.loadData();
     });
-  }
-
-  ngOnChanges() {
-    if (this.packetId) {
-      this.cleanForm();
-      console.log("LOADING PACKET EVENT...")
-      this.load();
-    }
   }
 
   ngOnDestroy() {
@@ -130,7 +121,8 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
     this.eventMailComponent.reset();
   }
 
-  load() {
+  loadData(packetId?: number) {
+    if(packetId) this.packetId = packetId;
     this.hPacketService.findHPacket(this.packetId).subscribe((p: HPacket) => {
       this.packet = p;
       this.project = p.device.project;
