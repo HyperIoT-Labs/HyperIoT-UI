@@ -125,7 +125,7 @@ export class PacketSelectComponent implements OnInit {
     }
     const tempMap = [] as FieldMatrixConfiguration[];
     this.selectedFields.map((pf: HPacketField) => {
-      if (pf.multiplicity == HPacketField.MultiplicityEnum.ARRAY) {
+      if (pf.multiplicity == HPacketField.MultiplicityEnum.ARRAY || pf.multiplicity == HPacketField.MultiplicityEnum.MATRIX) {
         const fieldMapping = this.packetFieldsMapping.find((f) => f.field.id === pf.id);
         if (!fieldMapping) {
           const af = new FieldMatrixConfiguration();

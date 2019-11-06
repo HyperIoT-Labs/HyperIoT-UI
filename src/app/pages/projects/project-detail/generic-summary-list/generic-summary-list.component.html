@@ -1,7 +1,7 @@
 <div *ngIf="_summaryList && _summaryList.list.length > 0" class="d-flex flex-row justify-content-start align-items-stretch">
-    <header class="flex-fill">
+    <div class="header flex-fill">
         {{_summaryList.title}}
-    </header>
+    </div>
 </div>
 <div *ngFor="let item of _summaryList.list; let i = index" (click)="onItemClick(i, item)"
     [matMenuTriggerFor]="itemMenu"

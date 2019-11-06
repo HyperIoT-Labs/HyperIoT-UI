@@ -7,8 +7,9 @@
 *:focus {
     outline: none;
 }
-header {
+.header {
     height: 32px;
+    min-height: auto !important;
     line-height: 32px;
     vertical-align: middle;
     background: black;
