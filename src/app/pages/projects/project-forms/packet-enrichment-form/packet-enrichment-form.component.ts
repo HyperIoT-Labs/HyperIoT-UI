@@ -110,12 +110,13 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
     this.resetErrors();
     this.resetForm();
     this.editMode = false;
-    console.log(this.editMode);
     this.showCancel = false;
   }
   delete(successCallback, errorCallback) {
     this.rulesService.deleteRule(this.entity.id).subscribe((res) => {
-      this.cancel();
+      this.resetErrors();
+      this.resetForm();
+      this.showCancel = false;
       this.updateSummaryList();
       if (successCallback) successCallback();
     }, (err) => {
