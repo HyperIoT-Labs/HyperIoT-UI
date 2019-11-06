@@ -90,6 +90,7 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
   }
 
   onAddClick() {
+    this.cleanForm();
     this.edit();
   }
 

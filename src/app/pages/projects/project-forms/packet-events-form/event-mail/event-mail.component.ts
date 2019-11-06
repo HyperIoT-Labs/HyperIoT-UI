@@ -56,6 +56,7 @@ export class EventMailComponent implements OnInit {
 
   reset(): void {
     this.mailForm.reset();
+    this.originalValueUpdate();
   }
 
   addPlaceHolder(event): void {

@@ -191,6 +191,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
   }
 
   onAddButtonClick() {
+    this.cleanForm();
     this.edit({ jsonActions: '[]' } as Rule);
   }
 
