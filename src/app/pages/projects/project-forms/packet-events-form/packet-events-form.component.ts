@@ -90,7 +90,7 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
   }
 
   onAddClick() {
-    this.editMode = true;
+    this.edit();
   }
 
   edit(rule?: Rule, readyCallback?) {
@@ -175,6 +175,7 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
       this.entity = res;
       this.resetForm();
       this.updateSummaryList();
+      this.showCancel = false;
       this.loadingStatus = LoadingStatusEnum.Ready;
       successCallback && successCallback(res, wasNew);
     };
