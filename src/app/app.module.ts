@@ -39,6 +39,7 @@ import { DeleteConfirmDialogComponent } from './components/dialogs/delete-confir
 import { HomeComponent } from './pages/home/home.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { NotificationbarComponent } from './components/notificationbar/notificationbar.component';
 
 export class MyUrlSerializer extends DefaultUrlSerializer implements UrlSerializer  {
   /** Converts a `UrlTree` into a url */
@@ -67,7 +68,8 @@ export function apiConfigFactory(): Configuration {
     ProfileComponent,
     SaveChangesDialogComponent,
     DeleteConfirmDialogComponent,
-    HomeComponent
+    HomeComponent,
+    NotificationbarComponent
   ],
   // dynamically created components
   entryComponents: [
@@ -90,7 +92,7 @@ export function apiConfigFactory(): Configuration {
     HyperiotComponentsModule,
     ProjectsModule,
     HyperiotClientModule.forRoot(apiConfigFactory),
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production, registrationStrategy: 'registerImmediately' })
   ],
   providers: [
     // ActivatedRouteSnapshot,
