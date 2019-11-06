@@ -1,4 +1,4 @@
-import { Component, OnDestroy, ViewChild, ElementRef, Input, OnChanges, Injector } from '@angular/core';
+import { Component, OnDestroy, ViewChild, ElementRef, Input, Injector } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 
 import { Subscription, Observable } from 'rxjs';
@@ -17,7 +17,7 @@ import { I18n } from '@ngx-translate/i18n-polyfill';
   templateUrl: './packet-fields-form.component.html',
   styleUrls: ['./packet-fields-form.component.scss']
 })
-export class PacketFieldsFormComponent extends ProjectFormEntity implements OnDestroy, OnChanges {
+export class PacketFieldsFormComponent extends ProjectFormEntity implements OnDestroy {
   @ViewChild('treeViewFields', { static: false }) treeViewFields: HytTreeViewEditableComponent;
   private routerSubscription: Subscription;
   private activatedRouteSubscription: Subscription;
@@ -41,7 +41,6 @@ export class PacketFieldsFormComponent extends ProjectFormEntity implements OnDe
     }
   };
 
-  @Input()
   packetId: number;
 
   fieldMultiplicityOptions: Option[] = Object.keys(HPacketField.MultiplicityEnum)
@@ -82,12 +81,6 @@ export class PacketFieldsFormComponent extends ProjectFormEntity implements OnDe
         this.loadData();
       }
     });
-  }
-
-  ngOnChanges() {
-    if (this.packetId) {
-      this.loadData();
-    }
   }
 
   ngOnDestroy() {
@@ -133,7 +126,8 @@ export class PacketFieldsFormComponent extends ProjectFormEntity implements OnDe
     console.log('cancelField', e);
   }
 
-  private loadData() {
+  loadData(packetId?: number) {
+    if(packetId) this.packetId = packetId;
     this.hPacketService.findHPacket(this.packetId).subscribe((p: HPacket) => {
       this.packet = p;
       this.entityEvent.emit({

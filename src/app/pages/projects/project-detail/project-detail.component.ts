@@ -101,7 +101,9 @@ export class ProjectDetailComponent implements OnInit {
   onSaveClick() {
     this.validationErrors = [];
     this.currentEntity.save((res) => {
-      // TODO: ...
+      if (this.currentEntity instanceof PacketEnrichmentFormComponent || this.currentEntity instanceof PacketEventsFormComponent) {
+        this.currentEntity.editMode = false;
+      }
     }, (err) => {
       // TODO: ...
     });
