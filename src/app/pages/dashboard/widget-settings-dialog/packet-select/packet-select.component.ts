@@ -80,8 +80,9 @@ export class PacketSelectComponent implements OnInit {
       if (!this.multiPacketSelect) {
         this.selectedFields = [ this.selectedFields ];
       }
-      this.selectedFields.map((pf) => this.widget.config.packetFields.push(pf.id));
+      this.selectedFields.map((pf) => this.widget.config.packetFields[pf.id] = pf.name);
       this.widget.config.packetFieldsMapping = this.packetFieldsMapping;
+      console.log(this.widget);
     }
   }
 
@@ -105,7 +106,7 @@ export class PacketSelectComponent implements OnInit {
               this.selectedPacket = packet;
               if (this.widget.config.packetFields) {
                 packet.fields.map((pf) => {
-                  if (this.widget.config.packetFields.indexOf(pf.id) !== -1) {
+                  if (this.widget.config.packetFields[pf.id]) {
                     if (this.multiPacketSelect) {
                       this.selectedFields.push(pf);
                     } else {
