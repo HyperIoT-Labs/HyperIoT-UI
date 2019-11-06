@@ -31,7 +31,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
-import { MatCardModule, MatButtonModule, MatProgressSpinnerModule, MatProgressBarModule, MatMenuModule } from '@angular/material';
+import { MatCardModule, MatButtonModule, MatProgressSpinnerModule, MatProgressBarModule, MatMenuModule, MatRippleModule } from '@angular/material';
 import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
@@ -70,6 +70,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
     ReactiveFormsModule,
     RouterModule,
     MatChipsModule,
+    MatRippleModule,
     MatAutocompleteModule,
     MatInputModule,
     MatExpansionModule
