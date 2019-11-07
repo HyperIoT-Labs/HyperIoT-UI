@@ -53,6 +53,8 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
 
   pageStatus: PageStatus = PageStatus.Loading;
 
+  private removingWidget = false;
+
   /** Subject for manage the open subscriptions */
   protected ngUnsubscribe: Subject<void> = new Subject<void>();
 
@@ -68,9 +70,9 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
 
   autoSaveTimeout;
 
-  changes: number = 0;
+  changes = 0;
 
-  showSettingWidget: boolean = false
+  showSettingWidget = false;
 
   private responsiveBreakPoints = [
     { breakPoint: 1611, columns: 6, cell: 250},
@@ -266,8 +268,13 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
   onWidgetAction(data) {
     switch (data.action) {
       case 'toolbar:close':
-        // TODO: should request action confim
-        this.removeItem(data.widget);
+        if (!this.removingWidget) {
+          this.removingWidget = true;
+          // TODO: should request action confim
+          this.removeItem(data.widget, () => {
+            this.removingWidget = false;
+          });
+        }
         break;
       case 'toolbar:settings':
         this.currentWidgetIdSetting = data.widget.id;
@@ -277,7 +284,7 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
         const widget = this.getItemById(data.widget.id);
         this.widgetSetting.setWidget(widget);
 
-        this.openModal("hyt-modal-widget-setting")
+        this.openModal('hyt-modal-widget-setting');
         // this.router.navigate([
         //   'dashboards',
         //   { outlets: { modal: ['settings', data.widget.id] } }
@@ -364,7 +371,7 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
     return this.dashboard.find((w) => w.id === +id);
   }
 
-  removeItem(item) {
+  removeItem(item, callback) {
     if (item.id > 0) {
       this.configService
         .removeDashboardWidget(item.id)
@@ -372,7 +379,12 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
         .subscribe(() => {
           // TODO: handle errors
           this.dashboard.splice(this.dashboard.indexOf(item), 1);
+          if (callback) {
+            callback();
+          }
         });
+    } else if (callback) {
+      callback();
     }
   }
 
