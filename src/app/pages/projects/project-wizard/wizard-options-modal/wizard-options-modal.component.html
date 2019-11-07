@@ -1,0 +1,47 @@
+<div class="hyt-modal">
+    <div class="hyt-modal-body">
+        <div class="dialog">
+            <div class="center">
+                <div class="row">
+                    <div class="col-md-12">
+                        <ng-container i18n="@@HYT_choose_how_proceed">HYT_choose_how_proceed</ng-container>
+                        <button (click)="close()">X</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <img src="assets/projects/icons/monitor.png" (click)="output('goToStep', 4);">
+                        <br>
+                        <b i18n="@@HYT_enrichment_data">HYT_enrichment_data</b>
+                        <br>
+                        <p i18n="@@HYT_enrichment_definition_long">HYT_enrichment_definition_long</p>
+                    </div>
+                    <div class="col-md-4">
+                        <img src="assets/projects/icons/monitor.png" (click)="output('goToStep', 5);">
+                        <br>
+                        <b i18n="@@HYT_statistics">HYT_statistics</b>
+                        <br>
+                        <p i18n="@@HYT_statistics_definition_long">HYT_statistics_definition_long</p>
+                    </div>
+                    <div class="col-md-4">
+                        <img src="assets/projects/icons/monitor.png" (click)="output('goToStep', 6);">
+                        <br>
+                        <b i18n="@@HYT_events">HYT_events</b>
+                        <br>
+                        <p i18n="@@HYT_events_definition_long">HYT_events_definition_long</p>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-12">
+                        <hyt-button (clickFn)="output('goToFinish', null);">
+                            <ng-container i18n="@@HYT_finish">HYT_finish</ng-container>
+                        </hyt-button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="hyt-modal-background"></div>

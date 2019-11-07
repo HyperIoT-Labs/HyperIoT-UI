@@ -1,0 +1,50 @@
+<div class="hyt-modal">
+    <div class="hyt-modal-body">
+        <div class="dialog">
+            <div class="center">
+                <div class="row">
+                    <div class="col-md-12">
+                        <ng-container i18n="@@HYT_congratulations">HYT_congratulations</ng-container>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <p i18n="@@HYT_pw_finsh">HYT_pw_finsh</p>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <table id="tableSummary">
+                                    <tr *ngFor="let data of reportData">
+                                        <td><img [src]="data.imgPath"></td>
+                                        <td>
+                                            <ng-container>{{data.type}}</ng-container>
+                                            <hr>
+                                            <ul>
+                                                <li *ngFor="let ent of data.entities">{{ent}}</li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-md-3">
+                                <img src="assets/projects/icons/monitor.png" (click)="goToProjectWizard()">
+                                <br>
+                                <b i18n="@@HYT_go_to_project_list">HYT_go_to_project_list</b>
+                                <br>
+                                <p i18n="@@HYT_go_to_project_list_long">HYT_go_to_project_list_long</p>
+                            </div>
+                            <div class="col-md-3">
+                                <img src="assets/projects/icons/monitor.png" (click)="goToDashboard()">
+                                <br>
+                                <b i18n="@@HYT_go_to_dashboard">HYT_go_to_dashboard</b>
+                                <br>
+                                <p i18n="@@HYT_go_to_dashboard_long">HYT_go_to_dashboard_long</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="hyt-modal-background"></div>

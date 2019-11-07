@@ -13,13 +13,15 @@ import { PacketSelectComponent } from './packet-select/packet-select.component';
 import { PacketEnrichmentFormComponent } from '../project-forms/packet-enrichment-form/packet-enrichment-form.component';
 import { PacketEventsFormComponent } from '../project-forms/packet-events-form/packet-events-form.component';
 import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
+import { PacketStatisticsFormComponent } from '../project-forms/packet-statistics-form/packet-statistics-form.component';
+import { HytModalConfService } from 'src/app/services/hyt-modal-conf.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProjectWizardCanDeactivate implements CanDeactivate<ProjectWizardComponent>{
   canDeactivate(com: ProjectWizardComponent) {
-    if (com.currentProject == null || com.finishOpen)
+    if (com.currentProject == null)
       return true;
     else {
       com.deactivateModal = true;
@@ -31,7 +33,7 @@ export class ProjectWizardCanDeactivate implements CanDeactivate<ProjectWizardCo
 @Component({
   selector: 'hyt-project-wizard',
   templateUrl: './project-wizard.component.html',
-  styleUrls: ['./project-wizard.component.scss']
+  styleUrls: ['./project-wizard.component.scss'],
 })
 export class ProjectWizardComponent implements OnInit, AfterViewInit {
 
@@ -64,6 +66,8 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
   @ViewChild('enrichmentForm', { static: false })
   enrichmentForm: PacketEnrichmentFormComponent;
 
+  statisticsForm: PacketStatisticsFormComponent;
+
   @ViewChild('eventsForm', { static: false })
   eventsForm: PacketEventsFormComponent;
 
@@ -79,13 +83,10 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
 
   packetInformationValidated: boolean = false;
 
-  ovpOpen: boolean = false;
-  finishOpen: boolean = false;
-
   constructor(
-    private router: Router,
     private hDevicesService: HdevicesService,
-    private hPacketsService: HpacketsService
+    private hPacketsService: HpacketsService,
+    private modalService: HytModalConfService
   ) { }
 
   ngOnInit() {
@@ -143,6 +144,7 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
         break;
       }
       case 5: {
+        this.currentForm = this.statisticsForm;
         break;
       }
       case 6: {
@@ -326,31 +328,34 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
   }
 
   openOptionModal() {
-    this.ovpOpen = true;
-    this.packetInformationValidated = true;
+    this.modalService.open('hyt-wizard-options-modal');
   }
 
-  closeOptionModal() {
-    this.ovpOpen = false;
+  optionsModalClosed(event: { action: string, data: any }) {
+    console.log(event);
+    switch (event.action) {
+      case 'goToStep': {
+        console.log(event.data)
+        this.stepper.changeStep(event.data);
+        break;
+      }
+      case 'goToFinish': {
+        this.openFinishModal();
+        break;
+      }
+    }
   }
 
+  finishData: { imgPath: string, type: string, entities: string[] }[] = [];
   openFinishModal() {
-    this.ovpOpen = false;
-    this.finishOpen = true;
+    this.finishData = [];
+    this.finishData.push({ imgPath: 'assets/projects/icons/monitor.png', type: 'Project', entities: [this.currentProject.name] });//@I18N@
+    this.finishData.push({ imgPath: 'assets/projects/icons/monitor.png', type: 'Devices', entities: this.hDevices.map(d => d.deviceName) });//@I18N@
+    this.finishData.push({ imgPath: 'assets/projects/icons/monitor.png', type: 'Packets', entities: this.hPackets.map(p => p.name) });//@I18N@
+    this.finishData.push({ imgPath: 'assets/projects/icons/monitor.png', type: 'Enrichment', entities: this.enrichmentRules.map(e => e.name) });//@I18N@
+    this.finishData.push({ imgPath: 'assets/projects/icons/monitor.png', type: 'Events', entities: this.eventRules.map(e => e.name) });//@I18N@
+    this.modalService.open('hyt-wizard-report-modal')
   }
-
-  closeFinishModal() {
-    this.finishOpen = false;
-  }
-
-  goToDashboard() {
-    this.router.navigate(['/dashboards']);
-  }
-
-  goToProjectWizard() {
-    this.router.navigate(['/projects']);
-  }
-
   //Deactivation logic
 
   canDeactivate$: Subject<boolean> = new Subject<boolean>();

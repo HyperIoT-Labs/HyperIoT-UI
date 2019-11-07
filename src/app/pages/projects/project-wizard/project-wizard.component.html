@@ -41,6 +41,7 @@
       </ng-template>
 
       <ng-template #statisticsTemplate>
+        <hyt-statistics-step></hyt-statistics-step>
       </ng-template>
 
       <ng-template #eventsTemplate>
@@ -65,7 +66,6 @@
         <div class="col-12">
           <hyt-button class="toRight" *ngIf="currentForm" (clickFn)="onSaveClick($event)"
             [isDisabled]="!currentForm.isValid() || !currentForm.isDirty() || currentForm.loadingStatus != 0">
-            <!--TODO... fix ExpressionChangedAfterItHasBeenCheckedError (isDisabled)-->
             <ng-container *ngIf="currentForm && currentForm.isNew()" i18n="@@HYT_save">HYT_save</ng-container>
             <ng-container *ngIf="currentForm && !currentForm.isNew()" i18n="@@HYT_update">HYT_update</ng-container>
           </hyt-button>
@@ -120,141 +120,6 @@
 
 </div>
 
-<hyt-modal id="optionsModal" [mOpen]="ovpOpen">
-  <div class="center">
-    <div class="row">
-      <div class="col-md-12">
-        <ng-container i18n="@@HYT_choose_how_proceed">HYT_choose_how_proceed</ng-container>
-        <button (click)="closeOptionModal()">X</button>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-4">
-        <img src="assets/projects/icons/monitor.png" (click)="stepper.changeStep(4); closeOptionModal();">
-        <br>
-        <b i18n="@@HYT_enrichment_data">HYT_enrichment_data</b>
-        <br>
-        <p i18n="@@HYT_enrichment_definition_long">HYT_enrichment_definition_long</p>
-      </div>
-      <div class="col-md-4">
-        <img src="assets/projects/icons/monitor.png" (click)="stepper.changeStep(5); closeOptionModal();">
-        <br>
-        <b i18n="@@HYT_statistics">HYT_statistics</b>
-        <br>
-        <p i18n="@@HYT_statistics_definition_long">HYT_statistics_definition_long</p>
-      </div>
-      <div class="col-md-4">
-        <img src="assets/projects/icons/monitor.png" (click)="stepper.changeStep(6); closeOptionModal();">
-        <br>
-        <b i18n="@@HYT_events">HYT_events</b>
-        <br>
-        <p i18n="@@HYT_events_definition_long">HYT_events_definition_long</p>
-      </div>
-    </div>
-    <hr>
-    <div class="row">
-      <div class="col-md-12">
-        <hyt-button (clickFn)="openFinishModal()">
-          <ng-container i18n="@@HYT_finish">HYT_finish</ng-container>
-        </hyt-button>
-      </div>
-    </div>
-  </div>
-</hyt-modal>
-
-<hyt-modal id="finishModal" [mOpen]="finishOpen">
-  <div class="center">
-    <div class="row">
-      <div class="col-md-12">
-        <ng-container i18n="@@HYT_congratulations">HYT_congratulations</ng-container>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12">
-        <p i18n="@@HYT_pw_finsh">HYT_pw_finsh</p>
-        <div class="row">
-          <div class="col-md-6">
-            <table id="tableSummary">
-              <tr>
-                <td><img src="assets/projects/icons/monitor.png"></td>
-                <td>
-                  <ng-container i18n="@@HYT_project">HYT_project</ng-container>
-                  <hr>{{(currentProject)?currentProject.name:''}}
-                </td>
-              </tr>
-              <tr>
-                <td><img src="assets/projects/icons/monitor.png"></td>
-                <td>
-                  <ng-container i18n="@@HYT_devices">HYT_devices</ng-container>
-                  <hr>
-                  <ul>
-                    <li *ngFor="let el of hDevices">{{el.deviceName}}</li>
-                  </ul>
-                </td>
-              </tr>
-              <tr>
-                <td><img src="assets/projects/icons/monitor.png"></td>
-                <td>
-                  <ng-container i18n="@@HYT_packets">HYT_packets</ng-container>
-                  <hr>
-                  <ul>
-                    <li *ngFor="let el of hPackets">{{el.name}}</li>
-                  </ul>
-                </td>
-              </tr>
-              <!-- <tr>
-                  <td><img src="assets/projects/icons/monitor.png"></td>
-                  <td>Fields<hr><ul><li *ngFor="el of hPackets">el.name</li></ul></td>
-                </tr> -->
-              <tr>
-                <td><img src="assets/projects/icons/monitor.png"></td>
-                <td>
-                  <ng-container i18n="@@HYT_enrichment">HYT_enrichment</ng-container>
-                  <hr>
-                  <ul>
-                    <li *ngFor="let el of enrichmentRules">{{el.name}}</li>
-                  </ul>
-                </td>
-              </tr>
-              <tr>
-                <td><img src="assets/projects/icons/monitor.png"></td>
-                <td>
-                  <ng-container i18n="@@HYT_statistics">HYT_statistics</ng-container>
-                  <hr>
-                </td>
-              </tr>
-              <tr>
-                <td><img src="assets/projects/icons/monitor.png"></td>
-                <td>
-                  <ng-container i18n="@@HYT_events">HYT_events</ng-container>
-                  <hr>
-                  <ul>
-                    <li *ngFor="let el of eventRules">{{el.name}}</li>
-                  </ul>
-                </td>
-              </tr>
-            </table>
-          </div>
-          <div class="col-md-3">
-            <img src="assets/projects/icons/monitor.png" (click)="goToProjectWizard()">
-            <br>
-            <b i18n="@@HYT_go_to_project_list">HYT_go_to_project_list</b>
-            <br>
-            <p i18n="@@HYT_go_to_project_list_long">HYT_go_to_project_list_long</p>
-          </div>
-          <div class="col-md-3">
-            <img src="assets/projects/icons/monitor.png" (click)="goToDashboard()">
-            <br>
-            <b i18n="@@HYT_go_to_dashboard">HYT_go_to_dashboard</b>
-            <br>
-            <p i18n="@@HYT_go_to_dashboard_long">HYT_go_to_dashboard_long</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</hyt-modal>
-
 <hyt-modal [mOpen]="deactivateModal">
   <div class="center">
     <p i18n="@@HYT_pw_deactivation_modal">HYT_pw_deactivation_modal</p>
@@ -268,3 +133,7 @@
     </hyt-button>
   </div>
 </hyt-modal>
+
+<hyt-wizard-options-modal id="hyt-wizard-options-modal" (modalClose)="optionsModalClosed($event)"></hyt-wizard-options-modal>
+<hyt-wizard-report-modal id="hyt-wizard-report-modal" [reportData]="finishData"></hyt-wizard-report-modal>
+<!-- <hyt-wizard-deactivation-modal id="hyt-wizard-deactivation-modal" (modalClose)="deactivationModalClosed($event)"></hyt-wizard-deactivation-modal> -->
