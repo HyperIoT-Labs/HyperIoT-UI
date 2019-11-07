@@ -167,6 +167,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
       this.entity = res;
       this.resetForm();
       this.updateSummaryList();
+      this.showCancel = false;
       this.loadingStatus = LoadingStatusEnum.Ready;
       successCallback && successCallback(res);
     };
@@ -190,6 +191,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
   }
 
   onAddButtonClick() {
+    this.cleanForm();
     this.edit({ jsonActions: '[]' } as Rule);
   }
 

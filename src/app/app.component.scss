@@ -12,16 +12,16 @@ html {
 
   /* Track */
   ::-webkit-scrollbar-track {
-    background: #f1f1f1; 
+    background: #f1f1f1;
   }
-  
+
   /* Handle */
   ::-webkit-scrollbar-thumb {
     background: #5F87EF;
 
     /* Handle on hover */
     &:hover {
-      background: rgb(70, 104, 192); 
+      background: rgb(70, 104, 192);
     }
   }
 
@@ -51,14 +51,14 @@ html {
         right: 0;
         left: 0;
       }
-      
+
       #hyt-container-nav {
         position: relative;
         min-height: 100%;
         width: 100%;
 
         #hyt-container-router {
-        
+
           &.container-fluid {
             position: relative;
             padding-left: 60px;
@@ -85,46 +85,48 @@ html {
     hyt-add-widget-dialog,
     hyt-widget-settings-dialog,
     hyt-info-recording-action,
-    hyt-confirm-recording-action {
+    hyt-confirm-recording-action,
+    hyt-wizard-options-modal,
+    hyt-wizard-report-modal,
+    hyt-wizard-deactivation-modal {
       /* modals are hidden by default */
       display: none;
 
       .hyt-modal {
         /* modal container fixed across whole screen */
-        position: fixed;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        opacity: 0;
-  
+        position: relative;
+
         /* z-index must be higher than .hyt-modal-background */
         z-index: 1004;
-        
+
         /* enables scrolling for tall modals */
-        overflow: auto;
-  
+        //overflow: auto;
+
         .hyt-modal-body {
-          // padding: 20px;
-          background: #fff;
-          border-radius: 8px;
+
+          position: fixed;
+          top: 50%;
+          left: 50%;
+
           transform: scale(0.9);
 
-          -webkit-animation-name: modalTransform; /* Safari 4.0 - 8.0 */
-          -webkit-animation-duration: .4s; /* Safari 4.0 - 8.0 */
+          -webkit-animation-name: modalTransform;
+          /* Safari 4.0 - 8.0 */
+          -webkit-animation-duration: .4s;
+          /* Safari 4.0 - 8.0 */
           animation-name: modalTransform;
           animation-duration: .4s cubic-bezier(.25, .8, .25, 1);
 
-          -webkit-animation-name: modalOpacityBody; /* Safari 4.0 - 8.0 */
-          -webkit-animation-duration: .4s; /* Safari 4.0 - 8.0 */
+          -webkit-animation-name: modalOpacityBody;
+          /* Safari 4.0 - 8.0 */
+          -webkit-animation-duration: .4s;
+          /* Safari 4.0 - 8.0 */
           animation-name: modalOpacityBody;
           animation-duration: .4s cubic-bezier(.25, .8, .25, 1);
-  
+
           /* margin exposes part of the modal background */
           // margin: 40px;
         }
-
-
 
       }
 
@@ -143,11 +145,13 @@ html {
         /* z-index must be below .hyt-modal and above everything else  */
         z-index: 1003;
 
-        -webkit-animation-name: modalOpacity; /* Safari 4.0 - 8.0 */
-        -webkit-animation-duration: .4s; /* Safari 4.0 - 8.0 */
+        -webkit-animation-name: modalOpacity;
+        /* Safari 4.0 - 8.0 */
+        -webkit-animation-duration: .4s;
+        /* Safari 4.0 - 8.0 */
         animation-name: modalOpacity;
         animation-duration: .4s cubic-bezier(.25, .8, .25, 1);
-        
+
       }
 
       &.open {
@@ -158,73 +162,31 @@ html {
 
           .hyt-modal-body {
             transform: scale(1);
+            transform: translate(-50%, -50%);
             // transition: transform 0.4s cubic-bezier(.25, .8, .25, 1);
           }
         }
 
         .hyt-modal-background {
-          opacity: 0.75;
+          opacity: 0.65;
           // transition: all 0.4s cubic-bezier(.25, .8, .25, 1);
         }
       }
 
-      &.close {
-        display: none;
-
-        .hyt-modal {
-          opacity: 0;
-
-          .hyt-modal-body {
-            transform: scale(0.9);
-            transition: transform 0.4s cubic-bezier(.25, .8, .25, 1);
-          }
-        }
-
-        .hyt-modal-background {
-          opacity: 0;
-          transition: all 0.4s cubic-bezier(.25, .8, .25, 1);
-        }
-      }
-
     }
-  
+
     .hyt-modal-open {
       /* body overflow is hidden to hide main scrollbar when modal window is open */
       overflow: hidden;
     }
-  
-    hyt-add-widget-dialog {
-  
-      .hyt-modal-body {
-        top: 10%;
-        left: 50%;
-        margin-left: -512px;
-      }
-  
-    }
-  
-    hyt-widget-settings-dialog,
-    hyt-info-recording-action,
-    hyt-confirm-recording-action {
-      /* modals are hidden by default */
-  
-      .hyt-modal-body { 
-        top: 10%;
-        left: 50%;
-        width: 800px;
-        margin-left: -400px;
-      }
-  
-    }
 
-  
   }
 
 }
 
 @keyframes modalOpacity {
   0% {opacity: 0}
-  100% {opacity: 0.75}
+  100% {opacity: 0.65}
 }
 
 @keyframes modalOpacityBody {

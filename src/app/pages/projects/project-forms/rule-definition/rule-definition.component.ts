@@ -65,6 +65,7 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
       conditionOptions: [],
       compareWith: false
     })];
+    this.originalValueUpdate();
   }
 
   fieldFlatList: FieldList[] = [];

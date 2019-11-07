@@ -56,6 +56,7 @@ export class EventMailComponent implements OnInit {
 
   reset(): void {
     this.mailForm.reset();
+    this.originalValueUpdate();
   }
 
   addPlaceHolder(event): void {
@@ -63,10 +64,6 @@ export class EventMailComponent implements OnInit {
       mailBody: this.mailForm.value['mailBody'] + event
     });
     (<HTMLElement>document.querySelector('#mailBody.hyt-input.mat-input-element')).focus();
-  }
-
-  updateHint(event: string): void {
-    this.wizardService.updateHint(event, 6);
   }
 
   originalValueUpdate(){

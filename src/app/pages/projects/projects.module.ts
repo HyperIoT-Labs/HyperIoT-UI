@@ -34,6 +34,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule, MatButtonModule, MatProgressSpinnerModule, MatProgressBarModule, MatMenuModule, MatRippleModule } from '@angular/material';
 import { MatExpansionModule } from '@angular/material/expansion';
 
+import { StatisticsStepComponent } from './project-wizard/statistics-step/statistics-step.component';
+import { WizardReportModalComponent } from './project-wizard/wizard-report-modal/wizard-report-modal.component';
+import { WizardOptionsModalComponent } from './project-wizard/wizard-options-modal/wizard-options-modal.component';
+import { WizardDeactivationModalComponent } from './project-wizard/wizard-deactivation-modal/wizard-deactivation-modal.component';
+
 @NgModule({
   declarations: [
     ProjectsComponent,
@@ -55,7 +60,11 @@ import { MatExpansionModule } from '@angular/material/expansion';
     SelectableTextComponent,
     PacketSelectComponent,
     GenericSummaryListComponent,
-    DeviceSelectComponent
+    DeviceSelectComponent,
+    StatisticsStepComponent,
+    WizardReportModalComponent,
+    WizardOptionsModalComponent,
+    WizardDeactivationModalComponent
   ],
   imports: [
     MatIconModule,

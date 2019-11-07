@@ -21,13 +21,13 @@ export class HytModalConfService {
 
   open(id: string) {
       // open modal specified by id
-      let modal: any = this.modals.filter(x => x.id === id)[0];
+      let modal: any = this.modals.filter(x => x.id === id)[0];//TODO... find
       modal.open();
   }
 
   close(id: string) {
       // close modal specified by id
-      let modal: any = this.modals.filter(x => x.id === id)[0];
+      let modal: any = this.modals.filter(x => x.id === id)[0];//TODO... find
       modal.close();
   }
 }
