@@ -2,83 +2,34 @@ import {
   Component,
   OnInit,
   Input,
-  Output,
-  EventEmitter,
-  ElementRef,
-  HostListener,
   ViewChild,
-  OnDestroy
+  OnDestroy,
+  Injector
 } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 
 import { Subject } from 'rxjs';
 import { NgForm } from '@angular/forms';
-import { HytModalConfService } from 'src/app/services/hyt-modal-conf.service';
+import { HytModal } from 'src/app/services/hyt-modal';
 
 @Component({
   selector: 'hyt-widget-settings-dialog',
   templateUrl: './widget-settings-dialog.component.html',
   styleUrls: ['./widget-settings-dialog.component.scss']
 })
-export class WidgetSettingsDialogComponent implements OnInit, OnDestroy {
-  @Output() modalClose: EventEmitter<any> = new EventEmitter<any>();
+export class WidgetSettingsDialogComponent extends HytModal implements OnInit, OnDestroy {
+
   modalApply: Subject<any> = new Subject();
   @Input() widget;
   @Input() widgetName;
   @Input() widgetId: string;
   @ViewChild(NgForm, { static: true }) settingsForm: NgForm;
 
-  @Input() id: string;
-  private element: any;
-
   dialogDataState = 0;
 
   constructor(
-    private viewContainer: ElementRef,
-    private activatedRoute: ActivatedRoute,
-    private router: Router,
-    private hytModalService: HytModalConfService
+    injector: Injector
   ) {
-    this.element = viewContainer.nativeElement;
-    // this.widgetId = this.activatedRoute.snapshot.paramMap.get('widgetId');
-  }
-
-  @HostListener('document:keydown.escape', ['$event']) onKeydownHandler(event: KeyboardEvent) {
-    if (event.key.toUpperCase() === 'ESCAPE') {
-      // this.close(event);
-      this.close();
-    }
-  }
-
-  ngOnInit() {
-    let modal = this;
-
-    // ensure id attribute exists
-    if (!this.id) {
-        console.error('modal must have an id');
-        return;
-    }
-
-    // move element to bottom of page (just before </body>) so it can be displayed above everything else
-    document.body.appendChild(this.element);
-
-    // close modal on background click
-    this.element.addEventListener('click', function (e: any) {
-        if (e.target.className === 'hyt-modal') {
-            modal.close();
-        }
-    });
-
-    // add self (this modal instance) to the modal service so it's accessible from controllers
-    this.hytModalService.add(this);
-
-    // this.open();
-  }
-
-  // remove self from modal service when directive is destroyed
-  ngOnDestroy(): void {
-    this.hytModalService.remove(this.id);
-    this.element.remove();
+    super(injector);
   }
 
   modalIsOpen: boolean = false;
@@ -86,16 +37,14 @@ export class WidgetSettingsDialogComponent implements OnInit, OnDestroy {
   // open modal
   open(): void {
     this.dialogDataState = 0;
-    this.element.classList.add('open');
-    document.body.classList.add('hyt-modal-open');
+    super.open();
     this.modalIsOpen = true;
     this.dialogDataState = 1;
   }
 
   // close modal
   close(event?): void {
-    this.element.classList.remove('open');
-    document.body.classList.remove('hyt-modal-open');
+    super.close();
     this.modalIsOpen = false;
   }
 
