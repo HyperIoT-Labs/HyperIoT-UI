@@ -30,7 +30,6 @@ import { TextLabelSettingsComponent } from './widget-settings-dialog/text-label-
 import { TimeChartSettingsComponent } from './widget-settings-dialog/time-chart-settings/time-chart-settings.component';
 
 import { MyTelInputComponent } from '../../test/my-tel-input/my-tel-input.component';
-import { from } from 'rxjs';
 import { DashboardComponent } from './dashboard.component';
 import { ConfirmRecordingActionComponent } from './modals/confirm-recording-action/confirm-recording-action.component';
 import { InfoRecordingActionComponent } from './modals/info-recording-action/info-recording-action.component';

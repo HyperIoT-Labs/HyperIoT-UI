@@ -76,7 +76,7 @@ export class PacketSelectComponent implements OnInit {
   apply() {
     if (this.selectedPacket) {
       this.widget.config.packetId = this.selectedPacket.id;
-      this.widget.config.packetFields = [];
+      this.widget.config.packetFields = {};
       if (!this.multiPacketSelect) {
         this.selectedFields = [ this.selectedFields ];
       }
