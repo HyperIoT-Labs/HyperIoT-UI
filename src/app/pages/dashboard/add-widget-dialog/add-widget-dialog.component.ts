@@ -1,7 +1,8 @@
-import { Component, OnInit, ElementRef, Output, EventEmitter, HostListener, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, ElementRef, Output, EventEmitter, HostListener, Input, OnDestroy, Injector } from '@angular/core';
 import { HytModalConfService } from 'src/app/services/hyt-modal-conf.service';
 import { WidgetsService, Widget } from '@hyperiot/core';
 import { KeyValue } from '@angular/common';
+import { HytModal } from 'src/app/services/hyt-modal';
 
 interface WidgetClient {
   id?: number;
@@ -27,8 +28,8 @@ interface WidgetClient {
   templateUrl: './add-widget-dialog.component.html',
   styleUrls: ['./add-widget-dialog.component.scss']
 })
-export class AddWidgetDialogComponent implements OnInit, OnDestroy {
-  @Output() modalClose: EventEmitter<any> = new EventEmitter<any>();
+export class AddWidgetDialogComponent extends HytModal implements OnInit, OnDestroy {
+
   @Output() addWidgets: EventEmitter<any> = new EventEmitter();
   filteredWidgets: WidgetClient[] = [];
   widgetCategoryList: any;
@@ -38,64 +39,22 @@ export class AddWidgetDialogComponent implements OnInit, OnDestroy {
   widgetAddMax = 10;
   currentWidget: WidgetClient;
 
-  @Input() id: string;
-  private element: any;
-
   dialogDataState = 0;
 
+  
   constructor(
-    private viewContainer: ElementRef,
-    private hytModalService: HytModalConfService,
+    injector: Injector,
     private widgetsService: WidgetsService
   ) {
-    this.element = viewContainer.nativeElement;
-  }
-
-  @HostListener('document:keydown.escape', ['$event']) onKeydownHandler(event: KeyboardEvent) {
-    if (event.key.toUpperCase() === 'ESCAPE') {
-      // this.close(event);
-      this.close();
-    }
-  }
-
-  ngOnInit() {
-    let modal = this;
-
-    // ensure id attribute exists
-    if (!this.id) {
-      console.error('modal must have an id');
-      return;
-    }
-
-    // move element to bottom of page (just before </body>) so it can be displayed above everything else
-    document.body.appendChild(this.element);
-
-    // close modal on background click
-    this.element.addEventListener('click', function (e: any) {
-      if (e.target.className === 'hyt-modal') {
-        modal.close();
-      }
-    });
-
-    // add self (this modal instance) to the modal service so it's accessible from controllers
-    this.hytModalService.add(this);
-
-    // this.open();
-  }
-
-  // remove self from modal service when directive is destroyed
-  ngOnDestroy(): void {
-    this.hytModalService.remove(this.id);
-    this.element.remove();
+    super(injector);
   }
 
   widgetsByCategory: any;
 
   // open modal
   open(): void {
-    this.dialogDataState = 0,
-    this.element.classList.add('open');
-    document.body.classList.add('hyt-modal-open');
+    this.dialogDataState = 0;
+    super.open();
 
     this.dialogDataState = 0;
     this.currentWidget = null;
@@ -134,13 +93,7 @@ export class AddWidgetDialogComponent implements OnInit, OnDestroy {
       });
 
   }
-
-  // close modal
-  close(): void {
-    this.element.classList.remove('open');
-    document.body.classList.remove('hyt-modal-open');
-  }
-
+  
   /****************************************************************************************** */
 
   // close($event?) {

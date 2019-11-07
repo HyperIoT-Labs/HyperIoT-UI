@@ -43,7 +43,7 @@ export abstract class HytModal implements OnInit, OnDestroy {
 
         // close modal on background click
         this.element.addEventListener('click', function (e: any) {
-            if (e.target.className === 'hyt-modal') {
+            if (e.target.className === 'hyt-modal-background') {
                 modal.close();
             }
         });
