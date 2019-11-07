@@ -15,6 +15,7 @@ import { PacketEventsFormComponent } from '../project-forms/packet-events-form/p
 import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
 import { PacketStatisticsFormComponent } from '../project-forms/packet-statistics-form/packet-statistics-form.component';
 import { HytModalConfService } from 'src/app/services/hyt-modal-conf.service';
+import { HytStepperComponent } from '@hyperiot/components/lib/hyt-stepper/hyt-stepper.component';
 
 @Injectable({
   providedIn: 'root',
@@ -38,7 +39,7 @@ export class ProjectWizardCanDeactivate implements CanDeactivate<ProjectWizardCo
 export class ProjectWizardComponent implements OnInit, AfterViewInit {
 
   @ViewChild('stepper', { static: false })
-  stepper;
+  stepper: HytStepperComponent;
 
   currentForm: ProjectFormEntity;
 
@@ -329,6 +330,7 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
 
   openOptionModal() {
     this.modalService.open('hyt-wizard-options-modal');
+    this.packetInformationValidated = true;
   }
 
   optionsModalClosed(event: { action: string, data: any }) {
