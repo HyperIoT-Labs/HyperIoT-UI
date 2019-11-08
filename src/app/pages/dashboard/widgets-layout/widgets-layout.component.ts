@@ -75,17 +75,17 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
   showSettingWidget = false;
 
   private responsiveBreakPoints = [
-    { breakPoint: 1611, columns: 6, cell: 250},
-    { breakPoint: 1610, columns: 6, cell: 200},
-    { breakPoint: 1327, columns: 6, cell: 180},
-    { breakPoint: 1200, columns: 6, cell: 180},
-    { breakPoint: 1024, columns: 4, cell: 230},
-    { breakPoint: 880, columns: 4, cell: 190},
-    { breakPoint: 720, columns: 3, cell: 210},
-    { breakPoint: 640, columns: 2, cell: 270},
-    { breakPoint: 480, columns: 2, cell: 200},
-    { breakPoint: 400, columns: 1, cell: 170},
-    { breakPoint: 0, columns: 1, cell: 120}
+    { breakPoint: 1611, columns: 6, cell: 250 },
+    { breakPoint: 1610, columns: 6, cell: 200 },
+    { breakPoint: 1327, columns: 6, cell: 180 },
+    { breakPoint: 1200, columns: 6, cell: 180 },
+    { breakPoint: 1024, columns: 4, cell: 230 },
+    { breakPoint: 880, columns: 4, cell: 190 },
+    { breakPoint: 720, columns: 3, cell: 210 },
+    { breakPoint: 640, columns: 2, cell: 270 },
+    { breakPoint: 480, columns: 2, cell: 200 },
+    { breakPoint: 400, columns: 1, cell: 170 },
+    { breakPoint: 0, columns: 1, cell: 120 }
   ];
 
   lastWindowSize;
@@ -104,46 +104,42 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    this.loadDashboard();
+  }
+
+  loadDashboard() {
     this.setOptions();
 
     this.dashboard = [];
 
-    if (this.dashboardValue) {
-      this.dashboardEntity = this.dashboardValue;
-      this.dashboardType = this.dashboardEntity.dashboardType;
-      this.projectId = this.dashboardEntity.hproject.id;
-      // connect to data upstream
-      this.dataStreamService.connect(this.projectId);
-      // get dashboard config
-
-      this.getWidgetsMapped(this.widgets)
+    this.configService.getDashboard(+this.dashboardValue.id)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
-        (dashboardConfig: Array<GridsterItem>) => {
-          this.dashboard = dashboardConfig;
-          this.originalDashboard = JSON.parse(JSON.stringify(dashboardConfig));
-          this.pageStatus = PageStatus.Standard;
+        (d) => {
+          console.log(d);
+          this.dashboardEntity = d;
+          this.dashboardType = this.dashboardEntity.dashboardType;
+          this.projectId = this.dashboardEntity.hproject.id;
+          // connect to data upstream
+          this.dataStreamService.connect(this.projectId);
+          // get dashboard config
+
+          this.getWidgetsMapped(d.widgets)
+            .pipe(takeUntil(this.ngUnsubscribe))
+            .subscribe(
+              (dashboardConfig: Array<GridsterItem>) => {
+                this.dashboard = dashboardConfig;
+                this.originalDashboard = JSON.parse(JSON.stringify(dashboardConfig));
+                this.pageStatus = PageStatus.Standard;
+              }
+            );
+
+        },
+        error => {
+          console.error(error);
+          this.pageStatus = PageStatus.Error;
         }
       );
-
-      //  this.configService.getConfig(this.projectId, this.dashboardId)
-      //   .pipe(takeUntil(this.ngUnsubscribe))
-      //   .subscribe((dashboardConfig: Array<GridsterItem>) => {}
-        // this.dashboard = dashboardConfig;
-        // console.log(this.dashboard)
-        // this.originalDashboard = JSON.parse(JSON.stringify(dashboardConfig));
-        // this.pageStatus = PageStatus.Standard;
-      // });
-    } else {
-      console.error('error');
-      this.pageStatus = PageStatus.Error;
-    }
-
-    // window.onbeforeunload = () => {
-    //   this.saveDashboard();
-    //   console.log("saviiiing")
-    //   // localStorage.setItem("DASHBOARDTOSAVE",this.dashboardId+"_"+JSON.stringify(this.dashboard))
-    // };
 
     window.addEventListener('beforeunload', (e) => {
       this.saveDashboard();
@@ -225,11 +221,11 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
         const config = [];
         // Normalize data received from server
         data.map((w: DashboardWidget) => {
-            const widget = JSON.parse(w.widgetConf);
-            widget.projectId = +this.projectId;
-            widget.id = w.id;
-            widget.entityVersion = w.entityVersion;
-            config.push(widget);
+          const widget = JSON.parse(w.widgetConf);
+          widget.projectId = +this.projectId;
+          widget.id = w.id;
+          widget.entityVersion = w.entityVersion;
+          config.push(widget);
         });
         return config;
       },
@@ -328,7 +324,7 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
 
       this.pageStatus = PageStatus.Loading;
       this.lastWindowSize = setTimeout(() => {
-        this.ngOnInit();
+        this.loadDashboard();
         // this.pageStatus = PageStatus.Standard;
       }, 500);
 
@@ -409,7 +405,7 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
 
   saveDashboard() {
     this.configService.putConfig(+this.dashboardValue.id, this.dashboard)
-    .pipe(takeUntil(this.ngUnsubscribe))
+      .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((res) => {
         if (res && res.status_code === 200) {
           this.originalDashboard = this.dashboard;
