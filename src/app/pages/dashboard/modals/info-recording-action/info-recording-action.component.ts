@@ -23,7 +23,7 @@ export class InfoRecordingActionComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    let modal = this;
+    const modal = this;
 
     // ensure id attribute exists
     if (!this.id) {
@@ -35,7 +35,7 @@ export class InfoRecordingActionComponent implements OnInit, OnDestroy {
     document.body.appendChild(this.element);
 
     // close modal on background click
-    this.element.addEventListener('click', function (e: any) {
+    this.element.addEventListener('click', (e: any) => {
         if (e.target.className === 'hyt-modal') {
           modal.close();
         }
@@ -64,13 +64,13 @@ export class InfoRecordingActionComponent implements OnInit, OnDestroy {
   }
 
   next(event) {
-    this.modalClose.emit(true)
-    this.close()
+    this.modalClose.emit(true);
+    this.close();
   }
 
   back(event) {
-    this.modalClose.emit(false)
-    this.close()
+    this.modalClose.emit(false);
+    this.close();
   }
-  
+
 }

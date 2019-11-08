@@ -1,5 +1,5 @@
-import { ProfilePage } from "./profile.po"
-import { browser, logging, element, by } from 'protractor';
+import { ProfilePage } from './profile.po';
+import { browser } from 'protractor';
 
 
 describe('Profile Page', () => {
@@ -39,4 +39,4 @@ describe('Profile Page', () => {
     //     browser.sleep(1000);
 
    // });
-})
+});

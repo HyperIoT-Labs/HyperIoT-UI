@@ -18,19 +18,19 @@ export class LoginComponent implements OnInit {
 
   error: string[] = [null, null, null];
 
-  returnUrl: String;
+  returnUrl: string;
 
   loginForm: FormGroup;
 
-  cookieValue: String;
+  cookieValue: string;
 
-  private key: string = "9$&hy7Ke2/";
+  private key = '9$&hy7Ke2/';
 
   private encrypted;
 
   private decrypted;
 
-  loading: boolean = false;
+  loading = false;
 
   injectedErrorState = false;
 
@@ -70,9 +70,9 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('userInfo', JSON.stringify(res));
         localStorage.setItem('user', JSON.stringify(res.authenticable));
         this.logger.trace('userInfo', JSON.stringify(res.authenticable));
- 
-        if (this.loginForm.value.rememberMe == true) {
-          this.encrypting(this.loginForm.value.username + "&" + this.loginForm.value.password, this.key);
+
+        if (this.loginForm.value.rememberMe === true) {
+          this.encrypting(this.loginForm.value.username + '&' + this.loginForm.value.password, this.key);
           this.cookieService.set('hytUser', this.encrypted, 28, '/');
           this.cookieValue = this.cookieService.get('hytUser');
         } else if (this.cookieService.check('hytUser')) {
@@ -84,18 +84,18 @@ export class LoginComponent implements OnInit {
       },
       err => {
         this.logger.error('Invalid account credentials', err);
-        let k: HYTError[] = this.httperrorHandler.handleLogin(err);
-        for (let e of k) {
+        const k: HYTError[] = this.httperrorHandler.handleLogin(err);
+        for (const e of k) {
           this.error[2] = e.message;
         }
         this.loading = false;
       }
-    )
+    );
   }
 
   keyDownFunction(event) {
-    if (event.keyCode == 13) {
-      this.login()
+    if (event.keyCode === 13) {
+      this.login();
     }
   }
 
@@ -111,7 +111,7 @@ export class LoginComponent implements OnInit {
     return (
       this.loginForm.get('username').invalid ||
       this.loginForm.get('password').invalid
-    )
+    );
   }
 
 }

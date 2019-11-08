@@ -22,15 +22,16 @@ export class AuthenticationHttpErrorHandlerService extends HttpErrorHandlerServi
             return [
               {
                 message: httpError.error.errorMessages[0] + ' ' + this.i18n('HYT_duplicate_entity'),
-                container: (httpError.error.errorMessages[0] == 'username') ? 'username' : 'email'
+                container: (httpError.error.errorMessages[0] === 'username') ? 'username' : 'email'
               }
             ];
             break;
           }
           case 'it.acsoftware.hyperiot.base.exception.HyperIoTValidationException': {
-            var errors: HYTError[] = [];
-            for (let k of httpError.error.validationErrors)
-              errors.push({ message: k.message, container: k.field })
+            const errors: HYTError[] = [];
+            for (const k of httpError.error.validationErrors) {
+              errors.push({ message: k.message, container: k.field });
+            }
             return errors;
             break;
           }

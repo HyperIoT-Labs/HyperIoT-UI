@@ -76,8 +76,7 @@ export class PacketFormComponent extends ProjectFormEntity implements OnDestroy 
     @ViewChild('form', { static: true }) formView: ElementRef,
     private hPacketService: HpacketsService,
     private activatedRoute: ActivatedRoute,
-    private router: Router,
-    private i18n:I18n
+    private router: Router
   ) {
     super(injector, formView);
     this.longDefinition = this.i18n('HYT_packet_long_definition');
@@ -153,8 +152,7 @@ export class PacketFormComponent extends ProjectFormEntity implements OnDestroy 
         errorCallback && errorCallback(err);
         this.loadingStatus = LoadingStatusEnum.Error;
       });
-    }
-    else {
+    } else {
       p.entityVersion = 1;
       p.version = '1';
       p.fields = [];

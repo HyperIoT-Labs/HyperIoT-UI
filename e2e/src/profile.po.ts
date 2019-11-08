@@ -5,7 +5,6 @@ export class ProfilePage {
     private updateInfoBtn = element(by.xpath('//*[@id=form-details]/div[6]'));
     changePwdBtn = element.all(by.css('hyt-button')).last();
     nameFormInput = element(by.id('mat-input-2'));
-    
 
     getUpdateInfoBtn() {
         return this.updateInfoBtn;

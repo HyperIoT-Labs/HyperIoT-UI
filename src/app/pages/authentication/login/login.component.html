@@ -11,23 +11,21 @@
 
       <div id="column-welcome" class="col-md-6">
         <div id="head-welcome-box">
-          Hello!
+          <ng-container i18n="@@HYT_hello">HYT_hello</ng-container>!
         </div>
-        <!--@I18N@-->
         <div id="body-welcome-box">
-          We are happy to see you again!
-          <!--@I18N@-->
+          <ng-container i18n="@@HYT_login_text">HYT_login_text</ng-container>
         </div>
         <div id="footer-welcome-box">
-          Don't have an account?<br /><a routerLink="/auth/registration">Register Now</a> and Enjoy all our benefits!
+          <ng-container i18n="@@HYT_login_no_account">HYT_login_no_account</ng-container>
+          <br /><a routerLink="/auth/registration" i18n="@@HYT_register_now">HYT_register_now</a> 
+          &#160;<ng-container i18n="@@HYT_login_register_message">HYT_login_register_message</ng-container>
         </div>
-        <!--@I18N@-->
       </div>
 
       <div id="column-login-form" class="col-md-6">
 
-        <h3 id="login-title">Login to your Account</h3>
-        <!--@I18N@-->
+        <h3 id="login-title" i18n="@@HYT_login_to_account">HYT_login_to_account</h3>
 
         <div class="row">
 
@@ -55,17 +53,15 @@
 
               <div id="forgot-container" class="container-form-field">
 
-                <a routerLink="/auth/password-recovery">Forgot Password?</a>
-                <!--@I18N@-->
+                <a routerLink="/auth/password-recovery" i18n="@@HYT_login_forgot_password">HYT_login_forgot_password</a>
 
               </div> <!-- Container Forgot Password -->
 
               <div class="container-form-field">
                 <mat-checkbox type="checkbox" id="remember-me">
-                  Remember me
+                  <ng-container i18n="@@HYT_remember_me">HYT_remember_me</ng-container>
                 </mat-checkbox>
               </div> <!-- Container Remember Me -->
-              <!--@I18N@-->
 
               <div class="container-form-field errorMessage">
                 <ng-container *ngIf="error[2]">
@@ -76,10 +72,9 @@
               <div class="container-form-field">
                 <hyt-button id="submit-btn" [ngClass]="{'submit-valid-form' : !notValid() }" type="submit"
                   [isDisabled]="notValid() || loading">
-                  Login
+                  <ng-container i18n="@@HYT_login">HYT_login</ng-container>
                 </hyt-button>
               </div> <!-- Container Button -->
-              <!--@I18N@-->
 
             </form> <!-- End Form -->
 

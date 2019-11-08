@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class AccountButtonComponent implements OnInit {
 
-  isLoggedIn: boolean = true;
+  isLoggedIn = true;
 
   constructor(
     private route: Router,

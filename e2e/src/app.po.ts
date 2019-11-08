@@ -6,7 +6,7 @@ export class AppPage {
   editUserName = element(by.id('mat-input-0'));
   editPwd = element(by.id('mat-input-1'));
   rememberMe = element(by.id('remember-me'));
-  
+
 
   navigateTo() {
     return browser.get('/auth/login');

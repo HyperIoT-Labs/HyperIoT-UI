@@ -20,11 +20,11 @@ import { HytStepperComponent } from '@hyperiot/components/lib/hyt-stepper/hyt-st
 @Injectable({
   providedIn: 'root',
 })
-export class ProjectWizardCanDeactivate implements CanDeactivate<ProjectWizardComponent>{
+export class ProjectWizardCanDeactivate implements CanDeactivate<ProjectWizardComponent> {
   canDeactivate(com: ProjectWizardComponent) {
-    if (com.currentProject == null)
+    if (com.currentProject == null) {
       return true;
-    else {
+    } else {
       com.deactivateModal = true;
       return com.canDeactivate$;
     }
@@ -82,7 +82,18 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
   enrichmentRules: Rule[] = [];
   eventRules: Rule[] = [];
 
-  packetInformationValidated: boolean = false;
+  packetInformationValidated = false;
+
+  hintMessage = '';
+  hintVisible = false;
+
+  currentStepIndex = 0;
+
+  finishData: { imgPath: string, type: string, entities: string[] }[] = [];
+
+  canDeactivate$: Subject<boolean> = new Subject<boolean>();
+
+  deactivateModal = false;
 
   constructor(
     private hDevicesService: HdevicesService,
@@ -95,7 +106,7 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    setTimeout(() => {//TODO...setimeout 0 to avoid 'expression changed after view checked'
+    setTimeout(() => {// TODO...setimeout 0 to avoid 'expression changed after view checked'
       this.eventsForm.editMode = true;
       this.enrichmentForm.editMode = true;
       this.resetForms();
@@ -111,14 +122,9 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
     this.packetsForm.edit();
   }
 
-  hintMessage = '';
-  hintVisible = false;
-
-  currentStepIndex: number = 0;
-
   stepChanged(event) {
     this.currentStepIndex = event.selectedIndex;
-    //setting current form...
+    // setting current form...
     switch (event.selectedIndex) {
       case 0: {
         this.currentForm = this.projectForm;
@@ -154,29 +160,30 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
         break;
       }
       default: {
-        console.log("error");
+        console.log('error');
       }
     }
     // if (!this.currentForm.isDirty())
     //   this.currentForm.edit();
-    //this.wizardService.stepChanged(event.selectedIndex);
+    // this.wizardService.stepChanged(event.selectedIndex);
   }
 
   updateList(ent: any, entityList: any[]): any[] {
-    let fin = entityList.find(x => x.id == ent.id);
+    const fin = entityList.find(x => x.id === ent.id);
     if (fin) {
-      const en = entityList.find(x => x.id == ent.id);
+      const en = entityList.find(x => x.id === ent.id);
       entityList[entityList.indexOf(en)] = ent;
-    }
-    else
+    } else {
       entityList.push(ent);
+    }
     return entityList;
   }
 
   deleteFromList(entId: number, entityList: any[]) {
     for (let k = 0; k < entityList.length; k++) {
-      if (entityList[k].id == entId)
+      if (entityList[k].id === entId) {
         entityList.splice(k, 1);
+      }
     }
     return entityList;
   }
@@ -202,28 +209,20 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
   onSaveClick(e) {
     this.currentForm.save((ent, isNew) => {
 
-      if (this.currentForm == this.projectForm) {
+      if (this.currentForm instanceof ProjectFormComponent) {
         this.currentProject = ent;
-      }
-
-      else if (this.currentForm == this.devicesForm) {
+      } else if (this.currentForm instanceof DeviceFormComponent) {
         this.currentForm.cleanForm();
         this.hDevices = [...this.updateList(ent, this.hDevices)];
         this.updateDeviceTable();
-      }
-
-      else if (this.currentForm == this.packetsForm) {
+      } else if (this.currentForm instanceof PacketFormComponent) {
         this.currentForm.cleanForm();
         this.hPackets = [...this.updateList(ent, this.hPackets)];
         this.updatePacketTable();
-      }
-
-      else if (this.currentForm == this.enrichmentForm) {
+      } else if (this.currentForm instanceof PacketEnrichmentFormComponent) {
         this.enrichmentRules = [...this.updateList(ent, this.enrichmentRules)];
         this.currentForm.cleanForm();
-      }
-
-      else if (this.currentForm == this.eventsForm) {
+      } else if (this.currentForm instanceof PacketEventsFormComponent) {
         this.eventRules = [...this.updateList(ent, this.eventRules)];
         this.currentForm.cleanForm();
       }
@@ -260,41 +259,38 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
   }
 
   menuAction(event): void {
-    console.log(event.item)
+    console.log(event.item);
     switch (event.action) {
       case 'edit':
-        if (this.currentForm == this.packetsForm) {
+        if (this.currentForm instanceof PacketFormComponent) {
           this.deviceSelect.selectSpecific(event.item.data.device.id);
           this.deviceSelect.freezeSelection();
         }
         this.currentForm.edit(event.item.data);
         break;
       case 'duplicate':
-        if (this.currentForm == this.packetsForm) {
+        if (this.currentForm instanceof PacketFormComponent) {
           this.deviceSelect.unfreezeSelection();
           this.deviceSelect.selectSpecific(event.item.data.device.id);
         }
         this.currentForm.clone(event.item.data);
         break;
       case 'delete':
-        if (this.currentForm == this.packetsForm) {
+        if (this.currentForm instanceof PacketFormComponent) {
           this.deviceSelect.selectSpecific(event.item.data.device.id);
           this.deviceSelect.freezeSelection();
         }
         this.currentForm.edit(event.item.data, this.currentForm.openDeleteDialog((del) => {
-          if (this.currentForm == this.devicesForm) {
+          if (this.currentForm instanceof DeviceFormComponent) {
             this.hDevices = [...this.deleteFromList(event.item.data.id, this.hDevices)];
             this.updateDeviceTable();
-          }
-          else if (this.currentForm == this.packetsForm) {
+          } else if (this.currentForm instanceof PacketFormComponent) {
             this.hPackets = [...this.deleteFromList(event.item.data.id, this.hPackets)];
             this.updatePacketTable();
             this.deviceSelect.unfreezeSelection();
-          }
-          else if (this.currentForm == this.enrichmentForm) {
+          } else if (this.currentForm instanceof PacketEnrichmentFormComponent) {
             this.enrichmentRules = [...this.deleteFromList(event.item.data.id, this.enrichmentRules)];
-          }
-          else if (this.currentForm == this.eventsForm) {
+          } else if (this.currentForm instanceof PacketEventsFormComponent) {
             this.eventRules = [...this.deleteFromList(event.item.data.id, this.eventRules)];
           }
           this.currentForm.cleanForm();
@@ -348,7 +344,6 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
     }
   }
 
-  finishData: { imgPath: string, type: string, entities: string[] }[] = [];
   openFinishModal() {
     this.finishData = [];
     this.finishData.push({ imgPath: 'assets/projects/icons/monitor.png', type: 'Project', entities: [this.currentProject.name] });//@I18N@
@@ -358,34 +353,30 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
     this.finishData.push({ imgPath: 'assets/projects/icons/monitor.png', type: 'Events', entities: this.eventRules.map(e => e.name) });//@I18N@
     this.modalService.open('hyt-wizard-report-modal')
   }
-  //Deactivation logic
 
-  canDeactivate$: Subject<boolean> = new Subject<boolean>();
-
-  deactivateModal: boolean = false;
-
+  // Deactivation logic
   deactivate(cd: boolean): void {
     this.deactivateModal = false;
     this.canDeactivate$.next(cd);
   }
 
-  //TODO... in service
+  // TODO... in service
   getDevices(): void {
     this.hDevicesService.findAllHDeviceByProjectId(this.currentProject.id).subscribe(
       (res: HDevice[]) => {
         this.hDevices = res;
         this.updateDeviceTable();
       }
-    )
+    );
   }
-  //TODO... in service
+  // TODO... in service
   getPackets(): void {
     this.hPacketsService.findAllHPacketByProjectId(this.currentProject.id).subscribe(
       (res: HPacket[]) => {
         this.hPackets = res;
         this.updatePacketTable();
       }
-    )
+    );
   }
 
   isNextDisabled(): boolean {
@@ -395,11 +386,11 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
         break;
       }
       case 1: {
-        return this.hDevices.length == 0;
+        return this.hDevices.length === 0;
         break;
       }
       case 2: {
-        return this.hPackets.length == 0;
+        return this.hPackets.length === 0;
         break;
       }
       default: {
@@ -409,12 +400,13 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
   }
 
   nextFn() {
-    if (this.currentStepIndex == 3 && !this.packetInformationValidated)
+    if (this.currentStepIndex === 3 && !this.packetInformationValidated) {
       this.openOptionModal();
-    else if (this.currentStepIndex == 6)
+    } else if (this.currentStepIndex === 6) {
       this.openOptionModal();
-    else
+    } else {
       this.stepper.next();
+    }
   }
 
   showCancel(): boolean {

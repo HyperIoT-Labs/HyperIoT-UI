@@ -20,11 +20,11 @@ describe('ProjectDetailComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ ProjectDetailComponent ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
-      providers: [{provide: HprojectsService, useValue: hProjectService}, 
-        {provide: HdevicesService, useValue: hDeviceService}, 
+      providers: [{provide: HprojectsService, useValue: hProjectService},
+        {provide: HdevicesService, useValue: hDeviceService},
         {provide: HpacketsService, useValue: packetService},
         {provide: ActivatedRoute, useValue: activatedRoute},
-        {provide: Router, useValue: router}, 
+        {provide: Router, useValue: router},
         {provide: MatDialog, useValue: dialog}]
     })
     .compileComponents();

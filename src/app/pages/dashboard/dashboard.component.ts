@@ -46,11 +46,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   pageStatus: PageStatus = PageStatus.Loading;
 
-  signalIsOn: boolean = true;
+  signalIsOn = true;
 
-  streamIsOn: boolean = true;
+  streamIsOn = true;
 
-  dataRecordingIsOn: boolean = false;
+  dataRecordingIsOn = false;
 
   idProjectSelected: number;
 
@@ -59,6 +59,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
   currentDashboard: Dashboard;
 
   currentDashboardType: Dashboard.DashboardTypeEnum;
+
+  recordReloading = false;
 
   constructor(
     private dashboardConfigService: DashboardConfigService,
@@ -84,17 +86,17 @@ export class DashboardComponent implements OnInit, OnDestroy {
       res => {
         try {
           this.hProjectList = [...res];
-          this.hProjectListOptions = <HytSelectOption[]>this.hProjectList;
+          this.hProjectListOptions = this.hProjectList as HytSelectOption[];
           this.hProjectListOptions.forEach(element => {
             element.label = element.name;
             element.value = element.id;
           });
 
-          this.hProjectListOptions.sort(function (a, b) {
+          this.hProjectListOptions.sort((a, b) => {
             if (a.entityModifyDate > b.entityModifyDate) { return -1; }
             if (a.entityModifyDate < b.entityModifyDate) { return 1; }
             return 0;
-          })
+          });
 
           if (this.hProjectListOptions.length > 0) {
             this.idProjectSelected = this.hProjectListOptions[0].id;
@@ -102,27 +104,27 @@ export class DashboardComponent implements OnInit, OnDestroy {
             this.dashboardConfigService.getRealtimeDashboardFromProject(this.idProjectSelected)
               .pipe(takeUntil(this.ngUnsubscribe))
               .subscribe(
-                (res: Dashboard[]) => {
+                (dashboardRes: Dashboard[]) => {
                   try {
-                    this.currentDashboard = res[0];
+                    this.currentDashboard = dashboardRes[0];
                     this.currentDashboardId = this.currentDashboard.id;
                     this.pageStatus = PageStatus.Standard;
                   } catch (error) {
-                    console.error(error)
+                    console.error(error);
                     this.pageStatus = PageStatus.New;
                   }
                 },
                 error => {
-                  console.error(error)
+                  console.error(error);
                   this.pageStatus = PageStatus.New;
                 }
-              )
+              );
           } else {
             this.pageStatus = PageStatus.New;
           }
 
         } catch (error) {
-          console.error(error)
+          console.error(error);
           this.pageStatus = PageStatus.Error;
         }
 
@@ -131,7 +133,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         this.pageStatus = PageStatus.Error;
       }
 
-    )
+    );
 
   }
 
@@ -159,7 +161,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       error => {
         this.pageStatus = PageStatus.New;
       }
-    )
+    );
   }
 
   changeSignalState(event) {
@@ -206,51 +208,49 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   changeRecordingState(event) {
 
-    if(event == true) {
+    if (event === true) {
 
-      if(this.dataRecordingIsOn) {
+      if (this.dataRecordingIsOn) {
         this.dashboardConfigService.postRecordingStateOff(this.idProjectSelected)
         .pipe(takeUntil(this.ngUnsubscribe))
         .subscribe(
-          res=> {
+          res => {
 
             this.dataRecordingIsOn = !this.dataRecordingIsOn;
           },
           error => {
-            console.error(error)
+            console.error(error);
           }
-        )
+        );
       } else {
         this.dashboardConfigService.postRecordingStateOn(this.idProjectSelected)
         .pipe(takeUntil(this.ngUnsubscribe))
         .subscribe(
-          res=> {
+          res => {
 
             this.dataRecordingIsOn = !this.dataRecordingIsOn;
           },
           error => {
-            console.error(error)
+            console.error(error);
           }
-        )
+        );
       }
 
     }
   }
 
   infoRecordingState(event) {
-    if(event == true) {
-      this.openModal("hyt-modal-recording-confirm-action");
+    if (event === true) {
+      this.openModal('hyt-modal-recording-confirm-action');
     }
   }
 
-  recordReloading: boolean = false;
-
   reloadRecording(event) {
-    if(event == true) {
+    if (event === true) {
       this.recordReloading = true;
 
       setTimeout(() => {
-        this.recordReloading = false
+        this.recordReloading = false;
       }, 1000);
     }
   }
@@ -262,10 +262,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
   // addWidget() {
   //   this.dashboardView.navigateToAddWidget();
   // }
- 
+
   openRecordingActionModal() {
-    if(!this.recordReloading) {
-      if(this.dataRecordingIsOn) {
+    if (!this.recordReloading) {
+      if (this.dataRecordingIsOn) {
         this.hytModalService.open('hyt-modal-recording-info-action');
       } else {
         this.hytModalService.open('hyt-modal-recording-confirm-action');
@@ -281,14 +281,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.hytModalService.close(id);
   }
 
-  /******************************************************************************************************************************* Not used */
+  /************************************************************************************************************* Not used */
 
   createDashboard(idProject: number) {
 
-    let dashboard: Dashboard = {
-      dashboardType: "REALTIME",
+    const dashboard: Dashboard = {
+      dashboardType: 'REALTIME',
       entityVersion: 1,
-      hproject: this.hProjectList.find(x => (x.id == idProject)),
+      hproject: this.hProjectList.find(x => (x.id === idProject)),
       // name: this.hProjectList.find(x => (x.id == idProject)).name
     };
 
@@ -304,7 +304,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         ([res1, res2]) => {
           try {
             this.hProjectList = [...res1];
-            this.hProjectListOptions = <HytSelectOption[]>this.hProjectList;
+            this.hProjectListOptions = this.hProjectList as HytSelectOption[];
             this.hProjectListOptions.forEach(element => {
               element.label = element.name;
               element.value = element.id;
@@ -323,25 +323,25 @@ export class DashboardComponent implements OnInit, OnDestroy {
         },
         () => {
 
-          this.hProjectListOptions.sort(function (a, b) {
+          this.hProjectListOptions.sort((a, b) => {
             if (a.entityModifyDate > b.entityModifyDate) { return -1; }
             if (a.entityModifyDate < b.entityModifyDate) { return 1; }
             return 0;
-          })
+          });
           // console.log(this.hProjectListOptions)
 
-          this.dashboardList.sort(function (a, b) {
+          this.dashboardList.sort((a, b) => {
             if (a.entityModifyDate > b.entityModifyDate) { return -1; }
             if (a.entityModifyDate < b.entityModifyDate) { return 1; }
             return 0;
-          })
+          });
 
           // console.log(this.dashboardList)
 
           if (this.dashboardList.length > 0 && this.hProjectListOptions.length > 0) {
 
             try {
-              this.idProjectSelected = this.hProjectListOptions.find(x => (x.id == this.dashboardList[0].hproject.id)).value;
+              this.idProjectSelected = this.hProjectListOptions.find(x => (x.id === this.dashboardList[0].hproject.id)).value;
               this.currentDashboardId = this.dashboardList[0].id;
             } catch (error) {
 
@@ -349,7 +349,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
             this.pageStatus = PageStatus.Standard;
             // console.log(this.idProjectSelected)
 
-          } else if (this.dashboardList.length == 0 && this.hProjectListOptions.length > 0) {
+          } else if (this.dashboardList.length === 0 && this.hProjectListOptions.length > 0) {
 
             this.idProjectSelected = this.hProjectListOptions[0].value;
             this.currentDashboardId = this.idProjectSelected[0].id;
@@ -360,7 +360,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
           }
 
         }
-      )
+      );
   }
 
 }

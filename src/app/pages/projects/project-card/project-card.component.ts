@@ -4,9 +4,6 @@ import { HProject, HprojectsService } from '@hyperiot/core';
 import { MatDialog } from '@angular/material';
 import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
 
-
-
-
 @Component({
   selector: 'hyt-project-card',
   templateUrl: './project-card.component.html',
@@ -45,7 +42,7 @@ export class ProjectCardComponent implements OnInit {
     this.openDeleteDialog();
   }
 
-  openDeleteDialog(){
+  openDeleteDialog() {
 
     const dialogRef = this.dialog.open(DeleteConfirmDialogComponent, {
       data: {title: 'Are you sure you want to delete the project?', message: 'This operation cannot be undone.'}
@@ -54,22 +51,21 @@ export class ProjectCardComponent implements OnInit {
     dialogRef.afterClosed().subscribe(
       (result) => {
 
-        if(result === 'delete'){
-          
+        if ( result === 'delete') {
+
           this.projectService.deleteHProject(this.project.id).subscribe(
             (res) => {
               this.toRefreshView('success', 'The project was successfully deleted');
-              
             },
             (err) => {
               this.toRefreshView('error', 'An error occurred while deleting the project');
               console.log(this.project);
-              console.log('ERRORE CANCELLAZIONE\n', err)
+              console.log('ERRORE CANCELLAZIONE\n', err);
             }
 
           );
 
-        } 
+        }
 
       },
       (err) => {

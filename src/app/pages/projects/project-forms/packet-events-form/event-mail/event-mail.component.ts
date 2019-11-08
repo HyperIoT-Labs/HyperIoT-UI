@@ -15,6 +15,13 @@ export class EventMailComponent implements OnInit {
 
   private originalFormsValues = '';
 
+  placeHolders: SelectableText[] = [
+    { placeholder: '[$NAME_DEVICE$]', description: this.i18n('HYT_name_of_device') },
+    { placeholder: '[$NAME_PACKET$]', description: this.i18n('HYT_name_of_packet') },
+    { placeholder: '[$NAME_FIELD$]', description: this.i18n('HYT_name_of_field') },
+    { placeholder: '[$DATA_EVENT$]', description: this.i18n('HYT_name_of_event_mail') }
+  ];
+
   constructor(
     private fb: FormBuilder,
     private wizardService: ProjectWizardService,
@@ -23,11 +30,11 @@ export class EventMailComponent implements OnInit {
 
   buildMail(): any {
     return {
-      mailRecipient: this.mailForm.value['mailRecipient'],
-      mailCC: this.mailForm.value['mailCC'],
-      mailObject: this.mailForm.value['mailObject'],
-      mailBody: this.mailForm.value['mailBody']
-    }
+      mailRecipient: this.mailForm.value.mailRecipient,
+      mailCC: this.mailForm.value.mailCC,
+      mailObject: this.mailForm.value.mailObject,
+      mailBody: this.mailForm.value.mailBody
+    };
   }
 
   ngOnInit() {
@@ -38,15 +45,8 @@ export class EventMailComponent implements OnInit {
     return this.mailForm.get('mailRecipient').invalid;
   }
 
-  placeHolders: SelectableText[] = [
-    { placeholder: '[$NAME_DEVICE$]', description: this.i18n('HYT_name_of_device') },
-    { placeholder: '[$NAME_PACKET$]', description: this.i18n('HYT_name_of_packet') },
-    { placeholder: '[$NAME_FIELD$]', description: this.i18n('HYT_name_of_field') },
-    { placeholder: '[$DATA_EVENT$]', description: this.i18n('HYT_name_of_event_mail') }
-  ];
-
   setMail(dataArr): void {
-    let data = JSON.parse(dataArr[0]);
+    const data = JSON.parse(dataArr[0]);
     this.mailForm.get('mailRecipient').setValue(data.recipients);
     this.mailForm.get('mailCC').setValue(data.ccRecipients);
     this.mailForm.get('mailObject').setValue(data.subject);
@@ -61,12 +61,12 @@ export class EventMailComponent implements OnInit {
 
   addPlaceHolder(event): void {
     this.mailForm.patchValue({
-      mailBody: this.mailForm.value['mailBody'] + event
+      mailBody: this.mailForm.value.mailBody + event
     });
-    (<HTMLElement>document.querySelector('#mailBody.hyt-input.mat-input-element')).focus();
+    (document.querySelector('#mailBody.hyt-input.mat-input-element') as HTMLElement).focus();
   }
 
-  originalValueUpdate(){
+  originalValueUpdate() {
     this.originalFormsValues = this.getJsonForms();
   }
 

@@ -16,6 +16,8 @@ export class AssetCategoryComponent implements OnInit {
 
   categoriesFlatTree: TreeNodeCategory[] = [];
 
+  catIds: number[] = [];
+
   constructor(
     private wizardService: ProjectWizardService,
     private assetCategoriesService: AssetscategoriesService
@@ -32,25 +34,24 @@ export class AssetCategoryComponent implements OnInit {
             children: [],
             data: x,
             active: false
-          })
-        })
+          });
+        });
         this.categoriesFlatTree.forEach(x => {
-          x.parent = (x.data.parent) ? this.categoriesFlatTree.find(y => y.id == x.data.parent.id) : null;
+          x.parent = (x.data.parent) ? this.categoriesFlatTree.find(y => y.id === x.data.parent.id) : null;
           // x.active = this.packet.categoryIds.includes(x.id);
-        })
+        });
         this.categoriesFlatTree = [...this.categoriesFlatTree];
       }
-    )
+    );
   }
-
-  catIds: number[] = [];
 
   fillCatIds() {
     this.catIds = [];
     this.categoriesFlatTree.forEach(x => {
-      if (x.children.length == 0 && x.active)
+      if (x.children.length === 0 && x.active) {
         this.catIds.push(x.id);
-    })
+      }
+    });
   }
 
   cbChange(event) {
@@ -59,7 +60,7 @@ export class AssetCategoryComponent implements OnInit {
   }
 
   cbAdd(event) {
-    let data: AssetCategory = {
+    const data: AssetCategory = {
       entityVersion: 1,
       name: event.label,
       owner: {
@@ -67,7 +68,7 @@ export class AssetCategoryComponent implements OnInit {
         ownerResourceId: this.wizardService.getHProject().id
       },
       parent: event.parent ? event.parent.data : null
-    }
+    };
 
     this.assetCategoriesService.saveAssetCategory(data).subscribe(
       (res: AssetCategory) => {
@@ -78,11 +79,11 @@ export class AssetCategoryComponent implements OnInit {
           children: [],
           data: res,
           active: false
-        })
+        });
         this.categoriesFlatTree = [...this.categoriesFlatTree];
       },
       err => console.log(err)
-    )
+    );
   }
 
 }

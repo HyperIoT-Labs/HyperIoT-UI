@@ -43,10 +43,15 @@ export class StatisticsStepComponent implements OnInit {
   ];
 
   enrichmentRules: SelectOption[] = [
-    { value: JSON.stringify({ actionName: "AddCategoryRuleAction", ruleId: 0, categoryIds: null }), label: 'Categories' },
-    { value: JSON.stringify({ actionName: "AddTagRuleAction", ruleId: 0, tagIds: null }), label: 'Tags' },
-    { value: JSON.stringify({ actionName: "ValidateHPacketRuleAction", ruleId: 0 }), label: 'Packet' }//TODO actionName is wrong
+    { value: JSON.stringify({ actionName: 'AddCategoryRuleAction', ruleId: 0, categoryIds: null }), label: 'Categories' },
+    { value: JSON.stringify({ actionName: 'AddTagRuleAction', ruleId: 0, tagIds: null }), label: 'Tags' },
+    { value: JSON.stringify({ actionName: 'ValidateHPacketRuleAction', ruleId: 0 }), label: 'Packet' }// TODO actionName is wrong
   ];
+
+  enrichmentType = '';
+
+  assetTags: number[] = [];
+  assetCategories: number[] = [];
 
   constructor(
     private rulesService: RulesService,
@@ -56,8 +61,8 @@ export class StatisticsStepComponent implements OnInit {
   ngOnInit() {
     this.statisticsForm = this.fb.group({});
     this.rulesService.findAllRuleActions('ENRICHMENT').subscribe(
-      res => { }//TODO //this.enrichmentRules = res
-    )
+      res => { }// TODO this.enrichmentRules = res
+    );
   }
 
   createStatistic() {
@@ -71,27 +76,22 @@ export class StatisticsStepComponent implements OnInit {
   }
 
   getError(field: string): string {
-    return (this.errors.find(x => x.container == field)) ? this.errors.find(x => x.container == field).message : null;
+    return (this.errors.find(x => x.container === field)) ? this.errors.find(x => x.container === field).message : null;
   }
-
-  enrichmentType: string = '';
 
   enrichmentTypeChanged(event) {
-    if (event.value)
+    if (event.value) {
       this.enrichmentType = JSON.parse(event.value).actionName;
+    }
   }
 
-  //Tags
-
-  assetTags: number[] = [];
+  // Tags
 
   updateAssetTag(event) {
     this.assetTags = event;
   }
 
-  //Category
-
-  assetCategories: number[] = [];
+  // Category
 
   updateAssetCategory(event) {
     this.assetCategories = event;

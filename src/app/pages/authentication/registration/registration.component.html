@@ -11,17 +11,14 @@
 
       <div id="column-welcome" class="col-md-6">
         <div id="head-welcome-box">
-          Welcome!
+          <ng-container i18n="@@HYT_welcome">HYT_welcome</ng-container>!
         </div>
-        <!--@I18N@-->
-        <div id="body-welcome-box">
-          register and enjoy our benefits
-        </div>
-        <!--@I18N@-->
+        <div id="body-welcome-box" i18n="@@HYT_registration_1">HYT_registration_1</div>
         <div id="footer-welcome-box">
-          Already a Member?<br /><a routerLink="/auth/login">Login Now</a> and Enjoy the experience
+          <ng-container i18n="@@HYT_already_member_question">HYT_already_member_question</ng-container>
+          <br /><a routerLink="/auth/login" i18n="@@HYT_login_now">HYT_login_now</a>
+          &#160;<ng-container i18n="@@HYT_registration_login_message">HYT_registration_login_message</ng-container>
         </div>
-        <!--@I18N@-->
       </div>
 
       <div id="column-registration-form" class="col-md-6">
@@ -77,9 +74,11 @@
 
               <div class="container-form-field">
                 <mat-checkbox>
-                  Check per <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a>.
+                  <ng-container i18n="@@HYT_check_per">HYT_check_per</ng-container>
+                  &#160;<a href="#" i18n="@@HYT_terms_of_use">HYT_terms_of_use</a>
+                  &#160;<ng-container i18n="@@HYT_and">HYT_and</ng-container>
+                  &#160;<a href="#" i18n="@@HYT_privacy_policy">HYT_privacy_policy</a>.
                 </mat-checkbox>
-                <!--@I18N@-->
               </div> <!-- Container CheckBox Privacy -->
 
               <div class="container-form-field errorMessage">

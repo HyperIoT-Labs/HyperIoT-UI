@@ -1,6 +1,5 @@
 <div *ngIf="showCover && !editMode" class="d-flex flex-column justify-content-center align-items-center">
   <hyt-button (clickFn)="onAddButtonClick()">Add enrichment</hyt-button>
-   <!--@I18N@-->
 </div>
 <form [ngClass]="{ hidden: !editMode }" class="container enrichment-form" [formGroup]="form" autocomplete="on">
 
@@ -9,7 +8,6 @@
       <hyt-input-text [form]="form" formControlName="rule-name" name="rule-name" [isRequired]="true"
         i18n-placeholder="@@HYT_name" placeholder="HYT_name" [injectedErrorMsg]="getError('rule-name')"
         hintMessage="Enter the rule name">
-        <!--@I18N@-->
       </hyt-input-text>
     </div> <!-- Field Name -->
     <div class="col-md-4 container-form-field">
@@ -23,7 +21,6 @@
         i18n-placeholder="@@HYT_description" placeholder="HYT_description"
         hintMessage="Enter the rule description. (max...)">
       </hyt-text-area>
-      <!--@I18N@-->
     </div> <!-- Field RuleDescription -->
   </div>
 

@@ -32,7 +32,7 @@ export class WidgetSettingsDialogComponent extends HytModal implements OnInit, O
     super(injector);
   }
 
-  modalIsOpen: boolean = false;
+  modalIsOpen = false;
 
   // open modal
   open(): void {

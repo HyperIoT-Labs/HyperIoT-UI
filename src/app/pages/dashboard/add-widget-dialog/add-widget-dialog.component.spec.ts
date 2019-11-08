@@ -18,9 +18,9 @@ describe('ModalDialogComponent', () => {
     TestBed.configureTestingModule({
       declarations: [AddWidgetDialogComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
-      providers: [{provide: ActivatedRoute, useValue: activatedRoute}, 
-        {provide: Router, useValue: router}, 
-        {provide: DashboardConfigService, useValue: dashboardConfigService}, 
+      providers: [{provide: ActivatedRoute, useValue: activatedRoute},
+        {provide: Router, useValue: router},
+        {provide: DashboardConfigService, useValue: dashboardConfigService},
         {provide: HytModalConfService, useValue: hytModalService}]
     })
       .compileComponents();

@@ -29,9 +29,11 @@ export class ProjectsComponent implements OnInit {
     { value: 'date-decreasing', label: 'Newest' }
   ];
 
-  displayMessageArea : boolean = false;
-  messageAreaText : string;
-  typeMessageArea : string;
+  displayMessageArea = false;
+  messageAreaText: string;
+  typeMessageArea: string;
+
+  noProjectsMatches = false;
 
   constructor(
     private router: Router,
@@ -46,10 +48,9 @@ export class ProjectsComponent implements OnInit {
     this.hProjectService.cardsView().subscribe(
       res => {
         this.hProjects = res;
-        this.pageStatus = (this.hProjects.length !==0)
+        this.pageStatus = (this.hProjects.length !== 0)
           ? PageStatus.Standard
-          : PageStatus.New
-
+          : PageStatus.New;
         this.hProjectsFiltered = [...this.hProjects];
         /* Default Sort */
         this.sortBy('date-decreasing');
@@ -62,10 +63,8 @@ export class ProjectsComponent implements OnInit {
 
   }
 
-  filter(){
+  filter() {
   }
-
-  noProjectsMatches: boolean = false;
 
   search(value: string) {
 
@@ -73,19 +72,18 @@ export class ProjectsComponent implements OnInit {
       if (value.split('*').length > 18) {
         this.hProjectsFiltered = [];
         this.noProjectsMatches = true;
-      }
-      else {
-        let reg = new RegExp(value.replace(/[.+^${}()|[\]\\]/g, '\\$&').replace(/\*/g, '.+').replace(/\?/g, '.'), 'i');
+      } else {
+        const reg = new RegExp(value.replace(/[.+^${}()|[\]\\]/g, '\\$&').replace(/\*/g, '.+').replace(/\?/g, '.'), 'i');
         this.hProjectsFiltered =  this.hProjects.filter(el => (el.name.match(reg)));
         this.sortBy(this.filteringForm.value.sort);
-        
-        if(this.hProjectsFiltered.length == 0)
+
+        if (this.hProjectsFiltered.length === 0) {
           this.noProjectsMatches = true;
-        else
+        } else {
           this.noProjectsMatches = false;
+        }
       }
-    }
-    else {
+    } else {
       this.hProjectsFiltered = [...this.hProjects];
       this.sortBy(this.filteringForm.value.sort);
     }
@@ -105,45 +103,45 @@ export class ProjectsComponent implements OnInit {
   sortBy(type: string) {
     switch (type) {
 
-      case "none":
-          this.hProjectsFiltered.sort(function(a, b){
-            if(a.id > b.id) { return -1; }
-            if(a.id < b.id) { return 1; }
+      case 'none':
+          this.hProjectsFiltered.sort((a, b) => {
+            if (a.id > b.id) { return -1; }
+            if (a.id < b.id) { return 1; }
             return 0;
           });
-        break;
+          break;
 
-      case "alfabetic-increasing":
-          this.hProjectsFiltered.sort(function(a, b){
-            if(a.name.toLocaleLowerCase() < b.name.toLocaleLowerCase()) { return -1; }
-            if(a.name.toLocaleLowerCase() > b.name.toLocaleLowerCase()) { return 1; }
+      case 'alfabetic-increasing':
+          this.hProjectsFiltered.sort((a, b) => {
+            if (a.name.toLocaleLowerCase() < b.name.toLocaleLowerCase()) { return -1; }
+            if (a.name.toLocaleLowerCase() > b.name.toLocaleLowerCase()) { return 1; }
             return 0;
           });
-        break;
+          break;
 
-      case "alfabetic-decreasing":
-          this.hProjectsFiltered.sort(function(a, b){
-            if(a.name.toLocaleLowerCase() > b.name.toLocaleLowerCase()) { return -1; }
-            if(a.name.toLocaleLowerCase() < b.name.toLocaleLowerCase()) { return 1; }
+      case 'alfabetic-decreasing':
+          this.hProjectsFiltered.sort((a, b) => {
+            if (a.name.toLocaleLowerCase() > b.name.toLocaleLowerCase()) { return -1; }
+            if (a.name.toLocaleLowerCase() < b.name.toLocaleLowerCase()) { return 1; }
             return 0;
           });
-        break;
+          break;
 
-      case "date-increasing":
-          this.hProjectsFiltered.sort(function(a, b){
-            if(a.id < b.id) { return -1; }
-            if(a.id > b.id) { return 1; }
+      case 'date-increasing':
+          this.hProjectsFiltered.sort((a, b) => {
+            if (a.id < b.id) { return -1; }
+            if (a.id > b.id) { return 1; }
             return 0;
           });
-        break;
+          break;
 
-      case "date-decreasing":
-          this.hProjectsFiltered.sort(function(a, b){
-            if(a.id > b.id) { return -1; }
-            if(a.id < b.id) { return 1; }
+      case 'date-decreasing':
+          this.hProjectsFiltered.sort((a, b) => {
+            if (a.id > b.id) { return -1; }
+            if (a.id < b.id) { return 1; }
             return 0;
           });
-        break;
+          break;
 
       default:
         break;
@@ -158,9 +156,9 @@ export class ProjectsComponent implements OnInit {
   refreshViewOnDelete(event) {
     this.displayMessageArea = false;
 
-    this.typeMessageArea = event.type; 
-    
-    if(this.typeMessageArea === 'error'){
+    this.typeMessageArea = event.type;
+
+    if (this.typeMessageArea === 'error') {
 
       this.displayMessageArea = true;
       this.messageAreaText = event.value;
@@ -168,7 +166,7 @@ export class ProjectsComponent implements OnInit {
       // setTimeout(() => {
       //   this.hideMessageArea();
       // }, 5000);
-      
+
     } else {
 
       this.displayMessageArea = false;
@@ -178,19 +176,19 @@ export class ProjectsComponent implements OnInit {
       // Update Component
       this.refreshComponent();
     }
-    
-    
+
+
   }
 
-  refreshComponent(){
+  refreshComponent() {
     this.filteringForm = this.fb.group({});
 
     this.hProjectService.cardsView().subscribe(
       res => {
         this.hProjects = res;
-        this.pageStatus = (this.hProjects.length !==0)
+        this.pageStatus = (this.hProjects.length !== 0)
           ? PageStatus.Standard
-          : PageStatus.New
+          : PageStatus.New;
 
         this.hProjectsFiltered = [...this.hProjects];
         /* Default Sort */

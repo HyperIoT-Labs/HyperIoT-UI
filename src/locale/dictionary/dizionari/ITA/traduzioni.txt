@@ -1,3 +1,37 @@
+HYT_company_info
+Info azienda
+HYT_plan_info
+Info piano
+HYT_your_role_is
+Il tuo ruolo è
+HYT_your_current_plan_is
+Il tuo piano attuale è
+HYT_this_plan_includes
+Questo piano include
+HYT_projects
+Progetti
+HYT_devices
+Dispositivi
+HYT_statistics
+Statistiche
+HYT_personal_info
+Info personali
+HYT_update_personal_info
+Aggiorna info personali
+HYT_change_password
+Cambia password
+HYT_cancel
+Annulla
+HYT_save
+Salva
+HYT_discard
+Scarta
+HYT_welcome_to_hyperiot
+Benvenuto su HyperIoT
+HYT_home_message_1
+Per adesso la pagina è vuota ma se vuoi puoi vedere i tuoi progetti cliccando il bottone qui sotto
+HYT_go_to_your_projects
+Vai ai tuoi progetti
 HYT_toolbar_settings
 Impostazioni
 HYT_toolbar_refresh
@@ -16,8 +50,6 @@ HYT_type
 Tipo
 HYT_apply
 Applica
-HYT_cancel
-Annulla
 HYT_error_occurred_long
 Si è verificato un errore. Contatta l'amministratore
 HYT_you_are_dashboard_mode
@@ -40,10 +72,22 @@ HYT_add
 Aggiungi
 HYT_add_widget
 Aggiungi widget
+HYT_dashboard_list
+Lista dashboard
+HYT_no_dashboard_for_user
+Nessuna dashboard trovata
 HYT_widget_settings_select_packet
 Seleziona pacchetto
 HYT_widget_settings_select_fields
 Seleziona {multiPacketSelect?1:0, plural, =0 {campo} other {campi}}
+HYT_data_recording
+Registrazione dati
+HYT_data_recording_on_off
+{{(dataRecordingIsOn)?'Registrazione dati attiva':'Registrazione dati disattivata'}}
+HYT_signal_is_on
+{{(signalIsOn)?'Online':'Offline'}}
+HYT_stream_is_on
+{{(streamIsOn)?'Play':'Pausa'}}
 HYT_add_a_widget
 Aggiungi un widget
 HYT_page_is_loading
@@ -54,8 +98,6 @@ HYT_widget_settings_apply
 Applica
 HYT_widget_settings_cancel
 Annulla
-HYT_data_recording
-Registrazione dati
 HYT_attention
 Attenzione!
 HYT_dashboard_end_registration
@@ -64,12 +106,66 @@ HYT_next
 Avanti
 HYT_back
 Indietro
+HYT_password_reset_1
+Hai bisogno di resettare la tua password?
+HYT_password_reset_2
+Nessun problema! Riempi i campi qui sotto e ti manderemo una mail di conferma
 HYT_password
 Password
 HYT_passwordConfirm
 Conferma password
+HYT_reset_password
+Resetta password
+HYT_back_to_home
+Torna ad Home
+HYT_password_reset_3
+Controlla le tue email!
+HYT_password_reset_4
+Ti abbiamo inviato una mail per resettare la tua passwotd
+HYT_back_to_login
+Torna al Login
+HYT_something_went_wrong
+Qualcosa è andato storto
+HYT_acivation_incorrect_data
+I dati sono errati, riprova.
+HYT_return_to_home
+Ritorna ad Home
+HYT_activation_success_1
+Congratulazioni, il tuo account è attivo
+HYT_activation_success_2
+Comincia ora a scoprire cosa puoi fare e divertiti
+HYT_go_to_home
+Vai a Home
+HYT_hello
+Ciao
+HYT_login_text
+Siamo felici di vederti di nuovo!
+HYT_login_no_account
+Non hai un account?
+HYT_register_now
+Registrati ora
+HYT_login_register_message
+e goditi tutti i nostri benefici
+HYT_login_to_account
+Login
 HYT_username_or_email
 Username o email
+HYT_login_forgot_password
+Password dimenticata?
+HYT_remember_me
+Ricordati di me
+HYT_login
+Login
+HYT_welcome
+Benvenuto
+HYT_registration_1
+Registrati e goditi i nosttri benefici
+HYT_already_member_question
+Sei già registrato?
+HYT_login_now
+Fai il login
+HYT_registration_login_message
+e goditi l'esperienza
 HYT_registration
 Registrazione
 HYT_surname
@@ -80,10 +176,34 @@ HYT_email
 Email
 HYT_password_confirm
 Conferma password
+HYT_check_per
+Check per
+HYT_terms_of_use
+Termini di utilizzo
+HYT_and
+e
+HYT_privacy_policy
+Privacy policy
 HYT_registration_button
 Registrati
 HYT_registration_form_ok
 Controlla la tua casella email. Ti abbiamo inviato una mail per completare la registrazione
+HYT_password_recovery_1
+Hai scordato la password?
+HYT_password_recovery_2
+Non riesci a fare login? Ti manderemo le istruzioni per resettare la tua password.
+HYT_email_me
+Manda email
+HYT_password_recovery_3
+Controlla le tue email
+HYT_password_recovery_4
+Ti abbiamo inviato le istruzioni per resettare la tua password
+HYT_edit
+Modifica
+HYT_duplicate
+Duplica
+HYT_delete
+Elimina
 HYT_loading_project_data
 Caricamento dati progetto...
 HYT_project_detail_error_occurred
@@ -138,50 +258,14 @@ HYT_mail_object
 Oggetto
 HYT_mail_body
 Corpo della mail
+HYT_add_event
+Aggiungi evento
 HYT_output_data
 Output evento
-HYT_save
-Salva
 HYT_update
 Aggiorna
 HYT_entity_name_M
 ENTITY NAME
-HYT_choose_how_proceed
-Scegli come procedere
-HYT_enrichment_data
-Arricchimento dati
-HYT_enrichment_definition_long
-Lunga definizione di arricchimento dati. Lunga definizione di arricchimento dati. Lunga definizione di arricchimento dati. Lunga definizione di arricchimento dati. Lunga definizione di arricchimento dati.
-HYT_statistics
-Statistiche
-HYT_statistics_definition_long
-Lunga definizione di statistiche. Lunga definizione di statistiche. Lunga definizione di statistiche. Lunga definizione di statistiche. Lunga definizione di statistiche. Lunga definizione di statistiche. Lunga definizione di statistiche. 
-HYT_events
-Eventi
-HYT_events_definition_long
-Lunga definizione di eventi. Lunga definizione di eventi. Lunga definizione di eventi. Lunga definizione di eventi. Lunga definizione di eventi. Lunga definizione di eventi. Lunga definizione di eventi. 
-HYT_finish
-Finisci
-HYT_congratulations
-Congratulazioni
-HYT_pw_finsh
-Hai finito di configurare il tuo progetto
-HYT_project
-Progetto
-HYT_devices
-Dispositivi
-HYT_packets
-Pacchetti
-HYT_enrichment
-Arricchimento
-HYT_go_to_project_list
-Vai alla lista progetti
-HYT_go_to_project_list_long
-Vai alla lista progetti lunga definizione. Vai alla lista progetti lunga definizione. Vai alla lista progetti lunga definizione. Vai alla lista progetti lunga definizione. Vai alla lista progetti lunga definizione. 
-HYT_go_to_dashboard
-Vai alla dashboard
-HYT_go_to_dashboard_long
-Vai alla dashboard lunga definizione. Vai alla dashboard lunga definizione. Vai alla dashboard lunga definizione. Vai alla dashboard lunga definizione. Vai alla dashboard lunga definizione. Vai alla dashboard lunga definizione. 
 HYT_pw_deactivation_modal
 Se esci dalla pagina perderai tutte le modifiche non salvate
 HYT_OK
@@ -202,24 +286,48 @@ HYT_create_first_project
 Crea il tuo primo progetto
 HYT_edit_in_wizard
 Modifica nel wizard
+HYT_loading_project_tree
+Caricamento project tree
+HYT_error_project_tree
+Errore caricamento project tree
 HYT_string_device
 Dispositiv{{ deviceCount == 1 ? 'o' : 'i' }}
 HYT_string_rule
 Regol{{ rulesCount == 1 ? 'a' : 'e' }}
 HYT_definition_of_terms
 Definizione dei termini
-HYT_device_long_definition
-device long definition
-HYT_categories
-Categorie
-HYT_tags
-Tags
-HYT_validation
-Validazione
-HYT_enrichment_long_definition
-enrichment long definition
-HYT_unavaiable_rule_name
-Unavailable rule name
+HYT_congratulations
+Congratulazioni
+HYT_pw_finsh
+Hai finito di configurare il tuo progetto
+HYT_go_to_project_list
+Vai alla lista progetti
+HYT_go_to_project_list_long
+Vai alla lista progetti lunga definizione. Vai alla lista progetti lunga definizione. Vai alla lista progetti lunga definizione. Vai alla lista progetti lunga definizione. Vai alla lista progetti lunga definizione. 
+HYT_go_to_dashboard
+Vai alla dashboard
+HYT_go_to_dashboard_long
+Vai alla dashboard lunga definizione. Vai alla dashboard lunga definizione. Vai alla dashboard lunga definizione. Vai alla dashboard lunga definizione. Vai alla dashboard lunga definizione. Vai alla dashboard lunga definizione. 
+HYT_choose_how_proceed
+Scegli come procedere
+HYT_enrichment_data
+Arricchimento dati
+HYT_enrichment_definition_long
+Lunga definizione di arricchimento dati. Lunga definizione di arricchimento dati. Lunga definizione di arricchimento dati. Lunga definizione di arricchimento dati. Lunga definizione di arricchimento dati.
+HYT_statistics_definition_long
+Lunga definizione di statistiche. Lunga definizione di statistiche. Lunga definizione di statistiche. Lunga definizione di statistiche. Lunga definizione di statistiche. Lunga definizione di statistiche. Lunga definizione di statistiche. 
+HYT_events
+Eventi
+HYT_events_definition_long
+Lunga definizione di eventi. Lunga definizione di eventi. Lunga definizione di eventi. Lunga definizione di eventi. Lunga definizione di eventi. Lunga definizione di eventi. Lunga definizione di eventi. 
+HYT_finish
+Finisci
+HYT_generic_error
+Qualcosa è andato storto
+HYT_user_updated
+Informazioni personali aggiornate con successo
+HYT_password_changed
+Password modificata con successo
 HYT_name_of_device
 Nome del device
 HYT_name_of_packet
@@ -228,22 +336,6 @@ HYT_name_of_field
 Nome del campo
 HYT_name_of_event_mail
 Nome dell'evento mail
-HYT_send_mail_M
-MANDA MAIL
-HYT_events_long_definition
-events long definition
-HYT_unavaiable_event_name
-Unavailable event name
-HYT_fields_long_definition
-fields long definition
-HYT_packet_long_definition
-packet long definition
-HYT_statistics_long_definition
-statistics long definition
-HYT_project_long_definition
-project long definition
-HYT_unavaiable_project_name
-Unavailable project name
 HYT_(&gt;)_greater
 (>) Maggiore
 HYT_(&gt;=)_greater_equal

@@ -17,10 +17,11 @@ export class SidebarComponent implements OnInit {
 
   click(event) {
 
-    if(this.lastSelectedElement)
-      this.lastSelectedElement.classList.remove("selected")
+    if (this.lastSelectedElement) {
+      this.lastSelectedElement.classList.remove('selected');
+    }
 
-    event.classList.add("selected")
+    event.classList.add('selected');
 
     this.lastSelectedElement = event;
   }

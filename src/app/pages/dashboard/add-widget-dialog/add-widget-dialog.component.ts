@@ -41,7 +41,6 @@ export class AddWidgetDialogComponent extends HytModal implements OnInit, OnDest
 
   dialogDataState = 0;
 
-  
   constructor(
     injector: Injector,
     private widgetsService: WidgetsService
@@ -65,27 +64,29 @@ export class AddWidgetDialogComponent extends HytModal implements OnInit, OnDest
 
     this.widgetsService.findAllWidgetInCategories().subscribe(
       res => {
-        this.widgetCategoryList = res['catInfo'];
-        this.widgetsByCategory = res['widgetMap'];
-        for (var key in this.widgetsByCategory) {
-          for (let el of this.widgetsByCategory[key]) {
-            this.widgetList.push({
-              id: el.id,
-              entityVersion: el.entityVersion,
-              count: 0,
-              name: el.name,
-              description: el.description,
-              cols: el.cols,
-              rows: el.rows,
-              type: el.type,
-              image: 'data:image/jpeg;base64,' + atob(el.image),
-              preView: 'data:image/jpeg;base64,' + atob(el.preView),
-              avgRating: el.avgRating,
-              widgetCategory: el.widgetCategory
-            })
+        this.widgetCategoryList = res.catInfo;
+        this.widgetsByCategory = res.widgetMap;
+        for (const key in this.widgetsByCategory) {
+          if (this.widgetsByCategory[key]) {
+            for (const el of this.widgetsByCategory[key]) {
+              this.widgetList.push({
+                id: el.id,
+                entityVersion: el.entityVersion,
+                count: 0,
+                name: el.name,
+                description: el.description,
+                cols: el.cols,
+                rows: el.rows,
+                type: el.type,
+                image: 'data:image/jpeg;base64,' + atob(el.image),
+                preView: 'data:image/jpeg;base64,' + atob(el.preView),
+                avgRating: el.avgRating,
+                widgetCategory: el.widgetCategory
+              });
+            }
           }
         }
-        this.onCategorySelect(this.widgetCategoryList['ALL']);
+        this.onCategorySelect(this.widgetCategoryList.ALL);
         this.dialogDataState = 1;
       },
       error => {
@@ -93,7 +94,7 @@ export class AddWidgetDialogComponent extends HytModal implements OnInit, OnDest
       });
 
   }
-  
+
   /****************************************************************************************** */
 
   // close($event?) {
@@ -112,8 +113,8 @@ export class AddWidgetDialogComponent extends HytModal implements OnInit, OnDest
   // }
 
   confirm() {
-    let widgetOutput: any[] = [];
-    this.selectedWidgets.forEach(w=>widgetOutput.push({
+    const widgetOutput: any[] = [];
+    this.selectedWidgets.forEach(w => widgetOutput.push({
       count: w.count,
       x: 0,
       y: 0,
@@ -124,7 +125,7 @@ export class AddWidgetDialogComponent extends HytModal implements OnInit, OnDest
       dataUrl: '',
       dataTableUrl: '',
       config: w.baseConfig
-    }))
+    }));
     this.addWidgets.emit(widgetOutput);
     this.close();
   }
@@ -156,15 +157,20 @@ export class AddWidgetDialogComponent extends HytModal implements OnInit, OnDest
   }
 
   onCategorySelect(category: any) {
-    if (category.name == 'all')
+    if (category.name === 'all') {
       this.filteredWidgets = [...this.widgetList];
-    else
-      this.filteredWidgets = this.widgetList.filter((w) => w.widgetCategory['name'] == category['name']);
+    } else {
+      this.filteredWidgets = this.widgetList.filter((w) => w.widgetCategory['name'] === category.name);
+    }
+
     this.selectedCategory = category;
   }
 
   onRate(rating: any) {
-    this.widgetsService.rateWidget(rating.newValue, { id: this.currentWidget.id, entityVersion: this.currentWidget.entityVersion }).subscribe();
+    this.widgetsService.rateWidget(
+      rating.newValue,
+      { id: this.currentWidget.id, entityVersion: this.currentWidget.entityVersion}
+    ).subscribe();
   }
 
   orderById(akv: KeyValue<string, any>, bkv: KeyValue<string, any>): number {

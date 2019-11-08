@@ -20,17 +20,14 @@
     <label class="menu-title" *ngIf="selectedItem">{{selectedItem.name}}</label>
     <button mat-menu-item (click)="onEditOptionClick()">
         <mat-icon>edit</mat-icon>
-        <span>Edit</span>
-        <!--@I18N-->
+        <span i18n="@@HYT_edit">HYT_edit</span>
     </button>
     <button mat-menu-item (click)="onDuplicateOptionClick()">
         <mat-icon>file_copy</mat-icon>
-        <span>Duplicate</span>
-        <!--@I18N-->
+        <span i18n="@@HYT_duplicate">HYT_duplicate</span>
     </button>
     <button mat-menu-item (click)="onDeleteOptionClick()">
         <mat-icon>close</mat-icon>
-        <span>Delete</span>
-        <!--@I18N-->
+        <span i18n="@@HYT_delete">HYT_delete</span>
     </button>
 </mat-menu>

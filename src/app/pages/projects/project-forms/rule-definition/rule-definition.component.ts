@@ -9,7 +9,7 @@ import { I18n } from '@ngx-translate/i18n-polyfill';
 interface RuleForm {
   form: FormGroup;
   conditionOptions: SelectOption[];
-  compareWith: boolean
+  compareWith: boolean;
 }
 
 interface FieldList {
@@ -30,6 +30,8 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
 
   ruleForms: RuleForm[] = [];
 
+  fieldFlatList: FieldList[] = [];
+
   allConditionOptions = [
     { value: '>', label: this.i18n('HYT_(>)_greater'), type: ['OBJECT', 'INTEGER', 'DOUBLE', 'FLOAT', 'DATE'] },
     { value: '>=', label: this.i18n('HYT_(>=)_greater_equal'), type: ['OBJECT', 'INTEGER', 'DOUBLE', 'FLOAT', 'DATE'] },
@@ -40,12 +42,12 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
     { value: '()', label: this.i18n('HYT_(())_like'), type: ['OBJECT', 'INTEGER', 'DOUBLE', 'FLOAT', 'BOOLEAN', 'DATE'] },
     { value: 'isTrue', label: this.i18n('HYT_is_true'), type: ['OBJECT', 'BOOLEAN'] },
     { value: 'isFalse', label: this.i18n('HYT_is_false'), type: ['OBJECT', 'BOOLEAN'] }
-  ]
+  ];
 
   joinOptions: Option[] = [
     { value: ' AND ', label: this.i18n('HYT_AND'), checked: false },
     { value: ' OR ', label: this.i18n('HYT_OR'), checked: false }
-  ]
+  ];
 
   private originalFormsValues = '';
 
@@ -68,76 +70,79 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
     this.originalValueUpdate();
   }
 
-  fieldFlatList: FieldList[] = [];
-
   extractField(fieldArr: HPacketField[], pre: string) {
     fieldArr.forEach(f => {
-      let fieldName: string = pre + '.' + f.name;
+      const fieldName: string = pre + '.' + f.name;
       this.fieldFlatList.push({ field: f, label: fieldName });
-      if (f.innerFields)
+      if (f.innerFields) {
         this.extractField(f.innerFields, fieldName);
+      }
     });
   }
 
   ngOnChanges() {
     this.resetRuleDefinition();
     let fieldList: HPacketField[] = [];
-    if (this.currentPacket && this.currentPacket.id)
+    if (this.currentPacket && this.currentPacket.id) {
       fieldList = this.wizardService.treefy(this.currentPacket.fields);
+    }
     this.fieldOptions = [];
     this.fieldFlatList = [];
     this.extractField(fieldList, 'packet');
-    for (let el of this.fieldFlatList)
+    for (const el of this.fieldFlatList) {
       this.fieldOptions.push({ value: el.label, label: el.field.name });
+    }
     this.fieldOptions = [...this.fieldOptions];
   }
 
   addCondition(index) {
-    if (this.ruleForms.length == index + 1)
+    if (this.ruleForms.length === index + 1) {
       this.ruleForms.push({
         form: this.fb.group({}),
         conditionOptions: [],
         compareWith: false
       });
+    }
   }
 
   removeCondition(index) {
-    this.ruleForms.splice(index, 1)
+    this.ruleForms.splice(index, 1);
     this.ruleForms[this.ruleForms.length - 1].form.get('ruleJoin').setValue(null);
   }
 
   buildRuleDefinition(): string {
     let rd = '';
-    for (let k = 0; k < this.ruleForms.length; k++) {
-      let element: string = (this.ruleForms[k].form.value.ruleField) ? this.ruleForms[k].form.value.ruleField : '';
-      let condition: string = (this.ruleForms[k].form.value.ruleCondition) ? ' ' + this.ruleForms[k].form.value.ruleCondition : '';
-      let valueRule: string = (this.ruleForms[k].form.value.ruleValue) ? ' ' + this.ruleForms[k].form.value.ruleValue : '';
-      let joinRule: string = (this.ruleForms[k].form.value.ruleJoin) ? this.ruleForms[k].form.value.ruleJoin : '';
+    for (const rule of this.ruleForms) {
+      const element: string = (rule.form.value.ruleField) ? rule.form.value.ruleField : '';
+      const condition: string = (rule.form.value.ruleCondition) ? ' ' + rule.form.value.ruleCondition : '';
+      const valueRule: string = (rule.form.value.ruleValue) ? ' ' + rule.form.value.ruleValue : '';
+      const joinRule: string = (rule.form.value.ruleJoin) ? rule.form.value.ruleJoin : '';
       rd += element + condition + valueRule + joinRule;
     }
     return rd;
   }
 
   fieldChanged(event, index) {
-    let type = this.fieldFlatList.find(y => y.label == event.value).field.type;
+    const type = this.fieldFlatList.find(y => y.label === event.value).field.type;
     this.ruleForms[index].conditionOptions = [];
 
     this.allConditionOptions.forEach(x => {
-      if (x.type.includes(type))
-        this.ruleForms[index].conditionOptions.push({ value: x.value, label: x.label })
-    })
-    this.ruleForms[index].compareWith = type != 'BOOLEAN';
+      if (x.type.includes(type)) {
+        this.ruleForms[index].conditionOptions.push({ value: x.value, label: x.label });
+      }
+    });
+    this.ruleForms[index].compareWith = type !== 'BOOLEAN';
   }
 
   isFormInvalid(k: number): boolean {
-    let valArr = this.ruleForms[k].form;
+    const valArr = this.ruleForms[k].form;
     return (
-      (Object.entries(valArr.value).length == 0) ?
+      (Object.entries(valArr.value).length === 0) ?
         true :
         valArr.get('ruleField').invalid ||
         valArr.get('ruleCondition').invalid ||
         ((this.ruleForms[k].compareWith) ? valArr.get('ruleValue').invalid : false)
-    )
+    );
   }
 
   isDirty(): boolean {
@@ -154,38 +159,39 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
 
   setRuleDefinition(ruleDefinition: string): void {
     setTimeout(() => {
-      if (ruleDefinition && ruleDefinition.length != 0) {
+      if (ruleDefinition && ruleDefinition.length !== 0) {
         this.ruleForms = [];
-        let ruleArray: string[] = ruleDefinition.split(/(?<= AND )|(?<= OR )/);
+        const ruleArray: string[] = ruleDefinition.split(/(?<= AND )|(?<= OR )/);
 
         for (let k = 0; k < ruleArray.length; k++) {
-          let splitted: string[] = ruleArray[k].split(' ');
+          const splitted: string[] = ruleArray[k].split(' ');
 
-          const f = this.fieldFlatList.find(x => x.label == splitted[0]);
-          if (!f) continue;
-          let actualField: HPacketField = f.field;
+          const f = this.fieldFlatList.find(x => x.label === splitted[0]);
+          if (!f) { continue; }
+          const actualField: HPacketField = f.field;
 
-          let conditionOptions = [];
+          const conditionOptions = [];
           this.allConditionOptions.forEach(x => {
-            if (x.type.includes(actualField.type))
-              conditionOptions.push({ value: x.value, label: x.label })
-          })
+            if (x.type.includes(actualField.type)) {
+              conditionOptions.push({ value: x.value, label: x.label });
+            }
+          });
 
           this.ruleForms.push({
             form: this.fb.group({}),
             conditionOptions: conditionOptions,
-            compareWith: actualField.type != 'BOOLEAN'
+            compareWith: actualField.type !== 'BOOLEAN'
           });
 
           setTimeout(() => {
-            this.ruleForms[k].form.get('ruleField').setValue(this.fieldOptions.find(x => x.value == splitted[0]).value);
+            this.ruleForms[k].form.get('ruleField').setValue(this.fieldOptions.find(x => x.value === splitted[0]).value);
             this.ruleForms[k].form.get('ruleCondition').setValue(splitted[1]);
             if (this.ruleForms[k].compareWith) {
               this.ruleForms[k].form.get('ruleValue').setValue(splitted[2]);
               this.ruleForms[k].form.get('ruleJoin').setValue((splitted[3]) ? ' ' + splitted[3] + ' ' : null);
-            }
-            else
+            } else {
               this.ruleForms[k].form.get('ruleJoin').setValue((splitted[2]) ? ' ' + splitted[2] + ' ' : null);
+            }
             if (k === this.ruleForms.length - 1) {
               this.originalValueUpdate();
             }

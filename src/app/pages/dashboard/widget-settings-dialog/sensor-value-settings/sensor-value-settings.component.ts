@@ -21,8 +21,9 @@ export class SensorValueSettingsComponent implements OnInit, OnDestroy {
   constructor(public settingsForm: NgForm) { }
 
   ngOnInit() {
-    if (this.widget.config == null)
+    if (this.widget.config == null) {
       this.widget.config = {};
+    }
 
     if (this.widget.config.seriesConfig == null || this.widget.config.seriesConfig.length === 0) {
       Object.assign(this.widget.config, this.defaultConfig);
@@ -40,7 +41,6 @@ export class SensorValueSettingsComponent implements OnInit, OnDestroy {
   apply() {
     this.packetSelect.apply();
   }
-
 
   onSelectedFieldsChange(fields) {
     this.selectedFields = fields;

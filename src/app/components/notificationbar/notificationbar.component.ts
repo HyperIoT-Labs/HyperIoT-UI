@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NotificationbarComponent implements OnInit {
 
-  notificationDisplay : boolean = false;
+  notificationDisplay = false;
   deferredPrompt: any;
 
   constructor() { }
@@ -46,9 +46,9 @@ export class NotificationbarComponent implements OnInit {
 
   showAddToHomeScreen() {
     this.notificationDisplay = true;
-    console.log('Notify: ', this.notificationDisplay)
+    console.log('Notify: ', this.notificationDisplay);
     const adToHomeBtn: HTMLElement = document.getElementById('btn-dwd-ok') as HTMLElement;
-    //adToHomeBtn.style.display = 'block';
+    // adToHomeBtn.style.display = 'block';
     adToHomeBtn.addEventListener('click', this.addToHomeScreen);
   }
 

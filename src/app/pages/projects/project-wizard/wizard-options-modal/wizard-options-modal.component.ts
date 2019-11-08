@@ -9,7 +9,7 @@ import { HytModal } from 'src/app/services/hyt-modal';
 export class WizardOptionsModalComponent extends HytModal implements OnInit  {
 
   @Output()
-  modalClose: EventEmitter<{action:string, data:any}> = new EventEmitter<{action:string, data:any}>();
+  modalClose: EventEmitter<{action: string, data: any}> = new EventEmitter<{action: string, data: any}>();
 
   constructor(
     injector: Injector
@@ -17,8 +17,8 @@ export class WizardOptionsModalComponent extends HytModal implements OnInit  {
     super(injector);
   }
 
-  output(action: string, data: number){
-    this.modalClose.emit({action: action, data: data});
+  output(action: string, data: number) {
+    this.modalClose.emit({action, data});
     this.close();
   }
 
