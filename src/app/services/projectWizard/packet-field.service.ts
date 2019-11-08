@@ -19,7 +19,7 @@ export class PacketFieldService {
     this.hPacketService.findTreeFields(this.packet.id).subscribe(
       (res: HPacketField[]) => this.treeFields$.next(res),
       err => this.treeFields$.error(err)
-    )
+    );
   }
 
   setPacket(packet: HPacket) {
@@ -29,10 +29,10 @@ export class PacketFieldService {
     return this.packet;
   }
 
-  //return true if id and entityVersion on a provided packet are the same of the currentPacket
+  // return true if id and entityVersion on a provided packet are the same of the currentPacket
   checkPacket(packet: HPacket) {
-    if (!this.packet) return false;
-    return (this.packet.id == packet.id && this.packet.entityVersion == packet.entityVersion);
+    if (!this.packet) { return false; }
+    return (this.packet.id === packet.id && this.packet.entityVersion === packet.entityVersion);
   }
 
 }

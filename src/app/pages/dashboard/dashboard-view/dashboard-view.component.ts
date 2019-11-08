@@ -14,12 +14,12 @@ import { Dashboard } from '@hyperiot/core';
 export class DashboardViewComponent implements OnInit {
   @ViewChild(WidgetsLayoutComponent, { static: false })
   dashboardLayout: WidgetsLayoutComponent;
-  
+
   @Input() dashboard: Dashboard;
   @Input() dashboardType: any;
   @Input() dashboardWidgets;
 
-  bool: boolean = false;
+  bool = false;
 
   /** Subject for manage the open subscriptions */
   protected ngUnsubscribe: Subject<void> = new Subject<void>();
@@ -32,7 +32,7 @@ export class DashboardViewComponent implements OnInit {
   ngOnInit() {}
 
   onAddingWidgets(event) {
-    this.onWidgetsAdd(event)
+    this.onWidgetsAdd(event);
     // console.log("adding widgets",event)
     // event.addWidgets
     // .pipe(takeUntil(this.ngUnsubscribe))

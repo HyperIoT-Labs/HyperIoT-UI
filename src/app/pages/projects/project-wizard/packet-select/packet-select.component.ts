@@ -35,9 +35,13 @@ export class PacketSelectComponent implements OnInit {
   }
 
   autoSelect(): void {
-    this.devicesOptions = this.hDevices.map(dev => { return ({ value: dev, label: dev.deviceName, disabled: this.hPackets.filter(p => p.device.id == dev.id).length == 0 }) });
+    this.devicesOptions = this.hDevices.map(
+      dev => { return ({ value: dev, label: dev.deviceName, disabled: this.hPackets.filter(
+          p => p.device.id === dev.id
+        ).length === 0 }); }
+      );
     let index = 0;
-    while(this.devicesOptions[index].disabled){
+    while (this.devicesOptions[index].disabled) {
       index++;
     }
     this.selectForm.get('selectDevice').setValue(this.devicesOptions[index].value);
@@ -51,12 +55,13 @@ export class PacketSelectComponent implements OnInit {
       selectPacket: null
     });
     this.currentPacket.emit(null);
-    this.packetsOptions = this.hPackets.filter(p => p.device.id == this.selectedDevice.id).map(pac => { return ({ value: pac, label: pac.name }) });
-    if(this.packetsOptions.length != 0){
+    this.packetsOptions = this.hPackets
+      .filter(p => p.device.id === this.selectedDevice.id)
+      .map(pac => ({ value: pac, label: pac.name }));
+    if (this.packetsOptions.length !== 0) {
       this.selectForm.get('selectPacket').setValue(this.packetsOptions[0].value);
       this.packetChanged(this.packetsOptions[0]);
-    }
-    else{
+    } else {
       this.currentPacket.emit(null);
     }
   }
@@ -71,7 +76,8 @@ export class PacketSelectComponent implements OnInit {
     // this.selectedDevice = device;
     // this.selectForm.get('selectDevice').setValue(device);
     // this.packetsOptions = [];
-    // this.wizardService.hPackets.filter(p => p.device.id == this.selectedDevice.id).forEach(p => this.packetsOptions.push({ value: p, label: p.name }));
+    // this.wizardService.hPackets.filter(p => p.device.id == this.selectedDevice.id)
+    // .forEach(p => this.packetsOptions.push({ value: p, label: p.name }));
     // console.log(this.packetsOptions);
     // let pack = this.packetsOptions.find(y => y.value.id == packet.id).value;
     // this.selectForm.get('selectPacket').setValue(pack);

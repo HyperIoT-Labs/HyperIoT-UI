@@ -1,4 +1,4 @@
-import { Component, OnDestroy, ViewChild, ElementRef, Input, Injector } from '@angular/core';
+import { Component, OnDestroy, ViewChild, ElementRef, Injector } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 
 import { Subscription, Observable } from 'rxjs';
@@ -9,7 +9,6 @@ import { RuleDefinitionComponent } from '../rule-definition/rule-definition.comp
 import { EventMailComponent } from './event-mail/event-mail.component';
 import { Option } from '@hyperiot/components';
 import { SummaryListItem } from '../../project-detail/generic-summary-list/generic-summary-list.component';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 
 @Component({
   selector: 'hyt-packet-events-form',
@@ -52,7 +51,7 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
   outputOptions: Option[] = [
     { value: 'SendMailAction', label: this.i18n('HYT_send_mail_M'), checked: true }
     // { value: '', label: 'START STATISTIC' }
-  ]
+  ];
 
   constructor(
     injector: Injector,
@@ -60,8 +59,7 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
     private hPacketService: HpacketsService,
     private rulesService: RulesService,
     private activatedRoute: ActivatedRoute,
-    private router: Router,
-    private i18n: I18n
+    private router: Router
   ) {
     super(injector, formView);
     this.longDefinition = this.i18n('HYT_events_long_definition');
@@ -75,8 +73,9 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
     this.activatedRouteSubscription = this.activatedRoute.params.subscribe(routeParams => {
       this.editMode = false;
       this.packetId = +(activatedRoute.snapshot.params.packetId);
-      if (this.packetId)
+      if (this.packetId) {
         this.loadData();
+      }
     });
   }
 
@@ -123,7 +122,7 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
   }
 
   loadData(packetId?: number) {
-    if(packetId) this.packetId = packetId;
+    if (packetId) { this.packetId = packetId; }
     this.hPacketService.findHPacket(this.packetId).subscribe((p: HPacket) => {
       this.packet = p;
       this.project = p.device.project;
@@ -149,22 +148,22 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
     this.loadingStatus = LoadingStatusEnum.Saving;
     this.resetErrors();
 
-    var jActionStr: string = '';
+    let jActionStr = '';
 
-    if (this.form.value['eventOutput'] == 'SendMailAction') {
-      let mail = this.eventMailComponent.buildMail();
-      let act = {
+    if (this.form.value.eventOutput === 'SendMailAction') {
+      const mail = this.eventMailComponent.buildMail();
+      const act = {
         actionName: 'events.SendMailAction',
         recipients: mail.mailRecipient,
         ccRecipients: mail.mailCC,
         subject: mail.mailObject,
         body: mail.mailBody
-      }
-      var jActions = [JSON.stringify(act)];
+      };
+      const jActions = [JSON.stringify(act)];
       jActionStr = JSON.stringify(jActions);
     }
 
-    let e = this.entity;
+    const e = this.entity;
     e.name = this.form.get('rule-name').value;
     e.description = this.form.get('rule-description').value;
     e.ruleDefinition = this.ruleDefinitionComponent.buildRuleDefinition();
@@ -186,8 +185,7 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
         this.setErrors(err);
         errorCallback && errorCallback(err);
       });
-    }
-    else {
+    } else {
       e.entityVersion = 1;
       e.project = { id: this.project.id, entityVersion: this.project.entityVersion };
       e.packet = { id: this.packet.id, entityVersion: this.packet.entityVersion };
@@ -211,9 +209,9 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
       this.resetForm();
       this.showCancel = false;
       this.updateSummaryList();
-      if (successCallback) successCallback();
+      if (successCallback) { successCallback(); }
     }, (err) => {
-      if (errorCallback) errorCallback();
+      if (errorCallback) { errorCallback(); }
     });
   }
 
@@ -240,7 +238,7 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
     if (err.error && err.error.type) {
       switch (err.error.type) {
         case 'it.acsoftware.hyperiot.base.exception.HyperIoTDuplicateEntityException': {
-          this.validationError = [{ "message": this.i18n('HYT_unavaiable_event_name'), "field": "rule-name", "invalidValue": "" }];
+          this.validationError = [{ "message": this.i18n('HYT_unavaiable_event_name'), "field": 'rule-name', "invalidValue": '' }];
           this.form.get('rule-name').setErrors({
             validateInjectedError: {
               valid: false

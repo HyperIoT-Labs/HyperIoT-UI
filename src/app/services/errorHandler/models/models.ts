@@ -1,6 +1,6 @@
 export interface HYTError {
-    message: string,
-    container: string
+    message: string;
+    container: string;
 }
 // export interface AuthenticationErrorHandlerDM {
 //     error: any,

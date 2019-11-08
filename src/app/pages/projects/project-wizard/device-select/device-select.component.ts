@@ -30,28 +30,26 @@ export class DeviceSelectComponent implements OnChanges {
       this.devicesOptions.push({
         value: device,
         label: device.deviceName
-      })
+      });
     });
     this.autoSelect();
   }
 
   deviceChanged(event): void {
-    console.log(event)
     this.selectedDevice.emit(event.value);
   }
 
   autoSelect(): void {
-    if (this.devicesOptions.length != 0) {
+    if (this.devicesOptions.length !== 0) {
       this.selectForm.get('selectDevice').setValue(this.devicesOptions[0].value);
       this.deviceChanged(this.devicesOptions[0]);
-    }
-    else
+    } else {
       this.selectedDevice.emit(null);
+    }
   }
 
   selectSpecific(deviceId: number): void {
-    console.log(deviceId)
-    let so: SelectOption = this.devicesOptions.find(x => x.value.id == deviceId);
+    const so: SelectOption = this.devicesOptions.find(x => x.value.id === deviceId);
     this.selectForm.get('selectDevice').setValue(so.value);
     this.deviceChanged(so);
   }

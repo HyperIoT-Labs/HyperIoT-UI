@@ -16,9 +16,18 @@ export class RegistrationComponent implements OnInit {
 
   registrationForm: FormGroup;
 
-  loading: boolean = false; /* false */
+  loading = false;
 
   private logger: Logger;
+
+  generalError = 0;
+
+  exception = false;
+  errorMessage: string[] = [];
+
+  fieldError = new Map();
+
+  registrationSucceeded = false;
 
   constructor(
     private hUserService: HusersService,
@@ -34,22 +43,13 @@ export class RegistrationComponent implements OnInit {
     this.registrationForm = this.fb.group({});
   }
 
-  generalError = 0;
-
-  exception: boolean = false;
-  errorMessage: string[] = [];
-
-  fieldError = new Map();
-
-  registrationSucceeded: boolean = false;
-
   register() {
     this.loading = true;
     this.errors = [];
     this.generalError = 0;
     this.registrationSucceeded = false;
 
-    let user: HUser = {
+    const user: HUser = {
       name: this.registrationForm.value.name,
       lastname: this.registrationForm.value.lastName,
       username: this.registrationForm.value.username,
@@ -57,7 +57,7 @@ export class RegistrationComponent implements OnInit {
       password: this.registrationForm.value['huser-password'],
       passwordConfirm: this.registrationForm.value['huser-passwordConfirm'],
       entityVersion: 1
-    }
+    };
 
     this.hUserService.register(user).subscribe(
       res => {
@@ -67,16 +67,17 @@ export class RegistrationComponent implements OnInit {
       err => {
         this.errors = this.httperrorHandler.handleRegistration(err);
         this.errors.forEach(e => {
-          if (e.container != 'general')
+          if (e.container !== 'general') {
             this.registrationForm.get(e.container).setErrors({
               validateInjectedError: {
                 valid: false
               }
             });
-        })
-        this.loading = false
+          }
+        });
+        this.loading = false;
       }
-    )
+    );
   }
 
   notValid(): boolean {
@@ -87,11 +88,11 @@ export class RegistrationComponent implements OnInit {
       this.registrationForm.get('email').invalid ||
       this.registrationForm.get('huser-password').invalid ||
       this.registrationForm.get('huser-passwordConfirm').invalid
-    )
+    );
   }
 
   getError(field: string): string {
-    return (this.errors.find(x => x.container == field)) ? this.errors.find(x => x.container == field).message : null;
+    return (this.errors.find(x => x.container === field)) ? this.errors.find(x => x.container === field).message : null;
   }
 
 }

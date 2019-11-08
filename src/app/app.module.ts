@@ -1,4 +1,4 @@
-//angular
+// angular
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule, TRANSLATIONS, LOCALE_ID, TRANSLATIONS_FORMAT, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
@@ -6,12 +6,12 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { CookieService } from 'ngx-cookie-service';
 
-//modules
+// modules
 import { HytRoutingModule } from './configuration-modules/hyt-routing.module';
 import { CustomMaterialModule } from './configuration-modules/custom-material.module';
 import { AuthenticationModule } from './pages/authentication/authentication.module';
 
-//components
+// components
 import { AppComponent } from './app.component';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { DashboardModule } from './pages/dashboard/dashboard.module';
@@ -44,7 +44,7 @@ import { NotificationbarComponent } from './components/notificationbar/notificat
 export class MyUrlSerializer extends DefaultUrlSerializer implements UrlSerializer  {
   /** Converts a `UrlTree` into a url */
   serialize(tree: UrlTree): string {
-    return super.serialize(tree); //.replace(/\(|\)|\w+-\w+:/g, '');
+    return super.serialize(tree); // .replace(/\(|\)|\w+-\w+:/g, '');
   }
 }
 
@@ -54,7 +54,7 @@ export function apiConfigFactory(): Configuration {
     username: '',
     password: '',
     accessToken: ''
-  }
+  };
   return new Configuration(params);
 }
 

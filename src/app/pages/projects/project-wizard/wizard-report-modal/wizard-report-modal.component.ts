@@ -10,7 +10,7 @@ import { HytModal } from 'src/app/services/hyt-modal';
 export class WizardReportModalComponent extends HytModal implements OnInit {
 
   @Input()
-  reportData: { imgPath:string, type: string, entities: string[] }[];
+  reportData: { imgPath: string, type: string, entities: string[] }[];
 
   constructor(
     injector: Injector,

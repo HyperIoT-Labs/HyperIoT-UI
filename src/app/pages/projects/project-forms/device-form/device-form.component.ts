@@ -1,18 +1,17 @@
-import { Component, OnDestroy, ElementRef, ViewChild, Input, Injector } from '@angular/core';
-import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
+import { Component, OnDestroy, ElementRef, ViewChild, Input, Injector, AfterViewInit } from '@angular/core';
+import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { HdevicesService, HDevice, HProject } from '@hyperiot/core';
 
 import { ProjectFormEntity, LoadingStatusEnum } from '../project-form-entity';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 
 @Component({
   selector: 'hyt-device-form',
   templateUrl: './device-form.component.html',
   styleUrls: ['./device-form.component.scss']
 })
-export class DeviceFormComponent extends ProjectFormEntity implements OnDestroy {
+export class DeviceFormComponent extends ProjectFormEntity implements OnDestroy, AfterViewInit {
   entity: HDevice = {} as HDevice;
   entityFormMap = {
     'hdevice-devicename': {
@@ -53,14 +52,13 @@ export class DeviceFormComponent extends ProjectFormEntity implements OnDestroy 
     @ViewChild('form', { static: true }) formView: ElementRef,
     private hDeviceService: HdevicesService,
     private activatedRoute: ActivatedRoute,
-    private router: Router,
-    private i18n: I18n
+    private router: Router
   ) {
     super(injector, formView);
     this.longDefinition = this.i18n('HYT_device_long_definition');
     this.routerSubscription = this.router.events.subscribe((rl) => {
       if (rl instanceof NavigationEnd) {
-        this.id = activatedRoute.snapshot.params.deviceId;
+        this.id = this.activatedRoute.snapshot.params.deviceId;
         this.load();
       }
     });
@@ -69,14 +67,14 @@ export class DeviceFormComponent extends ProjectFormEntity implements OnDestroy 
   ngAfterViewInit() {
     //TODO: Replace with Mismatch
     this.form.get('hdevice-password').valueChanges.subscribe(res => {
-      let control = this.form.get('hdevice-passwordConfirm')
+      const control = this.form.get('hdevice-passwordConfirm')
       if (control.hasError('validateInjectedError')) {
         control.setErrors({ validateInjectedError: null });
         control.updateValueAndValidity();
       }
     });
     this.form.get('hdevice-passwordConfirm').valueChanges.subscribe(res => {
-      let control = this.form.get('hdevice-password')
+      const control = this.form.get('hdevice-password')
       if (control.hasError('validateInjectedError')) {
         control.setErrors({ validateInjectedError: null });
         control.updateValueAndValidity();

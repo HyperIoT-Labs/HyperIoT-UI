@@ -8,6 +8,9 @@ export abstract class HytModal implements OnInit, OnDestroy {
 
     private element: any;
 
+    protected viewContainer: ElementRef;
+    protected hytModalService: HytModalConfService;
+
     @Output()
     modalClose: EventEmitter<any> = new EventEmitter<any>();
 
@@ -18,9 +21,6 @@ export abstract class HytModal implements OnInit, OnDestroy {
         }
     }
 
-    protected viewContainer: ElementRef;
-    protected hytModalService: HytModalConfService;
-
     constructor(
         injector: Injector
     ) {
@@ -30,7 +30,7 @@ export abstract class HytModal implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        let modal = this;
+        const modal = this;
 
         // ensure id attribute exists
         if (!this.id) {
@@ -42,7 +42,7 @@ export abstract class HytModal implements OnInit, OnDestroy {
         document.body.appendChild(this.element);
 
         // close modal on background click
-        this.element.addEventListener('click', function (e: any) {
+        this.element.addEventListener('click', (e: any) => {
             if (e.target.className === 'hyt-modal-background') {
                 modal.close();
             }

@@ -23,6 +23,14 @@ export class AssetTagComponent implements OnInit {
 
   tagStatus: TagStatus = TagStatus.Default;
 
+  tagCtrl = new FormControl();
+  filteredTags: Observable<AssetTag[]>;
+  tags: AssetTag[] = [];
+  allTags: AssetTag[] = [];
+  tagChoice: AssetTag[] = [];
+
+  @ViewChild('tagInput', { static: false }) tagInput: ElementRef<HTMLInputElement>;
+
   @Output() tagIds: EventEmitter<number[]> = new EventEmitter<number[]>();
 
   constructor(
@@ -43,16 +51,8 @@ export class AssetTagComponent implements OnInit {
       err => {
         this.tagStatus = TagStatus.Error;
       }
-    )
+    );
   }
-
-  tagCtrl = new FormControl();
-  filteredTags: Observable<AssetTag[]>;
-  tags: AssetTag[] = [];
-  allTags: AssetTag[] = [];
-  tagChoice: AssetTag[] = [];
-
-  @ViewChild('tagInput', { static: false }) tagInput: ElementRef<HTMLInputElement>;
 
   add(event: MatChipInputEvent): void {
     const input = event.input;
@@ -67,8 +67,7 @@ export class AssetTagComponent implements OnInit {
       else if (this.allTags.some(x => x.name === event.value)) {
         assetTag = this.allTags.find(x => x.name === event.value);
         this.selected({ option: { value: assetTag } });
-      }
-      else {
+      } else {
         assetTag = {
           name: event.value,
           owner: {
@@ -76,10 +75,10 @@ export class AssetTagComponent implements OnInit {
             ownerResourceId: 12
           },
           entityVersion: 1
-        }
+        };
         this.assetsTagService.saveAssetTag(assetTag).subscribe(
           res => {
-            this.allTags.push(res)
+            this.allTags.push(res);
             this.tags.push(res);
             this.outTags();
           },
@@ -101,7 +100,7 @@ export class AssetTagComponent implements OnInit {
     const index = this.tags.indexOf(tag);
     if (index >= 0) {
       this.tags.splice(index, 1);
-      if (this.allTags.find(x => x.name == tag.name)) {
+      if (this.allTags.find(x => x.name === tag.name)) {
         this.tagChoice.push(tag);
         this.tagCtrl.setValue(null);
       }
@@ -112,8 +111,9 @@ export class AssetTagComponent implements OnInit {
   selected(event): void {
     this.tags.push(event.option.value);
     for (let k = 0; k < this.tagChoice.length; k++) {
-      if (this.tagChoice[k].name == event.option.value.name)
+      if (this.tagChoice[k].name === event.option.value.name) {
         this.tagChoice.splice(k, 1);
+      }
     }
     this.outTags();
     this.tagInput.nativeElement.value = '';
@@ -121,15 +121,15 @@ export class AssetTagComponent implements OnInit {
   }
 
   private _filter(value: string | AssetTag): AssetTag[] {
-    let filterValue: string = (typeof value == 'string') ? value.toLowerCase() : value.name.toLowerCase();
+    const filterValue: string = (typeof value === 'string') ? value.toLowerCase() : value.name.toLowerCase();
     return this.tagChoice.filter(tag => tag.name.toLowerCase().includes(filterValue));
   }
 
   outTags() {
-    let selectedTagsIds: number[] = []
+    const selectedTagsIds: number[] = [];
     this.tags.forEach(t => {
       selectedTagsIds.push(t.id);
-    })
+    });
     this.tagIds.emit(selectedTagsIds);
   }
 

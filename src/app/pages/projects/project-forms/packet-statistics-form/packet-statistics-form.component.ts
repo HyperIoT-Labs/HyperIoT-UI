@@ -21,8 +21,7 @@ export class PacketStatisticsFormComponent extends ProjectFormEntity implements 
     @ViewChild('form', { static: true }) formView: ElementRef,
     private hPacketService: HpacketsService,
     private activatedRoute: ActivatedRoute,
-    private router: Router,
-    private i18n: I18n
+    private router: Router
   ) {
     super(injector, formView);
     this.longDefinition = this.i18n('HYT_statistics_long_definition');

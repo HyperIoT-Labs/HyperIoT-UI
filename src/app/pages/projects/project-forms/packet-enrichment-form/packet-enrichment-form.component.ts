@@ -4,7 +4,6 @@ import { FormGroup } from '@angular/forms';
 import { SelectOption } from '@hyperiot/components';
 import { RuleDefinitionComponent } from '../rule-definition/rule-definition.component';
 import { AssetTagComponent } from './asset-tag/asset-tag.component';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 // TODO: find a bettere placement for PageStatusEnum
 import { ProjectFormEntity, LoadingStatusEnum } from '../project-form-entity';
 import { Subscription, Observable } from 'rxjs';
@@ -55,8 +54,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
     private rulesService: RulesService,
     private packetService: HpacketsService,
     private activatedRoute: ActivatedRoute,
-    private router: Router,
-    private i18n: I18n
+    private router: Router
   ) {
     super(injector, formView);
     this.longDefinition = this.i18n('HYT_enrichment_long_definition');
@@ -70,8 +68,9 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
     this.activatedRouteSubscription = this.activatedRoute.params.subscribe(routeParams => {
       this.editMode = false;
       this.packetId = +(activatedRoute.snapshot.params.packetId);
-      if (this.packetId)
+      if (this.packetId) {
         this.loadData();
+      }
     });
   }
 
@@ -118,14 +117,14 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
       this.resetForm();
       this.showCancel = false;
       this.updateSummaryList();
-      if (successCallback) successCallback();
+      if (successCallback) { successCallback(); }
     }, (err) => {
-      if (errorCallback) errorCallback();
+      if (errorCallback) { errorCallback(); }
     });
   }
 
   loadData(packetId?: number) {
-    if(packetId) this.packetId = packetId;
+    if (packetId) { this.packetId = packetId; }
     this.packetService.findHPacket(this.packetId).subscribe((p: HPacket) => {
       this.project = p.device.project;
       this.packetService.findAllHPacketByProjectId(this.project.id)
@@ -248,8 +247,8 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
     super.resetForm();
     this.ruleDefinitionComponent.originalValueUpdate();
     //this.errors = [];
-    //this.ruleDefinitionComponent.resetRuleDefinition();
-    //this.form.reset();
+    // this.ruleDefinitionComponent.resetRuleDefinition();
+    // this.form.reset();
   }
 
   cleanForm() {
@@ -259,13 +258,13 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
 
   postRule() {
 
-    if (this.enrichmentType == 'AddTagRuleAction') {
+    if (this.enrichmentType === 'AddTagRuleAction') {
       this.packet.tagIds = this.assetTags;
       this.packetService.updateHPacket(this.packet).subscribe(
         (res: HPacket) => {
         }
       );
-    } else if (this.enrichmentType == 'AddCategoryRuleAction') {
+    } else if (this.enrichmentType === 'AddCategoryRuleAction') {
       this.packet.categoryIds = this.assetCategories;
       this.packetService.updateHPacket(this.packet).subscribe(
         (res: HPacket) => {
@@ -275,12 +274,12 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
 
   }
 
-  //Tags
+  // Tags
   updateAssetTag(event) {
     this.assetTags = event;
   }
 
-  //Category
+  // Category
   updateAssetCategory(event) {
     this.assetCategories = event;
   }
@@ -290,7 +289,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
     if (err.error && err.error.type) {
       switch (err.error.type) {
         case 'it.acsoftware.hyperiot.base.exception.HyperIoTDuplicateEntityException': {
-          this.validationError = [{ "message": this.i18n('HYT_unavaiable_rule_name'), "field": "rule-name", "invalidValue": "" }];
+          this.validationError = [{ "message": this.i18n('HYT_unavaiable_rule_name'), "field": 'rule-name', "invalidValue": '' }];
           this.form.get('rule-name').setErrors({
             validateInjectedError: {
               valid: false

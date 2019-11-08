@@ -7,7 +7,7 @@ import { AuthenticationHttpErrorHandlerService } from 'src/app/services/errorHan
 import { SubmissionStatus } from '../models/pageStatus';
 
 @Component({
-  selector: 'app-password-reset',
+  selector: 'hyt-password-reset',
   templateUrl: './password-reset.component.html',
   styleUrls: ['./password-reset.component.scss'],
   encapsulation: ViewEncapsulation.None
@@ -41,36 +41,36 @@ export class PasswordResetComponent implements OnInit {
 
     this.route.paramMap.subscribe(
       (p) => {
-        this.logger.debug('data:', p)
+        this.logger.debug('data:', p);
         this.email = p.get('email');
         this.code = p.get('code');
       }
-    )
+    );
 
   }
 
   resetPwd() {
 
-    var pwdReset: HUserPasswordReset = {
+    const pwdReset: HUserPasswordReset = {
       password: this.recoverPassForm.value.password,
       passwordConfirm: this.recoverPassForm.value.confPassword,
       email: this.email,
       resetCode: this.code
-    }
+    };
 
     this.hUserService.resetPassword(pwdReset).subscribe(
-      res => { 
+      res => {
         this.logger.debug('', res);
-        this.submissionStatus = SubmissionStatus.Submitted },
+        this.submissionStatus = SubmissionStatus.Submitted; },
       err => {
-        let k: HYTError[] = this.httperrorHandler.handlePwdRecovery(err);
-        for (let e of k) {
+        const k: HYTError[] = this.httperrorHandler.handlePwdRecovery(err);
+        for (const e of k) {
           this.error = e.message;
         }
         this.submissionStatus = SubmissionStatus.Error;
       }
 
-    )
+    );
   }
 
   notValid(): boolean {

@@ -6,6 +6,7 @@ import { MatRadioChange, MatDialog } from '@angular/material';
 import { ElementRef, ViewChild, OnInit, Output, EventEmitter, AfterViewInit, Injector } from '@angular/core';
 import { SummaryList } from '../project-detail/generic-summary-list/generic-summary-list.component';
 import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
+import { I18n } from '@ngx-translate/i18n-polyfill';
 
 export enum LoadingStatusEnum {
     Ready,
@@ -40,6 +41,7 @@ export abstract class ProjectFormEntity implements OnInit {
 
     protected formBuilder: FormBuilder;
     protected dialog: MatDialog;
+    protected i18n: I18n;
 
     constructor(
         injector: Injector,
@@ -47,6 +49,7 @@ export abstract class ProjectFormEntity implements OnInit {
     ) {
         this.formBuilder = injector.get(FormBuilder);
         this.dialog = injector.get(MatDialog);
+        this.i18n = injector.get(I18n);
         this.form = this.formBuilder.group({});
     }
 
@@ -225,8 +228,7 @@ export abstract class ProjectFormEntity implements OnInit {
 
     openDeleteDialog(successCallback?: any, errorCallback?: any) {
         const dialogRef = this.dialog.open(DeleteConfirmDialogComponent, {
-            data: { title: 'Delete item?', message: 'This operation cannot be undone.' }
-            //@I18N@
+            data: { title: this.i18n('HYT_delete_item_question'), message: this.i18n('HYT_operation_can_not_be_undone') }
         });
         dialogRef.afterClosed().subscribe((result) => {
             if (result === 'delete') {

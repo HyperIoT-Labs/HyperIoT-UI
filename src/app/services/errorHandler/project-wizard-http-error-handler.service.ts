@@ -67,11 +67,11 @@ export class ProjectWizardHttpErrorHandlerService extends HttpErrorHandlerServic
             break;
           }
           case 'it.acsoftware.hyperiot.base.exception.HyperIoTValidationException': {
-            var errors: HYTError[] = [];
-            errors.length
-            for (let k of httpError.error.validationErrors)
-              errors.push({ message: k.message, container: k.field })
-            errors.push({ message: 'alcuni campi inseriti sono invalidi', container: 'general' })
+            const errors: HYTError[] = [];
+            for (const k of httpError.error.validationErrors) {
+              errors.push({ message: k.message, container: k.field });
+            }
+            errors.push({ message: 'alcuni campi inseriti sono invalidi', container: 'general' });
             return errors;
             break;
           }
@@ -110,11 +110,11 @@ export class ProjectWizardHttpErrorHandlerService extends HttpErrorHandlerServic
             break;
           }
           case 'it.acsoftware.hyperiot.base.exception.HyperIoTValidationException': {
-            var errors: HYTError[] = [];
-            errors.length
-            for (let k of httpError.error.validationErrors)
-              errors.push({ message: k.message, container: k.field })
-            errors.push({ message: 'alcuni campi inseriti sono invalidi', container: 'general' })
+            const errors: HYTError[] = [];
+            for (const k of httpError.error.validationErrors) {
+              errors.push({ message: k.message, container: k.field });
+            }
+            errors.push({ message: 'alcuni campi inseriti sono invalidi', container: 'general' });
             return errors;
             break;
           }
@@ -153,10 +153,10 @@ export class ProjectWizardHttpErrorHandlerService extends HttpErrorHandlerServic
             break;
           }
           case 'it.acsoftware.hyperiot.base.exception.HyperIoTValidationException': {
-            var errors: HYTError[] = [];
-            errors.length
-            for (let k of httpError.error.validationErrors)
+            const errors: HYTError[] = [];
+            for (const k of httpError.error.validationErrors) {
               errors.push({ message: k.message, container: k.field });
+            }
             errors.push({ message: 'Alcuni campi inseriti sono invalidi', container: 'general' });
             return errors;
             break;
@@ -196,10 +196,10 @@ export class ProjectWizardHttpErrorHandlerService extends HttpErrorHandlerServic
             break;
           }
           case 'it.acsoftware.hyperiot.base.exception.HyperIoTValidationException': {
-            var errors: HYTError[] = [];
-            errors.length
-            for (let k of httpError.error.validationErrors)
+            const errors: HYTError[] = [];
+            for (const k of httpError.error.validationErrors) {
               errors.push({ message: k.message, container: k.field });
+            }
             errors.push({ message: 'Alcuni campi inseriti sono invalidi', container: 'general' });
             return errors;
             break;

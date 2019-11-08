@@ -80,13 +80,15 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
     { breakPoint: 1327, columns: 6, cell: 180},
     { breakPoint: 1200, columns: 6, cell: 180},
     { breakPoint: 1024, columns: 4, cell: 230},
-    { breakPoint: 880, columns: 4,cell: 190},
-    { breakPoint: 720, columns: 3,cell: 210},
-    { breakPoint: 640, columns: 2,cell: 270},
-    { breakPoint: 480, columns: 2,cell: 200},
-    { breakPoint: 400, columns: 1,cell: 170},
-    { breakPoint: 0, columns: 1,cell: 120}
+    { breakPoint: 880, columns: 4, cell: 190},
+    { breakPoint: 720, columns: 3, cell: 210},
+    { breakPoint: 640, columns: 2, cell: 270},
+    { breakPoint: 480, columns: 2, cell: 200},
+    { breakPoint: 400, columns: 1, cell: 170},
+    { breakPoint: 0, columns: 1, cell: 120}
   ];
+
+  lastWindowSize;
 
   /**
    * This is a demo dashboard for testing widgets
@@ -106,9 +108,9 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
 
     this.dashboard = [];
 
-    if(this.dashboardValue){
+    if (this.dashboardValue) {
       this.dashboardEntity = this.dashboardValue;
-      this.dashboardType = this.dashboardEntity.dashboardType
+      this.dashboardType = this.dashboardEntity.dashboardType;
       this.projectId = this.dashboardEntity.hproject.id;
       // connect to data upstream
       this.dataStreamService.connect(this.projectId);
@@ -124,14 +126,15 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
         }
       );
 
-      // this.configService.getConfig(this.projectId, this.dashboardId).pipe(takeUntil(this.ngUnsubscribe)).subscribe((dashboardConfig: Array<GridsterItem>) => {
+      //  this.configService.getConfig(this.projectId, this.dashboardId)
+      //   .pipe(takeUntil(this.ngUnsubscribe))
+      //   .subscribe((dashboardConfig: Array<GridsterItem>) => {}
         // this.dashboard = dashboardConfig;
         // console.log(this.dashboard)
         // this.originalDashboard = JSON.parse(JSON.stringify(dashboardConfig));
         // this.pageStatus = PageStatus.Standard;
       // });
-    }
-    else{
+    } else {
       console.error('error');
       this.pageStatus = PageStatus.Error;
     }
@@ -149,11 +152,13 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
 
-    if(this.autoSaveTimeout)
+    if (this.autoSaveTimeout) {
       clearTimeout(this.autoSaveTimeout);
+    }
 
-    if(this.ngUnsubscribe)
+    if (this.ngUnsubscribe) {
       this.ngUnsubscribe.next();
+    }
 
     this.saveDashboard();
 
@@ -202,7 +207,7 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
       this.options.mobileBreakpoint = 0;
     }
 
-    //const cellSize = (availableWidth - (this.options.margin * this.options.maxCols)) / this.options.maxCols;
+    // const cellSize = (availableWidth - (this.options.margin * this.options.maxCols)) / this.options.maxCols;
     // const cellSize = 250;
 
     this.cellSize = this.getResponsiveCellSize(); /* 160 misura base */
@@ -210,9 +215,9 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
     this.options.fixedRowHeight = this.cellSize / 2;
   }
 
-  getWidgetsMapped(widgets: any): Observable<any>{
+  getWidgetsMapped(widgets: any): Observable<any> {
     const obs: Observable<any> = new Observable(subscriber => {
-      subscriber.next(widgets)
+      subscriber.next(widgets);
     });
 
     return obs.pipe(map(
@@ -229,12 +234,13 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
         return config;
       },
       error => console.error(error)
-    ))
+    ));
   }
 
   activeAutoSave() {
-    if(this.autoSaveTimeout)
+    if (this.autoSaveTimeout) {
       clearTimeout(this.autoSaveTimeout);
+    }
     this.autoSaveTimeout = setTimeout(() => {
       this.saveDashboard();
     }, 5000);
@@ -254,13 +260,13 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
 
   // Widget events
 
-  onWidgetSettingClose(event){
+  onWidgetSettingClose(event) {
     // const widgetId = event.getWidgetId();
     // const widget = this.getItemById(widgetId);
     // event.setWidget(widget);
     this.showSettingWidget = false;
     this.changes++;
-    this.activeAutoSave()
+    this.activeAutoSave();
     // if(this.ngUnsubscribe)
     //   this.ngUnsubscribe.next();
   }
@@ -305,11 +311,10 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
 
   closeModal(id: string) {
     this.hytModalService.close(id);
-    if(this.ngUnsubscribe)
+    if (this.ngUnsubscribe) {
       this.ngUnsubscribe.next();
+    }
   }
-
-  lastWindowSize;
 
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
@@ -317,17 +322,15 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
     const cell = this.getResponsiveCellSize();
     if (columns !== this.options.maxCols || cell !== this.options.maxCellSize) {
 
-      if(this.lastWindowSize)
-        clearTimeout(this.lastWindowSize)
+      if (this.lastWindowSize) {
+        clearTimeout(this.lastWindowSize);
+      }
 
       this.pageStatus = PageStatus.Loading;
-      this.lastWindowSize = setTimeout(()=>{
-      
-
+      this.lastWindowSize = setTimeout(() => {
         this.ngOnInit();
         // this.pageStatus = PageStatus.Standard;
-
-      }, 500)
+      }, 500);
 
     }
 
@@ -351,7 +354,7 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
 
   onItemChange(item, itemComponent) {
     this.changes++;
-    this.activeAutoSave()
+    this.activeAutoSave();
     if (typeof item.change === 'function') {
       item.change();
     }
@@ -420,7 +423,7 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
     if (availableWidth <= this.options.mobileBreakpoint) {
       columns = 1;
     } else {
-      let b = 0;
+      const b = 0;
       const bp = this.responsiveBreakPoints.find((p) => p.breakPoint <= availableWidth);
       if (bp) {
         columns = bp.columns;

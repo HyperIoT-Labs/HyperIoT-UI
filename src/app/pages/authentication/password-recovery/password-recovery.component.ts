@@ -21,7 +21,8 @@ export class PasswordRecoveryComponent implements OnInit {
 
   private logger: Logger;
 
-  constructor(private hUserService: HusersService,
+  constructor(
+    private hUserService: HusersService,
     private httperrorHandler: AuthenticationHttpErrorHandlerService,
     private fb: FormBuilder,
     private loggerService: LoggerService
@@ -35,19 +36,20 @@ export class PasswordRecoveryComponent implements OnInit {
   }
 
   recoveryRequest() {
-    this.submissionStatus = SubmissionStatus.Default
+    this.submissionStatus = SubmissionStatus.Default;
     this.hUserService.resetPasswordRequest(this.recoverMailForm.value.email).subscribe(
-      res => { 
-        this.logger.debug('email address:', res)
-        this.submissionStatus = SubmissionStatus.Submitted },
+      res => {
+        this.logger.debug('email address:', res);
+        this.submissionStatus = SubmissionStatus.Submitted;
+      },
       err => {
-        let k: HYTError[] = this.httperrorHandler.handlePwdRecovery(err);
-        for (let e of k) {
+        const k: HYTError[] = this.httperrorHandler.handlePwdRecovery(err);
+        for (const e of k) {
           this.error = e.message;
         }
         this.submissionStatus = SubmissionStatus.Error;
       }
-    )
+    );
   }
 
   notValid(): boolean {

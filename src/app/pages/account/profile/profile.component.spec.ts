@@ -30,8 +30,8 @@ describe('ProfileComponent', () => {
     fixture = TestBed.createComponent(ProfileComponent);
     component = fixture.componentInstance;
     component.ngOnInit();
-    //component.personalInfoForm = formBuilder.group({});
-    //component.changePasswordForm = formBuilder.group({});
+    // component.personalInfoForm = formBuilder.group({});
+    // component.changePasswordForm = formBuilder.group({});
 
     fixture.detectChanges();
   });

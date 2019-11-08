@@ -1,4 +1,4 @@
-import { Component, OnDestroy, ViewChild, ElementRef, Input, Injector } from '@angular/core';
+import { Component, OnDestroy, ViewChild, ElementRef, Injector } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 
 import { Subscription, Observable } from 'rxjs';
@@ -8,9 +8,7 @@ import { ProjectFormEntity, LoadingStatusEnum } from '../project-form-entity';
 
 import { Option } from '@hyperiot/components';
 import { Node, HytTreeViewEditableComponent } from '@hyperiot/components/lib/hyt-tree-view-editable/hyt-tree-view-editable.component';
-import { MatDialog } from '@angular/material';
 import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 
 @Component({
   selector: 'hyt-packet-fields-form',
@@ -21,7 +19,7 @@ export class PacketFieldsFormComponent extends ProjectFormEntity implements OnDe
   @ViewChild('treeViewFields', { static: false }) treeViewFields: HytTreeViewEditableComponent;
   private routerSubscription: Subscription;
   private activatedRouteSubscription: Subscription;
-  
+
   entityFormMap = {
     'hpacketfield-name': {
       field: 'name',
@@ -62,8 +60,7 @@ export class PacketFieldsFormComponent extends ProjectFormEntity implements OnDe
     @ViewChild('form', { static: true }) formView: ElementRef,
     private hPacketService: HpacketsService,
     private activatedRoute: ActivatedRoute,
-    private router: Router,
-    private i18n: I18n
+    private router: Router
   ) {
     super(injector, formView);
     this.longDefinition = this.i18n('HYT_fields_long_definition');
@@ -127,7 +124,7 @@ export class PacketFieldsFormComponent extends ProjectFormEntity implements OnDe
   }
 
   loadData(packetId?: number) {
-    if(packetId) this.packetId = packetId;
+    if(packetId) { this.packetId = packetId; }
     this.hPacketService.findHPacket(this.packetId).subscribe((p: HPacket) => {
       this.packet = p;
       this.entityEvent.emit({

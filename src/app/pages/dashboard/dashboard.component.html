@@ -22,8 +22,8 @@
                             d="m257.778 128.889c-71.068 0-128.889 57.805-128.889 128.889s57.821 128.889 128.889 128.889 128.889-57.805 128.889-128.889-57.821-128.889-128.889-128.889z" />
                     </svg>
                 </span>
-                {{(dataRecordingIsOn)?'Data recording on':'Data recording off'}}
-                <!--@I18N-->
+                <ng-container i18n="@@HYT_data_recording_on_off">HYT_data_recording_on_off</ng-container>
+
                 <div id="reload-btn" (click)="openModal('hyt-modal-reload-recording-confirm')">
                     <span class="hyt-icon icon-hyt_reload {{(recordReloading)?'reloading':''}}"></span>
                 </div>
@@ -40,15 +40,13 @@
                         <div id="signal-btn" (click)="changeSignalState($event)">
                             <span
                                 class="hyt-icon {{(signalIsOn)?'icon-hyt_wifiOnFilled':'icon-hyt_wifiOffFilled'}}"></span>
-                            <p>{{(signalIsOn)?'Online':'Offline'}}</p>
-                            <!--@I18N-->
+                            <p i18n="@@HYT_signal_is_on">HYT_signal_is_on</p>
                         </div>
 
 
                         <div *ngIf="signalIsOn" id="play-btn" (click)="changeStreamState($event)">
                             <span class="hyt-icon {{(streamIsOn)?'icon-hyt_play':'icon-hyt_pause'}}"></span>
-                            <p>{{(streamIsOn)?'Play':'Pause'}}</p>
-                            <!--@I18N-->
+                            <p i18n="@@HYT_stream_is_on">HYT_stream_is_on</p>
                         </div>
 
                     </div>
