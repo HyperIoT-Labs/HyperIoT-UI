@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import { NgForm, ControlContainer } from '@angular/forms';
 
 @Component({
@@ -9,7 +9,8 @@ import { NgForm, ControlContainer } from '@angular/forms';
   viewProviders: [ { provide: ControlContainer, useExisting: NgForm } ]
 })
 export class TextLabelSettingsComponent implements OnInit, OnDestroy {
-  @Input() modalApply: Subject<any>;
+  subscription: any;
+  @Input() modalApply: Observable<any>;
   @Input() widget;
 
   labelText: string;
@@ -18,14 +19,14 @@ export class TextLabelSettingsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.labelText = this.widget.config.labelText;
-    this.modalApply.subscribe((event) => {
+    this.subscription = this.modalApply.subscribe((event) => {
         if (event === 'apply') {
           this.apply();
         }
     });
   }
   ngOnDestroy() {
-    // this.modalApply.unsubscribe();
+    this.subscription.unsubscribe();
   }
 
   apply() {

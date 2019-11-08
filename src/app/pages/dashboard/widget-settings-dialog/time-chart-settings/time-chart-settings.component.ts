@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, Input, OnDestroy } from '@angular/core';
 import { ControlContainer, NgForm } from '@angular/forms';
 
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 
 import { PacketSelectComponent } from '../packet-select/packet-select.component';
 
@@ -13,7 +13,8 @@ import { PacketSelectComponent } from '../packet-select/packet-select.component'
 })
 export class TimeChartSettingsComponent implements OnInit, OnDestroy {
     @ViewChild(PacketSelectComponent, { static: true }) packetSelect: PacketSelectComponent;
-    @Input() modalApply: Subject<any>;
+    subscription: any;
+    @Input() modalApply: Observable<any>;
     @Input() widget;
     selectedFields = [];
     private defaultConfig = {
@@ -47,14 +48,14 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
         if (this.widget.config.seriesConfig == null || this.widget.config.seriesConfig.length === 0) {
             Object.assign(this.widget.config, this.defaultConfig);
         }
-        this.modalApply.subscribe((event) => {
+        this.subscription = this.modalApply.subscribe((event) => {
             if (event === 'apply') {
                 this.apply();
             }
         });
     }
     ngOnDestroy() {
-        // this.modalApply.unsubscribe();
+        this.subscription.unsubscribe();
     }
 
     onSelectedFieldsChange(fields) {

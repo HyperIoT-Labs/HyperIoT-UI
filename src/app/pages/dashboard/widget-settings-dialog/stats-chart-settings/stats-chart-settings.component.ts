@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { ControlContainer, NgForm } from '@angular/forms';
 
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 
 @Component({
   selector: 'hyt-stats-chart-settings',
@@ -10,7 +10,8 @@ import { Subject } from 'rxjs';
   viewProviders: [ { provide: ControlContainer, useExisting: NgForm } ]
 })
 export class StatsChartSettingsComponent implements OnInit, OnDestroy {
-  @Input() modalApply: Subject<any>;
+  subscription: any;
+  @Input() modalApply: Observable<any>;
   @Input() widget;
   dataUrl: string;
   dataTableUrl: string;
@@ -31,7 +32,7 @@ export class StatsChartSettingsComponent implements OnInit, OnDestroy {
     }
     this.dataUrl = this.widget.dataUrl;
     this.dataTableUrl = this.widget.dataTableUrl;
-    this.modalApply.subscribe((event) => {
+    this.subscription = this.modalApply.subscribe((event) => {
       if (event === 'apply') {
         this.apply();
       }
@@ -39,7 +40,7 @@ export class StatsChartSettingsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    // this.modalApply.unsubscribe();
+    this.subscription.unsubscribe();
   }
 
   apply() {
