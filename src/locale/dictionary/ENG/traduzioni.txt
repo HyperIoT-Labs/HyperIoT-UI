@@ -80,8 +80,6 @@ HYT_widget_settings_select_packet
 Select packet
 HYT_widget_settings_select_fields
 Select {multiPacketSelect?1:0, plural, =0 {campo} other {campi}}
-HYT_data_recording
-Data recording
 HYT_data_recording_on_off
 {{(dataRecordingIsOn)?'Data recording on':'Data recording off'}}
 HYT_signal_is_on
@@ -98,6 +96,8 @@ HYT_widget_settings_apply
 Apply
 HYT_widget_settings_cancel
 Cancel
+HYT_data_recording
+Data recording
 HYT_attention
 Attention!
 HYT_dashboard_end_registration
@@ -328,6 +328,12 @@ HYT_user_updated
 Personal information updated correctly
 HYT_password_changed
 Password changed correctly
+HYT_device_long_definition
+Device long definition
+HYT_enrichment_long_definition
+Enrichment long definition
+HYT_unavaiable_rule_name
+Unavaiable rule name
 HYT_name_of_device
 The name of the device
 HYT_name_of_packet
@@ -336,6 +342,24 @@ HYT_name_of_field
 The name of the field
 HYT_name_of_event_mail
 The name of the event mail
+HYT_events_long_definition
+Events long definition
+HYT_unavaiable_event_name
+Unavaiable event name
+HYT_fields_long_definition
+Fields long definition
+HYT_packet_long_definition
+Packet long definition
+HYT_statistics_long_definition
+Statistics long definition
+HYT_delete_item_question
+Do you really want to delete this item?
+HYT_operation_can_not_be_undone
+This operation can not be undone
+HYT_project_long_definition
+Project long definition
+HYT_unavaiable_project_name
+Unavaiable project name
 HYT_(&gt;)_greater
 (>) Greater
 HYT_(&gt;=)_greater_equal

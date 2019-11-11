@@ -36,9 +36,10 @@ export class ProjectFormComponent extends ProjectFormEntity implements OnDestroy
     @ViewChild('form', { static: true }) formView: ElementRef,
     private hProjectService: HprojectsService,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private i18n: I18n
   ) {
-    super(injector, formView);
+    super(injector, i18n, formView);
     this.longDefinition = this.i18n('HYT_project_long_definition');
     this.routerSubscription = this.router.events.subscribe((rl) => {
       if (rl instanceof NavigationEnd) {

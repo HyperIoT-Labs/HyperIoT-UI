@@ -41,15 +41,15 @@ export abstract class ProjectFormEntity implements OnInit {
 
     protected formBuilder: FormBuilder;
     protected dialog: MatDialog;
-    protected i18n: I18n;
 
     constructor(
         injector: Injector,
+        private i18nD: I18n,    // TODO https://github.com/ngx-translate/i18n-polyfill/issues/30
         @ViewChild('form', { static: true }) private formView: ElementRef
     ) {
         this.formBuilder = injector.get(FormBuilder);
         this.dialog = injector.get(MatDialog);
-        this.i18n = injector.get(I18n);
+        this.i18nD = injector.get(I18n);
         this.form = this.formBuilder.group({});
     }
 
@@ -228,7 +228,7 @@ export abstract class ProjectFormEntity implements OnInit {
 
     openDeleteDialog(successCallback?: any, errorCallback?: any) {
         const dialogRef = this.dialog.open(DeleteConfirmDialogComponent, {
-            data: { title: this.i18n('HYT_delete_item_question'), message: this.i18n('HYT_operation_can_not_be_undone') }
+           data: { title: this.i18nD('HYT_delete_item_question'), message: this.i18nD('HYT_operation_can_not_be_undone') }
             // TODO This translation does not work
         });
         dialogRef.afterClosed().subscribe((result) => {
