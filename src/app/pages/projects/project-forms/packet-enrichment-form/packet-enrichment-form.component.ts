@@ -31,9 +31,9 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
   project: HProject = {} as HProject;
 
   enrichmentRules: SelectOption[] = [
-    { value: JSON.stringify({ actionName: 'AddCategoryRuleAction', ruleId: 0, categoryIds: null }), label: this.i18n('HYT_categories') },
-    { value: JSON.stringify({ actionName: 'AddTagRuleAction', ruleId: 0, tagIds: null }), label: this.i18n('HYT_tags') },
-    { value: JSON.stringify({ actionName: 'ValidateHPacketRuleAction', ruleId: 0 }), label: this.i18n('HYT_validation') }
+    { value: JSON.stringify({ actionName: 'AddCategoryRuleAction', ruleId: 0, categoryIds: null }), label: 'Categories' }, // TODO i18n
+    { value: JSON.stringify({ actionName: 'AddTagRuleAction', ruleId: 0, tagIds: null }), label: 'Tags' }, // TODO i18n
+    { value: JSON.stringify({ actionName: 'ValidateHPacketRuleAction', ruleId: 0 }), label: 'Validation' } // TODO i18n
   ];
 
   enrichmentType = '';

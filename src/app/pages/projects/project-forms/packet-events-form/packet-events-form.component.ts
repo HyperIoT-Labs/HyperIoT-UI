@@ -49,7 +49,7 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
   eventMailComponent: EventMailComponent;
 
   outputOptions: Option[] = [
-    { value: 'SendMailAction', label: this.i18n('HYT_send_mail_M'), checked: true }
+    { value: 'SendMailAction', label: 'Send mail', checked: true } // TODO i18n
     // { value: '', label: 'START STATISTIC' }
   ];
 

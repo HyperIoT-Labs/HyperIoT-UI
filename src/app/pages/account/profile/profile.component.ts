@@ -81,6 +81,7 @@ export class ProfileComponent implements OnInit {
       this.user = JSON.parse(localStorage.getItem('user'));
       this.userId = this.user.id;
     } else {
+      // TODO redirect login
       err => { this.errors = this.httperrorHandler.handle(err); }
     }
 
@@ -114,6 +115,7 @@ export class ProfileComponent implements OnInit {
         }, 3000);
       },
       err => {
+        // TODO handle errors
         this.errors = this.httperrorHandler.handle(err);
         this.loading = false;
         this.personalInfoUpdated = false;
