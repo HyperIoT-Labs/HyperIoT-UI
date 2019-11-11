@@ -17,6 +17,13 @@ interface FieldList {
   label: string;
 }
 
+interface RuleDefinition {
+  field: string;
+  condition: string;
+  value?: string;
+  join?: string;
+}
+
 @Component({
   selector: 'hyt-rule-definition',
   templateUrl: './rule-definition.component.html',
@@ -30,8 +37,14 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
 
   ruleForms: RuleForm[] = [];
 
+  /**
+   * A flat list of the selected Packet fields
+   */
   fieldFlatList: FieldList[] = [];
 
+  /**
+   * allConditionOptions stores the information of the condition option.
+   */
   allConditionOptions = [
     { value: '>', label: this.i18n('HYT_(>)_greater'), type: ['OBJECT', 'INTEGER', 'DOUBLE', 'FLOAT', 'DATE'] },
     { value: '>=', label: this.i18n('HYT_(>=)_greater_equal'), type: ['OBJECT', 'INTEGER', 'DOUBLE', 'FLOAT', 'DATE'] },
@@ -44,13 +57,25 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
     { value: 'isFalse', label: this.i18n('HYT_is_false'), type: ['OBJECT', 'BOOLEAN'] }
   ];
 
+  /**
+   * joinOptions stores the information of the join option.
+   */
   joinOptions: Option[] = [
     { value: ' AND ', label: this.i18n('HYT_AND'), checked: false },
     { value: ' OR ', label: this.i18n('HYT_OR'), checked: false }
   ];
 
+  /**
+   * originalFormsValues is used to keep record of the old ruleDefinition value (dirty)
+   */
   private originalFormsValues = '';
 
+  /**
+   * class constructor
+   * @param fb FormBuilder service instance
+   * @param wizardService service needed to handle fields
+   * @param i18n service for translations
+   */
   constructor(
     public fb: FormBuilder,
     private wizardService: ProjectWizardService,
@@ -115,8 +140,15 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
     for (const rule of this.ruleForms) {
       const element: string = (rule.form.value.ruleField) ? rule.form.value.ruleField : '';
       const condition: string = (rule.form.value.ruleCondition) ? ' ' + rule.form.value.ruleCondition : '';
-      const valueRule: string = (rule.form.value.ruleValue) ? ' ' + rule.form.value.ruleValue : '';
-      const joinRule: string = (rule.form.value.ruleJoin) ? rule.form.value.ruleJoin : '';
+      const valueRule: string = (
+        rule.form.value.ruleValue
+        && rule.form.value.ruleCondition !== 'isTrue'
+        && rule.form.value.ruleCondition !== 'isFalse'
+        ) ? ' ' + rule.form.value.ruleValue : '';
+      const joinRule: string = (
+        rule.form.value.ruleJoin === ' AND ' ||
+        rule.form.value.ruleJoin === ' OR '
+        ) ? rule.form.value.ruleJoin : '';
       rd += element + condition + valueRule + joinRule;
     }
     return rd;
@@ -158,15 +190,35 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
   }
 
   setRuleDefinition(ruleDefinition: string): void {
+    const ruleDef: RuleDefinition[] = [];
     setTimeout(() => {
       if (ruleDefinition && ruleDefinition.length !== 0) {
         this.ruleForms = [];
-        const ruleArray: string[] = ruleDefinition.split(/(?<= AND )|(?<= OR )/);
+        const ruleArray: string[] = ruleDefinition.split(/(?= AND )|(?= OR )/);
 
         for (let k = 0; k < ruleArray.length; k++) {
           const splitted: string[] = ruleArray[k].split(' ');
+          if (k === 0) {
+            ruleDef.push({
+              field: splitted[0],
+              condition: splitted[1],
+              value: splitted[2] ? splitted[2] : null,
+              join: null
+            });
+          } else {
+            ruleDef[k - 1].join = splitted[1];
+            ruleDef.push({
+              field: splitted[2],
+              condition: splitted[3],
+              value: splitted[4] ? splitted[4] : null,
+              join: null
+            });
+          }
+        }
 
-          const f = this.fieldFlatList.find(x => x.label === splitted[0]);
+        for (let k = 0; k < ruleDef.length; k++) {
+
+          const f = this.fieldFlatList.find(x => x.label === ruleDef[k].field);
           if (!f) { continue; }
           const actualField: HPacketField = f.field;
 
@@ -184,14 +236,12 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
           });
 
           setTimeout(() => {
-            this.ruleForms[k].form.get('ruleField').setValue(this.fieldOptions.find(x => x.value === splitted[0]).value);
-            this.ruleForms[k].form.get('ruleCondition').setValue(splitted[1]);
+            this.ruleForms[k].form.get('ruleField').setValue(this.fieldOptions.find(x => x.value === ruleDef[k].field).value);
+            this.ruleForms[k].form.get('ruleCondition').setValue(ruleDef[k].condition);
             if (this.ruleForms[k].compareWith) {
-              this.ruleForms[k].form.get('ruleValue').setValue(splitted[2]);
-              this.ruleForms[k].form.get('ruleJoin').setValue((splitted[3]) ? ' ' + splitted[3] + ' ' : null);
-            } else {
-              this.ruleForms[k].form.get('ruleJoin').setValue((splitted[2]) ? ' ' + splitted[2] + ' ' : null);
+              this.ruleForms[k].form.get('ruleValue').setValue(ruleDef[k].value);
             }
+            this.ruleForms[k].form.get('ruleJoin').setValue(' ' + ruleDef[k].join + ' ');
             if (k === this.ruleForms.length - 1) {
               this.originalValueUpdate();
             }
