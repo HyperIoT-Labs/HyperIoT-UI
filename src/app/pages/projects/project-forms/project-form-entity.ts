@@ -229,6 +229,7 @@ export abstract class ProjectFormEntity implements OnInit {
     openDeleteDialog(successCallback?: any, errorCallback?: any) {
         const dialogRef = this.dialog.open(DeleteConfirmDialogComponent, {
             data: { title: this.i18n('HYT_delete_item_question'), message: this.i18n('HYT_operation_can_not_be_undone') }
+            // TODO This translation does not work
         });
         dialogRef.afterClosed().subscribe((result) => {
             if (result === 'delete') {

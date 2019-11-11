@@ -50,6 +50,7 @@ const hyperiotRoutes: Routes = [
   {
     path: '',
     component: HomeComponent,
+    canActivate: [LoggedInGuard],
     data: {
       showToolBar: true
     }
