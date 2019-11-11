@@ -2,6 +2,7 @@ import { Component, OnInit, Input, EventEmitter, Output, ViewEncapsulation } fro
 import { ControlContainer, NgForm } from '@angular/forms';
 
 import { HPacket, HPacketField, HpacketsService } from '@hyperiot/core';
+import { UnitConversionService } from 'src/app/services/unit-conversion.service';
 
 export class FieldMatrixConfiguration {
   field: HPacketField;
@@ -34,7 +35,11 @@ export class PacketSelectComponent implements OnInit {
 
   packetFieldsMapping: FieldMatrixConfiguration[];
 
-  constructor(private packetService: HpacketsService, public settingsForm: NgForm) {
+  constructor(
+    private packetService: HpacketsService,
+    public settingsForm: NgForm,
+    private unitConversionService: UnitConversionService
+  ) {
     this.multiPacketSelect = this.multiPacketSelect || false;
   }
 
