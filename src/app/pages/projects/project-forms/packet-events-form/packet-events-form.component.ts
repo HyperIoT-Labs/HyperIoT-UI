@@ -33,7 +33,6 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
       default: 'SendMailAction'
     }
   };
-  formTitle = 'Packet Events';
 
   private routerSubscription: Subscription;
   private activatedRouteSubscription: Subscription;
@@ -65,6 +64,7 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
   ) {
     super(injector, i18n, formView);
     this.longDefinition = this.entitiesService.event.longDefinition;
+    this.formTitle = this.entitiesService.event.formTitle;
     this.hideDelete = true; // hide 'Delete' button
     this.routerSubscription = this.router.events.subscribe((rl) => {
       if (rl instanceof NavigationEnd) {

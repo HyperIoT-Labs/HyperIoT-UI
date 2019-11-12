@@ -24,7 +24,6 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
   packet: HPacket;
 
   entity = {} as Rule;
-  formTitle = 'Packet Enrichments';
 
   form: FormGroup;
 
@@ -60,6 +59,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
   ) {
     super(injector, i18n, formView);
     this.longDefinition = this.entitiesService.enrichment.longDefinition;
+    this.formTitle = this.entitiesService.enrichment.formTitle;
     this.hideDelete = true; // hide 'Delete' button
     this.routerSubscription = this.router.events.subscribe((rl) => {
       if (rl instanceof NavigationEnd) {

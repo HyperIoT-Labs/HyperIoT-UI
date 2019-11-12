@@ -264,8 +264,6 @@ HYT_output_data
 Output evento
 HYT_update
 Aggiorna
-HYT_entity_name_M
-ENTITY NAME
 HYT_pw_deactivation_modal
 Se esci dalla pagina perderai tutte le modifiche non salvate
 HYT_OK
@@ -328,10 +326,6 @@ HYT_user_updated
 Informazioni personali aggiornate con successo
 HYT_password_changed
 Password modificata con successo
-HYT_device_long_definition
-Dispositivo definizione lunga
-HYT_enrichment_long_definition
-Arricchimente definizione lunga
 HYT_unavaiable_rule_name
 Nome regola non disponibile
 HYT_name_of_device
@@ -342,22 +336,12 @@ HYT_name_of_field
 Nome del campo
 HYT_name_of_event_mail
 Nome dell'evento mail
-HYT_events_long_definition
-Eventi definizione lunga
 HYT_unavaiable_event_name
 Nome evento non disponibile
-HYT_fields_long_definition
-Campo definizione lunga
-HYT_packet_long_definition
-Pacchetto lunga definizione
-HYT_statistics_long_definition
-Statistiche lunga definizione
 HYT_delete_item_question
 Sei sicuro di voler eliminare l'oggetto?
 HYT_operation_can_not_be_undone
 Questa operazione è definitiva
-HYT_project_long_definition
-Progetto lunga definizione
 HYT_unavaiable_project_name
 Nome progetto non disponibile
 HYT_(&gt;)_greater
@@ -382,6 +366,76 @@ HYT_AND
 AND
 HYT_OR
 OR
+HYT_project_displaylistname
+Progetto
+HYT_project_form_title
+Progetto
+HYT_project_short_definition
+Progetto definizione breve...
+HYT_project_definition
+Progetto definizione...
+HYT_project_long_definition
+Progetto lunga definizione...
+HYT_device_displaylistname
+Dispositivi
+HYT_device_form_title
+Dispositivo
+HYT_device_shotrt_definition
+Dispositivo definizione breve...
+HYT_device_definition
+Dispositivo definizione...
+HYT_device_long_definition
+Dispositivo definizione lunga...
+HYT_packet_displaylistname
+Pacchetti
+HYT_packet_form_title
+Pacchetto
+HYT_packet_short_definition
+Pacchetto definizione breve...
+HYT_packet_definition
+Pacchetto definizione...
+HYT_packet_long_definition
+Pacchetto lunga definizione...
+HYT_field_displaylistname
+Campi
+HYT_field_form_title
+Campi Pacchetto
+HYT_fields_short_definition
+Campo defizione breve...
+HYT_fields_definition
+Campo defizione...
+HYT_fields_long_definition
+Campo definizione lunga...
+HYT_enrichment_displaylistname
+Arricchimente
+HYT_enrichment_form_title
+Arricchimento Pacchetto
+HYT_enrichment_short_definition
+Arricchimento defizione breve...
+HYT_enrichment_definition
+Arricchimento defizione...
+HYT_enrichment_long_definition
+Arricchimente definizione lunga...
+HYT_statistic_displaylistname
+Statistiche
+HYT_statistic_form_title
+Statistiche Pacchetto
+HYT_statistics_short_definition
+Statistiche definizione breve...
+HYT_statistics_definition
+Statistiche definizione...
+HYT_statistics_long_definition
+Statistiche lunga definizione...
+HYT_event_displaylistname
+Eventi
+HYT_event_form_title
+Eventi Pacchetto
+HYT_events_short_definition
+Eventi definizione breve...
+HYT_events_definition
+Eventi definizione ...
+HYT_events_long_definition
+Eventi definizione lunga...
 HYT_duplicate_entity
 già in uso
 HYT_unknown_error
@@ -389,7 +443,7 @@ Errore nell'esecuzione della richiesta
 HYT_wrong_user_or_password
 Username o password errati
 HYT_error_403
-your account is not activated. Please activate your account with the activation link we send you by email
+Il tuo account non è attivo. Per favore, attiva il tuo account con la mail che ti abbiamo inviato.
 HYT_service_temporarily_unavaiable
 Servizio temporaneamente non disponibile
 HYT_server_error_500

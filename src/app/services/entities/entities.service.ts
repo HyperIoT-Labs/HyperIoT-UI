@@ -7,6 +7,7 @@ interface Entity {
   // readonly displayName: string;
   readonly displayListName: string;
   // readonly pluralName: string;
+  readonly formTitle: string;
   readonly shortDefinition: string;
   readonly definition: string;
   readonly longDefinition: string;
@@ -39,6 +40,7 @@ export class EntitiesService {
     // displayName: 'Project',
     displayListName: this.i18n('HYT_project_displaylistname'),
     // pluralName: 'Projects',
+    formTitle: this.i18n('HYT_project_form_title'),
     shortDefinition: this.i18n('HYT_project_short_definition'),
     definition: this.i18n('HYT_project_definition'),
     longDefinition: this.i18n('HYT_project_long_definition'),
@@ -55,6 +57,7 @@ export class EntitiesService {
     // displayName: 'Device',
     displayListName: this.i18n('HYT_device_displaylistname'),
     // pluralName: 'Devices',
+    formTitle: this.i18n('HYT_device_form_title'),
     shortDefinition: this.i18n('HYT_device_shotrt_definition'),
     definition: this.i18n('HYT_device_definition'),
     longDefinition: this.i18n('HYT_device_long_definition'),
@@ -71,6 +74,7 @@ export class EntitiesService {
     // displayName: 'Packet',
     displayListName: this.i18n('HYT_packet_displaylistname'),
     // pluralName: 'Packets',
+    formTitle: this.i18n('HYT_packet_form_title'),
     shortDefinition: this.i18n('HYT_packet_short_definition'),
     definition: this.i18n('HYT_packet_definition'),
     longDefinition: this.i18n('HYT_packet_long_definition'),
@@ -87,6 +91,7 @@ export class EntitiesService {
     // displayName: 'Field',
     displayListName: this.i18n('HYT_field_displaylistname'),
     // pluralName: 'Fields',
+    formTitle: this.i18n('HYT_field_form_title'),
     shortDefinition: this.i18n('HYT_fields_short_definition'),
     definition: this.i18n('HYT_fields_definition'),
     longDefinition: this.i18n('HYT_fields_long_definition'),
@@ -103,6 +108,7 @@ export class EntitiesService {
     // displayName: 'Enrichment',
     displayListName: this.i18n('HYT_enrichment_displaylistname'),
     // pluralName: 'Enrichment',
+    formTitle: this.i18n('HYT_enrichment_form_title'),
     shortDefinition: this.i18n('HYT_enrichment_short_definition'),
     definition: this.i18n('HYT_enrichment_definition'),
     longDefinition: this.i18n('HYT_enrichment_long_definition'),
@@ -119,6 +125,7 @@ export class EntitiesService {
     // displayName: 'Statistic',
     displayListName: this.i18n('HYT_statistic_displaylistname'),
     // pluralName: 'Statistics',
+    formTitle: this.i18n('HYT_statistic_form_title'),
     shortDefinition: this.i18n('HYT_statistics_short_definition'),
     definition: this.i18n('HYT_statistics_definition'),
     longDefinition: this.i18n('HYT_statistics_long_definition'),
@@ -135,6 +142,7 @@ export class EntitiesService {
     // displayName: 'Event',
     displayListName: this.i18n('HYT_event_displaylistname'),
     // pluralName: 'Events',
+    formTitle: this.i18n('HYT_event_form_title'),
     shortDefinition: this.i18n('HYT_events_short_definition'),
     definition: this.i18n('HYT_events_definition'),
     longDefinition: this.i18n('HYT_events_long_definition'),

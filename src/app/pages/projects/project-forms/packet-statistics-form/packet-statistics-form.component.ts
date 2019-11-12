@@ -25,7 +25,8 @@ export class PacketStatisticsFormComponent extends ProjectFormEntity implements 
     private i18n: I18n
   ) {
     super(injector, i18n, formView);
-    this.longDefinition = this.i18n('HYT_statistics_long_definition');
+    this.longDefinition = this.entitiesService.statistic.longDefinition;
+    this.formTitle = this.entitiesService.statistic.formTitle;
     this.hideDelete = true; // hide 'Delete' button
     this.routerSubscription = this.router.events.subscribe((rl) => {
       if (rl instanceof NavigationEnd) {

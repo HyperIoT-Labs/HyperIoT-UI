@@ -46,7 +46,6 @@ export class PacketFormComponent extends ProjectFormEntity implements OnDestroy 
       default: 'HIGH'
     }
   };
-  formTitle = 'Packet';
 
   @Input()
   currentDevice: HDevice;
@@ -81,6 +80,7 @@ export class PacketFormComponent extends ProjectFormEntity implements OnDestroy 
   ) {
     super(injector, i18n, formView);
     this.longDefinition = this.entitiesService.packet.longDefinition;
+    this.formTitle = this.entitiesService.packet.formTitle;
     this.routerSubscription = this.router.events.subscribe((rl) => {
       if (rl instanceof NavigationEnd) {
         this.id = this.activatedRoute.snapshot.params.packetId;

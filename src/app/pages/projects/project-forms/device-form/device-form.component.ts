@@ -40,7 +40,6 @@ export class DeviceFormComponent extends ProjectFormEntity implements OnDestroy,
       default: null
     }
   };
-  formTitle = 'Device';
 
   id: number; // <-- this could be made private
 
@@ -58,6 +57,7 @@ export class DeviceFormComponent extends ProjectFormEntity implements OnDestroy,
   ) {
     super(injector, i18n, formView);
     this.longDefinition = this.entitiesService.device.longDefinition;
+    this.formTitle = this.entitiesService.device.formTitle;
     this.routerSubscription = this.router.events.subscribe((rl) => {
       if (rl instanceof NavigationEnd) {
         this.id = this.activatedRoute.snapshot.params.deviceId;

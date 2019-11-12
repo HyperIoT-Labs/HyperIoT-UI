@@ -54,8 +54,6 @@ export class PacketFieldsFormComponent extends ProjectFormEntity implements OnDe
 
   packetTree = [] as Node[];
 
-  formTitle = 'Packet Fields';
-
   constructor(
     injector: Injector,
     @ViewChild('form', { static: true }) formView: ElementRef,
@@ -66,6 +64,7 @@ export class PacketFieldsFormComponent extends ProjectFormEntity implements OnDe
   ) {
     super(injector, i18n, formView);
     this.longDefinition = this.entitiesService.field.longDefinition;
+    this.formTitle = this.entitiesService.field.formTitle;
     this.hideDelete = true;
     this.routerSubscription = this.router.events.subscribe((rl) => {
       if (rl instanceof NavigationEnd) {

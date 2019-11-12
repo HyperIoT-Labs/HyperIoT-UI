@@ -264,8 +264,6 @@ HYT_output_data
 Event output
 HYT_update
 Update
-HYT_entity_name_M
-ENTITY NAME
 HYT_pw_deactivation_modal
 You will lose any unsaved modifiction if you leave the page
 HYT_OK
@@ -328,10 +326,6 @@ HYT_user_updated
 Personal information updated correctly
 HYT_password_changed
 Password changed correctly
-HYT_device_long_definition
-Device long definition
-HYT_enrichment_long_definition
-Enrichment long definition
 HYT_unavaiable_rule_name
 Unavaiable rule name
 HYT_name_of_device
@@ -342,22 +336,12 @@ HYT_name_of_field
 The name of the field
 HYT_name_of_event_mail
 The name of the event mail
-HYT_events_long_definition
-Events long definition
 HYT_unavaiable_event_name
 Unavaiable event name
-HYT_fields_long_definition
-Fields long definition
-HYT_packet_long_definition
-Packet long definition
-HYT_statistics_long_definition
-Statistics long definition
 HYT_delete_item_question
 Do you really want to delete this item?
 HYT_operation_can_not_be_undone
 This operation can not be undone
-HYT_project_long_definition
-Project long definition
 HYT_unavaiable_project_name
 Unavaiable project name
 HYT_(&gt;)_greater
@@ -382,6 +366,76 @@ HYT_AND
 AND
 HYT_OR
 OR
+HYT_project_displaylistname
+Project
+HYT_project_form_title
+Project
+HYT_project_short_definition
+Project short definition...
+HYT_project_definition
+Project definition...
+HYT_project_long_definition
+Project long definition...
+HYT_device_displaylistname
+Devices
+HYT_device_form_title
+Device
+HYT_device_shotrt_definition
+Device short definition...
+HYT_device_definition
+Device definition...
+HYT_device_long_definition
+Device long definition...
+HYT_packet_displaylistname
+Packets
+HYT_packet_form_title
+Packet
+HYT_packet_short_definition
+Packet short definition...
+HYT_packet_definition
+Packet definition...
+HYT_packet_long_definition
+Packet long definition...
+HYT_field_displaylistname
+Fields
+HYT_field_form_title
+Packet Fields
+HYT_fields_short_definition
+Fields short definition...
+HYT_fields_definition
+Fields definition...
+HYT_fields_long_definition
+Fields long definition...
+HYT_enrichment_displaylistname
+Enrichment
+HYT_enrichment_form_title
+Packet Enrichments
+HYT_enrichment_short_definition
+Enrichment short definition...
+HYT_enrichment_definition
+Enrichment definition...
+HYT_enrichment_long_definition
+Enrichment long definition...
+HYT_statistic_displaylistname
+Statistics
+HYT_statistic_form_title
+Packet Statistics
+HYT_statistics_short_definition
+Statistics short definition...
+HYT_statistics_definition
+Statistics definition...
+HYT_statistics_long_definition
+Statistics long definition...
+HYT_event_displaylistname
+Events
+HYT_event_form_title
+Packet Events
+HYT_events_short_definition
+Events short definition...
+HYT_events_definition
+Events definition...
+HYT_events_long_definition
+Events long definition...
 HYT_duplicate_entity
 already in use
 HYT_unknown_error
