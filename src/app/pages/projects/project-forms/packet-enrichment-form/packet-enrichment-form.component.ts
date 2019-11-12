@@ -189,6 +189,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
         this.loadingStatus = LoadingStatusEnum.Error;
       });
     }
+    this.updatePacket();
   }
 
   onAddButtonClick() {
@@ -258,7 +259,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
     this.ruleDefinitionComponent.resetRuleDefinition();
   }
 
-  postRule() {
+  updatePacket() {
 
     if (this.enrichmentType === 'AddTagRuleAction') {
       this.packet.tagIds = this.assetTags;

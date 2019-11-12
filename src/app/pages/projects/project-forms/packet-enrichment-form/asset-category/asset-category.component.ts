@@ -12,6 +12,8 @@ export class AssetCategoryComponent implements OnInit {
 
   @Input() packet: HPacket;
 
+  @Input() project: HProject;
+
   @Output() categoryIds: EventEmitter<number[]> = new EventEmitter<number[]>();
 
   categoriesFlatTree: TreeNodeCategory[] = [];
@@ -19,7 +21,6 @@ export class AssetCategoryComponent implements OnInit {
   catIds: number[] = [];
 
   constructor(
-    private wizardService: ProjectWizardService,
     private assetCategoriesService: AssetscategoriesService
   ) { }
 
@@ -65,7 +66,7 @@ export class AssetCategoryComponent implements OnInit {
       name: event.label,
       owner: {
         ownerResourceName: 'it.acsoftware.hyperiot.hproject',
-        ownerResourceId: this.wizardService.getHProject().id
+        ownerResourceId: this.project.id
       },
       parent: event.parent ? event.parent.data : null
     };

@@ -14,7 +14,9 @@
                             <div class="col-md-6">
                                 <table id="tableSummary">
                                     <tr *ngFor="let data of reportData">
-                                        <td><span [class]="data.iconPath"></span></td>
+                                        <td>
+                                            <img src="assets/projects/icons/monitor.png" (click)="goToDashboard()">
+                                            <span [class]="data.iconPath"></span></td>
                                         <td>
                                             <ng-container>{{data.type}}</ng-container>
                                             <hr>

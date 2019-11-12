@@ -40,7 +40,7 @@
 
   <div *ngIf="enrichmentType=='AddCategoryRuleAction'" class="row">
     <div class="col-md-12 center">
-      <hyt-asset-category [packet]="packet" (categoryIds)="updateAssetCategory($event)">
+      <hyt-asset-category [project]="project" [packet]="packet" (categoryIds)="updateAssetCategory($event)">
       </hyt-asset-category>
     </div>
   </div>
