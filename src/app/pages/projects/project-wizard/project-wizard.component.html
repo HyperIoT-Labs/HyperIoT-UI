@@ -54,11 +54,34 @@
       <div class="row">
         <div class="col-md-12">
           <hyt-stepper #stepper (selectionChange)="stepChanged($event)" [isLinear]="true" style="width: 100%"
-            [stepArray]="[ projectTemplate, devicesTemplate, packetsTemplate, fieldsTemplate, enrichmentTemplate, statisticsTemplate, eventsTemplate ]"
-            [labelArray]="[ 'Projects', 'Devices', 'Packets', 'Fields', 'Enrichment', 'Statistics', 'Events' ]"
-            [completedArray]="[ currentProject != null, hDevices.length != 0, hPackets.length != 0, packetInformationValidated, packetInformationValidated, packetInformationValidated, packetInformationValidated ]">
+            [stepArray]="[
+              projectTemplate,
+              devicesTemplate,
+              packetsTemplate,
+              fieldsTemplate,
+              enrichmentTemplate,
+              statisticsTemplate,
+              eventsTemplate
+            ]"
+            [labelArray]="[
+              entitiesService.project.displayListName,
+              entitiesService.device.displayListName,
+              entitiesService.packet.displayListName,
+              entitiesService.field.displayListName,
+              entitiesService.enrichment.displayListName,
+              entitiesService.statistic.displayListName,
+              entitiesService.event.displayListName
+            ]"
+            [completedArray]="[
+              currentProject != null,
+              hDevices.length != 0,
+              hPackets.length != 0,
+              packetInformationValidated,
+              packetInformationValidated,
+              packetInformationValidated,
+              packetInformationValidated
+            ]">
           </hyt-stepper>
-          <!--@I18N-->
         </div>
       </div>
 

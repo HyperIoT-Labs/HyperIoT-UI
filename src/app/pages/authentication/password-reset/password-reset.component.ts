@@ -6,6 +6,10 @@ import { HYTError } from 'src/app/services/errorHandler/models/models';
 import { AuthenticationHttpErrorHandlerService } from 'src/app/services/errorHandler/authentication-http-error-handler.service';
 import { SubmissionStatus } from '../models/pageStatus';
 
+/**
+ * PasswordResetComponent is a component of AuthenticationModule.
+ * It is used to hallow the user to reset his account password.
+ */
 @Component({
   selector: 'hyt-password-reset',
   templateUrl: './password-reset.component.html',
@@ -14,17 +18,39 @@ import { SubmissionStatus } from '../models/pageStatus';
 })
 export class PasswordResetComponent implements OnInit {
 
+  /**
+   * the user email extrapolated from the url
+   */
   email: string;
+
+  /**
+   * the request code extrapolated from the url
+   */
   code: string;
 
+  /**
+   * recoverPassForm stores the password-reset form
+   */
   recoverPassForm: FormGroup;
 
+  /**
+   * pwdResetStatus is used to handle the template view when the user is making the password-reset request
+   */
+  pwdResetStatus: SubmissionStatus = SubmissionStatus.Default;
+
+  /**
+   * error stores the errors returned by the server
+   */
   error: string = null;
 
-  submissionStatus: SubmissionStatus = SubmissionStatus.Default;
-
+  /**
+   * logger service
+   */
   private logger: Logger;
 
+  /**
+   * class constructor
+   */
   constructor(
     private route: ActivatedRoute,
     private hUserService: HusersService,
@@ -35,6 +61,9 @@ export class PasswordResetComponent implements OnInit {
     this.logger.registerClass('PasswordResetComponent');
    }
 
+  /**
+   * ngOnInit() builds the password-reset form and sets the email and reset code extracted from the url
+   */
   ngOnInit() {
 
     this.recoverPassForm = new FormGroup({});
@@ -49,6 +78,11 @@ export class PasswordResetComponent implements OnInit {
 
   }
 
+  /**
+   * resetPwd() is used to let the user reset his account password.
+   * This function send the password-reset request to the server with the new password provided by the user,
+   * the email and the reset-password code.
+   */
   resetPwd() {
 
     const pwdReset: HUserPasswordReset = {
@@ -61,18 +95,22 @@ export class PasswordResetComponent implements OnInit {
     this.hUserService.resetPassword(pwdReset).subscribe(
       res => {
         this.logger.debug('', res);
-        this.submissionStatus = SubmissionStatus.Submitted; },
+        this.pwdResetStatus = SubmissionStatus.Submitted; },
       err => {
         const k: HYTError[] = this.httperrorHandler.handlePwdRecovery(err);
         for (const e of k) {
           this.error = e.message;
         }
-        this.submissionStatus = SubmissionStatus.Error;
+        this.pwdResetStatus = SubmissionStatus.Error;
       }
 
     );
   }
 
+  /**
+   * notValid() returns false if the password-reset form is not valid.
+   * This function is used by the template.
+   */
   notValid(): boolean {
     return this.recoverPassForm.get('email').invalid;
   }

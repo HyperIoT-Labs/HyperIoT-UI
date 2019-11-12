@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { AuthenticationService, LoggerService, Logger } from '@hyperiot/core';
 import { Router } from '@angular/router';
@@ -7,10 +7,11 @@ import { AuthenticationHttpErrorHandlerService } from 'src/app/services/errorHan
 import { HYTError } from 'src/app/services/errorHandler/models/models';
 
 import * as CryptoJS from 'crypto-js';
+import { SubmissionStatus } from '../models/pageStatus';
 
 /**
  * LoginComponent is a component of AuthenticationModule.
- * It is used to hallow the user to login with his account.
+ * It is used to hallow the user to login with the credentials of his account.
  */
 @Component({
   selector: 'hyt-login',
@@ -48,9 +49,9 @@ export class LoginComponent implements OnInit {
   // private decrypted;
 
   /**
-   * loading is true when the login is in pending
+   * loginStatus is used to handle the template view when the user is logging in
    */
-  loading = false;
+  loginStatus: SubmissionStatus = SubmissionStatus.Default;
 
   /**
    * injectedErrorState is true if the server returns an error
@@ -62,6 +63,9 @@ export class LoginComponent implements OnInit {
    */
   private logger: Logger;
 
+  /**
+   * class constructor
+   */
   constructor(
     private authenticationService: AuthenticationService,
     private fb: FormBuilder,
@@ -74,7 +78,7 @@ export class LoginComponent implements OnInit {
   }
 
   /**
-   * ngOnInit() build the loginForm and set the returnUrl
+   * ngOnInit() builds the loginForm and set the returnUrl
    */
   ngOnInit() {
     this.loginForm = this.fb.group({});
@@ -83,10 +87,10 @@ export class LoginComponent implements OnInit {
 
   /**
    * login() is used to let the user enter in his dedicated environment.
-   * This functions set the user info in the localstorage and set the JWTTOKEN.
+   * This function set the user info in the localstorage and set the JWTTOKEN.
    */
   login() {
-    this.loading = true;
+    this.loginStatus = SubmissionStatus.Loading;
     this.error = [];
 
     if (this.loginForm.invalid) {
@@ -107,7 +111,7 @@ export class LoginComponent implements OnInit {
         } else if (this.cookieService.check('hytUser')) {
           this.cookieService.delete('hytUser', '/');
         }
-        this.loading = false;
+        this.loginStatus = SubmissionStatus.Submitted;
 
         this.router.navigate([this.returnUrl]);
       },
@@ -117,7 +121,7 @@ export class LoginComponent implements OnInit {
         for (const e of k) {
           this.error[2] = e.message;
         }
-        this.loading = false;
+        this.loginStatus = SubmissionStatus.Error;
       }
     );
   }

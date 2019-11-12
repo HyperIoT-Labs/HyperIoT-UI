@@ -65,7 +65,7 @@ export class PacketFieldsFormComponent extends ProjectFormEntity implements OnDe
     private i18n: I18n
   ) {
     super(injector, i18n, formView);
-    this.longDefinition = this.i18n('HYT_fields_long_definition');
+    this.longDefinition = this.entitiesService.field.longDefinition;
     this.hideDelete = true;
     this.routerSubscription = this.router.events.subscribe((rl) => {
       if (rl instanceof NavigationEnd) {

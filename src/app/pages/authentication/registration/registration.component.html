@@ -45,8 +45,8 @@
 
               <div class="container-form-field">
                 <hyt-input-text [form]="registrationForm" formControlName="username" name="username" [isRequired]="true"
-                  i18n-placeholder="@@HYT_username" placeholder="HYT_username"
-                  [injectedErrorMsg]="getError('username')">
+                  i18n-placeholder="@@HYT_username" placeholder="HYT_username" pattern="[A-Za-z0-9 ]*"
+                  [injectedErrorMsg]="getError('huser-username')">
                 </hyt-input-text>
               </div> <!-- Field Username -->
 
@@ -88,12 +88,12 @@
               </div> <!-- Error Box -->
 
               <div class="container-form-field">
-                <hyt-button id="submit-btn" type="submit" [isDisabled]="notValid() || loading || registrationSucceeded">
+                <hyt-button id="submit-btn" type="submit" [isDisabled]="notValid() || registrationStatus == 1 || registrationStatus == 2">
                   <ng-container i18n="@@HYT_registration_button">HYT_registration_button</ng-container>
                 </hyt-button>
               </div> <!-- Container Button -->
 
-              <ng-container *ngIf="!registrationSucceeded && loading">
+              <ng-container *ngIf="registrationStatus == 1">
                 <div class="sk-circle">
                   <div class="sk-circle1 sk-child"></div>
                   <div class="sk-circle2 sk-child"></div>
@@ -110,11 +110,11 @@
                 </div>
               </ng-container>
 
-              <ng-container *ngIf="registrationSucceeded">
+              <ng-container *ngIf="registrationStatus == 2">
 
                 <div id="successMessage" i18n="@@HYT_registration_form_ok">HYT_registration_form_ok</div>
 
-              </ng-container> <!-- *ngIf="registrationSucceeded" -->
+              </ng-container> <!-- *ngIf="registrationStatus == 2" -->
 
             </form> <!-- End Form -->
 

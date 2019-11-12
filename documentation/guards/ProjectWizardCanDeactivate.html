@@ -1,0 +1,678 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>hyperiot documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">hyperiot documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content guard">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+    <li>Guards</li>
+    <li>ProjectWizardCanDeactivate</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+        <div class="tab-pane fade active in" id="c-info">
+            <p class="comment">
+            <h3>File</h3>
+            </p>
+            <p class="comment">
+                <code>src/app/pages/projects/project-wizard/project-wizard.component.ts</code>
+            </p>
+
+
+
+
+
+                <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#canDeactivate">canDeactivate</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+
+                <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="canDeactivate"></a>
+                    <span class="name">
+                        <b>
+                            canDeactivate
+                        </b>
+                        <a href="#canDeactivate"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>canDeactivate(com: <a href="../components/ProjectWizardComponent.html">ProjectWizardComponent</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="25"
+                            class="link-to-prism">src/app/pages/projects/project-wizard/project-wizard.component.ts:25</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>com</td>
+                                    <td>
+                                                <code><a href="../components/ProjectWizardComponent.html" target="_self" >ProjectWizardComponent</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+        </div>
+
+
+        <div class="tab-pane fade  tab-source-code" id="c-source">
+            <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit, ViewChild, Injectable, AfterViewInit } from &#x27;@angular/core&#x27;;
+import { HProject, HDevice, HPacket, Rule, HdevicesService, HpacketsService } from &#x27;@hyperiot/core&#x27;;
+import { Router, CanDeactivate } from &#x27;@angular/router&#x27;;
+import { Subject } from &#x27;rxjs&#x27;;
+import { ProjectFormEntity } from &#x27;../project-forms/project-form-entity&#x27;;
+import { ProjectFormComponent } from &#x27;../project-forms/project-form/project-form.component&#x27;;
+import { DeviceFormComponent } from &#x27;../project-forms/device-form/device-form.component&#x27;;
+import { PacketFormComponent } from &#x27;../project-forms/packet-form/packet-form.component&#x27;;
+import { DeviceSelectComponent } from &#x27;./device-select/device-select.component&#x27;;
+import { PacketFieldsFormComponent } from &#x27;../project-forms/packet-fields-form/packet-fields-form.component&#x27;;
+import { SummaryListItem } from &#x27;../project-detail/generic-summary-list/generic-summary-list.component&#x27;;
+import { PacketSelectComponent } from &#x27;./packet-select/packet-select.component&#x27;;
+import { PacketEnrichmentFormComponent } from &#x27;../project-forms/packet-enrichment-form/packet-enrichment-form.component&#x27;;
+import { PacketEventsFormComponent } from &#x27;../project-forms/packet-events-form/packet-events-form.component&#x27;;
+import { DeleteConfirmDialogComponent } from &#x27;src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component&#x27;;
+import { PacketStatisticsFormComponent } from &#x27;../project-forms/packet-statistics-form/packet-statistics-form.component&#x27;;
+import { HytModalConfService } from &#x27;src/app/services/hyt-modal-conf.service&#x27;;
+import { HytStepperComponent } from &#x27;@hyperiot/components/lib/hyt-stepper/hyt-stepper.component&#x27;;
+import { EntitiesService } from &#x27;src/app/services/entities/entities.service&#x27;;
+
+@Injectable({
+  providedIn: &#x27;root&#x27;,
+})
+export class ProjectWizardCanDeactivate implements CanDeactivate&lt;ProjectWizardComponent&gt; {
+  canDeactivate(com: ProjectWizardComponent) {
+    if (com.currentProject &#x3D;&#x3D; null) {
+      return true;
+    } else {
+      com.deactivateModal &#x3D; true;
+      return com.canDeactivate$;
+    }
+  }
+}
+
+@Component({
+  selector: &#x27;hyt-project-wizard&#x27;,
+  templateUrl: &#x27;./project-wizard.component.html&#x27;,
+  styleUrls: [&#x27;./project-wizard.component.scss&#x27;],
+})
+export class ProjectWizardComponent implements OnInit, AfterViewInit {
+
+  @ViewChild(&#x27;stepper&#x27;, { static: false })
+  stepper: HytStepperComponent;
+
+  currentForm: ProjectFormEntity;
+
+  @ViewChild(&#x27;projectForm&#x27;, { static: false })
+  projectForm: ProjectFormComponent;
+
+  @ViewChild(&#x27;devicesForm&#x27;, { static: false })
+  devicesForm: DeviceFormComponent;
+
+  @ViewChild(&#x27;packetsForm&#x27;, { static: false })
+  packetsForm: PacketFormComponent;
+
+  @ViewChild(&#x27;fieldPacketSelect&#x27;, { static: false })
+  fieldPacketSelect: PacketSelectComponent;
+
+  @ViewChild(&#x27;enrichmentPacketSelect&#x27;, { static: false })
+  enrichmentPacketSelect: PacketSelectComponent;
+
+  @ViewChild(&#x27;deviceSelect&#x27;, { static: false })
+  deviceSelect: DeviceSelectComponent;
+
+  @ViewChild(&#x27;fieldsForm&#x27;, { static: false })
+  fieldsForm: PacketFieldsFormComponent;
+
+  @ViewChild(&#x27;enrichmentForm&#x27;, { static: false })
+  enrichmentForm: PacketEnrichmentFormComponent;
+
+  statisticsForm: PacketStatisticsFormComponent;
+
+  @ViewChild(&#x27;eventsForm&#x27;, { static: false })
+  eventsForm: PacketEventsFormComponent;
+
+  @ViewChild(&#x27;eventPacketSelect&#x27;, { static: false })
+  eventPacketSelect: PacketSelectComponent;
+
+  currentProject: HProject;
+  currentDevice: HDevice;
+  hDevices: HDevice[] &#x3D; [];
+  hPackets: HPacket[] &#x3D; [];
+  enrichmentRules: Rule[] &#x3D; [];
+  eventRules: Rule[] &#x3D; [];
+
+  packetInformationValidated &#x3D; false;
+
+  hintMessage &#x3D; &#x27;&#x27;;
+  hintVisible &#x3D; false;
+
+  currentStepIndex &#x3D; 0;
+
+  finishData: { iconPath: string, type: string, entities: string[] }[] &#x3D; [];
+
+  canDeactivate$: Subject&lt;boolean&gt; &#x3D; new Subject&lt;boolean&gt;();
+
+  deactivateModal &#x3D; false;
+
+  entService;
+
+  constructor(
+    private hDevicesService: HdevicesService,
+    private hPacketsService: HpacketsService,
+    private modalService: HytModalConfService,
+    private entitiesService: EntitiesService
+  ) {
+    this.entService &#x3D; entitiesService;
+  }
+
+  ngOnInit() {
+
+  }
+
+  ngAfterViewInit() {
+    setTimeout(() &#x3D;&gt; {// TODO...setimeout 0 to avoid &#x27;expression changed after view checked&#x27;
+      this.eventsForm.editMode &#x3D; true;
+      this.enrichmentForm.editMode &#x3D; true;
+      this.resetForms();
+      if (window.history.state.projectId) {
+        this.projectForm.id &#x3D; window.history.state.projectId;
+        this.projectForm.load();
+      }
+      this.currentForm &#x3D; this.projectForm;
+    }, 0);
+  }
+
+  resetForms() {
+    this.packetsForm.edit();
+  }
+
+  stepChanged(event) {
+    this.currentStepIndex &#x3D; event.selectedIndex;
+    // setting current form...
+    switch (event.selectedIndex) {
+      case 0: {
+        this.currentForm &#x3D; this.projectForm;
+        break;
+      }
+      case 1: {
+        this.currentForm &#x3D; this.devicesForm;
+        this.getDevices();
+        break;
+      }
+      case 2: {
+        this.currentForm &#x3D; this.packetsForm;
+        this.getPackets();
+        break;
+      }
+      case 3: {
+        this.currentForm &#x3D; this.fieldsForm;
+        this.fieldPacketSelect.autoSelect();
+        break;
+      }
+      case 4: {
+        this.currentForm &#x3D; this.enrichmentForm;
+        this.enrichmentPacketSelect.autoSelect();
+        break;
+      }
+      case 5: {
+        this.currentForm &#x3D; this.statisticsForm;
+        break;
+      }
+      case 6: {
+        this.currentForm &#x3D; this.eventsForm;
+        this.eventPacketSelect.autoSelect();
+        break;
+      }
+      default: {
+        console.log(&#x27;error&#x27;);
+      }
+    }
+    // if (!this.currentForm.isDirty())
+    //   this.currentForm.edit();
+    // this.wizardService.stepChanged(event.selectedIndex);
+  }
+
+  updateList(ent: any, entityList: any[]): any[] {
+    const fin &#x3D; entityList.find(x &#x3D;&gt; x.id &#x3D;&#x3D;&#x3D; ent.id);
+    if (fin) {
+      const en &#x3D; entityList.find(x &#x3D;&gt; x.id &#x3D;&#x3D;&#x3D; ent.id);
+      entityList[entityList.indexOf(en)] &#x3D; ent;
+    } else {
+      entityList.push(ent);
+    }
+    return entityList;
+  }
+
+  deleteFromList(entId: number, entityList: any[]) {
+    for (let k &#x3D; 0; k &lt; entityList.length; k++) {
+      if (entityList[k].id &#x3D;&#x3D;&#x3D; entId) {
+        entityList.splice(k, 1);
+      }
+    }
+    return entityList;
+  }
+
+  updateDeviceTable() {
+    this.devicesForm.summaryList &#x3D; {
+      title: &#x27;Devices&#x27;,
+      list: this.hDevices.map((d) &#x3D;&gt; {
+        return { name: d.deviceName, description: d.description, data: d };
+      }) as SummaryListItem[]
+    };
+  }
+
+  updatePacketTable() {
+    this.packetsForm.summaryList &#x3D; {
+      title: &#x27;Packets&#x27;,
+      list: this.hPackets.map((p) &#x3D;&gt; {
+        return { name: p.name, description: p.trafficPlan, data: p };
+      }) as SummaryListItem[]
+    };
+  }
+
+  onSaveClick(e) {
+    this.currentForm.save((ent, isNew) &#x3D;&gt; {
+
+      if (this.currentForm instanceof ProjectFormComponent) {
+        this.currentProject &#x3D; ent;
+      } else if (this.currentForm instanceof DeviceFormComponent) {
+        this.currentForm.cleanForm();
+        this.hDevices &#x3D; [...this.updateList(ent, this.hDevices)];
+        this.updateDeviceTable();
+      } else if (this.currentForm instanceof PacketFormComponent) {
+        this.currentForm.cleanForm();
+        this.hPackets &#x3D; [...this.updateList(ent, this.hPackets)];
+        this.updatePacketTable();
+      } else if (this.currentForm instanceof PacketEnrichmentFormComponent) {
+        this.enrichmentRules &#x3D; [...this.updateList(ent, this.enrichmentRules)];
+        this.currentForm.cleanForm();
+      } else if (this.currentForm instanceof PacketEventsFormComponent) {
+        this.eventRules &#x3D; [...this.updateList(ent, this.eventRules)];
+        this.currentForm.cleanForm();
+      }
+
+    }, (error) &#x3D;&gt; {
+      // TODO: ...
+    });
+  }
+  onCancelClick(e) {
+    this.currentForm.cancel();
+  }
+  onEntityEvent(data: any) {
+    switch (data.event) {
+      case &#x27;hint:show&#x27;:
+        this.showHintMessage(data.message);
+        break;
+      case &#x27;hint:hide&#x27;:
+        this.hideHintMessage();
+        break;
+      case &#x27;pw:project-loaded&#x27;:
+        this.currentProject &#x3D; data.project;
+    }
+  }
+
+  showHintMessage(message: string): void {
+    this.hintMessage &#x3D; message;
+    this.hintVisible &#x3D; true;
+  }
+  hideHintMessage(): void {
+    this.hintVisible &#x3D; false;
+  }
+
+  onSummaryItemClick(event): void {
+  }
+
+  menuAction(event): void {
+    console.log(event.item);
+    switch (event.action) {
+      case &#x27;edit&#x27;:
+        if (this.currentForm instanceof PacketFormComponent) {
+          this.deviceSelect.selectSpecific(event.item.data.device.id);
+          this.deviceSelect.freezeSelection();
+        }
+        this.currentForm.edit(event.item.data);
+        break;
+      case &#x27;duplicate&#x27;:
+        if (this.currentForm instanceof PacketFormComponent) {
+          this.deviceSelect.unfreezeSelection();
+          this.deviceSelect.selectSpecific(event.item.data.device.id);
+        }
+        this.currentForm.clone(event.item.data);
+        break;
+      case &#x27;delete&#x27;:
+        if (this.currentForm instanceof PacketFormComponent) {
+          this.deviceSelect.selectSpecific(event.item.data.device.id);
+          this.deviceSelect.freezeSelection();
+        }
+        this.currentForm.edit(event.item.data, this.currentForm.openDeleteDialog((del) &#x3D;&gt; {
+          if (this.currentForm instanceof DeviceFormComponent) {
+            this.hDevices &#x3D; [...this.deleteFromList(event.item.data.id, this.hDevices)];
+            this.updateDeviceTable();
+          } else if (this.currentForm instanceof PacketFormComponent) {
+            this.hPackets &#x3D; [...this.deleteFromList(event.item.data.id, this.hPackets)];
+            this.updatePacketTable();
+            this.deviceSelect.unfreezeSelection();
+          } else if (this.currentForm instanceof PacketEnrichmentFormComponent) {
+            this.enrichmentRules &#x3D; [...this.deleteFromList(event.item.data.id, this.enrichmentRules)];
+          } else if (this.currentForm instanceof PacketEventsFormComponent) {
+            this.eventRules &#x3D; [...this.deleteFromList(event.item.data.id, this.eventRules)];
+          }
+          this.currentForm.cleanForm();
+          this.currentForm.entity &#x3D; {};
+        }));
+        break;
+    }
+  }
+
+  deviceChanged(event): void {
+    this.currentDevice &#x3D; event;
+  }
+
+  fieldPacketChanged(event): void {
+    if (event) {
+      this.fieldsForm.loadData(event.id);
+    }
+  }
+
+  enrichmentPacketChanged(event): void {
+    if (event) {
+      this.enrichmentForm.cleanForm();
+      this.enrichmentForm.loadData(event.id);
+    }
+  }
+
+  eventPacketChanged(event): void {
+    if (event) {
+      this.eventsForm.cleanForm();
+      this.eventsForm.loadData(event.id);
+    }
+  }
+
+  openOptionModal() {
+    this.modalService.open(&#x27;hyt-wizard-options-modal&#x27;);
+    this.packetInformationValidated &#x3D; true;
+  }
+
+  optionsModalClosed(event: { action: string, data: any }) {
+    console.log(event);
+    switch (event.action) {
+      case &#x27;goToStep&#x27;: {
+        this.stepper.changeStep(event.data);
+        break;
+      }
+      case &#x27;goToFinish&#x27;: {
+        this.openFinishModal();
+        break;
+      }
+    }
+  }
+
+  openFinishModal() {
+    this.finishData &#x3D; [];
+    this.finishData.push({
+      iconPath: this.entitiesService.project.icon,
+      type: this.entitiesService.project.displayListName,
+      entities: [this.currentProject.name]
+    });
+    this.finishData.push({
+      iconPath: this.entitiesService.device.icon,
+      type: this.entitiesService.device.displayListName,
+      entities: this.hDevices.map(d &#x3D;&gt; d.deviceName)
+    });
+    this.finishData.push({
+      iconPath: this.entitiesService.packet.icon,
+      type: this.entitiesService.packet.displayListName,
+      entities: this.hPackets.map(p &#x3D;&gt; p.name)
+    });
+    this.finishData.push({
+      iconPath: this.entitiesService.enrichment.icon,
+      type: this.entitiesService.enrichment.displayListName,
+      entities: this.enrichmentRules.map(e &#x3D;&gt; e.name)
+    });
+    this.finishData.push({
+      iconPath: this.entitiesService.event.icon,
+      type: this.entitiesService.event.displayListName,
+      entities: this.eventRules.map(e &#x3D;&gt; e.name)
+    });
+    this.modalService.open(&#x27;hyt-wizard-report-modal&#x27;);
+  }
+
+  // Deactivation logic
+  deactivate(cd: boolean): void {
+    this.deactivateModal &#x3D; false;
+    this.canDeactivate$.next(cd);
+  }
+
+  // TODO... in service
+  getDevices(): void {
+    this.hDevicesService.findAllHDeviceByProjectId(this.currentProject.id).subscribe(
+      (res: HDevice[]) &#x3D;&gt; {
+        this.hDevices &#x3D; res;
+        this.updateDeviceTable();
+      }
+    );
+  }
+  // TODO... in service
+  getPackets(): void {
+    this.hPacketsService.findAllHPacketByProjectId(this.currentProject.id).subscribe(
+      (res: HPacket[]) &#x3D;&gt; {
+        this.hPackets &#x3D; res;
+        this.updatePacketTable();
+      }
+    );
+  }
+
+  isNextDisabled(): boolean {
+    switch (this.currentStepIndex) {
+      case 0: {
+        return !this.currentProject;
+        break;
+      }
+      case 1: {
+        return this.hDevices.length &#x3D;&#x3D;&#x3D; 0;
+        break;
+      }
+      case 2: {
+        return this.hPackets.length &#x3D;&#x3D;&#x3D; 0;
+        break;
+      }
+      default: {
+        return false;
+      }
+    }
+  }
+
+  nextFn() {
+    if (this.currentStepIndex &#x3D;&#x3D;&#x3D; 3 &amp;&amp; !this.packetInformationValidated) {
+      this.openOptionModal();
+    } else if (this.currentStepIndex &#x3D;&#x3D;&#x3D; 6) {
+      this.openOptionModal();
+    } else {
+      this.stepper.next();
+    }
+  }
+
+  showCancel(): boolean {
+    return this.currentForm instanceof PacketFieldsFormComponent;
+  }
+
+}
+</code></pre>
+        </div>
+</div>
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'guard';
+            var COMPODOC_CURRENT_PAGE_URL = 'ProjectWizardCanDeactivate.html';
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

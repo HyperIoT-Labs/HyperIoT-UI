@@ -7,6 +7,7 @@ import { ElementRef, ViewChild, OnInit, Output, EventEmitter, AfterViewInit, Inj
 import { SummaryList } from '../project-detail/generic-summary-list/generic-summary-list.component';
 import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
 import { I18n } from '@ngx-translate/i18n-polyfill';
+import { EntitiesService } from 'src/app/services/entities/entities.service';
 
 export enum LoadingStatusEnum {
     Ready,
@@ -41,6 +42,7 @@ export abstract class ProjectFormEntity implements OnInit {
 
     protected formBuilder: FormBuilder;
     protected dialog: MatDialog;
+    protected entitiesService: EntitiesService;
 
     constructor(
         injector: Injector,
@@ -49,6 +51,7 @@ export abstract class ProjectFormEntity implements OnInit {
     ) {
         this.formBuilder = injector.get(FormBuilder);
         this.dialog = injector.get(MatDialog);
+        this.entitiesService = injector.get(EntitiesService);
         this.i18nD = injector.get(I18n);
         this.form = this.formBuilder.group({});
     }

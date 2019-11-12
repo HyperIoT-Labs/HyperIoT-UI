@@ -1,0 +1,3639 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>hyperiot documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">hyperiot documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li>Components</li>
+  <li>PacketFormComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li >
+            <a href="#templateData" role="tab" id="templateData-tab" data-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li >
+            <a href="#styleData" role="tab" id="styleData-tab" data-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li >
+            <a href="#tree" role="tab" id="tree-tab" data-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/pages/projects/project-forms/packet-form/packet-form.component.ts</code>
+</p>
+
+
+    <p class="comment">
+        <h3>Extends</h3>
+    </p>
+    <p class="comment">
+                <code><a href="../interfaces/Entity.html" target="_self" >ProjectFormEntity</a></code>
+    </p>
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                    <code><a href="https://angular.io/api/core/OnDestroy" target="_blank" >OnDestroy</a></code>
+    </p>
+
+
+<section>
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>hyt-packet-form</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./packet-form.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./packet-form.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#deviceName">deviceName</a>
+                            </li>
+                            <li>
+                                <a href="#entity">entity</a>
+                            </li>
+                            <li>
+                                <a href="#entityFormMap">entityFormMap</a>
+                            </li>
+                            <li>
+                                <a href="#formatOptions">formatOptions</a>
+                            </li>
+                            <li>
+                                <a href="#formTitle">formTitle</a>
+                            </li>
+                            <li>
+                                <a href="#id">id</a>
+                            </li>
+                            <li>
+                                <a href="#mqttTopic">mqttTopic</a>
+                            </li>
+                            <li>
+                                <a href="#mqttUrl">mqttUrl</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#routerSubscription">routerSubscription</a>
+                            </li>
+                            <li>
+                                <a href="#serializationOptions">serializationOptions</a>
+                            </li>
+                            <li>
+                                <a href="#trafficPlanOptions">trafficPlanOptions</a>
+                            </li>
+                            <li>
+                                <a href="#typeOptions">typeOptions</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#circularFix">circularFix</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#dialog">dialog</a>
+                            </li>
+                            <li>
+                                <a href="#editMode">editMode</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#entitiesService">entitiesService</a>
+                            </li>
+                            <li>
+                                <a href="#entity">entity</a>
+                            </li>
+                            <li>
+                                <a href="#entityFormMap">entityFormMap</a>
+                            </li>
+                            <li>
+                                <a href="#form">form</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#formBuilder">formBuilder</a>
+                            </li>
+                            <li>
+                                <a href="#formTitle">formTitle</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#getUser">getUser</a>
+                            </li>
+                            <li>
+                                <a href="#hideDelete">hideDelete</a>
+                            </li>
+                            <li>
+                                <a href="#isProjectEntity">isProjectEntity</a>
+                            </li>
+                            <li>
+                                <a href="#loadingStatus">loadingStatus</a>
+                            </li>
+                            <li>
+                                <a href="#LoadingStatus">LoadingStatus</a>
+                            </li>
+                            <li>
+                                <a href="#longDefinition">longDefinition</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#originalValue">originalValue</a>
+                            </li>
+                            <li>
+                                <a href="#showCancel">showCancel</a>
+                            </li>
+                            <li>
+                                <a href="#summaryList">summaryList</a>
+                            </li>
+                            <li>
+                                <a href="#unsavedChangesCallback">unsavedChangesCallback</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#validationError">validationError</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#delete">delete</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#deletePacket">deletePacket</a>
+                            </li>
+                            <li>
+                                <a href="#load">load</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnDestroy">ngOnDestroy</a>
+                            </li>
+                            <li>
+                                <a href="#save">save</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#savePacket">savePacket</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#buildHintMessages">buildHintMessages</a>
+                            </li>
+                            <li>
+                                <a href="#cancel">cancel</a>
+                            </li>
+                            <li>
+                                <a href="#canDeactivate">canDeactivate</a>
+                            </li>
+                            <li>
+                                <a href="#cleanForm">cleanForm</a>
+                            </li>
+                            <li>
+                                <a href="#clone">clone</a>
+                            </li>
+                            <li>
+                                <a href="#delete">delete</a>
+                            </li>
+                            <li>
+                                <a href="#edit">edit</a>
+                            </li>
+                            <li>
+                                <a href="#getError">getError</a>
+                            </li>
+                            <li>
+                                <a href="#isDirty">isDirty</a>
+                            </li>
+                            <li>
+                                <a href="#isNew">isNew</a>
+                            </li>
+                            <li>
+                                <a href="#isValid">isValid</a>
+                            </li>
+                            <li>
+                                <a href="#load">load</a>
+                            </li>
+                            <li>
+                                <a href="#newEntity">newEntity</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit">ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#openDeleteDialog">openDeleteDialog</a>
+                            </li>
+                            <li>
+                                <a href="#resetErrors">resetErrors</a>
+                            </li>
+                            <li>
+                                <a href="#resetForm">resetForm</a>
+                            </li>
+                            <li>
+                                <a href="#save">save</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#serialize">serialize</a>
+                            </li>
+                            <li>
+                                <a href="#setErrors">setErrors</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Inputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#currentDevice">currentDevice</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Outputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#entityEvent">entityEvent</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(injector: <a href="https://angular.io/api/core/Injector" target="_blank">Injector</a>, formView: <a href="https://angular.io/api/core/ElementRef" target="_blank">ElementRef</a>, hPacketService: HpacketsService, activatedRoute: <a href="https://angular.io/api/router/ActivatedRoute" target="_blank">ActivatedRoute</a>, router: <a href="https://angular.io/api/router/Router" target="_blank">Router</a>, i18n: I18n)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="72" class="link-to-prism">src/app/pages/projects/project-forms/packet-form/packet-form.component.ts:72</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>injector</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://angular.io/api/core/Injector" target="_blank" >Injector</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>formView</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://angular.io/api/core/ElementRef" target="_blank" >ElementRef</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>hPacketService</td>
+                                                  
+                                                        <td>
+                                                                    <code>HpacketsService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>activatedRoute</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://angular.io/api/router/ActivatedRoute" target="_blank" >ActivatedRoute</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>router</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://angular.io/api/router/Router" target="_blank" >Router</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>i18n</td>
+                                                  
+                                                        <td>
+                                                                    <code>I18n</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+    <section>
+    <h3 id="inputs">Inputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="currentDevice"></a>
+                        <b>currentDevice</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>HDevice</code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">src/app/pages/projects/project-forms/packet-form/packet-form.component.ts:52</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+    <section>
+    <h3 id="outputs">Outputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="entityEvent"></a>
+                        <b>entityEvent</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://angular.io/api/core/EventEmitter" target="_blank" >EventEmitter</a></code>
+
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4" colspan="2">
+                                    <div class="io-line">Inherited from         <code><a href="../interfaces/Entity.html" target="_self" >ProjectFormEntity</a></code>
+</div>
+                                </td>
+                            </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in         <code><a href="../interfaces/Entity.html#source" target="_self" >ProjectFormEntity:20</a></code>
+</div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+
+
+    <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="delete"></a>
+                    <span class="name">
+                        <b>
+                            delete
+                        </b>
+                        <a href="#delete"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>delete(successCallback, errorCallback)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="100"
+                            class="link-to-prism">src/app/pages/projects/project-forms/packet-form/packet-form.component.ts:100</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>successCallback</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>errorCallback</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="deletePacket"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            deletePacket
+                        </b>
+                        <a href="#deletePacket"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>deletePacket(successCallback?, errorCallback?)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="169"
+                            class="link-to-prism">src/app/pages/projects/project-forms/packet-form/packet-form.component.ts:169</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>successCallback</td>
+
+                                    <td>
+                                        Yes
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>errorCallback</td>
+
+                                    <td>
+                                        Yes
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="load"></a>
+                    <span class="name">
+                        <b>
+                            load
+                        </b>
+                        <a href="#load"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>load()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="104"
+                            class="link-to-prism">src/app/pages/projects/project-forms/packet-form/packet-form.component.ts:104</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnDestroy"></a>
+                    <span class="name">
+                        <b>
+                            ngOnDestroy
+                        </b>
+                        <a href="#ngOnDestroy"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnDestroy()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="92"
+                            class="link-to-prism">src/app/pages/projects/project-forms/packet-form/packet-form.component.ts:92</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="save"></a>
+                    <span class="name">
+                        <b>
+                            save
+                        </b>
+                        <a href="#save"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>save(successCallback, errorCallback)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="97"
+                            class="link-to-prism">src/app/pages/projects/project-forms/packet-form/packet-form.component.ts:97</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>successCallback</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>errorCallback</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="savePacket"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            savePacket
+                        </b>
+                        <a href="#savePacket"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>savePacket(successCallback?, errorCallback?)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="124"
+                            class="link-to-prism">src/app/pages/projects/project-forms/packet-form/packet-form.component.ts:124</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>successCallback</td>
+
+                                    <td>
+                                        Yes
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>errorCallback</td>
+
+                                    <td>
+                                        Yes
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="buildHintMessages"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            buildHintMessages
+                        </b>
+                        <a href="#buildHintMessages"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>buildHintMessages()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../interfaces/Entity.html" target="_self" >ProjectFormEntity</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../interfaces/Entity.html#source" target="_self" >ProjectFormEntity:187</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="cancel"></a>
+                    <span class="name">
+                        <b>
+                            cancel
+                        </b>
+                        <a href="#cancel"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>cancel()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../interfaces/Entity.html" target="_self" >ProjectFormEntity</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../interfaces/Entity.html#source" target="_self" >ProjectFormEntity:76</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="canDeactivate"></a>
+                    <span class="name">
+                        <b>
+                            canDeactivate
+                        </b>
+                        <a href="#canDeactivate"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>canDeactivate()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../interfaces/Entity.html" target="_self" >ProjectFormEntity</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../interfaces/Entity.html#source" target="_self" >ProjectFormEntity:66</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Observable | boolean</code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="cleanForm"></a>
+                    <span class="name">
+                        <b>
+                            cleanForm
+                        </b>
+                        <a href="#cleanForm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>cleanForm()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../interfaces/Entity.html" target="_self" >ProjectFormEntity</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../interfaces/Entity.html#source" target="_self" >ProjectFormEntity:169</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="clone"></a>
+                    <span class="name">
+                        <b>
+                            clone
+                        </b>
+                        <a href="#clone"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>clone(entity?: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../interfaces/Entity.html" target="_self" >ProjectFormEntity</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../interfaces/Entity.html#source" target="_self" >ProjectFormEntity:94</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>entity</td>
+                                    <td>
+                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                    </td>
+
+                                    <td>
+                                        Yes
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="delete"></a>
+                    <span class="name">
+                        <b>
+                            delete
+                        </b>
+                        <a href="#delete"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>delete(successCallback: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>, errorCallback: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../interfaces/Entity.html" target="_self" >ProjectFormEntity</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../interfaces/Entity.html#source" target="_self" >ProjectFormEntity:75</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>successCallback</td>
+                                    <td>
+                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>errorCallback</td>
+                                    <td>
+                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="edit"></a>
+                    <span class="name">
+                        <b>
+                            edit
+                        </b>
+                        <a href="#edit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>edit(entity?: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>, readyCallback?)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../interfaces/Entity.html" target="_self" >ProjectFormEntity</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../interfaces/Entity.html#source" target="_self" >ProjectFormEntity:81</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>entity</td>
+                                    <td>
+                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                    </td>
+
+                                    <td>
+                                        Yes
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>readyCallback</td>
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        Yes
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getError"></a>
+                    <span class="name">
+                        <b>
+                            getError
+                        </b>
+                        <a href="#getError"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getError(field)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../interfaces/Entity.html" target="_self" >ProjectFormEntity</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../interfaces/Entity.html#source" target="_self" >ProjectFormEntity:129</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>field</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isDirty"></a>
+                    <span class="name">
+                        <b>
+                            isDirty
+                        </b>
+                        <a href="#isDirty"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>isDirty()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../interfaces/Entity.html" target="_self" >ProjectFormEntity</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../interfaces/Entity.html#source" target="_self" >ProjectFormEntity:125</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isNew"></a>
+                    <span class="name">
+                        <b>
+                            isNew
+                        </b>
+                        <a href="#isNew"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>isNew()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../interfaces/Entity.html" target="_self" >ProjectFormEntity</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../interfaces/Entity.html#source" target="_self" >ProjectFormEntity:77</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isValid"></a>
+                    <span class="name">
+                        <b>
+                            isValid
+                        </b>
+                        <a href="#isValid"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>isValid()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../interfaces/Entity.html" target="_self" >ProjectFormEntity</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../interfaces/Entity.html#source" target="_self" >ProjectFormEntity:118</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="load"></a>
+                    <span class="name">
+                        <b>
+                            load
+                        </b>
+                        <a href="#load"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>load()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../interfaces/Entity.html" target="_self" >ProjectFormEntity</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../interfaces/Entity.html#source" target="_self" >ProjectFormEntity:73</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="newEntity"></a>
+                    <span class="name">
+                        <b>
+                            newEntity
+                        </b>
+                        <a href="#newEntity"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>newEntity()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../interfaces/Entity.html" target="_self" >ProjectFormEntity</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../interfaces/Entity.html#source" target="_self" >ProjectFormEntity:104</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>{}</code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <b>
+                            ngOnInit
+                        </b>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../interfaces/Entity.html" target="_self" >ProjectFormEntity</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../interfaces/Entity.html#source" target="_self" >ProjectFormEntity:59</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="openDeleteDialog"></a>
+                    <span class="name">
+                        <b>
+                            openDeleteDialog
+                        </b>
+                        <a href="#openDeleteDialog"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>openDeleteDialog(successCallback?: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>, errorCallback?: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../interfaces/Entity.html" target="_self" >ProjectFormEntity</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../interfaces/Entity.html#source" target="_self" >ProjectFormEntity:232</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>successCallback</td>
+                                    <td>
+                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                    </td>
+
+                                    <td>
+                                        Yes
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>errorCallback</td>
+                                    <td>
+                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                    </td>
+
+                                    <td>
+                                        Yes
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="resetErrors"></a>
+                    <span class="name">
+                        <b>
+                            resetErrors
+                        </b>
+                        <a href="#resetErrors"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>resetErrors()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../interfaces/Entity.html" target="_self" >ProjectFormEntity</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../interfaces/Entity.html#source" target="_self" >ProjectFormEntity:160</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="resetForm"></a>
+                    <span class="name">
+                        <b>
+                            resetForm
+                        </b>
+                        <a href="#resetForm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>resetForm()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../interfaces/Entity.html" target="_self" >ProjectFormEntity</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../interfaces/Entity.html#source" target="_self" >ProjectFormEntity:164</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="save"></a>
+                    <span class="name">
+                        <b>
+                            save
+                        </b>
+                        <a href="#save"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>save(successCallback: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>, errorCallback: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../interfaces/Entity.html" target="_self" >ProjectFormEntity</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../interfaces/Entity.html#source" target="_self" >ProjectFormEntity:74</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>successCallback</td>
+                                    <td>
+                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>errorCallback</td>
+                                    <td>
+                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="serialize"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            serialize
+                        </b>
+                        <a href="#serialize"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>serialize()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../interfaces/Entity.html" target="_self" >ProjectFormEntity</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../interfaces/Entity.html#source" target="_self" >ProjectFormEntity:175</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setErrors"></a>
+                    <span class="name">
+                        <b>
+                            setErrors
+                        </b>
+                        <a href="#setErrors"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>setErrors(err)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../interfaces/Entity.html" target="_self" >ProjectFormEntity</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../interfaces/Entity.html#source" target="_self" >ProjectFormEntity:133</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>err</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section>
+    
+        <h3 id="inputs">
+            Properties
+        </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="deviceName"></a>
+                        <span class="name">
+                            <b>
+                            deviceName</b>
+                            <a href="#deviceName"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="55" class="link-to-prism">src/app/pages/projects/project-forms/packet-form/packet-form.component.ts:55</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="entity"></a>
+                        <span class="name">
+                            <b>
+                            entity</b>
+                            <a href="#entity"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>HPacket</code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>{} as HPacket</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">src/app/pages/projects/project-forms/packet-form/packet-form.component.ts:18</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="entityFormMap"></a>
+                        <span class="name">
+                            <b>
+                            entityFormMap</b>
+                            <a href="#entityFormMap"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>{
+    &#x27;hpacket-name&#x27;: {
+      field: &#x27;name&#x27;,
+      default: null
+    },
+    &#x27;hpacket-type&#x27;: {
+      field: &#x27;type&#x27;,
+      default: &#x27;INPUT&#x27;
+    },
+    &#x27;hpacket-serialization&#x27;: {
+      field: &#x27;serialization&#x27;,
+      default: &#x27;AVRO&#x27;
+    },
+    &#x27;hpacket-format&#x27;: {
+      field: &#x27;format&#x27;,
+      default: &#x27;JSON&#x27;
+    },
+    &#x27;hpacket-timestampfield&#x27;: {
+      field: &#x27;timestampField&#x27;,
+      default: &#x27;timestamp&#x27;
+    },
+    &#x27;hpacket-timestampformat&#x27;: {
+      field: &#x27;timestampFormat&#x27;,
+      default: &#x27;dd/MM/yyyy hh.mmZ&#x27;
+    },
+    &#x27;hpacket-trafficplan&#x27;: {
+      field: &#x27;trafficPlan&#x27;,
+      default: &#x27;HIGH&#x27;
+    }
+  }</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">src/app/pages/projects/project-forms/packet-form/packet-form.component.ts:19</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="formatOptions"></a>
+                        <span class="name">
+                            <b>
+                            formatOptions</b>
+                            <a href="#formatOptions"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>Option[]</code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>Object.keys(HPacket.FormatEnum)
+    .map((k) &#x3D;&gt; ({ label: k, value: k }))</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="66" class="link-to-prism">src/app/pages/projects/project-forms/packet-form/packet-form.component.ts:66</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="formTitle"></a>
+                        <span class="name">
+                            <b>
+                            formTitle</b>
+                            <a href="#formTitle"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>&#x27;Packet&#x27;</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="49" class="link-to-prism">src/app/pages/projects/project-forms/packet-form/packet-form.component.ts:49</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="id"></a>
+                        <span class="name">
+                            <b>
+                            id</b>
+                            <a href="#id"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="54" class="link-to-prism">src/app/pages/projects/project-forms/packet-form/packet-form.component.ts:54</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="mqttTopic"></a>
+                        <span class="name">
+                            <b>
+                            mqttTopic</b>
+                            <a href="#mqttTopic"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="58" class="link-to-prism">src/app/pages/projects/project-forms/packet-form/packet-form.component.ts:58</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="mqttUrl"></a>
+                        <span class="name">
+                            <b>
+                            mqttUrl</b>
+                            <a href="#mqttUrl"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="57" class="link-to-prism">src/app/pages/projects/project-forms/packet-form/packet-form.component.ts:57</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="routerSubscription"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            routerSubscription</b>
+                            <a href="#routerSubscription"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>Subscription</code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="72" class="link-to-prism">src/app/pages/projects/project-forms/packet-form/packet-form.component.ts:72</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="serializationOptions"></a>
+                        <span class="name">
+                            <b>
+                            serializationOptions</b>
+                            <a href="#serializationOptions"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>Option[]</code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>Object.keys(HPacket.SerializationEnum)
+    .map((k) &#x3D;&gt; ({ label: k, value: k }))</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="63" class="link-to-prism">src/app/pages/projects/project-forms/packet-form/packet-form.component.ts:63</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="trafficPlanOptions"></a>
+                        <span class="name">
+                            <b>
+                            trafficPlanOptions</b>
+                            <a href="#trafficPlanOptions"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>Option[]</code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>Object.keys(HPacket.TrafficPlanEnum)
+    .map((k) &#x3D;&gt; ({ label: k, value: k }))</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="69" class="link-to-prism">src/app/pages/projects/project-forms/packet-form/packet-form.component.ts:69</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="typeOptions"></a>
+                        <span class="name">
+                            <b>
+                            typeOptions</b>
+                            <a href="#typeOptions"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>Option[]</code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>Object.keys(HPacket.TypeEnum)
+    .map((k) &#x3D;&gt; ({ label: k, value: k }))</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="60" class="link-to-prism">src/app/pages/projects/project-forms/packet-form/packet-form.component.ts:60</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="circularFix"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Protected</span>
+                            circularFix</b>
+                            <a href="#circularFix"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>() &#x3D;&gt; {...}</code>
+                        </td>
+                    </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Inherited from         <code><a href="../interfaces/Entity.html" target="_self" >ProjectFormEntity</a></code>
+</div>
+                                </td>
+                            </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in         <code><a href="../interfaces/Entity.html#source" target="_self" >ProjectFormEntity:216</a></code>
+</div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="dialog"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Protected</span>
+                            dialog</b>
+                            <a href="#dialog"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>MatDialog</code>
+
+                        </td>
+                    </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Inherited from         <code><a href="../interfaces/Entity.html" target="_self" >ProjectFormEntity</a></code>
+</div>
+                                </td>
+                            </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in         <code><a href="../interfaces/Entity.html#source" target="_self" >ProjectFormEntity:44</a></code>
+</div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="editMode"></a>
+                        <span class="name">
+                            <b>
+                            editMode</b>
+                            <a href="#editMode"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>false</code>
+                        </td>
+                    </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Inherited from         <code><a href="../interfaces/Entity.html" target="_self" >ProjectFormEntity</a></code>
+</div>
+                                </td>
+                            </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in         <code><a href="../interfaces/Entity.html#source" target="_self" >ProjectFormEntity:32</a></code>
+</div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="entitiesService"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Protected</span>
+                            entitiesService</b>
+                            <a href="#entitiesService"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="../injectables/EntitiesService.html" target="_self" >EntitiesService</a></code>
+
+                        </td>
+                    </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Inherited from         <code><a href="../interfaces/Entity.html" target="_self" >ProjectFormEntity</a></code>
+</div>
+                                </td>
+                            </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in         <code><a href="../interfaces/Entity.html#source" target="_self" >ProjectFormEntity:45</a></code>
+</div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="entity"></a>
+                        <span class="name">
+                            <b>
+                            entity</b>
+                            <a href="#entity"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>{}</code>
+                        </td>
+                    </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Inherited from         <code><a href="../interfaces/Entity.html" target="_self" >ProjectFormEntity</a></code>
+</div>
+                                </td>
+                            </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in         <code><a href="../interfaces/Entity.html#source" target="_self" >ProjectFormEntity:22</a></code>
+</div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="entityFormMap"></a>
+                        <span class="name">
+                            <b>
+                            entityFormMap</b>
+                            <a href="#entityFormMap"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </td>
+                    </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Inherited from         <code><a href="../interfaces/Entity.html" target="_self" >ProjectFormEntity</a></code>
+</div>
+                                </td>
+                            </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in         <code><a href="../interfaces/Entity.html#source" target="_self" >ProjectFormEntity:23</a></code>
+</div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="form"></a>
+                        <span class="name">
+                            <b>
+                            form</b>
+                            <a href="#form"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://angular.io/api/forms/FormGroup" target="_blank" >FormGroup</a></code>
+
+                        </td>
+                    </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Inherited from         <code><a href="../interfaces/Entity.html" target="_self" >ProjectFormEntity</a></code>
+</div>
+                                </td>
+                            </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in         <code><a href="../interfaces/Entity.html#source" target="_self" >ProjectFormEntity:26</a></code>
+</div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="formBuilder"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Protected</span>
+                            formBuilder</b>
+                            <a href="#formBuilder"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://angular.io/api/forms/FormBuilder" target="_blank" >FormBuilder</a></code>
+
+                        </td>
+                    </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Inherited from         <code><a href="../interfaces/Entity.html" target="_self" >ProjectFormEntity</a></code>
+</div>
+                                </td>
+                            </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in         <code><a href="../interfaces/Entity.html#source" target="_self" >ProjectFormEntity:43</a></code>
+</div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="formTitle"></a>
+                        <span class="name">
+                            <b>
+                            formTitle</b>
+                            <a href="#formTitle"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>&#x27;Project Form Entity&#x27;</code>
+                        </td>
+                    </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Inherited from         <code><a href="../interfaces/Entity.html" target="_self" >ProjectFormEntity</a></code>
+</div>
+                                </td>
+                            </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in         <code><a href="../interfaces/Entity.html#source" target="_self" >ProjectFormEntity:24</a></code>
+</div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="getUser"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Protected</span>
+                            getUser</b>
+                            <a href="#getUser"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>() &#x3D;&gt; {...}</code>
+                        </td>
+                    </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Inherited from         <code><a href="../interfaces/Entity.html" target="_self" >ProjectFormEntity</a></code>
+</div>
+                                </td>
+                            </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in         <code><a href="../interfaces/Entity.html#source" target="_self" >ProjectFormEntity:224</a></code>
+</div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="hideDelete"></a>
+                        <span class="name">
+                            <b>
+                            hideDelete</b>
+                            <a href="#hideDelete"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>false</code>
+                        </td>
+                    </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Inherited from         <code><a href="../interfaces/Entity.html" target="_self" >ProjectFormEntity</a></code>
+</div>
+                                </td>
+                            </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in         <code><a href="../interfaces/Entity.html#source" target="_self" >ProjectFormEntity:33</a></code>
+</div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="isProjectEntity"></a>
+                        <span class="name">
+                            <b>
+                            isProjectEntity</b>
+                            <a href="#isProjectEntity"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>true</code>
+                        </td>
+                    </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Inherited from         <code><a href="../interfaces/Entity.html" target="_self" >ProjectFormEntity</a></code>
+</div>
+                                </td>
+                            </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in         <code><a href="../interfaces/Entity.html#source" target="_self" >ProjectFormEntity:31</a></code>
+</div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="loadingStatus"></a>
+                        <span class="name">
+                            <b>
+                            loadingStatus</b>
+                            <a href="#loadingStatus"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>LoadingStatusEnum.Ready</code>
+                        </td>
+                    </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Inherited from         <code><a href="../interfaces/Entity.html" target="_self" >ProjectFormEntity</a></code>
+</div>
+                                </td>
+                            </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in         <code><a href="../interfaces/Entity.html#source" target="_self" >ProjectFormEntity:39</a></code>
+</div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="LoadingStatus"></a>
+                        <span class="name">
+                            <b>
+                            LoadingStatus</b>
+                            <a href="#LoadingStatus"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>LoadingStatusEnum</code>
+                        </td>
+                    </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Inherited from         <code><a href="../interfaces/Entity.html" target="_self" >ProjectFormEntity</a></code>
+</div>
+                                </td>
+                            </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in         <code><a href="../interfaces/Entity.html#source" target="_self" >ProjectFormEntity:38</a></code>
+</div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="longDefinition"></a>
+                        <span class="name">
+                            <b>
+                            longDefinition</b>
+                            <a href="#longDefinition"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>&#x27;entity long definition&#x27;</code>
+                        </td>
+                    </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Inherited from         <code><a href="../interfaces/Entity.html" target="_self" >ProjectFormEntity</a></code>
+</div>
+                                </td>
+                            </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in         <code><a href="../interfaces/Entity.html#source" target="_self" >ProjectFormEntity:35</a></code>
+</div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="originalValue"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            originalValue</b>
+                            <a href="#originalValue"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>&#x27;{}&#x27;</code>
+                        </td>
+                    </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Inherited from         <code><a href="../interfaces/Entity.html" target="_self" >ProjectFormEntity</a></code>
+</div>
+                                </td>
+                            </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in         <code><a href="../interfaces/Entity.html#source" target="_self" >ProjectFormEntity:27</a></code>
+</div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="showCancel"></a>
+                        <span class="name">
+                            <b>
+                            showCancel</b>
+                            <a href="#showCancel"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>false</code>
+                        </td>
+                    </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Inherited from         <code><a href="../interfaces/Entity.html" target="_self" >ProjectFormEntity</a></code>
+</div>
+                                </td>
+                            </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in         <code><a href="../interfaces/Entity.html#source" target="_self" >ProjectFormEntity:34</a></code>
+</div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="summaryList"></a>
+                        <span class="name">
+                            <b>
+                            summaryList</b>
+                            <a href="#summaryList"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="../classes/SummaryList.html" target="_self" >SummaryList</a></code>
+
+                        </td>
+                    </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Inherited from         <code><a href="../interfaces/Entity.html" target="_self" >ProjectFormEntity</a></code>
+</div>
+                                </td>
+                            </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in         <code><a href="../interfaces/Entity.html#source" target="_self" >ProjectFormEntity:36</a></code>
+</div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="unsavedChangesCallback"></a>
+                        <span class="name">
+                            <b>
+                            unsavedChangesCallback</b>
+                            <a href="#unsavedChangesCallback"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Inherited from         <code><a href="../interfaces/Entity.html" target="_self" >ProjectFormEntity</a></code>
+</div>
+                                </td>
+                            </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in         <code><a href="../interfaces/Entity.html#source" target="_self" >ProjectFormEntity:41</a></code>
+</div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="validationError"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Protected</span>
+                            validationError</b>
+                            <a href="#validationError"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>[]</code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>[]</code>
+                        </td>
+                    </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Inherited from         <code><a href="../interfaces/Entity.html" target="_self" >ProjectFormEntity</a></code>
+</div>
+                                </td>
+                            </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in         <code><a href="../interfaces/Entity.html#source" target="_self" >ProjectFormEntity:28</a></code>
+</div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnDestroy, ViewChild, ElementRef, Input, Injector } from &#x27;@angular/core&#x27;;
+import { ActivatedRoute, Router, NavigationEnd } from &#x27;@angular/router&#x27;;
+
+import { Subscription } from &#x27;rxjs&#x27;;
+
+import { HPacket, HpacketsService, HDevice } from &#x27;@hyperiot/core&#x27;;
+import { Option } from &#x27;@hyperiot/components&#x27;;
+
+import { ProjectFormEntity, LoadingStatusEnum } from &#x27;../project-form-entity&#x27;;
+import { I18n } from &#x27;@ngx-translate/i18n-polyfill&#x27;;
+
+@Component({
+  selector: &#x27;hyt-packet-form&#x27;,
+  templateUrl: &#x27;./packet-form.component.html&#x27;,
+  styleUrls: [&#x27;./packet-form.component.scss&#x27;]
+})
+export class PacketFormComponent extends ProjectFormEntity implements OnDestroy {
+  entity: HPacket &#x3D; {} as HPacket;
+  entityFormMap &#x3D; {
+    &#x27;hpacket-name&#x27;: {
+      field: &#x27;name&#x27;,
+      default: null
+    },
+    &#x27;hpacket-type&#x27;: {
+      field: &#x27;type&#x27;,
+      default: &#x27;INPUT&#x27;
+    },
+    &#x27;hpacket-serialization&#x27;: {
+      field: &#x27;serialization&#x27;,
+      default: &#x27;AVRO&#x27;
+    },
+    &#x27;hpacket-format&#x27;: {
+      field: &#x27;format&#x27;,
+      default: &#x27;JSON&#x27;
+    },
+    &#x27;hpacket-timestampfield&#x27;: {
+      field: &#x27;timestampField&#x27;,
+      default: &#x27;timestamp&#x27;
+    },
+    &#x27;hpacket-timestampformat&#x27;: {
+      field: &#x27;timestampFormat&#x27;,
+      default: &#x27;dd/MM/yyyy hh.mmZ&#x27;
+    },
+    &#x27;hpacket-trafficplan&#x27;: {
+      field: &#x27;trafficPlan&#x27;,
+      default: &#x27;HIGH&#x27;
+    }
+  };
+  formTitle &#x3D; &#x27;Packet&#x27;;
+
+  @Input()
+  currentDevice: HDevice;
+
+  id: number; // &lt;-- this could be made private
+  deviceName: &#x27;---&#x27;;
+
+  mqttUrl;
+  mqttTopic;
+
+  typeOptions: Option[] &#x3D; Object.keys(HPacket.TypeEnum)
+    .map((k) &#x3D;&gt; ({ label: k, value: k }));
+
+  serializationOptions: Option[] &#x3D; Object.keys(HPacket.SerializationEnum)
+    .map((k) &#x3D;&gt; ({ label: k, value: k }));
+
+  formatOptions: Option[] &#x3D; Object.keys(HPacket.FormatEnum)
+    .map((k) &#x3D;&gt; ({ label: k, value: k }));
+
+  trafficPlanOptions: Option[] &#x3D; Object.keys(HPacket.TrafficPlanEnum)
+    .map((k) &#x3D;&gt; ({ label: k, value: k }));
+
+  private routerSubscription: Subscription;
+
+  constructor(
+    injector: Injector,
+    @ViewChild(&#x27;form&#x27;, { static: true }) formView: ElementRef,
+    private hPacketService: HpacketsService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
+    private i18n: I18n
+  ) {
+    super(injector, i18n, formView);
+    this.longDefinition &#x3D; this.entitiesService.packet.longDefinition;
+    this.routerSubscription &#x3D; this.router.events.subscribe((rl) &#x3D;&gt; {
+      if (rl instanceof NavigationEnd) {
+        this.id &#x3D; this.activatedRoute.snapshot.params.packetId;
+        this.load();
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    this.routerSubscription.unsubscribe();
+  }
+
+  // ProjectDetailEntity interface
+  save(successCallback, errorCallback) {
+    this.savePacket(successCallback, errorCallback);
+  }
+  delete(successCallback, errorCallback) {
+    this.deletePacket(successCallback, errorCallback);
+  }
+
+  load() {
+    this.loadingStatus &#x3D; LoadingStatusEnum.Loading;
+    this.hPacketService.findHPacket(this.id).subscribe((p: HPacket) &#x3D;&gt; {
+      this.entity &#x3D; p;
+      // update form data
+      this.edit();
+      // update static data (not part of this form)
+      this.mqttUrl &#x3D; &#x27;tcp://karaf-activemq-mqtt-test.hyperiot.cloud&#x27;;
+      this.mqttTopic &#x3D; &#x27;/v1/devices/&#x27; + p.device.id + &#x27;/&#x27; + p.id;
+      // emit event for updating UI
+      this.entityEvent.emit({
+        event: &#x27;treeview:focus&#x27;,
+        id: p.id, type: &#x27;packet&#x27;
+      });
+      this.loadingStatus &#x3D; LoadingStatusEnum.Ready;
+    }, (err) &#x3D;&gt; {
+      this.loadingStatus &#x3D; LoadingStatusEnum.Error;
+    });
+  }
+
+  private savePacket(successCallback?, errorCallback?) {
+    this.loadingStatus &#x3D; LoadingStatusEnum.Saving;
+    this.resetErrors();
+
+    const p &#x3D; this.entity;
+    p.name &#x3D; this.form.value[&#x27;hpacket-name&#x27;];
+    p.type &#x3D; this.form.value[&#x27;hpacket-type&#x27;];
+    p.format &#x3D; this.form.value[&#x27;hpacket-format&#x27;];
+    p.serialization &#x3D; this.form.value[&#x27;hpacket-serialization&#x27;];
+    p.trafficPlan &#x3D; this.form.value[&#x27;hpacket-trafficplan&#x27;];
+    p.timestampField &#x3D; this.form.value[&#x27;hpacket-timestampfield&#x27;];
+    p.timestampFormat &#x3D; this.form.value[&#x27;hpacket-timestampformat&#x27;];
+    //TODO p.device &#x3D; ...
+
+    const wasNew &#x3D; this.isNew();
+    const responseHandler &#x3D; (res) &#x3D;&gt; {
+      this.entity &#x3D; res;
+      this.resetForm();
+      this.entityEvent.emit({
+        event: &#x27;treeview:update&#x27;,
+        id: this.entity.id, type: &#x27;packet&#x27;, name: this.entity.name
+      });
+      this.loadingStatus &#x3D; LoadingStatusEnum.Ready;
+      successCallback &amp;&amp; successCallback(res, wasNew);
+    };
+
+    if (p.id) {
+      this.hPacketService.updateHPacket(p).subscribe(responseHandler, (err) &#x3D;&gt; {
+        this.setErrors(err);
+        errorCallback &amp;&amp; errorCallback(err);
+        this.loadingStatus &#x3D; LoadingStatusEnum.Error;
+      });
+    } else {
+      p.entityVersion &#x3D; 1;
+      p.version &#x3D; &#x27;1&#x27;;
+      p.fields &#x3D; [];
+      p.device &#x3D; { id: this.currentDevice.id, entityVersion: this.currentDevice.entityVersion };
+      this.hPacketService.saveHPacket(p).subscribe(responseHandler, (err) &#x3D;&gt; {
+        this.setErrors(err);
+        errorCallback &amp;&amp; errorCallback(err);
+        this.loadingStatus &#x3D; LoadingStatusEnum.Error;
+      });
+    }
+  }
+
+  private deletePacket(successCallback?, errorCallback?) {
+    this.loadingStatus &#x3D; LoadingStatusEnum.Saving;
+    this.hPacketService.deleteHPacket(this.entity.id).subscribe((res) &#x3D;&gt; {
+      this.loadingStatus &#x3D; LoadingStatusEnum.Ready;
+      // request navigate to parent node (device page)
+      this.entityEvent.emit({
+        event: &#x27;entity:delete&#x27;,
+        exitRoute: [
+          //&#x27;/projects&#x27;, this.entity.device.project.id,
+          { outlets: { projectDetails: [&#x27;device&#x27;, this.entity.device.id] } }
+        ]
+      });
+      this.entityEvent.emit({ event: &#x27;treeview:refresh&#x27; });
+      successCallback &amp;&amp; successCallback(res);
+    }, (err) &#x3D;&gt; {
+      errorCallback &amp;&amp; errorCallback(err);
+      this.loadingStatus &#x3D; LoadingStatusEnum.Error;
+    });
+  }
+
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;container&quot;&gt;
+
+    &lt;form [formGroup]&#x3D;&quot;form&quot;&gt;
+
+        &lt;div class&#x3D;&quot;d-flex flex-column flex-md-row flex-wrap&quot;&gt;
+            &lt;div class&#x3D;&quot;pr-md-3 flex-fill&quot;&gt;
+
+                &lt;hyt-input-text name&#x3D;&quot;hpacket-name&quot; i18n-placeholder&#x3D;&quot;@@HYT_name&quot; placeholder&#x3D;&quot;HYT_name&quot; [form]&#x3D;&quot;form&quot;
+                    [injectedErrorMsg]&#x3D;&quot;getError(&#x27;hpacket-name&#x27;)&quot; hintMessage&#x3D;&quot;Enter the packet name.&quot;
+                    errorPosition&#x3D;&quot;bottom&quot; minlength&#x3D;&quot;3&quot; isRequired&#x3D;&quot;true&quot;&gt;
+                &lt;/hyt-input-text&gt;
+
+            &lt;/div&gt;
+            &lt;div class&#x3D;&quot;pl-md-3 flex-fill&quot;&gt;
+
+                &lt;div&gt;
+                    &lt;hyt-select [form]&#x3D;&quot;form&quot; i18n-label&#x3D;&quot;@@HYT_traffic_plan&quot; label&#x3D;&quot;HYT_traffic_plan&quot; name&#x3D;&quot;hpacket-trafficplan&quot;
+                        [injectedErrorMsg]&#x3D;&quot;getError(&#x27;hpacket-trafficplan&#x27;)&quot; hintMessage&#x3D;&quot;Select traffic plan.&quot;
+                        isRequired&#x3D;&quot;true&quot; [options]&#x3D;&quot;trafficPlanOptions&quot;&gt;&lt;/hyt-select&gt;
+                &lt;/div&gt;
+
+            &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;div class&#x3D;&quot;d-flex flex-column flex-md-row flex-wrap&quot;&gt;
+            &lt;div class&#x3D;&quot;pr-md-3 flex-fill&quot;&gt;
+
+                &lt;label i18n&#x3D;&quot;@@HYT_type&quot;&gt;HYT_type&lt;/label&gt;
+                &lt;div class&#x3D;&quot;radio-options pl-2 pr-2&quot;&gt;
+                    &lt;hyt-radio-button [form]&#x3D;&quot;form&quot; name&#x3D;&quot;hpacket-type&quot; [options]&#x3D;&quot;typeOptions&quot;
+                        [injectedErrorMsg]&#x3D;&quot;getError(&#x27;hpacket-type&#x27;)&quot; hintMessage&#x3D;&quot;Set the packet type.&quot;&gt;
+                    &lt;/hyt-radio-button&gt;
+                &lt;/div&gt;
+
+            &lt;/div&gt;
+            &lt;div class&#x3D;&quot;pl-md-3 flex-fill&quot;&gt;
+
+                &lt;label i18n&#x3D;&quot;@@HYT_format&quot;&gt;HYT_format&lt;/label&gt;
+                &lt;div class&#x3D;&quot;radio-options pl-2 pr-2&quot;&gt;
+                    &lt;hyt-radio-button [form]&#x3D;&quot;form&quot; [injectedErrorMsg]&#x3D;&quot;getError(&#x27;hpacket-format&#x27;)&quot;
+                        name&#x3D;&quot;hpacket-format&quot; [options]&#x3D;&quot;formatOptions&quot;&gt;
+                    &lt;/hyt-radio-button&gt;
+                &lt;/div&gt;
+
+            &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;div class&#x3D;&quot;d-flex flex-column flex-md-row flex-wrap&quot;&gt;
+            &lt;div class&#x3D;&quot;pr-md-3 flex-fill&quot;&gt;
+
+                &lt;label i18n&#x3D;&quot;@@HYT_serialization&quot;&gt;HYT_serialization&lt;/label&gt;
+                &lt;div class&#x3D;&quot;radio-options pl-2 pr-2&quot;&gt;
+                    &lt;hyt-radio-button [form]&#x3D;&quot;form&quot; name&#x3D;&quot;hpacket-serialization&quot; [options]&#x3D;&quot;serializationOptions&quot;
+                        [injectedErrorMsg]&#x3D;&quot;getError(&#x27;hpacket-serialization&#x27;)&quot;&gt;
+                    &lt;/hyt-radio-button&gt;
+                &lt;/div&gt;
+
+            &lt;/div&gt;
+            &lt;div class&#x3D;&quot;pl-md-3 flex-fill&quot;&gt;
+
+            &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;div class&#x3D;&quot;mt-4 d-flex flex-column flex-md-row flex-wrap&quot;&gt;
+
+            &lt;div class&#x3D;&quot;pr-md-3 flex-fill&quot;&gt;
+
+                &lt;hyt-input-text i18n-placeholder&#x3D;&quot;@@HYT_timestamp_field&quot; placeholder&#x3D;&quot;HYT_timestamp_field&quot; [form]&#x3D;&quot;form&quot; name&#x3D;&quot;hpacket-timestampfield&quot;
+                    [injectedErrorMsg]&#x3D;&quot;getError(&#x27;hpacket-timestampfield&#x27;)&quot;
+                    hintMessage&#x3D;&quot;Enter the timestamp field name.&quot; errorPosition&#x3D;&quot;bottom&quot; minlength&#x3D;&quot;1&quot;
+                    isRequired&#x3D;&quot;true&quot;&gt;
+                &lt;/hyt-input-text&gt;
+
+            &lt;/div&gt;
+            &lt;div class&#x3D;&quot;pl-md-3 flex-fill&quot;&gt;
+
+                &lt;hyt-input-text i18n-placeholder&#x3D;&quot;@@HYT_timestamp_format&quot; placeholder&#x3D;&quot;HYT_timestamp_format&quot; [form]&#x3D;&quot;form&quot; name&#x3D;&quot;hpacket-timestampformat&quot;
+                    [injectedErrorMsg]&#x3D;&quot;getError(&#x27;hpacket-timestampformat&#x27;)&quot;
+                    hintMessage&#x3D;&quot;Enter the timestamp field format: eg. &#x27;dd/MM/yyyy HH.mmZ&#x27;.&quot; errorPosition&#x3D;&quot;bottom&quot;
+                    minlength&#x3D;&quot;3&quot; isRequired&#x3D;&quot;true&quot;&gt;
+                &lt;/hyt-input-text&gt;
+
+            &lt;/div&gt;
+
+        &lt;/div&gt;
+
+        &lt;div *ngIf&#x3D;&quot;mqttUrl&quot; class&#x3D;&quot;mt-4 d-flex flex-column flex-md-row flex-wrap&quot;&gt;
+            &lt;div class&#x3D;&quot;pr-md-3 flex-fill&quot;&gt;
+                &lt;hyt-input-text
+                    i18n-placeholder&#x3D;&quot;@@HYT_mqtt_url&quot;
+                    placeholder&#x3D;&quot;HYT_mqtt_url&quot;
+                    name&#x3D;&quot;hpacket-mqttUrl&quot;
+                    disabled&#x3D;&quot;true&quot;
+                    [fieldValue]&#x3D;&quot;mqttUrl&quot;&gt;
+                &lt;/hyt-input-text&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div *ngIf&#x3D;&quot;mqttTopic&quot; class&#x3D;&quot;mt-4 d-flex flex-column flex-md-row flex-wrap&quot;&gt;
+            &lt;div class&#x3D;&quot;pr-md-3 flex-fill&quot;&gt;
+                &lt;hyt-input-text
+                    i18n-placeholder&#x3D;&quot;@@HYT_mqtt_topic&quot;
+                    placeholder&#x3D;&quot;HYT_mqtt_topic&quot;
+                    name&#x3D;&quot;hpacket-mqttTopic&quot;
+                    disabled&#x3D;&quot;true&quot;
+                    [fieldValue]&#x3D;&quot;mqttTopic&quot;&gt;
+                &lt;/hyt-input-text&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+
+    &lt;/form&gt;
+
+    &lt;!-- TODO: This HTML block is repeated
+               across all &#x27;entity&#x27; components,
+               consider making a component out of it --&gt;
+    &lt;div *ngIf&#x3D;&quot;loadingStatus !&#x3D;&#x3D; LoadingStatus.Ready&quot;
+        class&#x3D;&quot;overlay d-flex flex-column align-items-center justify-content-center&quot;&gt;
+        &lt;h4 *ngIf&#x3D;&quot;loadingStatus &#x3D;&#x3D;&#x3D; LoadingStatus.Loading&quot; i18n&#x3D;&quot;@@HYT_loading_project_data&quot;&gt;HYT_loading_project_data&lt;/h4&gt;
+        &lt;div *ngIf&#x3D;&quot;loadingStatus &#x3D;&#x3D;&#x3D; LoadingStatus.Error&quot; class&#x3D;&quot;d-flex flex-column justify-content-center&quot;&gt;
+            &lt;h4 i18n&#x3D;&quot;@@HYT_project_detail_error_occurred&quot;&gt;HYT_project_detail_error_occurred&lt;/h4&gt;
+            &lt;button mat-stroked-button (click)&#x3D;&quot;loadingStatus &#x3D; LoadingStatus.Ready&quot;&gt;
+                &lt;span i18n&#x3D;&quot;@@HYT_close&quot;&gt;HYT_close&lt;/span&gt;
+                &lt;mat-icon&gt;close&lt;/mat-icon&gt;
+            &lt;/button&gt;
+        &lt;/div&gt;
+        &lt;h4 *ngIf&#x3D;&quot;loadingStatus &#x3D;&#x3D;&#x3D; LoadingStatus.Saving&quot; i18n&#x3D;&quot;@@HYT_saving_project_data&quot;&gt;HYT_saving_project_data&lt;/h4&gt;
+        &lt;mat-progress-bar *ngIf&#x3D;&quot;loadingStatus &#x3D;&#x3D;&#x3D; LoadingStatus.Loading || loadingStatus &#x3D;&#x3D;&#x3D; LoadingStatus.Saving&quot;
+            mode&#x3D;&quot;query&quot;&gt;&lt;/mat-progress-bar&gt;
+    &lt;/div&gt;
+
+&lt;/div&gt;</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-styleData">
+                <p class="comment">
+                    <code>./packet-form.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">.flex-fill {
+    min-width: 50%;
+}
+
+:host ::ng-deep .mat-radio-label-content {
+    font-size: 12px;
+    font-weight: 400;
+    padding-left: 4px;
+}
+
+:host ::ng-deep .mat-radio-checked .mat-radio-label-content {
+    font-weight: 600;
+}
+
+label {
+    font-size: 12px;
+    color: grey;
+    font-weight: 400;
+}
+
+.radio-options {
+    border: lightgray solid 1px;
+    border-radius: 4px;
+    padding-top: 9px;
+}
+
+.container {
+    position: relative;
+}
+
+.overlay {
+    position: absolute;
+    background-color: rgba(255,255,255,.75);
+    left: 0; top: 0; right: 0; bottom: 0;
+}
+
+mat-progress-bar {
+    max-width: 200px;
+    margin: 8px;
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div class="container">    <form [formGroup]="form">        <div class="d-flex flex-column flex-md-row flex-wrap">            <div class="pr-md-3 flex-fill">                <hyt-input-text name="hpacket-name" i18n-placeholder="@@HYT_name" placeholder="HYT_name" [form]="form"                    [injectedErrorMsg]="getError(\'hpacket-name\')" hintMessage="Enter the packet name."                    errorPosition="bottom" minlength="3" isRequired="true">                </hyt-input-text>            </div>            <div class="pl-md-3 flex-fill">                <div>                    <hyt-select [form]="form" i18n-label="@@HYT_traffic_plan" label="HYT_traffic_plan" name="hpacket-trafficplan"                        [injectedErrorMsg]="getError(\'hpacket-trafficplan\')" hintMessage="Select traffic plan."                        isRequired="true" [options]="trafficPlanOptions"></hyt-select>                </div>            </div>        </div>        <div class="d-flex flex-column flex-md-row flex-wrap">            <div class="pr-md-3 flex-fill">                <label i18n="@@HYT_type">HYT_type</label>                <div class="radio-options pl-2 pr-2">                    <hyt-radio-button [form]="form" name="hpacket-type" [options]="typeOptions"                        [injectedErrorMsg]="getError(\'hpacket-type\')" hintMessage="Set the packet type.">                    </hyt-radio-button>                </div>            </div>            <div class="pl-md-3 flex-fill">                <label i18n="@@HYT_format">HYT_format</label>                <div class="radio-options pl-2 pr-2">                    <hyt-radio-button [form]="form" [injectedErrorMsg]="getError(\'hpacket-format\')"                        name="hpacket-format" [options]="formatOptions">                    </hyt-radio-button>                </div>            </div>        </div>        <div class="d-flex flex-column flex-md-row flex-wrap">            <div class="pr-md-3 flex-fill">                <label i18n="@@HYT_serialization">HYT_serialization</label>                <div class="radio-options pl-2 pr-2">                    <hyt-radio-button [form]="form" name="hpacket-serialization" [options]="serializationOptions"                        [injectedErrorMsg]="getError(\'hpacket-serialization\')">                    </hyt-radio-button>                </div>            </div>            <div class="pl-md-3 flex-fill">            </div>        </div>        <div class="mt-4 d-flex flex-column flex-md-row flex-wrap">            <div class="pr-md-3 flex-fill">                <hyt-input-text i18n-placeholder="@@HYT_timestamp_field" placeholder="HYT_timestamp_field" [form]="form" name="hpacket-timestampfield"                    [injectedErrorMsg]="getError(\'hpacket-timestampfield\')"                    hintMessage="Enter the timestamp field name." errorPosition="bottom" minlength="1"                    isRequired="true">                </hyt-input-text>            </div>            <div class="pl-md-3 flex-fill">                <hyt-input-text i18n-placeholder="@@HYT_timestamp_format" placeholder="HYT_timestamp_format" [form]="form" name="hpacket-timestampformat"                    [injectedErrorMsg]="getError(\'hpacket-timestampformat\')"                    hintMessage="Enter the timestamp field format: eg. \'dd/MM/yyyy HH.mmZ\'." errorPosition="bottom"                    minlength="3" isRequired="true">                </hyt-input-text>            </div>        </div>        <div *ngIf="mqttUrl" class="mt-4 d-flex flex-column flex-md-row flex-wrap">            <div class="pr-md-3 flex-fill">                <hyt-input-text                    i18n-placeholder="@@HYT_mqtt_url"                    placeholder="HYT_mqtt_url"                    name="hpacket-mqttUrl"                    disabled="true"                    [fieldValue]="mqttUrl">                </hyt-input-text>            </div>        </div>        <div *ngIf="mqttTopic" class="mt-4 d-flex flex-column flex-md-row flex-wrap">            <div class="pr-md-3 flex-fill">                <hyt-input-text                    i18n-placeholder="@@HYT_mqtt_topic"                    placeholder="HYT_mqtt_topic"                    name="hpacket-mqttTopic"                    disabled="true"                    [fieldValue]="mqttTopic">                </hyt-input-text>            </div>        </div>    </form>    <!-- TODO: This HTML block is repeated               across all \'entity\' components,               consider making a component out of it -->    <div *ngIf="loadingStatus !== LoadingStatus.Ready"        class="overlay d-flex flex-column align-items-center justify-content-center">        <h4 *ngIf="loadingStatus === LoadingStatus.Loading" i18n="@@HYT_loading_project_data">HYT_loading_project_data</h4>        <div *ngIf="loadingStatus === LoadingStatus.Error" class="d-flex flex-column justify-content-center">            <h4 i18n="@@HYT_project_detail_error_occurred">HYT_project_detail_error_occurred</h4>            <button mat-stroked-button (click)="loadingStatus = LoadingStatus.Ready">                <span i18n="@@HYT_close">HYT_close</span>                <mat-icon>close</mat-icon>            </button>        </div>        <h4 *ngIf="loadingStatus === LoadingStatus.Saving" i18n="@@HYT_saving_project_data">HYT_saving_project_data</h4>        <mat-progress-bar *ngIf="loadingStatus === LoadingStatus.Loading || loadingStatus === LoadingStatus.Saving"            mode="query"></mat-progress-bar>    </div></div></div>'
+    var COMPONENTS = [{'name': 'AccountButtonComponent', 'selector': 'hyt-account-button'},{'name': 'AddWidgetDialogComponent', 'selector': 'hyt-add-widget-dialog'},{'name': 'AppComponent', 'selector': 'hyt-root'},{'name': 'AssetCategoryComponent', 'selector': 'hyt-asset-category'},{'name': 'AssetTagComponent', 'selector': 'hyt-asset-tag'},{'name': 'AuthenticationComponent', 'selector': 'hyt-authentication'},{'name': 'ConfirmRecordingActionComponent', 'selector': 'hyt-confirm-recording-action'},{'name': 'DashboardComponent', 'selector': 'hyt-dashboard'},{'name': 'DashboardsListComponent', 'selector': 'hyt-dashboards-list'},{'name': 'DashboardViewComponent', 'selector': 'hyt-dashboard-view'},{'name': 'DeleteConfirmDialogComponent', 'selector': 'hyt-delete-confirm-dialog'},{'name': 'DeviceFormComponent', 'selector': 'hyt-device-form'},{'name': 'DeviceSelectComponent', 'selector': 'hyt-device-select'},{'name': 'DynamicWidgetComponent', 'selector': 'hyt-dynamic-widget'},{'name': 'EventMailComponent', 'selector': 'hyt-event-mail'},{'name': 'EventsLogSettingsComponent', 'selector': 'hyt-events-log-settings'},{'name': 'GenericSummaryListComponent', 'selector': 'hyt-generic-summary-list'},{'name': 'HomeComponent', 'selector': 'hyt-home'},{'name': 'InfoRecordingActionComponent', 'selector': 'hyt-info-recording-action'},{'name': 'LoginComponent', 'selector': 'hyt-login'},{'name': 'MyTelInputComponent', 'selector': 'example-tel-input'},{'name': 'NotFoundComponent', 'selector': 'hyt-not-found'},{'name': 'NotificationbarComponent', 'selector': 'hyt-notificationbar'},{'name': 'PacketEnrichmentFormComponent', 'selector': 'hyt-packet-enrichment-form'},{'name': 'PacketEventsFormComponent', 'selector': 'hyt-packet-events-form'},{'name': 'PacketFieldsFormComponent', 'selector': 'hyt-packet-fields-form'},{'name': 'PacketFormComponent', 'selector': 'hyt-packet-form'},{'name': 'PacketSelectComponent', 'selector': 'hyt-packet-select'},{'name': 'PacketSelectComponent', 'selector': 'hyt-pw-packet-select'},{'name': 'PacketStatisticsFormComponent', 'selector': 'hyt-packet-statistics-form'},{'name': 'PasswordRecoveryComponent', 'selector': 'hyt-password-recovery'},{'name': 'PasswordResetComponent', 'selector': 'hyt-password-reset'},{'name': 'ProfileComponent', 'selector': 'hyt-profile'},{'name': 'ProjectCardComponent', 'selector': 'hyt-project-card'},{'name': 'ProjectDetailComponent', 'selector': 'hyt-project-detail'},{'name': 'ProjectFormComponent', 'selector': 'hyt-project-form'},{'name': 'ProjectsComponent', 'selector': 'hyt-projects'},{'name': 'ProjectWizardComponent', 'selector': 'hyt-project-wizard'},{'name': 'RegistrationComponent', 'selector': 'hyt-registration'},{'name': 'RuleDefinitionComponent', 'selector': 'hyt-rule-definition'},{'name': 'SaveChangesDialogComponent', 'selector': 'hyt-save-changes-dialog'},{'name': 'SelectableTextComponent', 'selector': 'hyt-selectable-text'},{'name': 'SensorValueSettingsComponent', 'selector': 'hyt-sensor-value-settings'},{'name': 'SidebarComponent', 'selector': 'hyt-sidebar'},{'name': 'StatisticsStepComponent', 'selector': 'hyt-statistics-step'},{'name': 'StatsChartSettingsComponent', 'selector': 'hyt-stats-chart-settings'},{'name': 'TextLabelSettingsComponent', 'selector': 'hyt-text-label-settings'},{'name': 'TimeChartSettingsComponent', 'selector': 'hyt-time-chart-settings'},{'name': 'TopbarComponent', 'selector': 'hyt-topbar'},{'name': 'UserActivationComponent', 'selector': 'hyt-user-activation'},{'name': 'WidgetSettingsDialogComponent', 'selector': 'hyt-widget-settings-dialog'},{'name': 'WidgetsLayoutComponent', 'selector': 'hyt-widgets-layout'},{'name': 'WizardDeactivationModalComponent', 'selector': 'hyt-wizard-deactivation-modal'},{'name': 'WizardOptionsModalComponent', 'selector': 'hyt-wizard-options-modal'},{'name': 'WizardReportModalComponent', 'selector': 'hyt-wizard-report-modal'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'PacketFormComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'PacketFormComponent.html';
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

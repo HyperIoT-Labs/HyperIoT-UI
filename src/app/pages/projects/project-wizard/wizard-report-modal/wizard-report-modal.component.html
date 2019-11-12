@@ -14,7 +14,7 @@
                             <div class="col-md-6">
                                 <table id="tableSummary">
                                     <tr *ngFor="let data of reportData">
-                                        <td><img [src]="data.imgPath"></td>
+                                        <td><span [class]="data.iconPath"></span></td>
                                         <td>
                                             <ng-container>{{data.type}}</ng-container>
                                             <hr>

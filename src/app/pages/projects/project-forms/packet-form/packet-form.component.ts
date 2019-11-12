@@ -80,7 +80,7 @@ export class PacketFormComponent extends ProjectFormEntity implements OnDestroy 
     private i18n: I18n
   ) {
     super(injector, i18n, formView);
-    this.longDefinition = this.i18n('HYT_packet_long_definition');
+    this.longDefinition = this.entitiesService.packet.longDefinition;
     this.routerSubscription = this.router.events.subscribe((rl) => {
       if (rl instanceof NavigationEnd) {
         this.id = this.activatedRoute.snapshot.params.packetId;

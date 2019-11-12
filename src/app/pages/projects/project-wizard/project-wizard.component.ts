@@ -16,6 +16,7 @@ import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-
 import { PacketStatisticsFormComponent } from '../project-forms/packet-statistics-form/packet-statistics-form.component';
 import { HytModalConfService } from 'src/app/services/hyt-modal-conf.service';
 import { HytStepperComponent } from '@hyperiot/components/lib/hyt-stepper/hyt-stepper.component';
+import { EntitiesService } from 'src/app/services/entities/entities.service';
 
 @Injectable({
   providedIn: 'root',
@@ -89,7 +90,7 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
 
   currentStepIndex = 0;
 
-  finishData: { imgPath: string, type: string, entities: string[] }[] = [];
+  finishData: { iconPath: string, type: string, entities: string[] }[] = [];
 
   canDeactivate$: Subject<boolean> = new Subject<boolean>();
 
@@ -98,7 +99,8 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
   constructor(
     private hDevicesService: HdevicesService,
     private hPacketsService: HpacketsService,
-    private modalService: HytModalConfService
+    private modalService: HytModalConfService,
+    public entitiesService: EntitiesService
   ) { }
 
   ngOnInit() {
@@ -333,7 +335,6 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
     console.log(event);
     switch (event.action) {
       case 'goToStep': {
-        console.log(event.data)
         this.stepper.changeStep(event.data);
         break;
       }
@@ -346,12 +347,32 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
 
   openFinishModal() {
     this.finishData = [];
-    this.finishData.push({ imgPath: 'assets/projects/icons/monitor.png', type: 'Project', entities: [this.currentProject.name] });//@I18N@
-    this.finishData.push({ imgPath: 'assets/projects/icons/monitor.png', type: 'Devices', entities: this.hDevices.map(d => d.deviceName) });//@I18N@
-    this.finishData.push({ imgPath: 'assets/projects/icons/monitor.png', type: 'Packets', entities: this.hPackets.map(p => p.name) });//@I18N@
-    this.finishData.push({ imgPath: 'assets/projects/icons/monitor.png', type: 'Enrichment', entities: this.enrichmentRules.map(e => e.name) });//@I18N@
-    this.finishData.push({ imgPath: 'assets/projects/icons/monitor.png', type: 'Events', entities: this.eventRules.map(e => e.name) });//@I18N@
-    this.modalService.open('hyt-wizard-report-modal')
+    this.finishData.push({
+      iconPath: this.entitiesService.project.icon,
+      type: this.entitiesService.project.displayListName,
+      entities: [this.currentProject.name]
+    });
+    this.finishData.push({
+      iconPath: this.entitiesService.device.icon,
+      type: this.entitiesService.device.displayListName,
+      entities: this.hDevices.map(d => d.deviceName)
+    });
+    this.finishData.push({
+      iconPath: this.entitiesService.packet.icon,
+      type: this.entitiesService.packet.displayListName,
+      entities: this.hPackets.map(p => p.name)
+    });
+    this.finishData.push({
+      iconPath: this.entitiesService.enrichment.icon,
+      type: this.entitiesService.enrichment.displayListName,
+      entities: this.enrichmentRules.map(e => e.name)
+    });
+    this.finishData.push({
+      iconPath: this.entitiesService.event.icon,
+      type: this.entitiesService.event.displayListName,
+      entities: this.eventRules.map(e => e.name)
+    });
+    this.modalService.open('hyt-wizard-report-modal');
   }
 
   // Deactivation logic

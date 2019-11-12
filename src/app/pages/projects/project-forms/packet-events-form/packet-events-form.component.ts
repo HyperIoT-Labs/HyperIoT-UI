@@ -64,7 +64,7 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
     private i18n: I18n
   ) {
     super(injector, i18n, formView);
-    this.longDefinition = this.i18n('HYT_events_long_definition');
+    this.longDefinition = this.entitiesService.event.longDefinition;
     this.hideDelete = true; // hide 'Delete' button
     this.routerSubscription = this.router.events.subscribe((rl) => {
       if (rl instanceof NavigationEnd) {

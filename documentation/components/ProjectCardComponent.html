@@ -1,0 +1,1729 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>hyperiot documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">hyperiot documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li>Components</li>
+  <li>ProjectCardComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li >
+            <a href="#templateData" role="tab" id="templateData-tab" data-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li >
+            <a href="#styleData" role="tab" id="styleData-tab" data-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li >
+            <a href="#tree" role="tab" id="tree-tab" data-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/pages/projects/project-card/project-card.component.ts</code>
+</p>
+
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                    <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
+    </p>
+
+
+<section>
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover">
+        <tbody>
+
+
+            <tr>
+                <td class="col-md-3">encapsulation</td>
+                <td class="col-md-9"><code>ViewEncapsulation.None</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>hyt-project-card</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./project-card.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./project-card.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#activeTimeout">activeTimeout</a>
+                            </li>
+                            <li>
+                                <a href="#deviceCount">deviceCount</a>
+                            </li>
+                            <li>
+                                <a href="#isActive">isActive</a>
+                            </li>
+                            <li>
+                                <a href="#rulesCount">rulesCount</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#deleteProject">deleteProject</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit">ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#openDeleteDialog">openDeleteDialog</a>
+                            </li>
+                            <li>
+                                <a href="#setActive">setActive</a>
+                            </li>
+                            <li>
+                                <a href="#toRefreshView">toRefreshView</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Inputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#project">project</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Outputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#refreshView">refreshView</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(dialog: MatDialog, projectService: HprojectsService)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">src/app/pages/projects/project-card/project-card.component.ts:20</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>dialog</td>
+                                                  
+                                                        <td>
+                                                                    <code>MatDialog</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>projectService</td>
+                                                  
+                                                        <td>
+                                                                    <code>HprojectsService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+    <section>
+    <h3 id="inputs">Inputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="project"></a>
+                        <b>project</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>HProject</code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/app/pages/projects/project-card/project-card.component.ts:15</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+    <section>
+    <h3 id="outputs">Outputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="refreshView"></a>
+                        <b>refreshView</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://angular.io/api/core/EventEmitter" target="_blank" >EventEmitter</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/app/pages/projects/project-card/project-card.component.ts:16</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+
+
+    <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="deleteProject"></a>
+                    <span class="name">
+                        <b>
+                            deleteProject
+                        </b>
+                        <a href="#deleteProject"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>deleteProject()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="41"
+                            class="link-to-prism">src/app/pages/projects/project-card/project-card.component.ts:41</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <b>
+                            ngOnInit
+                        </b>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="24"
+                            class="link-to-prism">src/app/pages/projects/project-card/project-card.component.ts:24</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="openDeleteDialog"></a>
+                    <span class="name">
+                        <b>
+                            openDeleteDialog
+                        </b>
+                        <a href="#openDeleteDialog"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>openDeleteDialog()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="45"
+                            class="link-to-prism">src/app/pages/projects/project-card/project-card.component.ts:45</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setActive"></a>
+                    <span class="name">
+                        <b>
+                            setActive
+                        </b>
+                        <a href="#setActive"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>setActive(active)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="34"
+                            class="link-to-prism">src/app/pages/projects/project-card/project-card.component.ts:34</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>active</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="toRefreshView"></a>
+                    <span class="name">
+                        <b>
+                            toRefreshView
+                        </b>
+                        <a href="#toRefreshView"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>toRefreshView(typeMsg: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, valueMsg: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="79"
+                            class="link-to-prism">src/app/pages/projects/project-card/project-card.component.ts:79</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>typeMsg</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>valueMsg</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section>
+    
+        <h3 id="inputs">
+            Properties
+        </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="activeTimeout"></a>
+                        <span class="name">
+                            <b>
+                            activeTimeout</b>
+                            <a href="#activeTimeout"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">src/app/pages/projects/project-card/project-card.component.ts:20</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="deviceCount"></a>
+                        <span class="name">
+                            <b>
+                            deviceCount</b>
+                            <a href="#deviceCount"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>0</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">src/app/pages/projects/project-card/project-card.component.ts:18</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="isActive"></a>
+                        <span class="name">
+                            <b>
+                            isActive</b>
+                            <a href="#isActive"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>false</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/app/pages/projects/project-card/project-card.component.ts:17</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="rulesCount"></a>
+                        <span class="name">
+                            <b>
+                            rulesCount</b>
+                            <a href="#rulesCount"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>0</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">src/app/pages/projects/project-card/project-card.component.ts:19</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit, Input, ViewEncapsulation, Output, EventEmitter } from &#x27;@angular/core&#x27;;
+
+import { HProject, HprojectsService } from &#x27;@hyperiot/core&#x27;;
+import { MatDialog } from &#x27;@angular/material&#x27;;
+import { DeleteConfirmDialogComponent } from &#x27;src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component&#x27;;
+
+@Component({
+  selector: &#x27;hyt-project-card&#x27;,
+  templateUrl: &#x27;./project-card.component.html&#x27;,
+  styleUrls: [&#x27;./project-card.component.scss&#x27;],
+  encapsulation: ViewEncapsulation.None
+})
+
+export class ProjectCardComponent implements OnInit {
+  @Input() project: HProject;
+  @Output() refreshView &#x3D; new EventEmitter&lt;object&gt;();
+  isActive &#x3D; false;
+  deviceCount &#x3D; 0;
+  rulesCount &#x3D; 0;
+  activeTimeout;
+
+  constructor( private dialog: MatDialog, private projectService: HprojectsService ) { }
+
+  ngOnInit() {
+    /* Find All Device */
+    this.deviceCount &#x3D; this.project.deviceCount;
+
+    /* Find All Device */
+    this.rulesCount &#x3D; this.project.rulesCount;
+  }
+
+
+
+  setActive(active) {
+    if (this.activeTimeout) {
+      clearTimeout(this.activeTimeout);
+    }
+    this.activeTimeout &#x3D; setTimeout(() &#x3D;&gt; this.isActive &#x3D; active, 50);
+  }
+
+  deleteProject() {
+    this.openDeleteDialog();
+  }
+
+  openDeleteDialog() {
+
+    const dialogRef &#x3D; this.dialog.open(DeleteConfirmDialogComponent, {
+      data: {title: &#x27;Are you sure you want to delete the project?&#x27;, message: &#x27;This operation cannot be undone.&#x27;}
+    });
+
+    dialogRef.afterClosed().subscribe(
+      (result) &#x3D;&gt; {
+
+        if ( result &#x3D;&#x3D;&#x3D; &#x27;delete&#x27;) {
+
+          this.projectService.deleteHProject(this.project.id).subscribe(
+            (res) &#x3D;&gt; {
+              this.toRefreshView(&#x27;success&#x27;, &#x27;The project was successfully deleted&#x27;);
+            },
+            (err) &#x3D;&gt; {
+              this.toRefreshView(&#x27;error&#x27;, &#x27;An error occurred while deleting the project&#x27;);
+              console.log(this.project);
+              console.log(&#x27;ERRORE CANCELLAZIONE\n&#x27;, err);
+            }
+
+          );
+
+        }
+
+      },
+      (err) &#x3D;&gt; {
+        console.log(&#x27;Errore nell\&#x27; AFTER CLOSED del DIALOG di MATERIAL \n&#x27;, err);
+      }
+
+    );
+
+  }
+
+  toRefreshView(typeMsg: string, valueMsg: string) {
+    this.refreshView.emit({type: typeMsg, value: valueMsg});
+  }
+
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-templateData">
+        <pre class="line-numbers"><code class="language-html">
+&lt;mat-card class&#x3D;&quot;mat-elevation-z5&quot;&gt;
+
+    &lt;div class&#x3D;&quot;title-card-back&quot;&gt; &lt;!-- flex-fill d-flex align-items-end --&gt;
+        {{ project.name }}
+    &lt;/div&gt;
+
+    &lt;div class&#x3D;&quot;box-card-front&quot;&gt;
+
+        &lt;div class&#x3D;&quot;header-card-front&quot;&gt;
+
+            {{ project.name }}
+
+        &lt;/div&gt; &lt;!-- End Card Front Header --&gt;
+
+        &lt;div class&#x3D;&quot;content-card-front&quot;&gt;
+
+            &lt;div class&#x3D;&quot;card-description&quot;&gt;
+                {{ project.description }}
+            &lt;/div&gt; &lt;!-- End Card Description --&gt;
+
+            &lt;div class&#x3D;&quot;card-elements&quot;&gt;
+
+                &lt;div class&#x3D;&quot;single-element&quot;&gt;
+                    &lt;mat-icon&gt;devices_other&lt;/mat-icon&gt;
+                    &lt;strong class&#x3D;&quot;single-element px-2&quot;&gt;{{ deviceCount }}&lt;/strong&gt;
+                    &lt;span i18n&#x3D;&quot;@@projectCard-string-device&quot;&gt;HYT_string_device&lt;/span&gt;
+                &lt;/div&gt; &lt;!-- End Single Element --&gt;
+
+                &lt;div class&#x3D;&quot;single-element&quot;&gt;
+                    &lt;mat-icon&gt;code&lt;/mat-icon&gt;
+                    &lt;strong class&#x3D;&quot;count-element px-2&quot;&gt;{{ rulesCount }}&lt;/strong&gt; 
+                    &lt;span i18n&#x3D;&quot;@@projectCard-string-rule&quot;&gt;HYT_string_rule&lt;/span&gt;
+                &lt;/div&gt; &lt;!-- End Single Element --&gt;
+                
+
+            &lt;/div&gt; &lt;!-- End Card Elements --&gt;
+
+        &lt;/div&gt; &lt;!-- End Card Front Content --&gt;
+
+        &lt;div class&#x3D;&quot;footer-card-front&quot;&gt;
+
+            &lt;hyt-button
+                class&#x3D;&quot;view-project-btn&quot; 
+                routerLink&#x3D;&quot;{{project.id}}&quot;
+            &gt;
+                View Project
+            &lt;/hyt-button&gt;
+            
+        &lt;/div&gt; &lt;!-- End Card Front Footer --&gt;
+
+    &lt;/div&gt;
+
+&lt;/mat-card&gt;
+
+&lt;div class&#x3D;&quot;delete-project-btn&quot; (click)&#x3D;&quot;deleteProject()&quot;&gt;
+    &lt;span class&#x3D;&quot;hyt-icon icon-hyt_cancel&quot;&gt;&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-styleData">
+                <p class="comment">
+                    <code>./project-card.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">hyt-project-card {
+    position: relative;
+    min-width: 250px;
+    height: 320px;
+
+    mat-card.mat-card {
+        background-color: #0d416d;
+        background-image: url(&#x27;../../../../assets/images/projects/Card_Idle.png&#x27;);
+        background-repeat: no-repeat;
+        background-position: bottom center;
+        background-size: cover;
+        position: absolute;
+        left: 0; top: 0; right: 0; bottom: 0;
+        border-radius: 6px;
+        color: #ffffff;
+        font-family: &#x27;Exo&#x27;;
+        overflow: hidden;
+        box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 5px 8px 0 rgba(0,0,0,.14), 0 1px 14px 0 rgba(0,0,0,.12);
+        transition: all 0.15s ease-in-out;
+
+        &amp;:hover {
+            .box-card-front {
+                top: 0px;
+                background-image: url(&#x27;../../../../assets/images/projects/Card_Round-Hover.png&#x27;);
+                background-repeat: no-repeat;
+                background-position: bottom center;
+                background-size: cover;
+            }
+        }
+
+        .title-card-back {
+            width: 100%;
+            max-height: 108px;
+            // border: 1px solid;
+            word-break: break-word;
+            padding: 5px;
+            position: inherit;
+            bottom: 0px;
+            left: 0px;
+            font-size: 2em;
+            font-weight: 400;
+            line-height: 34px;
+            overflow: hidden;
+
+            background: rgba(30,88,165,1);
+            background: -moz-linear-gradient(left, rgba(30,88,165,1) 66%, rgba(255,255,255,0) 100%);
+            background: -webkit-gradient(left top, right top, color-stop(66%, rgba(30,88,165,1)), color-stop(100%, rgba(255,255,255,0)));
+            background: -webkit-linear-gradient(left, rgba(30,88,165,1) 66%, rgba(255,255,255,0) 100%);
+            background: -o-linear-gradient(left, rgba(30,88,165,1) 66%, rgba(255,255,255,0) 100%);
+            background: -ms-linear-gradient(left, rgba(30,88,165,1) 66%, rgba(255,255,255,0) 100%);
+            background: linear-gradient(to right, rgba(30,88,165,1) 66%, rgba(255,255,255,0) 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr&#x3D;&#x27;#1e58a5&#x27;, endColorstr&#x3D;&#x27;#ffffff&#x27;, GradientType&#x3D;1 );
+
+        }
+
+        .box-card-front {
+            position: inherit;
+            width: 100%;
+            top: 100%;
+            left: 0px;
+            padding: 5px;
+            background-color: #ffffff;
+            height: 100%;
+            transition: all 0.15s ease-in-out;
+
+            .header-card-front {
+                // border: 1px solid;
+                max-height: 108px;
+                font-size: 2em;
+                line-height: 35px;
+                word-break: break-word;
+                overflow: hidden;
+                color: #0956B6;
+            }
+
+            .content-card-front {
+                height: 235px;
+
+                .card-description {
+                    // border: 1px solid brown;
+                    margin-bottom: 10px;
+                    height: 90px;
+                    overflow: hidden;
+                    word-break: break-word;
+                    padding-top: 4px;
+                    font-size: .9em;
+                    position: absolute;
+                    width: 100%;
+                    left: 0px;
+                    bottom: 108px;
+                    padding-left: 5px;
+                    padding-right: 5px;  
+                    color: #414141;
+                    font-style: italic;        
+                }
+
+                .card-elements {
+                    // border: 1px solid fuchsia;
+                    position: absolute;
+                    width: 100%;
+                    left: 0;
+                    bottom: 60px;
+                    padding-left: 5px;
+                    padding-right: 5px;
+
+                    .single-element {
+                        display: flex;
+                        color: #0956B6;
+
+                        &amp;:not(:last-child) {
+                            margin-bottom: 5px;
+                        }
+                    }
+                }
+
+            }
+
+            .footer-card-front {
+                // border: 1px solid red;
+                width: 100%;
+                bottom: 0px;
+                position: absolute;
+                left: 0px;
+                text-align: center;
+                padding-bottom: 3px;
+                height: 43px;
+
+                hyt-button {
+                    // width: 80%;
+
+                    &amp;:hover {
+                        button.mat-raised-button {
+                            background-color: #0956B6;
+                            color: #ffffff;
+                        }
+                    }
+
+                    button.mat-raised-button {
+                        font-family: &#x27;Exo&#x27;;
+                        box-shadow: none;
+                        text-transform: uppercase;
+                        background-color: #ffffff;
+                        color: #0956B6;
+                        font-size: 1em;
+                        width: 80%;
+                        height: 100%;
+                        border: 1px solid #0956B6;
+                        border-radius: 0px;
+                        font-weight: bold;
+                    }
+                }
+
+            }
+
+        }
+
+    }
+
+
+
+    &amp;.active {
+        background-color: #ffffff;
+        color: #0f78d1;
+    }
+
+    #card-front {
+
+        .multiline-ellipsis {
+            font-size: 80%;
+            max-width: 100%;
+            height: 60px;
+            margin: 8px auto;
+            display: block;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+
+}
+
+.delete-project-btn {
+    width: 30px;
+    height: 30px;
+    background-color: #523dd6;
+    text-align: center;
+    position: absolute;
+    top: -16px;
+    right: -12px;
+    color: #fff;
+    border-radius: 50%;
+    padding-top: 5px;
+    cursor: pointer;
+    display: none;
+}
+
+hyt-project-card {
+    &amp;:hover {
+        .delete-project-btn {
+            display: block;
+            &amp;:hover {
+                background-color: #d40b0b;
+            }
+        }
+    }
+}
+
+@media (max-width: 1700px) {
+
+    hyt-project-card {
+        min-width: 230px;
+        height: 294px;
+
+        mat-card.mat-card {
+            .title-card-back {
+                font-size: 1.8em;
+                line-height: 26px;
+                max-height: 90px;
+            }
+
+            .box-card-front {
+
+                .header-card-front {
+                    font-size: 1.8em;
+                    line-height: 26px;
+                    max-height: 90px;
+                }
+
+                .content-card-front {
+                    height: 226px;
+    
+                    .card-description {
+                        font-size: .89em;
+                        bottom: 96px;
+                        height: 100px;
+                    }
+    
+                    .card-elements {
+                        bottom: 54px;
+
+                        .single-element {
+                            font-size: .9em;
+
+                            &amp;:not(:last-child) {
+                                margin-bottom: 2px;
+                            }
+
+                            mat-icon {
+                                height: 22px;
+                                width: 22px;
+
+                                &amp;.material-icons {
+                                    font-size: 22px;
+                                }
+                            }
+                        }
+                    }
+    
+                }
+
+                .footer-card-front {
+                    height: 34px;
+
+                    hyt-button {
+                        height: 29px;
+
+                        button.mat-raised-button {
+                            font-size: .9em;
+                            line-height: 30px;
+                        }
+                    }
+                }
+
+            }
+
+        }
+
+    }
+}
+
+@media (max-width: 1560px) {
+    hyt-project-card {
+        min-width: 200px;
+        height: 256px;
+        
+
+        mat-card.mat-card {
+            .title-card-back {
+                font-size: 1.7em;
+                line-height: 26px;
+                max-height: 90px;
+            }
+
+            .box-card-front {
+                .header-card-front {
+                    font-size: 1.7em;
+                    line-height: 26px;
+                    max-height: 90px;
+                }
+
+                .content-card-front {
+                    height: 188px;
+
+                    .card-description {
+                        font-size: 0.7em;
+                        line-height: 20px;
+                        height: 75px;
+                        bottom: 85px
+                    }
+
+                    .card-elements {
+                        bottom: 50px;
+                        
+                        .single-element {
+                            font-size: .85em;
+                            
+                            &amp;:not(:last-child) {
+                                margin-bottom: 1px;
+                            }
+
+                            mat-icon {
+                                width: 20px;
+                                height: 20px;
+
+                                &amp;.material.icons {
+                                    font-size: 20px;
+                                }
+                            }
+
+                        }
+
+                    }
+
+                }
+
+                .footer-card-front {
+
+                    hyt-button {
+
+                        button.mat-raised-button {
+                            font-size: .9em;
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+}
+
+@media (max-width: 1400px) {
+    hyt-project-card {
+        min-width: 180px;
+        height: 230px;
+        
+
+        mat-card.mat-card {
+            .title-card-back {
+                font-size: 1.4em;
+                line-height: 22px;
+                max-height: 78px;
+            }
+
+            .box-card-front {
+                .header-card-front {
+                    font-size: 1.4em;
+                    line-height: 22px;
+                    max-height: 78px;
+                    padding-top: 2px;
+                    bottom: 68px;
+                }
+
+                .content-card-front {
+
+                    .card-description {
+                        font-size: 0.7em;
+                        height: 75px;
+                        line-height: 15px;
+                        bottom: 77px;
+                    }
+
+                    .card-elements {
+                        bottom: 43px;
+
+                        .single-element {
+                            font-size: .8em;
+
+                           &amp;:not(:last-child) {
+                               margin-bottom: 2px;
+                           }
+                            
+                            mat-icon {
+                                width: 18px;
+                                height: 18px;
+
+                                &amp;.material-icons {
+                                    font-size: 18px;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                .footer-card-front {
+                    height: 31px;
+
+                    hyt-button {
+                        height: 25px;
+
+                        button.mat-raised-button {
+                            font-size: 0.8em;
+                            line-height: 23px;
+                        }
+                    }
+                }
+
+            }
+
+        }
+    }
+}
+
+@media (max-width: 1240px) {
+    hyt-project-card {
+        min-width: 170px;
+        height: 218px;
+        
+
+        mat-card.mat-card {
+            .title-card-back {
+                font-size: 1.2em;
+                line-height: 20px;
+                max-height: 72px;
+            }
+
+            .box-card-front {
+
+                .header-card-front {
+                    font-size: 1.2em;
+                    line-height: 20px;
+                    max-height: 72px;
+                    bottom: 66px;
+                }
+
+                .content-card-front {
+                    .card-description {
+                        font-size: 0.7em;
+                        line-height: 14px;
+                        height: 74px;
+                    }
+                }
+
+            }
+
+        }
+    }
+}
+
+@media (max-width: 1200px) { /* BOOTSTRAP BREACKPOINT */
+    hyt-project-card {
+        min-width: 215px;
+        height: 275px;
+        
+
+        mat-card.mat-card {
+            .title-card-back {
+                font-size: 1.4em;
+                line-height: 22px;
+                max-height: 78px;
+            }
+
+            .box-card-front {
+                .header-card-front {
+                    font-size: 1.4em;
+                    line-height: 22px;
+                    max-height: 78px;
+                }
+
+                .content-card-front {
+
+                    .card-description {
+                        bottom: 90px;
+                        height: 100px;
+                        font-size: 0.8em;
+                        line-height: 18px;
+                    }
+
+                    .card-elements {
+                        bottom: 50px;
+
+                        .single-element {
+                            font-size: .9em;
+
+                            &amp;:not(:last-child) {
+                                margin-bottom: 2px;
+                            }
+
+                            mat-icon {
+                                width: 22px;
+                                height: 22px;
+
+                                &amp;.material-icons {
+                                    font-size: 22px;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                .footer-card-front {
+                    height: 35px;
+
+                    hyt-button {
+                        height: 30px;
+
+                        button.mat-raised-button {
+                            font-size: 0.9em;
+                            line-height: 32px;
+                        }
+                    }
+
+                }
+
+            }
+        }
+    }
+}
+
+@media (max-width: 991px) { /* BOOTSTRAP BREACKPOINT */
+
+}
+
+@media (max-width: 767px) { /* BOOTSTRAP BREACKPOINT */
+    hyt-project-card {
+        min-width: 225px;
+        height: 288px;
+        
+
+        mat-card.mat-card {
+            .title-card-back {
+                font-size: 1.6em;
+                line-height: 25px;
+                max-height: 87px;
+            }
+
+            .box-card-front {
+                .header-card-front {
+                    font-size: 1.6em;
+                    line-height: 25px;
+                    max-height: 87px;
+                }
+
+                .content-card-front {
+                    
+                    .card-description {
+                        bottom: 93px;
+                        height: 90px;
+                    }
+
+                    .card-elements {
+                        bottom: 55px;
+
+                        .single-element {
+                            &amp;:not(:last-child) {
+                                margin-bottom: 1px;
+                            }
+                        }
+                    }
+
+                }
+                
+            }
+        }
+    }
+}
+
+@media (max-width: 575px) { /* BOOTSTRAP BREACKPOINT */
+    hyt-project-card {
+        min-width: 250px;
+        height: 320px;
+        
+
+        mat-card.mat-card {
+            .title-card-back {
+                font-size: 1.8em;
+                line-height: 32px;
+                max-height: 108px;
+            }
+
+            .box-card-front {
+
+                .header-card-front {
+                    font-size: 1.8em;
+                    line-height: 32px;
+                    max-height: 108px;
+                }
+
+                .content-card-front {
+
+                    .card-description {
+                        font-size: .9em;
+                        height: 100px;
+                        bottom: 106px;
+                    }
+
+                    .card-elements {
+                        bottom: 63px;
+
+                        .single-element {
+                            font-size: 1em;
+                        }
+                    }
+                }
+
+                .footer-card-front {
+                    height: 40px;
+
+                    hyt-button {
+                        height: 35px;
+
+                        button.mat-raised-button {
+                            font-size: 1.1em;
+                            line-height: 37px;
+                        }
+                    }
+
+                }
+
+            }
+        }
+    }
+}
+
+@media (max-width: 374px) { 
+    hyt-project-card {
+        min-width: 200px;
+        height: 256px;
+        
+
+        mat-card.mat-card {
+            .title-card-back {
+                font-size: 1.1em;
+                line-height: 20px;
+                max-height: 72px;
+            }
+
+            .box-card-front {
+
+                .header-card-front {
+                    font-size: 1.1em;
+                    line-height: 20px;
+                    max-height: 72px;
+                }
+
+                .content-card-front {
+                    
+                    .card-description {
+                        bottom: 87px;
+                        height: 90px;
+                        font-size: 0.75em;
+                        line-height: 16px;
+                    }
+
+                    .card-elements {
+                        bottom: 49px;
+
+                        .single-element {
+                            font-size: .85em;
+
+                            &amp;:not(:last-child) {
+                                margin-bottom: 1px;
+                            }
+                        }
+                    }
+                }
+
+                .footer-card-front {
+                    height: 33px;
+
+                    hyt-button {
+                        height: 28px;
+
+                        button.mat-raised-button {
+                            font-size: .88em;
+                            line-height: 30px;
+                        }
+                    }
+
+                }
+
+            }
+        }
+    }
+}
+
+@media (max-width: 320px) { 
+    hyt-project-card {
+
+        min-width: 180px;
+        height: 230px;
+        
+
+        mat-card.mat-card {
+            .title-card-back {
+                font-size: 1em;
+                line-height: 18px;
+                max-height: 66px;
+            }
+
+            .box-card-front {
+
+                .header-card-front {
+                    font-size: 1em;
+                    line-height: 18px;
+                    max-height: 66px;
+                }
+
+                .content-card-front {
+                    
+                    .card-description {
+                        bottom: 73px;
+                        font-size: 0.7em;
+                        line-height: 15px;
+                        height: 85px;
+                    }
+
+                    .card-elements {
+                        bottom: 41px;
+
+                        .single-element {
+                            font-size: .8em;
+
+                            mat-icon {
+                                width: 18px;
+                                height: 18px;
+                                
+                                &amp;.material-icons {
+                                    font-size: 18px;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                .footer-card-front {
+                    height: 28px;
+
+                    hyt-button {
+                        height: 24px;
+
+                        button.mat-raised-button {
+                            font-size: 0.8em;
+                            line-height: 25px;
+                        }
+                    }
+
+                }
+
+            }
+        }
+    }
+}</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><mat-card class="mat-elevation-z5">    <div class="title-card-back"> <!-- flex-fill d-flex align-items-end -->        {{ project.name }}    </div>    <div class="box-card-front">        <div class="header-card-front">            {{ project.name }}        </div> <!-- End Card Front Header -->        <div class="content-card-front">            <div class="card-description">                {{ project.description }}            </div> <!-- End Card Description -->            <div class="card-elements">                <div class="single-element">                    <mat-icon>devices_other</mat-icon>                    <strong class="single-element px-2">{{ deviceCount }}</strong>                    <span i18n="@@projectCard-string-device">HYT_string_device</span>                </div> <!-- End Single Element -->                <div class="single-element">                    <mat-icon>code</mat-icon>                    <strong class="count-element px-2">{{ rulesCount }}</strong>                     <span i18n="@@projectCard-string-rule">HYT_string_rule</span>                </div> <!-- End Single Element -->                            </div> <!-- End Card Elements -->        </div> <!-- End Card Front Content -->        <div class="footer-card-front">            <hyt-button                class="view-project-btn"                 routerLink="{{project.id}}"            >                View Project            </hyt-button>                    </div> <!-- End Card Front Footer -->    </div></mat-card><div class="delete-project-btn" (click)="deleteProject()">    <span class="hyt-icon icon-hyt_cancel"></span></div></div>'
+    var COMPONENTS = [{'name': 'AccountButtonComponent', 'selector': 'hyt-account-button'},{'name': 'AddWidgetDialogComponent', 'selector': 'hyt-add-widget-dialog'},{'name': 'AppComponent', 'selector': 'hyt-root'},{'name': 'AssetCategoryComponent', 'selector': 'hyt-asset-category'},{'name': 'AssetTagComponent', 'selector': 'hyt-asset-tag'},{'name': 'AuthenticationComponent', 'selector': 'hyt-authentication'},{'name': 'ConfirmRecordingActionComponent', 'selector': 'hyt-confirm-recording-action'},{'name': 'DashboardComponent', 'selector': 'hyt-dashboard'},{'name': 'DashboardsListComponent', 'selector': 'hyt-dashboards-list'},{'name': 'DashboardViewComponent', 'selector': 'hyt-dashboard-view'},{'name': 'DeleteConfirmDialogComponent', 'selector': 'hyt-delete-confirm-dialog'},{'name': 'DeviceFormComponent', 'selector': 'hyt-device-form'},{'name': 'DeviceSelectComponent', 'selector': 'hyt-device-select'},{'name': 'DynamicWidgetComponent', 'selector': 'hyt-dynamic-widget'},{'name': 'EventMailComponent', 'selector': 'hyt-event-mail'},{'name': 'EventsLogSettingsComponent', 'selector': 'hyt-events-log-settings'},{'name': 'GenericSummaryListComponent', 'selector': 'hyt-generic-summary-list'},{'name': 'HomeComponent', 'selector': 'hyt-home'},{'name': 'InfoRecordingActionComponent', 'selector': 'hyt-info-recording-action'},{'name': 'LoginComponent', 'selector': 'hyt-login'},{'name': 'MyTelInputComponent', 'selector': 'example-tel-input'},{'name': 'NotFoundComponent', 'selector': 'hyt-not-found'},{'name': 'NotificationbarComponent', 'selector': 'hyt-notificationbar'},{'name': 'PacketEnrichmentFormComponent', 'selector': 'hyt-packet-enrichment-form'},{'name': 'PacketEventsFormComponent', 'selector': 'hyt-packet-events-form'},{'name': 'PacketFieldsFormComponent', 'selector': 'hyt-packet-fields-form'},{'name': 'PacketFormComponent', 'selector': 'hyt-packet-form'},{'name': 'PacketSelectComponent', 'selector': 'hyt-packet-select'},{'name': 'PacketSelectComponent', 'selector': 'hyt-pw-packet-select'},{'name': 'PacketStatisticsFormComponent', 'selector': 'hyt-packet-statistics-form'},{'name': 'PasswordRecoveryComponent', 'selector': 'hyt-password-recovery'},{'name': 'PasswordResetComponent', 'selector': 'hyt-password-reset'},{'name': 'ProfileComponent', 'selector': 'hyt-profile'},{'name': 'ProjectCardComponent', 'selector': 'hyt-project-card'},{'name': 'ProjectDetailComponent', 'selector': 'hyt-project-detail'},{'name': 'ProjectFormComponent', 'selector': 'hyt-project-form'},{'name': 'ProjectsComponent', 'selector': 'hyt-projects'},{'name': 'ProjectWizardComponent', 'selector': 'hyt-project-wizard'},{'name': 'RegistrationComponent', 'selector': 'hyt-registration'},{'name': 'RuleDefinitionComponent', 'selector': 'hyt-rule-definition'},{'name': 'SaveChangesDialogComponent', 'selector': 'hyt-save-changes-dialog'},{'name': 'SelectableTextComponent', 'selector': 'hyt-selectable-text'},{'name': 'SensorValueSettingsComponent', 'selector': 'hyt-sensor-value-settings'},{'name': 'SidebarComponent', 'selector': 'hyt-sidebar'},{'name': 'StatisticsStepComponent', 'selector': 'hyt-statistics-step'},{'name': 'StatsChartSettingsComponent', 'selector': 'hyt-stats-chart-settings'},{'name': 'TextLabelSettingsComponent', 'selector': 'hyt-text-label-settings'},{'name': 'TimeChartSettingsComponent', 'selector': 'hyt-time-chart-settings'},{'name': 'TopbarComponent', 'selector': 'hyt-topbar'},{'name': 'UserActivationComponent', 'selector': 'hyt-user-activation'},{'name': 'WidgetSettingsDialogComponent', 'selector': 'hyt-widget-settings-dialog'},{'name': 'WidgetsLayoutComponent', 'selector': 'hyt-widgets-layout'},{'name': 'WizardDeactivationModalComponent', 'selector': 'hyt-wizard-deactivation-modal'},{'name': 'WizardOptionsModalComponent', 'selector': 'hyt-wizard-options-modal'},{'name': 'WizardReportModalComponent', 'selector': 'hyt-wizard-report-modal'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'ProjectCardComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'ProjectCardComponent.html';
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>
