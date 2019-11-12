@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { AssetscategoriesService, AssetCategory, HPacket } from '@hyperiot/core';
+import { AssetscategoriesService, AssetCategory, HPacket, HProject } from '@hyperiot/core';
 import { TreeNodeCategory } from '@hyperiot/components';
-import { ProjectWizardService } from 'src/app/services/projectWizard/project-wizard.service';
 
 @Component({
   selector: 'hyt-asset-category',
