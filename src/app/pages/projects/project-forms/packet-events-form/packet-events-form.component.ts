@@ -136,7 +136,7 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
   updateSummaryList() {
     this.rulesService.findAllRuleByPacketId(this.packet.id).subscribe((rules: Rule[]) => {
       this.summaryList = {
-        title: 'Events Data',
+        title: this.formTitle,
         list: rules
           .filter(r => r.type === Rule.TypeEnum.EVENT)
           .map(l => {

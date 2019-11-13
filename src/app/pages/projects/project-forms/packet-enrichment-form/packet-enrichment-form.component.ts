@@ -3,7 +3,6 @@ import { HPacket, Rule, RulesService, HpacketsService, HProject } from '@hyperio
 import { FormGroup } from '@angular/forms';
 import { SelectOption } from '@hyperiot/components';
 import { RuleDefinitionComponent } from '../rule-definition/rule-definition.component';
-import { AssetTagComponent } from './asset-tag/asset-tag.component';
 // TODO: find a bettere placement for PageStatusEnum
 import { ProjectFormEntity, LoadingStatusEnum } from '../project-form-entity';
 import { Subscription, Observable } from 'rxjs';
@@ -19,8 +18,6 @@ import { I18n } from '@ngx-translate/i18n-polyfill';
 export class PacketEnrichmentFormComponent extends ProjectFormEntity implements OnInit, OnDestroy {
 
   @ViewChild('ruleDef', { static: false }) ruleDefinitionComponent: RuleDefinitionComponent;
-  @ViewChild('assetTag', { static: false }) assetTagComponent: AssetTagComponent;
-
   packet: HPacket;
 
   entity = {} as Rule;
@@ -200,7 +197,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
   updateSummaryList() {
     this.rulesService.findAllRuleByPacketId(this.packet.id).subscribe((rules: Rule[]) => {
       this.summaryList = {
-        title: 'Enrichments Data',
+        title: this.formTitle,
         list: rules.filter((i) => {
           if (i.type === Rule.TypeEnum.ENRICHMENT) {
             return i;
@@ -256,18 +253,19 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
 
   cleanForm() {
     super.cleanForm();
+    this.enrichmentType = null;
     this.ruleDefinitionComponent.resetRuleDefinition();
   }
 
   updatePacket() {
 
-    if (this.enrichmentType === 'AddTagRuleAction') {
+    if (this.enrichmentType === 'AddTagRuleAction' && this.assetTags.length !== 0) {
       this.packet.tagIds = this.assetTags;
       this.packetService.updateHPacket(this.packet).subscribe(
         (res: HPacket) => {
         }
       );
-    } else if (this.enrichmentType === 'AddCategoryRuleAction') {
+    } else if (this.enrichmentType === 'AddCategoryRuleAction' && this.assetCategories.length !== 0) {
       this.packet.categoryIds = this.assetCategories;
       this.packetService.updateHPacket(this.packet).subscribe(
         (res: HPacket) => {

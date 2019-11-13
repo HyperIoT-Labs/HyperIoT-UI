@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, Injectable, AfterViewInit } from '@angular/core';
 import { HProject, HDevice, HPacket, Rule, HdevicesService, HpacketsService } from '@hyperiot/core';
-import { Router, CanDeactivate } from '@angular/router';
+import { CanDeactivate } from '@angular/router';
 import { Subject } from 'rxjs';
 import { ProjectFormEntity } from '../project-forms/project-form-entity';
 import { ProjectFormComponent } from '../project-forms/project-form/project-form.component';
@@ -17,6 +17,7 @@ import { PacketStatisticsFormComponent } from '../project-forms/packet-statistic
 import { HytModalConfService } from 'src/app/services/hyt-modal-conf.service';
 import { HytStepperComponent } from '@hyperiot/components/lib/hyt-stepper/hyt-stepper.component';
 import { EntitiesService } from 'src/app/services/entities/entities.service';
+import { ProjectDataStatus } from './model/pageStatusEnum';
 
 @Injectable({
   providedIn: 'root',
@@ -96,6 +97,8 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
 
   deactivateModal = false;
 
+  loadingProjectData: ProjectDataStatus = ProjectDataStatus.Ok;
+
   constructor(
     private hDevicesService: HdevicesService,
     private hPacketsService: HpacketsService,
@@ -113,6 +116,7 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
       this.enrichmentForm.editMode = true;
       this.resetForms();
       if (window.history.state.projectId) {
+        //this.loadingProjectData = true;
         this.projectForm.id = window.history.state.projectId;
         this.projectForm.load();
       }
@@ -192,7 +196,7 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
 
   updateDeviceTable() {
     this.devicesForm.summaryList = {
-      title: 'Devices',
+      title: this.entitiesService.device.displayListName,
       list: this.hDevices.map((d) => {
         return { name: d.deviceName, description: d.description, data: d };
       }) as SummaryListItem[]
@@ -201,7 +205,7 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
 
   updatePacketTable() {
     this.packetsForm.summaryList = {
-      title: 'Packets',
+      title: this.entitiesService.packet.displayListName,
       list: this.hPackets.map((p) => {
         return { name: p.name, description: p.trafficPlan, data: p };
       }) as SummaryListItem[]
@@ -246,6 +250,9 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
         break;
       case 'pw:project-loaded':
         this.currentProject = data.project;
+        this.getDevices();
+        this.getPackets();
+        break;
     }
   }
 
