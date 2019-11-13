@@ -10,22 +10,22 @@
                 </div>
                 <div class="row">
                     <div class="col-md-4">
-                        <img src="assets/projects/icons/monitor.png" (click)="output('goToStep', 4);">
-                        <br>
+                        <hyt-hexagon [iconPath]="entitiesService.enrichment.icon" (clicked)="output('goToStep', 4);">
+                        </hyt-hexagon>
                         <b i18n="@@HYT_enrichment_data">HYT_enrichment_data</b>
                         <br>
                         <p i18n="@@HYT_enrichment_definition_long">HYT_enrichment_definition_long</p>
                     </div>
                     <div class="col-md-4">
-                        <img src="assets/projects/icons/monitor.png" (click)="output('goToStep', 5);">
-                        <br>
+                        <hyt-hexagon [iconPath]="entitiesService.statistic.icon" (clicked)="output('goToStep', 5);">
+                        </hyt-hexagon>
                         <b i18n="@@HYT_statistics">HYT_statistics</b>
                         <br>
                         <p i18n="@@HYT_statistics_definition_long">HYT_statistics_definition_long</p>
                     </div>
                     <div class="col-md-4">
-                        <img src="assets/projects/icons/monitor.png" (click)="output('goToStep', 6);">
-                        <br>
+                        <hyt-hexagon [iconPath]="entitiesService.event.icon" (clicked)="output('goToStep', 6);">
+                        </hyt-hexagon>
                         <b i18n="@@HYT_events">HYT_events</b>
                         <br>
                         <p i18n="@@HYT_events_definition_long">HYT_events_definition_long</p>

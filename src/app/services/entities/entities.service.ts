@@ -44,8 +44,8 @@ export class EntitiesService {
     shortDefinition: this.i18n('HYT_project_short_definition'),
     definition: this.i18n('HYT_project_definition'),
     longDefinition: this.i18n('HYT_project_long_definition'),
-    icon: 'hyt-icon icon-hyt_projects',
-    iconPlus: 'hyt-icon icon-hyt_projectsPlus'
+    icon: 'icon-hyt_projects',
+    iconPlus: 'icon-hyt_projectsPlus'
   };
 
   /**
@@ -61,8 +61,8 @@ export class EntitiesService {
     shortDefinition: this.i18n('HYT_device_shotrt_definition'),
     definition: this.i18n('HYT_device_definition'),
     longDefinition: this.i18n('HYT_device_long_definition'),
-    icon: 'hyt-icon icon-hyt_device',
-    iconPlus: 'hyt-icon icon-hyt_devicePlus'
+    icon: 'icon-hyt_device',
+    iconPlus: 'icon-hyt_devicePlus'
   };
 
   /**
@@ -78,8 +78,8 @@ export class EntitiesService {
     shortDefinition: this.i18n('HYT_packet_short_definition'),
     definition: this.i18n('HYT_packet_definition'),
     longDefinition: this.i18n('HYT_packet_long_definition'),
-    icon: 'hyt-icon icon-hyt_packets',
-    iconPlus: 'hyt-icon icon-hyt_packetsPlus'
+    icon: 'icon-hyt_packets',
+    iconPlus: 'icon-hyt_packetsPlus'
   };
 
   /**
@@ -95,8 +95,8 @@ export class EntitiesService {
     shortDefinition: this.i18n('HYT_fields_short_definition'),
     definition: this.i18n('HYT_fields_definition'),
     longDefinition: this.i18n('HYT_fields_long_definition'),
-    icon: 'hyt-icon icon-hyt_fields',
-    iconPlus: 'hyt-icon icon-hyt_fieldsPlus'
+    icon: 'icon-hyt_fields',
+    iconPlus: 'icon-hyt_fieldsPlus'
   };
 
   /**
@@ -112,8 +112,8 @@ export class EntitiesService {
     shortDefinition: this.i18n('HYT_enrichment_short_definition'),
     definition: this.i18n('HYT_enrichment_definition'),
     longDefinition: this.i18n('HYT_enrichment_long_definition'),
-    icon: 'hyt-icon icon-hyt_enrichments',
-    iconPlus: 'hyt-icon icon-hyt_enrichmentsPlus'
+    icon: 'icon-hyt_enrichments',
+    iconPlus: 'icon-hyt_enrichmentsPlus'
   };
 
   /**
@@ -129,8 +129,8 @@ export class EntitiesService {
     shortDefinition: this.i18n('HYT_statistics_short_definition'),
     definition: this.i18n('HYT_statistics_definition'),
     longDefinition: this.i18n('HYT_statistics_long_definition'),
-    icon: 'hyt-icon icon-hyt_statistics',
-    iconPlus: 'hyt-icon icon-hyt_statisticsPlus'
+    icon: 'icon-hyt_statistics',
+    iconPlus: 'icon-hyt_statisticsPlus'
   };
 
   /**
@@ -146,8 +146,8 @@ export class EntitiesService {
     shortDefinition: this.i18n('HYT_events_short_definition'),
     definition: this.i18n('HYT_events_definition'),
     longDefinition: this.i18n('HYT_events_long_definition'),
-    icon: 'hyt-icon icon-hyt_event',
-    iconPlus: 'hyt-icon icon-hyt_eventPlus'
+    icon: 'icon-hyt_event',
+    iconPlus: 'icon-hyt_eventPlus'
   };
 
 }
