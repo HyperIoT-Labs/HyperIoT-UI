@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Injectable, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, Injectable, AfterViewInit, ViewEncapsulation } from '@angular/core';
 import { HProject, HDevice, HPacket, Rule, HdevicesService, HpacketsService } from '@hyperiot/core';
 import { Router, CanDeactivate } from '@angular/router';
 import { Subject } from 'rxjs';
@@ -36,6 +36,7 @@ export class ProjectWizardCanDeactivate implements CanDeactivate<ProjectWizardCo
   selector: 'hyt-project-wizard',
   templateUrl: './project-wizard.component.html',
   styleUrls: ['./project-wizard.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ProjectWizardComponent implements OnInit, AfterViewInit {
 
