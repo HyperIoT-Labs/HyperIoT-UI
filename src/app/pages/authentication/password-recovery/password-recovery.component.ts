@@ -5,6 +5,10 @@ import { HusersService, LoggerService, Logger } from '@hyperiot/core';
 import { AuthenticationHttpErrorHandlerService } from 'src/app/services/errorHandler/authentication-http-error-handler.service';
 import { HYTError } from 'src/app/services/errorHandler/models/models';
 
+/**
+ * PasswordRecoveryComponent is a component of AuthenticationModule.
+ * It is used to hallow the user to send the request to reset his account password.
+ */
 @Component({
   selector: 'hyt-password-recovery',
   templateUrl: './password-recovery.component.html',
@@ -13,14 +17,29 @@ import { HYTError } from 'src/app/services/errorHandler/models/models';
 })
 export class PasswordRecoveryComponent implements OnInit {
 
-  error: string = null;
-
-  submissionStatus: SubmissionStatus = SubmissionStatus.Default;
-
+  /**
+   * recoverMailForm stores the recover-mail form
+   */
   recoverMailForm: FormGroup;
 
+  /**
+   * recoverMailStatus is used to handle the template view when the user is making the password-recovery request
+   */
+  recoverMailStatus: SubmissionStatus = SubmissionStatus.Default;
+
+  /**
+   * error stores the errors returned by the server
+   */
+  error: string = null;
+
+  /**
+   * logger service
+   */
   private logger: Logger;
 
+  /**
+   * class constructor
+   */
   constructor(
     private hUserService: HusersService,
     private httperrorHandler: AuthenticationHttpErrorHandlerService,
@@ -31,27 +50,38 @@ export class PasswordRecoveryComponent implements OnInit {
     this.logger.registerClass('PasswordRecoveryComponent');
    }
 
+  /**
+   * ngOnInit() builds the recoverMailForm
+   */
   ngOnInit() {
     this.recoverMailForm = this.fb.group({});
   }
 
+  /**
+   * recoveryRequest() is used to let the user recover his password.
+   * This function sends the recovery password request (with the mail provided by the user) to the server.
+   */
   recoveryRequest() {
-    this.submissionStatus = SubmissionStatus.Default;
+    this.recoverMailStatus = SubmissionStatus.Default;
     this.hUserService.resetPasswordRequest(this.recoverMailForm.value.email).subscribe(
       res => {
         this.logger.debug('email address:', res);
-        this.submissionStatus = SubmissionStatus.Submitted;
+        this.recoverMailStatus = SubmissionStatus.Submitted;
       },
       err => {
         const k: HYTError[] = this.httperrorHandler.handlePwdRecovery(err);
         for (const e of k) {
           this.error = e.message;
         }
-        this.submissionStatus = SubmissionStatus.Error;
+        this.recoverMailStatus = SubmissionStatus.Error;
       }
     );
   }
 
+  /**
+   * notValid() returns false if the recoverMail form is not valid.
+   * This function is used by the template.
+   */
   notValid(): boolean {
     return this.recoverMailForm.get('email').invalid;
   }

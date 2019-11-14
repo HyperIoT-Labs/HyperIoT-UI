@@ -1,6 +1,3 @@
-<!-- {{status}} -->
-
-
 <div id="container-act">
 
   <div class="preload" style="display: none">
@@ -9,7 +6,7 @@
   </div>
 
 
-  <div class="container" id="box-act" *ngIf="submissionStatus == -1">
+  <div class="container" id="box-act" *ngIf="activationStatus == -1">
 
     <div id="row-icon-act" class="row">
       <div id="icon-block" class="col-12">
@@ -30,7 +27,7 @@
 
   </div>
 
-  <div class="container" id="box-act-success" *ngIf="submissionStatus == 1">
+  <div class="container" id="box-act-success" *ngIf="activationStatus == 2">
 
     <div id="row-icon-success">
       <div id="icon-success-block" class="col-12">

@@ -6,6 +6,9 @@ import {
     query
 } from '@angular/animations';
 
+/**
+ * fadeAnimation describes the routing animation triggered when the user navigates through the authentication pages
+ */
 export const fadeAnimation = trigger('routeAnimations', [
     transition('* => *', [
         query(

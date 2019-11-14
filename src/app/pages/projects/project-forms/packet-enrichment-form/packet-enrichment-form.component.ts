@@ -3,12 +3,12 @@ import { HPacket, Rule, RulesService, HpacketsService, HProject } from '@hyperio
 import { FormGroup } from '@angular/forms';
 import { SelectOption } from '@hyperiot/components';
 import { RuleDefinitionComponent } from '../rule-definition/rule-definition.component';
-import { AssetTagComponent } from './asset-tag/asset-tag.component';
 // TODO: find a bettere placement for PageStatusEnum
 import { ProjectFormEntity, LoadingStatusEnum } from '../project-form-entity';
 import { Subscription, Observable } from 'rxjs';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { SummaryListItem } from '../../project-detail/generic-summary-list/generic-summary-list.component';
+import { I18n } from '@ngx-translate/i18n-polyfill';
 
 @Component({
   selector: 'hyt-packet-enrichment-form',
@@ -18,12 +18,9 @@ import { SummaryListItem } from '../../project-detail/generic-summary-list/gener
 export class PacketEnrichmentFormComponent extends ProjectFormEntity implements OnInit, OnDestroy {
 
   @ViewChild('ruleDef', { static: false }) ruleDefinitionComponent: RuleDefinitionComponent;
-  @ViewChild('assetTag', { static: false }) assetTagComponent: AssetTagComponent;
-
   packet: HPacket;
 
   entity = {} as Rule;
-  formTitle = 'Packet Enrichments';
 
   form: FormGroup;
 
@@ -31,9 +28,9 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
   project: HProject = {} as HProject;
 
   enrichmentRules: SelectOption[] = [
-    { value: JSON.stringify({ actionName: 'AddCategoryRuleAction', ruleId: 0, categoryIds: null }), label: this.i18n('HYT_categories') },
-    { value: JSON.stringify({ actionName: 'AddTagRuleAction', ruleId: 0, tagIds: null }), label: this.i18n('HYT_tags') },
-    { value: JSON.stringify({ actionName: 'ValidateHPacketRuleAction', ruleId: 0 }), label: this.i18n('HYT_validation') }
+    { value: JSON.stringify({ actionName: 'AddCategoryRuleAction', ruleId: 0, categoryIds: null }), label: 'Categories' }, // TODO i18n
+    { value: JSON.stringify({ actionName: 'AddTagRuleAction', ruleId: 0, tagIds: null }), label: 'Tags' }, // TODO i18n
+    { value: JSON.stringify({ actionName: 'ValidateHPacketRuleAction', ruleId: 0 }), label: 'Validation' } // TODO i18n
   ];
 
   enrichmentType = '';
@@ -54,10 +51,13 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
     private rulesService: RulesService,
     private packetService: HpacketsService,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private i18n: I18n
   ) {
-    super(injector, formView);
-    this.longDefinition = this.i18n('HYT_enrichment_long_definition');
+    super(injector, i18n, formView);
+    this.longDefinition = this.entitiesService.enrichment.longDefinition;
+    this.formTitle = this.entitiesService.enrichment.formTitle;
+    this.icon = this.entitiesService.enrichment.icon;
     this.hideDelete = true; // hide 'Delete' button
     this.routerSubscription = this.router.events.subscribe((rl) => {
       if (rl instanceof NavigationEnd) {
@@ -187,6 +187,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
         this.loadingStatus = LoadingStatusEnum.Error;
       });
     }
+    this.updatePacket();
   }
 
   onAddButtonClick() {
@@ -197,7 +198,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
   updateSummaryList() {
     this.rulesService.findAllRuleByPacketId(this.packet.id).subscribe((rules: Rule[]) => {
       this.summaryList = {
-        title: 'Enrichments Data',
+        title: this.formTitle,
         list: rules.filter((i) => {
           if (i.type === Rule.TypeEnum.ENRICHMENT) {
             return i;
@@ -253,18 +254,19 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
 
   cleanForm() {
     super.cleanForm();
+    this.enrichmentType = null;
     this.ruleDefinitionComponent.resetRuleDefinition();
   }
 
-  postRule() {
+  updatePacket() {
 
-    if (this.enrichmentType === 'AddTagRuleAction') {
+    if (this.enrichmentType === 'AddTagRuleAction' && this.assetTags.length !== 0) {
       this.packet.tagIds = this.assetTags;
       this.packetService.updateHPacket(this.packet).subscribe(
         (res: HPacket) => {
         }
       );
-    } else if (this.enrichmentType === 'AddCategoryRuleAction') {
+    } else if (this.enrichmentType === 'AddCategoryRuleAction' && this.assetCategories.length !== 0) {
       this.packet.categoryIds = this.assetCategories;
       this.packetService.updateHPacket(this.packet).subscribe(
         (res: HPacket) => {

@@ -3,7 +3,12 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { HusersService, HUser, LoggerService, Logger } from '@hyperiot/core';
 import { AuthenticationHttpErrorHandlerService } from 'src/app/services/errorHandler/authentication-http-error-handler.service';
 import { HYTError } from 'src/app/services/errorHandler/models/models';
+import { SubmissionStatus } from '../models/pageStatus';
 
+/**
+ * RegistrationComponent is a component of AuthenticationModule.
+ * It is used to hallow the user to create his own account.
+ */
 @Component({
   selector: 'hyt-registration',
   templateUrl: './registration.component.html',
@@ -12,23 +17,29 @@ import { HYTError } from 'src/app/services/errorHandler/models/models';
 })
 export class RegistrationComponent implements OnInit {
 
+  /**
+   * error is used to handle errors in the template
+   */
   errors: HYTError[] = [];
 
+  /**
+   * registrationForm stores the registration form
+   */
   registrationForm: FormGroup;
 
-  loading = false;
+  /**
+   * registrationStatus is used to handle the template view when the user is creating an account
+   */
+  registrationStatus: SubmissionStatus = SubmissionStatus.Default;
 
+  /**
+   * logger service
+   */
   private logger: Logger;
 
-  generalError = 0;
-
-  exception = false;
-  errorMessage: string[] = [];
-
-  fieldError = new Map();
-
-  registrationSucceeded = false;
-
+  /**
+   * class constructor
+   */
   constructor(
     private hUserService: HusersService,
     private fb: FormBuilder,
@@ -39,15 +50,20 @@ export class RegistrationComponent implements OnInit {
     this.logger.registerClass('RegistrationComponent');
   }
 
+  /**
+   * ngOnInit() builds the registrationForm
+   */
   ngOnInit() {
     this.registrationForm = this.fb.group({});
   }
 
+  /**
+   * register() is used to let the user create his account.
+   * This function sends the request to the server.
+   */
   register() {
-    this.loading = true;
+    this.registrationStatus = SubmissionStatus.Loading;
     this.errors = [];
-    this.generalError = 0;
-    this.registrationSucceeded = false;
 
     const user: HUser = {
       name: this.registrationForm.value.name,
@@ -61,8 +77,7 @@ export class RegistrationComponent implements OnInit {
 
     this.hUserService.register(user).subscribe(
       res => {
-        this.registrationSucceeded = true;
-        this.loading = false;
+        this.registrationStatus = SubmissionStatus.Submitted;
       },
       err => {
         this.errors = this.httperrorHandler.handleRegistration(err);
@@ -75,11 +90,15 @@ export class RegistrationComponent implements OnInit {
             });
           }
         });
-        this.loading = false;
+        this.registrationStatus = SubmissionStatus.Error;
       }
     );
   }
 
+  /**
+   * notValid() returns false if the registration form is not valid.
+   * This function is used by the template.
+   */
   notValid(): boolean {
     return (
       this.registrationForm.get('name').invalid ||
@@ -91,6 +110,10 @@ export class RegistrationComponent implements OnInit {
     );
   }
 
+  /**
+   * getError() is used by the template to get errors returned by the server
+   * @param field The field to check for errors
+   */
   getError(field: string): string {
     return (this.errors.find(x => x.container === field)) ? this.errors.find(x => x.container === field).message : null;
   }

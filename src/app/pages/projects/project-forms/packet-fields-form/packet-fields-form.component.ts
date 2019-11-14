@@ -11,6 +11,7 @@ import { Node, HytTreeViewEditableComponent } from '@hyperiot/components/lib/hyt
 import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
 import { UnitConversionService } from 'src/app/services/unit-conversion.service';
 import { HytSelectComponent } from '@hyperiot/components/lib/hyt-select/hyt-select.component';
+import { I18n } from '@ngx-translate/i18n-polyfill';
 
 @Component({
   selector: 'hyt-packet-fields-form',
@@ -74,10 +75,13 @@ export class PacketFieldsFormComponent extends ProjectFormEntity implements OnDe
     private hPacketService: HpacketsService,
     private unitConversionService: UnitConversionService,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private i18n: I18n
   ) {
-    super(injector, formView);
-    this.longDefinition = this.i18n('HYT_fields_long_definition');
+    super(injector, i18n, formView);
+    this.longDefinition = this.entitiesService.field.longDefinition;
+    this.formTitle = this.entitiesService.field.formTitle;
+    this.icon = this.entitiesService.field.icon;
     this.hideDelete = true;
     this.routerSubscription = this.router.events.subscribe((rl) => {
       if (rl instanceof NavigationEnd) {

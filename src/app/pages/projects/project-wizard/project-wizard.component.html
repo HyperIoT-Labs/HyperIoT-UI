@@ -54,39 +54,75 @@
       <div class="row">
         <div class="col-md-12">
           <hyt-stepper #stepper (selectionChange)="stepChanged($event)" [isLinear]="true" style="width: 100%"
-            [stepArray]="[ projectTemplate, devicesTemplate, packetsTemplate, fieldsTemplate, enrichmentTemplate, statisticsTemplate, eventsTemplate ]"
-            [labelArray]="[ 'Projects', 'Devices', 'Packets', 'Fields', 'Enrichment', 'Statistics', 'Events' ]"
-            [completedArray]="[ currentProject != null, hDevices.length != 0, hPackets.length != 0, packetInformationValidated, packetInformationValidated, packetInformationValidated, packetInformationValidated ]">
+            [stepArray]="[
+              projectTemplate,
+              devicesTemplate,
+              packetsTemplate,
+              fieldsTemplate,
+              enrichmentTemplate,
+              statisticsTemplate,
+              eventsTemplate
+            ]"
+            [labelArray]="[
+              entitiesService.project.displayListName,
+              entitiesService.device.displayListName,
+              entitiesService.packet.displayListName,
+              entitiesService.field.displayListName,
+              entitiesService.enrichment.displayListName,
+              entitiesService.statistic.displayListName,
+              entitiesService.event.displayListName
+            ]"
+            [completedArray]="[
+              currentProject != null,
+              hDevices.length != 0,
+              hPackets.length != 0,
+              packetInformationValidated,
+              packetInformationValidated,
+              packetInformationValidated,
+              packetInformationValidated
+            ]">
           </hyt-stepper>
-          <!--@I18N-->
         </div>
       </div>
 
-      <div class="row">
-        <div class="col-12">
-          <hyt-button class="toRight" *ngIf="currentForm" (clickFn)="onSaveClick($event)"
-            [isDisabled]="!currentForm.isValid() || !currentForm.isDirty() || currentForm.loadingStatus != 0">
-            <ng-container *ngIf="currentForm && currentForm.isNew()" i18n="@@HYT_save">HYT_save</ng-container>
-            <ng-container *ngIf="currentForm && !currentForm.isNew()" i18n="@@HYT_update">HYT_update</ng-container>
-          </hyt-button>
-          <hyt-button class="toRight" *ngIf="currentForm && showCancel()" (clickFn)="onCancelClick($event)">
-            <ng-container i18n="@@HYT_cancel">HYT_cancel</ng-container>
-          </hyt-button>
-          <div class="clear"></div>
-        </div>
-      </div>
+      <div id="container-save-update" class="container">
+      
+        <div id="row-save-update" class="row">
 
-      <div class="row">
-        <div class="col-12">
-          <hyt-button *ngIf="currentStepIndex != 0" (clickFn)="stepper.previous()">
-            <ng-container i18n="@@HYT_back">HYT_back</ng-container>
-          </hyt-button>
-          <hyt-button class="toRight" [isDisabled]="isNextDisabled()"
-            (clickFn)="(currentStepIndex == 3 && !packetInformationValidated || currentStepIndex == 6)? openOptionModal() : stepper.next()">
-            <ng-container i18n="@@HYT_next">HYT_next</ng-container>
-          </hyt-button>
-          <div class="clear"></div>
+          <div class="col-12">
+            <hyt-button class="toRight" *ngIf="currentForm" (clickFn)="onSaveClick($event)"
+              [isDisabled]="!currentForm.isValid() || !currentForm.isDirty() || currentForm.loadingStatus != 0">
+              <ng-container *ngIf="currentForm && currentForm.isNew()" i18n="@@HYT_save">HYT_save</ng-container>
+              <ng-container *ngIf="currentForm && !currentForm.isNew()" i18n="@@HYT_update">HYT_update</ng-container>
+            </hyt-button>
+            <hyt-button class="toRight" *ngIf="currentForm && showCancel()" (clickFn)="onCancelClick($event)">
+              <ng-container i18n="@@HYT_cancel">HYT_cancel</ng-container>
+            </hyt-button>
+            <div class="clear"></div>
+          </div>
         </div>
+
+      </div>  
+
+      <div id="container-prev-next" class="container-fluid">
+
+          <div id="row-next-back" class="row">
+          
+            <div *ngIf="currentStepIndex != 0" class="col-6">
+              <hyt-button  (clickFn)="stepper.previous()">
+                <ng-container i18n="@@HYT_back">HYT_back</ng-container>
+              </hyt-button>
+            </div>
+  
+            <div  [ngClass]="{'offset-6': currentStepIndex == 0}" class="col-6">
+              <hyt-button class="toRight" [isDisabled]="isNextDisabled()"
+                (clickFn)="(currentStepIndex == 3 && !packetInformationValidated || currentStepIndex == 6)? openOptionModal() : stepper.next()">
+                <ng-container i18n="@@HYT_next">HYT_next</ng-container>
+              </hyt-button>
+            </div>
+  
+          </div>
+
       </div>
 
     </div>
@@ -97,7 +133,8 @@
         <mat-expansion-panel [expanded]="true">
           <mat-expansion-panel-header>
             <mat-panel-title>
-              <b i18n="@@HYT_entity_name_M">HYT_entity_name_M</b>
+              <hyt-hexagon [iconPath]="currentForm.icon" [dimension]="0.6"></hyt-hexagon>
+              <b>{{currentForm.formTitle}}</b>
             </mat-panel-title>
           </mat-expansion-panel-header>
           <p>{{currentForm.longDefinition}}</p>

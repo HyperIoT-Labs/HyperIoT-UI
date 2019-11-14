@@ -1,12 +1,20 @@
-.container {
+#project-form {
     position: relative;
+    margin-top: 35px;
+
+    .overlay {
+        position: absolute;
+        background-color: rgba(255,255,255,.75);
+        left: 0; top: 0; right: 0; bottom: 0;
+    }
+
+    mat-progress-bar {
+        max-width: 200px;
+        margin: 8px;
+    }
+
 }
-.overlay {
-    position: absolute;
-    background-color: rgba(255,255,255,.75);
-    left: 0; top: 0; right: 0; bottom: 0;
-}
-mat-progress-bar {
-    max-width: 200px;
-    margin: 8px;
-}
+
+
+
+

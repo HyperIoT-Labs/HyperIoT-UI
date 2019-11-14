@@ -1,4 +1,4 @@
-<div class="container">
+<div id="project-form" class="container">
 
     <form [formGroup]="form" class="d-flex flex-column justify-content-center">
 
@@ -33,10 +33,13 @@
                 <mat-icon>close</mat-icon>
             </button>
         </div>
+        
         <h4 *ngIf="loadingStatus === LoadingStatus.Saving" i18n="@@HYT_saving_project_data">HYT_saving_project_data</h4>
+
         <mat-progress-bar
             *ngIf="loadingStatus === LoadingStatus.Loading || loadingStatus === LoadingStatus.Saving"
-            mode="query"></mat-progress-bar>
+            mode="query"
+        ></mat-progress-bar>
     </div>
 
 </div>

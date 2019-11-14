@@ -5,7 +5,7 @@ export enum PageStatusEnum {
     Submitted = 2
 }
 
-export enum TableStatusEnum {
+export enum ProjectDataStatus {
     Loading = 0,
     Error = -1,
     Ok = 1,

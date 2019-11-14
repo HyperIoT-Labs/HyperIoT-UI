@@ -71,7 +71,7 @@
 
               <div class="container-form-field">
                 <hyt-button id="submit-btn" [ngClass]="{'submit-valid-form' : !notValid() }" type="submit"
-                  [isDisabled]="notValid() || loading">
+                  [isDisabled]="notValid() || loginStatus == 1">
                   <ng-container i18n="@@HYT_login">HYT_login</ng-container>
                 </hyt-button>
               </div> <!-- Container Button -->

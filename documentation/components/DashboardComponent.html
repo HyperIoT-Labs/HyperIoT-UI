@@ -1,0 +1,2479 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>hyperiot documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">hyperiot documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li>Components</li>
+  <li>DashboardComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li >
+            <a href="#templateData" role="tab" id="templateData-tab" data-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li >
+            <a href="#styleData" role="tab" id="styleData-tab" data-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li >
+            <a href="#tree" role="tab" id="tree-tab" data-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/pages/dashboard/dashboard.component.ts</code>
+</p>
+
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                    <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
+                    <code><a href="https://angular.io/api/core/OnDestroy" target="_blank" >OnDestroy</a></code>
+    </p>
+
+
+<section>
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover">
+        <tbody>
+
+
+            <tr>
+                <td class="col-md-3">encapsulation</td>
+                <td class="col-md-9"><code>ViewEncapsulation.None</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>hyt-dashboard</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./dashboard.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./dashboard.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#currentDashboard">currentDashboard</a>
+                            </li>
+                            <li>
+                                <a href="#currentDashboardId">currentDashboardId</a>
+                            </li>
+                            <li>
+                                <a href="#currentDashboardType">currentDashboardType</a>
+                            </li>
+                            <li>
+                                <a href="#dashboardList">dashboardList</a>
+                            </li>
+                            <li>
+                                <a href="#dashboardView">dashboardView</a>
+                            </li>
+                            <li>
+                                <a href="#dataRecordingIsOn">dataRecordingIsOn</a>
+                            </li>
+                            <li>
+                                <a href="#hProjectList">hProjectList</a>
+                            </li>
+                            <li>
+                                <a href="#hProjectListOptions">hProjectListOptions</a>
+                            </li>
+                            <li>
+                                <a href="#idProjectSelected">idProjectSelected</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                <a href="#ngUnsubscribe">ngUnsubscribe</a>
+                            </li>
+                            <li>
+                                <a href="#pageStatus">pageStatus</a>
+                            </li>
+                            <li>
+                                <a href="#PageStatus">PageStatus</a>
+                            </li>
+                            <li>
+                                <a href="#recordReloading">recordReloading</a>
+                            </li>
+                            <li>
+                                <a href="#signalIsOn">signalIsOn</a>
+                            </li>
+                            <li>
+                                <a href="#streamIsOn">streamIsOn</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#changeRecordingState">changeRecordingState</a>
+                            </li>
+                            <li>
+                                <a href="#changeSignalState">changeSignalState</a>
+                            </li>
+                            <li>
+                                <a href="#changeStreamState">changeStreamState</a>
+                            </li>
+                            <li>
+                                <a href="#closeModal">closeModal</a>
+                            </li>
+                            <li>
+                                <a href="#createDashboard">createDashboard</a>
+                            </li>
+                            <li>
+                                <a href="#getAllDashboardAndProjects">getAllDashboardAndProjects</a>
+                            </li>
+                            <li>
+                                <a href="#infoRecordingState">infoRecordingState</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnDestroy">ngOnDestroy</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit">ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#onSelectChange">onSelectChange</a>
+                            </li>
+                            <li>
+                                <a href="#openModal">openModal</a>
+                            </li>
+                            <li>
+                                <a href="#openRecordingActionModal">openRecordingActionModal</a>
+                            </li>
+                            <li>
+                                <a href="#reloadRecording">reloadRecording</a>
+                            </li>
+                            <li>
+                                <a href="#saveDashboard">saveDashboard</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(dashboardConfigService: <a href="../injectables/DashboardConfigService.html">DashboardConfigService</a>, route: <a href="https://angular.io/api/router/Router" target="_blank">Router</a>, hytModalService: <a href="../injectables/HytModalConfService.html">HytModalConfService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="63" class="link-to-prism">src/app/pages/dashboard/dashboard.component.ts:63</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>dashboardConfigService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/DashboardConfigService.html" target="_self" >DashboardConfigService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>route</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://angular.io/api/router/Router" target="_blank" >Router</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>hytModalService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/HytModalConfService.html" target="_self" >HytModalConfService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="changeRecordingState"></a>
+                    <span class="name">
+                        <b>
+                            changeRecordingState
+                        </b>
+                        <a href="#changeRecordingState"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>changeRecordingState(event)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="209"
+                            class="link-to-prism">src/app/pages/dashboard/dashboard.component.ts:209</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>event</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="changeSignalState"></a>
+                    <span class="name">
+                        <b>
+                            changeSignalState
+                        </b>
+                        <a href="#changeSignalState"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>changeSignalState(event)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="167"
+                            class="link-to-prism">src/app/pages/dashboard/dashboard.component.ts:167</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>event</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="changeStreamState"></a>
+                    <span class="name">
+                        <b>
+                            changeStreamState
+                        </b>
+                        <a href="#changeStreamState"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>changeStreamState(event)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="205"
+                            class="link-to-prism">src/app/pages/dashboard/dashboard.component.ts:205</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>event</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="closeModal"></a>
+                    <span class="name">
+                        <b>
+                            closeModal
+                        </b>
+                        <a href="#closeModal"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>closeModal(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="280"
+                            class="link-to-prism">src/app/pages/dashboard/dashboard.component.ts:280</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>id</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createDashboard"></a>
+                    <span class="name">
+                        <b>
+                            createDashboard
+                        </b>
+                        <a href="#createDashboard"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>createDashboard(idProject: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="286"
+                            class="link-to-prism">src/app/pages/dashboard/dashboard.component.ts:286</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>***</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong> Not used </p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>idProject</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getAllDashboardAndProjects"></a>
+                    <span class="name">
+                        <b>
+                            getAllDashboardAndProjects
+                        </b>
+                        <a href="#getAllDashboardAndProjects"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getAllDashboardAndProjects()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="300"
+                            class="link-to-prism">src/app/pages/dashboard/dashboard.component.ts:300</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="infoRecordingState"></a>
+                    <span class="name">
+                        <b>
+                            infoRecordingState
+                        </b>
+                        <a href="#infoRecordingState"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>infoRecordingState(event)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="242"
+                            class="link-to-prism">src/app/pages/dashboard/dashboard.component.ts:242</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>event</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnDestroy"></a>
+                    <span class="name">
+                        <b>
+                            ngOnDestroy
+                        </b>
+                        <a href="#ngOnDestroy"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnDestroy()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="140"
+                            class="link-to-prism">src/app/pages/dashboard/dashboard.component.ts:140</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <b>
+                            ngOnInit
+                        </b>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="73"
+                            class="link-to-prism">src/app/pages/dashboard/dashboard.component.ts:73</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onSelectChange"></a>
+                    <span class="name">
+                        <b>
+                            onSelectChange
+                        </b>
+                        <a href="#onSelectChange"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onSelectChange(event)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="146"
+                            class="link-to-prism">src/app/pages/dashboard/dashboard.component.ts:146</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>event</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="openModal"></a>
+                    <span class="name">
+                        <b>
+                            openModal
+                        </b>
+                        <a href="#openModal"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>openModal(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="276"
+                            class="link-to-prism">src/app/pages/dashboard/dashboard.component.ts:276</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>id</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="openRecordingActionModal"></a>
+                    <span class="name">
+                        <b>
+                            openRecordingActionModal
+                        </b>
+                        <a href="#openRecordingActionModal"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>openRecordingActionModal()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="266"
+                            class="link-to-prism">src/app/pages/dashboard/dashboard.component.ts:266</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="reloadRecording"></a>
+                    <span class="name">
+                        <b>
+                            reloadRecording
+                        </b>
+                        <a href="#reloadRecording"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>reloadRecording(event)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="248"
+                            class="link-to-prism">src/app/pages/dashboard/dashboard.component.ts:248</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>event</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="saveDashboard"></a>
+                    <span class="name">
+                        <b>
+                            saveDashboard
+                        </b>
+                        <a href="#saveDashboard"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>saveDashboard()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="258"
+                            class="link-to-prism">src/app/pages/dashboard/dashboard.component.ts:258</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section>
+    
+        <h3 id="inputs">
+            Properties
+        </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="currentDashboard"></a>
+                        <span class="name">
+                            <b>
+                            currentDashboard</b>
+                            <a href="#currentDashboard"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>Dashboard</code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="59" class="link-to-prism">src/app/pages/dashboard/dashboard.component.ts:59</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="currentDashboardId"></a>
+                        <span class="name">
+                            <b>
+                            currentDashboardId</b>
+                            <a href="#currentDashboardId"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="57" class="link-to-prism">src/app/pages/dashboard/dashboard.component.ts:57</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="currentDashboardType"></a>
+                        <span class="name">
+                            <b>
+                            currentDashboardType</b>
+                            <a href="#currentDashboardType"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>Dashboard.DashboardTypeEnum</code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="61" class="link-to-prism">src/app/pages/dashboard/dashboard.component.ts:61</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="dashboardList"></a>
+                        <span class="name">
+                            <b>
+                            dashboardList</b>
+                            <a href="#dashboardList"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>Dashboard[]</code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>[]</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="39" class="link-to-prism">src/app/pages/dashboard/dashboard.component.ts:39</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="dashboardView"></a>
+                        <span class="name">
+                            <b>
+                            dashboardView</b>
+                            <a href="#dashboardView"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="../components/DashboardViewComponent.html" target="_self" >DashboardViewComponent</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <b>Decorators : </b>
+                            <br />
+                            <code>
+                                @ViewChild(DashboardViewComponent, {static: false})<br />
+                            </code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">src/app/pages/dashboard/dashboard.component.ts:34</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="dataRecordingIsOn"></a>
+                        <span class="name">
+                            <b>
+                            dataRecordingIsOn</b>
+                            <a href="#dataRecordingIsOn"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>false</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="53" class="link-to-prism">src/app/pages/dashboard/dashboard.component.ts:53</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="hProjectList"></a>
+                        <span class="name">
+                            <b>
+                            hProjectList</b>
+                            <a href="#hProjectList"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>HProject[]</code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>[]</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="41" class="link-to-prism">src/app/pages/dashboard/dashboard.component.ts:41</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="hProjectListOptions"></a>
+                        <span class="name">
+                            <b>
+                            hProjectListOptions</b>
+                            <a href="#hProjectListOptions"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="../interfaces/HytSelectOption.html" target="_self" >HytSelectOption[]</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>[]</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="43" class="link-to-prism">src/app/pages/dashboard/dashboard.component.ts:43</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="idProjectSelected"></a>
+                        <span class="name">
+                            <b>
+                            idProjectSelected</b>
+                            <a href="#idProjectSelected"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="55" class="link-to-prism">src/app/pages/dashboard/dashboard.component.ts:55</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="ngUnsubscribe"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Protected</span>
+                            ngUnsubscribe</b>
+                            <a href="#ngUnsubscribe"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>Subject&lt;void&gt;</code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>new Subject&lt;void&gt;()</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">src/app/pages/dashboard/dashboard.component.ts:37</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Subject for manage the open subscriptions </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="pageStatus"></a>
+                        <span class="name">
+                            <b>
+                            pageStatus</b>
+                            <a href="#pageStatus"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="../miscellaneous/enumerations.html#PageStatus" target="_self" >PageStatus</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>PageStatus.Loading</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">src/app/pages/dashboard/dashboard.component.ts:47</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="PageStatus"></a>
+                        <span class="name">
+                            <b>
+                            PageStatus</b>
+                            <a href="#PageStatus"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>PageStatus</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">src/app/pages/dashboard/dashboard.component.ts:45</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="recordReloading"></a>
+                        <span class="name">
+                            <b>
+                            recordReloading</b>
+                            <a href="#recordReloading"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>false</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="63" class="link-to-prism">src/app/pages/dashboard/dashboard.component.ts:63</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="signalIsOn"></a>
+                        <span class="name">
+                            <b>
+                            signalIsOn</b>
+                            <a href="#signalIsOn"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>true</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="49" class="link-to-prism">src/app/pages/dashboard/dashboard.component.ts:49</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="streamIsOn"></a>
+                        <span class="name">
+                            <b>
+                            streamIsOn</b>
+                            <a href="#streamIsOn"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>true</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="51" class="link-to-prism">src/app/pages/dashboard/dashboard.component.ts:51</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit, ViewEncapsulation, OnDestroy, ViewChild } from &#x27;@angular/core&#x27;;
+import { DashboardConfigService } from &#x27;./dashboard-config.service&#x27;;
+import { takeUntil } from &#x27;rxjs/operators&#x27;;
+import { Subject, forkJoin } from &#x27;rxjs&#x27;;
+import { Dashboard, HProject } from &#x27;@hyperiot/core&#x27;;
+import { SelectOption } from &#x27;@hyperiot/components&#x27;;
+import { RouterLink, Router, ActivatedRoute, RouterOutlet } from &#x27;@angular/router&#x27;;
+import { WidgetsLayoutComponent } from &#x27;./widgets-layout/widgets-layout.component&#x27;;
+import { DashboardViewComponent } from &#x27;./dashboard-view/dashboard-view.component&#x27;;
+import { AddWidgetDialogComponent } from &#x27;./add-widget-dialog/add-widget-dialog.component&#x27;;
+import { WidgetSettingsDialogComponent } from &#x27;./widget-settings-dialog/widget-settings-dialog.component&#x27;;
+import { HytModalConfService } from &#x27;src/app/services/hyt-modal-conf.service&#x27;;
+
+enum PageStatus {
+  Loading &#x3D; 0,
+  Standard &#x3D; 1,
+  New &#x3D; 2,
+  Error &#x3D; -1
+}
+
+interface HytSelectOption extends HProject {
+  label: string;
+  value?: number;
+}
+
+@Component({
+  selector: &#x27;hyt-dashboard&#x27;,
+  templateUrl: &#x27;./dashboard.component.html&#x27;,
+  styleUrls: [&#x27;./dashboard.component.scss&#x27;],
+  encapsulation: ViewEncapsulation.None
+})
+export class DashboardComponent implements OnInit, OnDestroy {
+  @ViewChild(DashboardViewComponent, { static: false })
+  dashboardView: DashboardViewComponent;
+
+  /** Subject for manage the open subscriptions */
+  protected ngUnsubscribe: Subject&lt;void&gt; &#x3D; new Subject&lt;void&gt;();
+
+  dashboardList: Dashboard[] &#x3D; [];
+
+  hProjectList: HProject[] &#x3D; [];
+
+  hProjectListOptions: HytSelectOption[] &#x3D; [];
+
+  PageStatus &#x3D; PageStatus;
+
+  pageStatus: PageStatus &#x3D; PageStatus.Loading;
+
+  signalIsOn &#x3D; true;
+
+  streamIsOn &#x3D; true;
+
+  dataRecordingIsOn &#x3D; false;
+
+  idProjectSelected: number;
+
+  currentDashboardId: number;
+
+  currentDashboard: Dashboard;
+
+  currentDashboardType: Dashboard.DashboardTypeEnum;
+
+  recordReloading &#x3D; false;
+
+  constructor(
+    private dashboardConfigService: DashboardConfigService,
+    private route: Router,
+    private hytModalService: HytModalConfService
+  ) {
+
+  }
+
+  ngOnInit() {
+
+    // if(localStorage.getItem(&quot;DASHBOARDTOSAVE&quot;)){
+    //   let toSave &#x3D; localStorage.getItem(&quot;DASHBOARDTOSAVE&quot;);
+    //   localStorage.removeItem(&quot;DASHBOARDTOSAVE&quot;);
+    //   let idToSave &#x3D; toSave.split(&quot;_&quot;)[0];
+    //   toSave &#x3D; JSON.parse(toSave);
+    //   this.dashboardConfigService.putConfig(+idToSave, toSave);
+    // }
+
+    this.dashboardConfigService.getProjectsList()
+    .pipe(takeUntil(this.ngUnsubscribe))
+    .subscribe(
+      res &#x3D;&gt; {
+        try {
+          this.hProjectList &#x3D; [...res];
+          this.hProjectListOptions &#x3D; this.hProjectList as HytSelectOption[];
+          this.hProjectListOptions.forEach(element &#x3D;&gt; {
+            element.label &#x3D; element.name;
+            element.value &#x3D; element.id;
+          });
+
+          this.hProjectListOptions.sort((a, b) &#x3D;&gt; {
+            if (a.entityModifyDate &gt; b.entityModifyDate) { return -1; }
+            if (a.entityModifyDate &lt; b.entityModifyDate) { return 1; }
+            return 0;
+          });
+
+          if (this.hProjectListOptions.length &gt; 0) {
+            this.idProjectSelected &#x3D; this.hProjectListOptions[0].id;
+
+            this.dashboardConfigService.getRealtimeDashboardFromProject(this.idProjectSelected)
+              .pipe(takeUntil(this.ngUnsubscribe))
+              .subscribe(
+                (dashboardRes: Dashboard[]) &#x3D;&gt; {
+                  try {
+                    this.currentDashboard &#x3D; dashboardRes[0];
+                    this.currentDashboardId &#x3D; this.currentDashboard.id;
+                    this.pageStatus &#x3D; PageStatus.Standard;
+                  } catch (error) {
+                    console.error(error);
+                    this.pageStatus &#x3D; PageStatus.New;
+                  }
+                },
+                error &#x3D;&gt; {
+                  console.error(error);
+                  this.pageStatus &#x3D; PageStatus.New;
+                }
+              );
+          } else {
+            this.pageStatus &#x3D; PageStatus.New;
+          }
+
+        } catch (error) {
+          console.error(error);
+          this.pageStatus &#x3D; PageStatus.Error;
+        }
+
+      },
+      error &#x3D;&gt; {
+        this.pageStatus &#x3D; PageStatus.Error;
+      }
+
+    );
+
+  }
+
+  ngOnDestroy() {
+    if (this.ngUnsubscribe) {
+      this.ngUnsubscribe.next();
+    }
+  }
+
+  onSelectChange(event) {
+    this.pageStatus &#x3D; PageStatus.Loading;
+    this.idProjectSelected &#x3D; event.value;
+    this.dashboardConfigService.getRealtimeDashboardFromProject(event.value)
+    .pipe(takeUntil(this.ngUnsubscribe))
+    .subscribe(
+      (res: Dashboard[]) &#x3D;&gt; {
+        try {
+          this.currentDashboard &#x3D; res[0];
+          this.currentDashboardId &#x3D; this.currentDashboard.id;
+          this.pageStatus &#x3D; PageStatus.Standard;
+        } catch (error) {
+          this.pageStatus &#x3D; PageStatus.New;
+        }
+      },
+      error &#x3D;&gt; {
+        this.pageStatus &#x3D; PageStatus.New;
+      }
+    );
+  }
+
+  changeSignalState(event) {
+    if (this.signalIsOn) {
+      this.signalIsOn &#x3D; !this.signalIsOn;
+      this.pageStatus &#x3D; PageStatus.Loading;
+      this.dashboardConfigService.getOfflineDashboardFromProject(this.idProjectSelected)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (res: Dashboard[]) &#x3D;&gt; {
+          this.currentDashboard &#x3D; res[0];
+          this.currentDashboardId &#x3D; this.currentDashboard.id;
+          this.pageStatus &#x3D; PageStatus.Standard;
+        },
+        error &#x3D;&gt; {
+          this.pageStatus &#x3D; PageStatus.New;
+        }
+      );
+    } else {
+      this.signalIsOn &#x3D; !this.signalIsOn;
+      this.pageStatus &#x3D; PageStatus.Loading;
+      this.dashboardConfigService.getRealtimeDashboardFromProject(this.idProjectSelected)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        (res: Dashboard[]) &#x3D;&gt; {
+          try {
+            this.currentDashboard &#x3D; res[0];
+            this.currentDashboardId &#x3D; this.currentDashboard.id;
+            this.pageStatus &#x3D; PageStatus.Standard;
+          } catch (error) {
+            this.pageStatus &#x3D; PageStatus.New;
+          }
+        },
+        error &#x3D;&gt; {
+          this.pageStatus &#x3D; PageStatus.New;
+        }
+      );
+    }
+  }
+
+  changeStreamState(event) {
+    this.streamIsOn &#x3D; !this.streamIsOn;
+  }
+
+  changeRecordingState(event) {
+
+    if (event &#x3D;&#x3D;&#x3D; true) {
+
+      if (this.dataRecordingIsOn) {
+        this.dashboardConfigService.postRecordingStateOff(this.idProjectSelected)
+        .pipe(takeUntil(this.ngUnsubscribe))
+        .subscribe(
+          res &#x3D;&gt; {
+
+            this.dataRecordingIsOn &#x3D; !this.dataRecordingIsOn;
+          },
+          error &#x3D;&gt; {
+            console.error(error);
+          }
+        );
+      } else {
+        this.dashboardConfigService.postRecordingStateOn(this.idProjectSelected)
+        .pipe(takeUntil(this.ngUnsubscribe))
+        .subscribe(
+          res &#x3D;&gt; {
+
+            this.dataRecordingIsOn &#x3D; !this.dataRecordingIsOn;
+          },
+          error &#x3D;&gt; {
+            console.error(error);
+          }
+        );
+      }
+
+    }
+  }
+
+  infoRecordingState(event) {
+    if (event &#x3D;&#x3D;&#x3D; true) {
+      this.openModal(&#x27;hyt-modal-recording-confirm-action&#x27;);
+    }
+  }
+
+  reloadRecording(event) {
+    if (event &#x3D;&#x3D;&#x3D; true) {
+      this.recordReloading &#x3D; true;
+
+      setTimeout(() &#x3D;&gt; {
+        this.recordReloading &#x3D; false;
+      }, 1000);
+    }
+  }
+
+  saveDashboard() {
+    this.dashboardView.saveDashboard();
+  }
+
+  // addWidget() {
+  //   this.dashboardView.navigateToAddWidget();
+  // }
+
+  openRecordingActionModal() {
+    if (!this.recordReloading) {
+      if (this.dataRecordingIsOn) {
+        this.hytModalService.open(&#x27;hyt-modal-recording-info-action&#x27;);
+      } else {
+        this.hytModalService.open(&#x27;hyt-modal-recording-confirm-action&#x27;);
+      }
+    }
+  }
+
+  openModal(id: string) {
+    this.hytModalService.open(id);
+  }
+
+  closeModal(id: string) {
+    this.hytModalService.close(id);
+  }
+
+  /************************************************************************************************************* Not used */
+
+  createDashboard(idProject: number) {
+
+    const dashboard: Dashboard &#x3D; {
+      dashboardType: &#x27;REALTIME&#x27;,
+      entityVersion: 1,
+      hproject: this.hProjectList.find(x &#x3D;&gt; (x.id &#x3D;&#x3D;&#x3D; idProject)),
+      // name: this.hProjectList.find(x &#x3D;&gt; (x.id &#x3D;&#x3D; idProject)).name
+    };
+
+    // this.dashboardConfigService.saveDashboard(dashboard)
+    // console.log(dashboard)
+
+  }
+
+  getAllDashboardAndProjects() {
+    this.dashboardConfigService.getAllDashboardsAndProjects()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        ([res1, res2]) &#x3D;&gt; {
+          try {
+            this.hProjectList &#x3D; [...res1];
+            this.hProjectListOptions &#x3D; this.hProjectList as HytSelectOption[];
+            this.hProjectListOptions.forEach(element &#x3D;&gt; {
+              element.label &#x3D; element.name;
+              element.value &#x3D; element.id;
+            });
+          } catch (error) {
+            this.pageStatus &#x3D; PageStatus.Error;
+          }
+
+          try {
+            this.dashboardList &#x3D; [...res2];
+          } catch (error) { }
+
+        },
+        error &#x3D;&gt; {
+          this.pageStatus &#x3D; PageStatus.Error;
+        },
+        () &#x3D;&gt; {
+
+          this.hProjectListOptions.sort((a, b) &#x3D;&gt; {
+            if (a.entityModifyDate &gt; b.entityModifyDate) { return -1; }
+            if (a.entityModifyDate &lt; b.entityModifyDate) { return 1; }
+            return 0;
+          });
+          // console.log(this.hProjectListOptions)
+
+          this.dashboardList.sort((a, b) &#x3D;&gt; {
+            if (a.entityModifyDate &gt; b.entityModifyDate) { return -1; }
+            if (a.entityModifyDate &lt; b.entityModifyDate) { return 1; }
+            return 0;
+          });
+
+          // console.log(this.dashboardList)
+
+          if (this.dashboardList.length &gt; 0 &amp;&amp; this.hProjectListOptions.length &gt; 0) {
+
+            try {
+              this.idProjectSelected &#x3D; this.hProjectListOptions.find(x &#x3D;&gt; (x.id &#x3D;&#x3D;&#x3D; this.dashboardList[0].hproject.id)).value;
+              this.currentDashboardId &#x3D; this.dashboardList[0].id;
+            } catch (error) {
+
+            }
+            this.pageStatus &#x3D; PageStatus.Standard;
+            // console.log(this.idProjectSelected)
+
+          } else if (this.dashboardList.length &#x3D;&#x3D;&#x3D; 0 &amp;&amp; this.hProjectListOptions.length &gt; 0) {
+
+            this.idProjectSelected &#x3D; this.hProjectListOptions[0].value;
+            this.currentDashboardId &#x3D; this.idProjectSelected[0].id;
+
+            this.pageStatus &#x3D; PageStatus.New;
+          } else {
+            this.pageStatus &#x3D; PageStatus.Error;
+          }
+
+        }
+      );
+  }
+
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div id&#x3D;&quot;dashboard-page&quot;&gt;
+
+    &lt;div class&#x3D;&quot;header d-flex flex-row justify-content-stretch&quot;&gt;
+
+        &lt;div class&#x3D;&quot;breadcrumb flex-grow-1&quot;&gt;
+            &lt;a [routerLink]&#x3D;&quot;[&#x27;/&#x27;]&quot;&gt;Home&lt;/a&gt; &gt; &lt;strong&gt;Dashboard&lt;/strong&gt;
+        &lt;/div&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id&#x3D;&quot;container-dashboard&quot; [ngSwitch]&#x3D;&quot;pageStatus&quot;&gt;
+
+        &lt;div id&#x3D;&quot;row-recording&quot; class&#x3D;&quot;row&quot;&gt;
+            &lt;div class&#x3D;&quot;col-12 recording {{(dataRecordingIsOn)?&#x27;on&#x27;:&#x27;off&#x27;}}&quot;&gt;
+                &lt;span id&#x3D;&quot;icon-recording&quot; class&#x3D;&quot;{{(dataRecordingIsOn)?&#x27;recOn&#x27;:&#x27;recOff&#x27;}}&quot;
+                    (click)&#x3D;&quot;openRecordingActionModal()&quot;&gt;
+                    &lt;svg xmlns&#x3D;&quot;http://www.w3.org/2000/svg&quot; id&#x3D;&quot;Capa_1&quot; enable-background&#x3D;&quot;new 0 0 515.556 515.556&quot;
+                        height&#x3D;&quot;512&quot; viewBox&#x3D;&quot;0 0 515.556 515.556&quot; width&#x3D;&quot;512&quot;&gt;
+                        &lt;path
+                            d&#x3D;&quot;m257.778 0c-142.137 0-257.778 115.641-257.778 257.778s115.641 257.778 257.778 257.778 257.778-115.641 257.778-257.778-115.642-257.778-257.778-257.778zm0 451.111c-106.61 0-193.333-86.723-193.333-193.333s86.723-193.334 193.333-193.334 193.333 86.723 193.333 193.333-86.723 193.334-193.333 193.334z&quot; /&gt;
+                        &lt;path
+                            d&#x3D;&quot;m257.778 128.889c-71.068 0-128.889 57.805-128.889 128.889s57.821 128.889 128.889 128.889 128.889-57.805 128.889-128.889-57.821-128.889-128.889-128.889z&quot; /&gt;
+                    &lt;/svg&gt;
+                &lt;/span&gt;
+                &lt;ng-container i18n&#x3D;&quot;@@HYT_data_recording_on_off&quot;&gt;HYT_data_recording_on_off&lt;/ng-container&gt;
+
+                &lt;div id&#x3D;&quot;reload-btn&quot; (click)&#x3D;&quot;openModal(&#x27;hyt-modal-reload-recording-confirm&#x27;)&quot;&gt;
+                    &lt;span class&#x3D;&quot;hyt-icon icon-hyt_reload {{(recordReloading)?&#x27;reloading&#x27;:&#x27;&#x27;}}&quot;&gt;&lt;/span&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;div class&#x3D;&quot;row&quot;&gt;
+            &lt;div id&#x3D;&quot;tools-dashboard-box&quot; class&#x3D;&quot;col-12&quot; *ngIf&#x3D;&quot;pageStatus !&#x3D; -1&quot;&gt;
+
+                &lt;div class&#x3D;&quot;row no-gutters&quot;&gt;
+
+                    &lt;div class&#x3D;&quot;col-6 left-tools&quot;&gt;
+
+                        &lt;div id&#x3D;&quot;signal-btn&quot; (click)&#x3D;&quot;changeSignalState($event)&quot;&gt;
+                            &lt;span
+                                class&#x3D;&quot;hyt-icon {{(signalIsOn)?&#x27;icon-hyt_wifiOnFilled&#x27;:&#x27;icon-hyt_wifiOffFilled&#x27;}}&quot;&gt;&lt;/span&gt;
+                            &lt;p i18n&#x3D;&quot;@@HYT_signal_is_on&quot;&gt;HYT_signal_is_on&lt;/p&gt;
+                        &lt;/div&gt;
+
+
+                        &lt;div *ngIf&#x3D;&quot;signalIsOn&quot; id&#x3D;&quot;play-btn&quot; (click)&#x3D;&quot;changeStreamState($event)&quot;&gt;
+                            &lt;span class&#x3D;&quot;hyt-icon {{(streamIsOn)?&#x27;icon-hyt_play&#x27;:&#x27;icon-hyt_pause&#x27;}}&quot;&gt;&lt;/span&gt;
+                            &lt;p i18n&#x3D;&quot;@@HYT_stream_is_on&quot;&gt;HYT_stream_is_on&lt;/p&gt;
+                        &lt;/div&gt;
+
+                    &lt;/div&gt;
+
+                    &lt;div class&#x3D;&quot;col-6 right-tools&quot;&gt;
+
+                        &lt;hyt-select *ngIf&#x3D;&quot;pageStatus &#x3D;&#x3D; 1&quot; [label]&#x3D;&quot;&#x27;Select a project&#x27;&quot; name&#x3D;&quot;project&quot;
+                            [options]&#x3D;&quot;hProjectListOptions&quot; [selected]&#x3D;&quot;idProjectSelected&quot;
+                            (changeFn)&#x3D;&quot;onSelectChange($event)&quot; [disabled]&#x3D;&quot;false&quot;&gt;&lt;/hyt-select&gt;
+
+                        &lt;div id&#x3D;&quot;add-widget-btn&quot; *ngIf&#x3D;&quot;pageStatus &#x3D;&#x3D; PageStatus.Standard&quot;
+                            (click)&#x3D;&quot;openModal(&#x27;hyt-modal-add-widgets&#x27;)&quot;&gt;
+                            &lt;!-- &lt;a [routerLink]&#x3D;&quot;[{outlets: { modal: [ &#x27;widgets&#x27; ] }}]&quot;&gt; --&gt;
+                            &lt;span class&#x3D;&quot;hyt-icon icon-hyt_widgetPlus&quot;&gt;&lt;/span&gt;
+                            &lt;p i18n&#x3D;&quot;@@HYT_add_a_widget&quot;&gt;HYT_add_a_widget&lt;/p&gt;
+                            &lt;!-- &lt;/a&gt; --&gt;
+                        &lt;/div&gt;
+
+                        &lt;!-- &lt;div id&#x3D;&quot;save-dashboard-btn&quot; *ngIf&#x3D;&quot;pageStatus &#x3D;&#x3D; PageStatus.Standard&quot; (click)&#x3D;&quot;saveDashboard()&quot;&gt;
+                            &lt;span class&#x3D;&quot;hyt-icon icon-hyt_save&quot;&gt;&lt;/span&gt;
+                            &lt;p&gt;Save&lt;/p&gt;
+                        &lt;/div&gt; --&gt;
+
+                    &lt;/div&gt;
+
+                &lt;/div&gt;
+
+            &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;div id&#x3D;&quot;loadingStatus&quot; *ngSwitchCase&#x3D;&quot;PageStatus.Loading&quot;
+            class&#x3D;&quot;row align-items-center justify-content-center&quot;&gt;
+            &lt;div class&#x3D;&quot;mt-5 d-flex flex-column&quot;&gt;
+                &lt;h2 i18n&#x3D;&quot;@@HYT_page_is_loading&quot;&gt;HYT_page_is_loading&lt;/h2&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;div id&#x3D;&quot;standardStatus&quot; *ngSwitchCase&#x3D;&quot;PageStatus.Standard&quot; class&#x3D;&quot;row&quot;&gt;
+            &lt;!-- Standard --&gt;
+
+            &lt;div id&#x3D;&quot;container-box-dashboard&quot; class&#x3D;&quot;col-12&quot;&gt;
+                &lt;hyt-dashboard-view [dashboard]&#x3D;&quot;currentDashboard&quot; [dashboardType]&#x3D;&quot;currentDashboardType&quot;
+                    [dashboardWidgets]&#x3D;&quot;currentDashboard.widgets&quot;&gt;&lt;/hyt-dashboard-view&gt;
+            &lt;/div&gt;
+
+        &lt;/div&gt;
+
+        &lt;div id&#x3D;&quot;newStatus&quot; *ngSwitchCase&#x3D;&quot;PageStatus.New&quot; class&#x3D;&quot;row align-items-center justify-content-center&quot;&gt;
+            &lt;!-- New --&gt;
+
+            &lt;div class&#x3D;&quot;mt-5 no-dashboards&quot;&gt;
+
+                &lt;div id&#x3D;&quot;content-no-dashboards&quot; class&#x3D;&quot;col-md-12&quot;&gt;
+                    &lt;i class&#x3D;&quot;fa fa-bar-chart-o&quot;&gt;&lt;/i&gt;
+                    &lt;h3 id&#x3D;&quot;title-no-dashboards&quot; i18n&#x3D;&quot;@@HYT_no_dashboard_yet&quot;&gt;HYT_no_dashboard_yet&lt;/h3&gt;
+                    &lt;!-- &lt;h4 id&#x3D;&quot;subtitle-no-dashboards&quot;&gt;Start adding widgets.&lt;/h4&gt; --&gt;
+                &lt;/div&gt;
+
+                &lt;hyt-dashboard-view [dashboard]&#x3D;&quot;currentDashboard&quot;&gt;&lt;/hyt-dashboard-view&gt;
+
+            &lt;/div&gt; &lt;!-- End No Projects Row --&gt;
+
+        &lt;/div&gt;
+
+        &lt;div id&#x3D;&quot;errorStatus&quot; *ngSwitchCase&#x3D;&quot;PageStatus.Error&quot; class&#x3D;&quot;row align-items-center justify-content-center&quot;&gt;
+            &lt;div class&#x3D;&quot;mt-5 d-flex flex-column align-items-center justify-content-center&quot;&gt;
+                &lt;h2 i18n&#x3D;&quot;@@HYT_error_occurred_long&quot;&gt;HYT_error_occurred_long&lt;/h2&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;div *ngSwitchDefault&gt;
+            switch-case error
+        &lt;/div&gt;
+
+    &lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;hyt-confirm-recording-action id&#x3D;&quot;hyt-modal-recording-confirm-action&quot; (modalClose)&#x3D;&quot;changeRecordingState($event)&quot;&gt;
+&lt;/hyt-confirm-recording-action&gt;
+
+&lt;hyt-info-recording-action id&#x3D;&quot;hyt-modal-recording-info-action&quot; (modalClose)&#x3D;&quot;infoRecordingState($event)&quot;&gt;
+&lt;/hyt-info-recording-action&gt;
+
+&lt;hyt-confirm-recording-action id&#x3D;&quot;hyt-modal-reload-recording-confirm&quot; (modalClose)&#x3D;&quot;reloadRecording($event)&quot;&gt;
+&lt;/hyt-confirm-recording-action&gt;</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-styleData">
+                <p class="comment">
+                    <code>./dashboard.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">@import url(//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css);
+
+#dashboard-page {
+    font-family: &#x27;Exo&#x27;;
+    font-size: 1em;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 15px;
+  
+    .header {
+      border-bottom: 1px solid #008aff;
+      min-height: 50px;
+
+      .breadcrumb {
+        font-weight: 400;
+        font-size: 1.2em;
+        line-height: 48px;
+        // vertical-align: middle;
+        // background-image: url(&#x27;../../../assets/images/projects/cube-breadcrumb.png&#x27;);
+        background-position: 0px center;
+        background-repeat: no-repeat;
+        background-size: 25px;
+        padding-left: 32px;
+
+      }
+    }
+
+    #container-dashboard {
+        padding-top: 20px;
+
+        #row-recording {
+            margin-bottom: 15px;
+            font-size: .9em;
+
+            .recording {
+                padding-bottom: 12px;
+                padding-top: 12px;
+                max-width: 96%;
+                margin-left: auto;
+                margin-right: auto;
+                border-radius: 8px;
+
+                &amp;.on {
+                    border: 0.5px solid #00800078;
+                    background-color: rgba(55, 169, 29, 0.07);
+                }
+
+                &amp;.off {
+                    border: 0.5px solid #a89c0063;
+                    background-color: rgba(255, 239, 0, 0.11);
+                }
+
+                span {
+
+                    vertical-align: middle;
+
+                    &amp;#icon-recording {
+                        margin-right: 10px;
+                        cursor: pointer;
+
+                        svg {
+                            width: 20px;
+                            height: 20px;
+                        }
+                    }
+
+                    &amp;.recOn {
+
+                        svg {
+                            animation-duration: 1s;
+                            animation-name: recOn;
+                            animation-iteration-count: infinite;
+                        }
+
+                    }
+
+                    &amp;.recOff {
+
+                        svg {
+                            fill: black;
+                        }
+
+                    }
+
+                }
+
+                #reload-btn {
+                    float: right;
+                    text-align: center;
+                    cursor: pointer;
+                    text-transform: uppercase;
+
+                    &amp;:hover {
+                        color: #008aff;
+                    }
+
+                    span {
+                        display: block;
+                        font-size: 1.5em;
+                        margin-bottom: 0.15em;
+
+                        &amp;.reloading {
+                            animation-duration: 1.5s;
+                            animation-name: recording;
+                            animation-iteration-count: infinite;
+                        }
+                    }
+
+                    p {
+                        margin-bottom: 0;
+                        margin-top: -5px;
+                        font-size: .8em;
+                    }
+
+                }
+
+            }
+
+        }
+
+        #tools-dashboard-box {
+            max-width: 96%;
+            margin-left: auto;
+            margin-right: auto;
+            // padding: .6em .8em .6em .8em;
+            padding-top: 10px;
+            border-radius: .8em;
+            box-shadow: 0 2px 6px 0px rgba(0, 0, 0, 0.2);
+
+            .left-tools {
+
+                .dash-container-btn {
+                    margin: 1px;
+                    padding:2px;
+                    align-content: center;
+                }
+
+                #signal-btn,
+                #play-btn {
+                    float: left;
+                    margin: 0.3em 0.3em 0.3em 0.3em;
+                    text-align: center;
+                    cursor: pointer;
+                    text-transform: uppercase;
+                    width: 4em;
+                    height: 4em;
+
+                    &amp;:hover {
+                        color: #008aff;
+                    }
+
+                    span {
+                        font-size: 2.3em;
+                        display: block;
+                    }
+
+                    p {
+                        margin-bottom: 0;
+                        margin-top: -5px;
+                        font-size: .8em;
+                    }
+
+                }
+
+            }
+
+            .right-tools {
+                // text-align: right;
+
+                #add-widget-btn, 
+                #save-dashboard-btn {
+                    float: right;
+                    text-align: center;
+                    margin: .3em 1.2em .3em 1.2em;
+                    cursor: pointer;
+                    text-transform: uppercase;
+
+                    &amp;:hover {
+                        color: #008aff;
+                    }
+
+                    span {
+                        font-size: 2.0em;
+                        display: block;
+                    }
+
+                    p {
+                        margin-bottom: 0;
+                        margin-top: -2px;
+                        font-size: .8em;
+                    }
+
+                }
+
+            }
+
+        }
+
+        #standardStatus{
+
+            #container-box-dashboard {
+                margin-top: 20px;
+            }
+    
+        }
+
+        #newStatus {
+            text-align: center;
+
+            #content-no-dashboards {
+
+                color: #bbbbbb;
+
+                i {
+                    color:#0956b636;
+
+                    &amp;.fa {
+                        font-size: 15em;
+                    }
+                    
+                }
+
+                #title-no-dashboards {
+
+                    margin-top: 20px;
+                }
+
+            }
+
+            #btn-no-dashboards{
+                margin-top: 20px;
+
+                hyt-button {
+
+                    &amp;#add-dashboard-btn {
+    
+                        button {
+                            border-radius: 10px;
+                            color: white;
+                            background-color: #008aff;
+
+                            &amp;:focus {
+                                outline: none;
+                            }
+
+                        }
+
+                    }
+    
+                }
+
+            }
+
+        }
+
+    }
+  
+}
+
+@keyframes recording {
+
+    from {
+      transform: rotate(0deg);
+    }
+    
+    to {
+     transform: rotate(360deg);
+    }
+
+}
+
+@keyframes recOn {
+
+    0% {
+      fill: #950404;
+    }
+    
+    50% {
+     fill: red;
+    }
+
+    100% {
+        fill: #950404;
+    }
+
+}</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div id="dashboard-page">    <div class="header d-flex flex-row justify-content-stretch">        <div class="breadcrumb flex-grow-1">            <a [routerLink]="[\'/\']">Home</a> > <strong>Dashboard</strong>        </div>    </div>    <div id="container-dashboard" [ngSwitch]="pageStatus">        <div id="row-recording" class="row">            <div class="col-12 recording {{(dataRecordingIsOn)?\'on\':\'off\'}}">                <span id="icon-recording" class="{{(dataRecordingIsOn)?\'recOn\':\'recOff\'}}"                    (click)="openRecordingActionModal()">                    <svg xmlns="http://www.w3.org/2000/svg" id="Capa_1" enable-background="new 0 0 515.556 515.556"                        height="512" viewBox="0 0 515.556 515.556" width="512">                        <path                            d="m257.778 0c-142.137 0-257.778 115.641-257.778 257.778s115.641 257.778 257.778 257.778 257.778-115.641 257.778-257.778-115.642-257.778-257.778-257.778zm0 451.111c-106.61 0-193.333-86.723-193.333-193.333s86.723-193.334 193.333-193.334 193.333 86.723 193.333 193.333-86.723 193.334-193.333 193.334z" />                        <path                            d="m257.778 128.889c-71.068 0-128.889 57.805-128.889 128.889s57.821 128.889 128.889 128.889 128.889-57.805 128.889-128.889-57.821-128.889-128.889-128.889z" />                    </svg>                </span>                <ng-container i18n="@@HYT_data_recording_on_off">HYT_data_recording_on_off</ng-container>                <div id="reload-btn" (click)="openModal(\'hyt-modal-reload-recording-confirm\')">                    <span class="hyt-icon icon-hyt_reload {{(recordReloading)?\'reloading\':\'\'}}"></span>                </div>            </div>        </div>        <div class="row">            <div id="tools-dashboard-box" class="col-12" *ngIf="pageStatus != -1">                <div class="row no-gutters">                    <div class="col-6 left-tools">                        <div id="signal-btn" (click)="changeSignalState($event)">                            <span                                class="hyt-icon {{(signalIsOn)?\'icon-hyt_wifiOnFilled\':\'icon-hyt_wifiOffFilled\'}}"></span>                            <p i18n="@@HYT_signal_is_on">HYT_signal_is_on</p>                        </div>                        <div *ngIf="signalIsOn" id="play-btn" (click)="changeStreamState($event)">                            <span class="hyt-icon {{(streamIsOn)?\'icon-hyt_play\':\'icon-hyt_pause\'}}"></span>                            <p i18n="@@HYT_stream_is_on">HYT_stream_is_on</p>                        </div>                    </div>                    <div class="col-6 right-tools">                        <hyt-select *ngIf="pageStatus == 1" [label]="\'Select a project\'" name="project"                            [options]="hProjectListOptions" [selected]="idProjectSelected"                            (changeFn)="onSelectChange($event)" [disabled]="false"></hyt-select>                        <div id="add-widget-btn" *ngIf="pageStatus == PageStatus.Standard"                            (click)="openModal(\'hyt-modal-add-widgets\')">                            <!-- <a [routerLink]="[{outlets: { modal: [ \'widgets\' ] }}]"> -->                            <span class="hyt-icon icon-hyt_widgetPlus"></span>                            <p i18n="@@HYT_add_a_widget">HYT_add_a_widget</p>                            <!-- </a> -->                        </div>                        <!-- <div id="save-dashboard-btn" *ngIf="pageStatus == PageStatus.Standard" (click)="saveDashboard()">                            <span class="hyt-icon icon-hyt_save"></span>                            <p>Save</p>                        </div> -->                    </div>                </div>            </div>        </div>        <div id="loadingStatus" *ngSwitchCase="PageStatus.Loading"            class="row align-items-center justify-content-center">            <div class="mt-5 d-flex flex-column">                <h2 i18n="@@HYT_page_is_loading">HYT_page_is_loading</h2>            </div>        </div>        <div id="standardStatus" *ngSwitchCase="PageStatus.Standard" class="row">            <!-- Standard -->            <div id="container-box-dashboard" class="col-12">                <hyt-dashboard-view [dashboard]="currentDashboard" [dashboardType]="currentDashboardType"                    [dashboardWidgets]="currentDashboard.widgets"></hyt-dashboard-view>            </div>        </div>        <div id="newStatus" *ngSwitchCase="PageStatus.New" class="row align-items-center justify-content-center">            <!-- New -->            <div class="mt-5 no-dashboards">                <div id="content-no-dashboards" class="col-md-12">                    <i class="fa fa-bar-chart-o"></i>                    <h3 id="title-no-dashboards" i18n="@@HYT_no_dashboard_yet">HYT_no_dashboard_yet</h3>                    <!-- <h4 id="subtitle-no-dashboards">Start adding widgets.</h4> -->                </div>                <hyt-dashboard-view [dashboard]="currentDashboard"></hyt-dashboard-view>            </div> <!-- End No Projects Row -->        </div>        <div id="errorStatus" *ngSwitchCase="PageStatus.Error" class="row align-items-center justify-content-center">            <div class="mt-5 d-flex flex-column align-items-center justify-content-center">                <h2 i18n="@@HYT_error_occurred_long">HYT_error_occurred_long</h2>            </div>        </div>        <div *ngSwitchDefault>            switch-case error        </div>    </div></div><hyt-confirm-recording-action id="hyt-modal-recording-confirm-action" (modalClose)="changeRecordingState($event)"></hyt-confirm-recording-action><hyt-info-recording-action id="hyt-modal-recording-info-action" (modalClose)="infoRecordingState($event)"></hyt-info-recording-action><hyt-confirm-recording-action id="hyt-modal-reload-recording-confirm" (modalClose)="reloadRecording($event)"></hyt-confirm-recording-action></div>'
+    var COMPONENTS = [{'name': 'AccountButtonComponent', 'selector': 'hyt-account-button'},{'name': 'AddWidgetDialogComponent', 'selector': 'hyt-add-widget-dialog'},{'name': 'AppComponent', 'selector': 'hyt-root'},{'name': 'AssetCategoryComponent', 'selector': 'hyt-asset-category'},{'name': 'AssetTagComponent', 'selector': 'hyt-asset-tag'},{'name': 'AuthenticationComponent', 'selector': 'hyt-authentication'},{'name': 'ConfirmRecordingActionComponent', 'selector': 'hyt-confirm-recording-action'},{'name': 'DashboardComponent', 'selector': 'hyt-dashboard'},{'name': 'DashboardsListComponent', 'selector': 'hyt-dashboards-list'},{'name': 'DashboardViewComponent', 'selector': 'hyt-dashboard-view'},{'name': 'DeleteConfirmDialogComponent', 'selector': 'hyt-delete-confirm-dialog'},{'name': 'DeviceFormComponent', 'selector': 'hyt-device-form'},{'name': 'DeviceSelectComponent', 'selector': 'hyt-device-select'},{'name': 'DynamicWidgetComponent', 'selector': 'hyt-dynamic-widget'},{'name': 'EventMailComponent', 'selector': 'hyt-event-mail'},{'name': 'EventsLogSettingsComponent', 'selector': 'hyt-events-log-settings'},{'name': 'GenericSummaryListComponent', 'selector': 'hyt-generic-summary-list'},{'name': 'HomeComponent', 'selector': 'hyt-home'},{'name': 'InfoRecordingActionComponent', 'selector': 'hyt-info-recording-action'},{'name': 'LoginComponent', 'selector': 'hyt-login'},{'name': 'MyTelInputComponent', 'selector': 'example-tel-input'},{'name': 'NotFoundComponent', 'selector': 'hyt-not-found'},{'name': 'NotificationbarComponent', 'selector': 'hyt-notificationbar'},{'name': 'PacketEnrichmentFormComponent', 'selector': 'hyt-packet-enrichment-form'},{'name': 'PacketEventsFormComponent', 'selector': 'hyt-packet-events-form'},{'name': 'PacketFieldsFormComponent', 'selector': 'hyt-packet-fields-form'},{'name': 'PacketFormComponent', 'selector': 'hyt-packet-form'},{'name': 'PacketSelectComponent', 'selector': 'hyt-packet-select'},{'name': 'PacketSelectComponent', 'selector': 'hyt-pw-packet-select'},{'name': 'PacketStatisticsFormComponent', 'selector': 'hyt-packet-statistics-form'},{'name': 'PasswordRecoveryComponent', 'selector': 'hyt-password-recovery'},{'name': 'PasswordResetComponent', 'selector': 'hyt-password-reset'},{'name': 'ProfileComponent', 'selector': 'hyt-profile'},{'name': 'ProjectCardComponent', 'selector': 'hyt-project-card'},{'name': 'ProjectDetailComponent', 'selector': 'hyt-project-detail'},{'name': 'ProjectFormComponent', 'selector': 'hyt-project-form'},{'name': 'ProjectsComponent', 'selector': 'hyt-projects'},{'name': 'ProjectWizardComponent', 'selector': 'hyt-project-wizard'},{'name': 'RegistrationComponent', 'selector': 'hyt-registration'},{'name': 'RuleDefinitionComponent', 'selector': 'hyt-rule-definition'},{'name': 'SaveChangesDialogComponent', 'selector': 'hyt-save-changes-dialog'},{'name': 'SelectableTextComponent', 'selector': 'hyt-selectable-text'},{'name': 'SensorValueSettingsComponent', 'selector': 'hyt-sensor-value-settings'},{'name': 'SidebarComponent', 'selector': 'hyt-sidebar'},{'name': 'StatisticsStepComponent', 'selector': 'hyt-statistics-step'},{'name': 'StatsChartSettingsComponent', 'selector': 'hyt-stats-chart-settings'},{'name': 'TextLabelSettingsComponent', 'selector': 'hyt-text-label-settings'},{'name': 'TimeChartSettingsComponent', 'selector': 'hyt-time-chart-settings'},{'name': 'TopbarComponent', 'selector': 'hyt-topbar'},{'name': 'UserActivationComponent', 'selector': 'hyt-user-activation'},{'name': 'WidgetSettingsDialogComponent', 'selector': 'hyt-widget-settings-dialog'},{'name': 'WidgetsLayoutComponent', 'selector': 'hyt-widgets-layout'},{'name': 'WizardDeactivationModalComponent', 'selector': 'hyt-wizard-deactivation-modal'},{'name': 'WizardOptionsModalComponent', 'selector': 'hyt-wizard-options-modal'},{'name': 'WizardReportModalComponent', 'selector': 'hyt-wizard-report-modal'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'DashboardComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'DashboardComponent.html';
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

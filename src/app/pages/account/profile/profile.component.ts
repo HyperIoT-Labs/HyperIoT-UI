@@ -15,10 +15,14 @@ export class ProfileComponent implements OnInit {
 
   errors: HYTError[] = [];
 
-  /* Flag to display Company Section */
+  /**
+   * Flag to display Company Section
+   */
   isCompany = false;
 
-  /* This field is used as a flag to make the form buttons clickable */
+  /**
+   * This field is used as a flag to make the form buttons clickable
+   */
   loading = false;
 
   personalInfoForm: FormGroup;
@@ -31,43 +35,67 @@ export class ProfileComponent implements OnInit {
 
   fieldError = new Map();
 
-  /* This variable is used as a flag to make a success message appear when updating personal information goes well. */
+  /**
+   * This variable is used as a flag to make a success message appear when updating personal information goes well.
+   */
   personalInfoUpdated = false;
 
-  /* This variable is used as a flag to make a success message appear when changing password goes well. */
+  /**
+   * This variable is used as a flag to make a success message appear when changing password goes well.
+   */
   passwordChanged = false;
 
-  /* This variable is used as a flag to make an alert appear when an error occurs. */
+  /**
+   * This variable is used as a flag to make an alert appear when an error occurs.
+   */
   wentWrong = false;
 
-  /* This variable contains the string to display in case of error while trying to update personal information or change password. */
+  /**
+   * This variable contains the string to display in case of error while trying to update personal information or change password.
+   */
   errMsg = this.i18n('HYT_generic_error');
 
-  /* This variable contains the string to display when the personal information update is successful. */
+ /**
+  * This variable contains the string to display when the personal information update is successful.
+  */
   successMsg = this.i18n('HYT_user_updated');
 
-  /* This variable contains the string to display when the password change is successful. */
+  /**
+   * This variable contains the string to display when the password change is successful.
+   */
   succesMsgPwd = this.i18n('HYT_password_changed');
 
   // TODO... implement or remove error logic in single fields
   error: any;
 
-  /* This variable is used to hold account informations of the user logged in. */
+  /**
+   * This variable is used to hold account informations of the user logged in.
+   */
   user: HUser;
 
-  /* This variable hold the specific field of the ID for the user logged in. */
+  /**
+   * This variable hold the specific field of the ID for the user logged in.
+   */
   userId: number;
 
-  /* This variable contains the user input for the password to change. */
+  /**
+   * This variable contains the user input for the password to change.
+   */
   oldPassword: string;
 
-  /* This variable contains the user input for the new password. */
+  /**
+   * This variable contains the user input for the new password.
+   */
   newPassword: string;
 
-  /* This variable contains the user input for the new password; entering the new password twice is a confirmation step. */
+  /**
+   * This variable contains the user input for the new password; entering the new password twice is a confirmation step.
+   */
   confirmPassword: string;
 
-  /* This is the constructor of the class. */
+  /**
+   * This is the constructor of the class.
+   */
   constructor(
     private hUserService: HusersService,
     private fb: FormBuilder,
@@ -75,12 +103,15 @@ export class ProfileComponent implements OnInit {
     private i18n: I18n
   ) { }
 
-  /* This is an angular lifecycle hook that executes certain operations on initialization of the application. */
+  /**
+   * This is an angular lifecycle hook that executes certain operations on initialization of the application.
+   */
   ngOnInit(): void {
     if (localStorage.getItem('user') !== null) {
       this.user = JSON.parse(localStorage.getItem('user'));
       this.userId = this.user.id;
     } else {
+      // TODO redirect login
       err => { this.errors = this.httperrorHandler.handle(err); }
     }
 
@@ -114,6 +145,7 @@ export class ProfileComponent implements OnInit {
         }, 3000);
       },
       err => {
+        // TODO handle errors
         this.errors = this.httperrorHandler.handle(err);
         this.loading = false;
         this.personalInfoUpdated = false;
@@ -153,7 +185,9 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  /* This method performs the form control on input elements for the "personal information" form and returns the status of the elements */
+  /**
+   * This method performs the form control on input elements for the "personal information" form and returns the status of the elements
+   */
   notValidPif(): boolean {
     return (
       this.personalInfoForm.get('username').invalid ||
@@ -163,7 +197,9 @@ export class ProfileComponent implements OnInit {
     );
   }
 
-  /* This method performs the form control on input elements for the "change password" form and returns the status of the elements */
+  /**
+   * This method performs the form control on input elements for the "change password" form and returns the status of the elements
+   */
   notValidCpf(): boolean {
     return (
       this.changePasswordForm.get('oldPassword').invalid ||

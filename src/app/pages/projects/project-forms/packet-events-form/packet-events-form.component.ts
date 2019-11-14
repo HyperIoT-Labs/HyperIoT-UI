@@ -9,6 +9,7 @@ import { RuleDefinitionComponent } from '../rule-definition/rule-definition.comp
 import { EventMailComponent } from './event-mail/event-mail.component';
 import { Option } from '@hyperiot/components';
 import { SummaryListItem } from '../../project-detail/generic-summary-list/generic-summary-list.component';
+import { I18n } from '@ngx-translate/i18n-polyfill';
 
 @Component({
   selector: 'hyt-packet-events-form',
@@ -32,7 +33,6 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
       default: 'SendMailAction'
     }
   };
-  formTitle = 'Packet Events';
 
   private routerSubscription: Subscription;
   private activatedRouteSubscription: Subscription;
@@ -49,7 +49,7 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
   eventMailComponent: EventMailComponent;
 
   outputOptions: Option[] = [
-    { value: 'SendMailAction', label: this.i18n('HYT_send_mail_M'), checked: true }
+    { value: 'SendMailAction', label: 'Send mail', checked: true } // TODO i18n
     // { value: '', label: 'START STATISTIC' }
   ];
 
@@ -59,10 +59,13 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
     private hPacketService: HpacketsService,
     private rulesService: RulesService,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private i18n: I18n
   ) {
-    super(injector, formView);
-    this.longDefinition = this.i18n('HYT_events_long_definition');
+    super(injector, i18n, formView);
+    this.longDefinition = this.entitiesService.event.longDefinition;
+    this.formTitle = this.entitiesService.event.formTitle;
+    this.icon = this.entitiesService.event.icon;
     this.hideDelete = true; // hide 'Delete' button
     this.routerSubscription = this.router.events.subscribe((rl) => {
       if (rl instanceof NavigationEnd) {
@@ -134,7 +137,7 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
   updateSummaryList() {
     this.rulesService.findAllRuleByPacketId(this.packet.id).subscribe((rules: Rule[]) => {
       this.summaryList = {
-        title: 'Events Data',
+        title: this.formTitle,
         list: rules
           .filter(r => r.type === Rule.TypeEnum.EVENT)
           .map(l => {

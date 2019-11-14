@@ -21,10 +21,12 @@ export class PacketStatisticsFormComponent extends ProjectFormEntity implements 
     @ViewChild('form', { static: true }) formView: ElementRef,
     private hPacketService: HpacketsService,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private i18n: I18n
   ) {
-    super(injector, formView);
-    this.longDefinition = this.i18n('HYT_statistics_long_definition');
+    super(injector, i18n, formView);
+    this.longDefinition = this.entitiesService.statistic.longDefinition;
+    this.formTitle = this.entitiesService.statistic.formTitle;
     this.hideDelete = true; // hide 'Delete' button
     this.routerSubscription = this.router.events.subscribe((rl) => {
       if (rl instanceof NavigationEnd) {

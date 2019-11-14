@@ -1,0 +1,803 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>hyperiot documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">hyperiot documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li>Components</li>
+  <li>AssetCategoryComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li >
+            <a href="#templateData" role="tab" id="templateData-tab" data-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li >
+            <a href="#styleData" role="tab" id="styleData-tab" data-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li >
+            <a href="#tree" role="tab" id="tree-tab" data-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/pages/projects/project-forms/packet-enrichment-form/asset-category/asset-category.component.ts</code>
+</p>
+
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                    <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
+    </p>
+
+
+<section>
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>hyt-asset-category</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./asset-category.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./asset-category.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#categoriesFlatTree">categoriesFlatTree</a>
+                            </li>
+                            <li>
+                                <a href="#catIds">catIds</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#cbAdd">cbAdd</a>
+                            </li>
+                            <li>
+                                <a href="#cbChange">cbChange</a>
+                            </li>
+                            <li>
+                                <a href="#fillCatIds">fillCatIds</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit">ngOnInit</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Inputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#packet">packet</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Outputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#categoryIds">categoryIds</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(wizardService: <a href="../injectables/ProjectWizardService.html">ProjectWizardService</a>, assetCategoriesService: AssetscategoriesService)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">src/app/pages/projects/project-forms/packet-enrichment-form/asset-category/asset-category.component.ts:19</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>wizardService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/ProjectWizardService.html" target="_self" >ProjectWizardService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>assetCategoriesService</td>
+                                                  
+                                                        <td>
+                                                                    <code>AssetscategoriesService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+    <section>
+    <h3 id="inputs">Inputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="packet"></a>
+                        <b>packet</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>HPacket</code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/app/pages/projects/project-forms/packet-enrichment-form/asset-category/asset-category.component.ts:13</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+    <section>
+    <h3 id="outputs">Outputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="categoryIds"></a>
+                        <b>categoryIds</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>EventEmitter&lt;number[]&gt;</code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/app/pages/projects/project-forms/packet-enrichment-form/asset-category/asset-category.component.ts:15</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+
+
+    <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="cbAdd"></a>
+                    <span class="name">
+                        <b>
+                            cbAdd
+                        </b>
+                        <a href="#cbAdd"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>cbAdd(event)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="62"
+                            class="link-to-prism">src/app/pages/projects/project-forms/packet-enrichment-form/asset-category/asset-category.component.ts:62</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>event</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="cbChange"></a>
+                    <span class="name">
+                        <b>
+                            cbChange
+                        </b>
+                        <a href="#cbChange"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>cbChange(event)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="57"
+                            class="link-to-prism">src/app/pages/projects/project-forms/packet-enrichment-form/asset-category/asset-category.component.ts:57</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>event</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="fillCatIds"></a>
+                    <span class="name">
+                        <b>
+                            fillCatIds
+                        </b>
+                        <a href="#fillCatIds"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>fillCatIds()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="48"
+                            class="link-to-prism">src/app/pages/projects/project-forms/packet-enrichment-form/asset-category/asset-category.component.ts:48</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <b>
+                            ngOnInit
+                        </b>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="26"
+                            class="link-to-prism">src/app/pages/projects/project-forms/packet-enrichment-form/asset-category/asset-category.component.ts:26</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section>
+    
+        <h3 id="inputs">
+            Properties
+        </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="categoriesFlatTree"></a>
+                        <span class="name">
+                            <b>
+                            categoriesFlatTree</b>
+                            <a href="#categoriesFlatTree"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>TreeNodeCategory[]</code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>[]</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/app/pages/projects/project-forms/packet-enrichment-form/asset-category/asset-category.component.ts:17</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="catIds"></a>
+                        <span class="name">
+                            <b>
+                            catIds</b>
+                            <a href="#catIds"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>number[]</code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>[]</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">src/app/pages/projects/project-forms/packet-enrichment-form/asset-category/asset-category.component.ts:19</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit, Input, Output, EventEmitter } from &#x27;@angular/core&#x27;;
+import { AssetscategoriesService, AssetCategory, HPacket } from &#x27;@hyperiot/core&#x27;;
+import { TreeNodeCategory } from &#x27;@hyperiot/components&#x27;;
+import { ProjectWizardService } from &#x27;src/app/services/projectWizard/project-wizard.service&#x27;;
+
+@Component({
+  selector: &#x27;hyt-asset-category&#x27;,
+  templateUrl: &#x27;./asset-category.component.html&#x27;,
+  styleUrls: [&#x27;./asset-category.component.scss&#x27;]
+})
+export class AssetCategoryComponent implements OnInit {
+
+  @Input() packet: HPacket;
+
+  @Output() categoryIds: EventEmitter&lt;number[]&gt; &#x3D; new EventEmitter&lt;number[]&gt;();
+
+  categoriesFlatTree: TreeNodeCategory[] &#x3D; [];
+
+  catIds: number[] &#x3D; [];
+
+  constructor(
+    private wizardService: ProjectWizardService,
+    private assetCategoriesService: AssetscategoriesService
+  ) { }
+
+  ngOnInit() {
+    this.assetCategoriesService.findAllAssetCategory().subscribe(
+      (res: AssetCategory[]) &#x3D;&gt; {
+        res.forEach(x &#x3D;&gt; {
+          this.categoriesFlatTree.push({
+            id: x.id,
+            label: x.name,
+            parent: null,
+            children: [],
+            data: x,
+            active: false
+          });
+        });
+        this.categoriesFlatTree.forEach(x &#x3D;&gt; {
+          x.parent &#x3D; (x.data.parent) ? this.categoriesFlatTree.find(y &#x3D;&gt; y.id &#x3D;&#x3D;&#x3D; x.data.parent.id) : null;
+          // x.active &#x3D; this.packet.categoryIds.includes(x.id);
+        });
+        this.categoriesFlatTree &#x3D; [...this.categoriesFlatTree];
+      }
+    );
+  }
+
+  fillCatIds() {
+    this.catIds &#x3D; [];
+    this.categoriesFlatTree.forEach(x &#x3D;&gt; {
+      if (x.children.length &#x3D;&#x3D;&#x3D; 0 &amp;&amp; x.active) {
+        this.catIds.push(x.id);
+      }
+    });
+  }
+
+  cbChange(event) {
+    this.fillCatIds();
+    this.categoryIds.emit(this.catIds);
+  }
+
+  cbAdd(event) {
+    const data: AssetCategory &#x3D; {
+      entityVersion: 1,
+      name: event.label,
+      owner: {
+        ownerResourceName: &#x27;it.acsoftware.hyperiot.hproject&#x27;,
+        ownerResourceId: this.wizardService.getHProject().id
+      },
+      parent: event.parent ? event.parent.data : null
+    };
+
+    this.assetCategoriesService.saveAssetCategory(data).subscribe(
+      (res: AssetCategory) &#x3D;&gt; {
+        this.categoriesFlatTree.push({
+          id: res.id,
+          label: res.name,
+          parent: event.parent,
+          children: [],
+          data: res,
+          active: false
+        });
+        this.categoriesFlatTree &#x3D; [...this.categoriesFlatTree];
+      },
+      err &#x3D;&gt; console.log(err)
+    );
+  }
+
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-templateData">
+        <pre class="line-numbers"><code class="language-html">Categories
+&lt;!-- &lt;input matInput placeholder&#x3D;&quot;Cerca&quot;&gt; --&gt;
+&lt;hyt-tree-view-category [treeDataFlat]&#x3D;&quot;categoriesFlatTree&quot; (cbChange)&#x3D;&quot;cbChange($event)&quot; (cbAdd)&#x3D;&quot;cbAdd($event)&quot;&gt;
+&lt;/hyt-tree-view-category&gt;</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-styleData">
+                <p class="comment">
+                    <code>./asset-category.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss"></code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div>Categories<!-- <input matInput placeholder="Cerca"> --><hyt-tree-view-category [treeDataFlat]="categoriesFlatTree" (cbChange)="cbChange($event)" (cbAdd)="cbAdd($event)"></hyt-tree-view-category></div>'
+    var COMPONENTS = [{'name': 'AccountButtonComponent', 'selector': 'hyt-account-button'},{'name': 'AddWidgetDialogComponent', 'selector': 'hyt-add-widget-dialog'},{'name': 'AppComponent', 'selector': 'hyt-root'},{'name': 'AssetCategoryComponent', 'selector': 'hyt-asset-category'},{'name': 'AssetTagComponent', 'selector': 'hyt-asset-tag'},{'name': 'AuthenticationComponent', 'selector': 'hyt-authentication'},{'name': 'ConfirmRecordingActionComponent', 'selector': 'hyt-confirm-recording-action'},{'name': 'DashboardComponent', 'selector': 'hyt-dashboard'},{'name': 'DashboardsListComponent', 'selector': 'hyt-dashboards-list'},{'name': 'DashboardViewComponent', 'selector': 'hyt-dashboard-view'},{'name': 'DeleteConfirmDialogComponent', 'selector': 'hyt-delete-confirm-dialog'},{'name': 'DeviceFormComponent', 'selector': 'hyt-device-form'},{'name': 'DeviceSelectComponent', 'selector': 'hyt-device-select'},{'name': 'DynamicWidgetComponent', 'selector': 'hyt-dynamic-widget'},{'name': 'EventMailComponent', 'selector': 'hyt-event-mail'},{'name': 'EventsLogSettingsComponent', 'selector': 'hyt-events-log-settings'},{'name': 'GenericSummaryListComponent', 'selector': 'hyt-generic-summary-list'},{'name': 'HomeComponent', 'selector': 'hyt-home'},{'name': 'InfoRecordingActionComponent', 'selector': 'hyt-info-recording-action'},{'name': 'LoginComponent', 'selector': 'hyt-login'},{'name': 'MyTelInputComponent', 'selector': 'example-tel-input'},{'name': 'NotFoundComponent', 'selector': 'hyt-not-found'},{'name': 'NotificationbarComponent', 'selector': 'hyt-notificationbar'},{'name': 'PacketEnrichmentFormComponent', 'selector': 'hyt-packet-enrichment-form'},{'name': 'PacketEventsFormComponent', 'selector': 'hyt-packet-events-form'},{'name': 'PacketFieldsFormComponent', 'selector': 'hyt-packet-fields-form'},{'name': 'PacketFormComponent', 'selector': 'hyt-packet-form'},{'name': 'PacketSelectComponent', 'selector': 'hyt-packet-select'},{'name': 'PacketSelectComponent', 'selector': 'hyt-pw-packet-select'},{'name': 'PacketStatisticsFormComponent', 'selector': 'hyt-packet-statistics-form'},{'name': 'PasswordRecoveryComponent', 'selector': 'hyt-password-recovery'},{'name': 'PasswordResetComponent', 'selector': 'hyt-password-reset'},{'name': 'ProfileComponent', 'selector': 'hyt-profile'},{'name': 'ProjectCardComponent', 'selector': 'hyt-project-card'},{'name': 'ProjectDetailComponent', 'selector': 'hyt-project-detail'},{'name': 'ProjectFormComponent', 'selector': 'hyt-project-form'},{'name': 'ProjectsComponent', 'selector': 'hyt-projects'},{'name': 'ProjectWizardComponent', 'selector': 'hyt-project-wizard'},{'name': 'RegistrationComponent', 'selector': 'hyt-registration'},{'name': 'RuleDefinitionComponent', 'selector': 'hyt-rule-definition'},{'name': 'SaveChangesDialogComponent', 'selector': 'hyt-save-changes-dialog'},{'name': 'SelectableTextComponent', 'selector': 'hyt-selectable-text'},{'name': 'SensorValueSettingsComponent', 'selector': 'hyt-sensor-value-settings'},{'name': 'SidebarComponent', 'selector': 'hyt-sidebar'},{'name': 'StatisticsStepComponent', 'selector': 'hyt-statistics-step'},{'name': 'StatsChartSettingsComponent', 'selector': 'hyt-stats-chart-settings'},{'name': 'TextLabelSettingsComponent', 'selector': 'hyt-text-label-settings'},{'name': 'TimeChartSettingsComponent', 'selector': 'hyt-time-chart-settings'},{'name': 'TopbarComponent', 'selector': 'hyt-topbar'},{'name': 'UserActivationComponent', 'selector': 'hyt-user-activation'},{'name': 'WidgetSettingsDialogComponent', 'selector': 'hyt-widget-settings-dialog'},{'name': 'WidgetsLayoutComponent', 'selector': 'hyt-widgets-layout'},{'name': 'WizardDeactivationModalComponent', 'selector': 'hyt-wizard-deactivation-modal'},{'name': 'WizardOptionsModalComponent', 'selector': 'hyt-wizard-options-modal'},{'name': 'WizardReportModalComponent', 'selector': 'hyt-wizard-report-modal'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'AssetCategoryComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'AssetCategoryComponent.html';
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

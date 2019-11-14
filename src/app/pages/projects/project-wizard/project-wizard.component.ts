@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild, Injectable, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, Injectable, AfterViewInit, ViewEncapsulation } from '@angular/core';
 import { HProject, HDevice, HPacket, Rule, HdevicesService, HpacketsService } from '@hyperiot/core';
-import { Router, CanDeactivate } from '@angular/router';
+import { CanDeactivate } from '@angular/router';
 import { Subject } from 'rxjs';
 import { ProjectFormEntity } from '../project-forms/project-form-entity';
 import { ProjectFormComponent } from '../project-forms/project-form/project-form.component';
@@ -16,6 +16,8 @@ import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-
 import { PacketStatisticsFormComponent } from '../project-forms/packet-statistics-form/packet-statistics-form.component';
 import { HytModalConfService } from 'src/app/services/hyt-modal-conf.service';
 import { HytStepperComponent } from '@hyperiot/components/lib/hyt-stepper/hyt-stepper.component';
+import { EntitiesService } from 'src/app/services/entities/entities.service';
+import { ProjectDataStatus } from './model/pageStatusEnum';
 
 @Injectable({
   providedIn: 'root',
@@ -35,6 +37,7 @@ export class ProjectWizardCanDeactivate implements CanDeactivate<ProjectWizardCo
   selector: 'hyt-project-wizard',
   templateUrl: './project-wizard.component.html',
   styleUrls: ['./project-wizard.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ProjectWizardComponent implements OnInit, AfterViewInit {
 
@@ -89,16 +92,19 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
 
   currentStepIndex = 0;
 
-  finishData: { imgPath: string, type: string, entities: string[] }[] = [];
+  finishData: { iconPath: string, type: string, entities: string[] }[] = [];
 
   canDeactivate$: Subject<boolean> = new Subject<boolean>();
 
   deactivateModal = false;
 
+  loadingProjectData: ProjectDataStatus = ProjectDataStatus.Ok;
+
   constructor(
     private hDevicesService: HdevicesService,
     private hPacketsService: HpacketsService,
-    private modalService: HytModalConfService
+    private modalService: HytModalConfService,
+    public entitiesService: EntitiesService
   ) { }
 
   ngOnInit() {
@@ -111,6 +117,7 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
       this.enrichmentForm.editMode = true;
       this.resetForms();
       if (window.history.state.projectId) {
+        //this.loadingProjectData = true;
         this.projectForm.id = window.history.state.projectId;
         this.projectForm.load();
       }
@@ -190,7 +197,7 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
 
   updateDeviceTable() {
     this.devicesForm.summaryList = {
-      title: 'Devices',
+      title: this.entitiesService.device.displayListName,
       list: this.hDevices.map((d) => {
         return { name: d.deviceName, description: d.description, data: d };
       }) as SummaryListItem[]
@@ -199,7 +206,7 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
 
   updatePacketTable() {
     this.packetsForm.summaryList = {
-      title: 'Packets',
+      title: this.entitiesService.packet.displayListName,
       list: this.hPackets.map((p) => {
         return { name: p.name, description: p.trafficPlan, data: p };
       }) as SummaryListItem[]
@@ -218,6 +225,7 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
       } else if (this.currentForm instanceof PacketFormComponent) {
         this.currentForm.cleanForm();
         this.hPackets = [...this.updateList(ent, this.hPackets)];
+        this.deviceSelect.unfreezeSelection();
         this.updatePacketTable();
       } else if (this.currentForm instanceof PacketEnrichmentFormComponent) {
         this.enrichmentRules = [...this.updateList(ent, this.enrichmentRules)];
@@ -244,6 +252,9 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
         break;
       case 'pw:project-loaded':
         this.currentProject = data.project;
+        this.getDevices();
+        this.getPackets();
+        break;
     }
   }
 
@@ -333,7 +344,6 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
     console.log(event);
     switch (event.action) {
       case 'goToStep': {
-        console.log(event.data)
         this.stepper.changeStep(event.data);
         break;
       }
@@ -346,12 +356,32 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
 
   openFinishModal() {
     this.finishData = [];
-    this.finishData.push({ imgPath: 'assets/projects/icons/monitor.png', type: 'Project', entities: [this.currentProject.name] });//@I18N@
-    this.finishData.push({ imgPath: 'assets/projects/icons/monitor.png', type: 'Devices', entities: this.hDevices.map(d => d.deviceName) });//@I18N@
-    this.finishData.push({ imgPath: 'assets/projects/icons/monitor.png', type: 'Packets', entities: this.hPackets.map(p => p.name) });//@I18N@
-    this.finishData.push({ imgPath: 'assets/projects/icons/monitor.png', type: 'Enrichment', entities: this.enrichmentRules.map(e => e.name) });//@I18N@
-    this.finishData.push({ imgPath: 'assets/projects/icons/monitor.png', type: 'Events', entities: this.eventRules.map(e => e.name) });//@I18N@
-    this.modalService.open('hyt-wizard-report-modal')
+    this.finishData.push({
+      iconPath: this.entitiesService.project.icon,
+      type: this.entitiesService.project.displayListName,
+      entities: [this.currentProject.name]
+    });
+    this.finishData.push({
+      iconPath: this.entitiesService.device.icon,
+      type: this.entitiesService.device.displayListName,
+      entities: this.hDevices.map(d => d.deviceName)
+    });
+    this.finishData.push({
+      iconPath: this.entitiesService.packet.icon,
+      type: this.entitiesService.packet.displayListName,
+      entities: this.hPackets.map(p => p.name)
+    });
+    this.finishData.push({
+      iconPath: this.entitiesService.enrichment.icon,
+      type: this.entitiesService.enrichment.displayListName,
+      entities: this.enrichmentRules.map(e => e.name)
+    });
+    this.finishData.push({
+      iconPath: this.entitiesService.event.icon,
+      type: this.entitiesService.event.displayListName,
+      entities: this.eventRules.map(e => e.name)
+    });
+    this.modalService.open('hyt-wizard-report-modal');
   }
 
   // Deactivation logic
