@@ -113,12 +113,14 @@
     border-radius: 5px;
     background: whitesmoke;
     font-size: .9em;
+    border: .5px solid #bbc9da;
 
     & mat-icon {
         color: #969696;
         font-size: 1.5em;
         margin-top: -5px;
         margin-right: -6px;
+        color: #0956b6;
     }
 
     & .text {

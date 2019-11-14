@@ -114,7 +114,7 @@
               </hyt-button>
             </div>
   
-            <div  [ngClass]="{'offset-6': currentStepIndex == 0}" class="col-6">
+            <div [ngClass]="{'offset-6': currentStepIndex == 0}" class="col-6">
               <hyt-button class="toRight" [isDisabled]="isNextDisabled()"
                 (clickFn)="(currentStepIndex == 3 && !packetInformationValidated || currentStepIndex == 6)? openOptionModal() : stepper.next()">
                 <ng-container i18n="@@HYT_next">HYT_next</ng-container>
@@ -129,17 +129,33 @@
 
     <div id="hint-column" class="col-md-2">
 
-      <div *ngIf="currentForm">
-        <mat-expansion-panel [expanded]="true">
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              <hyt-hexagon [iconPath]="currentForm.icon" [dimension]="0.6"></hyt-hexagon>
-              <b>{{currentForm.formTitle}}</b>
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-          <p>{{currentForm.longDefinition}}</p>
-        </mat-expansion-panel>
+      <!-- NEW ACCORDION -->
+      <div 
+        *ngIf="currentForm" 
+        id="section-title" 
+        (click)="togglePanel()" 
+        [ngClass]="{'clicked': panelIsVisible, 'unclicked': !panelIsVisible}" 
+        class="row"
+      >
+
+        <div id="icon-title" class="col-4">
+          <hyt-hexagon [iconPath]="currentForm.icon" [dimension]="0.7"></hyt-hexagon>
+        </div>
+
+        <div id="text-title" class="col-8">
+          {{currentForm.formTitle}}
+        </div>
+
       </div>
+
+      <div *ngIf="currentForm" id="section-title-panel" [ngClass]="{'panel-open': panelIsVisible}" class="row">
+        <div class="col-12">
+          {{currentForm.longDefinition}}
+        </div>
+      </div>
+
+      <hr id="title-underline">
+      <!-- END NEW ACCORDION -->
 
       <hyt-generic-summary-list *ngIf="currentForm && currentForm.summaryList"
         [ngClass]="{ disabled: currentForm.isDirty() && !currentForm.isNew() }" [summaryList]="currentForm.summaryList"
