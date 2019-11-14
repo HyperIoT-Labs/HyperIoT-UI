@@ -65,6 +65,7 @@ export class PacketFieldsFormComponent extends ProjectFormEntity implements OnDe
     super(injector, i18n, formView);
     this.longDefinition = this.entitiesService.field.longDefinition;
     this.formTitle = this.entitiesService.field.formTitle;
+    this.icon = this.entitiesService.field.icon;
     this.hideDelete = true;
     this.routerSubscription = this.router.events.subscribe((rl) => {
       if (rl instanceof NavigationEnd) {

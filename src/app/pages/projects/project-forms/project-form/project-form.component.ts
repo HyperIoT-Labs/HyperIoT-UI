@@ -41,6 +41,7 @@ export class ProjectFormComponent extends ProjectFormEntity implements OnDestroy
     super(injector, i18n, formView);
     this.longDefinition = this.entitiesService.project.longDefinition;
     this.formTitle = this.entitiesService.project.formTitle;
+    this.icon = this.entitiesService.project.icon;
     this.routerSubscription = this.router.events.subscribe((rl) => {
       if (rl instanceof NavigationEnd) {
         this.id = this.activatedRoute.snapshot.params.projectId;

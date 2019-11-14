@@ -33,6 +33,7 @@ export abstract class ProjectFormEntity implements OnInit {
     hideDelete = false;
     showCancel = false;
     longDefinition = 'entity long definition';
+    icon = '';
     summaryList: SummaryList;
 
     LoadingStatus = LoadingStatusEnum;

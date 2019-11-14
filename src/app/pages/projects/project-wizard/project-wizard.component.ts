@@ -225,6 +225,7 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
       } else if (this.currentForm instanceof PacketFormComponent) {
         this.currentForm.cleanForm();
         this.hPackets = [...this.updateList(ent, this.hPackets)];
+        this.deviceSelect.unfreezeSelection();
         this.updatePacketTable();
       } else if (this.currentForm instanceof PacketEnrichmentFormComponent) {
         this.enrichmentRules = [...this.updateList(ent, this.enrichmentRules)];

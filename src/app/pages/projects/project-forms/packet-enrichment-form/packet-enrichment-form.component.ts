@@ -57,6 +57,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
     super(injector, i18n, formView);
     this.longDefinition = this.entitiesService.enrichment.longDefinition;
     this.formTitle = this.entitiesService.enrichment.formTitle;
+    this.icon = this.entitiesService.enrichment.icon;
     this.hideDelete = true; // hide 'Delete' button
     this.routerSubscription = this.router.events.subscribe((rl) => {
       if (rl instanceof NavigationEnd) {
