@@ -9,6 +9,8 @@ import { ProjectFormEntity, LoadingStatusEnum } from '../project-form-entity';
 import { Option } from '@hyperiot/components';
 import { Node, HytTreeViewEditableComponent } from '@hyperiot/components/lib/hyt-tree-view-editable/hyt-tree-view-editable.component';
 import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
+import { UnitConversionService } from 'src/app/services/unit-conversion.service';
+import { HytSelectComponent } from '@hyperiot/components/lib/hyt-select/hyt-select.component';
 
 @Component({
   selector: 'hyt-packet-fields-form',
@@ -17,6 +19,7 @@ import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-
 })
 export class PacketFieldsFormComponent extends ProjectFormEntity implements OnDestroy {
   @ViewChild('treeViewFields', { static: false }) treeViewFields: HytTreeViewEditableComponent;
+  @ViewChild('measureSelect', { static: false }) measureSelect: HytSelectComponent;
   private routerSubscription: Subscription;
   private activatedRouteSubscription: Subscription;
 
@@ -36,6 +39,10 @@ export class PacketFieldsFormComponent extends ProjectFormEntity implements OnDe
     'hpacketfield-multiplicity': {
       field: 'multiplicity',
       default: 'SINGLE'
+    },
+    'hpacketfield-unit': {
+      field: 'unit',
+      default: null
     }
   };
 
@@ -55,10 +62,17 @@ export class PacketFieldsFormComponent extends ProjectFormEntity implements OnDe
 
   formTitle = 'Packet Fields';
 
+  measureOptions = UnitConversionService.measurements.map((m) => ({
+    label: m.type,
+    value: m.type
+  }));
+  unitOptions = [];
+
   constructor(
     injector: Injector,
     @ViewChild('form', { static: true }) formView: ElementRef,
     private hPacketService: HpacketsService,
+    private unitConversionService: UnitConversionService,
     private activatedRoute: ActivatedRoute,
     private router: Router
   ) {
@@ -78,11 +92,27 @@ export class PacketFieldsFormComponent extends ProjectFormEntity implements OnDe
         this.loadData();
       }
     });
+    // add empty option to measurement type select
+    this.measureOptions.unshift({ label: '(not specified)', value: '' });
   }
 
   ngOnDestroy() {
     this.routerSubscription.unsubscribe();
     this.activatedRouteSubscription.unsubscribe();
+  }
+
+  onMeasurementTypeChange(measurementType) {
+    const measurementUnit = UnitConversionService.measurements.find((m) => m.type === measurementType);
+    this.unitOptions = [{ label: '(not specified)', value: '' }];
+    if (measurementUnit) {
+      this.unitOptions.push(...measurementUnit.list
+        .map((u) => ({
+          label: `${u.plural} (${u.abbr})`,
+          value: u.abbr
+        }))
+      );
+    }
+    this.form.patchValue({'hpacketfield-unit': ''});
   }
 
   // ProjectDetailEntity interface
@@ -95,6 +125,7 @@ export class PacketFieldsFormComponent extends ProjectFormEntity implements OnDe
   }
   */
   cancel() {
+    this.resetForm();
     this.showCancel = false;
     this.currentField = null;
   }
@@ -109,22 +140,29 @@ export class PacketFieldsFormComponent extends ProjectFormEntity implements OnDe
   }
 
   removeField(e) {
-    console.log('removeField', e);
     this.openDelete(e.data.id);
   }
 
   editField(e) {
-    this.currentField = e.data;
-    this.showCancel = true;
-    this.loadFormData();
-  }
-
-  cancelField(e) {
-    console.log('cancelField', e);
+    const proceedWithEdit = () => {
+      this.currentField = e.data;
+      this.showCancel = true;
+      this.loadFormData();
+    };
+    const canDeactivate = this.canDeactivate();
+    if (typeof canDeactivate === 'boolean' && canDeactivate === true) {
+      proceedWithEdit();
+    } else {
+      (canDeactivate as Observable<any>).subscribe((res) => {
+        if (res) {
+          proceedWithEdit();
+        }
+      });
+    }
   }
 
   loadData(packetId?: number) {
-    if(packetId) { this.packetId = packetId; }
+    if (packetId) { this.packetId = packetId; }
     this.hPacketService.findHPacket(this.packetId).subscribe((p: HPacket) => {
       this.packet = p;
       this.entityEvent.emit({
@@ -161,6 +199,7 @@ export class PacketFieldsFormComponent extends ProjectFormEntity implements OnDe
     this.currentField.description = this.form.get('hpacketfield-description').value;
     this.currentField.multiplicity = this.form.get('hpacketfield-multiplicity').value;
     this.currentField.type = this.form.get('hpacketfield-type').value;
+    this.currentField.unit = this.form.get('hpacketfield-unit').value;
     let saveObservable: Observable<any>;
     if (this.currentField.id > 0) {
       saveObservable = this.hPacketService
@@ -187,6 +226,17 @@ export class PacketFieldsFormComponent extends ProjectFormEntity implements OnDe
     this.form.get('hpacketfield-description').setValue(this.currentField.description);
     this.form.get('hpacketfield-multiplicity').setValue(this.currentField.multiplicity);
     this.form.get('hpacketfield-type').setValue(this.currentField.type);
+    // load and populate measurement unit fields
+    if (this.currentField.unit) {
+      const measurementUnit = this.unitConversionService.convert().describe(this.currentField.unit);
+      this.measureSelect.formControl.setValue(measurementUnit.measure);
+      this.onMeasurementTypeChange(measurementUnit.measure);
+      this.form.get('hpacketfield-unit').setValue(this.currentField.unit);
+    } else {
+      this.measureSelect.formControl.setValue('');
+      this.onMeasurementTypeChange('');
+    }
+    // reset form
     this.resetForm();
   }
 
@@ -198,7 +248,6 @@ export class PacketFieldsFormComponent extends ProjectFormEntity implements OnDe
       if (result === 'delete') {
         this.hPacketService.deleteHPacketField(fieldId).subscribe(
           res => {
-            console.log(res)
             this.loadData();
           },
           err => {

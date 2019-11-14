@@ -5,8 +5,7 @@
         [treeData]="packetTree"
         (addFn)="addField($event)"
         (removeFn)="removeField($event)"
-        (editFn)="editField($event)"
-        (cancelFn)="cancelField($event)">
+        (editFn)="editField($event)">
     </hyt-tree-view-editable>
 
     <form [formGroup]="form" class="flex-fill mt-4" [ngClass]="{hidden: currentField == null}">
@@ -49,6 +48,23 @@
             
             </div>
         
+        </div>
+        <div class="d-flex flex-row align-items-start justify-content-around">
+
+            <hyt-select 
+                [options]="measureOptions"
+                (changeFn)="onMeasurementTypeChange($event.value)"
+                label="Measurement Type"
+                hintMessage="Select measurement type." #measureSelect>
+            </hyt-select>
+            <hyt-select
+                [form]="form"
+                name="hpacketfield-unit"
+                [options]="unitOptions"
+                label="Unit"
+                hintMessage="Select measure unit." #unitSelect>
+            </hyt-select>
+
         </div>
 
     </form>
