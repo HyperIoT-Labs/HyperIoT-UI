@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, OnDestroy, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
-import { Subject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { PacketSelectComponent } from '../packet-select/packet-select.component';
 

@@ -994,8 +994,8 @@
                <context context-type="linenumber">68</context>
             </context-group>
          </trans-unit>
-         <trans-unit id="HYT_loading_project_data" datatype="html">
-            <source>HYT_loading_project_data</source>
+         <trans-unit id="HYT_loading_data" datatype="html">
+            <source>HYT_loading_data</source>
             <target>Loading project data...</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/project-form/project-form.component.html</context>
@@ -1014,8 +1014,8 @@
                <context context-type="linenumber">61</context>
             </context-group>
          </trans-unit>
-         <trans-unit id="HYT_project_detail_error_occurred" datatype="html">
-            <source>HYT_project_detail_error_occurred</source>
+         <trans-unit id="HYT_error_occurred" datatype="html">
+            <source>HYT_error_occurred</source>
             <target>An unexpected error has occurred</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/project-form/project-form.component.html</context>
@@ -1054,8 +1054,8 @@
                <context context-type="linenumber">65</context>
             </context-group>
          </trans-unit>
-         <trans-unit id="HYT_saving_project_data" datatype="html">
-            <source>HYT_saving_project_data</source>
+         <trans-unit id="HYT_saving_data" datatype="html">
+            <source>HYT_saving_data</source>
             <target>Saving project data...</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/project-form/project-form.component.html</context>

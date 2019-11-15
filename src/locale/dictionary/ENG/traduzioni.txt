@@ -204,14 +204,14 @@ HYT_duplicate
 Duplicate
 HYT_delete
 Delete
-HYT_loading_project_data
-Loading project data...
-HYT_project_detail_error_occurred
+HYT_loading_data
+Loading data...
+HYT_error_occurred
 An unexpected error has occurred
 HYT_close
 Close
-HYT_saving_project_data
-Saving project data...
+HYT_saving_data
+Saving data...
 HYT_brand
 Brand
 HYT_model
@@ -460,3 +460,55 @@ HYT_upper_case
 At least one uppercase character
 HYT_special_char
 At least one special character
+HYT_hint_project_name
+Enter the project name.
+HYT_hint_project_description
+Enter the project description.
+HYT_hint_packet_name
+Enter the packet name.
+HYT_hint_packet_traffic_plan
+Select traffic plan.
+HYT_hint_packet_type
+Set the packet type.
+HYT_hint_packet_timestamp_field
+Enter the timestamp field name.
+HYT_hint_packet_enter_timestamp_format
+Enter the timestamp field format: eg. 'dd/MM/yyyy HH.mmZ'.
+HYT_hint_field_name
+Enter the field name.
+HYT_hint_field_description
+Enter the field description.
+HYT_hint_field_type
+Select field type.
+HYT_hint_select_measure_type
+Select measurement type.
+HYT_hint_select_measure_unit
+Select measure unit.
+HYT_hint_event_name
+Enter the event name
+HYT_hint_event_description
+Enter the event description
+HYT_hint_rule_name
+Enter the rule name
+HYT_hint_rule_description
+Enter the rule description.
+HYT_title_categories
+Categories
+HYT_hint_device_name
+Enter the device name.
+HYT_hint_device_brand
+Enter the device brand.
+HYT_hint_device_model
+Enter the device model.
+HYT_hint_device_software
+Enter the device software version.
+HYT_hint_device_firmware
+Enter the device firmware version.
+HYT_hint_device_password
+Enter the device password.
+HYT_hint_password_confirm
+Confirm device password.
+HYT_hint_device_description
+Enter the device description.
+HYT_button_add
+Add

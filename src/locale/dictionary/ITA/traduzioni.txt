@@ -204,14 +204,14 @@ HYT_duplicate
 Duplica
 HYT_delete
 Elimina
-HYT_loading_project_data
-Caricamento dati progetto...
-HYT_project_detail_error_occurred
+HYT_loading_data
+Caricamento dati...
+HYT_error_occurred
 Si è verificato un errore inaspettato
 HYT_close
 Chiudi
-HYT_saving_project_data
-Salvataggio dati progetto...
+HYT_saving_data
+Salvataggio dati...
 HYT_brand
 Marca
 HYT_model
@@ -460,3 +460,55 @@ HYT_upper_case
 Almeno un carattere maiuscolo
 HYT_special_char
 Almeno un carattere speciale
+HYT_hint_project_name
+Inserire nome progetto.
+HYT_hint_project_description
+Inserire descrizione progetto.
+HYT_hint_packet_name
+Inserire nome pacchetto.
+HYT_hint_packet_traffic_plan
+Selezionare piano traffico.
+HYT_hint_packet_type
+Selezionare il tipo di pacchetto.
+HYT_hint_packet_timestamp_field
+Inserire nome del campo timestamp.
+HYT_hint_packet_enter_timestamp_format
+Inserire il formato del campo timestamp: e.g. 'dd/MM/yyyy HH.mmZ'.
+HYT_hint_field_name
+Inserire il nome del campo.
+HYT_hint_field_description
+Inserire la descrizione del campo.
+HYT_hint_field_type
+Selezionare il tipo di campo.
+HYT_hint_select_measure_type
+Selezionare il tipo di misurazione.
+HYT_hint_select_measure_unit
+Selezionare unità di misura.
+HYT_hint_event_name
+Inserire il nome dell'evento.
+HYT_hint_event_description
+Inserire la descrizione dell'evento.
+HYT_hint_rule_name
+Inserire il nome della regola.
+HYT_hint_rule_description
+Inserire la descrizione della regola.
+HYT_title_categories
+Categorie
+HYT_hint_device_name
+Inserire il nome del dispositivo.
+HYT_hint_device_brand
+Inserire la marca del dispositivo.
+HYT_hint_device_model
+Inserire il modello del dispositivo.
+HYT_hint_device_software
+Inserire la versione del software del dispositivo.
+HYT_hint_device_firmware
+Inserire la versione del firmware del dispositivo.
+HYT_hint_device_password
+Inserire la password del dispositivo.
+HYT_hint_password_confirm
+Confermare la password del dispositivo.
+HYT_hint_device_description
+Inserire la descrizione del dispositivo.
+HYT_button_add
+Aggiungi

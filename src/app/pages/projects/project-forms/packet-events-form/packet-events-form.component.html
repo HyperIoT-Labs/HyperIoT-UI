@@ -10,12 +10,16 @@
   <div class="row">
     <div class="col-md-6 container-form-field">
       <hyt-input-text [form]="form" name="rule-name" [isRequired]="true" i18n-placeholder="@@HYT_name"
-        placeholder="HYT_name" [injectedErrorMsg]="getError('rule-name')" hintMessage="Enter the event name">
+        placeholder="HYT_name" [injectedErrorMsg]="getError('rule-name')"
+        i18n-hintMessage="@@HYT_hint_event_name"
+        hintMessage="HYT_hint_event_name">
       </hyt-input-text>
     </div> <!-- Field Name -->
     <div class="col-md-6 container-form-field">
       <hyt-text-area [form]="form" name="rule-description" i18n-placeholder="@@HYT_description"
-        placeholder="HYT_description" hintMessage="Enter the event description">
+        placeholder="HYT_description"
+        i18n-hintMessage="@@HYT_hint_event_description"
+        hintMessage="HYT_hint_event_description">
       </hyt-text-area>
     </div> <!-- Field RuleDescription -->
   </div>
