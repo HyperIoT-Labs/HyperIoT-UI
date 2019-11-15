@@ -40,6 +40,7 @@ export class ProjectWizardCanDeactivate implements CanDeactivate<ProjectWizardCo
   encapsulation: ViewEncapsulation.None
 })
 export class ProjectWizardComponent implements OnInit, AfterViewInit {
+  [x: string]: any;
 
   @ViewChild('stepper', { static: false })
   stepper: HytStepperComponent;
@@ -78,6 +79,8 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
   @ViewChild('eventPacketSelect', { static: false })
   eventPacketSelect: PacketSelectComponent;
 
+  panelIsVisible : boolean = false;
+
   currentProject: HProject;
   currentDevice: HDevice;
   hDevices: HDevice[] = [];
@@ -112,6 +115,7 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
+    
     setTimeout(() => {// TODO...setimeout 0 to avoid 'expression changed after view checked'
       this.eventsForm.editMode = true;
       this.enrichmentForm.editMode = true;
@@ -122,7 +126,9 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
         this.projectForm.load();
       }
       this.currentForm = this.projectForm;
+      
     }, 0);
+    
   }
 
   resetForms() {
@@ -441,6 +447,10 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
 
   showCancel(): boolean {
     return this.currentForm instanceof PacketFieldsFormComponent;
+  }
+
+  togglePanel() {
+    this.panelIsVisible = !this.panelIsVisible;
   }
 
 }
