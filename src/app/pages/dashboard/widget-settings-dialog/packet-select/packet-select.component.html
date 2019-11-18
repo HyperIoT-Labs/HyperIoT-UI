@@ -36,10 +36,31 @@
             </mat-form-field>
 
         </div>
+        <div *ngIf="hasFieldsUnit()">
+            <h3>Unit Conversion</h3>
+            <div *ngFor="let conversion of packetUnitsConversion; let i = index;">
+                <label class="label">{{ conversion.field.name }}</label>:
+                {{ getUnit(conversion.convertFrom).singular }}
+                ({{ getUnit(conversion.convertFrom).abbr }})
+                <br/>
+                <hyt-select-template class="ml-4"
+                    name="hpacketfield-unit-{{i}}"
+                    [(ngModel)]="conversion.convertTo"
+                    [options]="conversion.options"
+                    label="Convert to">
+                </hyt-select-template>
+                <hyt-select-template class="ml-4"
+                    name="hpacketfield-decimals-{{i}}"
+                    [(ngModel)]="conversion.decimals"
+                    [options]="conversionDecimalsOptions"
+                    label="Decimal digits">
+                </hyt-select-template>
+            </div>
+        </div>
         <div *ngIf="packetFieldsMapping && packetFieldsMapping.length > 0 && multiPacketSelect">
             <h3>Fields Mapping</h3>
             <div *ngFor="let fieldConfig of packetFieldsMapping">
-                <label>{{ fieldConfig.field.name }}</label>
+                <label class="label">{{ fieldConfig.field.name }}</label>
                 <div class="d-flex flex-row align-items-center flex-wrap field-mapping ">
                     <div *ngFor="let fieldMap of fieldConfig.map; let i = index"
                         class="map-container m-2 p-2 d-flex flex-row align-items-center">
