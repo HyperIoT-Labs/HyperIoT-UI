@@ -60,9 +60,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   currentDashboardType: Dashboard.DashboardTypeEnum;
 
+  recordStateInLoading = true;
+
   recordReloading = false;
 
   updateRecordingInterval;
+
+  upTimeSec;
 
   constructor(
     private dashboardConfigService: DashboardConfigService,
@@ -154,26 +158,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }
   }
 
-  updateToplogyStatus() {
-    if (!this.recordReloading) {
-      this.dashboardConfigService.getRecordingStatus(this.idProjectSelected)
-        .pipe(takeUntil(this.ngUnsubscribe))
-        .subscribe(
-          res => {
-            if (res != null && res != undefined && res.status.toLowerCase() === 'active') {
-              this.dataRecordingIsOn = true;
-            } else {
-              this.dataRecordingIsOn = false;
-            }
-          },
-          error => {
-            this.dataRecordingIsOn = false;
-            console.error(error);
-          }
-        );
-    }
-  }
-
   onSelectChange(event) {
     this.pageStatus = PageStatus.Loading;
     this.idProjectSelected = event.value;
@@ -237,33 +221,72 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.streamIsOn = !this.streamIsOn;
   }
 
+  updateToplogyStatus() {
+    this.dashboardConfigService.getRecordingStatus(this.idProjectSelected)
+    .pipe(takeUntil(this.ngUnsubscribe))
+    .subscribe(
+      res => {
+        if (res != null && res != undefined && res.status.toLowerCase() === 'active') {
+          this.dataRecordingIsOn = true;
+          if (res.upTimeSec) {
+            let seconds = res.upTimeSec;
+            const days = Math.floor(seconds / (3600 * 24));
+            seconds -= days * 3600 * 24;
+            const hrs = Math.floor(seconds / 3600);
+            seconds -= hrs * 3600;
+            const mnts = Math.floor(seconds / 60);
+            seconds -= mnts * 60;
+            this.upTimeSec = days + 'd, ' + hrs + 'h, ' + mnts + 'm';
+          } else {
+            this.upTimeSec = undefined;
+          }
+        } else {
+          this.dataRecordingIsOn = false;
+          this.upTimeSec = undefined;
+        }
+        this.recordStateInLoading = false;
+      },
+      error => {
+        this.dataRecordingIsOn = false;
+        this.recordStateInLoading = false;
+        this.upTimeSec = undefined;
+        console.error(error);
+      }
+    );
+  }
+
   changeRecordingState(event) {
 
     if (event === true) {
+      this.recordStateInLoading = true;
 
       if (this.dataRecordingIsOn) {
         this.dashboardConfigService.postRecordingStateOff(this.idProjectSelected)
-          .pipe(takeUntil(this.ngUnsubscribe))
-          .subscribe(
-            res => {
-              this.dataRecordingIsOn = !this.dataRecordingIsOn;
-            },
-            error => {
-              console.error(error);
-            }
-          );
+        .pipe(takeUntil(this.ngUnsubscribe))
+        .subscribe(
+          res => {
+            this.dataRecordingIsOn = !this.dataRecordingIsOn;
+            this.recordStateInLoading = false;
+            this.upTimeSec = undefined;
+          },
+          error => {
+            console.error(error);
+            this.recordStateInLoading = false;
+          }
+        );
       } else {
         this.dashboardConfigService.postRecordingStateOn(this.idProjectSelected)
-          .pipe(takeUntil(this.ngUnsubscribe))
-          .subscribe(
-            res => {
-
-              this.dataRecordingIsOn = !this.dataRecordingIsOn;
-            },
-            error => {
-              console.error(error);
-            }
-          );
+        .pipe(takeUntil(this.ngUnsubscribe))
+        .subscribe(
+          res => {
+            this.dataRecordingIsOn = !this.dataRecordingIsOn;
+            this.recordStateInLoading = false;
+          },
+          error => {
+            console.error(error);
+            this.recordStateInLoading = false;
+          }
+        );
       }
 
     }
@@ -278,13 +301,30 @@ export class DashboardComponent implements OnInit, OnDestroy {
   reloadRecording(event) {
     if (event === true) {
       this.recordReloading = true;
+      this.recordStateInLoading = true;
 
-      setTimeout(() => {
-        this.recordReloading = false;
-      }, 1000);
+      this.dashboardConfigService.postRecordingStateOff(this.idProjectSelected)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        res => {
+          this.dataRecordingIsOn = !this.dataRecordingIsOn;
+          this.recordStateInLoading = false;
+          this.recordReloading = false;
+          this.upTimeSec = undefined;
+        },
+        error => {
+          console.error(error);
+          this.recordStateInLoading = false;
+          this.recordReloading = false;
+          this.upTimeSec = undefined;
+        }
+      );
     }
   }
 
+  /**
+   * Method that save the current Dashboard
+   */
   saveDashboard() {
     this.dashboardView.saveDashboard();
   }
@@ -294,12 +334,18 @@ export class DashboardComponent implements OnInit, OnDestroy {
   // }
 
   openRecordingActionModal() {
-    if (!this.recordReloading) {
+    if (!this.recordReloading && !this.recordStateInLoading) {
       if (this.dataRecordingIsOn) {
         this.hytModalService.open('hyt-modal-recording-info-action');
       } else {
         this.hytModalService.open('hyt-modal-recording-confirm-action');
       }
+    }
+  }
+
+  openReloadRecordingModal() {
+    if (!this.recordReloading && !this.recordStateInLoading) {
+      this.openModal('hyt-modal-reload-recording-confirm');
     }
   }
 

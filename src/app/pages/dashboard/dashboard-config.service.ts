@@ -25,7 +25,7 @@ export class DashboardConfigService {
         private dashboardService: DashboardsService,
         private dashboardWidgetService: DashboardwidgetsService,
         private hProjectService: HprojectsService,
-        private sotrmService: StormService,
+        private stormService: StormService,
         private http: HttpClient
     ) { }
 
@@ -155,15 +155,15 @@ export class DashboardConfigService {
     }
 
     postRecordingStateOn(projectId: number) {
-        return this.sotrmService.submitProjectTopology(projectId);
+        return this.stormService.submitProjectTopology(projectId);
     }
 
     postRecordingStateOff(projectId: number) {
-        return this.sotrmService.deactivateTopology(projectId);
+        return this.stormService.deactivateTopology(projectId);
     }
 
     getRecordingStatus(projectId: number) {
-        return this.sotrmService.getTopology(projectId);
+        return this.stormService.getTopology(projectId);
     }
 
 }
