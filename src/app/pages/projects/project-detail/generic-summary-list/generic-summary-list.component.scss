@@ -1,20 +1,25 @@
 :host {
     display: block;
-    max-width: 200px;
+    // max-width: 200px;
+    width: 100%;
     font-size: 10px;
-    margin-top: 48px;
+    // margin-top: 48px;
+    margin-top: 25px;
 }
+
 *:focus {
     outline: none;
 }
+
 .header {
     height: 32px;
     min-height: auto !important;
     border-bottom: none !important;
     line-height: 32px;
     vertical-align: middle;
-    background: black;
-    border-right: solid 1px black;
+    // background: black;
+    // border-right: solid 1px black;
+    background-color: #376caf;
     color: white;
     font-weight: 800;
     font-size: 140%;
@@ -22,36 +27,50 @@
     padding-left: 12px;
     padding-right: 12px;
 }
+
 .flex-row {
     border-right: solid 1px gray;
     border-bottom: solid 1px gray;
 }
+
 .item:hover {
     cursor: pointer;
     background: rgba(150, 150, 150, 0.240710);
 }
+
 .icon {
     width: 32px;
     height: 32px;
-    background: gray;
+    // background: gray;
+    background-color:#143967;
     color: white;
+    span {
+        &.hyt-icon {
+            font-size: 1.8em;
+        }
+    }
 }
+
 .row-content {
     height: 32px;
 }
+
 .row-fields {
     padding-left: 8px;
     padding-right: 8px;
 }
+
 .field-name {
     font-weight: 600;
 }
+
 .truncate {
     width: 152px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
 .menu-title {
     color: #0956b6;
     font-size: 90%;
