@@ -80,6 +80,8 @@ HYT_widget_settings_select_packet
 Select packet
 HYT_widget_settings_select_fields
 Select {multiPacketSelect?1:0, plural, =0 {campo} other {campi}}
+HYT_button_add
+Add
 HYT_data_recording_on_off
 {{(dataRecordingIsOn)?'Data recording on':'Data recording off'}}
 HYT_signal_is_on
@@ -137,7 +139,7 @@ Start now to find out what you can do and have fun.
 HYT_go_to_home
 Go to Home
 HYT_hello
-Ciao
+Hello
 HYT_login_text
 We are happy to see you again!
 HYT_login_no_account
@@ -204,40 +206,80 @@ HYT_duplicate
 Duplicate
 HYT_delete
 Delete
-HYT_loading_project_data
-Loading project data...
-HYT_project_detail_error_occurred
+HYT_hint_project_name
+Enter the project name.
+HYT_hint_project_description
+Enter the project description.
+HYT_loading_data
+Loading data...
+HYT_error_occurred
 An unexpected error has occurred
 HYT_close
 Close
-HYT_saving_project_data
-Saving project data...
+HYT_saving_data
+Saving data...
+HYT_hint_device_name
+Enter the device name.
 HYT_brand
 Brand
+HYT_hint_device_brand
+Enter the device brand.
 HYT_model
 Model
+HYT_hint_device_model
+Enter the device model.
 HYT_software_version
 Software version
+HYT_hint_device_software
+Enter the device software version.
 HYT_firmware_version
 Firmware version
+HYT_hint_device_firmware
+Enter the device firmware version.
+HYT_hint_device_password
+Enter the device password.
+HYT_hint_password_confirm
+Confirm device password.
+HYT_hint_device_description
+Enter the device description.
+HYT_hint_packet_name
+Enter the packet name.
 HYT_traffic_plan
 Traffic plan
+HYT_hint_packet_traffic_plan
+Select traffic plan.
+HYT_hint_packet_type
+Set the packet type.
 HYT_format
 Format
 HYT_serialization
 Serialization
 HYT_timestamp_field
 Timestamp field
+HYT_hint_packet_timestamp_field
+Enter the timestamp field name.
 HYT_timestamp_format
 Timestamp format
+HYT_hint_packet_enter_timestamp_format
+Enter the timestamp field format: eg. 'dd/MM/yyyy HH.mmZ'.
 HYT_mqtt_url
 MQTT Url
 HYT_mqtt_topic
 MQTT Topic
 HYT_device
 Device
+HYT_hint_field_name
+Enter the field name.
+HYT_hint_field_description
+Enter the field description.
+HYT_hint_field_type
+Select field type.
 HYT_multiplicity
 Multiplicity
+HYT_hint_select_measure_type
+Select measurement type.
+HYT_hint_select_measure_unit
+Select measure unit.
 HYT_packet
 Packet
 HYT_field
@@ -248,8 +290,12 @@ HYT_value
 Value
 HYT_remove
 Remove
+HYT_hint_rule_name
+Enter the rule name
 HYT_rule_type
 Rule type
+HYT_hint_rule_description
+Enter the rule description.
 HYT_mail_to
 Recipient
 HYT_mail_cc
@@ -260,6 +306,10 @@ HYT_mail_body
 Mail body
 HYT_add_event
 Add event
+HYT_hint_event_name
+Enter the event name
+HYT_hint_event_description
+Enter the event description
 HYT_output_data
 Event output
 HYT_update
@@ -292,6 +342,8 @@ HYT_string_device
 Device{{ deviceCount == 1 ? '' : 's' }}
 HYT_string_rule
 Rule{{ rulesCount == 1 ? '' : 's' }}
+HYT_title_categories
+Categories
 HYT_definition_of_terms
 Definition of terms
 HYT_congratulations

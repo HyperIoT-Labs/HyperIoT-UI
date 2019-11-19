@@ -1,8 +1,8 @@
-<div *ngIf="tagStatus==0">
-  Loading...
+<div *ngIf="tagStatus==0" i18n="@@HYT_loading_data">
+  HYT_loading_data
 </div>
-<div *ngIf="tagStatus==-1">
-  An error has occurred while loading tag data
+<div *ngIf="tagStatus==-1" i18n="@@HYT_error_occurred">
+  HYT_error_occurred
 </div>
 <div *ngIf="tagStatus==1">
   <mat-form-field class="tag-list">

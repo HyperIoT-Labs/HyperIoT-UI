@@ -81,7 +81,7 @@
               "i18nFile": "src/locale/translations.it-IT.xlf",
               "i18nFormat": "xlf",
               "i18nLocale": "it-IT",
-              "i18nMissingTranslation": "error"
+              "i18nMissingTranslation": "ignore"
             },
             "production-en": {
               "fileReplacements": [{

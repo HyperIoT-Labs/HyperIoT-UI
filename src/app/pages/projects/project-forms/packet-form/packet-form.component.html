@@ -6,7 +6,9 @@
             <div class="pr-md-3 flex-fill">
 
                 <hyt-input-text name="hpacket-name" i18n-placeholder="@@HYT_name" placeholder="HYT_name" [form]="form"
-                    [injectedErrorMsg]="getError('hpacket-name')" hintMessage="Enter the packet name."
+                    [injectedErrorMsg]="getError('hpacket-name')"
+                    i18n-hintMessage="@@HYT_hint_packet_name"
+                    hintMessage="HYT_hint_packet_name"
                     errorPosition="bottom" minlength="3" isRequired="true">
                 </hyt-input-text>
 
@@ -15,7 +17,9 @@
 
                 <div>
                     <hyt-select [form]="form" i18n-label="@@HYT_traffic_plan" label="HYT_traffic_plan" name="hpacket-trafficplan"
-                        [injectedErrorMsg]="getError('hpacket-trafficplan')" hintMessage="Select traffic plan."
+                        [injectedErrorMsg]="getError('hpacket-trafficplan')"
+                        i18n-hintMessage="@@HYT_hint_packet_traffic_plan"
+                        hintMessage="HYT_hint_packet_traffic_plan"
                         isRequired="true" [options]="trafficPlanOptions"></hyt-select>
                 </div>
 
@@ -28,7 +32,9 @@
                 <label i18n="@@HYT_type">HYT_type</label>
                 <div class="radio-options pl-2 pr-2">
                     <hyt-radio-button [form]="form" name="hpacket-type" [options]="typeOptions"
-                        [injectedErrorMsg]="getError('hpacket-type')" hintMessage="Set the packet type.">
+                        [injectedErrorMsg]="getError('hpacket-type')"
+                        i18n-hintMessage="@@HYT_hint_packet_type"
+                        hintMessage="HYT_hint_packet_type">
                     </hyt-radio-button>
                 </div>
 
@@ -67,7 +73,9 @@
 
                 <hyt-input-text i18n-placeholder="@@HYT_timestamp_field" placeholder="HYT_timestamp_field" [form]="form" name="hpacket-timestampfield"
                     [injectedErrorMsg]="getError('hpacket-timestampfield')"
-                    hintMessage="Enter the timestamp field name." errorPosition="bottom" minlength="1"
+                    i18n-hintMessage="@@HYT_hint_packet_timestamp_field"
+                    hintMessage="HYT_hint_packet_timestamp_field"
+                    errorPosition="bottom" minlength="1"
                     isRequired="true">
                 </hyt-input-text>
 
@@ -76,7 +84,9 @@
 
                 <hyt-input-text i18n-placeholder="@@HYT_timestamp_format" placeholder="HYT_timestamp_format" [form]="form" name="hpacket-timestampformat"
                     [injectedErrorMsg]="getError('hpacket-timestampformat')"
-                    hintMessage="Enter the timestamp field format: eg. 'dd/MM/yyyy HH.mmZ'." errorPosition="bottom"
+                    i18n-hintMessage="@@HYT_hint_packet_enter_timestamp_format"
+                    hintMessage="HYT_hint_packet_enter_timestamp_format"
+                    errorPosition="bottom"
                     minlength="3" isRequired="true">
                 </hyt-input-text>
 
@@ -114,15 +124,15 @@
                consider making a component out of it -->
     <div *ngIf="loadingStatus !== LoadingStatus.Ready"
         class="overlay d-flex flex-column align-items-center justify-content-center">
-        <h4 *ngIf="loadingStatus === LoadingStatus.Loading" i18n="@@HYT_loading_project_data">HYT_loading_project_data</h4>
+        <h4 *ngIf="loadingStatus === LoadingStatus.Loading" i18n="@@HYT_loading_data">HYT_loading_data</h4>
         <div *ngIf="loadingStatus === LoadingStatus.Error" class="d-flex flex-column justify-content-center">
-            <h4 i18n="@@HYT_project_detail_error_occurred">HYT_project_detail_error_occurred</h4>
+            <h4 i18n="@@HYT_error_occurred">HYT_error_occurred</h4>
             <button mat-stroked-button (click)="loadingStatus = LoadingStatus.Ready">
                 <span i18n="@@HYT_close">HYT_close</span>
                 <mat-icon>close</mat-icon>
             </button>
         </div>
-        <h4 *ngIf="loadingStatus === LoadingStatus.Saving" i18n="@@HYT_saving_project_data">HYT_saving_project_data</h4>
+        <h4 *ngIf="loadingStatus === LoadingStatus.Saving" i18n="@@HYT_saving_data">HYT_saving_data</h4>
         <mat-progress-bar *ngIf="loadingStatus === LoadingStatus.Loading || loadingStatus === LoadingStatus.Saving"
             mode="query"></mat-progress-bar>
     </div>

@@ -62,6 +62,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   recordReloading = false;
 
+  updateRecordingInterval;
+
   constructor(
     private dashboardConfigService: DashboardConfigService,
     private route: Router,
@@ -101,6 +103,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
           if (this.hProjectListOptions.length > 0) {
             this.idProjectSelected = this.hProjectListOptions[0].id;
 
+            this.updateToplogyStatus();
+            this.updateRecordingInterval = setInterval(() => {
+              this.updateToplogyStatus();
+            }, 60000);
+
             this.dashboardConfigService.getRealtimeDashboardFromProject(this.idProjectSelected)
               .pipe(takeUntil(this.ngUnsubscribe))
               .subscribe(
@@ -138,8 +145,33 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    if (this.updateRecordingInterval) {
+      clearInterval(this.updateRecordingInterval);
+    }
+
     if (this.ngUnsubscribe) {
       this.ngUnsubscribe.next();
+    }
+  }
+
+  updateToplogyStatus() {
+    if (!this.recordReloading) {
+      this.dashboardConfigService.getRecordingStatus(this.idProjectSelected)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        res => {
+          const newRes: string = res;
+          if (newRes.toLowerCase() === 'active') {
+            this.dataRecordingIsOn = true;
+          } else {
+            this.dataRecordingIsOn = false;
+          }
+        },
+        error => {
+          this.dataRecordingIsOn = false;
+          console.error(error);
+        }
+      );
     }
   }
 
@@ -215,7 +247,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
         .pipe(takeUntil(this.ngUnsubscribe))
         .subscribe(
           res => {
-
             this.dataRecordingIsOn = !this.dataRecordingIsOn;
           },
           error => {
