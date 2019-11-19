@@ -145,9 +145,11 @@ export class DashboardConfigService {
         return this.dashboardWidgetService
             .saveAllDashboardWidget(+dashboardId, dashboardWidgets);
     }
+
     getWidgetCategoryList() {
         return this.http.get(this.widgetCategoryListUrl);
     }
+
     getWidgetList() {
         return this.http.get(this.widgetListUrl);
     }
@@ -158,6 +160,10 @@ export class DashboardConfigService {
 
     postRecordingStateOff(projectId: number) {
         return this.sotrmService.deactivateTopology(projectId);
+    }
+
+    getRecordingStatus(projectId: number) {
+        return this.sotrmService.getTopology(projectId);
     }
 
 }
