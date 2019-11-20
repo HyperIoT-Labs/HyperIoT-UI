@@ -1,4 +1,4 @@
-import { Component, OnDestroy, ElementRef, ViewChild, Input, Injector, AfterViewInit } from '@angular/core';
+import { Component, OnDestroy, ElementRef, ViewChild, Input, Injector, AfterViewInit, ViewEncapsulation } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 
@@ -10,7 +10,8 @@ import { I18n } from '@ngx-translate/i18n-polyfill';
 @Component({
   selector: 'hyt-device-form',
   templateUrl: './device-form.component.html',
-  styleUrls: ['./device-form.component.scss']
+  styleUrls: ['./device-form.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class DeviceFormComponent extends ProjectFormEntity implements OnDestroy, AfterViewInit {
   entity: HDevice = {} as HDevice;

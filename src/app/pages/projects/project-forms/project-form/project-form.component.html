@@ -2,24 +2,44 @@
 
     <form [formGroup]="form" class="d-flex flex-column justify-content-center">
 
-        <hyt-input-text [form]="form"
-            name="hproject-name"
-            i18n-placeholder="@@HYT_name"
-            placeholder="HYT_name"
-            errorPosition="bottom"
-            minlength="3"
-            [injectedErrorMsg]="getError('hproject-name')"
-            i18n-hintMessage="@@HYT_hint_project_name"
-            hintMessage="HYT_hint_project_name"
-            [isRequired]="true"></hyt-input-text>
+        <div class="form-group row">
 
-        <hyt-text-area [form]="form"
-            name="hproject-description"
-            [injectedErrorMsg]="getError('hproject-description')"
-            i18n-hintMessage="@@HYT_hint_project_description"
-            hintMessage="HYT_hint_project_description"
-            i18n-placeholder="@@HYT_description"
-            placeholder="HYT_description"></hyt-text-area>
+            <div id="fproj-col-name" class="col-12">
+
+                <hyt-input-text [form]="form"
+                    name="hproject-name"
+                    i18n-placeholder="@@HYT_name"
+                    placeholder="HYT_name"
+                    errorPosition="bottom"
+                    minlength="3"
+                    [injectedErrorMsg]="getError('hproject-name')"
+                    i18n-hintMessage="@@HYT_hint_project_name"
+                    hintMessage="HYT_hint_project_name"
+                    [isRequired]="true"
+                >
+                </hyt-input-text>
+
+            </div>
+
+        </div> <!-- First Row -->
+
+        <div class="form-group row">
+
+            <div id="fproj-col-descr" class="col-12">
+                
+                <hyt-text-area [form]="form"
+                    name="hproject-description"
+                    [injectedErrorMsg]="getError('hproject-description')"
+                    i18n-hintMessage="@@HYT_hint_project_description"
+                    hintMessage="HYT_hint_project_description"
+                    i18n-placeholder="@@HYT_description"
+                    placeholder="HYT_description"
+                >
+                </hyt-text-area>
+
+            </div>
+
+        </div> <!-- Second Row -->
 
     </form>
 

@@ -1,47 +1,56 @@
-<div class="container">
+<div id="container-packet-form" class="container">
 
     <form [formGroup]="form">
 
-        <div class="d-flex flex-column flex-md-row flex-wrap">
-            <div class="pr-md-3 flex-fill">
+        <div class="form-group row">
 
-                <hyt-input-text name="hpacket-name" i18n-placeholder="@@HYT_name" placeholder="HYT_name" [form]="form"
+            <div id="fpack-col-name" class="col-6">
+
+                <hyt-input-text 
+                    name="hpacket-name" i18n-placeholder="@@HYT_name" placeholder="HYT_name" [form]="form"
                     [injectedErrorMsg]="getError('hpacket-name')"
                     i18n-hintMessage="@@HYT_hint_packet_name"
                     hintMessage="HYT_hint_packet_name"
-                    errorPosition="bottom" minlength="3" isRequired="true">
+                    errorPosition="bottom" minlength="3" isRequired="true"
+                >
                 </hyt-input-text>
 
             </div>
-            <div class="pl-md-3 flex-fill">
+            <div id="fpack-col-plan" class="col-6">
 
-                <div>
-                    <hyt-select [form]="form" i18n-label="@@HYT_traffic_plan" label="HYT_traffic_plan" name="hpacket-trafficplan"
-                        [injectedErrorMsg]="getError('hpacket-trafficplan')"
-                        i18n-hintMessage="@@HYT_hint_packet_traffic_plan"
-                        hintMessage="HYT_hint_packet_traffic_plan"
-                        isRequired="true" [options]="trafficPlanOptions"></hyt-select>
-                </div>
+                <hyt-select 
+                    [form]="form" i18n-label="@@HYT_traffic_plan" label="HYT_traffic_plan" name="hpacket-trafficplan"
+                    [injectedErrorMsg]="getError('hpacket-trafficplan')"
+                    i18n-hintMessage="@@HYT_hint_packet_traffic_plan"
+                    hintMessage="HYT_hint_packet_traffic_plan"
+                    isRequired="true" [options]="trafficPlanOptions"
+                ></hyt-select>
 
             </div>
-        </div>
 
-        <div class="d-flex flex-column flex-md-row flex-wrap">
-            <div class="pr-md-3 flex-fill">
+        </div> <!-- First Row -->
 
-                <label i18n="@@HYT_type">HYT_type</label>
+        <div class="form-group row">
+
+            <div id="fpack-col-type" class="col-6">
+
+                <label class="f-label" i18n="@@HYT_type">HYT_type</label>
+                
                 <div class="radio-options pl-2 pr-2">
-                    <hyt-radio-button [form]="form" name="hpacket-type" [options]="typeOptions"
+                    <hyt-radio-button 
+                        [form]="form" name="hpacket-type" [options]="typeOptions"
                         [injectedErrorMsg]="getError('hpacket-type')"
                         i18n-hintMessage="@@HYT_hint_packet_type"
-                        hintMessage="HYT_hint_packet_type">
+                        hintMessage="HYT_hint_packet_type"
+                    >
                     </hyt-radio-button>
                 </div>
 
             </div>
-            <div class="pl-md-3 flex-fill">
+            <div id="fpack-col-format" class="col-6">
 
-                <label i18n="@@HYT_format">HYT_format</label>
+                <label class="f-label" i18n="@@HYT_format">HYT_format</label>
+
                 <div class="radio-options pl-2 pr-2">
                     <hyt-radio-button [form]="form" [injectedErrorMsg]="getError('hpacket-format')"
                         name="hpacket-format" [options]="formatOptions">
@@ -49,72 +58,85 @@
                 </div>
 
             </div>
-        </div>
 
-        <div class="d-flex flex-column flex-md-row flex-wrap">
-            <div class="pr-md-3 flex-fill">
+        </div> <!-- Second Row -->
 
-                <label i18n="@@HYT_serialization">HYT_serialization</label>
+        <div class="form-group row">
+
+            <div id="fpack-col-serial" class="col-6">
+                
+                <label class="f-label" i18n="@@HYT_serialization">HYT_serialization</label>
+
                 <div class="radio-options pl-2 pr-2">
-                    <hyt-radio-button [form]="form" name="hpacket-serialization" [options]="serializationOptions"
-                        [injectedErrorMsg]="getError('hpacket-serialization')">
+                    <hyt-radio-button 
+                        [form]="form" name="hpacket-serialization" [options]="serializationOptions"
+                        [injectedErrorMsg]="getError('hpacket-serialization')"
+                    >
                     </hyt-radio-button>
                 </div>
 
             </div>
-            <div class="pl-md-3 flex-fill">
 
-            </div>
-        </div>
+        </div> <!-- Third Row -->
 
-        <div class="mt-4 d-flex flex-column flex-md-row flex-wrap">
+        <div class="form-group row">
 
-            <div class="pr-md-3 flex-fill">
+            <div id="fpack-col-tfield" class="col-6">
 
-                <hyt-input-text i18n-placeholder="@@HYT_timestamp_field" placeholder="HYT_timestamp_field" [form]="form" name="hpacket-timestampfield"
+                <hyt-input-text 
+                    i18n-placeholder="@@HYT_timestamp_field" placeholder="HYT_timestamp_field" [form]="form" name="hpacket-timestampfield"
                     [injectedErrorMsg]="getError('hpacket-timestampfield')"
                     i18n-hintMessage="@@HYT_hint_packet_timestamp_field"
                     hintMessage="HYT_hint_packet_timestamp_field"
                     errorPosition="bottom" minlength="1"
-                    isRequired="true">
+                    isRequired="true"
+                >
                 </hyt-input-text>
 
             </div>
-            <div class="pl-md-3 flex-fill">
+            <div id="fpack-col-tformat" class="col-6">
 
-                <hyt-input-text i18n-placeholder="@@HYT_timestamp_format" placeholder="HYT_timestamp_format" [form]="form" name="hpacket-timestampformat"
+                <hyt-input-text 
+                    i18n-placeholder="@@HYT_timestamp_format" placeholder="HYT_timestamp_format" [form]="form" name="hpacket-timestampformat"
                     [injectedErrorMsg]="getError('hpacket-timestampformat')"
                     i18n-hintMessage="@@HYT_hint_packet_enter_timestamp_format"
                     hintMessage="HYT_hint_packet_enter_timestamp_format"
                     errorPosition="bottom"
-                    minlength="3" isRequired="true">
+                    minlength="3" isRequired="true"
+                >
                 </hyt-input-text>
 
             </div>
 
-        </div>
+        </div> <!-- Fourth Row -->
 
-        <div *ngIf="mqttUrl" class="mt-4 d-flex flex-column flex-md-row flex-wrap">
-            <div class="pr-md-3 flex-fill">
+        <div *ngIf="mqttUrl && mqttTopic" class="form-group row">
+
+            <div id="fpack-col-mqtt-url" class="col-6">
+
                 <hyt-input-text
                     i18n-placeholder="@@HYT_mqtt_url"
                     placeholder="HYT_mqtt_url"
                     name="hpacket-mqttUrl"
                     disabled="true"
-                    [fieldValue]="mqttUrl">
+                    [fieldValue]="mqttUrl"
+                >
                 </hyt-input-text>
+
             </div>
-        </div>
-        <div *ngIf="mqttTopic" class="mt-4 d-flex flex-column flex-md-row flex-wrap">
-            <div class="pr-md-3 flex-fill">
+            <div id="fpack-col-mqtt-topic" class="col-6">
+
                 <hyt-input-text
                     i18n-placeholder="@@HYT_mqtt_topic"
                     placeholder="HYT_mqtt_topic"
                     name="hpacket-mqttTopic"
                     disabled="true"
-                    [fieldValue]="mqttTopic">
+                    [fieldValue]="mqttTopic"
+                >
                 </hyt-input-text>
+
             </div>
+
         </div>
 
     </form>

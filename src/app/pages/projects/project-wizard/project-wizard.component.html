@@ -157,9 +157,13 @@
       <hr id="title-underline">
       <!-- END NEW ACCORDION -->
 
-      <hyt-generic-summary-list *ngIf="currentForm && currentForm.summaryList"
-        [ngClass]="{ disabled: currentForm.isDirty() && !currentForm.isNew() }" [summaryList]="currentForm.summaryList"
-        (itemClick)="onSummaryItemClick($event)" (menuAction)="menuAction($event)"></hyt-generic-summary-list>
+      <hyt-generic-summary-list 
+        *ngIf="currentForm && currentForm.summaryList"
+        [ngClass]="{ disabled: currentForm.isDirty() && !currentForm.isNew() }" 
+        [summaryList]="currentForm.summaryList"
+        (itemClick)="onSummaryItemClick($event)" 
+        (menuAction)="menuAction($event)"
+      ></hyt-generic-summary-list>
 
       <div *ngIf="hintVisible" class="info-message m-2 mt-4 d-flex flex-row">
         <span class="text p-2 flex-grow-1">{{hintMessage}}</span>

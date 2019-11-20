@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, OnChanges, ViewEncapsulation } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { SelectOption } from '@hyperiot/components';
 import { HDevice, HPacket } from '@hyperiot/core';
@@ -7,7 +7,8 @@ import { ProjectWizardService } from 'src/app/services/projectWizard/project-wiz
 @Component({
   selector: 'hyt-pw-packet-select',
   templateUrl: './packet-select.component.html',
-  styleUrls: ['./packet-select.component.scss']
+  styleUrls: ['./packet-select.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class PacketSelectComponent implements OnInit {
 

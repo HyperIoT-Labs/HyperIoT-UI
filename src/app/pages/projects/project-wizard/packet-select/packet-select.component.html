@@ -1,19 +1,31 @@
-<form class="field-form" [formGroup]="selectForm" autocomplete="on">
+<div id="container-packet-select" class="container">
 
-  <div class="row">
+  <form class="field-form" [formGroup]="selectForm" autocomplete="on">
 
-    <div class="col-md-3 container-form-field">
-      <hyt-select [form]="selectForm" formControlName="selectDevice" name="selectDevice" [options]="devicesOptions"
-        i18n-label="@@HYT_device" label="HYT_device" (changeFn)="deviceChanged($event)">
-      </hyt-select>
-    </div> <!-- Select Device -->
+    <div class="form-group row">
 
-    <div class="col-md-3 container-form-field">
-      <hyt-select [form]="selectForm" formControlName="selectPacket" name="selectPacket" [options]="packetsOptions"
-        i18n-label="@@HYT_packet" label="HYT_packet" (changeFn)="packetChanged($event)" [disabled]="false">
-      </hyt-select>
-    </div> <!-- Select Packet -->
+      <div id="ffield-col-sel-dev" class="col-6">
 
-  </div>
+        <hyt-select 
+          [form]="selectForm" formControlName="selectDevice" name="selectDevice" [options]="devicesOptions"
+          i18n-label="@@HYT_device" label="HYT_device" (changeFn)="deviceChanged($event)"
+        >
+        </hyt-select>
 
-</form>
+      </div>
+
+      <div id="ffield-col-sel-pack" class="col-6">
+
+        <hyt-select 
+          [form]="selectForm" formControlName="selectPacket" name="selectPacket" [options]="packetsOptions"
+          i18n-label="@@HYT_packet" label="HYT_packet" (changeFn)="packetChanged($event)" [disabled]="false"
+        >
+        </hyt-select>
+
+      </div>
+  
+    </div> <!-- First Row -->
+  
+  </form>
+
+</div>

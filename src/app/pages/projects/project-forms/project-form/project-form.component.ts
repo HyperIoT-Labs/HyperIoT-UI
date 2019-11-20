@@ -1,4 +1,4 @@
-import { Component, OnDestroy, ViewChild, ElementRef, Injector } from '@angular/core';
+import { Component, OnDestroy, ViewChild, ElementRef, Injector, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 
@@ -12,7 +12,8 @@ import { I18n } from '@ngx-translate/i18n-polyfill';
 @Component({
   selector: 'hyt-project-form',
   templateUrl: './project-form.component.html',
-  styleUrls: ['./project-form.component.scss']
+  styleUrls: ['./project-form.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ProjectFormComponent extends ProjectFormEntity implements OnDestroy {
   entity = {} as HProject;

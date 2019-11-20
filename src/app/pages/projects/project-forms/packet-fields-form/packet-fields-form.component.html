@@ -1,4 +1,141 @@
-<div class="content d-flex flex-column align-items-center justify-content-stretch">
+<div id="container-packet-field" class="container">
+
+    <div class="row">
+
+        <div id="ffield-col-tree" class="col-12">
+
+            <hyt-tree-view-editable *ngIf="packet" class="flex-fill" #treeViewFields
+                [deviceName]="packet.name"
+                [treeData]="packetTree"
+                (addFn)="addField($event)"
+                (removeFn)="removeField($event)"
+                (editFn)="editField($event)"
+            >
+            </hyt-tree-view-editable>
+
+        </div>
+
+    </div> <!-- Second Row -->
+
+    <form [formGroup]="form" class="flex-fill mt-4" [ngClass]="{hidden: currentField == null}">
+
+        <div class="form-group row">
+
+            <div id="ffield-col-name" class="col-6">
+
+                <hyt-input-text 
+                    [form]="form" name="hpacketfield-name"
+                    [isRequired]="true"
+                    i18n-placeholder="@@HYT_name"
+                    placeholder="HYT_name"
+                    [injectedErrorMsg]="getError('hpacketfield-name')"
+                    i18n-hintMessage="@@HYT_hint_field_name"
+                    hintMessage="HYT_hint_field_name"
+                >
+                </hyt-input-text>
+
+            </div>
+            <div id="ffield-col-type" class="col-6">
+
+                <hyt-select 
+                    [form]="form"
+                    name="hpacketfield-type"
+                    [options]="fieldTypeOptions"
+                    [isRequired]="true"
+                    i18n-label="@@HYT_type"
+                    label="HYT_type"
+                    i18n-hintMessage="@@HYT_hint_field_type"
+                    hintMessage="HYT_hint_field_type" #fieldType
+                >
+                </hyt-select>
+
+            </div>
+
+        </div> <!-- First Row Form -->
+
+        <div class="form-group row">
+
+            <div id="ffield-col-desc" class="col-6">
+
+                <hyt-text-area 
+                    [form]="form" name="hpacketfield-description" class="flex-fill"
+                    i18n-placeholder="@@HYT_description"
+                    placeholder="HYT_description"
+                    i18n-hintMessage="@@HYT_hint_field_description"
+                    hintMessage="HYT_hint_field_description"
+                >
+                </hyt-text-area>
+
+            </div>
+            <div id="ffield-col-mult" class="col-6">
+
+                <strong i18n="@@HYT_multiplicity">HYT_multiplicity</strong>
+
+                <hyt-radio-button 
+                    [form]="form" name="hpacketfield-multiplicity"
+                    [isRequired]="true"
+                    [options]="fieldMultiplicityOptions"
+                    [verticalAlign]="true"
+                >
+                </hyt-radio-button>
+
+            </div>
+
+        </div> <!-- Second Row Form -->
+
+        <div *ngIf="fieldType.formControl.value !== 'OBJECT'" class="form-group row">
+
+            <div id="ffield-col-mes-type" class="col-6">
+
+                <hyt-select 
+                    [options]="measureOptions"
+                    (changeFn)="onMeasurementTypeChange($event.value)"
+                    label="Measurement Type"
+                    i18n-hintMessage="@@HYT_hint_select_measure_type"
+                    hintMessage="HYT_hint_select_measure_type" #measureSelect
+                >
+                </hyt-select>
+
+            </div>
+            <div id="ffield-col-mes-unit" class="col-6">
+
+                <hyt-select
+                    [form]="form"
+                    name="hpacketfield-unit"
+                    [options]="unitOptions"
+                    label="Unit"
+                    i18n-hintMessage="@@HYT_hint_select_measure_unit"
+                    hintMessage="HYT_hint_select_measure_unit" #unitSelect
+                >
+                </hyt-select>
+
+            </div>
+
+        </div> <!-- Third Row Form -->
+
+    </form>
+
+    <!-- TODO: This HTML block is repeated
+               across all 'entity' components,
+               consider making a component out of it -->
+    <div *ngIf="loadingStatus !== LoadingStatus.Ready" class="overlay d-flex flex-column align-items-center justify-content-center">
+        <h4 *ngIf="loadingStatus === LoadingStatus.Loading" i18n="@@HYT_loading_data">HYT_loading_data</h4>
+        <div *ngIf="loadingStatus === LoadingStatus.Error" class="d-flex flex-column justify-content-center">
+            <h4 i18n="@@HYT_error_occurred">HYT_error_occurred</h4>
+            <button mat-stroked-button (click)="loadingStatus = LoadingStatus.Ready">
+                <span i18n="@@HYT_close">HYT_close</span>
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+        <h4 *ngIf="loadingStatus === LoadingStatus.Saving" i18n="@@HYT_saving_data">HYT_saving_data</h4>
+        <mat-progress-bar
+            *ngIf="loadingStatus === LoadingStatus.Loading || loadingStatus === LoadingStatus.Saving"
+            mode="query"></mat-progress-bar>
+    </div>
+
+</div>
+
+ <!-- <div class="content d-flex flex-column align-items-center justify-content-stretch">
 
     <hyt-tree-view-editable *ngIf="packet" class="flex-fill" #treeViewFields
         [deviceName]="packet.name"
@@ -77,7 +214,7 @@
 
     <!-- TODO: This HTML block is repeated
                across all 'entity' components,
-               consider making a component out of it -->
+               consider making a component out of it 
     <div *ngIf="loadingStatus !== LoadingStatus.Ready" class="overlay d-flex flex-column align-items-center justify-content-center">
         <h4 *ngIf="loadingStatus === LoadingStatus.Loading" i18n="@@HYT_loading_data">HYT_loading_data</h4>
         <div *ngIf="loadingStatus === LoadingStatus.Error" class="d-flex flex-column justify-content-center">
@@ -91,7 +228,7 @@
         <mat-progress-bar
             *ngIf="loadingStatus === LoadingStatus.Loading || loadingStatus === LoadingStatus.Saving"
             mode="query"></mat-progress-bar>
-    </div>
+    </div> 
 
-</div>
+</div>-->
 

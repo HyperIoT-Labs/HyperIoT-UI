@@ -1,0 +1,17 @@
+#container-packet-select {
+    padding-top: 35px;
+
+    form {
+        .form-group {
+            &.row {
+                margin-bottom: 15px;
+
+                #ffield-col-sel-dev,
+                #ffield-col-sel-pack {
+                    text-align: center;
+                }
+            }
+        }
+    }
+
+}

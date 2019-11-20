@@ -1,3 +1,31 @@
+<!-- NEW TABLE -->
+
+<div *ngIf="_summaryList && _summaryList.list.length > 0" id="container-table-device" class="container-fluid">
+    
+    <div class="row">
+        <div class="col-12 header-table">
+            {{_summaryList.title}}
+        </div>
+    </div>
+
+    <div *ngFor="let item of _summaryList.list; let i = index" class="row single-row-table">
+
+        <div class="col-10 el-row-table title-block-table" (click)="onEditOptionClick()">
+            {{item.name}}
+        </div>
+        <div class="col-1 el-row-table cancel-block-table">
+            <span class="hyt-icon icon-hyt_trash"></span>
+        </div>
+        <div class="col-1 el-row-table duplicate-block-table">
+            <span class="hyt-icon icon-hyt_duplicate" (click)="onDuplicateOptionClick()"></span>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- END NEW TABLE -->
+
 <div *ngIf="_summaryList && _summaryList.list.length > 0" class="d-flex flex-row justify-content-start align-items-stretch">
     <div class="header flex-fill">
         {{_summaryList.title}}
@@ -25,7 +53,7 @@
     </button>
     <button mat-menu-item (click)="onDuplicateOptionClick()">
         <mat-icon>file_copy</mat-icon>
-        <span i18n="@@HYT_duplicate">HYT_duplicate</span>
+        <span i18n="@@HYT_duplicate" (click)="onDeleteOptionClick()">HYT_duplicate</span>
     </button>
     <button mat-menu-item (click)="onDeleteOptionClick()">
         <mat-icon>close</mat-icon>

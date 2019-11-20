@@ -1,4 +1,4 @@
-import { Component, OnDestroy, ViewChild, ElementRef, Input, Injector } from '@angular/core';
+import { Component, OnDestroy, ViewChild, ElementRef, Input, Injector, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 
 import { Subscription } from 'rxjs';
@@ -12,7 +12,8 @@ import { I18n } from '@ngx-translate/i18n-polyfill';
 @Component({
   selector: 'hyt-packet-form',
   templateUrl: './packet-form.component.html',
-  styleUrls: ['./packet-form.component.scss']
+  styleUrls: ['./packet-form.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class PacketFormComponent extends ProjectFormEntity implements OnDestroy {
   entity: HPacket = {} as HPacket;

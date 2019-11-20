@@ -1,4 +1,4 @@
-import { Component, OnChanges, Input, EventEmitter, Output } from '@angular/core';
+import { Component, OnChanges, Input, EventEmitter, Output, ViewEncapsulation } from '@angular/core';
 import { HDevice } from '@hyperiot/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { SelectOption } from '@hyperiot/components';
@@ -6,7 +6,8 @@ import { SelectOption } from '@hyperiot/components';
 @Component({
   selector: 'hyt-device-select',
   templateUrl: './device-select.component.html',
-  styleUrls: ['./device-select.component.scss']
+  styleUrls: ['./device-select.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class DeviceSelectComponent implements OnChanges {
 

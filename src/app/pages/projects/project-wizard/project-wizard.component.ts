@@ -79,7 +79,7 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
   @ViewChild('eventPacketSelect', { static: false })
   eventPacketSelect: PacketSelectComponent;
 
-  panelIsVisible : boolean = false;
+  panelIsVisible : boolean = true;
 
   currentProject: HProject;
   currentDevice: HDevice;

@@ -1,14 +1,29 @@
-<form class="field-form" [formGroup]="selectForm" autocomplete="on">
+<div id="container-device-select" class="container">
 
-    <div class="row">
+        <form class="field-form" [formGroup]="selectForm" autocomplete="on">
 
-        <div class="col-md-3 container-form-field">
-            <hyt-select [form]="selectForm" formControlName="selectDevice" name="selectDevice"
-                [options]="devicesOptions" i18n-label="@@HYT_device" label="HYT_device"
-                (changeFn)="deviceChanged($event)">
-            </hyt-select>
-        </div> <!-- Select Device -->
+            <div class="form-group row">
 
-    </div>
+                <div id="fpack-col-sel-dev" class="col-12">
 
-</form>
+                    <hyt-select 
+                        [form]="selectForm" formControlName="selectDevice" name="selectDevice"
+                        [options]="devicesOptions" i18n-label="@@HYT_device" label="HYT_device"
+                        (changeFn)="deviceChanged($event)"
+                    >
+                    </hyt-select>
+
+                </div>
+        
+                <!-- <div class="col-md-3 container-form-field">
+                    <hyt-select [form]="selectForm" formControlName="selectDevice" name="selectDevice"
+                        [options]="devicesOptions" i18n-label="@@HYT_device" label="HYT_device"
+                        (changeFn)="deviceChanged($event)">
+                    </hyt-select>
+                </div>  -->
+        
+            </div>
+        
+        </form>
+
+</div>

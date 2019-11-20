@@ -1,11 +1,146 @@
-<div class="container">
+<div id="container-device-form" class="container">
+
+    <!-- SECOND FORM -->
 
     <form [formGroup]="form" #formReference>
+
+        <div class="form-group row">
+
+            <div id="fdev-col-name" class="col-6">
+                <hyt-input-text 
+                    name="hdevice-devicename"
+                    [form]="form"
+                    formControlName="hdevice-devicename"
+                    errorPosition="bottom"
+                    i18n-placeholder="@@HYT_name"
+                    placeholder="HYT_name"
+                    patternz="[A-Za-z0-9_-]*"
+                    [injectedErrorMsg]="getError('hdevice-devicename')"
+                    i18n-hintMessage="@@HYT_hint_device_name"
+                    hintMessage="HYT_hint_device_name"
+                    isRequired="true"
+                >
+                </hyt-input-text>
+            </div>
+            <div id="fdev-col-brand" class="col-6">
+                <hyt-input-text 
+                    name="hdevice-brand"
+                    formControlName="hdevice-brand"
+                    i18n-placeholder="@@HYT_brand"
+                    placeholder="HYT_brand"
+                    [injectedErrorMsg]="getError('hdevice-brand')"
+                    i18n-hintMessage="@@HYT_hint_device_brand"
+                    hintMessage="HYT_hint_device_brand"
+                    [form]="form"
+                >
+                </hyt-input-text>
+            </div>
+
+        </div> <!-- First Row -->
+
+        <div class="form-group row">
+
+            <div id="fdev-col-model" class="col-6">
+
+                <hyt-input-text 
+                    name="hdevice-model"
+                    formControlName="hdevice-model"
+                    i18n-placeholder="@@HYT_model"
+                    placeholder="HYT_model"
+                    [injectedErrorMsg]="getError('hdevice-model')"
+                    i18n-hintMessage="@@HYT_hint_device_model"
+                    hintMessage="HYT_hint_device_model"
+                    [form]="form"
+                >
+                </hyt-input-text>
+
+            </div>
+
+            <div id="fdev-col-soft-desc" class="col-6">
+
+                <hyt-input-text 
+                    name="hdevice-softwareversion"
+                    formControlName="hdevice-softwareversion"
+                    i18n-placeholder="@@HYT_software_version"
+                    placeholder="HYT_software_version"
+                    [injectedErrorMsg]="getError('hdevice-softwareversion')"
+                    i18n-hintMessage="@@HYT_hint_device_software"
+                    hintMessage="HYT_hint_device_software"
+                    [form]="form"
+                >
+                </hyt-input-text>
+
+            </div>
+
+        </div> <!-- Second Row -->
+
+        <div class="form-group row">
+
+            <div id="fdev-col-group-firm" class="col-6">
+
+                <hyt-input-text 
+                    name="hdevice-firmwareversion"
+                    formControlName="hdevice-firmwareversion"
+                    i18n-placeholder="@@HYT_firmware_version"
+                    placeholder="HYT_firmware_version"
+                    [injectedErrorMsg]="getError('hdevice-firmwareversion')"
+                    i18n-hintMessage="@@HYT_hint_device_firmware"
+                    hintMessage="HYT_hint_device_firmware"
+                    [form]="form"
+                >
+                </hyt-input-text>
+                <ng-container *ngIf="!entity.id">
+                    <hyt-input-text 
+                        [form]="form" 
+                        name="hdevice-password"
+                        formControlName="hdevice-password"
+                        [isRequired]="!entity.id" [isPassword]="true" i18n-placeholder="@@HYT_password" placeholder="HYT_password"
+                        type="password" [injectedErrorMsg]="getError('hdevice-password')"
+                        i18n-hintMessage="@@HYT_hint_device_password"
+                        hintMessage="HYT_hint_device_password"
+                    >
+                    </hyt-input-text>
+                    <hyt-input-text 
+                        [form]="form" 
+                        name="hdevice-passwordConfirm"
+                        formControlName="hdevice-passwordConfirm"
+                        [isRequired]="!entity.id" i18n-placeholder="@@HYT_password_confirm" placeholder="HYT_password_confirm"
+                        type="password" [injectedErrorMsg]="getError('hdevice-passwordConfirm')"
+                        i18n-hintMessage="@@HYT_hint_password_confirm"
+                        hintMessage="HYT_hint_password_confirm"
+                    >
+                    </hyt-input-text>
+                </ng-container>
+
+            </div>
+            <div id="fdev-col-desc" class="col-6">
+
+                <hyt-text-area 
+                    name="hdevice-description"
+                    i18n-placeholder="@@HYT_description"
+                    placeholder="HYT_description"
+                    [injectedErrorMsg]="getError('hdevice-description')"
+                    i18n-hintMessage="@@HYT_hint_device_description"
+                    hintMessage="HYT_hint_device_description"
+                    [form]="form"
+                >
+                </hyt-text-area>
+
+            </div>
+
+        </div> <!-- Third Row -->
+
+    </form>
+
+    <!-- END SECOND FORM -->
+
+    <!-- <form [formGroup]="form" #formReference>
 
         <div class="d-flex flex-column flex-md-row flex-wrap">
 
             <div class="pr-md-3 flex-fill">
-                <hyt-input-text name="hdevice-devicename"
+                <hyt-input-text 
+                    name="hdevice-devicename"
                     [form]="form"
                     formControlName="hdevice-devicename"
                     errorPosition="bottom"
@@ -97,7 +232,7 @@
 
         </div>
 
-    </form>
+    </form> -->
 
     <!-- TODO: This HTML block is repeated
                across all 'entity' components,
