@@ -86,7 +86,6 @@
             <hyt-generic-summary-list *ngIf="currentEntity.summaryList"
                 [ngClass]="{ disabled: currentEntity.isDirty() }"
                 [summaryList]="currentEntity.summaryList"
-                (itemClick)="onSummaryItemClick($event)"
                 (menuAction)="onSummaryMenuClick($event)"></hyt-generic-summary-list>
 
         </div>

@@ -117,9 +117,6 @@ export class ProjectDetailComponent implements OnInit {
     this.currentEntity.cancel();
   }
 
-  onSummaryItemClick(item: SummaryListItem) {
-    //console.log('clicked summary item', item);
-  }
   onSummaryMenuClick(e) {
     const rule = Object.assign({}, e.item.data as Rule);
     switch (e.action) {

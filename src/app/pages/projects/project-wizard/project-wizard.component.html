@@ -161,7 +161,6 @@
         *ngIf="currentForm && currentForm.summaryList"
         [ngClass]="{ disabled: currentForm.isDirty() && !currentForm.isNew() }" 
         [summaryList]="currentForm.summaryList"
-        (itemClick)="onSummaryItemClick($event)" 
         (menuAction)="menuAction($event)"
       ></hyt-generic-summary-list>
 

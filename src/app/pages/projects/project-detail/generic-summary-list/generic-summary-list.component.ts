@@ -17,7 +17,7 @@ export class SummaryListItem {
   styleUrls: ['./generic-summary-list.component.scss']
 })
 export class GenericSummaryListComponent {
-  @Output() itemClick = new EventEmitter<SummaryListItem>();
+
   @Output() menuAction = new EventEmitter<{
     action: 'edit' | 'duplicate' | 'delete',
     item: any
@@ -34,30 +34,25 @@ export class GenericSummaryListComponent {
   constructor(
   ) { }
 
-  onItemClick(i: number, item: SummaryListItem) {
-    //item.index = i;
-    this.selectedItem = item;
-    this.itemClick.emit(item);
-  }
-
-  onEditOptionClick() {
+  onEditOptionClick(itemT: SummaryListItem) {
     this.menuAction.emit({
       action: 'edit',
-      item: this.selectedItem
+      item: itemT
     });
   }
 
-  onDuplicateOptionClick() {
+  onDuplicateOptionClick(itemT: SummaryListItem) {
     this.menuAction.emit({
       action: 'duplicate',
-      item: this.selectedItem
+      item: itemT
     });
   }
 
-  onDeleteOptionClick() {
+  onDeleteOptionClick(itemT: SummaryListItem) {
     this.menuAction.emit({
       action: 'delete',
-      item: this.selectedItem
+      item: itemT
     });
   }
+
 }

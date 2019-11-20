@@ -272,9 +272,6 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
     this.hintVisible = false;
   }
 
-  onSummaryItemClick(event): void {
-  }
-
   menuAction(event): void {
     console.log(event.item);
     switch (event.action) {
