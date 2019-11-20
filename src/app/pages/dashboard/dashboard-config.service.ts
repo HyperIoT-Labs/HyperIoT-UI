@@ -159,7 +159,7 @@ export class DashboardConfigService {
     }
 
     postRecordingStateOff(projectId: number) {
-        return this.stormService.deactivateTopology(projectId);
+        return this.stormService.killTopology(projectId);
     }
 
     getRecordingStatus(projectId: number) {

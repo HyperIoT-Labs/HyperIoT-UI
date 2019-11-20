@@ -303,17 +303,18 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.recordReloading = true;
       this.recordStateInLoading = true;
 
-      this.dashboardConfigService.postRecordingStateOff(this.idProjectSelected)
+      this.dashboardConfigService.postRecordingStateOn(this.idProjectSelected)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         res => {
-          this.dataRecordingIsOn = !this.dataRecordingIsOn;
+          this.dataRecordingIsOn = true;
           this.recordStateInLoading = false;
           this.recordReloading = false;
           this.upTimeSec = undefined;
         },
         error => {
           console.error(error);
+          this.dataRecordingIsOn = false;
           this.recordStateInLoading = false;
           this.recordReloading = false;
           this.upTimeSec = undefined;
