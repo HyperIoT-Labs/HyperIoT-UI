@@ -113,7 +113,7 @@ export class PacketFieldsFormComponent extends ProjectFormEntity implements OnDe
         .map((u) => ({
           label: `${u.plural} (${u.abbr})`,
           value: u.abbr
-        }))
+        })).sort((a, b) => a.label < b.label ? -1 : 1)
       );
     }
     this.form.patchValue({'hpacketfield-unit': ''});

@@ -87,7 +87,6 @@ export class PacketSelectComponent implements OnInit {
   }
 
   onPacketUnitConversionChange(unit, i) {
-    console.log(unit, i);
     this.packetUnitsConversion[i].convertTo = unit;
   }
 
@@ -209,7 +208,7 @@ export class PacketSelectComponent implements OnInit {
         .map((u) => ({
           label: `${u.plural} (${u.abbr})`,
           value: u.abbr
-        }))
+        })).sort((a, b) => a.label < b.label ? -1 : 1)
       );
     }
     return unitOptions;

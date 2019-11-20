@@ -11,9 +11,8 @@
     <div id="container-dashboard" [ngSwitch]="pageStatus">
 
         <div id="row-recording" class="row">
-            <div class="col-12 recording {{(dataRecordingIsOn)?'on':'off'}}">
-                <span id="icon-recording" class="{{(dataRecordingIsOn)?'recOn':'recOff'}}"
-                    (click)="openRecordingActionModal()">
+            <div class="col-12 recording {{(recordStateInLoading)?'inLoading':''}} {{(dataRecordingIsOn)?'on':'off'}}">
+                <span id="icon-recording" class="{{(dataRecordingIsOn)?'recOn':'recOff'}}">
                     <svg xmlns="http://www.w3.org/2000/svg" id="Capa_1" enable-background="new 0 0 515.556 515.556"
                         height="512" viewBox="0 0 515.556 515.556" width="512">
                         <path
@@ -22,9 +21,14 @@
                             d="m257.778 128.889c-71.068 0-128.889 57.805-128.889 128.889s57.821 128.889 128.889 128.889 128.889-57.805 128.889-128.889-57.821-128.889-128.889-128.889z" />
                     </svg>
                 </span>
-                <ng-container i18n="@@HYT_data_recording_on_off">HYT_data_recording_on_off</ng-container>
+                <span *ngIf="recordStateInLoading; else recordingState">Loading...</span>
+                <ng-template #recordingState i18n="@@HYT_data_recording_on_off">HYT_data_recording_on_off</ng-template>
+                <span *ngIf="upTimeSec">
+                    <ng-container> - Time passed since activation: </ng-container> {{upTimeSec}}
+                </span>
+                <span id="play-pause-btn" class="hyt-icon {{(dataRecordingIsOn)?'icon-hyt_pause':'icon-hyt_play'}}" (click)="openRecordingActionModal()"></span>
 
-                <div id="reload-btn" (click)="openModal('hyt-modal-reload-recording-confirm')">
+                <div id="reload-btn" (click)="openReloadRecordingModal()">
                     <span class="hyt-icon icon-hyt_reload {{(recordReloading)?'reloading':''}}"></span>
                 </div>
             </div>
