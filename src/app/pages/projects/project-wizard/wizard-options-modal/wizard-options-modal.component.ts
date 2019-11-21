@@ -1,11 +1,12 @@
-import { Component, OnInit, Injector, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Injector, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
 import { HytModal } from 'src/app/services/hyt-modal';
 import { EntitiesService } from 'src/app/services/entities/entities.service';
 
 @Component({
   selector: 'hyt-wizard-options-modal',
   templateUrl: './wizard-options-modal.component.html',
-  styleUrls: ['./wizard-options-modal.component.scss']
+  styleUrls: ['./wizard-options-modal.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class WizardOptionsModalComponent extends HytModal implements OnInit  {
 

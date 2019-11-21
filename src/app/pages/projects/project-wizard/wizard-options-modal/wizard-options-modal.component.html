@@ -1,45 +1,64 @@
-<div class="hyt-modal">
+<div id="container-option-modal" class="hyt-modal">
+    
     <div class="hyt-modal-body">
+
         <div class="dialog">
-            <div class="center">
-                <div class="row">
-                    <div class="col-md-12">
-                        <ng-container i18n="@@HYT_choose_how_proceed">HYT_choose_how_proceed</ng-container>
-                        <button (click)="close()">X</button>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <hyt-hexagon [iconPath]="entitiesService.enrichment.icon" (clicked)="output('goToStep', 4);">
+
+            <div class="dialog-header">
+                <span i18n="@@HYT_choose_how_proceed">HYT_choose_how_proceed</span>
+                <span class="hyt-icon icon-hyt_cancelC" (click)="close()"></span>
+            </div>
+
+            <div class="dialog-body">
+
+                <div class="row row-block">
+
+                    <div id="enrich-block" class="col-4 single-box">
+
+                        <hyt-hexagon 
+                            [iconPath]="entitiesService.enrichment.icon" 
+                            (clicked)="output('goToStep', 4);"
+                        >
                         </hyt-hexagon>
-                        <b i18n="@@HYT_enrichment_data">HYT_enrichment_data</b>
-                        <br>
-                        <p i18n="@@HYT_enrichment_definition_long">HYT_enrichment_definition_long</p>
+
+                        <span class="title-block" i18n="@@HYT_enrichment_data">HYT_enrichment_data</span>
+                        
+                        <p class="body-block" i18n="@@HYT_enrichment_definition_long">HYT_enrichment_definition_long</p>
+
                     </div>
-                    <div class="col-md-4">
+                    <div id="stats-block" class="col-4 single-box">
+                        
                         <hyt-hexagon [iconPath]="entitiesService.statistic.icon" (clicked)="output('goToStep', 5);">
                         </hyt-hexagon>
-                        <b i18n="@@HYT_statistics">HYT_statistics</b>
-                        <br>
-                        <p i18n="@@HYT_statistics_definition_long">HYT_statistics_definition_long</p>
+
+                        <span class="title-block" i18n="@@HYT_statistics">HYT_statistics</span>
+                       
+                        <p class="body-block" i18n="@@HYT_statistics_definition_long">HYT_statistics_definition_long</p>
+                    
                     </div>
-                    <div class="col-md-4">
+                    <div id="events-block" class="col-4 single-box">
+
                         <hyt-hexagon [iconPath]="entitiesService.event.icon" (clicked)="output('goToStep', 6);">
                         </hyt-hexagon>
-                        <b i18n="@@HYT_events">HYT_events</b>
-                        <br>
-                        <p i18n="@@HYT_events_definition_long">HYT_events_definition_long</p>
+
+                        <span class="title-block"i18n="@@HYT_events">HYT_events</span>
+                        
+                        <p class="body-block" i18n="@@HYT_events_definition_long">HYT_events_definition_long</p>
+
                     </div>
-                </div>
-                <hr>
-                <div class="row">
-                    <div class="col-md-12">
-                        <hyt-button (clickFn)="output('goToFinish', null);">
-                            <ng-container i18n="@@HYT_finish">HYT_finish</ng-container>
-                        </hyt-button>
-                    </div>
-                </div>
+
+                </div> <!-- Row 1 -->
+
             </div>
+
+            <div class="dialog-footer">
+
+                <hyt-button (clickFn)="output('goToFinish', null);">
+                    <ng-container i18n="@@HYT_finish">HYT_finish</ng-container>
+                </hyt-button>
+
+            </div>
+            
         </div>
     </div>
 </div>

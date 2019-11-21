@@ -1,20 +1,66 @@
 #container-packet-field {
     padding-top: 35px;
+
+    hyt-tree-view-editable {
+        width: 100%;
+        max-width: 640px;
+    }
+
+    form {
+        width: 100%;
+
+        .row {
+            
+            #ffield-col-tree {
+                margin-bottom: 20px;
+            }
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+
+            &.row {
+                #ffield-col-type,
+                #ffield-col-mult,
+                #ffield-col-mes-type,
+                #ffield-col-mes-unit {
+                    text-align: center;
+                }
+
+                mat-radio-group {
+                    width: 90%;
+                    margin: 0 auto;
+                    border: .5px solid #949494;
+                    border-radius: 5px;
+                    padding: 5px;
+                }
+
+                mat-select {
+                    
+                    .mat-form-field {
+                        width: auto !important;
+                    }
+                    
+                    .mat-select-value {
+                        max-width: 100%;
+                        width: auto;
+                    }  
+                    
+                }
+            }
+        }
+
+    }
+
 }
 
-hyt-tree-view-editable {
-    width: 100%;
-    max-width: 640px;
-}
+
 
 [name="fieldMultiplicity"] {
     min-width: 180px;
 }
 
-form {
-    width: 100%;
-    max-width: 640px;
-}
+
 
 .content {
     position: relative;

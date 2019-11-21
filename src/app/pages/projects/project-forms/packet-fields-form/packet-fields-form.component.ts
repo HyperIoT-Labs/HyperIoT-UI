@@ -1,4 +1,4 @@
-import { Component, OnDestroy, ViewChild, ElementRef, Injector } from '@angular/core';
+import { Component, OnDestroy, ViewChild, ElementRef, Injector, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 
 import { Subscription, Observable } from 'rxjs';
@@ -16,7 +16,8 @@ import { I18n } from '@ngx-translate/i18n-polyfill';
 @Component({
   selector: 'hyt-packet-fields-form',
   templateUrl: './packet-fields-form.component.html',
-  styleUrls: ['./packet-fields-form.component.scss']
+  styleUrls: ['./packet-fields-form.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class PacketFieldsFormComponent extends ProjectFormEntity implements OnDestroy {
   @ViewChild('treeViewFields', { static: false }) treeViewFields: HytTreeViewEditableComponent;

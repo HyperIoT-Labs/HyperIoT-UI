@@ -111,11 +111,11 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit() {
-
+    
   }
 
   ngAfterViewInit() {
-    
+
     setTimeout(() => {// TODO...setimeout 0 to avoid 'expression changed after view checked'
       this.eventsForm.editMode = true;
       this.enrichmentForm.editMode = true;
