@@ -79,7 +79,7 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
   @ViewChild('eventPacketSelect', { static: false })
   eventPacketSelect: PacketSelectComponent;
 
-  panelIsVisible : boolean = true;
+  panelIsVisible = true;
 
   currentProject: HProject;
   currentDevice: HDevice;
@@ -110,9 +110,7 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
     public entitiesService: EntitiesService
   ) { }
 
-  ngOnInit() {
-    
-  }
+  ngOnInit() { }
 
   ngAfterViewInit() {
 
@@ -126,9 +124,9 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
         this.projectForm.load();
       }
       this.currentForm = this.projectForm;
-      
+
     }, 0);
-    
+
   }
 
   resetForms() {
@@ -408,6 +406,9 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
       (res: HPacket[]) => {
         this.hPackets = res;
         this.updatePacketTable();
+        if (window.history.state.projectId && !this.packetInformationValidated && res.length !== 0) {
+          this.packetInformationValidated = true;
+        }
       }
     );
   }
