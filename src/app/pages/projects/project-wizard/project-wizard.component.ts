@@ -88,8 +88,6 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
   enrichmentRules: Rule[] = [];
   eventRules: Rule[] = [];
 
-  packetInformationValidated = false;
-
   hintMessage = '';
   hintVisible = false;
 
@@ -102,6 +100,8 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
   deactivateModal = false;
 
   loadingProjectData: ProjectDataStatus = ProjectDataStatus.Ok;
+
+  optionModalViewed = false;
 
   constructor(
     private hDevicesService: HdevicesService,
@@ -122,6 +122,7 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
         //this.loadingProjectData = true;
         this.projectForm.id = window.history.state.projectId;
         this.projectForm.load();
+        this.optionModalViewed = true;
       }
       this.currentForm = this.projectForm;
 
@@ -271,7 +272,6 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
   }
 
   menuAction(event): void {
-    console.log(event.item);
     switch (event.action) {
       case 'edit':
         if (this.currentForm instanceof PacketFormComponent) {
@@ -295,6 +295,7 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
         this.currentForm.edit(event.item.data, this.currentForm.openDeleteDialog((del) => {
           if (this.currentForm instanceof DeviceFormComponent) {
             this.hDevices = [...this.deleteFromList(event.item.data.id, this.hDevices)];
+            this.getPackets();
             this.updateDeviceTable();
           } else if (this.currentForm instanceof PacketFormComponent) {
             this.hPackets = [...this.deleteFromList(event.item.data.id, this.hPackets)];
@@ -338,7 +339,7 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
 
   openOptionModal() {
     this.modalService.open('hyt-wizard-options-modal');
-    this.packetInformationValidated = true;
+    this.optionModalViewed = true;
   }
 
   optionsModalClosed(event: { action: string, data: any }) {
@@ -406,9 +407,6 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
       (res: HPacket[]) => {
         this.hPackets = res;
         this.updatePacketTable();
-        if (window.history.state.projectId && !this.packetInformationValidated && res.length !== 0) {
-          this.packetInformationValidated = true;
-        }
       }
     );
   }
@@ -430,16 +428,6 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
       default: {
         return false;
       }
-    }
-  }
-
-  nextFn() {
-    if (this.currentStepIndex === 3 && !this.packetInformationValidated) {
-      this.openOptionModal();
-    } else if (this.currentStepIndex === 6) {
-      this.openOptionModal();
-    } else {
-      this.stepper.next();
     }
   }
 
