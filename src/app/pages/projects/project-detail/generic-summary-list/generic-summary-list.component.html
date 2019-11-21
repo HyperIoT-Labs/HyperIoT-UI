@@ -1,7 +1,5 @@
-<!-- NEW TABLE -->
-
 <div *ngIf="_summaryList && _summaryList.list.length > 0" id="container-table-device" class="container-fluid">
-    
+
     <div class="row">
         <div class="col-12 header-table">
             {{_summaryList.title}}
@@ -10,53 +8,16 @@
 
     <div *ngFor="let item of _summaryList.list; let i = index" class="row single-row-table">
 
-        <div class="col-10 el-row-table title-block-table" (click)="onEditOptionClick()">
+        <div class="col-10 el-row-table title-block-table" (click)="onEditOptionClick(item)">
             {{item.name}}
         </div>
         <div class="col-1 el-row-table cancel-block-table">
-            <span class="hyt-icon icon-hyt_trash"></span>
+            <span class="hyt-icon icon-hyt_trash" (click)="onDeleteOptionClick(item)"></span>
         </div>
         <div class="col-1 el-row-table duplicate-block-table">
-            <span class="hyt-icon icon-hyt_duplicate" (click)="onDuplicateOptionClick()"></span>
+            <span class="hyt-icon icon-hyt_duplicate" (click)="onDuplicateOptionClick(item)"></span>
         </div>
 
     </div>
 
 </div>
-
-<!-- END NEW TABLE -->
-
-<div *ngIf="_summaryList && _summaryList.list.length > 0" class="d-flex flex-row justify-content-start align-items-stretch">
-    <div class="header flex-fill">
-        {{_summaryList.title}}
-    </div>
-</div>
-<div *ngFor="let item of _summaryList.list; let i = index" (click)="onItemClick(i, item)"
-    [matMenuTriggerFor]="itemMenu"
-    class="item d-flex flex-row justify-content-start align-items-stretch">
-    <div class="icon d-flex flex-column justify-content-center align-items-center">
-        <!-- <mat-icon>double_arrow</mat-icon> -->
-        <span class="hyt-icon icon-hyt_device"></span>
-    </div>
-    <div class="row-content" class="flex-fill">
-        <div class="row-fields d-flex flex-column justify-content-start align-items-stretch">
-            <div class="field-name truncate">{{item.name}}</div>
-            <div class="field-description truncate">{{item.description}}</div>
-        </div>
-    </div>
-</div>
-<mat-menu #itemMenu="matMenu">
-    <label class="menu-title" *ngIf="selectedItem">{{selectedItem.name}}</label>
-    <button mat-menu-item (click)="onEditOptionClick()">
-        <mat-icon>edit</mat-icon>
-        <span i18n="@@HYT_edit">HYT_edit</span>
-    </button>
-    <button mat-menu-item (click)="onDuplicateOptionClick()">
-        <mat-icon>file_copy</mat-icon>
-        <span i18n="@@HYT_duplicate" (click)="onDeleteOptionClick()">HYT_duplicate</span>
-    </button>
-    <button mat-menu-item (click)="onDeleteOptionClick()">
-        <mat-icon>close</mat-icon>
-        <span i18n="@@HYT_delete">HYT_delete</span>
-    </button>
-</mat-menu>
