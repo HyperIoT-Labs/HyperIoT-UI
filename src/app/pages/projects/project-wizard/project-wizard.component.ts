@@ -17,21 +17,6 @@ import { PacketStatisticsFormComponent } from '../project-forms/packet-statistic
 import { HytModalConfService } from 'src/app/services/hyt-modal-conf.service';
 import { HytStepperComponent } from '@hyperiot/components/lib/hyt-stepper/hyt-stepper.component';
 import { EntitiesService } from 'src/app/services/entities/entities.service';
-import { ProjectDataStatus } from './model/pageStatusEnum';
-
-@Injectable({
-  providedIn: 'root',
-})
-export class ProjectWizardCanDeactivate implements CanDeactivate<ProjectWizardComponent> {
-  canDeactivate(com: ProjectWizardComponent) {
-    if (com.currentProject == null) {
-      return true;
-    } else {
-      com.deactivateModal = true;
-      return com.canDeactivate$;
-    }
-  }
-}
 
 @Component({
   selector: 'hyt-project-wizard',
@@ -99,8 +84,6 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
 
   deactivateModal = false;
 
-  loadingProjectData: ProjectDataStatus = ProjectDataStatus.Ok;
-
   optionModalViewed = false;
 
   constructor(
@@ -119,7 +102,6 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
       this.enrichmentForm.editMode = true;
       this.resetForms();
       if (window.history.state.projectId) {
-        //this.loadingProjectData = true;
         this.projectForm.id = window.history.state.projectId;
         this.projectForm.load();
         this.optionModalViewed = true;
@@ -128,6 +110,11 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
 
     }, 0);
 
+  }
+
+  canDeactivate(com: ProjectWizardComponent) {
+    //TODO implement can deactivate logic
+    return true;
   }
 
   resetForms() {
@@ -343,7 +330,6 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
   }
 
   optionsModalClosed(event: { action: string, data: any }) {
-    console.log(event);
     switch (event.action) {
       case 'goToStep': {
         this.stepper.changeStep(event.data);

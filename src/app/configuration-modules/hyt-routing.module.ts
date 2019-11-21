@@ -9,7 +9,7 @@ import { NotFoundComponent } from '../pages/not-found/not-found.component';
 import { LoginComponent } from '../pages/authentication/login/login.component';
 import { RegistrationComponent } from '../pages/authentication/registration/registration.component';
 import { PasswordRecoveryComponent } from '../pages/authentication/password-recovery/password-recovery.component';
-import { ProjectWizardComponent, ProjectWizardCanDeactivate } from '../pages/projects/project-wizard/project-wizard.component';
+import { ProjectWizardComponent } from '../pages/projects/project-wizard/project-wizard.component';
 import { ProjectsComponent } from '../pages/projects/projects.component';
 import { ProfileComponent } from '../pages/account/profile/profile.component';
 import { ProjectDetailComponent } from '../pages/projects/project-detail/project-detail.component';
@@ -98,7 +98,7 @@ const hyperiotRoutes: Routes = [
     path: 'project-wizard',
     component: ProjectWizardComponent,
     canActivate: [LoggedInGuard],
-    // canDeactivate: [ProjectWizardCanDeactivate],
+    canDeactivate: [CanDeactivateGuard],
     data: {
       showToolBar: true,
     }

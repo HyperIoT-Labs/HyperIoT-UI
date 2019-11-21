@@ -23,7 +23,7 @@ import { SelectableTextComponent } from './project-forms/packet-events-form/even
 import { AssetCategoryComponent } from './project-forms/packet-enrichment-form/asset-category/asset-category.component';
 import { AssetTagComponent } from './project-forms/packet-enrichment-form/asset-tag/asset-tag.component';
 
-import { ProjectWizardComponent, ProjectWizardCanDeactivate } from './project-wizard/project-wizard.component';
+import { ProjectWizardComponent } from './project-wizard/project-wizard.component';
 import { DeviceSelectComponent } from './project-wizard/device-select/device-select.component';
 import { PacketSelectComponent } from './project-wizard/packet-select/packet-select.component';
 
