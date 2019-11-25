@@ -1,4 +1,4 @@
-import { Component, OnDestroy, ViewChild, ElementRef, Input, Injector, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, ViewChild, ElementRef, Input, Injector, ViewEncapsulation, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 
 import { Subscription } from 'rxjs';
@@ -15,7 +15,7 @@ import { I18n } from '@ngx-translate/i18n-polyfill';
   styleUrls: ['./packet-form.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class PacketFormComponent extends ProjectFormEntity implements OnDestroy {
+export class PacketFormComponent extends ProjectFormEntity implements AfterViewInit, OnDestroy {
   entity: HPacket = {} as HPacket;
   entityFormMap = {
     'hpacket-name': {
@@ -76,18 +76,24 @@ export class PacketFormComponent extends ProjectFormEntity implements OnDestroy 
     @ViewChild('form', { static: true }) formView: ElementRef,
     private hPacketService: HpacketsService,
     private activatedRoute: ActivatedRoute,
-    private router: Router,
+    private cdr: ChangeDetectorRef,
     private i18n: I18n
   ) {
     super(injector, i18n, formView);
     this.longDefinition = this.entitiesService.packet.longDefinition;
     this.formTitle = this.entitiesService.packet.formTitle;
     this.icon = this.entitiesService.packet.icon;
-    this.routerSubscription = this.router.events.subscribe((rl) => {
-      if (rl instanceof NavigationEnd) {
-        this.id = this.activatedRoute.snapshot.params.packetId;
+  }
+
+  ngAfterViewInit(): void {
+    this.routerSubscription = this.activatedRoute.params.subscribe(params => {
+      if (params.packetId) {
+        this.id = params.packetId;
         this.load();
+      } else {
+        this.loadEmpty();
       }
+      this.cdr.detectChanges();
     });
   }
 
@@ -121,6 +127,12 @@ export class PacketFormComponent extends ProjectFormEntity implements OnDestroy 
     }, (err) => {
       this.loadingStatus = LoadingStatusEnum.Error;
     });
+  }
+
+  loadEmpty() {
+    this.form.reset();
+    this.entity = { ...this.entitiesService.packet.emptyModel };
+    this.edit();
   }
 
   private savePacket(successCallback?, errorCallback?) {

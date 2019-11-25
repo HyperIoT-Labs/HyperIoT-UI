@@ -1,1 +1,35 @@
-<p>wizard-deactivation-modal works!</p>
+<div class="hyt-modal">
+    <div class="hyt-modal-body">
+        <div class="dialog">
+            <div class="center">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>Unsaved data</h3>
+                        If you leave the page the unsaved changes will be lost
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <button mat-button (click)="output(false)">
+                                    <mat-icon>arrow_back</mat-icon>
+                                    <span>Remain</span>
+                                </button>
+                            </div>
+                            <div class="col-md-6">
+                                <button defaultButton color="warn" mat-button (click)="output(true)">
+                                    <mat-icon>close</mat-icon>
+                                    <span>Leave</span>
+                                    <!--Leave the page-->
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="hyt-modal-background"></div>

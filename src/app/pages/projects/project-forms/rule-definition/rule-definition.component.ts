@@ -68,7 +68,7 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
   /**
    * originalFormsValues is used to keep record of the old ruleDefinition value (dirty)
    */
-  private originalFormsValues = '';
+  private originalFormsValues = '{"ruleField":"","ruleCondition":"","ruleJoin":""}';
 
   /**
    * class constructor
@@ -92,7 +92,7 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
       conditionOptions: [],
       compareWith: false
     })];
-    this.originalValueUpdate();
+    this.originalFormsValues = '{"ruleField":"","ruleCondition":"","ruleJoin":""}';
   }
 
   extractField(fieldArr: HPacketField[], pre: string) {

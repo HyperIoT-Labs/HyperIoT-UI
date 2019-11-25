@@ -1,5 +1,5 @@
 <div *ngIf="showCover && !editMode" class="d-flex flex-column justify-content-center align-items-center">
-  <hyt-button (clickFn)="onAddButtonClick()">Add enrichment</hyt-button>
+  <hyt-button (clickFn)="loadEmpty()">Add enrichment</hyt-button>
 </div>
 <form [ngClass]="{ hidden: !editMode }" class="container enrichment-form" [formGroup]="form" autocomplete="on">
 
@@ -13,7 +13,7 @@
     </div> <!-- Field Name -->
     <div class="col-md-4 container-form-field">
       <hyt-select [form]="form" [options]="enrichmentRules" (changeFn)="enrichmentTypeChanged($event)"
-        formControlName="enrichmentRule" name="enrichmentRule" [isRequired]="true" i18n-label="@@HYT_rule_type"
+        formControlName="rule-type" name="rule-type" [isRequired]="true" i18n-label="@@HYT_rule_type"
         label="HYT_rule_type">
       </hyt-select>
     </div> <!-- Field RuleType -->

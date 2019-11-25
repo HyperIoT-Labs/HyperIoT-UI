@@ -1,5 +1,5 @@
-import { Component, OnDestroy, ElementRef, ViewChild, Input, Injector, AfterViewInit, ViewEncapsulation } from '@angular/core';
-import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
+import { Component, OnDestroy, ElementRef, ViewChild, Input, Injector, AfterViewInit, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { HdevicesService, HDevice, HProject } from '@hyperiot/core';
@@ -13,32 +13,32 @@ import { I18n } from '@ngx-translate/i18n-polyfill';
   styleUrls: ['./device-form.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class DeviceFormComponent extends ProjectFormEntity implements OnDestroy, AfterViewInit {
+export class DeviceFormComponent extends ProjectFormEntity implements AfterViewInit, OnDestroy {
   entity: HDevice = {} as HDevice;
   entityFormMap = {
     'hdevice-devicename': {
-      field: 'deviceName',
-      default: null
+      field: 'deviceName'
     },
     'hdevice-brand': {
-      field: 'brand',
-      default: null
+      field: 'brand'
     },
     'hdevice-model': {
-      field: 'model',
-      default: null
+      field: 'model'
     },
     'hdevice-firmwareversion': {
-      field: 'firmwareVersion',
-      default: null
+      field: 'firmwareVersion'
     },
     'hdevice-softwareversion': {
-      field: 'softwareVersion',
-      default: null
+      field: 'softwareVersion'
     },
     'hdevice-description': {
-      field: 'description',
-      default: null
+      field: 'description'
+    },
+    'hdevice-password': {
+      field: 'password'
+    },
+    'hdevice-passwordConfirm': {
+      field: 'passwordConfirm'
     }
   };
 
@@ -53,22 +53,27 @@ export class DeviceFormComponent extends ProjectFormEntity implements OnDestroy,
     @ViewChild('form', { static: true }) formView: ElementRef,
     private hDeviceService: HdevicesService,
     private activatedRoute: ActivatedRoute,
-    private router: Router,
+    private cdr: ChangeDetectorRef,
     private i18n: I18n
   ) {
     super(injector, i18n, formView);
     this.longDefinition = this.entitiesService.device.longDefinition;
     this.formTitle = this.entitiesService.device.formTitle;
     this.icon = this.entitiesService.device.icon;
-    this.routerSubscription = this.router.events.subscribe((rl) => {
-      if (rl instanceof NavigationEnd) {
-        this.id = this.activatedRoute.snapshot.params.deviceId;
-        this.load();
-      }
-    });
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
+
+    this.routerSubscription = this.activatedRoute.params.subscribe(params => {
+      if (params.deviceId) {
+        this.id = params.deviceId;
+        this.load();
+      } else {
+        this.loadEmpty();
+      }
+      this.cdr.detectChanges();
+    });
+
     //TODO: Replace with Mismatch
     this.form.get('hdevice-password').valueChanges.subscribe(res => {
       const control = this.form.get('hdevice-passwordConfirm')
@@ -112,16 +117,27 @@ export class DeviceFormComponent extends ProjectFormEntity implements OnDestroy,
       this.loadingStatus = LoadingStatusEnum.Error;
     });
   }
+
+  loadEmpty() {
+    this.form.reset();
+    this.entity = { ...this.entitiesService.device.emptyModel };
+    this.edit();
+  }
+
   edit(d?: HDevice, readyCallback?) {
     // TODO: verify this...
     if (d && d.id) {
       this.form.removeControl('hdevice-password');
       this.form.removeControl('hdevice-passwordConfirm');
+      super.edit(d, readyCallback);
     } else {
+      //TODO find better implementation. Settimeout per aspettare che siano rigenerati password e confPassword nel template
+      setTimeout(() => {
+        super.edit(d, readyCallback);
+      }, 0);
       //this.form.addControl('hdevice-password');
       //this.form.removeControl('hdevice-passwordConfirm');
     }
-    super.edit(d, readyCallback);
   }
   clone(entity?: HDevice): HDevice {
     const device = { ...entity } || this.entity;

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, ViewChild, ElementRef, Injector, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, ViewChild, ElementRef, Injector, ViewEncapsulation, AfterViewInit, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 
@@ -15,16 +15,15 @@ import { I18n } from '@ngx-translate/i18n-polyfill';
   styleUrls: ['./project-form.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class ProjectFormComponent extends ProjectFormEntity implements OnDestroy {
+export class ProjectFormComponent extends ProjectFormEntity implements AfterViewInit, OnDestroy {
+
   entity = {} as HProject;
   entityFormMap = {
     'hproject-name': {
-      field: 'name',
-      default: null
+      field: 'name'
     },
     'hproject-description': {
-      field: 'description',
-      default: null
+      field: 'description'
     }
   };
 
@@ -36,18 +35,24 @@ export class ProjectFormComponent extends ProjectFormEntity implements OnDestroy
     @ViewChild('form', { static: true }) formView: ElementRef,
     private hProjectService: HprojectsService,
     private activatedRoute: ActivatedRoute,
-    private router: Router,
+    private cdr: ChangeDetectorRef,
     private i18n: I18n
   ) {
     super(injector, i18n, formView);
     this.longDefinition = this.entitiesService.project.longDefinition;
     this.formTitle = this.entitiesService.project.formTitle;
     this.icon = this.entitiesService.project.icon;
-    this.routerSubscription = this.router.events.subscribe((rl) => {
-      if (rl instanceof NavigationEnd) {
-        this.id = this.activatedRoute.snapshot.params.projectId;
-        if (this.id) { this.load(); }
+  }
+
+  ngAfterViewInit(): void {
+    this.routerSubscription = this.activatedRoute.params.subscribe(params => {
+      if (params.projectId) {
+        this.id = params.projectId;
+        this.load();
+      } else {
+        this.loadEmpty();
       }
+      this.cdr.detectChanges();
     });
   }
 
@@ -76,6 +81,12 @@ export class ProjectFormComponent extends ProjectFormEntity implements OnDestroy
     }, (err) => {
       this.loadingStatus = LoadingStatusEnum.Error;
     });
+  }
+
+  loadEmpty() {
+    this.form.reset();
+    this.entity = { ...this.entitiesService.project.emptyModel };
+    this.edit();
   }
 
   private saveProject(successCallback?, errorCallback?) {
@@ -130,7 +141,7 @@ export class ProjectFormComponent extends ProjectFormEntity implements OnDestroy
     if (err.error && err.error.type) {
       switch (err.error.type) {
         case 'it.acsoftware.hyperiot.base.exception.HyperIoTDuplicateEntityException': {
-          this.validationError = [{ "message": this.i18n("HYT_unavaiable_project_name"), "field": "hproject-name", "invalidValue": "" }];
+          this.validationError = [{ "message": this.i18n('HYT_unavaiable_project_name'), "field": 'hproject-name', "invalidValue": '' }];
           this.form.get('hproject-name').setErrors({
             validateInjectedError: {
               valid: false

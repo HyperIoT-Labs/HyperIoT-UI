@@ -36,7 +36,8 @@
 
       <ng-template #enrichmentTemplate>
         <hyt-pw-packet-select #enrichmentPacketSelect [hDevices]="hDevices" [hPackets]="hPackets"
-          (currentPacket)="enrichmentPacketChanged($event)"></hyt-pw-packet-select>
+          (currentPacket)="enrichmentPacketChanged($event)">
+        </hyt-pw-packet-select>
         <hyt-packet-enrichment-form #enrichmentForm></hyt-packet-enrichment-form>
       </ng-template>
 
@@ -86,7 +87,7 @@
       </div>
 
       <div id="container-save-update" class="container">
-      
+
         <div id="row-save-update" class="row">
 
           <div class="col-12">
@@ -102,26 +103,26 @@
           </div>
         </div>
 
-      </div>  
+      </div>
 
       <div id="container-prev-next" class="container-fluid">
 
-          <div id="row-next-back" class="row">
-          
-            <div *ngIf="currentStepIndex != 0" class="col-6">
-              <hyt-button  (clickFn)="stepper.previous()">
-                <ng-container i18n="@@HYT_back">HYT_back</ng-container>
-              </hyt-button>
-            </div>
-  
-            <div [ngClass]="{'offset-6': currentStepIndex == 0}" class="col-6">
-              <hyt-button class="toRight" [isDisabled]="isNextDisabled()"
-                (clickFn)="(currentStepIndex == 3 && !optionModalViewed || currentStepIndex == 6)? openOptionModal() : stepper.next()">
-                <ng-container i18n="@@HYT_next">HYT_next</ng-container>
-              </hyt-button>
-            </div>
-  
+        <div id="row-next-back" class="row">
+
+          <div *ngIf="currentStepIndex != 0" class="col-6">
+            <hyt-button (clickFn)="stepper.previous()">
+              <ng-container i18n="@@HYT_back">HYT_back</ng-container>
+            </hyt-button>
           </div>
+
+          <div [ngClass]="{'offset-6': currentStepIndex == 0}" class="col-6">
+            <hyt-button class="toRight" [isDisabled]="isNextDisabled()"
+              (clickFn)="(currentStepIndex == 3 && !optionModalViewed || currentStepIndex == 6)? openOptionModal() : stepper.next()">
+              <ng-container i18n="@@HYT_next">HYT_next</ng-container>
+            </hyt-button>
+          </div>
+
+        </div>
 
       </div>
 
@@ -130,11 +131,11 @@
     <div id="hint-column" class="col-md-2">
 
       <!-- NEW ACCORDION -->
-      <div 
-        *ngIf="currentForm" 
-        id="section-title" 
-        (click)="togglePanel()" 
-        [ngClass]="{'clicked': panelIsVisible, 'unclicked': !panelIsVisible}" 
+      <div
+        *ngIf="currentForm"
+        id="section-title"
+        (click)="togglePanel()"
+        [ngClass]="{'clicked': panelIsVisible, 'unclicked': !panelIsVisible}"
         class="row"
       >
 
@@ -157,9 +158,9 @@
       <hr id="title-underline">
       <!-- END NEW ACCORDION -->
 
-      <hyt-generic-summary-list 
+      <hyt-generic-summary-list
         *ngIf="currentForm && currentForm.summaryList"
-        [ngClass]="{ disabled: currentForm.isDirty() && !currentForm.isNew() }" 
+        [ngClass]="{ disabled: currentForm.isDirty() && !currentForm.isNew() }"
         [summaryList]="currentForm.summaryList"
         (menuAction)="menuAction($event)"
       ></hyt-generic-summary-list>
@@ -190,6 +191,9 @@
   </div>
 </hyt-modal>
 
-<hyt-wizard-options-modal id="hyt-wizard-options-modal" (modalClose)="optionsModalClosed($event)"></hyt-wizard-options-modal>
-<hyt-wizard-report-modal id="hyt-wizard-report-modal" [reportData]="finishData"></hyt-wizard-report-modal>
-<!-- <hyt-wizard-deactivation-modal id="hyt-wizard-deactivation-modal" (modalClose)="deactivationModalClosed($event)"></hyt-wizard-deactivation-modal> -->
+<hyt-wizard-options-modal id="hyt-wizard-options-modal" (modalClose)="optionsModalClosed($event)">
+</hyt-wizard-options-modal>
+<hyt-wizard-report-modal id="hyt-wizard-report-modal" [reportData]="finishData">
+</hyt-wizard-report-modal>
+<hyt-wizard-deactivation-modal #deactivationModal id="hyt-wizard-deactivation-modal">
+</hyt-wizard-deactivation-modal>

@@ -1,5 +1,5 @@
 import { Component, OnDestroy, ViewChild, ElementRef, Injector } from '@angular/core';
-import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 import { Subscription, Observable } from 'rxjs';
 
@@ -21,20 +21,13 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
   entity: Rule = {} as Rule;
   entityFormMap = {
     'rule-name': {
-      field: 'name',
-      default: null
+      field: 'name'
     },
     'rule-description': {
-      field: 'description',
-      default: null
-    },
-    'eventOutput': {
-      //field: null,
-      default: 'SendMailAction'
+      field: 'description'
     }
   };
 
-  private routerSubscription: Subscription;
   private activatedRouteSubscription: Subscription;
 
   private packetId: number;
@@ -49,7 +42,7 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
   eventMailComponent: EventMailComponent;
 
   outputOptions: Option[] = [
-    { value: 'SendMailAction', label: 'Send mail', checked: true } // TODO i18n
+    { value: 'events.SendMailAction', label: 'Send mail', checked: true } // TODO i18n
     // { value: '', label: 'START STATISTIC' }
   ];
 
@@ -59,7 +52,6 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
     private hPacketService: HpacketsService,
     private rulesService: RulesService,
     private activatedRoute: ActivatedRoute,
-    private router: Router,
     private i18n: I18n
   ) {
     super(injector, i18n, formView);
@@ -67,14 +59,7 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
     this.formTitle = this.entitiesService.event.formTitle;
     this.icon = this.entitiesService.event.icon;
     this.hideDelete = true; // hide 'Delete' button
-    this.routerSubscription = this.router.events.subscribe((rl) => {
-      if (rl instanceof NavigationEnd) {
-        this.packetId = +(activatedRoute.snapshot.params.packetId);
-        this.loadData();
-      }
-    });
     this.activatedRouteSubscription = this.activatedRoute.params.subscribe(routeParams => {
-      this.editMode = false;
       this.packetId = +(activatedRoute.snapshot.params.packetId);
       if (this.packetId) {
         this.loadData();
@@ -84,15 +69,17 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
 
   ngOnDestroy() {
     this.activatedRouteSubscription.unsubscribe();
-    this.routerSubscription.unsubscribe();
   }
 
   save(successCallback, errorCallback) {
     this.saveEvent(successCallback, errorCallback);
   }
 
-  onAddClick() {
-    this.cleanForm();
+  loadEmpty() {
+    this.form.reset();
+    this.ruleDefinitionComponent.resetRuleDefinition();
+    this.eventMailComponent.reset();
+    this.entity = { ...this.entitiesService.event.emptyModel };
     this.edit();
   }
 
@@ -100,11 +87,14 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
     const proceedWithEdit = () => {
       this.showCancel = true;
       this.editMode = true;
-      if (rule) {
-        this.ruleDefinitionComponent.setRuleDefinition(rule.ruleDefinition);
-        this.eventMailComponent.setMail(JSON.parse(rule.jsonActions));
-      }
-      super.edit(rule, readyCallback);
+      super.edit(rule, () => {
+        this.ruleDefinitionComponent.setRuleDefinition(this.entity.ruleDefinition);
+        this.eventMailComponent.setMail(JSON.parse(this.entity.jsonActions));
+        this.form.get('eventOutput').setValue(JSON.parse(JSON.parse(this.entity.jsonActions)[0]).actionName);
+        if (readyCallback) {
+          readyCallback();
+        }
+      });
     };
     const canDeactivate = this.canDeactivate();
     if (typeof canDeactivate === 'boolean' && canDeactivate === true) {
@@ -118,19 +108,16 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
     }
   }
 
-  cleanForm() {
-    super.cleanForm();
-    this.ruleDefinitionComponent.resetRuleDefinition();
-    this.eventMailComponent.reset();
-  }
-
   loadData(packetId?: number) {
     if (packetId) { this.packetId = packetId; }
     this.hPacketService.findHPacket(this.packetId).subscribe((p: HPacket) => {
       this.packet = p;
       this.project = p.device.project;
-      // update rules summary list (on the right side)
       this.updateSummaryList();
+      this.entityEvent.emit({
+        event: 'treeview:focus',
+        id: p.id, type: 'packet-events'
+      });
     });
   }
 
@@ -153,10 +140,10 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
 
     let jActionStr = '';
 
-    if (this.form.value.eventOutput === 'SendMailAction') {
+    if (this.form.value.eventOutput === 'events.SendMailAction') {
       const mail = this.eventMailComponent.buildMail();
       const act = {
-        actionName: 'events.SendMailAction',
+        actionName: this.form.get('eventOutput').value,
         recipients: mail.mailRecipient,
         ccRecipients: mail.mailCC,
         subject: mail.mailObject,
@@ -187,6 +174,7 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
       this.rulesService.updateRule(e).subscribe(responseHandler, (err) => {
         this.setErrors(err);
         errorCallback && errorCallback(err);
+        this.loadingStatus = LoadingStatusEnum.Error;
       });
     } else {
       e.entityVersion = 1;
@@ -196,6 +184,7 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
       this.rulesService.saveRule(e).subscribe(responseHandler, (err) => {
         this.setErrors(err);
         errorCallback && errorCallback(err);
+        this.loadingStatus = LoadingStatusEnum.Error;
       });
     }
 
@@ -228,12 +217,6 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
         !this.ruleDefinitionComponent.isInvalid() &&
         !this.eventMailComponent.isInvalid()
       ) : false;
-  }
-
-  resetForm() {
-    super.resetForm();
-    this.ruleDefinitionComponent.originalValueUpdate();
-    this.eventMailComponent.originalValueUpdate();
   }
 
   setErrors(err) {

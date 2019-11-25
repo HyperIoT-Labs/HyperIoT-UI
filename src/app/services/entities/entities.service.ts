@@ -13,6 +13,7 @@ interface Entity {
   readonly longDefinition: string;
   readonly icon: string;
   readonly iconPlus: string;
+  readonly emptyModel?: any;
 }
 
 /**
@@ -45,7 +46,12 @@ export class EntitiesService {
     definition: this.i18n('HYT_project_definition'),
     longDefinition: this.i18n('HYT_project_long_definition'),
     icon: 'icon-hyt_projects',
-    iconPlus: 'icon-hyt_projectsPlus'
+    iconPlus: 'icon-hyt_projectsPlus',
+    emptyModel: {
+      name: '',
+      description: '',
+      entityVersion: 1
+    }
   };
 
   /**
@@ -62,7 +68,18 @@ export class EntitiesService {
     definition: this.i18n('HYT_device_definition'),
     longDefinition: this.i18n('HYT_device_long_definition'),
     icon: 'icon-hyt_device',
-    iconPlus: 'icon-hyt_devicePlus'
+    iconPlus: 'icon-hyt_devicePlus',
+    emptyModel: {
+      deviceName: '',
+      model: '',
+      brand: '',
+      firmwareVersion: '',
+      softwareVersion: '',
+      description: '',
+      password: '',
+      passwordConfirm: '',
+      entityVersion: 1
+    }
   };
 
   /**
@@ -79,7 +96,17 @@ export class EntitiesService {
     definition: this.i18n('HYT_packet_definition'),
     longDefinition: this.i18n('HYT_packet_long_definition'),
     icon: 'icon-hyt_packets',
-    iconPlus: 'icon-hyt_packetsPlus'
+    iconPlus: 'icon-hyt_packetsPlus',
+    emptyModel: {
+      name: '',
+      type: 'INPUT',
+      serialization: 'AVRO',
+      format: 'JSON',
+      timestampField: 'timestamp',
+      timestampFormat: 'dd/MM/yyyy hh.mmZ',
+      trafficPlan: 'HIGH',
+      entityVersion: 1
+    }
   };
 
   /**
@@ -113,7 +140,14 @@ export class EntitiesService {
     definition: this.i18n('HYT_enrichment_definition'),
     longDefinition: this.i18n('HYT_enrichment_long_definition'),
     icon: 'icon-hyt_enrichments',
-    iconPlus: 'icon-hyt_enrichmentsPlus'
+    iconPlus: 'icon-hyt_enrichmentsPlus',
+    emptyModel: {
+      name: '',
+      description: '',
+      jsonActions: '[]',
+      type: 'ENRICHMENT',
+      entityVersion: 1
+    }
   };
 
   /**
@@ -147,7 +181,14 @@ export class EntitiesService {
     definition: this.i18n('HYT_events_definition'),
     longDefinition: this.i18n('HYT_events_long_definition'),
     icon: 'icon-hyt_event',
-    iconPlus: 'icon-hyt_eventPlus'
+    iconPlus: 'icon-hyt_eventPlus',
+    emptyModel: {
+      name: '',
+      description: '',
+      type: 'ENRICHMENT',
+      jsonActions: '[\"{\\\"actionName\\\":\\\"events.SendMailAction\\\",\\\"recipients\\\":\\\"\\\",\\\"ccRecipients\\\":\\\"\\\",\\\"subject\\\":\\\"\\\",\\\"body\\\":\\\"\\\"}\"]',
+      entityVersion: 1
+    }
   };
 
 }
