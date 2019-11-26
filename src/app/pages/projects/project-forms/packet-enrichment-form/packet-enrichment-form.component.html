@@ -100,7 +100,10 @@
       *ngIf="loadingStatus !== LoadingStatus.Ready"
       class="overlay d-flex flex-column align-items-center justify-content-center"
     >
-      <h4 *ngIf="loadingStatus === LoadingStatus.Loading" i18n="@@HYT_loading_data">HYT_loading_data</h4>
+      <div *ngIf="loadingStatus === LoadingStatus.Loading" class="loading-logo">
+          <h4 i18n="@@HYT_loading_data">HYT_loading_data</h4>
+      </div>
+        <!-- <h4 *ngIf="loadingStatus === LoadingStatus.Loading" i18n="@@HYT_loading_data">HYT_loading_data</h4> -->
       <div *ngIf="loadingStatus === LoadingStatus.Error" class="d-flex flex-column justify-content-center">
         <h4 i18n="@@HYT_error_occurred">HYT_error_occurred</h4>
         <button mat-stroked-button (click)="loadingStatus = LoadingStatus.Ready">
