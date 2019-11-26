@@ -17,8 +17,8 @@
 
       <ng-template #devicesTemplate>
         <hyt-radio-button [options]="sourceOptions" (changeFn)="sourceChanged($event)"></hyt-radio-button>
-        <hyt-application-form *ngIf="selectedSource == 'application'" #applicationsForm [currentProject]="currentProject"
-          (entityEvent)="onEntityEvent($event)"></hyt-application-form>
+        <hyt-application-form *ngIf="selectedSource == 'application'" #applicationsForm
+          [currentProject]="currentProject" (entityEvent)="onEntityEvent($event)"></hyt-application-form>
         <hyt-device-form *ngIf="selectedSource == 'device'" #devicesForm [currentProject]="currentProject"
           (entityEvent)="onEntityEvent($event)">
         </hyt-device-form>
@@ -46,6 +46,8 @@
       </ng-template>
 
       <ng-template #statisticsTemplate>
+        <hyt-pw-packet-select [hDevices]="hDevices" [hPackets]="hPackets">
+        </hyt-pw-packet-select>
         <hyt-statistics-step></hyt-statistics-step>
       </ng-template>
 
