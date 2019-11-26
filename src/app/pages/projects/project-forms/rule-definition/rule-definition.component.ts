@@ -219,7 +219,11 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
         for (let k = 0; k < ruleDef.length; k++) {
 
           const f = this.fieldFlatList.find(x => x.label === ruleDef[k].field);
-          if (!f) { continue; }
+          if (!f) {
+            // TODO implement logic
+            console.warn('Unable to build ruleDefinition with actual fields. Probabilmente il nome di alcuni field è stato cambiato dopo aver salvato la regola.');
+            return;
+          }
           const actualField: HPacketField = f.field;
 
           const conditionOptions = [];

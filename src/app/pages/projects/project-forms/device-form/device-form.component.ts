@@ -75,21 +75,6 @@ export class DeviceFormComponent extends ProjectFormEntity implements AfterViewI
       this.cdr.detectChanges();
     });
 
-    //TODO: Replace with Mismatch
-    // this.form.get('hdevice-password').valueChanges.subscribe(res => {
-    //   const control = this.form.get('hdevice-passwordConfirm')
-    //   if (control.hasError('validateInjectedError')) {
-    //     control.setErrors({ validateInjectedError: null });
-    //     control.updateValueAndValidity();
-    //   }
-    // });
-    // this.form.get('hdevice-passwordConfirm').valueChanges.subscribe(res => {
-    //   const control = this.form.get('hdevice-password')
-    //   if (control.hasError('validateInjectedError')) {
-    //     control.setErrors({ validateInjectedError: null });
-    //     control.updateValueAndValidity();
-    //   }
-    // });
   }
 
   ngOnDestroy() {
