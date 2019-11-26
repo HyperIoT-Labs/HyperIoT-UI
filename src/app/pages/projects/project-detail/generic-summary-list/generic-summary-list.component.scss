@@ -93,6 +93,21 @@
         color: #fff;
         background-color: #376caf;
         text-transform: uppercase;
+
+        span {
+            &.icon-hyt_plusC {
+                font-size: 1.45em;
+                position: absolute;
+                right: 7px;
+                top: 50%;
+                cursor: pointer;
+                transform: translateY(-50%);
+            }
+
+            &:hover.icon-hyt_plusC {
+                color: #2258a5;
+            }
+        }
     }
 
     .single-row-table {

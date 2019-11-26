@@ -3,7 +3,8 @@
     <div class="row">
         <div class="col-12 header-table">
             {{_summaryList.title}}
-            <button *ngIf="addButtonActive" (click)="addEntity()">+</button>
+            <!-- <button *ngIf="addButtonActive" (click)="addEntity()">+</button> -->
+            <span *ngIf="addButtonActive" class="hyt-icon icon-hyt_plusC" (click)="addEntity()"></span>
         </div>
     </div>
 
