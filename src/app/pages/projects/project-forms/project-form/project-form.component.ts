@@ -141,7 +141,7 @@ export class ProjectFormComponent extends ProjectFormEntity implements AfterView
     if (err.error && err.error.type) {
       switch (err.error.type) {
         case 'it.acsoftware.hyperiot.base.exception.HyperIoTDuplicateEntityException': {
-          this.validationError = [{ "message": this.i18n('HYT_unavaiable_project_name'), "field": 'hproject-name', "invalidValue": '' }];
+          this.validationError = [{ message: this.i18n('HYT_unavaiable_project_name'), field: 'hproject-name', invalidValue: '' }];
           this.form.get('hproject-name').setErrors({
             validateInjectedError: {
               valid: false

@@ -165,7 +165,6 @@ export class PacketFormComponent extends ProjectFormEntity implements AfterViewI
       this.hPacketService.updateHPacket(p).subscribe(responseHandler, (err) => {
         this.setErrors(err);
         errorCallback && errorCallback(err);
-        this.loadingStatus = LoadingStatusEnum.Error;
       });
     } else {
       p.entityVersion = 1;
@@ -175,7 +174,6 @@ export class PacketFormComponent extends ProjectFormEntity implements AfterViewI
       this.hPacketService.saveHPacket(p).subscribe(responseHandler, (err) => {
         this.setErrors(err);
         errorCallback && errorCallback(err);
-        this.loadingStatus = LoadingStatusEnum.Error;
       });
     }
   }
@@ -198,6 +196,34 @@ export class PacketFormComponent extends ProjectFormEntity implements AfterViewI
       errorCallback && errorCallback(err);
       this.loadingStatus = LoadingStatusEnum.Error;
     });
+  }
+
+  setErrors(err) {
+
+    if (err.error && err.error.type) {
+      switch (err.error.type) {
+        case 'it.acsoftware.hyperiot.base.exception.HyperIoTDuplicateEntityException': {
+          this.validationError = [{ message: 'Unavaiable packet name', field: 'hpacket-name', invalidValue: '' }]; // @I18N@
+          this.form.get('hpacket-name').setErrors({
+            validateInjectedError: {
+              valid: false
+            }
+          });
+          this.loadingStatus = LoadingStatusEnum.Ready;
+          break;
+        }
+        case 'it.acsoftware.hyperiot.base.exception.HyperIoTValidationException': {
+          super.setErrors(err);
+          break;
+        }
+        default: {
+          this.loadingStatus = LoadingStatusEnum.Error;
+        }
+      }
+    } else {
+      this.loadingStatus = LoadingStatusEnum.Error;
+    }
+
   }
 
 }

@@ -33,6 +33,28 @@ export class EntitiesService {
   ) { }
 
   /**
+   * information about Source
+   */
+  public readonly application: Entity = {
+    id: 0,
+    entityName: 'application',
+    displayListName: 'Source', // @I18N@
+    formTitle: 'Source', // @I18N@
+    shortDefinition: 'application short definition',
+    definition: 'application definition',
+    longDefinition: 'application long definition',
+    icon: 'icon-hyt_device',
+    iconPlus: 'icon-hyt_devicePlus',
+    emptyModel: {
+      deviceName: '',
+      description: '',
+      password: '',
+      passwordConfirm: '',
+      entityVersion: 1
+    }
+  };
+
+  /**
    * information about Project
    */
   public readonly project: Entity = {
@@ -61,9 +83,9 @@ export class EntitiesService {
     id: 0,
     entityName: 'device',
     // displayName: 'Device',
-    displayListName: this.i18n('HYT_device_displaylistname'),
+    displayListName: 'Source', // @I18N@
     // pluralName: 'Devices',
-    formTitle: this.i18n('HYT_device_form_title'),
+    formTitle: 'Source', // @I18N@
     shortDefinition: this.i18n('HYT_device_shotrt_definition'),
     definition: this.i18n('HYT_device_definition'),
     longDefinition: this.i18n('HYT_device_long_definition'),

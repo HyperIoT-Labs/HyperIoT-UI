@@ -16,7 +16,11 @@
       </ng-template>
 
       <ng-template #devicesTemplate>
-        <hyt-device-form #devicesForm [currentProject]="currentProject" (entityEvent)="onEntityEvent($event)">
+        <hyt-radio-button [options]="sourceOptions" (changeFn)="sourceChanged($event)"></hyt-radio-button>
+        <hyt-application-form *ngIf="selectedSource == 'application'" #applicationsForm [currentProject]="currentProject"
+          (entityEvent)="onEntityEvent($event)"></hyt-application-form>
+        <hyt-device-form *ngIf="selectedSource == 'device'" #devicesForm [currentProject]="currentProject"
+          (entityEvent)="onEntityEvent($event)">
         </hyt-device-form>
       </ng-template>
 
@@ -63,17 +67,15 @@
               enrichmentTemplate,
               statisticsTemplate,
               eventsTemplate
-            ]"
-            [labelArray]="[
+            ]" [labelArray]="[
               entitiesService.project.displayListName,
-              entitiesService.device.displayListName,
+              'Sources',
               entitiesService.packet.displayListName,
               entitiesService.field.displayListName,
               entitiesService.enrichment.displayListName,
               entitiesService.statistic.displayListName,
               entitiesService.event.displayListName
-            ]"
-            [completedArray]="[
+            ]" [completedArray]="[
               currentProject != null,
               hDevices.length != 0,
               hPackets.length != 0,
@@ -81,6 +83,14 @@
               hDevices.length != 0 && hPackets.length != 0 && optionModalViewed,
               hDevices.length != 0 && hPackets.length != 0 && optionModalViewed,
               hDevices.length != 0 && hPackets.length != 0 && optionModalViewed
+            ]" [isDirty]="[
+              getDirty(0),
+              getDirty(1),
+              getDirty(2),
+              getDirty(3),
+              getDirty(4),
+              getDirty(5),
+              getDirty(6)
             ]">
           </hyt-stepper>
         </div>
@@ -131,13 +141,8 @@
     <div id="hint-column" class="col-md-2">
 
       <!-- NEW ACCORDION -->
-      <div
-        *ngIf="currentForm"
-        id="section-title"
-        (click)="togglePanel()"
-        [ngClass]="{'clicked': panelIsVisible, 'unclicked': !panelIsVisible}"
-        class="row"
-      >
+      <div *ngIf="currentForm" id="section-title" (click)="togglePanel()"
+        [ngClass]="{'clicked': panelIsVisible, 'unclicked': !panelIsVisible}" class="row">
 
         <div id="icon-title" class="col-4">
           <hyt-hexagon [iconPath]="currentForm.icon" [dimension]="0.7"></hyt-hexagon>
@@ -158,12 +163,9 @@
       <hr id="title-underline">
       <!-- END NEW ACCORDION -->
 
-      <hyt-generic-summary-list
-        *ngIf="currentForm && currentForm.summaryList"
-        [ngClass]="{ disabled: currentForm.isDirty() && !currentForm.isNew() }"
-        [summaryList]="currentForm.summaryList"
-        (menuAction)="menuAction($event)"
-      ></hyt-generic-summary-list>
+      <hyt-generic-summary-list *ngIf="currentForm && currentForm.summaryList"
+        [ngClass]="{ disabled: currentForm.isDirty() && !currentForm.isNew() }" [addButtonActive]="true"
+        [summaryList]="currentForm.summaryList" (menuAction)="menuAction($event)"></hyt-generic-summary-list>
 
       <div *ngIf="hintVisible" class="info-message m-2 mt-4 d-flex flex-row">
         <span class="text p-2 flex-grow-1">{{hintMessage}}</span>

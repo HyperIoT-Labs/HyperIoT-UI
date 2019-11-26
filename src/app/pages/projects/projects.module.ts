@@ -45,6 +45,7 @@ import { StatisticsStepComponent } from './project-wizard/statistics-step/statis
 import { WizardReportModalComponent } from './project-wizard/wizard-report-modal/wizard-report-modal.component';
 import { WizardOptionsModalComponent } from './project-wizard/wizard-options-modal/wizard-options-modal.component';
 import { WizardDeactivationModalComponent } from './project-wizard/wizard-deactivation-modal/wizard-deactivation-modal.component';
+import { ApplicationFormComponent } from './project-forms/application-form/application-form.component';
 
 @NgModule({
   declarations: [
@@ -71,7 +72,8 @@ import { WizardDeactivationModalComponent } from './project-wizard/wizard-deacti
     StatisticsStepComponent,
     WizardReportModalComponent,
     WizardOptionsModalComponent,
-    WizardDeactivationModalComponent
+    WizardDeactivationModalComponent,
+    ApplicationFormComponent
   ],
   imports: [
     MatIconModule,

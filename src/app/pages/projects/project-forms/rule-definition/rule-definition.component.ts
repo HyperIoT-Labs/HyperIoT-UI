@@ -144,11 +144,11 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
         rule.form.value.ruleValue
         && rule.form.value.ruleCondition !== 'isTrue'
         && rule.form.value.ruleCondition !== 'isFalse'
-        ) ? ' ' + rule.form.value.ruleValue : '';
+      ) ? ' ' + rule.form.value.ruleValue : '';
       const joinRule: string = (
         rule.form.value.ruleJoin === ' AND ' ||
         rule.form.value.ruleJoin === ' OR '
-        ) ? rule.form.value.ruleJoin : '';
+      ) ? rule.form.value.ruleJoin : '';
       rd += element + condition + valueRule + joinRule;
     }
     return rd;
@@ -178,7 +178,7 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
   }
 
   isDirty(): boolean {
-    return this.getJsonForms() !== this.originalFormsValues;
+    return (this.getJsonForms() === '{}') ? false : this.getJsonForms() !== this.originalFormsValues;
   }
   isInvalid(): boolean {
     for (let k = 0; k < this.ruleForms.length; k++) {

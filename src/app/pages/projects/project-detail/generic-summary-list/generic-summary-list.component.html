@@ -3,6 +3,7 @@
     <div class="row">
         <div class="col-12 header-table">
             {{_summaryList.title}}
+            <button *ngIf="addButtonActive" (click)="addEntity()">+</button>
         </div>
     </div>
 

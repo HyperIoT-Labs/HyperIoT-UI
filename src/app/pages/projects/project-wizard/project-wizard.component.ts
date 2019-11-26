@@ -16,6 +16,8 @@ import { HytModalConfService } from 'src/app/services/hyt-modal-conf.service';
 import { HytStepperComponent } from '@hyperiot/components/lib/hyt-stepper/hyt-stepper.component';
 import { EntitiesService } from 'src/app/services/entities/entities.service';
 import { WizardDeactivationModalComponent } from './wizard-deactivation-modal/wizard-deactivation-modal.component';
+import { Option } from '@hyperiot/components';
+import { ApplicationFormComponent } from '../project-forms/application-form/application-form.component';
 
 @Component({
   selector: 'hyt-project-wizard',
@@ -35,6 +37,9 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
 
   @ViewChild('devicesForm', { static: false })
   devicesForm: DeviceFormComponent;
+
+  @ViewChild('applicationsForm', { static: false })
+  applicationsForm: ApplicationFormComponent;
 
   @ViewChild('deviceSelect', { static: false })
   deviceSelect: DeviceSelectComponent;
@@ -115,7 +120,8 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
   isWizardDirty() {
     return (
       this.projectForm.isDirty() ||
-      this.devicesForm.isDirty() ||
+      ((this.selectedSource === 'application') ? this.applicationsForm.isDirty() : this.devicesForm.isDirty()) ||
+      // this.devicesForm.isDirty() ||
       this.packetsForm.isDirty() ||
       this.fieldsForm.isDirty() ||
       this.enrichmentForm.isDirty() ||
@@ -140,7 +146,9 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
         break;
       }
       case 1: {
-        this.currentForm = this.devicesForm;
+        (this.selectedSource === 'application') ?
+          this.currentForm = this.applicationsForm :
+          this.currentForm = this.devicesForm;
         this.getDevices();
         break;
       }
@@ -196,12 +204,21 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
   }
 
   updateDeviceTable() {
-    this.devicesForm.summaryList = {
-      title: this.entitiesService.device.displayListName,
-      list: this.hDevices.map((d) => {
-        return { name: d.deviceName, description: d.description, data: d };
-      }) as SummaryListItem[]
-    };
+    if (this.selectedSource === 'application') {
+      this.applicationsForm.summaryList = {
+        title: this.entitiesService.device.displayListName,
+        list: this.hDevices.map((d) => {
+          return { name: d.deviceName, description: d.description, data: d };
+        }) as SummaryListItem[]
+      };
+    } else {
+      this.devicesForm.summaryList = {
+        title: this.entitiesService.device.displayListName,
+        list: this.hDevices.map((d) => {
+          return { name: d.deviceName, description: d.description, data: d };
+        }) as SummaryListItem[]
+      };
+    }
   }
 
   updatePacketTable() {
@@ -218,7 +235,7 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
 
       if (this.currentForm instanceof ProjectFormComponent) {
         this.currentProject = ent;
-      } else if (this.currentForm instanceof DeviceFormComponent) {
+      } else if (this.currentForm instanceof DeviceFormComponent || this.currentForm instanceof ApplicationFormComponent) {
         this.currentForm.loadEmpty();
         this.hDevices = [...this.updateList(ent, this.hDevices)];
         this.updateDeviceTable();
@@ -288,7 +305,7 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
           this.deviceSelect.freezeSelection();
         }
         this.currentForm.edit(event.item.data, this.currentForm.openDeleteDialog((del) => {
-          if (this.currentForm instanceof DeviceFormComponent) {
+          if (this.currentForm instanceof DeviceFormComponent || this.currentForm instanceof ApplicationFormComponent) {
             this.hDevices = [...this.deleteFromList(event.item.data.id, this.hDevices)];
             this.getPackets();
             this.updateDeviceTable();
@@ -303,6 +320,13 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
           }
           this.currentForm.loadEmpty();
         }));
+        break;
+      case 'add':
+        if (this.currentForm instanceof PacketFormComponent) {
+          this.deviceSelect.unfreezeSelection();
+          this.deviceSelect.autoSelect();
+        }
+        this.currentForm.loadEmpty();
         break;
     }
   }
@@ -439,6 +463,69 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
 
   togglePanel() {
     this.panelIsVisible = !this.panelIsVisible;
+  }
+
+  sourceOptions: Option[] = [
+    { value: 'application', label: 'application', checked: true },
+    { value: 'device', label: 'device' }
+  ];
+
+  selectedSource = 'application';
+
+  sourceChanged(value) {
+    this.selectedSource = value;
+    if (this.selectedSource === 'application') {
+      //TODO find better way to wait form recreation
+      setTimeout(() => {
+        this.currentForm = this.applicationsForm;
+        this.updateDeviceTable();
+      }, 0);
+    } else {
+      setTimeout(() => {
+        this.currentForm = this.devicesForm;
+        this.updateDeviceTable();
+      }, 0);
+    }
+  }
+
+  getDirty(index: number): boolean {
+    switch (index) {
+      case 0: {
+        return (this.projectForm) ? this.projectForm.isDirty() : false;
+        break;
+      }
+      case 1: {
+        if (this.selectedSource === 'application') {
+          return (this.applicationsForm) ? this.applicationsForm.isDirty() : false;
+        } else {
+          return (this.devicesForm) ? this.devicesForm.isDirty() : false;
+        }
+        break;
+      }
+      case 2: {
+        return (this.packetsForm) ? this.packetsForm.isDirty() : false;
+        break;
+      }
+      case 3: {
+        return (this.fieldsForm) ? this.fieldsForm.isDirty() : false;
+        break;
+      }
+      case 4: {
+        return (this.enrichmentForm && this.enrichmentForm.editMode) ? this.enrichmentForm.isDirty() : false;
+        break;
+      }
+      case 5: {
+        return false;
+        break;
+      }
+      case 6: {
+        return (this.eventsForm && this.eventsForm.editMode) ? this.eventsForm.isDirty() : false;
+        break;
+      }
+      default: {
+        return false;
+      }
+    }
   }
 
 }
