@@ -12,7 +12,7 @@
                     i18n-hintMessage="@@HYT_hint_device_name" hintMessage="HYT_hint_device_name" isRequired="true">
                 </hyt-input-text>
 
-                <div [ngClass]="(entity.id) ? 'diaplyNone' : ''">
+                <div [ngClass]="(entity.id) ? 'displayNone' : ''">
                     <hyt-input-text [form]="form" name="hdevice-password" formControlName="hdevice-password"
                         [isRequired]="!entity.id" [isPassword]="true" i18n-placeholder="@@HYT_password"
                         placeholder="HYT_password" type="password" [injectedErrorMsg]="getError('hdevice-password')"
@@ -22,8 +22,7 @@
                         formControlName="hdevice-passwordConfirm" [isRequired]="!entity.id"
                         i18n-placeholder="@@HYT_password_confirm" placeholder="HYT_password_confirm" type="password"
                         [injectedErrorMsg]="getError('hdevice-passwordConfirm')"
-                        i18n-hintMessage="@@HYT_hint_password_confirm" hintMessage="HYT_hint_password_confirm"
-                        confirmPassword="hdevice-password">
+                        i18n-hintMessage="@@HYT_hint_password_confirm" hintMessage="HYT_hint_password_confirm">
                     </hyt-input-text>
                 </div>
 

@@ -106,6 +106,13 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
     setTimeout(() => {// TODO...setimeout 0 to avoid 'expression changed after view checked'. Replace with chenge detection
       this.eventsForm.loadEmpty();
       this.enrichmentForm.loadEmpty();
+      this.fieldsForm.entityEvent.subscribe(
+        res => {
+          if (res.event === 'field:delete') {
+            this.updateSelectFieldChanged(res.packet);
+          }
+        }
+      );
       if (window.history.state.projectId) {
         this.projectForm.id = window.history.state.projectId;
         this.projectForm.load();
@@ -159,12 +166,12 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
       }
       case 3: {
         this.currentForm = this.fieldsForm;
-        this.fieldPacketSelect.autoSelect();
+        this.fieldPacketSelect.updateSelect();
         break;
       }
       case 4: {
         this.currentForm = this.enrichmentForm;
-        this.enrichmentPacketSelect.autoSelect();
+        this.enrichmentPacketSelect.updateSelect();
         break;
       }
       case 5: {
@@ -173,7 +180,7 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
       }
       case 6: {
         this.currentForm = this.eventsForm;
-        this.eventPacketSelect.autoSelect();
+        this.eventPacketSelect.updateSelect();
         break;
       }
       default: {
@@ -244,6 +251,8 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
         this.hPackets = [...this.updateList(ent, this.hPackets)];
         this.deviceSelect.unfreezeSelection();
         this.updatePacketTable();
+      } else if (this.currentForm instanceof PacketFieldsFormComponent) {
+        this.updateSelectFieldChanged(isNew);
       } else if (this.currentForm instanceof PacketEnrichmentFormComponent) {
         this.enrichmentRules = [...this.updateList(ent, this.enrichmentRules)];
         this.currentForm.loadEmpty();
@@ -307,11 +316,14 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
         this.currentForm.edit(event.item.data, this.currentForm.openDeleteDialog((del) => {
           if (this.currentForm instanceof DeviceFormComponent || this.currentForm instanceof ApplicationFormComponent) {
             this.hDevices = [...this.deleteFromList(event.item.data.id, this.hDevices)];
-            this.getPackets();
+            this.hPackets = [...this.hPackets.filter(p => p.device.id !== event.item.data.id)];
             this.updateDeviceTable();
+            this.updatePacketTable();
+            this.updateDeletePacketDep();
           } else if (this.currentForm instanceof PacketFormComponent) {
             this.hPackets = [...this.deleteFromList(event.item.data.id, this.hPackets)];
             this.updatePacketTable();
+            this.updateDeletePacketDep();
             this.deviceSelect.unfreezeSelection();
           } else if (this.currentForm instanceof PacketEnrichmentFormComponent) {
             this.enrichmentRules = [...this.deleteFromList(event.item.data.id, this.enrichmentRules)];
@@ -335,22 +347,52 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
     this.currentDevice = event;
   }
 
-  fieldPacketChanged(event): void {
-    if (event) {
-      this.fieldsForm.loadData(event.id);
+  /**
+   * used to select another packet in field/enrichment/events if the previous one is deleted
+   */
+  updateDeletePacketDep() {
+    if (!this.hPackets.some(p => p.id === this.fieldPacketId)) {
+      this.fieldPacketSelect.autoSelect();
+    }
+    if (!this.hPackets.some(p => p.id === this.enrichmentPacketId)) {
+      this.enrichmentPacketSelect.autoSelect();
+    }
+    if (!this.hPackets.some(p => p.id === this.eventPacketId)) {
+      this.eventPacketSelect.autoSelect();
     }
   }
 
-  enrichmentPacketChanged(event): void {
+  updateSelectFieldChanged(idPacketChanged: number) {
+    if (idPacketChanged === this.enrichmentPacketId) {
+      this.enrichmentPacketSelect.autoSelect();
+    }
+    if (idPacketChanged === this.eventPacketId) {
+      this.eventPacketSelect.autoSelect();
+    }
+  }
+
+  fieldPacketId: number;
+  fieldPacketChanged(event: number): void {
     if (event) {
-      this.enrichmentForm.loadData(event.id);
+      this.fieldPacketId = event;
+      this.fieldsForm.loadData(this.fieldPacketId);
+    }
+  }
+
+  enrichmentPacketId: number;
+  enrichmentPacketChanged(event: number): void {
+    if (event) {
+      this.enrichmentPacketId = event;
+      this.enrichmentForm.loadData(this.enrichmentPacketId);
       this.enrichmentForm.loadEmpty();
     }
   }
 
-  eventPacketChanged(event): void {
+  eventPacketId: number;
+  eventPacketChanged(event: number): void {
     if (event) {
-      this.eventsForm.loadData(event.id);
+      this.eventPacketId = event;
+      this.eventsForm.loadData(this.eventPacketId);
       this.eventsForm.loadEmpty();
     }
   }

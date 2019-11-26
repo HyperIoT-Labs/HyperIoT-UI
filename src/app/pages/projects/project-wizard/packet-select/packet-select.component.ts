@@ -1,8 +1,7 @@
-import { Component, OnInit, Output, EventEmitter, Input, OnChanges, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, ViewEncapsulation } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { SelectOption } from '@hyperiot/components';
 import { HDevice, HPacket } from '@hyperiot/core';
-import { ProjectWizardService } from 'src/app/services/projectWizard/project-wizard.service';
 
 @Component({
   selector: 'hyt-pw-packet-select',
@@ -22,10 +21,10 @@ export class PacketSelectComponent implements OnInit {
   devicesOptions: SelectOption[] = [];
   packetsOptions: SelectOption[] = [];
 
-  selectedDevice: HDevice;
-  selectedPacket: HPacket;
+  selectedDeviceId: number;
+  selectedPacketId: number;
 
-  @Output() currentPacket = new EventEmitter<HPacket>();
+  @Output() currentPacket = new EventEmitter<number>();
 
   constructor(
     private fb: FormBuilder
@@ -35,12 +34,41 @@ export class PacketSelectComponent implements OnInit {
     this.selectForm = this.fb.group({});
   }
 
-  autoSelect(): void {
+  buildDeviceOptions() {
     this.devicesOptions = this.hDevices.map(
-      dev => { return ({ value: dev, label: dev.deviceName, disabled: this.hPackets.filter(
-          p => p.device.id === dev.id
-        ).length === 0 }); }
-      );
+      dev => {
+        return ({
+          value: dev.id, label: dev.deviceName, disabled: this.hPackets.filter(
+            p => p.device.id === dev.id
+          ).length === 0
+        });
+      }
+    );
+  }
+
+  buildPacketOptions() {
+    this.packetsOptions = this.hPackets
+      .filter(p => p.device.id === this.selectedDeviceId)
+      .map(pac => ({ value: pac.id, label: pac.name }));
+  }
+
+  buildSelects() {
+    this.buildDeviceOptions();
+    this.selectForm.get('selectDevice').setValue(this.selectedDeviceId);
+    this.buildPacketOptions();
+    this.selectForm.get('selectPacket').setValue(this.selectedPacketId);
+  }
+
+  updateSelect() {
+    if (!this.selectedDeviceId || !this.selectedPacketId) {
+      this.autoSelect();
+    } else {
+      this.buildSelects();
+    }
+  }
+
+  autoSelect(): void {
+    this.buildDeviceOptions();
     let index = 0;
     while (this.devicesOptions[index].disabled) {
       index++;
@@ -50,15 +78,11 @@ export class PacketSelectComponent implements OnInit {
   }
 
   deviceChanged(event): void {
-    this.selectedDevice = event.value;
+    this.selectedDeviceId = event.value;
     this.packetsOptions = [];
-    this.selectForm.patchValue({
-      selectPacket: null
-    });
+    this.selectForm.get('selectPacket').setValue(null);
     this.currentPacket.emit(null);
-    this.packetsOptions = this.hPackets
-      .filter(p => p.device.id === this.selectedDevice.id)
-      .map(pac => ({ value: pac, label: pac.name }));
+    this.buildPacketOptions();
     if (this.packetsOptions.length !== 0) {
       this.selectForm.get('selectPacket').setValue(this.packetsOptions[0].value);
       this.packetChanged(this.packetsOptions[0]);
@@ -68,20 +92,8 @@ export class PacketSelectComponent implements OnInit {
   }
 
   packetChanged(event): void {
-    this.selectedPacket = event.value;
-    this.currentPacket.emit(this.selectedPacket);
-  }
-
-  setPacket(packet: HPacket): void {
-    // let device = this.devicesOptions.find(x => x.value.id == packet.device.id).value;
-    // this.selectedDevice = device;
-    // this.selectForm.get('selectDevice').setValue(device);
-    // this.packetsOptions = [];
-    // this.wizardService.hPackets.filter(p => p.device.id == this.selectedDevice.id)
-    // .forEach(p => this.packetsOptions.push({ value: p, label: p.name }));
-    // console.log(this.packetsOptions);
-    // let pack = this.packetsOptions.find(y => y.value.id == packet.id).value;
-    // this.selectForm.get('selectPacket').setValue(pack);
+    this.selectedPacketId = event.value;
+    this.currentPacket.emit(this.selectedPacketId);
   }
 
   freezeSelection() {
