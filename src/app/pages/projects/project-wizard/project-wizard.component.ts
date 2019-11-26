@@ -86,10 +86,6 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
 
   finishData: { iconPath: string, type: string, entities: string[] }[] = [];
 
-  canDeactivate$: Subject<boolean> = new Subject<boolean>();
-
-  deactivateModal = false;
-
   optionModalViewed = false;
 
   constructor(
@@ -242,6 +238,10 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
 
       if (this.currentForm instanceof ProjectFormComponent) {
         this.currentProject = ent;
+        // wait for step 0 validation (next cicle)
+        setTimeout(() => {
+          this.stepper.next();
+        }, 0);
       } else if (this.currentForm instanceof DeviceFormComponent || this.currentForm instanceof ApplicationFormComponent) {
         this.currentForm.loadEmpty();
         this.hDevices = [...this.updateList(ent, this.hDevices)];
@@ -452,12 +452,6 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
       entities: this.eventRules.map(e => e.name)
     });
     this.modalService.open('hyt-wizard-report-modal');
-  }
-
-  // Deactivation logic
-  deactivate(cd: boolean): void {
-    this.deactivateModal = false;
-    this.canDeactivate$.next(cd);
   }
 
   // TODO... in service

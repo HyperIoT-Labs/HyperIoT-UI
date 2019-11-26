@@ -168,7 +168,8 @@ export class ApplicationFormComponent extends ProjectFormEntity implements After
       // request navigate to project page when a device is deleted
       this.entityEvent.emit({
         event: 'entity:delete',
-        //exitRoute: ['/projects', this.entity.project.id]
+        exitRoute: 'project'
+        // exitRoute: ['/projects', this.entity.project.id]
       });
       successCallback && successCallback(res);
     }, (err) => {

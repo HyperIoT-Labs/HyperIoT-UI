@@ -128,7 +128,8 @@ export class ProjectFormComponent extends ProjectFormEntity implements AfterView
       // request navigate to project list when the project itself is deleted
       this.entityEvent.emit({
         event: 'entity:delete',
-        exitRoute: ['/projects']
+        exitRoute: 'out'
+        // exitRoute: ['/projects']
       });
     }, (err) => {
       this.loadingStatus = LoadingStatusEnum.Error;

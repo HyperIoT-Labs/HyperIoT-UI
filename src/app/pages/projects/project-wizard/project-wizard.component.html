@@ -179,20 +179,6 @@
 
 </div>
 
-<hyt-modal [mOpen]="deactivateModal">
-  <div class="center">
-    <p i18n="@@HYT_pw_deactivation_modal">HYT_pw_deactivation_modal</p>
-    <br>
-    <br>
-    <hyt-button (clickFn)="deactivate(true)">
-      <ng-container i18n="@@HYT_OK">HYT_OK</ng-container>
-    </hyt-button>
-    <hyt-button (clickFn)="deactivate(false)">
-      <ng-container i18n="@@HYT_CANCEL">HYT_CANCEL</ng-container>
-    </hyt-button>
-  </div>
-</hyt-modal>
-
 <hyt-wizard-options-modal id="hyt-wizard-options-modal" (modalClose)="optionsModalClosed($event)">
 </hyt-wizard-options-modal>
 <hyt-wizard-report-modal id="hyt-wizard-report-modal" [reportData]="finishData">

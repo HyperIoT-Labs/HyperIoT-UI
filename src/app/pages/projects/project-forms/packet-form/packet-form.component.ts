@@ -185,10 +185,11 @@ export class PacketFormComponent extends ProjectFormEntity implements AfterViewI
       // request navigate to parent node (device page)
       this.entityEvent.emit({
         event: 'entity:delete',
-        exitRoute: [
+        exitRoute: 'project'
+        // exitRoute: [
           //'/projects', this.entity.device.project.id,
-          { outlets: { projectDetails: ['device', this.entity.device.id] } }
-        ]
+          // { outlets: { projectDetails: ['device', this.entity.device.id] } }
+        // ]
       });
       this.entityEvent.emit({ event: 'treeview:refresh' });
       successCallback && successCallback(res);

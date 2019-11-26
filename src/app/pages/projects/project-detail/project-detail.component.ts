@@ -85,9 +85,11 @@ export class ProjectDetailComponent implements OnInit {
             this.hideHintMessage();
             break;
           case 'entity:delete':
-            // if (data.exitRoute) {
-            this.router.navigate(['/projects/' + this.projectId]);
-            // }
+            if (data.exitRoute == 'project') {
+              this.router.navigate(['/projects/' + this.projectId]);
+            } else if (data.exitRoute == 'out') {
+              this.router.navigate(['/projects']);
+            }
             break;
         }
       });
