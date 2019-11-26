@@ -133,7 +133,7 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
 
   removeCondition(index) {
     this.ruleForms.splice(index, 1);
-    this.ruleForms[this.ruleForms.length - 1].form.get('ruleJoin').setValue(null);
+    this.ruleForms[this.ruleForms.length - 1].form.get('ruleJoin').setValue('');
   }
 
   buildRuleDefinition(): string {
