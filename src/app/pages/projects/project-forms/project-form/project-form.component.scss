@@ -20,14 +20,49 @@
         position: absolute;
         background-color: rgba(255,255,255,.75);
         left: 0; top: 0; right: 0; bottom: 0;
-    }
 
-    mat-progress-bar {
-        max-width: 200px;
-        margin: 8px;
+        .loading-logo {
+            height: 63%;
+            position: relative;
+            // top: -30px;
+            text-align: center;
+            display: flex;
+            align-items: flex-end;
+
+            background-image: url('src/assets/images/hyperiot_logo_single_char.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center center;
+
+            img {
+                height: 100%;
+                margin-bottom: 5px;
+                max-height: 178px;
+                width: auto;
+                // animation-name: pulses;
+                // animation-duration: 1.5s;
+                // animation-iteration-count: infinite;
+            }
+            
+            h4 {
+                text-align: center;
+            }
+        }
+
+        mat-progress-bar {
+            max-width: 200px;
+            margin: 8px;
+        }    
+
     }
 
 }
+
+// @keyframes pulses {
+//     0%   { width: 200px; }
+//     50%  { width: 230px; }
+//     100% { width: 200px; }
+//   }
 
 
 

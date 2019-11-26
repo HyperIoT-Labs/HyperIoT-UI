@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, ElementRef, OnDestroy, Injector } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef, OnDestroy, Injector, ViewEncapsulation } from '@angular/core';
 import { HPacket, Rule, RulesService, HpacketsService, HProject } from '@hyperiot/core';
 import { FormGroup } from '@angular/forms';
 import { SelectOption } from '@hyperiot/components';
@@ -13,7 +13,8 @@ import { I18n } from '@ngx-translate/i18n-polyfill';
 @Component({
   selector: 'hyt-packet-enrichment-form',
   templateUrl: './packet-enrichment-form.component.html',
-  styleUrls: ['./packet-enrichment-form.component.scss']
+  styleUrls: ['./packet-enrichment-form.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class PacketEnrichmentFormComponent extends ProjectFormEntity implements OnInit, OnDestroy {
 

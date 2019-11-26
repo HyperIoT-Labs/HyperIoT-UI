@@ -1,0 +1,49 @@
+#ruleDefinition {
+
+    form {
+
+        .form-group {
+
+            &.row {
+                margin-bottom: 15px;
+                border: .5px solid #8b9bb0;
+
+                .container-first-form-field {
+                    text-align: left;
+                }
+
+                .container-form-field {
+                    text-align: center;
+                }
+
+                .containerputRule-form-field {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    span {
+                        &.icon-hyt_cancel {
+
+                            cursor: pointer;
+                            font-size: 1.2em;
+                            font-weight: bold;
+                            position: absolute;
+                            top: 50%;
+                            right: 5px;
+                            transform: translateY(-50%);
+
+                        }
+
+                        &:hover.icon-hyt_cancel {
+                            color: red;
+                        }
+                    }
+                }
+
+            }
+
+        }
+
+    }
+
+}

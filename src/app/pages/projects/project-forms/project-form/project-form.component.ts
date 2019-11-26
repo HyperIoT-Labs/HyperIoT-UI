@@ -16,6 +16,7 @@ import { I18n } from '@ngx-translate/i18n-polyfill';
   encapsulation: ViewEncapsulation.None
 })
 export class ProjectFormComponent extends ProjectFormEntity implements OnDestroy {
+ 
   entity = {} as HProject;
   entityFormMap = {
     'hproject-name': {
@@ -50,6 +51,8 @@ export class ProjectFormComponent extends ProjectFormEntity implements OnDestroy
       }
     });
   }
+
+  
 
   ngOnDestroy() {
     this.routerSubscription.unsubscribe();

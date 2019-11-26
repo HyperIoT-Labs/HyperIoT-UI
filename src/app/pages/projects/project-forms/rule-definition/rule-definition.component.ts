@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, ViewEncapsulation } from '@angular/core';
 import { HPacket, HPacketField } from '@hyperiot/core';
 import { SelectOption } from '@hyperiot/components';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -27,7 +27,8 @@ interface RuleDefinition {
 @Component({
   selector: 'hyt-rule-definition',
   templateUrl: './rule-definition.component.html',
-  styleUrls: ['./rule-definition.component.scss']
+  styleUrls: ['./rule-definition.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class RuleDefinitionComponent implements OnInit, OnChanges {
 
