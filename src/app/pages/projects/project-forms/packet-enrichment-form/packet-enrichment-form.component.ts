@@ -6,7 +6,7 @@ import { RuleDefinitionComponent } from '../rule-definition/rule-definition.comp
 // TODO: find a bettere placement for PageStatusEnum
 import { ProjectFormEntity, LoadingStatusEnum } from '../project-form-entity';
 import { Subscription, Observable } from 'rxjs';
-import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SummaryListItem } from '../../project-detail/generic-summary-list/generic-summary-list.component';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 
@@ -18,6 +18,15 @@ import { I18n } from '@ngx-translate/i18n-polyfill';
 })
 export class PacketEnrichmentFormComponent extends ProjectFormEntity implements OnInit, OnDestroy {
 
+  entityFormMap = {
+    'rule-name': {
+      field: 'name'
+    },
+    'rule-description': {
+      field: 'description'
+    }
+  };
+
   @ViewChild('ruleDef', { static: false }) ruleDefinitionComponent: RuleDefinitionComponent;
   packet: HPacket;
 
@@ -25,13 +34,12 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
 
   form: FormGroup;
 
-  packetList: HPacket[] = [];
   project: HProject = {} as HProject;
 
   enrichmentRules: SelectOption[] = [
-    { value: JSON.stringify({ actionName: 'AddCategoryRuleAction', ruleId: 0, categoryIds: null }), label: 'Categories' }, // TODO i18n
-    { value: JSON.stringify({ actionName: 'AddTagRuleAction', ruleId: 0, tagIds: null }), label: 'Tags' }, // TODO i18n
-    { value: JSON.stringify({ actionName: 'ValidateHPacketRuleAction', ruleId: 0 }), label: 'Validation' } // TODO i18n
+    { value: 'AddCategoryRuleAction', label: 'Categories' }, // TODO @I18N@
+    { value: 'AddTagRuleAction', label: 'Tags' }, // TODO @I18N@
+    { value: 'ValidateHPacketRuleAction', label: 'Validation' } // TODO @I18N@
   ];
 
   enrichmentType = '';
@@ -41,7 +49,6 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
 
   showCover = false;
 
-  private routerSubscription: Subscription;
   private activatedRouteSubscription: Subscription;
 
   private packetId: number;
@@ -60,14 +67,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
     this.formTitle = this.entitiesService.enrichment.formTitle;
     this.icon = this.entitiesService.enrichment.icon;
     this.hideDelete = true; // hide 'Delete' button
-    this.routerSubscription = this.router.events.subscribe((rl) => {
-      if (rl instanceof NavigationEnd) {
-        this.packetId = +(activatedRoute.snapshot.params.packetId);
-        this.loadData();
-      }
-    });
     this.activatedRouteSubscription = this.activatedRoute.params.subscribe(routeParams => {
-      this.editMode = false;
       this.packetId = +(activatedRoute.snapshot.params.packetId);
       if (this.packetId) {
         this.loadData();
@@ -75,25 +75,29 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
     });
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   ngOnDestroy() {
     this.activatedRouteSubscription.unsubscribe();
-    this.routerSubscription.unsubscribe();
   }
 
   save(successCallback, errorCallback) {
     this.saveRule(successCallback, errorCallback);
   }
-  edit(rule: Rule, readyCallback?) {
+  edit(rule?: Rule, readyCallback?) {
     const proceedWithEdit = () => {
       this.showCancel = true;
       this.editMode = true;
-      this.setForm(rule);
-      if (readyCallback) {
-        readyCallback();
-      }
+      super.edit(rule, () => {
+        const type = JSON.parse(this.entity.jsonActions)[0] || null;
+        this.ruleDefinitionComponent.setRuleDefinition(this.entity.ruleDefinition);
+        this.enrichmentType = JSON.parse(type) ? JSON.parse(type).actionName : null;
+        this.form.get('rule-type').setValue(this.enrichmentType);
+        if (readyCallback) {
+          readyCallback();
+        }
+      });
+
     };
     const canDeactivate = this.canDeactivate();
     if (typeof canDeactivate === 'boolean' && canDeactivate === true) {
@@ -106,6 +110,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
       });
     }
   }
+
   cancel() {
     this.resetErrors();
     this.resetForm();
@@ -128,13 +133,8 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
     if (packetId) { this.packetId = packetId; }
     this.packetService.findHPacket(this.packetId).subscribe((p: HPacket) => {
       this.project = p.device.project;
-      this.packetService.findAllHPacketByProjectId(this.project.id)
-        .subscribe((pl: HPacket[]) => {
-          this.packetList = pl;
-          this.packet = p;
-          // update rules summary list (on the right side)
-          this.updateSummaryList();
-        });
+      this.packet = p;
+      this.updateSummaryList();
       this.entityEvent.emit({
         event: 'treeview:focus',
         id: p.id, type: 'packet-enrichments'
@@ -146,7 +146,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
     this.loadingStatus = LoadingStatusEnum.Saving;
     this.resetErrors();
 
-    const jActions = [this.form.get('enrichmentRule').value];
+    const jActions = [JSON.stringify({ actionName: this.form.get('rule-type').value, ruleId: 0 })];
     const jActionStr = JSON.stringify(jActions);
     const rule = this.entity;
 
@@ -159,7 +159,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
       },
       packet: this.packet,
       jsonActions: jActionStr,
-      type: 'ENRICHMENT',
+      type: 'ENRICHMENT'
     });
     delete rule.actions;
     delete rule.parent;
@@ -191,9 +191,12 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
     this.updatePacket();
   }
 
-  onAddButtonClick() {
-    this.cleanForm();
-    this.edit({ jsonActions: '[]' } as Rule);
+  loadEmpty() {
+    this.form.reset();
+    this.enrichmentType = null;
+    this.ruleDefinitionComponent.resetRuleDefinition();
+    this.entity = { ...this.entitiesService.enrichment.emptyModel };
+    this.edit();
   }
 
   updateSummaryList() {
@@ -211,7 +214,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
 
   enrichmentTypeChanged(event) {
     if (event.value) {
-      this.enrichmentType = JSON.parse(event.value).actionName;
+      this.enrichmentType = event.value;
     }
   }
 
@@ -229,35 +232,6 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
   }
 
   // TODO: code below is still to be verified / refactored
-
-
-  setForm(data: Rule) {
-    if (data) {
-      this.entity = data;
-      let type = JSON.parse(data.jsonActions)[0] || null;
-      this.ruleDefinitionComponent.setRuleDefinition(data.ruleDefinition);
-      this.form.get('rule-description').setValue(data.description);
-      this.form.get('rule-name').setValue(data.name);
-      this.form.get('enrichmentRule').setValue(type);
-      type = JSON.parse(type);
-      this.enrichmentType = type ? type.actionName : null;
-    }
-    this.resetForm();
-  }
-
-  resetForm() {
-    super.resetForm();
-    this.ruleDefinitionComponent.originalValueUpdate();
-    //this.errors = [];
-    // this.ruleDefinitionComponent.resetRuleDefinition();
-    // this.form.reset();
-  }
-
-  cleanForm() {
-    super.cleanForm();
-    this.enrichmentType = null;
-    this.ruleDefinitionComponent.resetRuleDefinition();
-  }
 
   updatePacket() {
 

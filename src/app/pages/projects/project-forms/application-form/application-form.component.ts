@@ -9,28 +9,16 @@ import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Validators } from '@angular/forms';
 
 @Component({
-  selector: 'hyt-device-form',
-  templateUrl: './device-form.component.html',
-  styleUrls: ['./device-form.component.scss'],
+  selector: 'hyt-application-form',
+  templateUrl: './application-form.component.html',
+  styleUrls: ['./application-form.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class DeviceFormComponent extends ProjectFormEntity implements AfterViewInit, OnDestroy {
+export class ApplicationFormComponent extends ProjectFormEntity implements AfterViewInit, OnDestroy {
   entity: HDevice = {} as HDevice;
   entityFormMap = {
     'hdevice-devicename': {
       field: 'deviceName'
-    },
-    'hdevice-brand': {
-      field: 'brand'
-    },
-    'hdevice-model': {
-      field: 'model'
-    },
-    'hdevice-firmwareversion': {
-      field: 'firmwareVersion'
-    },
-    'hdevice-softwareversion': {
-      field: 'softwareVersion'
     },
     'hdevice-description': {
       field: 'description'
@@ -58,9 +46,9 @@ export class DeviceFormComponent extends ProjectFormEntity implements AfterViewI
     private i18n: I18n
   ) {
     super(injector, i18n, formView);
-    this.longDefinition = this.entitiesService.device.longDefinition;
-    this.formTitle = this.entitiesService.device.formTitle;
-    this.icon = this.entitiesService.device.icon;
+    this.longDefinition = this.entitiesService.application.longDefinition;
+    this.formTitle = this.entitiesService.application.formTitle;
+    this.icon = this.entitiesService.application.icon;
   }
 
   ngAfterViewInit(): void {
@@ -140,10 +128,6 @@ export class DeviceFormComponent extends ProjectFormEntity implements AfterViewI
     const d = this.entity;
     d.deviceName = this.form.get('hdevice-devicename').value;
     d.description = this.form.get('hdevice-description').value;
-    d.brand = this.form.get('hdevice-brand').value;
-    d.model = this.form.get('hdevice-model').value;
-    d.firmwareVersion = this.form.get('hdevice-firmwareversion').value;
-    d.softwareVersion = this.form.get('hdevice-softwareversion').value;
 
     const wasNew = this.isNew();
     const responseHandler = (res) => {
@@ -201,7 +185,7 @@ export class DeviceFormComponent extends ProjectFormEntity implements AfterViewI
       console.log(err.error.type)
       switch (err.error.type) {
         case 'it.acsoftware.hyperiot.base.exception.HyperIoTDuplicateEntityException': {
-          this.validationError = [{ message: 'Unavaiable device name', field: 'hdevice-devicename', invalidValue: '' }]; // @I18N@
+          this.validationError = [{ message: 'Unavaiable application name', field: 'hdevice-devicename', invalidValue: '' }]; // @I18N@
           console.log(this.validationError);
           this.form.get('hdevice-devicename').setErrors({
             validateInjectedError: {
@@ -212,7 +196,7 @@ export class DeviceFormComponent extends ProjectFormEntity implements AfterViewI
           break;
         }
         case 'it.acsoftware.hyperiot.base.exception.HyperIoTScreenNameAlreadyExistsException': {
-          this.validationError = [{ message: 'Device name already in use', field: 'hdevice-devicename', invalidValue: '' }]; // @I18N@
+          this.validationError = [{ message: 'Application name already in use', field: 'hdevice-devicename', invalidValue: '' }]; // @I18N@
           this.form.get('hdevice-devicename').setErrors({
             validateInjectedError: {
               valid: false

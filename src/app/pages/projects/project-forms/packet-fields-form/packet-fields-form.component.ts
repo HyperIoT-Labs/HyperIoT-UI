@@ -117,7 +117,7 @@ export class PacketFieldsFormComponent extends ProjectFormEntity implements OnDe
         })).sort((a, b) => a.label < b.label ? -1 : 1)
       );
     }
-    this.form.patchValue({'hpacketfield-unit': ''});
+    this.form.patchValue({ 'hpacketfield-unit': '' });
   }
 
   // ProjectDetailEntity interface
@@ -219,7 +219,7 @@ export class PacketFieldsFormComponent extends ProjectFormEntity implements OnDe
       this.showCancel = false;
       this.loadData(); // refresh data and treeview
       this.loadingStatus = LoadingStatusEnum.Ready;
-      successCallback && successCallback(res);
+      successCallback && successCallback(res, this.packetId);
     }, (err) => {
       this.setErrors(err);
       errorCallback && errorCallback(err);
@@ -251,12 +251,19 @@ export class PacketFieldsFormComponent extends ProjectFormEntity implements OnDe
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result === 'delete') {
+        if (this.currentField && this.currentField.id === fieldId) {
+          this.currentField = null;
+        }
         this.hPacketService.deleteHPacketField(fieldId).subscribe(
           res => {
             this.loadData();
+            this.entityEvent.emit({
+              event: 'field:delete',
+              packet: this.packetId
+            });
           },
           err => {
-            console.log(err)
+            console.log(err);
             // TODO: report error!
           }
         );

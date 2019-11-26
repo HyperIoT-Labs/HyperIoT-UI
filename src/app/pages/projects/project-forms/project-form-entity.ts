@@ -8,6 +8,7 @@ import { SummaryList } from '../project-detail/generic-summary-list/generic-summ
 import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { EntitiesService } from 'src/app/services/entities/entities.service';
+import { DeviceFormComponent } from './device-form/device-form.component';
 
 export enum LoadingStatusEnum {
     Ready,
@@ -72,6 +73,7 @@ export abstract class ProjectFormEntity implements OnInit {
     }
 
     load(): void { }
+    loadEmpty(): void { }
     save(successCallback: any, errorCallback: any): void { }
     delete(successCallback: any, errorCallback: any): void { }
     cancel(): void { }
@@ -84,13 +86,15 @@ export abstract class ProjectFormEntity implements OnInit {
             this.entity = { ...entity };
         }
         Object.keys(this.entityFormMap).forEach((key) => {
-            this.form.get(key)
-                .setValue(this.entity[this.entityFormMap[key].field] || this.entityFormMap[key].default);
+            if (this.form.get(key)) {
+                this.form.get(key)
+                    .setValue(this.entity[this.entityFormMap[key].field]);
+            }
         });
-        this.resetForm();
         if (readyCallback) {
             readyCallback();
-          }
+        }
+        this.resetForm();
     }
     clone(entity?: any): any {
         const cloned = { ...entity } || this.entity;
@@ -124,7 +128,7 @@ export abstract class ProjectFormEntity implements OnInit {
         return !invalid;
     }
     isDirty(): boolean {
-        return this.serialize() !== this.originalValue;
+        return (this.originalValue === '{}') ? false : this.serialize() !== this.originalValue;
     }
 
     getError(field) {
@@ -165,12 +169,6 @@ export abstract class ProjectFormEntity implements OnInit {
     resetForm() {
         this.originalValue = this.serialize();
         this.buildHintMessages();
-    }
-
-    cleanForm(): void {
-        this.entity = {};
-        this.form.reset();
-        this.edit();
     }
 
     private serialize() {
@@ -232,7 +230,7 @@ export abstract class ProjectFormEntity implements OnInit {
 
     openDeleteDialog(successCallback?: any, errorCallback?: any) {
         const dialogRef = this.dialog.open(DeleteConfirmDialogComponent, {
-           data: { title: this.i18nD('HYT_delete_item_question'), message: this.i18nD('HYT_operation_can_not_be_undone') }
+            data: { title: this.i18nD('HYT_delete_item_question'), message: this.i18nD('HYT_operation_can_not_be_undone') }
             // TODO This translation does not work
         });
         dialogRef.afterClosed().subscribe((result) => {

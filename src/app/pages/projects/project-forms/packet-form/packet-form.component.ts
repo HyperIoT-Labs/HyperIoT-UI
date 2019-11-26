@@ -1,4 +1,4 @@
-import { Component, OnDestroy, ViewChild, ElementRef, Input, Injector, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, ViewChild, ElementRef, Input, Injector, ViewEncapsulation, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 
 import { Subscription } from 'rxjs';
@@ -15,7 +15,7 @@ import { I18n } from '@ngx-translate/i18n-polyfill';
   styleUrls: ['./packet-form.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class PacketFormComponent extends ProjectFormEntity implements OnDestroy {
+export class PacketFormComponent extends ProjectFormEntity implements AfterViewInit, OnDestroy {
   entity: HPacket = {} as HPacket;
   entityFormMap = {
     'hpacket-name': {
@@ -76,18 +76,24 @@ export class PacketFormComponent extends ProjectFormEntity implements OnDestroy 
     @ViewChild('form', { static: true }) formView: ElementRef,
     private hPacketService: HpacketsService,
     private activatedRoute: ActivatedRoute,
-    private router: Router,
+    private cdr: ChangeDetectorRef,
     private i18n: I18n
   ) {
     super(injector, i18n, formView);
     this.longDefinition = this.entitiesService.packet.longDefinition;
     this.formTitle = this.entitiesService.packet.formTitle;
     this.icon = this.entitiesService.packet.icon;
-    this.routerSubscription = this.router.events.subscribe((rl) => {
-      if (rl instanceof NavigationEnd) {
-        this.id = this.activatedRoute.snapshot.params.packetId;
+  }
+
+  ngAfterViewInit(): void {
+    this.routerSubscription = this.activatedRoute.params.subscribe(params => {
+      if (params.packetId) {
+        this.id = params.packetId;
         this.load();
+      } else {
+        this.loadEmpty();
       }
+      this.cdr.detectChanges();
     });
   }
 
@@ -123,6 +129,12 @@ export class PacketFormComponent extends ProjectFormEntity implements OnDestroy 
     });
   }
 
+  loadEmpty() {
+    this.form.reset();
+    this.entity = { ...this.entitiesService.packet.emptyModel };
+    this.edit();
+  }
+
   private savePacket(successCallback?, errorCallback?) {
     this.loadingStatus = LoadingStatusEnum.Saving;
     this.resetErrors();
@@ -153,7 +165,6 @@ export class PacketFormComponent extends ProjectFormEntity implements OnDestroy 
       this.hPacketService.updateHPacket(p).subscribe(responseHandler, (err) => {
         this.setErrors(err);
         errorCallback && errorCallback(err);
-        this.loadingStatus = LoadingStatusEnum.Error;
       });
     } else {
       p.entityVersion = 1;
@@ -163,7 +174,6 @@ export class PacketFormComponent extends ProjectFormEntity implements OnDestroy 
       this.hPacketService.saveHPacket(p).subscribe(responseHandler, (err) => {
         this.setErrors(err);
         errorCallback && errorCallback(err);
-        this.loadingStatus = LoadingStatusEnum.Error;
       });
     }
   }
@@ -175,10 +185,11 @@ export class PacketFormComponent extends ProjectFormEntity implements OnDestroy 
       // request navigate to parent node (device page)
       this.entityEvent.emit({
         event: 'entity:delete',
-        exitRoute: [
+        exitRoute: 'project'
+        // exitRoute: [
           //'/projects', this.entity.device.project.id,
-          { outlets: { projectDetails: ['device', this.entity.device.id] } }
-        ]
+          // { outlets: { projectDetails: ['device', this.entity.device.id] } }
+        // ]
       });
       this.entityEvent.emit({ event: 'treeview:refresh' });
       successCallback && successCallback(res);
@@ -186,6 +197,34 @@ export class PacketFormComponent extends ProjectFormEntity implements OnDestroy 
       errorCallback && errorCallback(err);
       this.loadingStatus = LoadingStatusEnum.Error;
     });
+  }
+
+  setErrors(err) {
+
+    if (err.error && err.error.type) {
+      switch (err.error.type) {
+        case 'it.acsoftware.hyperiot.base.exception.HyperIoTDuplicateEntityException': {
+          this.validationError = [{ message: 'Unavaiable packet name', field: 'hpacket-name', invalidValue: '' }]; // @I18N@
+          this.form.get('hpacket-name').setErrors({
+            validateInjectedError: {
+              valid: false
+            }
+          });
+          this.loadingStatus = LoadingStatusEnum.Ready;
+          break;
+        }
+        case 'it.acsoftware.hyperiot.base.exception.HyperIoTValidationException': {
+          super.setErrors(err);
+          break;
+        }
+        default: {
+          this.loadingStatus = LoadingStatusEnum.Error;
+        }
+      }
+    } else {
+      this.loadingStatus = LoadingStatusEnum.Error;
+    }
+
   }
 
 }

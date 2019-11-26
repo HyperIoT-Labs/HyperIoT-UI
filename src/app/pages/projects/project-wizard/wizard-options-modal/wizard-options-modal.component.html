@@ -13,33 +13,27 @@
 
                 <div class="row row-block">
 
-                    <div id="enrich-block" class="col-4 single-box">
+                    <div id="enrich-block" class="col-4 single-box" (click)="output('goToStep', 4);">
 
-                        <hyt-hexagon 
-                            [iconPath]="entitiesService.enrichment.icon" 
-                            (clicked)="output('goToStep', 4);"
-                        >
-                        </hyt-hexagon>
+                        <hyt-hexagon [iconPath]="entitiesService.enrichment.icon"></hyt-hexagon>
 
                         <span class="title-block" i18n="@@HYT_enrichment_data">HYT_enrichment_data</span>
                         
                         <p class="body-block" i18n="@@HYT_enrichment_definition_long">HYT_enrichment_definition_long</p>
 
                     </div>
-                    <div id="stats-block" class="col-4 single-box">
+                    <div id="stats-block" class="col-4 single-box" (click)="output('goToStep', 5);">
                         
-                        <hyt-hexagon [iconPath]="entitiesService.statistic.icon" (clicked)="output('goToStep', 5);">
-                        </hyt-hexagon>
+                        <hyt-hexagon [iconPath]="entitiesService.statistic.icon"></hyt-hexagon>
 
                         <span class="title-block" i18n="@@HYT_statistics">HYT_statistics</span>
                        
                         <p class="body-block" i18n="@@HYT_statistics_definition_long">HYT_statistics_definition_long</p>
                     
                     </div>
-                    <div id="events-block" class="col-4 single-box">
+                    <div id="events-block" class="col-4 single-box" (click)="output('goToStep', 6);">
 
-                        <hyt-hexagon [iconPath]="entitiesService.event.icon" (clicked)="output('goToStep', 6);">
-                        </hyt-hexagon>
+                        <hyt-hexagon [iconPath]="entitiesService.event.icon"></hyt-hexagon>
 
                         <span class="title-block"i18n="@@HYT_events">HYT_events</span>
                         

@@ -1,7 +1,6 @@
-import { Component, OnInit, ViewChild, Injectable, AfterViewInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, ViewEncapsulation } from '@angular/core';
 import { HProject, HDevice, HPacket, Rule, HdevicesService, HpacketsService } from '@hyperiot/core';
-import { CanDeactivate } from '@angular/router';
-import { Subject } from 'rxjs';
+import { Subject, Observable, Observer } from 'rxjs';
 import { ProjectFormEntity } from '../project-forms/project-form-entity';
 import { ProjectFormComponent } from '../project-forms/project-form/project-form.component';
 import { DeviceFormComponent } from '../project-forms/device-form/device-form.component';
@@ -12,26 +11,13 @@ import { SummaryListItem } from '../project-detail/generic-summary-list/generic-
 import { PacketSelectComponent } from './packet-select/packet-select.component';
 import { PacketEnrichmentFormComponent } from '../project-forms/packet-enrichment-form/packet-enrichment-form.component';
 import { PacketEventsFormComponent } from '../project-forms/packet-events-form/packet-events-form.component';
-import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
 import { PacketStatisticsFormComponent } from '../project-forms/packet-statistics-form/packet-statistics-form.component';
 import { HytModalConfService } from 'src/app/services/hyt-modal-conf.service';
 import { HytStepperComponent } from '@hyperiot/components/lib/hyt-stepper/hyt-stepper.component';
 import { EntitiesService } from 'src/app/services/entities/entities.service';
-import { ProjectDataStatus } from './model/pageStatusEnum';
-
-@Injectable({
-  providedIn: 'root',
-})
-export class ProjectWizardCanDeactivate implements CanDeactivate<ProjectWizardComponent> {
-  canDeactivate(com: ProjectWizardComponent) {
-    if (com.currentProject == null) {
-      return true;
-    } else {
-      com.deactivateModal = true;
-      return com.canDeactivate$;
-    }
-  }
-}
+import { WizardDeactivationModalComponent } from './wizard-deactivation-modal/wizard-deactivation-modal.component';
+import { Option } from '@hyperiot/components';
+import { ApplicationFormComponent } from '../project-forms/application-form/application-form.component';
 
 @Component({
   selector: 'hyt-project-wizard',
@@ -40,7 +26,6 @@ export class ProjectWizardCanDeactivate implements CanDeactivate<ProjectWizardCo
   encapsulation: ViewEncapsulation.None
 })
 export class ProjectWizardComponent implements OnInit, AfterViewInit {
-  [x: string]: any;
 
   @ViewChild('stepper', { static: false })
   stepper: HytStepperComponent;
@@ -53,33 +38,39 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
   @ViewChild('devicesForm', { static: false })
   devicesForm: DeviceFormComponent;
 
+  @ViewChild('applicationsForm', { static: false })
+  applicationsForm: ApplicationFormComponent;
+
+  @ViewChild('deviceSelect', { static: false })
+  deviceSelect: DeviceSelectComponent;
+
   @ViewChild('packetsForm', { static: false })
   packetsForm: PacketFormComponent;
 
   @ViewChild('fieldPacketSelect', { static: false })
   fieldPacketSelect: PacketSelectComponent;
 
-  @ViewChild('enrichmentPacketSelect', { static: false })
-  enrichmentPacketSelect: PacketSelectComponent;
-
-  @ViewChild('deviceSelect', { static: false })
-  deviceSelect: DeviceSelectComponent;
-
   @ViewChild('fieldsForm', { static: false })
   fieldsForm: PacketFieldsFormComponent;
+
+  @ViewChild('enrichmentPacketSelect', { static: false })
+  enrichmentPacketSelect: PacketSelectComponent;
 
   @ViewChild('enrichmentForm', { static: false })
   enrichmentForm: PacketEnrichmentFormComponent;
 
   statisticsForm: PacketStatisticsFormComponent;
 
-  @ViewChild('eventsForm', { static: false })
-  eventsForm: PacketEventsFormComponent;
-
   @ViewChild('eventPacketSelect', { static: false })
   eventPacketSelect: PacketSelectComponent;
 
-  panelIsVisible : boolean = true;
+  @ViewChild('eventsForm', { static: false })
+  eventsForm: PacketEventsFormComponent;
+
+  @ViewChild('deactivationModal', { static: false })
+  deactivationModal: WizardDeactivationModalComponent;
+
+  panelIsVisible = true;
 
   currentProject: HProject;
   currentDevice: HDevice;
@@ -88,8 +79,6 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
   enrichmentRules: Rule[] = [];
   eventRules: Rule[] = [];
 
-  packetInformationValidated = false;
-
   hintMessage = '';
   hintVisible = false;
 
@@ -97,11 +86,7 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
 
   finishData: { iconPath: string, type: string, entities: string[] }[] = [];
 
-  canDeactivate$: Subject<boolean> = new Subject<boolean>();
-
-  deactivateModal = false;
-
-  loadingProjectData: ProjectDataStatus = ProjectDataStatus.Ok;
+  optionModalViewed = false;
 
   constructor(
     private hDevicesService: HdevicesService,
@@ -110,29 +95,49 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
     public entitiesService: EntitiesService
   ) { }
 
-  ngOnInit() {
-    
-  }
+  ngOnInit() { }
 
   ngAfterViewInit() {
 
-    setTimeout(() => {// TODO...setimeout 0 to avoid 'expression changed after view checked'
-      this.eventsForm.editMode = true;
-      this.enrichmentForm.editMode = true;
-      this.resetForms();
+    setTimeout(() => {// TODO...setimeout 0 to avoid 'expression changed after view checked'. Replace with chenge detection
+      this.eventsForm.loadEmpty();
+      this.enrichmentForm.loadEmpty();
+      this.fieldsForm.entityEvent.subscribe(
+        res => {
+          if (res.event === 'field:delete') {
+            this.updateSelectFieldChanged(res.packet);
+          }
+        }
+      );
       if (window.history.state.projectId) {
-        //this.loadingProjectData = true;
         this.projectForm.id = window.history.state.projectId;
         this.projectForm.load();
+        this.optionModalViewed = true;
       }
       this.currentForm = this.projectForm;
-      
+
     }, 0);
-    
+
   }
 
-  resetForms() {
-    this.packetsForm.edit();
+  isWizardDirty() {
+    return (
+      this.projectForm.isDirty() ||
+      ((this.selectedSource === 'application') ? this.applicationsForm.isDirty() : this.devicesForm.isDirty()) ||
+      // this.devicesForm.isDirty() ||
+      this.packetsForm.isDirty() ||
+      this.fieldsForm.isDirty() ||
+      this.enrichmentForm.isDirty() ||
+      // this.statisticsForm.isDirty() ||
+      this.eventsForm.isDirty()
+    );
+  }
+
+  canDeactivate(com: ProjectWizardComponent) {
+    if (this.isWizardDirty()) {
+      return this.openDeactivationModal();
+    }
+    return true;
   }
 
   stepChanged(event) {
@@ -144,7 +149,9 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
         break;
       }
       case 1: {
-        this.currentForm = this.devicesForm;
+        (this.selectedSource === 'application') ?
+          this.currentForm = this.applicationsForm :
+          this.currentForm = this.devicesForm;
         this.getDevices();
         break;
       }
@@ -155,12 +162,12 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
       }
       case 3: {
         this.currentForm = this.fieldsForm;
-        this.fieldPacketSelect.autoSelect();
+        this.fieldPacketSelect.updateSelect();
         break;
       }
       case 4: {
         this.currentForm = this.enrichmentForm;
-        this.enrichmentPacketSelect.autoSelect();
+        this.enrichmentPacketSelect.updateSelect();
         break;
       }
       case 5: {
@@ -169,16 +176,14 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
       }
       case 6: {
         this.currentForm = this.eventsForm;
-        this.eventPacketSelect.autoSelect();
+        this.eventPacketSelect.updateSelect();
         break;
       }
       default: {
         console.log('error');
       }
     }
-    // if (!this.currentForm.isDirty())
-    //   this.currentForm.edit();
-    // this.wizardService.stepChanged(event.selectedIndex);
+
   }
 
   updateList(ent: any, entityList: any[]): any[] {
@@ -202,12 +207,21 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
   }
 
   updateDeviceTable() {
-    this.devicesForm.summaryList = {
-      title: this.entitiesService.device.displayListName,
-      list: this.hDevices.map((d) => {
-        return { name: d.deviceName, description: d.description, data: d };
-      }) as SummaryListItem[]
-    };
+    if (this.selectedSource === 'application') {
+      this.applicationsForm.summaryList = {
+        title: this.entitiesService.device.displayListName,
+        list: this.hDevices.map((d) => {
+          return { name: d.deviceName, description: d.description, data: d };
+        }) as SummaryListItem[]
+      };
+    } else {
+      this.devicesForm.summaryList = {
+        title: this.entitiesService.device.displayListName,
+        list: this.hDevices.map((d) => {
+          return { name: d.deviceName, description: d.description, data: d };
+        }) as SummaryListItem[]
+      };
+    }
   }
 
   updatePacketTable() {
@@ -224,21 +238,27 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
 
       if (this.currentForm instanceof ProjectFormComponent) {
         this.currentProject = ent;
-      } else if (this.currentForm instanceof DeviceFormComponent) {
-        this.currentForm.cleanForm();
+        // wait for step 0 validation (next cicle)
+        setTimeout(() => {
+          this.stepper.next();
+        }, 0);
+      } else if (this.currentForm instanceof DeviceFormComponent || this.currentForm instanceof ApplicationFormComponent) {
+        this.currentForm.loadEmpty();
         this.hDevices = [...this.updateList(ent, this.hDevices)];
         this.updateDeviceTable();
       } else if (this.currentForm instanceof PacketFormComponent) {
-        this.currentForm.cleanForm();
+        this.currentForm.loadEmpty();
         this.hPackets = [...this.updateList(ent, this.hPackets)];
         this.deviceSelect.unfreezeSelection();
         this.updatePacketTable();
+      } else if (this.currentForm instanceof PacketFieldsFormComponent) {
+        this.updateSelectFieldChanged(isNew);
       } else if (this.currentForm instanceof PacketEnrichmentFormComponent) {
         this.enrichmentRules = [...this.updateList(ent, this.enrichmentRules)];
-        this.currentForm.cleanForm();
+        this.currentForm.loadEmpty();
       } else if (this.currentForm instanceof PacketEventsFormComponent) {
         this.eventRules = [...this.updateList(ent, this.eventRules)];
-        this.currentForm.cleanForm();
+        this.currentForm.loadEmpty();
       }
 
     }, (error) => {
@@ -273,7 +293,6 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
   }
 
   menuAction(event): void {
-    console.log(event.item);
     switch (event.action) {
       case 'edit':
         if (this.currentForm instanceof PacketFormComponent) {
@@ -295,21 +314,31 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
           this.deviceSelect.freezeSelection();
         }
         this.currentForm.edit(event.item.data, this.currentForm.openDeleteDialog((del) => {
-          if (this.currentForm instanceof DeviceFormComponent) {
+          if (this.currentForm instanceof DeviceFormComponent || this.currentForm instanceof ApplicationFormComponent) {
             this.hDevices = [...this.deleteFromList(event.item.data.id, this.hDevices)];
+            this.hPackets = [...this.hPackets.filter(p => p.device.id !== event.item.data.id)];
             this.updateDeviceTable();
+            this.updatePacketTable();
+            this.updateDeletePacketDep();
           } else if (this.currentForm instanceof PacketFormComponent) {
             this.hPackets = [...this.deleteFromList(event.item.data.id, this.hPackets)];
             this.updatePacketTable();
+            this.updateDeletePacketDep();
             this.deviceSelect.unfreezeSelection();
           } else if (this.currentForm instanceof PacketEnrichmentFormComponent) {
             this.enrichmentRules = [...this.deleteFromList(event.item.data.id, this.enrichmentRules)];
           } else if (this.currentForm instanceof PacketEventsFormComponent) {
             this.eventRules = [...this.deleteFromList(event.item.data.id, this.eventRules)];
           }
-          this.currentForm.cleanForm();
-          this.currentForm.entity = {};
+          this.currentForm.loadEmpty();
         }));
+        break;
+      case 'add':
+        if (this.currentForm instanceof PacketFormComponent) {
+          this.deviceSelect.unfreezeSelection();
+          this.deviceSelect.autoSelect();
+        }
+        this.currentForm.loadEmpty();
         break;
     }
   }
@@ -318,33 +347,71 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
     this.currentDevice = event;
   }
 
-  fieldPacketChanged(event): void {
-    if (event) {
-      this.fieldsForm.loadData(event.id);
+  /**
+   * used to select another packet in field/enrichment/events if the previous one is deleted
+   */
+  updateDeletePacketDep() {
+    if (!this.hPackets.some(p => p.id === this.fieldPacketId)) {
+      this.fieldPacketSelect.autoSelect();
+    }
+    if (!this.hPackets.some(p => p.id === this.enrichmentPacketId)) {
+      this.enrichmentPacketSelect.autoSelect();
+    }
+    if (!this.hPackets.some(p => p.id === this.eventPacketId)) {
+      this.eventPacketSelect.autoSelect();
     }
   }
 
-  enrichmentPacketChanged(event): void {
-    if (event) {
-      this.enrichmentForm.cleanForm();
-      this.enrichmentForm.loadData(event.id);
+  updateSelectFieldChanged(idPacketChanged: number) {
+    if (idPacketChanged === this.enrichmentPacketId) {
+      this.enrichmentPacketSelect.autoSelect();
+    }
+    if (idPacketChanged === this.eventPacketId) {
+      this.eventPacketSelect.autoSelect();
     }
   }
 
-  eventPacketChanged(event): void {
+  fieldPacketId: number;
+  fieldPacketChanged(event: number): void {
     if (event) {
-      this.eventsForm.cleanForm();
-      this.eventsForm.loadData(event.id);
+      this.fieldPacketId = event;
+      this.fieldsForm.loadData(this.fieldPacketId);
     }
+  }
+
+  enrichmentPacketId: number;
+  enrichmentPacketChanged(event: number): void {
+    if (event) {
+      this.enrichmentPacketId = event;
+      this.enrichmentForm.loadData(this.enrichmentPacketId);
+      this.enrichmentForm.loadEmpty();
+    }
+  }
+
+  eventPacketId: number;
+  eventPacketChanged(event: number): void {
+    if (event) {
+      this.eventPacketId = event;
+      this.eventsForm.loadData(this.eventPacketId);
+      this.eventsForm.loadEmpty();
+    }
+  }
+
+  openDeactivationModal(): Observable<boolean> {
+    return new Observable((observer: Observer<boolean>) => {
+      this.modalService.open('hyt-wizard-deactivation-modal');
+      this.deactivationModal.modalClose.subscribe(
+        res => observer.next(res)
+      );
+    });
   }
 
   openOptionModal() {
     this.modalService.open('hyt-wizard-options-modal');
-    this.packetInformationValidated = true;
+    this.optionModalViewed = true;
   }
 
   optionsModalClosed(event: { action: string, data: any }) {
-    console.log(event);
     switch (event.action) {
       case 'goToStep': {
         this.stepper.changeStep(event.data);
@@ -387,12 +454,6 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
     this.modalService.open('hyt-wizard-report-modal');
   }
 
-  // Deactivation logic
-  deactivate(cd: boolean): void {
-    this.deactivateModal = false;
-    this.canDeactivate$.next(cd);
-  }
-
   // TODO... in service
   getDevices(): void {
     this.hDevicesService.findAllHDeviceByProjectId(this.currentProject.id).subscribe(
@@ -432,22 +493,75 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
     }
   }
 
-  nextFn() {
-    if (this.currentStepIndex === 3 && !this.packetInformationValidated) {
-      this.openOptionModal();
-    } else if (this.currentStepIndex === 6) {
-      this.openOptionModal();
-    } else {
-      this.stepper.next();
-    }
-  }
-
   showCancel(): boolean {
     return this.currentForm instanceof PacketFieldsFormComponent;
   }
 
   togglePanel() {
     this.panelIsVisible = !this.panelIsVisible;
+  }
+
+  sourceOptions: Option[] = [
+    { value: 'application', label: 'application', checked: true },
+    { value: 'device', label: 'device' }
+  ];
+
+  selectedSource = 'application';
+
+  sourceChanged(value) {
+    this.selectedSource = value;
+    if (this.selectedSource === 'application') {
+      //TODO find better way to wait form recreation
+      setTimeout(() => {
+        this.currentForm = this.applicationsForm;
+        this.updateDeviceTable();
+      }, 0);
+    } else {
+      setTimeout(() => {
+        this.currentForm = this.devicesForm;
+        this.updateDeviceTable();
+      }, 0);
+    }
+  }
+
+  getDirty(index: number): boolean {
+    switch (index) {
+      case 0: {
+        return (this.projectForm) ? this.projectForm.isDirty() : false;
+        break;
+      }
+      case 1: {
+        if (this.selectedSource === 'application') {
+          return (this.applicationsForm) ? this.applicationsForm.isDirty() : false;
+        } else {
+          return (this.devicesForm) ? this.devicesForm.isDirty() : false;
+        }
+        break;
+      }
+      case 2: {
+        return (this.packetsForm) ? this.packetsForm.isDirty() : false;
+        break;
+      }
+      case 3: {
+        return (this.fieldsForm) ? this.fieldsForm.isDirty() : false;
+        break;
+      }
+      case 4: {
+        return (this.enrichmentForm && this.enrichmentForm.editMode) ? this.enrichmentForm.isDirty() : false;
+        break;
+      }
+      case 5: {
+        return false;
+        break;
+      }
+      case 6: {
+        return (this.eventsForm && this.eventsForm.editMode) ? this.eventsForm.isDirty() : false;
+        break;
+      }
+      default: {
+        return false;
+      }
+    }
   }
 
 }

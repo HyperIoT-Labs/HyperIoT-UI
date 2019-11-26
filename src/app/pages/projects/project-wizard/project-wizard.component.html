@@ -16,7 +16,11 @@
       </ng-template>
 
       <ng-template #devicesTemplate>
-        <hyt-device-form #devicesForm [currentProject]="currentProject" (entityEvent)="onEntityEvent($event)">
+        <hyt-radio-button [options]="sourceOptions" (changeFn)="sourceChanged($event)"></hyt-radio-button>
+        <hyt-application-form *ngIf="selectedSource == 'application'" #applicationsForm [currentProject]="currentProject"
+          (entityEvent)="onEntityEvent($event)"></hyt-application-form>
+        <hyt-device-form *ngIf="selectedSource == 'device'" #devicesForm [currentProject]="currentProject"
+          (entityEvent)="onEntityEvent($event)">
         </hyt-device-form>
       </ng-template>
 
@@ -36,7 +40,8 @@
 
       <ng-template #enrichmentTemplate>
         <hyt-pw-packet-select #enrichmentPacketSelect [hDevices]="hDevices" [hPackets]="hPackets"
-          (currentPacket)="enrichmentPacketChanged($event)"></hyt-pw-packet-select>
+          (currentPacket)="enrichmentPacketChanged($event)">
+        </hyt-pw-packet-select>
         <hyt-packet-enrichment-form #enrichmentForm></hyt-packet-enrichment-form>
       </ng-template>
 
@@ -62,31 +67,37 @@
               enrichmentTemplate,
               statisticsTemplate,
               eventsTemplate
-            ]"
-            [labelArray]="[
+            ]" [labelArray]="[
               entitiesService.project.displayListName,
-              entitiesService.device.displayListName,
+              'Sources',
               entitiesService.packet.displayListName,
               entitiesService.field.displayListName,
               entitiesService.enrichment.displayListName,
               entitiesService.statistic.displayListName,
               entitiesService.event.displayListName
-            ]"
-            [completedArray]="[
+            ]" [completedArray]="[
               currentProject != null,
               hDevices.length != 0,
               hPackets.length != 0,
-              packetInformationValidated,
-              packetInformationValidated,
-              packetInformationValidated,
-              packetInformationValidated
+              hDevices.length != 0 && hPackets.length != 0 && optionModalViewed,
+              hDevices.length != 0 && hPackets.length != 0 && optionModalViewed,
+              hDevices.length != 0 && hPackets.length != 0 && optionModalViewed,
+              hDevices.length != 0 && hPackets.length != 0 && optionModalViewed
+            ]" [isDirty]="[
+              getDirty(0),
+              getDirty(1),
+              getDirty(2),
+              getDirty(3),
+              getDirty(4),
+              getDirty(5),
+              getDirty(6)
             ]">
           </hyt-stepper>
         </div>
       </div>
 
       <div id="container-save-update" class="container">
-      
+
         <div id="row-save-update" class="row">
 
           <div class="col-12">
@@ -102,26 +113,26 @@
           </div>
         </div>
 
-      </div>  
+      </div>
 
       <div id="container-prev-next" class="container-fluid">
 
-          <div id="row-next-back" class="row">
-          
-            <div *ngIf="currentStepIndex != 0" class="col-6">
-              <hyt-button  (clickFn)="stepper.previous()">
-                <ng-container i18n="@@HYT_back">HYT_back</ng-container>
-              </hyt-button>
-            </div>
-  
-            <div [ngClass]="{'offset-6': currentStepIndex == 0}" class="col-6">
-              <hyt-button class="toRight" [isDisabled]="isNextDisabled()"
-                (clickFn)="(currentStepIndex == 3 && !packetInformationValidated || currentStepIndex == 6)? openOptionModal() : stepper.next()">
-                <ng-container i18n="@@HYT_next">HYT_next</ng-container>
-              </hyt-button>
-            </div>
-  
+        <div id="row-next-back" class="row">
+
+          <div *ngIf="currentStepIndex != 0" class="col-6">
+            <hyt-button (clickFn)="stepper.previous()">
+              <ng-container i18n="@@HYT_back">HYT_back</ng-container>
+            </hyt-button>
           </div>
+
+          <div [ngClass]="{'offset-6': currentStepIndex == 0}" class="col-6">
+            <hyt-button class="toRight" [isDisabled]="isNextDisabled()"
+              (clickFn)="(currentStepIndex == 3 && !optionModalViewed || currentStepIndex == 6)? openOptionModal() : stepper.next()">
+              <ng-container i18n="@@HYT_next">HYT_next</ng-container>
+            </hyt-button>
+          </div>
+
+        </div>
 
       </div>
 
@@ -130,13 +141,8 @@
     <div id="hint-column" class="col-md-2">
 
       <!-- NEW ACCORDION -->
-      <div 
-        *ngIf="currentForm" 
-        id="section-title" 
-        (click)="togglePanel()" 
-        [ngClass]="{'clicked': panelIsVisible, 'unclicked': !panelIsVisible}" 
-        class="row"
-      >
+      <div *ngIf="currentForm" id="section-title" (click)="togglePanel()"
+        [ngClass]="{'clicked': panelIsVisible, 'unclicked': !panelIsVisible}" class="row">
 
         <div id="icon-title" class="col-4">
           <hyt-hexagon [iconPath]="currentForm.icon" [dimension]="0.7"></hyt-hexagon>
@@ -157,12 +163,9 @@
       <hr id="title-underline">
       <!-- END NEW ACCORDION -->
 
-      <hyt-generic-summary-list 
-        *ngIf="currentForm && currentForm.summaryList"
-        [ngClass]="{ disabled: currentForm.isDirty() && !currentForm.isNew() }" 
-        [summaryList]="currentForm.summaryList"
-        (menuAction)="menuAction($event)"
-      ></hyt-generic-summary-list>
+      <hyt-generic-summary-list *ngIf="currentForm && currentForm.summaryList"
+        [ngClass]="{ disabled: currentForm.isDirty() && !currentForm.isNew() }" [addButtonActive]="true"
+        [summaryList]="currentForm.summaryList" (menuAction)="menuAction($event)"></hyt-generic-summary-list>
 
       <div *ngIf="hintVisible" class="info-message m-2 mt-4 d-flex flex-row">
         <span class="text p-2 flex-grow-1">{{hintMessage}}</span>
@@ -176,20 +179,9 @@
 
 </div>
 
-<hyt-modal [mOpen]="deactivateModal">
-  <div class="center">
-    <p i18n="@@HYT_pw_deactivation_modal">HYT_pw_deactivation_modal</p>
-    <br>
-    <br>
-    <hyt-button (clickFn)="deactivate(true)">
-      <ng-container i18n="@@HYT_OK">HYT_OK</ng-container>
-    </hyt-button>
-    <hyt-button (clickFn)="deactivate(false)">
-      <ng-container i18n="@@HYT_CANCEL">HYT_CANCEL</ng-container>
-    </hyt-button>
-  </div>
-</hyt-modal>
-
-<hyt-wizard-options-modal id="hyt-wizard-options-modal" (modalClose)="optionsModalClosed($event)"></hyt-wizard-options-modal>
-<hyt-wizard-report-modal id="hyt-wizard-report-modal" [reportData]="finishData"></hyt-wizard-report-modal>
-<!-- <hyt-wizard-deactivation-modal id="hyt-wizard-deactivation-modal" (modalClose)="deactivationModalClosed($event)"></hyt-wizard-deactivation-modal> -->
+<hyt-wizard-options-modal id="hyt-wizard-options-modal" (modalClose)="optionsModalClosed($event)">
+</hyt-wizard-options-modal>
+<hyt-wizard-report-modal id="hyt-wizard-report-modal" [reportData]="finishData">
+</hyt-wizard-report-modal>
+<hyt-wizard-deactivation-modal #deactivationModal id="hyt-wizard-deactivation-modal">
+</hyt-wizard-deactivation-modal>

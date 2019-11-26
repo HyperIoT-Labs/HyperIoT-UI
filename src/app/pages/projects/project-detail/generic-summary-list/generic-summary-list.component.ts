@@ -19,8 +19,8 @@ export class SummaryListItem {
 export class GenericSummaryListComponent {
 
   @Output() menuAction = new EventEmitter<{
-    action: 'edit' | 'duplicate' | 'delete',
-    item: any
+    action: 'add' | 'edit' | 'duplicate' | 'delete',
+    item?: any
   }>();
 
   _summaryList: SummaryList;
@@ -29,10 +29,19 @@ export class GenericSummaryListComponent {
     this._summaryList = summary;
   }
 
+  @Input()
+  addButtonActive = false;
+
   selectedItem: SummaryListItem;
 
   constructor(
   ) { }
+
+  addEntity() {
+    this.menuAction.emit({
+      action: 'add'
+    });
+  }
 
   onEditOptionClick(itemT: SummaryListItem) {
     this.menuAction.emit({

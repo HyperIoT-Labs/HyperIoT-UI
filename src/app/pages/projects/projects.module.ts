@@ -23,7 +23,7 @@ import { SelectableTextComponent } from './project-forms/packet-events-form/even
 import { AssetCategoryComponent } from './project-forms/packet-enrichment-form/asset-category/asset-category.component';
 import { AssetTagComponent } from './project-forms/packet-enrichment-form/asset-tag/asset-tag.component';
 
-import { ProjectWizardComponent, ProjectWizardCanDeactivate } from './project-wizard/project-wizard.component';
+import { ProjectWizardComponent } from './project-wizard/project-wizard.component';
 import { DeviceSelectComponent } from './project-wizard/device-select/device-select.component';
 import { PacketSelectComponent } from './project-wizard/packet-select/packet-select.component';
 
@@ -45,6 +45,7 @@ import { StatisticsStepComponent } from './project-wizard/statistics-step/statis
 import { WizardReportModalComponent } from './project-wizard/wizard-report-modal/wizard-report-modal.component';
 import { WizardOptionsModalComponent } from './project-wizard/wizard-options-modal/wizard-options-modal.component';
 import { WizardDeactivationModalComponent } from './project-wizard/wizard-deactivation-modal/wizard-deactivation-modal.component';
+import { ApplicationFormComponent } from './project-forms/application-form/application-form.component';
 
 @NgModule({
   declarations: [
@@ -71,7 +72,8 @@ import { WizardDeactivationModalComponent } from './project-wizard/wizard-deacti
     StatisticsStepComponent,
     WizardReportModalComponent,
     WizardOptionsModalComponent,
-    WizardDeactivationModalComponent
+    WizardDeactivationModalComponent,
+    ApplicationFormComponent
   ],
   imports: [
     MatIconModule,

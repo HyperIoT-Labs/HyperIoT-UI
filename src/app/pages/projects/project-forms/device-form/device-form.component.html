@@ -89,7 +89,7 @@
                     [form]="form"
                 >
                 </hyt-input-text>
-                <ng-container *ngIf="!entity.id">
+                <div [ngClass]="(entity.id) ? 'displayNone' : ''">
                     <hyt-input-text 
                         [form]="form" 
                         name="hdevice-password"
@@ -110,7 +110,7 @@
                         hintMessage="HYT_hint_password_confirm"
                     >
                     </hyt-input-text>
-                </ng-container>
+                </div>
 
             </div>
             <div id="fdev-col-desc" class="col-6">
