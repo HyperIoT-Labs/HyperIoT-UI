@@ -1,11 +1,12 @@
-import { Component, OnInit, Input, Injector } from '@angular/core';
+import { Component, OnInit, Input, Injector, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { HytModal } from 'src/app/services/hyt-modal';
 
 @Component({
   selector: 'hyt-wizard-report-modal',
   templateUrl: './wizard-report-modal.component.html',
-  styleUrls: ['./wizard-report-modal.component.scss']
+  styleUrls: ['./wizard-report-modal.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class WizardReportModalComponent extends HytModal implements OnInit {
 
