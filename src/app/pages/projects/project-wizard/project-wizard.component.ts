@@ -502,8 +502,8 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
   }
 
   sourceOptions: Option[] = [
-    { value: 'application', label: 'application', checked: true },
-    { value: 'device', label: 'device' }
+    { value: 'application', label: 'APPLICATION', checked: true },
+    { value: 'device', label: 'DEVICE' }
   ];
 
   selectedSource = 'application';

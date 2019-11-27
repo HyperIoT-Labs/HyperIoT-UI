@@ -16,12 +16,31 @@
       </ng-template>
 
       <ng-template #devicesTemplate>
-        <hyt-radio-button [options]="sourceOptions" (changeFn)="sourceChanged($event)"></hyt-radio-button>
+
+        <div id="container-source" class="container">
+
+          <div class="row">
+
+            <div id="select-source" class="col-6">
+
+              <p id="label-sources">Select Source Type</p> <!-- @I18N@ -->
+              
+              <div id="container-radio-btn-source">
+                  <hyt-radio-button [options]="sourceOptions" (changeFn)="sourceChanged($event)"></hyt-radio-button>
+              </div>
+
+            </div>
+
+          </div>
+        
+        </div>
+
         <hyt-application-form *ngIf="selectedSource == 'application'" #applicationsForm
           [currentProject]="currentProject" (entityEvent)="onEntityEvent($event)"></hyt-application-form>
         <hyt-device-form *ngIf="selectedSource == 'device'" #devicesForm [currentProject]="currentProject"
           (entityEvent)="onEntityEvent($event)">
         </hyt-device-form>
+
       </ng-template>
 
       <ng-template #packetsTemplate>

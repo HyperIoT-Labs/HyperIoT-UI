@@ -1,6 +1,84 @@
-<div id="statistics-step" class="row">
+<div id="statistics-step" class="container"> <!-- ROW -->
 
-  <div class="col-md-12">
+  <form class="statistics-form" [formGroup]="statisticsForm" autocomplete="on">
+
+      <div class="form-group row">
+
+        <div id="fstat-col-name" class="col-6">
+
+          <hyt-input-text 
+            [form]="statisticsForm" 
+            formControlName="statisticsName" 
+            name="statisticsName"
+            [isRequired]="true" 
+            placeholder="Name">
+          </hyt-input-text>
+
+        </div>
+
+        <div id="fstat-col-packet" class="col-6">
+
+          <hyt-input-text 
+            [form]="statisticsForm" 
+            formControlName="statisticsPacket" 
+            name="statisticsPacket"
+            placeholder="Packet">
+          </hyt-input-text> 
+
+        </div>
+
+      </div> <!-- END FIRST ROW -->
+
+      <div class="form-group row">
+        
+        <div id="fstat-col-algorithm" class="col-6">
+
+          <hyt-select 
+            [form]="statisticsForm" 
+            [options]="algorithmOptions" 
+            formControlName="statisticsAlgorithm"
+            name="statisticsAlgorithm" 
+            [isRequired]="true" 
+            label="Algorithm">
+          </hyt-select>
+
+        </div>
+        <div id="fstat-col-rule" class="col-6">
+
+          <hyt-select 
+            [form]="statisticsForm" 
+            [options]="enrichmentRules" 
+            (changeFn)="enrichmentTypeChanged($event)"
+            formControlName="statisticsSourceData" 
+            name="statisticsSourceData" 
+            [isRequired]="true" 
+            label="Rule Type">
+          </hyt-select>
+
+        </div>
+
+      </div> <!-- END SECOND ROW -->
+
+      <div class="form-group row">
+
+        <div id="fstat-col-descr" class="col-6">
+
+          <hyt-text-area [form]="statisticsForm" formControlName="statisticsInputFields" name="statisticsInputFields"
+            placeholder="Description">
+          </hyt-text-area>
+
+        </div>
+        <div id="fstat-col-trange" class="col-6">
+
+          asdasdsa
+
+        </div>
+
+      </div> <!-- END THIRD ROW -->
+
+  </form>
+
+  <!-- <div class="row"> <!-- col-md-12 --
 
     <form class="statistics-form" [formGroup]="statisticsForm" autocomplete="on">
 
@@ -12,18 +90,18 @@
             <hyt-input-text [form]="statisticsForm" formControlName="statisticsName" name="statisticsName"
               [isRequired]="true" placeholder="Name">
             </hyt-input-text>
-          </div> <!-- Field Name -->
+          </div> <!-- Field Name --
 
           <div class="container-form-field">
             <hyt-select [form]="statisticsForm" [options]="algorithmOptions" formControlName="statisticsAlgorithm"
               name="statisticsAlgorithm" [isRequired]="true" label="Algorithm">
-            </hyt-select> <!-- Field Algorithm -->
+            </hyt-select> <!-- Field Algorithm --
           </div>
 
           <div class="container-form-field">
             <hyt-text-area [form]="statisticsForm" formControlName="statisticsInputFields" name="statisticsInputFields"
-              placeholder="Field">
-            </hyt-text-area> <!-- Field Field -->
+              placeholder="Description">
+            </hyt-text-area> <!-- Field Field --
           </div>
 
         </div>
@@ -33,19 +111,19 @@
           <div class="container-form-field">
             <hyt-input-text [form]="statisticsForm" formControlName="statisticsPacket" name="statisticsPacket"
               placeholder="Packet">
-            </hyt-input-text> <!-- Field Packet -->
+            </hyt-input-text> <!-- Field Packet --
           </div>
 
           <div class="container-form-field">
             <hyt-select [form]="statisticsForm" [options]="enrichmentRules" (changeFn)="enrichmentTypeChanged($event)"
               formControlName="statisticsSourceData" name="statisticsSourceData" [isRequired]="true" label="Rule Type">
-            </hyt-select> <!-- Field Sourde Data -->
+            </hyt-select> <!-- Field Sourde Data --
           </div>
 
           <div class="container-form-field">
             <hyt-select [form]="statisticsForm" [options]="timeRangeOptions" formControlName="statisticsTimeRange"
               name="statisticsTimeRange" [isRequired]="true" label="Time range">
-            </hyt-select> <!-- Field Time Range -->
+            </hyt-select> <!-- Field Time Range --
           </div>
 
         </div>
@@ -70,10 +148,10 @@
         <ng-container *ngIf="getError('general')">
           {{getError('general')}}
         </ng-container>
-      </div> <!-- Error Box -->
+      </div> <!-- Error Box --
 
     </form>
 
-  </div>
+  </div> -->
 
 </div>
