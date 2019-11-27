@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { HYTError } from 'src/app/services/errorHandler/models/models';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { SelectOption } from '@hyperiot/components';
@@ -8,7 +8,8 @@ import { RulesService, HPacket } from '@hyperiot/core';
 @Component({
   selector: 'hyt-statistics-step',
   templateUrl: './statistics-step.component.html',
-  styleUrls: ['./statistics-step.component.scss']
+  styleUrls: ['./statistics-step.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class StatisticsStepComponent implements OnInit {
 
@@ -40,6 +41,11 @@ export class StatisticsStepComponent implements OnInit {
     { value: '6', label: 'Four monthly' },
     { value: '7', label: 'Half yearly' },
     { value: '8', label: 'Annual' }
+  ];
+
+  statisticsFields: SelectOption[] = [
+    { value: 'Temperature', label: 'Temperature' },
+    { value: 'Humidity', label: 'Humidity' }
   ];
 
   enrichmentRules: SelectOption[] = [

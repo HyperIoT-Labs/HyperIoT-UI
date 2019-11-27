@@ -1,4 +1,4 @@
-import { Component, OnDestroy, ViewChild, ElementRef, Injector } from '@angular/core';
+import { Component, OnDestroy, ViewChild, ElementRef, Injector, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { Subscription, Observable } from 'rxjs';
@@ -14,7 +14,8 @@ import { I18n } from '@ngx-translate/i18n-polyfill';
 @Component({
   selector: 'hyt-packet-events-form',
   templateUrl: './packet-events-form.component.html',
-  styleUrls: ['./packet-events-form.component.scss']
+  styleUrls: ['./packet-events-form.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class PacketEventsFormComponent extends ProjectFormEntity implements OnDestroy {
 
@@ -42,7 +43,7 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
   eventMailComponent: EventMailComponent;
 
   outputOptions: Option[] = [
-    { value: 'events.SendMailAction', label: 'Send mail', checked: true } // TODO i18n
+    { value: 'events.SendMailAction', label: 'SEND E-MAIL', checked: true } // TODO i18n
     // { value: '', label: 'START STATISTIC' }
   ];
 

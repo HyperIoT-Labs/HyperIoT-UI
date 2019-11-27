@@ -1,6 +1,62 @@
-.container {
-  position: relative;
+#container-events {
+
+  &.container {
+    position: relative;
+
+    #events-edit-mode {
+
+      #btn-edit-mode {
+
+        text-align: center;
+        padding-top: 20px;
+        padding-bottom: 20px;
+
+      }
+
+    }
+
+    form {
+
+      .form-group {
+
+        &.row {
+
+          margin-bottom: 25px;
+
+          #fevent-col-event {
+
+            p#label-event-aoutput {
+              
+              margin-bottom: 10px;
+              color: #909090;
+              font-size: 0.98em;
+
+            }
+
+            #container-radio-events {
+              border: lightgray solid 1px;
+              border-radius: 4px;
+              padding-top: 9px;
+              padding-left: 9px;
+            }
+
+          }
+
+        }
+
+      }
+
+    }
+
+  }  
+
 }
+/*
+  margin-bottom: 10px;
+    color: #909090;
+    font-size: 0.98em;
+*/
+
 
 .overlay {
   position: absolute;
@@ -9,11 +65,40 @@
   top: 0;
   right: 0;
   bottom: 0;
-}
 
-mat-progress-bar {
-  max-width: 200px;
-  margin: 8px;
+  .loading-logo {
+    height: 63%;
+    position: relative;
+    // top: -30px;
+    text-align: center;
+    display: flex;
+    align-items: flex-end;
+
+    background-image: url('../../../../../assets/images/hyperiot_logo_single_char.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+
+    img {
+        height: 100%;
+        margin-bottom: 5px;
+        max-height: 178px;
+        width: auto;
+        // animation-name: pulses;
+        // animation-duration: 1.5s;
+        // animation-iteration-count: infinite;
+    }
+    
+    h4 {
+        text-align: center;
+    }
+  }
+
+  mat-progress-bar {
+    max-width: 200px;
+    margin: 8px;
+  }
+
 }
 
 .hidden {

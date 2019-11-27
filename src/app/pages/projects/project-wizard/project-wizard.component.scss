@@ -151,6 +151,28 @@
 
   }
 
+  #container-source {
+    padding-top: 35px;
+
+    p {
+
+      &#label-sources {
+        margin-bottom: 10px;
+        color: #909090;
+        font-size: .98em;
+      }
+
+    }
+
+    #container-radio-btn-source {
+      border: lightgray solid 1px;
+      border-radius: 4px;
+      padding-top: 9px;
+      padding-left: 9px;
+    }
+
+  }
+
 }
 
 #finishModal {
