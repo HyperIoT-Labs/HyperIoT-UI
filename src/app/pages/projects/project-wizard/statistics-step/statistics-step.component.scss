@@ -1,0 +1,27 @@
+#statistics-step {
+
+    padding-top: 15px;
+
+    form {
+
+        .form-group {
+
+            &.row {
+
+                margin-bottom: 25px;
+
+                #fstat-col-algorithm,
+                #fstat-col-fields,
+                #fstat-col-trange,
+                #fstat-col-sdata,
+                #fstat-col-tagcat {
+                    text-align: center;
+                }
+
+            }
+
+        }
+
+    }
+
+}

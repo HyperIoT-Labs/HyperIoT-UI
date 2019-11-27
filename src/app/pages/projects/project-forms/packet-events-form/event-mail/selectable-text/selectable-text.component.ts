@@ -1,10 +1,11 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
 import { SelectableText } from '../selectableText';
 
 @Component({
   selector: 'hyt-selectable-text',
   templateUrl: './selectable-text.component.html',
-  styleUrls: ['./selectable-text.component.scss']
+  styleUrls: ['./selectable-text.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class SelectableTextComponent {
 

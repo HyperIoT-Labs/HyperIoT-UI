@@ -1,7 +1,12 @@
-<p i18n="@@HYT_definition_of_terms">HYT_definition_of_terms</p>
-<div class="row bgGrey">
-  <div *ngFor="let ph of placeHolders" class="col-md-6">
-    <div class="clickable inline" (click)="emitText(ph.placeholder)">{{ph.placeholder}}</div>
-    <div class="inline">&#160;- {{ph.description}}</div>
-  </div>
+<div id="selectable-text">
+
+    <p id="label-terms" i18n="@@HYT_definition_of_terms">HYT_definition_of_terms</p>
+    <div class="row bgGrey">
+      <div *ngFor="let ph of placeHolders" class="col-6 box-term">
+        <div class="clickable inline" (click)="emitText(ph.placeholder)">{{ph.placeholder}}</div>
+        <div class="sub-inline">&#160;- {{ph.description}}</div>
+      </div>
+    </div>
+
 </div>
+
