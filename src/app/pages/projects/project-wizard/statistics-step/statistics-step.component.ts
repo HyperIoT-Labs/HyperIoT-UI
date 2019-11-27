@@ -42,6 +42,11 @@ export class StatisticsStepComponent implements OnInit {
     { value: '8', label: 'Annual' }
   ];
 
+  statisticsFields: SelectOption[] = [
+    { value: 'Temperature', label: 'Temperature' },
+    { value: 'Humidity', label: 'Humidity' }
+  ];
+
   enrichmentRules: SelectOption[] = [
     { value: JSON.stringify({ actionName: 'AddCategoryRuleAction', ruleId: 0, categoryIds: null }), label: 'Categories' },
     { value: JSON.stringify({ actionName: 'AddTagRuleAction', ruleId: 0, tagIds: null }), label: 'Tags' },

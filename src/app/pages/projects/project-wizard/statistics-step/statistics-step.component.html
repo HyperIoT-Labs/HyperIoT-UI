@@ -52,7 +52,7 @@
             formControlName="statisticsSourceData" 
             name="statisticsSourceData" 
             [isRequired]="true" 
-            label="Rule Type">
+            label="Source Data">
           </hyt-select>
 
         </div>
@@ -63,9 +63,14 @@
 
         <div id="fstat-col-descr" class="col-6">
 
-          <hyt-text-area [form]="statisticsForm" formControlName="statisticsInputFields" name="statisticsInputFields"
-            placeholder="Description">
-          </hyt-text-area>
+            <hyt-select 
+            [form]="statisticsForm" 
+            [options]="statisticsFields" 
+            formControlName="statisticsInputFields" 
+            name="statisticsInputFields" 
+            [isRequired]="true" 
+            label="Fields">
+          </hyt-select>
 
         </div>
         <div id="fstat-col-trange" class="col-6">
@@ -116,7 +121,7 @@
 
           <div class="container-form-field">
             <hyt-select [form]="statisticsForm" [options]="enrichmentRules" (changeFn)="enrichmentTypeChanged($event)"
-              formControlName="statisticsSourceData" name="statisticsSourceData" [isRequired]="true" label="Rule Type">
+              formControlName="statisticsSourceData" name="statisticsSourceData" [isRequired]="true" label="Source Data">
             </hyt-select> <!-- Field Sourde Data --
           </div>
 
