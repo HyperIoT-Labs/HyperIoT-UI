@@ -1,11 +1,15 @@
 <div id="container-events" class="container">
 
-  <div *ngIf="!editMode" class="d-flex flex-column align-items-center justify-content-center">
+  <div *ngIf="!editMode" id="events-edit-mode" class="form-group row">
 
-    <hyt-button (clickFn)="loadEmpty()">
-      <mat-icon>add</mat-icon>
-      <span i18n="@@HYT_add_event">HYT_add_event</span>
-    </hyt-button>
+    <div id="btn-edit-mode" class="col-12">
+
+      <hyt-button (clickFn)="loadEmpty()">
+        <mat-icon>add</mat-icon>
+        <span i18n="@@HYT_add_event">HYT_add_event</span>
+      </hyt-button>
+
+    </div>
 
   </div>
 
