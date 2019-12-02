@@ -144,6 +144,7 @@ export class PacketSelectComponent implements OnInit {
                   }
                 });
                 this.syncUnitsConversion();
+                this.syncFieldMapping();
               }
             });
         }
