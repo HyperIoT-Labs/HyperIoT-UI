@@ -8,9 +8,14 @@
 
     <!-- button on the right side -->
     <div class="align-self-right">
-      <hyt-button *ngIf="pageStatus === 1" id="add-project-btn-top" (click)="addProject()" type="button">
+      <!-- <hyt-button *ngIf="pageStatus === 1" id="add-project-btn-top" (click)="addProject()" type="button">
         <ng-container i18n="@@HYT_add_new_project">HYT_add_new_project</ng-container>
+      </hyt-button> -->
+
+      <hyt-button *ngIf="pageStatus === 1" id="add-project-btn-top" (click)="addProject()" [color]="'hyt-base-total-white'">
+          <span class="hyt-icon icon-hyt_plusC"></span> <ng-container i18n="@@HYT_add_new_project">HYT_add_new_project</ng-container>
       </hyt-button>
+
     </div>
 
   </div>
