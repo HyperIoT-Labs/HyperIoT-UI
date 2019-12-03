@@ -31,36 +31,36 @@
 
     }
 
-    hyt-button {
+    // hyt-button {
 
-      &#add-project-btn-top {
-        margin-top: 2px;
+    //   &#add-project-btn-top {
+    //     margin-top: 2px;
         
-        button.mat-raised-button {
-          background-color: #0d416d;
-          color: #fff;
-          font-family: "Exo";
-          font-size: .9em;
-          font-weight: 200;
-          text-transform: uppercase;
+    //     button.mat-raised-button {
+    //       background-color: #0d416d;
+    //       color: #fff;
+    //       font-family: "Exo";
+    //       font-size: .9em;
+    //       font-weight: 200;
+    //       text-transform: uppercase;
 
-          &::before {
-            content: '+';
-            padding: 1px 7px 0px 7px;
-            font-size: 17px;
-            border-radius: 50%;
-            border: .5px solid #d1d1d1;
-          }
+    //       &::before {
+    //         content: '+';
+    //         padding: 1px 7px 0px 7px;
+    //         font-size: 17px;
+    //         border-radius: 50%;
+    //         border: .5px solid #d1d1d1;
+    //       }
 
-          &:hover {
-            background-color: #105f99;
-            box-shadow: none;
-          }
-        }
+    //       &:hover {
+    //         background-color: #105f99;
+    //         box-shadow: none;
+    //       }
+    //     }
 
-      }
+    //   }
 
-    }
+    // }
 
   }
 
