@@ -4,6 +4,7 @@ import { HusersService, HUser } from '@hyperiot/core';
 import { AuthenticationHttpErrorHandlerService } from '../../../services/errorHandler/authentication-http-error-handler.service';
 import { HYTError } from 'src/app/services/errorHandler/models/models';
 import { I18n } from '@ngx-translate/i18n-polyfill';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'hyt-profile',
@@ -100,7 +101,8 @@ export class ProfileComponent implements OnInit {
     private hUserService: HusersService,
     private fb: FormBuilder,
     private httperrorHandler: AuthenticationHttpErrorHandlerService,
-    private i18n: I18n
+    private i18n: I18n,
+    private router: Router
   ) { }
 
   /**
@@ -111,10 +113,8 @@ export class ProfileComponent implements OnInit {
       this.user = JSON.parse(localStorage.getItem('user'));
       this.userId = this.user.id;
     } else {
-      // TODO redirect login
-      err => { this.errors = this.httperrorHandler.handle(err); }
+      this.router.navigate(['/auth/login']);
     }
-
     this.personalInfoForm = this.fb.group({});
     this.changePasswordForm = this.fb.group({});
   }
