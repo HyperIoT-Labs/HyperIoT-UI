@@ -18,7 +18,7 @@
           </hyt-select>
         </div> <!-- Field Condition -->
 
-        <div *ngIf="ruleForm.compareWith" class="col-3 container-form-field">
+        <div [ngClass]="{'hidden-form-value' : !ruleForm.compareWith}" class="col-3 container-form-field">
           <hyt-input-text [form]="ruleForm.form" formControlName="ruleValue"
             name="ruleValue" [isRequired]="true" i18n-placeholder="@@HYT_value" placeholder="HYT_value">
           </hyt-input-text>

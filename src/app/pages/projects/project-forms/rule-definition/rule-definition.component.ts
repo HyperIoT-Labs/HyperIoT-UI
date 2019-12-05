@@ -44,6 +44,12 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
   fieldFlatList: FieldList[] = [];
 
   /**
+   * Updating is true when the rule-definition is loaded. It is used to avoid expressionchangedafterviewchecked (isDirty)
+   * TODO remove aftersetRuleDefinition() rework.
+   */
+  updating = false;
+
+  /**
    * allConditionOptions stores the information of the condition option.
    */
   allConditionOptions = [
@@ -69,7 +75,7 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
   /**
    * originalFormsValues is used to keep record of the old ruleDefinition value (dirty)
    */
-  private originalFormsValues = '{"ruleField":"","ruleCondition":"","ruleJoin":""}';
+  private originalFormsValues = '{"ruleField":"","ruleCondition":"","ruleValue":"","ruleJoin":""}';
 
   /**
    * class constructor
@@ -93,7 +99,7 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
       conditionOptions: [],
       compareWith: false
     })];
-    this.originalFormsValues = '{"ruleField":"","ruleCondition":"","ruleJoin":""}';
+    this.originalFormsValues = '{"ruleField":"","ruleCondition":"","ruleValue":"","ruleJoin":""}';
   }
 
   extractField(fieldArr: HPacketField[], pre: string) {
@@ -179,7 +185,7 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
   }
 
   isDirty(): boolean {
-    return (this.getJsonForms() === '{}') ? false : this.getJsonForms() !== this.originalFormsValues;
+    return (this.getJsonForms() === '{}' || this.updating) ? false : this.getJsonForms() !== this.originalFormsValues;
   }
   isInvalid(): boolean {
     for (let k = 0; k < this.ruleForms.length; k++) {
@@ -190,7 +196,11 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
     return false;
   }
 
+  /**
+   * TODO rework (remove setTimeout)
+   */
   setRuleDefinition(ruleDefinition: string): void {
+    this.updating = true;
     const ruleDef: RuleDefinition[] = [];
     setTimeout(() => {
       if (ruleDefinition && ruleDefinition.length !== 0) {
@@ -249,6 +259,7 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
             this.ruleForms[k].form.get('ruleJoin').setValue(' ' + ruleDef[k].join + ' ');
             if (k === this.ruleForms.length - 1) {
               this.originalValueUpdate();
+              this.updating = false;
             }
           }, 0);
         }
