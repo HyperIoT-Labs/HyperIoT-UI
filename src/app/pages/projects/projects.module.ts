@@ -77,7 +77,7 @@ import { CategoriesFormComponent } from './project-forms/categories-form/categor
     WizardOptionsModalComponent,
     WizardDeactivationModalComponent,
     ApplicationFormComponent,
-    RuleErrorModalComponent
+    RuleErrorModalComponent,
     TagsFormComponent,
     CategoriesFormComponent
   ],
