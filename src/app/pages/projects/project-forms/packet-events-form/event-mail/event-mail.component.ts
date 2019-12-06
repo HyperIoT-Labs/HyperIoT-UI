@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { SelectableText } from './selectableText';
-import { ProjectWizardService } from 'src/app/services/projectWizard/project-wizard.service';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 
 @Component({
@@ -24,7 +23,6 @@ export class EventMailComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private wizardService: ProjectWizardService,
     private i18n: I18n
   ) { }
 

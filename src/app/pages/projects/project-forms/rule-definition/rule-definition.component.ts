@@ -3,8 +3,8 @@ import { HPacket, HPacketField } from '@hyperiot/core';
 import { SelectOption } from '@hyperiot/components';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Option } from '@hyperiot/components/lib/hyt-radio-button/hyt-radio-button.component';
-import { ProjectWizardService } from 'src/app/services/projectWizard/project-wizard.service';
 import { I18n } from '@ngx-translate/i18n-polyfill';
+import { HytModalConfService } from 'src/app/services/hyt-modal-conf.service';
 
 interface RuleForm {
   form: FormGroup;
@@ -85,7 +85,7 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
    */
   constructor(
     public fb: FormBuilder,
-    private wizardService: ProjectWizardService,
+    private modalService: HytModalConfService,
     private i18n: I18n
   ) { }
 
@@ -112,11 +112,31 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
     });
   }
 
+  findParent(fieldList: HPacketField[], packetField: HPacketField): HPacketField {
+    const parent: HPacketField = fieldList.find(x => x.innerFields.some(y => y.id === packetField.id));
+    if (parent) {
+      return this.findParent(fieldList, parent);
+    } else {
+      return packetField;
+    }
+  }
+
+  treefy(fieldList: HPacketField[]): HPacketField[] {
+    const treefiedFields = [];
+    fieldList.forEach(x => {
+      const parent: HPacketField = this.findParent(fieldList, x);
+      if (parent && !treefiedFields.some(y => y.id === parent.id)) {
+        treefiedFields.push(parent);
+      }
+    });
+    return treefiedFields;
+  }
+
   ngOnChanges() {
     this.resetRuleDefinition();
     let fieldList: HPacketField[] = [];
     if (this.currentPacket && this.currentPacket.id) {
-      fieldList = this.wizardService.treefy(this.currentPacket.fields);
+      fieldList = this.treefy(this.currentPacket.fields);
     }
     this.fieldOptions = [];
     this.fieldFlatList = [];
@@ -231,8 +251,7 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
 
           const f = this.fieldFlatList.find(x => x.label === ruleDef[k].field);
           if (!f) {
-            // TODO implement logic
-            console.warn('Unable to build ruleDefinition with actual fields. Probabilmente il nome di alcuni field è stato cambiato dopo aver salvato la regola.');
+            this.modalService.open('hyt-rule-error-modal');
             return;
           }
           const actualField: HPacketField = f.field;

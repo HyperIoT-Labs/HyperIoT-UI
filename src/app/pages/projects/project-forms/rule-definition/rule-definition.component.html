@@ -6,26 +6,26 @@
 
       <div class="form-group row">
 
-        <div class="container-first-form-field" [ngClass]="ruleForm.compareWith ? 'col-3' : 'col-4' "> 
+        <div class="container-first-form-field" [ngClass]="ruleForm.compareWith ? 'col-3' : 'col-4' ">
           <hyt-select [form]="ruleForm.form" [options]="fieldOptions" formControlName="ruleField" name="ruleField"
             [isRequired]="true" i18n-label="@@HYT_field" label="HYT_field" (changeFn)="fieldChanged($event, i)">
           </hyt-select>
         </div> <!-- Field Field -->
 
-        <div class="container-form-field" [ngClass]="ruleForm.compareWith ? 'col-3' : 'col-4' "> 
+        <div class="container-form-field" [ngClass]="ruleForm.compareWith ? 'col-3' : 'col-4' ">
           <hyt-select [form]="ruleForm.form" [options]="ruleForm.conditionOptions" formControlName="ruleCondition"
             name="ruleCondition" [isRequired]="true" i18n-label="@@HYT_condition" label="HYT_condition">
           </hyt-select>
         </div> <!-- Field Condition -->
 
         <div [ngClass]="{'hidden-form-value' : !ruleForm.compareWith}" class="col-3 container-form-field">
-          <hyt-input-text [form]="ruleForm.form" formControlName="ruleValue"
-            name="ruleValue" [isRequired]="true" i18n-placeholder="@@HYT_value" placeholder="HYT_value">
+          <hyt-input-text [form]="ruleForm.form" formControlName="ruleValue" name="ruleValue" [isRequired]="true"
+            i18n-placeholder="@@HYT_value" placeholder="HYT_value">
           </hyt-input-text>
         </div> <!-- Field Value -->
 
-        <div class="containerputRule-form-field" [ngClass]="ruleForm.compareWith ? 'col-3' : 'col-4' "> 
-          
+        <div class="containerputRule-form-field" [ngClass]="ruleForm.compareWith ? 'col-3' : 'col-4' ">
+
           <hyt-radio-button [form]="ruleForm.form" [options]="joinOptions" (changeFn)="addCondition(i)"
             formControlName="ruleJoin" name="ruleJoin">
           </hyt-radio-button>
@@ -39,5 +39,8 @@
     </form>
 
   </div>
+
+  <hyt-rule-error-modal class="hyt-modal-general" id="hyt-rule-error-modal">
+  </hyt-rule-error-modal>
 
 </div>

@@ -454,7 +454,7 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
     this.modalService.open('hyt-wizard-report-modal');
   }
 
-  // TODO... in service
+
   getDevices(): void {
     this.hDevicesService.findAllHDeviceByProjectId(this.currentProject.id).subscribe(
       (res: HDevice[]) => {
@@ -463,7 +463,7 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
       }
     );
   }
-  // TODO... in service
+
   getPackets(): void {
     this.hPacketsService.findAllHPacketByProjectId(this.currentProject.id).subscribe(
       (res: HPacket[]) => {
