@@ -1,32 +1,43 @@
 <div class="hyt-modal">
     <div class="hyt-modal-body">
-        <div class="dialog">
-            <div class="center">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h3>Unsaved data</h3>
-                        If you leave the page the unsaved changes will be lost
-                    </div>
+        <div class="dialog container-fluid">
+            
+            <div id="title-deact-mod" class="row">
+
+                <div class="col-12">
+                    <h3>Unsaved data</h3>
                 </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <button mat-button (click)="output(false)">
-                                    <mat-icon>arrow_back</mat-icon>
-                                    <span>Remain</span>
-                                </button>
-                            </div>
-                            <div class="col-md-6">
-                                <button defaultButton color="warn" mat-button (click)="output(true)">
-                                    <mat-icon>close</mat-icon>
-                                    <span>Leave</span>
-                                    <!--Leave the page-->
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+
+            </div>
+
+            <div id="body-deact-mod" class="row">
+
+                <div class="col-12">
+
+                    <p>If you leave the page the unsaved changes will be lost</p>
+
                 </div>
+
+            </div>
+
+            <div id="footer-deact-mod" class="row">
+
+                <div class="col-6">
+
+                    <hyt-button [color]="'hyt-base-total-green'" (click)="output(false)">
+                        <span class="hyt-icon icon-hyt_arrowLeft"></span>  Remain <!-- @I18N@ -->
+                    </hyt-button>
+
+                </div>
+
+                <div class="col-6">
+
+                    <hyt-button [color]="'hyt-base-total-red'" (click)="output(true)">
+                        Discard Changes <span class="hyt-icon icon-hyt_cancel"></span> <!-- @I18N@ -->
+                    </hyt-button>
+
+                </div>
+                
             </div>
         </div>
     </div>
