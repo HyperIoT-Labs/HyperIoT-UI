@@ -1,39 +1,75 @@
-:host {
-    justify-content: center;
-    --header-color: rgba(50, 50, 50, 0.1);
-}
 
-.dialog {
-    position: relative;
-    min-width: 320px;
-    max-height: 100vh;
-    overflow: hidden; 
-    background: white;
-    border: solid 1px rgba(0, 0, 0, 0.1);
-    box-shadow: 0 0 5px 2px rgba(0,0,0,.35);
-    font-family: 'Exo';
-    border-radius: 8px;
+#hyt-modal-reload-recording-confirm {
 
-    .action-header{
-        padding-left: 10px;
-        padding-right: 10px;
-        padding-top: 10px;
-    }
+    .dialog {
+        // position: relative;
+        position: fixed;
+        width: 40%;
+        min-width: 320px;
+        max-height: 100vh;
+        overflow: hidden; 
+        background: white;
+        border: none;
+        box-shadow: 0 0 5px 2px rgba(0,0,0,.35);
+        font-family: 'Exo';
+        border-radius: 8px;
 
-    footer {
+        #header-row {
 
-        background-color: var(--header-color);
-        border-top: 1px solid rgba(0,0,0,0.1);
-        padding: 6px;
+            background-color: #ff9d1b;
+            color: #271600;
 
-        .action-button-close, .action-button-confirm {
-            margin-left:6px;
+            .action-header{
+                padding: 12px;
+
+                h2 {
+
+                    text-align: center;
+                    margin: 0px;
+
+                }
+            }
+
         }
 
-    }
+        #body-row {
 
-    .dialog-body {
-        padding: 10px 20px 20px 20px;
+            .dialog-body {
+                padding: 25px 20px;
+
+                p {
+
+                    margin: 0px;
+                    text-align: center;
+                    font-size: 1.4em;
+
+                }
+
+            }
+
+        }
+
+        #footer-row {
+
+            padding: 6px;
+            text-align: center;
+
+        }
+    
+        footer {
+    
+            background-color: var(--header-color);
+            border-top: 1px solid rgba(0,0,0,0.1);
+            padding: 6px;
+    
+            .action-button-close, .action-button-confirm {
+                margin-left:6px;
+            }
+    
+        }
+
+    
     }
 
 }
+

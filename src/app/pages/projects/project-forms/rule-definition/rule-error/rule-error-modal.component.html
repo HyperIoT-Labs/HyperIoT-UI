@@ -7,18 +7,13 @@
             <div class="dialog-header">
                 <h3>Error</h3>
                 <!--@I18N@-->
+                <span class="hyt-icon icon-hyt_cancelC" (click)="close()"></span>
             </div>
 
             <div class="dialog-body">
                 <p>An error occurred while loading the rule definition. This happens when field names have been
                     modified. Please, redefine the rule and delete the old one.</p>
                 <!--@I18N@-->
-            </div>
-
-            <div class="dialog-footer">
-                <hyt-button (clickFn)="close()">
-                    <ng-container i18n="@@HYT_close">HYT_close</ng-container>
-                </hyt-button>
             </div>
 
         </div>

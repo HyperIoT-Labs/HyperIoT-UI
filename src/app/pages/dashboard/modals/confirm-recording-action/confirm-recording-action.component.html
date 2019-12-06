@@ -1,30 +1,48 @@
 <div class="hyt-modal">
 
-    <div class="dialog hyt-modal-body">
+    <div class="dialog hyt-modal-body container-fluid">
 
-        <div class="action-header">
-            <h2>Data recording</h2>
-            <!--@I18N-->
-        </div>
+        <div id="header-row" class="row">
 
-        <div class="dialog-body">
-            <!-- <span class="hyt-icon icon-hyt_warnT"></span> -->
-            <p>
-                Sure to perform this action?
-            </p>
-            <!--@I18N-->
-        </div>
+            <div class="col-12 action-header">
+                <h2>Data recording</h2>
+                <!--@I18N-->
+            </div>
 
-        <footer class="d-flex flex-row align-items-center justify-content-end">
-            <hyt-button class="action-button-confirm" (clickFn)="confirm($event)">
-                <mat-icon>check</mat-icon>
-                <span i18n="@@HYT_widget_settings_apply">HYT_widget_settings_apply</span>
-            </hyt-button>
-            <hyt-button class="action-button-close" (clickFn)="cancel($event)">
-                <mat-icon>close</mat-icon>
-                <span i18n="@@HYT_widget_settings_cancel">HYT_widget_settings_cancel</span>
-            </hyt-button>
-        </footer>
+        </div> <!-- END HEADER ROW -->
+
+        <div id="body-row" class="row">
+
+            <div class="col-12 dialog-body">
+                <p>
+                    Sure to perform this action?
+                </p>
+                <!--@I18N-->
+            </div>
+
+        </div> <!-- END BODY ROW -->
+
+        <div id="footer-row" class="row">
+
+            <div class="col-6">
+
+                <hyt-button [color]="'hyt-base-total-green'" (clickFn)="confirm($event)">
+                    <span class="hyt-icon icon-hyt_valid"></span> 
+                    <span i18n="@@HYT_widget_settings_apply">HYT_widget_settings_apply</span>
+                </hyt-button>
+            
+            </div>
+
+            <div class="col-6">
+
+                <hyt-button [color]="'hyt-base-total-red'" (clickFn)="cancel($event)">
+                    <span class="hyt-icon icon-hyt_cancel"></span>
+                    <span i18n="@@HYT_widget_settings_cancel">HYT_widget_settings_cancel</span> 
+                </hyt-button>
+
+            </div>
+
+        </div> <!-- END FOOTER ROW -->
         
     </div>
     

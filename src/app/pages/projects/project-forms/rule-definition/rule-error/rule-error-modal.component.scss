@@ -1,37 +1,58 @@
-#container-option-modal {
+#hyt-rule-error-modal {
 
-  .hyt-modal-body {
+  #container-option-modal {
 
-    .dialog {
-      overflow: hidden;
-      background-color: #2258a5;
-      box-shadow: 0 0 5px 2px rgba(0, 0, 0, .35);
-      border-radius: 8px;
-
-      .dialog-header {
+    .hyt-modal-body {
+  
+      .dialog {
+        overflow: hidden;
         background-color: #2258a5;
-        padding: 8px 10px;
-        color: #fff;
-        text-align: center;
-        font-size: 1.3em;
-        position: relative;
-      }
+        box-shadow: 0 0 5px 2px rgba(0, 0, 0, .35);
+        border-radius: 8px;
+        border: none;
+  
+        .dialog-header {
+          background-color: #e60000;
+          padding: 8px 10px;
+          color: #fff;
+          text-align: center;
+          font-size: 1.3em;
+          position: relative;
 
-      .dialog-body {
-        background-color: #fff;
-        padding: 30px;
-      }
+          h3 {
+            margin: 0px;
+            text-transform: uppercase;
+          }
 
-      .dialog-footer {
-        background-color: #2258a5;
-        padding: 8px 10px;
-        color: #fff;
-        text-align: center;
-        position: relative;
-      }
+          span {
 
+            &.icon-hyt_cancelC {
+
+              color: #ffffff;
+
+              &:hover {
+
+                color: #500000;
+
+              }
+
+            }
+
+          }
+
+        }
+  
+        .dialog-body {
+          background-color: #fff;
+          padding: 30px;
+        }
+  
+      }
+  
     }
-
+  
   }
 
 }
+
+

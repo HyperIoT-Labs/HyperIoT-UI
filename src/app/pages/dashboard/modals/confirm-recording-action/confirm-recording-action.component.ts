@@ -1,11 +1,12 @@
-import { Component, OnInit, Input, ElementRef, OnDestroy, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, Input, ElementRef, OnDestroy, EventEmitter, Output, ViewEncapsulation } from '@angular/core';
 import { DashboardConfigService } from '../../dashboard-config.service';
 import { HytModalConfService } from 'src/app/services/hyt-modal-conf.service';
 
 @Component({
   selector: 'hyt-confirm-recording-action',
   templateUrl: './confirm-recording-action.component.html',
-  styleUrls: ['./confirm-recording-action.component.scss']
+  styleUrls: ['./confirm-recording-action.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ConfirmRecordingActionComponent implements OnInit, OnDestroy {
 
