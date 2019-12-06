@@ -32,6 +32,7 @@ export abstract class ProjectFormEntity implements OnInit {
     isProjectEntity = true;
     editMode = false;
     hideDelete = false;
+    showSave = true;
     showCancel = false;
     longDefinition = 'entity long definition';
     icon = '';

@@ -53,6 +53,7 @@
 
             <div class="mt-4 d-flex flex-row justify-content-between">
                 <hyt-button 
+                    [ngClass]="{hidden: !currentEntity.showSave}"
                     id="save-btn"
                     (clickFn)="onSaveClick()" 
                     [isDisabled]="!currentEntity.isValid() || !currentEntity.isDirty()">
