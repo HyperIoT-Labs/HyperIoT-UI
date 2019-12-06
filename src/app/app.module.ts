@@ -29,6 +29,7 @@ import { MatButtonModule, MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS } from '@a
 // hyperiot
 import { Configuration, ConfigurationParameters, HyperiotClientModule } from '@hyperiot/core';
 import { HyperiotComponentsModule } from '@hyperiot/components';
+import { HytConfirmDialogComponent } from '@hyperiot/components';
 import { RouterModule, DefaultUrlSerializer, UrlSerializer, UrlTree } from '@angular/router';
 
 // local
@@ -41,7 +42,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { NotificationbarComponent } from './components/notificationbar/notificationbar.component';
 
-export class MyUrlSerializer extends DefaultUrlSerializer implements UrlSerializer  {
+export class MyUrlSerializer extends DefaultUrlSerializer implements UrlSerializer {
   /** Converts a `UrlTree` into a url */
   serialize(tree: UrlTree): string {
     return super.serialize(tree); // .replace(/\(|\)|\w+-\w+:/g, '');
@@ -74,7 +75,8 @@ export function apiConfigFactory(): Configuration {
   // dynamically created components
   entryComponents: [
     SaveChangesDialogComponent,
-    DeleteConfirmDialogComponent
+    DeleteConfirmDialogComponent,
+    HytConfirmDialogComponent
   ],
   imports: [
     RouterModule,

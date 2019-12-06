@@ -140,78 +140,78 @@ export class ProjectDetailComponent implements OnInit {
     this.treeStatus = TreeStatusEnum.Loading;
     this.treeData = [];
     this.hProjectService.findHProject(+this.projectId).subscribe((p: HProject) => {
-        const projectNode: TreeDataNode = {
-          data: { id: p.id },
-          name: p.name,
-          icon: 'icon-hyt_projectRSolo',
-          children: []
-        };
-        this.projectName = p.name;
-        this.treeData.push(projectNode);
-        this.treeView.setData(this.treeData);
-        this.hDeviceService.findAllHDeviceByProjectId(p.id).subscribe((deviceList: HDevice[]) => {
-          const requests: Observable<any>[] = [];
-          const devices = []; // device lookup list
-          deviceList.map((d) => {
-            const node = {
-              data: { id: d.id, type: 'device' },
-              name: d.deviceName,
-              icon: 'icon-hyt_device'
-            };
-            devices[d.id] = node;
-            projectNode.children.push(node);
-            requests.push(this.packetService.getHDevicePacketList(d.id));
-          });
-          zip(...requests).subscribe((packetList: Array<HPacket[]>) => {
-            packetList.map((kd: HPacket[]) => {
-              if (kd.length === 0) {
-                return;
-              }
-              const d = kd[0].device;
-              devices[d.id].children = kd.map((k) => {
-                return {
-                  data: { id: k.id, type: 'packet' },
-                  name: k.name,
-                  icon: 'icon-hyt_packets',
-                  children: [
-                    {
-                      data: { id: k.id, type: 'packet-fields' },
-                      name: 'Fields',
-                      icon: 'icon-hyt_fields'
-                    },
-                    {
-                      data: { id: k.id, type: 'packet-enrichments' },
-                      name: 'Enrichments',
-                      icon: 'icon-hyt_enrichments'
-                    },
-                    {
-                      data: { id: k.id, type: 'packet-statistics' },
-                      name: 'Statistics',
-                      icon: 'icon-hyt_statistics'
-                    },
-                    {
-                      data: { id: k.id, type: 'packet-events' },
-                      name: 'Events',
-                      icon: 'icon-hyt_event'
-                    }
-                  ]
-                };
-              });
-            });
-            this.treeView.setData(this.treeData);
-            if (this.treeView.treeControl.dataNodes.length > 0) {
-              this.treeView.treeControl.expand(this.treeView.treeControl.dataNodes[0]);
+      const projectNode: TreeDataNode = {
+        data: { id: p.id },
+        name: p.name,
+        icon: 'icon-hyt_projectRSolo',
+        children: []
+      };
+      this.projectName = p.name;
+      this.treeData.push(projectNode);
+      this.treeView.setData(this.treeData);
+      this.hDeviceService.findAllHDeviceByProjectId(p.id).subscribe((deviceList: HDevice[]) => {
+        const requests: Observable<any>[] = [];
+        const devices = []; // device lookup list
+        deviceList.map((d) => {
+          const node = {
+            data: { id: d.id, type: 'device' },
+            name: d.deviceName,
+            icon: 'icon-hyt_device'
+          };
+          devices[d.id] = node;
+          projectNode.children.push(node);
+          requests.push(this.packetService.getHDevicePacketList(d.id));
+        });
+        zip(...requests).subscribe((packetList: Array<HPacket[]>) => {
+          packetList.map((kd: HPacket[]) => {
+            if (kd.length === 0) {
+              return;
             }
-            this.treeStatus = TreeStatusEnum.Ready;
-          }, (err) => {
-            this.treeStatus = TreeStatusEnum.Error;
+            const d = kd[0].device;
+            devices[d.id].children = kd.map((k) => {
+              return {
+                data: { id: k.id, type: 'packet' },
+                name: k.name,
+                icon: 'icon-hyt_packets',
+                children: [
+                  {
+                    data: { id: k.id, type: 'packet-fields' },
+                    name: 'Fields',
+                    icon: 'icon-hyt_fields'
+                  },
+                  {
+                    data: { id: k.id, type: 'packet-enrichments' },
+                    name: 'Enrichments',
+                    icon: 'icon-hyt_enrichments'
+                  },
+                  {
+                    data: { id: k.id, type: 'packet-statistics' },
+                    name: 'Statistics',
+                    icon: 'icon-hyt_statistics'
+                  },
+                  {
+                    data: { id: k.id, type: 'packet-events' },
+                    name: 'Events',
+                    icon: 'icon-hyt_event'
+                  }
+                ]
+              };
+            });
           });
-          if (requests.length === 0) {
-            this.treeStatus = TreeStatusEnum.Ready;
+          this.treeView.setData(this.treeData);
+          if (this.treeView.treeControl.dataNodes.length > 0) {
+            this.treeView.treeControl.expand(this.treeView.treeControl.dataNodes[0]);
           }
+          this.treeStatus = TreeStatusEnum.Ready;
         }, (err) => {
           this.treeStatus = TreeStatusEnum.Error;
         });
+        if (requests.length === 0) {
+          this.treeStatus = TreeStatusEnum.Ready;
+        }
+      }, (err) => {
+        this.treeStatus = TreeStatusEnum.Error;
+      });
     }, (err) => {
       this.treeStatus = TreeStatusEnum.Error;
     });
@@ -219,15 +219,27 @@ export class ProjectDetailComponent implements OnInit {
 
   onNodeClick(node) {
     if (node.data && node.data.type) {
-      this.router.navigate(
-        [{ outlets: { projectDetails: [node.data.type, node.data.id] } }],
-        { relativeTo: this.activatedRoute }
-      ).then((success) => {
-        if (!success) {
-          // reposition on last selected node if navigation is cancelled
-          this.treeView.setActiveNode(this.currentNode);
-        }
-      });
+      if (node.data.type === 'tags' || node.data.type === 'categories') {
+        this.router.navigate(
+          [{ outlets: { projectDetails: node.data.type } }],
+          { relativeTo: this.activatedRoute }
+        ).then((success) => {
+          if (!success) {
+            // reposition on last selected node if navigation is cancelled
+            this.treeView.setActiveNode(this.currentNode);
+          }
+        });
+      } else {
+        this.router.navigate(
+          [{ outlets: { projectDetails: [node.data.type, node.data.id] } }],
+          { relativeTo: this.activatedRoute }
+        ).then((success) => {
+          if (!success) {
+            // reposition on last selected node if navigation is cancelled
+            this.treeView.setActiveNode(this.currentNode);
+          }
+        });
+      }
     } else {
       this.router.navigate(
         ['./', { outlets: { projectDetails: null } }],
@@ -252,7 +264,7 @@ export class ProjectDetailComponent implements OnInit {
       if (this.focusTimeout !== null) {
         clearTimeout(this.focusTimeout);
       }
-      this.focusTimeout = setTimeout( () => {
+      this.focusTimeout = setTimeout(() => {
         this.focus(data);
       }, 100);
       return;
@@ -281,7 +293,7 @@ export class ProjectDetailComponent implements OnInit {
   openSaveDialog(): Observable<boolean> {
     return new Observable((observer: Observer<boolean>) => {
       const dialogRef = this.dialog.open(SaveChangesDialogComponent, {
-        data: {title: 'Discard changes?', message: 'There are pending changes to be saved.'}
+        data: { title: 'Discard changes?', message: 'There are pending changes to be saved.' }
       });
       dialogRef.afterClosed().subscribe((result) => {
         if (result === 'save') {
