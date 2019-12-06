@@ -1,16 +1,53 @@
-.dialog {
-  overflow: hidden;
-  background: white;
-  padding: 15px;
-  border: solid 1px rgba(0, 0, 0, 0.1);
-  box-shadow: 0 0 5px 2px rgba(0, 0, 0, .35);
-  border-radius: 8px;
-}
+#hyt-wizard-deactivation-modal {
 
-.center {
   text-align: center;
+
+  .dialog {
+    width: 85%;
+    overflow: hidden;
+    background: white;
+    border: none;
+    box-shadow: 0 0 5px 2px rgba(0, 0, 0, .35);
+    border-radius: 8px;
+  
+    #title-deact-mod {
+      background: #e60000;
+      color: #fff;
+      padding: 10px 15px;
+
+      h3 {
+
+        margin: 0px;
+        font-size: 1.4em;
+        text-transform: capitalize;
+
+      }
+
+    }
+
+    #body-deact-mod {
+
+      margin-top: 35px;
+
+      p {
+
+        font-size: 1.2em;
+        font-weight: bold;
+
+      }
+
+    }
+
+    #footer-deact-mod {
+
+      margin-top: 35px;
+      margin-bottom: 15px;
+
+    }
+   
+  }
+
 }
 
-.white-font {
-  color: white;
-}
+
+

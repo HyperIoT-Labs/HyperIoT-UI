@@ -117,7 +117,7 @@ export class PacketFormComponent extends ProjectFormEntity implements AfterViewI
       this.edit();
       // update static data (not part of this form)
       this.mqttUrl = 'tcp://karaf-activemq-mqtt-test.hyperiot.cloud';
-      this.mqttTopic = '/v1/devices/' + p.device.id + '/' + p.id;
+      this.mqttTopic = 'streaming/' + p.device.project.id + '/' + p.device.id + '/' + p.id;
       // emit event for updating UI
       this.entityEvent.emit({
         event: 'treeview:focus',
