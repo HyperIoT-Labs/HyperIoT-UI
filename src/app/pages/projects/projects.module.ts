@@ -47,6 +47,8 @@ import { WizardOptionsModalComponent } from './project-wizard/wizard-options-mod
 import { WizardDeactivationModalComponent } from './project-wizard/wizard-deactivation-modal/wizard-deactivation-modal.component';
 import { ApplicationFormComponent } from './project-forms/application-form/application-form.component';
 import { RuleErrorModalComponent } from './project-forms/rule-definition/rule-error/rule-error-modal.component';
+import { TagsFormComponent } from './project-forms/tags-form/tags-form.component';
+import { CategoriesFormComponent } from './project-forms/categories-form/categories-form.component';
 
 @NgModule({
   declarations: [
@@ -75,7 +77,9 @@ import { RuleErrorModalComponent } from './project-forms/rule-definition/rule-er
     WizardOptionsModalComponent,
     WizardDeactivationModalComponent,
     ApplicationFormComponent,
-    RuleErrorModalComponent
+    RuleErrorModalComponent,
+    TagsFormComponent,
+    CategoriesFormComponent
   ],
   imports: [
     MatIconModule,
