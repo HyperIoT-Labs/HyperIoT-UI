@@ -3,12 +3,11 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { Observable } from 'rxjs';
 
 import { MatRadioChange, MatDialog } from '@angular/material';
-import { ElementRef, ViewChild, OnInit, Output, EventEmitter, AfterViewInit, Injector } from '@angular/core';
+import { ElementRef, ViewChild, OnInit, Output, EventEmitter, Injector } from '@angular/core';
 import { SummaryList } from '../project-detail/generic-summary-list/generic-summary-list.component';
 import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { EntitiesService } from 'src/app/services/entities/entities.service';
-import { DeviceFormComponent } from './device-form/device-form.component';
 
 export enum LoadingStatusEnum {
     Ready,

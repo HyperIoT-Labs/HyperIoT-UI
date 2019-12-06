@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, AfterViewInit, ViewEncapsulation } from '@angular/core';
 import { HProject, HDevice, HPacket, Rule, HdevicesService, HpacketsService } from '@hyperiot/core';
-import { Subject, Observable, Observer } from 'rxjs';
+import { Observable, Observer } from 'rxjs';
 import { ProjectFormEntity } from '../project-forms/project-form-entity';
 import { ProjectFormComponent } from '../project-forms/project-form/project-form.component';
 import { DeviceFormComponent } from '../project-forms/device-form/device-form.component';

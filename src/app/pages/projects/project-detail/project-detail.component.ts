@@ -10,7 +10,6 @@ import { HytTreeViewProjectComponent } from '@hyperiot/components/lib/hyt-tree-v
 import { ProjectFormEntity } from '../project-forms/project-form-entity';
 import { MatDialog } from '@angular/material';
 import { SaveChangesDialogComponent } from 'src/app/components/dialogs/save-changes-dialog/save-changes-dialog.component';
-import { SummaryListItem } from './generic-summary-list/generic-summary-list.component';
 import { PacketEnrichmentFormComponent } from '../project-forms/packet-enrichment-form/packet-enrichment-form.component';
 import { PacketEventsFormComponent } from '../project-forms/packet-events-form/packet-events-form.component';
 

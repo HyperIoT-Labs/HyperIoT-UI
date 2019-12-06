@@ -1,14 +1,10 @@
 import { Component, OnInit, ViewEncapsulation, OnDestroy, ViewChild } from '@angular/core';
 import { DashboardConfigService } from './dashboard-config.service';
 import { takeUntil } from 'rxjs/operators';
-import { Subject, forkJoin } from 'rxjs';
+import { Subject } from 'rxjs';
 import { Dashboard, HProject } from '@hyperiot/core';
-import { SelectOption } from '@hyperiot/components';
-import { RouterLink, Router, ActivatedRoute, RouterOutlet } from '@angular/router';
-import { WidgetsLayoutComponent } from './widgets-layout/widgets-layout.component';
+import { Router } from '@angular/router';
 import { DashboardViewComponent } from './dashboard-view/dashboard-view.component';
-import { AddWidgetDialogComponent } from './add-widget-dialog/add-widget-dialog.component';
-import { WidgetSettingsDialogComponent } from './widget-settings-dialog/widget-settings-dialog.component';
 import { HytModalConfService } from 'src/app/services/hyt-modal-conf.service';
 
 enum PageStatus {

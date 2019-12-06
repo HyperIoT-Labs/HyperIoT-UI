@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { map, catchError } from 'rxjs/operators';
-import { Subject, forkJoin, of, Observable } from 'rxjs';
+import { Subject, forkJoin, of } from 'rxjs';
 
 import {
     DashboardwidgetsService,

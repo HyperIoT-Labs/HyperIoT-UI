@@ -1,5 +1,5 @@
 import { Component, OnDestroy, ViewChild, ElementRef, Input, Injector, ViewEncapsulation, ChangeDetectorRef, AfterViewInit } from '@angular/core';
-import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 import { Subscription } from 'rxjs';
 
