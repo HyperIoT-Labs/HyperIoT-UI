@@ -157,6 +157,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
   onSelectChange(event) {
     this.pageStatus = PageStatus.Loading;
     this.idProjectSelected = event.value;
+    clearInterval(this.updateRecordingInterval);
+    this.recordStateInLoading = true;
+    this.updateToplogyStatus();
+    this.updateRecordingInterval = setInterval(() => {
+      this.updateToplogyStatus();
+    }, 60000);
     this.dashboardConfigService.getRealtimeDashboardFromProject(event.value)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
