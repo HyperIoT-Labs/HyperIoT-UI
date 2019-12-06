@@ -13,6 +13,10 @@ export class CategoriesFormComponent extends ProjectFormEntity implements OnInit
 
   categoriesFlatTree: TreeNodeCategory[] = [];
 
+  hideDelete = true;
+
+  showSave = false;
+
   constructor(
     injector: Injector,
     private assetCategoriesService: AssetscategoriesService,
@@ -45,7 +49,6 @@ export class CategoriesFormComponent extends ProjectFormEntity implements OnInit
         this.categoriesFlatTree = [...this.categoriesFlatTree];
       }
     );
-
   }
 
   cbChange(event) {
