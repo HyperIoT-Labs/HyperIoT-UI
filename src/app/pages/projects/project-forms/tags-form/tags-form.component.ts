@@ -1,4 +1,4 @@
-import { Component, OnInit, Injector, ViewChild } from '@angular/core';
+import { Component, OnInit, Injector, ViewChild, Input } from '@angular/core';
 import { ProjectFormEntity } from '../project-form-entity';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { ElementRef } from '@angular/core';
@@ -23,6 +23,8 @@ export enum TagStatus {
 })
 export class TagsFormComponent extends ProjectFormEntity implements OnInit {
 
+  @Input() project: HProject;
+  
   @Output() tagIds: EventEmitter = new EventEmitter();
 
   @ViewChild('tagInput', { static: false }) tagInput: ElementRef<HTMLInputElement>;
