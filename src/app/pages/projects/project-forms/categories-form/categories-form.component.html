@@ -1,0 +1,19 @@
+<div id="container-packet-form" class="container">
+
+    <div class="category-text">
+        Lorem ipsum dolor sit amet, consectetur adipisci elit, sed do eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullamco laboriosam, nisi ut aliquid ex ea commodi consequatur. Duis aute irure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
+    </div>
+
+    <div class="category-tree">
+        <form [formGroup]="form">
+
+            <hyt-tree-view-category 
+                mode="edit"
+                [treeDataFlat]="categoriesFlatTree" 
+                (cbChange)="cbChange($event)" 
+                (cbAdd)="cbAdd($event)">
+            </hyt-tree-view-category>
+
+        </form>
+    </div>
+</div>

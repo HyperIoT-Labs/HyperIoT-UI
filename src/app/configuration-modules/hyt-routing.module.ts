@@ -16,6 +16,8 @@ import { ProjectDetailComponent } from '../pages/projects/project-detail/project
 import { ProjectFormComponent } from '../pages/projects/project-forms/project-form/project-form.component';
 import { DeviceFormComponent } from '../pages/projects/project-forms/device-form/device-form.component';
 import { PacketFormComponent } from '../pages/projects/project-forms/packet-form/packet-form.component';
+import { TagsFormComponent } from '../pages/projects/project-forms/tags-form/tags-form.component';
+import { CategoriesFormComponent } from '../pages/projects/project-forms/categories-form/categories-form.component';
 import { CanDeactivateGuard } from '../components/CanDeactivateGuard';
 import { DashboardComponent } from '../pages/dashboard/dashboard.component';
 import { PacketFieldsFormComponent } from '../pages/projects/project-forms/packet-fields-form/packet-fields-form.component';
@@ -156,6 +158,18 @@ const hyperiotRoutes: Routes = [
         canDeactivate: [CanDeactivateGuard],
         path: 'packet-events/:packetId',
         component: PacketEventsFormComponent,
+        outlet: 'projectDetails'
+      },
+      {
+        canDeactivate: [CanDeactivateGuard],
+        path: 'tags',
+        component: TagsFormComponent,
+        outlet: 'projectDetails'
+      },
+      {
+        canDeactivate: [CanDeactivateGuard],
+        path: 'categories',
+        component: CategoriesFormComponent,
         outlet: 'projectDetails'
       }
     ],

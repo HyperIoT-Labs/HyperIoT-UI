@@ -46,6 +46,8 @@ import { WizardReportModalComponent } from './project-wizard/wizard-report-modal
 import { WizardOptionsModalComponent } from './project-wizard/wizard-options-modal/wizard-options-modal.component';
 import { WizardDeactivationModalComponent } from './project-wizard/wizard-deactivation-modal/wizard-deactivation-modal.component';
 import { ApplicationFormComponent } from './project-forms/application-form/application-form.component';
+import { TagsFormComponent } from './project-forms/tags-form/tags-form.component';
+import { CategoriesFormComponent } from './project-forms/categories-form/categories-form.component';
 
 @NgModule({
   declarations: [
@@ -73,7 +75,9 @@ import { ApplicationFormComponent } from './project-forms/application-form/appli
     WizardReportModalComponent,
     WizardOptionsModalComponent,
     WizardDeactivationModalComponent,
-    ApplicationFormComponent
+    ApplicationFormComponent,
+    TagsFormComponent,
+    CategoriesFormComponent
   ],
   imports: [
     MatIconModule,
