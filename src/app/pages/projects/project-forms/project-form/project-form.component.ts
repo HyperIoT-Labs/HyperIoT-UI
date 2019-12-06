@@ -1,6 +1,5 @@
-import { Component, OnDestroy, ViewChild, ElementRef, Injector, ViewEncapsulation, AfterViewInit, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
-import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
-import { FormBuilder } from '@angular/forms';
+import { Component, OnDestroy, ViewChild, ElementRef, Injector, ViewEncapsulation, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 import { Subscription } from 'rxjs';
 

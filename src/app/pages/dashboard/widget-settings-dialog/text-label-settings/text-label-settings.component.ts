@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { Subject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { NgForm, ControlContainer } from '@angular/forms';
 
 @Component({

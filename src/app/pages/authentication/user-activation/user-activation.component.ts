@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
 import { HusersService, Logger, LoggerService } from '@hyperiot/core';
 import { ActivatedRoute } from '@angular/router';
 import { SubmissionStatus } from '../models/pageStatus';

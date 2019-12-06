@@ -1,5 +1,4 @@
-import { Component, OnInit, ElementRef, Output, EventEmitter, HostListener, Input, OnDestroy, Injector } from '@angular/core';
-import { HytModalConfService } from 'src/app/services/hyt-modal-conf.service';
+import { Component, OnInit, Output, EventEmitter, OnDestroy, Injector } from '@angular/core';
 import { WidgetsService, Widget } from '@hyperiot/core';
 import { KeyValue } from '@angular/common';
 import { HytModal } from 'src/app/services/hyt-modal';

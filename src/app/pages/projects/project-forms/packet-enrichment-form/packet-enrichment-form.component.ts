@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, ElementRef, OnDestroy, Injector, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy, Injector, ViewEncapsulation } from '@angular/core';
 import { HPacket, Rule, RulesService, HpacketsService, HProject } from '@hyperiot/core';
 import { FormGroup } from '@angular/forms';
 import { SelectOption } from '@hyperiot/components';
