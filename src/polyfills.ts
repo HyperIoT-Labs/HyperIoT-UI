@@ -61,4 +61,11 @@ import 'zone.js/dist/zone';  // Included with Angular CLI.
 /***************************************************************************************************
  * APPLICATION IMPORTS
  */
-(window as any).global = window; // patch to make 'convert-units' package work
+// patch to make 'convert-units' package work
+(window as any).global = window;
+// patch for avro-js
+global.Buffer = global.Buffer || require('buffer').Buffer;
+(window as any).process = {
+    env: { DEBUG: undefined },
+    browser: true
+};

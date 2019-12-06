@@ -23,7 +23,7 @@ export class ConfirmRecordingActionComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    let modal = this;
+    const modal = this;
 
     // ensure id attribute exists
     if (!this.id) {
@@ -64,13 +64,13 @@ export class ConfirmRecordingActionComponent implements OnInit, OnDestroy {
   }
 
   confirm(event) {
-    this.modalClose.emit(true)
-    this.close()
+    this.modalClose.emit(true);
+    this.close();
   }
 
   cancel(event) {
-    this.modalClose.emit(false)
-    this.close()
+    this.modalClose.emit(false);
+    this.close();
   }
 
 }

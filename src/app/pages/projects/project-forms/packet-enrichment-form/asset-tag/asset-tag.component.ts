@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { AssetTag, AssetstagsService, HProject } from '@hyperiot/core';
 import { MatChipInputEvent } from '@angular/material';
 import { startWith, map } from 'rxjs/operators';
-import { ProjectWizardService } from 'src/app/services/projectWizard/project-wizard.service';
 
 export enum TagStatus {
   Default = 0,
@@ -36,7 +35,6 @@ export class AssetTagComponent implements OnInit {
   @Output() tagIds: EventEmitter<number[]> = new EventEmitter<number[]>();
 
   constructor(
-    private wizardService: ProjectWizardService,
     private assetsTagService: AssetstagsService,
   ) { }
 

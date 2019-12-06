@@ -82,13 +82,7 @@ html {
 
     /* MODAL STYLES
     -------------------------------*/
-    hyt-add-widget-dialog,
-    hyt-widget-settings-dialog,
-    hyt-info-recording-action,
-    hyt-confirm-recording-action,
-    hyt-wizard-options-modal,
-    hyt-wizard-report-modal,
-    hyt-wizard-deactivation-modal {
+    .hyt-modal-general {
       /* modals are hidden by default */
       display: none;
 
