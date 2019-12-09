@@ -1,5 +1,6 @@
 
-#hyt-modal-reload-recording-confirm {
+#hyt-modal-reload-recording-confirm,
+#hyt-modal-recording-confirm-action {
 
     .dialog {
         // position: relative;
@@ -34,6 +35,9 @@
 
         #body-row {
 
+            max-height: 320px;
+            overflow-y: auto;
+
             .dialog-body {
                 padding: 25px 20px;
 
@@ -51,7 +55,7 @@
 
         #footer-row {
 
-            padding: 6px;
+            padding: 10px;
             text-align: center;
 
         }

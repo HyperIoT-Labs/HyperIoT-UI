@@ -129,11 +129,24 @@
 
 </div>
 
-<hyt-confirm-recording-action class="hyt-modal-general" id="hyt-modal-recording-confirm-action" (modalClose)="changeRecordingState($event)">
-</hyt-confirm-recording-action>
+<hyt-confirm-recording-action 
+    class="hyt-modal-general" 
+    id="hyt-modal-recording-confirm-action" 
+    textBodyModal="You are about to put the data saving in Play / Pause" 
+    (modalClose)="changeRecordingState($event)"
+>
+</hyt-confirm-recording-action> <!-- @I18N@ -->
 
-<hyt-info-recording-action class="hyt-modal-general" id="hyt-modal-recording-info-action" (modalClose)="infoRecordingState($event)">
+<hyt-info-recording-action 
+    class="hyt-modal-general" 
+    id="hyt-modal-recording-info-action" 
+    (modalClose)="infoRecordingState($event)"
+>
 </hyt-info-recording-action>
 
-<hyt-confirm-recording-action class="hyt-modal-general" id="hyt-modal-reload-recording-confirm" (modalClose)="reloadRecording($event)">
-</hyt-confirm-recording-action>
+<hyt-confirm-recording-action 
+    class="hyt-modal-general" 
+    id="hyt-modal-reload-recording-confirm" 
+    textBodyModal="You are about to reboot data saving" 
+    (modalClose)="reloadRecording($event)">
+</hyt-confirm-recording-action> <!-- @I18N@ -->
