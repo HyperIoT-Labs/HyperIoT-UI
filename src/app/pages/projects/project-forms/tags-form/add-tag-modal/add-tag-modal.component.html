@@ -1,0 +1,31 @@
+<div id="container-option-modal" class="hyt-modal">
+
+    <div class="hyt-modal-body">
+
+        <div class="dialog">
+
+            <div class="dialog-header">
+                <span>Tag</span>
+                <span class="hyt-icon icon-hyt_cancelC" (click)="close()"></span>
+            </div>
+
+            <div class="dialog-body">
+
+                <form [formGroup]="tagForm" (ngSubmit)="submitTag()">
+                    <hyt-input-text [form]="tagForm" formControlName="name" name="name" placeholder="Tag name"
+                        [isRequired]="true" [injectedErrorMsg]="nameError" [fieldValue]="nameValue">
+                    </hyt-input-text>
+                    <!--@I18N-->
+                    <hyt-button type="submit" color="primary" [isDisabled]="notValid()">Add</hyt-button>
+                    <!--@I18N-->
+                    <ng-container *ngIf="pageStatus == 0">Loading</ng-container>
+                    <!--TODO replace with spinner-->
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="hyt-modal-background"></div>

@@ -8,10 +8,10 @@ import { EntitiesService } from 'src/app/services/entities/entities.service';
   styleUrls: ['./wizard-options-modal.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class WizardOptionsModalComponent extends HytModal implements OnInit  {
+export class WizardOptionsModalComponent extends HytModal implements OnInit {
 
   @Output()
-  modalClose: EventEmitter<{action: string, data: any}> = new EventEmitter<{action: string, data: any}>();
+  modalClose: EventEmitter<{ action: string, data: any }> = new EventEmitter<{ action: string, data: any }>();
 
   constructor(
     injector: Injector,
@@ -21,7 +21,7 @@ export class WizardOptionsModalComponent extends HytModal implements OnInit  {
   }
 
   output(action: string, data: number) {
-    this.modalClose.emit({action, data});
+    this.modalClose.emit({ action, data });
     this.close();
   }
 

@@ -12,8 +12,10 @@
         <ng-container i18n="@@HYT_add_new_project">HYT_add_new_project</ng-container>
       </hyt-button> -->
 
-      <hyt-button *ngIf="pageStatus === 1" id="add-project-btn-top" (click)="addProject()" [color]="'hyt-base-total-white'">
-          <span class="hyt-icon icon-hyt_plusC"></span> <ng-container i18n="@@HYT_add_new_project">HYT_add_new_project</ng-container>
+      <hyt-button *ngIf="pageStatus === 1" id="add-project-btn-top" (click)="addProject()"
+        [color]="'hyt-base-total-white'">
+        <span class="hyt-icon icon-hyt_plusC"></span>
+        <ng-container i18n="@@HYT_add_new_project">HYT_add_new_project</ng-container>
       </hyt-button>
 
     </div>
@@ -47,13 +49,14 @@
                 <div class="col-6">
                   <hyt-input-text id="hyt-search-bottom" [form]="filteringForm" formControlName="textFilter"
                     name="textFilter" placeholder="Search" (keyup)="onChangeInputSearch($event)"></hyt-input-text>
-                    <!--@I18N-->
+                  <!--@I18N-->
                 </div>
                 <div class="col-6 sort-right">
                   <span id="sort-text">Sort by: </span>
                   <!--@I18N-->
                   <hyt-select [form]="filteringForm" [label]="'Select a sort type'" formControlName="sort" name="sort"
                     (changeFn)="onChangeSelectSort($event)" [options]="sortOptions"></hyt-select>
+                  <!--@I18N-->
                 </div>
               </div>
             </form>
@@ -89,7 +92,6 @@
           <div *ngIf="hProjectsFiltered.length == 0" class="col-12">
             <span i18n="@@HYT_no_project_found">HYT_no_project_found</span>
           </div>
-
 
           <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2 single-card-container d-flex flex-row justify-content-center"
             *ngFor="let p of hProjectsFiltered">

@@ -49,6 +49,7 @@ import { ApplicationFormComponent } from './project-forms/application-form/appli
 import { RuleErrorModalComponent } from './project-forms/rule-definition/rule-error/rule-error-modal.component';
 import { TagsFormComponent } from './project-forms/tags-form/tags-form.component';
 import { CategoriesFormComponent } from './project-forms/categories-form/categories-form.component';
+import { AddTagModalComponent } from './project-forms/tags-form/add-tag-modal/add-tag-modal.component';
 
 @NgModule({
   declarations: [
@@ -79,7 +80,8 @@ import { CategoriesFormComponent } from './project-forms/categories-form/categor
     ApplicationFormComponent,
     RuleErrorModalComponent,
     TagsFormComponent,
-    CategoriesFormComponent
+    CategoriesFormComponent,
+    AddTagModalComponent
   ],
   imports: [
     MatIconModule,

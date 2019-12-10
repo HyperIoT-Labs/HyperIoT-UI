@@ -22,18 +22,16 @@ export class ProjectsComponent implements OnInit {
   filteringForm: FormGroup;
 
   sortOptions: SelectOption[] = [
-    { value: 'none', label: 'None' },
-    { value: 'alfabetic-increasing', label: 'A-Z' },
-    { value: 'alfabetic-decreasing', label: 'Z-A' },
-    { value: 'date-increasing', label: 'Oldest' },
-    { value: 'date-decreasing', label: 'Newest' }
+    { value: 'none', label: 'None' }, // @I18N@
+    { value: 'alfabetic-increasing', label: 'A-Z' }, // @I18N@
+    { value: 'alfabetic-decreasing', label: 'Z-A' }, // @I18N@
+    { value: 'date-increasing', label: 'Oldest' }, // @I18N@
+    { value: 'date-decreasing', label: 'Newest' } // @I18N@
   ];
 
   displayMessageArea = false;
   messageAreaText: string;
   typeMessageArea: string;
-
-  noProjectsMatches = false;
 
   constructor(
     private router: Router,
@@ -71,17 +69,10 @@ export class ProjectsComponent implements OnInit {
     if (value) {
       if (value.split('*').length > 18) {
         this.hProjectsFiltered = [];
-        this.noProjectsMatches = true;
       } else {
         const reg = new RegExp(value.replace(/[.+^${}()|[\]\\]/g, '\\$&').replace(/\*/g, '.+').replace(/\?/g, '.'), 'i');
-        this.hProjectsFiltered =  this.hProjects.filter(el => (el.name.match(reg)));
+        this.hProjectsFiltered = this.hProjects.filter(el => (el.name.match(reg)));
         this.sortBy(this.filteringForm.value.sort);
-
-        if (this.hProjectsFiltered.length === 0) {
-          this.noProjectsMatches = true;
-        } else {
-          this.noProjectsMatches = false;
-        }
       }
     } else {
       this.hProjectsFiltered = [...this.hProjects];
@@ -104,44 +95,44 @@ export class ProjectsComponent implements OnInit {
     switch (type) {
 
       case 'none':
-          this.hProjectsFiltered.sort((a, b) => {
-            if (a.id > b.id) { return -1; }
-            if (a.id < b.id) { return 1; }
-            return 0;
-          });
-          break;
+        this.hProjectsFiltered.sort((a, b) => {
+          if (a.id > b.id) { return -1; }
+          if (a.id < b.id) { return 1; }
+          return 0;
+        });
+        break;
 
       case 'alfabetic-increasing':
-          this.hProjectsFiltered.sort((a, b) => {
-            if (a.name.toLocaleLowerCase() < b.name.toLocaleLowerCase()) { return -1; }
-            if (a.name.toLocaleLowerCase() > b.name.toLocaleLowerCase()) { return 1; }
-            return 0;
-          });
-          break;
+        this.hProjectsFiltered.sort((a, b) => {
+          if (a.name.toLocaleLowerCase() < b.name.toLocaleLowerCase()) { return -1; }
+          if (a.name.toLocaleLowerCase() > b.name.toLocaleLowerCase()) { return 1; }
+          return 0;
+        });
+        break;
 
       case 'alfabetic-decreasing':
-          this.hProjectsFiltered.sort((a, b) => {
-            if (a.name.toLocaleLowerCase() > b.name.toLocaleLowerCase()) { return -1; }
-            if (a.name.toLocaleLowerCase() < b.name.toLocaleLowerCase()) { return 1; }
-            return 0;
-          });
-          break;
+        this.hProjectsFiltered.sort((a, b) => {
+          if (a.name.toLocaleLowerCase() > b.name.toLocaleLowerCase()) { return -1; }
+          if (a.name.toLocaleLowerCase() < b.name.toLocaleLowerCase()) { return 1; }
+          return 0;
+        });
+        break;
 
       case 'date-increasing':
-          this.hProjectsFiltered.sort((a, b) => {
-            if (a.id < b.id) { return -1; }
-            if (a.id > b.id) { return 1; }
-            return 0;
-          });
-          break;
+        this.hProjectsFiltered.sort((a, b) => {
+          if (a.id < b.id) { return -1; }
+          if (a.id > b.id) { return 1; }
+          return 0;
+        });
+        break;
 
       case 'date-decreasing':
-          this.hProjectsFiltered.sort((a, b) => {
-            if (a.id > b.id) { return -1; }
-            if (a.id < b.id) { return 1; }
-            return 0;
-          });
-          break;
+        this.hProjectsFiltered.sort((a, b) => {
+          if (a.id > b.id) { return -1; }
+          if (a.id < b.id) { return 1; }
+          return 0;
+        });
+        break;
 
       default:
         break;

@@ -46,7 +46,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   streamIsOn = true;
 
-  dataRecordingIsOn = false;
+  dataRecordingIsOn = true;
 
   idProjectSelected: number;
 
@@ -243,13 +243,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
             this.upTimeSec = undefined;
           }
         } else {
-          this.dataRecordingIsOn = false;
+          this.dataRecordingIsOn = true;
           this.upTimeSec = undefined;
         }
         this.recordStateInLoading = false;
       },
       error => {
-        this.dataRecordingIsOn = false;
+        this.dataRecordingIsOn = true;
         this.recordStateInLoading = false;
         this.upTimeSec = undefined;
         console.error(error);
