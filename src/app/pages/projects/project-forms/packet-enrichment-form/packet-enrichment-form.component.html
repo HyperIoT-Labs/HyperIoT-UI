@@ -14,11 +14,16 @@
 
     <div class="form-group row">
 
-      <div 
+      <!-- <div 
         id="ffield-col-enrich-name" 
         class="col-tag-cat"
         [ngClass]="enrichmentType=='AddTagRuleAction' || enrichmentType=='AddCategoryRuleAction' ? 'col-4' : 'col-6'"
-      > <!-- col-4 -->
+      > -->
+      
+      <div 
+        id="ffield-col-enrich-name" 
+        class="col-tag-cat col-6"
+      ><!-- col-4 -->
 
         <hyt-input-text 
           [form]="form" formControlName="rule-name" name="rule-name" [isRequired]="true"
@@ -30,10 +35,15 @@
 
       </div>
 
-      <div 
+      <!-- <div 
         id="ffield-col-enrich-rules" 
         class="col-tag-cat"
         [ngClass]="enrichmentType=='AddTagRuleAction' || enrichmentType=='AddCategoryRuleAction' ? 'col-4' : 'col-6'"
+      >  -->
+      
+      <div 
+        id="ffield-col-enrich-rules" 
+        class="col-tag-cat col-6"
       > <!-- col-4 -->
 
         <hyt-select 
@@ -47,7 +57,7 @@
       <div 
         *ngIf="enrichmentType=='AddTagRuleAction' || enrichmentType=='AddCategoryRuleAction'"
         id="ffield-col-enrich-tag-cat" 
-        class="col-4 col-tag-cat" 
+        class="col-8 offset-2 col-tag-cat" 
       >
 
         <hyt-asset-tag 
