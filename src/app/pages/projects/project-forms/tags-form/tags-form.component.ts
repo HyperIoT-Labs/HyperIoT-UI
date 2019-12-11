@@ -1,14 +1,12 @@
-import { Component, OnInit, Injector, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, Injector, ViewChild } from '@angular/core';
 import { ProjectFormEntity } from '../project-form-entity';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { ElementRef } from '@angular/core';
-import { AssetTag, AssetstagsService, HProject } from '@hyperiot/core';
-import { FormControl } from '@angular/forms';
-import { MatChipInputEvent } from '@angular/material';
-import { Output } from '@angular/core';
-import { EventEmitter } from 'events';
-import { Observable } from 'rxjs';
-import { startWith, map } from 'rxjs/operators';
+import { AssetTag, AssetstagsService } from '@hyperiot/core';
+import { FormGroup } from '@angular/forms';
+import { SelectOption } from '@hyperiot/components';
+import { Router } from '@angular/router';
+import { HytModalConfService } from 'src/app/services/hyt-modal-conf.service';
 
 export enum TagStatus {
   Default = 0,
@@ -23,46 +21,55 @@ export enum TagStatus {
 })
 export class TagsFormComponent extends ProjectFormEntity implements OnInit {
 
-  @Input() project: HProject;
-  
-  @Output() tagIds: EventEmitter = new EventEmitter();
-
-  @ViewChild('tagInput', { static: false }) tagInput: ElementRef<HTMLInputElement>;
+  projectId: number;
 
   tagStatus: TagStatus = TagStatus.Default;
-
-  tagCtrl = new FormControl();
 
   tags: AssetTag[] = [];
 
   allTags: AssetTag[] = [];
 
-  tagChoice: AssetTag[] = [];
+  // filter/sort logic
 
-  filteredTags: Observable<AssetTag[]>;
+  filteredTags: AssetTag[] = [];
 
-  hideDelete = true;
+  filteringForm: FormGroup;
 
-  showSave = false;
+  sortOptions: SelectOption[] = [
+    { value: 'none', label: 'None' },
+    { value: 'alfabetic-increasing', label: 'A-Z' },
+    { value: 'alfabetic-decreasing', label: 'Z-A' },
+    { value: 'date-increasing', label: 'Oldest' },
+    { value: 'date-decreasing', label: 'Newest' }
+  ];
+
+  valueFilter = {
+    search: '',
+    sort: ''
+  };
 
   constructor(
     injector: Injector,
     @ViewChild('form', { static: true }) formView: ElementRef,
     private i18n: I18n,
+    private router: Router,
     private assetsTagService: AssetstagsService,
+    private modalService: HytModalConfService
   ) {
     super(injector, i18n, formView);
     this.formTitle = 'Project Tags';
+    this.showSave = false;
+    this.hideDelete = true;
+    this.projectId = +this.router.url.split('/')[2];
   }
 
   ngOnInit() {
+    this.filteringForm = this.formBuilder.group({});
+
     this.assetsTagService.findAllAssetTag().subscribe(
-      res => {
+      (res: AssetTag[]) => {
         this.allTags = res;
-        this.tagChoice = [...this.allTags];
-        this.filteredTags = this.tagCtrl.valueChanges.pipe(
-          startWith(null),
-          map((ser: string | null) => ser ? this._filter(ser) : this.tagChoice.slice()));
+        this.filteredTags = [...this.allTags];
         this.tagStatus = TagStatus.Loaded;
       },
       err => {
@@ -71,73 +78,108 @@ export class TagsFormComponent extends ProjectFormEntity implements OnInit {
     );
   }
 
-  remove(tag: AssetTag): void {
-    const index = this.tags.indexOf(tag);
-    if (index >= 0) {
-      this.tags.splice(index, 1);
-      if (this.allTags.find(x => x.name === tag.name)) {
-        this.tagChoice.push(tag);
-        this.tagCtrl.setValue(null);
-      }
-      this.outTags();
+  tagCreated(tag: AssetTag) {
+    console.log(tag)
+    if (this.allTags.some(t => t.id === tag.id)) {
+      this.allTags.find(t => t.id === tag.id).name = tag.name;
+    } else {
+      this.allTags.push(tag);
     }
+    this.search();
   }
 
-  add(event: MatChipInputEvent): void {
-    const input = event.input;
-    const value = event.value;
-    if ((value || '').trim()) {
-      let assetTag: AssetTag;
-      if (this.tags.find(x => x.name === event.value))
-        return;
-      else if (this.allTags.some(x => x.name === event.value)) {
-        assetTag = this.allTags.find(x => x.name === event.value);
-        this.selected({ option: { value: assetTag } });
+  openTagModal(tag?: AssetTag) {
+    this.modalService.open('hyt-add-tag-modal', { projectId: this.projectId, tag });
+  }
+
+  delete(tag: AssetTag): void {
+    this.assetsTagService.deleteAssetTag(tag.id).subscribe(
+      res => {
+        this.allTags = this.allTags.filter(t => t.id !== tag.id);
+        this.search();
+      },
+      err => {
+        //TODO error modal
+      }
+    );
+  }
+
+  // filter/sort logic
+
+  onChangeInputSearch() {
+    this.valueFilter.search = this.filteringForm.value.textFilter;
+    this.search();
+  }
+
+  onChangeSelectSort() {
+    this.valueFilter.sort = this.filteringForm.value.sort;
+    this.sort();
+  }
+
+  search() {
+
+    if (this.valueFilter.search && this.valueFilter.search !== '') {
+      if (this.valueFilter.search.split('*').length > 18) {
+        this.filteredTags = [];
       } else {
-        assetTag = {
-          name: event.value,
-          owner: {
-            ownerResourceName: 'it.acsoftware.hyperiot.hproject',
-            ownerResourceId: this.project.id
-          },
-          entityVersion: 1
-        };
-        this.assetsTagService.saveAssetTag(assetTag).subscribe(
-          res => {
-            this.allTags.push(res);
-            this.tags.push(res);
-            this.outTags();
-          },
-          err => { }
-        );
+        const reg = new RegExp(this.valueFilter.search.replace(/[.+^${}()|[\]\\]/g, '\\$&').replace(/\*/g, '.+').replace(/\?/g, '.'), 'i');
+        this.filteredTags = this.allTags.filter(el => (el.name.match(reg)));
+        this.sort();
       }
+    } else {
+      this.filteredTags = [...this.allTags];
+      this.sort();
     }
-    if (input) {
-      input.value = '';
-    }
-    this.tagCtrl.setValue(null);
+
   }
 
+  sort() {
+    switch (this.valueFilter.sort) {
 
-  selected(event): void {
-    this.tags.push(event.option.value);
-    for (let k = 0; k < this.tagChoice.length; k++) {
-      if (this.tagChoice[k].name === event.option.value.name) {
-        this.tagChoice.splice(k, 1);
-      }
+      case 'none':
+        this.filteredTags.sort((a, b) => {
+          if (a.id > b.id) { return -1; }
+          if (a.id < b.id) { return 1; }
+          return 0;
+        });
+        break;
+
+      case 'alfabetic-increasing':
+        this.filteredTags.sort((a, b) => {
+          if (a.name.toLocaleLowerCase() < b.name.toLocaleLowerCase()) { return -1; }
+          if (a.name.toLocaleLowerCase() > b.name.toLocaleLowerCase()) { return 1; }
+          return 0;
+        });
+        break;
+
+      case 'alfabetic-decreasing':
+        this.filteredTags.sort((a, b) => {
+          if (a.name.toLocaleLowerCase() > b.name.toLocaleLowerCase()) { return -1; }
+          if (a.name.toLocaleLowerCase() < b.name.toLocaleLowerCase()) { return 1; }
+          return 0;
+        });
+        break;
+
+      case 'date-increasing':
+        this.filteredTags.sort((a, b) => {
+          if (a.id < b.id) { return -1; }
+          if (a.id > b.id) { return 1; }
+          return 0;
+        });
+        break;
+
+      case 'date-decreasing':
+        this.filteredTags.sort((a, b) => {
+          if (a.id > b.id) { return -1; }
+          if (a.id < b.id) { return 1; }
+          return 0;
+        });
+        break;
+
+      default:
+        break;
+
     }
-    this.outTags();
-    this.tagInput.nativeElement.value = '';
-    this.tagCtrl.setValue(null);
-  }
-
-  private _filter(value: string | AssetTag): AssetTag[] {
-    const filterValue: string = (typeof value === 'string') ? value.toLowerCase() : value.name.toLowerCase();
-    return this.tagChoice.filter(tag => tag.name.toLowerCase().includes(filterValue));
-  }
-
-  outTags() {
-    //  this.tagIds.emit(this.tags.map(t => t.id));
   }
 
 }

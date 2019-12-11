@@ -6,6 +6,8 @@ export abstract class HytModal implements OnInit, OnDestroy {
     @Input()
     id: string;
 
+    protected data: any;
+
     private element: any;
 
     protected viewContainer: ElementRef;
@@ -60,7 +62,8 @@ export abstract class HytModal implements OnInit, OnDestroy {
         this.element.remove();
     }
 
-    open(): void {
+    open(data?: any): void {
+        this.data = { ...data };
         this.element.classList.add('open');
         document.body.classList.add('hyt-modal-open');
     }

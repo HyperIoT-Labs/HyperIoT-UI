@@ -195,10 +195,8 @@ export class DeviceFormComponent extends ProjectFormEntity implements AfterViewI
   }
 
   setErrors(err) {
-    console.log(err);
 
     if (err.error && err.error.type) {
-      console.log(err.error.type)
       switch (err.error.type) {
         case 'it.acsoftware.hyperiot.base.exception.HyperIoTDuplicateEntityException': {
           this.validationError = [{ message: 'Unavaiable device name', field: 'hdevice-devicename', invalidValue: '' }]; // @I18N@
