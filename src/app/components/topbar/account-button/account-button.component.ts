@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'hyt-account-button',
   templateUrl: './account-button.component.html',
-  styleUrls: ['./account-button.component.scss']
+  styleUrls: ['./account-button.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class AccountButtonComponent implements OnInit {
 
