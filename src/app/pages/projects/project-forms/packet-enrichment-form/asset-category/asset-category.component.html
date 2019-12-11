@@ -1,4 +1,20 @@
 <span i18n="@@HYT_title_categories">HYT_title_categories</span>
-<!-- <input matInput placeholder="Cerca"> -->
-<hyt-tree-view-category [treeDataFlat]="categoriesFlatTree" (cbChange)="cbChange($event)" (cbAdd)="cbAdd($event)">
-</hyt-tree-view-category>
+
+<div *ngIf="categoryStatus==0">
+    Loading
+    <!--TODO (spinner?)-->
+    <!--@I18N@-->
+</div>
+
+<div class="category-tree" *ngIf="categoryStatus==1">
+    <hyt-tree-view-category [treeDataFlat]="categoriesFlatTree" mode="packet" (treeAction)="treeAction($event)">
+    </hyt-tree-view-category>
+</div>
+
+<div *ngIf="categoryStatus==-1">
+    Error loading category data
+    <!--TODO-->
+    <!--@I18N@-->
+</div>
+<hyt-add-cetegory-modal class="hyt-modal-general" id="hyt-add-cetegory-modal" (modalClose)="categoryCreated($event)">
+</hyt-add-cetegory-modal>
