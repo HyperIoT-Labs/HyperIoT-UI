@@ -17,21 +17,22 @@
         user-select:none;
 
         &.main-menu {
-            // background:#e4e4e4;
-            border-right:1px solid #e5e5e5;
+            // border-right:1px solid #e5e5e5;
+            border-right: 1px solid #074290;
             position:fixed;
             top:0px;
             bottom:0;
             height:100%;
             left:0;
-            // width:60px;
             z-index:1001;
-            background-color: #ffffff;
+            // background-color: #ffffff;
+            background-color: #1e58a5;
     
             ul {
                 padding-top: 65px;
                 overflow: hidden;
-                background: white;
+                // background: white;
+                background: #1e58a5;
                 -webkit-transition: width .1s ease-in-out;
                 -moz-transition: width .1s ease-in-out;
                 transition: width .1s ease-in-out;
@@ -44,7 +45,8 @@
                     width: 250px;
                     overflow: visible;
                     height: 100%;
-                    border-right: 1px solid #e5e5e5;
+                    // border-right: 1px solid #e5e5e5;
+                    border-right: 1px solid #0b5594;
                     -moz-box-shadow: -7px 0px 24px -4px #000;
                     -webkit-box-shadow: -7px 0px 24px -4px #000;
                     box-shadow: -7px 0px 24px -4px #000;
@@ -78,18 +80,24 @@
                 transition: width 0.1s ease-in-out;
 
                 &.selected {
-                    color:#0d59c5;
-                    border-bottom: solid 1px #17a4fa;
-                    background-color: #e6f0ff;
+                    // color:#0d59c5;
+                    // border-bottom: solid 1px #17a4fa;
+                    // background-color: #e6f0ff;
+                    border-bottom: solid 1px #ffffff;
+                    background-color: #003679;
                 }
 
                 &:hover:not(.selected) {
-                    border-color: #3b9aff;
-                    border-right: 1px solid #e5e5e5;
+                    // border-color: #3b9aff;
+                    // border-right: 1px solid #e5e5e5;
+                    
+                    // border-color: #264e84;
 
                     a {
-                        color: #398fd7;
-                        background-color: #ffffff;
+                        // color: #398fd7;
+                        // background-color: #ffffff;
+                        color: #f9f9f9;
+                        background-color: #4371ab;
                     }
                 }
 
@@ -102,12 +110,12 @@
                     display:table;
                     border-collapse:collapse;
                     border-spacing:0;
-                    color:#999;
                     font-family: arial;
                     font-size: 15px;
                     text-decoration:none;
                     font-family: 'Exo';
-                    color: #000000;
+                    // color: #000000;
+                    color: #ffffff;
 
                     // -webkit-transform:translateZ(0) scale(1,1);
 
