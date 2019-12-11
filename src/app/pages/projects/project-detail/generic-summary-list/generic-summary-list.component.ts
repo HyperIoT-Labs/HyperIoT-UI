@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
 
 export class SummaryList {
   title: string;
@@ -14,7 +14,8 @@ export class SummaryListItem {
 @Component({
   selector: 'hyt-generic-summary-list',
   templateUrl: './generic-summary-list.component.html',
-  styleUrls: ['./generic-summary-list.component.scss']
+  styleUrls: ['./generic-summary-list.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class GenericSummaryListComponent {
 
