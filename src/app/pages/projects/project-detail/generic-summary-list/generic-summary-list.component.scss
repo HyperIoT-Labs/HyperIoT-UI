@@ -30,7 +30,6 @@
 
     #container-table-elements {
 
-
         max-height: 341px;
         overflow-y: auto;
         padding-left: -15px;
@@ -41,6 +40,9 @@
 
 
         .single-row-table {
+
+            margin-right: -12px;
+            margin-left: -12px;
 
             .el-row-table {
                 padding: 5px 0px;
