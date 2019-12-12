@@ -24,11 +24,18 @@
             <!-- BEGIN TreeView -->
             <div [ngStyle]="{display: treeStatus == TreeStatus.Ready ? '' : 'none'}" class="treeview pb-2 flex-grow-1 flex-sm-grow-0 flex-fill">
                 <hyt-tree-view-project #treeView (nodeClick)="onNodeClick($event)"></hyt-tree-view-project>
+                
                 <div id="editInWizardContent">
-                    <hyt-button (clickFn)="goToProjectWizard()">
-                        <ng-container i18n="@@HYT_edit_in_wizard">HYT_edit_in_wizard</ng-container>
+
+                    <hyt-button 
+                        [color]="'hyt-base-default-white'" 
+                        (clickFn)="goToProjectWizard()"
+                    >
+                        <span class="hyt-icon icon-hyt_pencil"></span> <ng-container i18n="@@HYT_edit_in_wizard">HYT_edit_in_wizard</ng-container>
                     </hyt-button>
+
                 </div>
+
             </div>        
             <div *ngIf="treeStatus == TreeStatus.Loading || treeStatus == TreeStatus.LoadingComplete" class="treeview mt-2 d-flex flex-column align-items-center justify-content-center">
                 <h4 i18n="@@HYT_loading_project_tree">HYT_loading_project_tree</h4>
@@ -53,23 +60,28 @@
 
             <div class="mt-4 d-flex flex-row justify-content-between">
                 <hyt-button 
+                    [color]="'hyt-base-default-white'"
                     [ngClass]="{hidden: !currentEntity.showSave}"
                     id="save-btn"
                     (clickFn)="onSaveClick()" 
                     [isDisabled]="!currentEntity.isValid() || !currentEntity.isDirty()">
-                    <mat-icon class="md-primary">save</mat-icon>
+                    <!-- <mat-icon class="md-primary">save</mat-icon> -->
+                    <span class="hyt-icon icon-hyt_save"></span>
                     <span i18n="@@HYT_save">HYT_save</span>
                 </hyt-button>
 
                 <hyt-button 
+                    [color]="'hyt-base-default-white'"
                     [ngClass]="{hidden: currentEntity.hideDelete}"
                     id="delete-btn"
                     (clickFn)="onDeleteClick()">
-                    <mat-icon>delete</mat-icon>
+                    <!-- <mat-icon>delete</mat-icon> -->
+                    <span class="hyt-icon icon-hyt_trash"></span>
                     <span i18n="@@HYT_delete">HYT_delete</span>
                 </hyt-button>
 
                 <hyt-button 
+                    [color]="'hyt-base-default-white'"
                     [ngClass]="{hidden: !currentEntity.showCancel}"
                     id="cancel-btn"
                     (clickFn)="onCancelClick()">

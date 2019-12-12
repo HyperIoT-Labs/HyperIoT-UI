@@ -78,6 +78,7 @@
 
             #editInWizardContent{
                 text-align: center;
+                margin-top: 25px;
             }
             
         }
@@ -101,6 +102,35 @@
             padding-right: 10px;
             right: 0; top: -25px; bottom: 0;
             width: 240px;
+
+            #save-btn {
+
+                span {
+
+                    &.icon-hyt_save {
+
+                        font-size: 1.4em;
+
+                    }
+
+                }
+
+            }
+
+            #delete-btn {
+
+                span {
+
+                    &.icon-hyt_trash {
+
+                        font-size: 1.3em;
+
+                    }
+
+                }
+
+            }
+
         }
 
     }
