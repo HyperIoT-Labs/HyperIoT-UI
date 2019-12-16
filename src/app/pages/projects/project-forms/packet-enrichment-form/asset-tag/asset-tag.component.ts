@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild, EventEmitter, Output, Input } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { AssetTag, AssetstagsService, HProject } from '@hyperiot/core';
@@ -18,21 +18,24 @@ export enum TagStatus {
 })
 export class AssetTagComponent implements OnInit {
 
-  @Input() project: HProject;
+  @Input()
+  project: HProject;
 
-  selectedTags: number[] = [];
+  @Input()
+  selectedTags: number[];
+
+  originalTags = [];
 
   tagStatus: TagStatus = TagStatus.Default;
 
   tagCtrl = new FormControl();
   filteredTags: Observable<AssetTag[]>;
   tags: AssetTag[] = [];
-  allTags: AssetTag[] = [];
+  allTags: AssetTag[];
   tagChoice: AssetTag[] = [];
 
-  @ViewChild('tagInput', { static: false }) tagInput: ElementRef<HTMLInputElement>;
-
-  @Output() tagIds: EventEmitter<number[]> = new EventEmitter<number[]>();
+  @ViewChild('tagInput', { static: false })
+  tagInput: ElementRef<HTMLInputElement>;
 
   constructor(
     private assetsTagService: AssetstagsService,
@@ -46,6 +49,7 @@ export class AssetTagComponent implements OnInit {
         this.filteredTags = this.tagCtrl.valueChanges.pipe(
           startWith(null),
           map((ser: string | null) => ser ? this._filter(ser) : this.tagChoice.slice()));
+        this.fill();
         this.tagStatus = TagStatus.Loaded;
       },
       err => {
@@ -59,12 +63,10 @@ export class AssetTagComponent implements OnInit {
     const value = event.value;
 
     if ((value || '').trim()) {
-
       let assetTag: AssetTag;
-
-      if (this.tags.find(x => x.name === event.value))
+      if (this.tags.find(x => x.name === event.value)) {
         return;
-      else if (this.allTags.some(x => x.name === event.value)) {
+      } else if (this.allTags.some(x => x.name === event.value)) {
         assetTag = this.allTags.find(x => x.name === event.value);
         this.selected({ option: { value: assetTag } });
       } else {
@@ -80,13 +82,10 @@ export class AssetTagComponent implements OnInit {
           res => {
             this.allTags.push(res);
             this.tags.push(res);
-            this.outTags();
           },
           err => { }
         );
-
       }
-
     }
 
     if (input) {
@@ -104,18 +103,14 @@ export class AssetTagComponent implements OnInit {
         this.tagChoice.push(tag);
         this.tagCtrl.setValue(null);
       }
-      this.outTags();
+      this.selectedTags = this.tags.map(t => t.id);
     }
   }
 
   selected(event): void {
     this.tags.push(event.option.value);
-    for (let k = 0; k < this.tagChoice.length; k++) {
-      if (this.tagChoice[k].name === event.option.value.name) {
-        this.tagChoice.splice(k, 1);
-      }
-    }
-    this.outTags();
+    this.selectedTags = this.tags.map(t => t.id);
+    this.tagChoice = this.allTags.filter(x => !this.selectedTags.some(y => y === x.id));
     this.tagInput.nativeElement.value = '';
     this.tagCtrl.setValue(null);
   }
@@ -125,8 +120,20 @@ export class AssetTagComponent implements OnInit {
     return this.tagChoice.filter(tag => tag.name.toLowerCase().includes(filterValue));
   }
 
-  outTags() {
-    this.tagIds.emit(this.tags.map(t => t.id));
+  isDirty(): boolean {
+    return this.allTags ? JSON.stringify(this.originalTags.sort()) !== JSON.stringify(this.selectedTags.sort()) : false;
+  }
+
+  originalValueUpdate() {
+    this.originalTags = [...this.selectedTags];
+  }
+
+  fill() {
+    this.tags = this.allTags.filter(x => this.selectedTags.some(y => y === x.id));
+    this.selectedTags = this.tags.map(t => t.id);
+    this.tagChoice = this.allTags.filter(x => !this.selectedTags.some(y => y === x.id));
+    this.tagCtrl.setValue(null);
+    this.originalValueUpdate();
   }
 
 }

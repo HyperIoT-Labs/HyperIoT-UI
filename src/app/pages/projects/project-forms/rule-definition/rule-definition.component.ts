@@ -275,7 +275,7 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
             if (this.ruleForms[k].compareWith) {
               this.ruleForms[k].form.get('ruleValue').setValue(ruleDef[k].value);
             }
-            this.ruleForms[k].form.get('ruleJoin').setValue(' ' + ruleDef[k].join + ' ');
+            this.ruleForms[k].form.get('ruleJoin').setValue((ruleDef[k].join) ? ' ' + ruleDef[k].join + ' ' : '');
             if (k === this.ruleForms.length - 1) {
               this.originalValueUpdate();
               this.updating = false;

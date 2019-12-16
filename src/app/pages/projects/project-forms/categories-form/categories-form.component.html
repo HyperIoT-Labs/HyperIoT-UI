@@ -16,8 +16,8 @@
     </div>
 
     <div class="category-tree" *ngIf="categoryStatus==1">
-        <hyt-tree-view-category [treeDataFlat]="categoriesFlatTree" mode="project"
-            (treeAction)="treeAction($event)">
+        <hyt-tree-view-category [treeDataFlat]="categoriesFlatTree" mode="project" [addFunction]="addFunction"
+            [removeFunction]="removeFunction" [editFunction]="editFunction">
         </hyt-tree-view-category>
     </div>
 
@@ -29,5 +29,5 @@
 
 </div>
 
-<hyt-add-cetegory-modal class="hyt-modal-general" id="hyt-add-cetegory-modal" (modalClose)="categoryCreated($event)">
-</hyt-add-cetegory-modal>
+<!-- <hyt-add-cetegory-modal class="hyt-modal-general" id="hyt-add-cetegory-modal" (modalClose)="categoryCreated($event)">
+</hyt-add-cetegory-modal> -->
