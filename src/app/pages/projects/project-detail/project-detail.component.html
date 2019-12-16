@@ -8,10 +8,146 @@
 
     </div> <!-- End of Breadcrumb -->
 
+    <div id="container-general-form" class="container-fluid">
+
+        <div class="row">
+
+            <div id="container-project-treeview" class="col-2">
+
+                <a 
+                    class="back-btn d-flex flex-column align-items-center justify-content-center"
+                    [routerLink]="['/projects']"
+                >
+                    <span class="icon-hyt_caretDown hyt-icon-back"></span>
+
+                </a>
+                
+                <!-- BEGIN TreeView -->
+                <div [ngStyle]="{display: treeStatus == TreeStatus.Ready ? '' : 'none'}" class="treeview pb-2 flex-grow-1 flex-sm-grow-0 flex-fill">
+                    <hyt-tree-view-project #treeView (nodeClick)="onNodeClick($event)"></hyt-tree-view-project>
+                    
+                    <div id="editInWizardContent">
+
+                        <hyt-button 
+                            [color]="'hyt-base-default-white'" 
+                            (clickFn)="goToProjectWizard()"
+                        >
+                            <span class="hyt-icon icon-hyt_pencil"></span> <ng-container i18n="@@HYT_edit_in_wizard">HYT_edit_in_wizard</ng-container>
+                        </hyt-button>
+
+                    </div>
+
+                </div>        
+                <div *ngIf="treeStatus == TreeStatus.Loading || treeStatus == TreeStatus.LoadingComplete" class="treeview mt-2 d-flex flex-column align-items-center justify-content-center">
+                    <h4 i18n="@@HYT_loading_project_tree">HYT_loading_project_tree</h4>
+                    <mat-spinner></mat-spinner>
+                </div>
+                <div *ngIf="treeStatus == TreeStatus.Error" class="mt-2 treeview">
+                    <h4 i18n="@@HYT_error_project_tree">HYT_error_project_tree</h4>
+                </div>
+                <!-- END TreeView -->
+
+            </div> <!-- ------------------- End Container TREE ------------------- style="background-color: aliceblue;" -->
+
+            <div id="container-project-content" class="col-8">
+                
+                <div class="content">
+                    <h2 id="form-title" *ngIf="currentEntity && currentEntity.formTitle">{{ currentEntity.formTitle }}</h2>
+                    <router-outlet
+                        name="projectDetails"
+                        id="projectDetails"
+                        (attach)="onActivate($event)"
+                        (activate)="onActivate($event)"
+                    ></router-outlet>
+                </div>
+
+            </div> <!-- ------------------- End Container CONTENT ------------------- style="background-color: antiquewhite;" -->
+
+            <div id="container-project-info-action" class="col-2">
+
+                <div *ngIf="currentEntity" class="row side-bar">
+                    
+                    <div id="container-action-btn" class="col-12">
+
+                        <hyt-button 
+                            [color]="'hyt-base-default-white'"
+                            [ngClass]="{hidden: !currentEntity.showSave}"
+                            id="save-btn"
+                            (clickFn)="onSaveClick()" 
+                            [isDisabled]="!currentEntity.isValid() || !currentEntity.isDirty()">
+                            <!-- <mat-icon class="md-primary">save</mat-icon> -->
+                            <span class="hyt-icon icon-hyt_save"></span>
+                            <span i18n="@@HYT_save">HYT_save</span>
+                        </hyt-button>
+        
+                        <hyt-button 
+                            [color]="'hyt-base-default-white'"
+                            [ngClass]="currentEntity.hideDelete ? 'hidden' : 'last-btn'"
+                            id="delete-btn"
+                            (clickFn)="onDeleteClick()">
+                            <!-- <mat-icon>delete</mat-icon> -->
+                            <span class="hyt-icon icon-hyt_trash"></span>
+                            <span i18n="@@HYT_delete">HYT_delete</span>
+                        </hyt-button>
+        
+                        <hyt-button 
+                            [color]="'hyt-base-default-white'"
+                            [ngClass]="!currentEntity.showCancel ? 'hidden' : 'last-btn' "
+                            id="cancel-btn"
+                            (clickFn)="onCancelClick()">
+                            <!-- <mat-icon>undo</mat-icon> -->
+                            <span class="hyt-icon icon-hyt_arrowLeft"></span>
+                            <span i18n="@@HYT_cancel">HYT_cancel</span>
+                        </hyt-button>
+        
+                    </div> <!-- END BTN -->
+
+                    <div *ngIf="hintVisible" id="container-hint" class="col-12">
+
+                        <div class="info-message">
+                            <span class="text">{{hintMessage}}</span>
+                            <mat-icon class="">info</mat-icon> <!-- mt-2 mr-2 -->
+                        </div> 
+
+                    </div> <!-- END HINT -->
+
+                    <div *ngIf="currentEntity.summaryList" id="container-summary-list" class="col-12">
+
+                        <hyt-generic-summary-list
+                            [ngClass]="{ disabled: currentEntity.isDirty() }"
+                            [summaryList]="currentEntity.summaryList"
+                            (menuAction)="onSummaryMenuClick($event)"
+                        ></hyt-generic-summary-list> 
+
+                    </div> <!-- END TABLE -->
+        
+        
+                </div>
+
+            </div> <!-- ------------------- End Container ACTION BTN ------------------- style="background-color: beige;" -->
+
+        </div>
+
+    </div> <!-- END CONTAINER GENERAL FORM -->
+
+</div> <!-- END CONTAINER SINGLE PROJECT -->
+
+
+
+<!-- <div id="single-project-page">
+
+    <div class="header d-flex flex-row justify-content-stretch">
+        
+        <div class="breadcrumb flex-grow-1">
+            <span class="hyt-icon icon-hyt_projectSolo"></span> <a [routerLink]="['/']">Home</a> > <strong>Project</strong> 
+        </div>
+
+    </div> <!-- End of Breadcrumb --
+
     <div id="container-general-form" class="d-flex flex-row align-items-start justify-content-stretch">
         
         <div class="flex-grow-1 d-flex flex-row align-items-start justify-content-stretch">
-            <!--flex-wrap removed to fix enrichment-packet-form position-->
+            <!--flex-wrap removed to fix enrichment-packet-form position--
 
             <a 
                 class="back-btn d-flex flex-column align-items-center justify-content-center"
@@ -21,14 +157,21 @@
 
             </a>
 
-            <!-- BEGIN TreeView -->
+            <!-- BEGIN TreeView --
             <div [ngStyle]="{display: treeStatus == TreeStatus.Ready ? '' : 'none'}" class="treeview pb-2 flex-grow-1 flex-sm-grow-0 flex-fill">
                 <hyt-tree-view-project #treeView (nodeClick)="onNodeClick($event)"></hyt-tree-view-project>
+                
                 <div id="editInWizardContent">
-                    <hyt-button (clickFn)="goToProjectWizard()">
-                        <ng-container i18n="@@HYT_edit_in_wizard">HYT_edit_in_wizard</ng-container>
+
+                    <hyt-button 
+                        [color]="'hyt-base-default-white'" 
+                        (clickFn)="goToProjectWizard()"
+                    >
+                        <span class="hyt-icon icon-hyt_pencil"></span> <ng-container i18n="@@HYT_edit_in_wizard">HYT_edit_in_wizard</ng-container>
                     </hyt-button>
+
                 </div>
+
             </div>        
             <div *ngIf="treeStatus == TreeStatus.Loading || treeStatus == TreeStatus.LoadingComplete" class="treeview mt-2 d-flex flex-column align-items-center justify-content-center">
                 <h4 i18n="@@HYT_loading_project_tree">HYT_loading_project_tree</h4>
@@ -37,14 +180,15 @@
             <div *ngIf="treeStatus == TreeStatus.Error" class="mt-2 treeview">
                 <h4 i18n="@@HYT_error_project_tree">HYT_error_project_tree</h4>
             </div>
-            <!-- END TreeView -->
+            <!-- END TreeView --
 
             <div class="content pl-4 pr-4 flex-grow-1">
                 <h2 id="form-title" *ngIf="currentEntity && currentEntity.formTitle">{{ currentEntity.formTitle }}</h2>
                 <router-outlet
                     name="projectDetails"
                     (attach)="onActivate($event)"
-                    (activate)="onActivate($event)"></router-outlet>
+                    (activate)="onActivate($event)"
+                ></router-outlet>
             </div>
 
         </div>
@@ -53,23 +197,28 @@
 
             <div class="mt-4 d-flex flex-row justify-content-between">
                 <hyt-button 
+                    [color]="'hyt-base-default-white'"
                     [ngClass]="{hidden: !currentEntity.showSave}"
                     id="save-btn"
                     (clickFn)="onSaveClick()" 
                     [isDisabled]="!currentEntity.isValid() || !currentEntity.isDirty()">
-                    <mat-icon class="md-primary">save</mat-icon>
+                    <!-- <mat-icon class="md-primary">save</mat-icon> --
+                    <span class="hyt-icon icon-hyt_save"></span>
                     <span i18n="@@HYT_save">HYT_save</span>
                 </hyt-button>
 
                 <hyt-button 
+                    [color]="'hyt-base-default-white'"
                     [ngClass]="{hidden: currentEntity.hideDelete}"
                     id="delete-btn"
                     (clickFn)="onDeleteClick()">
-                    <mat-icon>delete</mat-icon>
+                    <!-- <mat-icon>delete</mat-icon> --
+                    <span class="hyt-icon icon-hyt_trash"></span>
                     <span i18n="@@HYT_delete">HYT_delete</span>
                 </hyt-button>
 
                 <hyt-button 
+                    [color]="'hyt-base-default-white'"
                     [ngClass]="{hidden: !currentEntity.showCancel}"
                     id="cancel-btn"
                     (clickFn)="onCancelClick()">
@@ -81,7 +230,7 @@
 
             <div *ngIf="hintVisible" class="info-message m-2 mt-4 d-flex flex-row"> 
                 <span class="text p-2 flex-grow-1">{{hintMessage}}</span>
-                <mat-icon class="">info</mat-icon> <!-- mt-2 mr-2 -->
+                <mat-icon class="">info</mat-icon> <!-- mt-2 mr-2 --
             </div>
 
             <hyt-generic-summary-list *ngIf="currentEntity.summaryList"
@@ -93,4 +242,4 @@
 
     </div>
 
-</div>
+</div> -->

@@ -8,6 +8,25 @@
 @import "../../../node_modules/bootstrap/scss/variables";
 @import "../../../node_modules/bootstrap/scss/mixins";
 
+/* OVERRIDE BOOTSTRAP BREAKPOINTS */
+
+$grid-breakpoints: (
+    xs: 0,
+    sm: 576px,
+    md: 768px,
+    lg: 992px,
+    xl: 1200px,
+    xxl: 1500px
+);
+
+$container-max-widths: (
+    sm: 540px,
+    md: 720px,
+    lg: 960px,
+    xl: 1140px,
+    xxl: 1210px
+);
+
 // Optional
 @import "../../../node_modules/bootstrap/scss/reboot";
 // @import "../../../node_modules/bootstrap/scss/type";

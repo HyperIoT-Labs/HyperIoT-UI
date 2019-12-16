@@ -123,13 +123,13 @@
 
           <div class="col-12">
 
-            <hyt-button [color]="'hyt-base-white'" class="toRight" *ngIf="currentForm" (clickFn)="onSaveClick($event)"
+            <hyt-button [color]="'hyt-base-default-white'" class="toRight" *ngIf="currentForm" (clickFn)="onSaveClick($event)"
             [isDisabled]="!currentForm.isValid() || !currentForm.isDirty() || currentForm.loadingStatus != 0">
               <ng-container *ngIf="currentForm && currentForm.isNew()" i18n="@@HYT_save">HYT_save</ng-container>
               <ng-container *ngIf="currentForm && !currentForm.isNew()" i18n="@@HYT_update">HYT_update</ng-container>
             </hyt-button>
 
-            <hyt-button [color]="'hyt-base-white'" class="toRight" *ngIf="currentForm && showCancel()" (clickFn)="onCancelClick($event)">
+            <hyt-button [color]="'hyt-base-default-white'" class="toRight" *ngIf="currentForm && showCancel()" (clickFn)="onCancelClick($event)">
               <ng-container i18n="@@HYT_cancel">HYT_cancel</ng-container>
             </hyt-button>
 
