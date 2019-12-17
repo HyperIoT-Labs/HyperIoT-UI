@@ -47,8 +47,11 @@
                         <img [src]="currentWidget.preView" width="100%">
                     </div>
                     <div>
-                        <star-rating [value]="currentWidget.avgRating || 2.5" checkedcolor="gold" uncheckedcolor="gray"
-                            size="32px" readonly="false" (rate)="onRate($event)" [ngClass]="{'mac-linux': classOS}">
+                        <star-rating 
+                            [value]="currentWidget.avgRating || 2.5" checkedcolor="gold" uncheckedcolor="gray"
+                            size="32px" readonly="false" (rate)="onRate($event)" 
+                            [ngClass]="{'mac': mac, 'linux': linux}"
+                        >
                         </star-rating> 
                     </div>
                     <label i18n="@@HYT_widget_info_type">HYT_widget_info_type</label>
