@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, OnDestroy, Injector } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnDestroy, Injector, ViewEncapsulation } from '@angular/core';
 import { WidgetsService, Widget } from '@hyperiot/core';
 import { KeyValue } from '@angular/common';
 import { HytModal } from 'src/app/services/hyt-modal';
@@ -25,7 +25,8 @@ interface WidgetClient {
 @Component({
   selector: 'hyt-add-widget-dialog',
   templateUrl: './add-widget-dialog.component.html',
-  styleUrls: ['./add-widget-dialog.component.scss']
+  styleUrls: ['./add-widget-dialog.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class AddWidgetDialogComponent extends HytModal implements OnInit, OnDestroy {
 
@@ -40,6 +41,9 @@ export class AddWidgetDialogComponent extends HytModal implements OnInit, OnDest
 
   dialogDataState = 0;
 
+  os: string;
+  classOS: boolean;
+
   constructor(
     injector: Injector,
     private widgetsService: WidgetsService
@@ -53,6 +57,14 @@ export class AddWidgetDialogComponent extends HytModal implements OnInit, OnDest
   open(): void {
     this.dialogDataState = 0;
     super.open();
+
+    this.os = navigator.platform;
+    console.log('New OS: ', this.os);
+    console.log('New OS: ', navigator);
+
+    let lowOS = this.os.toLocaleLowerCase();
+    this.classOS = lowOS.includes('mac') || lowOS.includes('linux');
+    console.log('Contiene: ', this.classOS);
 
     this.dialogDataState = 0;
     this.currentWidget = null;
@@ -87,6 +99,11 @@ export class AddWidgetDialogComponent extends HytModal implements OnInit, OnDest
         }
         this.onCategorySelect(this.widgetCategoryList.ALL);
         this.dialogDataState = 1;
+        
+        if(this.classOS){
+          // Add Class  
+        }
+
       },
       error => {
         this.dialogDataState = -1;
