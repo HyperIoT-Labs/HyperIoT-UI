@@ -77,26 +77,27 @@ export class AssetCategoryComponent implements OnInit {
     this.categoryIds.emit(this.selectedCategories);
   }
 
-  // addFunction: (node: TreeNodeCategory) => Observable<TreeNodeCategory> = (node) => {
-  // return new Observable(sub => {
-  //   const dialogRef = this.dialog.open(DeleteConfirmDialogComponent, {
-  //     data: { title: 'Delete item?', message: 'This operation cannot be undone.' }
-  //   });
-  //   dialogRef.afterClosed().subscribe((result) => {
-  //     if (result === 'delete') {
-  //       this.assetCategoriesService.deleteAssetCategory(node.id).subscribe(
-  //         res => {
-  //           sub.next(res);
-  //           sub.complete();
-  //         },
-  //         err => {
-  //           sub.error();
-  //         }
-  //       );
-  //     }
-  //   });
-  // });
-  // }
+  addFunction: (node: TreeNodeCategory) => Observable<TreeNodeCategory> = (node) => {
+    return null;
+    // return new Observable(sub => {
+    //   const dialogRef = this.dialog.open(DeleteConfirmDialogComponent, {
+    //     data: { title: 'Delete item?', message: 'This operation cannot be undone.' }
+    //   });
+    //   dialogRef.afterClosed().subscribe((result) => {
+    //     if (result === 'delete') {
+    //       this.assetCategoriesService.deleteAssetCategory(node.id).subscribe(
+    //         res => {
+    //           sub.next(res);
+    //           sub.complete();
+    //         },
+    //         err => {
+    //           sub.error();
+    //         }
+    //       );
+    //     }
+    //   });
+    // });
+  }
 
   removeFunction: (node: TreeNodeCategory) => Observable<TreeNodeCategory> = (node) => {
     return new Observable(sub => {
@@ -119,26 +120,27 @@ export class AssetCategoryComponent implements OnInit {
     });
   }
 
-  // editFunction: (node: TreeNodeCategory) => Observable<TreeNodeCategory> = (node) => {
-  // return new Observable(sub => {
-  //   const dialogRef = this.dialog.open(DeleteConfirmDialogComponent, {
-  //     data: { title: 'Delete item?', message: 'This operation cannot be undone.' }
-  //   });
-  //   dialogRef.afterClosed().subscribe((result) => {
-  //     if (result === 'delete') {
-  //       this.assetCategoriesService.deleteAssetCategory(node.id).subscribe(
-  //         res => {
-  //           sub.next(res);
-  //           sub.complete();
-  //         },
-  //         err => {
-  //           sub.error();
-  //         }
-  //       );
-  //     }
-  //   });
-  // });
-  // }
+  editFunction: (node: TreeNodeCategory) => Observable<TreeNodeCategory> = (node) => {
+    return null;
+    // return new Observable(sub => {
+    //   const dialogRef = this.dialog.open(DeleteConfirmDialogComponent, {
+    //     data: { title: 'Delete item?', message: 'This operation cannot be undone.' }
+    //   });
+    //   dialogRef.afterClosed().subscribe((result) => {
+    //     if (result === 'delete') {
+    //       this.assetCategoriesService.deleteAssetCategory(node.id).subscribe(
+    //         res => {
+    //           sub.next(res);
+    //           sub.complete();
+    //         },
+    //         err => {
+    //           sub.error();
+    //         }
+    //       );
+    //     }
+    //   });
+    // });
+  }
 
   isDirty(): boolean {
     return this.assetCategories ? JSON.stringify(this.originalCategories.sort()) !== JSON.stringify(this.selectedCategories.sort()) : false;

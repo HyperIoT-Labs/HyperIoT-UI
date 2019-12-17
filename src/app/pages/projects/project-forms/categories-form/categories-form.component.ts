@@ -71,7 +71,8 @@ export class CategoriesFormComponent extends ProjectFormEntity implements OnInit
     );
   }
 
-  // addFunction: (node: TreeNodeCategory) => Observable<TreeNodeCategory> = (node) => {
+  addFunction: (node: TreeNodeCategory) => Observable<TreeNodeCategory> = (node) => {
+    return null;
     // return new Observable(sub => {
     //   const dialogRef = this.dialog.open(DeleteConfirmDialogComponent, {
     //     data: { title: 'Delete item?', message: 'This operation cannot be undone.' }
@@ -90,7 +91,7 @@ export class CategoriesFormComponent extends ProjectFormEntity implements OnInit
     //     }
     //   });
     // });
-  // }
+  }
 
   removeFunction: (node: TreeNodeCategory) => Observable<TreeNodeCategory> = (node) => {
     return new Observable(sub => {
@@ -113,7 +114,8 @@ export class CategoriesFormComponent extends ProjectFormEntity implements OnInit
     });
   }
 
-  // editFunction: (node: TreeNodeCategory) => Observable<TreeNodeCategory> = (node) => {
+  editFunction: (node: TreeNodeCategory) => Observable<TreeNodeCategory> = (node) => {
+    return null;
     // return new Observable(sub => {
     //   const dialogRef = this.dialog.open(DeleteConfirmDialogComponent, {
     //     data: { title: 'Delete item?', message: 'This operation cannot be undone.' }
@@ -132,6 +134,6 @@ export class CategoriesFormComponent extends ProjectFormEntity implements OnInit
     //     }
     //   });
     // });
-  // }
+  }
 
 }

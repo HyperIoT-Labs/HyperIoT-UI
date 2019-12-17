@@ -33,6 +33,7 @@ import { MyTelInputComponent } from '../../test/my-tel-input/my-tel-input.compon
 import { DashboardComponent } from './dashboard.component';
 import { ConfirmRecordingActionComponent } from './modals/confirm-recording-action/confirm-recording-action.component';
 import { InfoRecordingActionComponent } from './modals/info-recording-action/info-recording-action.component';
+import { TimelineComponent } from './timeline/timeline.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { InfoRecordingActionComponent } from './modals/info-recording-action/inf
     MyTelInputComponent,
     DashboardComponent,
     ConfirmRecordingActionComponent,
-    InfoRecordingActionComponent
+    InfoRecordingActionComponent,
+    TimelineComponent
   ],
   imports: [
     CommonModule,
