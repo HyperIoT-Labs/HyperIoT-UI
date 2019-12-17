@@ -61,17 +61,19 @@
       >
 
         <hyt-asset-tag 
+          #assetTag
           *ngIf="enrichmentType=='AddTagRuleAction'" 
           [project]="project" 
           [packet]="packet"
-          (tagIds)="updateAssetTag($event)">
+          [selectedTags]="assetTags">
         </hyt-asset-tag>
 
-        <hyt-asset-category 
+        <hyt-asset-category
+          #assetCategory
           *ngIf="enrichmentType=='AddCategoryRuleAction'" 
           [project]="project" 
           [packet]="packet"
-          (categoryIds)="updateAssetCategory($event)">
+          [selectedCategories]="assetCategories">
         </hyt-asset-category>
         
       </div>
