@@ -11,7 +11,7 @@ export class TimelineComponent implements OnInit {
     { label: 'Minutes', value: '60' },
     { label: 'Hours', value: '3600' },
     { label: 'Days', value: '86400' },
-    { label: 'Minutes', value: '2.592.000‬' }
+    { label: 'Months', value: '2.592.000‬' }
   ];
 
   constructor() { }
