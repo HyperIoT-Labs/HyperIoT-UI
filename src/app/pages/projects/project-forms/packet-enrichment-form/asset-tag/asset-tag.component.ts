@@ -1,6 +1,6 @@
 import { Component, OnInit, ElementRef, ViewChild, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { AssetTag, AssetstagsService, HProject } from '@hyperiot/core';
 import { MatChipInputEvent } from '@angular/material';
 import { startWith, map } from 'rxjs/operators';
@@ -37,11 +37,21 @@ export class AssetTagComponent implements OnInit {
   @ViewChild('tagInput', { static: false })
   tagInput: ElementRef<HTMLInputElement>;
 
+  assetRequest: Subscription;
+
   constructor(
     private assetsTagService: AssetstagsService,
   ) { }
 
   ngOnInit() {
+    this.getAssetTags();
+  }
+
+  getAssetTags() {
+    this.tagStatus = TagStatus.Default;
+    if (this.assetRequest) {
+      this.assetRequest.unsubscribe();
+    }
     this.assetsTagService.findAllAssetTag().subscribe(
       res => {
         this.allTags = res;
@@ -121,7 +131,7 @@ export class AssetTagComponent implements OnInit {
   }
 
   isDirty(): boolean {
-    return this.allTags ? JSON.stringify(this.originalTags.sort()) !== JSON.stringify(this.selectedTags.sort()) : false;
+    return this.tagStatus === 1 ? JSON.stringify(this.originalTags.sort()) !== JSON.stringify(this.selectedTags.sort()) : false;
   }
 
   originalValueUpdate() {

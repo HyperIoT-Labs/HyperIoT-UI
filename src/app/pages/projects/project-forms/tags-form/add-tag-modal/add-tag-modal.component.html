@@ -1,4 +1,4 @@
-<div id="container-option-modal" class="hyt-modal">
+<div id="add-tag-modal" class="hyt-modal">
 
     <div class="hyt-modal-body">
 
@@ -16,7 +16,9 @@
                         [isRequired]="true" [injectedErrorMsg]="nameError" [fieldValue]="nameValue">
                     </hyt-input-text>
                     <!--@I18N-->
-                    <hyt-button type="submit" color="primary" [isDisabled]="notValid()">Add</hyt-button>
+                    <ng-container *ngIf="pageStatus == -2">{{nameError}}</ng-container>
+                    <hyt-button type="submit" color="primary" [isDisabled]="notValid() || pageStatus == 0">
+                        {{(data.mode=='add')?'Add':'Update'}}</hyt-button>
                     <!--@I18N-->
                     <ng-container *ngIf="pageStatus == 0">Loading</ng-container>
                     <!--TODO replace with spinner-->
@@ -27,5 +29,3 @@
         </div>
     </div>
 </div>
-
-<div class="hyt-modal-background"></div>

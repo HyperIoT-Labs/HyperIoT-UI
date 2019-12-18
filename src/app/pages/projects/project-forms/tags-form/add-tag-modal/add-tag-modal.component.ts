@@ -1,15 +1,16 @@
-import { Component, OnInit, Output, EventEmitter, Injector } from '@angular/core';
-import { HytModal } from 'src/app/services/hyt-modal';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { HytModal, HytModalService } from '@hyperiot/components';
 import { PageStatus } from 'src/app/pages/projects/models/pageStatus';
-import { AssetTag, AssetstagsService } from '@hyperiot/core';
+import { AssetstagsService } from '@hyperiot/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { HttpErrorHandlerService } from 'src/app/services/errorHandler/http-error-handler.service';
 
 @Component({
   selector: 'hyt-add-tag-modal',
   templateUrl: './add-tag-modal.component.html',
   styleUrls: ['./add-tag-modal.component.scss']
 })
-export class AddTagModalComponent extends HytModal implements OnInit {
+export class AddTagModalComponent extends HytModal implements OnInit, AfterViewInit {
 
   pageStatus: PageStatus = PageStatus.Standard;
 
@@ -22,38 +23,40 @@ export class AddTagModalComponent extends HytModal implements OnInit {
   resObserver = {
     next: (res) => {
       this.pageStatus = PageStatus.New;
-      this.modalClose.emit(res);
-      this.close();
+      this.close(res);
     },
     error: (err) => {
-      this.pageStatus = PageStatus.Error;
       this.setErrors(err);
     },
     complete: () => { }
   };
 
-  @Output()
-  modalClose: EventEmitter<AssetTag> = new EventEmitter<AssetTag>();
-
   constructor(
-    injector: Injector,
+    service: HytModalService,
     private assetTagService: AssetstagsService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private errorHandler: HttpErrorHandlerService
   ) {
-    super(injector);
+    super(service);
   }
 
   ngOnInit() {
-    super.ngOnInit();
-    //this.nameValue = this.data.tag.name;
-    // decommenta quando modale è a posto
+    if (this.data.mode === 'edit') {
+      this.nameValue = this.data.tag.name;
+    }
     this.tagForm = this.formBuilder.group({});
+  }
+
+  ngAfterViewInit(): void {
+    (document.querySelector('#add-tag-modal .hyt-input.mat-input-element') as HTMLElement).focus();
   }
 
   submitTag() {
     this.pageStatus = PageStatus.Loading;
     if (this.data.tag) {
       this.assetTagService.updateAssetTag({
+        id: this.data.tag.id,
+        owner: this.data.tag.owner,
         name: this.tagForm.value.name,
         entityVersion: this.data.tag.entityVersion
       }).subscribe(this.resObserver);
@@ -79,16 +82,17 @@ export class AddTagModalComponent extends HytModal implements OnInit {
               valid: false
             }
           });
+          this.pageStatus = PageStatus.Error;
           break;
         }
         default: {
-          //TODO handle generic errors
-          this.close();
+          this.nameError = this.errorHandler.handle(err)[0].message;
+          this.pageStatus = PageStatus.ErrorGeneric;
         }
       }
     } else {
-      //TODO handle generic errors
-      this.close();
+      this.nameError = this.errorHandler.handle(err)[0].message;
+      this.pageStatus = PageStatus.ErrorGeneric;
     }
   }
 

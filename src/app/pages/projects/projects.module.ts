@@ -103,6 +103,10 @@ import { AddCetegoryModalComponent } from './project-forms/categories-form/add-c
     MatInputModule,
     MatExpansionModule
   ],
+  entryComponents: [
+    AddTagModalComponent,
+    AddCetegoryModalComponent
+  ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
   ]
