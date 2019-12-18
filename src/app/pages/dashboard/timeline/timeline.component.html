@@ -1,8 +1,10 @@
 <!-- <div class="row">
     <div class="col-md-6">Timeline</div>
     <div class="col-md-6">
+        <input type="date" [(ngModel)]="startDate" name="startDate" />
+        <input type="date" [(ngModel)]="stopDate" name="stopDate" />
         <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
-            <mat-button-toggle *ngFor="let time of timeRange"></mat-button-toggle>
+            <mat-button-toggle *ngFor="let time of timeRange" [value]="time.value">{{time.label}}</mat-button-toggle>
         </mat-button-toggle-group>
     </div>
 </div> -->

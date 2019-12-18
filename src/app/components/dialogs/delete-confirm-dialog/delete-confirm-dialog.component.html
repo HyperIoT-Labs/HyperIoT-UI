@@ -3,11 +3,11 @@
     {{data.message}}
 </mat-dialog-content>
 <mat-dialog-actions class="d-flex flex-row justify-content-around">
-    <button color="primary" mat-button mat-dialog-close="cancel" class="m-2 btn-left">
+    <button color="primary" mat-button (click)="close('cancel')" class="m-2 btn-left">
         <mat-icon>arrow_back</mat-icon>
         <span>Cancel</span>
     </button>
-    <button defaultButton color="warn" mat-button mat-dialog-close="delete" class="m-2 btn-right">
+    <button defaultButton color="warn" mat-button (click)="close('delete')" class="m-2 btn-right">
         <mat-icon>delete</mat-icon>
         <span>Delete</span>
     </button>

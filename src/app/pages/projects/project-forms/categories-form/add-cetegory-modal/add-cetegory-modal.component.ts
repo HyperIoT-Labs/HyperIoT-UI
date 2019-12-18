@@ -1,15 +1,16 @@
-import { Component, OnInit, Output, EventEmitter, Injector } from '@angular/core';
-import { HytModal } from 'src/app/services/hyt-modal';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { HytModal, HytModalService } from '@hyperiot/components';
 import { PageStatus } from 'src/app/pages/projects/models/pageStatus';
-import { AssetCategory, AssetscategoriesService } from '@hyperiot/core';
+import { AssetscategoriesService } from '@hyperiot/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { HttpErrorHandlerService } from 'src/app/services/errorHandler/http-error-handler.service';
 
 @Component({
   selector: 'hyt-add-cetegory-modal',
   templateUrl: './add-cetegory-modal.component.html',
   styleUrls: ['./add-cetegory-modal.component.scss']
 })
-export class AddCetegoryModalComponent extends HytModal implements OnInit {
+export class AddCetegoryModalComponent extends HytModal implements OnInit, AfterViewInit {
 
   pageStatus: PageStatus = PageStatus.Standard;
 
@@ -22,32 +23,32 @@ export class AddCetegoryModalComponent extends HytModal implements OnInit {
   resObserver = {
     next: (res) => {
       this.pageStatus = PageStatus.New;
-      this.modalClose.emit(res);
-      this.close();
+      this.close(res);
     },
     error: (err) => {
-      this.pageStatus = PageStatus.Error;
       this.setErrors(err);
     },
     complete: () => { }
   };
 
-  @Output()
-  modalClose: EventEmitter<AssetCategory> = new EventEmitter<AssetCategory>();
-
   constructor(
-    injector: Injector,
+    service: HytModalService,
     private assetCategoryService: AssetscategoriesService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private errorHandler: HttpErrorHandlerService
   ) {
-    super(injector);
+    super(service);
   }
 
   ngOnInit() {
-    super.ngOnInit();
-    //this.nameValue = this.data.category.name;
-    // decommenta quando modale è a posto
+    if (this.data.mode === 'edit') {
+      this.nameValue = this.data.category.name;
+    }
     this.categoryForm = this.formBuilder.group({});
+  }
+
+  ngAfterViewInit(): void {
+    (document.querySelector('#add-category-modal .hyt-input.mat-input-element') as HTMLElement).focus();
   }
 
   submitCategory() {
@@ -56,11 +57,7 @@ export class AddCetegoryModalComponent extends HytModal implements OnInit {
       this.assetCategoryService.updateAssetCategory({
         id: this.data.category.id,
         name: this.categoryForm.value.name,
-        owner: {
-          ownerResourceName: 'it.acsoftware.hyperiot.hproject',
-          ownerResourceId: this.data.projectId
-        },
-        // parent: this.data.category ? this.data.category : null,
+        owner: this.data.category.owner,
         entityVersion: this.data.category.entityVersion
       }).subscribe(this.resObserver);
     } else {
@@ -86,16 +83,17 @@ export class AddCetegoryModalComponent extends HytModal implements OnInit {
               valid: false
             }
           });
+          this.pageStatus = PageStatus.Error;
           break;
         }
         default: {
-          //TODO handle generic errors
-          this.close();
+          this.nameError = this.errorHandler.handle(err)[0].message;
+          this.pageStatus = PageStatus.ErrorGeneric;
         }
       }
     } else {
-      //TODO handle generic errors
-      this.close();
+      this.nameError = this.errorHandler.handle(err)[0].message;
+      this.pageStatus = PageStatus.ErrorGeneric;
     }
   }
 

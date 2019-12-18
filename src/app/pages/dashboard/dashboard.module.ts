@@ -1,39 +1,34 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
-
 import { CommonModule } from '@angular/common';
-
-import { MatIconModule } from '@angular/material/icon';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSelectModule } from '@angular/material/select';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material';
-
-import { RatingModule } from 'ng-starrating';
-
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSelectModule } from '@angular/material/select';
+import { RouterModule } from '@angular/router';
 import { HyperiotComponentsModule } from '@hyperiot/components';
-
-import { WidgetsLayoutComponent } from './widgets-layout/widgets-layout.component';
-import { DynamicWidgetComponent } from './dynamic-widget/dynamic-widget.component';
-import { GridsterModule } from 'angular-gridster2';
 import { WidgetsModule } from '@hyperiot/widgets';
-import { DashboardConfigService } from './dashboard-config.service';
+import { GridsterModule } from 'angular-gridster2';
+import { RatingModule } from 'ng-starrating';
+import { MyTelInputComponent } from '../../test/my-tel-input/my-tel-input.component';
 import { AddWidgetDialogComponent } from './add-widget-dialog/add-widget-dialog.component';
-import { WidgetSettingsDialogComponent } from './widget-settings-dialog/widget-settings-dialog.component';
+import { DashboardConfigService } from './dashboard-config.service';
 import { DashboardViewComponent } from './dashboard-view/dashboard-view.component';
+import { DashboardComponent } from './dashboard.component';
 import { DashboardsListComponent } from './dashboards-list/dashboards-list.component';
+import { DynamicWidgetComponent } from './dynamic-widget/dynamic-widget.component';
+import { ConfirmRecordingActionComponent } from './modals/confirm-recording-action/confirm-recording-action.component';
+import { InfoRecordingActionComponent } from './modals/info-recording-action/info-recording-action.component';
+import { TimelineComponent } from './timeline/timeline.component';
 import { EventsLogSettingsComponent } from './widget-settings-dialog/events-log-settings/events-log-settings.component';
 import { PacketSelectComponent } from './widget-settings-dialog/packet-select/packet-select.component';
 import { SensorValueSettingsComponent } from './widget-settings-dialog/sensor-value-settings/sensor-value-settings.component';
 import { StatsChartSettingsComponent } from './widget-settings-dialog/stats-chart-settings/stats-chart-settings.component';
 import { TextLabelSettingsComponent } from './widget-settings-dialog/text-label-settings/text-label-settings.component';
 import { TimeChartSettingsComponent } from './widget-settings-dialog/time-chart-settings/time-chart-settings.component';
-
-import { MyTelInputComponent } from '../../test/my-tel-input/my-tel-input.component';
-import { DashboardComponent } from './dashboard.component';
-import { ConfirmRecordingActionComponent } from './modals/confirm-recording-action/confirm-recording-action.component';
-import { InfoRecordingActionComponent } from './modals/info-recording-action/info-recording-action.component';
-import { TimelineComponent } from './timeline/timeline.component';
+import { WidgetSettingsDialogComponent } from './widget-settings-dialog/widget-settings-dialog.component';
+import { WidgetsLayoutComponent } from './widgets-layout/widgets-layout.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +62,8 @@ import { TimelineComponent } from './timeline/timeline.component';
     WidgetsModule,
     MatFormFieldModule,
     MatInputModule,
-    MatSelectModule
+    MatSelectModule,
+    MatButtonToggleModule
   ],
   providers: [
     DashboardConfigService

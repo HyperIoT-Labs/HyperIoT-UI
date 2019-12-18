@@ -48,7 +48,7 @@
           </div>
 
           <div class="col-6">
-            <hyt-button mat-mini-fab (click)="openTagModal()">
+            <hyt-button mat-mini-fab (click)="addTagModal()">
               Add Tag <span class="hyt-icon icon-hyt_plus"></span>
             </hyt-button>
             <!--@I18N@-->
@@ -66,7 +66,7 @@
 
         <hyt-tag-list>
           <hyt-tag *ngFor="let tag of filteredTags" [selectable]="true" [selected]="true" [removable]="true"
-            [editable]="true" (removed)="delete(tag)" (edited)="openTagModal(tag)" [value]="tag.name">
+            [editable]="true" (removed)="delete(tag)" (edited)="editTagModal(tag)" [value]="tag.name">
           </hyt-tag>
         </hyt-tag-list>
       </div>
@@ -81,6 +81,3 @@
   </div>
 
 </div>
-
-<hyt-add-tag-modal class="hyt-modal-general" id="hyt-add-tag-modal" (modalClose)="tagCreated($event)">
-</hyt-add-tag-modal>

@@ -1,14 +1,14 @@
-import { Component, OnInit, ViewChild, ElementRef, OnDestroy, Injector, ViewEncapsulation } from '@angular/core';
-import { HPacket, Rule, RulesService, HpacketsService, HProject } from '@hyperiot/core';
+import { Component, ElementRef, Injector, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { SelectOption } from '@hyperiot/components';
-import { RuleDefinitionComponent } from '../rule-definition/rule-definition.component';
-// TODO: find a bettere placement for PageStatusEnum
-import { ProjectFormEntity, LoadingStatusEnum } from '../project-form-entity';
-import { Subscription, Observable } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SummaryListItem } from '../../project-detail/generic-summary-list/generic-summary-list.component';
+import { SelectOption } from '@hyperiot/components';
+import { HPacket, HpacketsService, HProject, Rule, RulesService } from '@hyperiot/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
+import { Observable, Subscription } from 'rxjs';
+import { SummaryListItem } from '../../project-detail/generic-summary-list/generic-summary-list.component';
+// TODO: find a bettere placement for PageStatusEnum
+import { LoadingStatusEnum, ProjectFormEntity } from '../project-form-entity';
+import { RuleDefinitionComponent } from '../rule-definition/rule-definition.component';
 import { AssetCategoryComponent } from './asset-category/asset-category.component';
 import { AssetTagComponent } from './asset-tag/asset-tag.component';
 
@@ -105,14 +105,14 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
         if (this.enrichmentType === 'AddCategoryRuleAction') {
           if (this.assetCategoryComponent) {
             this.assetCategoryComponent.selectedCategories = JSON.parse(type) ? JSON.parse(type).categoryIds : null;
-            this.assetCategoryComponent.flatCategories();
+            this.assetCategoryComponent.getAssetCategories();
           } else {
             this.assetCategories = JSON.parse(type) ? JSON.parse(type).categoryIds : null;
           }
         } else if (this.enrichmentType === 'AddTagRuleAction') {
           if (this.assetTagComponent) {
             this.assetTagComponent.selectedTags = JSON.parse(type) ? JSON.parse(type).tagIds : null;
-            this.assetTagComponent.fill()
+            this.assetTagComponent.getAssetTags();
           } else {
             this.assetTags = JSON.parse(type) ? JSON.parse(type).tagIds : null;
           }
