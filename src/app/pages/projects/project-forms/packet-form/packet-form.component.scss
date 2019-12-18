@@ -1,4 +1,5 @@
 #container-packet-form {
+
     &.container {
         position: relative;
     }
@@ -15,6 +16,57 @@
                 #fpack-col-mqtt-topic {
                     padding-top: 15px;
                 }
+
+                hyt-input-text {
+
+                    mat-form-field {
+
+                        font-family: 'Exo';
+
+                    }
+
+                }
+
+                hyt-select {
+
+                    mat-form-field {
+
+                        width: 100%;
+
+                        mat-select {
+
+                            font-family: 'Exo';
+
+                        }
+
+                    }
+
+                }
+
+                hyt-radio-button {
+
+                    mat-radio-group {
+
+                        mat-radio-button {
+
+                            &.mat-radio-button {
+
+                                font-family: 'Exo';
+
+                                .mat-radio-label-content {
+
+                                    line-height: 27px;
+
+                                }
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
             }
 
             label {
@@ -75,6 +127,16 @@
         }
     }
     
+
+}
+
+mat-option {
+
+    &.mat-option {
+
+        font-family: 'Exo';
+
+    } 
 
 }
 

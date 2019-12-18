@@ -28,13 +28,20 @@
                     justify-content: center;
 
                     &#ffield-col-enrich-name {
+
                         hyt-input-text { 
                             flex-grow: 1;
                         }
+
                     }
 
                     &#ffield-col-enrich-rules {
                         text-align: center;
+
+                        hyt-select {
+                            flex-grow: 1;
+                        }
+
                     }
 
                     &#ffield-col-enrich-tag-cat {
@@ -100,6 +107,80 @@
                     }
 
                 }
+
+                hyt-input-text,
+                hyt-text-area {
+
+                    mat-form-field {
+
+                        font-family: 'Exo';
+
+                    }
+
+                }
+
+                hyt-select {
+
+                    mat-form-field {
+
+                        width: 100%;
+
+                        mat-select {
+
+                            font-family: 'Exo';
+
+                        }
+
+                        label {
+
+                            &.mat-form-field-label {
+
+                                font-family: 'Exo';
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
+                hyt-asset-tag {
+
+                    flex-grow: 1;
+
+                    mat-form-field {
+
+                        width: 100%;
+
+                        label {
+
+                            &.mat-form-field-label {
+
+                                font-family: 'Exo';
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
+                hyt-radio-button {
+
+                    mat-radio-group {
+
+                        mat-radio-button {
+
+                            font-family: 'Exo';
+
+                        }
+
+                    }
+
+                }
+
             }
 
         }
@@ -131,9 +212,6 @@
             margin-bottom: 5px;
             max-height: 178px;
             width: auto;
-            // animation-name: pulses;
-            // animation-duration: 1.5s;
-            // animation-iteration-count: infinite;
         }
         
         h4 {
@@ -150,4 +228,14 @@
 
 .hidden {
     display: none;
+}
+
+mat-option {
+
+    &.mat-option {
+
+        font-family: 'Exo';
+
+    } 
+
 }

@@ -60,10 +60,9 @@ export class AddWidgetDialogComponent extends HytModal implements OnInit, OnDest
     super.open();
 
     this.os = navigator.platform;
-    console.log('New OS: ', this.os);
-    console.log('New OS: ', navigator);
 
     let lowOS = this.os.toLocaleLowerCase();
+    
     if(lowOS.includes('mac')) {
       this.mac = true;
     }else if(lowOS.includes('linux')) {

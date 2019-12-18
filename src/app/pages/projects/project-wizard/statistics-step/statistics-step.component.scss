@@ -18,10 +18,56 @@
                     text-align: center;
                 }
 
+                hyt-input-text {
+
+                    mat-form-field {
+
+                        font-family: 'Exo';
+
+                    }
+
+                }
+
+                hyt-select {
+
+                    mat-form-field {
+
+                        width: 100%;
+
+                        mat-select {
+
+                            font-family: 'Exo';
+
+                        }
+
+                        label {
+
+                            &.mat-form-field-label {
+
+                                font-family: 'Exo';
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
             }
 
         }
 
     }
+
+}
+
+mat-option {
+
+    &.mat-option {
+
+        font-family: 'Exo';
+
+    } 
 
 }

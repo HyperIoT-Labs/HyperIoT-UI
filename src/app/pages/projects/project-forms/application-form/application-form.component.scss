@@ -18,6 +18,29 @@
     
                 }
 
+                hyt-input-text,
+                hyt-text-area {
+                    
+                    mat-form-field {
+                        font-family: 'Exo';
+                    }
+    
+                }
+
+                hyt-text-area {
+                    
+                    mat-form-field {
+                        
+                        textarea {
+
+                            min-height: 173px;
+
+                        }
+
+                    }
+    
+                }
+
                 #fdev-col-desc {
                     padding-top: 18px;
 

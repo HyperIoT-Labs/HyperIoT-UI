@@ -2,16 +2,50 @@
     padding-top: 35px;
 
     form {
+
         .form-group {
+
             &.row {
+
                 margin-bottom: 15px;
 
                 #ffield-col-sel-dev,
                 #ffield-col-sel-pack {
+
                     text-align: center;
+
                 }
+
+                hyt-select {
+
+                    mat-form-field {
+            
+                        width: 100%;
+            
+                        mat-select {
+            
+                            font-family: 'Exo';
+            
+                        }
+
+                        label {
+
+                            &.mat-form-field-label {
+
+                                font-family: 'Exo';
+
+                            }
+
+                        }
+            
+                    }
+            
+                }
+
             }
+
         }
+
     }
 
 }
