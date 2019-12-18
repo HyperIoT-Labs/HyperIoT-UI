@@ -41,8 +41,9 @@ export class AddWidgetDialogComponent extends HytModal implements OnInit, OnDest
 
   dialogDataState = 0;
 
-  os: string;
-  classOS: boolean;
+  os: string = '';
+  mac: boolean = false;
+  linux: boolean = false;
 
   constructor(
     injector: Injector,
@@ -63,8 +64,11 @@ export class AddWidgetDialogComponent extends HytModal implements OnInit, OnDest
     console.log('New OS: ', navigator);
 
     let lowOS = this.os.toLocaleLowerCase();
-    this.classOS = lowOS.includes('mac') || lowOS.includes('linux');
-    console.log('Contiene: ', this.classOS);
+    if(lowOS.includes('mac')) {
+      this.mac = true;
+    }else if(lowOS.includes('linux')) {
+      this.linux = true;
+    }
 
     this.dialogDataState = 0;
     this.currentWidget = null;
@@ -99,10 +103,6 @@ export class AddWidgetDialogComponent extends HytModal implements OnInit, OnDest
         }
         this.onCategorySelect(this.widgetCategoryList.ALL);
         this.dialogDataState = 1;
-        
-        if(this.classOS){
-          // Add Class  
-        }
 
       },
       error => {

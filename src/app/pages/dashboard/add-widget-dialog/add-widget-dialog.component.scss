@@ -329,11 +329,20 @@
     
                 star-rating {
 
-                    &.mac-linux {
+                    &.mac {
 
                         .star.half:after {
                             width: 16px;
                             margin-left: -32px;
+                        }
+
+                    }
+
+                    &.linux {
+
+                        .star.half:after {
+                            width: 14px;
+                            margin-left: -29px;
                         }
 
                     }
