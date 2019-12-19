@@ -1,4 +1,4 @@
-<div id="container-category-form" class="container">
+<div id="container-category-form" class="container-fluid">
 
     <div class="category-text">
         Lorem ipsum dolor sit amet, consectetur adipisci elit, sed do eiusmod tempor incidunt ut labore et dolore magna
@@ -7,23 +7,28 @@
         Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
     </div>
 
-    <hr>
-
-    <div *ngIf="categoryStatus==0">
-        Loading
-        <!--TODO (spinner?)-->
+    <div id="container-loading-cat" *ngIf="categoryStatus==0">
+        
+        <span class="text-loading">Loading Categories</span>
+        <div class="loader"></div>
         <!--@I18N@-->
     </div>
 
-    <div class="category-tree" *ngIf="categoryStatus==1">
-        <hyt-tree-view-category [treeDataFlat]="categoriesFlatTree" mode="project" [addFunction]="addFunction"
-            [removeFunction]="removeFunction" [editFunction]="editFunction">
-        </hyt-tree-view-category>
+    <div class="row-categories row" *ngIf="categoryStatus==1">
+        <div class="col-8 offset-2 category-tree">
+
+            <hyt-tree-view-category [treeDataFlat]="categoriesFlatTree" mode="project" [addFunction]="addFunction"
+                [removeFunction]="removeFunction" [editFunction]="editFunction">
+            </hyt-tree-view-category>
+
+        </div>
     </div>
 
-    <div *ngIf="categoryStatus==-1">
-        Error loading category data
-        <!--TODO-->
+    
+
+    <div id="container-error-cat" *ngIf="categoryStatus==-1">
+        
+        <span class="text-error">Error loading category data</span>
         <!--@I18N@-->
     </div>
 

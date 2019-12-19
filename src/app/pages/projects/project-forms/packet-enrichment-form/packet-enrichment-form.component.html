@@ -1,10 +1,20 @@
 <div id="container-enrichment-form" class="container">
 
+  <!-- <p class="subtitle-section">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer rutrum magna lacus, a lacinia orci feugiat non. Quisque pharetra quam vitae pharetra euismod. Curabitur sodales eget elit id aliquam. In hac habitasse platea dictumst. Nam in dignissim leo. Pellentesque in lorem at justo mollis volutpat. Nam rutrum, orci vel fermentum semper, felis ante dictum nisl, vitae ultricies lectus ante iaculis nibh. Donec facilisis sagittis ligula, ut consequat elit facilisis non. Nam non enim magna. Mauris euismod velit sit amet porta fermentum.
+    </p> ONLY FOR PROJECT DETAIL -->
+
   <div *ngIf="showCover && !editMode" class="row">
 
     <div id="container-add-enrich" class="col-12">
 
-      <hyt-button (clickFn)="loadEmpty()">Add enrichment</hyt-button>
+      <hyt-button 
+        [color] = "'hyt-base-default-white'"
+        (clickFn)="loadEmpty()"
+      >
+        <span class="hyt-icon icon-hyt_plus"></span>
+        Add enrichment
+      </hyt-button>
 
     </div>
 

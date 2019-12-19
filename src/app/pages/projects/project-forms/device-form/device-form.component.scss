@@ -1,9 +1,22 @@
 
 #container-device-form {
-    padding-top: 35px;
+    padding-top: 20px;
 
     &.container {
         position: relative;
+
+        p {
+
+            &.subtitle-section {
+    
+                font-size: .9em;
+                font-style: italic;
+                line-height: 25px;
+                margin-bottom: 30px;
+    
+            }
+    
+        }
     }
 
     form {

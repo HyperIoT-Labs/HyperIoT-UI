@@ -1,4 +1,4 @@
-<div id="container-tag-form" class="container">
+<div id="container-tag-form" class="container-fluid">
 
   <div class="tags-text">
     Lorem ipsum dolor sit amet, consectetur adipisci elit, sed do eiusmod tempor incidunt ut labore et dolore magna
@@ -8,17 +8,15 @@
     <!--@I18N@-->
   </div>
 
-  <hr>
+  <div class="tag-logic-container row">
 
-  <div class="tag-logic-container">
-
-    <div *ngIf="tagStatus==0">
+    <div *ngIf="tagStatus==0" class="col-12"> <!-- tagStatus==0 -->
       Loading
       <!--TODO (spinner?)-->
       <!--@I18N@-->
     </div>
 
-    <div *ngIf="tagStatus==1">
+    <div *ngIf="tagStatus==1"> <!-- tagStatus==1 -->
 
       <div class="col-12">
         <form #f="ngForm" [formGroup]="filteringForm">
@@ -73,7 +71,7 @@
 
     </div>
 
-    <div *ngIf="tagStatus==-1">
+    <div *ngIf="tagStatus==-1" class="col-12"> <!-- tagStatus==-1 -->
       Error loading tag data
       <!--TODO-->
       <!--@I18N@-->

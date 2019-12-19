@@ -48,7 +48,11 @@ export class AddTagModalComponent extends HytModal implements OnInit, AfterViewI
   }
 
   ngAfterViewInit(): void {
-    (document.querySelector('#add-tag-modal .hyt-input.mat-input-element') as HTMLElement).focus();
+    setTimeout(() => {
+
+      (document.querySelector('#add-tag-modal .hyt-input.mat-input-element') as HTMLElement).focus();
+
+    }, 0);
   }
 
   submitTag() {

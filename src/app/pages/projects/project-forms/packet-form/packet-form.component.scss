@@ -2,6 +2,20 @@
 
     &.container {
         position: relative;
+        padding-top: 20px;
+
+        p {
+
+            &.subtitle-section {
+    
+                font-size: .9em;
+                font-style: italic;
+                line-height: 25px;
+                margin-bottom: 30px;
+    
+            }
+    
+        }
     }
 
     form {

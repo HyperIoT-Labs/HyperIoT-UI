@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewEncapsulation } from '@angular/core';
 import { HytModal, HytModalService } from '@hyperiot/components';
 import { PageStatus } from 'src/app/pages/projects/models/pageStatus';
 import { AssetscategoriesService } from '@hyperiot/core';
@@ -8,7 +8,8 @@ import { HttpErrorHandlerService } from 'src/app/services/errorHandler/http-erro
 @Component({
   selector: 'hyt-add-cetegory-modal',
   templateUrl: './add-cetegory-modal.component.html',
-  styleUrls: ['./add-cetegory-modal.component.scss']
+  styleUrls: ['./add-cetegory-modal.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class AddCetegoryModalComponent extends HytModal implements OnInit, AfterViewInit {
 
@@ -48,7 +49,13 @@ export class AddCetegoryModalComponent extends HytModal implements OnInit, After
   }
 
   ngAfterViewInit(): void {
-    (document.querySelector('#add-category-modal .hyt-input.mat-input-element') as HTMLElement).focus();
+
+    setTimeout(() => {
+
+      (document.querySelector('#add-category-modal .hyt-input.mat-input-element') as HTMLElement).focus();
+
+    },0);
+
   }
 
   submitCategory() {

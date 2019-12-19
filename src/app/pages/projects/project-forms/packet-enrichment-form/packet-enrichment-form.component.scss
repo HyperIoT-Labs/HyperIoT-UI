@@ -6,6 +6,19 @@
     &.container {
         position: relative;
 
+        p {
+
+            &.subtitle-section {
+
+                font-size: .9em;
+                font-style: italic;
+                line-height: 25px;
+                margin-bottom: 30px;
+
+            }
+
+        }
+
         #container-add-enrich {
 
             text-align: center;

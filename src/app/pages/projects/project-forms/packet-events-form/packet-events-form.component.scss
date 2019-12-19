@@ -2,6 +2,20 @@
 
   &.container {
     position: relative;
+    padding-top: 20px;
+
+    p {
+
+      &.subtitle-section {
+
+        font-size: .9em;
+        font-style: italic;
+        line-height: 25px;
+        margin-bottom: 30px;
+
+      }
+
+    }
 
     #events-edit-mode {
 
@@ -102,11 +116,6 @@
   }  
 
 }
-/*
-  margin-bottom: 10px;
-    color: #909090;
-    font-size: 0.98em;
-*/
 
 
 .overlay {
@@ -135,9 +144,6 @@
         margin-bottom: 5px;
         max-height: 178px;
         width: auto;
-        // animation-name: pulses;
-        // animation-duration: 1.5s;
-        // animation-iteration-count: infinite;
     }
     
     h4 {

@@ -25,15 +25,22 @@
 
             <div class="widget-list" *ngIf="selectedCategory != null">
 
-                <div class="widget-item" *ngFor="let widget of filteredWidgets" [ngClass]="{selected: widget.count > 0}"
-                    (click)="currentWidget = widget">
+                <div 
+                    class="widget-item" 
+                    *ngFor="let widget of filteredWidgets" 
+                    [ngClass]="{selected: widget.count > 0}"
+                    (click)="currentWidget = widget"
+                >
+
                     <div class="widget-name">{{ widget.name }}</div>
+
                     <img *ngIf="widget.image" [src]="widget.image">
-                    <input type="number" class="item-count" title="HYT_widget_add_quantity"
+
+                    <input 
+                        type="number" class="item-count" title="HYT_widget_add_quantity"
                         i18n-title="@@HYT_widget_add_quantity" min="0" max="{{widgetAddMax}}"
-                        [(ngModel)]="widget.count" (ngModelChange)="onWidgetChange(widget)">
-                    <!-- <button class="remove" i18n-title="@@HYT_widget_add_less" title="HYT_widget_add_less" (click)="removeWidget(widget)"></button>
-                    <button class="add" i18n-title="@@HYT_widget_add_more" title="HYT_widget_add_more" (click)="addWidget(widget)"></button> -->
+                        [(ngModel)]="widget.count" (ngModelChange)="onWidgetChange(widget)"
+                    >
                 </div>
 
             </div>

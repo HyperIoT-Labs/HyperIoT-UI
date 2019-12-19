@@ -1,14 +1,54 @@
-.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
 
-    border-color: #8345e2;
+.mat-radio-button {
 
-}
+    &.mat-accent {
 
-.mat-radio-button.mat-accent .mat-radio-inner-circle,
-.mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element:not(.mat-radio-persistent-ripple),
-.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-persistent-ripple,
-.mat-radio-button.mat-accent:active .mat-radio-persistent-ripple {
+        &.mat-radio-checked {
 
-    background-color: #702adc;
+            .mat-radio-outer-circle {
+
+                border-color: #8345e2;
+            
+            }
+
+            .mat-radio-persistent-ripple {
+
+                background-color: #702adc;
+
+            }
+
+        }
+
+        &:active {
+
+            .mat-radio-persistent-ripple {
+
+                background-color: #702adc;
+
+            }
+
+        }
+
+        .mat-radio-inner-circle {
+
+            background-color: #702adc;
+
+        }
+
+        .mat-radio-ripple {
+
+            .mat-ripple-element {
+
+                &:not(.mat-radio-persistent-ripple) {
+
+                    background-color: #702adc;
+
+                }
+
+            }
+
+        }
+
+    }
 
 }

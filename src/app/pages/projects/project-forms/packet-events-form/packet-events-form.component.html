@@ -1,12 +1,20 @@
 <div id="container-events" class="container">
 
+  <!-- <p class="subtitle-section">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer rutrum magna lacus, a lacinia orci feugiat non. Quisque pharetra quam vitae pharetra euismod. Curabitur sodales eget elit id aliquam. In hac habitasse platea dictumst. Nam in dignissim leo. Pellentesque in lorem at justo mollis volutpat. Nam rutrum, orci vel fermentum semper, felis ante dictum nisl, vitae ultricies lectus ante iaculis nibh. Donec facilisis sagittis ligula, ut consequat elit facilisis non. Nam non enim magna. Mauris euismod velit sit amet porta fermentum.
+    </p> ONLY FOR PROJECT DETAIL -->
+
   <div *ngIf="!editMode" id="events-edit-mode" class="form-group row">
 
     <div id="btn-edit-mode" class="col-12">
 
-      <hyt-button (clickFn)="loadEmpty()">
-        <mat-icon>add</mat-icon>
+      <hyt-button 
+        [color]="'hyt-base-default-white'"
+        (clickFn)="loadEmpty()"
+      >
+        <span class="hyt-icon icon-hyt_plus"></span>
         <span i18n="@@HYT_add_event">HYT_add_event</span>
+
       </hyt-button>
 
     </div>
