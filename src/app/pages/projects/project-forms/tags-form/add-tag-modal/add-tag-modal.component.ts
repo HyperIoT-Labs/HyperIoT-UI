@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewEncapsulation } from '@angular/core';
 import { HytModal, HytModalService } from '@hyperiot/components';
 import { PageStatus } from 'src/app/pages/projects/models/pageStatus';
 import { AssetstagsService } from '@hyperiot/core';
@@ -8,7 +8,8 @@ import { HttpErrorHandlerService } from 'src/app/services/errorHandler/http-erro
 @Component({
   selector: 'hyt-add-tag-modal',
   templateUrl: './add-tag-modal.component.html',
-  styleUrls: ['./add-tag-modal.component.scss']
+  styleUrls: ['./add-tag-modal.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class AddTagModalComponent extends HytModal implements OnInit, AfterViewInit {
 

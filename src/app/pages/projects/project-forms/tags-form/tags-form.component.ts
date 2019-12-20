@@ -1,4 +1,4 @@
-import { Component, OnInit, Injector, ViewChild } from '@angular/core';
+import { Component, OnInit, Injector, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ProjectFormEntity } from '../project-form-entity';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { ElementRef } from '@angular/core';
@@ -17,7 +17,8 @@ export enum TagStatus {
 @Component({
   selector: 'hyt-tags-form',
   templateUrl: './tags-form.component.html',
-  styleUrls: ['./tags-form.component.scss']
+  styleUrls: ['./tags-form.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class TagsFormComponent extends ProjectFormEntity implements OnInit {
 

@@ -10,72 +10,107 @@
 
   <div class="tag-logic-container row">
 
-    <div *ngIf="tagStatus==0" class="col-12"> <!-- tagStatus==0 -->
-      Loading
-      <!--TODO (spinner?)-->
+    <div id="container-loading-tags" *ngIf="tagStatus == 0" class="col-12"> <!-- tagStatus==0 -->
+      
+      <span class="text-loading">Loading Tags</span>
+      <div class="loader"></div>
       <!--@I18N@-->
+
     </div>
 
-    <div *ngIf="tagStatus==1"> <!-- tagStatus==1 -->
+    <div id="container-tags" *ngIf="tagStatus == 1" class="col-12"> <!-- tagStatus==1 -->
 
-      <div class="col-12">
+      <div id="container-form-tags">
+
         <form #f="ngForm" [formGroup]="filteringForm">
+
           <div class="row">
-            <div class="col-6">
+
+            <div id="container-filter-tags" class="col-6">
+
               <hyt-input-text [form]="filteringForm" formControlName="textFilter" name="textFilter" placeholder="Search"
                 (keyup)="onChangeInputSearch()"></hyt-input-text>
               <!--@I18N-->
-            </div>
-            <div class="col-6 sort-right">
+
+            </div> <!-- END COL 1 -->
+
+            <div id="container-sort-tags" class="col-6">
+
               <span id="sort-text">Sort by: </span>
               <!--@I18N-->
-              <hyt-select [form]="filteringForm" [label]="'Select a sort type'" formControlName="sort" name="sort"
-                (changeFn)="onChangeSelectSort()" [options]="sortOptions"></hyt-select>
+              <hyt-select 
+                [form]="filteringForm" 
+                [label]="'Select a sort type'" 
+                formControlName="sort" 
+                name="sort"
+                (changeFn)="onChangeSelectSort()" 
+                [options]="sortOptions"
+              ></hyt-select>
               <!--@I18N-->
-            </div>
-          </div>
+
+            </div> <!-- END COL 2 -->
+
+          </div> <!-- END ROW -->
+
         </form>
+
       </div>
 
-      <div class="col-12">
-        <div class="row">
-
-          <div class="col-6">
-            Showing {{filteredTags.length}} tags of {{allTags.length}}
-            <!--@I18N@-->
-          </div>
-
-          <div class="col-6">
-            <hyt-button mat-mini-fab (click)="addTagModal()">
-              Add Tag <span class="hyt-icon icon-hyt_plus"></span>
-            </hyt-button>
-            <!--@I18N@-->
-          </div>
-
+      <div id="tags-resume" class="row">
+        <div class="col-12">
+          Showing {{filteredTags.length}} tags of {{allTags.length}}
+          <!--@I18N@-->
         </div>
       </div>
 
-      <div class="tag-box">
+      <div id="container-add-tags" class="row">
 
-        <div *ngIf="filteredTags.length == 0">
-          <span>No tag found</span>
+        <div class="col-12">
+
+          <hyt-button 
+            mat-mini-fab 
+            (click)="addTagModal()"
+            [color]="'hyt-base-default-white'"
+          >
+            Add Tag 
+            <span class="hyt-icon icon-hyt_plusC"></span>
+
+          </hyt-button>
+          <!--@I18N@-->
+
+        </div>
+
+      </div>
+
+      <div id="tag-box" class="row">
+
+        <div id="no-tags-found" class="col-12" *ngIf="filteredTags.length == 0"> 
+          <span>No tags found, create one!!</span>
           <!--@I18N@-->
         </div>
 
-        <hyt-tag-list>
-          <hyt-tag *ngFor="let tag of filteredTags" [selectable]="true" [selected]="true" [removable]="true"
-            [editable]="true" (removed)="delete(tag)" (edited)="editTagModal(tag)" [value]="tag.name">
-          </hyt-tag>
-        </hyt-tag-list>
+        <div id="tags-container" class="col-12" *ngIf="filteredTags.length > 0">
+
+          <p id="subtitle-tags">List of Tags</p> <!-- @I18N@ -->
+          <hyt-tag-list>
+            <hyt-tag *ngFor="let tag of filteredTags" [selectable]="true" [selected]="true" [removable]="true"
+              [editable]="true" (removed)="delete(tag)" (edited)="editTagModal(tag)" [value]="tag.name">
+            </hyt-tag>
+          </hyt-tag-list>
+
+        </div>
+
       </div>
 
     </div>
 
-    <div *ngIf="tagStatus==-1" class="col-12"> <!-- tagStatus==-1 -->
-      Error loading tag data
-      <!--TODO-->
+    <div id="container-error-tags" *ngIf="tagStatus == -1" class="col-12"> <!-- tagStatus==-1 -->
+
+      <span class="text-error">Error loading tags data</span>
       <!--@I18N@-->
+
     </div>
+
   </div>
 
 </div>
