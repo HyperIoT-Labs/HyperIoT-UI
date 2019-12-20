@@ -1,17 +1,13 @@
-@import '~@angular/material/theming';
+#single-project-page {
 
-:host {
     position: relative;
     display: block;
     padding-top: 15px;
     padding-left: 15px;
     margin-right: 15px;
-}
-
-#single-project-page {
 
     .header {
-        border-bottom: 1px solid #008aff;
+        border-bottom: 1px solid #1e58a5;
         min-height: 50px;
     
         .breadcrumb {
@@ -40,6 +36,7 @@
     }
 
     #container-general-form {
+
         margin-top: 40px;
 
         a {
@@ -47,7 +44,9 @@
                 height: 25px;
                 width: 25px;
                 text-decoration: none;
-                margin-top: 15px;
+                position: absolute;
+                top: 17px;
+                left: -8px;
 
                 &:hover {
                     text-decoration: none;
@@ -73,71 +72,165 @@
         } /* End A > BACK BTN */
 
         .treeview {
-            min-width: 300px;
-            width: 300px;
+
+            width: 100%;
+            min-width: 100%;
 
             #editInWizardContent{
                 text-align: center;
+                margin-top: 25px;
+
+                hyt-button {
+
+                    button {
+
+                        &.hyt-base-btn {
+
+                            font-size: 0.85em;
+                            min-height: 30px;
+                            height: 40px;
+
+                        }
+
+                    }
+
+                }
+
             }
             
+
         }
 
         .content {
-            min-width: 240px;
+
             h2 {
                 &#form-title {
                     padding-left: 13px;
                     padding-right: 13px;
                     color: #0956b6;
                     font-size: 1.8em;
-                    margin-bottom: 35px;
+                    margin-bottom: 0px;
                 }
             }
         }
 
         .side-bar {
-            // position: fixed;
-            position: relative;
-            padding-right: 10px;
-            right: 0; top: -25px; bottom: 0;
-            width: 240px;
+            
+            text-align: center;
+
+            hyt-button {
+
+                margin-right: 10px;
+
+                &.last-btn {
+                    margin-right: 0px;
+                }
+
+                button {
+
+                    font-size: 0.8em;
+                    height: 40px;
+                    min-height: 40px;
+                    padding: 0 10px;
+
+                }
+
+                &#save-btn {
+
+                    span {
+    
+                        &.icon-hyt_save {
+    
+                            font-size: 1.4em;
+    
+                        }
+    
+                    }
+    
+                }
+    
+                &#delete-btn {
+    
+                    span {
+    
+                        &.icon-hyt_trash {
+    
+                            font-size: 1.3em;
+    
+                        }
+    
+                    }
+    
+                }
+
+            }
+
+            #container-hint {
+
+                margin-top: 25px;
+
+                .info-message {
+                    
+                    -moz-border-radius: 5px;
+                    -webkit-border-radius: 5px;
+                    border-radius: 5px;
+                    background: whitesmoke;
+                    font-size: .9em;
+                    border: .5px solid #bbc9da;
+                    padding: 8px;
+                
+                    & mat-icon {
+                        
+                        position: absolute;
+                        top: 0px;
+                        right: 12px;
+                        font-size: 1.5em;
+                        margin-top: -5px;
+                        margin-right: -6px;
+                        color: #0956b6;
+
+                    }
+                
+                    .text {
+                        margin: 0;
+                        line-height: 20px;
+                        color: #0047a0;
+                    }
+
+                }
+
+            }
+
+            #container-summary-list {
+
+                margin-top: 25px;
+
+                hyt-generic-summary-list {
+
+                    &.disabled {
+
+                        pointer-events: none;
+                        cursor: not-allowed;
+
+                        #container-table-device {
+
+                            opacity: .5;
+
+                        } 
+
+                    }
+
+                }
+
+            }
+
+
         }
 
     }
- 
-}
 
-.info-message {
-    // @include mat-elevation(4);
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    border-radius: 5px;
-    background: whitesmoke;
-    font-size: .9em;
-    border: .5px solid #bbc9da;
-
-    & mat-icon {
-        color: #969696;
-        font-size: 1.5em;
-        margin-top: -5px;
-        margin-right: -6px;
-        color: #0956b6;
+    .hidden {
+        display: none;
     }
 
-    & .text {
-        margin: 0; padding: 0;
-        padding-left: 4px;
-        padding-right: 4px;
-        vertical-align: top;
-        line-height: 20px;
-        color: #0047a0;
-    }
-}
-
-.hidden {
-    display: none;
-}
-.disabled {
-    opacity: 0.5;
-    pointer-events: none;
 }

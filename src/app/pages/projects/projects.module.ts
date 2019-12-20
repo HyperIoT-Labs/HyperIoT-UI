@@ -50,6 +50,7 @@ import { RuleErrorModalComponent } from './project-forms/rule-definition/rule-er
 import { TagsFormComponent } from './project-forms/tags-form/tags-form.component';
 import { CategoriesFormComponent } from './project-forms/categories-form/categories-form.component';
 import { AddTagModalComponent } from './project-forms/tags-form/add-tag-modal/add-tag-modal.component';
+import { AddCetegoryModalComponent } from './project-forms/categories-form/add-cetegory-modal/add-cetegory-modal.component';
 
 @NgModule({
   declarations: [
@@ -81,7 +82,8 @@ import { AddTagModalComponent } from './project-forms/tags-form/add-tag-modal/ad
     RuleErrorModalComponent,
     TagsFormComponent,
     CategoriesFormComponent,
-    AddTagModalComponent
+    AddTagModalComponent,
+    AddCetegoryModalComponent
   ],
   imports: [
     MatIconModule,
@@ -100,6 +102,10 @@ import { AddTagModalComponent } from './project-forms/tags-form/add-tag-modal/ad
     MatAutocompleteModule,
     MatInputModule,
     MatExpansionModule
+  ],
+  entryComponents: [
+    AddTagModalComponent,
+    AddCetegoryModalComponent
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA

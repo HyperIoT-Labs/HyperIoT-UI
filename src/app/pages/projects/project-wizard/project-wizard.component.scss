@@ -3,7 +3,7 @@
   padding: 15px;
 
   .header {
-    border-bottom: 1px solid #008aff;
+    border-bottom: 1px solid #1e58a5;
     min-height: 50px;
 
     .breadcrumb {
@@ -38,12 +38,20 @@
     #container-steps {
 
       mat-step-header {
+
         .mat-step-label {
           color: #3e3e3e;
           font-family: "Exo";
           font-size: .9em;
           font-weight: 600;
+
+          -moz-user-select: none;
+          -webkit-user-select: none;
+          -ms-user-select: none;
+          user-select: none;
+
         }
+
       }
 
       #container-save-update {
@@ -68,10 +76,14 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        // background-color: violet;
         background-color: transparent;
         transition: 0.3s;
         cursor: pointer;
+
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
 
         &.unclicked {
 
@@ -138,6 +150,11 @@
         overflow: hidden;
         transition: all 0.1s ease-in-out;
 
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+
         &.panel-open {
           max-height: 100%;
           padding: 20px 0px;
@@ -160,6 +177,7 @@
         margin-bottom: 10px;
         color: #909090;
         font-size: .98em;
+        font-family: 'Exo';
       }
 
     }
@@ -169,6 +187,31 @@
       border-radius: 4px;
       padding-top: 9px;
       padding-left: 9px;
+
+      hyt-radio-button {
+
+        mat-radio-group {
+
+          mat-radio-button {
+
+            &.mat-radio-button {
+
+              font-family: 'Exo';
+
+              .mat-radio-label-content {
+
+                line-height: 27px;
+
+              }
+
+            }
+
+          }
+
+        }
+
+      }
+
     }
 
   }

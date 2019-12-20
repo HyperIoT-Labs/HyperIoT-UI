@@ -1,12 +1,12 @@
-import { Component, OnInit, Injector, ViewChild } from '@angular/core';
+import { Component, OnInit, Injector, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ProjectFormEntity } from '../project-form-entity';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { ElementRef } from '@angular/core';
 import { AssetTag, AssetstagsService } from '@hyperiot/core';
 import { FormGroup } from '@angular/forms';
-import { SelectOption } from '@hyperiot/components';
+import { SelectOption, HytModalService } from '@hyperiot/components';
 import { Router } from '@angular/router';
-import { HytModalConfService } from 'src/app/services/hyt-modal-conf.service';
+import { AddTagModalComponent } from './add-tag-modal/add-tag-modal.component';
 
 export enum TagStatus {
   Default = 0,
@@ -17,7 +17,8 @@ export enum TagStatus {
 @Component({
   selector: 'hyt-tags-form',
   templateUrl: './tags-form.component.html',
-  styleUrls: ['./tags-form.component.scss']
+  styleUrls: ['./tags-form.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class TagsFormComponent extends ProjectFormEntity implements OnInit {
 
@@ -54,7 +55,7 @@ export class TagsFormComponent extends ProjectFormEntity implements OnInit {
     private i18n: I18n,
     private router: Router,
     private assetsTagService: AssetstagsService,
-    private modalService: HytModalConfService
+    private modalService: HytModalService
   ) {
     super(injector, i18n, formView);
     this.formTitle = 'Project Tags';
@@ -88,8 +89,18 @@ export class TagsFormComponent extends ProjectFormEntity implements OnInit {
     this.search();
   }
 
-  openTagModal(tag?: AssetTag) {
-    this.modalService.open('hyt-add-tag-modal', { projectId: this.projectId, tag });
+  addTagModal() {
+    const dialogRef = this.modalService.open(AddTagModalComponent, { mode: 'add', projectId: this.projectId });
+    dialogRef.onClosed.subscribe((res: AssetTag) => {
+      this.tagCreated(res);
+    });
+  }
+
+  editTagModal(tag: AssetTag) {
+    const dialogRef = this.modalService.open(AddTagModalComponent, { mode: 'edit', projectId: this.projectId, tag });
+    dialogRef.onClosed.subscribe((res: AssetTag) => {
+      this.tagCreated(res);
+    });
   }
 
   delete(tag: AssetTag): void {

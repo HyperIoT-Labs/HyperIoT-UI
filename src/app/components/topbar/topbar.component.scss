@@ -1,24 +1,40 @@
 #hyt-topbar {
     height: 64px;
-    background-color: #0956B6;
-    color: #fff;
+    // background-color: #0956B6;
+    // color: #fff;
+
+    background-color: #fdfdfd;
+    color: #0956B6;
     text-transform: uppercase;
+    border-bottom: 1px solid #dadada;
+
+    -moz-box-shadow: 4px -7px 13px 2px #aeaeae;
+    -webkit-box-shadow: 4px -7px 13px 2px #aeaeae;
+    box-shadow: 4px -7px 13px 2px #aeaeae;
 
     #logo-container {
-        font-family: "Exo";
-        font-style: italic;
-        font-weight: 400;
-        text-transform: capitalize;
-        font-size: 2em;
         float: left;
         display: table;
-        height: 100%;
+        width: 100%;
+        max-width: 205px;
+        margin-left: -9px;
 
-        span {
-            display: table-cell;
-            vertical-align: middle;
-            cursor: pointer;
+        a {
+            display: block;
+
+            img {
+
+                &#img-logo-hyt {
+
+                    width: 100%;
+                    margin-top: 10px;
+
+                }
+
+            }
+
         }
+
     }
     
     #main-container {

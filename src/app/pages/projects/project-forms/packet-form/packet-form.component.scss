@@ -1,6 +1,21 @@
 #container-packet-form {
+
     &.container {
         position: relative;
+        padding-top: 20px;
+
+        p {
+
+            &.subtitle-section {
+    
+                font-size: .9em;
+                font-style: italic;
+                line-height: 25px;
+                margin-bottom: 30px;
+    
+            }
+    
+        }
     }
 
     form {
@@ -15,6 +30,57 @@
                 #fpack-col-mqtt-topic {
                     padding-top: 15px;
                 }
+
+                hyt-input-text {
+
+                    mat-form-field {
+
+                        font-family: 'Exo';
+
+                    }
+
+                }
+
+                hyt-select {
+
+                    mat-form-field {
+
+                        width: 100%;
+
+                        mat-select {
+
+                            font-family: 'Exo';
+
+                        }
+
+                    }
+
+                }
+
+                hyt-radio-button {
+
+                    mat-radio-group {
+
+                        mat-radio-button {
+
+                            &.mat-radio-button {
+
+                                font-family: 'Exo';
+
+                                .mat-radio-label-content {
+
+                                    line-height: 27px;
+
+                                }
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
             }
 
             label {
@@ -75,6 +141,16 @@
         }
     }
     
+
+}
+
+mat-option {
+
+    &.mat-option {
+
+        font-family: 'Exo';
+
+    } 
 
 }
 

@@ -1,10 +1,20 @@
 <div id="container-enrichment-form" class="container">
 
+  <!-- <p class="subtitle-section">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer rutrum magna lacus, a lacinia orci feugiat non. Quisque pharetra quam vitae pharetra euismod. Curabitur sodales eget elit id aliquam. In hac habitasse platea dictumst. Nam in dignissim leo. Pellentesque in lorem at justo mollis volutpat. Nam rutrum, orci vel fermentum semper, felis ante dictum nisl, vitae ultricies lectus ante iaculis nibh. Donec facilisis sagittis ligula, ut consequat elit facilisis non. Nam non enim magna. Mauris euismod velit sit amet porta fermentum.
+    </p> ONLY FOR PROJECT DETAIL -->
+
   <div *ngIf="showCover && !editMode" class="row">
 
     <div id="container-add-enrich" class="col-12">
 
-      <hyt-button (clickFn)="loadEmpty()">Add enrichment</hyt-button>
+      <hyt-button 
+        [color] = "'hyt-base-default-white'"
+        (clickFn)="loadEmpty()"
+      >
+        <span class="hyt-icon icon-hyt_plus"></span>
+        Add enrichment
+      </hyt-button>
 
     </div>
 
@@ -14,11 +24,16 @@
 
     <div class="form-group row">
 
-      <div 
+      <!-- <div 
         id="ffield-col-enrich-name" 
         class="col-tag-cat"
         [ngClass]="enrichmentType=='AddTagRuleAction' || enrichmentType=='AddCategoryRuleAction' ? 'col-4' : 'col-6'"
-      > <!-- col-4 -->
+      > -->
+      
+      <div 
+        id="ffield-col-enrich-name" 
+        class="col-tag-cat col-6"
+      ><!-- col-4 -->
 
         <hyt-input-text 
           [form]="form" formControlName="rule-name" name="rule-name" [isRequired]="true"
@@ -30,10 +45,15 @@
 
       </div>
 
-      <div 
+      <!-- <div 
         id="ffield-col-enrich-rules" 
         class="col-tag-cat"
         [ngClass]="enrichmentType=='AddTagRuleAction' || enrichmentType=='AddCategoryRuleAction' ? 'col-4' : 'col-6'"
+      >  -->
+      
+      <div 
+        id="ffield-col-enrich-rules" 
+        class="col-tag-cat col-6"
       > <!-- col-4 -->
 
         <hyt-select 
@@ -47,21 +67,23 @@
       <div 
         *ngIf="enrichmentType=='AddTagRuleAction' || enrichmentType=='AddCategoryRuleAction'"
         id="ffield-col-enrich-tag-cat" 
-        class="col-4 col-tag-cat" 
+        class="col-8 offset-2 col-tag-cat" 
       >
 
         <hyt-asset-tag 
+          #assetTag
           *ngIf="enrichmentType=='AddTagRuleAction'" 
           [project]="project" 
           [packet]="packet"
-          (tagIds)="updateAssetTag($event)">
+          [selectedTags]="assetTags">
         </hyt-asset-tag>
 
-        <hyt-asset-category 
+        <hyt-asset-category
+          #assetCategory
           *ngIf="enrichmentType=='AddCategoryRuleAction'" 
           [project]="project" 
           [packet]="packet"
-          (categoryIds)="updateAssetCategory($event)">
+          [selectedCategories]="assetCategories">
         </hyt-asset-category>
         
       </div>

@@ -1,14 +1,60 @@
-<h1 mat-dialog-title>{{data.title}}</h1>
+<!-- <h1 mat-dialog-title>{{data.title}}</h1>
 <mat-dialog-content class="mb-3">
     {{data.message}}
 </mat-dialog-content>
 <mat-dialog-actions class="d-flex flex-row justify-content-around">
-    <button color="primary" mat-button mat-dialog-close="cancel" class="m-2 btn-left">
+    <button color="primary" mat-button (click)="close('cancel')" class="m-2 btn-left">
         <mat-icon>arrow_back</mat-icon>
         <span>Cancel</span>
     </button>
-    <button defaultButton color="warn" mat-button mat-dialog-close="delete" class="m-2 btn-right">
+    <button defaultButton color="warn" mat-button (click)="close('delete')" class="m-2 btn-right">
         <mat-icon>delete</mat-icon>
         <span>Delete</span>
     </button>
-</mat-dialog-actions>
+</mat-dialog-actions> -->
+
+<div id="container-cancel-modal">
+
+    <div class="dialog-header">
+        <span>{{data.title}}</span>
+        <span class="hyt-icon icon-hyt_cancelC" (click)="close('cancel')"></span>
+    </div>
+
+    <div class="dialog-body">
+
+        {{data.message}}
+
+        <div id="container-btn">
+
+            <div id="btn-left">
+
+                <hyt-button 
+                    [color]="'hyt-base-total-green'"
+                    (click)="close('cancel')"
+                > 
+                    <span class="hyt-icon icon-hyt_arrowLeft"></span>
+                    Cancel
+
+                </hyt-button>
+                <!-- @I18N@ -->
+            </div>
+
+            <div id="btn-right">
+
+                <hyt-button 
+                    [color]="'hyt-base-total-red'"
+                    (click)="close('delete')"
+                > 
+                    <span class="hyt-icon icon-hyt_trash"></span>
+                    Delete
+
+                </hyt-button>
+                <!-- @I18N@ -->
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>

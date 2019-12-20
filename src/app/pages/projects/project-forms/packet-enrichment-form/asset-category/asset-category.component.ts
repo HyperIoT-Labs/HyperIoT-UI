@@ -1,6 +1,11 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { AssetscategoriesService, AssetCategory, HPacket, HProject } from '@hyperiot/core';
-import { TreeNodeCategory } from '@hyperiot/components';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MatDialog } from '@angular/material';
+import { HytModalService, TreeNodeCategory } from '@hyperiot/components';
+import { AssetCategory, AssetscategoriesService, HPacket, HProject } from '@hyperiot/core';
+import { Observable, Subscription } from 'rxjs';
+import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
+import { LoadStatus } from 'src/app/models/loadStatus';
+import { AddCetegoryModalComponent } from '../../categories-form/add-cetegory-modal/add-cetegory-modal.component';
 
 @Component({
   selector: 'hyt-asset-category',
@@ -9,81 +14,151 @@ import { TreeNodeCategory } from '@hyperiot/components';
 })
 export class AssetCategoryComponent implements OnInit {
 
-  @Input() packet: HPacket;
+  @Input()
+  packet: HPacket;
 
-  @Input() project: HProject;
+  @Input()
+  project: HProject;
 
-  @Output() categoryIds: EventEmitter<number[]> = new EventEmitter<number[]>();
+  @Input()
+  selectedCategories: number[];
+
+  originalCategories = [];
+
+  assetCategories: AssetCategory[];
+
+  categoryStatus: LoadStatus = LoadStatus.Default;
+
+  @Output()
+  categoryIds: EventEmitter<number[]> = new EventEmitter<number[]>();
 
   categoriesFlatTree: TreeNodeCategory[] = [];
 
-  catIds: number[] = [];
+  assetRequest: Subscription;
 
   constructor(
-    private assetCategoriesService: AssetscategoriesService
+    private assetCategoriesService: AssetscategoriesService,
+    private dialog: MatDialog,
+    private modalService: HytModalService
   ) { }
 
   ngOnInit() {
-    this.assetCategoriesService.findAllAssetCategory().subscribe(
+    this.getAssetCategories();
+  }
+
+  getAssetCategories() {
+    this.categoryStatus = LoadStatus.Default;
+    if (this.assetRequest) {
+      this.assetRequest.unsubscribe();
+    }
+    this.assetRequest = this.assetCategoriesService.findAllAssetCategory().subscribe(
       (res: AssetCategory[]) => {
-        res.forEach(x => {
-          this.categoriesFlatTree.push({
-            id: x.id,
-            label: x.name,
-            parent: null,
-            children: [],
-            data: x,
-            active: false
-          });
-        });
-        this.categoriesFlatTree.forEach(x => {
-          x.parent = (x.data.parent) ? this.categoriesFlatTree.find(y => y.id === x.data.parent.id) : null;
-          // x.active = this.packet.categoryIds.includes(x.id);
-        });
-        this.categoriesFlatTree = [...this.categoriesFlatTree];
+        this.assetCategories = [...res];
+        this.flatCategories();
+        this.categoryStatus = LoadStatus.Loaded;
+      },
+      err => {
+        this.categoryStatus = LoadStatus.Error;
       }
     );
   }
 
-  fillCatIds() {
-    this.catIds = [];
+  flatCategories() {
+    this.categoriesFlatTree = this.assetCategories.map((d) => ({
+      id: d.id,
+      label: d.name,
+      parent: null,
+      children: null,
+      data: d,
+      active: this.selectedCategories.some(n => n === d.id)
+    }));
     this.categoriesFlatTree.forEach(x => {
-      if (x.children.length === 0 && x.active) {
-        this.catIds.push(x.id);
-      }
+      x.parent = (x.data.parent) ? this.categoriesFlatTree.find(y => y.id === x.data.parent.id) : null;
+      // x.active = this.packet.categoryIds.includes(x.id);
+    });
+    this.categoriesFlatTree = [...this.categoriesFlatTree];
+    this.originalValueUpdate();
+  }
+
+  nodeChecked(node: TreeNodeCategory) {
+    this.selectedCategories = this.categoriesFlatTree
+      .filter(x => x.children.length === 0 && x.active)
+      .map(x => x.id);
+    this.categoryIds.emit(this.selectedCategories);
+  }
+
+  addFunction: (node: TreeNodeCategory) => Observable<TreeNodeCategory> = (node) => {
+    return new Observable(sub => {
+      const dialogRef = this.modalService.open(AddCetegoryModalComponent, {
+        mode: 'add',
+        projectId: this.project.id,
+        category: node ? node.data : null
+      });
+      dialogRef.onClosed.subscribe((result: AssetCategory) => {
+        sub.next({
+          id: result.id,
+          label: result.name,
+          parent: node,
+          children: [],
+          data: result,
+          active: false
+        });
+        sub.complete();
+      });
     });
   }
 
-  cbChange(event) {
-    this.fillCatIds();
-    this.categoryIds.emit(this.catIds);
+  removeFunction: (node: TreeNodeCategory) => Observable<TreeNodeCategory> = (node) => {
+    return new Observable(sub => {
+      const dialogRef = this.modalService.open(
+        DeleteConfirmDialogComponent,
+        { title: 'Delete item?', message: 'This operation cannot be undone.' }
+      );
+      dialogRef.onClosed.subscribe((result) => {
+        if (result === 'delete') {
+          this.assetCategoriesService.deleteAssetCategory(node.id).subscribe(
+            res => {
+              sub.next(res);
+              sub.complete();
+            },
+            err => {
+              sub.error();
+            }
+          );
+        }
+      });
+    });
   }
 
-  cbAdd(event) {
-    const data: AssetCategory = {
-      entityVersion: 1,
-      name: event.label,
-      owner: {
-        ownerResourceName: 'it.acsoftware.hyperiot.hproject',
-        ownerResourceId: this.project.id
-      },
-      parent: event.parent ? event.parent.data : null
-    };
-
-    this.assetCategoriesService.saveAssetCategory(data).subscribe(
-      (res: AssetCategory) => {
-        this.categoriesFlatTree.push({
-          id: res.id,
-          label: res.name,
-          parent: event.parent,
-          children: [],
-          data: res,
-          active: false
+  editFunction: (node: TreeNodeCategory) => Observable<TreeNodeCategory> = (node) => {
+    return new Observable(sub => {
+      const dialogRef = this.modalService.open(AddCetegoryModalComponent, {
+        mode: 'edit',
+        projectId: this.project.id,
+        category: node.data
+      });
+      dialogRef.onClosed.subscribe((result) => {
+        sub.next({
+          id: node.id,
+          label: result.name,
+          parent: node.parent,
+          children: node.children,
+          data: result,
+          active: node.active
         });
-        this.categoriesFlatTree = [...this.categoriesFlatTree];
-      },
-      err => console.log(err)
-    );
+        sub.complete();
+      });
+    });
+  }
+
+  isDirty(): boolean {
+    return this.categoryStatus === 1 ?
+      JSON.stringify(this.originalCategories.sort()) !== JSON.stringify(this.selectedCategories.sort()) :
+      false;
+  }
+
+  originalValueUpdate() {
+    this.originalCategories = [...this.selectedCategories];
   }
 
 }

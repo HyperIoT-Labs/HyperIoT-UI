@@ -5,12 +5,21 @@
     </button>
 
     <div *ngIf="isLoggedIn" class="dropdown-content">
-        <div>
-            <a routerLink="/account/profile">Account</a>
+
+        <div class="submenu-element">
+            <a routerLink="/account/profile">
+                <span class="hyt-icon icon-hyt_userEx"></span>
+                Account
+            </a> <!-- @I18N@ -->
         </div>
-        <div (click)="logout()" class="clickable">
-            <a>Logout</a>
+
+        <div (click)="logout()" class="submenu-element clickable">
+            <a>
+                <span class="hyt-icon icon-hyt_connector"></span>
+                Logout
+            </a> <!-- @I18N@ -->
         </div>
+
     </div>
 
 </div>

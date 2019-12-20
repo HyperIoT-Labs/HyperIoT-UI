@@ -1,14 +1,16 @@
-import { Component, OnInit, ViewChild, ElementRef, OnDestroy, Injector, ViewEncapsulation } from '@angular/core';
-import { HPacket, Rule, RulesService, HpacketsService, HProject } from '@hyperiot/core';
+import { Component, ElementRef, Injector, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { SelectOption } from '@hyperiot/components';
-import { RuleDefinitionComponent } from '../rule-definition/rule-definition.component';
-// TODO: find a bettere placement for PageStatusEnum
-import { ProjectFormEntity, LoadingStatusEnum } from '../project-form-entity';
-import { Subscription, Observable } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SummaryListItem } from '../../project-detail/generic-summary-list/generic-summary-list.component';
+import { SelectOption } from '@hyperiot/components';
+import { HPacket, HpacketsService, HProject, Rule, RulesService } from '@hyperiot/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
+import { Observable, Subscription } from 'rxjs';
+import { SummaryListItem } from '../../project-detail/generic-summary-list/generic-summary-list.component';
+// TODO: find a bettere placement for PageStatusEnum
+import { LoadingStatusEnum, ProjectFormEntity } from '../project-form-entity';
+import { RuleDefinitionComponent } from '../rule-definition/rule-definition.component';
+import { AssetCategoryComponent } from './asset-category/asset-category.component';
+import { AssetTagComponent } from './asset-tag/asset-tag.component';
 
 @Component({
   selector: 'hyt-packet-enrichment-form',
@@ -27,7 +29,15 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
     }
   };
 
-  @ViewChild('ruleDef', { static: false }) ruleDefinitionComponent: RuleDefinitionComponent;
+  @ViewChild('ruleDef', { static: false })
+  ruleDefinitionComponent: RuleDefinitionComponent;
+
+  @ViewChild('assetTag', { static: false })
+  assetTagComponent: AssetTagComponent;
+
+  @ViewChild('assetCategory', { static: false })
+  assetCategoryComponent: AssetCategoryComponent;
+
   packet: HPacket;
 
   entity = {} as Rule;
@@ -92,12 +102,26 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
         const type = JSON.parse(this.entity.jsonActions)[0] || null;
         this.ruleDefinitionComponent.setRuleDefinition(this.entity.ruleDefinition);
         this.enrichmentType = JSON.parse(type) ? JSON.parse(type).actionName : null;
+        if (this.enrichmentType === 'AddCategoryRuleAction') {
+          if (this.assetCategoryComponent) {
+            this.assetCategoryComponent.selectedCategories = JSON.parse(type) ? JSON.parse(type).categoryIds : null;
+            this.assetCategoryComponent.getAssetCategories();
+          } else {
+            this.assetCategories = JSON.parse(type) ? JSON.parse(type).categoryIds : null;
+          }
+        } else if (this.enrichmentType === 'AddTagRuleAction') {
+          if (this.assetTagComponent) {
+            this.assetTagComponent.selectedTags = JSON.parse(type) ? JSON.parse(type).tagIds : null;
+            this.assetTagComponent.getAssetTags();
+          } else {
+            this.assetTags = JSON.parse(type) ? JSON.parse(type).tagIds : null;
+          }
+        }
         this.form.get('rule-type').setValue(this.enrichmentType);
         if (readyCallback) {
           readyCallback();
         }
       });
-
     };
     const canDeactivate = this.canDeactivate();
     if (typeof canDeactivate === 'boolean' && canDeactivate === true) {
@@ -142,12 +166,26 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
     });
   }
 
+  buildJActions(): string {
+    let jac = '';
+    switch (this.form.get('rule-type').value) {
+      case 'AddCategoryRuleAction':
+        jac = JSON.stringify({ actionName: 'AddCategoryRuleAction', categoryIds: this.assetCategoryComponent.selectedCategories });
+        break;
+      case 'AddTagRuleAction':
+        jac = JSON.stringify({ actionName: 'AddTagRuleAction', tagIds: this.assetTagComponent.selectedTags });
+        break;
+      case 'ValidateHPacketRuleAction':
+        jac = JSON.stringify({ actionName: 'ValidateHPacketRuleAction' });
+        break;
+    }
+    return JSON.stringify([jac]);
+  }
+
   saveRule(successCallback, errorCallback) {
     this.loadingStatus = LoadingStatusEnum.Saving;
     this.resetErrors();
 
-    const jActions = [JSON.stringify({ actionName: this.form.get('rule-type').value, ruleId: 0 })];
-    const jActionStr = JSON.stringify(jActions);
     const rule = this.entity;
 
     Object.assign(rule, {
@@ -158,7 +196,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
         id: this.project.id
       },
       packet: this.packet,
-      jsonActions: jActionStr,
+      jsonActions: this.buildJActions(),
       type: 'ENRICHMENT'
     });
     delete rule.actions;
@@ -188,12 +226,13 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
         this.loadingStatus = LoadingStatusEnum.Error;
       });
     }
-    this.updatePacket();
   }
 
   loadEmpty() {
     this.form.reset();
     this.enrichmentType = null;
+    this.assetTags = [];
+    this.assetCategories = [];
     this.ruleDefinitionComponent.resetRuleDefinition();
     this.entity = { ...this.entitiesService.enrichment.emptyModel };
     this.edit();
@@ -218,47 +257,30 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
     }
   }
 
+  categoryDirty() {
+    return this.assetTagComponent ? this.assetTagComponent.isDirty() : false;
+  }
+
+  tagDirty() {
+    return this.assetCategoryComponent ? this.assetCategoryComponent.isDirty() : false;
+  }
   isValid() {
     return super.isValid() && !this.invalidRules();
   }
   isDirty() {
-    return this.editMode && (super.isDirty() || this.ruleDefinitionComponent.isDirty());
+    return this.editMode &&
+      (
+        super.isDirty() ||
+        this.ruleDefinitionComponent.isDirty() ||
+        this.categoryDirty() ||
+        this.tagDirty()
+      );
   }
 
   private invalidRules(): boolean {
     return (
       ((this.ruleDefinitionComponent) ? this.ruleDefinitionComponent.isInvalid() : true)
     );
-  }
-
-  // TODO: code below is still to be verified / refactored
-
-  updatePacket() {
-
-    if (this.enrichmentType === 'AddTagRuleAction' && this.assetTags.length !== 0) {
-      this.packet.tagIds = this.assetTags;
-      this.packetService.updateHPacket(this.packet).subscribe(
-        (res: HPacket) => {
-        }
-      );
-    } else if (this.enrichmentType === 'AddCategoryRuleAction' && this.assetCategories.length !== 0) {
-      this.packet.categoryIds = this.assetCategories;
-      this.packetService.updateHPacket(this.packet).subscribe(
-        (res: HPacket) => {
-        }
-      );
-    }
-
-  }
-
-  // Tags
-  updateAssetTag(event) {
-    this.assetTags = event;
-  }
-
-  // Category
-  updateAssetCategory(event) {
-    this.assetCategories = event;
   }
 
   setErrors(err) {
