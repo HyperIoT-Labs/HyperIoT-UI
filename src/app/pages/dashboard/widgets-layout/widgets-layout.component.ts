@@ -141,9 +141,9 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
         }
       );
 
-    window.addEventListener('beforeunload', (e) => {
-      this.saveDashboard();
-    });
+    // window.addEventListener('beforeunload', (e) => {
+    //   this.saveDashboard();
+    // });
   }
 
   ngOnDestroy() {

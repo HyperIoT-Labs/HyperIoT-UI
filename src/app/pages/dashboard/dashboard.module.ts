@@ -31,8 +31,7 @@ import { TimeChartSettingsComponent } from './widget-settings-dialog/time-chart-
 
 import { MyTelInputComponent } from '../../test/my-tel-input/my-tel-input.component';
 import { DashboardComponent } from './dashboard.component';
-import { ConfirmRecordingActionComponent } from './modals/confirm-recording-action/confirm-recording-action.component';
-import { InfoRecordingActionComponent } from './modals/info-recording-action/info-recording-action.component';
+import { SharedComponentsModule } from 'src/app/components/shared-components/shared-components.module';
 
 @NgModule({
   declarations: [
@@ -49,9 +48,7 @@ import { InfoRecordingActionComponent } from './modals/info-recording-action/inf
     TextLabelSettingsComponent,
     TimeChartSettingsComponent,
     MyTelInputComponent,
-    DashboardComponent,
-    ConfirmRecordingActionComponent,
-    InfoRecordingActionComponent
+    DashboardComponent
   ],
   imports: [
     CommonModule,
@@ -65,7 +62,8 @@ import { InfoRecordingActionComponent } from './modals/info-recording-action/inf
     WidgetsModule,
     MatFormFieldModule,
     MatInputModule,
-    MatSelectModule
+    MatSelectModule,
+    SharedComponentsModule
   ],
   providers: [
     DashboardConfigService

@@ -41,6 +41,8 @@ import { HomeComponent } from './pages/home/home.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { NotificationbarComponent } from './components/notificationbar/notificationbar.component';
+import { ConfirmRecordingActionComponent } from './components/modals/confirm-recording-action/confirm-recording-action.component';
+import { InfoRecordingActionComponent } from './components/modals/info-recording-action/info-recording-action.component';
 
 export class MyUrlSerializer extends DefaultUrlSerializer implements UrlSerializer {
   /** Converts a `UrlTree` into a url */
@@ -70,13 +72,17 @@ export function apiConfigFactory(): Configuration {
     SaveChangesDialogComponent,
     DeleteConfirmDialogComponent,
     HomeComponent,
-    NotificationbarComponent
+    NotificationbarComponent,
+    ConfirmRecordingActionComponent,
+    InfoRecordingActionComponent
   ],
   // dynamically created components
   entryComponents: [
     SaveChangesDialogComponent,
     DeleteConfirmDialogComponent,
-    HytConfirmDialogComponent
+    HytConfirmDialogComponent,
+    ConfirmRecordingActionComponent,
+    InfoRecordingActionComponent
   ],
   imports: [
     RouterModule,

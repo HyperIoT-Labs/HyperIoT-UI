@@ -10,32 +10,8 @@
 
     <div id="container-dashboard" [ngSwitch]="pageStatus">
 
-        <div id="row-recording" class="row">
-            <div class="col-12 recording {{(recordStateInLoading)?'inLoading':''}} {{(dataRecordingIsOn)?'on':'off'}}">
-                <span id="icon-recording" class="{{(dataRecordingIsOn)?'recOn':'recOff'}}">
-                    <svg xmlns="http://www.w3.org/2000/svg" id="Capa_1" enable-background="new 0 0 515.556 515.556"
-                        height="512" viewBox="0 0 515.556 515.556" width="512">
-                        <path
-                            d="m257.778 0c-142.137 0-257.778 115.641-257.778 257.778s115.641 257.778 257.778 257.778 257.778-115.641 257.778-257.778-115.642-257.778-257.778-257.778zm0 451.111c-106.61 0-193.333-86.723-193.333-193.333s86.723-193.334 193.333-193.334 193.333 86.723 193.333 193.333-86.723 193.334-193.333 193.334z" />
-                        <path
-                            d="m257.778 128.889c-71.068 0-128.889 57.805-128.889 128.889s57.821 128.889 128.889 128.889 128.889-57.805 128.889-128.889-57.821-128.889-128.889-128.889z" />
-                    </svg>
-                </span>
-                <span *ngIf="recordStateInLoading; else recordingState">Loading...</span>
-                <ng-template #recordingState i18n="@@HYT_data_recording_on_off">HYT_data_recording_on_off</ng-template>
-                <span *ngIf="upTimeSec">
-                    <ng-container> - Time passed since activation: </ng-container> {{upTimeSec}}
-                </span>
-                <span id="play-pause-btn" class="hyt-icon {{(dataRecordingIsOn)?'icon-hyt_pause':'icon-hyt_play'}}" (click)="openRecordingActionModal()"></span>
-
-                <div id="reload-btn" (click)="openReloadRecordingModal()">
-                    <span class="hyt-icon icon-hyt_reload {{(recordReloading)?'reloading':''}}"></span>
-                </div>
-            </div>
-        </div>
-
         <div class="row">
-            <div id="tools-dashboard-box" class="col-12" *ngIf="pageStatus != -1">
+            <div id="tools-dashboard-box" class="col-12 {{(pageStatus == 0)?'inLoading':''}}" *ngIf="pageStatus != -1">
 
                 <div class="row no-gutters">
 
@@ -53,6 +29,13 @@
                             <p i18n="@@HYT_stream_is_on">HYT_stream_is_on</p>
                         </div>
 
+                        <hyt-topology-toolbar
+                            [dataRecordingIsOn]="dataRecordingIsOn"
+                            [upTimeSec]="upTimeSec"
+                            [idProjectSelected]="idProjectSelected"
+                            [recordStateInLoading]="recordStateInLoading">
+                        </hyt-topology-toolbar>
+
                     </div>
 
                     <div class="col-6 right-tools">
@@ -63,16 +46,9 @@
 
                         <div id="add-widget-btn" *ngIf="pageStatus == PageStatus.Standard"
                             (click)="openModal('hyt-modal-add-widgets')">
-                            <!-- <a [routerLink]="[{outlets: { modal: [ 'widgets' ] }}]"> -->
                             <span class="hyt-icon icon-hyt_widgetPlus"></span>
                             <p i18n="@@HYT_add_a_widget">HYT_add_a_widget</p>
-                            <!-- </a> -->
                         </div>
-
-                        <!-- <div id="save-dashboard-btn" *ngIf="pageStatus == PageStatus.Standard" (click)="saveDashboard()">
-                            <span class="hyt-icon icon-hyt_save"></span>
-                            <p>Save</p>
-                        </div> -->
 
                     </div>
 
@@ -90,17 +66,36 @@
 
         <div id="standardStatus" *ngSwitchCase="PageStatus.Standard" class="row">
             <!-- Standard -->
+            <div *ngIf="!dataRecordingIsOn && signalIsOn && !recordStateInLoading" id="dashboard-overlay-blurred" class="row no-gutters justify-content-center">
 
-            <div id="container-box-dashboard" class="col-12">
-                <hyt-dashboard-view [dashboard]="currentDashboard" [dashboardType]="currentDashboardType"
-                    [dashboardWidgets]="currentDashboard.widgets"></hyt-dashboard-view>
+                <div class="col-md-4">
+                    <h2 id="overlay-blurred-title">Topology is disabled</h2>
+                    <!--@I18N-->
+                    <h3 id="overlay-blurred-text">
+                        The online dashboard cannot be used in this state.
+                        You can activate the toplogy by pressing the "RUN" button
+                        or you can use the dasboard offline taking the "OFFLINE" button.
+                    </h3>
+                    <!--@I18N-->
+                </div>
+
+            </div>
+
+            <div id="container-box-dashboard" class="col-12 {{(!dataRecordingIsOn && signalIsOn) ? 'blurred-animation' : ''}}">
+
+                <hyt-dashboard-view 
+                    [dashboard]="currentDashboard" 
+                    [dashboardType]="currentDashboardType"
+                    [dashboardWidgets]="currentDashboard.widgets"
+                >
+                </hyt-dashboard-view>
+
             </div>
 
         </div>
 
         <div id="newStatus" *ngSwitchCase="PageStatus.New" class="row align-items-center justify-content-center">
             <!-- New -->
-
             <div class="mt-5 no-dashboards">
 
                 <div id="content-no-dashboards" class="col-md-12">
@@ -109,7 +104,7 @@
                     <!-- <h4 id="subtitle-no-dashboards">Start adding widgets.</h4> -->
                 </div>
 
-                <hyt-dashboard-view [dashboard]="currentDashboard"></hyt-dashboard-view>
+                <!-- <hyt-dashboard-view [dashboard]="currentDashboard"></hyt-dashboard-view> -->
 
             </div> <!-- End No Projects Row -->
 
@@ -128,25 +123,3 @@
     </div>
 
 </div>
-
-<hyt-confirm-recording-action 
-    class="hyt-modal-general" 
-    id="hyt-modal-recording-confirm-action" 
-    textBodyModal="You are about to put the data saving in Play / Pause" 
-    (modalClose)="changeRecordingState($event)"
->
-</hyt-confirm-recording-action> <!-- @I18N@ -->
-
-<hyt-info-recording-action 
-    class="hyt-modal-general" 
-    id="hyt-modal-recording-info-action" 
-    (modalClose)="infoRecordingState($event)"
->
-</hyt-info-recording-action>
-
-<hyt-confirm-recording-action 
-    class="hyt-modal-general" 
-    id="hyt-modal-reload-recording-confirm" 
-    textBodyModal="You are about to reboot data saving" 
-    (modalClose)="reloadRecording($event)">
-</hyt-confirm-recording-action> <!-- @I18N@ -->

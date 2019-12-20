@@ -1,11 +1,12 @@
-import { Component, OnInit, ViewEncapsulation, OnDestroy, ViewChild } from '@angular/core';
-import { DashboardConfigService } from './dashboard-config.service';
-import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
-import { Dashboard, HProject } from '@hyperiot/core';
+import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
-import { DashboardViewComponent } from './dashboard-view/dashboard-view.component';
+import { HytModalService } from '@hyperiot/components';
+import { Dashboard, HProject } from '@hyperiot/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { HytModalConfService } from 'src/app/services/hyt-modal-conf.service';
+import { DashboardConfigService } from './dashboard-config.service';
+import { DashboardViewComponent } from './dashboard-view/dashboard-view.component';
 
 enum PageStatus {
   Loading = 0,
@@ -58,8 +59,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   recordStateInLoading = true;
 
-  recordReloading = false;
-
   updateRecordingInterval;
 
   upTimeSec;
@@ -67,20 +66,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
   constructor(
     private dashboardConfigService: DashboardConfigService,
     private route: Router,
-    private hytModalService: HytModalConfService
+    private hytModalService: HytModalConfService,
+    private hytModalServiceNew: HytModalService
   ) {
 
   }
 
   ngOnInit() {
-
-    // if(localStorage.getItem("DASHBOARDTOSAVE")){
-    //   let toSave = localStorage.getItem("DASHBOARDTOSAVE");
-    //   localStorage.removeItem("DASHBOARDTOSAVE");
-    //   let idToSave = toSave.split("_")[0];
-    //   toSave = JSON.parse(toSave);
-    //   this.dashboardConfigService.putConfig(+idToSave, toSave);
-    // }
 
     this.dashboardConfigService.getProjectsList()
       .pipe(takeUntil(this.ngUnsubscribe))
@@ -257,99 +249,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
     );
   }
 
-  changeRecordingState(event) {
-
-    if (event === true) {
-      this.recordStateInLoading = true;
-
-      if (this.dataRecordingIsOn) {
-        this.dashboardConfigService.postRecordingStateOff(this.idProjectSelected)
-        .pipe(takeUntil(this.ngUnsubscribe))
-        .subscribe(
-          res => {
-            this.dataRecordingIsOn = !this.dataRecordingIsOn;
-            this.recordStateInLoading = false;
-            this.upTimeSec = undefined;
-          },
-          error => {
-            console.error(error);
-            this.recordStateInLoading = false;
-          }
-        );
-      } else {
-        this.dashboardConfigService.postRecordingStateOn(this.idProjectSelected)
-        .pipe(takeUntil(this.ngUnsubscribe))
-        .subscribe(
-          res => {
-            this.dataRecordingIsOn = !this.dataRecordingIsOn;
-            this.recordStateInLoading = false;
-          },
-          error => {
-            console.error(error);
-            this.recordStateInLoading = false;
-          }
-        );
-      }
-
-    }
-  }
-
-  infoRecordingState(event) {
-    if (event === true) {
-      this.openModal('hyt-modal-recording-confirm-action');
-    }
-  }
-
-  reloadRecording(event) {
-    if (event === true) {
-      this.recordReloading = true;
-      this.recordStateInLoading = true;
-
-      this.dashboardConfigService.postRecordingStateOn(this.idProjectSelected)
-      .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe(
-        res => {
-          this.dataRecordingIsOn = true;
-          this.recordStateInLoading = false;
-          this.recordReloading = false;
-          this.upTimeSec = undefined;
-        },
-        error => {
-          console.error(error);
-          this.dataRecordingIsOn = false;
-          this.recordStateInLoading = false;
-          this.recordReloading = false;
-          this.upTimeSec = undefined;
-        }
-      );
-    }
-  }
-
   /**
    * Method that save the current Dashboard
    */
   saveDashboard() {
     this.dashboardView.saveDashboard();
-  }
-
-  // addWidget() {
-  //   this.dashboardView.navigateToAddWidget();
-  // }
-
-  openRecordingActionModal() {
-    if (!this.recordReloading && !this.recordStateInLoading) {
-      if (this.dataRecordingIsOn) {
-        this.hytModalService.open('hyt-modal-recording-info-action');
-      } else {
-        this.hytModalService.open('hyt-modal-recording-confirm-action');
-      }
-    }
-  }
-
-  openReloadRecordingModal() {
-    if (!this.recordReloading && !this.recordStateInLoading) {
-      this.openModal('hyt-modal-reload-recording-confirm');
-    }
   }
 
   openModal(id: string) {
@@ -407,15 +311,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
             if (a.entityModifyDate < b.entityModifyDate) { return 1; }
             return 0;
           });
-          // console.log(this.hProjectListOptions)
 
           this.dashboardList.sort((a, b) => {
             if (a.entityModifyDate > b.entityModifyDate) { return -1; }
             if (a.entityModifyDate < b.entityModifyDate) { return 1; }
             return 0;
           });
-
-          // console.log(this.dashboardList)
 
           if (this.dashboardList.length > 0 && this.hProjectListOptions.length > 0) {
 
@@ -426,7 +327,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
             }
             this.pageStatus = PageStatus.Standard;
-            // console.log(this.idProjectSelected)
 
           } else if (this.dashboardList.length === 0 && this.hProjectListOptions.length > 0) {
 
