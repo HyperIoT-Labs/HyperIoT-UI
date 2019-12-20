@@ -18,8 +18,6 @@ import { DashboardViewComponent } from './dashboard-view/dashboard-view.componen
 import { DashboardComponent } from './dashboard.component';
 import { DashboardsListComponent } from './dashboards-list/dashboards-list.component';
 import { DynamicWidgetComponent } from './dynamic-widget/dynamic-widget.component';
-import { ConfirmRecordingActionComponent } from './modals/confirm-recording-action/confirm-recording-action.component';
-import { InfoRecordingActionComponent } from './modals/info-recording-action/info-recording-action.component';
 import { TimelineComponent } from './timeline/timeline.component';
 import { EventsLogSettingsComponent } from './widget-settings-dialog/events-log-settings/events-log-settings.component';
 import { PacketSelectComponent } from './widget-settings-dialog/packet-select/packet-select.component';
@@ -29,9 +27,6 @@ import { TextLabelSettingsComponent } from './widget-settings-dialog/text-label-
 import { TimeChartSettingsComponent } from './widget-settings-dialog/time-chart-settings/time-chart-settings.component';
 import { WidgetSettingsDialogComponent } from './widget-settings-dialog/widget-settings-dialog.component';
 import { WidgetsLayoutComponent } from './widgets-layout/widgets-layout.component';
-
-import { MyTelInputComponent } from '../../test/my-tel-input/my-tel-input.component';
-import { DashboardComponent } from './dashboard.component';
 import { SharedComponentsModule } from 'src/app/components/shared-components/shared-components.module';
 
 @NgModule({
@@ -50,8 +45,6 @@ import { SharedComponentsModule } from 'src/app/components/shared-components/sha
     TimeChartSettingsComponent,
     MyTelInputComponent,
     DashboardComponent,
-    ConfirmRecordingActionComponent,
-    InfoRecordingActionComponent,
     TimelineComponent
   ],
   imports: [
@@ -66,7 +59,7 @@ import { SharedComponentsModule } from 'src/app/components/shared-components/sha
     WidgetsModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
     SharedComponentsModule
   ],
   providers: [
