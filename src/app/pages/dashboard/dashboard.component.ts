@@ -215,6 +215,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.streamIsOn = !this.streamIsOn;
   }
 
+  changeTopologyState(event) {
+    this.dataRecordingIsOn = event.dataRecordingIsOn;
+    this.upTimeSec = event.upTimeSec;
+  }
+
   updateToplogyStatus() {
     this.dashboardConfigService.getRecordingStatus(this.idProjectSelected)
     .pipe(takeUntil(this.ngUnsubscribe))

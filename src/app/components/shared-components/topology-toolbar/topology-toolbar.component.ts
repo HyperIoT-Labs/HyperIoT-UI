@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewEncapsulation, AfterContentChecked } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation, AfterContentChecked, Output, EventEmitter } from '@angular/core';
 import { HytModalService } from '@hyperiot/components';
 import { Subject } from 'rxjs';
 import { ConfirmRecordingActionComponent } from './../../modals/confirm-recording-action/confirm-recording-action.component';
@@ -17,6 +17,8 @@ export class TopologyToolbarComponent implements OnInit {
   @Input() dataRecordingIsOn: boolean;
   @Input() upTimeSec: boolean;
   @Input() recordStateInLoading: boolean;
+
+  @Output() recordingStateChange: EventEmitter<any> = new EventEmitter();
 
   recordReloading = false;
 
@@ -120,6 +122,8 @@ export class TopologyToolbarComponent implements OnInit {
     if (data.upTimeSec && data.upTimeSec === 0) {
       this.upTimeSec = undefined;
     }
+
+    this.recordingStateChange.emit(data);
   }
 
 }
