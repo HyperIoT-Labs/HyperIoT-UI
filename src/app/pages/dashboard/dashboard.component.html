@@ -33,7 +33,8 @@
                             [dataRecordingIsOn]="dataRecordingIsOn"
                             [upTimeSec]="upTimeSec"
                             [idProjectSelected]="idProjectSelected"
-                            [recordStateInLoading]="recordStateInLoading">
+                            [recordStateInLoading]="recordStateInLoading"
+                            (recordingStateChange)="changeTopologyState($event)">
                         </hyt-topology-toolbar>
 
                     </div>
