@@ -199,30 +199,21 @@ export class ProjectDetailComponent implements OnInit {
           });
           // Add tags, categories and areas
           const tags: TreeDataNode = {
-            data: {
-              id: -1,
-              type: 'tags'
-            },
+            data: { type: 'tags' },
             name: 'Tags',
             icon: 'icon-hyt_tags',
             visible: true,
             children: []
           };
           const categories: TreeDataNode = {
-            data: {
-              id: -2,
-              type: 'categories'
-            },
+            data: { type: 'categories' },
             name: 'Categories',
             icon: 'icon-hyt_categories',
             visible: true,
             children: []
           };
           const areas: TreeDataNode = {
-            data: {
-              id: -3,
-              type: 'areas'
-            },
+            data: { type: 'areas' },
             name: 'Areas',
             icon: 'icon-hyt_tags',
             visible: true,
@@ -250,27 +241,15 @@ export class ProjectDetailComponent implements OnInit {
 
   onNodeClick(node) {
     if (node.data && node.data.type) {
-      if (node.data.type === 'tags' || node.data.type === 'categories' || node.data.type === 'areas') {
-        this.router.navigate(
-          [{ outlets: { projectDetails: node.data.type } }],
-          { relativeTo: this.activatedRoute }
-        ).then((success) => {
-          if (!success) {
-            // reposition on last selected node if navigation is cancelled
-            this.treeView.setActiveNode(this.currentNode);
-          }
-        });
-      } else {
-        this.router.navigate(
-          [{ outlets: { projectDetails: [node.data.type, node.data.id] } }],
-          { relativeTo: this.activatedRoute }
-        ).then((success) => {
-          if (!success) {
-            // reposition on last selected node if navigation is cancelled
-            this.treeView.setActiveNode(this.currentNode);
-          }
-        });
-      }
+      this.router.navigate(
+        [{ outlets: { projectDetails: node.data.id ? [node.data.type, node.data.id] : node.data.type } }],
+        { relativeTo: this.activatedRoute }
+      ).then((success) => {
+        if (!success && this.currentNode) {
+          // reposition on last selected node if navigation is cancelled
+          this.treeView.setActiveNode(this.currentNode);
+        }
+      });
     } else {
       this.router.navigate(
         ['./', { outlets: { projectDetails: null } }],

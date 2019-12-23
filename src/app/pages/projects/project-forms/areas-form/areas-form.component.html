@@ -1,1 +1,45 @@
-<p>areas-form works!</p>
+<!-- Main areas list -->
+<div *ngIf="!areaId">
+
+    <h3>Main areas list</h3>
+
+    <div *ngFor="let area of areaList" class="area-item" [routerLink]="[area.id]" routerLinkActive="router-link-active">
+        <h4>{{area.name}}</h4>
+        <p>{{area.description}}</p>
+    </div>
+
+</div>
+
+<!-- Area detail form -->
+<div [ngClass]="{ hidden: !entity || entity.id == null }">
+
+    // <strong>TODO:</strong> show breadcrumbs with current areas path
+
+    <form [formGroup]="form" class="d-flex flex-column justify-content-center">
+
+        <hyt-input-text [form]="form"
+            name="area-name"
+            i18n-placeholder="@@HYT_name"
+            placeholder="HYT_name"
+            errorPosition="bottom"
+            minlength="3"
+            [injectedErrorMsg]="getError('area-name')"
+            i18n-hintMessage="@@HYT_hint_area_name"
+            hintMessage="HYT_hint_area_name"
+            [isRequired]="true"></hyt-input-text>
+        
+        <hyt-text-area [form]="form"
+            name="area-description"
+            [injectedErrorMsg]="getError('area-description')"
+            i18n-hintMessage="@@HYT_hint_area_description"
+            hintMessage="HYT_hint_area_description"
+            i18n-placeholder="@@HYT_description"
+            placeholder="HYT_description"></hyt-text-area>
+
+    </form>
+
+    // <strong>TODO:</strong> upload image form
+    <br/>
+    // <strong>TODO:</strong> show sub-areas list (direct children)
+
+</div>

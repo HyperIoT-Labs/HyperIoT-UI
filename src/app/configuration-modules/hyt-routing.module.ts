@@ -178,6 +178,12 @@ const hyperiotRoutes: Routes = [
         path: 'areas',
         component: AreasFormComponent,
         outlet: 'projectDetails'
+      },
+      {
+        canDeactivate: [CanDeactivateGuard],
+        path: 'areas/:areaId',
+        component: AreasFormComponent,
+        outlet: 'projectDetails'
       }
     ],
     data: {
