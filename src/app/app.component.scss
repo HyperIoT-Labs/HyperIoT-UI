@@ -27,8 +27,6 @@ html {
 
   body {
     height: 100%;
-    // position: relative;
-    // overflow: hidden;
 
     &.hyt-modal-open {
       overflow: hidden;
@@ -39,12 +37,9 @@ html {
     }
 
     #hyt-container {
-      // position: relative;
-      // height: 100%;
 
       #hyt-container-topbar {
-        // z-index: 1;
-        // width: 100%;
+        
         position: fixed;
         z-index: 1002;
         top: 0;

@@ -3,6 +3,7 @@ import { Component, OnInit, Input, ViewEncapsulation, Output, EventEmitter } fro
 import { HProject, HprojectsService } from '@hyperiot/core';
 import { MatDialog } from '@angular/material';
 import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
+import { HytModalService } from '@hyperiot/components';
 
 @Component({
   selector: 'hyt-project-card',
@@ -19,7 +20,7 @@ export class ProjectCardComponent implements OnInit {
   rulesCount = 0;
   activeTimeout;
 
-  constructor( private dialog: MatDialog, private projectService: HprojectsService ) { }
+  constructor( private dialog: HytModalService, private projectService: HprojectsService ) { }
 
   ngOnInit() {
     /* Find All Device */
@@ -45,10 +46,11 @@ export class ProjectCardComponent implements OnInit {
   openDeleteDialog() {
 
     const dialogRef = this.dialog.open(DeleteConfirmDialogComponent, {
-      data: {title: 'Are you sure you want to delete the project?', message: 'This operation cannot be undone.'}
-    });
+      title: 'Are you sure you want to delete the project?', message: 'This operation cannot be undone.'
+      }
+    );
 
-    dialogRef.afterClosed().subscribe(
+    dialogRef.onClosed.subscribe(
       (result) => {
 
         if ( result === 'delete') {
