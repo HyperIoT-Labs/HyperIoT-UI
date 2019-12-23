@@ -197,6 +197,38 @@ export class ProjectDetailComponent implements OnInit {
               };
             });
           });
+          // Add tags, categories and areas
+          const tags: TreeDataNode = {
+            data: {
+              id: -1,
+              type: 'tags'
+            },
+            name: 'Tags',
+            icon: 'icon-hyt_tags',
+            visible: true,
+            children: []
+          };
+          const categories: TreeDataNode = {
+            data: {
+              id: -2,
+              type: 'categories'
+            },
+            name: 'Categories',
+            icon: 'icon-hyt_categories',
+            visible: true,
+            children: []
+          };
+          const areas: TreeDataNode = {
+            data: {
+              id: -3,
+              type: 'areas'
+            },
+            name: 'Areas',
+            icon: 'icon-hyt_tags',
+            visible: true,
+            children: []
+          };
+          projectNode.children.push(...[tags, categories, areas]);
           this.treeView.setData(this.treeData);
           if (this.treeView.treeControl.dataNodes.length > 0) {
             this.treeView.treeControl.expand(this.treeView.treeControl.dataNodes[0]);
@@ -218,7 +250,7 @@ export class ProjectDetailComponent implements OnInit {
 
   onNodeClick(node) {
     if (node.data && node.data.type) {
-      if (node.data.type === 'tags' || node.data.type === 'categories') {
+      if (node.data.type === 'tags' || node.data.type === 'categories' || node.data.type === 'areas') {
         this.router.navigate(
           [{ outlets: { projectDetails: node.data.type } }],
           { relativeTo: this.activatedRoute }
