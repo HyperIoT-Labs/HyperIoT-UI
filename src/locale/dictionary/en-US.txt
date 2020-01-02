@@ -32,6 +32,28 @@ HYT_home_message_1
 For now the page is empty but if you want you can view your projects by clicking the button below
 HYT_go_to_your_projects
 Go to your Projects
+HYT_widget_settings_apply
+Apply
+HYT_widget_settings_cancel
+Cancel
+HYT_data_recording
+Data recording
+HYT_attention
+Attention!
+HYT_dashboard_end_registration
+Proceeding with this action you will disable the registration of the data and they will not be stored until the rehabilitation of this property
+HYT_next
+Next
+HYT_back
+Back
+HYT_name
+Name
+HYT_hint_area_name
+@@I18N@@
+HYT_hint_area_description
+@@I18N@@
+HYT_description
+Description
 HYT_toolbar_settings
 Settings
 HYT_toolbar_refresh
@@ -44,8 +66,6 @@ HYT_common_not_configured
 Click 'Settings' button to configure.
 HYT_widget_settings_title
 Widget Settings
-HYT_name
-Name
 HYT_type
 Type
 HYT_apply
@@ -64,8 +84,6 @@ HYT_widget_add_quantity
 Quantity
 HYT_widget_info_type
 Type
-HYT_description
-Description
 HYT_widget_info_intro
 Select one or more widgets to add in the dashboard.. etc... etc..
 HYT_add
@@ -82,8 +100,6 @@ HYT_widget_settings_select_fields
 Select {multiPacketSelect?1:0, plural, =0 {campo} other {campi}}
 HYT_button_add
 Add
-HYT_data_recording_on_off
-{{(dataRecordingIsOn)?'Data recording on':'Data recording off'}}
 HYT_signal_is_on
 {{(signalIsOn)?'Online':'Offline'}}
 HYT_stream_is_on
@@ -94,20 +110,6 @@ HYT_page_is_loading
 Page is loading...
 HYT_no_dashboard_yet
 You have not configured any dashboard yet.
-HYT_widget_settings_apply
-Apply
-HYT_widget_settings_cancel
-Cancel
-HYT_data_recording
-Data recording
-HYT_attention
-Attention!
-HYT_dashboard_end_registration
-Proceeding with this action you will disable the registration of the data and they will not be stored until the rehabilitation of this property
-HYT_next
-Next
-HYT_back
-Back
 HYT_password_reset_1
 Need to reset your password?
 HYT_password_reset_2
@@ -200,12 +202,6 @@ HYT_password_recovery_3
 Check in your Email!
 HYT_password_recovery_4
 We just emailed you with the instructions to reset your password
-HYT_edit
-Edit
-HYT_duplicate
-Duplicate
-HYT_delete
-Delete
 HYT_hint_project_name
 Enter the project name.
 HYT_hint_project_description
@@ -266,20 +262,20 @@ HYT_mqtt_url
 MQTT Url
 HYT_mqtt_topic
 MQTT Topic
-HYT_device
-Device
 HYT_hint_field_name
 Enter the field name.
-HYT_hint_field_description
-Enter the field description.
 HYT_hint_field_type
 Select field type.
+HYT_hint_field_description
+Enter the field description.
 HYT_multiplicity
 Multiplicity
 HYT_hint_select_measure_type
 Select measurement type.
 HYT_hint_select_measure_unit
 Select measure unit.
+HYT_device
+Device
 HYT_packet
 Packet
 HYT_field
@@ -288,8 +284,8 @@ HYT_condition
 Condition
 HYT_value
 Value
-HYT_remove
-Remove
+HYT_title_categories
+Categories
 HYT_hint_rule_name
 Enter the rule name
 HYT_rule_type
@@ -314,12 +310,6 @@ HYT_output_data
 Event output
 HYT_update
 Update
-HYT_pw_deactivation_modal
-You will lose any unsaved modifiction if you leave the page
-HYT_OK
-OK
-HYT_CANCEL
-CANCEL
 HYT_add_new_project
 Add new project
 HYT_project_list
@@ -338,12 +328,12 @@ HYT_loading_project_tree
 Loading project tree
 HYT_error_project_tree
 Error loading project tree
+HYT_delete
+Delete
 HYT_string_device
 Device{{ deviceCount == 1 ? '' : 's' }}
 HYT_string_rule
 Rule{{ rulesCount == 1 ? '' : 's' }}
-HYT_title_categories
-Categories
 HYT_definition_of_terms
 Definition of terms
 HYT_congratulations
@@ -428,10 +418,6 @@ HYT_project_definition
 Project definition...
 HYT_project_long_definition
 Project long definition...
-HYT_device_displaylistname
-Devices
-HYT_device_form_title
-Device
 HYT_device_shotrt_definition
 Device short definition...
 HYT_device_definition
