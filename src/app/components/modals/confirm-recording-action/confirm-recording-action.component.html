@@ -1,0 +1,116 @@
+<div [ngSwitch]="topologyActionState" id="hyt-modal-confirm-recording-action" class="dialog">
+
+    <div *ngSwitchCase="0" class="container-fluid">
+        <div id="header-row" class="row">
+            <div class="col-12 action-header">
+                <h2>Data recording</h2>
+                <!--@I18N-->
+            </div>
+        </div> <!-- END HEADER ROW -->
+        <div id="body-row" class="row">
+            <div class="col-12 dialog-body">
+                <p>
+                    {{data.textBodyModal}}
+                </p>
+                <!--@I18N-->
+            </div>
+        </div> <!-- END BODY ROW -->
+        <div id="footer-row" class="row">
+            <div class="col-6">
+                <hyt-button [color]="'hyt-base-total-green'" (clickFn)="confirm()">
+                    <span class="hyt-icon icon-hyt_valid"></span> 
+                    <span i18n="@@HYT_widget_settings_apply">HYT_widget_settings_apply</span>
+                </hyt-button>
+            </div>
+            <div class="col-6">
+                <hyt-button [color]="'hyt-base-total-red'" (clickFn)="close()">
+                    <span class="hyt-icon icon-hyt_cancelC"></span>
+                    <span i18n="@@HYT_widget_settings_cancel">HYT_widget_settings_cancel</span> 
+                </hyt-button>
+            </div>
+        </div> <!-- END FOOTER ROW -->
+    </div>
+
+    <div *ngSwitchCase="1" id="case-request-to-on" class="container-fluid">
+        <div id="header-row" class="row">
+            <div class="col-12 action-header">
+                <h2>Loading request</h2>
+                <!--@I18N-->
+            </div>
+        </div>
+        <div id="body-row" class="row">
+            <div class="col-12 dialog-body">
+                <img src="assets/images/rocket.svg">
+                <div [ngSwitch]="topologyRequestState" id="text-request-state">
+                    <span *ngSwitchCase="0">Loading</span>
+                    <span *ngSwitchCase="1">Submitting...</span>
+                    <span *ngSwitchCase="2">Submitting failed</span>
+                    <span *ngSwitchCase="3">Connecting...</span>
+                    <span *ngSwitchCase="4">Connecting failed</span>
+                    <span *ngSwitchCase="5">Starting...</span>
+                    <span *ngSwitchCase="6">Starting failed</span>
+                    <span *ngSwitchCase="7">Started!</span>
+                </div>
+                <div class="wrapper-progressbar">
+                    <ul class="progressbar">
+                        <li class="{{(topologyRequestState > 2)?'active':''}} {{(topologyRequestState == 2)?'failed':''}}">Submit</li>
+                        <li class="{{(topologyRequestState > 4)?'active':''}} {{(topologyRequestState  == 4)?'failed':''}}">Connect</li>
+                        <li class="{{(topologyRequestState > 6)?'active':''}} {{(topologyRequestState  == 6)?'failed':''}}">Start</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="topologyRequestState == 2 || topologyRequestState == 4 || topologyRequestState == 6; else emptyFooter" id="footer-row" class="row">
+            <div class="col-6">
+                <hyt-button [color]="'hyt-base-total-green'" (clickFn)="confirm()">
+                    <span class="hyt-icon icon-hyt_valid"></span> 
+                    <span>Try again</span>
+                </hyt-button>
+            </div>
+            <div class="col-6">
+                <hyt-button [color]="'hyt-base-total-red'" (clickFn)="cancel()">
+                    <span class="hyt-icon icon-hyt_cancelC"></span>
+                    <span >Close</span> 
+                </hyt-button>
+            </div>
+        </div>
+    </div>
+
+    <div *ngSwitchCase="2">
+        <div id="header-row" class="row">
+            <div class="col-12 action-header">
+                <h2>Data recording</h2>
+                <!--@I18N-->
+            </div>
+        </div> <!-- END HEADER ROW -->
+        <div id="body-row" class="row">
+            <div class="col-12 dialog-body">
+                <div [ngSwitch]="topologyRequestState" id="text-request-state">
+                    <p *ngSwitchCase="-1">Request failed</p>
+                    <p *ngSwitchCase="1">Loading to off...</p>
+                    <p *ngSwitchCase="7">Completed</p>
+                </div>
+                <!--@I18N-->
+            </div>
+        </div> <!-- END BODY ROW -->
+        <div *ngIf="topologyRequestState == -1; else emptyFooter" id="footer-row" class="row">
+            <div class="col-6">
+                <hyt-button [color]="'hyt-base-total-green'" (clickFn)="confirm()">
+                    <span class="hyt-icon icon-hyt_valid"></span> 
+                    <span>Try again</span>
+                </hyt-button>
+            </div>
+            <div class="col-6">
+                <hyt-button [color]="'hyt-base-total-red'" (clickFn)="cancel()">
+                    <span class="hyt-icon icon-hyt_cancelC"></span>
+                    <span >Close</span> 
+                </hyt-button>
+            </div>
+        </div>
+    </div>
+
+    <ng-template #emptyFooter>
+        <div id="footer-row" class="row"></div>
+    </ng-template>
+
+</div>

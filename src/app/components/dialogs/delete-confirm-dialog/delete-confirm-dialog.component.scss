@@ -1,9 +1,94 @@
-h1 {
-    font-weight: 500;
-}
-.btn-left {
-    transform: translate(-20px, 0);
-}
-.btn-right {
-    transform: translate(20px, 0);
+#container-cancel-modal {
+
+    width: 600px;
+
+    .dialog-header {
+
+        background-color: #e60000;
+        padding: 8px 10px;
+        color: #fff;
+        text-align: center;
+        font-size: 1.3em;
+        position: relative;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+      
+        span {
+      
+          &.icon-hyt_cancelC {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            font-size: 1.3em;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #fff;
+      
+            &:hover {
+              color: #002456;
+            }
+      
+          }
+      
+        }
+      
+    }
+
+    .dialog-body {
+
+        background-color: #fff;
+        padding: 30px;
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
+        text-align: center;
+        font-size: 1.2em;
+
+        #container-btn {
+
+            display: flex;
+            justify-content: space-between;
+            
+        margin-top: 30px;
+
+            #btn-right,
+            #btn-left {
+
+                width: 49%;
+
+            }
+
+            #btn-left {
+
+                span {
+
+                    &.icon-hyt_arrowLeft {
+
+                        font-size: 1.4em;
+                        vertical-align: text-top;
+
+                    }
+
+                }
+
+            }
+
+            #btn-right {
+
+                span {
+
+                    &.icon-hyt_trash {
+
+                        font-size: 1.2em;
+                        vertical-align: text-top;
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    }
+
 }

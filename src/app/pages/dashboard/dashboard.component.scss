@@ -28,131 +28,40 @@
     #container-dashboard {
         padding-top: 20px;
 
-        #row-recording {
-            margin-bottom: 15px;
-            font-size: .9em;
-
-            .recording {
-                padding-bottom: 12px;
-                padding-top: 12px;
-                max-width: 96%;
-                margin-left: auto;
-                margin-right: auto;
-                border-radius: 8px;
-
-                &.inLoading {
-
-                    &.on,
-                    &.off {
-                        border: 0.5px solid gray;
-                        background-color: rgb(230, 230, 230);
-                    }
-                    
-                    span {
-                        &.recOn,
-                        &.recOff {
-
-                            svg {
-                                fill: gray;
-                            }
-    
-                        }
-                    }
-
-                }
-
-                &.on {
-                    border: 0.5px solid #00800078;
-                    background-color: rgba(55, 169, 29, 0.07);
-                }
-
-                &.off {
-                    border: 0.5px solid #a89c0063;
-                    background-color: rgba(255, 239, 0, 0.11);
-                }
-
-                span {
-
-                    vertical-align: middle;
-
-                    &#icon-recording {
-                        margin-right: 10px;
-                        // cursor: pointer;
-
-                        svg {
-                            width: 20px;
-                            height: 20px;
-                        }
-                    }
-
-                    &#play-pause-btn {
-                        margin-left: 10px;
-                        cursor: pointer;
-                        font-size: 1.5em;
-                    }
-
-                    &.recOn {
-
-                        svg {
-                            animation-duration: 1s;
-                            animation-name: recOn;
-                            animation-iteration-count: infinite;
-                        }
-
-                    }
-
-                    &.recOff {
-
-                        svg {
-                            fill: black;
-                        }
-
-                    }
-
-                }
-
-                #reload-btn {
-                    float: right;
-                    text-align: center;
-                    cursor: pointer;
-                    text-transform: uppercase;
-
-                    &:hover {
-                        color: #008aff;
-                    }
-
-                    span {
-                        display: block;
-                        font-size: 1.5em;
-                        margin-bottom: 0.15em;
-
-                        &.reloading {
-                            animation-duration: 1.5s;
-                            animation-name: recording;
-                            animation-iteration-count: infinite;
-                        }
-                    }
-
-                    p {
-                        margin-bottom: 0;
-                        margin-top: -5px;
-                        font-size: .8em;
-                    }
-
-                }
-
-            }
-
-        }
-
         #tools-dashboard-box {
             max-width: 96%;
             margin-left: auto;
             margin-right: auto;
             // padding: .6em .8em .6em .8em;
             padding-top: 10px;
+            padding-bottom: 8px;
             border-radius: .8em;
             box-shadow: 0 2px 6px 0px rgba(0, 0, 0, 0.2);
+
+            &.inLoading {
+
+                #signal-btn,
+                #play-btn,
+                #add-widget-btn {
+                    
+                    color: #cccccc;
+                    cursor: default;
+
+                }
+
+
+            }
+
+            &:not(.inLoading) {
+
+                #signal-btn,
+                #play-btn,
+                #add-widget-btn {
+                    &:hover {
+                        color: #008aff;
+                    }
+                }
+            }
 
             .left-tools {
 
@@ -170,11 +79,7 @@
                     cursor: pointer;
                     text-transform: uppercase;
                     width: 4em;
-                    height: 4em;
-
-                    &:hover {
-                        color: #008aff;
-                    }
+                    height: 3.2em;
 
                     span {
                         font-size: 2.3em;
@@ -185,6 +90,10 @@
                         margin-bottom: 0;
                         margin-top: -5px;
                         font-size: .8em;
+                        -moz-user-select: none;
+                        -webkit-user-select: none;
+                        -ms-user-select: none;
+                        user-select: none;
                     }
 
                 }
@@ -192,7 +101,23 @@
             }
 
             .right-tools {
-                // text-align: right;
+
+                hyt-select {
+                    
+                    mat-form-field {
+
+                        font-family: 'Exo';
+
+
+                        mat-select {
+
+                            font-family: 'Exo';
+
+                        }
+
+                    }
+
+                }
 
                 #add-widget-btn, 
                 #save-dashboard-btn {
@@ -202,12 +127,8 @@
                     cursor: pointer;
                     text-transform: uppercase;
 
-                    &:hover {
-                        color: #008aff;
-                    }
-
                     span {
-                        font-size: 2.0em;
+                        font-size: 2.2em;
                         display: block;
                     }
 
@@ -215,6 +136,10 @@
                         margin-bottom: 0;
                         margin-top: -2px;
                         font-size: .8em;
+                        -moz-user-select: none;
+                        -webkit-user-select: none;
+                        -ms-user-select: none;
+                        user-select: none;
                     }
 
                 }
@@ -225,8 +150,24 @@
 
         #standardStatus{
 
+            position: relative;
+
+            #dashboard-overlay-blurred {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                z-index: 1;
+                text-align: center;
+                padding-top: 80px;
+            }
+
             #container-box-dashboard {
                 margin-top: 20px;
+
+                &.blurred-animation {
+                    filter: blur(5px);
+                    animation: blurredAnimation .5s ease-in-out;
+                }
             }
     
         }
@@ -284,30 +225,24 @@
   
 }
 
-@keyframes recording {
+mat-option {
 
-    from {
-      transform: rotate(0deg);
-    }
-    
-    to {
-     transform: rotate(360deg);
+    &.mat-option {
+
+        font-family: 'Exo';
+
     }
 
 }
 
-@keyframes recOn {
+@keyframes blurredAnimation {
 
     0% {
-      fill: #950404;
+        filter: blur(0px);
     }
     
-    50% {
-     fill: red;
-    }
-
     100% {
-        fill: #950404;
+        filter: blur(3px);
     }
 
 }

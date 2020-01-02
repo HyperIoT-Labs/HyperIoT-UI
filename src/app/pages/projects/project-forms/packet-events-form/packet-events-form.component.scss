@@ -2,6 +2,20 @@
 
   &.container {
     position: relative;
+    padding-top: 20px;
+
+    p {
+
+      &.subtitle-section {
+
+        font-size: .9em;
+        font-style: italic;
+        line-height: 25px;
+        margin-bottom: 30px;
+
+      }
+
+    }
 
     #events-edit-mode {
 
@@ -42,6 +56,57 @@
 
           }
 
+          hyt-input-text,
+          hyt-text-area {
+
+            mat-form-field {
+
+                font-family: 'Exo';
+
+            }
+
+        }
+
+        hyt-select {
+
+            mat-form-field {
+
+                width: 100%;
+
+                mat-select {
+
+                    font-family: 'Exo';
+
+                }
+
+            }
+
+        }
+
+        hyt-radio-button {
+
+            mat-radio-group {
+
+                mat-radio-button {
+
+                    &.mat-radio-button {
+
+                        font-family: 'Exo';
+
+                        .mat-radio-label-content {
+
+                            line-height: 27px;
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+
         }
 
       }
@@ -51,11 +116,6 @@
   }  
 
 }
-/*
-  margin-bottom: 10px;
-    color: #909090;
-    font-size: 0.98em;
-*/
 
 
 .overlay {
@@ -84,9 +144,6 @@
         margin-bottom: 5px;
         max-height: 178px;
         width: auto;
-        // animation-name: pulses;
-        // animation-duration: 1.5s;
-        // animation-iteration-count: infinite;
     }
     
     h4 {

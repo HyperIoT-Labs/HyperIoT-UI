@@ -18,8 +18,6 @@ import { DashboardViewComponent } from './dashboard-view/dashboard-view.componen
 import { DashboardComponent } from './dashboard.component';
 import { DashboardsListComponent } from './dashboards-list/dashboards-list.component';
 import { DynamicWidgetComponent } from './dynamic-widget/dynamic-widget.component';
-import { ConfirmRecordingActionComponent } from './modals/confirm-recording-action/confirm-recording-action.component';
-import { InfoRecordingActionComponent } from './modals/info-recording-action/info-recording-action.component';
 import { TimelineComponent } from './timeline/timeline.component';
 import { EventsLogSettingsComponent } from './widget-settings-dialog/events-log-settings/events-log-settings.component';
 import { PacketSelectComponent } from './widget-settings-dialog/packet-select/packet-select.component';
@@ -31,6 +29,7 @@ import { WidgetSettingsDialogComponent } from './widget-settings-dialog/widget-s
 import { WidgetsLayoutComponent } from './widgets-layout/widgets-layout.component';
 import { TimeAxisComponent } from './timeline/time-axis/time-axis.component';
 import { DatePickerComponent } from './timeline/date-picker/date-picker.component';
+import { SharedComponentsModule } from 'src/app/components/shared-components/shared-components.module';
 
 @NgModule({
   declarations: [
@@ -53,6 +52,7 @@ import { DatePickerComponent } from './timeline/date-picker/date-picker.componen
     TimelineComponent,
     TimeAxisComponent,
     DatePickerComponent
+    TimelineComponent
   ],
   imports: [
     CommonModule,
@@ -66,8 +66,8 @@ import { DatePickerComponent } from './timeline/date-picker/date-picker.componen
     WidgetsModule,
     MatFormFieldModule,
     MatInputModule,
-    MatSelectModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    SharedComponentsModule
   ],
   providers: [
     DashboardConfigService

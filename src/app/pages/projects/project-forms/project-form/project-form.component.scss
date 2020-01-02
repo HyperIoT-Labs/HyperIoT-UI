@@ -1,6 +1,19 @@
 #project-form {
     position: relative;
-    margin-top: 35px;
+    margin-top: 20px;
+
+    p {
+
+        &.subtitle-section {
+
+            font-size: .9em;
+            font-style: italic;
+            line-height: 25px;
+            margin-bottom: 30px;
+
+        }
+
+    }
 
     form {
         .form-group {
@@ -11,6 +24,15 @@
                         margin-bottom: 10px;
                     }
     
+                }
+
+                hyt-input-text, 
+                hyt-text-area {
+
+                    mat-form-field {
+                        font-family: 'Exo';
+                    }
+
                 }
             }
         }

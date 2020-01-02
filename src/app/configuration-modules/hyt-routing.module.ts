@@ -25,6 +25,7 @@ import { PacketEnrichmentFormComponent } from '../pages/projects/project-forms/p
 import { PacketStatisticsFormComponent } from '../pages/projects/project-forms/packet-statistics-form/packet-statistics-form.component';
 import { PacketEventsFormComponent } from '../pages/projects/project-forms/packet-events-form/packet-events-form.component';
 import { HomeComponent } from '../pages/home/home.component';
+import { AreasFormComponent } from '../pages/projects/project-forms/areas-form/areas-form.component';
 
 @Injectable()
 export class LoggedInGuard implements CanActivate {
@@ -170,6 +171,18 @@ const hyperiotRoutes: Routes = [
         canDeactivate: [CanDeactivateGuard],
         path: 'categories',
         component: CategoriesFormComponent,
+        outlet: 'projectDetails'
+      },
+      {
+        canDeactivate: [CanDeactivateGuard],
+        path: 'areas',
+        component: AreasFormComponent,
+        outlet: 'projectDetails'
+      },
+      {
+        canDeactivate: [CanDeactivateGuard],
+        path: 'areas/:areaId',
+        component: AreasFormComponent,
         outlet: 'projectDetails'
       }
     ],

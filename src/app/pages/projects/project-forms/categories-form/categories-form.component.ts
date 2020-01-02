@@ -1,4 +1,4 @@
-import { Component, OnInit, Injector, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Injector, ViewChild, ElementRef, ViewEncapsulation } from '@angular/core';
 import { ProjectFormEntity } from '../project-form-entity';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { TreeNodeCategory, HytModalService } from '@hyperiot/components';
@@ -13,7 +13,8 @@ import { AddCetegoryModalComponent } from './add-cetegory-modal/add-cetegory-mod
 @Component({
   selector: 'hyt-categories-form',
   templateUrl: './categories-form.component.html',
-  styleUrls: ['./categories-form.component.scss']
+  styleUrls: ['./categories-form.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class CategoriesFormComponent extends ProjectFormEntity implements OnInit {
 

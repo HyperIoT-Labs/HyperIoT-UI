@@ -1,23 +1,65 @@
-<div id="add-category-modal" class="dialog-container" style="width: 400px;">
+<div id="add-category-modal" class="dialog-container">
+
     <div class="dialog-header">
-        <span>Category</span>
+        <span>{{(data.mode=='add')?'Add':'Edit'}} Category</span>
         <span class="hyt-icon icon-hyt_cancelC" (click)="close()"></span>
     </div>
 
     <div class="dialog-body">
 
         <form [formGroup]="categoryForm" (ngSubmit)="submitCategory()">
+
             <hyt-input-text [form]="categoryForm" formControlName="name" name="name" placeholder="Category name"
                 [isRequired]="true" [injectedErrorMsg]="nameError" [fieldValue]="nameValue">
             </hyt-input-text>
             <!--@I18N-->
-            <ng-container *ngIf="pageStatus == -2">{{nameError}}</ng-container>
-            <hyt-button type="submit" color="primary" [isDisabled]="notValid() || pageStatus == 0">
-                {{(data.mode=='add')?'Add':'Update'}}
-            </hyt-button>
-            <!--@I18N-->
-            <ng-container *ngIf="pageStatus == 0">Loading</ng-container>
-            <!--TODO replace with spinner-->
+
+            <div id="container-btn">
+
+                <hyt-button 
+                    type="submit" 
+                    [color]="'hyt-base-total-white'"
+                    [isDisabled]="notValid() || pageStatus == 0"
+                > 
+                    {{(data.mode=='add')?'Add':'Update'}}
+                    <span 
+                        class="hyt-icon" 
+                        [ngClass]="{'icon-hyt_plusC' : data.mode == 'add', 'icon-hyt_reload' : data.mode != 'add'}"
+                    ></span>
+
+                </hyt-button>
+                <!--@I18N-->
+
+            </div>
+
+            <ng-container *ngIf="pageStatus == 0"> 
+                
+                <div id="container-loading">
+
+                    <!-- Loading... -->
+
+                    <div class="spinner">
+                        <div class="rect1"></div>
+                        <div class="rect2"></div>
+                        <div class="rect3"></div>
+                        <div class="rect4"></div>
+                        <div class="rect5"></div>
+                    </div>
+
+                </div>
+
+            </ng-container>
+
+            <ng-container *ngIf="pageStatus == -2"> 
+                
+                <div id="container-error">
+                    
+                    {{nameError}}
+
+                </div>
+
+            </ng-container>
+
         </form>
 
     </div>

@@ -1,6 +1,19 @@
 #container-packet-field {
     min-height: 200px;
-    padding-top: 35px;
+    padding-top: 20px;
+
+    p {
+
+        &.subtitle-section {
+
+            font-size: .9em;
+            font-style: italic;
+            line-height: 25px;
+            margin-bottom: 30px;
+
+        }
+
+    }
 
     hyt-tree-view-editable {
         width: 100%;

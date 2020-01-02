@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, Injector } from '@angular/core';
-import { HytModal } from 'src/app/services/hyt-modal';
+import { HytModal, HytModalService } from '@hyperiot/components';
 
 @Component({
   selector: 'hyt-info-recording-action',
@@ -8,24 +8,18 @@ import { HytModal } from 'src/app/services/hyt-modal';
 })
 export class InfoRecordingActionComponent extends HytModal {
 
-  @Input() id: string;
-
-  @Output() modalClose: EventEmitter<any> = new EventEmitter<any>();
-
   constructor(
-    injector: Injector
+    hytModalService: HytModalService
   ) {
-    super(injector);
+    super(hytModalService);
   }
 
   next(event) {
-    this.modalClose.emit(true);
-    this.close();
+    this.close(event);
   }
 
   back(event) {
-    this.modalClose.emit(false);
-    this.close();
+    this.close(event);
   }
 
 }

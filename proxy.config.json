@@ -83,5 +83,11 @@
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
+  },
+  "/hyperiot/areas/*": {
+    "target": "http://localhost:8181",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
   }
 }
