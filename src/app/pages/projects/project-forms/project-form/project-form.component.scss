@@ -51,7 +51,7 @@
             display: flex;
             align-items: flex-end;
 
-            background-image: url('../../../../../assets/images/hyperiot_logo_single_char.png');
+            background-image: url('~/assets/images/hyperiot_logo_single_char.png');
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center center;
@@ -61,9 +61,6 @@
                 margin-bottom: 5px;
                 max-height: 178px;
                 width: auto;
-                // animation-name: pulses;
-                // animation-duration: 1.5s;
-                // animation-iteration-count: infinite;
             }
             
             h4 {
