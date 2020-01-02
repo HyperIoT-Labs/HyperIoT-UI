@@ -30,6 +30,8 @@ import { WidgetsLayoutComponent } from './widgets-layout/widgets-layout.componen
 import { TimeAxisComponent } from './timeline/time-axis/time-axis.component';
 import { DatePickerComponent } from './timeline/date-picker/date-picker.component';
 import { SharedComponentsModule } from 'src/app/components/shared-components/shared-components.module';
+import { ConfirmRecordingActionComponent } from 'src/app/components/modals/confirm-recording-action/confirm-recording-action.component';
+import { InfoRecordingActionComponent } from 'src/app/components/modals/info-recording-action/info-recording-action.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +53,7 @@ import { SharedComponentsModule } from 'src/app/components/shared-components/sha
     InfoRecordingActionComponent,
     TimelineComponent,
     TimeAxisComponent,
-    DatePickerComponent
+    DatePickerComponent,
     TimelineComponent
   ],
   imports: [
