@@ -1,10 +1,30 @@
-<!-- <div class="row">
-    <div class="col-md-6">Timeline</div>
-    <div class="col-md-6">
-        <input type="date" [(ngModel)]="startDate" name="startDate" />
-        <input type="date" [(ngModel)]="stopDate" name="stopDate" />
-        <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
-            <mat-button-toggle *ngFor="let time of timeRange" [value]="time.value">{{time.label}}</mat-button-toggle>
-        </mat-button-toggle-group>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-5">
+            <h2>Timeline</h2>
+            Seleziona tempo
+            <!-- {{timeStart | date:'dd/MM/yyyy HH:mm'}} - 
+            {{timeStop | date:'dd/MM/yyyy HH:mm'}} -->
+        </div>
+        <div class="col-7">
+
+            <hyt-select label="Seleziona tempo" [options]="timeOptions" (changeFn)="timeSelectionChanged($event)">
+            </hyt-select>
+
+            <div *ngIf="customSelection">
+                <hyt-date-picker (customTime)="submitTime($event)"></hyt-date-picker>
+            </div>
+
+            <mat-button-toggle-group name="fontStyle" aria-label="Font Style" [value]="domainInterval">
+                <mat-button-toggle *ngFor="let time of timeRange" [value]="time.value" (change)="rangeChanged($event)">
+                    {{time.label}}</mat-button-toggle>
+            </mat-button-toggle-group>
+        </div>
+        <div id="chartBox" class="col-12">
+            <button (click)="timeBack()">
+                <<</button> <hyt-time-axis #timeAxis>
+                    </hyt-time-axis>
+                    <button (click)="timeForward()">>></button>
+        </div>
     </div>
-</div> -->
+</div>

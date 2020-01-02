@@ -29,6 +29,8 @@ import { TextLabelSettingsComponent } from './widget-settings-dialog/text-label-
 import { TimeChartSettingsComponent } from './widget-settings-dialog/time-chart-settings/time-chart-settings.component';
 import { WidgetSettingsDialogComponent } from './widget-settings-dialog/widget-settings-dialog.component';
 import { WidgetsLayoutComponent } from './widgets-layout/widgets-layout.component';
+import { TimeAxisComponent } from './timeline/time-axis/time-axis.component';
+import { DatePickerComponent } from './timeline/date-picker/date-picker.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +50,9 @@ import { WidgetsLayoutComponent } from './widgets-layout/widgets-layout.componen
     DashboardComponent,
     ConfirmRecordingActionComponent,
     InfoRecordingActionComponent,
-    TimelineComponent
+    TimelineComponent,
+    TimeAxisComponent,
+    DatePickerComponent
   ],
   imports: [
     CommonModule,

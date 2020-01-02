@@ -1,0 +1,5 @@
+<input type="datetime-local" [ngModel]="customTimeStart | date:'yyyy-MM-ddTHH:mm'" name="customTimeStart"
+[value]="customTimeStart | date:'yyyy-MM-ddTHH:mm'" (ngModelChange)="timeStartChanged($event)">
+<input type="datetime-local" [ngModel]="customTimeStop | date:'yyyy-MM-ddTHH:mm'" name="customTimeStop"
+[value]="customTimeStop | date:'yyyy-MM-ddTHH:mm'" (ngModelChange)="timeStopChanged($event)">
+<button (click)="submitCustomTime()">Submit Time</button>
