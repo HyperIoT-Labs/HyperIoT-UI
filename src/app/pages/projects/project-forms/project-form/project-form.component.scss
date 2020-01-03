@@ -16,7 +16,19 @@
     }
 
     form {
+
+        &.blurred {
+
+            -webkit-filter: blur(1px);
+            -moz-filter: blur(1px);
+            -ms-filter: blur(1px);
+            -o-filter: blur(1px);    
+            filter: blur(1px);
+            
+        }
+
         .form-group {
+
             &.row {
                 hyt-input-text {
                     
@@ -40,27 +52,50 @@
 
     .overlay {
         position: absolute;
-        background-color: rgba(255,255,255,.75);
+        background-color: rgba(255, 255, 255, .50);
         left: 0; top: 0; right: 0; bottom: 0;
 
         .loading-logo {
-            height: 63%;
+            
             position: relative;
-            // top: -30px;
             text-align: center;
             display: flex;
             align-items: flex-end;
+            justify-content: center;
 
-            background-image: url('~/assets/images/hyperiot_logo_single_char.png');
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center center;
+            &.display-logo {
 
-            img {
-                height: 100%;
-                margin-bottom: 5px;
-                max-height: 178px;
-                width: auto;
+                height: 63%;
+                width: 100%;
+                
+                background-repeat: no-repeat;
+                background-position: top center;
+                background-image: url('~/assets/images/hyperiot_logo_single_char_animated.svg');
+
+                &.big-bg {
+
+                    background-size: 220px;
+    
+                }
+
+                &.medium-bg {
+
+                    background-size: 170px;
+    
+                }
+
+                &.small-bg {
+
+                    background-size: 125px;
+    
+                }
+
+                &.x-small-bg {
+
+                    background-size: 90px;
+    
+                }
+
             }
             
             h4 {
@@ -71,17 +106,33 @@
         mat-progress-bar {
             max-width: 200px;
             margin: 8px;
-        }    
+        }
+
+        .error-overlay {
+
+            hyt-button {
+
+                margin: 20px auto 0px auto;
+
+                span {
+
+                    &.icon-hyt_cancelC {
+
+                        font-size: 1.3em;
+                        vertical-align: sub;
+                        margin-left: 5px;
+
+                    }
+
+                }
+
+            }
+
+        }
 
     }
 
 }
-
-// @keyframes pulses {
-//     0%   { width: 200px; }
-//     50%  { width: 230px; }
-//     100% { width: 200px; }
-//   }
 
 
 

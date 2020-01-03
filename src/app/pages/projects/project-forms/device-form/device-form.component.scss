@@ -20,6 +20,17 @@
     }
 
     form {
+        
+        &.blurred {
+
+            -webkit-filter: blur(1px);
+            -moz-filter: blur(1px);
+            -ms-filter: blur(1px);
+            -o-filter: blur(1px);    
+            filter: blur(1px);
+            
+        }
+
         .form-group {
 
             &.row {
@@ -58,28 +69,50 @@
 
     .overlay {
         position: absolute;
-        background-color: rgba(255,255,255,.75);
+        background-color: rgba(255, 255, 255, .50);
         left: 0; top: 0; right: 0; bottom: 0;
 
         .loading-logo {
-            height: 63%;
-            width: 100%;
+            
             position: relative;
             text-align: center;
             display: flex;
             align-items: flex-end;
             justify-content: center;
 
-            background-image: url('~/assets/images/hyperiot_logo_single_char_animated.svg');
-            background-size: 220px;
-            background-repeat: no-repeat;
-            background-position: top center;
+            &.display-logo {
 
-            img {
-                height: 100%;
-                margin-bottom: 5px;
-                max-height: 178px;
-                width: auto;
+                height: 63%;
+                width: 100%;
+                
+                background-repeat: no-repeat;
+                background-position: top center;
+                background-image: url('~/assets/images/hyperiot_logo_single_char_animated.svg');
+
+                &.big-bg {
+
+                    background-size: 220px;
+    
+                }
+
+                &.medium-bg {
+
+                    background-size: 170px;
+    
+                }
+
+                &.small-bg {
+
+                    background-size: 125px;
+    
+                }
+
+                &.x-small-bg {
+
+                    background-size: 90px;
+    
+                }
+
             }
             
             h4 {

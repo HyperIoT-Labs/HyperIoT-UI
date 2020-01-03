@@ -1,4 +1,4 @@
-import { Component, OnDestroy, ViewChild, ElementRef, Injector, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, ViewChild, ElementRef, Injector, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { Subscription, Observable } from 'rxjs';
@@ -53,6 +53,7 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
     private hPacketService: HpacketsService,
     private rulesService: RulesService,
     private activatedRoute: ActivatedRoute,
+    private cdr : ChangeDetectorRef,
     private i18n: I18n
   ) {
     super(injector, i18n, formView);
