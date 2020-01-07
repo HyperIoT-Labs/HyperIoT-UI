@@ -6,6 +6,7 @@
     <div *ngFor="let area of areaList" class="area-item" [routerLink]="[area.id]" routerLinkActive="router-link-active">
         <h4>{{area.name}}</h4>
         <p>{{area.description}}</p>
+        <p>{{area.imagePath}}</p>
     </div>
 
 </div>
@@ -15,7 +16,7 @@
 
     // <strong>TODO:</strong> show breadcrumbs with current areas path
 
-    <form [formGroup]="form" class="d-flex flex-column justify-content-center">
+    <form [formGroup]="form" enctype="multipart/form-data" class="d-flex flex-column justify-content-center">
 
         <hyt-input-text [form]="form"
             name="area-name"
@@ -38,8 +39,26 @@
 
     </form>
 
-    // <strong>TODO:</strong> upload image form
-    <br/>
-    // <strong>TODO:</strong> show sub-areas list (direct children)
+    <mat-tab-group>
+
+        <mat-tab label="Map devices">
+            // TODO: area map component
+            <br>
+            <input
+                name="area-image"
+                (change)="onFileChange($event)"
+                type="file" placeholder="Upload file" accept=".jpg,.png,.svg">
+        </mat-tab>
+
+        <mat-tab label="Inner areas ({{ areaList.length }})">
+            <div *ngFor="let area of areaList">
+                <a [routerLink]="[ '/projects/', projectId, {outlets: { projectDetails: ['areas', area.id ] } } ]">
+                    {{area.name}}
+                </a>    
+            </div>    
+            <hyt-button (clickFn)="onAddSubAreaClick($event)">Add sub-area</hyt-button>
+        </mat-tab>
+
+    </mat-tab-group>
 
 </div>
