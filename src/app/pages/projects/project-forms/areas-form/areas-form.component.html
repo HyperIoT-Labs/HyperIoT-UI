@@ -1,62 +1,108 @@
 <!-- Main areas list -->
-<div *ngIf="!areaId">
+<div *ngIf="!editMode" class="content">
 
-    <h3>Main areas list</h3>
+    <div class="overview">
+        Lorem ipsum dolor sit amet, consectetur adipisci elit, sed do eiusmod tempor incidunt ut labore et dolore magna
+        aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullamco laboriosam, nisi ut aliquid ex ea commodi
+        consequatur. Duis aute irure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
+        sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
+        <!--@I18N@-->
+    </div>
 
-    <div *ngFor="let area of areaList" class="area-item" [routerLink]="[area.id]" routerLinkActive="router-link-active">
-        <h4>{{area.name}}</h4>
-        <p>{{area.description}}</p>
-        <p>{{area.imagePath}}</p>
+    <div class="actions">
+        <hyt-button 
+            mat-mini-fab 
+            [color]="'hyt-base-default-white'"
+            [routerLink]="[ '/projects/', projectId, {outlets: { projectDetails: ['areas', 0 ] } } ]">
+            Add area <span class="hyt-icon icon-hyt_plusC"></span>
+        </hyt-button>
+        <!--@I18N@-->
+    </div>
+    
+    <div class="d-flex flex-row flex-wrap">
+        <mat-card *ngFor="let area of areaList"
+            class="area-item mat-elevation-z2"
+            [routerLink]="[area.id]">
+            <mat-card-header>
+                <mat-card-title>{{area.name}}</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>{{area.description}}</mat-card-content>
+        </mat-card>
     </div>
 
 </div>
 
 <!-- Area detail form -->
-<div [ngClass]="{ hidden: !entity || entity.id == null }">
+<div [ngClass]="{ hidden: !editMode }" class="content">
 
-    // <strong>TODO:</strong> show breadcrumbs with current areas path
+    <div class="current-path">
+        <label>PATH:</label>
+        <a [routerLink]="[ '/projects/', projectId, {outlets: { projectDetails: ['areas'] } } ]">Main</a>
+        <span *ngFor="let area of areaPath; let i = index; let c = count">
+            &nbsp;&gt;&nbsp;
+            <a *ngIf="i < c - 1" [routerLink]="[ '/projects/', projectId, {outlets: { projectDetails: ['areas', area.id ] } } ]">{{area.name}}</a>    
+            <span *ngIf="i === c - 1">{{area.name}}</span>
+        </span>
+    </div>
 
-    <form [formGroup]="form" enctype="multipart/form-data" class="d-flex flex-column justify-content-center">
+    <mat-tab-group [(selectedIndex)]="currentSection">
 
-        <hyt-input-text [form]="form"
-            name="area-name"
-            i18n-placeholder="@@HYT_name"
-            placeholder="HYT_name"
-            errorPosition="bottom"
-            minlength="3"
-            [injectedErrorMsg]="getError('area-name')"
-            i18n-hintMessage="@@HYT_hint_area_name"
-            hintMessage="HYT_hint_area_name"
-            [isRequired]="true"></hyt-input-text>
+        <mat-tab [label]="areaId === 0 ? 'New area' : 'Info'">
+            <form [formGroup]="form" enctype="multipart/form-data" class="mt-4 d-flex flex-column justify-content-center">
+
+                <hyt-input-text [form]="form"
+                    name="area-name"
+                    i18n-placeholder="@@HYT_name"
+                    placeholder="HYT_name"
+                    errorPosition="bottom"
+                    minlength="3"
+                    [injectedErrorMsg]="getError('area-name')"
+                    i18n-hintMessage="@@HYT_hint_area_name"
+                    hintMessage="HYT_hint_area_name"
+                    [isRequired]="true"></hyt-input-text>
+                
+                <hyt-text-area [form]="form"
+                    name="area-description"
+                    [injectedErrorMsg]="getError('area-description')"
+                    i18n-hintMessage="@@HYT_hint_area_description"
+                    hintMessage="HYT_hint_area_description"
+                    i18n-placeholder="@@HYT_description"
+                    placeholder="HYT_description"></hyt-text-area>
         
-        <hyt-text-area [form]="form"
-            name="area-description"
-            [injectedErrorMsg]="getError('area-description')"
-            i18n-hintMessage="@@HYT_hint_area_description"
-            hintMessage="HYT_hint_area_description"
-            i18n-placeholder="@@HYT_description"
-            placeholder="HYT_description"></hyt-text-area>
-
-    </form>
-
-    <mat-tab-group>
-
-        <mat-tab label="Map devices">
-            // TODO: area map component
-            <br>
-            <input
-                name="area-image"
-                (change)="onFileChange($event)"
-                type="file" placeholder="Upload file" accept=".jpg,.png,.svg">
+            </form>                    
         </mat-tab>
 
-        <mat-tab label="Inner areas ({{ areaList.length }})">
-            <div *ngFor="let area of areaList">
-                <a [routerLink]="[ '/projects/', projectId, {outlets: { projectDetails: ['areas', area.id ] } } ]">
-                    {{area.name}}
-                </a>    
-            </div>    
-            <hyt-button (clickFn)="onAddSubAreaClick($event)">Add sub-area</hyt-button>
+        <mat-tab *ngIf="areaId > 0" label="Map">
+            <div class="mt-4">
+
+                <input
+                    name="area-image"
+                    (change)="onFileChange($event)"
+                    type="file" placeholder="Upload file" accept=".jpg,.png,.svg">
+
+                <div class="mt-4">
+                    // TODO: integrate area map component
+                </div>
+
+            </div>
+        </mat-tab>
+
+        <mat-tab *ngIf="areaId > 0" label="Inner areas ({{ areaList.length }})">
+            <div class="actions">
+                <hyt-button mat-mini-fab (clickFn)="onAddSubAreaClick($event)">
+                    Add inner area <span class="hyt-icon icon-hyt_plusC"></span>
+                </hyt-button>
+            </div>
+            <div class="mt-4 mb-4 d-flex flex-row flex-wrap">
+                <mat-card *ngFor="let area of areaList"
+                    class="area-item mat-elevation-z2"
+                    [routerLink]="[ '/projects/', projectId, {outlets: { projectDetails: ['areas', area.id ] } } ]">
+                    <mat-card-header>
+                        <mat-card-title>{{area.name}}</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>{{area.description}}</mat-card-content>
+                </mat-card>
+            </div>
         </mat-tab>
 
     </mat-tab-group>

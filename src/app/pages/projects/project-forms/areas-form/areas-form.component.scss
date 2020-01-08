@@ -1,6 +1,30 @@
+.content {
+    padding: 16px;
+    padding-top: 0;
+}
+.overview {
+    font-size: 0.9em;
+    font-style: italic;
+    line-height: 25px;
+}
+.actions {
+    margin-top: 16px;
+    margin-bottom: 16px;
+    text-align: center;
+}
 .area-item {
-    border: solid 1px;
-    border-radius: 6px;
-    padding: 6px;
-    margin: 6px;
+    cursor: pointer;
+    outline: none;
+    width: 180px;
+    height: 180px;
+    overflow: hidden;
+    margin: 8px;
+}
+.current-path {
+    font-size: 90%;
+    text-transform: uppercase;
+}
+.current-path label {
+    font-weight: bold;
+    margin-right: 8px;
 }

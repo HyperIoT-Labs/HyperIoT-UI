@@ -24,7 +24,7 @@ import { AccountButtonComponent } from './components/topbar/account-button/accou
 
 // angular-material
 import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule, MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS, MatTabsModule } from '@angular/material';
+import { MatButtonModule, MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS, MatTabsModule, MatCardModule } from '@angular/material';
 
 // hyperiot
 import { Configuration, ConfigurationParameters, HyperiotClientModule } from '@hyperiot/core';
@@ -95,6 +95,7 @@ export function apiConfigFactory(): Configuration {
     MatButtonModule,
     MatDialogModule,
     MatTabsModule,
+    MatCardModule,
     CustomMaterialModule,
     DashboardModule,
     ReactiveFormsModule,
