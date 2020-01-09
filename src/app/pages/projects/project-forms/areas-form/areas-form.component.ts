@@ -50,42 +50,7 @@ export class AreasFormComponent extends ProjectFormEntity {
     });
   }
 
-  onFileChange(event) {
-    console.log('FILE CHANGED', event);
-    const reader = new FileReader();
-    if (event.target.files && event.target.files.length) {
-      const [file] = event.target.files;
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        this.form.patchValue({
-          imagePath: reader.result
-        });
-      };
-    }
-  }
-
-  onAddSubAreaClick(e) {
-    const a: Area = {
-      id: 0,
-      name: 'New area ' + new Date().getTime(),
-      description: 'New area description',
-      parentArea: { id: this.areaId, entityVersion: null },
-      entityVersion: null
-    };
-    // TODO:
-    // TODO: the 'project' field should be exposed in Area model by REST API
-    // TODO:
-    a['project'] = { id: this.projectId };
-    this.areaService.saveArea(a).subscribe(res => {
-      this.router.navigate(
-        [ '/projects/', this.projectId, {outlets: { projectDetails: ['areas', res.id ] } } ]
-      ).then((success) => {
-        // TODO: ?
-      });
-    });
-  }
-
-  public load() {
+  load() {
     this.loadingStatus = LoadingStatusEnum.Loading;
     this.currentSection = 0;
     this.areaList = [];
@@ -123,9 +88,54 @@ export class AreasFormComponent extends ProjectFormEntity {
       });
     }
   }
-
-  public save(successCallback: any, errorCallback: any) {
+  save(successCallback: any, errorCallback: any) {
     this.saveArea(successCallback, errorCallback);
+  }
+  delete(successCallback, errorCallback) {
+    this.deleteArea(successCallback, errorCallback);
+  }
+  cancel() {
+    this.resetForm();
+    this.router.navigate(
+      [ '/projects/', this.projectId, {outlets: { projectDetails: ['areas'] } } ]
+    ).then((success) => {
+      // TODO: ?
+    });
+  }
+
+  onFileChange(event) {
+    console.log('FILE CHANGED', event);
+    const reader = new FileReader();
+    if (event.target.files && event.target.files.length) {
+      const [file] = event.target.files;
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        this.form.patchValue({
+          imagePath: reader.result
+        });
+      };
+    }
+  }
+
+  onAddSubAreaClick(e) {
+    const a: Area = {
+      id: 0,
+      name: 'New area ' + new Date().getTime(),
+      description: 'New area description',
+      parentArea: { id: this.areaId, entityVersion: null },
+      entityVersion: null
+    };
+    // TODO:
+    // TODO: the 'project' field should be exposed in Area model by REST API
+    // TODO:
+    a['project'] = { id: this.projectId };
+    this.areaService.saveArea(a).subscribe(res => {
+      this.router.navigate(
+        [ '/projects/', this.projectId, {outlets: { projectDetails: ['areas', res.id ] } } ]
+      ).then((success) => {
+        // TODO: ?
+      });
+    });
   }
 
   private loadInnerAreas() {
@@ -156,8 +166,12 @@ export class AreasFormComponent extends ProjectFormEntity {
         this.resetForm();
         this.areaService.getAreaPath(res.id).subscribe((path) => {
           this.areaPath = path;
-          this.loadingStatus = LoadingStatusEnum.Ready;
         });
+        this.loadingStatus = LoadingStatusEnum.Ready;
+        successCallback && successCallback(res);
+      }, (err) => {
+        this.loadingStatus = LoadingStatusEnum.Error;
+        errorCallback && errorCallback(err);
       });
     } else {
       // Add new
@@ -168,7 +182,23 @@ export class AreasFormComponent extends ProjectFormEntity {
         ).then((success) => {
           // TODO: ?
         });
+        this.loadingStatus = LoadingStatusEnum.Ready;
+        successCallback && successCallback(res);
+      }, (err) => {
+        this.loadingStatus = LoadingStatusEnum.Error;
+        errorCallback && errorCallback(err);
       });
     }
+  }
+
+  private deleteArea(successCallback, errorCallback) {
+    // TODO: ....
+    this.areaService.deleteArea(this.areaId).subscribe((res) => {
+      this.loadingStatus = LoadingStatusEnum.Ready;
+      successCallback && successCallback(res);
+    }, (err) => {
+      errorCallback && errorCallback(err);
+      this.loadingStatus = LoadingStatusEnum.Error;
+    });
   }
 }
