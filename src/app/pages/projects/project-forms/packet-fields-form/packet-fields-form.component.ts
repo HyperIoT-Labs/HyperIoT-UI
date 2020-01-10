@@ -1,4 +1,4 @@
-import { Component, OnDestroy, ViewChild, ElementRef, Injector, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, ViewChild, ElementRef, Injector, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 
 import { Subscription, Observable } from 'rxjs';
@@ -20,6 +20,7 @@ import { I18n } from '@ngx-translate/i18n-polyfill';
   encapsulation: ViewEncapsulation.None
 })
 export class PacketFieldsFormComponent extends ProjectFormEntity implements OnDestroy {
+
   @ViewChild('treeViewFields', { static: false }) treeViewFields: HytTreeViewEditableComponent;
   @ViewChild('measureSelect', { static: false }) measureSelect: HytSelectComponent;
   private routerSubscription: Subscription;
@@ -77,6 +78,7 @@ export class PacketFieldsFormComponent extends ProjectFormEntity implements OnDe
     private unitConversionService: UnitConversionService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
+    private cdr: ChangeDetectorRef,
     private i18n: I18n
   ) {
     super(injector, i18n, formView);

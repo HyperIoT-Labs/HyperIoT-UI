@@ -40,7 +40,7 @@
                 </div>        
                 <div *ngIf="treeStatus == TreeStatus.Loading || treeStatus == TreeStatus.LoadingComplete" class="treeview mt-2 d-flex flex-column align-items-center justify-content-center">
                     <h4 i18n="@@HYT_loading_project_tree">HYT_loading_project_tree</h4>
-                    <mat-spinner></mat-spinner>
+                    <mat-spinner [strokeWidth] = 3 ></mat-spinner>
                 </div>
                 <div *ngIf="treeStatus == TreeStatus.Error" class="mt-2 treeview">
                     <h4 i18n="@@HYT_error_project_tree">HYT_error_project_tree</h4>

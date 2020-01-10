@@ -1,0 +1,14 @@
+<div class="item"
+    [ngStyle]="style"
+    cdkDrag
+    cdkDragBoundary=".example-boundary"
+    [cdkDragData]="itemData"
+    [cdkDragFreeDragPosition]="position"
+    (cdkDragMoved)="onDragMoved($event)"
+    (cdkDragEnded)="onDragEnded($event)"
+    (cdkDragReleased)="onDragReleased($event)">
+
+    <button class="remove-button" (click)="onRemoveButtonClick($event)">X</button>
+
+</div>
+

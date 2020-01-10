@@ -76,6 +76,22 @@
             width: 100%;
             min-width: 100%;
 
+            h4 {
+
+                margin-bottom: 35px;
+
+            }
+
+            mat-spinner {
+
+                circle {
+
+                    stroke: #b3e0fc;
+
+                }
+
+            }
+
             #editInWizardContent{
                 text-align: center;
                 margin-top: 25px;
@@ -109,7 +125,7 @@
                     padding-right: 13px;
                     color: #0956b6;
                     font-size: 1.8em;
-                    margin-bottom: 0px;
+                    margin-bottom: 0px      ;
                 }
             }
         }

@@ -15,6 +15,28 @@ import { Validators } from '@angular/forms';
   encapsulation: ViewEncapsulation.None
 })
 export class DeviceFormComponent extends ProjectFormEntity implements AfterViewInit, OnDestroy {
+
+  private overlayHeight: ElementRef;
+  showPreloader: boolean;
+  divHeight: number;
+
+  @ViewChild('overlayHeight', {static: false}) set content(content: ElementRef) {
+    
+    if(!content){
+
+      this.showPreloader = false;
+      return;
+
+    } else {
+      
+      this.showPreloader = true;
+      this.overlayHeight = content;
+      this.divHeight = this.overlayHeight.nativeElement.clientHeight;
+
+    }
+      
+  }
+
   entity: HDevice = {} as HDevice;
   entityFormMap = {
     'hdevice-devicename': {
@@ -65,6 +87,17 @@ export class DeviceFormComponent extends ProjectFormEntity implements AfterViewI
 
   ngAfterViewInit(): void {
 
+    // setTimeout(() => {
+
+    //   if(this.showPreloader) {
+
+    //     this.divHeight = this.overlayHeight.nativeElement.clientHeight;
+        
+    //   } 
+      
+    // }, 0);
+    
+
     this.routerSubscription = this.activatedRoute.params.subscribe(params => {
       if (params.deviceId) {
         this.id = params.deviceId;
@@ -74,7 +107,7 @@ export class DeviceFormComponent extends ProjectFormEntity implements AfterViewI
       }
       this.cdr.detectChanges();
     });
-
+    
   }
 
   ngOnDestroy() {
@@ -91,6 +124,19 @@ export class DeviceFormComponent extends ProjectFormEntity implements AfterViewI
 
   load() {
     this.loadingStatus = LoadingStatusEnum.Loading;
+
+    /******* VALUE LOADING OVERLAY *******/
+    
+    setTimeout(() => {
+
+      this.divHeight = this.overlayHeight.nativeElement.clientHeight;
+
+    }, 0);
+    
+    this.cdr.detectChanges();
+
+    /******* END VALUE LOADING OVERLAY *******/
+
     this.hDeviceService.findHDevice(this.id).subscribe((d: HDevice) => {
       // update form data
       this.edit(d);
@@ -230,6 +276,38 @@ export class DeviceFormComponent extends ProjectFormEntity implements AfterViewI
     } else {
       this.loadingStatus = LoadingStatusEnum.Error;
     }
+
+  }
+
+  getCustomClass() {
+
+    if(this.showPreloader) {
+
+      if(this.divHeight > 353) { /* BIG */
+        return 'loading-logo display-logo big-bg';
+      }
+  
+      if(this.divHeight >=  293 && this.divHeight <= 352) { /* MEDIUM */
+        return 'loading-logo display-logo medium-bg';
+      }
+  
+      if(this.divHeight >=  233 && this.divHeight <= 292) { /* SMALL */
+        return 'loading-logo display-logo small-bg';
+      }
+  
+      if(this.divHeight >=  182 && this.divHeight <= 232) { /* X-SMALL */
+        return 'loading-logo display-logo x-small-bg';
+      }
+  
+      if(this.divHeight < 182 ) { /* X-SMALL */
+        return '';
+      }
+
+    } else {
+      return '';
+    }
+
+    
 
   }
 

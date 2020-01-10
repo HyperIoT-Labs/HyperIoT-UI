@@ -113,8 +113,9 @@ export abstract class ProjectFormEntity implements OnInit {
             const keys = Object.keys(this.entityFormMap);
             keys.map((k) => {
                 const f = this.entityFormMap[k];
-                if (f.field)
+                if (f.field) {
                     entity[f.field] = f.default;
+                }
             });
         }
         return entity;

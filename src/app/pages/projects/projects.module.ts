@@ -52,6 +52,11 @@ import { CategoriesFormComponent } from './project-forms/categories-form/categor
 import { AddTagModalComponent } from './project-forms/tags-form/add-tag-modal/add-tag-modal.component';
 import { AddCetegoryModalComponent } from './project-forms/categories-form/add-cetegory-modal/add-cetegory-modal.component';
 
+import { AreaMapComponent } from './project-forms/areas-form/area-map/area-map.component';
+import { DraggableItemComponent } from './project-forms/areas-form/draggable-item/draggable-item.component';
+import { MapDirective } from './project-forms/areas-form/map.directive';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+
 @NgModule({
   declarations: [
     ProjectsComponent,
@@ -83,7 +88,10 @@ import { AddCetegoryModalComponent } from './project-forms/categories-form/add-c
     TagsFormComponent,
     CategoriesFormComponent,
     AddTagModalComponent,
-    AddCetegoryModalComponent
+    AddCetegoryModalComponent,
+    AreaMapComponent,
+    DraggableItemComponent,
+    MapDirective
   ],
   imports: [
     MatIconModule,
@@ -101,11 +109,13 @@ import { AddCetegoryModalComponent } from './project-forms/categories-form/add-c
     MatRippleModule,
     MatAutocompleteModule,
     MatInputModule,
-    MatExpansionModule
+    MatExpansionModule,
+    DragDropModule
   ],
   entryComponents: [
     AddTagModalComponent,
-    AddCetegoryModalComponent
+    AddCetegoryModalComponent,
+    DraggableItemComponent
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA

@@ -1,4 +1,4 @@
-import { Component, ElementRef, Injector, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, Injector, OnDestroy, OnInit, ViewChild, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SelectOption } from '@hyperiot/components';
@@ -70,6 +70,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
     private packetService: HpacketsService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
+    private cdr: ChangeDetectorRef,
     private i18n: I18n
   ) {
     super(injector, i18n, formView);
