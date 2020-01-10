@@ -115,7 +115,7 @@ export class TimelineComponent implements OnInit {
       setTimeout(() => {
         const data = this.fakeRequest();
         this.timeAxis.insertData(data);
-      }, 3000);
+      }, 1500);
     }
   }
 
