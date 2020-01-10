@@ -1,0 +1,30 @@
+:host {
+    position: absolute;
+}
+
+.item {
+    display: inline-flex;
+    position: relative;
+    width: 64px;
+    height: 64px;
+/*    background-color: rgba(255,255,255,0.9);
+    border-radius: 8px;
+    box-shadow: 0 0 12px 6px #00f; */
+    /* center the element */
+    margin-left: -32px;
+    margin-top: -32px;
+}
+
+.remove-button {
+    outline: none;
+    position: absolute;
+    right: -12px;
+    top: -12px;
+    font-size: 12px;
+    font-weight: bolder;
+    background-color: red;
+    color: white;
+    border-radius: 12px;
+    width: 24px;
+    height: 24px;
+}

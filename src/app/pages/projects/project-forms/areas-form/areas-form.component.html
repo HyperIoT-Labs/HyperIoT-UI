@@ -45,7 +45,7 @@
         </span>
     </div>
 
-    <mat-tab-group [(selectedIndex)]="currentSection">
+    <mat-tab-group [(selectedIndex)]="currentSection" (selectedTabChange)="onTabChange($event)">
 
         <mat-tab [label]="areaId === 0 ? 'New area' : 'Info'">
             <form [formGroup]="form" enctype="multipart/form-data" class="mt-4 d-flex flex-column justify-content-center">
@@ -80,7 +80,7 @@
                     (change)="onFileChange($event)"
                     type="file" placeholder="Upload file" accept=".jpg,.png,.svg">
 
-                <hyt-area-map></hyt-area-map>
+                <hyt-area-map #map></hyt-area-map>
 
             </div>
         </mat-tab>

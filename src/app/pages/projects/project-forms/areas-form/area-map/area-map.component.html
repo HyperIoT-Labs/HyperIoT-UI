@@ -1,4 +1,4 @@
-<div>
+<div class="m-4">
     <select [(ngModel)]="deviceIcon">
         <option value="motion-sensor.png">Motion Sensor</option>
         <option value="wind-sensor.png">Wind Sensor</option>
@@ -13,7 +13,7 @@
     <button (click)="onAddClick($event)" [disabled]="!deviceIcon">add</button>
 </div>
 
-<div class="example-boundary">
+<div class="example-boundary" #mapBoundary>
     <ng-template hytMapHost></ng-template>
 </div>
 

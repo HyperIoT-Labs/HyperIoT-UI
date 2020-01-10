@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { HytModalService } from '@hyperiot/components';
 import { ProjectFormEntity, LoadingStatusEnum } from '../project-form-entity';
 import { AreasService, HprojectsService, Area } from '@hyperiot/core';
+import { AreaMapComponent } from './area-map/area-map.component';
 
 @Component({
   selector: 'hyt-areas-form',
@@ -11,6 +12,9 @@ import { AreasService, HprojectsService, Area } from '@hyperiot/core';
   styleUrls: ['./areas-form.component.scss']
 })
 export class AreasFormComponent extends ProjectFormEntity {
+  @ViewChild('map', { static: false })
+  mapComponent: AreaMapComponent;
+
   entity = {} as Area;
   entityFormMap = {
     'area-name': {
@@ -136,6 +140,14 @@ export class AreasFormComponent extends ProjectFormEntity {
         // TODO: ?
       });
     });
+  }
+
+  onTabChange(e) {
+    if (this.currentSection === 1) {
+      // TODO: load map config and refresh map
+      console.log(this.mapComponent);
+      this.mapComponent.refresh();
+    }
   }
 
   private loadInnerAreas() {

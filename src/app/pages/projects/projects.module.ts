@@ -37,7 +37,8 @@ import {
   MatProgressSpinnerModule,
   MatProgressBarModule,
   MatMenuModule,
-  MatRippleModule
+  MatRippleModule,
+  MatTabsModule
 } from '@angular/material';
 import { MatExpansionModule } from '@angular/material/expansion';
 
@@ -52,6 +53,7 @@ import { CategoriesFormComponent } from './project-forms/categories-form/categor
 import { AddTagModalComponent } from './project-forms/tags-form/add-tag-modal/add-tag-modal.component';
 import { AddCetegoryModalComponent } from './project-forms/categories-form/add-cetegory-modal/add-cetegory-modal.component';
 
+import { AreasFormComponent } from './project-forms/areas-form/areas-form.component';
 import { AreaMapComponent } from './project-forms/areas-form/area-map/area-map.component';
 import { DraggableItemComponent } from './project-forms/areas-form/draggable-item/draggable-item.component';
 import { MapDirective } from './project-forms/areas-form/map.directive';
@@ -89,6 +91,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     CategoriesFormComponent,
     AddTagModalComponent,
     AddCetegoryModalComponent,
+    AreasFormComponent,
     AreaMapComponent,
     DraggableItemComponent,
     MapDirective
@@ -96,6 +99,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
   imports: [
     MatIconModule,
     MatButtonModule,
+    MatTabsModule,
     MatCardModule,
     MatProgressSpinnerModule,
     MatProgressBarModule,
