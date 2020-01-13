@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -65,6 +66,7 @@ import { SharedComponentsModule } from 'src/app/components/shared-components/sha
     MatFormFieldModule,
     MatInputModule,
     MatButtonToggleModule,
+    MatProgressBarModule,
     SharedComponentsModule
   ],
   providers: [

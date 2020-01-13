@@ -1,23 +1,17 @@
-// @import url(//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css);
-
 #hyt-account-button {
     font-family: "Exo";
 
-    /* The container <div> - needed to position the dropdown content */
     &.dropdown {
         position: relative;
         display: inline-block;
 
         &:hover {
 
-            /* Show the dropdown menu on hover */
             .dropdown-content{
                 display: block;
             }
             
-            /* Change the background color of the dropdown button when the dropdown content is shown */
             .dropbtn {
-                // color: #f1f1f1;
 
                 span {
 
@@ -33,10 +27,8 @@
             
         }
     
-        /* Style The Dropdown Button */
         .dropbtn {
             background: none;
-            // color: #f9f9f9;
             color: #1e58a5;
             padding: 10px;
             border: none;
@@ -47,12 +39,9 @@
             }
 
             &:hover {
-                
-                // background-color: #1e58a5;
 
                 span {
                     &.hyt-icon.icon-hyt_userCircle {
-                        // color: #95c4ff;
                         color: #ffffff;
                         background: #0956b6;
                     }
@@ -71,7 +60,6 @@
             }
         }
 
-        /* Dropdown Content (Hidden by Default) */
         .dropdown-content {
             display: none;
             position: absolute;
@@ -93,14 +81,12 @@
                     border-bottom: .5px solid #c7c7c7;
                 }
 
-                /* Links inside the dropdown */
                 a {
                     color: rgb(54, 54, 54);
                     padding: 15px 8px 12px 8px;
                     text-decoration: none;
                     display: block;
 
-                    /* Change color of dropdown links on hover */
                     &:hover {
                         color: white;
                         background-color: #1e58a5;
@@ -131,6 +117,24 @@
         }
 
         
+    }
+
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 991px) {
+
+    #hyt-account-button {
+
+        &.dropdown {
+
+            position: absolute;
+            top: 0px;
+            right: 10px;
+
+        }
+
     }
 
 }
