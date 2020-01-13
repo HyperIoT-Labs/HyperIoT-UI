@@ -24,7 +24,7 @@ import { AccountButtonComponent } from './components/topbar/account-button/accou
 
 // angular-material
 import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule, MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material';
+import { MatButtonModule, MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS, MatTabsModule, MatCardModule } from '@angular/material';
 
 // hyperiot
 import { Configuration, ConfigurationParameters, HyperiotClientModule } from '@hyperiot/core';
@@ -43,7 +43,6 @@ import { environment } from '../environments/environment';
 import { NotificationbarComponent } from './components/notificationbar/notificationbar.component';
 import { ConfirmRecordingActionComponent } from './components/modals/confirm-recording-action/confirm-recording-action.component';
 import { InfoRecordingActionComponent } from './components/modals/info-recording-action/info-recording-action.component';
-import { AreasFormComponent } from './pages/projects/project-forms/areas-form/areas-form.component';
 
 export class MyUrlSerializer extends DefaultUrlSerializer implements UrlSerializer {
   /** Converts a `UrlTree` into a url */
@@ -75,8 +74,7 @@ export function apiConfigFactory(): Configuration {
     HomeComponent,
     NotificationbarComponent,
     ConfirmRecordingActionComponent,
-    InfoRecordingActionComponent,
-    AreasFormComponent
+    InfoRecordingActionComponent
   ],
   // dynamically created components
   entryComponents: [
@@ -94,6 +92,8 @@ export function apiConfigFactory(): Configuration {
     MatIconModule,
     MatButtonModule,
     MatDialogModule,
+    MatTabsModule,
+    MatCardModule,
     CustomMaterialModule,
     DashboardModule,
     ReactiveFormsModule,
