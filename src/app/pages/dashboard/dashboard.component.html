@@ -71,7 +71,7 @@
         </div>
 
         <div id="standardStatus" *ngSwitchCase="PageStatus.Standard" class="row">
-            <!-- Standard style="display:none;"-->
+            <!-- Standard -->
             <div *ngIf="!dataRecordingIsOn && signalIsOn && !recordStateInLoading" id="dashboard-overlay-blurred" class="row no-gutters justify-content-center">
 
                 <div class="col-md-4">
@@ -87,7 +87,7 @@
 
             </div>
 
-            <div id="container-box-dashboard" class="col-12 {{(!dataRecordingIsOn && signalIsOn) ? 'blurred-animation' : ''}}"> <!--{{(!dataRecordingIsOn && signalIsOn) ? 'blurred-animation' : ''}}-->
+            <div id="container-box-dashboard" class="col-12 {{(!dataRecordingIsOn && signalIsOn) ? 'blurred-animation' : ''}}"> 
 
                 <hyt-dashboard-view 
                     [dashboard]="currentDashboard" 
