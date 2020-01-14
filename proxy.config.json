@@ -91,7 +91,7 @@
     "changeOrigin": true
   },
   "/hyperiot/hbaseconnectors/*": {
-    "target": "http://localhost:8181",
+    "target": "http://karaf-microservices-test.hyperiot.cloud",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
