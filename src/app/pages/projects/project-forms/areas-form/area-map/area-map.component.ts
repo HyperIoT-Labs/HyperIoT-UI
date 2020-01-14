@@ -1,6 +1,16 @@
-import { Component, OnInit, ComponentFactoryResolver, ViewChild, ComponentRef, ElementRef, HostListener } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ComponentFactoryResolver,
+  ViewChild,
+  ComponentRef,
+  ElementRef,
+  HostListener,
+  EventEmitter
+} from '@angular/core';
 import { DraggableItemComponent } from '../draggable-item/draggable-item.component';
 import { MapDirective } from '../map.directive';
+import { AreaDevice } from '@hyperiot/core';
 
 export class AreaDeviceConfig {
   id: number;
@@ -22,12 +32,15 @@ export class AreaConfig {
   templateUrl: './area-map.component.html',
   styleUrls: ['./area-map.component.scss']
 })
-export class AreaMapComponent implements OnInit {
+export class AreaMapComponent {
   @ViewChild(MapDirective, {static: true})
   mapContainer: MapDirective;
   @ViewChild('mapBoundary', {static: true})
   mapBoundary: ElementRef;
   deviceIcon = 'move-sensor.png';
+  // events
+  itemRemove = new EventEmitter<any>();
+  itemUpdate = new EventEmitter<any>();
 
   private mapComponents = [] as ComponentRef<DraggableItemComponent>[];
 
@@ -48,15 +61,14 @@ export class AreaMapComponent implements OnInit {
 
   constructor(private componentFactoryResolver: ComponentFactoryResolver) {}
 
-  ngOnInit() {
-    this.loadConfig();
-  }
-
-  onAddClick(e) {
+  addAreaDeviceItem(areaDevice: AreaDevice, icon: string) {
     const container = this.mapContainer.viewContainerRef.element.nativeElement.parentElement;
     const component = this.addItem();
     const cfg = new AreaDeviceConfig();
-    cfg.icon = this.deviceIcon;
+    cfg.id = areaDevice.id;
+    cfg.name = areaDevice.device.deviceName;
+    cfg.icon = icon;
+    cfg.position = { x: areaDevice.x, y: areaDevice.y };
     component.instance.setConfig(container, cfg);
     // TODO: should add component cfg to 'areaConfig.devices' as well
   }
@@ -70,6 +82,11 @@ export class AreaMapComponent implements OnInit {
     });
   }
 
+  setDevices(devices: AreaDeviceConfig[]) {
+    this.areaConfig.devices = devices;
+    this.loadConfig();
+  }
+
   addItem(): ComponentRef<DraggableItemComponent> {
     const componentFactory = this.componentFactoryResolver
       .resolveComponentFactory(DraggableItemComponent);
@@ -78,6 +95,10 @@ export class AreaMapComponent implements OnInit {
     // handle component removal
     component.instance.removeClicked.subscribe(() => {
       this.removeItem(component);
+    });
+    component.instance.positionChanged.subscribe(() => {
+      // TODO: update item position
+      this.updateItem(component);
     });
     this.mapComponents.push(component);
     return component;
@@ -88,6 +109,10 @@ export class AreaMapComponent implements OnInit {
     viewContainerRef.remove(idx);
     this.mapComponents.splice(this.mapComponents.indexOf(component), 1);
     // TODO: should remove it from 'areaConfig.devices' as well
+    this.itemRemove.emit(component.instance.itemData);
+  }
+  updateItem(component: ComponentRef<DraggableItemComponent>) {
+    this.itemUpdate.emit(component.instance.itemData);
   }
 
   refresh() {

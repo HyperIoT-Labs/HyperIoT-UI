@@ -8,6 +8,7 @@ import { CdkDrag } from '@angular/cdk/drag-drop';
 })
 export class DraggableItemComponent implements OnInit {
   removeClicked = new EventEmitter<any>();
+  positionChanged = new EventEmitter<any>();
   itemData: any = {
     position: { x: 0, y: 0}
   };
@@ -34,17 +35,16 @@ export class DraggableItemComponent implements OnInit {
   }
   onDragEnded(e) {
     const source: CdkDrag = e.source;
-    console.log('onDragEnded', e, source.getFreeDragPosition());
     const position = source.getFreeDragPosition();
     this.itemData.position = {
       x: position.x / this.container.clientWidth,
       y: position.y / this.container.clientHeight
     }
     this.refresh();
+    this.positionChanged.emit();
   }
   onRemoveButtonClick(e) {
-    console.log('onRemoveButtonClick', e);
-    this.removeClicked.emit(null);
+    this.removeClicked.emit();
   }
 
   setConfig(container: HTMLElement, itemData: any) {
