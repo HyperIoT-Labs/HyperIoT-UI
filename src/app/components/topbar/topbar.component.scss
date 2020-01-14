@@ -1,7 +1,5 @@
 #hyt-topbar {
     height: 64px;
-    // background-color: #0956B6;
-    // color: #fff;
 
     background-color: #fdfdfd;
     color: #0956B6;
@@ -15,9 +13,10 @@
     #logo-container {
         float: left;
         display: table;
-        width: 100%;
         max-width: 205px;
-        margin-left: -9px;
+        width: 180px;
+        margin-left: -7px;
+        margin-top: 2px;
 
         a {
             display: block;
@@ -40,4 +39,151 @@
     #main-container {
         float: right;
     }
+}
+
+/* HAMB BTN */
+.wrapper .icon{
+    margin:20px;
+}
+
+/* nav-icon-4 */
+.nav-icon-4{
+    width: 35px;
+    height: 30px;
+    margin: 10px 10px;
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+  }
+  .nav-icon-4 span{
+    background-color:#FFF;
+    position: absolute;
+    border-radius: 2px;
+    transition: .3s cubic-bezier(.8, .5, .2, 1.4);
+  }
+  .nav-icon-4 span:nth-child(1){
+    width: 100%;
+    height:  4px;
+    display: block;
+    top: 0px;
+    left: 0px;
+  }
+  .nav-icon-4 span:nth-child(2){
+    width: 100%;
+    height:  4px;
+    display: block;
+    top: 13px;
+    left: 0px;
+  }
+  .nav-icon-4 span:nth-child(3){
+    width: 100%;
+    height:  4px;
+    display: block;
+    bottom: 0px;
+    left: 0px;
+  }
+  .nav-icon-4:not(.open):hover span:nth-child(1){
+    width: 100%;
+    height:  4px;
+    display: block;
+    top: -2px;
+    left: 0px;
+    transition: .3s cubic-bezier(.8, .5, .2, 1.4);
+  }
+  .nav-icon-4:not(.open):hover span:nth-child(2){
+    width: 100%;
+    height:  4px;
+    display: block;
+    top: 13px;
+    left: 0px;
+    transition: .4s cubic-bezier(.8, .5, .2, 1.4);
+  }
+  .nav-icon-4:not(.open):hover span:nth-child(3){
+    width: 100%;
+    height:  4px;
+    display: block;
+    bottom: -2px;
+    left: 0px;
+    transition: .3s cubic-bezier(.8, .5, .2, 1.4);
+  }
+  .nav-icon-4.open {
+    transform: rotate(90deg);
+  }
+  .nav-icon-4.open span:nth-child(1){
+    left:3px;
+    top: 12px;
+    width: 30px;
+    transition: .3s cubic-bezier(.8, .5, .2, 1.4);
+    transform: rotate(90deg);
+    transition-delay: 150ms;
+  }
+  .nav-icon-4.open span:nth-child(2){
+    left:2px;
+    top: 20px;
+    width: 20px;
+    transition: .3s cubic-bezier(.8, .5, .2, 1.4);
+    transform: rotate(45deg);
+    transition-delay: 50ms;
+  }
+  .nav-icon-4.open span:nth-child(3){
+    left:14px;
+    top: 20px;
+    width: 20px;
+    transition: .3s cubic-bezier(.8, .5, .2, 1.4);
+    transform: rotate(-45deg);
+    transition-delay: 100ms;
+  }
+
+/* RESPONSIVE */
+
+@media (max-width: 991px) {
+
+    #hyt-topbar {
+
+        #hamburger-btn {
+
+            &.menu-mobile {
+
+                position: absolute;
+                top: 0px;
+                bottom: 0px;
+                left: 10px;
+                padding: 5px;
+                background-color: rebeccapurple;
+
+            }
+
+        }
+
+        #logo-container {
+
+            float: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            max-width: 100%;
+            height: 64px;
+            margin-top: 0px;
+
+            a {
+            
+                img{
+
+                    &#img-logo-hyt {
+
+                        height: 45px;
+                        width: auto;
+                        margin-top: 0px;
+
+                    }
+                    
+                }
+            
+            }
+
+        }
+
+    }
+
 }

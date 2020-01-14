@@ -40,6 +40,29 @@
 
   #container-projects {
 
+    #loadingStatus {
+
+      img {
+
+        &#animatedPreloaderImg {
+
+          width: 100%;
+          max-width: 250px;
+          margin-bottom: 40px;
+
+        }
+
+      }
+
+      mat-progress-bar {
+
+        width: 100%;
+        max-width: 300px;
+
+      }
+
+    }
+
     .no-projects {
 
       #content-no-projects, #btn-no-projects {
@@ -103,15 +126,8 @@
 
     }
 
-    #errorStatus, #loadingStatus {
+    #errorStatus {
       text-align: center;
-
-      h2 {
-        &#title-error-status, &#title-loading-status {
-          color: #0d416d;
-          font-size: 1.8em;
-        }
-      }
 
     }
 

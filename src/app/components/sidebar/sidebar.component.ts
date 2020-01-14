@@ -1,4 +1,6 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, HostListener, AfterViewInit, OnDestroy } from '@angular/core';
+import { ToggleSidebarService } from 'src/app/services/toggleSidebar/toggle-sidebar.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'hyt-sidebar',
@@ -6,24 +8,67 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
   styleUrls: ['./sidebar.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class SidebarComponent implements OnInit {
+export class SidebarComponent implements OnInit, AfterViewInit, OnDestroy {
 
   lastSelectedElement;
 
-  constructor() { }
+  public winInnerWidth: number;
 
-  ngOnInit() {
-  }
+  navIsOpen : boolean = false;
 
-  click(event) {
+  mobileBreakPoint: number = 991;
 
-    if (this.lastSelectedElement) {
-      this.lastSelectedElement.classList.remove('selected');
+  private subscriptionToggleMenu : Subscription;
+
+  constructor(private toggleSidebarService: ToggleSidebarService) { }
+
+  ngOnInit(): void {
+    
+    this.winInnerWidth = window.innerWidth;
+
+    if(this.winInnerWidth > this.mobileBreakPoint && this.navIsOpen === true) {
+
+      this.navIsOpen = this.toggleSidebarService.resetStatus();
+      
     }
 
-    event.classList.add('selected');
+  }
 
-    this.lastSelectedElement = event;
+  ngAfterViewInit(): void {
+    
+   this.subscriptionToggleMenu = this.toggleSidebarService.change.subscribe(
+      showSidebar => {
+
+        this.navIsOpen = showSidebar;
+
+      },
+      err => {
+
+        console.log('Errore: ', err);
+
+      }
+    );
+    
+  }
+
+  @HostListener('window:resize', ['$event'])
+  
+  onResize(event) {
+
+    this.winInnerWidth = event.target.innerWidth;
+
+    if(this.winInnerWidth > this.mobileBreakPoint && this.navIsOpen === true) {
+
+      this.navIsOpen = this.toggleSidebarService.resetStatus();
+
+    }
+
+  }
+
+  ngOnDestroy(): void {
+    
+    this.subscriptionToggleMenu.unsubscribe();
+
   }
 
 }

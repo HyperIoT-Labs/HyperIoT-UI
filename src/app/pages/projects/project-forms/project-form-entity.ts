@@ -8,6 +8,7 @@ import { SummaryList } from '../project-detail/generic-summary-list/generic-summ
 import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { EntitiesService } from 'src/app/services/entities/entities.service';
+import { HytModalService } from '@hyperiot/components';
 
 export enum LoadingStatusEnum {
     Ready,
@@ -45,6 +46,7 @@ export abstract class ProjectFormEntity implements OnInit {
     protected formBuilder: FormBuilder;
     protected dialog: MatDialog;
     protected entitiesService: EntitiesService;
+    protected hytDialogService: HytModalService;
 
     constructor(
         injector: Injector,
@@ -54,6 +56,7 @@ export abstract class ProjectFormEntity implements OnInit {
         this.formBuilder = injector.get(FormBuilder);
         this.dialog = injector.get(MatDialog);
         this.entitiesService = injector.get(EntitiesService);
+        this.hytDialogService = injector.get(HytModalService);
         this.i18nD = injector.get(I18n);
         this.form = this.formBuilder.group({});
     }
@@ -230,11 +233,11 @@ export abstract class ProjectFormEntity implements OnInit {
     }
 
     openDeleteDialog(successCallback?: any, errorCallback?: any) {
-        const dialogRef = this.dialog.open(DeleteConfirmDialogComponent, {
+        const dialogRef = this.hytDialogService.open(DeleteConfirmDialogComponent, {
             data: { title: this.i18nD('HYT_delete_item_question'), message: this.i18nD('HYT_operation_can_not_be_undone') }
             // TODO This translation does not work
         });
-        dialogRef.afterClosed().subscribe((result) => {
+        dialogRef.onClosed.subscribe((result) => {
             if (result === 'delete') {
                 this.delete(successCallback, errorCallback);
             }

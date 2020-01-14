@@ -22,14 +22,17 @@
 
   </div>
 
-  <div id="container-projects" [ngSwitch]="pageStatus">
+  <div id="container-projects" [ngSwitch]="pageStatus" class="container-fluid">
 
-    <div *ngSwitchCase="PageStatus.Loading">
-      <div class="mt-5 d-flex flex-column align-items-center justify-content-center">
-        <h2 i18n="@@HYT_page_is_loading">HYT_page_is_loading</h2>
-        <!-- Page is loading... -->
-      </div>
-    </div>
+    <div id="loadingStatus" *ngSwitchCase="PageStatus.Loading" class="mt-5 d-flex flex-column align-items-center justify-content-center">
+
+      <img id="animatedPreloaderImg" src="assets/images/hyperiot_logo_single_char_animated.svg" alt="Hyperiot Animated Logo"> <!-- @I18N@ -->
+      <h2 i18n="@@HYT_page_is_loading">HYT_page_is_loading</h2>
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar> 
+
+      <!-- Page is loading... -->
+      
+    </div> <!-- PageStatus.Loading -->
 
     <div id="standardStatus" *ngSwitchCase="PageStatus.Standard" class="row">
       <!-- Standard -->
@@ -104,9 +107,9 @@
 
       </div>
 
-    </div>
+    </div> <!-- PageStatus.Standard -->
 
-    <div *ngSwitchCase="PageStatus.New">
+    <div id="newStatus" *ngSwitchCase="PageStatus.New">
       <!-- New -->
 
       <div class="mt-5 no-projects">
@@ -126,17 +129,17 @@
 
       </div> <!-- End No Projects Row -->
 
-    </div>
+    </div> <!-- PageStatus.New -->
 
-    <div id="errorStatus" *ngSwitchCase="PageStatus.Error">
-      <div class="mt-5 d-flex flex-column align-items-center justify-content-center">
-        <h2 i18n="@@HYT_error_occurred_long">HYT_error_occurred_long</h2>
-        <!-- An error has occurred, contact the administrator! -->
-      </div>
-    </div>
+    <div id="errorStatus" *ngSwitchCase="PageStatus.Error" class="mt-5 d-flex flex-column align-items-center justify-content-center">
+      
+      <h2 i18n="@@HYT_error_occurred_long">HYT_error_occurred_long</h2>
+      <!-- An error has occurred, contact the administrator! -->
 
-    <div *ngSwitchDefault>
-      switch-case error
+    </div> <!-- PageStatus.Error -->
+
+    <div id="defaultStatus" *ngSwitchDefault class="mt-5 d-flex flex-column align-items-center justify-content-center">
+      <h2>Error!!</h2> <!-- @I18N@ -->
     </div>
 
   </div>

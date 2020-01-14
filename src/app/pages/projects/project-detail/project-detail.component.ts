@@ -119,7 +119,9 @@ export class ProjectDetailComponent implements OnInit {
   }
 
   onSummaryMenuClick(e) {
+
     const rule = Object.assign({}, e.item.data as Rule);
+    
     switch (e.action) {
       case 'edit':
         this.currentEntity.edit(rule);
