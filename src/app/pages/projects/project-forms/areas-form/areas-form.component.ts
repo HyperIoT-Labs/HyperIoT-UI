@@ -4,7 +4,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { HytModalService } from '@hyperiot/components';
 import { ProjectFormEntity, LoadingStatusEnum } from '../project-form-entity';
 import { AreasService, HprojectsService, Area, Attachment, ContentDisposition, HdevicesService, HDevice, AreaDevice } from '@hyperiot/core';
-import { AreaMapComponent, AreaDeviceConfig } from './area-map/area-map.component';
+import { AreaMapComponent } from './area-map/area-map.component';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'hyt-areas-form',
@@ -59,7 +60,8 @@ export class AreasFormComponent extends ProjectFormEntity {
     private areaService: AreasService,
     private projectService: HprojectsService,
     private deviceService: HdevicesService,
-    private modalService: HytModalService
+    private modalService: HytModalService,
+    private httpClient: HttpClient
   ) {
     super(injector, i18n, formView);
     this.formTitle = 'Project Areas';
@@ -125,11 +127,10 @@ export class AreasFormComponent extends ProjectFormEntity {
   }
 
   onFileChange(event) {
-    console.log('FILE CHANGED', event);
-    const reader = new FileReader();
     if (event.target.files && event.target.files.length) {
       const [file] = event.target.files;
-      reader.readAsArrayBuffer(file);
+      /*
+      const reader = new FileReader();
       reader.onload = () => {
         console.log(file, reader);
         // TODO: set image
@@ -147,6 +148,20 @@ export class AreasFormComponent extends ProjectFormEntity {
           console.log(res);
         });
       };
+      reader.readAsDataURL(file);
+      */
+      //this.areaService.setAreaImage(this.areaId, file).subscribe((res) => {
+      //  console.log(res);
+      //});
+
+      //this.mapComponent.setMapImage(null);
+
+      const formData = new FormData();
+      formData.append('image_file', file, file.name);
+      this.httpClient.post(`/hyperiot/areas/${this.areaId}/image`, formData).subscribe((res) => {
+        this.loadAreaImage();
+      });
+
     }
   }
 
@@ -156,29 +171,30 @@ export class AreasFormComponent extends ProjectFormEntity {
       icon: this.selectedDeviceIcon,
       x: 0.5,
       y: 0.5
-    } as AreaDevice).subscribe((areaDevice) => {
+    } as AreaDevice).subscribe((areaDevice: AreaDevice) => {
       console.log('Add Area Device Result', areaDevice);
-      this.mapComponent.addAreaDeviceItem(areaDevice, this.selectedDeviceIcon);
+      areaDevice.icon = this.selectedDeviceIcon;
+      this.mapComponent.addAreaDeviceItem(areaDevice);
     });
   }
-  onMapDeviceRemoved(removedItem: AreaDeviceConfig) {
+  onMapDeviceRemoved(removedItem: AreaDevice) {
     // TODO: handle errors
     this.areaService.removeAreaDevice(this.areaId, removedItem.id).subscribe((res) => {
       console.log('Removed item', res);
     });
   }
-  onMapDeviceUpdated(updatedItem: AreaDeviceConfig) {
+  onMapDeviceUpdated(updatedItem: AreaDevice) {
     // TODO: handle errors
-    /*
     this.areaService.removeAreaDevice(this.areaId, updatedItem.id).subscribe((res) => {
-      this.areaService.addAreaDevice(this.areaId, {
-        device: { id: updatedItem.},
-        icon: this.selectedDeviceIcon,
-        x: 0.5,
-        y: 0.5
-      } as AreaDevice);
+      updatedItem.id = 0;
+      // NOTE: 'updatedItem.device.project.user.screenName' property
+      //       causes error on the microservices side, so the property
+      //       is deleted before updating
+      delete updatedItem.device.project.user;
+      this.areaService.addAreaDevice(this.areaId, updatedItem).subscribe((ad) => {
+        Object.assign(updatedItem, ad);
+      });
     });
-    */
   }
 
   onAddSubAreaClick(e) {
@@ -205,13 +221,8 @@ export class AreasFormComponent extends ProjectFormEntity {
   onTabChange(e) {
     if (this.currentSection === 1) {
       // TODO: load map config and refresh map
-      this.areaService.getAreaDeviceList(this.areaId).subscribe((res) => {
-        this.mapComponent.setDevices(res.map((ad: AreaDevice) => ({
-          id: ad.id,
-          name: ad.device.deviceName,
-          icon: ad.icon,
-          position: { x: ad.x, y: ad.y },
-        } as AreaDeviceConfig)));
+      this.areaService.getAreaDeviceList(this.areaId).subscribe((res: AreaDevice[]) => {
+        this.mapComponent.setDevices(res);
         this.mapComponent.refresh();
       });
       if (this.mapComponent.itemRemove.observers.length === 0) {
@@ -224,7 +235,26 @@ export class AreasFormComponent extends ProjectFormEntity {
           this.onMapDeviceUpdated(updatedItem);
         });
       }
+      this.loadAreaImage();
     }
+  }
+
+  private loadAreaImage() {
+    //this.areaService.getAreaImage(this.areaId).subscribe((res) => {
+    //});
+    this.httpClient.get(`/hyperiot/areas/${this.areaId}/image`, {
+      responseType: 'blob'
+    }).subscribe((res: Blob) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const img = new Image();
+        img.onload = () => {
+          this.mapComponent.setMapImage(`/hyperiot/areas/${this.areaId}/image?` + (new Date().getTime()), img.width, img.height);
+        };
+        img.src = reader.result as string;
+      };
+      reader.readAsDataURL(res);
+    });
   }
 
   private loadAreaData() {
