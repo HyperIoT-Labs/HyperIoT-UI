@@ -1,9 +1,16 @@
 <div id="hyt-sidebar">
     <div class="area"></div>
-    <nav class="main-menu">
+    <nav 
+        class="main-menu" 
+        [ngClass]="{
+            'nav-mob-hidden': winInnerWidth <= mobileBreakPoint && navIsOpen == false,
+            'nav-mob-show': winInnerWidth <= mobileBreakPoint && navIsOpen == true
+        }"
+    >
+        
         <ul>
 
-            <li #home class="has-subnav" (click)="click(home)">
+            <li #home class="has-subnav" routerLinkActive="selected" [routerLinkActiveOptions]="{exact: true}"> 
                 <a routerLink="/">
                     <span class="hyt-icon icon-hyt_home"></span>
                     <span class="nav-text">
@@ -12,7 +19,7 @@
                 </a>
             </li>
 
-            <li #projects class="has-subnav" (click)="click(projects)">
+            <li #projects class="has-subnav" routerLinkActive="selected"> 
                 <a routerLink="/projects">
                     <span class="hyt-icon icon-hyt_projects"></span>
                     <span class="nav-text">
@@ -21,7 +28,7 @@
                 </a>
             </li>
 
-            <li #dashboards class="has-subnav" (click)="click(dashboards)">
+            <li #dashboards class="has-subnav" routerLinkActive="selected"> 
                 <a routerLink="/dashboards">
                     <span class="hyt-icon icon-hyt_dash"></span>
                     <span class="nav-text">

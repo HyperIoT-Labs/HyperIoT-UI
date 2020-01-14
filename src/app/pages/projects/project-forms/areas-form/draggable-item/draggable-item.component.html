@@ -1,4 +1,5 @@
 <div class="item"
+    [title]="itemData.name"
     [ngStyle]="style"
     cdkDrag
     cdkDragBoundary=".example-boundary"
@@ -8,7 +9,7 @@
     (cdkDragEnded)="onDragEnded($event)"
     (cdkDragReleased)="onDragReleased($event)">
 
-    <button class="remove-button" (click)="onRemoveButtonClick($event)">X</button>
+    <button class="remove-button" title="Remove {{itemData.name}}" (click)="onRemoveButtonClick($event)">X</button>
 
 </div>
 

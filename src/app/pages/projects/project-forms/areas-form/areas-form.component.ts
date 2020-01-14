@@ -3,7 +3,8 @@ import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HytModalService } from '@hyperiot/components';
 import { ProjectFormEntity, LoadingStatusEnum } from '../project-form-entity';
-import { AreasService, HprojectsService, Area } from '@hyperiot/core';
+import { AreasService, HprojectsService, Area, Attachment, ContentDisposition, HdevicesService, HDevice, AreaDevice } from '@hyperiot/core';
+import { AreaMapComponent, AreaDeviceConfig } from './area-map/area-map.component';
 
 @Component({
   selector: 'hyt-areas-form',
@@ -11,6 +12,9 @@ import { AreasService, HprojectsService, Area } from '@hyperiot/core';
   styleUrls: ['./areas-form.component.scss']
 })
 export class AreasFormComponent extends ProjectFormEntity {
+  @ViewChild('map', { static: false })
+  mapComponent: AreaMapComponent;
+
   entity = {} as Area;
   entityFormMap = {
     'area-name': {
@@ -30,6 +34,22 @@ export class AreasFormComponent extends ProjectFormEntity {
   areaList: Area[] = [];
   areaPath: Area[] = [];
 
+  projectDevices: {label: string, value: any}[] = [];
+  selectedDevice: HDevice;
+
+  deviceIconOptions = [
+    { label: 'Motion Sensor', value: 'motion-sensor.png' },
+    { label: 'Wind Sensor', value: 'wind-sensor.png' },
+    { label: 'Body Scanner', value: 'body-scanner.png' },
+    { label: 'Door Sensor', value: 'door-sensor.png' },
+    { label: 'GPS Sensor', value: 'gps-sensor.png' },
+    { label: 'Automated Light', value: 'light.png' },
+    { label: 'Rain Sensor', value: 'rain-sensor.png' },
+    { label: 'RFID Sensor', value: 'rfid.png' },
+    { label: 'Thermometer', value: 'thermometer.png' }
+  ];
+  selectedDeviceIcon: string;
+
   constructor(
     injector: Injector,
     @ViewChild('form', { static: true }) formView: ElementRef,
@@ -38,6 +58,7 @@ export class AreasFormComponent extends ProjectFormEntity {
     private router: Router,
     private areaService: AreasService,
     private projectService: HprojectsService,
+    private deviceService: HdevicesService,
     private modalService: HytModalService
   ) {
     super(injector, i18n, formView);
@@ -73,7 +94,7 @@ export class AreasFormComponent extends ProjectFormEntity {
         this.areaService.getAreaPath(this.areaId).subscribe((path) => {
           this.areaPath = path;
           this.loadingStatus = LoadingStatusEnum.Ready;
-          this.loadInnerAreas();
+          this.loadAreaData();
         });
       });
       this.editMode = true;
@@ -108,13 +129,56 @@ export class AreasFormComponent extends ProjectFormEntity {
     const reader = new FileReader();
     if (event.target.files && event.target.files.length) {
       const [file] = event.target.files;
-      reader.readAsDataURL(file);
+      reader.readAsArrayBuffer(file);
       reader.onload = () => {
-        this.form.patchValue({
-          imagePath: reader.result
+        console.log(file, reader);
+        // TODO: set image
+        const body = {
+          contentDisposition: {
+            filename: file.name,
+            type: file.type
+          } as ContentDisposition,
+          object: reader.result,
+          dataHandler: (test) => {
+            console.log(test);
+          }
+        } as Attachment;
+        this.areaService.setAreaImage(this.areaId, body).subscribe((res) => {
+          console.log(res);
         });
       };
     }
+  }
+
+  onDeviceAddClick(e) {
+    this.areaService.addAreaDevice(this.areaId, {
+      device: this.selectedDevice,
+      icon: this.selectedDeviceIcon,
+      x: 0.5,
+      y: 0.5
+    } as AreaDevice).subscribe((areaDevice) => {
+      console.log('Add Area Device Result', areaDevice);
+      this.mapComponent.addAreaDeviceItem(areaDevice, this.selectedDeviceIcon);
+    });
+  }
+  onMapDeviceRemoved(removedItem: AreaDeviceConfig) {
+    // TODO: handle errors
+    this.areaService.removeAreaDevice(this.areaId, removedItem.id).subscribe((res) => {
+      console.log('Removed item', res);
+    });
+  }
+  onMapDeviceUpdated(updatedItem: AreaDeviceConfig) {
+    // TODO: handle errors
+    /*
+    this.areaService.removeAreaDevice(this.areaId, updatedItem.id).subscribe((res) => {
+      this.areaService.addAreaDevice(this.areaId, {
+        device: { id: updatedItem.},
+        icon: this.selectedDeviceIcon,
+        x: 0.5,
+        y: 0.5
+      } as AreaDevice);
+    });
+    */
   }
 
   onAddSubAreaClick(e) {
@@ -138,10 +202,51 @@ export class AreasFormComponent extends ProjectFormEntity {
     });
   }
 
-  private loadInnerAreas() {
+  onTabChange(e) {
+    if (this.currentSection === 1) {
+      // TODO: load map config and refresh map
+      this.areaService.getAreaDeviceList(this.areaId).subscribe((res) => {
+        this.mapComponent.setDevices(res.map((ad: AreaDevice) => ({
+          id: ad.id,
+          name: ad.device.deviceName,
+          icon: ad.icon,
+          position: { x: ad.x, y: ad.y },
+        } as AreaDeviceConfig)));
+        this.mapComponent.refresh();
+      });
+      if (this.mapComponent.itemRemove.observers.length === 0) {
+        this.mapComponent.itemRemove.subscribe((removedItem) => {
+          this.onMapDeviceRemoved(removedItem);
+        });
+      }
+      if (this.mapComponent.itemUpdate.observers.length === 0) {
+        this.mapComponent.itemUpdate.subscribe((updatedItem) => {
+          this.onMapDeviceUpdated(updatedItem);
+        });
+      }
+    }
+  }
+
+  private loadAreaData() {
+    // Load inner areas
     this.loadingStatus = LoadingStatusEnum.Loading;
+    // TODO: handle errors
     this.areaService.findInnerAreas(this.entity.id).subscribe((areaTree) => {
       this.areaList = areaTree.innerArea;
+      this.loadingStatus = LoadingStatusEnum.Ready;
+      // load prject devices
+      this.loadProjectDevices();
+    });
+  }
+
+  private loadProjectDevices() {
+    this.loadingStatus = LoadingStatusEnum.Loading;
+    // TODO: handle errors
+    this.deviceService.findAllHDeviceByProjectId(this.projectId).subscribe((res) => {
+      this.projectDevices = res.map((d: HDevice) => ({
+        label: d.deviceName,
+        value: d
+      }));
       this.loadingStatus = LoadingStatusEnum.Ready;
     });
   }

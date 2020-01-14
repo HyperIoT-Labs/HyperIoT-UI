@@ -45,7 +45,7 @@
         </span>
     </div>
 
-    <mat-tab-group [(selectedIndex)]="currentSection">
+    <mat-tab-group [(selectedIndex)]="currentSection" (selectedTabChange)="onTabChange($event)">
 
         <mat-tab [label]="areaId === 0 ? 'New area' : 'Info'">
             <form [formGroup]="form" enctype="multipart/form-data" class="mt-4 d-flex flex-column justify-content-center">
@@ -73,16 +73,25 @@
         </mat-tab>
 
         <mat-tab *ngIf="areaId > 0" label="Map">
-            <div class="mt-4">
+            <div class="mt-4 d-flex flex-column">
 
+                <label>Set map image</label>
                 <input
                     name="area-image"
                     (change)="onFileChange($event)"
                     type="file" placeholder="Upload file" accept=".jpg,.png,.svg">
 
-                <hyt-area-map></hyt-area-map>
-
+                <label>Add device</label>
+                <div>
+                    <hyt-select-template [(ngModel)]="selectedDevice" [options]="projectDevices">
+                    </hyt-select-template>
+                    <hyt-select-template [(ngModel)]="selectedDeviceIcon" [options]="deviceIconOptions">
+                    </hyt-select-template>
+                    <hyt-button (clickFn)="onDeviceAddClick($event)">Add device</hyt-button>
+                </div>
+            
             </div>
+            <hyt-area-map #map></hyt-area-map>
         </mat-tab>
 
         <mat-tab *ngIf="areaId > 0" label="Inner areas ({{ areaList.length }})">

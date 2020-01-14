@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation, ɵConsole } from '@angular/core';
 import { Router } from '@angular/router';
 import { HytModalService } from '@hyperiot/components';
 import { Dashboard, HProject } from '@hyperiot/core';

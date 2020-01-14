@@ -7,6 +7,7 @@ import { HprojectsService, HProject } from '@hyperiot/core';
 
 import { ProjectFormEntity, LoadingStatusEnum } from '../project-form-entity';
 import { I18n } from '@ngx-translate/i18n-polyfill';
+import { HytModalService } from '@hyperiot/components';
 
 @Component({
   selector: 'hyt-project-form',

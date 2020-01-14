@@ -3,7 +3,7 @@
     <div class="header d-flex flex-row justify-content-stretch">
 
         <div class="breadcrumb flex-grow-1">
-            <a [routerLink]="['/']">Home</a> > <strong>Dashboard</strong>
+            <span class="hyt-icon icon-hyt_projectSolo"></span> <a [routerLink]="['/']">Home</a> > <strong>Dashboard</strong>
         </div>
 
     </div>
@@ -11,6 +11,7 @@
     <div id="container-dashboard" [ngSwitch]="pageStatus">
 
         <div class="row">
+
             <div id="tools-dashboard-box" class="col-12 {{(pageStatus == 0)?'inLoading':''}}" *ngIf="pageStatus != -1">
 
                 <div class="row no-gutters">
@@ -60,11 +61,13 @@
 
         <!-- <hyt-timeline></hyt-timeline> -->
 
-        <div id="loadingStatus" *ngSwitchCase="PageStatus.Loading"
-            class="row align-items-center justify-content-center">
-            <div class="mt-5 d-flex flex-column">
-                <h2 i18n="@@HYT_page_is_loading">HYT_page_is_loading</h2>
-            </div>
+        <div id="loadingStatus" *ngSwitchCase="PageStatus.Loading" class="mt-5 d-flex flex-column row align-items-center justify-content-center">
+            <!-- Loading -->
+
+            <img id="animatedPreloaderImg" src="assets/images/hyperiot_logo_single_char_animated.svg" alt="Hyperiot Animated Logo"> <!-- @I18N@ -->
+            <h2 i18n="@@HYT_page_is_loading">HYT_page_is_loading</h2>
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+
         </div>
 
         <div id="standardStatus" *ngSwitchCase="PageStatus.Standard" class="row">
@@ -84,7 +87,7 @@
 
             </div>
 
-            <div id="container-box-dashboard" class="col-12 {{(!dataRecordingIsOn && signalIsOn) ? 'blurred-animation' : ''}}">
+            <div id="container-box-dashboard" class="col-12 {{(!dataRecordingIsOn && signalIsOn) ? 'blurred-animation' : ''}}"> 
 
                 <hyt-dashboard-view 
                     [dashboard]="currentDashboard" 
@@ -113,10 +116,10 @@
 
         </div>
 
-        <div id="errorStatus" *ngSwitchCase="PageStatus.Error" class="row align-items-center justify-content-center">
-            <div class="mt-5 d-flex flex-column align-items-center justify-content-center">
-                <h2 i18n="@@HYT_error_occurred_long">HYT_error_occurred_long</h2>
-            </div>
+        <div id="errorStatus" *ngSwitchCase="PageStatus.Error" class="mt-5 d-flex flex-column row align-items-center justify-content-center">
+            <!-- Error -->
+            <h2 i18n="@@HYT_error_occurred_long">HYT_error_occurred_long</h2>
+
         </div>
 
         <div *ngSwitchDefault>
