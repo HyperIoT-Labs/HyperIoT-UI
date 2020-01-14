@@ -6,6 +6,7 @@ import { ProjectFormEntity, LoadingStatusEnum } from '../project-form-entity';
 import { AreasService, HprojectsService, Area, Attachment, ContentDisposition, HdevicesService, HDevice, AreaDevice } from '@hyperiot/core';
 import { AreaMapComponent } from './area-map/area-map.component';
 import { HttpClient } from '@angular/common/http';
+import { AreaDeviceSelectDialogComponent } from './area-device-select-dialog/area-device-select-dialog.component';
 
 @Component({
   selector: 'hyt-areas-form',
@@ -166,6 +167,12 @@ export class AreasFormComponent extends ProjectFormEntity {
   }
 
   onDeviceAddClick(e) {
+// TODO:
+//    const modalRef = this.modalService.open(AreaDeviceSelectDialogComponent, {
+//      areaId: this.areaId, projectId: this.projectId
+//    });
+//    modalRef.onClosed.subscribe(result => console.log(result));
+
     this.areaService.addAreaDevice(this.areaId, {
       device: this.selectedDevice,
       icon: this.selectedDeviceIcon,
