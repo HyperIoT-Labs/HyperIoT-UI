@@ -19,14 +19,16 @@
         <!--@I18N@-->
     </div>
     
-    <div class="d-flex flex-row flex-wrap">
+    <div class="d-flex flex-row flex-wrap justify-content-center">
         <mat-card *ngFor="let area of areaList"
             class="area-item mat-elevation-z2"
             [routerLink]="[area.id]">
             <mat-card-header>
                 <mat-card-title>{{area.name}}</mat-card-title>
             </mat-card-header>
-            <mat-card-content>{{area.description}}</mat-card-content>
+            <div *ngIf="area.imagePath != null && area.imagePath.length > 0" class="map-image" [ngStyle]="{ 'background-image': 'url(/hyperiot/areas/'+area.id+'/image)' }"></div>
+            <div *ngIf="area.imagePath == null || area.imagePath.length == 0" class="map-image d-flex flex-column justify-content-center align-items-center">(no image)</div>
+            <mat-card-content class="p-2">{{area.description}}</mat-card-content>
         </mat-card>
     </div>
 
@@ -73,10 +75,10 @@
         </mat-tab>
 
         <mat-tab *ngIf="areaId > 0" label="Map">
-            <div class="mt-4 d-flex flex-column">
+            <div class="mt-4 d-flex flex-row justify-content-center">
 
                 <hyt-button>
-                    <label for="map-image-input">Set map image</label>
+                    <label class="m-0 p-0" for="map-image-input">Set map image</label>
                 </hyt-button>
 
                 <input class="hidden" id="map-image-input"
@@ -84,11 +86,7 @@
                     (change)="onFileChange($event)"
                     type="file" placeholder="Upload file" accept=".jpg,.png,.svg">
 
-                <div>
-                    <hyt-button (clickFn)="onDeviceAddClick($event)">Add device</hyt-button>
-                    <hyt-select-template class="m-2" [(ngModel)]="selectedDevice" [options]="projectDevices"></hyt-select-template>
-                    <hyt-select-template class="m-2" [(ngModel)]="selectedDeviceIcon" [options]="deviceIconOptions"></hyt-select-template>
-                </div>
+                <hyt-button (clickFn)="onDeviceAddClick($event)">Add device</hyt-button>
             
             </div>
             <hyt-area-map #map></hyt-area-map>
@@ -100,14 +98,16 @@
                     Add inner area <span class="hyt-icon icon-hyt_plusC"></span>
                 </hyt-button>
             </div>
-            <div class="mt-4 mb-4 d-flex flex-row flex-wrap">
+            <div class="mt-4 mb-4 d-flex flex-row flex-wrap justify-content-center">
                 <mat-card *ngFor="let area of areaList"
                     class="area-item mat-elevation-z2"
-                    [routerLink]="[ '/projects/', projectId, {outlets: { projectDetails: ['areas', area.id ] } } ]">
+                    (click)="onEditSubAreaClick(area)">
                     <mat-card-header>
                         <mat-card-title>{{area.name}}</mat-card-title>
                     </mat-card-header>
-                    <mat-card-content>{{area.description}}</mat-card-content>
+                    <div *ngIf="area.imagePath != null && area.imagePath.length > 0" class="map-image" [ngStyle]="{ 'background-image': 'url(/hyperiot/areas/'+area.id+'/image)' }"></div>
+                    <div *ngIf="area.imagePath == null || area.imagePath.length == 0" class="map-image d-flex flex-column justify-content-center align-items-center">(no image)</div>
+                    <mat-card-content class="p-2">{{area.description}}</mat-card-content>
                 </mat-card>
             </div>
         </mat-tab>

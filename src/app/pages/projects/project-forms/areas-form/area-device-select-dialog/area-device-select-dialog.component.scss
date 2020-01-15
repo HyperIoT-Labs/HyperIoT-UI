@@ -1,5 +1,18 @@
+h3 {
+    color: #0956b6;
+}
+
 .dialog {
     background-color: white;
     width: 280px;
     min-height: 200px;
+}
+
+.mat-button {
+    width: 100%;
+    text-align: left;
+}
+
+.selected {
+    background-color: #aaa;
 }

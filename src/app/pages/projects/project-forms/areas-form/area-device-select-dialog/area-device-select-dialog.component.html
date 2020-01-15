@@ -1,8 +1,28 @@
-<div class="dialog p-4">
-    <p>area-device-select-dialog works!</p>
+<div class="dialog pt-2 pb-2">
+    <h3 class="ml-3 mr-3">Select device</h3>
 
     <mat-list role="list">
-        <mat-list-item *ngFor="let device of projectDevices" role="listitem">{{ device.deviceName }}</mat-list-item>
+        <mat-list-item *ngFor="let device of projectDevices" role="listitem">
+            <button mat-button
+                [disabled]="device.added"
+                [ngClass]="{ selected: device === selectedDevice }"
+                (click)="selectedDevice = device">{{ device.deviceName }}</button>
+        </mat-list-item>
     </mat-list>
+
+    <div *ngIf="selectedDevice" class="d-flex flex-row align-items-center justify-content-center">
+        <hyt-select-template class="m-2"
+            [(ngModel)]="selectedDeviceIcon"
+            [options]="deviceIconOptions"
+            label="Device icon"></hyt-select-template>
+    </div>
+
+    <div class="ml-3 mr-3 d-flex flex-row justify-content-between">
+        <hyt-button (clickFn)="close()">Cancel</hyt-button>
+        <hyt-button [isDisabled]="!selectedDevice || !selectedDeviceIcon" (clickFn)="close({
+            device: selectedDevice,
+            icon: selectedDeviceIcon
+        })">Ok</hyt-button>
+    </div>
 
 </div>

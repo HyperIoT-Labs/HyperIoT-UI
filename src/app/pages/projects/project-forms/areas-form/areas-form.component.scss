@@ -2,6 +2,22 @@
     padding: 16px;
     padding-top: 0;
 }
+.mat-card {
+    padding: 0;
+    height: 240px !important;
+    .mat-card-header {
+        padding-top: 8px;
+    }
+    .map-image {
+        color: gray;
+        width: 100%;
+        height: 140px;
+        overflow: hidden;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+}
 .overview {
     font-size: 0.9em;
     font-style: italic;

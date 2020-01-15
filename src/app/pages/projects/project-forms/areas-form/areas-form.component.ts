@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, Injector } from '@angular/core';
+import { Component, ViewChild, ElementRef, Injector } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HytModalService } from '@hyperiot/components';
@@ -36,22 +36,6 @@ export class AreasFormComponent extends ProjectFormEntity {
   areaList: Area[] = [];
   areaPath: Area[] = [];
 
-  projectDevices: {label: string, value: any}[] = [];
-  selectedDevice: HDevice;
-
-  deviceIconOptions = [
-    { label: 'Motion Sensor', value: 'motion-sensor.png' },
-    { label: 'Wind Sensor', value: 'wind-sensor.png' },
-    { label: 'Body Scanner', value: 'body-scanner.png' },
-    { label: 'Door Sensor', value: 'door-sensor.png' },
-    { label: 'GPS Sensor', value: 'gps-sensor.png' },
-    { label: 'Automated Light', value: 'light.png' },
-    { label: 'Rain Sensor', value: 'rain-sensor.png' },
-    { label: 'RFID Sensor', value: 'rfid.png' },
-    { label: 'Thermometer', value: 'thermometer.png' }
-  ];
-  selectedDeviceIcon: string;
-
   constructor(
     injector: Injector,
     @ViewChild('form', { static: true }) formView: ElementRef,
@@ -76,7 +60,6 @@ export class AreasFormComponent extends ProjectFormEntity {
 
   load() {
     this.loadingStatus = LoadingStatusEnum.Loading;
-    this.currentSection = 0;
     this.areaList = [];
     this.areaPath = [];
     this.showSave = false;
@@ -167,21 +150,22 @@ export class AreasFormComponent extends ProjectFormEntity {
   }
 
   onDeviceAddClick(e) {
-// TODO:
-//    const modalRef = this.modalService.open(AreaDeviceSelectDialogComponent, {
-//      areaId: this.areaId, projectId: this.projectId
-//    });
-//    modalRef.onClosed.subscribe(result => console.log(result));
-
-    this.areaService.addAreaDevice(this.areaId, {
-      device: this.selectedDevice,
-      icon: this.selectedDeviceIcon,
-      x: 0.5,
-      y: 0.5
-    } as AreaDevice).subscribe((areaDevice: AreaDevice) => {
-      console.log('Add Area Device Result', areaDevice);
-      areaDevice.icon = this.selectedDeviceIcon;
-      this.mapComponent.addAreaDeviceItem(areaDevice);
+    const modalRef = this.modalService.open(AreaDeviceSelectDialogComponent, {
+      areaId: this.areaId, projectId: this.projectId
+    });
+    modalRef.onClosed.subscribe(result => {
+      if (result) {
+        this.areaService.addAreaDevice(this.areaId, {
+          device: result.device,
+          icon: result.icon,
+          x: 0.5,
+          y: 0.5
+        } as AreaDevice).subscribe((areaDevice: AreaDevice) => {
+          console.log('Add Area Device Result', areaDevice);
+          areaDevice.icon = result.icon;
+          this.mapComponent.addAreaDeviceItem(areaDevice);
+        });
+      }
     });
   }
   onMapDeviceRemoved(removedItem: AreaDevice) {
@@ -204,6 +188,15 @@ export class AreasFormComponent extends ProjectFormEntity {
     });
   }
 
+  onEditSubAreaClick(area) {
+    this.currentSection = 0; // show the info tab
+    this.router.navigate(
+      [ '/projects/', this.projectId, {outlets: { projectDetails: ['areas', area.id ] } } ]
+    ).then((success) => {
+      // TODO: ?
+    });
+  }
+
   onAddSubAreaClick(e) {
     const a: Area = {
       id: 0,
@@ -217,6 +210,7 @@ export class AreasFormComponent extends ProjectFormEntity {
     // TODO:
     a['project'] = { id: this.projectId };
     this.areaService.saveArea(a).subscribe(res => {
+      this.currentSection = 0; // show the info tab
       this.router.navigate(
         [ '/projects/', this.projectId, {outlets: { projectDetails: ['areas', res.id ] } } ]
       ).then((success) => {
@@ -227,23 +221,28 @@ export class AreasFormComponent extends ProjectFormEntity {
 
   onTabChange(e) {
     if (this.currentSection === 1) {
-      // TODO: load map config and refresh map
-      this.areaService.getAreaDeviceList(this.areaId).subscribe((res: AreaDevice[]) => {
-        this.mapComponent.setDevices(res);
-        this.mapComponent.refresh();
-      });
-      if (this.mapComponent.itemRemove.observers.length === 0) {
-        this.mapComponent.itemRemove.subscribe((removedItem) => {
-          this.onMapDeviceRemoved(removedItem);
-        });
-      }
-      if (this.mapComponent.itemUpdate.observers.length === 0) {
-        this.mapComponent.itemUpdate.subscribe((updatedItem) => {
-          this.onMapDeviceUpdated(updatedItem);
-        });
-      }
-      this.loadAreaImage();
+      this.loadAreaMap();
     }
+  }
+
+  private loadAreaMap() {
+    this.loadingStatus = LoadingStatusEnum.Loading;
+    this.areaService.getAreaDeviceList(this.areaId).subscribe((res: AreaDevice[]) => {
+      this.mapComponent.setDevices(res);
+      this.mapComponent.refresh();
+      this.loadingStatus = LoadingStatusEnum.Ready;
+    });
+    if (this.mapComponent.itemRemove.observers.length === 0) {
+      this.mapComponent.itemRemove.subscribe((removedItem) => {
+        this.onMapDeviceRemoved(removedItem);
+      });
+    }
+    if (this.mapComponent.itemUpdate.observers.length === 0) {
+      this.mapComponent.itemUpdate.subscribe((updatedItem) => {
+        this.onMapDeviceUpdated(updatedItem);
+      });
+    }
+    this.loadAreaImage();
   }
 
   private loadAreaImage() {
@@ -264,6 +263,12 @@ export class AreasFormComponent extends ProjectFormEntity {
     });
   }
 
+  private getParentAreaId() {
+    if (this.areaPath.length > 1) {
+      return this.areaPath[this.areaPath.length - 2].id;
+    }
+  }
+
   private loadAreaData() {
     // Load inner areas
     this.loadingStatus = LoadingStatusEnum.Loading;
@@ -271,20 +276,9 @@ export class AreasFormComponent extends ProjectFormEntity {
     this.areaService.findInnerAreas(this.entity.id).subscribe((areaTree) => {
       this.areaList = areaTree.innerArea;
       this.loadingStatus = LoadingStatusEnum.Ready;
-      // load prject devices
-      this.loadProjectDevices();
-    });
-  }
-
-  private loadProjectDevices() {
-    this.loadingStatus = LoadingStatusEnum.Loading;
-    // TODO: handle errors
-    this.deviceService.findAllHDeviceByProjectId(this.projectId).subscribe((res) => {
-      this.projectDevices = res.map((d: HDevice) => ({
-        label: d.deviceName,
-        value: d
-      }));
-      this.loadingStatus = LoadingStatusEnum.Ready;
+      if (this.currentSection === 1) {
+        this.loadAreaMap();
+      }
     });
   }
 
@@ -296,11 +290,8 @@ export class AreasFormComponent extends ProjectFormEntity {
     // TODO: the field project should be exposed in model
     // TODO: if not passing this field the service will return validation error
     area['project'] = { id: this.projectId };
-    area.parentArea = null;
-    if (this.areaPath.length > 1) {
-      const parentAreaId = this.areaPath[this.areaPath.length - 2].id;
-      area.parentArea = { id: parentAreaId, entityVersion: null };
-    }
+    const parentAreaId = this.getParentAreaId();
+    area.parentArea = parentAreaId ? { id: parentAreaId, entityVersion: null } : null;
     if (area.id) {
       // Update existing
       this.areaService.updateArea(area).subscribe((res) => {
@@ -334,11 +325,28 @@ export class AreasFormComponent extends ProjectFormEntity {
   }
 
   private deleteArea(successCallback, errorCallback) {
-    // TODO: ....
+    let parentAreaId = this.getParentAreaId();
     this.areaService.deleteArea(this.areaId).subscribe((res) => {
       this.loadingStatus = LoadingStatusEnum.Ready;
       successCallback && successCallback(res);
-    }, (err) => {
+      if (parentAreaId) {
+        // navigate back to parent showing inner areas list
+        this.currentSection = 2;
+        this.router.navigate(
+          [ '/projects/', this.projectId, {outlets: { projectDetails: ['areas', parentAreaId ] } } ]
+        ).then((success) => {
+          // TODO: ?
+        });
+      } else {
+        // navigate back to main
+        this.currentSection = 0;
+        this.router.navigate(
+          [ '/projects/', this.projectId, {outlets: { projectDetails: ['areas' ] } } ]
+        ).then((success) => {
+          // TODO: ?
+        });
+      }
+  }, (err) => {
       errorCallback && errorCallback(err);
       this.loadingStatus = LoadingStatusEnum.Error;
     });

@@ -9,25 +9,44 @@ import { AreasService, HprojectsService, HdevicesService, AreaDevice, HDevice } 
 })
 export class AreaDeviceSelectDialogComponent  extends HytModal implements OnInit {
   projectDevices: HDevice[];
+  selectedDevice: HDevice;
+
+  deviceIconOptions = [
+    { label: 'Motion Sensor', value: 'motion-sensor.png' },
+    { label: 'Wind Sensor', value: 'wind-sensor.png' },
+    { label: 'Body Scanner', value: 'body-scanner.png' },
+    { label: 'Door Sensor', value: 'door-sensor.png' },
+    { label: 'GPS Sensor', value: 'gps-sensor.png' },
+    { label: 'Automated Light', value: 'light.png' },
+    { label: 'Rain Sensor', value: 'rain-sensor.png' },
+    { label: 'RFID Sensor', value: 'rfid.png' },
+    { label: 'Thermometer', value: 'thermometer.png' }
+  ];
+  selectedDeviceIcon: string;
 
   constructor(
     hytModalService: HytModalService,
     private areaService: AreasService,
-    private projectService: HprojectsService,
     private deviceService: HdevicesService
   ) {
     super(hytModalService);
   }
 
   ngOnInit() {
-    console.log(this.data);
-    this.areaService.getAreaDeviceList(this.data.areaId).subscribe((res: AreaDevice[]) => {
-      console.log(res);
-    });
-    this.deviceService.findAllHDeviceByProjectId(this.data.projectId).subscribe((res) => {
-      console.log('devices', res);
-      this.projectDevices = res;
+    this.areaService.getAreaDeviceList(this.data.areaId).subscribe((areaDevices: AreaDevice[]) => {
+      this.deviceService.findAllHDeviceByProjectId(this.data.projectId).subscribe((projectDevices: HDevice[]) => {
+        this.projectDevices = projectDevices;
+        projectDevices.map(pd => {
+          const ad = areaDevices.filter((d) => d.device.id === pd.id);
+          if (ad.length === 1) {
+            pd['added'] = true;
+          }
+        });
+      });
     });
   }
 
+  onAddButtonClick() {
+    this.close({ device: this.selectedDevice, icon: this.selectedDeviceIcon });
+  }
 }
