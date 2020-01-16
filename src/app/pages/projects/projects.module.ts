@@ -60,6 +60,7 @@ import { DraggableItemComponent } from './project-forms/areas-form/draggable-ite
 import { MapDirective } from './project-forms/areas-form/map.directive';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { AreaDeviceSelectDialogComponent } from './project-forms/areas-form/area-device-select-dialog/area-device-select-dialog.component';
+import { AreaInnerareaSelectDialogComponent } from './project-forms/areas-form/area-innerarea-select-dialog/area-innerarea-select-dialog.component';
 
 @NgModule({
   declarations: [
@@ -97,7 +98,8 @@ import { AreaDeviceSelectDialogComponent } from './project-forms/areas-form/area
     AreaMapComponent,
     DraggableItemComponent,
     MapDirective,
-    AreaDeviceSelectDialogComponent
+    AreaDeviceSelectDialogComponent,
+    AreaInnerareaSelectDialogComponent
   ],
   imports: [
     MatIconModule,
@@ -124,7 +126,8 @@ import { AreaDeviceSelectDialogComponent } from './project-forms/areas-form/area
     AddTagModalComponent,
     AddCetegoryModalComponent,
     DraggableItemComponent,
-    AreaDeviceSelectDialogComponent
+    AreaDeviceSelectDialogComponent,
+    AreaInnerareaSelectDialogComponent
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA

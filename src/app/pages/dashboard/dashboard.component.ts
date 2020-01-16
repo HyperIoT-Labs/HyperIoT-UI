@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation, ɵConsole } from '@angular/core';
-import { Router } from '@angular/router';
 import { Dashboard, HProject } from '@hyperiot/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -67,7 +66,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   constructor(
     private dashboardConfigService: DashboardConfigService,
-    private route: Router,
     private hytModalService: HytModalService
   ) {
 
@@ -268,10 +266,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.dashboardView.onWidgetsAdd(res);
     });
   }
-
-  // closeModal(id: string) {
-  //   this.hytModalService.close(id);
-  // }
 
   /************************************************************************************************************* Not used */
 

@@ -7,7 +7,7 @@ import { AreasService, HprojectsService, HdevicesService, AreaDevice, HDevice } 
   templateUrl: './area-device-select-dialog.component.html',
   styleUrls: ['./area-device-select-dialog.component.scss']
 })
-export class AreaDeviceSelectDialogComponent  extends HytModal implements OnInit {
+export class AreaDeviceSelectDialogComponent extends HytModal implements OnInit {
   projectDevices: HDevice[];
   selectedDevice: HDevice;
 
