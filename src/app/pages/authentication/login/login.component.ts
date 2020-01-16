@@ -46,7 +46,9 @@ export class LoginComponent implements OnInit {
    */
   private encrypted;
 
-  // private decrypted;
+  private decrypted;
+
+  initialValue = '';
 
   /**
    * loginStatus is used to handle the template view when the user is logging in
@@ -84,26 +86,27 @@ export class LoginComponent implements OnInit {
    * ngOnInit() builds the loginForm and sets the returnUrl
    */
   ngOnInit() {
-    // if (this.cookieService.check('rememberme')) {
-    //   this.loginForm = this.fb.group({
-    //     username: []
-    //   });
-    //   console.log('rememberMe: ', this.cookieService.get('rememberme'));
+    if (this.cookieService.check('rememberme')) {
+      // this.decrypting(this.cookieService.get('hytUser'), this.key);
 
-    // } else {
-    //   this.loginForm = this.fb.group({
-    //     rememberMe: [false]
-    //   });
-    //   console.log('rememberMe: ', this.loginForm.value.rememberMe);
-    // }
+      this.loginForm = this.fb.group({
+        username: this.cookieService.get('rememberme'),
+      });
 
-    this.loginForm = this.fb.group({});
+      this.initialValue = this.loginForm.value.username;
+      this.checked = true;
+
+    } else {
+      this.loginForm = this.fb.group({});
+    }
+
     this.returnUrl = window.history.state.returnUrl || '/';
   }
 
-  onClickCheckbox() {
-    this.checked = !this.checked;
-    this.loginForm.value.rememberMe = !this.loginForm.value.rememberMe;
+  onClickCheckbox(event) {
+    this.checked = event;
+
+    console.log(this.checked)
   }
 
   isLoggedIn(): boolean {
@@ -129,18 +132,16 @@ export class LoginComponent implements OnInit {
     this.authenticationService.login(this.loginForm.value.username, this.loginForm.value.password).subscribe(
       res => {
         this.cookieService.set('HIT-AUTH', res.token, 2, '/');
-        this.cookieService.set('rememberme', this.loginForm.value.username, 2, '/');
         localStorage.setItem('userInfo', JSON.stringify(res));
         localStorage.setItem('user', JSON.stringify(res.authenticable));
         this.logger.trace('userInfo', JSON.stringify(res.authenticable));
 
-        if (this.loginForm.value.rememberMe === true) {
-          console.log('rememberMe checked', this.loginForm.value.rememberMe);
-          this.encrypting(this.loginForm.value.username + '&' + this.loginForm.value.password, this.key);
-          this.cookieService.set('hytUser', this.encrypted, 28, '/');
-        } else if (this.cookieService.check('hytUser')) {
-          this.cookieService.delete('hytUser', '/');
+        if (this.checked === true) {
+          if (!this.cookieService.check('rememberme')) { this.cookieService.set('rememberme', this.loginForm.value.username, 2, '/'); }
+        } else {
+          if (this.cookieService.check('rememberme')) { this.cookieService.delete('rememberme', '/'); }
         }
+
         this.loginStatus = SubmissionStatus.Submitted;
 
         this.router.navigate([this.returnUrl]);
@@ -175,9 +176,9 @@ export class LoginComponent implements OnInit {
     this.encrypted = CryptoJS.AES.encrypt(message, key);
   }
 
-  // private decrypting(encrypted: string, key: string) {
-  //   this.decrypted = CryptoJS.AES.decrypt(encrypted, key);
-  // }
+  private decrypting(encrypted: string, key: string) {
+    this.decrypted = CryptoJS.AES.decrypt(encrypted, key);
+  }
 
   /**
    * notValid() returns false if the login form is not valid.
