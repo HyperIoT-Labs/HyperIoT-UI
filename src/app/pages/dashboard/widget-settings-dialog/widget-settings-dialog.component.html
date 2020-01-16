@@ -61,11 +61,11 @@
         </form>
 
         <footer class="d-flex flex-row align-items-center justify-content-end">
-            <hyt-button class="button-confirm" (clickFn)="confirm($event)" [isDisabled]="settingsForm.invalid">
+            <hyt-button class="button-confirm" [color]="'hyt-base-default-white'" (clickFn)="confirm($event)" [isDisabled]="settingsForm.invalid">
                 <mat-icon>check</mat-icon>
                 <span i18n="@@HYT_apply">HYT_apply</span>
             </hyt-button>
-            <hyt-button class="button-close" (clickFn)="closeModal($event)">
+            <hyt-button class="button-close" [color]="'hyt-base-default-white'" (clickFn)="closeModal($event)">
                 <mat-icon>close</mat-icon>
                 <span i18n="@@HYT_cancel">HYT_cancel</span>
             </hyt-button>
