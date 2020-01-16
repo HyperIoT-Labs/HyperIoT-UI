@@ -1,5 +1,5 @@
 import { Component, OnInit, Injector, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
-import { HytModal } from 'src/app/services/hyt-modal';
+import { HytModal, HytModalService } from '@hyperiot/components';
 import { EntitiesService } from 'src/app/services/entities/entities.service';
 
 @Component({
@@ -8,21 +8,17 @@ import { EntitiesService } from 'src/app/services/entities/entities.service';
   styleUrls: ['./wizard-options-modal.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class WizardOptionsModalComponent extends HytModal implements OnInit {
-
-  @Output()
-  modalClose: EventEmitter<{ action: string, data: any }> = new EventEmitter<{ action: string, data: any }>();
+export class WizardOptionsModalComponent extends HytModal {
 
   constructor(
-    injector: Injector,
-    public entitiesService: EntitiesService
+    public entitiesService: EntitiesService,
+    hytModalService: HytModalService
   ) {
-    super(injector);
+    super(hytModalService);
   }
 
   output(action: string, data: number) {
-    this.modalClose.emit({ action, data });
-    this.close();
+    this.close({ action, data });
   }
 
 }

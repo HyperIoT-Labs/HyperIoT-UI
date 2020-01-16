@@ -1,25 +1,21 @@
-<div id="container-option-modal" class="hyt-modal">
+<div id="container-option-modal">
 
-    <div class="hyt-modal-body">
+    <div class="dialog">
 
-        <div class="dialog">
+        <div class="dialog-header">
+            <h3>Error</h3>
+            <!--@I18N@-->
+            <span class="hyt-icon icon-hyt_cancelC" (click)="close()"></span>
+        </div>
 
-            <div class="dialog-header">
-                <h3>Error</h3>
-                <!--@I18N@-->
-                <span class="hyt-icon icon-hyt_cancelC" (click)="close()"></span>
-            </div>
-
-            <div class="dialog-body">
-                <p>An error occurred while loading the rule definition. This happens when field names have been
-                    modified. Please, redefine the rule and delete the old one.</p>
-                <!--@I18N@-->
-            </div>
-
+        <div class="dialog-body">
+            <p>An error occurred while loading the rule definition. This happens when field names have been
+                modified. Please, redefine the rule and delete the old one.</p>
+            <!--@I18N@-->
         </div>
 
     </div>
 
 </div>
 
-<div class="hyt-modal-background"></div>
+<!-- <div class="hyt-modal-background"></div> -->

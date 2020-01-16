@@ -1,12 +1,12 @@
 import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation, ɵConsole } from '@angular/core';
 import { Router } from '@angular/router';
-import { HytModalService } from '@hyperiot/components';
 import { Dashboard, HProject } from '@hyperiot/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { HytModalConfService } from 'src/app/services/hyt-modal-conf.service';
+import { HytModalService, HytModalRef } from '@hyperiot/components';
 import { DashboardConfigService } from './dashboard-config.service';
 import { DashboardViewComponent } from './dashboard-view/dashboard-view.component';
+import { AddWidgetDialogComponent } from './add-widget-dialog/add-widget-dialog.component';
 
 enum PageStatus {
   Loading = 0,
@@ -63,11 +63,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   upTimeSec;
 
+  widgetModalRef: HytModalRef;
+
   constructor(
     private dashboardConfigService: DashboardConfigService,
     private route: Router,
-    private hytModalService: HytModalConfService,
-    private hytModalServiceNew: HytModalService
+    private hytModalService: HytModalService
   ) {
 
   }
@@ -222,36 +223,36 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   updateToplogyStatus() {
     this.dashboardConfigService.getRecordingStatus(this.idProjectSelected)
-    .pipe(takeUntil(this.ngUnsubscribe))
-    .subscribe(
-      res => {
-        if (res != null && res != undefined && res.status.toLowerCase() === 'active') {
-          this.dataRecordingIsOn = true;
-          if (res.upTimeSec) {
-            let seconds = res.upTimeSec;
-            const days = Math.floor(seconds / (3600 * 24));
-            seconds -= days * 3600 * 24;
-            const hrs = Math.floor(seconds / 3600);
-            seconds -= hrs * 3600;
-            const mnts = Math.floor(seconds / 60);
-            seconds -= mnts * 60;
-            this.upTimeSec = days + 'd, ' + hrs + 'h, ' + mnts + 'm';
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        res => {
+          if (res != null && res != undefined && res.status.toLowerCase() === 'active') {
+            this.dataRecordingIsOn = true;
+            if (res.upTimeSec) {
+              let seconds = res.upTimeSec;
+              const days = Math.floor(seconds / (3600 * 24));
+              seconds -= days * 3600 * 24;
+              const hrs = Math.floor(seconds / 3600);
+              seconds -= hrs * 3600;
+              const mnts = Math.floor(seconds / 60);
+              seconds -= mnts * 60;
+              this.upTimeSec = days + 'd, ' + hrs + 'h, ' + mnts + 'm';
+            } else {
+              this.upTimeSec = undefined;
+            }
           } else {
+            this.dataRecordingIsOn = false;
             this.upTimeSec = undefined;
           }
-        } else {
+          this.recordStateInLoading = false;
+        },
+        error => {
           this.dataRecordingIsOn = false;
+          this.recordStateInLoading = false;
           this.upTimeSec = undefined;
+          console.error(error);
         }
-        this.recordStateInLoading = false;
-      },
-      error => {
-        this.dataRecordingIsOn = false;
-        this.recordStateInLoading = false;
-        this.upTimeSec = undefined;
-        console.error(error);
-      }
-    );
+      );
   }
 
   /**
@@ -261,13 +262,16 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.dashboardView.saveDashboard();
   }
 
-  openModal(id: string) {
-    this.hytModalService.open(id);
+  openWidgetModal() {
+    this.widgetModalRef = this.hytModalService.open(AddWidgetDialogComponent);
+    this.widgetModalRef.onClosed.subscribe(res => {
+      this.dashboardView.onWidgetsAdd(res);
+    });
   }
 
-  closeModal(id: string) {
-    this.hytModalService.close(id);
-  }
+  // closeModal(id: string) {
+  //   this.hytModalService.close(id);
+  // }
 
   /************************************************************************************************************* Not used */
 
