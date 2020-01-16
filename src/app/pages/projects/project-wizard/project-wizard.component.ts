@@ -12,12 +12,13 @@ import { PacketSelectComponent } from './packet-select/packet-select.component';
 import { PacketEnrichmentFormComponent } from '../project-forms/packet-enrichment-form/packet-enrichment-form.component';
 import { PacketEventsFormComponent } from '../project-forms/packet-events-form/packet-events-form.component';
 import { PacketStatisticsFormComponent } from '../project-forms/packet-statistics-form/packet-statistics-form.component';
-import { HytModalConfService } from 'src/app/services/hyt-modal-conf.service';
 import { HytStepperComponent } from '@hyperiot/components/lib/hyt-stepper/hyt-stepper.component';
 import { EntitiesService } from 'src/app/services/entities/entities.service';
 import { WizardDeactivationModalComponent } from './wizard-deactivation-modal/wizard-deactivation-modal.component';
-import { Option } from '@hyperiot/components';
+import { Option, HytModalService } from '@hyperiot/components';
 import { ApplicationFormComponent } from '../project-forms/application-form/application-form.component';
+import { WizardOptionsModalComponent } from './wizard-options-modal/wizard-options-modal.component';
+import { WizardReportModalComponent } from './wizard-report-modal/wizard-report-modal.component';
 
 @Component({
   selector: 'hyt-project-wizard',
@@ -91,8 +92,8 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
   constructor(
     private hDevicesService: HdevicesService,
     private hPacketsService: HpacketsService,
-    private modalService: HytModalConfService,
-    public entitiesService: EntitiesService
+    public entitiesService: EntitiesService,
+    private hytModalService: HytModalService
   ) { }
 
   ngOnInit() { }
@@ -399,16 +400,22 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
 
   openDeactivationModal(): Observable<boolean> {
     return new Observable((observer: Observer<boolean>) => {
-      this.modalService.open('hyt-wizard-deactivation-modal');
-      this.deactivationModal.modalClose.subscribe(
-        res => observer.next(res)
-      );
+      const modalRef = this.hytModalService.open(WizardDeactivationModalComponent);
+      modalRef.onClosed.subscribe(res => {
+        observer.next(res);
+      });
     });
   }
 
   openOptionModal() {
-    this.modalService.open('hyt-wizard-options-modal');
+    const modalRef = this.hytModalService.open(WizardOptionsModalComponent);
     this.optionModalViewed = true;
+
+    modalRef.onClosed.subscribe(res => {
+      this.optionsModalClosed(res);
+    }, err => {
+
+    });
   }
 
   optionsModalClosed(event: { action: string, data: any }) {
@@ -451,7 +458,10 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
       type: this.entitiesService.event.displayListName,
       entities: this.eventRules.map(e => e.name)
     });
-    this.modalService.open('hyt-wizard-report-modal');
+    // this.modalService.open('hyt-wizard-report-modal');
+    setTimeout(() => {
+      const modalRef = this.hytModalService.open(WizardReportModalComponent, this.finishData);
+    }, 500);
   }
 
 

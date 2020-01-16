@@ -1,118 +1,112 @@
-<div class="hyt-modal">
+<div id="hyt-modal-add-widgets" class="dialog hyt-modal-body" [ngSwitch]="dialogDataState">
 
-    <div class="dialog hyt-modal-body" [ngSwitch]="dialogDataState">
+    <div *ngSwitchCase="0">
+        <header id="title-modal" i18n="@@HYT_widget_add_widget">HYT_widget_add_widget</header>
+        <div class="loader"></div>
+    </div>
 
-        <div *ngSwitchCase="0">
-            <header id="title-modal" i18n="@@HYT_widget_add_widget">HYT_widget_add_widget</header>
-            <div class="loader"></div>
+    <div *ngSwitchCase="1">
+        <header id="title-modal" i18n="@@HYT_widget_add_widget">HYT_widget_add_widget</header>
+
+        <div class="category-list">
+
+            <button class="category-item"
+                [disabled]="!(category.value.name=='all' || widgetsByCategory[category.key].length != 0)"
+                [ngClass]="{selected: category.value === selectedCategory}"
+                *ngFor="let category of widgetCategoryList | keyvalue:orderById"
+                (click)="onCategorySelect(category.value)">
+                <span class="hyt-icon {{category.value.fontIcon}}"></span>
+                <div class="cat-name">{{category.value.name}}</div>
+            </button>
+
         </div>
 
-        <div *ngSwitchCase="1">
-            <header id="title-modal" i18n="@@HYT_widget_add_widget">HYT_widget_add_widget</header>
+        <div class="widget-list" *ngIf="selectedCategory != null">
 
-            <div class="category-list">
+            <div 
+                class="widget-item" 
+                *ngFor="let widget of filteredWidgets" 
+                [ngClass]="{selected: widget.count > 0}"
+                (click)="currentWidget = widget"
+            >
 
-                <button class="category-item"
-                    [disabled]="!(category.value.name=='all' || widgetsByCategory[category.key].length != 0)"
-                    [ngClass]="{selected: category.value === selectedCategory}"
-                    *ngFor="let category of widgetCategoryList | keyvalue:orderById"
-                    (click)="onCategorySelect(category.value)">
-                    <span class="hyt-icon {{category.value.fontIcon}}"></span>
-                    <div class="cat-name">{{category.value.name}}</div>
-                </button>
+                <div class="widget-name">{{ widget.name }}</div>
 
+                <img *ngIf="widget.image" [src]="widget.image">
+
+                <input 
+                    type="number" class="item-count" title="HYT_widget_add_quantity"
+                    i18n-title="@@HYT_widget_add_quantity" min="0" max="{{widgetAddMax}}"
+                    [(ngModel)]="widget.count" (ngModelChange)="onWidgetChange(widget)"
+                >
             </div>
 
-            <div class="widget-list" *ngIf="selectedCategory != null">
+        </div>
 
-                <div 
-                    class="widget-item" 
-                    *ngFor="let widget of filteredWidgets" 
-                    [ngClass]="{selected: widget.count > 0}"
-                    (click)="currentWidget = widget"
-                >
 
-                    <div class="widget-name">{{ widget.name }}</div>
+        <div class="widget-info">
 
-                    <img *ngIf="widget.image" [src]="widget.image">
-
-                    <input 
-                        type="number" class="item-count" title="HYT_widget_add_quantity"
-                        i18n-title="@@HYT_widget_add_quantity" min="0" max="{{widgetAddMax}}"
-                        [(ngModel)]="widget.count" (ngModelChange)="onWidgetChange(widget)"
+            <div id="info" *ngIf="currentWidget != null">
+                <h3>{{ currentWidget.name }}</h3>
+                <div *ngIf="currentWidget.preView">
+                    <img [src]="currentWidget.preView" width="100%">
+                </div>
+                <div>
+                    <star-rating 
+                        [value]="currentWidget.avgRating || 2.5" checkedcolor="gold" uncheckedcolor="gray"
+                        size="32px" readonly="false" (rate)="onRate($event)" 
+                        [ngClass]="{'mac': mac, 'linux': linux}"
                     >
+                    </star-rating> 
+                </div>
+                <label i18n="@@HYT_widget_info_type">HYT_widget_info_type</label>
+                <p>
+                    {{ currentWidget.type }}
+                </p>
+                <div>
+                    <label i18n="@@HYT_description">HYT_description</label>
+                    <p>{{ currentWidget.description }}</p>
                 </div>
 
             </div>
 
+            <div *ngIf="!currentWidget" id="intro-info" i18n="@@HYT_widget_info_intro">HYT_widget_info_intro</div>
 
-            <div class="widget-info">
-
-                <div id="info" *ngIf="currentWidget != null">
-                    <h3>{{ currentWidget.name }}</h3>
-                    <div *ngIf="currentWidget.preView">
-                        <img [src]="currentWidget.preView" width="100%">
-                    </div>
-                    <div>
-                        <star-rating 
-                            [value]="currentWidget.avgRating || 2.5" checkedcolor="gold" uncheckedcolor="gray"
-                            size="32px" readonly="false" (rate)="onRate($event)" 
-                            [ngClass]="{'mac': mac, 'linux': linux}"
-                        >
-                        </star-rating> 
-                    </div>
-                    <label i18n="@@HYT_widget_info_type">HYT_widget_info_type</label>
-                    <p>
-                        {{ currentWidget.type }}
-                    </p>
-                    <div>
-                        <label i18n="@@HYT_description">HYT_description</label>
-                        <p>{{ currentWidget.description }}</p>
-                    </div>
-
-                </div>
-
-                <div *ngIf="!currentWidget" id="intro-info" i18n="@@HYT_widget_info_intro">HYT_widget_info_intro</div>
-
-            </div>
-
-            <footer>
-
-                <hyt-button 
-                    [color]="'hyt-base-default-white'"
-                    class="button-close" 
-                    (clickFn)="close()"
-                >
-
-                    <span i18n="@@HYT_cancel">HYT_cancel</span>
-                    <span class="hyt-icon icon-hyt_cancel"></span>
-
-                </hyt-button>
-
-                <hyt-button 
-                    [color]="'hyt-base-default-white'"
-                    [isDisabled]="selectedWidgets.length === 0" 
-                    class="button-confirm" 
-                    (clickFn)="confirm()"
-                >
-
-                    <span i18n="@@HYT_add">HYT_add</span>
-                    <span class="hyt-icon icon-hyt_plus"></span>
-
-                </hyt-button>
-
-            </footer>
         </div>
 
-        <div *ngSwitchCase="-1">
-            <header id="title-modal" i18n="@@HYT_add_widget">HYT_add_widget</header>
-            <div class="mt-5 d-flex flex-column align-items-center justify-content-center">
-                <h2 i18n="@@HYT_error_occurred_long">HYT_error_occurred_long</h2>
-            </div>
-        </div>
+        <footer>
 
+            <hyt-button 
+                [color]="'hyt-base-default-white'"
+                class="button-close" 
+                (clickFn)="close()"
+            >
+
+                <span i18n="@@HYT_cancel">HYT_cancel</span>
+                <span class="hyt-icon icon-hyt_cancel"></span>
+
+            </hyt-button>
+
+            <hyt-button 
+                [color]="'hyt-base-default-white'"
+                [isDisabled]="selectedWidgets.length === 0" 
+                class="button-confirm" 
+                (clickFn)="confirm()"
+            >
+
+                <span i18n="@@HYT_add">HYT_add</span>
+                <span class="hyt-icon icon-hyt_plus"></span>
+
+            </hyt-button>
+
+        </footer>
+    </div>
+
+    <div *ngSwitchCase="-1">
+        <header id="title-modal" i18n="@@HYT_add_widget">HYT_add_widget</header>
+        <div class="mt-5 d-flex flex-column align-items-center justify-content-center">
+            <h2 i18n="@@HYT_error_occurred_long">HYT_error_occurred_long</h2>
+        </div>
     </div>
 
 </div>
-
-<div class="hyt-modal-background"></div>

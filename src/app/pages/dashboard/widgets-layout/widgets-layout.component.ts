@@ -17,7 +17,7 @@ import {
 } from '@hyperiot/core';
 
 import { DashboardConfigService } from '../dashboard-config.service';
-import { HytModalConfService } from 'src/app/services/hyt-modal-conf.service';
+import { HytModalService } from '@hyperiot/components';
 import { WidgetSettingsDialogComponent } from '../widget-settings-dialog/widget-settings-dialog.component';
 import { Subject, Observable } from 'rxjs';
 import { takeUntil, map } from 'rxjs/operators';
@@ -100,7 +100,7 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
     private dataStreamService: DataStreamService,
     private configService: DashboardConfigService,
     private router: Router,
-    private hytModalService: HytModalConfService
+    private hytModalService: HytModalService
   ) { }
 
   ngOnInit() {
@@ -282,35 +282,29 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
         this.currentWidgetIdSetting = data.widget.id;
         this.showSettingWidget = true;
 
-        const widgetId = this.widgetSetting.getWidgetId();
         const widget = this.getItemById(data.widget.id);
-        this.widgetSetting.setWidget(widget);
 
-        this.openModal('hyt-modal-widget-setting');
-        // this.router.navigate([
-        //   'dashboards',
-        //   { outlets: { modal: ['settings', data.widget.id] } }
-        // ]).then((e) => {
-        //   if (e) {
-        //     //console.log('Navigation is successful!');
-        //   } else {
-        //     //console.log('Navigation has failed!');
-        //   }
-        // });
+        this.openModal(widget);
         break;
     }
   }
 
-  openModal(id: string) {
-    this.hytModalService.open(id);
+  openModal(widget: GridsterItem) {
+    const modalRef = this.hytModalService.open(WidgetSettingsDialogComponent, {
+      currentWidgetIdSetting: this.currentWidgetIdSetting,
+      widget: widget
+    });
+    modalRef.onClosed.subscribe(event => {
+      this.onWidgetSettingClose(event);
+    });
   }
 
-  closeModal(id: string) {
-    this.hytModalService.close(id);
-    if (this.ngUnsubscribe) {
-      this.ngUnsubscribe.next();
-    }
-  }
+  // closeModal(id: string) {
+  //   this.hytModalService.close(id);
+  //   if (this.ngUnsubscribe) {
+  //     this.ngUnsubscribe.next();
+  //   }
+  // }
 
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {

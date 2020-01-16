@@ -47,7 +47,7 @@
                             (changeFn)="onSelectChange($event)" [disabled]="false"></hyt-select>
 
                         <div id="add-widget-btn" *ngIf="pageStatus == PageStatus.Standard"
-                            (click)="openModal('hyt-modal-add-widgets')">
+                            (click)="openWidgetModal()">
                             <span class="hyt-icon icon-hyt_widgetPlus"></span>
                             <p i18n="@@HYT_add_a_widget">HYT_add_a_widget</p>
                         </div>
@@ -87,7 +87,7 @@
 
             </div>
 
-            <div id="container-box-dashboard" class="col-12 {{(!dataRecordingIsOn && signalIsOn) ? 'blurred-animation' : ''}}"> 
+            <div id="container-box-dashboard" class="col-12 {{(!dataRecordingIsOn && signalIsOn) ? 'blurred-animation' : ''}}">
 
                 <hyt-dashboard-view 
                     [dashboard]="currentDashboard" 

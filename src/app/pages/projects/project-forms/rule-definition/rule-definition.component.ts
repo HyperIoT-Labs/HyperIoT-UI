@@ -5,6 +5,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Option } from '@hyperiot/components/lib/hyt-radio-button/hyt-radio-button.component';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { HytModalConfService } from 'src/app/services/hyt-modal-conf.service';
+import { HytModalService } from '@hyperiot/components';
+import { RuleErrorModalComponent } from './rule-error/rule-error-modal.component';
 
 interface RuleForm {
   form: FormGroup;
@@ -85,7 +87,7 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
    */
   constructor(
     public fb: FormBuilder,
-    private modalService: HytModalConfService,
+    private hytModalService: HytModalService,
     private i18n: I18n
   ) { }
 
@@ -251,7 +253,8 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
 
           const f = this.fieldFlatList.find(x => x.label === ruleDef[k].field);
           if (!f) {
-            this.modalService.open('hyt-rule-error-modal');
+            const modalRef = this.hytModalService.open(RuleErrorModalComponent);
+            // this.modalService.open('hyt-rule-error-modal');
             return;
           }
           const actualField: HPacketField = f.field;
