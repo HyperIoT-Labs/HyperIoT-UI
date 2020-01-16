@@ -8,6 +8,7 @@ import { AreaDevice } from '@hyperiot/core';
   styleUrls: ['./draggable-item.component.scss']
 })
 export class DraggableItemComponent implements OnInit {
+  openClicked = new EventEmitter<any>();
   removeClicked = new EventEmitter<any>();
   positionChanged = new EventEmitter<any>();
   itemData = {} as AreaDevice;
@@ -27,7 +28,7 @@ export class DraggableItemComponent implements OnInit {
 
   onDragReleased(e) {
     //const source: CdkDrag = e.source;
-    //console.log('onDragReleased', e, source.getFreeDragPosition(), this.dragPosition);
+    //console.log('onDragReleased', e, source);
   }
   onDragMoved(e) {
     //console.log('onDragMoved', e);
@@ -41,6 +42,9 @@ export class DraggableItemComponent implements OnInit {
   }
   onRemoveButtonClick(e) {
     this.removeClicked.emit();
+  }
+  onOpenButtonClick(e) {
+    this.openClicked.emit();
   }
 
   setConfig(container: HTMLElement, itemData: AreaDevice) {

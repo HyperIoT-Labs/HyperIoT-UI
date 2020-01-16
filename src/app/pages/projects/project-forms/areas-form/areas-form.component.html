@@ -75,7 +75,7 @@
         </mat-tab>
 
         <mat-tab *ngIf="areaId > 0" label="Map">
-            <div class="mt-4 d-flex flex-row justify-content-center">
+            <div class="mt-4 mb-2 d-flex flex-row justify-content-center">
 
                 <hyt-button>
                     <label class="m-0 p-0" for="map-image-input">Set map image</label>
@@ -85,8 +85,8 @@
                     (change)="onFileChange($event)"
                     type="file" placeholder="Upload file" accept=".jpg,.png,.svg">
 
-                <hyt-button (clickFn)="onDeviceAddClick($event)">Add device</hyt-button>
-                <hyt-button (clickFn)="onAreaAddClick($event)">Add area</hyt-button>
+                <hyt-button (clickFn)="onMapDeviceAddClick($event)">Add device</hyt-button>
+                <hyt-button (clickFn)="onMapAreaAddClick($event)">Add area</hyt-button>
             
             </div>
             <hyt-area-map #map></hyt-area-map>

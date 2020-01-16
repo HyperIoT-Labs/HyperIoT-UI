@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { DraggableItemComponent } from '../draggable-item/draggable-item.component';
 import { MapDirective } from '../map.directive';
-import { AreaDevice } from '@hyperiot/core';
+import { AreaDevice, Area } from '@hyperiot/core';
 
 @Component({
   selector: 'hyt-area-map',
@@ -23,6 +23,7 @@ export class AreaMapComponent {
   mapBoundary: ElementRef;
   mapImageSize = { width: 800, height: 600 };
   // events
+  itemOpen = new EventEmitter<any>();
   itemRemove = new EventEmitter<any>();
   itemUpdate = new EventEmitter<any>();
 
@@ -35,16 +36,16 @@ export class AreaMapComponent {
 
   constructor(private componentFactoryResolver: ComponentFactoryResolver) {}
 
-  addAreaDeviceItem(areaDevice: AreaDevice) {
+  addAreaItem(areaItem: AreaDevice | Area) {
     const container = this.mapContainer.viewContainerRef.element.nativeElement.parentElement;
     const component = this.addItem();
-    component.instance.setConfig(container, areaDevice);
+    component.instance.setConfig(container, areaItem);
   }
 
-  setDevices(devices: AreaDevice[]) {
+  setAreaItems(items: (AreaDevice | Area)[]) {
     this.reset();
     const container = this.mapContainer.viewContainerRef.element.nativeElement.parentElement;
-    devices.forEach((d) => {
+    items.forEach((d) => {
       this.addItem().instance.setConfig(container, d);
     });
   }
@@ -59,15 +60,23 @@ export class AreaMapComponent {
       .resolveComponentFactory(DraggableItemComponent);
     const viewContainerRef = this.mapContainer.viewContainerRef;
     const component = viewContainerRef.createComponent(componentFactory);
+    // handle click on component label (open button)
+    component.instance.openClicked.subscribe(() => {
+      // TODO: route openClicked event
+    });
     // handle component removal
     component.instance.removeClicked.subscribe(() => {
       this.removeItem(component);
     });
+    // handle position change
     component.instance.positionChanged.subscribe(() => {
       this.updateItem(component);
     });
     this.mapComponents.push(component);
     return component;
+  }
+  openItem(component: ComponentRef<DraggableItemComponent>, disableEvent?: boolean) {
+    this.itemOpen.emit(component.instance.itemData);
   }
   removeItem(component: ComponentRef<DraggableItemComponent>, disableEvent?: boolean) {
     const viewContainerRef = this.mapContainer.viewContainerRef;
@@ -85,9 +94,11 @@ export class AreaMapComponent {
   refresh() {
     const boundary: HTMLElement = this.mapBoundary.nativeElement;
     const mapHost = boundary.parentElement.parentElement;
-    boundary.style.width = mapHost.clientWidth + 'px';
-    const h = boundary.clientWidth / this.mapImageSize.width * this.mapImageSize.height;
-    boundary.style.height = h + 'px';
+    if (mapHost) {
+      boundary.style.width = mapHost.clientWidth + 'px';
+      const h = boundary.clientWidth / this.mapImageSize.width * this.mapImageSize.height;
+      boundary.style.height = h + 'px';
+    }
     this.mapComponents.forEach((c) => c.instance.refresh());
   }
 
