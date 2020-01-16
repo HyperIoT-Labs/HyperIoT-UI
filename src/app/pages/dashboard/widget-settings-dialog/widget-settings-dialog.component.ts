@@ -37,7 +37,6 @@ export class WidgetSettingsDialogComponent extends HytModal implements OnInit {
     this.widgetName = this.data.widget.name;
     this.widgetId = this.data.currentWidgetIdSetting;
     this.dialogDataState = 1;
-
   }
 
   modalIsOpen = false;

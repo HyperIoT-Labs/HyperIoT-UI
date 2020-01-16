@@ -1,4 +1,4 @@
-import { Component, OnInit, Injector, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { EntitiesService } from 'src/app/services/entities/entities.service';
 import { HytModal, HytModalService } from '@hyperiot/components';
 
@@ -10,9 +10,6 @@ import { HytModal, HytModalService } from '@hyperiot/components';
 })
 export class WizardDeactivationModalComponent extends HytModal {
 
-  // @Output()
-  // modalClose: EventEmitter<boolean> = new EventEmitter<boolean>();
-
   constructor(
     public entitiesService: EntitiesService,
     hytModalService: HytModalService
@@ -21,7 +18,6 @@ export class WizardDeactivationModalComponent extends HytModal {
   }
 
   output(action: boolean) {
-    // this.modalClose.emit(action);
     this.close(action);
   }
 

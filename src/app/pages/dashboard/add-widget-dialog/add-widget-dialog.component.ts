@@ -30,7 +30,6 @@ interface WidgetClient {
 })
 export class AddWidgetDialogComponent extends HytModal implements OnInit {
 
-  @Output() addWidgets: EventEmitter<any> = new EventEmitter();
   filteredWidgets: WidgetClient[] = [];
   widgetCategoryList: any;
   widgetList: WidgetClient[] = [];
@@ -141,7 +140,6 @@ export class AddWidgetDialogComponent extends HytModal implements OnInit {
       dataTableUrl: '',
       config: w.baseConfig
     }));
-    // this.addWidgets.emit(widgetOutput);
     this.close(widgetOutput);
   }
 

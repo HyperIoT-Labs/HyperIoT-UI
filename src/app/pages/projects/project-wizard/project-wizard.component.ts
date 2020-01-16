@@ -404,10 +404,6 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
       modalRef.onClosed.subscribe(res => {
         observer.next(res);
       });
-      // this.modalService.open('hyt-wizard-deactivation-modal');
-      // this.deactivationModal.modalClose.subscribe(
-      //   res => observer.next(res)
-      // );
     });
   }
 
@@ -423,7 +419,6 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
   }
 
   optionsModalClosed(event: { action: string, data: any }) {
-    console.log(event);
     switch (event.action) {
       case 'goToStep': {
         this.stepper.changeStep(event.data);
@@ -437,7 +432,6 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
   }
 
   openFinishModal() {
-    console.log('openFinishModal');
     this.finishData = [];
     this.finishData.push({
       iconPath: this.entitiesService.project.icon,
