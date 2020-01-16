@@ -39,7 +39,6 @@ export class AreaMapComponent {
     const container = this.mapContainer.viewContainerRef.element.nativeElement.parentElement;
     const component = this.addItem();
     component.instance.setConfig(container, areaDevice);
-    // TODO: should add component cfg to 'areaConfig.devices' as well
   }
 
   setDevices(devices: AreaDevice[]) {
@@ -65,7 +64,6 @@ export class AreaMapComponent {
       this.removeItem(component);
     });
     component.instance.positionChanged.subscribe(() => {
-      // TODO: update item position
       this.updateItem(component);
     });
     this.mapComponents.push(component);
@@ -76,7 +74,6 @@ export class AreaMapComponent {
     const idx = viewContainerRef.indexOf(component.hostView);
     viewContainerRef.remove(idx);
     this.mapComponents.splice(this.mapComponents.indexOf(component), 1);
-    // TODO: should remove it from 'areaConfig.devices' as well
     if (!disableEvent) {
       this.itemRemove.emit(component.instance.itemData);
     }

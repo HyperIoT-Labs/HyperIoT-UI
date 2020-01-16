@@ -7,6 +7,7 @@ import { AreasService, HprojectsService, Area, Attachment, ContentDisposition, H
 import { AreaMapComponent } from './area-map/area-map.component';
 import { HttpClient } from '@angular/common/http';
 import { AreaDeviceSelectDialogComponent } from './area-device-select-dialog/area-device-select-dialog.component';
+import { AreaInnerareaSelectDialogComponent } from './area-innerarea-select-dialog/area-innerarea-select-dialog.component';
 
 @Component({
   selector: 'hyt-areas-form',
@@ -157,12 +158,14 @@ export class AreasFormComponent extends ProjectFormEntity {
       if (result) {
         this.areaService.addAreaDevice(this.areaId, {
           device: result.device,
-          icon: result.icon,
-          x: 0.5,
-          y: 0.5
+          mapInfo: {
+            icon: result.icon,
+            x: 0.5,
+            y: 0.5
+          }
         } as AreaDevice).subscribe((areaDevice: AreaDevice) => {
           console.log('Add Area Device Result', areaDevice);
-          areaDevice.icon = result.icon;
+          areaDevice.mapInfo.icon = result.icon;
           this.mapComponent.addAreaDeviceItem(areaDevice);
         });
       }
@@ -188,7 +191,28 @@ export class AreasFormComponent extends ProjectFormEntity {
     });
   }
 
-  onEditSubAreaClick(area) {
+  onAreaAddClick(e) {
+    const modalRef = this.modalService.open(AreaInnerareaSelectDialogComponent, {
+      areaId: this.areaId, projectId: this.projectId, areas: this.areaList
+    });
+    modalRef.onClosed.subscribe(area => {
+      if (area) {
+        // TODO: the field project should be exposed in model
+        // TODO: if not passing this field the service will return validation error
+        area['project'] = { id: this.projectId };
+        area.mapInfo = {
+          x: 0.5,
+          y: 0.5
+        };
+        // TODO: handle errors
+        this.areaService.updateArea(area).subscribe(res => {
+          console.log(res);
+        });
+      }
+    });
+  }
+
+  onEditInnerAreaClick(area) {
     this.currentSection = 0; // show the info tab
     this.router.navigate(
       [ '/projects/', this.projectId, {outlets: { projectDetails: ['areas', area.id ] } } ]
@@ -197,7 +221,7 @@ export class AreasFormComponent extends ProjectFormEntity {
     });
   }
 
-  onAddSubAreaClick(e) {
+  onAddInnerAreaClick(e) {
     const a: Area = {
       id: 0,
       name: 'New area ' + new Date().getTime(),

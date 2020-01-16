@@ -35,8 +35,8 @@ export class DraggableItemComponent implements OnInit {
   onDragEnded(e) {
     const source: CdkDrag = e.source;
     const position = source.getFreeDragPosition();
-    this.itemData.x = position.x / this.container.clientWidth;
-    this.itemData.y = position.y / this.container.clientHeight;
+    this.itemData.mapInfo.x = position.x / this.container.clientWidth;
+    this.itemData.mapInfo.y = position.y / this.container.clientHeight;
     this.positionChanged.emit();
   }
   onRemoveButtonClick(e) {
@@ -46,20 +46,20 @@ export class DraggableItemComponent implements OnInit {
   setConfig(container: HTMLElement, itemData: AreaDevice) {
     this.container = container;
     this.itemData = itemData;
-    this.style['background-image'] = `url(assets/icons/${itemData.icon})`;
+    this.style['background-image'] = `url(assets/icons/${itemData.mapInfo.icon})`;
     this.style['background-size'] = `64px 64px`;
     this.refresh();
   }
   setPosition(x: number, y: number) {
     // normalize to view size
-    this.itemData.x = x;
-    this.itemData.y = y;
+    this.itemData.mapInfo.x = x;
+    this.itemData.mapInfo.y = y;
     this.refresh();
   }
   refresh() {
     this.position = {
-      x: this.itemData.x * this.container.clientWidth,
-      y: this.itemData.y * this.container.clientHeight
+      x: this.itemData.mapInfo.x * this.container.clientWidth,
+      y: this.itemData.mapInfo.y * this.container.clientHeight
     };
   }
 }

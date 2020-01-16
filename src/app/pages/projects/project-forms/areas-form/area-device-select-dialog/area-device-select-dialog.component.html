@@ -1,7 +1,7 @@
-<div class="dialog pt-2 pb-2">
+<div class="dialog pt-2 pb-2 d-flex flex-column">
     <h3 class="ml-3 mr-3">Select device</h3>
 
-    <mat-list role="list">
+    <mat-list role="list" class="flex-grow-1">
         <mat-list-item *ngFor="let device of projectDevices" role="listitem">
             <button mat-button
                 [disabled]="device.added"

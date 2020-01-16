@@ -80,13 +80,13 @@
                 <hyt-button>
                     <label class="m-0 p-0" for="map-image-input">Set map image</label>
                 </hyt-button>
-
                 <input class="hidden" id="map-image-input"
                     name="area-image"
                     (change)="onFileChange($event)"
                     type="file" placeholder="Upload file" accept=".jpg,.png,.svg">
 
                 <hyt-button (clickFn)="onDeviceAddClick($event)">Add device</hyt-button>
+                <hyt-button (clickFn)="onAreaAddClick($event)">Add area</hyt-button>
             
             </div>
             <hyt-area-map #map></hyt-area-map>
@@ -94,14 +94,14 @@
 
         <mat-tab *ngIf="areaId > 0" label="Inner areas ({{ areaList.length }})">
             <div class="actions">
-                <hyt-button mat-mini-fab (clickFn)="onAddSubAreaClick($event)">
+                <hyt-button mat-mini-fab (clickFn)="onAddInnerAreaClick($event)">
                     Add inner area <span class="hyt-icon icon-hyt_plusC"></span>
                 </hyt-button>
             </div>
             <div class="mt-4 mb-4 d-flex flex-row flex-wrap justify-content-center">
                 <mat-card *ngFor="let area of areaList"
                     class="area-item mat-elevation-z2"
-                    (click)="onEditSubAreaClick(area)">
+                    (click)="onEditInnerAreaClick(area)">
                     <mat-card-header>
                         <mat-card-title>{{area.name}}</mat-card-title>
                     </mat-card-header>
