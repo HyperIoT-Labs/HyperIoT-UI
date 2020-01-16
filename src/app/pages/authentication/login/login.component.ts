@@ -105,8 +105,6 @@ export class LoginComponent implements OnInit {
 
   onClickCheckbox(event) {
     this.checked = event;
-
-    console.log(this.checked)
   }
 
   isLoggedIn(): boolean {
