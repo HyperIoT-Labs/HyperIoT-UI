@@ -53,6 +53,7 @@ export class LoginComponent implements OnInit {
    */
   loginStatus: SubmissionStatus = SubmissionStatus.Default;
 
+  loggedIn = this.isLoggedIn();
   /**
    * injectedErrorState is true if the server returns an error
    */
@@ -62,6 +63,8 @@ export class LoginComponent implements OnInit {
    * logger service
    */
   private logger: Logger;
+
+  checked: boolean;
 
   /**
    * class constructor
@@ -78,11 +81,37 @@ export class LoginComponent implements OnInit {
   }
 
   /**
-   * ngOnInit() builds the loginForm and set the returnUrl
+   * ngOnInit() builds the loginForm and sets the returnUrl
    */
   ngOnInit() {
+    // if (this.cookieService.check('rememberme')) {
+    //   this.loginForm = this.fb.group({
+    //     username: []
+    //   });
+    //   console.log('rememberMe: ', this.cookieService.get('rememberme'));
+
+    // } else {
+    //   this.loginForm = this.fb.group({
+    //     rememberMe: [false]
+    //   });
+    //   console.log('rememberMe: ', this.loginForm.value.rememberMe);
+    // }
+
     this.loginForm = this.fb.group({});
     this.returnUrl = window.history.state.returnUrl || '/';
+  }
+
+  onClickCheckbox() {
+    this.checked = !this.checked;
+    this.loginForm.value.rememberMe = !this.loginForm.value.rememberMe;
+  }
+
+  isLoggedIn(): boolean {
+    if (localStorage.getItem('userInfo')) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   /**
@@ -99,13 +128,14 @@ export class LoginComponent implements OnInit {
 
     this.authenticationService.login(this.loginForm.value.username, this.loginForm.value.password).subscribe(
       res => {
-        this.logger.debug('username and password:', res);
         this.cookieService.set('HIT-AUTH', res.token, 2, '/');
+        this.cookieService.set('rememberme', this.loginForm.value.username, 2, '/');
         localStorage.setItem('userInfo', JSON.stringify(res));
         localStorage.setItem('user', JSON.stringify(res.authenticable));
         this.logger.trace('userInfo', JSON.stringify(res.authenticable));
 
         if (this.loginForm.value.rememberMe === true) {
+          console.log('rememberMe checked', this.loginForm.value.rememberMe);
           this.encrypting(this.loginForm.value.username + '&' + this.loginForm.value.password, this.key);
           this.cookieService.set('hytUser', this.encrypted, 28, '/');
         } else if (this.cookieService.check('hytUser')) {

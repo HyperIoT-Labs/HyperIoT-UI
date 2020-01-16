@@ -25,6 +25,7 @@ export class AccountButtonComponent implements OnInit {
     localStorage.removeItem('user');
     localStorage.removeItem('userInfo');
     this.route.navigate(['/auth/login']);
+    
   }
 
 }
