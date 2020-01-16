@@ -58,9 +58,11 @@
               </div> <!-- Container Forgot Password -->
 
               <div class="container-form-field">
-                <mat-checkbox type="checkbox" id="remember-me">
+
+                <hyt-checkbox [formGroup]="loginForm" name="rememberMe" type="checkbox" id="remember-me" [(ngModel)]="checked" [ngModelOptions]="{standalone: true}" (changeFn)="onClickCheckbox($event)" >
                   <ng-container i18n="@@HYT_remember_me">HYT_remember_me</ng-container>
-                </mat-checkbox>
+                </hyt-checkbox>
+
               </div> <!-- Container Remember Me -->
 
               <div class="container-form-field errorMessage">
