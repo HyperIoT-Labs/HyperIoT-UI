@@ -1,5 +1,6 @@
 import { Component, OnInit, HostListener, EventEmitter } from '@angular/core';
 import { CdkDrag } from '@angular/cdk/drag-drop';
+import { AreaDevice } from '@hyperiot/core';
 
 @Component({
   selector: 'hyt-draggable-item',
@@ -8,11 +9,10 @@ import { CdkDrag } from '@angular/cdk/drag-drop';
 })
 export class DraggableItemComponent implements OnInit {
   removeClicked = new EventEmitter<any>();
-  itemData: any = {
-    position: { x: 0, y: 0}
-  };
+  positionChanged = new EventEmitter<any>();
+  itemData = {} as AreaDevice;
   container;
-  position;
+  position = { x: 0, y: 0 };
   style: any = {};
 
   @HostListener('window:resize', ['$event'])
@@ -34,37 +34,32 @@ export class DraggableItemComponent implements OnInit {
   }
   onDragEnded(e) {
     const source: CdkDrag = e.source;
-    console.log('onDragEnded', e, source.getFreeDragPosition());
     const position = source.getFreeDragPosition();
-    this.itemData.position = {
-      x: position.x / this.container.clientWidth,
-      y: position.y / this.container.clientHeight
-    }
-    this.refresh();
+    this.itemData.x = position.x / this.container.clientWidth;
+    this.itemData.y = position.y / this.container.clientHeight;
+    this.positionChanged.emit();
   }
   onRemoveButtonClick(e) {
-    console.log('onRemoveButtonClick', e);
-    this.removeClicked.emit(null);
+    this.removeClicked.emit();
   }
 
-  setConfig(container: HTMLElement, itemData: any) {
+  setConfig(container: HTMLElement, itemData: AreaDevice) {
     this.container = container;
     this.itemData = itemData;
     this.style['background-image'] = `url(assets/icons/${itemData.icon})`;
     this.style['background-size'] = `64px 64px`;
     this.refresh();
   }
-  setPosition(rp: {x: number, y: number}) {
-    if (rp) {
-      this.itemData.position = rp;
-    }
+  setPosition(x: number, y: number) {
     // normalize to view size
-    this.position = {
-      x: this.itemData.position.x * this.container.clientWidth,
-      y: this.itemData.position.y * this.container.clientHeight
-    };
+    this.itemData.x = x;
+    this.itemData.y = y;
+    this.refresh();
   }
   refresh() {
-    this.setPosition(this.itemData.position);
+    this.position = {
+      x: this.itemData.x * this.container.clientWidth,
+      y: this.itemData.y * this.container.clientHeight
+    };
   }
 }

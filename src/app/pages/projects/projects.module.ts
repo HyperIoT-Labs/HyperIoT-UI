@@ -38,7 +38,8 @@ import {
   MatProgressBarModule,
   MatMenuModule,
   MatRippleModule,
-  MatTabsModule
+  MatTabsModule,
+  MatListModule
 } from '@angular/material';
 import { MatExpansionModule } from '@angular/material/expansion';
 
@@ -58,6 +59,7 @@ import { AreaMapComponent } from './project-forms/areas-form/area-map/area-map.c
 import { DraggableItemComponent } from './project-forms/areas-form/draggable-item/draggable-item.component';
 import { MapDirective } from './project-forms/areas-form/map.directive';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { AreaDeviceSelectDialogComponent } from './project-forms/areas-form/area-device-select-dialog/area-device-select-dialog.component';
 
 @NgModule({
   declarations: [
@@ -94,7 +96,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     AreasFormComponent,
     AreaMapComponent,
     DraggableItemComponent,
-    MapDirective
+    MapDirective,
+    AreaDeviceSelectDialogComponent
   ],
   imports: [
     MatIconModule,
@@ -114,12 +117,14 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     MatAutocompleteModule,
     MatInputModule,
     MatExpansionModule,
-    DragDropModule
+    DragDropModule,
+    MatListModule
   ],
   entryComponents: [
     AddTagModalComponent,
     AddCetegoryModalComponent,
-    DraggableItemComponent
+    DraggableItemComponent,
+    AreaDeviceSelectDialogComponent
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
