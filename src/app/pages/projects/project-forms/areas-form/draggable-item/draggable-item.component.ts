@@ -11,7 +11,7 @@ export class DraggableItemComponent implements OnInit {
   openClicked = new EventEmitter<any>();
   removeClicked = new EventEmitter<any>();
   positionChanged = new EventEmitter<any>();
-  itemData = {} as AreaDevice;
+  itemData = {} as any;
   container;
   position = { x: 0, y: 0 };
   style: any = {};
