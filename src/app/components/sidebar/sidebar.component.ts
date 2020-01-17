@@ -16,7 +16,10 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnDestroy {
 
   navIsOpen : boolean = false;
 
-  mobileBreakPoint: number = 991;
+  mobileBreakPoints = {
+    md : 991,
+    sm : 767
+  };
 
   private subscriptionToggleMenu : Subscription;
 
@@ -26,7 +29,7 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnDestroy {
     
     this.winInnerWidth = window.innerWidth;
 
-    if(this.winInnerWidth > this.mobileBreakPoint && this.navIsOpen === true) {
+    if(this.winInnerWidth > this.mobileBreakPoints.md && this.navIsOpen === true) {
 
       this.navIsOpen = this.toggleSidebarService.resetStatus();
       
@@ -57,7 +60,7 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.winInnerWidth = event.target.innerWidth;
 
-    if(this.winInnerWidth > this.mobileBreakPoint && this.navIsOpen === true) {
+    if(this.winInnerWidth > this.mobileBreakPoints.md && this.navIsOpen === true) {
 
       this.navIsOpen = this.toggleSidebarService.resetStatus();
 

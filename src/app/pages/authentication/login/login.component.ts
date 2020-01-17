@@ -101,7 +101,7 @@ export class LoginComponent implements OnInit {
     this.returnUrl = window.history.state.returnUrl || '/';
   }
 
-  onClickCheckbox() {
+  onClickCheckbox(event) {
     this.checked = !this.checked;
     this.loginForm.value.rememberMe = !this.loginForm.value.rememberMe;
   }
