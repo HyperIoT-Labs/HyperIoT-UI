@@ -3,7 +3,7 @@ import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HytModalService } from '@hyperiot/components';
 import { ProjectFormEntity, LoadingStatusEnum } from '../project-form-entity';
-import { AreasService, HprojectsService, Area, Attachment, ContentDisposition, HdevicesService, HDevice, AreaDevice } from '@hyperiot/core';
+import { AreasService, HprojectsService, Area, AreaDevice } from '@hyperiot/core';
 import { AreaMapComponent } from './area-map/area-map.component';
 import { HttpClient } from '@angular/common/http';
 import { AreaDeviceSelectDialogComponent } from './area-device-select-dialog/area-device-select-dialog.component';
@@ -45,7 +45,6 @@ export class AreasFormComponent extends ProjectFormEntity {
     private router: Router,
     private areaService: AreasService,
     private projectService: HprojectsService,
-    private deviceService: HdevicesService,
     private modalService: HytModalService,
     private httpClient: HttpClient
   ) {
@@ -80,10 +79,10 @@ export class AreasFormComponent extends ProjectFormEntity {
         this.edit(area);
         this.areaService.getAreaPath(this.areaId).subscribe((path) => {
           this.areaPath = path;
-          this.loadingStatus = LoadingStatusEnum.Ready;
+          this.apiSuccess(path);
           this.loadAreaData();
-        });
-      });
+        }, err => this.apiError(err));
+      }, err => this.apiError(err));
       this.editMode = true;
       this.showSave = true;
       this.showCancel = false;
@@ -92,8 +91,8 @@ export class AreasFormComponent extends ProjectFormEntity {
       this.editMode = false;
       this.projectService.getHProjectAreaList(this.projectId).subscribe((list) => {
         this.areaList = list;
-        this.loadingStatus = LoadingStatusEnum.Ready;
-      });
+        this.apiSuccess(list);
+      }, err => this.apiError(err));
     }
   }
   save(successCallback: any, errorCallback: any) {
@@ -106,14 +105,15 @@ export class AreasFormComponent extends ProjectFormEntity {
     this.resetForm();
     this.router.navigate(
       [ '/projects/', this.projectId, {outlets: { projectDetails: ['areas'] } } ]
-    ).then((success) => {
-      // TODO: ?
-    });
+    );
   }
 
   onFileChange(event) {
     if (event.target.files && event.target.files.length) {
       const [file] = event.target.files;
+      // TODO: could not find a way of implementing
+      //       upload via HyperIoT Area REST API
+      //       so it's currently implemented using HttpClient
       /*
       const reader = new FileReader();
       reader.onload = () => {
@@ -143,9 +143,11 @@ export class AreasFormComponent extends ProjectFormEntity {
 
       const formData = new FormData();
       formData.append('image_file', file, file.name);
+      this.loadingStatus = LoadingStatusEnum.Saving;
       this.httpClient.post(`/hyperiot/areas/${this.areaId}/image`, formData).subscribe((res) => {
+        this.apiSuccess(res);
         this.loadAreaImage();
-      });
+      }, err => this.apiError(err));
 
     }
   }
@@ -156,6 +158,7 @@ export class AreasFormComponent extends ProjectFormEntity {
     });
     modalRef.onClosed.subscribe(ad => {
       if (ad) {
+        this.loadingStatus = LoadingStatusEnum.Saving;
         this.areaService.addAreaDevice(this.areaId, {
           device: ad.device,
           mapInfo: {
@@ -164,21 +167,19 @@ export class AreasFormComponent extends ProjectFormEntity {
             y: 0.5
           }
         } as AreaDevice).subscribe((areaDevice: AreaDevice) => {
-          console.log('Add Area Device Result', areaDevice);
-          //areaDevice.mapInfo.icon = ad.mapInfo.icon;
+          this.apiSuccess(areaDevice);
           this.mapComponent.addAreaItem(areaDevice);
-        });
+        }, err => this.apiError(err));
       }
     });
   }
   onMapDeviceRemoved(areaDevice: AreaDevice) {
-    // TODO: handle errors
-    this.areaService.removeAreaDevice(this.areaId, areaDevice.id).subscribe((res) => {
-      console.log('Removed device from map', res);
-    });
+    this.loadingStatus = LoadingStatusEnum.Saving;
+    this.areaService.removeAreaDevice(this.areaId, areaDevice.id)
+      .subscribe(res => this.apiSuccess(res), (err) => this.apiError(err));
   }
   onMapDeviceUpdated(areaDevice: AreaDevice) {
-    // TODO: handle errors
+    this.loadingStatus = LoadingStatusEnum.Saving;
     this.areaService.removeAreaDevice(this.areaId, areaDevice.id).subscribe((res) => {
       areaDevice.id = 0;
       // NOTE: 'areaDevice.device.project.user.screenName' property
@@ -187,8 +188,9 @@ export class AreasFormComponent extends ProjectFormEntity {
       delete areaDevice.device.project.user;
       this.areaService.addAreaDevice(this.areaId, areaDevice).subscribe((ad) => {
         Object.assign(areaDevice, ad);
-      });
-    });
+        this.apiSuccess(ad);
+      }, (err) => this.apiError(err));
+    }, (err) => this.apiError(err));
   }
 
   onMapAreaAddClick(e) {
@@ -206,12 +208,11 @@ export class AreasFormComponent extends ProjectFormEntity {
           x: 0.5,
           y: 0.5
         };
-        // TODO: handle errors
+        this.loadingStatus = LoadingStatusEnum.Saving;
         this.areaService.updateArea(a).subscribe(area => {
-          console.log('Add Map Area Result', area);
-          //a.mapInfo.icon = area.mapInfo.icon;
           this.mapComponent.addAreaItem(area);
-        });
+          this.apiSuccess(area);
+        }, err => this.apiError(err));
       }
     });
   }
@@ -219,23 +220,29 @@ export class AreasFormComponent extends ProjectFormEntity {
     area['project'] = { id: this.projectId };
     area.parentArea = { id: this.areaId, entityVersion: null };
     area.mapInfo = null;
-    // TODO: handle errors
-    this.areaService.updateArea(area).subscribe();
+    this.loadingStatus = LoadingStatusEnum.Saving;
+    this.areaService.updateArea(area)
+      .subscribe(res => this.apiSuccess(res), err => this.apiError(err));
   }
   onMapAreaUpdated(area: Area) {
     area['project'] = { id: this.projectId };
     area.parentArea = { id: this.areaId, entityVersion: null };
-    // TODO: handle errors
-    this.areaService.updateArea(area).subscribe();
+    this.loadingStatus = LoadingStatusEnum.Saving;
+    this.areaService.updateArea(area)
+      .subscribe(res => this.apiSuccess(res), err => this.apiError(err));
   }
 
+  onEditAreaClick(area) {
+    this.currentSection = 0; // show the info tab
+    this.router.navigate(
+      [ '/projects/', this.projectId, {outlets: { projectDetails: ['areas', area.id ] } } ]
+    );
+  }
   onEditInnerAreaClick(area) {
     this.currentSection = 0; // show the info tab
     this.router.navigate(
       [ '/projects/', this.projectId, {outlets: { projectDetails: ['areas', area.id ] } } ]
-    ).then((success) => {
-      // TODO: ?
-    });
+    );
   }
 
   onAddInnerAreaClick(e) {
@@ -250,14 +257,14 @@ export class AreasFormComponent extends ProjectFormEntity {
     // TODO: the 'project' field should be exposed in Area model by REST API
     // TODO:
     a['project'] = { id: this.projectId };
+    this.loadingStatus = LoadingStatusEnum.Saving;
     this.areaService.saveArea(a).subscribe(res => {
       this.currentSection = 0; // show the info tab
+      this.apiSuccess(res);
       this.router.navigate(
         [ '/projects/', this.projectId, {outlets: { projectDetails: ['areas', res.id ] } } ]
-      ).then((success) => {
-        // TODO: ?
-      });
-    });
+      );
+    }, err => this.apiError(err));
   }
 
   onTabChange(e) {
@@ -278,7 +285,9 @@ export class AreasFormComponent extends ProjectFormEntity {
         if (openItem.device) {
           // TODO: handle device open
         } else {
-          // TODO: handle inner area open (show inner area map)
+          this.router.navigate(
+            [ '/projects/', this.projectId, {outlets: { projectDetails: ['areas', openItem.id ] } } ]
+          );
         }
       });
     }
@@ -330,14 +339,13 @@ export class AreasFormComponent extends ProjectFormEntity {
   private loadAreaData() {
     // Load inner areas
     this.loadingStatus = LoadingStatusEnum.Loading;
-    // TODO: handle errors
     this.areaService.findInnerAreas(this.entity.id).subscribe((areaTree) => {
       this.areaList = areaTree.innerArea;
-      this.loadingStatus = LoadingStatusEnum.Ready;
+      this.apiSuccess(areaTree);
       if (this.currentSection === 1) {
         this.loadAreaMap();
       }
-    });
+    }, err => this.apiError(err));
   }
 
   private saveArea(successCallback: any, errorCallback: any) {
@@ -358,55 +366,57 @@ export class AreasFormComponent extends ProjectFormEntity {
         this.areaService.getAreaPath(res.id).subscribe((path) => {
           this.areaPath = path;
         });
-        this.loadingStatus = LoadingStatusEnum.Ready;
+        this.apiSuccess(res);
         successCallback && successCallback(res);
       }, (err) => {
-        this.loadingStatus = LoadingStatusEnum.Error;
+        this.apiError(err);
         errorCallback && errorCallback(err);
       });
     } else {
       // Add new
       this.areaService.saveArea(area).subscribe((res) => {
         this.resetForm();
+        this.apiSuccess(res);
         this.router.navigate(
           [ '/projects/', this.projectId, {outlets: { projectDetails: ['areas', res.id ] } } ]
-        ).then((success) => {
-          // TODO: ?
-        });
-        this.loadingStatus = LoadingStatusEnum.Ready;
+        );
         successCallback && successCallback(res);
       }, (err) => {
-        this.loadingStatus = LoadingStatusEnum.Error;
+        this.apiError(err);
         errorCallback && errorCallback(err);
       });
     }
   }
 
   private deleteArea(successCallback, errorCallback) {
+    this.loadingStatus = LoadingStatusEnum.Saving;
     let parentAreaId = this.getParentAreaId();
     this.areaService.deleteArea(this.areaId).subscribe((res) => {
-      this.loadingStatus = LoadingStatusEnum.Ready;
+      this.apiSuccess(res);
       successCallback && successCallback(res);
       if (parentAreaId) {
         // navigate back to parent showing inner areas list
         this.currentSection = 2;
         this.router.navigate(
           [ '/projects/', this.projectId, {outlets: { projectDetails: ['areas', parentAreaId ] } } ]
-        ).then((success) => {
-          // TODO: ?
-        });
+        );
       } else {
         // navigate back to main
         this.currentSection = 0;
         this.router.navigate(
           [ '/projects/', this.projectId, {outlets: { projectDetails: ['areas' ] } } ]
-        ).then((success) => {
-          // TODO: ?
-        });
+        );
       }
-  }, (err) => {
+    }, (err) => {
+      this.apiError(err);
       errorCallback && errorCallback(err);
-      this.loadingStatus = LoadingStatusEnum.Error;
     });
+  }
+
+  private apiSuccess(res) {
+    this.loadingStatus = LoadingStatusEnum.Ready;
+  }
+  private apiError(err) {
+    this.loadingStatus = LoadingStatusEnum.Error;
   }
 }

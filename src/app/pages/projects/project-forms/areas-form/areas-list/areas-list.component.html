@@ -1,0 +1,12 @@
+<div class="d-flex flex-row flex-wrap justify-content-center">
+    <mat-card *ngFor="let area of areaList"
+        class="area-item mat-elevation-z2 d-flex flex-column"
+        (click)="onAreaItemClick(area)">
+        <mat-card-header>
+            <mat-card-title>{{area.name}}</mat-card-title>
+        </mat-card-header>
+        <div *ngIf="area.imagePath != null && area.imagePath.length > 0" class="map-image flex-grow-1" [ngStyle]="{ 'background-image': 'url(/hyperiot/areas/'+area.id+'/image)' }"></div>
+        <div *ngIf="area.imagePath == null || area.imagePath.length == 0" class="map-image flex-grow-1 d-flex flex-column justify-content-center align-items-center">(no image)</div>
+        <mat-card-content class="p-2">{{area.description}}</mat-card-content>
+    </mat-card>
+</div>
