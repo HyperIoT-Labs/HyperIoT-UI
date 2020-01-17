@@ -1,46 +1,40 @@
-<div class="hyt-modal">
-    <div class="hyt-modal-body">
-        <div class="dialog container-fluid">
-            
-            <div id="title-deact-mod" class="row">
+<div id="hyt-wizard-deactivation-modal" class="dialog container-fluid">
+    
+    <div id="title-deact-mod" class="row">
 
-                <div class="col-12">
-                    <h3>Unsaved data</h3><!-- @I18N@ -->
-                </div>
-
-            </div>
-
-            <div id="body-deact-mod" class="row">
-
-                <div class="col-12">
-
-                    <p>If you leave the page the unsaved changes will be lost</p><!-- @I18N@ -->
-
-                </div>
-
-            </div>
-
-            <div id="footer-deact-mod" class="row">
-
-                <div class="col-6">
-
-                    <hyt-button [color]="'hyt-base-total-green'" (click)="output(false)">
-                        <span class="hyt-icon icon-hyt_arrowLeft"></span>  Remain <!-- @I18N@ -->
-                    </hyt-button>
-
-                </div>
-
-                <div class="col-6">
-
-                    <hyt-button [color]="'hyt-base-total-red'" (click)="output(true)">
-                        Discard Changes <span class="hyt-icon icon-hyt_cancel"></span> <!-- @I18N@ -->
-                    </hyt-button>
-
-                </div>
-                
-            </div>
+        <div class="col-12">
+            <h3>Unsaved data</h3><!-- @I18N@ -->
         </div>
+
+    </div>
+
+    <div id="body-deact-mod" class="row">
+
+        <div class="col-12">
+
+            <p>If you leave the page the unsaved changes will be lost</p><!-- @I18N@ -->
+
+        </div>
+
+    </div>
+
+    <div id="footer-deact-mod" class="row">
+
+        <div class="col-6">
+
+            <hyt-button [color]="'hyt-base-total-green'" (click)="output(false)">
+                <span class="hyt-icon icon-hyt_arrowLeft"></span>  Remain <!-- @I18N@ -->
+            </hyt-button>
+
+        </div>
+
+        <div class="col-6">
+
+            <hyt-button [color]="'hyt-base-total-red'" (click)="output(true)">
+                Discard Changes <span class="hyt-icon icon-hyt_cancel"></span> <!-- @I18N@ -->
+            </hyt-button>
+
+        </div>
+        
     </div>
 </div>
-
-<div class="hyt-modal-background"></div>

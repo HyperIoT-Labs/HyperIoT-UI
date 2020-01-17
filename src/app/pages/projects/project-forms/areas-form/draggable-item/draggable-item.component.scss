@@ -13,6 +13,7 @@
     /* center the element */
     margin-left: -32px;
     margin-top: -32px;
+    cursor: move;
 }
 
 .remove-button {
@@ -27,4 +28,27 @@
     border-radius: 12px;
     width: 24px;
     height: 24px;
+}
+
+.title {
+    position: absolute;
+    height: 24px;
+    bottom: -24px;
+    width: 128px;
+    left: -32px;
+    right: 96px;
+    padding-left: 8px;
+    padding-right: 8px;
+    border: solid 1px gray;
+    border-radius: 12px;
+    background-color: rgba($color: white, $alpha: 0.65);
+    font-weight: bold;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+}
+.area-title {
+    background-color: rgba($color: yellow, $alpha: 0.65);
 }

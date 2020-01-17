@@ -1,23 +1,37 @@
-<div id="hyt-topbar" class="container-fluid">
+<div id="hyt-topbar" class="container-fluid" [ngClass]="{'topbarMob': winInnerWidth <= mobileBreakPoints.md}">
     
     <div id="logo-container">
         
         <a routerLink="/">
-            <img id="img-logo-hyt" src="assets/images/logo/Hyperiot-Ex_S.png" alt="HyperIoT Logo Extended">
+
+            <img 
+                id="img-logo-hyt" 
+                src="assets/images/logo/Hyperiot-Ex_S.png" 
+                alt="HyperIoT Logo Extended"
+                *ngIf="winInnerWidth > mobileBreakPoints.xs"
+            > <!--@I18N@-->
+
+            <img 
+                id="img-logo-mob-hyt" 
+                src="assets/images/hyperiot_logo_single_char_animated.svg" 
+                alt="HyperIoT Logo Single Char"
+                *ngIf="winInnerWidth <= mobileBreakPoints.xs"
+            > <!--@I18N@-->
+            
         </a>
     
     </div>
 
     <div id="main-container">
         <div 
-            *ngIf="winInnerWidth <= mobileBreakPoint" 
+            *ngIf="winInnerWidth <= mobileBreakPoints.md" 
             id="hamburger-btn" 
             class="menu-mobile" 
             (click)="toggleMenu()">
             
             <!-- INIZIO -->
 
-            <div class="icon nav-icon-4" [ngClass]="{'open': isShow}">
+            <div class="icon nav-icon-mob" [ngClass]="{'open': isShow}">
                 <span></span>
                 <span></span>
                 <span></span>

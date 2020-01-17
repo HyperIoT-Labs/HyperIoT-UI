@@ -8,9 +8,10 @@ import { AreaDevice } from '@hyperiot/core';
   styleUrls: ['./draggable-item.component.scss']
 })
 export class DraggableItemComponent implements OnInit {
+  openClicked = new EventEmitter<any>();
   removeClicked = new EventEmitter<any>();
   positionChanged = new EventEmitter<any>();
-  itemData = {} as AreaDevice;
+  itemData = {} as any;
   container;
   position = { x: 0, y: 0 };
   style: any = {};
@@ -27,7 +28,7 @@ export class DraggableItemComponent implements OnInit {
 
   onDragReleased(e) {
     //const source: CdkDrag = e.source;
-    //console.log('onDragReleased', e, source.getFreeDragPosition(), this.dragPosition);
+    //console.log('onDragReleased', e, source);
   }
   onDragMoved(e) {
     //console.log('onDragMoved', e);
@@ -35,31 +36,34 @@ export class DraggableItemComponent implements OnInit {
   onDragEnded(e) {
     const source: CdkDrag = e.source;
     const position = source.getFreeDragPosition();
-    this.itemData.x = position.x / this.container.clientWidth;
-    this.itemData.y = position.y / this.container.clientHeight;
+    this.itemData.mapInfo.x = position.x / this.container.clientWidth;
+    this.itemData.mapInfo.y = position.y / this.container.clientHeight;
     this.positionChanged.emit();
   }
   onRemoveButtonClick(e) {
     this.removeClicked.emit();
   }
+  onOpenButtonClick(e) {
+    this.openClicked.emit();
+  }
 
   setConfig(container: HTMLElement, itemData: AreaDevice) {
     this.container = container;
     this.itemData = itemData;
-    this.style['background-image'] = `url(assets/icons/${itemData.icon})`;
+    this.style['background-image'] = `url(assets/icons/${itemData.mapInfo.icon})`;
     this.style['background-size'] = `64px 64px`;
     this.refresh();
   }
   setPosition(x: number, y: number) {
     // normalize to view size
-    this.itemData.x = x;
-    this.itemData.y = y;
+    this.itemData.mapInfo.x = x;
+    this.itemData.mapInfo.y = y;
     this.refresh();
   }
   refresh() {
     this.position = {
-      x: this.itemData.x * this.container.clientWidth,
-      y: this.itemData.y * this.container.clientHeight
+      x: this.itemData.mapInfo.x * this.container.clientWidth,
+      y: this.itemData.mapInfo.y * this.container.clientHeight
     };
   }
 }

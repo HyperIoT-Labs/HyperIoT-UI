@@ -1,6 +1,6 @@
-import { Component, OnInit, Input, Injector, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
-import { HytModal } from 'src/app/services/hyt-modal';
+import { HytModal, HytModalService } from '@hyperiot/components';
 
 @Component({
   selector: 'hyt-wizard-report-modal',
@@ -8,24 +8,23 @@ import { HytModal } from 'src/app/services/hyt-modal';
   styleUrls: ['./wizard-report-modal.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class WizardReportModalComponent extends HytModal implements OnInit {
-
-  @Input()
-  reportData: { imgPath: string, type: string, entities: string[] }[];
+export class WizardReportModalComponent extends HytModal {
 
   constructor(
-    injector: Injector,
-    private router: Router
+    private router: Router,
+    hytModalService: HytModalService
   ) {
-    super(injector);
+    super(hytModalService);
   }
 
   goToDashboard() {
     this.router.navigate(['/dashboards']);
+    this.close();
   }
 
   goToProjectWizard() {
     this.router.navigate(['/projects']);
+    this.close();
   }
 
 }

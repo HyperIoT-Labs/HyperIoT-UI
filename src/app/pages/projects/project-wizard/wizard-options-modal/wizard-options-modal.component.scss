@@ -1,8 +1,6 @@
 #container-option-modal {
 
-  .hyt-modal-body {
-
-    .dialog {
+    &.dialog {
       overflow: hidden;
       background-color: #2258a5;
       box-shadow: 0 0 5px 2px rgba(0, 0, 0, .35);
@@ -97,7 +95,5 @@
       }
 
     }
-
-  }
 
 }

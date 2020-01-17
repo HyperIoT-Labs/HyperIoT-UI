@@ -9,27 +9,34 @@ import {
 
 import { Subject } from 'rxjs';
 import { NgForm } from '@angular/forms';
-import { HytModal } from 'src/app/services/hyt-modal';
+import { HytModal, HytModalService } from '@hyperiot/components';
 
 @Component({
   selector: 'hyt-widget-settings-dialog',
   templateUrl: './widget-settings-dialog.component.html',
   styleUrls: ['./widget-settings-dialog.component.scss']
 })
-export class WidgetSettingsDialogComponent extends HytModal implements OnInit, OnDestroy {
+export class WidgetSettingsDialogComponent extends HytModal implements OnInit {
 
   modalApply: Subject<any> = new Subject();
-  @Input() widget;
-  @Input() widgetName;
-  @Input() widgetId: string;
+  widget;
+  widgetName;
+  widgetId: string;
   @ViewChild(NgForm, { static: true }) settingsForm: NgForm;
 
   dialogDataState = 0;
 
   constructor(
-    injector: Injector
+    hytModalService: HytModalService,
   ) {
-    super(injector);
+    super(hytModalService);
+  }
+
+  ngOnInit() {
+    this.widget = this.data.widget;
+    this.widgetName = this.data.widget.name;
+    this.widgetId = this.data.currentWidgetIdSetting;
+    this.dialogDataState = 1;
   }
 
   modalIsOpen = false;
@@ -37,15 +44,15 @@ export class WidgetSettingsDialogComponent extends HytModal implements OnInit, O
   // open modal
   open(): void {
     this.dialogDataState = 0;
-    super.open();
+    // super.open();
     this.modalIsOpen = true;
     this.dialogDataState = 1;
   }
 
   // close modal
-  close(event?): void {
-    super.close();
+  closeModal(event?): void {
     this.modalIsOpen = false;
+    this.close(event);
   }
 
   getWidgetId() {
@@ -67,16 +74,16 @@ export class WidgetSettingsDialogComponent extends HytModal implements OnInit, O
     // close dialog
     // this.close($event);
 
-    this.modalClose.emit($event);
-    this.close();
+    // this.modalClose.emit($event);
+    this.close($event);
   }
 
-  dismiss(e: any) {
-    if (e.target === this.viewContainer.nativeElement) {
-      // this.close(e);
-      this.close();
-    }
-  }
+  // dismiss(e: any) {
+  //   if (e.target === this.viewContainer.nativeElement) {
+  //     // this.close(e);
+  //     this.close();
+  //   }
+  // }
 
   // open() {
   //   // TODO: init stuff goes here
