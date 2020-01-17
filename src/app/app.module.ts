@@ -43,6 +43,13 @@ import { environment } from '../environments/environment';
 import { NotificationbarComponent } from './components/notificationbar/notificationbar.component';
 import { ConfirmRecordingActionComponent } from './components/modals/confirm-recording-action/confirm-recording-action.component';
 import { InfoRecordingActionComponent } from './components/modals/info-recording-action/info-recording-action.component';
+import { WizardDeactivationModalComponent } from './pages/projects/project-wizard/wizard-deactivation-modal/wizard-deactivation-modal.component';
+import { WizardOptionsModalComponent } from './pages/projects/project-wizard/wizard-options-modal/wizard-options-modal.component';
+import { WizardReportModalComponent } from './pages/projects/project-wizard/wizard-report-modal/wizard-report-modal.component';
+import { RuleErrorModalComponent } from './pages/projects/project-forms/rule-definition/rule-error/rule-error-modal.component';
+import { AddWidgetDialogComponent } from './pages/dashboard/add-widget-dialog/add-widget-dialog.component';
+import { WidgetSettingsDialogComponent } from './pages/dashboard/widget-settings-dialog/widget-settings-dialog.component';
+
 
 export class MyUrlSerializer extends DefaultUrlSerializer implements UrlSerializer {
   /** Converts a `UrlTree` into a url */
@@ -82,7 +89,13 @@ export function apiConfigFactory(): Configuration {
     DeleteConfirmDialogComponent,
     HytConfirmDialogComponent,
     ConfirmRecordingActionComponent,
-    InfoRecordingActionComponent
+    InfoRecordingActionComponent,
+    WizardDeactivationModalComponent,
+    WizardOptionsModalComponent,
+    WizardReportModalComponent,
+    RuleErrorModalComponent,
+    AddWidgetDialogComponent,
+    WidgetSettingsDialogComponent
   ],
   imports: [
     RouterModule,

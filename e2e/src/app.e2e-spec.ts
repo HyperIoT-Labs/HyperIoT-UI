@@ -53,9 +53,9 @@ describe('Authentication Page', () => {
   });
 
   it('should perform a correct login', () => {
-    page.enterUserName('mirko');
+    page.enterUserName('hadmin');
     browser.sleep(500);
-    page.enterPwd('ciao!Hello1');
+    page.enterPwd('admin');
     browser.sleep(500);
     page.rememberMe.click();
     browser.sleep(500);

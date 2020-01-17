@@ -7,6 +7,7 @@ import { AreasService, HprojectsService, Area, Attachment, ContentDisposition, H
 import { AreaMapComponent } from './area-map/area-map.component';
 import { HttpClient } from '@angular/common/http';
 import { AreaDeviceSelectDialogComponent } from './area-device-select-dialog/area-device-select-dialog.component';
+import { AreaInnerareaSelectDialogComponent } from './area-innerarea-select-dialog/area-innerarea-select-dialog.component';
 
 @Component({
   selector: 'hyt-areas-form',
@@ -149,46 +150,86 @@ export class AreasFormComponent extends ProjectFormEntity {
     }
   }
 
-  onDeviceAddClick(e) {
+  onMapDeviceAddClick(e) {
     const modalRef = this.modalService.open(AreaDeviceSelectDialogComponent, {
       areaId: this.areaId, projectId: this.projectId
     });
-    modalRef.onClosed.subscribe(result => {
-      if (result) {
+    modalRef.onClosed.subscribe(ad => {
+      if (ad) {
         this.areaService.addAreaDevice(this.areaId, {
-          device: result.device,
-          icon: result.icon,
-          x: 0.5,
-          y: 0.5
+          device: ad.device,
+          mapInfo: {
+            icon: ad.icon,
+            x: 0.5,
+            y: 0.5
+          }
         } as AreaDevice).subscribe((areaDevice: AreaDevice) => {
           console.log('Add Area Device Result', areaDevice);
-          areaDevice.icon = result.icon;
-          this.mapComponent.addAreaDeviceItem(areaDevice);
+          //areaDevice.mapInfo.icon = ad.mapInfo.icon;
+          this.mapComponent.addAreaItem(areaDevice);
         });
       }
     });
   }
-  onMapDeviceRemoved(removedItem: AreaDevice) {
+  onMapDeviceRemoved(areaDevice: AreaDevice) {
     // TODO: handle errors
-    this.areaService.removeAreaDevice(this.areaId, removedItem.id).subscribe((res) => {
-      console.log('Removed item', res);
+    this.areaService.removeAreaDevice(this.areaId, areaDevice.id).subscribe((res) => {
+      console.log('Removed device from map', res);
     });
   }
-  onMapDeviceUpdated(updatedItem: AreaDevice) {
+  onMapDeviceUpdated(areaDevice: AreaDevice) {
     // TODO: handle errors
-    this.areaService.removeAreaDevice(this.areaId, updatedItem.id).subscribe((res) => {
-      updatedItem.id = 0;
-      // NOTE: 'updatedItem.device.project.user.screenName' property
+    this.areaService.removeAreaDevice(this.areaId, areaDevice.id).subscribe((res) => {
+      areaDevice.id = 0;
+      // NOTE: 'areaDevice.device.project.user.screenName' property
       //       causes error on the microservices side, so the property
       //       is deleted before updating
-      delete updatedItem.device.project.user;
-      this.areaService.addAreaDevice(this.areaId, updatedItem).subscribe((ad) => {
-        Object.assign(updatedItem, ad);
+      delete areaDevice.device.project.user;
+      this.areaService.addAreaDevice(this.areaId, areaDevice).subscribe((ad) => {
+        Object.assign(areaDevice, ad);
       });
     });
   }
 
-  onEditSubAreaClick(area) {
+  onMapAreaAddClick(e) {
+    const modalRef = this.modalService.open(AreaInnerareaSelectDialogComponent, {
+      areaId: this.areaId, projectId: this.projectId, areas: this.areaList
+    });
+    modalRef.onClosed.subscribe(a => {
+      if (a) {
+        // TODO: the field project should be exposed in model
+        // TODO: if not passing this field the service will return validation error
+        a['project'] = { id: this.projectId };
+        a.parentArea = { id: this.areaId, entityVersion: null };
+        a.mapInfo = {
+          icon: 'map.png',
+          x: 0.5,
+          y: 0.5
+        };
+        // TODO: handle errors
+        this.areaService.updateArea(a).subscribe(area => {
+          console.log('Add Map Area Result', area);
+          //a.mapInfo.icon = area.mapInfo.icon;
+          this.mapComponent.addAreaItem(area);
+        });
+      }
+    });
+  }
+  onMapAreaRemoved(area: Area) {
+    area['project'] = { id: this.projectId };
+    area.parentArea = { id: this.areaId, entityVersion: null };
+    area.mapInfo = null;
+    // TODO: handle errors
+    this.areaService.updateArea(area).subscribe();
+  }
+  onMapAreaUpdated(area: Area) {
+    area['project'] = { id: this.projectId };
+    area.parentArea = { id: this.areaId, entityVersion: null };
+    // TODO: handle errors
+    this.areaService.updateArea(area).subscribe();
+  }
+
+  onEditInnerAreaClick(area) {
     this.currentSection = 0; // show the info tab
     this.router.navigate(
       [ '/projects/', this.projectId, {outlets: { projectDetails: ['areas', area.id ] } } ]
@@ -197,7 +238,7 @@ export class AreasFormComponent extends ProjectFormEntity {
     });
   }
 
-  onAddSubAreaClick(e) {
+  onAddInnerAreaClick(e) {
     const a: Area = {
       id: 0,
       name: 'New area ' + new Date().getTime(),
@@ -227,19 +268,36 @@ export class AreasFormComponent extends ProjectFormEntity {
 
   private loadAreaMap() {
     this.loadingStatus = LoadingStatusEnum.Loading;
-    this.areaService.getAreaDeviceList(this.areaId).subscribe((res: AreaDevice[]) => {
-      this.mapComponent.setDevices(res);
+    this.areaService.getAreaDeviceList(this.areaId).subscribe((areaDevices: AreaDevice[]) => {
+      this.mapComponent.setAreaItems(areaDevices.concat(this.areaList.filter(a => a.mapInfo != null)));
       this.mapComponent.refresh();
       this.loadingStatus = LoadingStatusEnum.Ready;
     });
+    if (this.mapComponent.itemOpen.observers.length === 0) {
+      this.mapComponent.itemOpen.subscribe((openItem) => {
+        if (openItem.device) {
+          // TODO: handle device open
+        } else {
+          // TODO: handle inner area open (show inner area map)
+        }
+      });
+    }
     if (this.mapComponent.itemRemove.observers.length === 0) {
       this.mapComponent.itemRemove.subscribe((removedItem) => {
-        this.onMapDeviceRemoved(removedItem);
+        if (removedItem.device) {
+          this.onMapDeviceRemoved(removedItem);
+        } else {
+          this.onMapAreaRemoved(removedItem);
+        }
       });
     }
     if (this.mapComponent.itemUpdate.observers.length === 0) {
       this.mapComponent.itemUpdate.subscribe((updatedItem) => {
-        this.onMapDeviceUpdated(updatedItem);
+        if (updatedItem.device) {
+          this.onMapDeviceUpdated(updatedItem);
+        } else {
+          this.onMapAreaUpdated(updatedItem);
+        }
       });
     }
     this.loadAreaImage();
