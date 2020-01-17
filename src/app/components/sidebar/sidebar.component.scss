@@ -194,6 +194,38 @@
 
                 left: 0px;
 
+                ul {
+                    
+                    &.ul-mob-show {
+
+                        width: 250px;
+                        overflow: visible;
+                        height: 100%;
+                        border-right: 1px solid #0b5594;
+                        box-shadow: -7px 0px 24px -4px #000;
+
+                        li {
+
+                            width: 250px;
+
+                            a {
+
+                                span {
+
+                                    &.nav-text {
+                                        display: table-cell;
+                                    }
+
+                                }
+
+                            }
+                        
+                        }
+
+                    }
+
+                }
+
                }
 
             }

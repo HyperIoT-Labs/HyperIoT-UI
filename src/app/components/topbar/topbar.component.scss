@@ -37,89 +37,105 @@
     }
     
     #main-container {
-        float: right;
+      
+      float: right;
+      
+      #hamburger-btn {
+
+        &.menu-mobile {
+
+          .icon {
+
+            margin: 20px 15px 0px 15px;
+
+            &.nav-icon-mob {
+
+              width: 20px;
+              height: 14px;
+              position: relative;
+              cursor: pointer;
+              display: inline-block;
+
+              span {
+
+                background-color:#1e58a5;
+                position: absolute;
+                border-radius: 2px;
+                transition: .2s cubic-bezier(.8, .5, .2, 1.4);
+
+                &:nth-child(1) {
+                  width: 100%;
+                  height: 2px;
+                  display: block;
+                  top: 0px;
+                  left: 0px;
+                }
+
+                &:nth-child(2) {
+                  width: 100%;
+                  height: 2px;
+                  display: block;
+                  top: 6px;
+                  left: 0px;
+                }
+
+                &:nth-child(3) {
+                  width: 100%;
+                  height: 2px;
+                  display: block;
+                  bottom: 1px;
+                  left: 0px;
+                }
+
+              }
+
+              &.open {
+
+                transform: rotate(90deg);
+
+                span {
+
+                  &:nth-child(1) {
+                    left: 3px;
+                    top: 12px;
+                    width: 20px;
+                    transition: .2s ease-in-out;
+                    transform: rotate(90deg);
+                    transition-delay: 120ms;
+                  }
+
+                  &:nth-child(2) {
+                    left: 1px;
+                    top: 18px;
+                    width: 15px;
+                    transition: .2s ease-in-out;
+                    transform: rotate(45deg);
+                    transition-delay: 30ms;
+                  }
+
+                  &:nth-child(3) {
+                    left: 10px;
+                    top: 18px;
+                    width: 15px;
+                    transition: .2s ease-in-out;
+                    transform: rotate(-45deg);
+                    transition-delay: 80ms;
+                  }
+
+                }
+
+              }
+
+            }
+
+          }
+
+        }
+
+      }
+
     }
 }
-
-/* HAMB BTN */
-#hamburger-btn .icon{
-  margin: 20px 15px 0px 15px;
-}
-
-/* nav-icon-4 */
-.nav-icon-4 {
-    width: 20px;
-    height: 14px;
-    //margin: 10px 10px;
-    position: relative;
-    cursor: pointer;
-    display: inline-block;
-  }
-  .nav-icon-4 span {
-    background-color:#1e58a5;
-    position: absolute;
-    border-radius: 2px;
-    transition: .2s cubic-bezier(.8, .5, .2, 1.4);
-  }
-
-  // .nav-icon-4:hover span {
-  //   background-color: #1e58a5;
-  // }
-
-  .nav-icon-4 span:nth-child(1) {
-    width: 100%;
-    height: 2px;
-    display: block;
-    top: 0px;
-    left: 0px;
-  }
-  .nav-icon-4 span:nth-child(2) {
-    width: 100%;
-    height: 2px;
-    display: block;
-    top: 6px;
-    left: 0px;
-  }
-  .nav-icon-4 span:nth-child(3) {
-    width: 100%;
-    height: 2px;
-    display: block;
-    bottom: 0px;
-    left: 0px;
-  }
-  
-  .nav-icon-4.open {
-    transform: rotate(90deg);
-  }
-  .nav-icon-4.open span:nth-child(1){
-    left: 3px;
-    top: 12px;
-    width: 20px;
-    // transition: .3s cubic-bezier(.8, .5, .2, 1.4);
-    transition: .2s ease-in-out;
-    transform: rotate(90deg);
-    transition-delay: 120ms;
-  }
-
-  .nav-icon-4.open span:nth-child(2){
-    left: 1px;
-    top: 18px;
-    width: 15px;
-    // transition: .3s cubic-bezier(.8, .5, .2, 1.4);
-    transition: .2s ease-in-out;
-    transform: rotate(45deg);
-    transition-delay: 30ms;
-  }
-
-  .nav-icon-4.open span:nth-child(3){
-    left: 10px;
-    top: 18px;
-    width: 15px;
-    // transition: .3s cubic-bezier(.8, .5, .2, 1.4);
-    transition: .2s ease-in-out;
-    transform: rotate(-45deg);
-    transition-delay: 80ms;
-  }
 
 /* RESPONSIVE */
 
@@ -136,7 +152,6 @@
                 bottom: 0px;
                 left: 10px;
                 padding: 5px;
-                background-color: #66339970;
 
             }
 
@@ -164,6 +179,12 @@
                         margin-top: 0px;
 
                     }
+
+                    &#img-logo-mob-hyt {
+                      height: 45px;
+                      width: auto;
+                      margin-top: 0px;
+                    }
                     
                 }
             
@@ -172,5 +193,11 @@
         }
 
     }
+
+}
+
+@media (max-width: 767px) {
+
+
 
 }
