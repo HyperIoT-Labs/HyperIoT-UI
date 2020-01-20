@@ -87,6 +87,7 @@
       }
 
       #registration-form {
+        
         form {
 
           .container-form-field {
@@ -153,6 +154,10 @@
             &.errorMessage {
               color: red;
               text-align: center;
+            }
+
+            &#container-submit-btn {
+              text-align: right;
             }
 
           }
