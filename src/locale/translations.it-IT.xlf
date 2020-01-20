@@ -1921,7 +1921,7 @@
          </trans-unit>
          <trans-unit id="HYT_area_list_noimage" datatype="html">
             <source>HYT_area_list_noimage</source>
-            <target>(<) Minore</target>
+            <target>(&lt;) Minore</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/areas-form/areas-list/areas-list.component.html</context>
                <context context-type="linenumber">9</context>
@@ -1929,7 +1929,7 @@
          </trans-unit>
          <trans-unit id="67d72c5987b9b47feaf64ab8e6f76d6ccefc3e6a" datatype="html">
             <source>HYT_generic_error</source>
-            <target>(<=) Minore/Uguale</target>
+            <target>(&lt;=) Minore/Uguale</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/account/profile/profile.component.ts</context>
                <context context-type="linenumber">1</context>
