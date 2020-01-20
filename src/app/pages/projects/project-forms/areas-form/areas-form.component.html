@@ -14,23 +14,15 @@
             mat-mini-fab 
             [color]="'hyt-base-default-white'"
             [routerLink]="[ '/projects/', projectId, {outlets: { projectDetails: ['areas', 0 ] } } ]">
-            Add area <span class="hyt-icon icon-hyt_plusC"></span>
+            <span i18n="@@HYT_area_add">HYT_area_add</span>
+            <span class="hyt-icon icon-hyt_plusC"></span>
         </hyt-button>
-        <!--@I18N@-->
     </div>
-    
-    <div class="d-flex flex-row flex-wrap justify-content-center">
-        <mat-card *ngFor="let area of areaList"
-            class="area-item mat-elevation-z2"
-            [routerLink]="[area.id]">
-            <mat-card-header>
-                <mat-card-title>{{area.name}}</mat-card-title>
-            </mat-card-header>
-            <div *ngIf="area.imagePath != null && area.imagePath.length > 0" class="map-image" [ngStyle]="{ 'background-image': 'url(/hyperiot/areas/'+area.id+'/image)' }"></div>
-            <div *ngIf="area.imagePath == null || area.imagePath.length == 0" class="map-image d-flex flex-column justify-content-center align-items-center">(no image)</div>
-            <mat-card-content class="p-2">{{area.description}}</mat-card-content>
-        </mat-card>
-    </div>
+
+    <hyt-areas-list
+        [areaList]="areaList"
+        (itemSelected)="onEditAreaClick($event)">
+    </hyt-areas-list>
 
 </div>
 
@@ -38,18 +30,17 @@
 <div [ngClass]="{ hidden: !editMode }" class="content">
 
     <div class="current-path">
-        <label>PATH:</label>
-        <a [routerLink]="[ '/projects/', projectId, {outlets: { projectDetails: ['areas'] } } ]">Main</a>
+        <a [routerLink]="[ '/projects/', projectId, {outlets: { projectDetails: ['areas'] } } ]" i18n="@@HYT_area_path_main">HYT_area_path_main</a>
         <span *ngFor="let area of areaPath; let i = index; let c = count">
-            &nbsp;&gt;&nbsp;
+            &nbsp;&raquo;&nbsp;
             <a *ngIf="i < c - 1" [routerLink]="[ '/projects/', projectId, {outlets: { projectDetails: ['areas', area.id ] } } ]">{{area.name}}</a>    
-            <span *ngIf="i === c - 1">{{area.name}}</span>
+            <span *ngIf="i === c - 1"><strong>{{area.name}}</strong></span>
         </span>
     </div>
 
     <mat-tab-group [(selectedIndex)]="currentSection" (selectedTabChange)="onTabChange($event)">
 
-        <mat-tab [label]="areaId === 0 ? 'New area' : 'Info'">
+        <mat-tab label="Info" i18n-label="@@HYT_area_section_info">
             <form [formGroup]="form" enctype="multipart/form-data" class="mt-4 d-flex flex-column justify-content-center">
 
                 <hyt-input-text [form]="form"
@@ -62,7 +53,7 @@
                     i18n-hintMessage="@@HYT_hint_area_name"
                     hintMessage="HYT_hint_area_name"
                     [isRequired]="true"></hyt-input-text>
-                
+
                 <hyt-text-area [form]="form"
                     name="area-description"
                     [injectedErrorMsg]="getError('area-description')"
@@ -70,46 +61,39 @@
                     hintMessage="HYT_hint_area_description"
                     i18n-placeholder="@@HYT_description"
                     placeholder="HYT_description"></hyt-text-area>
-        
+
             </form>                    
         </mat-tab>
 
-        <mat-tab *ngIf="areaId > 0" label="Map">
+        <mat-tab *ngIf="areaId > 0" label="HYT_area_section_map" i18n-label="@@HYT_area_section_map">
             <div class="mt-4 mb-2 d-flex flex-row justify-content-center">
 
                 <hyt-button>
-                    <label class="m-0 p-0" for="map-image-input">Set map image</label>
+                    <label class="m-0 p-0" for="map-image-input" i18n="@@HYT_area_map_set_image">HYT_area_set_image</label>
                 </hyt-button>
                 <input class="hidden" id="map-image-input"
                     name="area-image"
                     (change)="onFileChange($event)"
                     type="file" placeholder="Upload file" accept=".jpg,.png,.svg">
 
-                <hyt-button (clickFn)="onMapDeviceAddClick($event)">Add device</hyt-button>
-                <hyt-button (clickFn)="onMapAreaAddClick($event)">Add area</hyt-button>
-            
+                <hyt-button (clickFn)="onMapDeviceAddClick($event)" i18n="@@HYT_area_map_device_add">HYT_area_map_device_add</hyt-button>
+                <hyt-button (clickFn)="onMapAreaAddClick($event)" i18n="@@HYT_area_map_area_add">HYT_area_map_area_add</hyt-button>
+
             </div>
             <hyt-area-map #map></hyt-area-map>
         </mat-tab>
 
-        <mat-tab *ngIf="areaId > 0" label="Inner areas ({{ areaList.length }})">
+        <mat-tab *ngIf="areaId > 0" label="Inner areas ({{ areaList.length }})" i18n-label="@@HYT_area_section_inner">
             <div class="actions">
                 <hyt-button mat-mini-fab (clickFn)="onAddInnerAreaClick($event)">
-                    Add inner area <span class="hyt-icon icon-hyt_plusC"></span>
+                    <span i18n="@@HYT_area_inner_add">HYT_area_inner_add</span>
+                    <span class="hyt-icon icon-hyt_plusC"></span>
                 </hyt-button>
             </div>
-            <div class="mt-4 mb-4 d-flex flex-row flex-wrap justify-content-center">
-                <mat-card *ngFor="let area of areaList"
-                    class="area-item mat-elevation-z2"
-                    (click)="onEditInnerAreaClick(area)">
-                    <mat-card-header>
-                        <mat-card-title>{{area.name}}</mat-card-title>
-                    </mat-card-header>
-                    <div *ngIf="area.imagePath != null && area.imagePath.length > 0" class="map-image" [ngStyle]="{ 'background-image': 'url(/hyperiot/areas/'+area.id+'/image)' }"></div>
-                    <div *ngIf="area.imagePath == null || area.imagePath.length == 0" class="map-image d-flex flex-column justify-content-center align-items-center">(no image)</div>
-                    <mat-card-content class="p-2">{{area.description}}</mat-card-content>
-                </mat-card>
-            </div>
+            <hyt-areas-list
+                [areaList]="areaList"
+                (itemSelected)="onEditInnerAreaClick($event)">
+            </hyt-areas-list>
         </mat-tab>
 
     </mat-tab-group>
@@ -117,36 +101,36 @@
 </div>
 
 
-    <!-- 
-        TODO: This HTML block is repeated
-        across all 'entity' components,
-        consider making a component out of it 
-    -->
+<!-- 
+    TODO: This HTML block is repeated
+    across all 'entity' components,
+    consider making a component out of it 
+-->
 
-    <div *ngIf="loadingStatus !== LoadingStatus.Ready" class="overlay d-flex flex-column align-items-center justify-content-center">
-        
-        <div *ngIf="loadingStatus === LoadingStatus.Loading">
+<div *ngIf="loadingStatus !== LoadingStatus.Ready" class="overlay d-flex flex-column align-items-center justify-content-center">
 
-            <h4 i18n="@@HYT_loading_data">HYT_loading_data</h4>
+    <div *ngIf="loadingStatus === LoadingStatus.Loading">
 
-        </div> 
-        
-        <div *ngIf="loadingStatus === LoadingStatus.Error" class="error-overlay d-flex flex-column justify-content-center">
-            <h4 i18n="@@HYT_error_occurred">HYT_error_occurred</h4>
+        <h4 i18n="@@HYT_loading_data">HYT_loading_data</h4>
 
-            <hyt-button 
-                [color]="'hyt-base-default-white'" 
-                (click)="loadingStatus = LoadingStatus.Ready"
-            >
-                <span i18n="@@HYT_close">HYT_close</span> <span class="icon-hyt_cancelC"></span> 
-            </hyt-button>
-        </div>
+    </div> 
 
-        <h4 *ngIf="loadingStatus === LoadingStatus.Saving" i18n="@@HYT_saving_data">HYT_saving_data</h4>
+    <div *ngIf="loadingStatus === LoadingStatus.Error" class="error-overlay d-flex flex-column justify-content-center">
+        <h4 i18n="@@HYT_error_occurred">HYT_error_occurred</h4>
 
-        <mat-progress-bar 
-            *ngIf="loadingStatus === LoadingStatus.Loading || loadingStatus === LoadingStatus.Saving"
-            mode="indeterminate"
-        ></mat-progress-bar> 
-
+        <hyt-button 
+            [color]="'hyt-base-default-white'" 
+            (click)="loadingStatus = LoadingStatus.Ready"
+        >
+            <span i18n="@@HYT_close">HYT_close</span> <span class="icon-hyt_cancelC"></span> 
+        </hyt-button>
     </div>
+
+    <h4 *ngIf="loadingStatus === LoadingStatus.Saving" i18n="@@HYT_saving_data">HYT_saving_data</h4>
+
+    <mat-progress-bar 
+        *ngIf="loadingStatus === LoadingStatus.Loading || loadingStatus === LoadingStatus.Saving"
+        mode="indeterminate"
+    ></mat-progress-bar> 
+
+</div>

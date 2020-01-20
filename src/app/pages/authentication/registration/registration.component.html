@@ -73,12 +73,12 @@
               </div> <!-- Field Repeat Password -->
 
               <div class="container-form-field">
-                <mat-checkbox>
-                  <ng-container i18n="@@HYT_check_per">HYT_check_per</ng-container>
-                  &#160;<a href="#" i18n="@@HYT_terms_of_use">HYT_terms_of_use</a>
-                  &#160;<ng-container i18n="@@HYT_and">HYT_and</ng-container>
-                  &#160;<a href="#" i18n="@@HYT_privacy_policy">HYT_privacy_policy</a>.
-                </mat-checkbox>
+                <hyt-checkbox [(ngModel)]="checked" [ngModelOptions]="{standalone: true}" name="checkPrivacy" type="checkbox" id="checkPrivacy" (changeFn)="onClickCheckbox($event)">
+                  <ng-container i18n="@@HYT_check_per">HYT_check_per</ng-container>&nbsp;
+                  <a href="#" i18n="@@HYT_terms_of_use">HYT_terms_of_use</a>&nbsp;
+                  <ng-container i18n="@@HYT_and">HYT_and</ng-container>&nbsp;
+                  <a href="#" i18n="@@HYT_privacy_policy">HYT_privacy_policy</a>.
+                </hyt-checkbox>
               </div> <!-- Container CheckBox Privacy -->
 
               <div class="container-form-field errorMessage">
@@ -87,7 +87,7 @@
                 </ng-container>
               </div> <!-- Error Box -->
 
-              <div class="container-form-field">
+              <div id="container-submit-btn" class="container-form-field">
                 <hyt-button [color]="'hyt-base-default-white'" id="submit-btn" type="submit" [isDisabled]="notValid() || registrationStatus == 1 || registrationStatus == 2">
                   <ng-container i18n="@@HYT_registration_button">HYT_registration_button</ng-container>
                 </hyt-button>

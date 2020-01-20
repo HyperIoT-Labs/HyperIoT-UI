@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener, EventEmitter } from '@angular/core';
+import { Component, HostListener, EventEmitter } from '@angular/core';
 import { CdkDrag } from '@angular/cdk/drag-drop';
 import { AreaDevice } from '@hyperiot/core';
 
@@ -7,7 +7,7 @@ import { AreaDevice } from '@hyperiot/core';
   templateUrl: './draggable-item.component.html',
   styleUrls: ['./draggable-item.component.scss']
 })
-export class DraggableItemComponent implements OnInit {
+export class DraggableItemComponent {
   openClicked = new EventEmitter<any>();
   removeClicked = new EventEmitter<any>();
   positionChanged = new EventEmitter<any>();
@@ -19,11 +19,6 @@ export class DraggableItemComponent implements OnInit {
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     this.refresh();
-  }
-
-  constructor() { }
-
-  ngOnInit() {
   }
 
   onDragReleased(e) {
@@ -40,11 +35,12 @@ export class DraggableItemComponent implements OnInit {
     this.itemData.mapInfo.y = position.y / this.container.clientHeight;
     this.positionChanged.emit();
   }
-  onRemoveButtonClick(e) {
-    this.removeClicked.emit();
-  }
+
   onOpenButtonClick(e) {
     this.openClicked.emit();
+  }
+  onRemoveButtonClick(e) {
+    this.removeClicked.emit();
   }
 
   setConfig(container: HTMLElement, itemData: AreaDevice) {

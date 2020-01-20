@@ -24,8 +24,19 @@ export class AppPage {
   errorNameNotEntered = browser.element(by.css('#registration-form > form > div:nth-child(1) > hyt-input-text > div > mat-form-field > div > div.mat-form-field-subscript-wrapper > div'));
   errorSurnameNotEntered = browser.element(by.css('#registration-form > form > div:nth-child(2) > hyt-input-text > div > mat-form-field > div > div.mat-form-field-subscript-wrapper > div'));
   errorMailInvalid = browser.element(by.css('#registration-form > form > div:nth-child(4) > hyt-input-text > div > mat-form-field > div > div.mat-form-field-subscript-wrapper > div'));
-  // registration page methods
+  errorConfirmPwd = browser.element(by.css('#registration-form > form > div:nth-child(6) > hyt-input-text > div > mat-form-field > div > div.mat-form-field-subscript-wrapper > div'));
+  confirmPwdVisibility = browser.element(by.xpath('//*[@id="registration-form"]/form/div[6]/hyt-input-text/div/mat-form-field/div/div[1]/div[2]/mat-icon'));
+  registrationCheckbox = browser.element(by.xpath('//*[@id="checkPrivacy"]'));
+  emailMeBtn = browser.element(by.css('#send-block > hyt-button > button'));
+  emailFieldForgottenPwd = browser.element.all(by.xpath('//*[@id="email-pr"]')).last();
 
+  // forgot password page methods
+  enterEMail(keys: string) {
+    this.emailFieldForgottenPwd.click();
+    return this.emailFieldForgottenPwd.sendKeys(keys);
+  }
+
+  // registration page methods
   enterName(keys: string) {
     this.nameField.click();
     return this.nameField.sendKeys(keys);
@@ -56,8 +67,7 @@ export class AppPage {
     return this.confirmField.sendKeys(keys);
   }
 
-  //login page methods
-
+  // login page methods
   navigateTo() {
     return browser.get('/auth/login');
   }

@@ -37,6 +37,8 @@ export class RegistrationComponent implements OnInit {
    */
   private logger: Logger;
 
+  checked: boolean = false;
+
   /**
    * class constructor
    */
@@ -55,6 +57,10 @@ export class RegistrationComponent implements OnInit {
    */
   ngOnInit() {
     this.registrationForm = this.fb.group({});
+  }
+
+  onClickCheckbox(event) {
+    this.checked = event;
   }
 
   /**
@@ -106,7 +112,8 @@ export class RegistrationComponent implements OnInit {
       this.registrationForm.get('username').invalid ||
       this.registrationForm.get('email').invalid ||
       this.registrationForm.get('huser-password').invalid ||
-      this.registrationForm.get('huser-passwordConfirm').invalid
+      this.registrationForm.get('huser-passwordConfirm').invalid ||
+      this.checked === false
     );
   }
 
