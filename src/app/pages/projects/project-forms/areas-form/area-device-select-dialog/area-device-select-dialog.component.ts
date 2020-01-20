@@ -11,6 +11,7 @@ export class AreaDeviceSelectDialogComponent extends HytModal implements OnInit 
   projectDevices: HDevice[];
   selectedDevice: HDevice;
 
+   // @@I18N@@ (for all labels)
   deviceIconOptions = [
     { label: 'Motion Sensor', value: 'motion-sensor.png' },
     { label: 'Wind Sensor', value: 'wind-sensor.png' },

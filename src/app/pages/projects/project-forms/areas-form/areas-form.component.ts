@@ -49,7 +49,7 @@ export class AreasFormComponent extends ProjectFormEntity {
     private httpClient: HttpClient
   ) {
     super(injector, i18n, formView);
-    this.formTitle = 'Project Areas';
+    this.formTitle = 'Project Areas'; // @@I18N@@
     this.projectId = this.activatedRoute.snapshot.parent.params.projectId;
     this.areaId = +this.activatedRoute.snapshot.params.areaId;
     this.activatedRoute.params.subscribe(params => {
@@ -248,7 +248,9 @@ export class AreasFormComponent extends ProjectFormEntity {
   onAddInnerAreaClick(e) {
     const a: Area = {
       id: 0,
+       // @@I18N@@
       name: 'New area ' + new Date().getTime(),
+       // @@I18N@@
       description: 'New area description',
       parentArea: { id: this.areaId, entityVersion: null },
       entityVersion: null
@@ -369,7 +371,7 @@ export class AreasFormComponent extends ProjectFormEntity {
         this.apiSuccess(res);
         successCallback && successCallback(res);
       }, (err) => {
-        this.apiError(err);
+        this.setErrors(err);
         errorCallback && errorCallback(err);
       });
     } else {
@@ -382,7 +384,7 @@ export class AreasFormComponent extends ProjectFormEntity {
         );
         successCallback && successCallback(res);
       }, (err) => {
-        this.apiError(err);
+        this.setErrors(err);
         errorCallback && errorCallback(err);
       });
     }

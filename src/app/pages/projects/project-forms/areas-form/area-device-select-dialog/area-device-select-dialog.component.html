@@ -1,5 +1,5 @@
 <div class="dialog pt-2 pb-2 d-flex flex-column">
-    <h3 class="ml-3 mr-3">Select device</h3>
+    <h3 class="ml-3 mr-3" i18n="@@HYT_area_map_select_device">HYT_area_map_select_device</h3>
 
     <mat-list role="list" class="flex-grow-1">
         <mat-list-item *ngFor="let device of projectDevices" role="listitem">
@@ -18,11 +18,11 @@
     </div>
 
     <div class="ml-3 mr-3 d-flex flex-row justify-content-between">
-        <hyt-button (clickFn)="close()">Cancel</hyt-button>
+        <hyt-button (clickFn)="close()" i18n="@@HYT_cancel">HYT_cancel</hyt-button>
         <hyt-button [isDisabled]="!selectedDevice || !selectedDeviceIcon" (clickFn)="close({
             device: selectedDevice,
             icon: selectedDeviceIcon
-        })">Ok</hyt-button>
+        })" i18n="@@HYT_add">HYT_add</hyt-button>
     </div>
 
 </div>
