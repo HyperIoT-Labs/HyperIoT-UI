@@ -1,5 +1,6 @@
 <div class="item"
     title="Move {{itemData.device ? itemData.device.deviceName : itemData.name}}"
+    i18n-title="@@HYT_area_draggable_title"
     [ngStyle]="style"
     cdkDrag
     cdkDragBoundary=".map-container"
@@ -11,10 +12,12 @@
 
     <button class="remove-button"
         title="Remove {{itemData.device ? itemData.device.deviceName : itemData.name}}"
+        i18n-title="@@HYT_area_draggable_remove"
         (mousedown)="$event.stopPropagation()"
         (click)="onRemoveButtonClick($event)">X</button>
     <div class="title" [ngClass]="{ 'area-title': !itemData.device }"
         title="Open {{itemData.device ? itemData.device.deviceName : itemData.name}}"
+        i18n-title="@@HYT_area_draggable_open"
         (mousedown)="$event.stopPropagation()"
         (click)="onOpenButtonClick($event)">{{itemData.device ? itemData.device.deviceName : itemData.name}}</div>
 </div>

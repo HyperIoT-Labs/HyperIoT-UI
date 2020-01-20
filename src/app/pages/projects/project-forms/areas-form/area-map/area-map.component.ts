@@ -23,9 +23,9 @@ export class AreaMapComponent {
   mapBoundary: ElementRef;
   mapImageSize = { width: 800, height: 600 };
   // events
-  itemOpen = new EventEmitter<any>();
-  itemRemove = new EventEmitter<any>();
-  itemUpdate = new EventEmitter<any>();
+  itemOpen = new EventEmitter<ComponentRef<DraggableItemComponent>>();
+  itemRemove = new EventEmitter<ComponentRef<DraggableItemComponent>>();
+  itemUpdate = new EventEmitter<ComponentRef<DraggableItemComponent>>();
 
   private mapComponents = [] as ComponentRef<DraggableItemComponent>[];
 
@@ -62,7 +62,7 @@ export class AreaMapComponent {
     const component = viewContainerRef.createComponent(componentFactory);
     // handle click on component label (open button)
     component.instance.openClicked.subscribe(() => {
-      // TODO: route openClicked event
+      this.openItem(component);
     });
     // handle component removal
     component.instance.removeClicked.subscribe(() => {

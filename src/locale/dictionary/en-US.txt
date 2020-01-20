@@ -498,3 +498,37 @@ HYT_upper_case
 At least one uppercase character
 HYT_special_char
 At least one special character
+HYT_area_add
+Add area
+HYT_area_path_main
+Main
+HYT_hint_area_name
+Enter area name
+HYT_hint_area_description
+Enter area description
+HYT_area_section_info
+Info
+HYT_area_section_map
+Map
+HYT_area_map_set_image
+Set map image
+HYT_area_map_device_add
+Add device
+HYT_area_map_area_add
+Add area
+HYT_area_inner_add
+Add sub-area
+HYT_area_section_inner
+Sub-areas ({{ areaList.length }})
+HYT_area_draggable_title
+Move {{itemData.device ? itemData.device.deviceName : itemData.name}}
+HYT_area_draggable_remove
+Remove {{itemData.device ? itemData.device.deviceName : itemData.name}}
+HYT_area_draggable_open
+Open {{itemData.device ? itemData.device.deviceName : itemData.name}}
+HYT_area_list_noimage
+(no image)
+HYT_area_map_select_area
+Select area
+HYT_area_map_select_device
+Select device

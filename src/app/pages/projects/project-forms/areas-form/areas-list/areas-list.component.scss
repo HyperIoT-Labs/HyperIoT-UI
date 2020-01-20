@@ -1,0 +1,24 @@
+.area-item {
+    cursor: pointer;
+    outline: none;
+    width: 180px;
+    height: 180px;
+    overflow: hidden;
+    margin: 8px;
+}
+.mat-card {
+    padding: 0;
+    height: 240px !important;
+    .mat-card-header {
+        padding-top: 8px;
+    }
+    .map-image {
+        color: gray;
+        width: 100%;
+        height: auto;
+        overflow: hidden;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+}

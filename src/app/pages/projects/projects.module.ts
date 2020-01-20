@@ -61,6 +61,7 @@ import { MapDirective } from './project-forms/areas-form/map.directive';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { AreaDeviceSelectDialogComponent } from './project-forms/areas-form/area-device-select-dialog/area-device-select-dialog.component';
 import { AreaInnerareaSelectDialogComponent } from './project-forms/areas-form/area-innerarea-select-dialog/area-innerarea-select-dialog.component';
+import { AreasListComponent } from './project-forms/areas-form/areas-list/areas-list.component';
 
 @NgModule({
   declarations: [
@@ -99,7 +100,8 @@ import { AreaInnerareaSelectDialogComponent } from './project-forms/areas-form/a
     DraggableItemComponent,
     MapDirective,
     AreaDeviceSelectDialogComponent,
-    AreaInnerareaSelectDialogComponent
+    AreaInnerareaSelectDialogComponent,
+    AreasListComponent
   ],
   imports: [
     MatIconModule,
