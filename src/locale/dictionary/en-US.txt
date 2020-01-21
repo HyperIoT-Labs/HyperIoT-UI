@@ -511,7 +511,7 @@ Set map image
 HYT_area_map_device_add
 Add device
 HYT_area_map_area_add
-Add area
+Add sub-area
 HYT_area_inner_add
 Add sub-area
 HYT_area_section_inner

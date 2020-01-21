@@ -515,9 +515,9 @@ Imposta immagine mappa
 HYT_area_map_device_add
 Aggiungi dispositivo
 HYT_area_map_area_add
-Aggiungi area
+Aggiungi sotto-area
 HYT_area_inner_add
-Add sotto-area
+Aggiungi sotto-area
 HYT_area_section_inner
 Sottoaree ({{ areaList.length }})
 HYT_area_draggable_title
