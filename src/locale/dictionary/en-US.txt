@@ -48,10 +48,6 @@ HYT_back
 Back
 HYT_name
 Name
-HYT_hint_area_name
-@@I18N@@
-HYT_hint_area_description
-@@I18N@@
 HYT_description
 Description
 HYT_toolbar_settings

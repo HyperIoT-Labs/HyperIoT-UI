@@ -1844,7 +1844,7 @@
             </context-group>
          </trans-unit>
          <trans-unit id="HYT_area_map_set_image" datatype="html">
-            <source>HYT_area_set_image</source>
+            <source>HYT_area_map_set_image</source>
             <target>Nome del pacchetto</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/areas-form/areas-form.component.html</context>
