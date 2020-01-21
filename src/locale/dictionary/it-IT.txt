@@ -391,9 +391,9 @@ HYT_(&gt;)_greater
 HYT_(&gt;=)_greater_equal
 (>=) Maggiore/Uguale
 HYT_(&lt;)_lower
-(<) Minore
+(&lt;) Minore
 HYT_(&lt;=)_lower_equal
-(<=) Minore/Uguale
+(&lt;=) Minore/Uguale
 HYT_(==)_equal
 (=) Uguale
 HYT_(!=)_different

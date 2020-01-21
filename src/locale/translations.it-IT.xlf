@@ -244,7 +244,7 @@
          </trans-unit>
          <trans-unit id="widgetsToolbar-title-settings" datatype="html">
             <source>HYT_toolbar_settings</source>
-            <target>Nome</target>
+            <target>Impostazioni</target>
             <context-group purpose="location">
                <context context-type="sourcefile">node_modules/@hyperiot/widgets/lib/common-toolbar/common-toolbar.component.d.ts</context>
                <context context-type="linenumber">16</context>
@@ -252,7 +252,7 @@
          </trans-unit>
          <trans-unit id="widgetsToolbar-title-refresh" datatype="html">
             <source>HYT_toolbar_refresh</source>
-            <target>@@I18N@@</target>
+            <target>Aggiorna</target>
             <context-group purpose="location">
                <context context-type="sourcefile">node_modules/@hyperiot/widgets/lib/common-toolbar/common-toolbar.component.d.ts</context>
                <context context-type="linenumber">21</context>
@@ -260,7 +260,7 @@
          </trans-unit>
          <trans-unit id="widgetsToolbar-title-close" datatype="html">
             <source>HYT_toolbar_close</source>
-            <target>@@I18N@@</target>
+            <target>Chiudi</target>
             <context-group purpose="location">
                <context context-type="sourcefile">node_modules/@hyperiot/widgets/lib/common-toolbar/common-toolbar.component.d.ts</context>
                <context context-type="linenumber">26</context>
@@ -268,7 +268,7 @@
          </trans-unit>
          <trans-unit id="widgetsToolbar-title-move" datatype="html">
             <source>HYT_toolbar_move</source>
-            <target>Descrizione</target>
+            <target>Sposta</target>
             <context-group purpose="location">
                <context context-type="sourcefile">node_modules/@hyperiot/widgets/lib/common-toolbar/common-toolbar.component.d.ts</context>
                <context context-type="linenumber">31</context>
@@ -276,7 +276,7 @@
          </trans-unit>
          <trans-unit id="widgetsCommon-msg-notconfigured" datatype="html">
             <source>HYT_common_not_configured</source>
-            <target>Impostazioni</target>
+            <target>Premi il pulsante 'Impostazioni' per configurare il widget.</target>
             <context-group purpose="location">
                <context context-type="sourcefile">node_modules/@hyperiot/widgets/lib/sensor-value/sensor-value.component.d.ts</context>
                <context context-type="linenumber">32</context>
@@ -296,7 +296,7 @@
          </trans-unit>
          <trans-unit id="HYT_widget_settings_title" datatype="html">
             <source>HYT_widget_settings_title</source>
-            <target>Aggiorna</target>
+            <target>Impostazioni Widget</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/dashboard/widget-settings-dialog/widget-settings-dialog.component.html</context>
                <context context-type="linenumber">5</context>
@@ -312,7 +312,7 @@
          </trans-unit>
          <trans-unit id="HYT_name" datatype="html">
             <source>HYT_name</source>
-            <target>Chiudi</target>
+            <target>Nome</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/dashboard/widget-settings-dialog/widget-settings-dialog.component.html</context>
                <context context-type="linenumber">18</context>
@@ -356,7 +356,7 @@
          </trans-unit>
          <trans-unit id="HYT_type" datatype="html">
             <source>HYT_type</source>
-            <target>Sposta</target>
+            <target>Tipo</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/dashboard/widget-settings-dialog/widget-settings-dialog.component.html</context>
                <context context-type="linenumber">24</context>
@@ -372,7 +372,7 @@
          </trans-unit>
          <trans-unit id="HYT_apply" datatype="html">
             <source>HYT_apply</source>
-            <target>Premi il pulsante 'Impostazioni' per configurare il widget.</target>
+            <target>Applica</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/dashboard/widget-settings-dialog/widget-settings-dialog.component.html</context>
                <context context-type="linenumber">66</context>
@@ -380,7 +380,7 @@
          </trans-unit>
          <trans-unit id="HYT_error_occurred_long" datatype="html">
             <source>HYT_error_occurred_long</source>
-            <target>Impostazioni Widget</target>
+            <target>Si è verificato un errore. Contatta l'amministratore</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/dashboard/widget-settings-dialog/widget-settings-dialog.component.html</context>
                <context context-type="linenumber">79</context>
@@ -400,7 +400,7 @@
          </trans-unit>
          <trans-unit id="HYT_you_are_dashboard_mode" datatype="html">
             <source>HYT_you_are_dashboard_mode</source>
-            <target>Tipo</target>
+            <target>Sei in modalità {{ dashboardType }}</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/dashboard/widgets-layout/widgets-layout.component.html</context>
                <context context-type="linenumber">29</context>
@@ -408,7 +408,7 @@
          </trans-unit>
          <trans-unit id="HYT_no_widget_in_dashboard" datatype="html">
             <source>HYT_no_widget_in_dashboard</source>
-            <target>Applica</target>
+            <target>Non ci sono widget in questa dashboard</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/dashboard/widgets-layout/widgets-layout.component.html</context>
                <context context-type="linenumber">30</context>
@@ -416,7 +416,7 @@
          </trans-unit>
          <trans-unit id="HYT_start_adding_widget" datatype="html">
             <source>HYT_start_adding_widget</source>
-            <target>Si è verificato un errore. Contatta l'amministratore</target>
+            <target>Comincia ad aggiungere widget</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/dashboard/widgets-layout/widgets-layout.component.html</context>
                <context context-type="linenumber">31</context>
@@ -424,7 +424,7 @@
          </trans-unit>
          <trans-unit id="HYT_widget_add_widget" datatype="html">
             <source>HYT_widget_add_widget</source>
-            <target>Sei in modalità {{ dashboardType }}</target>
+            <target>Aggiungi un widget</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/dashboard/add-widget-dialog/add-widget-dialog.component.html</context>
                <context context-type="linenumber">4</context>
@@ -436,7 +436,7 @@
          </trans-unit>
          <trans-unit id="HYT_widget_add_quantity" datatype="html">
             <source>HYT_widget_add_quantity</source>
-            <target>Non ci sono widget in questa dashboard</target>
+            <target>Quantità</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/dashboard/add-widget-dialog/add-widget-dialog.component.html</context>
                <context context-type="linenumber">38</context>
@@ -444,7 +444,7 @@
          </trans-unit>
          <trans-unit id="HYT_widget_info_type" datatype="html">
             <source>HYT_widget_info_type</source>
-            <target>Comincia ad aggiungere widget</target>
+            <target>Tipo</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/dashboard/add-widget-dialog/add-widget-dialog.component.html</context>
                <context context-type="linenumber">62</context>
@@ -452,7 +452,7 @@
          </trans-unit>
          <trans-unit id="HYT_description" datatype="html">
             <source>HYT_description</source>
-            <target>Aggiungi un widget</target>
+            <target>Descrizione</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/dashboard/add-widget-dialog/add-widget-dialog.component.html</context>
                <context context-type="linenumber">67</context>
@@ -488,7 +488,7 @@
          </trans-unit>
          <trans-unit id="HYT_widget_info_intro" datatype="html">
             <source>HYT_widget_info_intro</source>
-            <target>Quantità</target>
+            <target>Seleziona uno o più widget da aggiungere alla dashboard.. etc.. etc...</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/dashboard/add-widget-dialog/add-widget-dialog.component.html</context>
                <context context-type="linenumber">73</context>
@@ -496,7 +496,7 @@
          </trans-unit>
          <trans-unit id="HYT_add" datatype="html">
             <source>HYT_add</source>
-            <target>Tipo</target>
+            <target>Aggiungi</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/dashboard/add-widget-dialog/add-widget-dialog.component.html</context>
                <context context-type="linenumber">97</context>
@@ -508,7 +508,7 @@
          </trans-unit>
          <trans-unit id="HYT_add_widget" datatype="html">
             <source>HYT_add_widget</source>
-            <target>Seleziona uno o più widget da aggiungere alla dashboard.. etc.. etc...</target>
+            <target>Aggiungi widget</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/dashboard/add-widget-dialog/add-widget-dialog.component.html</context>
                <context context-type="linenumber">106</context>
@@ -516,7 +516,7 @@
          </trans-unit>
          <trans-unit id="HYT_dashboard_list" datatype="html">
             <source>HYT_dashboard_list</source>
-            <target>Aggiungi</target>
+            <target>Lista dashboard</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/dashboard/dashboards-list/dashboards-list.component.html</context>
                <context context-type="linenumber">1</context>
@@ -524,7 +524,7 @@
          </trans-unit>
          <trans-unit id="HYT_no_dashboard_for_user" datatype="html">
             <source>HYT_no_dashboard_for_user</source>
-            <target>Aggiungi widget</target>
+            <target>Nessuna dashboard trovata</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/dashboard/dashboards-list/dashboards-list.component.html</context>
                <context context-type="linenumber">3</context>
@@ -532,7 +532,7 @@
          </trans-unit>
          <trans-unit id="HYT_widget_settings_select_packet" datatype="html">
             <source>HYT_widget_settings_select_packet</source>
-            <target>Lista dashboard</target>
+            <target>Seleziona pacchetto</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/dashboard/widget-settings-dialog/packet-select/packet-select.component.html</context>
                <context context-type="linenumber">10</context>
@@ -540,7 +540,7 @@
          </trans-unit>
          <trans-unit id="HYT_widget_settings_select_fields" datatype="html">
             <source>HYT_widget_settings_select_fields</source>
-            <target>Nessuna dashboard trovata</target>
+            <target>Seleziona {multiPacketSelect?1:0, plural, =0 {campo} other {campi}}</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/dashboard/widget-settings-dialog/packet-select/packet-select.component.html</context>
                <context context-type="linenumber">30</context>
@@ -548,7 +548,7 @@
          </trans-unit>
          <trans-unit id="HYT_button_add" datatype="html">
             <source>HYT_button_add</source>
-            <target>Seleziona pacchetto</target>
+            <target>Aggiungi</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/dashboard/widget-settings-dialog/packet-select/packet-select.component.html</context>
                <context context-type="linenumber">94</context>
@@ -556,7 +556,7 @@
          </trans-unit>
          <trans-unit id="HYT_signal_is_on" datatype="html">
             <source>HYT_signal_is_on</source>
-            <target>Seleziona {multiPacketSelect?1:0, plural, =0 {campo} other {campi}}</target>
+            <target>{{(signalIsOn)?'Online':'Offline'}}</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/dashboard/dashboard.component.html</context>
                <context context-type="linenumber">24</context>
@@ -564,7 +564,7 @@
          </trans-unit>
          <trans-unit id="HYT_stream_is_on" datatype="html">
             <source>HYT_stream_is_on</source>
-            <target>Aggiungi</target>
+            <target>{{(streamIsOn)?'Play':'Pausa'}}</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/dashboard/dashboard.component.html</context>
                <context context-type="linenumber">30</context>
@@ -572,7 +572,7 @@
          </trans-unit>
          <trans-unit id="HYT_add_a_widget" datatype="html">
             <source>HYT_add_a_widget</source>
-            <target>{{(signalIsOn)?'Online':'Offline'}}</target>
+            <target>Aggiungi un widget</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/dashboard/dashboard.component.html</context>
                <context context-type="linenumber">52</context>
@@ -580,7 +580,7 @@
          </trans-unit>
          <trans-unit id="HYT_page_is_loading" datatype="html">
             <source>HYT_page_is_loading</source>
-            <target>{{(streamIsOn)?'Play':'Pausa'}}</target>
+            <target>Pagina in caricamento...</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/dashboard/dashboard.component.html</context>
                <context context-type="linenumber">68</context>
@@ -592,7 +592,7 @@
          </trans-unit>
          <trans-unit id="HYT_no_dashboard_yet" datatype="html">
             <source>HYT_no_dashboard_yet</source>
-            <target>Aggiungi un widget</target>
+            <target>Non hai ancora configurato nessuna dashboard</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/dashboard/dashboard.component.html</context>
                <context context-type="linenumber">109</context>
@@ -600,7 +600,7 @@
          </trans-unit>
          <trans-unit id="HYT_password_reset_1" datatype="html">
             <source>HYT_password_reset_1</source>
-            <target>Pagina in caricamento...</target>
+            <target>Hai bisogno di resettare la tua password?</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/authentication/password-reset/password-reset.component.html</context>
                <context context-type="linenumber">13</context>
@@ -608,7 +608,7 @@
          </trans-unit>
          <trans-unit id="HYT_password_reset_2" datatype="html">
             <source>HYT_password_reset_2</source>
-            <target>Non hai ancora configurato nessuna dashboard</target>
+            <target>Nessun problema! Riempi i campi qui sotto e ti manderemo una mail di conferma</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/authentication/password-reset/password-reset.component.html</context>
                <context context-type="linenumber">14</context>
@@ -616,7 +616,7 @@
          </trans-unit>
          <trans-unit id="HYT_password" datatype="html">
             <source>HYT_password</source>
-            <target>Hai bisogno di resettare la tua password?</target>
+            <target>Password</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/authentication/password-reset/password-reset.component.html</context>
                <context context-type="linenumber">26</context>
@@ -640,7 +640,7 @@
          </trans-unit>
          <trans-unit id="HYT_passwordConfirm" datatype="html">
             <source>HYT_passwordConfirm</source>
-            <target>Nessun problema! Riempi i campi qui sotto e ti manderemo una mail di conferma</target>
+            <target>Conferma password</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/authentication/password-reset/password-reset.component.html</context>
                <context context-type="linenumber">35</context>
@@ -648,7 +648,7 @@
          </trans-unit>
          <trans-unit id="HYT_reset_password" datatype="html">
             <source>HYT_reset_password</source>
-            <target>Password</target>
+            <target>Resetta password</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/authentication/password-reset/password-reset.component.html</context>
                <context context-type="linenumber">55</context>
@@ -656,7 +656,7 @@
          </trans-unit>
          <trans-unit id="HYT_back_to_home" datatype="html">
             <source>HYT_back_to_home</source>
-            <target>Conferma password</target>
+            <target>Torna ad Home</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/authentication/password-reset/password-reset.component.html</context>
                <context context-type="linenumber">60</context>
@@ -664,7 +664,7 @@
          </trans-unit>
          <trans-unit id="HYT_password_reset_3" datatype="html">
             <source>HYT_password_reset_3</source>
-            <target>Resetta password</target>
+            <target>Controlla le tue email!</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/authentication/password-reset/password-reset.component.html</context>
                <context context-type="linenumber">77</context>
@@ -672,7 +672,7 @@
          </trans-unit>
          <trans-unit id="HYT_password_reset_4" datatype="html">
             <source>HYT_password_reset_4</source>
-            <target>Torna ad Home</target>
+            <target>Ti abbiamo inviato una mail per resettare la tua passwotd</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/authentication/password-reset/password-reset.component.html</context>
                <context context-type="linenumber">78</context>
@@ -680,7 +680,7 @@
          </trans-unit>
          <trans-unit id="HYT_back_to_login" datatype="html">
             <source>HYT_back_to_login</source>
-            <target>Controlla le tue email!</target>
+            <target>Torna al Login</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/authentication/password-reset/password-reset.component.html</context>
                <context context-type="linenumber">80</context>
@@ -696,7 +696,7 @@
          </trans-unit>
          <trans-unit id="HYT_something_went_wrong" datatype="html">
             <source>HYT_something_went_wrong</source>
-            <target>Ti abbiamo inviato una mail per resettare la tua passwotd</target>
+            <target>Qualcosa è andato storto</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/authentication/user-activation/user-activation.component.html</context>
                <context context-type="linenumber">14</context>
@@ -704,7 +704,7 @@
          </trans-unit>
          <trans-unit id="HYT_acivation_incorrect_data" datatype="html">
             <source>HYT_acivation_incorrect_data</source>
-            <target>Torna al Login</target>
+            <target>I dati sono errati, riprova.</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/authentication/user-activation/user-activation.component.html</context>
                <context context-type="linenumber">15</context>
@@ -712,7 +712,7 @@
          </trans-unit>
          <trans-unit id="HYT_return_to_home" datatype="html">
             <source>HYT_return_to_home</source>
-            <target>Qualcosa è andato storto</target>
+            <target>Ritorna ad Home</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/authentication/user-activation/user-activation.component.html</context>
                <context context-type="linenumber">23</context>
@@ -720,7 +720,7 @@
          </trans-unit>
          <trans-unit id="HYT_activation_success_1" datatype="html">
             <source>HYT_activation_success_1</source>
-            <target>I dati sono errati, riprova.</target>
+            <target>Congratulazioni, il tuo account è attivo</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/authentication/user-activation/user-activation.component.html</context>
                <context context-type="linenumber">35</context>
@@ -728,7 +728,7 @@
          </trans-unit>
          <trans-unit id="HYT_activation_success_2" datatype="html">
             <source>HYT_activation_success_2</source>
-            <target>Ritorna ad Home</target>
+            <target>Comincia ora a scoprire cosa puoi fare e divertiti</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/authentication/user-activation/user-activation.component.html</context>
                <context context-type="linenumber">36</context>
@@ -736,7 +736,7 @@
          </trans-unit>
          <trans-unit id="HYT_go_to_home" datatype="html">
             <source>HYT_go_to_home</source>
-            <target>Congratulazioni, il tuo account è attivo</target>
+            <target>Vai a Home</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/authentication/user-activation/user-activation.component.html</context>
                <context context-type="linenumber">38</context>
@@ -744,7 +744,7 @@
          </trans-unit>
          <trans-unit id="HYT_hello" datatype="html">
             <source>HYT_hello</source>
-            <target>Comincia ora a scoprire cosa puoi fare e divertiti</target>
+            <target>Ciao</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/authentication/login/login.component.html</context>
                <context context-type="linenumber">14</context>
@@ -752,7 +752,7 @@
          </trans-unit>
          <trans-unit id="HYT_login_text" datatype="html">
             <source>HYT_login_text</source>
-            <target>Vai a Home</target>
+            <target>Siamo felici di vederti di nuovo!</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/authentication/login/login.component.html</context>
                <context context-type="linenumber">17</context>
@@ -760,7 +760,7 @@
          </trans-unit>
          <trans-unit id="HYT_login_no_account" datatype="html">
             <source>HYT_login_no_account</source>
-            <target>Ciao</target>
+            <target>Non hai un account?</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/authentication/login/login.component.html</context>
                <context context-type="linenumber">20</context>
@@ -768,7 +768,7 @@
          </trans-unit>
          <trans-unit id="HYT_register_now" datatype="html">
             <source>HYT_register_now</source>
-            <target>Siamo felici di vederti di nuovo!</target>
+            <target>Registrati ora</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/authentication/login/login.component.html</context>
                <context context-type="linenumber">21</context>
@@ -776,7 +776,7 @@
          </trans-unit>
          <trans-unit id="HYT_login_register_message" datatype="html">
             <source>HYT_login_register_message</source>
-            <target>Non hai un account?</target>
+            <target>e goditi tutti i nostri benefici</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/authentication/login/login.component.html</context>
                <context context-type="linenumber">22</context>
@@ -784,7 +784,7 @@
          </trans-unit>
          <trans-unit id="HYT_login_to_account" datatype="html">
             <source>HYT_login_to_account</source>
-            <target>Registrati ora</target>
+            <target>Login</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/authentication/login/login.component.html</context>
                <context context-type="linenumber">28</context>
@@ -792,7 +792,7 @@
          </trans-unit>
          <trans-unit id="HYT_username_or_email" datatype="html">
             <source>HYT_username_or_email</source>
-            <target>e goditi tutti i nostri benefici</target>
+            <target>Username o email</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/authentication/login/login.component.html</context>
                <context context-type="linenumber">40</context>
@@ -800,7 +800,7 @@
          </trans-unit>
          <trans-unit id="HYT_login_forgot_password" datatype="html">
             <source>HYT_login_forgot_password</source>
-            <target>Login</target>
+            <target>Password dimenticata?</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/authentication/login/login.component.html</context>
                <context context-type="linenumber">56</context>
@@ -808,7 +808,7 @@
          </trans-unit>
          <trans-unit id="HYT_remember_me" datatype="html">
             <source>HYT_remember_me</source>
-            <target>Username o email</target>
+            <target>Ricordati di me</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/authentication/login/login.component.html</context>
                <context context-type="linenumber">63</context>
@@ -816,7 +816,7 @@
          </trans-unit>
          <trans-unit id="HYT_login" datatype="html">
             <source>HYT_login</source>
-            <target>Password dimenticata?</target>
+            <target>Login</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/authentication/login/login.component.html</context>
                <context context-type="linenumber">77</context>
@@ -824,7 +824,7 @@
          </trans-unit>
          <trans-unit id="HYT_welcome" datatype="html">
             <source>HYT_welcome</source>
-            <target>Ricordati di me</target>
+            <target>Benvenuto</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/authentication/registration/registration.component.html</context>
                <context context-type="linenumber">14</context>
@@ -832,7 +832,7 @@
          </trans-unit>
          <trans-unit id="HYT_registration_1" datatype="html">
             <source>HYT_registration_1</source>
-            <target>Login</target>
+            <target>Registrati e goditi i nosttri benefici</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/authentication/registration/registration.component.html</context>
                <context context-type="linenumber">16</context>
@@ -840,7 +840,7 @@
          </trans-unit>
          <trans-unit id="HYT_already_member_question" datatype="html">
             <source>HYT_already_member_question</source>
-            <target>Benvenuto</target>
+            <target>Sei già registrato?</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/authentication/registration/registration.component.html</context>
                <context context-type="linenumber">18</context>
@@ -848,7 +848,7 @@
          </trans-unit>
          <trans-unit id="HYT_login_now" datatype="html">
             <source>HYT_login_now</source>
-            <target>Registrati e goditi i nosttri benefici</target>
+            <target>Fai il login</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/authentication/registration/registration.component.html</context>
                <context context-type="linenumber">19</context>
@@ -856,7 +856,7 @@
          </trans-unit>
          <trans-unit id="HYT_registration_login_message" datatype="html">
             <source>HYT_registration_login_message</source>
-            <target>Sei già registrato?</target>
+            <target>e goditi l'esperienza</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/authentication/registration/registration.component.html</context>
                <context context-type="linenumber">20</context>
@@ -864,7 +864,7 @@
          </trans-unit>
          <trans-unit id="HYT_registration" datatype="html">
             <source>HYT_registration</source>
-            <target>Fai il login</target>
+            <target>Registrazione</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/authentication/registration/registration.component.html</context>
                <context context-type="linenumber">26</context>
@@ -872,7 +872,7 @@
          </trans-unit>
          <trans-unit id="HYT_surname" datatype="html">
             <source>HYT_surname</source>
-            <target>e goditi l'esperienza</target>
+            <target>Cognome</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/authentication/registration/registration.component.html</context>
                <context context-type="linenumber">42</context>
@@ -880,7 +880,7 @@
          </trans-unit>
          <trans-unit id="HYT_username" datatype="html">
             <source>HYT_username</source>
-            <target>Registrazione</target>
+            <target>Username</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/authentication/registration/registration.component.html</context>
                <context context-type="linenumber">48</context>
@@ -888,7 +888,7 @@
          </trans-unit>
          <trans-unit id="HYT_email" datatype="html">
             <source>HYT_email</source>
-            <target>Cognome</target>
+            <target>Email</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/authentication/registration/registration.component.html</context>
                <context context-type="linenumber">55</context>
@@ -900,7 +900,7 @@
          </trans-unit>
          <trans-unit id="HYT_password_confirm" datatype="html">
             <source>HYT_password_confirm</source>
-            <target>Username</target>
+            <target>Conferma password</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/authentication/registration/registration.component.html</context>
                <context context-type="linenumber">70</context>
@@ -916,7 +916,7 @@
          </trans-unit>
          <trans-unit id="HYT_check_per" datatype="html">
             <source>HYT_check_per</source>
-            <target>Email</target>
+            <target>Check per</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/authentication/registration/registration.component.html</context>
                <context context-type="linenumber">77</context>
@@ -924,7 +924,7 @@
          </trans-unit>
          <trans-unit id="HYT_terms_of_use" datatype="html">
             <source>HYT_terms_of_use</source>
-            <target>Conferma password</target>
+            <target>Termini di utilizzo</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/authentication/registration/registration.component.html</context>
                <context context-type="linenumber">78</context>
@@ -932,7 +932,7 @@
          </trans-unit>
          <trans-unit id="HYT_and" datatype="html">
             <source>HYT_and</source>
-            <target>Check per</target>
+            <target>e</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/authentication/registration/registration.component.html</context>
                <context context-type="linenumber">79</context>
@@ -940,7 +940,7 @@
          </trans-unit>
          <trans-unit id="HYT_privacy_policy" datatype="html">
             <source>HYT_privacy_policy</source>
-            <target>Termini di utilizzo</target>
+            <target>Privacy policy</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/authentication/registration/registration.component.html</context>
                <context context-type="linenumber">80</context>
@@ -948,7 +948,7 @@
          </trans-unit>
          <trans-unit id="HYT_registration_button" datatype="html">
             <source>HYT_registration_button</source>
-            <target>e</target>
+            <target>Registrati</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/authentication/registration/registration.component.html</context>
                <context context-type="linenumber">92</context>
@@ -956,7 +956,7 @@
          </trans-unit>
          <trans-unit id="HYT_registration_form_ok" datatype="html">
             <source>HYT_registration_form_ok</source>
-            <target>Privacy policy</target>
+            <target>Controlla la tua casella email. Ti abbiamo inviato una mail per completare la registrazione</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/authentication/registration/registration.component.html</context>
                <context context-type="linenumber">115</context>
@@ -964,7 +964,7 @@
          </trans-unit>
          <trans-unit id="HYT_password_recovery_1" datatype="html">
             <source>HYT_password_recovery_1</source>
-            <target>Registrati</target>
+            <target>Hai scordato la password?</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/authentication/password-recovery/password-recovery.component.html</context>
                <context context-type="linenumber">13</context>
@@ -972,7 +972,7 @@
          </trans-unit>
          <trans-unit id="HYT_password_recovery_2" datatype="html">
             <source>HYT_password_recovery_2</source>
-            <target>Controlla la tua casella email. Ti abbiamo inviato una mail per completare la registrazione</target>
+            <target>Non riesci a fare login? Ti manderemo le istruzioni per resettare la tua password.</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/authentication/password-recovery/password-recovery.component.html</context>
                <context context-type="linenumber">14</context>
@@ -980,7 +980,7 @@
          </trans-unit>
          <trans-unit id="HYT_email_me" datatype="html">
             <source>HYT_email_me</source>
-            <target>Hai scordato la password?</target>
+            <target>Manda email</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/authentication/password-recovery/password-recovery.component.html</context>
                <context context-type="linenumber">31</context>
@@ -988,7 +988,7 @@
          </trans-unit>
          <trans-unit id="HYT_password_recovery_3" datatype="html">
             <source>HYT_password_recovery_3</source>
-            <target>Non riesci a fare login? Ti manderemo le istruzioni per resettare la tua password.</target>
+            <target>Controlla le tue email</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/authentication/password-recovery/password-recovery.component.html</context>
                <context context-type="linenumber">67</context>
@@ -996,7 +996,7 @@
          </trans-unit>
          <trans-unit id="HYT_password_recovery_4" datatype="html">
             <source>HYT_password_recovery_4</source>
-            <target>Manda email</target>
+            <target>Ti abbiamo inviato le istruzioni per resettare la tua password</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/authentication/password-recovery/password-recovery.component.html</context>
                <context context-type="linenumber">68</context>
@@ -1004,7 +1004,7 @@
          </trans-unit>
          <trans-unit id="HYT_hint_project_name" datatype="html">
             <source>HYT_hint_project_name</source>
-            <target>Controlla le tue email</target>
+            <target>Inserire nome progetto.</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/project-form/project-form.component.html</context>
                <context context-type="linenumber">21</context>
@@ -1012,7 +1012,7 @@
          </trans-unit>
          <trans-unit id="HYT_hint_project_description" datatype="html">
             <source>HYT_hint_project_description</source>
-            <target>Ti abbiamo inviato le istruzioni per resettare la tua password</target>
+            <target>Inserire descrizione progetto.</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/project-form/project-form.component.html</context>
                <context context-type="linenumber">38</context>
@@ -1020,7 +1020,7 @@
          </trans-unit>
          <trans-unit id="HYT_loading_data" datatype="html">
             <source>HYT_loading_data</source>
-            <target>Inserire nome progetto.</target>
+            <target>Caricamento dati...</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/project-form/project-form.component.html</context>
                <context context-type="linenumber">63</context>
@@ -1060,7 +1060,7 @@
          </trans-unit>
          <trans-unit id="HYT_error_occurred" datatype="html">
             <source>HYT_error_occurred</source>
-            <target>Inserire descrizione progetto.</target>
+            <target>Si è verificato un errore inaspettato</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/project-form/project-form.component.html</context>
                <context context-type="linenumber">68</context>
@@ -1100,7 +1100,7 @@
          </trans-unit>
          <trans-unit id="HYT_close" datatype="html">
             <source>HYT_close</source>
-            <target>Caricamento dati...</target>
+            <target>Chiudi</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/project-form/project-form.component.html</context>
                <context context-type="linenumber">74</context>
@@ -1136,7 +1136,7 @@
          </trans-unit>
          <trans-unit id="HYT_saving_data" datatype="html">
             <source>HYT_saving_data</source>
-            <target>Si è verificato un errore inaspettato</target>
+            <target>Salvataggio dati...</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/project-form/project-form.component.html</context>
                <context context-type="linenumber">78</context>
@@ -1172,7 +1172,7 @@
          </trans-unit>
          <trans-unit id="HYT_hint_device_name" datatype="html">
             <source>HYT_hint_device_name</source>
-            <target>Chiudi</target>
+            <target>Inserire il nome del dispositivo.</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/device-form/device-form.component.html</context>
                <context context-type="linenumber">24</context>
@@ -1184,7 +1184,7 @@
          </trans-unit>
          <trans-unit id="HYT_brand" datatype="html">
             <source>HYT_brand</source>
-            <target>Salvataggio dati...</target>
+            <target>Marca</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/device-form/device-form.component.html</context>
                <context context-type="linenumber">34</context>
@@ -1192,7 +1192,7 @@
          </trans-unit>
          <trans-unit id="HYT_hint_device_brand" datatype="html">
             <source>HYT_hint_device_brand</source>
-            <target>Inserire il nome del dispositivo.</target>
+            <target>Inserire la marca del dispositivo.</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/device-form/device-form.component.html</context>
                <context context-type="linenumber">37</context>
@@ -1200,7 +1200,7 @@
          </trans-unit>
          <trans-unit id="HYT_model" datatype="html">
             <source>HYT_model</source>
-            <target>Marca</target>
+            <target>Modello</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/device-form/device-form.component.html</context>
                <context context-type="linenumber">53</context>
@@ -1208,7 +1208,7 @@
          </trans-unit>
          <trans-unit id="HYT_hint_device_model" datatype="html">
             <source>HYT_hint_device_model</source>
-            <target>Inserire la marca del dispositivo.</target>
+            <target>Inserire il modello del dispositivo.</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/device-form/device-form.component.html</context>
                <context context-type="linenumber">56</context>
@@ -1216,7 +1216,7 @@
          </trans-unit>
          <trans-unit id="HYT_software_version" datatype="html">
             <source>HYT_software_version</source>
-            <target>Modello</target>
+            <target>Versione software</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/device-form/device-form.component.html</context>
                <context context-type="linenumber">69</context>
@@ -1224,7 +1224,7 @@
          </trans-unit>
          <trans-unit id="HYT_hint_device_software" datatype="html">
             <source>HYT_hint_device_software</source>
-            <target>Inserire il modello del dispositivo.</target>
+            <target>Inserire la versione del software del dispositivo.</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/device-form/device-form.component.html</context>
                <context context-type="linenumber">72</context>
@@ -1232,7 +1232,7 @@
          </trans-unit>
          <trans-unit id="HYT_firmware_version" datatype="html">
             <source>HYT_firmware_version</source>
-            <target>Versione software</target>
+            <target>Versione firmware</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/device-form/device-form.component.html</context>
                <context context-type="linenumber">89</context>
@@ -1240,7 +1240,7 @@
          </trans-unit>
          <trans-unit id="HYT_hint_device_firmware" datatype="html">
             <source>HYT_hint_device_firmware</source>
-            <target>Inserire la versione del software del dispositivo.</target>
+            <target>Inserire la versione del firmware del dispositivo.</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/device-form/device-form.component.html</context>
                <context context-type="linenumber">92</context>
@@ -1248,7 +1248,7 @@
          </trans-unit>
          <trans-unit id="HYT_hint_device_password" datatype="html">
             <source>HYT_hint_device_password</source>
-            <target>Versione firmware</target>
+            <target>Inserire la password del dispositivo.</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/device-form/device-form.component.html</context>
                <context context-type="linenumber">104</context>
@@ -1260,7 +1260,7 @@
          </trans-unit>
          <trans-unit id="HYT_hint_password_confirm" datatype="html">
             <source>HYT_hint_password_confirm</source>
-            <target>Inserire la versione del firmware del dispositivo.</target>
+            <target>Confermare la password del dispositivo.</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/device-form/device-form.component.html</context>
                <context context-type="linenumber">114</context>
@@ -1272,7 +1272,7 @@
          </trans-unit>
          <trans-unit id="HYT_hint_device_description" datatype="html">
             <source>HYT_hint_device_description</source>
-            <target>Inserire la password del dispositivo.</target>
+            <target>Inserire la descrizione del dispositivo.</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/device-form/device-form.component.html</context>
                <context context-type="linenumber">128</context>
@@ -1284,7 +1284,7 @@
          </trans-unit>
          <trans-unit id="HYT_hint_packet_name" datatype="html">
             <source>HYT_hint_packet_name</source>
-            <target>Confermare la password del dispositivo.</target>
+            <target>Inserire nome pacchetto.</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/packet-form/packet-form.component.html</context>
                <context context-type="linenumber">17</context>
@@ -1292,7 +1292,7 @@
          </trans-unit>
          <trans-unit id="HYT_traffic_plan" datatype="html">
             <source>HYT_traffic_plan</source>
-            <target>Inserire la descrizione del dispositivo.</target>
+            <target>Piano traffico dati</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/packet-form/packet-form.component.html</context>
                <context context-type="linenumber">26</context>
@@ -1300,7 +1300,7 @@
          </trans-unit>
          <trans-unit id="HYT_hint_packet_traffic_plan" datatype="html">
             <source>HYT_hint_packet_traffic_plan</source>
-            <target>Inserire nome pacchetto.</target>
+            <target>Selezionare piano traffico.</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/packet-form/packet-form.component.html</context>
                <context context-type="linenumber">29</context>
@@ -1308,7 +1308,7 @@
          </trans-unit>
          <trans-unit id="HYT_hint_packet_type" datatype="html">
             <source>HYT_hint_packet_type</source>
-            <target>Piano traffico dati</target>
+            <target>Selezionare il tipo di pacchetto.</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/packet-form/packet-form.component.html</context>
                <context context-type="linenumber">48</context>
@@ -1316,7 +1316,7 @@
          </trans-unit>
          <trans-unit id="HYT_format" datatype="html">
             <source>HYT_format</source>
-            <target>Selezionare piano traffico.</target>
+            <target>Formato</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/packet-form/packet-form.component.html</context>
                <context context-type="linenumber">56</context>
@@ -1324,7 +1324,7 @@
          </trans-unit>
          <trans-unit id="HYT_serialization" datatype="html">
             <source>HYT_serialization</source>
-            <target>Selezionare il tipo di pacchetto.</target>
+            <target>Serializzazione</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/packet-form/packet-form.component.html</context>
                <context context-type="linenumber">72</context>
@@ -1332,7 +1332,7 @@
          </trans-unit>
          <trans-unit id="HYT_timestamp_field" datatype="html">
             <source>HYT_timestamp_field</source>
-            <target>Formato</target>
+            <target>Campo Timestamp</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/packet-form/packet-form.component.html</context>
                <context context-type="linenumber">91</context>
@@ -1340,7 +1340,7 @@
          </trans-unit>
          <trans-unit id="HYT_hint_packet_timestamp_field" datatype="html">
             <source>HYT_hint_packet_timestamp_field</source>
-            <target>Serializzazione</target>
+            <target>Inserire nome del campo timestamp.</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/packet-form/packet-form.component.html</context>
                <context context-type="linenumber">94</context>
@@ -1348,7 +1348,7 @@
          </trans-unit>
          <trans-unit id="HYT_timestamp_format" datatype="html">
             <source>HYT_timestamp_format</source>
-            <target>Campo Timestamp</target>
+            <target>Formato Timestamp</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/packet-form/packet-form.component.html</context>
                <context context-type="linenumber">104</context>
@@ -1356,7 +1356,7 @@
          </trans-unit>
          <trans-unit id="HYT_hint_packet_enter_timestamp_format" datatype="html">
             <source>HYT_hint_packet_enter_timestamp_format</source>
-            <target>Inserire nome del campo timestamp.</target>
+            <target>Inserire il formato del campo timestamp: e.g. 'dd/MM/yyyy HH.mmZ'.</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/packet-form/packet-form.component.html</context>
                <context context-type="linenumber">107</context>
@@ -1364,7 +1364,7 @@
          </trans-unit>
          <trans-unit id="HYT_mqtt_url" datatype="html">
             <source>HYT_mqtt_url</source>
-            <target>Formato Timestamp</target>
+            <target>Url MQTT</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/packet-form/packet-form.component.html</context>
                <context context-type="linenumber">123</context>
@@ -1372,7 +1372,7 @@
          </trans-unit>
          <trans-unit id="HYT_mqtt_topic" datatype="html">
             <source>HYT_mqtt_topic</source>
-            <target>Inserire il formato del campo timestamp: e.g. 'dd/MM/yyyy HH.mmZ'.</target>
+            <target>MQTT Topic</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/packet-form/packet-form.component.html</context>
                <context context-type="linenumber">135</context>
@@ -1380,7 +1380,7 @@
          </trans-unit>
          <trans-unit id="HYT_hint_field_name" datatype="html">
             <source>HYT_hint_field_name</source>
-            <target>Url MQTT</target>
+            <target>Inserire il nome del campo.</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/packet-fields-form/packet-fields-form.component.html</context>
                <context context-type="linenumber">37</context>
@@ -1388,7 +1388,7 @@
          </trans-unit>
          <trans-unit id="HYT_hint_field_type" datatype="html">
             <source>HYT_hint_field_type</source>
-            <target>MQTT Topic</target>
+            <target>Selezionare il tipo di campo.</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/packet-fields-form/packet-fields-form.component.html</context>
                <context context-type="linenumber">52</context>
@@ -1396,7 +1396,7 @@
          </trans-unit>
          <trans-unit id="HYT_hint_field_description" datatype="html">
             <source>HYT_hint_field_description</source>
-            <target>Inserire il nome del campo.</target>
+            <target>Inserire la descrizione del campo.</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/packet-fields-form/packet-fields-form.component.html</context>
                <context context-type="linenumber">69</context>
@@ -1404,7 +1404,7 @@
          </trans-unit>
          <trans-unit id="HYT_multiplicity" datatype="html">
             <source>HYT_multiplicity</source>
-            <target>Selezionare il tipo di campo.</target>
+            <target>Molteplicità</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/packet-fields-form/packet-fields-form.component.html</context>
                <context context-type="linenumber">76</context>
@@ -1412,7 +1412,7 @@
          </trans-unit>
          <trans-unit id="HYT_hint_select_measure_type" datatype="html">
             <source>HYT_hint_select_measure_type</source>
-            <target>Inserire la descrizione del campo.</target>
+            <target>Selezionare il tipo di misurazione.</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/packet-fields-form/packet-fields-form.component.html</context>
                <context context-type="linenumber">99</context>
@@ -1420,7 +1420,7 @@
          </trans-unit>
          <trans-unit id="HYT_hint_select_measure_unit" datatype="html">
             <source>HYT_hint_select_measure_unit</source>
-            <target>Molteplicità</target>
+            <target>Selezionare unità di misura.</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/packet-fields-form/packet-fields-form.component.html</context>
                <context context-type="linenumber">112</context>
@@ -1428,7 +1428,7 @@
          </trans-unit>
          <trans-unit id="HYT_device" datatype="html">
             <source>HYT_device</source>
-            <target>Selezionare il tipo di misurazione.</target>
+            <target>Dispositivo</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-wizard/packet-select/packet-select.component.html</context>
                <context context-type="linenumber">11</context>
@@ -1436,7 +1436,7 @@
          </trans-unit>
          <trans-unit id="HYT_packet" datatype="html">
             <source>HYT_packet</source>
-            <target>Selezionare unità di misura.</target>
+            <target>Pacchetto</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-wizard/packet-select/packet-select.component.html</context>
                <context context-type="linenumber">21</context>
@@ -1444,7 +1444,7 @@
          </trans-unit>
          <trans-unit id="HYT_field" datatype="html">
             <source>HYT_field</source>
-            <target>Dispositivo</target>
+            <target>Campo</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/rule-definition/rule-definition.component.html</context>
                <context context-type="linenumber">11</context>
@@ -1452,7 +1452,7 @@
          </trans-unit>
          <trans-unit id="HYT_condition" datatype="html">
             <source>HYT_condition</source>
-            <target>Pacchetto</target>
+            <target>Condizione</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/rule-definition/rule-definition.component.html</context>
                <context context-type="linenumber">17</context>
@@ -1460,7 +1460,7 @@
          </trans-unit>
          <trans-unit id="HYT_value" datatype="html">
             <source>HYT_value</source>
-            <target>Campo</target>
+            <target>Valore</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/rule-definition/rule-definition.component.html</context>
                <context context-type="linenumber">23</context>
@@ -1468,7 +1468,7 @@
          </trans-unit>
          <trans-unit id="HYT_title_categories" datatype="html">
             <source>HYT_title_categories</source>
-            <target>Condizione</target>
+            <target>Categorie</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/packet-enrichment-form/asset-category/asset-category.component.html</context>
                <context context-type="linenumber">1</context>
@@ -1476,7 +1476,7 @@
          </trans-unit>
          <trans-unit id="HYT_hint_rule_name" datatype="html">
             <source>HYT_hint_rule_name</source>
-            <target>Valore</target>
+            <target>Inserire il nome della regola.</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/packet-enrichment-form/packet-enrichment-form.component.html</context>
                <context context-type="linenumber">36</context>
@@ -1484,7 +1484,7 @@
          </trans-unit>
          <trans-unit id="HYT_rule_type" datatype="html">
             <source>HYT_rule_type</source>
-            <target>Categorie</target>
+            <target>Tipo regola</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/packet-enrichment-form/packet-enrichment-form.component.html</context>
                <context context-type="linenumber">50</context>
@@ -1492,7 +1492,7 @@
          </trans-unit>
          <trans-unit id="HYT_hint_rule_description" datatype="html">
             <source>HYT_hint_rule_description</source>
-            <target>Inserire il nome della regola.</target>
+            <target>Inserire la descrizione della regola.</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/packet-enrichment-form/packet-enrichment-form.component.html</context>
                <context context-type="linenumber">89</context>
@@ -1500,7 +1500,7 @@
          </trans-unit>
          <trans-unit id="HYT_mail_to" datatype="html">
             <source>HYT_mail_to</source>
-            <target>Tipo regola</target>
+            <target>Destinatari</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/packet-events-form/event-mail/event-mail.component.html</context>
                <context context-type="linenumber">9</context>
@@ -1508,7 +1508,7 @@
          </trans-unit>
          <trans-unit id="HYT_mail_cc" datatype="html">
             <source>HYT_mail_cc</source>
-            <target>Inserire la descrizione della regola.</target>
+            <target>Copia</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/packet-events-form/event-mail/event-mail.component.html</context>
                <context context-type="linenumber">15</context>
@@ -1516,7 +1516,7 @@
          </trans-unit>
          <trans-unit id="HYT_mail_object" datatype="html">
             <source>HYT_mail_object</source>
-            <target>Destinatari</target>
+            <target>Oggetto</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/packet-events-form/event-mail/event-mail.component.html</context>
                <context context-type="linenumber">21</context>
@@ -1524,7 +1524,7 @@
          </trans-unit>
          <trans-unit id="HYT_mail_body" datatype="html">
             <source>HYT_mail_body</source>
-            <target>Copia</target>
+            <target>Corpo della mail</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/packet-events-form/event-mail/event-mail.component.html</context>
                <context context-type="linenumber">30</context>
@@ -1532,7 +1532,7 @@
          </trans-unit>
          <trans-unit id="HYT_add_event" datatype="html">
             <source>HYT_add_event</source>
-            <target>Oggetto</target>
+            <target>Aggiungi evento</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/packet-events-form/packet-events-form.component.html</context>
                <context context-type="linenumber">16</context>
@@ -1540,7 +1540,7 @@
          </trans-unit>
          <trans-unit id="HYT_hint_event_name" datatype="html">
             <source>HYT_hint_event_name</source>
-            <target>Corpo della mail</target>
+            <target>Inserire il nome dell'evento.</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/packet-events-form/packet-events-form.component.html</context>
                <context context-type="linenumber">33</context>
@@ -1548,7 +1548,7 @@
          </trans-unit>
          <trans-unit id="HYT_hint_event_description" datatype="html">
             <source>HYT_hint_event_description</source>
-            <target>Aggiungi evento</target>
+            <target>Inserire la descrizione dell'evento.</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/packet-events-form/packet-events-form.component.html</context>
                <context context-type="linenumber">43</context>
@@ -1556,7 +1556,7 @@
          </trans-unit>
          <trans-unit id="HYT_output_data" datatype="html">
             <source>HYT_output_data</source>
-            <target>Inserire il nome dell'evento.</target>
+            <target>Output evento</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/packet-events-form/packet-events-form.component.html</context>
                <context context-type="linenumber">54</context>
@@ -1564,7 +1564,7 @@
          </trans-unit>
          <trans-unit id="HYT_choose_how_proceed" datatype="html">
             <source>HYT_choose_how_proceed</source>
-            <target>Inserire la descrizione dell'evento.</target>
+            <target>Scegli come procedere</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-wizard/wizard-options-modal/wizard-options-modal.component.html</context>
                <context context-type="linenumber">4</context>
@@ -1572,7 +1572,7 @@
          </trans-unit>
          <trans-unit id="HYT_enrichment_data" datatype="html">
             <source>HYT_enrichment_data</source>
-            <target>Output evento</target>
+            <target>Arricchimento dati</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-wizard/wizard-options-modal/wizard-options-modal.component.html</context>
                <context context-type="linenumber">16</context>
@@ -1580,7 +1580,7 @@
          </trans-unit>
          <trans-unit id="HYT_enrichment_definition_long" datatype="html">
             <source>HYT_enrichment_definition_long</source>
-            <target>Aggiorna</target>
+            <target>Lunga definizione di arricchimento dati. Lunga definizione di arricchimento dati. Lunga definizione di arricchimento dati. Lunga definizione di arricchimento dati. Lunga definizione di arricchimento dati.</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-wizard/wizard-options-modal/wizard-options-modal.component.html</context>
                <context context-type="linenumber">18</context>
@@ -1588,7 +1588,7 @@
          </trans-unit>
          <trans-unit id="HYT_statistics_definition_long" datatype="html">
             <source>HYT_statistics_definition_long</source>
-            <target>Aggiungi un progetto</target>
+            <target>Lunga definizione di statistiche. Lunga definizione di statistiche. Lunga definizione di statistiche. Lunga definizione di statistiche. Lunga definizione di statistiche. Lunga definizione di statistiche. Lunga definizione di statistiche. </target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-wizard/wizard-options-modal/wizard-options-modal.component.html</context>
                <context context-type="linenumber">27</context>
@@ -1596,7 +1596,7 @@
          </trans-unit>
          <trans-unit id="HYT_events" datatype="html">
             <source>HYT_events</source>
-            <target>Lista progetti</target>
+            <target>Eventi</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-wizard/wizard-options-modal/wizard-options-modal.component.html</context>
                <context context-type="linenumber">34</context>
@@ -1604,7 +1604,7 @@
          </trans-unit>
          <trans-unit id="HYT_events_definition_long" datatype="html">
             <source>HYT_events_definition_long</source>
-            <target>Nessun progetto trovato che soddisfi la ricerca</target>
+            <target>Lunga definizione di eventi. Lunga definizione di eventi. Lunga definizione di eventi. Lunga definizione di eventi. Lunga definizione di eventi. Lunga definizione di eventi. Lunga definizione di eventi. </target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-wizard/wizard-options-modal/wizard-options-modal.component.html</context>
                <context context-type="linenumber">36</context>
@@ -1612,7 +1612,7 @@
          </trans-unit>
          <trans-unit id="HYT_finish" datatype="html">
             <source>HYT_finish</source>
-            <target>Non ci sono progetti</target>
+            <target>Finisci</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-wizard/wizard-options-modal/wizard-options-modal.component.html</context>
                <context context-type="linenumber">47</context>
@@ -1620,7 +1620,7 @@
          </trans-unit>
          <trans-unit id="HYT_congratulations" datatype="html">
             <source>HYT_congratulations</source>
-            <target>Per aggiungere un progetto clicca il bottone qui sotto</target>
+            <target>Congratulazioni</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-wizard/wizard-report-modal/wizard-report-modal.component.html</context>
                <context context-type="linenumber">8</context>
@@ -1628,7 +1628,7 @@
          </trans-unit>
          <trans-unit id="HYT_pw_finsh" datatype="html">
             <source>HYT_pw_finsh</source>
-            <target>Crea il tuo primo progetto</target>
+            <target>Hai finito di configurare il tuo progetto</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-wizard/wizard-report-modal/wizard-report-modal.component.html</context>
                <context context-type="linenumber">17</context>
@@ -1636,7 +1636,7 @@
          </trans-unit>
          <trans-unit id="HYT_go_to_project_list" datatype="html">
             <source>HYT_go_to_project_list</source>
-            <target>Modifica nel wizard</target>
+            <target>Vai alla lista progetti</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-wizard/wizard-report-modal/wizard-report-modal.component.html</context>
                <context context-type="linenumber">49</context>
@@ -1644,7 +1644,7 @@
          </trans-unit>
          <trans-unit id="HYT_go_to_project_list_long" datatype="html">
             <source>HYT_go_to_project_list_long</source>
-            <target>Caricamento project tree</target>
+            <target>Vai alla lista progetti lunga definizione. Vai alla lista progetti lunga definizione. Vai alla lista progetti lunga definizione. Vai alla lista progetti lunga definizione. Vai alla lista progetti lunga definizione. </target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-wizard/wizard-report-modal/wizard-report-modal.component.html</context>
                <context context-type="linenumber">51</context>
@@ -1652,7 +1652,7 @@
          </trans-unit>
          <trans-unit id="HYT_go_to_dashboard" datatype="html">
             <source>HYT_go_to_dashboard</source>
-            <target>Errore caricamento project tree</target>
+            <target>Vai alla dashboard</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-wizard/wizard-report-modal/wizard-report-modal.component.html</context>
                <context context-type="linenumber">57</context>
@@ -1660,7 +1660,7 @@
          </trans-unit>
          <trans-unit id="HYT_go_to_dashboard_long" datatype="html">
             <source>HYT_go_to_dashboard_long</source>
-            <target>Elimina</target>
+            <target>Vai alla dashboard lunga definizione. Vai alla dashboard lunga definizione. Vai alla dashboard lunga definizione. Vai alla dashboard lunga definizione. Vai alla dashboard lunga definizione. Vai alla dashboard lunga definizione. </target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-wizard/wizard-report-modal/wizard-report-modal.component.html</context>
                <context context-type="linenumber">59</context>
@@ -1668,7 +1668,7 @@
          </trans-unit>
          <trans-unit id="HYT_update" datatype="html">
             <source>HYT_update</source>
-            <target>Dispositiv{{ deviceCount == 1 ? 'o' : 'i' }}</target>
+            <target>Aggiorna</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-wizard/project-wizard.component.html</context>
                <context context-type="linenumber">129</context>
@@ -1676,7 +1676,7 @@
          </trans-unit>
          <trans-unit id="HYT_add_new_project" datatype="html">
             <source>HYT_add_new_project</source>
-            <target>Regol{{ rulesCount == 1 ? 'a' : 'e' }}</target>
+            <target>Aggiungi un progetto</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/projects.component.html</context>
                <context context-type="linenumber">18</context>
@@ -1684,7 +1684,7 @@
          </trans-unit>
          <trans-unit id="HYT_project_list" datatype="html">
             <source>HYT_project_list</source>
-            <target>Definizione dei termini</target>
+            <target>Lista progetti</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/projects.component.html</context>
                <context context-type="linenumber">46</context>
@@ -1692,7 +1692,7 @@
          </trans-unit>
          <trans-unit id="HYT_no_project_found" datatype="html">
             <source>HYT_no_project_found</source>
-            <target>Congratulazioni</target>
+            <target>Nessun progetto trovato che soddisfi la ricerca</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/projects.component.html</context>
                <context context-type="linenumber">96</context>
@@ -1700,7 +1700,7 @@
          </trans-unit>
          <trans-unit id="HYT_no_project" datatype="html">
             <source>HYT_no_project</source>
-            <target>Hai finito di configurare il tuo progetto</target>
+            <target>Non ci sono progetti</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/projects.component.html</context>
                <context context-type="linenumber">118</context>
@@ -1708,7 +1708,7 @@
          </trans-unit>
          <trans-unit id="HYT_add_project_button_hint" datatype="html">
             <source>HYT_add_project_button_hint</source>
-            <target>Vai alla lista progetti</target>
+            <target>Per aggiungere un progetto clicca il bottone qui sotto</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/projects.component.html</context>
                <context context-type="linenumber">119</context>
@@ -1716,7 +1716,7 @@
          </trans-unit>
          <trans-unit id="HYT_create_first_project" datatype="html">
             <source>HYT_create_first_project</source>
-            <target>Vai alla lista progetti lunga definizione. Vai alla lista progetti lunga definizione. Vai alla lista progetti lunga definizione. Vai alla lista progetti lunga definizione. Vai alla lista progetti lunga definizione. </target>
+            <target>Crea il tuo primo progetto</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/projects.component.html</context>
                <context context-type="linenumber">125</context>
@@ -1724,7 +1724,7 @@
          </trans-unit>
          <trans-unit id="HYT_edit_in_wizard" datatype="html">
             <source>HYT_edit_in_wizard</source>
-            <target>Vai alla dashboard</target>
+            <target>Modifica nel wizard</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-detail/project-detail.component.html</context>
                <context context-type="linenumber">35</context>
@@ -1732,7 +1732,7 @@
          </trans-unit>
          <trans-unit id="HYT_loading_project_tree" datatype="html">
             <source>HYT_loading_project_tree</source>
-            <target>Vai alla dashboard lunga definizione. Vai alla dashboard lunga definizione. Vai alla dashboard lunga definizione. Vai alla dashboard lunga definizione. Vai alla dashboard lunga definizione. Vai alla dashboard lunga definizione. </target>
+            <target>Caricamento project tree</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-detail/project-detail.component.html</context>
                <context context-type="linenumber">42</context>
@@ -1740,7 +1740,7 @@
          </trans-unit>
          <trans-unit id="HYT_error_project_tree" datatype="html">
             <source>HYT_error_project_tree</source>
-            <target>Scegli come procedere</target>
+            <target>Errore caricamento project tree</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-detail/project-detail.component.html</context>
                <context context-type="linenumber">46</context>
@@ -1748,40 +1748,31 @@
          </trans-unit>
          <trans-unit id="HYT_delete" datatype="html">
             <source>HYT_delete</source>
-            <target>Arricchimento dati</target>
+            <target>Elimina</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-detail/project-detail.component.html</context>
                <context context-type="linenumber">93</context>
             </context-group>
          </trans-unit>
          <trans-unit id="HYT_area_draggable_remove" datatype="html">
-            <source>
-               Remove 
-               <x id="INTERPOLATION" equiv-text="{{itemData.device ? itemData.device.deviceName : itemData.name}}"/>
-            </source>
-            <target>Lunga definizione di arricchimento dati. Lunga definizione di arricchimento dati. Lunga definizione di arricchimento dati. Lunga definizione di arricchimento dati. Lunga definizione di arricchimento dati.</target>
+            <source>HYT_area_draggable_remove</source>
+            <target>Rimuovi {{itemData.device ? itemData.device.deviceName : itemData.name}}</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/areas-form/draggable-item/draggable-item.component.html</context>
                <context context-type="linenumber">14</context>
             </context-group>
          </trans-unit>
          <trans-unit id="HYT_area_draggable_open" datatype="html">
-            <source>
-               Open 
-               <x id="INTERPOLATION" equiv-text="{{itemData.device ? itemData.device.deviceName : itemData.name}}"/>
-            </source>
-            <target>Lunga definizione di statistiche. Lunga definizione di statistiche. Lunga definizione di statistiche. Lunga definizione di statistiche. Lunga definizione di statistiche. Lunga definizione di statistiche. Lunga definizione di statistiche. </target>
+            <source>HYT_area_draggable_open</source>
+            <target>Apri {{itemData.device ? itemData.device.deviceName : itemData.name}}</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/areas-form/draggable-item/draggable-item.component.html</context>
                <context context-type="linenumber">19</context>
             </context-group>
          </trans-unit>
          <trans-unit id="HYT_area_draggable_title" datatype="html">
-            <source>
-               Move 
-               <x id="INTERPOLATION" equiv-text="{{itemData.device ? itemData.device.deviceName : itemData.name}}"/>
-            </source>
-            <target>Eventi</target>
+            <source>HYT_area_draggable_title</source>
+            <target>Sposta {{itemData.device ? itemData.device.deviceName : itemData.name}}</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/areas-form/draggable-item/draggable-item.component.html</context>
                <context context-type="linenumber">2</context>
@@ -1789,7 +1780,7 @@
          </trans-unit>
          <trans-unit id="HYT_area_map_select_device" datatype="html">
             <source>HYT_area_map_select_device</source>
-            <target>Lunga definizione di eventi. Lunga definizione di eventi. Lunga definizione di eventi. Lunga definizione di eventi. Lunga definizione di eventi. Lunga definizione di eventi. Lunga definizione di eventi. </target>
+            <target>Seleziona dispositivo</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/areas-form/area-device-select-dialog/area-device-select-dialog.component.html</context>
                <context context-type="linenumber">2</context>
@@ -1797,7 +1788,7 @@
          </trans-unit>
          <trans-unit id="HYT_area_map_select_area" datatype="html">
             <source>HYT_area_map_select_area</source>
-            <target>Finisci</target>
+            <target>Seleziona area</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/areas-form/area-innerarea-select-dialog/area-innerarea-select-dialog.component.html</context>
                <context context-type="linenumber">2</context>
@@ -1805,7 +1796,7 @@
          </trans-unit>
          <trans-unit id="HYT_area_add" datatype="html">
             <source>HYT_area_add</source>
-            <target>Qualcosa è andato storto</target>
+            <target>Aggiungi area</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/areas-form/areas-form.component.html</context>
                <context context-type="linenumber">17</context>
@@ -1813,7 +1804,7 @@
          </trans-unit>
          <trans-unit id="HYT_area_path_main" datatype="html">
             <source>HYT_area_path_main</source>
-            <target>Informazioni personali aggiornate con successo</target>
+            <target>Principale</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/areas-form/areas-form.component.html</context>
                <context context-type="linenumber">33</context>
@@ -1821,7 +1812,7 @@
          </trans-unit>
          <trans-unit id="HYT_hint_area_name" datatype="html">
             <source>HYT_hint_area_name</source>
-            <target>Password modificata con successo</target>
+            <target>Inserire nome area</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/areas-form/areas-form.component.html</context>
                <context context-type="linenumber">54</context>
@@ -1829,15 +1820,15 @@
          </trans-unit>
          <trans-unit id="HYT_hint_area_description" datatype="html">
             <source>HYT_hint_area_description</source>
-            <target>Nome regola non disponibile</target>
+            <target>Inserire descrizione area</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/areas-form/areas-form.component.html</context>
                <context context-type="linenumber">61</context>
             </context-group>
          </trans-unit>
          <trans-unit id="HYT_area_section_info" datatype="html">
-            <source>Info</source>
-            <target>Nome del device</target>
+            <source>HYT_area_section_info</source>
+            <target>Info</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/areas-form/areas-form.component.html</context>
                <context context-type="linenumber">43</context>
@@ -1845,7 +1836,7 @@
          </trans-unit>
          <trans-unit id="HYT_area_map_set_image" datatype="html">
             <source>HYT_area_map_set_image</source>
-            <target>Nome del pacchetto</target>
+            <target>Imposta immagine mappa</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/areas-form/areas-form.component.html</context>
                <context context-type="linenumber">72</context>
@@ -1853,7 +1844,7 @@
          </trans-unit>
          <trans-unit id="HYT_area_map_device_add" datatype="html">
             <source>HYT_area_map_device_add</source>
-            <target>Nome del campo</target>
+            <target>Aggiungi dispositivo</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/areas-form/areas-form.component.html</context>
                <context context-type="linenumber">79</context>
@@ -1861,7 +1852,7 @@
          </trans-unit>
          <trans-unit id="HYT_area_map_area_add" datatype="html">
             <source>HYT_area_map_area_add</source>
-            <target>Nome dell'evento mail</target>
+            <target>Aggiungi area</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/areas-form/areas-form.component.html</context>
                <context context-type="linenumber">80</context>
@@ -1869,7 +1860,7 @@
          </trans-unit>
          <trans-unit id="HYT_area_section_map" datatype="html">
             <source>HYT_area_section_map</source>
-            <target>Nome evento non disponibile</target>
+            <target>Mappa</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/areas-form/areas-form.component.html</context>
                <context context-type="linenumber">68</context>
@@ -1877,19 +1868,15 @@
          </trans-unit>
          <trans-unit id="HYT_area_inner_add" datatype="html">
             <source>HYT_area_inner_add</source>
-            <target>Sei sicuro di voler eliminare l'oggetto?</target>
+            <target>Add sotto-area</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/areas-form/areas-form.component.html</context>
                <context context-type="linenumber">89</context>
             </context-group>
          </trans-unit>
          <trans-unit id="HYT_area_section_inner" datatype="html">
-            <source>
-               Inner areas (
-               <x id="INTERPOLATION" equiv-text="{{ areaList.length }}"/>
-               )
-            </source>
-            <target>Questa operazione è definitiva</target>
+            <source>HYT_area_section_inner</source>
+            <target>Sottoaree ({{ areaList.length }})</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/areas-form/areas-form.component.html</context>
                <context context-type="linenumber">86</context>
@@ -1897,7 +1884,7 @@
          </trans-unit>
          <trans-unit id="projectCard-string-device" datatype="html">
             <source>HYT_string_device</source>
-            <target>Nome progetto non disponibile</target>
+            <target>Dispositiv{{ deviceCount == 1 ? 'o' : 'i' }}</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-card/project-card.component.html</context>
                <context context-type="linenumber">27</context>
@@ -1905,7 +1892,7 @@
          </trans-unit>
          <trans-unit id="projectCard-string-rule" datatype="html">
             <source>HYT_string_rule</source>
-            <target>(>) Maggiore</target>
+            <target>Regol{{ rulesCount == 1 ? 'a' : 'e' }}</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-card/project-card.component.html</context>
                <context context-type="linenumber">33</context>
@@ -1913,7 +1900,7 @@
          </trans-unit>
          <trans-unit id="HYT_definition_of_terms" datatype="html">
             <source>HYT_definition_of_terms</source>
-            <target>(>=) Maggiore/Uguale</target>
+            <target>Definizione dei termini</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/packet-events-form/event-mail/selectable-text/selectable-text.component.html</context>
                <context context-type="linenumber">3</context>
@@ -1921,7 +1908,7 @@
          </trans-unit>
          <trans-unit id="HYT_area_list_noimage" datatype="html">
             <source>HYT_area_list_noimage</source>
-            <target>(&lt;) Minore</target>
+            <target>(immagine assente)</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/areas-form/areas-list/areas-list.component.html</context>
                <context context-type="linenumber">9</context>
@@ -1929,7 +1916,7 @@
          </trans-unit>
          <trans-unit id="67d72c5987b9b47feaf64ab8e6f76d6ccefc3e6a" datatype="html">
             <source>HYT_generic_error</source>
-            <target>(&lt;=) Minore/Uguale</target>
+            <target>Qualcosa è andato storto</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/account/profile/profile.component.ts</context>
                <context context-type="linenumber">1</context>
@@ -1937,7 +1924,7 @@
          </trans-unit>
          <trans-unit id="4e0415c7b828a6f163f68dafc06eef99b9286e0b" datatype="html">
             <source>HYT_user_updated</source>
-            <target>(=) Uguale</target>
+            <target>Informazioni personali aggiornate con successo</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/account/profile/profile.component.ts</context>
                <context context-type="linenumber">1</context>
@@ -1945,7 +1932,7 @@
          </trans-unit>
          <trans-unit id="1a9f776b7a4983052475e2aed3774197ed0e09d9" datatype="html">
             <source>HYT_password_changed</source>
-            <target>(!=) Diverso</target>
+            <target>Password modificata con successo</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/account/profile/profile.component.ts</context>
                <context context-type="linenumber">1</context>
@@ -1953,7 +1940,7 @@
          </trans-unit>
          <trans-unit id="b6d6a5d39f4480babff456190a30233b97e43bb8" datatype="html">
             <source>HYT_unavaiable_rule_name</source>
-            <target>(()) Like</target>
+            <target>Nome regola non disponibile</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/packet-enrichment-form/packet-enrichment-form.component.ts</context>
                <context context-type="linenumber">1</context>
@@ -1961,7 +1948,7 @@
          </trans-unit>
          <trans-unit id="02cb6c3cb9666dd3e03574a667bfbbd9a68ad14f" datatype="html">
             <source>HYT_name_of_device</source>
-            <target>è vero</target>
+            <target>Nome del device</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/packet-events-form/event-mail/event-mail.component.ts</context>
                <context context-type="linenumber">1</context>
@@ -1969,7 +1956,7 @@
          </trans-unit>
          <trans-unit id="b56de836372ed80f55d206482d225412ab472430" datatype="html">
             <source>HYT_name_of_packet</source>
-            <target>è falso</target>
+            <target>Nome del pacchetto</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/packet-events-form/event-mail/event-mail.component.ts</context>
                <context context-type="linenumber">1</context>
@@ -1977,7 +1964,7 @@
          </trans-unit>
          <trans-unit id="a752c6e3ad3ddb536ea23e36efd3780793f5977a" datatype="html">
             <source>HYT_name_of_field</source>
-            <target>AND</target>
+            <target>Nome del campo</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/packet-events-form/event-mail/event-mail.component.ts</context>
                <context context-type="linenumber">1</context>
@@ -1985,7 +1972,7 @@
          </trans-unit>
          <trans-unit id="5fe3c1973f971496b4be414ceba660291e2c41ce" datatype="html">
             <source>HYT_name_of_event_mail</source>
-            <target>OR</target>
+            <target>Nome dell'evento mail</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/packet-events-form/event-mail/event-mail.component.ts</context>
                <context context-type="linenumber">1</context>
@@ -1993,7 +1980,7 @@
          </trans-unit>
          <trans-unit id="b58ffbc8b738d9501eb696090b64beb52e787b5f" datatype="html">
             <source>HYT_unavaiable_event_name</source>
-            <target>Progetto</target>
+            <target>Nome evento non disponibile</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/packet-events-form/packet-events-form.component.ts</context>
                <context context-type="linenumber">1</context>
@@ -2001,7 +1988,7 @@
          </trans-unit>
          <trans-unit id="762355cf8959a0270d8337fa6d33417607319e2f" datatype="html">
             <source>HYT_delete_item_question</source>
-            <target>Progetto</target>
+            <target>Sei sicuro di voler eliminare l'oggetto?</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/project-form-entity.ts</context>
                <context context-type="linenumber">1</context>
@@ -2009,7 +1996,7 @@
          </trans-unit>
          <trans-unit id="02077f9dfd83c2f9c5111a60234c8478696f1734" datatype="html">
             <source>HYT_operation_can_not_be_undone</source>
-            <target>Progetto definizione breve...</target>
+            <target>Questa operazione è definitiva</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/project-form-entity.ts</context>
                <context context-type="linenumber">1</context>
@@ -2017,7 +2004,7 @@
          </trans-unit>
          <trans-unit id="2b5c23178e4b5be144966b09ef5db76d4a0af741" datatype="html">
             <source>HYT_unavaiable_project_name</source>
-            <target>Progetto definizione...</target>
+            <target>Nome progetto non disponibile</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/project-form/project-form.component.ts</context>
                <context context-type="linenumber">1</context>
@@ -2025,7 +2012,7 @@
          </trans-unit>
          <trans-unit id="361ef7bb52b337b9a8e41f33e9329ac7606254ed" datatype="html">
             <source>HYT_(&gt;)_greater</source>
-            <target>Progetto lunga definizione...</target>
+            <target>(>) Maggiore</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/rule-definition/rule-definition.component.ts</context>
                <context context-type="linenumber">1</context>
@@ -2033,7 +2020,7 @@
          </trans-unit>
          <trans-unit id="ea3df980897ff3d62e2e36c1b57a5ab0539442a4" datatype="html">
             <source>HYT_(&gt;=)_greater_equal</source>
-            <target>Dispositivo definizione breve...</target>
+            <target>(>=) Maggiore/Uguale</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/rule-definition/rule-definition.component.ts</context>
                <context context-type="linenumber">1</context>
@@ -2041,7 +2028,7 @@
          </trans-unit>
          <trans-unit id="55761bdb29eea4196dca82024d37dd4c86797e27" datatype="html">
             <source>HYT_(&lt;)_lower</source>
-            <target>Dispositivo definizione...</target>
+            <target>(&lt;) Minore</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/rule-definition/rule-definition.component.ts</context>
                <context context-type="linenumber">1</context>
@@ -2049,7 +2036,7 @@
          </trans-unit>
          <trans-unit id="0c666596875be91136124a0fc9549fec9d309d3b" datatype="html">
             <source>HYT_(&lt;=)_lower_equal</source>
-            <target>Dispositivo definizione lunga...</target>
+            <target>(&lt;=) Minore/Uguale</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/rule-definition/rule-definition.component.ts</context>
                <context context-type="linenumber">1</context>
@@ -2057,7 +2044,7 @@
          </trans-unit>
          <trans-unit id="98ccbc292e89991c41a3bbca6731f6778e9b8afb" datatype="html">
             <source>HYT_(==)_equal</source>
-            <target>Pacchetti</target>
+            <target>(=) Uguale</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/rule-definition/rule-definition.component.ts</context>
                <context context-type="linenumber">1</context>
@@ -2065,7 +2052,7 @@
          </trans-unit>
          <trans-unit id="6547b5557dfe061189e3abf3fab01fa73082d360" datatype="html">
             <source>HYT_(!=)_different</source>
-            <target>Pacchetto</target>
+            <target>(!=) Diverso</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/rule-definition/rule-definition.component.ts</context>
                <context context-type="linenumber">1</context>
@@ -2073,7 +2060,7 @@
          </trans-unit>
          <trans-unit id="75df2c70950bf6f42d6d4f04d0664a8c8152e16f" datatype="html">
             <source>HYT_(())_like</source>
-            <target>Pacchetto definizione breve...</target>
+            <target>(()) Like</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/rule-definition/rule-definition.component.ts</context>
                <context context-type="linenumber">1</context>
@@ -2081,7 +2068,7 @@
          </trans-unit>
          <trans-unit id="521dd096c2aca9aca6b2d33898e97c86f5fc1c7e" datatype="html">
             <source>HYT_is_true</source>
-            <target>Pacchetto definizione...</target>
+            <target>è vero</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/rule-definition/rule-definition.component.ts</context>
                <context context-type="linenumber">1</context>
@@ -2089,7 +2076,7 @@
          </trans-unit>
          <trans-unit id="8d1c5a6839fa904a02cffbc035ee6fe46451299a" datatype="html">
             <source>HYT_is_false</source>
-            <target>Pacchetto lunga definizione...</target>
+            <target>è falso</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/rule-definition/rule-definition.component.ts</context>
                <context context-type="linenumber">1</context>
@@ -2097,7 +2084,7 @@
          </trans-unit>
          <trans-unit id="10853f599d0e1c44a9189e7b072ed74b910a5581" datatype="html">
             <source>HYT_AND</source>
-            <target>Campi</target>
+            <target>AND</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/rule-definition/rule-definition.component.ts</context>
                <context context-type="linenumber">1</context>
@@ -2105,7 +2092,7 @@
          </trans-unit>
          <trans-unit id="973c0194d00198076544a904b0d06aec4682175a" datatype="html">
             <source>HYT_OR</source>
-            <target>Campi Pacchetto</target>
+            <target>OR</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/rule-definition/rule-definition.component.ts</context>
                <context context-type="linenumber">1</context>
@@ -2113,7 +2100,7 @@
          </trans-unit>
          <trans-unit id="b4812f2da73608f6c8f85d8552c54c002655ffb3" datatype="html">
             <source>HYT_project_displaylistname</source>
-            <target>Campo defizione breve...</target>
+            <target>Progetto</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/services/entities/entities.service.ts</context>
                <context context-type="linenumber">1</context>
@@ -2121,7 +2108,7 @@
          </trans-unit>
          <trans-unit id="262ad69dc11c8f8b1b24fc014c0d356f9969b4bc" datatype="html">
             <source>HYT_project_form_title</source>
-            <target>Campo defizione...</target>
+            <target>Progetto</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/services/entities/entities.service.ts</context>
                <context context-type="linenumber">1</context>
@@ -2129,7 +2116,7 @@
          </trans-unit>
          <trans-unit id="3e93b304bca520287a74a27c3e41e69b1f1c61fd" datatype="html">
             <source>HYT_project_short_definition</source>
-            <target>Campo definizione lunga...</target>
+            <target>Progetto definizione breve...</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/services/entities/entities.service.ts</context>
                <context context-type="linenumber">1</context>
@@ -2137,7 +2124,7 @@
          </trans-unit>
          <trans-unit id="9d66b4175db5ba70f033ba0cedaae346d8e2ecd0" datatype="html">
             <source>HYT_project_definition</source>
-            <target>Arricchimente</target>
+            <target>Progetto definizione...</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/services/entities/entities.service.ts</context>
                <context context-type="linenumber">1</context>
@@ -2145,7 +2132,7 @@
          </trans-unit>
          <trans-unit id="b940594f3fbce57e1a9004f6c42fb3b7ca1646ba" datatype="html">
             <source>HYT_project_long_definition</source>
-            <target>Arricchimento Pacchetto</target>
+            <target>Progetto lunga definizione...</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/services/entities/entities.service.ts</context>
                <context context-type="linenumber">1</context>
@@ -2153,7 +2140,7 @@
          </trans-unit>
          <trans-unit id="061ac92d2049d615b055082efb7caabdb8409ac7" datatype="html">
             <source>HYT_device_shotrt_definition</source>
-            <target>Arricchimento defizione breve...</target>
+            <target>Dispositivo definizione breve...</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/services/entities/entities.service.ts</context>
                <context context-type="linenumber">1</context>
@@ -2161,7 +2148,7 @@
          </trans-unit>
          <trans-unit id="c5befc395ccbed630eb14a65353a4e64240ff8e0" datatype="html">
             <source>HYT_device_definition</source>
-            <target>Arricchimento defizione...</target>
+            <target>Dispositivo definizione...</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/services/entities/entities.service.ts</context>
                <context context-type="linenumber">1</context>
@@ -2169,7 +2156,7 @@
          </trans-unit>
          <trans-unit id="fb99c413aa4c2cb7ef0c0f6b13d6e6337c4daa4e" datatype="html">
             <source>HYT_device_long_definition</source>
-            <target>Arricchimente definizione lunga...</target>
+            <target>Dispositivo definizione lunga...</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/services/entities/entities.service.ts</context>
                <context context-type="linenumber">1</context>
@@ -2177,7 +2164,7 @@
          </trans-unit>
          <trans-unit id="8322fc15d8001bc9eb90d0bfe63d119f9ae34f86" datatype="html">
             <source>HYT_packet_displaylistname</source>
-            <target>Statistiche</target>
+            <target>Pacchetti</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/services/entities/entities.service.ts</context>
                <context context-type="linenumber">1</context>
@@ -2185,7 +2172,7 @@
          </trans-unit>
          <trans-unit id="408ae00c306346805ce70ac7d6fc92e9a3e2c819" datatype="html">
             <source>HYT_packet_form_title</source>
-            <target>Statistiche Pacchetto</target>
+            <target>Pacchetto</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/services/entities/entities.service.ts</context>
                <context context-type="linenumber">1</context>
@@ -2193,7 +2180,7 @@
          </trans-unit>
          <trans-unit id="6465b11e05e10df81c4bb919a5d03030160251d3" datatype="html">
             <source>HYT_packet_short_definition</source>
-            <target>Statistiche definizione breve...</target>
+            <target>Pacchetto definizione breve...</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/services/entities/entities.service.ts</context>
                <context context-type="linenumber">1</context>
@@ -2201,7 +2188,7 @@
          </trans-unit>
          <trans-unit id="2452a6bedd44dad9e75df30820b3e4c87b7304ef" datatype="html">
             <source>HYT_packet_definition</source>
-            <target>Statistiche definizione...</target>
+            <target>Pacchetto definizione...</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/services/entities/entities.service.ts</context>
                <context context-type="linenumber">1</context>
@@ -2209,7 +2196,7 @@
          </trans-unit>
          <trans-unit id="b70dbe632e39b59fe2212a9d42ba9d54da6bbb5c" datatype="html">
             <source>HYT_packet_long_definition</source>
-            <target>Statistiche lunga definizione...</target>
+            <target>Pacchetto lunga definizione...</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/services/entities/entities.service.ts</context>
                <context context-type="linenumber">1</context>
@@ -2217,7 +2204,7 @@
          </trans-unit>
          <trans-unit id="63efa39535af1d3f571cf036d81d692aea953f9f" datatype="html">
             <source>HYT_field_displaylistname</source>
-            <target>Eventi</target>
+            <target>Campi</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/services/entities/entities.service.ts</context>
                <context context-type="linenumber">1</context>
@@ -2225,7 +2212,7 @@
          </trans-unit>
          <trans-unit id="4544ccca3aea5db03e2ab42d7756c496c141d6b4" datatype="html">
             <source>HYT_field_form_title</source>
-            <target>Eventi Pacchetto</target>
+            <target>Campi Pacchetto</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/services/entities/entities.service.ts</context>
                <context context-type="linenumber">1</context>
@@ -2233,7 +2220,7 @@
          </trans-unit>
          <trans-unit id="1a69e84f401febd953ad55e5137f27ad21fc737b" datatype="html">
             <source>HYT_fields_short_definition</source>
-            <target>Eventi definizione breve...</target>
+            <target>Campo defizione breve...</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/services/entities/entities.service.ts</context>
                <context context-type="linenumber">1</context>
@@ -2241,7 +2228,7 @@
          </trans-unit>
          <trans-unit id="b2611c5999c758a7ad3b2fc61dc00d7d2a62aad2" datatype="html">
             <source>HYT_fields_definition</source>
-            <target>Eventi definizione ...</target>
+            <target>Campo defizione...</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/services/entities/entities.service.ts</context>
                <context context-type="linenumber">1</context>
@@ -2249,7 +2236,7 @@
          </trans-unit>
          <trans-unit id="0c577b8d89883f9d8ec7f12a0dd77630a7ecc787" datatype="html">
             <source>HYT_fields_long_definition</source>
-            <target>Eventi definizione lunga...</target>
+            <target>Campo definizione lunga...</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/services/entities/entities.service.ts</context>
                <context context-type="linenumber">1</context>
@@ -2257,7 +2244,7 @@
          </trans-unit>
          <trans-unit id="6ad981ab63a990d2a6e4c311c905e5fc01db34ad" datatype="html">
             <source>HYT_enrichment_displaylistname</source>
-            <target>già in uso</target>
+            <target>Arricchimente</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/services/entities/entities.service.ts</context>
                <context context-type="linenumber">1</context>
@@ -2265,7 +2252,7 @@
          </trans-unit>
          <trans-unit id="6792756eee53eb0f77ef3556a53c8b5f8f79be3c" datatype="html">
             <source>HYT_enrichment_form_title</source>
-            <target>Errore nell'esecuzione della richiesta</target>
+            <target>Arricchimento Pacchetto</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/services/entities/entities.service.ts</context>
                <context context-type="linenumber">1</context>
@@ -2273,7 +2260,7 @@
          </trans-unit>
          <trans-unit id="c555443866299cd3ee2a68c3fed234a86cc7a4aa" datatype="html">
             <source>HYT_enrichment_short_definition</source>
-            <target>Username o password errati</target>
+            <target>Arricchimento defizione breve...</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/services/entities/entities.service.ts</context>
                <context context-type="linenumber">1</context>
@@ -2281,7 +2268,7 @@
          </trans-unit>
          <trans-unit id="e7fd42769ba637e1c1dcea9df8d7866f77f4af8a" datatype="html">
             <source>HYT_enrichment_definition</source>
-            <target>Il tuo account non è attivo. Per favore, attiva il tuo account con la mail che ti abbiamo inviato.</target>
+            <target>Arricchimento defizione...</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/services/entities/entities.service.ts</context>
                <context context-type="linenumber">1</context>
@@ -2289,7 +2276,7 @@
          </trans-unit>
          <trans-unit id="56a78ef56386030fbf05c62616ac7333ec73be74" datatype="html">
             <source>HYT_enrichment_long_definition</source>
-            <target>Servizio temporaneamente non disponibile</target>
+            <target>Arricchimente definizione lunga...</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/services/entities/entities.service.ts</context>
                <context context-type="linenumber">1</context>
@@ -2297,7 +2284,7 @@
          </trans-unit>
          <trans-unit id="3ff079c89a03293d875419f216ee9f5471aab7e1" datatype="html">
             <source>HYT_statistic_displaylistname</source>
-            <target>Errore interno al server</target>
+            <target>Statistiche</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/services/entities/entities.service.ts</context>
                <context context-type="linenumber">1</context>
@@ -2305,7 +2292,7 @@
          </trans-unit>
          <trans-unit id="3668aaaf9d2edc95cb35f9487eeb8b479e5cba6b" datatype="html">
             <source>HYT_statistic_form_title</source>
-            <target>Il campo è obbligatorio</target>
+            <target>Statistiche Pacchetto</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/services/entities/entities.service.ts</context>
                <context context-type="linenumber">1</context>
@@ -2313,7 +2300,7 @@
          </trans-unit>
          <trans-unit id="7acd7f16acbe0517890a0dc8c4b7023fc026b00e" datatype="html">
             <source>HYT_statistics_short_definition</source>
-            <target>Inserire un indirizzo email valido</target>
+            <target>Statistiche definizione breve...</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/services/entities/entities.service.ts</context>
                <context context-type="linenumber">1</context>
@@ -2321,7 +2308,7 @@
          </trans-unit>
          <trans-unit id="2c1dbd69689a5739395a8c09df1cc5fe270a92fc" datatype="html">
             <source>HYT_statistics_definition</source>
-            <target>Almeno 8 caratteri</target>
+            <target>Statistiche definizione...</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/services/entities/entities.service.ts</context>
                <context context-type="linenumber">1</context>
@@ -2329,7 +2316,7 @@
          </trans-unit>
          <trans-unit id="15f194149a0f4f74803c8b9b30c68ef895da0024" datatype="html">
             <source>HYT_statistics_long_definition</source>
-            <target>Alemno un numero</target>
+            <target>Statistiche lunga definizione...</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/services/entities/entities.service.ts</context>
                <context context-type="linenumber">1</context>
@@ -2337,7 +2324,7 @@
          </trans-unit>
          <trans-unit id="66377709f9243dc079e53833f5049d0d592659c5" datatype="html">
             <source>HYT_event_displaylistname</source>
-            <target>Almeno un carattere maiuscolo</target>
+            <target>Eventi</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/services/entities/entities.service.ts</context>
                <context context-type="linenumber">1</context>
@@ -2345,7 +2332,7 @@
          </trans-unit>
          <trans-unit id="d9fe8fb3ba6d9e4a5c6d09dcad5265f9a91db753" datatype="html">
             <source>HYT_event_form_title</source>
-            <target>Almeno un carattere speciale</target>
+            <target>Eventi Pacchetto</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/services/entities/entities.service.ts</context>
                <context context-type="linenumber">1</context>
@@ -2353,7 +2340,7 @@
          </trans-unit>
          <trans-unit id="a521f8f0de9afe2b2ff00f5a857ff52d233297ec" datatype="html">
             <source>HYT_events_short_definition</source>
-            <target>Aggiungi area</target>
+            <target>Eventi definizione breve...</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/services/entities/entities.service.ts</context>
                <context context-type="linenumber">1</context>
@@ -2361,7 +2348,7 @@
          </trans-unit>
          <trans-unit id="1bf1d31534519e8bbdd2c9bc77db7ce18af74798" datatype="html">
             <source>HYT_events_definition</source>
-            <target>Principale</target>
+            <target>Eventi definizione ...</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/services/entities/entities.service.ts</context>
                <context context-type="linenumber">1</context>
@@ -2369,7 +2356,7 @@
          </trans-unit>
          <trans-unit id="2480a0f3ba5e5c1f05d2e61745fa549accf7fce2" datatype="html">
             <source>HYT_events_long_definition</source>
-            <target>Inserire nome area</target>
+            <target>Eventi definizione lunga...</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/services/entities/entities.service.ts</context>
                <context context-type="linenumber">1</context>
@@ -2377,7 +2364,7 @@
          </trans-unit>
          <trans-unit id="a04ce575c9895b8cb4283b493a2703883520710a" datatype="html">
             <source>HYT_duplicate_entity</source>
-            <target>Inserire descrizione area</target>
+            <target>già in uso</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/services/errorHandler/authentication-http-error-handler.service.ts</context>
                <context context-type="linenumber">1</context>
@@ -2405,7 +2392,7 @@
          </trans-unit>
          <trans-unit id="a48a62b370f07697e5532c369fa4e1e400f53b40" datatype="html">
             <source>HYT_unknown_error</source>
-            <target>Info</target>
+            <target>Errore nell'esecuzione della richiesta</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/services/errorHandler/authentication-http-error-handler.service.ts</context>
                <context context-type="linenumber">1</context>
@@ -2433,7 +2420,7 @@
          </trans-unit>
          <trans-unit id="f8e19291bb0f5e04beab8ca91700587fe9d3b9b3" datatype="html">
             <source>HYT_wrong_user_or_password</source>
-            <target>Mappa</target>
+            <target>Username o password errati</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/services/errorHandler/authentication-http-error-handler.service.ts</context>
                <context context-type="linenumber">1</context>
@@ -2441,7 +2428,7 @@
          </trans-unit>
          <trans-unit id="7e0f8161a6d64961fa1f08f54496815760807877" datatype="html">
             <source>HYT_error_403</source>
-            <target>Imposta immagine mappa</target>
+            <target>Il tuo account non è attivo. Per favore, attiva il tuo account con la mail che ti abbiamo inviato.</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/services/errorHandler/authentication-http-error-handler.service.ts</context>
                <context context-type="linenumber">1</context>
@@ -2449,7 +2436,7 @@
          </trans-unit>
          <trans-unit id="c38d0be8103d89408242396a002576c0b2d8fec3" datatype="html">
             <source>HYT_service_temporarily_unavaiable</source>
-            <target>Aggiungi dispositivo</target>
+            <target>Servizio temporaneamente non disponibile</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/services/errorHandler/http-error-handler.service.ts</context>
                <context context-type="linenumber">1</context>
@@ -2461,7 +2448,7 @@
          </trans-unit>
          <trans-unit id="6ab904593389e6b2cef07dbdd8176dfe41662bc1" datatype="html">
             <source>HYT_server_error_500</source>
-            <target>Aggiungi area</target>
+            <target>Errore interno al server</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/services/errorHandler/http-error-handler.service.ts</context>
                <context context-type="linenumber">1</context>
@@ -2469,7 +2456,7 @@
          </trans-unit>
          <trans-unit id="96b015a8cb3d48869109e5ce0b72af06d2bf9031" datatype="html">
             <source>HYT_field_required</source>
-            <target>Add sotto-area</target>
+            <target>Il campo è obbligatorio</target>
             <context-group purpose="location">
                <context context-type="sourcefile">projects/hyperiot-components/src/lib/hyt-input-template/hyt-input-template.component.ts</context>
                <context context-type="linenumber">1</context>
@@ -2497,7 +2484,7 @@
          </trans-unit>
          <trans-unit id="caa12f28e24ab3f2fe27e9123a59c2e0aa5a57c6" datatype="html">
             <source>HYT_valid_email</source>
-            <target>Sottoaree ({{ areaList.length }})</target>
+            <target>Inserire un indirizzo email valido</target>
             <context-group purpose="location">
                <context context-type="sourcefile">projects/hyperiot-components/src/lib/hyt-input-template/hyt-input-template.component.ts</context>
                <context context-type="linenumber">1</context>
@@ -2509,7 +2496,7 @@
          </trans-unit>
          <trans-unit id="33c9ece659dd5c0489ef586aae0136c6c480bb19" datatype="html">
             <source>HYT_min_length</source>
-            <target>Sposta {{itemData.device ? itemData.device.deviceName : itemData.name}}</target>
+            <target>Almeno 8 caratteri</target>
             <context-group purpose="location">
                <context context-type="sourcefile">projects/hyperiot-components/src/lib/hyt-input-template/hyt-input-template.component.ts</context>
                <context context-type="linenumber">1</context>
@@ -2521,7 +2508,7 @@
          </trans-unit>
          <trans-unit id="099248b4e8ef7f4dfb63ac0a0815c387b95bf564" datatype="html">
             <source>HYT_min_one_number</source>
-            <target>Rimuovi {{itemData.device ? itemData.device.deviceName : itemData.name}}</target>
+            <target>Alemno un numero</target>
             <context-group purpose="location">
                <context context-type="sourcefile">projects/hyperiot-components/src/lib/hyt-input-template/hyt-input-template.component.ts</context>
                <context context-type="linenumber">1</context>
@@ -2533,7 +2520,7 @@
          </trans-unit>
          <trans-unit id="88e4d8c0ae5f7fb56559746c5f537ed55f114e4b" datatype="html">
             <source>HYT_upper_case</source>
-            <target>Apri {{itemData.device ? itemData.device.deviceName : itemData.name}}</target>
+            <target>Almeno un carattere maiuscolo</target>
             <context-group purpose="location">
                <context context-type="sourcefile">projects/hyperiot-components/src/lib/hyt-input-template/hyt-input-template.component.ts</context>
                <context context-type="linenumber">1</context>
@@ -2545,7 +2532,7 @@
          </trans-unit>
          <trans-unit id="e75c1bdd7a657e3e31ef4323632c18c18cc0db9e" datatype="html">
             <source>HYT_special_char</source>
-            <target>(immagine assente)</target>
+            <target>Almeno un carattere speciale</target>
             <context-group purpose="location">
                <context context-type="sourcefile">projects/hyperiot-components/src/lib/hyt-input-template/hyt-input-template.component.ts</context>
                <context context-type="linenumber">1</context>

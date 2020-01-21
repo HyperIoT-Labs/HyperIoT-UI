@@ -1580,7 +1580,7 @@
          </trans-unit>
          <trans-unit id="HYT_enrichment_definition_long" datatype="html">
             <source>HYT_enrichment_definition_long</source>
-            <target>Long enrichment data definition. Long enrichment data definition. Long enrichment data definition. Long enrichment data definition. Long enrichment data definition. Long enrichment data definition. Long enrichment data definition.</target>
+            <target>Long enrichment data definition. Long enrichment data definition. Long enrichment data definition. Long enrichment data definition. Long enrichment data definition. Long enrichment data definition. Long enrichment data definition. </target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-wizard/wizard-options-modal/wizard-options-modal.component.html</context>
                <context context-type="linenumber">18</context>
@@ -1588,7 +1588,7 @@
          </trans-unit>
          <trans-unit id="HYT_statistics_definition_long" datatype="html">
             <source>HYT_statistics_definition_long</source>
-            <target>Long statistics definition. Long statistics definition. Long statistics definition. Long statistics definition. Long statistics definition. Long statistics definition. Long statistics definition. Long statistics definition.</target>
+            <target>Long statistics definition. Long statistics definition. Long statistics definition. Long statistics definition. Long statistics definition. Long statistics definition. Long statistics definition. Long statistics definition. </target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-wizard/wizard-options-modal/wizard-options-modal.component.html</context>
                <context context-type="linenumber">27</context>
@@ -1604,7 +1604,7 @@
          </trans-unit>
          <trans-unit id="HYT_events_definition_long" datatype="html">
             <source>HYT_events_definition_long</source>
-            <target>Long events definition. Long events definition. Long events definition. Long events definition. Long events definition. Long events definition. Long events definition. Long events definition. Long events definition. Long events definition.</target>
+            <target>Long events definition. Long events definition. Long events definition. Long events definition. Long events definition. Long events definition. Long events definition. Long events definition. Long events definition. Long events definition. </target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-wizard/wizard-options-modal/wizard-options-modal.component.html</context>
                <context context-type="linenumber">36</context>
@@ -1644,7 +1644,7 @@
          </trans-unit>
          <trans-unit id="HYT_go_to_project_list_long" datatype="html">
             <source>HYT_go_to_project_list_long</source>
-            <target>Go to project list definition. Go to project list definition. Go to project list definition. Go to project list definition. Go to project list definition. Go to project list definition. Go to project list definition. Go to project list definition.</target>
+            <target>Go to project list definition. Go to project list definition. Go to project list definition. Go to project list definition. Go to project list definition. Go to project list definition. Go to project list definition. Go to project list definition. </target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-wizard/wizard-report-modal/wizard-report-modal.component.html</context>
                <context context-type="linenumber">51</context>
@@ -1660,7 +1660,7 @@
          </trans-unit>
          <trans-unit id="HYT_go_to_dashboard_long" datatype="html">
             <source>HYT_go_to_dashboard_long</source>
-            <target>Go to dashboard definition. Go to dashboard definition. Go to dashboard definition. Go to dashboard definition. Go to dashboard definition. Go to dashboard definition. Go to dashboard definition. Go to dashboard definition. Go to dashboard definition.</target>
+            <target>Go to dashboard definition. Go to dashboard definition. Go to dashboard definition. Go to dashboard definition. Go to dashboard definition. Go to dashboard definition. Go to dashboard definition. Go to dashboard definition. Go to dashboard definition. </target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-wizard/wizard-report-modal/wizard-report-modal.component.html</context>
                <context context-type="linenumber">59</context>
@@ -1755,33 +1755,24 @@
             </context-group>
          </trans-unit>
          <trans-unit id="HYT_area_draggable_remove" datatype="html">
-            <source>
-               Remove 
-               <x id="INTERPOLATION" equiv-text="{{itemData.device ? itemData.device.deviceName : itemData.name}}"/>
-            </source>
-            <target>Long enrichment data definition. Long enrichment data definition. Long enrichment data definition. Long enrichment data definition. Long enrichment data definition. Long enrichment data definition. Long enrichment data definition. </target>
+            <source>HYT_area_draggable_remove</source>
+            <target>Remove {{itemData.device ? itemData.device.deviceName : itemData.name}}</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/areas-form/draggable-item/draggable-item.component.html</context>
                <context context-type="linenumber">14</context>
             </context-group>
          </trans-unit>
          <trans-unit id="HYT_area_draggable_open" datatype="html">
-            <source>
-               Open 
-               <x id="INTERPOLATION" equiv-text="{{itemData.device ? itemData.device.deviceName : itemData.name}}"/>
-            </source>
-            <target>Long statistics definition. Long statistics definition. Long statistics definition. Long statistics definition. Long statistics definition. Long statistics definition. Long statistics definition. Long statistics definition. </target>
+            <source>HYT_area_draggable_open</source>
+            <target>Open {{itemData.device ? itemData.device.deviceName : itemData.name}}</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/areas-form/draggable-item/draggable-item.component.html</context>
                <context context-type="linenumber">19</context>
             </context-group>
          </trans-unit>
          <trans-unit id="HYT_area_draggable_title" datatype="html">
-            <source>
-               Move 
-               <x id="INTERPOLATION" equiv-text="{{itemData.device ? itemData.device.deviceName : itemData.name}}"/>
-            </source>
-            <target>Events</target>
+            <source>HYT_area_draggable_title</source>
+            <target>Move {{itemData.device ? itemData.device.deviceName : itemData.name}}</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/areas-form/draggable-item/draggable-item.component.html</context>
                <context context-type="linenumber">2</context>
@@ -1884,12 +1875,8 @@
             </context-group>
          </trans-unit>
          <trans-unit id="HYT_area_section_inner" datatype="html">
-            <source>
-               Inner areas (
-               <x id="INTERPOLATION" equiv-text="{{ areaList.length }}"/>
-               )
-            </source>
-            <target>This operation can not be undone</target>
+            <source>HYT_area_section_inner</source>
+            <target>Sub-areas ({{ areaList.length }})</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/areas-form/areas-form.component.html</context>
                <context context-type="linenumber">86</context>
@@ -2025,7 +2012,7 @@
          </trans-unit>
          <trans-unit id="361ef7bb52b337b9a8e41f33e9329ac7606254ed" datatype="html">
             <source>HYT_(&gt;)_greater</source>
-            <target>(&gt;) Greater</target>
+            <target>(>) Greater</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/rule-definition/rule-definition.component.ts</context>
                <context context-type="linenumber">1</context>
@@ -2033,7 +2020,7 @@
          </trans-unit>
          <trans-unit id="ea3df980897ff3d62e2e36c1b57a5ab0539442a4" datatype="html">
             <source>HYT_(&gt;=)_greater_equal</source>
-            <target>(&gt;=) Greater/Equal</target>
+            <target>(>=) Greater/Equal</target>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/rule-definition/rule-definition.component.ts</context>
                <context context-type="linenumber">1</context>

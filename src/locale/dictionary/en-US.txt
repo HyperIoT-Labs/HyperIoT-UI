@@ -387,9 +387,9 @@ HYT_(&gt;)_greater
 HYT_(&gt;=)_greater_equal
 (>=) Greater/Equal
 HYT_(&lt;)_lower
-(<) Lower
+(&lt;) Lower
 HYT_(&lt;=)_lower_equal
-(<=) Lower/Equal
+(&lt;=) Lower/Equal
 HYT_(==)_equal
 (=) Equal
 HYT_(!=)_different

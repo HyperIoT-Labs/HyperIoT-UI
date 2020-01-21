@@ -40,7 +40,7 @@
 
     <mat-tab-group [(selectedIndex)]="currentSection" (selectedTabChange)="onTabChange($event)">
 
-        <mat-tab label="Info" i18n-label="@@HYT_area_section_info">
+        <mat-tab label="HYT_area_section_info" i18n-label="@@HYT_area_section_info">
             <form [formGroup]="form" enctype="multipart/form-data" class="mt-4 d-flex flex-column justify-content-center">
 
                 <hyt-input-text [form]="form"
@@ -83,7 +83,7 @@
             <hyt-area-map #map></hyt-area-map>
         </mat-tab>
 
-        <mat-tab *ngIf="areaId > 0" label="Inner areas ({{ areaList.length }})" i18n-label="@@HYT_area_section_inner">
+        <mat-tab *ngIf="areaId > 0" label="HYT_area_section_inner" i18n-label="@@HYT_area_section_inner">
             <div class="actions">
                 <hyt-button mat-mini-fab (clickFn)="onAddInnerAreaClick($event)">
                     <span i18n="@@HYT_area_inner_add">HYT_area_inner_add</span>

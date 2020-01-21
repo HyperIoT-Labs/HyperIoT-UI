@@ -1578,30 +1578,21 @@
             </context-group>
          </trans-unit>
          <trans-unit id="HYT_area_draggable_remove" datatype="html">
-            <source>
-               Remove 
-               <x id="INTERPOLATION" equiv-text="{{itemData.device ? itemData.device.deviceName : itemData.name}}"/>
-            </source>
+            <source>HYT_area_draggable_remove</source>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/areas-form/draggable-item/draggable-item.component.html</context>
                <context context-type="linenumber">14</context>
             </context-group>
          </trans-unit>
          <trans-unit id="HYT_area_draggable_open" datatype="html">
-            <source>
-               Open 
-               <x id="INTERPOLATION" equiv-text="{{itemData.device ? itemData.device.deviceName : itemData.name}}"/>
-            </source>
+            <source>HYT_area_draggable_open</source>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/areas-form/draggable-item/draggable-item.component.html</context>
                <context context-type="linenumber">19</context>
             </context-group>
          </trans-unit>
          <trans-unit id="HYT_area_draggable_title" datatype="html">
-            <source>
-               Move 
-               <x id="INTERPOLATION" equiv-text="{{itemData.device ? itemData.device.deviceName : itemData.name}}"/>
-            </source>
+            <source>HYT_area_draggable_title</source>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/areas-form/draggable-item/draggable-item.component.html</context>
                <context context-type="linenumber">2</context>
@@ -1650,14 +1641,14 @@
             </context-group>
          </trans-unit>
          <trans-unit id="HYT_area_section_info" datatype="html">
-            <source>Info</source>
+            <source>HYT_area_section_info</source>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/areas-form/areas-form.component.html</context>
                <context context-type="linenumber">43</context>
             </context-group>
          </trans-unit>
          <trans-unit id="HYT_area_map_set_image" datatype="html">
-            <source>HYT_area_set_image</source>
+            <source>HYT_area_map_set_image</source>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/areas-form/areas-form.component.html</context>
                <context context-type="linenumber">72</context>
@@ -1692,11 +1683,7 @@
             </context-group>
          </trans-unit>
          <trans-unit id="HYT_area_section_inner" datatype="html">
-            <source>
-               Inner areas (
-               <x id="INTERPOLATION" equiv-text="{{ areaList.length }}"/>
-               )
-            </source>
+            <source>HYT_area_section_inner</source>
             <context-group purpose="location">
                <context context-type="sourcefile">src/app/pages/projects/project-forms/areas-form/areas-form.component.html</context>
                <context context-type="linenumber">86</context>
