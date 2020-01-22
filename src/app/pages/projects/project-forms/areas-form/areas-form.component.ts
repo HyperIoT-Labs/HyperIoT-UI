@@ -111,8 +111,11 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit {
       this.hideDelete = false;
     } else {
       this.editMode = false;
-      this.projectService.getHProjectAreaList(this.projectId).subscribe((list) => {
+      this.projectService.getHProjectAreaList(this.projectId).subscribe((list: Area[]) => {
         this.areaList = list;
+        list.forEach((a) => {
+          this.countSubAreas(a);
+        });
         this.apiSuccess(list);
       }, err => this.apiError(err));
     }
@@ -174,6 +177,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit {
       formData.append('image_file', file, file.name);
       this.loadingStatus = LoadingStatusEnum.Saving;
       this.httpClient.post(`/hyperiot/areas/${this.areaId}/image`, formData).subscribe((res) => {
+        this.entity = res as Area;
         this.apiSuccess(res);
         this.loadAreaImage();
       }, err => this.apiError(err));
@@ -251,7 +255,14 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit {
     area.mapInfo = null;
     this.loadingStatus = LoadingStatusEnum.Saving;
     this.areaService.updateArea(area)
-      .subscribe(res => this.apiSuccess(res), err => this.apiError(err));
+      .subscribe(res => {
+        this.apiSuccess(res);
+        // update areaList item
+        const areaIndex = this.areaList.indexOf(this.areaList.find(a => a.id === area.id));
+        if (areaIndex !== -1) {
+          this.areaList[areaIndex] = area;
+        }
+      }, err => this.apiError(err));
   }
   onMapAreaUpdated(area: Area) {
     area['project'] = { id: this.projectId };
@@ -293,6 +304,17 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit {
     if (this.currentSection === 2) {
       this.loadAreaMap();
     }
+  }
+
+  private countSubAreas(area: Area) {
+    this.areaService.findInnerAreas(area.id).subscribe((areaTree) => {
+      const count = (list: Area[]): number => {
+        let sum = list.length;
+        list.forEach((a) => { sum += count(a.innerArea); });
+        return sum;
+      };
+      area['innerCount'] = count(areaTree.innerArea);
+    });
   }
 
   private loadAreaMap() {
@@ -365,6 +387,9 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit {
     this.loadingStatus = LoadingStatusEnum.Loading;
     this.areaService.findInnerAreas(this.entity.id).subscribe((areaTree) => {
       this.areaList = areaTree.innerArea;
+      this.areaList.forEach((a) => {
+        this.countSubAreas(a);
+      });
       this.apiSuccess(areaTree);
       if (this.currentSection === 2) {
         this.loadAreaMap();
