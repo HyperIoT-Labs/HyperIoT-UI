@@ -71,13 +71,13 @@ hyt-project-card {
                 word-break: break-word;
                 overflow: hidden;
                 color: #0956B6;
-                /*background: #ff000030; PLACEHOLDER */
+                background: #ff000030;
             }
 
             .content-card-front {
                 //height: 235px;
                 height: 205px;
-                /*background-color: #00800030; PLACEHOLDER */
+                background-color: #00800030;
 
                 .card-description {
                     // border: 1px solid brown;
@@ -96,7 +96,7 @@ hyt-project-card {
                     padding-right: 5px;  
                     color: #414141;
                     font-style: italic; 
-                   /* background: #ffff0050;   PLACEHOLDER */    
+                    background: #ffff0050;  
                 }
 
                 .card-elements {
@@ -107,7 +107,7 @@ hyt-project-card {
                     bottom: 60px;
                     padding-left: 5px;
                     padding-right: 5px;
-                    /*background: #00000050; PLACEHOLDER */
+                    background: #00000050;
 
                     .single-element {
                         display: flex;
@@ -130,7 +130,7 @@ hyt-project-card {
                 text-align: center;
                 padding-bottom: 3px;
                 height: 47px;
-               /* background: #00ffff60; PLACEHOLDER */
+               background: #00ffff60;
 
                 hyt-button {
                     // width: 80%;
