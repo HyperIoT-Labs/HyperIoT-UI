@@ -391,9 +391,9 @@ HYT_(&gt;)_greater
 HYT_(&gt;=)_greater_equal
 (>=) Maggiore/Uguale
 HYT_(&lt;)_lower
-(<) Minore
+(&lt;) Minore
 HYT_(&lt;=)_lower_equal
-(<=) Minore/Uguale
+(&lt;=) Minore/Uguale
 HYT_(==)_equal
 (=) Uguale
 HYT_(!=)_different
@@ -498,3 +498,37 @@ HYT_upper_case
 Almeno un carattere maiuscolo
 HYT_special_char
 Almeno un carattere speciale
+HYT_area_add
+Aggiungi area
+HYT_area_path_main
+Principale
+HYT_hint_area_name
+Inserire nome area
+HYT_hint_area_description
+Inserire descrizione area
+HYT_area_section_info
+Info
+HYT_area_section_map
+Mappa
+HYT_area_map_set_image
+Imposta immagine mappa
+HYT_area_map_device_add
+Aggiungi dispositivo
+HYT_area_map_area_add
+Aggiungi sotto-area
+HYT_area_inner_add
+Aggiungi sotto-area
+HYT_area_section_inner
+Sottoaree ({{ areaList.length }})
+HYT_area_draggable_title
+Sposta {{itemData.device ? itemData.device.deviceName : itemData.name}}
+HYT_area_draggable_remove
+Rimuovi {{itemData.device ? itemData.device.deviceName : itemData.name}}
+HYT_area_draggable_open
+Apri {{itemData.device ? itemData.device.deviceName : itemData.name}}
+HYT_area_list_noimage
+(immagine assente)
+HYT_area_map_select_area
+Seleziona area
+HYT_area_map_select_device
+Seleziona dispositivo

@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, Injector } from '@angular/core';
+import { Component, ViewChild, ElementRef, Injector, OnInit, OnDestroy } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HytModalService } from '@hyperiot/components';
@@ -14,7 +14,7 @@ import { AreaInnerareaSelectDialogComponent } from './area-innerarea-select-dial
   templateUrl: './areas-form.component.html',
   styleUrls: ['./areas-form.component.scss']
 })
-export class AreasFormComponent extends ProjectFormEntity {
+export class AreasFormComponent extends ProjectFormEntity implements OnInit {
   @ViewChild('map', { static: false })
   mapComponent: AreaMapComponent;
 
@@ -33,6 +33,7 @@ export class AreasFormComponent extends ProjectFormEntity {
 
   projectId: number;
   areaId = 0;
+  parentAreaId;
   currentSection = 0;
   areaList: Area[] = [];
   areaPath: Area[] = [];
@@ -49,7 +50,7 @@ export class AreasFormComponent extends ProjectFormEntity {
     private httpClient: HttpClient
   ) {
     super(injector, i18n, formView);
-    this.formTitle = 'Project Areas';
+    this.formTitle = 'Project Areas'; // @@I18N@@
     this.projectId = this.activatedRoute.snapshot.parent.params.projectId;
     this.areaId = +this.activatedRoute.snapshot.params.areaId;
     this.activatedRoute.params.subscribe(params => {
@@ -58,14 +59,29 @@ export class AreasFormComponent extends ProjectFormEntity {
     });
   }
 
+  ngOnInit() {
+    this.activatedRoute.queryParams
+      .subscribe(params => {
+        this.parentAreaId = params.parent;
+        if (this.parentAreaId) {
+          this.entity = { ...this.newEntity() } as Area;
+          this.form.reset();
+        }
+        console.log('QUERY PARAMS', params, this.parentAreaId);
+      });
+  }
+
   load() {
     this.loadingStatus = LoadingStatusEnum.Loading;
     this.areaList = [];
-    this.areaPath = [];
+    if (!this.parentAreaId) {
+      this.areaPath = [];
+    }
     this.showSave = false;
     this.showCancel = false;
     this.hideDelete = true;
     if (this.areaId === 0) {
+      this.areaPath.push({ name: 'New', id: 0} as Area);
       setTimeout(() => {
         this.resetForm();
         this.loadingStatus = LoadingStatusEnum.Ready;
@@ -103,9 +119,16 @@ export class AreasFormComponent extends ProjectFormEntity {
   }
   cancel() {
     this.resetForm();
-    this.router.navigate(
-      [ '/projects/', this.projectId, {outlets: { projectDetails: ['areas'] } } ]
-    );
+    if (this.parentAreaId) {
+      this.currentSection = 1; // parent inner area list
+      this.router.navigate(
+        [ '/projects/', this.projectId, {outlets: { projectDetails: ['areas', this.parentAreaId] } } ]
+      );
+    } else {
+      this.router.navigate(
+        [ '/projects/', this.projectId, {outlets: { projectDetails: ['areas'] } } ]
+      );
+    }
   }
 
   onFileChange(event) {
@@ -246,9 +269,16 @@ export class AreasFormComponent extends ProjectFormEntity {
   }
 
   onAddInnerAreaClick(e) {
+    this.router.navigate(
+      [ '/projects/', this.projectId, {outlets: { projectDetails: ['areas', 0] } } ],
+      { queryParams: { parent: this.areaId } }
+    );
+    return;
     const a: Area = {
       id: 0,
+       // @@I18N@@
       name: 'New area ' + new Date().getTime(),
+       // @@I18N@@
       description: 'New area description',
       parentArea: { id: this.areaId, entityVersion: null },
       entityVersion: null
@@ -268,7 +298,7 @@ export class AreasFormComponent extends ProjectFormEntity {
   }
 
   onTabChange(e) {
-    if (this.currentSection === 1) {
+    if (this.currentSection === 2) {
       this.loadAreaMap();
     }
   }
@@ -313,21 +343,23 @@ export class AreasFormComponent extends ProjectFormEntity {
   }
 
   private loadAreaImage() {
-    //this.areaService.getAreaImage(this.areaId).subscribe((res) => {
-    //});
-    this.httpClient.get(`/hyperiot/areas/${this.areaId}/image`, {
-      responseType: 'blob'
-    }).subscribe((res: Blob) => {
-      const reader = new FileReader();
-      reader.onload = () => {
-        const img = new Image();
-        img.onload = () => {
-          this.mapComponent.setMapImage(`/hyperiot/areas/${this.areaId}/image?` + (new Date().getTime()), img.width, img.height);
+    if (this.entity.imagePath) {
+      //this.areaService.getAreaImage(this.areaId).subscribe((res) => {
+      //});
+      this.httpClient.get(`/hyperiot/areas/${this.areaId}/image`, {
+        responseType: 'blob'
+      }).subscribe((res: Blob) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          const img = new Image();
+          img.onload = () => {
+            this.mapComponent.setMapImage(`/hyperiot/areas/${this.areaId}/image?` + (new Date().getTime()), img.width, img.height);
+          };
+          img.src = reader.result as string;
         };
-        img.src = reader.result as string;
-      };
-      reader.readAsDataURL(res);
-    });
+        reader.readAsDataURL(res);
+      });
+    }
   }
 
   private getParentAreaId() {
@@ -342,7 +374,7 @@ export class AreasFormComponent extends ProjectFormEntity {
     this.areaService.findInnerAreas(this.entity.id).subscribe((areaTree) => {
       this.areaList = areaTree.innerArea;
       this.apiSuccess(areaTree);
-      if (this.currentSection === 1) {
+      if (this.currentSection === 2) {
         this.loadAreaMap();
       }
     }, err => this.apiError(err));
@@ -369,7 +401,7 @@ export class AreasFormComponent extends ProjectFormEntity {
         this.apiSuccess(res);
         successCallback && successCallback(res);
       }, (err) => {
-        this.apiError(err);
+        this.setErrors(err);
         errorCallback && errorCallback(err);
       });
     } else {
@@ -377,12 +409,19 @@ export class AreasFormComponent extends ProjectFormEntity {
       this.areaService.saveArea(area).subscribe((res) => {
         this.resetForm();
         this.apiSuccess(res);
-        this.router.navigate(
-          [ '/projects/', this.projectId, {outlets: { projectDetails: ['areas', res.id ] } } ]
-        );
+        if (this.parentAreaId) {
+          this.currentSection = 1; // show parent inner area list
+          this.router.navigate(
+            [ '/projects/', this.projectId, {outlets: { projectDetails: ['areas', this.parentAreaId] } } ]
+          );
+        } else {
+          this.router.navigate(
+            [ '/projects/', this.projectId, {outlets: { projectDetails: ['areas', res.id ] } } ]
+          );
+        }
         successCallback && successCallback(res);
       }, (err) => {
-        this.apiError(err);
+        this.setErrors(err);
         errorCallback && errorCallback(err);
       });
     }
@@ -396,7 +435,7 @@ export class AreasFormComponent extends ProjectFormEntity {
       successCallback && successCallback(res);
       if (parentAreaId) {
         // navigate back to parent showing inner areas list
-        this.currentSection = 2;
+        this.currentSection = 1;
         this.router.navigate(
           [ '/projects/', this.projectId, {outlets: { projectDetails: ['areas', parentAreaId ] } } ]
         );
