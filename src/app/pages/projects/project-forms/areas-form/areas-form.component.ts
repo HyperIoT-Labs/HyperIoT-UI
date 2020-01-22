@@ -59,7 +59,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit {
     });
     router.events.subscribe( (event: Event) => {
       if (event instanceof NavigationStart) {
-          if (this.isDirty) {
+          if (this.isDirty && !this.parentAreaId) {
             this.currentSection = 0;
           }
       }
@@ -284,7 +284,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit {
   onTabChange(e) {
     if (this.currentSection === 0) {
       this.showSave = true;
-      this.hideDelete = false;
+      this.hideDelete = this.areaId ? false : true;
     } else {
       this.showSave = false;
       this.showCancel = false;
