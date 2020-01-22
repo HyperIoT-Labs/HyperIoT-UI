@@ -1,6 +1,6 @@
 import { Component, ViewChild, ElementRef, Injector, OnInit, OnDestroy } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, Event, NavigationStart } from '@angular/router';
 import { HytModalService } from '@hyperiot/components';
 import { ProjectFormEntity, LoadingStatusEnum } from '../project-form-entity';
 import { AreasService, HprojectsService, Area, AreaDevice } from '@hyperiot/core';
@@ -57,6 +57,13 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit {
       this.areaId = +params.areaId;
       this.load();
     });
+    router.events.subscribe( (event: Event) => {
+      if (event instanceof NavigationStart) {
+          if (this.isDirty) {
+            this.currentSection = 0;
+          }
+      }
+    });
   }
 
   ngOnInit() {
@@ -67,7 +74,6 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit {
           this.entity = { ...this.newEntity() } as Area;
           this.form.reset();
         }
-        console.log('QUERY PARAMS', params, this.parentAreaId);
       });
   }
 
@@ -273,31 +279,17 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit {
       [ '/projects/', this.projectId, {outlets: { projectDetails: ['areas', 0] } } ],
       { queryParams: { parent: this.areaId } }
     );
-    return;
-    const a: Area = {
-      id: 0,
-       // @@I18N@@
-      name: 'New area ' + new Date().getTime(),
-       // @@I18N@@
-      description: 'New area description',
-      parentArea: { id: this.areaId, entityVersion: null },
-      entityVersion: null
-    };
-    // TODO:
-    // TODO: the 'project' field should be exposed in Area model by REST API
-    // TODO:
-    a['project'] = { id: this.projectId };
-    this.loadingStatus = LoadingStatusEnum.Saving;
-    this.areaService.saveArea(a).subscribe(res => {
-      this.currentSection = 0; // show the info tab
-      this.apiSuccess(res);
-      this.router.navigate(
-        [ '/projects/', this.projectId, {outlets: { projectDetails: ['areas', res.id ] } } ]
-      );
-    }, err => this.apiError(err));
   }
 
   onTabChange(e) {
+    if (this.currentSection === 0) {
+      this.showSave = true;
+      this.hideDelete = false;
+    } else {
+      this.showSave = false;
+      this.showCancel = false;
+      this.hideDelete = true;
+    }
     if (this.currentSection === 2) {
       this.loadAreaMap();
     }
