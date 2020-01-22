@@ -59,7 +59,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit {
     });
     router.events.subscribe( (event: Event) => {
       if (event instanceof NavigationStart) {
-          if (this.isDirty && !this.parentAreaId) {
+          if (this.isDirty()) {
             this.currentSection = 0;
           }
       }
