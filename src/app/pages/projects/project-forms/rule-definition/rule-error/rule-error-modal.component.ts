@@ -1,5 +1,5 @@
 import { Component, OnInit, Injector, ViewEncapsulation } from '@angular/core';
-import { HytModal } from 'src/app/services/hyt-modal';
+import { HytModal, HytModalService } from '@hyperiot/components';
 
 @Component({
   selector: 'hyt-rule-error-modal',
@@ -10,9 +10,9 @@ import { HytModal } from 'src/app/services/hyt-modal';
 export class RuleErrorModalComponent extends HytModal {
 
   constructor(
-    injector: Injector
+    hytModalService: HytModalService
   ) {
-    super(injector);
+    super(hytModalService);
   }
 
 }

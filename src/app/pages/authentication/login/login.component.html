@@ -37,7 +37,7 @@
               <div class="container-form-field">
 
                 <hyt-input-text [form]="loginForm" formControlName="username" name="username" [isRequired]="true"
-                  i18n-placeholder="@@HYT_username_or_email" placeholder="HYT_username_or_email">
+                  i18n-placeholder="@@HYT_username_or_email" placeholder="HYT_username_or_email" [fieldValue]="initialValue">
                 </hyt-input-text>
 
               </div> <!-- Field Username -->
@@ -58,9 +58,11 @@
               </div> <!-- Container Forgot Password -->
 
               <div class="container-form-field">
-                <mat-checkbox type="checkbox" id="remember-me">
+
+                <hyt-checkbox [(ngModel)]="checked" [ngModelOptions]="{standalone: true}" name="rememberMe" type="checkbox" id="remember-me" (changeFn)="onClickCheckbox($event)" >
                   <ng-container i18n="@@HYT_remember_me">HYT_remember_me</ng-container>
-                </mat-checkbox>
+                </hyt-checkbox>
+
               </div> <!-- Container Remember Me -->
 
               <div class="container-form-field errorMessage">
@@ -70,7 +72,7 @@
               </div> <!-- Error Box -->
 
               <div class="container-form-field">
-                <hyt-button id="submit-btn" [ngClass]="{'submit-valid-form' : !notValid() }" type="submit"
+                <hyt-button [color]="'hyt-base-default-white'" id="submit-btn" [ngClass]="{'submit-valid-form' : !notValid() }" type="submit"
                   [isDisabled]="notValid() || loginStatus == 1">
                   <ng-container i18n="@@HYT_login">HYT_login</ng-container>
                 </hyt-button>

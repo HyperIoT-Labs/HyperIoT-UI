@@ -121,7 +121,7 @@ export class ProjectDetailComponent implements OnInit {
   onSummaryMenuClick(e) {
 
     const rule = Object.assign({}, e.item.data as Rule);
-    
+
     switch (e.action) {
       case 'edit':
         this.currentEntity.edit(rule);
@@ -151,6 +151,15 @@ export class ProjectDetailComponent implements OnInit {
       this.treeData.push(projectNode);
       this.treeView.setData(this.treeData);
       this.hDeviceService.findAllHDeviceByProjectId(p.id).subscribe((deviceList: HDevice[]) => {
+        const sourcesNode = { // sources node
+          data: { id: 0, type: 'sources' },
+          name: 'Sources',
+          icon: 'icon-hyt_StreamCloud_Lamp',
+          children: []
+        };
+        if (deviceList.length !== 0) {
+          projectNode.children.push(sourcesNode);
+        }
         const requests: Observable<any>[] = [];
         const devices = []; // device lookup list
         deviceList.map((d) => {
@@ -160,7 +169,7 @@ export class ProjectDetailComponent implements OnInit {
             icon: 'icon-hyt_device'
           };
           devices[d.id] = node;
-          projectNode.children.push(node);
+          sourcesNode.children.push(node);
           requests.push(this.packetService.getHDevicePacketList(d.id));
         });
         zip(...requests).subscribe((packetList: Array<HPacket[]>) => {

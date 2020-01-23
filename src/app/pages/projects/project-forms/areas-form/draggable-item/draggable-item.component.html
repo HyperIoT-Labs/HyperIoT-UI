@@ -1,15 +1,23 @@
 <div class="item"
-    [title]="itemData.name"
+    title="HYT_area_draggable_title"
+    i18n-title="@@HYT_area_draggable_title"
     [ngStyle]="style"
     cdkDrag
-    cdkDragBoundary=".example-boundary"
+    cdkDragBoundary=".map-container"
     [cdkDragData]="itemData"
     [cdkDragFreeDragPosition]="position"
     (cdkDragMoved)="onDragMoved($event)"
     (cdkDragEnded)="onDragEnded($event)"
     (cdkDragReleased)="onDragReleased($event)">
 
-    <button class="remove-button" title="Remove {{itemData.name}}" (click)="onRemoveButtonClick($event)">X</button>
-
+    <button class="remove-button"
+        title="HYT_area_draggable_remove"
+        i18n-title="@@HYT_area_draggable_remove"
+        (mousedown)="$event.stopPropagation()"
+        (click)="onRemoveButtonClick($event)">X</button>
+    <div class="title" [ngClass]="{ 'area-title': !itemData.device }"
+        title="HYT_area_draggable_open"
+        i18n-title="@@HYT_area_draggable_open"
+        (mousedown)="$event.stopPropagation()"
+        (click)="onOpenButtonClick($event)">{{itemData.device ? itemData.device.deviceName : itemData.name}}</div>
 </div>
-

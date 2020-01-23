@@ -1,6 +1,5 @@
 import {
   Component,
-  OnInit,
   ComponentFactoryResolver,
   ViewChild,
   ComponentRef,
@@ -10,22 +9,7 @@ import {
 } from '@angular/core';
 import { DraggableItemComponent } from '../draggable-item/draggable-item.component';
 import { MapDirective } from '../map.directive';
-import { AreaDevice } from '@hyperiot/core';
-
-export class AreaDeviceConfig {
-  id: number;
-  name: string;
-  icon: string;
-  position: { x: number, y: number };
-  status?: string;
-  container?: HTMLElement; /* for internal use */
-  constructor() {
-    this.position = { x: .5, y: .5 };
-  }
-}
-export class AreaConfig {
-  devices: AreaDeviceConfig[];
-}
+import { AreaDevice, Area } from '@hyperiot/core';
 
 @Component({
   selector: 'hyt-area-map',
@@ -37,22 +21,13 @@ export class AreaMapComponent {
   mapContainer: MapDirective;
   @ViewChild('mapBoundary', {static: true})
   mapBoundary: ElementRef;
-  deviceIcon = 'move-sensor.png';
+  mapImageSize = { width: 800, height: 600 };
   // events
-  itemRemove = new EventEmitter<any>();
-  itemUpdate = new EventEmitter<any>();
+  itemOpen = new EventEmitter<ComponentRef<DraggableItemComponent>>();
+  itemRemove = new EventEmitter<ComponentRef<DraggableItemComponent>>();
+  itemUpdate = new EventEmitter<ComponentRef<DraggableItemComponent>>();
 
   private mapComponents = [] as ComponentRef<DraggableItemComponent>[];
-
-  private areaConfig: AreaConfig = {
-    devices: [
-      { id: 100, name: 'device-1', position: { x: 0.3710, y: 0.5737 }, icon: 'gps-sensor.png' },
-      { id: 101, name: 'device-2', position: { x: 0.7132, y: 0.7535 }, icon: 'body-scanner.png' },
-      { id: 102, name: 'device-3', position: { x: 0.5137, y: 0.8565 }, icon: 'motion-sensor.png' },
-      { id: 103, name: 'device-4', position: { x: 0.6606, y: 0.4141 }, icon: 'door-sensor.png' },
-      { id: 104, name: 'device-5', position: { x: 0.2011, y: 0.4535 }, icon: 'thermometer.png' }
-    ]
-  };
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
@@ -61,30 +36,23 @@ export class AreaMapComponent {
 
   constructor(private componentFactoryResolver: ComponentFactoryResolver) {}
 
-  addAreaDeviceItem(areaDevice: AreaDevice, icon: string) {
+  addAreaItem(areaItem: AreaDevice | Area) {
     const container = this.mapContainer.viewContainerRef.element.nativeElement.parentElement;
     const component = this.addItem();
-    const cfg = new AreaDeviceConfig();
-    cfg.id = areaDevice.id;
-    cfg.name = areaDevice.device.deviceName;
-    cfg.icon = icon;
-    cfg.position = { x: areaDevice.x, y: areaDevice.y };
-    component.instance.setConfig(container, cfg);
-    // TODO: should add component cfg to 'areaConfig.devices' as well
+    component.instance.setConfig(container, areaItem);
   }
 
-  loadConfig() {
-    // TODO: should reset current configuration and remove actual draggable items
-    this.areaConfig.devices.forEach((d) => {
-      const container = this.mapContainer.viewContainerRef.element.nativeElement.parentElement;
-      const component = this.addItem();
-      component.instance.setConfig(container, d);
+  setAreaItems(items: (AreaDevice | Area)[]) {
+    this.reset();
+    const container = this.mapContainer.viewContainerRef.element.nativeElement.parentElement;
+    items.forEach((d) => {
+      this.addItem().instance.setConfig(container, d);
     });
   }
-
-  setDevices(devices: AreaDeviceConfig[]) {
-    this.areaConfig.devices = devices;
-    this.loadConfig();
+  setMapImage(imageUrl: string, width: number, height: number) {
+    this.mapImageSize = { width, height };
+    this.mapBoundary.nativeElement.style['background-image'] = `url(${imageUrl})`;
+    this.refresh();
   }
 
   addItem(): ComponentRef<DraggableItemComponent> {
@@ -92,24 +60,32 @@ export class AreaMapComponent {
       .resolveComponentFactory(DraggableItemComponent);
     const viewContainerRef = this.mapContainer.viewContainerRef;
     const component = viewContainerRef.createComponent(componentFactory);
+    // handle click on component label (open button)
+    component.instance.openClicked.subscribe(() => {
+      this.openItem(component);
+    });
     // handle component removal
     component.instance.removeClicked.subscribe(() => {
       this.removeItem(component);
     });
+    // handle position change
     component.instance.positionChanged.subscribe(() => {
-      // TODO: update item position
       this.updateItem(component);
     });
     this.mapComponents.push(component);
     return component;
   }
-  removeItem(component: ComponentRef<DraggableItemComponent>) {
+  openItem(component: ComponentRef<DraggableItemComponent>, disableEvent?: boolean) {
+    this.itemOpen.emit(component.instance.itemData);
+  }
+  removeItem(component: ComponentRef<DraggableItemComponent>, disableEvent?: boolean) {
     const viewContainerRef = this.mapContainer.viewContainerRef;
     const idx = viewContainerRef.indexOf(component.hostView);
     viewContainerRef.remove(idx);
     this.mapComponents.splice(this.mapComponents.indexOf(component), 1);
-    // TODO: should remove it from 'areaConfig.devices' as well
-    this.itemRemove.emit(component.instance.itemData);
+    if (!disableEvent) {
+      this.itemRemove.emit(component.instance.itemData);
+    }
   }
   updateItem(component: ComponentRef<DraggableItemComponent>) {
     this.itemUpdate.emit(component.instance.itemData);
@@ -118,11 +94,17 @@ export class AreaMapComponent {
   refresh() {
     const boundary: HTMLElement = this.mapBoundary.nativeElement;
     const mapHost = boundary.parentElement.parentElement;
-    boundary.style.width = mapHost.clientWidth + 'px';
-    // TODO: should resize height proportionally to background image aspect ratio w/h
-    //boundary.style.height = mapHost.clientHeight + 'px';
-console.log(mapHost.clientHeight);
+    if (mapHost) {
+      boundary.style.width = mapHost.clientWidth + 'px';
+      const h = boundary.clientWidth / this.mapImageSize.width * this.mapImageSize.height;
+      boundary.style.height = h + 'px';
+    }
     this.mapComponents.forEach((c) => c.instance.refresh());
+  }
+
+  reset() {
+    this.mapComponents.slice().forEach((c) => this.removeItem(c, true));
+    this.mapBoundary.nativeElement.style['background-image'] = null;
   }
 
 }

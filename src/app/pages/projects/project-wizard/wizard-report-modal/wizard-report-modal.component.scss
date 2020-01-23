@@ -1,15 +1,12 @@
 #wiz-report-modal {
 
-  .hyt-modal-body {
-
     height: 80%;
-    width: 60%;
     overflow: auto;
     -moz-border-radius: 8px;
     -webkit-border-radius: 8px;
     border-radius: 8px;
   
-    .dialog {
+    &.dialog {
       overflow: hidden;
       background: white;
       border: solid 1px rgba(0, 0, 0, 0.1);
@@ -160,8 +157,6 @@
       }
     
     }
-  
-  }
 
 }
 

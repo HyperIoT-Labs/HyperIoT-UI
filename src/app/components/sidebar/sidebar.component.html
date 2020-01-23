@@ -3,12 +3,17 @@
     <nav 
         class="main-menu" 
         [ngClass]="{
-            'nav-mob-hidden': winInnerWidth <= mobileBreakPoint && navIsOpen == false,
-            'nav-mob-show': winInnerWidth <= mobileBreakPoint && navIsOpen == true
+            'nav-mob-hidden': winInnerWidth <= mobileBreakPoints.md && navIsOpen == false,
+            'nav-mob-show': winInnerWidth <= mobileBreakPoints.md && navIsOpen == true
         }"
     >
         
-        <ul>
+        <ul
+            [ngClass]="{
+                'ul-mob-hidden': winInnerWidth <= mobileBreakPoints.md && navIsOpen == false,
+                'ul-mob-show': winInnerWidth <= mobileBreakPoints.md && navIsOpen == true
+            }"
+        >
 
             <li #home class="has-subnav" routerLinkActive="selected" [routerLinkActiveOptions]="{exact: true}"> 
                 <a routerLink="/">
@@ -37,33 +42,8 @@
                 </a>
             </li>
 
-            <!-- <li class="has-subnav">
-                <a routerLink="/project-wizard">
-                    <span class="hyt-icon icon-hyt_widget"></span>
-                    <span class="nav-text">
-                        Widget
-                    </span>
-                </a>
-            </li> -->
-
-            <!-- <li class="has-subnav">
-                <a routerLink="/">
-                    <span class="hyt-icon icon-hyt_tags"></span>
-                    <span class="nav-text">
-                        Tags
-                    </span>
-                </a>
-            </li>
-
-            <li class="has-subnav">
-                <a routerLink="/">
-                    <span class="hyt-icon icon-hyt_categories"></span>
-                    <span class="nav-text">
-                        Categories
-                    </span>
-                </a>
-            </li> -->
-
         </ul>
+
     </nav>
+    
 </div>

@@ -1,21 +1,4 @@
-<!--
-<div class="m-4">
-    <select [(ngModel)]="deviceIcon">
-        <option value="motion-sensor.png">Motion Sensor</option>
-        <option value="wind-sensor.png">Wind Sensor</option>
-        <option value="body-scanner.png">Body Scanner</option>
-        <option value="door-sensor.png">Door Sensor</option>
-        <option value="gps-sensor.png">GPS Sensor</option>
-        <option value="light.png">Automated Light</option>
-        <option value="rain-sensor.png">Rain Sensor</option>
-        <option value="rfid.png">RFID Sensor</option>
-        <option value="thermometer.png">Thermometer</option>
-    </select>
-    <button (click)="onAddClick($event)" [disabled]="!deviceIcon">add</button>
-</div>
--->
-
-<div class="example-boundary" #mapBoundary>
+<div class="map-container" #mapBoundary>
     <ng-template hytMapHost></ng-template>
 </div>
 

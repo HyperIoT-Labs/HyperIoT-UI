@@ -1,0 +1,17 @@
+<div class="dialog pt-2 pb-2 d-flex flex-column">
+    <h3 class="ml-3 mr-3" i18n="@@HYT_area_map_select_area">HYT_area_map_select_area</h3>
+
+    <mat-list role="list" class="flex-grow-1">
+        <mat-list-item *ngFor="let area of data.areas" role="listitem">
+            <button mat-button
+                [disabled]="area.mapInfo"
+                [ngClass]="{ selected: area === selectedArea }"
+                (click)="close(area)">{{ area.name }}</button>
+        </mat-list-item>
+    </mat-list>
+
+    <div class="ml-3 mr-3 d-flex flex-row justify-content-end">
+        <hyt-button (clickFn)="close()" i18n="@@HYT_cancel">HYT_cancel</hyt-button>
+    </div>
+
+</div>

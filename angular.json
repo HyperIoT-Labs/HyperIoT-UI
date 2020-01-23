@@ -111,7 +111,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "hyperiot:build:en"
+            "browserTarget": "hyperiot:build:en",
+            "proxyConfig": "proxy.config.json"
           },
           "configurations": {
             "production": {
@@ -121,7 +122,7 @@
               "browserTarget": "hyperiot:build:it"
             },
             "en": {
-              "browserTarget": "ssysweb:build:en"
+              "browserTarget": "hyperiot:build:en"
             }
           }
         },

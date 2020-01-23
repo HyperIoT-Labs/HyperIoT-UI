@@ -2,11 +2,9 @@
 
   text-align: center;
 
-  .hyt-modal-body {
-
     width: 50%;
 
-    .dialog {
+    &.dialog {
       width: 85%;
       overflow: hidden;
       background: white;
@@ -50,8 +48,6 @@
       }
      
     }
-
-  }
 
 }
 

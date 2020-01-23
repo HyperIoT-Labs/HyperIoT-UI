@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, OnDestroy, Injector, ViewEncapsulation } from '@angular/core';
 import { WidgetsService, Widget } from '@hyperiot/core';
 import { KeyValue } from '@angular/common';
-import { HytModal } from 'src/app/services/hyt-modal';
+import { HytModal, HytModalService } from '@hyperiot/components';
 
 interface WidgetClient {
   id?: number;
@@ -28,9 +28,8 @@ interface WidgetClient {
   styleUrls: ['./add-widget-dialog.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class AddWidgetDialogComponent extends HytModal implements OnInit, OnDestroy {
+export class AddWidgetDialogComponent extends HytModal implements OnInit {
 
-  @Output() addWidgets: EventEmitter<any> = new EventEmitter();
   filteredWidgets: WidgetClient[] = [];
   widgetCategoryList: any;
   widgetList: WidgetClient[] = [];
@@ -46,26 +45,26 @@ export class AddWidgetDialogComponent extends HytModal implements OnInit, OnDest
   linux: boolean = false;
 
   constructor(
-    injector: Injector,
+    hytModalService: HytModalService,
     private widgetsService: WidgetsService
   ) {
-    super(injector);
+    super(hytModalService);
   }
 
   widgetsByCategory: any;
 
   // open modal
-  open(): void {
+  ngOnInit() {
     this.dialogDataState = 0;
-    super.open();
+    //    super.open();
 
     this.os = navigator.platform;
 
     let lowOS = this.os.toLocaleLowerCase();
-    
-    if(lowOS.includes('mac')) {
+
+    if (lowOS.includes('mac')) {
       this.mac = true;
-    }else if(lowOS.includes('linux')) {
+    } else if (lowOS.includes('linux')) {
       this.linux = true;
     }
 
@@ -141,8 +140,7 @@ export class AddWidgetDialogComponent extends HytModal implements OnInit, OnDest
       dataTableUrl: '',
       config: w.baseConfig
     }));
-    this.addWidgets.emit(widgetOutput);
-    this.close();
+    this.close(widgetOutput);
   }
 
   // addWidget(widget) {
@@ -184,7 +182,7 @@ export class AddWidgetDialogComponent extends HytModal implements OnInit, OnDest
   onRate(rating: any) {
     this.widgetsService.rateWidget(
       rating.newValue,
-      { id: this.currentWidget.id, entityVersion: this.currentWidget.entityVersion}
+      { id: this.currentWidget.id, entityVersion: this.currentWidget.entityVersion }
     ).subscribe();
   }
 

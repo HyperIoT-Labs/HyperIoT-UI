@@ -10,18 +10,23 @@ import { ToggleSidebarService } from 'src/app/services/toggleSidebar/toggle-side
 export class TopbarComponent implements OnInit {
 
   public winInnerWidth: any;
-  isShow : boolean = false;
-  mobileBreakPoint: number = 991;
-
+  isShow: boolean = false;
+  
+  mobileBreakPoints = {
+    md : 991,
+    sm : 767,
+    xs : 575
+  };
+  
   constructor(private toggleSidebarService: ToggleSidebarService) { }
 
   @HostListener('window:resize', ['$event'])
-  
+
   onResize(event) {
-    
+
     this.winInnerWidth = event.target.innerWidth;
-    
-    if(this.winInnerWidth > this.mobileBreakPoint && this.isShow === true) {
+
+    if (this.winInnerWidth > this.mobileBreakPoints.md && this.isShow === true) {
 
       this.isShow = false;
 
@@ -29,11 +34,11 @@ export class TopbarComponent implements OnInit {
 
   }
 
-  ngOnInit():void {
+  ngOnInit(): void {
 
     this.winInnerWidth = window.innerWidth;
 
-    if(this.winInnerWidth > this.mobileBreakPoint && this.isShow === true) {
+    if (this.winInnerWidth > this.mobileBreakPoints.md && this.isShow === true) {
 
       this.isShow = false;
 
