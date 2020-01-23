@@ -241,6 +241,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit {
           x: 0.5,
           y: 0.5
         };
+        delete a['innerCount'];
         this.loadingStatus = LoadingStatusEnum.Saving;
         this.areaService.updateArea(a).subscribe(area => {
           this.mapComponent.addAreaItem(area);

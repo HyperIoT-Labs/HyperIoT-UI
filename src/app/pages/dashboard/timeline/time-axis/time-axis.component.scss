@@ -1,3 +1,12 @@
-#axis{
-    height: 50px;
+#axis {
+  height: 50px;
+}
+
+#axis rect.selection {
+  // fill: transparent;
+  stroke: transparent;
+}
+
+#axis rect.handle {
+  fill: grey;
 }
