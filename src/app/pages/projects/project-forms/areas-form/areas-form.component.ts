@@ -254,6 +254,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit {
     area['project'] = { id: this.projectId };
     area.parentArea = { id: this.areaId, entityVersion: null };
     area.mapInfo = null;
+    delete area['innerCount'];
     this.loadingStatus = LoadingStatusEnum.Saving;
     this.areaService.updateArea(area)
       .subscribe(res => {
@@ -268,6 +269,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit {
   onMapAreaUpdated(area: Area) {
     area['project'] = { id: this.projectId };
     area.parentArea = { id: this.areaId, entityVersion: null };
+    delete area['innerCount'];
     this.loadingStatus = LoadingStatusEnum.Saving;
     this.areaService.updateArea(area)
       .subscribe(res => this.apiSuccess(res), err => this.apiError(err));
