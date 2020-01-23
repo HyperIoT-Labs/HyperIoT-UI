@@ -305,7 +305,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit {
       this.hideDelete = true;
     }
     if (this.currentSection === 2) {
-      this.loadAreaMap();
+      this.loadAreaData();
     }
   }
 
