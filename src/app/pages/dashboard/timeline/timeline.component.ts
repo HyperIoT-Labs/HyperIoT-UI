@@ -35,6 +35,8 @@ export class TimelineComponent implements OnInit {
   domainStart: Date;
   domainStop: Date;
 
+  timeSelection = [null, null];
+
   customSelection = false;
 
   timeOptions: SelectOption[] = [
@@ -272,6 +274,10 @@ export class TimelineComponent implements OnInit {
     }
     console.log(fakeData);
     return fakeData;
+  }
+
+  dataTimeSelectionChanged(event) {
+    this.timeSelection = event;
   }
 
 }

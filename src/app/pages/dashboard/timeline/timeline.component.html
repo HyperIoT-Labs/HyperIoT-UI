@@ -21,10 +21,11 @@
             </mat-button-toggle-group>
         </div>
         <div id="chartBox" class="col-12">
-            <button (click)="timeBack()">
-                <<</button> <hyt-time-axis #timeAxis>
+            <button (click)="timeBack()" [ngClass]="{'hasData': (timeSelection[0]) ? timeSelection[0] < domainStart : false}">
+                <<</button> <hyt-time-axis #timeAxis (dataTimeSelectionChanged)="dataTimeSelectionChanged($event)">
                     </hyt-time-axis>
-                    <button (click)="timeForward()">>></button>
+                    <button (click)="timeForward()"  [ngClass]="{'hasData': (timeSelection[1]) ? timeSelection[1] > domainStop : false}">>></button>
         </div>
     </div>
 </div>
+<!-- <button (click)="button()">PROVA</button> -->
