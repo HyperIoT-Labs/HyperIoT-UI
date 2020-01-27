@@ -38,6 +38,8 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit {
   areaList: Area[] = [];
   areaPath: Area[] = [];
 
+  maxFileSize = 0; // this will be set in constructor via areaService.getConfig()...
+
   constructor(
     injector: Injector,
     @ViewChild('form', { static: true }) formView: ElementRef,
@@ -62,6 +64,14 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit {
           if (this.isDirty()) {
             this.currentSection = 0;
           }
+      }
+    });
+    // Get Area Service configuration
+    this.areaService.getConfig().subscribe((res) => {
+      if (res && res.maxFileSize > 0) {
+        this.maxFileSize = +res.maxFileSize;
+      } else {
+        // TODO: maybe report a message ("Could not get Area service config")
       }
     });
   }
@@ -176,15 +186,31 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit {
 
       //this.mapComponent.setMapImage(null);
 
-      const formData = new FormData();
-      formData.append('image_file', file, file.name);
       this.loadingStatus = LoadingStatusEnum.Saving;
-      this.httpClient.post(`/hyperiot/areas/${this.areaId}/image`, formData).subscribe((res) => {
-        this.entity = res as Area;
-        this.apiSuccess(res);
-        this.loadAreaImage();
-      }, err => this.apiError(err));
+      // check image file size on the client side before effective upload
+      const reader = new FileReader();
+      reader.onload = () => {
+        const base64MarkerPosition = reader.result.toString().indexOf(';base64,');
+        const base64Data = reader.result.toString().substring(base64MarkerPosition + 8);
+        const byteLength = 3 * (base64Data.length / 4);
+        const kiloBytesLength = byteLength / 100;
+        // Check if `kiloBytesLength` does not exceed the maximum allowed size
+        if (kiloBytesLength <= this.maxFileSize) {
+          // TODO: using standard HttpClient for this request (see early comment in this method)
+          const formData = new FormData();
+          formData.append('image_file', file, file.name);
+          this.httpClient.post(`/hyperiot/areas/${this.areaId}/image`, formData).subscribe((res) => {
+            this.entity = res as Area;
+            this.apiSuccess(res);
+            this.loadAreaImage();
+          }, err => this.apiError(err));
+        } else {
+          // TODO: report size exceed error
+          this.loadingStatus = LoadingStatusEnum.Error;
+        }
 
+      };
+      reader.readAsDataURL(file);
     }
   }
 
@@ -359,8 +385,10 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit {
 
   private loadAreaImage() {
     if (this.entity.imagePath) {
+      // TODO: no way to make this work with Area API
       //this.areaService.getAreaImage(this.areaId).subscribe((res) => {
       //});
+      // TODO: using standard HttpClient for this request
       this.httpClient.get(`/hyperiot/areas/${this.areaId}/image`, {
         responseType: 'blob'
       }).subscribe((res: Blob) => {
