@@ -87,6 +87,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit {
     this.showCancel = false;
     this.hideDelete = true;
     if (this.areaId === 0) {
+      // Add New Area
       this.areaPath.push({ name: 'New', id: 0} as Area);
       setTimeout(() => {
         this.resetForm();
@@ -97,6 +98,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit {
       this.showCancel = true;
       this.hideDelete = true;
     } else if (this.areaId > 0) {
+      // Load Area with id = this.areaId
       this.areaService.findArea(this.areaId).subscribe((area) => {
         this.edit(area);
         this.areaService.getAreaPath(this.areaId).subscribe((path) => {
@@ -110,11 +112,12 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit {
       this.showCancel = false;
       this.hideDelete = false;
     } else {
+      // Show Area list
       this.editMode = false;
       this.projectService.getHProjectAreaList(this.projectId).subscribe((list: Area[]) => {
         this.areaList = list;
         list.forEach((a) => {
-          this.countSubAreas(a);
+          this.countAreaItems(a);
         });
         this.apiSuccess(list);
       }, err => this.apiError(err));
@@ -232,16 +235,12 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit {
     });
     modalRef.onClosed.subscribe(a => {
       if (a) {
-        // TODO: the field project should be exposed in model
-        // TODO: if not passing this field the service will return validation error
-        a['project'] = { id: this.projectId };
-        a.parentArea = { id: this.areaId, entityVersion: null };
         a.mapInfo = {
           icon: 'map.png',
           x: 0.5,
           y: 0.5
         };
-        delete a['innerCount'];
+        this.patchArea(a);
         this.loadingStatus = LoadingStatusEnum.Saving;
         this.areaService.updateArea(a).subscribe(area => {
           this.mapComponent.addAreaItem(area);
@@ -251,10 +250,8 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit {
     });
   }
   onMapAreaRemoved(area: Area) {
-    area['project'] = { id: this.projectId };
-    area.parentArea = { id: this.areaId, entityVersion: null };
     area.mapInfo = null;
-    delete area['innerCount'];
+    this.patchArea(area);
     this.loadingStatus = LoadingStatusEnum.Saving;
     this.areaService.updateArea(area)
       .subscribe(res => {
@@ -267,9 +264,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit {
       }, err => this.apiError(err));
   }
   onMapAreaUpdated(area: Area) {
-    area['project'] = { id: this.projectId };
-    area.parentArea = { id: this.areaId, entityVersion: null };
-    delete area['innerCount'];
+    this.patchArea(area);
     this.loadingStatus = LoadingStatusEnum.Saving;
     this.areaService.updateArea(area)
       .subscribe(res => this.apiSuccess(res), err => this.apiError(err));
@@ -309,7 +304,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit {
     }
   }
 
-  private countSubAreas(area: Area) {
+  private countAreaItems(area: Area) {
     this.areaService.findInnerAreas(area.id).subscribe((areaTree) => {
       const count = (list: Area[]): number => {
         let sum = list.length;
@@ -317,6 +312,9 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit {
         return sum;
       };
       area['innerCount'] = count(areaTree.innerArea);
+    });
+    this.areaService.getAreaDeviceDeepList(area.id).subscribe((deviceList) => {
+      area['deviceCount'] = deviceList.length;
     });
   }
 
@@ -385,13 +383,22 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit {
     }
   }
 
+  private patchArea(a: Area) {
+    // TODO: the field project should be exposed in model
+    // TODO: if not passing this field the service will return validation error
+    a['project'] = { id: this.projectId };
+    a.parentArea = { id: this.areaId, entityVersion: null };
+    delete a['innerCount'];
+    delete a['deviceCount'];
+  }
+
   private loadAreaData() {
     // Load inner areas
     this.loadingStatus = LoadingStatusEnum.Loading;
     this.areaService.findInnerAreas(this.entity.id).subscribe((areaTree) => {
       this.areaList = areaTree.innerArea;
       this.areaList.forEach((a) => {
-        this.countSubAreas(a);
+        this.countAreaItems(a);
       });
       this.apiSuccess(areaTree);
       if (this.currentSection === 2) {
@@ -405,9 +412,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit {
     const area = this.entity;
     area.name = this.form.get('area-name').value;
     area.description = this.form.get('area-description').value;
-    // TODO: the field project should be exposed in model
-    // TODO: if not passing this field the service will return validation error
-    area['project'] = { id: this.projectId };
+    this.patchArea(area);
     const parentAreaId = this.getParentAreaId();
     area.parentArea = parentAreaId ? { id: parentAreaId, entityVersion: null } : null;
     if (area.id) {

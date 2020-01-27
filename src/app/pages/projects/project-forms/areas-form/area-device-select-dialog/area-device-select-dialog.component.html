@@ -6,7 +6,9 @@
             <button mat-button
                 [disabled]="device.added"
                 [ngClass]="{ selected: device === selectedDevice }"
-                (click)="selectedDevice = device">{{ device.deviceName }}</button>
+                (click)="selectedDevice = device">
+                {{ device.deviceName }}{{device.added ? ' (' + device.area + ')' : ''}}
+            </button>
         </mat-list-item>
     </mat-list>
 
