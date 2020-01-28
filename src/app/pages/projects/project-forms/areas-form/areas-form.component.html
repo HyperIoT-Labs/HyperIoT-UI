@@ -120,8 +120,7 @@
 
         <hyt-button 
             [color]="'hyt-base-default-white'" 
-            (click)="loadingStatus = LoadingStatus.Ready"
-        >
+            (click)="loadingStatus = LoadingStatus.Ready">
             <span i18n="@@HYT_close">HYT_close</span> <span class="icon-hyt_cancelC"></span> 
         </hyt-button>
     </div>
@@ -130,7 +129,6 @@
 
     <mat-progress-bar 
         *ngIf="loadingStatus === LoadingStatus.Loading || loadingStatus === LoadingStatus.Saving"
-        mode="indeterminate"
-    ></mat-progress-bar> 
+        mode="indeterminate"></mat-progress-bar> 
 
 </div>

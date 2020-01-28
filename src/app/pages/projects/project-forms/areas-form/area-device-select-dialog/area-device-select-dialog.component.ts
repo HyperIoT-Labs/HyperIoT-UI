@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HytModal, HytModalService } from '@hyperiot/components';
-import { AreasService, HprojectsService, HdevicesService, AreaDevice, HDevice } from '@hyperiot/core';
+import { AreasService, HprojectsService, HdevicesService, AreaDevice, HDevice, Area } from '@hyperiot/core';
 
 @Component({
   selector: 'hyt-area-device-select-dialog',
@@ -34,13 +34,17 @@ export class AreaDeviceSelectDialogComponent extends HytModal implements OnInit 
   }
 
   ngOnInit() {
-    this.areaService.getAreaDeviceList(this.data.areaId).subscribe((areaDevices: AreaDevice[]) => {
-      this.deviceService.findAllHDeviceByProjectId(this.data.projectId).subscribe((projectDevices: HDevice[]) => {
-        this.projectDevices = projectDevices;
+    this.deviceService.findAllHDeviceByProjectId(this.data.projectId).subscribe((projectDevices: HDevice[]) => {
+      this.projectDevices = projectDevices;
+      this.areaService.getAreaDeviceDeepListFromRoot(this.data.areaId).subscribe((assignedDevices) => {
         projectDevices.map(pd => {
-          const ad = areaDevices.filter((d) => d.device.id === pd.id);
-          if (ad.length === 1) {
+          const ad = assignedDevices.filter((d: AreaDevice) => d.device.id === pd.id);
+          if (ad.length > 0) {
             pd['added'] = true;
+            this.areaService.findArea(ad[0].area.id)
+              .subscribe((deviceArea: Area) => {
+                pd['area'] = deviceArea.name;
+              });
           }
         });
       });
