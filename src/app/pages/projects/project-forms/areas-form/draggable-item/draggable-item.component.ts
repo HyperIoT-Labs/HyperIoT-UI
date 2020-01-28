@@ -11,10 +11,12 @@ export class DraggableItemComponent {
   openClicked = new EventEmitter<any>();
   removeClicked = new EventEmitter<any>();
   positionChanged = new EventEmitter<any>();
+  renderDataRequest = new EventEmitter<any>();
   itemData = {} as any;
   container;
   position = { x: 0, y: 0 };
   style: any = {};
+  renderData = {} as any;
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
@@ -61,5 +63,6 @@ export class DraggableItemComponent {
       x: this.itemData.mapInfo.x * this.container.clientWidth,
       y: this.itemData.mapInfo.y * this.container.clientHeight
     };
+    this.renderDataRequest.emit();
   }
 }

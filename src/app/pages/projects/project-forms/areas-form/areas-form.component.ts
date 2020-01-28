@@ -8,6 +8,7 @@ import { AreaMapComponent } from './area-map/area-map.component';
 import { HttpClient } from '@angular/common/http';
 import { AreaDeviceSelectDialogComponent } from './area-device-select-dialog/area-device-select-dialog.component';
 import { AreaInnerareaSelectDialogComponent } from './area-innerarea-select-dialog/area-innerarea-select-dialog.component';
+import { DraggableItemComponent } from './draggable-item/draggable-item.component';
 
 @Component({
   selector: 'hyt-areas-form',
@@ -266,10 +267,10 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit {
           x: 0.5,
           y: 0.5
         };
-        this.patchArea(a);
         this.loadingStatus = LoadingStatusEnum.Saving;
-        this.areaService.updateArea(a).subscribe(area => {
-          this.mapComponent.addAreaItem(area);
+        this.areaService.updateArea(this.patchArea(a)).subscribe(area => {
+          Object.assign(a, area);
+          this.mapComponent.addAreaItem(a);
           this.apiSuccess(area);
         }, err => this.apiError(err));
       }
@@ -277,22 +278,20 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit {
   }
   onMapAreaRemoved(area: Area) {
     area.mapInfo = null;
-    this.patchArea(area);
     this.loadingStatus = LoadingStatusEnum.Saving;
-    this.areaService.updateArea(area)
+    this.areaService.updateArea(this.patchArea(area))
       .subscribe(res => {
         this.apiSuccess(res);
         // update areaList item
         const areaIndex = this.areaList.indexOf(this.areaList.find(a => a.id === area.id));
         if (areaIndex !== -1) {
-          this.areaList[areaIndex] = area;
+          Object.assign(this.areaList[areaIndex], area);
         }
       }, err => this.apiError(err));
   }
   onMapAreaUpdated(area: Area) {
-    this.patchArea(area);
     this.loadingStatus = LoadingStatusEnum.Saving;
-    this.areaService.updateArea(area)
+    this.areaService.updateArea(this.patchArea(area))
       .subscribe(res => this.apiSuccess(res), err => this.apiError(err));
   }
 
@@ -353,9 +352,9 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit {
     });
     if (this.mapComponent.itemOpen.observers.length === 0) {
       this.mapComponent.itemOpen.subscribe((openItem) => {
-        if (openItem.device) {
+        if (openItem.device) { // item is a device
           // TODO: handle device open
-        } else {
+        } else { // item is an area
           this.router.navigate(
             [ '/projects/', this.projectId, {outlets: { projectDetails: ['areas', openItem.id ] } } ]
           );
@@ -364,19 +363,27 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit {
     }
     if (this.mapComponent.itemRemove.observers.length === 0) {
       this.mapComponent.itemRemove.subscribe((removedItem) => {
-        if (removedItem.device) {
+        if (removedItem.device) { // item is a device
           this.onMapDeviceRemoved(removedItem);
-        } else {
+        } else { // item is an area
           this.onMapAreaRemoved(removedItem);
         }
       });
     }
     if (this.mapComponent.itemUpdate.observers.length === 0) {
       this.mapComponent.itemUpdate.subscribe((updatedItem) => {
-        if (updatedItem.device) {
+        if (updatedItem.device) { // item is a device
           this.onMapDeviceUpdated(updatedItem);
-        } else {
+        } else { // item is an area
           this.onMapAreaUpdated(updatedItem);
+        }
+      });
+    }
+    if (this.mapComponent.renderDataRequest.observers.length === 0) {
+      this.mapComponent.renderDataRequest.subscribe((draggableItem: DraggableItemComponent) => {
+        if (!draggableItem.itemData.device) { // item is an Area
+          const a = this.areaList.find((area) => area === draggableItem.itemData) as any;
+          draggableItem.renderData.deviceCount = a.deviceCount;
         }
       });
     }
@@ -411,13 +418,16 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit {
     }
   }
 
-  private patchArea(a: Area) {
+  private patchArea(a: Area): Area {
+    const area = {} as Area;
+    Object.assign(area, a); // clone
     // TODO: the field project should be exposed in model
     // TODO: if not passing this field the service will return validation error
-    a['project'] = { id: this.projectId };
-    a.parentArea = { id: this.areaId, entityVersion: null };
-    delete a['innerCount'];
-    delete a['deviceCount'];
+    area['project'] = { id: this.projectId };
+    area.parentArea = { id: this.areaId, entityVersion: null };
+    delete area['innerCount'];
+    delete area['deviceCount'];
+    return area;
   }
 
   private loadAreaData() {
