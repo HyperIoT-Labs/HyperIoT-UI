@@ -31,7 +31,6 @@ hyt-project-card {
         .title-card-back {
             width: 100%;
             max-height: 108px;
-            // border: 1px solid;
             word-break: break-word;
             padding: 5px;
             position: inherit;
@@ -64,24 +63,24 @@ hyt-project-card {
             transition: all 0.15s ease-in-out;
 
             .header-card-front {
-                //max-height: 108px;
+                
                 height: 108px;
                 font-size: 1.9em;
                 line-height: 35px;
                 word-break: break-word;
                 overflow: hidden;
                 color: #0956B6;
-                background: #ff000030;
+                // background: #ff000030;
+
             }
 
             .content-card-front {
-                //height: 235px;
+                
                 height: 205px;
-                background-color: #00800030;
+                // background-color: #00800030;
 
                 .card-description {
-                    // border: 1px solid brown;
-                    // margin-bottom: 35px;
+                    
                     height: 90px;
                     overflow: hidden;
                     word-break: break-word;
@@ -91,23 +90,22 @@ hyt-project-card {
                     width: 100%;
                     left: 0px;
                     top: 115px;
-                    //bottom: 108px;
                     padding-left: 5px;
                     padding-right: 5px;  
                     color: #414141;
                     font-style: italic; 
-                    background: #ffff0050;  
+                    // background: #ffff0050;  
                 }
 
                 .card-elements {
-                    // border: 1px solid fuchsia;
+                    
                     position: absolute;
                     width: 100%;
                     left: 0;
                     bottom: 60px;
                     padding-left: 5px;
                     padding-right: 5px;
-                    background: #00000050;
+                    // background: #00000050;
 
                     .single-element {
                         display: flex;
@@ -130,7 +128,7 @@ hyt-project-card {
                 text-align: center;
                 padding-bottom: 3px;
                 height: 47px;
-               background: #00ffff60;
+                // background: #00ffff60;
 
                 hyt-button {
                     // width: 80%;
@@ -226,6 +224,12 @@ hyt-project-card {
     }
 }
 
+/**********************************
+*
+*        RESPONSIVE
+*
+**********************************/
+
 @media (max-width: 1700px) {
 
     hyt-project-card {
@@ -233,18 +237,19 @@ hyt-project-card {
         height: 294px;
 
         mat-card.mat-card {
+
             .title-card-back {
-                font-size: 1.8em;
+                font-size: 1.4em;
                 line-height: 26px;
-                max-height: 90px;
+                max-height: 86px;
             }
 
             .box-card-front {
 
                 .header-card-front {
-                    font-size: 1.46em;
-                    line-height: 26px;
-                    max-height: 90px;
+                    font-size: 1.2em;
+                    line-height: 22px;
+                    height: 90px;
                 }
 
                 .content-card-front {
@@ -252,8 +257,9 @@ hyt-project-card {
     
                     .card-description {
                         font-size: .89em;
-                        bottom: 96px;
-                        height: 100px;
+                        bottom: unset;
+                        height: 90px;
+                        top: 100px;
                     }
     
                     .card-elements {
@@ -301,23 +307,26 @@ hyt-project-card {
 }
 
 @media (max-width: 1560px) {
+
     hyt-project-card {
         min-width: 200px;
         height: 256px;
         
 
         mat-card.mat-card {
+
             .title-card-back {
-                font-size: 1.7em;
-                line-height: 26px;
-                max-height: 90px;
+                font-size: 1.2em;
+                line-height: 22px;
+                max-height: 95px;
             }
 
             .box-card-front {
+
                 .header-card-front {
-                    font-size: 1.46em;
-                    line-height: 26px;
-                    max-height: 90px;
+                    font-size: 1.1em;
+                    line-height: 20px;
+                    height: 82px;
                 }
 
                 .content-card-front {
@@ -325,9 +334,10 @@ hyt-project-card {
 
                     .card-description {
                         font-size: 0.7em;
-                        line-height: 20px;
+                        line-height: 18px;
                         height: 75px;
-                        bottom: 85px
+                        bottom: unset;
+                        top: 88px;
                     }
 
                     .card-elements {
@@ -373,38 +383,42 @@ hyt-project-card {
 }
 
 @media (max-width: 1400px) {
+
     hyt-project-card {
         min-width: 180px;
         height: 230px;
         
 
         mat-card.mat-card {
+
             .title-card-back {
-                font-size: 1.4em;
+                font-size: 1.1em;
                 line-height: 22px;
-                max-height: 78px;
+                max-height: 95px;
             }
 
             .box-card-front {
+
                 .header-card-front {
-                    font-size: 1.26em;
-                    line-height: 22px;
-                    max-height: 78px;
+                    font-size: 1em;
+                    line-height: 18px;
+                    height: 76px;
                     padding-top: 2px;
-                    bottom: 68px;
+                    bottom: unset;
                 }
 
                 .content-card-front {
 
                     .card-description {
                         font-size: 0.7em;
-                        height: 75px;
+                        height: 64px;
                         line-height: 15px;
-                        bottom: 77px;
+                        bottom: unset;
+                        top: 82px;
                     }
 
                     .card-elements {
-                        bottom: 43px;
+                        bottom: 40px;
 
                         .single-element {
                             font-size: .8em;
@@ -445,33 +459,52 @@ hyt-project-card {
 }
 
 @media (max-width: 1240px) {
+
     hyt-project-card {
         min-width: 170px;
         height: 218px;
         
 
         mat-card.mat-card {
+
             .title-card-back {
-                font-size: 1.2em;
-                line-height: 20px;
-                max-height: 72px;
+                font-size: 1em;
+                line-height: 18px;
+                max-height: 97px;
             }
 
             .box-card-front {
 
                 .header-card-front {
-                    font-size: 1.1em;
-                    line-height: 20px;
-                    max-height: 72px;
-                    bottom: 66px;
+                    font-size: 1em;
+                    line-height: 17px;
+                    height: 72px;
+                    bottom: unset;
                 }
 
                 .content-card-front {
+
                     .card-description {
                         font-size: 0.7em;
                         line-height: 14px;
-                        height: 74px;
+                        height: 60px;
+                        top: 78px;
                     }
+
+                    .card-elements {
+
+                        bottom: 38px;
+
+                        .single-element {
+
+                            &:not(:last-child) {
+                                margin-bottom: 0px;
+                            }
+
+                        }
+
+                    }
+
                 }
 
                 .footer-card-front {
@@ -511,31 +544,33 @@ hyt-project-card {
         
 
         mat-card.mat-card {
+
             .title-card-back {
                 font-size: 1.4em;
-                line-height: 22px;
-                max-height: 78px;
+                line-height: 25px;
+                max-height: 107px;
             }
 
             .box-card-front {
+                
                 .header-card-front {
-                    font-size: 1.55em;
+                    font-size: 1.1em;
                     line-height: 22px;
-                    max-height: 78px;
-                    padding: 3px 0px;
+                    height: 92px;
                 }
 
                 .content-card-front {
 
                     .card-description {
-                        bottom: 90px;
-                        height: 100px;
-                        font-size: 0.8em;
-                        line-height: 18px;
+                        bottom: unset;
+                        height: 80px;
+                        font-size: 0.9em;
+                        line-height: 19px;
+                        top: 99px;
                     }
 
                     .card-elements {
-                        bottom: 50px;
+                        bottom: 45px;
 
                         .single-element {
                             font-size: .9em;
@@ -586,28 +621,33 @@ hyt-project-card {
         
 
         mat-card.mat-card {
+
             .title-card-back {
-                font-size: 1.6em;
-                line-height: 25px;
-                max-height: 87px;
+                font-size: 1.3em;
+                line-height: 24px;
+                max-height: 104px;
             }
 
             .box-card-front {
+
                 .header-card-front {
-                    font-size: 1.6em;
-                    line-height: 25px;
-                    max-height: 87px;
+                    font-size: 1.3em;
+                    line-height: 23px;
+                    height: 96px;
                 }
 
                 .content-card-front {
                     
                     .card-description {
-                        bottom: 93px;
-                        height: 90px;
+                        bottom: unset;
+                        height: 94px;
+                        top: 102px;
+                        line-height: 18px;
+                        font-size: .8em;
                     }
 
                     .card-elements {
-                        bottom: 55px;
+                        bottom: 43px;
 
                         .single-element {
                             &:not(:last-child) {
@@ -630,30 +670,33 @@ hyt-project-card {
         
 
         mat-card.mat-card {
+
             .title-card-back {
-                font-size: 1.8em;
+                font-size: 1.6em;
                 line-height: 32px;
-                max-height: 108px;
+                max-height: 137px;
             }
 
             .box-card-front {
 
                 .header-card-front {
-                    font-size: 1.8em;
-                    line-height: 32px;
-                    max-height: 108px;
+                    font-size: 1.6em;
+                    line-height: 27px;
+                    height: 112px;
                 }
 
                 .content-card-front {
 
                     .card-description {
-                        font-size: .9em;
+                        font-size: 1em;
                         height: 100px;
-                        bottom: 106px;
+                        bottom: unset;
+                        top: 120px;
+                        line-height: 19px;
                     }
 
                     .card-elements {
-                        bottom: 63px;
+                        bottom: 48px;
 
                         .single-element {
                             font-size: 1em;
@@ -687,10 +730,11 @@ hyt-project-card {
         
 
         mat-card.mat-card {
+
             .title-card-back {
                 font-size: 1.1em;
                 line-height: 20px;
-                max-height: 72px;
+                max-height: 87px;
             }
 
             .box-card-front {
@@ -698,26 +742,27 @@ hyt-project-card {
                 .header-card-front {
                     font-size: 1.1em;
                     line-height: 20px;
-                    max-height: 72px;
+                    height: 84px;
                 }
 
                 .content-card-front {
                     
                     .card-description {
-                        bottom: 87px;
-                        height: 90px;
+                        bottom: unset;
+                        height: 70px;
                         font-size: 0.75em;
                         line-height: 16px;
+                        top: 94px;
                     }
 
                     .card-elements {
-                        bottom: 49px;
+                        bottom: 42px;
 
                         .single-element {
                             font-size: .85em;
 
                             &:not(:last-child) {
-                                margin-bottom: 1px;
+                                margin-bottom: 0px;
                             }
                         }
                     }
@@ -743,6 +788,7 @@ hyt-project-card {
 }
 
 @media (max-width: 320px) { 
+    
     hyt-project-card {
 
         min-width: 180px;
@@ -750,10 +796,11 @@ hyt-project-card {
         
 
         mat-card.mat-card {
+
             .title-card-back {
                 font-size: 1em;
                 line-height: 18px;
-                max-height: 66px;
+                max-height: 78px;
             }
 
             .box-card-front {
@@ -761,20 +808,21 @@ hyt-project-card {
                 .header-card-front {
                     font-size: 1em;
                     line-height: 18px;
-                    max-height: 66px;
+                    height: 76px;
                 }
 
                 .content-card-front {
                     
                     .card-description {
-                        bottom: 73px;
+                        bottom: unset;
                         font-size: 0.7em;
                         line-height: 15px;
-                        height: 85px;
+                        height: 65px;
+                        top: 85px;
                     }
 
                     .card-elements {
-                        bottom: 41px;
+                        bottom: 36px;
 
                         .single-element {
                             font-size: .8em;

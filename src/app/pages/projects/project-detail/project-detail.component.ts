@@ -226,7 +226,7 @@ export class ProjectDetailComponent implements OnInit {
           const areas: TreeDataNode = {
             data: { type: 'areas' },
             name: 'Areas',
-            icon: 'icon-hyt_tags',
+            icon: 'icon-hyt_areaB16',
             visible: true,
             children: []
           };
