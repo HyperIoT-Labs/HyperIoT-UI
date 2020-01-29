@@ -447,10 +447,10 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit {
 
   private saveArea(successCallback: any, errorCallback: any) {
     this.loadingStatus = LoadingStatusEnum.Saving;
-    const area = this.entity;
+    let area = this.entity;
     area.name = this.form.get('area-name').value;
     area.description = this.form.get('area-description').value;
-    this.patchArea(area);
+    area = this.patchArea(area);
     const parentAreaId = this.getParentAreaId();
     area.parentArea = parentAreaId ? { id: parentAreaId, entityVersion: null } : null;
     if (area.id) {
