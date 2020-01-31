@@ -161,6 +161,8 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit {
       const [file] = event.target.files;
       const fileName = (file.name as string);
       const extension = fileName.substr(fileName.lastIndexOf('.'));
+      // reset file input
+      event.target.value = '';
       // if file type is allowed, continue reading and uploading file
       if (this.allowedImageTypes.indexOf(extension) >= 0) {
 
@@ -198,10 +200,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit {
         // check image file size on the client side before effective upload
         const reader = new FileReader();
         reader.onload = (e) => {
-          const base64MarkerPosition = reader.result.toString().indexOf(';base64,');
-          const base64Data = reader.result.toString().substring(base64MarkerPosition + 8);
-          const byteLength = 3 * (base64Data.length / 4);
-          const kiloBytesLength = byteLength / 100;
+          const kiloBytesLength = file.size;
           // Check if `kiloBytesLength` does not exceed the maximum allowed size
           if (kiloBytesLength <= this.maxFileSize) {
             // TODO: using standard HttpClient for this request (see early comment in this method)
@@ -211,7 +210,16 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit {
               this.entity = res as Area;
               this.apiSuccess(res);
               this.loadAreaImage();
-            }, err => this.apiError(err));
+            }, err => {
+              if (err.error && err.error.errorMessages) {
+                this.modalService.open(GenericMessageDialogComponent, {
+                  message: err.error.errorMessages[0]
+                });
+                this.loadingStatus = LoadingStatusEnum.Ready;
+              } else {
+                this.apiError(err);
+              }
+            });
           } else {
             this.modalService.open(GenericMessageDialogComponent, {
               message: `File size exceed limit of ${this.maxFileSize} bytes`
