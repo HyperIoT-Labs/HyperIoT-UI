@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HytModal, HytModalService } from '@hyperiot/components';
 import { AreasService, HprojectsService, HdevicesService, AreaDevice, HDevice, Area } from '@hyperiot/core';
+import { LoadingStatusEnum } from '../../project-form-entity';
 
 @Component({
   selector: 'hyt-area-device-select-dialog',
@@ -8,8 +9,10 @@ import { AreasService, HprojectsService, HdevicesService, AreaDevice, HDevice, A
   styleUrls: ['./area-device-select-dialog.component.scss']
 })
 export class AreaDeviceSelectDialogComponent extends HytModal implements OnInit {
-  projectDevices: HDevice[];
+  projectDevices = [] as HDevice[];
   selectedDevice: HDevice;
+  loadingStatus = LoadingStatusEnum.Ready;
+  LoadingStatus = LoadingStatusEnum;
 
    // @@I18N@@ (for all labels)
   deviceIconOptions = [
@@ -34,9 +37,11 @@ export class AreaDeviceSelectDialogComponent extends HytModal implements OnInit 
   }
 
   ngOnInit() {
+    this.loadingStatus = LoadingStatusEnum.Loading;
     this.deviceService.findAllHDeviceByProjectId(this.data.projectId).subscribe((projectDevices: HDevice[]) => {
       this.projectDevices = projectDevices;
       this.areaService.getAreaDeviceDeepListFromRoot(this.data.areaId).subscribe((assignedDevices) => {
+        this.loadingStatus = LoadingStatusEnum.Ready;
         projectDevices.map(pd => {
           const ad = assignedDevices.filter((d: AreaDevice) => d.device.id === pd.id);
           if (ad.length > 0) {
@@ -47,11 +52,15 @@ export class AreaDeviceSelectDialogComponent extends HytModal implements OnInit 
               });
           }
         });
-      });
-    });
+      }, (err) => this.apiError(err));
+    }, (err) => this.apiError(err));
   }
 
   onAddButtonClick() {
     this.close({ device: this.selectedDevice, icon: this.selectedDeviceIcon });
+  }
+
+  private apiError(err) {
+    this.loadingStatus = LoadingStatusEnum.Error;
   }
 }

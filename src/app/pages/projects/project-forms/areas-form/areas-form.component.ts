@@ -9,6 +9,7 @@ import { HttpClient } from '@angular/common/http';
 import { AreaDeviceSelectDialogComponent } from './area-device-select-dialog/area-device-select-dialog.component';
 import { AreaInnerareaSelectDialogComponent } from './area-innerarea-select-dialog/area-innerarea-select-dialog.component';
 import { DraggableItemComponent } from './draggable-item/draggable-item.component';
+import { GenericMessageDialogComponent } from 'src/app/components/modals/generic-message-dialog/generic-message-dialog.component';
 
 @Component({
   selector: 'hyt-areas-form',
@@ -39,6 +40,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit {
   areaList: Area[] = [];
   areaPath: Area[] = [];
 
+  allowedImageTypes = ['.jpg']; // eg.  ['.jpg', '.png', '.svg']
   maxFileSize = 0; // this will be set in constructor via areaService.getConfig()...
 
   constructor(
@@ -157,61 +159,73 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit {
   onFileChange(event) {
     if (event.target.files && event.target.files.length) {
       const [file] = event.target.files;
-      // TODO: could not find a way of implementing
-      //       upload via HyperIoT Area REST API
-      //       so it's currently implemented using HttpClient
-      /*
-      const reader = new FileReader();
-      reader.onload = () => {
-        console.log(file, reader);
-        // TODO: set image
-        const body = {
-          contentDisposition: {
-            filename: file.name,
-            type: file.type
-          } as ContentDisposition,
-          object: reader.result,
-          dataHandler: (test) => {
-            console.log(test);
+      const fileName = (file.name as string);
+      const extension = fileName.substr(fileName.lastIndexOf('.'));
+      // if file type is allowed, continue reading and uploading file
+      if (this.allowedImageTypes.indexOf(extension) >= 0) {
+
+        // TODO: could not find a way of implementing
+        //       upload via HyperIoT Area REST API
+        //       so it's currently implemented using HttpClient
+        /*
+        const reader = new FileReader();
+        reader.onload = () => {
+          console.log(file, reader);
+          // TODO: set image
+          const body = {
+            contentDisposition: {
+              filename: file.name,
+              type: file.type
+            } as ContentDisposition,
+            object: reader.result,
+            dataHandler: (test) => {
+              console.log(test);
+            }
+          } as Attachment;
+          this.areaService.setAreaImage(this.areaId, body).subscribe((res) => {
+            console.log(res);
+          });
+        };
+        reader.readAsDataURL(file);
+        */
+        //this.areaService.setAreaImage(this.areaId, file).subscribe((res) => {
+        //  console.log(res);
+        //});
+
+        //this.mapComponent.setMapImage(null);
+
+        this.loadingStatus = LoadingStatusEnum.Saving;
+        // check image file size on the client side before effective upload
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const base64MarkerPosition = reader.result.toString().indexOf(';base64,');
+          const base64Data = reader.result.toString().substring(base64MarkerPosition + 8);
+          const byteLength = 3 * (base64Data.length / 4);
+          const kiloBytesLength = byteLength / 100;
+          // Check if `kiloBytesLength` does not exceed the maximum allowed size
+          if (kiloBytesLength <= this.maxFileSize) {
+            // TODO: using standard HttpClient for this request (see early comment in this method)
+            const formData = new FormData();
+            formData.append('image_file', file, file.name);
+            this.httpClient.post(`/hyperiot/areas/${this.areaId}/image`, formData).subscribe((res) => {
+              this.entity = res as Area;
+              this.apiSuccess(res);
+              this.loadAreaImage();
+            }, err => this.apiError(err));
+          } else {
+            this.modalService.open(GenericMessageDialogComponent, {
+              message: `File size exceed limit of ${this.maxFileSize} bytes`
+            });
+            this.loadingStatus = LoadingStatusEnum.Ready;
           }
-        } as Attachment;
-        this.areaService.setAreaImage(this.areaId, body).subscribe((res) => {
-          console.log(res);
+        };
+        reader.readAsDataURL(file);
+      } else {
+        // wrong file type
+        this.modalService.open(GenericMessageDialogComponent, {
+          message: `File type must be ${this.allowedImageTypes.join(', ')}`
         });
-      };
-      reader.readAsDataURL(file);
-      */
-      //this.areaService.setAreaImage(this.areaId, file).subscribe((res) => {
-      //  console.log(res);
-      //});
-
-      //this.mapComponent.setMapImage(null);
-
-      this.loadingStatus = LoadingStatusEnum.Saving;
-      // check image file size on the client side before effective upload
-      const reader = new FileReader();
-      reader.onload = () => {
-        const base64MarkerPosition = reader.result.toString().indexOf(';base64,');
-        const base64Data = reader.result.toString().substring(base64MarkerPosition + 8);
-        const byteLength = 3 * (base64Data.length / 4);
-        const kiloBytesLength = byteLength / 100;
-        // Check if `kiloBytesLength` does not exceed the maximum allowed size
-        if (kiloBytesLength <= this.maxFileSize) {
-          // TODO: using standard HttpClient for this request (see early comment in this method)
-          const formData = new FormData();
-          formData.append('image_file', file, file.name);
-          this.httpClient.post(`/hyperiot/areas/${this.areaId}/image`, formData).subscribe((res) => {
-            this.entity = res as Area;
-            this.apiSuccess(res);
-            this.loadAreaImage();
-          }, err => this.apiError(err));
-        } else {
-          // TODO: report size exceed error
-          this.loadingStatus = LoadingStatusEnum.Error;
-        }
-
-      };
-      reader.readAsDataURL(file);
+      }
     }
   }
 
