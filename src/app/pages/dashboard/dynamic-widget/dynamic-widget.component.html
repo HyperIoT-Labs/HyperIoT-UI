@@ -29,3 +29,8 @@
   *ngIf="widget.type === 'text-label'"
   [widget]="widget"
   (widgetAction)="onWidgetAction($event)"></hyperiot-text-label>
+
+<hyperiot-offline-hpacket-table
+  *ngIf="widget.type === 'offline-table'"
+  [widget]="widget"
+  (widgetAction)="onWidgetAction($event)"></hyperiot-offline-hpacket-table>
