@@ -12,7 +12,7 @@
         <ng-container i18n="@@HYT_add_new_project">HYT_add_new_project</ng-container>
       </hyt-button> -->
 
-      <hyt-button *ngIf="pageStatus === 1" id="add-project-btn-top" (click)="addProject()"
+      <hyt-button *ngIf="pageStatus === 1" [isDisabled]="deletingInLoading" id="add-project-btn-top" (clickFn)="addProject()"
         [color]="'hyt-base-total-white'">
         <span class="hyt-icon icon-hyt_plusC"></span>
         <ng-container i18n="@@HYT_add_new_project">HYT_add_new_project</ng-container>
@@ -28,17 +28,16 @@
 
       <img id="animatedPreloaderImg" src="assets/images/hyperiot_logo_single_char_animated.svg" alt="Hyperiot Animated Logo"> <!-- @I18N@ -->
       <h2 i18n="@@HYT_page_is_loading">HYT_page_is_loading</h2>
-      <mat-progress-bar mode="indeterminate"></mat-progress-bar> 
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 
       <!-- Page is loading... -->
-      
+
     </div> <!-- PageStatus.Loading -->
 
     <div id="standardStatus" *ngSwitchCase="PageStatus.Standard" class="row">
       <!-- Standard -->
 
       <div id="container-box-project" class="col-12">
-
 
         <div id="row-container-title" class="row">
 
@@ -77,11 +76,12 @@
         <div *ngIf="displayMessageArea" id="row-messages-area" class="row">
 
           <div class="col-12 alert-box"
-            [ngClass]="{'alert-error' : typeMessageArea == 'error', 'alert-success' : typeMessageArea == 'success'}">
+            [ngClass]="{'alert-loading' : typeMessageArea == 'loading', 'alert-error' : typeMessageArea == 'error', 'alert-success' : typeMessageArea == 'success'}">
             <!-- alert-error | alert-success -->
             <p>{{ messageAreaText }}</p>
+            <mat-progress-bar *ngIf="typeMessageArea == 'loading'" mode="indeterminate"></mat-progress-bar>
 
-            <span class="cls-msg-area"
+            <span *ngIf="typeMessageArea != 'loading'" class="cls-msg-area"
               [ngClass]="{'btn-error' : typeMessageArea == 'error', 'btn-success' : typeMessageArea == 'success'}"
               (click)="hideMessageArea()">
             </span>
@@ -90,7 +90,7 @@
 
         </div> <!-- END DISPLAY MESSAGE AREA -->
 
-        <div id="row-cotainer-cards" class="row">
+        <div id="row-cotainer-cards" [ngClass]="{'cards-blurred' : deletingInLoading}" class="row">
 
           <div *ngIf="hProjectsFiltered.length == 0" class="col-12">
             <span i18n="@@HYT_no_project_found">HYT_no_project_found</span>

@@ -1,9 +1,12 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { PageStatus } from './models/pageStatus';
 import { HProject, HprojectsService } from '@hyperiot/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { SelectOption } from '@hyperiot/components/lib/hyt-select-template/hyt-select-template.component';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { ProjectsService } from 'src/app/services/projects.service';
 
 @Component({
   selector: 'hyt-projects',
@@ -11,7 +14,8 @@ import { SelectOption } from '@hyperiot/components/lib/hyt-select-template/hyt-s
   styleUrls: ['./projects.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class ProjectsComponent implements OnInit {
+export class ProjectsComponent implements OnInit, OnDestroy {
+
   PageStatus = PageStatus;
   pageStatus: PageStatus = PageStatus.Loading;
 
@@ -29,35 +33,68 @@ export class ProjectsComponent implements OnInit {
     { value: 'date-decreasing', label: 'Newest' } // @I18N@
   ];
 
+  deletingInLoading = false;
   displayMessageArea = false;
-  messageAreaText: string;
   typeMessageArea: string;
+  messageAreaText: string;
 
   constructor(
     private router: Router,
     private hProjectService: HprojectsService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private projectsService: ProjectsService
   ) { }
 
   ngOnInit() {
 
     this.filteringForm = this.fb.group({});
 
-    this.hProjectService.cardsView().subscribe(
-      res => {
-        this.hProjects = res;
-        this.pageStatus = (this.hProjects.length !== 0)
-          ? PageStatus.Standard
-          : PageStatus.New;
-        this.hProjectsFiltered = [...this.hProjects];
-        /* Default Sort */
-        this.sortBy('date-decreasing');
-      },
-      err => {
-        console.log(err);
-        this.pageStatus = PageStatus.Error;
+    if (this.projectsService.nextProjects.state === 'delete-loading') {
+      this.projectsInLoading(this.projectsService.nextProjects.projectToDelete);
+    }
+
+    this.projectsService.subProjects.subscribe({
+      next: (v) => {
+        switch (v.state) {
+          case 'update-success':
+            this.updateProjects(v.projectList);
+            this.sortBy('date-decreasing');
+            break;
+          case 'update-error':
+            this.pageStatus = PageStatus.Error;
+            break;
+          case 'delete-loading':
+            this.projectsInLoading(v.projectToDelete);
+            break;
+          case 'delete-success':
+            this.updateProjects(v.projectList);
+            this.sortBy('date-decreasing');
+            this.typeMessageArea = 'success';
+            this.messageAreaText = 'The project was successfully deleted.';
+            this.deletingInLoading = false;
+            setTimeout(() => {
+              this.hideMessageArea();
+            }, 5000);
+            break;
+          case 'delete-error':
+            this.typeMessageArea = 'error';
+            this.messageAreaText = 'An error occurred while deleting the project.';
+            this.deletingInLoading = false;
+            setTimeout(() => {
+              this.hideMessageArea();
+            }, 5000);
+            break;
+          default:
+            break;
+        }
       }
-    );
+    });
+
+    this.projectsService.updateProjectList();
+
+  }
+
+  ngOnDestroy() {
 
   }
 
@@ -145,30 +182,24 @@ export class ProjectsComponent implements OnInit {
   }
 
   refreshViewOnDelete(event) {
-    this.displayMessageArea = false;
+    this.projectsService.deleteProject(event.id);
+  }
 
-    this.typeMessageArea = event.type;
+  projectsInLoading(projectId: number) {
+    this.displayMessageArea = true;
+    this.deletingInLoading = true;
+    this.typeMessageArea = 'loading';
+    const projectToDelete = this.projectsService.nextProjects.projectList.find(x => x.id == projectId);
+    this.messageAreaText = `Deleting of project "${projectToDelete.name}" in loading. It may take a while.`;
+  }
 
-    if (this.typeMessageArea === 'error') {
-
-      this.displayMessageArea = true;
-      this.messageAreaText = event.value;
-
-      // setTimeout(() => {
-      //   this.hideMessageArea();
-      // }, 5000);
-
-    } else {
-
-      this.displayMessageArea = false;
-      // setTimeout(() => {
-      //   this.hideMessageArea();
-      // }, 2000);
-      // Update Component
-      this.refreshComponent();
-    }
-
-
+  updateProjects(projectList: HProject[]) {
+    this.hProjects = projectList;
+    this.pageStatus = (this.hProjects.length !== 0)
+      ? PageStatus.Standard
+      : PageStatus.New;
+    this.hProjectsFiltered = [...this.hProjects];
+    /* Default Sort */
   }
 
   refreshComponent() {
@@ -186,7 +217,6 @@ export class ProjectsComponent implements OnInit {
         this.sortBy('date-decreasing');
       },
       err => {
-        console.log(err);
         this.pageStatus = PageStatus.Error;
       }
     );
@@ -194,6 +224,8 @@ export class ProjectsComponent implements OnInit {
 
   hideMessageArea() {
     this.displayMessageArea = false;
+    this.typeMessageArea = undefined;
+    this.messageAreaText = undefined;
   }
 
 }

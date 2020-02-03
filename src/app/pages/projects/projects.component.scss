@@ -22,7 +22,8 @@
           font-size: 1.8em;
           vertical-align: middle;
           margin-right: 3px;
-          color: #bec3c7;        }
+          color: #bec3c7;
+        }
 
       }
 
@@ -33,10 +34,6 @@
     }
 
   }
-
-  
-
-
 
   #container-projects {
 
@@ -216,10 +213,19 @@
             margin-bottom: 0px;
           }
 
+          &.alert-loading {
+            border-color: lightblue;
+            color: #6386c3;
+            font-style: italic;
+
+            p {
+              padding-bottom: 4px;
+            }
+          }
+
           &.alert-error {
             border-color: red;
             color: #b30e0e;
-            font-style: italic;
 
             span {
 
@@ -293,6 +299,12 @@
       }
 
       #row-cotainer-cards {
+
+        &.cards-blurred {
+          pointer-events: none;
+          filter: blur(5px);
+          animation: blurredAnimation .5s ease-in-out;
+        }
 
         .single-card-container {
           margin-bottom: 40px;
@@ -449,6 +461,18 @@ mat-option {
 
   100% {
     opacity: 1;
+  }
+
+}
+
+@keyframes blurredAnimation {
+
+  0% {
+      filter: blur(0px);
+  }
+  
+  100% {
+      filter: blur(3px);
   }
 
 }

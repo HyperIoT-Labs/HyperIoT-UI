@@ -30,8 +30,6 @@ export class ProjectCardComponent implements OnInit {
     this.rulesCount = this.project.rulesCount;
   }
 
-
-
   setActive(active) {
     if (this.activeTimeout) {
       clearTimeout(this.activeTimeout);
@@ -46,40 +44,24 @@ export class ProjectCardComponent implements OnInit {
   openDeleteDialog() {
 
     const dialogRef = this.dialog.open(DeleteConfirmDialogComponent, {
-      title: 'Are you sure you want to delete the project?', message: 'This operation cannot be undone.'
+        title: 'Are you sure you want to delete the project?', message: 'This operation cannot be undone.'
       }
     );
 
     dialogRef.onClosed.subscribe(
       (result) => {
-
         if ( result === 'delete') {
-
-          this.projectService.deleteHProject(this.project.id).subscribe(
-            (res) => {
-              this.toRefreshView('success', 'The project was successfully deleted');
-            },
-            (err) => {
-              this.toRefreshView('error', 'An error occurred while deleting the project');
-              console.log(this.project);
-              console.log('ERRORE CANCELLAZIONE\n', err);
-            }
-
-          );
-
+          this.toRefreshView(this.project.id);
         }
-
       },
       (err) => {
         console.log('Errore nell\' AFTER CLOSED del DIALOG di MATERIAL \n', err);
       }
-
     );
-
   }
 
-  toRefreshView(typeMsg: string, valueMsg: string) {
-    this.refreshView.emit({type: typeMsg, value: valueMsg});
+  toRefreshView(projectId: number) {
+    this.refreshView.emit({id: projectId});
   }
 
 }
