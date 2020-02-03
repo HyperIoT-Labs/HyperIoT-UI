@@ -8,6 +8,8 @@ import { AreaMapComponent } from './area-map/area-map.component';
 import { HttpClient } from '@angular/common/http';
 import { AreaDeviceSelectDialogComponent } from './area-device-select-dialog/area-device-select-dialog.component';
 import { AreaInnerareaSelectDialogComponent } from './area-innerarea-select-dialog/area-innerarea-select-dialog.component';
+import { DraggableItemComponent } from './draggable-item/draggable-item.component';
+import { GenericMessageDialogComponent } from 'src/app/components/modals/generic-message-dialog/generic-message-dialog.component';
 
 @Component({
   selector: 'hyt-areas-form',
@@ -38,6 +40,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit {
   areaList: Area[] = [];
   areaPath: Area[] = [];
 
+  allowedImageTypes = ['.jpg']; // eg.  ['.jpg', '.png', '.svg']
   maxFileSize = 0; // this will be set in constructor via areaService.getConfig()...
 
   constructor(
@@ -156,61 +159,81 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit {
   onFileChange(event) {
     if (event.target.files && event.target.files.length) {
       const [file] = event.target.files;
-      // TODO: could not find a way of implementing
-      //       upload via HyperIoT Area REST API
-      //       so it's currently implemented using HttpClient
-      /*
-      const reader = new FileReader();
-      reader.onload = () => {
-        console.log(file, reader);
-        // TODO: set image
-        const body = {
-          contentDisposition: {
-            filename: file.name,
-            type: file.type
-          } as ContentDisposition,
-          object: reader.result,
-          dataHandler: (test) => {
-            console.log(test);
+      const fileName = (file.name as string);
+      const extension = fileName.substr(fileName.lastIndexOf('.'));
+      // reset file input
+      event.target.value = '';
+      // if file type is allowed, continue reading and uploading file
+      if (this.allowedImageTypes.indexOf(extension) >= 0) {
+
+        // TODO: could not find a way of implementing
+        //       upload via HyperIoT Area REST API
+        //       so it's currently implemented using HttpClient
+        /*
+        const reader = new FileReader();
+        reader.onload = () => {
+          console.log(file, reader);
+          // TODO: set image
+          const body = {
+            contentDisposition: {
+              filename: file.name,
+              type: file.type
+            } as ContentDisposition,
+            object: reader.result,
+            dataHandler: (test) => {
+              console.log(test);
+            }
+          } as Attachment;
+          this.areaService.setAreaImage(this.areaId, body).subscribe((res) => {
+            console.log(res);
+          });
+        };
+        reader.readAsDataURL(file);
+        */
+        //this.areaService.setAreaImage(this.areaId, file).subscribe((res) => {
+        //  console.log(res);
+        //});
+
+        //this.mapComponent.setMapImage(null);
+
+        this.loadingStatus = LoadingStatusEnum.Saving;
+        // check image file size on the client side before effective upload
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const kiloBytesLength = file.size;
+          // Check if `kiloBytesLength` does not exceed the maximum allowed size
+          if (kiloBytesLength <= this.maxFileSize) {
+            // TODO: using standard HttpClient for this request (see early comment in this method)
+            const formData = new FormData();
+            formData.append('image_file', file, file.name);
+            this.httpClient.post(`/hyperiot/areas/${this.areaId}/image`, formData).subscribe((res) => {
+              this.entity = res as Area;
+              this.apiSuccess(res);
+              this.loadAreaImage();
+            }, err => {
+              if (err.error && err.error.errorMessages) {
+                this.modalService.open(GenericMessageDialogComponent, {
+                  message: err.error.errorMessages[0]
+                });
+                this.loadingStatus = LoadingStatusEnum.Ready;
+              } else {
+                this.apiError(err);
+              }
+            });
+          } else {
+            this.modalService.open(GenericMessageDialogComponent, {
+              message: `File size exceed limit of ${this.maxFileSize} bytes`
+            });
+            this.loadingStatus = LoadingStatusEnum.Ready;
           }
-        } as Attachment;
-        this.areaService.setAreaImage(this.areaId, body).subscribe((res) => {
-          console.log(res);
+        };
+        reader.readAsDataURL(file);
+      } else {
+        // wrong file type
+        this.modalService.open(GenericMessageDialogComponent, {
+          message: `File type must be ${this.allowedImageTypes.join(', ')}`
         });
-      };
-      reader.readAsDataURL(file);
-      */
-      //this.areaService.setAreaImage(this.areaId, file).subscribe((res) => {
-      //  console.log(res);
-      //});
-
-      //this.mapComponent.setMapImage(null);
-
-      this.loadingStatus = LoadingStatusEnum.Saving;
-      // check image file size on the client side before effective upload
-      const reader = new FileReader();
-      reader.onload = () => {
-        const base64MarkerPosition = reader.result.toString().indexOf(';base64,');
-        const base64Data = reader.result.toString().substring(base64MarkerPosition + 8);
-        const byteLength = 3 * (base64Data.length / 4);
-        const kiloBytesLength = byteLength / 100;
-        // Check if `kiloBytesLength` does not exceed the maximum allowed size
-        if (kiloBytesLength <= this.maxFileSize) {
-          // TODO: using standard HttpClient for this request (see early comment in this method)
-          const formData = new FormData();
-          formData.append('image_file', file, file.name);
-          this.httpClient.post(`/hyperiot/areas/${this.areaId}/image`, formData).subscribe((res) => {
-            this.entity = res as Area;
-            this.apiSuccess(res);
-            this.loadAreaImage();
-          }, err => this.apiError(err));
-        } else {
-          // TODO: report size exceed error
-          this.loadingStatus = LoadingStatusEnum.Error;
-        }
-
-      };
-      reader.readAsDataURL(file);
+      }
     }
   }
 
@@ -266,10 +289,10 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit {
           x: 0.5,
           y: 0.5
         };
-        this.patchArea(a);
         this.loadingStatus = LoadingStatusEnum.Saving;
-        this.areaService.updateArea(a).subscribe(area => {
-          this.mapComponent.addAreaItem(area);
+        this.areaService.updateArea(this.patchArea(a)).subscribe(area => {
+          Object.assign(a, area);
+          this.mapComponent.addAreaItem(a);
           this.apiSuccess(area);
         }, err => this.apiError(err));
       }
@@ -277,22 +300,20 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit {
   }
   onMapAreaRemoved(area: Area) {
     area.mapInfo = null;
-    this.patchArea(area);
     this.loadingStatus = LoadingStatusEnum.Saving;
-    this.areaService.updateArea(area)
+    this.areaService.updateArea(this.patchArea(area))
       .subscribe(res => {
         this.apiSuccess(res);
         // update areaList item
         const areaIndex = this.areaList.indexOf(this.areaList.find(a => a.id === area.id));
         if (areaIndex !== -1) {
-          this.areaList[areaIndex] = area;
+          Object.assign(this.areaList[areaIndex], area);
         }
       }, err => this.apiError(err));
   }
   onMapAreaUpdated(area: Area) {
-    this.patchArea(area);
     this.loadingStatus = LoadingStatusEnum.Saving;
-    this.areaService.updateArea(area)
+    this.areaService.updateArea(this.patchArea(area))
       .subscribe(res => this.apiSuccess(res), err => this.apiError(err));
   }
 
@@ -353,9 +374,9 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit {
     });
     if (this.mapComponent.itemOpen.observers.length === 0) {
       this.mapComponent.itemOpen.subscribe((openItem) => {
-        if (openItem.device) {
+        if (openItem.device) { // item is a device
           // TODO: handle device open
-        } else {
+        } else { // item is an area
           this.router.navigate(
             [ '/projects/', this.projectId, {outlets: { projectDetails: ['areas', openItem.id ] } } ]
           );
@@ -364,19 +385,27 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit {
     }
     if (this.mapComponent.itemRemove.observers.length === 0) {
       this.mapComponent.itemRemove.subscribe((removedItem) => {
-        if (removedItem.device) {
+        if (removedItem.device) { // item is a device
           this.onMapDeviceRemoved(removedItem);
-        } else {
+        } else { // item is an area
           this.onMapAreaRemoved(removedItem);
         }
       });
     }
     if (this.mapComponent.itemUpdate.observers.length === 0) {
       this.mapComponent.itemUpdate.subscribe((updatedItem) => {
-        if (updatedItem.device) {
+        if (updatedItem.device) { // item is a device
           this.onMapDeviceUpdated(updatedItem);
-        } else {
+        } else { // item is an area
           this.onMapAreaUpdated(updatedItem);
+        }
+      });
+    }
+    if (this.mapComponent.renderDataRequest.observers.length === 0) {
+      this.mapComponent.renderDataRequest.subscribe((draggableItem: DraggableItemComponent) => {
+        if (!draggableItem.itemData.device) { // item is an Area
+          const a = this.areaList.find((area) => area === draggableItem.itemData) as any;
+          draggableItem.renderData.deviceCount = a.deviceCount;
         }
       });
     }
@@ -411,13 +440,16 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit {
     }
   }
 
-  private patchArea(a: Area) {
+  private patchArea(a: Area): Area {
+    const area = {} as Area;
+    Object.assign(area, a); // clone
     // TODO: the field project should be exposed in model
     // TODO: if not passing this field the service will return validation error
-    a['project'] = { id: this.projectId };
-    a.parentArea = { id: this.areaId, entityVersion: null };
-    delete a['innerCount'];
-    delete a['deviceCount'];
+    area['project'] = { id: this.projectId };
+    area.parentArea = { id: this.areaId, entityVersion: null };
+    delete area['innerCount'];
+    delete area['deviceCount'];
+    return area;
   }
 
   private loadAreaData() {
@@ -437,10 +469,10 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit {
 
   private saveArea(successCallback: any, errorCallback: any) {
     this.loadingStatus = LoadingStatusEnum.Saving;
-    const area = this.entity;
+    let area = this.entity;
     area.name = this.form.get('area-name').value;
     area.description = this.form.get('area-description').value;
-    this.patchArea(area);
+    area = this.patchArea(area);
     const parentAreaId = this.getParentAreaId();
     area.parentArea = parentAreaId ? { id: parentAreaId, entityVersion: null } : null;
     if (area.id) {

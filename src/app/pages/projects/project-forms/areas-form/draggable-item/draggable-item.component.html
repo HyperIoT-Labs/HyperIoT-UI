@@ -19,5 +19,13 @@
         title="HYT_area_draggable_open"
         i18n-title="@@HYT_area_draggable_open"
         (mousedown)="$event.stopPropagation()"
-        (click)="onOpenButtonClick($event)">{{itemData.device ? itemData.device.deviceName : itemData.name}}</div>
+        (click)="onOpenButtonClick($event)">
+        <div class="name">{{itemData.device ? itemData.device.deviceName : itemData.name}}</div>
+        <!-- BEGIN -- custom render data passed on component refresh event -->
+        <div class="stats" *ngIf="renderData.deviceCount">
+            (D: {{renderData.deviceCount}})
+        </div>
+        <!-- END -- custom render data passed on component refresh event -->
+    </div>
+
 </div>

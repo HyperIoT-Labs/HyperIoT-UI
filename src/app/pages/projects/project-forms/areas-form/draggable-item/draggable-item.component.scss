@@ -32,7 +32,7 @@
 
 .title {
     position: absolute;
-    height: 24px;
+    height: auto;
     bottom: -24px;
     width: 128px;
     left: -32px;
@@ -44,11 +44,22 @@
     background-color: rgba($color: white, $alpha: 0.65);
     font-weight: bold;
     text-align: center;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
     cursor: pointer;
 }
 .area-title {
     background-color: rgba($color: yellow, $alpha: 0.65);
+}
+
+.name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.stats {
+    font-weight: bolder;
+    font-size: smaller;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

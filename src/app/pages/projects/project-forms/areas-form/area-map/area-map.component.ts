@@ -23,9 +23,10 @@ export class AreaMapComponent {
   mapBoundary: ElementRef;
   mapImageSize = { width: 800, height: 600 };
   // events
-  itemOpen = new EventEmitter<ComponentRef<DraggableItemComponent>>();
-  itemRemove = new EventEmitter<ComponentRef<DraggableItemComponent>>();
-  itemUpdate = new EventEmitter<ComponentRef<DraggableItemComponent>>();
+  itemOpen = new EventEmitter<any>();
+  itemRemove = new EventEmitter<any>();
+  itemUpdate = new EventEmitter<any>();
+  renderDataRequest = new EventEmitter<DraggableItemComponent>();
 
   private mapComponents = [] as ComponentRef<DraggableItemComponent>[];
 
@@ -71,6 +72,10 @@ export class AreaMapComponent {
     // handle position change
     component.instance.positionChanged.subscribe(() => {
       this.updateItem(component);
+    });
+    // handle render data request to render custom data
+    component.instance.renderDataRequest.subscribe(() => {
+      this.renderDataRequest.emit(component.instance);
     });
     this.mapComponents.push(component);
     return component;

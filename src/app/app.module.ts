@@ -49,6 +49,7 @@ import { WizardReportModalComponent } from './pages/projects/project-wizard/wiza
 import { RuleErrorModalComponent } from './pages/projects/project-forms/rule-definition/rule-error/rule-error-modal.component';
 import { AddWidgetDialogComponent } from './pages/dashboard/add-widget-dialog/add-widget-dialog.component';
 import { WidgetSettingsDialogComponent } from './pages/dashboard/widget-settings-dialog/widget-settings-dialog.component';
+import { GenericMessageDialogComponent } from './components/modals/generic-message-dialog/generic-message-dialog.component';
 
 
 export class MyUrlSerializer extends DefaultUrlSerializer implements UrlSerializer {
@@ -81,7 +82,8 @@ export function apiConfigFactory(): Configuration {
     HomeComponent,
     NotificationbarComponent,
     ConfirmRecordingActionComponent,
-    InfoRecordingActionComponent
+    InfoRecordingActionComponent,
+    GenericMessageDialogComponent
   ],
   // dynamically created components
   entryComponents: [
