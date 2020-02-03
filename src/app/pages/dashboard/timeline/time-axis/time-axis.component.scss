@@ -1,12 +1,36 @@
 #axis {
-  height: 50px;
+  height: 70px;
 }
 
 #axis rect.selection {
-  // fill: transparent;
+  fill: transparent;
   stroke: transparent;
 }
 
-#axis rect.handle {
-  fill: grey;
+#axis rect.selectionRender {
+  fill: #35d443;
+  stroke: #35d443;
 }
+
+#axis circle.handle {
+  fill: #35d443;
+}
+
+
+#axis .selectionHelper {
+  stroke: #cccccc;
+  fill: #cccccc;
+  cursor: pointer;
+}
+
+#axis .selectionHelper:hover {
+  stroke: red;
+  fill: red;
+}
+
+
+
+
+
+//remove
+// circle{fill:orange;stroke:orange;fill-opacity:0.5;}

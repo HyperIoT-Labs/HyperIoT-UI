@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatButtonToggleChange, MatSelectChange } from '@angular/material';
 import { SelectOption } from '@hyperiot/components';
 import * as d3 from 'd3';
@@ -6,12 +6,8 @@ import * as moment from 'moment';
 import 'moment-precise-range-plugin';
 import { TimeAxisComponent } from './time-axis/time-axis.component';
 
-export enum HytDomain {
-  Hour = 0,
-  Day = 1,
-  Month = 2,
-  Year = 3
-}
+//TODO find better position
+export type TimeStep = 'year' | 'month' | 'day' | 'hour' | 'minute' | 'second' | 'millisecond';
 
 export interface HYTData {
   timestamp: Date;
@@ -25,12 +21,31 @@ export interface HYTData {
 })
 export class TimelineComponent implements OnInit {
 
+  mapToDomain = {
+    month: 'year',
+    day: 'month',
+    hour: 'day',
+    minute: 'hour',
+    second: 'minute',
+    millisecond: 'second'
+  };
+
+  mapToStep = {
+    year: 'month',
+    month: 'day',
+    day: 'hour',
+    hour: 'minute',
+    minute: 'second',
+    second: 'millisecond'
+  };
+
   @ViewChild('timeAxis', { static: false }) timeAxis: TimeAxisComponent;
+
 
   timeStart: Date;
   timeStop: Date;
   timeDifference: moment.PreciseRangeValueObject;
-  domainInterval: HytDomain;
+  domainInterval: TimeStep;
 
   domainStart: Date;
   domainStop: Date;
@@ -87,14 +102,14 @@ export class TimelineComponent implements OnInit {
     }
   ];
 
-  timeRange = [
-    { label: 'Minutes', value: HytDomain.Hour },
-    { label: 'Hours', value: HytDomain.Day },
-    { label: 'Days', value: HytDomain.Month },
-    { label: 'Months', value: HytDomain.Year }
+  timeRange: {} = [
+    // { label: 'Second', value: 'millisecond' },
+    { label: 'Second', value: 'second' },
+    { label: 'Minute', value: 'minute' },
+    { label: 'Hour', value: 'hour' },
+    { label: 'Day', value: 'day' },
+    { label: 'Month', value: 'month' }
   ];
-
-  rangeMap = [d3.timeMinute, d3.timeHour, d3.timeDay, d3.timeMonth];
 
   axisDomain;
   constructor() { }
@@ -111,173 +126,119 @@ export class TimelineComponent implements OnInit {
       this.setInterval();
       this.setDomain();
 
-      this.timeAxis.updateAxis([this.domainStart, this.domainStop], this.rangeMap[this.domainInterval]);
-
-      // simulazione chiamata dati
-      setTimeout(() => {
-        const data = this.fakeRequest();
-        this.timeAxis.insertData(data);
-      }, 1500);
+      this.fakeRequest();
+      this.timeAxis.updateAxis([this.domainStart, this.domainStop], this.domainInterval);
     }
   }
 
   setDomain() {
-    switch (this.domainInterval) {
-      case HytDomain.Hour: {
-        this.addMinute(this.timeStop);
-        break;
-      }
-      case HytDomain.Day: {
-        this.addHour(this.timeStop);
-        break;
-      }
-      case HytDomain.Month: {
-        this.addDay(this.timeStop);
-        break;
-      }
-      case HytDomain.Year: {
-        this.addMonth(this.timeStop);
-        break;
-      }
-    }
+    this.domainStart = moment(this.timeStart).startOf(this.mapToDomain[this.domainInterval]).toDate();
+    this.domainStop = moment(this.domainStart).add(1, this.mapToDomain[this.domainInterval]).toDate();
   }
 
   timeSelectionChanged(event: MatSelectChange) {
     this.submitTime(event.value());
   }
   setInterval() {
+    console.log(this.timeDifference);
     if (this.timeDifference.years > 0) {
-      this.domainInterval = HytDomain.Year;
+      this.domainInterval = 'month';
     } else if (this.timeDifference.months > 0) {
-      this.domainInterval = HytDomain.Month;
+      this.domainInterval = 'day';
     } else if (this.timeDifference.days > 0) {
-      this.domainInterval = HytDomain.Day;
+      this.domainInterval = 'hour';
     } else {
-      this.domainInterval = HytDomain.Hour;
+      this.domainInterval = 'minute';
     }
-  }
-
-  addMinute(referenceTime: Date) {
-    this.domainStart = new Date(referenceTime.getFullYear(), referenceTime.getMonth(), referenceTime.getDate(), referenceTime.getHours());
-    this.domainStop = new Date(referenceTime.getFullYear(), referenceTime.getMonth(), referenceTime.getDate(), referenceTime.getHours() + 1);
-  }
-
-  addHour(referenceTime: Date) {
-    this.domainStart = new Date(referenceTime.getFullYear(), referenceTime.getMonth(), referenceTime.getDate());
-    this.domainStop = new Date(referenceTime.getFullYear(), referenceTime.getMonth(), referenceTime.getDate() + 1);
-  }
-
-  addDay(referenceTime: Date) {
-    this.domainStart = new Date(referenceTime.getFullYear(), referenceTime.getMonth());
-    this.domainStop = new Date(referenceTime.getFullYear(), referenceTime.getMonth() + 1);
-  }
-
-  addMonth(referenceTime: Date) {
-    this.domainStart = new Date(new Date(referenceTime.getFullYear(), 0, 1));
-    this.domainStop = new Date(new Date(referenceTime.getFullYear() + 1, 0, 1));
-  }
-
-  removeMinute(referenceTime: Date) {
-    this.domainStart = new Date(referenceTime.getFullYear(), referenceTime.getMonth(), referenceTime.getDate(), referenceTime.getHours() - 1);
-    this.domainStop = new Date(referenceTime.getFullYear(), referenceTime.getMonth(), referenceTime.getDate(), referenceTime.getHours());
-  }
-
-  removeHour(referenceTime: Date) {
-    this.domainStart = new Date(referenceTime.getFullYear(), referenceTime.getMonth(), referenceTime.getDate() - 1);
-    this.domainStop = new Date(referenceTime.getFullYear(), referenceTime.getMonth(), referenceTime.getDate());
-  }
-
-  removeDay(referenceTime: Date) {
-    this.domainStart = new Date(referenceTime.getFullYear(), referenceTime.getMonth() - 1);
-    this.domainStop = new Date(referenceTime.getFullYear(), referenceTime.getMonth());
-  }
-
-  removeMonth(referenceTime: Date) {
-    this.domainStart = new Date(new Date(referenceTime.getFullYear() - 1, 0, 1));
-    this.domainStop = new Date(new Date(referenceTime.getFullYear(), 0, 1));
   }
 
   rangeChanged(event: MatButtonToggleChange) {
     this.domainInterval = event.value;
-    switch (this.domainInterval) {
-      case HytDomain.Hour: {
-        this.addMinute(new Date());
-        break;
-      }
-      case HytDomain.Day: {
-        this.addHour(new Date());
-        break;
-      }
-      case HytDomain.Month: {
-        this.addDay(new Date());
-        break;
-      }
-      case HytDomain.Year: {
-        this.addMonth(new Date());
-        break;
-      }
-    }
-    this.timeAxis.updateAxis([this.domainStart, this.domainStop], this.rangeMap[event.value]);
+    this.domainStart = moment(this.domainStart).startOf(this.mapToDomain[this.domainInterval]).toDate();
+    this.domainStop = moment(this.domainStart).add(1, this.mapToDomain[this.domainInterval]).toDate();
+    console.log(this.domainStart);
+    console.log(this.domainStop)
+    this.fakeRequest();
+    this.timeAxis.updateAxis([this.domainStart, this.domainStop], this.domainInterval);
   }
 
-
   timeBack() {
-    switch (this.domainInterval) {
-      case HytDomain.Hour: {
-        this.removeMinute(this.domainStart);
-        break;
-      }
-      case HytDomain.Day: {
-        this.removeHour(this.domainStart);
-        break;
-      }
-      case HytDomain.Month: {
-        this.removeDay(this.domainStart);
-        break;
-      }
-      case HytDomain.Year: {
-        this.removeMonth(this.domainStart);
-        break;
-      }
-    }
+    this.domainStart = moment(this.domainStart).subtract(1, this.mapToDomain[this.domainInterval]).toDate();
+    this.domainStop = moment(this.domainStop).subtract(1, this.mapToDomain[this.domainInterval]).toDate();
+    this.fakeRequest();
     this.timeAxis.updateAxis([this.domainStart, this.domainStop]);
   }
 
   timeForward() {
-    switch (this.domainInterval) {
-      case HytDomain.Hour: {
-        this.addMinute(this.domainStop);
-        break;
-      }
-      case HytDomain.Day: {
-        this.addHour(this.domainStop);
-        break;
-      }
-      case HytDomain.Month: {
-        this.addDay(this.domainStop);
-        break;
-      }
-      case HytDomain.Year: {
-        this.addMonth(this.domainStop);
-        break;
-      }
-    }
+    this.domainStart = moment(this.domainStart).add(1, this.mapToDomain[this.domainInterval]).toDate();
+    this.domainStop = moment(this.domainStop).add(1, this.mapToDomain[this.domainInterval]).toDate();
+    this.fakeRequest();
     this.timeAxis.updateAxis([this.domainStart, this.domainStop]);
   }
 
-  fakeRequest() {
-    const fakeData = [];
-    const start = this.timeStart.getTime();
-    const stop = this.timeStop.getTime();
-    for (let i = start; i < stop; i += 60000) {
-      fakeData.push({ timestamp: new Date(i), value: Math.random() * 10000 });
+  fakeData
+
+  drowNewData() {
+    this.fakeData = [];
+
+    const dateStart = new Date(Math.max.apply(null, [this.timeStart, this.domainStart]));
+    const dateStop = new Date(Math.min.apply(null, [this.timeStop, this.domainStop]));
+
+    const currentDate = moment(dateStart).startOf(this.domainInterval);
+    const stop = dateStop.getTime();
+    // console.log()
+    console.log(this.domainInterval);
+    while (moment(currentDate).valueOf() < stop) {
+      this.fakeData.push({ timestamp: currentDate.toDate(), value: Math.random() * 0 });
+      currentDate.add(1, this.domainInterval);
+      // TODO input?
+      this.timeAxis.data = this.fakeData;
     }
-    console.log(fakeData);
-    return fakeData;
+  }
+
+  fakeRequest() {
+    this.drowNewData();
+    setTimeout(() => {
+      this.fakeData.forEach(element => {
+        element.value = Math.random() * 10000;
+      });
+      this.timeAxis.updateData(this.fakeData);
+    }, 500);
   }
 
   dataTimeSelectionChanged(event) {
     this.timeSelection = event;
+  }
+
+  changeStep(event) {
+    if (this.domainInterval === 'second') {
+      return;
+    }
+    this.domainStart = new Date(event[0]);
+    this.domainStop = moment(this.domainStart).add(1, this.domainInterval).toDate();
+    this.domainInterval = this.mapToStep[this.domainInterval];
+    this.fakeRequest();
+    this.timeAxis.updateAxis([this.domainStart, this.domainStop], this.domainInterval);
+  }
+
+  button() {
+
+    // console.log(this.domainInterval);
+  }
+
+
+  yearOption: SelectOption[] = [
+    { value: 2018, label: '2018' },
+    { value: 2019, label: '2019' },
+    { value: 2020, label: '2020' },
+    { value: 2021, label: '2021' }
+  ];
+
+  yearChanged(event){
+    this.timeStart = moment(new Date().setFullYear(event.value)).startOf('year').toDate();
+    this.timeStop = moment(this.timeStart).add(1, 'year').toDate();
+    this.submitTime([this.timeStart, this.timeStop]);
+
   }
 
 }

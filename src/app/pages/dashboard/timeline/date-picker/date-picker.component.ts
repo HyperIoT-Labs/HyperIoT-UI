@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
-  selector: 'hyt-date-picker',
+  selector: 'hyt-date-picker-int',
   templateUrl: './date-picker.component.html',
   styleUrls: ['./date-picker.component.scss']
 })

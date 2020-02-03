@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild, ViewEncapsulation, EventEmitter, Output } from '@angular/core';
 import { ResizeSensor } from 'css-element-queries';
 import * as d3 from 'd3';
-import { HYTData } from '../timeline.component';
+import { HYTData, TimeStep } from '../timeline.component';
 
 @Component({
   selector: 'hyt-time-axis',
@@ -11,10 +11,25 @@ import { HYTData } from '../timeline.component';
 })
 export class TimeAxisComponent implements OnInit, AfterViewInit {
 
+  timeStepMap = {
+    year: d3.timeYear,
+    month: d3.timeMonth,
+    day: d3.timeDay,
+    hour: d3.timeHour,
+    minute: d3.timeMinute,
+    second: d3.timeSecond,
+    millisecond: d3.timeMillisecond
+  };
+
   @ViewChild('axis', { static: false }) axis: ElementRef;
 
+  //green selection changed
   @Output()
   dataTimeSelectionChanged = new EventEmitter();
+
+  //cube selected
+  @Output()
+  domainSet = new EventEmitter();
 
   data: HYTData[];
 
@@ -24,7 +39,7 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
   selectionPx = [null, null];
 
   domain: (number | Date | { valueOf(): number; })[] = [0, 0];
-  margin = { top: 5, right: 15, bottom: 20, left: 15 };
+  margin = { top: 5, right: 20, bottom: 20, left: 20 };
   axisScale: d3.ScaleTime<number, number>;
   tickScale = d3.scaleLinear().domain([0, 10000]).range([0, 9]);
   dataIntensityScale = d3.interpolate('#bbbbbb', '#0066ff');//('#0066ff', '#33ff00');
@@ -34,6 +49,10 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
   axisInterval: d3.CountableTimeInterval = d3.timeHour;
   element: any;
   ticks;
+
+  handleRadius = { w: 4, e: 4 };
+  brushArea = { w: -1, h: 10 };
+  transition = { duration: 1000, type: '' };
 
   brush;
 
@@ -58,8 +77,11 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
 
   brushed = () => {
     const selection = d3.event.detail.selection;
+    const mode = d3.event.detail.mode;
     if (selection) {
-      this.timeInterval = selection.map(d => this.axisInterval.round(this.axisScale.invert(d)));
+      if (mode !== 'code') {
+        this.timeInterval = selection.map(d => this.axisInterval.round(this.axisScale.invert(d)));
+      }
       this.rect.attr('fill', (d) =>
         d.timestamp >= this.timeInterval[0] && d.timestamp < this.timeInterval[1] ?
           '#35d443' :
@@ -67,7 +89,7 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
             '#999999' : 'blue')
       );
     } else {
-      this.rect.attr('fill', d => d.value < 5000 ? 'grey' : 'blue');
+      this.rect.attr('fill', d => d.value < 5000 ? '#999999' : 'blue');
     }
   }
 
@@ -93,18 +115,20 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
       .attr('width', this.contentWidth + this.margin.left + this.margin.right)
       .attr('height', this.contentHeight + this.margin.top + this.margin.bottom);
 
-    this.brush = g => {
-      g.call(this.appendBrush)
-        .on('start brush end', this.brushed)
-        .on('end', this.brushReleased);
-    };
-
     const xAxis = g => {
       this.svgAxis = g
         .append('g')
         .attr('width', this.contentWidth)
-        .attr('height', this.contentHeight)
-        .attr('transform', `translate(0,${this.contentHeight})`);
+        .attr('height', this.contentHeight - 20) //TODO make variable
+        .attr('transform', `translate(0,${this.contentHeight - 20})`); //TODO make variable
+
+      this.svgAxis.append("g").attr('class', 'cube-container')
+    };
+
+    this.brush = g => {
+      g.call(this.appendBrush)
+        .on('start brush end', this.brushed)
+        .on('end', this.brushReleased);
     };
 
     this.svg
@@ -115,8 +139,13 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
 
     this.svg
       .append('g')
+      .attr('transform', `translate(${this.contentWidth + this.margin.right},47) scale(0.6)`)//TODO make variable
+      .call(this.drawSelectionHelper);
+
+    this.svg
+      .append('g')
       .attr('id', 'brush-group')
-      .attr('transform', `translate(${this.margin.left},${this.margin.top})`)
+      .attr('transform', `translate(${this.margin.left},55)`) //TODO make variable
       .call(this.brush);
 
   }
@@ -132,23 +161,27 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
     this.youAreHere();
   }
 
-  // setTicks = g => {
-  //   g.append('line')
-  // }
+  //for animation
+  oldScale;
 
-  updateAxis(domain?: (number | Date | { valueOf(): number; })[], interval?: d3.CountableTimeInterval) {
+  updateAxis(domain?: (number | Date | { valueOf(): number; })[], interval?: TimeStep) {
     if (domain) {
       this.domain = domain;
     }
     if (interval) {
-      this.axisInterval = interval;
+      this.axisInterval = this.timeStepMap[interval];
     }
+
+    this.oldScale = this.axisScale;
+
     this.axisScale.domain(this.domain);
-    this.svgAxis.append('rect')
+    // this.svgAxis.append('rect')
 
 
 
-    this.svgAxis.call(d3.axisBottom(this.axisScale).ticks(this.axisInterval));
+    this.svgAxis
+      // .transition().duration(1000)
+      .call(d3.axisBottom(this.axisScale).ticks(this.axisInterval));
     this.tickTextRemove(this.contentWidth);
 
     if (this.data) {
@@ -171,8 +204,10 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
   }
 
   youAreHere() {
-    d3.select('circle').remove();
-    this.svgAxis.append('circle').attr('cx', this.axisScale(new Date()))
+    d3.select('circle.you').remove();
+    this.svgAxis.append('circle')
+      .attr('class', 'you')
+      .attr('cx', this.axisScale(new Date()))
       .attr('cy', '0')
       .attr('r', '5px')
       .style('fill', 'red');
@@ -182,18 +217,49 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
     d3.select('#axisSvg').remove();
   }
 
-  insertData(data) {
+  updateData(data) {
+    console.log("updateData")
     this.data = [...data];
-    this.drowData();
+    this.rect.attr('fill', (d) =>
+      d.timestamp >= this.timeInterval[0] && d.timestamp < this.timeInterval[1] ?
+        '#35d443' :
+        (d.value < 5000 ?
+          '#999999' : 'blue')
+    );
   }
 
   rect;
 
   container;
-  selectionSvg
+  selectionSvg;
+  selectionRenderSvg;
   rightHandle
   leftHandle
-  hs = 4; //handle size
+
+  selectionHelper = g => {
+    g.append('path')
+      .attr('class', 'selectionHelper')
+      .attr('d', 'M 0 14 L 20 24 C 35 28, 35 0 20 4 Z')
+    // .attr('stroke', '#cccccc')
+    // .attr('fill', '#cccccc')
+  }
+
+
+  drawSelectionHelper = g => {
+    g.call(this.selectionHelper)
+      .on('mouseover', (d) => {
+        console.log(d);
+        d3.select(d).attr('fill', 'red');
+      })
+      .on('mouseover', (d) => {
+        d3.select(d).attr('fill', '#cccccc');
+      })
+      .on('click', () => {
+        console.log("EHI")
+        this.resetSelection();
+        this.brushed();
+      });
+  }
 
 
   setSelection(s, g, event?) {
@@ -204,16 +270,21 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
     this.selectionPx = s;
     if (!s) {
       this.selectionPx = [null, null];
-      this.resetSelection(g);
+      this.resetSelection();
       return;
     }
+    this.selectionRenderSvg
+      .attr('width', s[1] - s[0])
+      .attr('x', s[0]);
     this.selectionSvg
       .attr('width', s[1] - s[0])
       .attr('x', s[0]);
-    this.rightHandle.attr('style', '')
-      .attr('x', s[1] - this.hs / 2);
-    this.leftHandle.attr('style', '')
-      .attr('x', s[0] - this.hs / 2);
+    this.rightHandle
+      .attr('style', '')
+      .attr('cx', s[1]);
+    this.leftHandle
+      .attr('style', '')
+      .attr('cx', s[0]);
 
     if (g && event) {
       g.dispatch(event.type, { detail: { selection: this.selectionPx, mode: event.mode } });
@@ -222,34 +293,43 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
     }
   }
 
-  resetSelection(g) {
+  resetSelection() {
+    this.selectionRenderSvg
+      .attr('width', null)
+      .attr('x', null)
+      .style('display', 'none');
     this.selectionSvg
       .attr('width', null)
       .attr('x', null)
       .style('display', 'none');
     this.rightHandle.attr('style', '')
-      .attr('x', null)
+      .attr('cx', null)
       .style('display', 'none');
     this.leftHandle.attr('style', '')
-      .attr('x', null)
+      .attr('cx', null)
       .style('display', 'none');
   }
 
   appendBrush = g => {
+
+    g.append('path')
+      .attr('d', `M 0 ${this.brushArea.h / 2} H ${this.contentWidth}`)
+      .attr('stroke', 'grey');
 
     this.container = g.append('rect')
       .attr('class', 'overlay')
       .attr('x', 0)
       .attr('y', 0)
       .attr('pointer-events', 'all')
-      .attr('cursor', 'crosshair')
+      .attr('cursor', 'pointer')
       .attr('fill', 'transparent')
       .attr('width', this.contentWidth)
-      .attr('height', this.contentHeight)
+      .attr('height', this.brushArea.h)
       .call(d3.drag()
         .on('start', (d) => {
           g.attr('pointer-events', 'none');
           this.selectionSvg.attr('style', '');
+          this.selectionRenderSvg.attr('style', '');
           this.leftHandle.attr('style', '').attr('y', 0);
           this.rightHandle.attr('style', '').attr('y', 0);
           this.setSelection([d3.event.subject.x, d3.event.subject.x], g, { type: 'start', mode: 'container' });
@@ -266,11 +346,20 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
         })
       );
 
+    this.selectionRenderSvg = g.append('rect')
+      .attr('class', 'selectionRender')
+      .attr('x', 0)
+      .attr('y', this.brushArea.h / 2)
+      .attr('height', 1)
+      .attr('fill', 'transparent')
+      .attr('cursor', 'grab')
+      .style('display', 'none');
+
     this.selectionSvg = g.append('rect')
       .attr('class', 'selection')
       .attr('x', 0)
       .attr('y', 0)
-      .attr('height', this.contentHeight)
+      .attr('height', this.brushArea.h)
       .attr('fill', 'transparent')
       .attr('cursor', 'grab')
       .style('display', 'none')
@@ -290,24 +379,23 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
         })
         .on('end', (d) => {
           g.attr('pointer-events', 'all');
-          this.container.attr('cursor', 'crosshair');
+          this.container.attr('cursor', 'pointer');
           g.dispatch('end', { detail: { selection: this.selectionPx, mode: 'selection' } });
         })
       );
 
     let remember;
-    this.leftHandle = g.append('rect')
+    this.leftHandle = g.append('circle')
       .attr('class', 'handle handle--w')
-      .attr('x', 0)
-      .attr('y', 0)
-      .attr('cursor', 'ew-resize')
-      .attr('width', this.hs)
-      .attr('height', this.contentHeight)
+      .attr('cx', 0)
+      .attr('cy', this.brushArea.h / 2)
+      .attr('cursor', 'grab')
+      .attr('r', this.handleRadius.w)
       .style('display', 'none')
       .call(d3.drag()
         .on('start', (d) => {
           g.attr('pointer-events', 'none');
-          this.container.attr('cursor', 'ew-resize');
+          this.container.attr('cursor', 'grab');
           remember = this.selectionPx[1];
           g.dispatch('start', { detail: { selection: this.selectionPx, mode: 'handle' } });
         })
@@ -319,23 +407,22 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
         })
         .on('end', (d) => {
           g.attr('pointer-events', 'all');
-          this.container.attr('cursor', 'crosshair');
+          this.container.attr('cursor', 'pointer');
           g.dispatch('end', { detail: { selection: this.selectionPx, mode: 'handle' } });
         })
       );
 
-    this.rightHandle = g.append('rect')
+    this.rightHandle = g.append('circle')
       .attr('class', 'handle handle--e')
-      .attr('x', 0)
-      .attr('y', 0)
-      .attr('cursor', 'ew-resize')
-      .attr('width', this.hs)
-      .attr('height', this.contentHeight)
+      .attr('cx', 0)
+      .attr('cy', this.brushArea.h / 2)
+      .attr('cursor', 'grab')
+      .attr('r', this.handleRadius.e)
       .style('display', 'none')
       .call(d3.drag()
         .on('start', (d) => {
           g.attr('pointer-events', 'none');
-          this.container.attr('cursor', 'ew-resize');
+          this.container.attr('cursor', 'grab');
           remember = this.selectionPx[0];
           g.dispatch('start', { detail: { selection: this.selectionPx, mode: 'handle' } });
         })
@@ -347,7 +434,7 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
         })
         .on('end', (d) => {
           g.attr('pointer-events', 'all');
-          this.container.attr('cursor', 'crosshair');
+          this.container.attr('cursor', 'pointer');
           g.dispatch('end', { detail: { selection: this.selectionPx, mode: 'handle' } });
         })
       );
@@ -387,12 +474,22 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
       .attr('d', 'M5 4 L5 10');
   }
 
+  //circle;
+
   drowData() {
-    const ticks = this.axisScale.ticks();
-    ticks.forEach(x => console.log(this.axisScale(x)))
-    const distance = this.axisScale(ticks[2]) - this.axisScale(ticks[1])
+    const distance = this.contentWidth / this.data.length / 2;
 
-
+    console.log(this.data);
+    /*
+        this.rect = this.svgAxis
+          .append('g')
+          //TODO TOFIX width and scale
+          .style('stroke-width', '0.2px')
+          .selectAll('rect')
+          .data(this.data)
+          .join('g')
+          ;
+    */
 
     d3.selectAll('.data-cube').remove();
     this.rect = this.svgAxis
@@ -403,10 +500,23 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
       .selectAll('rect')
       .data(this.data)
       .join('g')
-      .attr('fill', (d) => d.value < 5000 ? '#999999' : 'blue')
+      .attr('fill', d => d.timestamp >= this.timeInterval[0] && d.timestamp < this.timeInterval[1] ? '#35d443' : (d.value < 5000 ? '#999999' : 'blue'))
       .attr('class', 'data-cube')
       .call(this.appendCube)
-      .attr('transform', (d) => `translate(${this.axisScale(d.timestamp) + 1.5},${-this.contentHeight}) scale(2)`); // scale(0.3)
+      .attr('cursor', 'pointer')
+      .attr('transform', (d, i, n) => `translate(${this.axisScale(d.timestamp) +
+          distance - (d3.select(n[i]) as any).node().getBBox().width},${-this.contentHeight + 20}) scale(2)`) // scale(0.3)  //TODO make variable
+      .on('mouseover', (d, i, n) => {
+        d3.select(n[i]).attr('transform', `translate(${this.axisScale(d.timestamp) +
+          distance - (d3.select(n[i]) as any).node().getBBox().width},${-this.contentHeight + 20}) scale(2.3)`)
+      })
+      .on('mouseout', (d, i, n) => {
+        d3.select(n[i]).attr('transform', `translate(${this.axisScale(d.timestamp) +
+          distance - (d3.select(n[i]) as any).node().getBBox().width},${-this.contentHeight + 20}) scale(2)`);
+      })
+      .on('click', (d, i, n) => {
+        this.domainSet.emit([d.timestamp, n[i + 1]])
+      });
 
     // this.svgAxis.append('g')
     //   .attr('id', 'ticksContainer')
@@ -436,15 +546,16 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
   }
 
   generalButton() {
-    console.log(this.timeInterval);
-    const endDate = new Date();
+    this.data = [];
+    // console.log(this.timeInterval);
+    // const endDate = new Date();
     // const initDate = new Date(endDate);
     // initDate.setMinutes(initDate.getMinutes() - 20);
     // console.log('general button')
-    d3.select('#containerSvg #brush-group').call(
-      this.brush.move,
-      [this.axisScale(endDate), this.axisScale(endDate)]
-    );
+    // d3.select('#containerSvg #brush-group').call(
+    //   this.brush.move,
+    //   [this.axisScale(endDate), this.axisScale(endDate)]
+    // );
     // this.brush.move(d3.select(this), [
     //   this.axisScale(new Date(2020, 1, 15, 10, 15, 0, 0)),
     //   this.axisScale(new Date(2020, 1, 15, 10, 35, 0, 0)),

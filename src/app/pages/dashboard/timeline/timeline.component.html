@@ -12,8 +12,11 @@
             </hyt-select>
 
             <div *ngIf="customSelection">
-                <hyt-date-picker (customTime)="submitTime($event)"></hyt-date-picker>
+                <hyt-date-picker-int (customTime)="submitTime($event)"></hyt-date-picker-int>
             </div>
+
+            <hyt-select label="Seleziona Ora" [options]="yearOption" (changeFn)="yearChanged($event)">
+            </hyt-select>
 
             <mat-button-toggle-group name="fontStyle" aria-label="Font Style" [value]="domainInterval">
                 <mat-button-toggle *ngFor="let time of timeRange" [value]="time.value" (change)="rangeChanged($event)">
@@ -22,10 +25,10 @@
         </div>
         <div id="chartBox" class="col-12">
             <button (click)="timeBack()" [ngClass]="{'hasData': (timeSelection[0]) ? timeSelection[0] < domainStart : false}">
-                <<</button> <hyt-time-axis #timeAxis (dataTimeSelectionChanged)="dataTimeSelectionChanged($event)">
+                <<</button> <hyt-time-axis #timeAxis (dataTimeSelectionChanged)="dataTimeSelectionChanged($event)" (domainSet)="changeStep($event)">
                     </hyt-time-axis>
                     <button (click)="timeForward()"  [ngClass]="{'hasData': (timeSelection[1]) ? timeSelection[1] > domainStop : false}">>></button>
         </div>
     </div>
 </div>
-<!-- <button (click)="button()">PROVA</button> -->
+<button (click)="button()">PROVA</button>
