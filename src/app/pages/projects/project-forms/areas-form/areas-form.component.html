@@ -93,12 +93,16 @@
                 <hyt-button [isDisabled]="areaList.length === 0" (clickFn)="onMapAreaAddClick($event)" i18n="@@HYT_area_map_area_add">HYT_area_map_area_add</hyt-button>
 
             </div>
-            <hyt-area-map #map></hyt-area-map>
+            <hyt-area-map #map [editMode]="true"></hyt-area-map>
         </mat-tab>
 
     </mat-tab-group>
 
 </div>
+
+
+<!-- TODO: this treeview is a temporary test (to be removed from here) -->
+<hyt-tree-view-project #treeView></hyt-tree-view-project>
 
 
 <!-- 

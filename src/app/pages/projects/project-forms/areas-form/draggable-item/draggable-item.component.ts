@@ -12,6 +12,7 @@ export class DraggableItemComponent {
   removeClicked = new EventEmitter<any>();
   positionChanged = new EventEmitter<any>();
   renderDataRequest = new EventEmitter<any>();
+  editMode = false;
   itemData = {} as any;
   container;
   position = { x: 0, y: 0 };
@@ -50,6 +51,7 @@ export class DraggableItemComponent {
     this.itemData = itemData;
     this.style['background-image'] = `url(assets/icons/${itemData.mapInfo.icon})`;
     this.style['background-size'] = `64px 64px`;
+    this.style['cursor'] = this.editMode ? 'move' : '';
     this.refresh();
   }
   setPosition(x: number, y: number) {

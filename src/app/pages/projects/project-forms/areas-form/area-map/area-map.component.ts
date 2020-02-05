@@ -5,7 +5,8 @@ import {
   ComponentRef,
   ElementRef,
   HostListener,
-  EventEmitter
+  EventEmitter,
+  Input
 } from '@angular/core';
 import { DraggableItemComponent } from '../draggable-item/draggable-item.component';
 import { MapDirective } from '../map.directive';
@@ -22,6 +23,8 @@ export class AreaMapComponent {
   @ViewChild('mapBoundary', {static: true})
   mapBoundary: ElementRef;
   mapImageSize = { width: 800, height: 600 };
+  @Input()
+  editMode = false;
   // events
   itemOpen = new EventEmitter<any>();
   itemRemove = new EventEmitter<any>();
@@ -61,6 +64,8 @@ export class AreaMapComponent {
       .resolveComponentFactory(DraggableItemComponent);
     const viewContainerRef = this.mapContainer.viewContainerRef;
     const component = viewContainerRef.createComponent(componentFactory);
+    // enable/disable editMode
+    component.instance.editMode = this.editMode;
     // handle click on component label (open button)
     component.instance.openClicked.subscribe(() => {
       this.openItem(component);
