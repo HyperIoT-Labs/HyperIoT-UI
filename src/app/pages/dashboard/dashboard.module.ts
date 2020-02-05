@@ -30,6 +30,8 @@ import { WidgetSettingsDialogComponent } from './widget-settings-dialog/widget-s
 import { WidgetsLayoutComponent } from './widgets-layout/widgets-layout.component';
 import { TimeAxisComponent } from './timeline/time-axis/time-axis.component';
 import { SharedComponentsModule } from 'src/app/components/shared-components/shared-components.module';
+import { PacketTableSettingsComponent } from './widget-settings-dialog/packet-table-settings/packet-table-settings.component';
+import { PacketTableSelectComponent } from './widget-settings-dialog/packet-table-select/packet-table-select.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +51,10 @@ import { SharedComponentsModule } from 'src/app/components/shared-components/sha
     DashboardComponent,
     TimelineComponent,
     TimeAxisComponent,
-    TimelineComponent
+    DatePickerComponent,
+    TimelineComponent,
+    PacketTableSettingsComponent,
+    PacketTableSelectComponent
   ],
   imports: [
     CommonModule,

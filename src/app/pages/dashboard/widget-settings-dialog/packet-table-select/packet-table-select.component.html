@@ -1,0 +1,101 @@
+<div class="padding-6 d-flex flex-column justify-content-stretch">
+
+    <ng-container *ngIf="widget.config">
+
+        <div class="d-flex flex-column">
+
+            <mat-form-field>
+                <mat-select [(ngModel)]="selectedPacket" [compareWith]="packetCompare"
+                    (ngModelChange)="onPacketChange()" name="packet-select"
+                    placeholder="HYT_widget_settings_select_packet"
+                    i18n-placeholder="@@HYT_widget_settings_select_packet" required disableRipple>
+                    <mat-option *ngFor="let packet of projectPackets" [value]="packet" selected>
+                        {{packet.name}}
+                        ({{packet.id}})
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+        </div>
+
+    </ng-container>
+
+    <ng-container *ngIf="selectedPacket != null">
+
+        <div class="d-flex flex-column">
+
+            <mat-form-field>
+                <mat-select [(ngModel)]="selectedFields" multiple
+                    (ngModelChange)="onPacketFieldChange($event)" name="field-select"
+                    placeholder="HYT_widget_settings_select_fields"
+                    i18n-placeholder="@@HYT_widget_settings_select_fields" required disableRipple>
+                    <mat-option *ngFor="let field of selectedPacket.fields" [value]="field" selected>
+                        {{field.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+        </div>
+        <div *ngIf="hasFieldsUnit()">
+            <h3>Unit Conversion</h3>
+            <div *ngFor="let conversion of packetUnitsConversion; let i = index;">
+                <label class="label">{{ conversion.field.name }}</label>:
+                {{ getUnit(conversion.convertFrom).singular }}
+                ({{ getUnit(conversion.convertFrom).abbr }})
+                <br/>
+                <hyt-select-template class="ml-4"
+                    name="hpacketfield-unit-{{i}}"
+                    [(ngModel)]="conversion.convertTo"
+                    [options]="conversion.options"
+                    label="Convert to">
+                </hyt-select-template>
+                <hyt-select-template class="ml-4"
+                    name="hpacketfield-decimals-{{i}}"
+                    [(ngModel)]="conversion.decimals"
+                    [options]="conversionDecimalsOptions"
+                    label="Decimal digits">
+                </hyt-select-template>
+            </div>
+        </div>
+        <div *ngIf="packetFieldsMapping && packetFieldsMapping.length > 0">
+            <h3>Fields Mapping</h3>
+            <div *ngFor="let fieldConfig of packetFieldsMapping">
+                <label class="label">{{ fieldConfig.field.name }}</label>
+                <div class="d-flex flex-row align-items-center flex-wrap field-mapping ">
+                    <div *ngFor="let fieldMap of fieldConfig.map; let i = index"
+                        class="map-container m-2 p-2 d-flex flex-row align-items-center">
+
+                        <strong>[&nbsp;</strong>
+                        <hyt-input-template class="w-80"
+                            placeholder="Coordinates"
+                            pattern="[0-9]+(,[0-9]+)*"
+                            required
+                            [name]="'coords'+i"
+                            [(ngModel)]="fieldMap.coords"
+                            #name="ngModel"></hyt-input-template>
+                        <strong>&nbsp;]</strong>
+
+                        <hyt-input-template
+                            class="w-80 ml-2"
+                            placeholder="Name"
+                            required
+                            [name]="'name'+i"
+                            [(ngModel)]="fieldMap.name"
+                            #name="ngModel"></hyt-input-template>
+
+                        <mat-icon class="map-remove"
+                                (click)="onDeleteFieldMapping(fieldConfig, i)"
+                                matRipple>remove_circle</mat-icon>
+
+                    </div>
+                </div>
+                <hyt-button (clickFn)="onAddFieldMapping(fieldConfig)">
+                    <mat-icon>add</mat-icon>
+                    <span i18n="@@HYT_button_add">HYT_button_add</span>
+                </hyt-button>
+            </div>
+        </div>
+
+    </ng-container>
+
+</div>

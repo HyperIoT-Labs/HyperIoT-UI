@@ -114,6 +114,25 @@
     },
     {
         "id": 0,
+        "name": "Offline HPacket table",
+        "info": {
+            "description": "This widget displays HPacket fields",
+            "icon": "assets/widgets/images/preview/sensor_value_mini.png",
+            "preview": "assets/widgets/images/preview/sensor_value.png",
+            "rating": 3
+        },
+        "categoryId": 3,
+        "cols": 3,
+        "rows": 3,
+        "y": 0,
+        "x": 0,
+        "type": "offline-table",
+        "config": {
+            "data": []
+        }
+    },
+    {
+        "id": 0,
         "categoryId": 3,
         "name": "Events log",
         "info": {

@@ -44,7 +44,7 @@ export class ProjectCardComponent implements OnInit {
   openDeleteDialog() {
 
     const dialogRef = this.dialog.open(DeleteConfirmDialogComponent, {
-        title: 'Are you sure you want to delete the project?', message: 'This operation cannot be undone.'
+        data: { title: 'Are you sure you want to delete the project?', message: 'This operation cannot be undone.' }
       }
     );
 
