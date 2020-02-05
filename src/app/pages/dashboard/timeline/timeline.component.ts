@@ -66,10 +66,14 @@ export class TimelineComponent implements OnInit, AfterViewInit {
     private hBaseConnectorsService: HbaseconnectorsService
   ) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.domainStart = moment(new Date()).startOf(this.mapToDomain[this.domainInterval]).utc().toDate();
+    this.domainStop = moment(new Date()).add(1, this.mapToDomain[this.domainInterval]).toDate();
+  }
 
   ngAfterViewInit() {
-    this.rangeChanged('month');
+    this.fakeRequest();
+    this.timeAxis.updateAxis(this.timeLineData, [this.domainStart, this.domainStop], this.domainInterval);
   }
 
   rangeChanged(value: any) {
