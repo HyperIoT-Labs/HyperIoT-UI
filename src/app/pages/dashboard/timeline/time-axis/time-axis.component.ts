@@ -1,7 +1,11 @@
 import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild, ViewEncapsulation, EventEmitter, Output } from '@angular/core';
 import { ResizeSensor } from 'css-element-queries';
 import * as d3 from 'd3';
-import { HYTData, TimeStep } from '../timeline.component';
+import * as moment from 'moment';
+import { HYTData } from '../timeline.component';
+import { TimeStep } from '@hyperiot/components';
+
+const animation = false;
 
 @Component({
   selector: 'hyt-time-axis',
@@ -31,14 +35,14 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
   @Output()
   domainSet = new EventEmitter();
 
-  data: HYTData[];
+  data: HYTData[] = [];
 
   svg;
 
   timeInterval = [];
   selectionPx = [null, null];
 
-  domain: (number | Date | { valueOf(): number; })[] = [0, 0];
+  domain: (number | Date)[] = [0, 0];
   margin = { top: 5, right: 20, bottom: 20, left: 20 };
   axisScale: d3.ScaleTime<number, number>;
   tickScale = d3.scaleLinear().domain([0, 10000]).range([0, 9]);
@@ -63,17 +67,25 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
     month: d3.timeMonth
   };
 
+  contentWidth;
+  contentHeight;
+
+  stepInDomain = {
+    year: 1,
+    month: 12,
+    day: moment(this.domain[0]).daysInMonth(),
+    hour: 24,
+    minute: 60,
+    second: 60
+  }
+
   constructor() { }
 
   ngOnInit() { }
 
   ngAfterViewInit() {
     this.buildAxis();
-
   }
-
-  contentWidth;
-  contentHeight;
 
   brushed = () => {
     const selection = d3.event.detail.selection;
@@ -85,11 +97,11 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
       this.rect.attr('fill', (d) =>
         d.timestamp >= this.timeInterval[0] && d.timestamp < this.timeInterval[1] ?
           '#35d443' :
-          (d.value < 5000 ?
+          (d.value === 0 ?
             '#999999' : 'blue')
       );
     } else {
-      this.rect.attr('fill', d => d.value < 5000 ? '#999999' : 'blue');
+      this.rect.attr('fill', d => d.value === 0 ? '#999999' : 'blue');
     }
   }
 
@@ -156,39 +168,52 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
 
     this.tickTextRemove(this.contentWidth);
     if (this.data) {
-      this.drowData();
+      this.drowData(null);
     }
-    this.youAreHere();
   }
 
-  //for animation
-  oldScale;
+  updateAxis(data: HYTData[], domain: (number | Date)[], interval: TimeStep) {
 
-  updateAxis(domain?: (number | Date | { valueOf(): number; })[], interval?: TimeStep) {
-    if (domain) {
-      this.domain = domain;
+    this.domain = domain;
+    this.axisInterval = this.timeStepMap[interval];
+
+    if (animation) {
+      const oldData = [...this.data];
+      this.data = [...data];
+
+      d3.selectAll('.data-cube').attr('class', 'old-data-cube');
+
+      this.drowData(interval);
+
+      this.axisScale.domain(this.domain);
+
+      this.svgAxis
+        .transition().duration(1000)
+        .call(d3.axisBottom(this.axisScale).ticks(this.axisInterval));
+      this.tickTextRemove(this.contentWidth);
+
+      const dist = this.contentWidth / this.stepInDomain[interval] / 2;
+
+      d3.selectAll('.data-cube').data(this.data).transition().duration(1000)
+        .attr('transform', (d, i, n) => `translate(${this.axisScale(d.timestamp) +
+          dist},${-this.contentHeight + 20}) scale(1.8)`)
+        .style('opacity', 1)
+      d3.selectAll('.old-data-cube').data(oldData).transition().duration(1000)
+        .attr('transform', (d, i, n) => `translate(${this.axisScale(d.timestamp) +
+          dist},${-this.contentHeight + 20}) scale(1.8)`)
+        .style('opacity', 0)
+        .remove();
+    } else {
+      this.data = [...data];
+      this.axisScale.domain(this.domain);
+      this.drowData(interval);
+      this.svgAxis
+        .call(d3.axisBottom(this.axisScale).ticks(this.axisInterval));
+      this.tickTextRemove(this.contentWidth);
     }
-    if (interval) {
-      this.axisInterval = this.timeStepMap[interval];
-    }
 
-    this.oldScale = this.axisScale;
-
-    this.axisScale.domain(this.domain);
-    // this.svgAxis.append('rect')
-
-
-
-    this.svgAxis
-      // .transition().duration(1000)
-      .call(d3.axisBottom(this.axisScale).ticks(this.axisInterval));
-    this.tickTextRemove(this.contentWidth);
-
-    if (this.data) {
-      this.drowData();
-    }
-    this.youAreHere();
     this.setBrush();
+
   }
 
   setBrush() {
@@ -203,16 +228,6 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
     }
   }
 
-  youAreHere() {
-    d3.select('circle.you').remove();
-    this.svgAxis.append('circle')
-      .attr('class', 'you')
-      .attr('cx', this.axisScale(new Date()))
-      .attr('cy', '0')
-      .attr('r', '5px')
-      .style('fill', 'red');
-  }
-
   destroyAxis() {
     d3.select('#axisSvg').remove();
   }
@@ -223,7 +238,7 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
     this.rect.attr('fill', (d) =>
       d.timestamp >= this.timeInterval[0] && d.timestamp < this.timeInterval[1] ?
         '#35d443' :
-        (d.value < 5000 ?
+        (d.value === 0 ?
           '#999999' : 'blue')
     );
   }
@@ -465,7 +480,7 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
       .style('stroke-width', 0);
   }
 
-  appendCube = g => {
+  appendCube2 = g => {
     g.append('path')
       .attr('d', 'M5 0 L10 2 L10 8 L5 10 L0 8 L0 2 z');
     g.append('path')
@@ -474,12 +489,21 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
       .attr('d', 'M5 4 L5 10');
   }
 
+  appendCube = g => {
+    g.append('path')
+      .attr('d', 'M0 0 L5 2 L5 8 L0 10 L-5 8 L-5 2 z');
+    g.append('path')
+      .attr('d', 'M-5 2 L0 4 L5 2');
+    g.append('path')
+      .attr('d', 'M0 4 L0 10');
+  }
+
   //circle;
 
-  drowData() {
-    const distance = this.contentWidth / this.data.length / 2;
+  drowData(interval) {
+    const distance = this.contentWidth / this.stepInDomain[interval] / 2;
+    // svg width:  (d3.select(n[i]) as any).node().getBBox().width
 
-    console.log(this.data);
     /*
         this.rect = this.svgAxis
           .append('g')
@@ -491,28 +515,30 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
           ;
     */
 
-    d3.selectAll('.data-cube').remove();
+    d3.selectAll('#cube-container').remove();
     this.rect = this.svgAxis
       .append('g')
+      .attr('id', 'cube-container')
       .style('stroke', 'black')
       //TODO TOFIX width and scale
       .style('stroke-width', '0.2px')
       .selectAll('rect')
       .data(this.data)
       .join('g')
-      .attr('fill', d => d.timestamp >= this.timeInterval[0] && d.timestamp < this.timeInterval[1] ? '#35d443' : (d.value < 5000 ? '#999999' : 'blue'))
+      .attr('fill', d => d.timestamp >= this.timeInterval[0] && d.timestamp < this.timeInterval[1] ? '#35d443' : (d.value === 0 ? '#999999' : 'blue'))
       .attr('class', 'data-cube')
       .call(this.appendCube)
       .attr('cursor', 'pointer')
+      .style('opacity', 1)
       .attr('transform', (d, i, n) => `translate(${this.axisScale(d.timestamp) +
-          distance - (d3.select(n[i]) as any).node().getBBox().width},${-this.contentHeight + 20}) scale(2)`) // scale(0.3)  //TODO make variable
+        distance},${-this.contentHeight + 20}) scale(1.8)`) // scale(0.3)  //TODO make variable
       .on('mouseover', (d, i, n) => {
         d3.select(n[i]).attr('transform', `translate(${this.axisScale(d.timestamp) +
-          distance - (d3.select(n[i]) as any).node().getBBox().width},${-this.contentHeight + 20}) scale(2.3)`)
+          distance},${-this.contentHeight + 20}) scale(2.1)`)
       })
       .on('mouseout', (d, i, n) => {
         d3.select(n[i]).attr('transform', `translate(${this.axisScale(d.timestamp) +
-          distance - (d3.select(n[i]) as any).node().getBBox().width},${-this.contentHeight + 20}) scale(2)`);
+          distance},${-this.contentHeight + 20}) scale(1.8)`);
       })
       .on('click', (d, i, n) => {
         this.domainSet.emit([d.timestamp, n[i + 1]])
@@ -546,7 +572,11 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
   }
 
   generalButton() {
-    this.data = [];
+    console.log("OK")
+    d3.selectAll('.data-cube')
+      .transition().duration(1000)
+      .attr('transform', (d, i, n) => `translate(${i * 10},${-this.contentHeight + 20}) scale(1.8)`) // scale(0.3)  //TODO make variable
+      .style('opacity', 0);
     // console.log(this.timeInterval);
     // const endDate = new Date();
     // const initDate = new Date(endDate);

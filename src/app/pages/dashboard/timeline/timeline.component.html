@@ -2,26 +2,18 @@
     <div class="row">
         <div class="col-5">
             <h2>Timeline</h2>
-            Seleziona tempo
             <!-- {{timeStart | date:'dd/MM/yyyy HH:mm'}} - 
             {{timeStop | date:'dd/MM/yyyy HH:mm'}} -->
         </div>
         <div class="col-7">
 
-            <hyt-select label="Seleziona tempo" [options]="timeOptions" (changeFn)="timeSelectionChanged($event)">
-            </hyt-select>
-
-            <div *ngIf="customSelection">
-                <hyt-date-picker-int (customTime)="submitTime($event)"></hyt-date-picker-int>
-            </div>
-
-            <hyt-select label="Seleziona Ora" [options]="yearOption" (changeFn)="yearChanged($event)">
-            </hyt-select>
-
             <mat-button-toggle-group name="fontStyle" aria-label="Font Style" [value]="domainInterval">
-                <mat-button-toggle *ngFor="let time of timeRange" [value]="time.value" (change)="rangeChanged($event)">
+                <mat-button-toggle *ngFor="let time of timeRange" [value]="time.value" (change)="rangeChanged($event.value)">
                     {{time.label}}</mat-button-toggle>
             </mat-button-toggle-group>
+
+            <hyt-date-picker [date]="domainStart" [minStep]="mapToDomain[domainInterval]" (selectedDate)="selectedDateChanged($event)"></hyt-date-picker>
+
         </div>
         <div id="chartBox" class="col-12">
             <button (click)="timeBack()" [ngClass]="{'hasData': (timeSelection[0]) ? timeSelection[0] < domainStart : false}">
@@ -31,4 +23,3 @@
         </div>
     </div>
 </div>
-<button (click)="button()">PROVA</button>

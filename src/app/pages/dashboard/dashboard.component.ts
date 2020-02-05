@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation, ɵConsole } from '@angular/core';
-import { Dashboard, HProject } from '@hyperiot/core';
+import { Dashboard, HProject, Widget, DashboardWidget } from '@hyperiot/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { HytModalService, HytModalRef } from '@hyperiot/components';
@@ -64,11 +64,24 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   widgetModalRef: HytModalRef;
 
+  packetsInDashboard: number[] = [];
+
   constructor(
     private dashboardConfigService: DashboardConfigService,
     private hytModalService: HytModalService
-  ) {
+  ) { }
 
+  getPacketsFromWidgets(widgets: DashboardWidget[]) {
+    const packetsList = [];
+    widgets.forEach(w => {
+      try {
+        const wConfig = JSON.parse(w.widgetConf).config;
+        if (wConfig) {
+          packetsList.push(wConfig.packetId);
+        }
+      } catch (e) { }
+    });
+    this.packetsInDashboard = [...packetsList];
   }
 
   ngOnInit() {
@@ -150,6 +163,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.idProjectSelected = event.value;
     clearInterval(this.updateRecordingInterval);
     this.recordStateInLoading = true;
+    this.signalIsOn = true;
     this.updateToplogyStatus();
     this.updateRecordingInterval = setInterval(() => {
       this.updateToplogyStatus();
@@ -182,6 +196,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
           (res: Dashboard[]) => {
             this.currentDashboard = res[0];
             this.currentDashboardId = this.currentDashboard.id;
+            this.getPacketsFromWidgets(this.currentDashboard.widgets);
             this.pageStatus = PageStatus.Standard;
           },
           error => {

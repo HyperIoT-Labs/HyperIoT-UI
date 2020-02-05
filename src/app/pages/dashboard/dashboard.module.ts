@@ -1,17 +1,17 @@
 import { CommonModule } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatInputModule } from '@angular/material';
-import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { MatInputModule, MatSelectModule } from '@angular/material';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
-import { MatSelectModule } from '@angular/material';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { RouterModule } from '@angular/router';
 import { HyperiotComponentsModule } from '@hyperiot/components';
 import { WidgetsModule } from '@hyperiot/widgets';
 import { GridsterModule } from 'angular-gridster2';
 import { RatingModule } from 'ng-starrating';
+import { SharedComponentsModule } from 'src/app/components/shared-components/shared-components.module';
 import { MyTelInputComponent } from '../../test/my-tel-input/my-tel-input.component';
 import { AddWidgetDialogComponent } from './add-widget-dialog/add-widget-dialog.component';
 import { DashboardConfigService } from './dashboard-config.service';
@@ -19,20 +19,18 @@ import { DashboardViewComponent } from './dashboard-view/dashboard-view.componen
 import { DashboardComponent } from './dashboard.component';
 import { DashboardsListComponent } from './dashboards-list/dashboards-list.component';
 import { DynamicWidgetComponent } from './dynamic-widget/dynamic-widget.component';
+import { TimeAxisComponent } from './timeline/time-axis/time-axis.component';
 import { TimelineComponent } from './timeline/timeline.component';
 import { EventsLogSettingsComponent } from './widget-settings-dialog/events-log-settings/events-log-settings.component';
 import { PacketSelectComponent } from './widget-settings-dialog/packet-select/packet-select.component';
+import { PacketTableSelectComponent } from './widget-settings-dialog/packet-table-select/packet-table-select.component';
+import { PacketTableSettingsComponent } from './widget-settings-dialog/packet-table-settings/packet-table-settings.component';
 import { SensorValueSettingsComponent } from './widget-settings-dialog/sensor-value-settings/sensor-value-settings.component';
 import { StatsChartSettingsComponent } from './widget-settings-dialog/stats-chart-settings/stats-chart-settings.component';
 import { TextLabelSettingsComponent } from './widget-settings-dialog/text-label-settings/text-label-settings.component';
 import { TimeChartSettingsComponent } from './widget-settings-dialog/time-chart-settings/time-chart-settings.component';
 import { WidgetSettingsDialogComponent } from './widget-settings-dialog/widget-settings-dialog.component';
 import { WidgetsLayoutComponent } from './widgets-layout/widgets-layout.component';
-import { TimeAxisComponent } from './timeline/time-axis/time-axis.component';
-import { DatePickerComponent } from './timeline/date-picker/date-picker.component';
-import { SharedComponentsModule } from 'src/app/components/shared-components/shared-components.module';
-import { PacketTableSettingsComponent } from './widget-settings-dialog/packet-table-settings/packet-table-settings.component';
-import { PacketTableSelectComponent } from './widget-settings-dialog/packet-table-select/packet-table-select.component';
 
 @NgModule({
   declarations: [
@@ -52,8 +50,6 @@ import { PacketTableSelectComponent } from './widget-settings-dialog/packet-tabl
     DashboardComponent,
     TimelineComponent,
     TimeAxisComponent,
-    DatePickerComponent,
-    TimelineComponent,
     PacketTableSettingsComponent,
     PacketTableSelectComponent
   ],
