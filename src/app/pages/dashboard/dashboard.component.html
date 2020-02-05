@@ -3,7 +3,8 @@
     <div class="header d-flex flex-row justify-content-stretch">
 
         <div class="breadcrumb flex-grow-1">
-            <span class="hyt-icon icon-hyt_projectSolo"></span> <a [routerLink]="['/']">Home</a> > <strong>Dashboard</strong>
+            <span class="hyt-icon icon-hyt_projectSolo"></span> <a [routerLink]="['/']">Home</a> >
+            <strong>Dashboard</strong>
         </div>
 
     </div>
@@ -30,11 +31,8 @@
                             <p i18n="@@HYT_stream_is_on">HYT_stream_is_on</p>
                         </div>
 
-                        <hyt-topology-toolbar
-                            [dataRecordingIsOn]="dataRecordingIsOn"
-                            [upTimeSec]="upTimeSec"
-                            [idProjectSelected]="idProjectSelected"
-                            [recordStateInLoading]="recordStateInLoading"
+                        <hyt-topology-toolbar [dataRecordingIsOn]="dataRecordingIsOn" [upTimeSec]="upTimeSec"
+                            [idProjectSelected]="idProjectSelected" [recordStateInLoading]="recordStateInLoading"
                             (recordingStateChange)="changeTopologyState($event)">
                         </hyt-topology-toolbar>
 
@@ -46,8 +44,7 @@
                             [options]="hProjectListOptions" [selected]="idProjectSelected"
                             (changeFn)="onSelectChange($event)" [disabled]="false"></hyt-select>
 
-                        <div id="add-widget-btn" *ngIf="pageStatus == PageStatus.Standard"
-                            (click)="openWidgetModal()">
+                        <div id="add-widget-btn" *ngIf="pageStatus == PageStatus.Standard" (click)="openWidgetModal()">
                             <span class="hyt-icon icon-hyt_widgetPlus"></span>
                             <p i18n="@@HYT_add_a_widget">HYT_add_a_widget</p>
                         </div>
@@ -57,22 +54,28 @@
                 </div>
 
             </div>
+
         </div>
 
-        <!-- <hyt-timeline></hyt-timeline> -->
-
-        <div id="loadingStatus" *ngSwitchCase="PageStatus.Loading" class="mt-5 d-flex flex-column row align-items-center justify-content-center">
+        <div id="loadingStatus" *ngSwitchCase="PageStatus.Loading"
+            class="mt-5 d-flex flex-column row align-items-center justify-content-center">
             <!-- Loading -->
 
-            <img id="animatedPreloaderImg" src="assets/images/hyperiot_logo_single_char_animated.svg" alt="Hyperiot Animated Logo"> <!-- @I18N@ -->
+            <img id="animatedPreloaderImg" src="assets/images/hyperiot_logo_single_char_animated.svg"
+                alt="Hyperiot Animated Logo"> <!-- @I18N@ -->
             <h2 i18n="@@HYT_page_is_loading">HYT_page_is_loading</h2>
             <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 
         </div>
 
         <div id="standardStatus" *ngSwitchCase="PageStatus.Standard" class="row">
+
+            <hyt-timeline [projectId]="idProjectSelected" [dashboardPackets]="packetsInDashboard" class="col-12"
+                *ngIf="!signalIsOn"></hyt-timeline>
+
             <!-- Standard -->
-            <div *ngIf="!dataRecordingIsOn && signalIsOn && !recordStateInLoading" id="dashboard-overlay-blurred" class="row no-gutters justify-content-center">
+            <div *ngIf="!dataRecordingIsOn && signalIsOn && !recordStateInLoading" id="dashboard-overlay-blurred"
+                class="row no-gutters justify-content-center">
 
                 <div class="col-md-4">
                     <h2 id="overlay-blurred-title">Data recording is disabled</h2>
@@ -87,13 +90,11 @@
 
             </div>
 
-            <div id="container-box-dashboard" class="col-12 {{(!dataRecordingIsOn && signalIsOn) ? 'blurred-animation' : ''}}">
+            <div id="container-box-dashboard"
+                class="col-12 {{(!dataRecordingIsOn && signalIsOn) ? 'blurred-animation' : ''}}">
 
-                <hyt-dashboard-view 
-                    [dashboard]="currentDashboard" 
-                    [dashboardType]="currentDashboardType"
-                    [dashboardWidgets]="currentDashboard.widgets"
-                >
+                <hyt-dashboard-view [dashboard]="currentDashboard" [dashboardType]="currentDashboardType"
+                    [dashboardWidgets]="currentDashboard.widgets">
                 </hyt-dashboard-view>
 
             </div>
@@ -116,7 +117,8 @@
 
         </div>
 
-        <div id="errorStatus" *ngSwitchCase="PageStatus.Error" class="mt-5 d-flex flex-column row align-items-center justify-content-center">
+        <div id="errorStatus" *ngSwitchCase="PageStatus.Error"
+            class="mt-5 d-flex flex-column row align-items-center justify-content-center">
             <!-- Error -->
             <h2 i18n="@@HYT_error_occurred_long">HYT_error_occurred_long</h2>
 

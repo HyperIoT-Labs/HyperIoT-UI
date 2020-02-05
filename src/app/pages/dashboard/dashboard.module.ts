@@ -29,7 +29,6 @@ import { TimeChartSettingsComponent } from './widget-settings-dialog/time-chart-
 import { WidgetSettingsDialogComponent } from './widget-settings-dialog/widget-settings-dialog.component';
 import { WidgetsLayoutComponent } from './widgets-layout/widgets-layout.component';
 import { TimeAxisComponent } from './timeline/time-axis/time-axis.component';
-import { DatePickerComponent } from './timeline/date-picker/date-picker.component';
 import { SharedComponentsModule } from 'src/app/components/shared-components/shared-components.module';
 
 @NgModule({
@@ -50,7 +49,6 @@ import { SharedComponentsModule } from 'src/app/components/shared-components/sha
     DashboardComponent,
     TimelineComponent,
     TimeAxisComponent,
-    DatePickerComponent,
     TimelineComponent
   ],
   imports: [
