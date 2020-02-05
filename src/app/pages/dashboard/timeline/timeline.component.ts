@@ -1,9 +1,9 @@
-import { AfterViewInit, Component, OnInit, ViewChild, Input } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { TimeStep } from '@hyperiot/components';
+import { HbaseconnectorsService } from '@hyperiot/core';
 import * as moment from 'moment';
 import 'moment-precise-range-plugin';
 import { TimeAxisComponent } from './time-axis/time-axis.component';
-import { HbaseconnectorsService } from '@hyperiot/core';
 
 export interface HYTData {
   timestamp: Date;
