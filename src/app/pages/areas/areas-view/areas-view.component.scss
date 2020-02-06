@@ -1,0 +1,35 @@
+.content {
+    font-family: 'Exo';
+    font-size: 1em;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 15px;
+}
+
+.header {
+    border-bottom: 1px solid #1e58a5;
+    min-height: 50px;
+
+    .breadcrumb {
+      font-weight: 400;
+      font-size: 1.2em;
+      line-height: 48px;
+      vertical-align: middle;
+
+      span {
+  
+          &.icon-hyt_projectSolo {
+          font-size: 1.8em;
+          vertical-align: middle;
+          margin-right: 3px;
+          color: #bec3c7;      
+          }
+
+      }
+
+      a {
+          color: #000000;
+      }
+
+  }
+}

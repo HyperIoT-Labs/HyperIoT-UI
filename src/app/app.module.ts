@@ -50,6 +50,7 @@ import { RuleErrorModalComponent } from './pages/projects/project-forms/rule-def
 import { AddWidgetDialogComponent } from './pages/dashboard/add-widget-dialog/add-widget-dialog.component';
 import { WidgetSettingsDialogComponent } from './pages/dashboard/widget-settings-dialog/widget-settings-dialog.component';
 import { GenericMessageDialogComponent } from './components/modals/generic-message-dialog/generic-message-dialog.component';
+import { AreasViewComponent } from './pages/areas/areas-view/areas-view.component';
 
 
 export class MyUrlSerializer extends DefaultUrlSerializer implements UrlSerializer {
@@ -83,7 +84,8 @@ export function apiConfigFactory(): Configuration {
     NotificationbarComponent,
     ConfirmRecordingActionComponent,
     InfoRecordingActionComponent,
-    GenericMessageDialogComponent
+    GenericMessageDialogComponent,
+    AreasViewComponent
   ],
   // dynamically created components
   entryComponents: [
