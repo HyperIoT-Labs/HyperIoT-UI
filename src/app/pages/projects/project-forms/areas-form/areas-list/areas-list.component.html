@@ -1,4 +1,4 @@
-<div class="d-flex flex-row flex-wrap justify-content-center">
+<div class="d-flex flex-row flex-wrap justify-content-center" *ngIf="areaList && areaList.length > 0">
     <mat-card *ngFor="let area of areaList"
         class="area-item mat-elevation-z2 d-flex flex-column"
         (click)="onAreaItemClick(area)">
@@ -9,4 +9,7 @@
         <div *ngIf="area.imagePath == null || area.imagePath.length == 0" class="map-image flex-grow-1 d-flex flex-column justify-content-center align-items-center" i18n="@@HYT_area_list_noimage">HYT_area_list_noimage</div>
         <mat-card-content class="p-2">{{area.description}} (A: {{area.innerCount}}, D: {{area.deviceCount}})</mat-card-content>
     </mat-card>
+</div>
+<div *ngIf="!areaList || !areaList.length">
+    <h3>No areas defined.</h3> <!--@I18N-->
 </div>

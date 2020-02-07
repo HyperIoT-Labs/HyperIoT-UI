@@ -10,7 +10,6 @@ import { AreaDeviceSelectDialogComponent } from './area-device-select-dialog/are
 import { AreaInnerareaSelectDialogComponent } from './area-innerarea-select-dialog/area-innerarea-select-dialog.component';
 import { DraggableItemComponent } from './draggable-item/draggable-item.component';
 import { GenericMessageDialogComponent } from 'src/app/components/modals/generic-message-dialog/generic-message-dialog.component';
-import { HytTreeViewProjectComponent } from '@hyperiot/components/lib/hyt-tree-view-project/hyt-tree-view-project.component';
 
 @Component({
   selector: 'hyt-areas-form',
@@ -415,6 +414,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit {
   }
 
   private loadAreaImage() {
+    this.mapComponent.unsetMapImage();
     if (this.entity.imagePath) {
       // TODO: no way to make this work with Area API
       //this.areaService.getAreaImage(this.areaId).subscribe((res) => {

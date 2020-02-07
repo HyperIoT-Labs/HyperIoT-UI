@@ -58,6 +58,9 @@ export class AreaMapComponent {
     this.mapBoundary.nativeElement.style['background-image'] = `url(${imageUrl})`;
     this.refresh();
   }
+  unsetMapImage() {
+    this.mapBoundary.nativeElement.style['background-image'] = null;
+  }
 
   addItem(): ComponentRef<DraggableItemComponent> {
     const componentFactory = this.componentFactoryResolver
@@ -114,7 +117,6 @@ export class AreaMapComponent {
 
   reset() {
     this.mapComponents.slice().forEach((c) => this.removeItem(c, true));
-    this.mapBoundary.nativeElement.style['background-image'] = null;
   }
 
 }
