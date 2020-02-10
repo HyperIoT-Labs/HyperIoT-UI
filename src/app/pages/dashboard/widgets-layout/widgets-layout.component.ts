@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy, HostListener, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, HostListener, ViewChild, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 
 import {
@@ -40,6 +40,8 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
   @Input() dashboardValue: Dashboard;
 
   @Input() widgets;
+
+  @Output() widgetLayoutEvent: EventEmitter<any> = new EventEmitter<any>();
 
   dashboard: Array<GridsterItem>;
   dashboardEntity: Dashboard;
@@ -237,6 +239,7 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
     if (this.autoSaveTimeout) {
       clearTimeout(this.autoSaveTimeout);
     }
+    this.saveDashboard();
     this.autoSaveTimeout = setTimeout(() => {
       this.saveDashboard();
     }, 5000);
@@ -263,6 +266,7 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
     this.showSettingWidget = false;
     this.changes++;
     this.activeAutoSave();
+    this.widgetLayoutEvent.emit();
     // if(this.ngUnsubscribe)
     //   this.ngUnsubscribe.next();
   }
@@ -274,6 +278,7 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
           this.removingWidget = true;
           // TODO: should request action confim
           this.removeItem(data.widget, () => {
+            this.widgetLayoutEvent.emit();
             this.removingWidget = false;
           });
         }
@@ -294,9 +299,9 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
       currentWidgetIdSetting: this.currentWidgetIdSetting,
       widget: widget
     });
-    modalRef.onClosed.subscribe(event => {
-      this.onWidgetSettingClose(event);
-    });
+    modalRef.onClosed.subscribe(
+      event => { this.onWidgetSettingClose(event) }
+    );
   }
 
   // closeModal(id: string) {

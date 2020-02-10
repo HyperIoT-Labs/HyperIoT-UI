@@ -1,10 +1,9 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { WidgetsLayoutComponent } from '../widgets-layout/widgets-layout.component';
 import { Subject } from 'rxjs';
 import { HytModalConfService } from 'src/app/services/hyt-modal-conf.service';
 import { Dashboard } from '@hyperiot/core';
-import { HytModalRef } from '@hyperiot/components';
 
 @Component({
   selector: 'hyt-dashboard-view',
@@ -18,6 +17,8 @@ export class DashboardViewComponent implements OnInit {
   @Input() dashboard: Dashboard;
   @Input() dashboardType: any;
   @Input() dashboardWidgets;
+
+  @Output() dashboardViewEvent: EventEmitter<any> = new EventEmitter<any>();
 
   bool = false;
 
@@ -50,4 +51,5 @@ export class DashboardViewComponent implements OnInit {
       this.dashboardLayout.addItem(widget);
     });
   }
+
 }

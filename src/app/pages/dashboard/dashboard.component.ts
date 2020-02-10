@@ -1,11 +1,11 @@
-import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation, ɵConsole } from '@angular/core';
-import { Dashboard, HProject, Widget, DashboardWidget } from '@hyperiot/core';
+import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { HytModalRef, HytModalService } from '@hyperiot/components';
+import { Dashboard, DashboardOfflineDataService, DashboardWidget, HProject } from '@hyperiot/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { HytModalService, HytModalRef } from '@hyperiot/components';
+import { AddWidgetDialogComponent } from './add-widget-dialog/add-widget-dialog.component';
 import { DashboardConfigService } from './dashboard-config.service';
 import { DashboardViewComponent } from './dashboard-view/dashboard-view.component';
-import { AddWidgetDialogComponent } from './add-widget-dialog/add-widget-dialog.component';
 
 enum PageStatus {
   Loading = 0,
@@ -68,6 +68,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   constructor(
     private dashboardConfigService: DashboardConfigService,
+    private dashboardOfflineDataService: DashboardOfflineDataService,
     private hytModalService: HytModalService
   ) { }
 
@@ -197,6 +198,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
             this.currentDashboard = res[0];
             this.currentDashboardId = this.currentDashboard.id;
             this.getPacketsFromWidgets(this.currentDashboard.widgets);
+            this.dashboardOfflineDataService.resetService(this.idProjectSelected, this.packetsInDashboard);
             this.pageStatus = PageStatus.Standard;
           },
           error => {
@@ -282,82 +284,31 @@ export class DashboardComponent implements OnInit, OnDestroy {
     });
   }
 
-  /************************************************************************************************************* Not used */
-
-  createDashboard(idProject: number) {
-
-    const dashboard: Dashboard = {
-      dashboardType: 'REALTIME',
-      entityVersion: 1,
-      hproject: this.hProjectList.find(x => (x.id === idProject)),
-      // name: this.hProjectList.find(x => (x.id == idProject)).name
-    };
-
-    // this.dashboardConfigService.saveDashboard(dashboard)
-    // console.log(dashboard)
-
+  timeLineSelection(event: Date[]) {
+    this.dashboardOfflineDataService.getHPacketMap(event[0].getTime(), event[1].getTime());
   }
 
-  getAllDashboardAndProjects() {
-    this.dashboardConfigService.getAllDashboardsAndProjects()
-      .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe(
-        ([res1, res2]) => {
-          try {
-            this.hProjectList = [...res1];
-            this.hProjectListOptions = this.hProjectList as HytSelectOption[];
-            this.hProjectListOptions.forEach(element => {
-              element.label = element.name;
-              element.value = element.id;
-            });
-          } catch (error) {
-            this.pageStatus = PageStatus.Error;
-          }
-
-          try {
-            this.dashboardList = [...res2];
-          } catch (error) { }
-
-        },
-        error => {
-          this.pageStatus = PageStatus.Error;
-        },
-        () => {
-
-          this.hProjectListOptions.sort((a, b) => {
-            if (a.entityModifyDate > b.entityModifyDate) { return -1; }
-            if (a.entityModifyDate < b.entityModifyDate) { return 1; }
-            return 0;
-          });
-
-          this.dashboardList.sort((a, b) => {
-            if (a.entityModifyDate > b.entityModifyDate) { return -1; }
-            if (a.entityModifyDate < b.entityModifyDate) { return 1; }
-            return 0;
-          });
-
-          if (this.dashboardList.length > 0 && this.hProjectListOptions.length > 0) {
-
-            try {
-              this.idProjectSelected = this.hProjectListOptions.find(x => (x.id === this.dashboardList[0].hproject.id)).value;
-              this.currentDashboardId = this.dashboardList[0].id;
-            } catch (error) {
-
+  // TODO getOfflineDashboardFromProject() should not be called because currentDashboard should be updated automatically
+  // TODO settimeout is used to wait the dashboard configuration to be saved before getOfflineDashboardFromProject(). Remove it.
+  onWidgetEvent() {
+    setTimeout(() => {
+      if (!this.signalIsOn) {
+        this.dashboardConfigService.getOfflineDashboardFromProject(this.idProjectSelected)
+          .pipe(takeUntil(this.ngUnsubscribe))
+          .subscribe(
+            (res: Dashboard[]) => {
+              this.currentDashboard = res[0];
+              this.currentDashboardId = this.currentDashboard.id;
+              this.getPacketsFromWidgets(this.currentDashboard.widgets);
+              this.dashboardOfflineDataService.resetService(this.idProjectSelected, this.packetsInDashboard);
+              this.pageStatus = PageStatus.Standard;
+            },
+            error => {
+              this.pageStatus = PageStatus.New;
             }
-            this.pageStatus = PageStatus.Standard;
-
-          } else if (this.dashboardList.length === 0 && this.hProjectListOptions.length > 0) {
-
-            this.idProjectSelected = this.hProjectListOptions[0].value;
-            this.currentDashboardId = this.idProjectSelected[0].id;
-
-            this.pageStatus = PageStatus.New;
-          } else {
-            this.pageStatus = PageStatus.Error;
-          }
-
-        }
-      );
+          );
+      }
+    }, 500);
   }
 
 }

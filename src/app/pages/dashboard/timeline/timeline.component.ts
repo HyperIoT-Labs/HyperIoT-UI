@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit, ViewChild, Output, EventEmitter, OnChanges } from '@angular/core';
 import { TimeStep } from '@hyperiot/components';
 import { HbaseconnectorsService } from '@hyperiot/core';
 import * as moment from 'moment';
@@ -15,7 +15,7 @@ export interface HYTData {
   templateUrl: './timeline.component.html',
   styleUrls: ['./timeline.component.scss']
 })
-export class TimelineComponent implements OnInit, AfterViewInit {
+export class TimelineComponent implements AfterViewInit, OnChanges {
 
   @Input()
   projectId;
@@ -45,6 +45,9 @@ export class TimelineComponent implements OnInit, AfterViewInit {
 
   @ViewChild('timeAxis', { static: false }) timeAxis: TimeAxisComponent;
 
+  @Output()
+  dateOutput = new EventEmitter<any>();
+
   timeDifference: moment.PreciseRangeValueObject;
   domainInterval: TimeStep = 'month';
 
@@ -64,15 +67,16 @@ export class TimelineComponent implements OnInit, AfterViewInit {
 
   constructor(
     private hBaseConnectorsService: HbaseconnectorsService
-  ) { }
+  ) {
+    this.domainStart = moment(new Date()).startOf(this.mapToDomain[this.domainInterval]).toDate();
+    this.domainStop = moment(this.domainStart).add(1, this.mapToDomain[this.domainInterval]).toDate();
+  }
 
-  ngOnInit() {
-    this.domainStart = moment(new Date()).startOf(this.mapToDomain[this.domainInterval]).utc().toDate();
-    this.domainStop = moment(new Date()).add(1, this.mapToDomain[this.domainInterval]).toDate();
+  ngOnChanges(): void {
+    this.fakeRequest();
   }
 
   ngAfterViewInit() {
-    this.fakeRequest();
     this.timeAxis.updateAxis(this.timeLineData, [this.domainStart, this.domainStop], this.domainInterval);
   }
 
@@ -100,9 +104,7 @@ export class TimelineComponent implements OnInit, AfterViewInit {
 
   drowNewData() {
     this.timeLineData = [];
-
     const currentDate = moment(this.domainStart).startOf(this.domainInterval);
-    console.log(currentDate);
     const stop = this.domainStop.getTime();
     while (moment(currentDate).valueOf() < stop) {
       this.timeLineData.push({ timestamp: currentDate.toDate(), value: 0 });
@@ -123,14 +125,15 @@ export class TimelineComponent implements OnInit, AfterViewInit {
       this.domainStop.getTime()).subscribe(
         res => {
           //TODO IMPORTANT this converion has to be removed
-          res.forEach(element => {
-            element.timestamp = element.timestamp + (new Date).getTimezoneOffset() * 60 * 1000;
-          });
+          // res.forEach(element => {
+          //   element.timestamp = element.timestamp + (new Date).getTimezoneOffset() * 60 * 1000;
+          // });
           this.timeLineData.forEach(element => {
             if (res.some(y => y.timestamp === element.timestamp.getTime())) {
               element.value = res.find(y => y.timestamp === element.timestamp.getTime()).value;
             }
           });
+          console.log(res)
           this.timeAxis.updateData(this.timeLineData);
         },
         err => console.log(err)
@@ -140,6 +143,7 @@ export class TimelineComponent implements OnInit, AfterViewInit {
 
   dataTimeSelectionChanged(event) {
     this.timeSelection = event;
+    this.dateOutput.emit(this.timeSelection);
   }
 
   changeStep(event) {

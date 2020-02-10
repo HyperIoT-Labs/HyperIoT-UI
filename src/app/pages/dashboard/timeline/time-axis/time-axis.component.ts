@@ -46,7 +46,9 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
   margin = { top: 5, right: 20, bottom: 20, left: 20 };
   axisScale: d3.ScaleTime<number, number>;
   tickScale = d3.scaleLinear().domain([0, 10000]).range([0, 9]);
-  dataIntensityScale = d3.interpolate('#bbbbbb', '#0066ff');//('#0066ff', '#33ff00');
+  dataIntensityScale = d3.interpolate('#999999', '#003cff');//('#0066ff', '#33ff00');
+
+  colorLogScale = d3.scaleLog().domain([0, 1000]).range([0, 100]);
   //d3.scaleQuantize<any>().domain([0, 1000]).range(['#0066ff', '#33ff00']);
   // svgCont: d3.Selection<SVGGElement, unknown, HTMLElement, any>;
   svgAxis: d3.Selection<SVGGElement, unknown, HTMLElement, any>;
@@ -59,6 +61,8 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
   transition = { duration: 1000, type: '' };
 
   brush;
+
+  maxValue = 1;
 
   rangeMap = {
     minute: d3.timeMinute,
@@ -97,11 +101,10 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
       this.rect.attr('fill', (d) =>
         d.timestamp >= this.timeInterval[0] && d.timestamp < this.timeInterval[1] ?
           '#35d443' :
-          (d.value === 0 ?
-            '#999999' : 'blue')
+          this.dataIntensityScale(d.value / this.maxValue)
       );
     } else {
-      this.rect.attr('fill', d => d.value === 0 ? '#999999' : 'blue');
+      this.rect.attr('fill', d => this.dataIntensityScale(d.value / this.maxValue));
     }
   }
 
@@ -233,13 +236,18 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
   }
 
   updateData(data) {
-    console.log("updateData")
-    this.data = [...data];
-    this.rect.attr('fill', (d) =>
-      d.timestamp >= this.timeInterval[0] && d.timestamp < this.timeInterval[1] ?
-        '#35d443' :
-        (d.value === 0 ?
-          '#999999' : 'blue')
+    this.maxValue = 1;
+    for (let i = 0; i < data.length; i++) {
+      this.data[i].value = data[i].value;
+    }
+    this.data.forEach(y => {
+      if (y.value > this.maxValue) {
+        this.maxValue = y.value;
+      }
+    });
+    this.rect.attr('fill', (d) => d.timestamp >= this.timeInterval[0] && d.timestamp < this.timeInterval[1] ?
+      '#35d443' :
+      this.dataIntensityScale(d.value / this.maxValue)
     );
   }
 
@@ -515,7 +523,9 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
           ;
     */
 
-    d3.selectAll('#cube-container').remove();
+    if (!animation) {
+      d3.selectAll('#cube-container').remove();
+    }
     this.rect = this.svgAxis
       .append('g')
       .attr('id', 'cube-container')
@@ -525,11 +535,11 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
       .selectAll('rect')
       .data(this.data)
       .join('g')
-      .attr('fill', d => d.timestamp >= this.timeInterval[0] && d.timestamp < this.timeInterval[1] ? '#35d443' : (d.value === 0 ? '#999999' : 'blue'))
+      .attr('fill', d => d.timestamp >= this.timeInterval[0] && d.timestamp < this.timeInterval[1] ? '#35d443' : this.dataIntensityScale(d.value / this.maxValue))
       .attr('class', 'data-cube')
       .call(this.appendCube)
       .attr('cursor', 'pointer')
-      .style('opacity', 1)
+      .style('opacity', animation ? 0 : 1)
       .attr('transform', (d, i, n) => `translate(${this.axisScale(d.timestamp) +
         distance},${-this.contentHeight + 20}) scale(1.8)`) // scale(0.3)  //TODO make variable
       .on('mouseover', (d, i, n) => {

@@ -1,15 +1,7 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  ViewChild,
-  OnDestroy,
-  Injector
-} from '@angular/core';
-
-import { Subject } from 'rxjs';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { HytModal, HytModalService } from '@hyperiot/components';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'hyt-widget-settings-dialog',
@@ -37,6 +29,7 @@ export class WidgetSettingsDialogComponent extends HytModal implements OnInit {
     this.widgetName = this.data.widget.name;
     this.widgetId = this.data.currentWidgetIdSetting;
     this.dialogDataState = 1;
+    console.log(this)
   }
 
   modalIsOpen = false;
@@ -64,7 +57,7 @@ export class WidgetSettingsDialogComponent extends HytModal implements OnInit {
     this.widgetName = w.name;
   }
 
-  confirm($event) {
+  confirm() {
     // common config options
     this.widget.name = this.widgetName;
     // signal 'apply' to widget specific config component
@@ -75,7 +68,7 @@ export class WidgetSettingsDialogComponent extends HytModal implements OnInit {
     // this.close($event);
 
     // this.modalClose.emit($event);
-    this.close($event);
+    this.close('save');
   }
 
   // dismiss(e: any) {

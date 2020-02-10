@@ -70,8 +70,8 @@
 
         <div id="standardStatus" *ngSwitchCase="PageStatus.Standard" class="row">
 
-            <hyt-timeline [projectId]="idProjectSelected" [dashboardPackets]="packetsInDashboard" class="col-12"
-                *ngIf="!signalIsOn"></hyt-timeline>
+            <hyt-timeline *ngIf="!signalIsOn" [projectId]="idProjectSelected" [dashboardPackets]="packetsInDashboard"
+                class="col-12" (dateOutput)="timeLineSelection($event)"></hyt-timeline>
 
             <!-- Standard -->
             <div *ngIf="!dataRecordingIsOn && signalIsOn && !recordStateInLoading" id="dashboard-overlay-blurred"
@@ -94,7 +94,7 @@
                 class="col-12 {{(!dataRecordingIsOn && signalIsOn) ? 'blurred-animation' : ''}}">
 
                 <hyt-dashboard-view [dashboard]="currentDashboard" [dashboardType]="currentDashboardType"
-                    [dashboardWidgets]="currentDashboard.widgets">
+                    [dashboardWidgets]="currentDashboard.widgets" (dashboardViewEvent)="onWidgetEvent()">
                 </hyt-dashboard-view>
 
             </div>
