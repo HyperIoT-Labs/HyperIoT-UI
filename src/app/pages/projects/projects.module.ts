@@ -135,6 +135,7 @@ import { GenericMessageDialogComponent } from 'src/app/components/modals/generic
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
-  ]
+  ],
+  exports: [ AreasListComponent, AreaMapComponent, DraggableItemComponent, DragDropModule ]
 })
 export class ProjectsModule { }

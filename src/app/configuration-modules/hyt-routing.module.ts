@@ -26,6 +26,7 @@ import { PacketStatisticsFormComponent } from '../pages/projects/project-forms/p
 import { PacketEventsFormComponent } from '../pages/projects/project-forms/packet-events-form/packet-events-form.component';
 import { HomeComponent } from '../pages/home/home.component';
 import { AreasFormComponent } from '../pages/projects/project-forms/areas-form/areas-form.component';
+import { AreasViewComponent } from '../pages/areas/areas-view/areas-view.component';
 
 @Injectable()
 export class LoggedInGuard implements CanActivate {
@@ -193,6 +194,14 @@ const hyperiotRoutes: Routes = [
   {
     path: 'dashboards',
     component: DashboardComponent,
+    canActivate: [LoggedInGuard],
+    data: {
+      showToolBar: true,
+    }
+  },
+  {
+    path: 'areas',
+    component: AreasViewComponent,
     canActivate: [LoggedInGuard],
     data: {
       showToolBar: true,

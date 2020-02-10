@@ -93,13 +93,12 @@
                 <hyt-button [isDisabled]="areaList.length === 0" (clickFn)="onMapAreaAddClick($event)" i18n="@@HYT_area_map_area_add">HYT_area_map_area_add</hyt-button>
 
             </div>
-            <hyt-area-map #map></hyt-area-map>
+            <hyt-area-map #map [editMode]="true"></hyt-area-map>
         </mat-tab>
 
     </mat-tab-group>
 
 </div>
-
 
 <!-- 
     TODO: This HTML block is repeated

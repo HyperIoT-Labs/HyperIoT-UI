@@ -3,6 +3,7 @@
     i18n-title="@@HYT_area_draggable_title"
     [ngStyle]="style"
     cdkDrag
+    [cdkDragDisabled]="!editMode"
     cdkDragBoundary=".map-container"
     [cdkDragData]="itemData"
     [cdkDragFreeDragPosition]="position"
@@ -14,7 +15,8 @@
         title="HYT_area_draggable_remove"
         i18n-title="@@HYT_area_draggable_remove"
         (mousedown)="$event.stopPropagation()"
-        (click)="onRemoveButtonClick($event)">X</button>
+        (click)="onRemoveButtonClick($event)"
+        [ngStyle]="{ display: editMode ? '' : 'none' }">X</button>
     <div class="title" [ngClass]="{ 'area-title': !itemData.device }"
         title="HYT_area_draggable_open"
         i18n-title="@@HYT_area_draggable_open"

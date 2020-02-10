@@ -359,9 +359,10 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit {
         return sum;
       };
       area['innerCount'] = count(areaTree.innerArea);
-    });
-    this.areaService.getAreaDeviceDeepList(area.id).subscribe((deviceList) => {
-      area['deviceCount'] = deviceList.length;
+      // get all devices (including inner areas ones)
+      this.areaService.getAreaDeviceDeepList(area.id).subscribe((deviceList) => {
+        area['deviceCount'] = deviceList.length;
+      });
     });
   }
 
@@ -413,6 +414,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit {
   }
 
   private loadAreaImage() {
+    this.mapComponent.unsetMapImage();
     if (this.entity.imagePath) {
       // TODO: no way to make this work with Area API
       //this.areaService.getAreaImage(this.areaId).subscribe((res) => {

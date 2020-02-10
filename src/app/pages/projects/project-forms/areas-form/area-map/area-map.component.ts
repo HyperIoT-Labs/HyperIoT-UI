@@ -5,7 +5,8 @@ import {
   ComponentRef,
   ElementRef,
   HostListener,
-  EventEmitter
+  EventEmitter,
+  Input
 } from '@angular/core';
 import { DraggableItemComponent } from '../draggable-item/draggable-item.component';
 import { MapDirective } from '../map.directive';
@@ -22,6 +23,8 @@ export class AreaMapComponent {
   @ViewChild('mapBoundary', {static: true})
   mapBoundary: ElementRef;
   mapImageSize = { width: 800, height: 600 };
+  @Input()
+  editMode = false;
   // events
   itemOpen = new EventEmitter<any>();
   itemRemove = new EventEmitter<any>();
@@ -55,12 +58,17 @@ export class AreaMapComponent {
     this.mapBoundary.nativeElement.style['background-image'] = `url(${imageUrl})`;
     this.refresh();
   }
+  unsetMapImage() {
+    this.mapBoundary.nativeElement.style['background-image'] = null;
+  }
 
   addItem(): ComponentRef<DraggableItemComponent> {
     const componentFactory = this.componentFactoryResolver
       .resolveComponentFactory(DraggableItemComponent);
     const viewContainerRef = this.mapContainer.viewContainerRef;
     const component = viewContainerRef.createComponent(componentFactory);
+    // enable/disable editMode
+    component.instance.editMode = this.editMode;
     // handle click on component label (open button)
     component.instance.openClicked.subscribe(() => {
       this.openItem(component);
@@ -109,7 +117,6 @@ export class AreaMapComponent {
 
   reset() {
     this.mapComponents.slice().forEach((c) => this.removeItem(c, true));
-    this.mapBoundary.nativeElement.style['background-image'] = null;
   }
 
 }
