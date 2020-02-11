@@ -49,8 +49,6 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
   dataIntensityScale = d3.interpolate('#999999', '#003cff');//('#0066ff', '#33ff00');
 
   colorLogScale = d3.scaleLog().domain([0, 1000]).range([0, 100]);
-  //d3.scaleQuantize<any>().domain([0, 1000]).range(['#0066ff', '#33ff00']);
-  // svgCont: d3.Selection<SVGGElement, unknown, HTMLElement, any>;
   svgAxis: d3.Selection<SVGGElement, unknown, HTMLElement, any>;
   axisInterval: d3.CountableTimeInterval = d3.timeHour;
   element: any;
@@ -81,7 +79,16 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
     hour: 24,
     minute: 60,
     second: 60
-  }
+  };
+
+  // BRUSH PROPERTIES
+  //TODO type
+  rect;
+  container;
+  selectionSvg;
+  selectionRenderSvg;
+  rightHandle;
+  leftHandle;
 
   constructor() { }
 
@@ -98,6 +105,9 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
       if (mode !== 'code') {
         this.timeInterval = selection.map(d => this.axisInterval.round(this.axisScale.invert(d)));
       }
+      if (mode === 'code-released') {
+        this.dataTimeSelectionChanged.emit(this.timeInterval);
+      }
       this.rect.attr('fill', (d) =>
         d.timestamp >= this.timeInterval[0] && d.timestamp < this.timeInterval[1] ?
           '#35d443' :
@@ -111,10 +121,10 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
   brushReleased = () => {
     const selection = d3.event.detail.selection;
     this.timeInterval = selection.map(d => this.axisInterval.round(this.axisScale.invert(d)));
-    this.dataTimeSelectionChanged.emit(this.timeInterval);
     this.setSelection(
       this.timeInterval[1] > this.timeInterval[0] ? this.timeInterval.map(this.axisScale) : null,
-      d3.select('#brush-group')
+      d3.select('#brush-group'),
+      { type: 'brush', mode: 'code-released' }
     );
   }
 
@@ -162,14 +172,12 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
       .attr('id', 'brush-group')
       .attr('transform', `translate(${this.margin.left},55)`) //TODO make variable
       .call(this.brush);
-
   }
 
   updateRange() {
     this.axisScale.range([this.margin.left, this.contentWidth - this.margin.right]);
     this.svgAxis.call(d3.axisBottom(this.axisScale).ticks(this.axisInterval));
 
-    this.tickTextRemove(this.contentWidth);
     if (this.data) {
       this.drowData(null);
     }
@@ -183,20 +191,13 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
     if (animation) {
       const oldData = [...this.data];
       this.data = [...data];
-
       d3.selectAll('.data-cube').attr('class', 'old-data-cube');
-
       this.drowData(interval);
-
       this.axisScale.domain(this.domain);
-
       this.svgAxis
         .transition().duration(1000)
         .call(d3.axisBottom(this.axisScale).ticks(this.axisInterval));
-      this.tickTextRemove(this.contentWidth);
-
       const dist = this.contentWidth / this.stepInDomain[interval] / 2;
-
       d3.selectAll('.data-cube').data(this.data).transition().duration(1000)
         .attr('transform', (d, i, n) => `translate(${this.axisScale(d.timestamp) +
           dist},${-this.contentHeight + 20}) scale(1.8)`)
@@ -212,7 +213,6 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
       this.drowData(interval);
       this.svgAxis
         .call(d3.axisBottom(this.axisScale).ticks(this.axisInterval));
-      this.tickTextRemove(this.contentWidth);
     }
 
     this.setBrush();
@@ -222,12 +222,7 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
   setBrush() {
     if (this.timeInterval[0] && this.timeInterval[1]) {
       //TODO variable instead of select() ?
-      console.log("prova")
       this.setSelection(this.timeInterval[1] > this.timeInterval[0] ? this.timeInterval.map(this.axisScale) : null, d3.select('#brush-group'));
-      // d3.select('#containerSvg #brush-group').call(
-      //   this.brush.move,
-      //   [this.axisScale(this.timeInterval[0]), this.axisScale(this.timeInterval[1])]
-      // );
     }
   }
 
@@ -251,14 +246,6 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
     );
   }
 
-  rect;
-
-  container;
-  selectionSvg;
-  selectionRenderSvg;
-  rightHandle
-  leftHandle
-
   selectionHelper = g => {
     g.append('path')
       .attr('class', 'selectionHelper')
@@ -266,7 +253,6 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
     // .attr('stroke', '#cccccc')
     // .attr('fill', '#cccccc')
   }
-
 
   drawSelectionHelper = g => {
     g.call(this.selectionHelper)
@@ -278,7 +264,6 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
         d3.select(d).attr('fill', '#cccccc');
       })
       .on('click', () => {
-        console.log("EHI")
         this.resetSelection();
         this.brushed();
       });
@@ -463,40 +448,6 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
       );
   }
 
-  appendHytShape = g => {
-    g.call(this.appendBottomPath);
-    g.call(this.appendCube);
-    g.call(this.appendTimeText);
-  }
-
-  appendTimeText = g => {
-    const formatTime = d3.timeFormat('%H:%M');
-    g.append('text')
-      .style('font-size', 4)
-      .attr('x', 0)
-      .attr('y', 18)
-      .text(d => formatTime(d.timestamp));
-  }
-
-  appendBottomPath = g => {
-    let lineHeight = 6;
-    g.append('rect')
-      .attr('x', -1)
-      .attr('y', 8)
-      .attr('height', lineHeight)
-      .attr('width', 12)
-      .style('stroke-width', 0);
-  }
-
-  appendCube2 = g => {
-    g.append('path')
-      .attr('d', 'M5 0 L10 2 L10 8 L5 10 L0 8 L0 2 z');
-    g.append('path')
-      .attr('d', 'M0 2 L5 4 L10 2');
-    g.append('path')
-      .attr('d', 'M5 4 L5 10');
-  }
-
   appendCube = g => {
     g.append('path')
       .attr('d', 'M0 0 L5 2 L5 8 L0 10 L-5 8 L-5 2 z');
@@ -506,22 +457,9 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
       .attr('d', 'M0 4 L0 10');
   }
 
-  //circle;
-
   drowData(interval) {
     const distance = this.contentWidth / this.stepInDomain[interval] / 2;
     // svg width:  (d3.select(n[i]) as any).node().getBBox().width
-
-    /*
-        this.rect = this.svgAxis
-          .append('g')
-          //TODO TOFIX width and scale
-          .style('stroke-width', '0.2px')
-          .selectAll('rect')
-          .data(this.data)
-          .join('g')
-          ;
-    */
 
     if (!animation) {
       d3.selectAll('#cube-container').remove();
@@ -554,52 +492,6 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
         this.domainSet.emit([d.timestamp, n[i + 1]])
       });
 
-    // this.svgAxis.append('g')
-    //   .attr('id', 'ticksContainer')
-    //   .selectAll('line')
-    //   .data(this.data)
-    //   .join('line')
-    //   .attr('x1', d => this.axisScale(d.timestamp))
-    //   .attr('x2', d => this.axisScale(d.timestamp))
-    //   .attr('y1', -30)
-    //   .attr('y2', 30)
-    //   .style('stroke-width', 1)
-    //   .style('stroke', 'grey');
-
-  }
-
-  tickTextRemove(width: number) {
-    // const ticks = this.svgAxis.selectAll('#axisSvg .tick');
-    // const n = Math.round(ticks.size() / this.tickScale(width));
-
-    // console.log(ticks.size())
-    // console.log(this.tickScale(width));
-    // console.log(n);
-    // console.log(this.svgAxis.selectAll('#axisSvg .tick text').size());
-
-    // this.svgAxis.selectAll('#axisSvg .tick text').filter((d, i) => !(i % n === 0)).remove();
-
-  }
-
-  generalButton() {
-    console.log("OK")
-    d3.selectAll('.data-cube')
-      .transition().duration(1000)
-      .attr('transform', (d, i, n) => `translate(${i * 10},${-this.contentHeight + 20}) scale(1.8)`) // scale(0.3)  //TODO make variable
-      .style('opacity', 0);
-    // console.log(this.timeInterval);
-    // const endDate = new Date();
-    // const initDate = new Date(endDate);
-    // initDate.setMinutes(initDate.getMinutes() - 20);
-    // console.log('general button')
-    // d3.select('#containerSvg #brush-group').call(
-    //   this.brush.move,
-    //   [this.axisScale(endDate), this.axisScale(endDate)]
-    // );
-    // this.brush.move(d3.select(this), [
-    //   this.axisScale(new Date(2020, 1, 15, 10, 15, 0, 0)),
-    //   this.axisScale(new Date(2020, 1, 15, 10, 35, 0, 0)),
-    // ])
   }
 
 }
