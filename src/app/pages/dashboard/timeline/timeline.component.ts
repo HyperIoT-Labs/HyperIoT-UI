@@ -41,6 +41,15 @@ export class TimelineComponent implements AfterViewInit, OnChanges {
     second: 'millisecond'
   };
 
+  mapToGranularity = {
+    year: 'hour',
+    month: 'hour',
+    day: 'hour',
+    hour: 'hour',
+    minute: 'minute',
+    second: 'second'
+  };
+
   timeLineData = [];
 
   @ViewChild('timeAxis', { static: false }) timeAxis: TimeAxisComponent;
@@ -120,24 +129,25 @@ export class TimelineComponent implements AfterViewInit, OnChanges {
       `timeline_hproject_${this.projectId}`,
       this.dashboardPackets.toString(),
       this.domainInterval,
-      this.domainInterval,
+      this.mapToGranularity[this.domainInterval],
       this.domainStart.getTime(),
-      this.domainStop.getTime()).subscribe(
-        res => {
-          //TODO IMPORTANT this converion has to be removed
-          // res.forEach(element => {
-          //   element.timestamp = element.timestamp + (new Date).getTimezoneOffset() * 60 * 1000;
-          // });
-          this.timeLineData.forEach(element => {
-            if (res.some(y => y.timestamp === element.timestamp.getTime())) {
-              element.value = res.find(y => y.timestamp === element.timestamp.getTime()).value;
-            }
-          });
-          console.log(res)
-          this.timeAxis.updateData(this.timeLineData);
-        },
-        err => console.log(err)
-      );
+      this.domainStop.getTime()
+    ).subscribe(
+      res => {
+        //TODO IMPORTANT this converion has to be removed
+        // res.forEach(element => {
+        //   element.timestamp = element.timestamp + (new Date).getTimezoneOffset() * 60 * 1000;
+        // });
+        this.timeLineData.forEach(element => {
+          if (res.some(y => y.timestamp === element.timestamp.getTime())) {
+            element.value = res.find(y => y.timestamp === element.timestamp.getTime()).value;
+          }
+        });
+        console.log(res)
+        this.timeAxis.updateData(this.timeLineData);
+      },
+      err => console.log(err)
+    );
 
   }
 
