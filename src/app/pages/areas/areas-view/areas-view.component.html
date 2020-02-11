@@ -12,9 +12,9 @@
     <div>&nbsp;</div>
 
     <div class="flex-grow-1 d-flex flex-row justify-content-center">
-        <hyt-select [label]="'Select a project'" name="project"
-        [options]="userProjectsOptions" [selected]="selectedProjectOption"
-        (changeFn)="onSelectedProjectChange($event)"></hyt-select>
+        <hyt-select label="Select a project" name="project"
+            [options]="userProjectsOptions" [selected]="selectedProjectOption"
+            (changeFn)="onSelectedProjectChange($event)" [disabled]="false"></hyt-select>
     </div>
 
     <div class="align-self-center">
@@ -32,9 +32,30 @@
 
     <div *ngIf="areaId" class="d-flex flex-row" style="width: 100%;">
         <hyt-tree-view-project #treeView class="treeview" (nodeClick)="onTreeNodeClick($event)"></hyt-tree-view-project>
-        <div class="flex-grow-1">
-            <hyt-area-map #map></hyt-area-map>
+        <div class="flex-grow-1 d-flex flex-column m-4">
+            <div class="d-flex flex-row justify-content-between">
+                <div>Sub-areas: {{areaList.length}} Devices: {{areaDevices.length}}</div>
+                <hyt-button>Edit</hyt-button><!-- @I18N@ -->
+            </div>
+            <div>
+                <hyt-area-map #map></hyt-area-map>
+            </div>
         </div>
     </div>
 
+</div>
+
+<!-- Loading Status -->
+<div *ngIf="pageStatus === PageStatus.Loading"
+    class="loading-status mt-5 d-flex flex-column row align-items-center justify-content-center">
+
+    <img class="loading-animation" src="assets/images/hyperiot_logo_single_char_animated.svg"
+        alt="Hyperiot Animated Logo"> <!-- @I18N@ -->
+    <h2 i18n="@@HYT_page_is_loading">HYT_page_is_loading</h2>
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</div>
+<!-- Loading Error -->
+<div *ngIf="pageStatus === PageStatus.Error"
+    class="loading-status mt-5 d-flex flex-column row align-items-center justify-content-center">
+    <h2 i18n="@@HYT_error_occurred_long">HYT_error_occurred_long</h2>
 </div>
