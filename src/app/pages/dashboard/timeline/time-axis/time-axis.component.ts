@@ -33,7 +33,7 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
 
   //cube selected
   @Output()
-  domainSet = new EventEmitter();
+  domainSet: EventEmitter<Date> = new EventEmitter<Date>();
 
   data: HYTData[] = [];
 
@@ -46,7 +46,7 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
   margin = { top: 5, right: 20, bottom: 20, left: 20 };
   axisScale: d3.ScaleTime<number, number>;
   tickScale = d3.scaleLinear().domain([0, 10000]).range([0, 9]);
-  dataIntensityScale = d3.interpolate('#999999', '#003cff');//('#0066ff', '#33ff00');
+  dataIntensityScale = d3.interpolate('#bababa', '#003cff');//('#0066ff', '#33ff00');
 
   colorLogScale = d3.scaleLog().domain([0, 1000]).range([0, 100]);
   svgAxis: d3.Selection<SVGGElement, unknown, HTMLElement, any>;
@@ -498,7 +498,7 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
           distance},${-this.contentHeight + 20}) scale(1.8)`);
       })
       .on('click', (d, i, n) => {
-        this.domainSet.emit([d.timestamp, n[i + 1]])
+        this.domainSet.emit(d.timestamp);
       });
 
   }
