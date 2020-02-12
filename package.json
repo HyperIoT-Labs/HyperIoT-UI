@@ -33,7 +33,7 @@
     "@angular/service-worker": "~8.1.0",
     "@hyperiot/components": "0.0.72",
     "@hyperiot/core": "^0.5.9",
-    "@hyperiot/widgets": "^0.0.32",
+    "@hyperiot/widgets": "0.0.33",
     "@ngx-translate/i18n-polyfill": "^1.0.0",
     "@types/d3": "^5.7.2",
     "@types/moment-precise-range-plugin": "^0.2.0",

@@ -285,7 +285,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   timeLineSelection(event: Date[]) {
-    this.dashboardOfflineDataService.getHPacketMap(event[0].getTime(), event[1].getTime());
+    console.log(event[0], event[1])
+    if (event[0] && event[1]) {
+      this.dashboardOfflineDataService.getHPacketMap(event[0].getTime(), event[1].getTime());
+    }
   }
 
   // TODO getOfflineDashboardFromProject() should not be called because currentDashboard should be updated automatically

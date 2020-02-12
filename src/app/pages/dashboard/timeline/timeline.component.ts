@@ -82,7 +82,7 @@ export class TimelineComponent implements AfterViewInit, OnChanges {
   }
 
   ngOnChanges(): void {
-    this.fakeRequest();
+    this.timelineDataRequest();
   }
 
   ngAfterViewInit() {
@@ -93,36 +93,35 @@ export class TimelineComponent implements AfterViewInit, OnChanges {
     this.domainInterval = value;
     this.domainStart = moment(this.domainStart).startOf(this.mapToDomain[this.domainInterval]).utc().toDate();
     this.domainStop = moment(this.domainStart).add(1, this.mapToDomain[this.domainInterval]).toDate();
-    this.fakeRequest();
+    this.timelineDataRequest();
     this.timeAxis.updateAxis(this.timeLineData, [this.domainStart, this.domainStop], this.domainInterval);
   }
 
   timeBack() {
     this.domainStart = moment(this.domainStart).subtract(1, this.mapToDomain[this.domainInterval]).toDate();
     this.domainStop = moment(this.domainStop).subtract(1, this.mapToDomain[this.domainInterval]).toDate();
-    this.fakeRequest();
+    this.timelineDataRequest();
     this.timeAxis.updateAxis(this.timeLineData, [this.domainStart, this.domainStop], this.domainInterval);
   }
 
   timeForward() {
     this.domainStart = moment(this.domainStart).add(1, this.mapToDomain[this.domainInterval]).toDate();
     this.domainStop = moment(this.domainStop).add(1, this.mapToDomain[this.domainInterval]).toDate();
-    this.fakeRequest();
+    this.timelineDataRequest();
     this.timeAxis.updateAxis(this.timeLineData, [this.domainStart, this.domainStop], this.domainInterval);
   }
 
   drowNewData() {
     this.timeLineData = [];
-    const currentDate = moment(this.domainStart).startOf(this.domainInterval);
+    const currentDate = moment(this.domainStart);
     const stop = this.domainStop.getTime();
     while (moment(currentDate).valueOf() < stop) {
       this.timeLineData.push({ timestamp: currentDate.toDate(), value: 0 });
       currentDate.add(1, this.domainInterval);
-      // TODO input?
     }
   }
 
-  fakeRequest() {
+  timelineDataRequest() {
 
     this.drowNewData();
     this.hBaseConnectorsService.timelineScan(
@@ -143,7 +142,7 @@ export class TimelineComponent implements AfterViewInit, OnChanges {
             element.value = res.find(y => y.timestamp === element.timestamp.getTime()).value;
           }
         });
-        console.log(res)
+        //console.log(res)
         this.timeAxis.updateData(this.timeLineData);
       },
       err => console.log(err)
@@ -163,14 +162,14 @@ export class TimelineComponent implements AfterViewInit, OnChanges {
     this.domainStart = new Date(event[0]);
     this.domainStop = moment(this.domainStart).add(1, this.domainInterval).toDate();
     this.domainInterval = this.mapToStep[this.domainInterval];
-    this.fakeRequest();
+    this.timelineDataRequest();
     this.timeAxis.updateAxis(this.timeLineData, [this.domainStart, this.domainStop], this.domainInterval);
   }
 
   selectedDateChanged(event) {
     this.domainStart = moment(event).startOf(this.mapToDomain[this.domainInterval]).toDate();
     this.domainStop = moment(this.domainStart).add(1, this.mapToDomain[this.domainInterval]).toDate();
-    this.fakeRequest();
+    this.timelineDataRequest();
     this.timeAxis.updateAxis(this.timeLineData, [this.domainStart, this.domainStop], this.domainInterval);
   }
 
