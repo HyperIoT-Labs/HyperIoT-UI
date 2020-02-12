@@ -35,16 +35,16 @@
 
 <!-- no devices defined -->
 <div *ngIf="projectDevices.length === 0 && loadingStatus === LoadingStatus.Ready">
-    <!-- @I18N -->
+    <!-- @I18N@ -->
     No devices defined for this project. Add a device first.
 </div>
 
 <!-- loading progress / error -->
 <div *ngIf="loadingStatus === LoadingStatus.Loading" class="loading">
-    <!-- @I18N -->
+    <!-- @I18N@ -->
     Loading...
 </div>
 <div *ngIf="loadingStatus === LoadingStatus.Error" class="loading">
-    <!-- @I18N -->
+    <!-- @I18N@ -->
     An error occurred while loading data.
 </div>

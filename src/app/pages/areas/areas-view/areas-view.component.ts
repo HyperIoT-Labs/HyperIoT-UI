@@ -8,6 +8,12 @@ import { HytModalService } from '@hyperiot/components';
 import { AreaMapComponent } from '../../projects/project-forms/areas-form/area-map/area-map.component';
 import { HttpClient } from '@angular/common/http';
 
+enum PageStatus {
+  Loading = 0,
+  Ready = 1,
+  Error = -1
+}
+
 @Component({
   selector: 'hyt-areas-view',
   templateUrl: './areas-view.component.html',
@@ -19,11 +25,15 @@ export class AreasViewComponent implements OnInit {
   @ViewChild('treeView', { static: false })
   treeView: HytTreeViewProjectComponent;
 
+  PageStatus = PageStatus;
+  pageStatus: PageStatus;
+
   userProjectsOptions: any[];
-  selectedProjectOption: any;
+  selectedProjectOption: number;
   projectId: number;
   areaId: number;
   areaList: Area[] = [];
+  areaDevices = [] as AreaDevice[];
   areaPath: Area[] = [];
 
   constructor(
@@ -34,16 +44,27 @@ export class AreasViewComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.pageStatus = PageStatus.Loading;
     this.projectService.findAllHProject()
     .subscribe((projectList: HProject[]) => {
       this.userProjectsOptions = [];
+      // sort by date
+      projectList.sort((a, b) => {
+        if (a.entityModifyDate > b.entityModifyDate) { return -1; }
+        if (a.entityModifyDate < b.entityModifyDate) { return 1; }
+        return 0;
+      });
+      // add options
       projectList.forEach(p => this.userProjectsOptions.push({
         label: p.name,
         value: p.id
       }));
+      // select current project
       if (this.userProjectsOptions.length > 0) {
-        // TODO: select current project
+        this.selectedProjectOption = this.userProjectsOptions[0].value;
+        console.log('Selected project', this.selectedProjectOption, this.userProjectsOptions);
       }
+      this.apiSuccess(projectList);
     }, err => {
       this.apiError(err);
     });
@@ -52,6 +73,7 @@ export class AreasViewComponent implements OnInit {
   onSelectedProjectChange(e) {
     this.areaId = 0; this.areaList = [];
     this.projectId = e.value;
+    this.pageStatus = PageStatus.Loading;
     this.projectService.getHProjectAreaList(this.projectId).subscribe((list: Area[]) => {
       this.areaList = list;
       list.forEach((a) => {
@@ -73,15 +95,18 @@ export class AreasViewComponent implements OnInit {
 
   private loadArea(area: Area) {
     this.areaId = area.id;
-    // TODO: load area map items
+    // load area map items
+    this.pageStatus = PageStatus.Loading;
     this.areaService.findInnerAreas(this.areaId).subscribe(areaTree => {
       this.areaList = areaTree.innerArea;
       this.areaService.getAreaDeviceList(this.areaId).subscribe((areaDevices: AreaDevice[]) => {
+        this.areaDevices = areaDevices;
         this.mapComponent.setAreaItems(areaDevices.concat(this.areaList.filter(a => a.mapInfo != null)));
         this.mapComponent.refresh();
         this.loadAreaImage(area);
-      });
-    });
+        this.apiSuccess(this.areaList);
+      }, (err) => this.apiError(err));
+    }, (err) => this.apiError(err));
   }
 
   private loadAreaImage(area: Area) {
@@ -170,9 +195,12 @@ export class AreasViewComponent implements OnInit {
               // add inner-areas
               children: buildTreeConfig(a.innerArea)
             };
-            // add inner-areas count to area name
+            // add inner-areas and device count to area name
             if (treeArea.children.length > 0) {
               treeArea.name += ' A: ' + treeArea.children.length;
+            }
+            if (a.deviceList && a.deviceList.length > 0) {
+              treeArea.name += ' D: ' + a.deviceList.length;
             }
             // add area devices
             if (showDevices && a.deviceList && a.deviceList.length > 0) {
@@ -204,10 +232,10 @@ export class AreasViewComponent implements OnInit {
   }
 
   apiSuccess(res) {
-    // TODO: handle api success
+    this.pageStatus = PageStatus.Ready;
   }
   apiError(err) {
-    // TODO: handle api errors
     console.log('API ERROR', err);
+    this.pageStatus = PageStatus.Error;
   }
 }
