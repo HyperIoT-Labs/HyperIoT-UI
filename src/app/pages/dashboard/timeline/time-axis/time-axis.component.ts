@@ -33,7 +33,7 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
 
   //cube selected
   @Output()
-  domainSet = new EventEmitter();
+  domainSet: EventEmitter<Date> = new EventEmitter<Date>();
 
   data: HYTData[] = [];
 
@@ -46,7 +46,7 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
   margin = { top: 5, right: 20, bottom: 20, left: 20 };
   axisScale: d3.ScaleTime<number, number>;
   tickScale = d3.scaleLinear().domain([0, 10000]).range([0, 9]);
-  dataIntensityScale = d3.interpolate('#999999', '#003cff');//('#0066ff', '#33ff00');
+  dataIntensityScale = d3.interpolate('#bababa', '#003cff');//('#0066ff', '#33ff00');
 
   colorLogScale = d3.scaleLog().domain([0, 1000]).range([0, 100]);
   svgAxis: d3.Selection<SVGGElement, unknown, HTMLElement, any>;
@@ -121,11 +121,15 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
   brushReleased = () => {
     const selection = d3.event.detail.selection;
     this.timeInterval = selection.map(d => this.axisInterval.round(this.axisScale.invert(d)));
-    this.setSelection(
-      this.timeInterval[1] > this.timeInterval[0] ? this.timeInterval.map(this.axisScale) : null,
-      d3.select('#brush-group'),
-      { type: 'brush', mode: 'code-released' }
-    );
+    if (this.timeInterval[1] > this.timeInterval[0]) {
+      this.setSelection(
+        this.timeInterval.map(this.axisScale),
+        d3.select('#brush-group'),
+        { type: 'brush', mode: 'code-released' }
+      );
+    } else {
+      this.resetSelection();
+    }
   }
 
   buildAxis() {
@@ -146,27 +150,30 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
         .attr('width', this.contentWidth)
         .attr('height', this.contentHeight - 20) //TODO make variable
         .attr('transform', `translate(0,${this.contentHeight - 20})`); //TODO make variable
-
-      this.svgAxis.append("g").attr('class', 'cube-container')
     };
 
+    // Defining brush logic
     this.brush = g => {
       g.call(this.appendBrush)
         .on('start brush end', this.brushed)
         .on('end', this.brushReleased);
     };
 
+    // Append Axis
+    // TODO custom axis
     this.svg
       .append('g')
       .attr('id', 'axis-group')
       .attr('transform', `translate(${this.margin.left},${this.margin.top})`)
       .call(xAxis);
 
+    // Append SelectionHelper
     this.svg
       .append('g')
       .attr('transform', `translate(${this.contentWidth + this.margin.right},47) scale(0.6)`)//TODO make variable
       .call(this.drawSelectionHelper);
 
+    // Append brush logic
     this.svg
       .append('g')
       .attr('id', 'brush-group')
@@ -174,14 +181,14 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
       .call(this.brush);
   }
 
-  updateRange() {
-    this.axisScale.range([this.margin.left, this.contentWidth - this.margin.right]);
-    this.svgAxis.call(d3.axisBottom(this.axisScale).ticks(this.axisInterval));
+  // updateRange() {
+  //   this.axisScale.range([this.margin.left, this.contentWidth - this.margin.right]);
+  //   this.svgAxis.call(d3.axisBottom(this.axisScale).ticks(this.axisInterval));
 
-    if (this.data) {
-      this.drowData(null);
-    }
-  }
+  //   if (this.data) {
+  //     this.drowData(null);
+  //   }
+  // }
 
   updateAxis(data: HYTData[], domain: (number | Date)[], interval: TimeStep) {
 
@@ -222,7 +229,11 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
   setBrush() {
     if (this.timeInterval[0] && this.timeInterval[1]) {
       //TODO variable instead of select() ?
-      this.setSelection(this.timeInterval[1] > this.timeInterval[0] ? this.timeInterval.map(this.axisScale) : null, d3.select('#brush-group'));
+      if (this.timeInterval[1] > this.timeInterval[0]) {
+        this.setSelection(this.timeInterval.map(this.axisScale), d3.select('#brush-group'));
+      } else {
+        this.resetSelection();
+      }
     }
   }
 
@@ -249,7 +260,7 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
   selectionHelper = g => {
     g.append('path')
       .attr('class', 'selectionHelper')
-      .attr('d', 'M 0 14 L 20 24 C 35 28, 35 0 20 4 Z')
+      .attr('d', 'M 0 14 L 20 24 C 35 28, 35 0 20 4 Z');
     // .attr('stroke', '#cccccc')
     // .attr('fill', '#cccccc')
   }
@@ -276,11 +287,6 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
     // .transition()
     // .duration(100)
     this.selectionPx = s;
-    if (!s) {
-      this.selectionPx = [null, null];
-      this.resetSelection();
-      return;
-    }
     this.selectionRenderSvg
       .attr('width', s[1] - s[0])
       .attr('x', s[0]);
@@ -302,6 +308,9 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
   }
 
   resetSelection() {
+    this.selectionPx = [null, null];
+    this.timeInterval = [null, null];
+    this.dataTimeSelectionChanged.emit(this.timeInterval);
     this.selectionRenderSvg
       .attr('width', null)
       .attr('x', null)
@@ -470,7 +479,7 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
       .style('stroke', 'black')
       //TODO TOFIX width and scale
       .style('stroke-width', '0.2px')
-      .selectAll('rect')
+      .selectAll('g')
       .data(this.data)
       .join('g')
       .attr('fill', d => d.timestamp >= this.timeInterval[0] && d.timestamp < this.timeInterval[1] ? '#35d443' : this.dataIntensityScale(d.value / this.maxValue))
@@ -482,14 +491,14 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
         distance},${-this.contentHeight + 20}) scale(1.8)`) // scale(0.3)  //TODO make variable
       .on('mouseover', (d, i, n) => {
         d3.select(n[i]).attr('transform', `translate(${this.axisScale(d.timestamp) +
-          distance},${-this.contentHeight + 20}) scale(2.1)`)
+          distance},${-this.contentHeight + 20}) scale(2.1)`);
       })
       .on('mouseout', (d, i, n) => {
         d3.select(n[i]).attr('transform', `translate(${this.axisScale(d.timestamp) +
           distance},${-this.contentHeight + 20}) scale(1.8)`);
       })
       .on('click', (d, i, n) => {
-        this.domainSet.emit([d.timestamp, n[i + 1]])
+        this.domainSet.emit(d.timestamp);
       });
 
   }
