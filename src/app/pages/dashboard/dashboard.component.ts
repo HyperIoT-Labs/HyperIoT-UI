@@ -6,6 +6,8 @@ import { takeUntil } from 'rxjs/operators';
 import { AddWidgetDialogComponent } from './add-widget-dialog/add-widget-dialog.component';
 import { DashboardConfigService } from './dashboard-config.service';
 import { DashboardViewComponent } from './dashboard-view/dashboard-view.component';
+import { ActivatedRoute } from '@angular/router';
+import { Route } from '@angular/compiler/src/core';
 
 enum PageStatus {
   Loading = 0,
@@ -66,26 +68,20 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   packetsInDashboard: number[] = [];
 
+  areaId: number;
+  showAreas = false;
+
   constructor(
     private dashboardConfigService: DashboardConfigService,
     private dashboardOfflineDataService: DashboardOfflineDataService,
-    private hytModalService: HytModalService
+    private hytModalService: HytModalService,
+    private activatedRoute: ActivatedRoute
   ) { }
 
-  getPacketsFromWidgets(widgets: DashboardWidget[]) {
-    const packetsList = [];
-    widgets.forEach(w => {
-      try {
-        const wConfig = JSON.parse(w.widgetConf).config;
-        if (wConfig) {
-          packetsList.push(wConfig.packetId);
-        }
-      } catch (e) { }
-    });
-    this.packetsInDashboard = [...packetsList];
-  }
-
   ngOnInit() {
+    this.areaId = +this.activatedRoute.snapshot.params.areaId;
+    this.showAreas = this.activatedRoute.snapshot.routeConfig.path.startsWith('areas/');
+console.log('Area ID', this.areaId, this.showAreas);
 
     this.dashboardConfigService.getProjectsList()
       .pipe(takeUntil(this.ngUnsubscribe))
@@ -113,7 +109,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
                 this.updateToplogyStatus();
               }, 60000);
 
-              this.dashboardConfigService.getRealtimeDashboardFromProject(this.idProjectSelected)
+              if (this.showAreas) {
+                // TODO:
+                // TODO: load area realtime Dashboard
+                // TODO:
+                //this.pageStatus = PageStatus.Standard;
+              } else {
+                // load project realtime Dashboard
+                this.dashboardConfigService.getRealtimeDashboardFromProject(this.idProjectSelected)
                 .pipe(takeUntil(this.ngUnsubscribe))
                 .subscribe(
                   (dashboardRes: Dashboard[]) => {
@@ -131,6 +134,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
                     this.pageStatus = PageStatus.New;
                   }
                 );
+              }
             } else {
               this.pageStatus = PageStatus.New;
             }
@@ -185,6 +189,19 @@ export class DashboardComponent implements OnInit, OnDestroy {
           this.pageStatus = PageStatus.New;
         }
       );
+  }
+
+  getPacketsFromWidgets(widgets: DashboardWidget[]) {
+    const packetsList = [];
+    widgets.forEach(w => {
+      try {
+        const wConfig = JSON.parse(w.widgetConf).config;
+        if (wConfig) {
+          packetsList.push(wConfig.packetId);
+        }
+      } catch (e) { }
+    });
+    this.packetsInDashboard = [...packetsList];
   }
 
   changeSignalState(event) {
