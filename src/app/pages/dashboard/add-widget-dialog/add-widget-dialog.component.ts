@@ -40,9 +40,9 @@ export class AddWidgetDialogComponent extends HytModal implements OnInit {
 
   dialogDataState = 0;
 
-  os: string = '';
-  mac: boolean = false;
-  linux: boolean = false;
+  os = '';
+  mac = false;
+  linux = false;
 
   constructor(
     hytModalService: HytModalService,
@@ -60,7 +60,7 @@ export class AddWidgetDialogComponent extends HytModal implements OnInit {
 
     this.os = navigator.platform;
 
-    let lowOS = this.os.toLocaleLowerCase();
+    const lowOS = this.os.toLocaleLowerCase();
 
     if (lowOS.includes('mac')) {
       this.mac = true;
@@ -127,7 +127,7 @@ export class AddWidgetDialogComponent extends HytModal implements OnInit {
   // }
 
   confirm() {
-    const widgetOutput: any[] = [];
+    const widgetOutput = [];
     this.selectedWidgets.forEach(w => widgetOutput.push({
       count: w.count,
       x: 0,

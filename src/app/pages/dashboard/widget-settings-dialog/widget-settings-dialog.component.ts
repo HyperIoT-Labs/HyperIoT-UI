@@ -18,6 +18,8 @@ export class WidgetSettingsDialogComponent extends HytModal implements OnInit {
 
   dialogDataState = 0;
 
+  modalIsOpen = false;
+
   constructor(
     hytModalService: HytModalService,
   ) {
@@ -29,10 +31,7 @@ export class WidgetSettingsDialogComponent extends HytModal implements OnInit {
     this.widgetName = this.data.widget.name;
     this.widgetId = this.data.currentWidgetIdSetting;
     this.dialogDataState = 1;
-    console.log(this)
   }
-
-  modalIsOpen = false;
 
   // open modal
   open(): void {
