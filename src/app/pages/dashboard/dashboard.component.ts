@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { HytModalRef, HytModalService } from '@hyperiot/components';
-import { Dashboard, DashboardOfflineDataService, DashboardWidget, HProject } from '@hyperiot/core';
+import { Dashboard, DashboardOfflineDataService, DashboardWidget, HProject, AreasService, Area } from '@hyperiot/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { AddWidgetDialogComponent } from './add-widget-dialog/add-widget-dialog.component';
@@ -69,88 +69,37 @@ export class DashboardComponent implements OnInit, OnDestroy {
   packetsInDashboard: number[] = [];
 
   areaId: number;
+  areaPath: Area[];
   showAreas = false;
+  areaListOptions = [] as any[];
+  selectedAreaId: number;
 
   constructor(
     private dashboardConfigService: DashboardConfigService,
     private dashboardOfflineDataService: DashboardOfflineDataService,
+    private areaService: AreasService,
     private hytModalService: HytModalService,
     private activatedRoute: ActivatedRoute
   ) { }
 
   ngOnInit() {
-    this.areaId = +this.activatedRoute.snapshot.params.areaId;
     this.showAreas = this.activatedRoute.snapshot.routeConfig.path.startsWith('areas/');
-console.log('Area ID', this.areaId, this.showAreas);
-
-    this.dashboardConfigService.getProjectsList()
-      .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe(
-        res => {
-          try {
-            this.hProjectList = [...res];
-            this.hProjectListOptions = this.hProjectList as HytSelectOption[];
-            this.hProjectListOptions.forEach(element => {
-              element.label = element.name;
-              element.value = element.id;
-            });
-
-            this.hProjectListOptions.sort((a, b) => {
-              if (a.entityModifyDate > b.entityModifyDate) { return -1; }
-              if (a.entityModifyDate < b.entityModifyDate) { return 1; }
-              return 0;
-            });
-
-            if (this.hProjectListOptions.length > 0) {
-              this.idProjectSelected = this.hProjectListOptions[0].id;
-
-              this.updateToplogyStatus();
-              this.updateRecordingInterval = setInterval(() => {
-                this.updateToplogyStatus();
-              }, 60000);
-
-              if (this.showAreas) {
-                // TODO:
-                // TODO: load area realtime Dashboard
-                // TODO:
-                //this.pageStatus = PageStatus.Standard;
-              } else {
-                // load project realtime Dashboard
-                this.dashboardConfigService.getRealtimeDashboardFromProject(this.idProjectSelected)
-                .pipe(takeUntil(this.ngUnsubscribe))
-                .subscribe(
-                  (dashboardRes: Dashboard[]) => {
-                    try {
-                      this.currentDashboard = dashboardRes[0];
-                      this.currentDashboardId = this.currentDashboard.id;
-                      this.pageStatus = PageStatus.Standard;
-                    } catch (error) {
-                      console.error(error);
-                      this.pageStatus = PageStatus.New;
-                    }
-                  },
-                  error => {
-                    console.error(error);
-                    this.pageStatus = PageStatus.New;
-                  }
-                );
-              }
-            } else {
-              this.pageStatus = PageStatus.New;
-            }
-
-          } catch (error) {
-            console.error(error);
-            this.pageStatus = PageStatus.Error;
-          }
-
-        },
-        error => {
-          this.pageStatus = PageStatus.Error;
-        }
-
-      );
-
+    if (this.showAreas) {
+      // load area realtime Dashboard
+      this.areaId = +this.activatedRoute.snapshot.params.areaId;
+      this.idProjectSelected = +this.activatedRoute.snapshot.params.projectId;
+      console.log('###', this.idProjectSelected, this.activatedRoute.snapshot.params)
+      if (this.areaId) {
+        this.areaService.getAreaPath(this.areaId).subscribe((areas: Area[]) => {
+          this.areaPath = areas;
+        });
+      }
+    }
+    if (this.showAreas) {
+      this.showDashboard();
+    } else {
+      this.getProjectList();
+    }
   }
 
   ngOnDestroy() {
@@ -173,22 +122,11 @@ console.log('Area ID', this.areaId, this.showAreas);
     this.updateRecordingInterval = setInterval(() => {
       this.updateToplogyStatus();
     }, 60000);
-    this.dashboardConfigService.getRealtimeDashboardFromProject(event.value)
-      .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe(
-        (res: Dashboard[]) => {
-          try {
-            this.currentDashboard = res[0];
-            this.currentDashboardId = this.currentDashboard.id;
-            this.pageStatus = PageStatus.Standard;
-          } catch (error) {
-            this.pageStatus = PageStatus.New;
-          }
-        },
-        error => {
-          this.pageStatus = PageStatus.New;
-        }
-      );
+    if (this.showAreas) {
+      // TODO: select change still not implemented for Areas Dashboard
+    } else {
+      this.getRealTimeDashboard(event.value);
+    }
   }
 
   getPacketsFromWidgets(widgets: DashboardWidget[]) {
@@ -208,39 +146,15 @@ console.log('Area ID', this.areaId, this.showAreas);
     if (this.signalIsOn) {
       this.signalIsOn = !this.signalIsOn;
       this.pageStatus = PageStatus.Loading;
-      this.dashboardConfigService.getOfflineDashboardFromProject(this.idProjectSelected)
-        .pipe(takeUntil(this.ngUnsubscribe))
-        .subscribe(
-          (res: Dashboard[]) => {
-            this.currentDashboard = res[0];
-            this.currentDashboardId = this.currentDashboard.id;
-            this.getPacketsFromWidgets(this.currentDashboard.widgets);
-            this.dashboardOfflineDataService.resetService(this.idProjectSelected, this.packetsInDashboard);
-            this.pageStatus = PageStatus.Standard;
-          },
-          error => {
-            this.pageStatus = PageStatus.New;
-          }
-        );
+      this.getOfflineDashboard();
     } else {
       this.signalIsOn = !this.signalIsOn;
       this.pageStatus = PageStatus.Loading;
-      this.dashboardConfigService.getRealtimeDashboardFromProject(this.idProjectSelected)
-        .pipe(takeUntil(this.ngUnsubscribe))
-        .subscribe(
-          (res: Dashboard[]) => {
-            try {
-              this.currentDashboard = res[0];
-              this.currentDashboardId = this.currentDashboard.id;
-              this.pageStatus = PageStatus.Standard;
-            } catch (error) {
-              this.pageStatus = PageStatus.New;
-            }
-          },
-          error => {
-            this.pageStatus = PageStatus.New;
-          }
-        );
+      if (this.showAreas) {
+        this.getRealTimeDashboard(this.areaId);
+      } else {
+        this.getRealTimeDashboard(this.idProjectSelected);
+      }
     }
   }
 
@@ -313,22 +227,106 @@ console.log('Area ID', this.areaId, this.showAreas);
   onWidgetEvent() {
     setTimeout(() => {
       if (!this.signalIsOn) {
-        this.dashboardConfigService.getOfflineDashboardFromProject(this.idProjectSelected)
-          .pipe(takeUntil(this.ngUnsubscribe))
-          .subscribe(
-            (res: Dashboard[]) => {
-              this.currentDashboard = res[0];
-              this.currentDashboardId = this.currentDashboard.id;
-              this.getPacketsFromWidgets(this.currentDashboard.widgets);
-              this.dashboardOfflineDataService.resetService(this.idProjectSelected, this.packetsInDashboard);
-              this.pageStatus = PageStatus.Standard;
-            },
-            error => {
-              this.pageStatus = PageStatus.New;
-            }
-          );
+        this.getOfflineDashboard();
       }
     }, 500);
   }
 
+  private getProjectList() {
+    this.dashboardConfigService.getProjectsList()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        res => {
+          try {
+            this.hProjectList = [...res];
+            this.hProjectListOptions = this.hProjectList as HytSelectOption[];
+            this.hProjectListOptions.forEach(element => {
+              element.label = element.name;
+              element.value = element.id;
+            });
+
+            this.hProjectListOptions.sort((a, b) => {
+              if (a.entityModifyDate > b.entityModifyDate) { return -1; }
+              if (a.entityModifyDate < b.entityModifyDate) { return 1; }
+              return 0;
+            });
+
+            if (this.hProjectListOptions.length > 0) {
+              this.idProjectSelected = this.hProjectListOptions[0].id;
+              this.showDashboard();
+            } else {
+              this.pageStatus = PageStatus.New;
+            }
+
+          } catch (error) {
+            console.error(error);
+            this.pageStatus = PageStatus.Error;
+          }
+
+        },
+        error => {
+          this.pageStatus = PageStatus.Error;
+        }
+
+      );
+  }
+
+  private showDashboard() {
+    this.updateToplogyStatus();
+    this.updateRecordingInterval = setInterval(() => {
+      this.updateToplogyStatus();
+    }, 60000);
+    if (this.showAreas) {
+      this.getRealTimeDashboard(this.areaId);
+    } else {
+      this.getRealTimeDashboard(this.idProjectSelected);
+    }
+  }
+
+  private getOfflineDashboard() {
+    const responseHandler = (res: Dashboard[]) => {
+      this.currentDashboard = res[0];
+      this.currentDashboardId = this.currentDashboard.id;
+      this.getPacketsFromWidgets(this.currentDashboard.widgets);
+      this.dashboardOfflineDataService.resetService(this.idProjectSelected, this.packetsInDashboard);
+      this.pageStatus = PageStatus.Standard;
+    };
+    const errorHandler = error => {
+      this.pageStatus = PageStatus.New;
+    };
+    if (this.showAreas) {
+      this.dashboardConfigService.getOfflineDashboardFromArea(this.areaId)
+        .pipe(takeUntil(this.ngUnsubscribe))
+        .subscribe(responseHandler, errorHandler);
+    } else {
+      this.dashboardConfigService.getOfflineDashboardFromProject(this.idProjectSelected)
+        .pipe(takeUntil(this.ngUnsubscribe))
+        .subscribe(responseHandler, errorHandler);
+    }
+  }
+  private getRealTimeDashboard(id: number) {
+    const errorHandler = error => {
+      console.error(error);
+      this.pageStatus = PageStatus.New;
+    };
+    const responseHandler = (dashboardRes: Dashboard[]) => {
+      try {
+        this.currentDashboard = dashboardRes[0];
+        this.currentDashboardId = this.currentDashboard.id;
+        this.pageStatus = PageStatus.Standard;
+      } catch (error) {
+        errorHandler(error);
+      }
+    };
+    if (this.showAreas) {
+      this.dashboardConfigService.getRealtimeDashboardFromArea(id)
+        .pipe(takeUntil(this.ngUnsubscribe))
+        .subscribe(responseHandler, errorHandler);
+    } else {
+      // load project realtime Dashboard
+      this.dashboardConfigService.getRealtimeDashboardFromProject(id)
+        .pipe(takeUntil(this.ngUnsubscribe))
+        .subscribe(responseHandler, errorHandler);
+    }
+  }
 }

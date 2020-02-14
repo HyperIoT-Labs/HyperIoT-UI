@@ -9,6 +9,7 @@ import {
     DashboardsService,
     DashboardWidget,
     HprojectsService,
+    AreasService,
     Dashboard,
     StormService
 } from '@hyperiot/core';
@@ -25,6 +26,7 @@ export class DashboardConfigService {
         private dashboardService: DashboardsService,
         private dashboardWidgetService: DashboardwidgetsService,
         private hProjectService: HprojectsService,
+        private areaService: AreasService,
         private stormService: StormService,
         private http: HttpClient
     ) { }
@@ -35,6 +37,14 @@ export class DashboardConfigService {
 
     getOfflineDashboardFromProject(projectId: number) {
         return this.dashboardService.findHProjectOfflineDashboard(projectId);
+    }
+
+    getRealtimeDashboardFromArea(areaId: number) {
+        return this.dashboardService.findAreaRealtimeDashboard(areaId);
+    }
+
+    getOfflineDashboardFromArea(areaId: number) {
+        return this.dashboardService.findAreaOfflineDashboard(areaId);
     }
 
     getAllDashboardsAndProjects() {
@@ -55,6 +65,10 @@ export class DashboardConfigService {
 
     getProjectsList() {
         return this.hProjectService.findAllHProject();
+    }
+
+    getAreasList(projectId: number) {
+        return this.hProjectService.getHProjectAreaList(projectId);
     }
 
     getDashboardList() {

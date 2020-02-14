@@ -3,8 +3,9 @@
     <div class="header d-flex flex-row justify-content-stretch">
 
         <div class="breadcrumb flex-grow-1">
-            <span class="hyt-icon icon-hyt_projectSolo"></span> <a [routerLink]="['/']">Home</a> >
-            <strong>Dashboard</strong>
+            <span class="hyt-icon icon-hyt_projectSolo"></span> <a [routerLink]="['/']">Home</a>
+            <span *ngIf="showAreas"> &gt; <strong>Areas</strong></span>
+            <span> &gt; <strong>Dashboard</strong></span>
         </div>
 
     </div>
@@ -40,10 +41,28 @@
 
                     <div class="col-6 right-tools">
 
-                        <hyt-select *ngIf="pageStatus == 1" [label]="'Select a project'" name="project"
+                        <hyt-select *ngIf="!showAreas && pageStatus == 1" [label]="'Select a project'" name="project"
                             [options]="hProjectListOptions" [selected]="idProjectSelected"
                             (changeFn)="onSelectChange($event)" [disabled]="false"></hyt-select>
 
+                        <h3 *ngIf="showAreas" style="float:left; margin-top: 18px; color: blue">
+                            {{ areaPath && areaPath[areaPath.length - 1].name }}
+                        </h3>
+                        <!--
+                        <div *ngIf="showAreas" class="current-path">
+                            <span *ngFor="let area of areaPath; let i = index; let c = count">
+                                <span *ngIf="i > 0">&nbsp;&raquo;&nbsp;</span>
+                                <a *ngIf="i < c - 1" [routerLink]="['/areas', idProjectSelected, area.id, 'dashboards']">{{area.name}}</a>
+                                <span *ngIf="i === c - 1"><strong>{{area.name}}</strong></span>
+                            </span>
+                        </div>
+                        -->
+                        
+                        <div id="add-widget-btn" *ngIf="showAreas" [routerLink]="['/areas', idProjectSelected, areaId]">
+                            <span class="hyt-icon icon-hyt_areaB16"></span>
+                            <p>Areas</p>
+                        </div>
+    
                         <div id="add-widget-btn" *ngIf="pageStatus == PageStatus.Standard" (click)="openWidgetModal()">
                             <span class="hyt-icon icon-hyt_widgetPlus"></span>
                             <p i18n="@@HYT_add_a_widget">HYT_add_a_widget</p>
