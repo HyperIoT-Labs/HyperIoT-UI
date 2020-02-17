@@ -88,7 +88,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
       // load area realtime Dashboard
       this.areaId = +this.activatedRoute.snapshot.params.areaId;
       this.idProjectSelected = +this.activatedRoute.snapshot.params.projectId;
-      console.log('###', this.idProjectSelected, this.activatedRoute.snapshot.params)
       if (this.areaId) {
         this.areaService.getAreaPath(this.areaId).subscribe((areas: Area[]) => {
           this.areaPath = areas;
@@ -216,7 +215,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   timeLineSelection(event: Date[]) {
-    console.log(event[0], event[1])
     if (event[0] && event[1]) {
       this.dashboardOfflineDataService.getHPacketMap(event[0].getTime(), event[1].getTime());
     }

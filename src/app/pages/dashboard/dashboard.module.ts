@@ -23,8 +23,6 @@ import { TimeAxisComponent } from './timeline/time-axis/time-axis.component';
 import { TimelineComponent } from './timeline/timeline.component';
 import { EventsLogSettingsComponent } from './widget-settings-dialog/events-log-settings/events-log-settings.component';
 import { PacketSelectComponent } from './widget-settings-dialog/packet-select/packet-select.component';
-import { PacketTableSelectComponent } from './widget-settings-dialog/packet-table-select/packet-table-select.component';
-import { PacketTableSettingsComponent } from './widget-settings-dialog/packet-table-settings/packet-table-settings.component';
 import { SensorValueSettingsComponent } from './widget-settings-dialog/sensor-value-settings/sensor-value-settings.component';
 import { StatsChartSettingsComponent } from './widget-settings-dialog/stats-chart-settings/stats-chart-settings.component';
 import { TextLabelSettingsComponent } from './widget-settings-dialog/text-label-settings/text-label-settings.component';
@@ -49,9 +47,7 @@ import { WidgetsLayoutComponent } from './widgets-layout/widgets-layout.componen
     MyTelInputComponent,
     DashboardComponent,
     TimelineComponent,
-    TimeAxisComponent,
-    PacketTableSettingsComponent,
-    PacketTableSelectComponent
+    TimeAxisComponent
   ],
   imports: [
     CommonModule,

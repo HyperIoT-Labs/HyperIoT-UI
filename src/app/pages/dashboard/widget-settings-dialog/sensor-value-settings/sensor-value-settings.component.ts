@@ -15,6 +15,7 @@ export class SensorValueSettingsComponent implements OnInit, OnDestroy {
   @ViewChild(PacketSelectComponent, { static: true }) packetSelect: PacketSelectComponent;
   @Input() modalApply: Observable<any>;
   @Input() widget;
+  @Input() areaId;
   selectedFields = [];
   private defaultConfig = {};
 

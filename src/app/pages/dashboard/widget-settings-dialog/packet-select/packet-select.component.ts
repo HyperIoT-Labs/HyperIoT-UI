@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, EventEmitter, Output, ViewEncapsulation } from '@angular/core';
 import { ControlContainer, NgForm } from '@angular/forms';
 
-import { HPacket, HPacketField, HpacketsService } from '@hyperiot/core';
+import { HPacket, HPacketField, HpacketsService, AreasService, AreaDevice, HDevice } from '@hyperiot/core';
 import { UnitConversionService } from 'src/app/services/unit-conversion.service';
 
 export class FieldMatrixConfiguration {
@@ -39,6 +39,8 @@ export class PacketSelectComponent implements OnInit {
   projectPackets: HPacket[] = [];
   @Input()
   multiPacketSelect: false;
+  @Input()
+  areaId: number;
 
   packetFieldsMapping: FieldMatrixConfiguration[];
   packetUnitsConversion: FieldUnitConversion[];
@@ -54,13 +56,23 @@ export class PacketSelectComponent implements OnInit {
   constructor(
     private packetService: HpacketsService,
     public settingsForm: NgForm,
-    private unitConversionService: UnitConversionService
+    private areaService: AreasService,
+    private unitConversionService: UnitConversionService,
   ) {
     this.multiPacketSelect = this.multiPacketSelect || false;
   }
 
   ngOnInit() {
-    this.loadPackets();
+    console.log('Packet Select area id', this.areaId);
+    // If `areaId` is set, then show only packets belonging to the given area devices
+    if (this.areaId) {
+      this.areaService.getAreaDeviceList(this.areaId).subscribe((areaDevices: AreaDevice[]) => {
+        const devices = areaDevices.map((ad: AreaDevice) => ad.device);
+        this.loadPackets(devices);
+      });
+    } else {
+      this.loadPackets();
+    }
   }
 
   onPacketChange() {
@@ -117,7 +129,7 @@ export class PacketSelectComponent implements OnInit {
     return p1 != null && p2 != null && p1.id === p2.id;
   }
 
-  loadPackets() {
+  loadPackets(devices?: HDevice[]) {
     this.packetFieldsMapping = this.widget.config.packetFieldsMapping ?
         JSON.parse(JSON.stringify(this.widget.config.packetFieldsMapping)) : [];
     this.packetUnitsConversion = this.widget.config.packetUnitsConversion ?
@@ -126,6 +138,14 @@ export class PacketSelectComponent implements OnInit {
     this.packetService
       .findAllHPacketByProjectId(this.widget.projectId)
       .subscribe((packetList) => {
+        // Filter out packets not belonging to the given `devices` list (if set)
+        if (devices) {
+          packetList = packetList.filter((p: HPacket) => {
+            if (p.device && devices.find(d => d.id === p.device.id)) {
+              return p;
+            }
+          });
+        }
         this.projectPackets = packetList;
         const w = this.widget;
         // load curent packet data and set selected fields

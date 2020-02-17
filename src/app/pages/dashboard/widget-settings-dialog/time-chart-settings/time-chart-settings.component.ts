@@ -16,6 +16,7 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
     subscription: any;
     @Input() modalApply: Observable<any>;
     @Input() widget;
+    @Input() areaId;
     selectedFields = [];
     private defaultConfig = {
         timeAxisRange: 10,

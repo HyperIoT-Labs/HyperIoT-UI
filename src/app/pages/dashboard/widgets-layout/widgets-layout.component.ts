@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnDestroy, HostListener, ViewChild, Output, EventEmitter } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 import {
   GridsterConfig,
@@ -101,7 +101,7 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
   constructor(
     private dataStreamService: DataStreamService,
     private configService: DashboardConfigService,
-    private router: Router,
+    private activatedRoute: ActivatedRoute,
     private hytModalService: HytModalService
   ) { }
 
@@ -118,7 +118,6 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         (d) => {
-          console.log(d);
           this.dashboardEntity = d;
           this.dashboardType = this.dashboardEntity.dashboardType;
           this.projectId = this.dashboardEntity.hproject.id;
@@ -295,9 +294,11 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
   }
 
   openModal(widget: GridsterItem) {
+    const areaId = this.activatedRoute.snapshot.params.areaId;
     const modalRef = this.hytModalService.open(WidgetSettingsDialogComponent, {
       currentWidgetIdSetting: this.currentWidgetIdSetting,
-      widget: widget
+      widget,
+      areaId
     });
     modalRef.onClosed.subscribe(
       event => { this.onWidgetSettingClose(event) }

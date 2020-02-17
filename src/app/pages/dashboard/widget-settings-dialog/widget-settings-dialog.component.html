@@ -29,17 +29,17 @@
 
             <div class="custom-settings" [ngSwitch]="widget.type">
                 <div *ngSwitchCase="'sensor-value'">
-                    <hyt-sensor-value-settings [widget]="widget" [modalApply]="modalApply.asObservable()"
+                    <hyt-sensor-value-settings [widget]="widget" [areaId]="areaId" [modalApply]="modalApply.asObservable()"
                         [settingsForm]="settingsForm">
                     </hyt-sensor-value-settings>
                 </div>
                 <div *ngSwitchCase="'offline-table'">
-                    <hyt-packet-table-settings [widget]="widget" [modalApply]="modalApply.asObservable()"
+                    <hyt-time-chart-settings [widget]="widget" [areaId]="areaId" [modalApply]="modalApply.asObservable()"
                         [settingsForm]="settingsForm">
-                    </hyt-packet-table-settings>
+                    </hyt-time-chart-settings>
                 </div>
                 <div *ngSwitchCase="'gauge-value'">
-                    <hyt-sensor-value-settings [widget]="widget" [modalApply]="modalApply.asObservable()"
+                    <hyt-sensor-value-settings [widget]="widget" [areaId]="areaId" [modalApply]="modalApply.asObservable()"
                         [settingsForm]="settingsForm">
                     </hyt-sensor-value-settings>
                 </div>
@@ -49,7 +49,7 @@
                     </hyt-stats-chart-settings>
                 </div>
                 <div *ngSwitchCase="'time-chart'">
-                    <hyt-time-chart-settings [widget]="widget" [modalApply]="modalApply.asObservable()"
+                    <hyt-time-chart-settings [widget]="widget" [areaId]="areaId" [modalApply]="modalApply.asObservable()"
                         [settingsForm]="settingsForm">
                     </hyt-time-chart-settings>
                 </div>
