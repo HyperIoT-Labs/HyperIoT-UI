@@ -13,7 +13,7 @@
     </h3>
 
     <div class="flex-grow-1 d-flex flex-row justify-content-center">
-        <hyt-select label="Select a project" name="project"
+        <hyt-select *ngIf="pageStatus === PageStatus.Ready" label="Select a project" name="project"
             [options]="userProjectsOptions" [selected]="selectedProjectOption"
             (changeFn)="onSelectedProjectChange($event)" [disabled]="false"></hyt-select>
         <div *ngIf="areaId" class="icon-button" [routerLink]="['/areas', projectId]">
@@ -42,7 +42,7 @@
             <div class="d-flex flex-row justify-content-between">
                 <h3>{{ areaName }}</h3>
                 <div>Sub-areas: {{areaList.length}} Devices: {{areaDevices.length}}</div>
-                <hyt-button>Edit</hyt-button><!-- @I18N@ -->
+                <hyt-button (clickFn)="onEditButtonClick()">Edit</hyt-button><!-- @I18N@ -->
             </div>
             <div>
                 <hyt-area-map #map></hyt-area-map>

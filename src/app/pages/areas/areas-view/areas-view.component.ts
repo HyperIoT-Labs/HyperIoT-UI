@@ -65,16 +65,22 @@ export class AreasViewComponent {
 
   onSelectedProjectChange(e) {
     this.areaId = 0; this.areaList = [];
-    this.router.navigate([`/areas/${e.value}`]);
+    this.router.navigate(['/areas', e.value]);
   }
 
   onMainAreaClick(area: Area) {
-    this.router.navigate([`/areas/${this.projectId}/${area.id}`]);
+    this.router.navigate(['/areas', this.projectId, area.id]);
   }
 
   onTreeNodeClick(node) {
-    // this.router.navigate([`/areas/${this.projectId}/${node.data.item.id}`]);
     this.loadArea(node.data.item);
+  }
+
+  onEditButtonClick() {
+    // open areas editor
+    this.router.navigate(
+      [ '/projects/', this.projectId, {outlets: { projectDetails: ['areas', this.areaId ] } } ]
+    );
   }
 
   private loadProjectsList() {
