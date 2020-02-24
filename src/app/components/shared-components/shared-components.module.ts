@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TopologyToolbarComponent } from './topology-toolbar/topology-toolbar.component';
-import { HyperiotComponentsModule } from '@hyperiot/components';
+import { ComponentsModule } from '@hyperiot/components';
 
 @NgModule({
   declarations: [
@@ -9,7 +9,7 @@ import { HyperiotComponentsModule } from '@hyperiot/components';
   ],
   imports: [
     CommonModule,
-    HyperiotComponentsModule
+    ComponentsModule
   ],
   exports: [
     TopologyToolbarComponent

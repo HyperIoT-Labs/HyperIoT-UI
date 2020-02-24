@@ -7,7 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { RouterModule } from '@angular/router';
-import { HyperiotComponentsModule } from '@hyperiot/components';
+import { ComponentsModule } from '@hyperiot/components';
 import { WidgetsModule } from '@hyperiot/widgets';
 import { GridsterModule } from 'angular-gridster2';
 import { RatingModule } from 'ng-starrating';
@@ -56,7 +56,7 @@ import { WidgetsLayoutComponent } from './widgets-layout/widgets-layout.componen
     RouterModule,
     RatingModule,
     MatIconModule,
-    HyperiotComponentsModule,
+    ComponentsModule,
     GridsterModule,
     WidgetsModule,
     MatFormFieldModule,

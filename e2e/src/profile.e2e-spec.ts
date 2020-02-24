@@ -8,11 +8,11 @@ describe('Profile Page', () => {
     beforeAll(() => {
         browser.driver.manage().window().maximize();
         profile = new ProfilePage();
-        profile.goToAccount();
-
     });
 
     it('...', () => {
+        browser.actions()
+        profile.goToAccount();
         expect(browser.getCurrentUrl()).toContain('/account/profile');
     });
 

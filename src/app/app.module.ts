@@ -28,7 +28,7 @@ import { MatButtonModule, MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS, MatTabsMo
 
 // hyperiot
 import { Configuration, ConfigurationParameters, HyperiotClientModule } from '@hyperiot/core';
-import { HyperiotComponentsModule } from '@hyperiot/components';
+import { ComponentsModule } from '@hyperiot/components';
 import { HytConfirmDialogComponent } from '@hyperiot/components';
 import { RouterModule, DefaultUrlSerializer, UrlSerializer, UrlTree } from '@angular/router';
 
@@ -116,7 +116,7 @@ export function apiConfigFactory(): Configuration {
     ReactiveFormsModule,
     HytRoutingModule,
     AuthenticationModule,
-    HyperiotComponentsModule,
+    ComponentsModule,
     ProjectsModule,
     HyperiotClientModule.forRoot(apiConfigFactory),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production, registrationStrategy: 'registerImmediately' })

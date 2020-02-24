@@ -1,7 +1,7 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProjectsComponent } from './projects.component';
-import { HyperiotComponentsModule } from '@hyperiot/components';
+import { ComponentsModule } from '@hyperiot/components';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
@@ -113,7 +113,7 @@ import { GenericMessageDialogComponent } from 'src/app/components/modals/generic
     MatProgressBarModule,
     MatMenuModule,
     CommonModule,
-    HyperiotComponentsModule,
+    ComponentsModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule,

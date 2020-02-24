@@ -12,7 +12,8 @@ exports.config = {
   specs: [
     //'./src/**/*.e2e-spec.ts'
     './src/app.e2e-spec.ts',
-    //'./src/profile.e2e-spec.ts'
+    //'./src/profile.e2e-spec.ts',
+    './src/projects.e2e-spec.ts'
   ],
   capabilities: {
     'browserName': 'chrome'
@@ -22,7 +23,7 @@ exports.config = {
   framework: 'jasmine',
   jasmineNodeOpts: {
     showColors: true,
-    defaultTimeoutInterval: 30000,
+    defaultTimeoutInterval: 300000,
     print: function() {}
   },
   onPrepare() {
