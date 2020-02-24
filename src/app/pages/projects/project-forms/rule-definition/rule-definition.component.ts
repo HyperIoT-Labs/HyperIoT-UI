@@ -59,7 +59,7 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
     { value: '>=', label: this.i18n('HYT_(>=)_greater_equal'), type: ['OBJECT', 'INTEGER', 'DOUBLE', 'FLOAT', 'DATE'] },
     { value: '<', label: this.i18n('HYT_(<)_lower'), type: ['OBJECT', 'INTEGER', 'DOUBLE', 'FLOAT', 'DATE'] },
     { value: '<=', label: this.i18n('HYT_(<=)_lower_equal'), type: ['OBJECT', 'INTEGER', 'DOUBLE', 'FLOAT', 'DATE'] },
-    { value: '=', label: this.i18n('HYT_(==)_equal'), type: ['OBJECT', 'INTEGER', 'DOUBLE', 'FLOAT', 'DATE', 'TEXT'] },
+    { value: '==', label: this.i18n('HYT_(==)_equal'), type: ['OBJECT', 'INTEGER', 'DOUBLE', 'FLOAT', 'DATE', 'TEXT'] },
     { value: '!=', label: this.i18n('HYT_(!=)_different'), type: ['OBJECT', 'INTEGER', 'DOUBLE', 'FLOAT', 'DATE', 'TEXT'] },
     { value: '()', label: this.i18n('HYT_(())_like'), type: ['OBJECT', 'INTEGER', 'DOUBLE', 'FLOAT', 'BOOLEAN', 'DATE'] },
     { value: 'isTrue', label: this.i18n('HYT_is_true'), type: ['OBJECT', 'BOOLEAN'] },
