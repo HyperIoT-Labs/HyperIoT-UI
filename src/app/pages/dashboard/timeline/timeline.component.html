@@ -7,19 +7,33 @@
         </div>
         <div class="col-7">
 
-            <mat-button-toggle-group name="fontStyle" aria-label="Font Style" [value]="domainInterval">
-                <mat-button-toggle *ngFor="let time of timeRange" [value]="time.value" (change)="rangeChanged($event.value)">
+            <mat-button-toggle-group name="fontStyle" aria-label="Font Style" [value]="domainInterval"
+                style="height: 40px;">
+                <mat-button-toggle *ngFor="let time of timeRange" [value]="time.value"
+                    (change)="rangeChanged($event.value)">
                     {{time.label}}</mat-button-toggle>
             </mat-button-toggle-group>
 
-            <hyt-date-picker [date]="domainStart" [minStep]="mapToDomain[domainInterval]" (selectedDate)="selectedDateChanged($event)"></hyt-date-picker>
+            <hyt-date-picker [date]="domainStart" [minStep]="mapToDomain[domainInterval]"
+                (selectedDate)="selectedDateChanged($event)"></hyt-date-picker>
 
         </div>
-        <div id="chartBox" class="col-12">
-            <button (click)="timeBack()" [ngClass]="{'hasData': timeSelection[0] ? timeSelection[0] < domainStart : false}">
-                <<</button> <hyt-time-axis #timeAxis (dataTimeSelectionChanged)="dataTimeSelectionChanged($event)" (domainSet)="changeStep($event)">
-                    </hyt-time-axis>
-                    <button (click)="timeForward()"  [ngClass]="{'hasData': timeSelection[1] ? timeSelection[1] > domainStop : false}">>></button>
+        <!--TODO move inline style in scss-->
+        <div class="chartBox" style="border-top: 1px solid #1e58a594; padding-top: 8px; margin-top: 4px;" class="col-12">
+            <div style="float: left;">
+                <button (click)="timeBack()"
+                    [ngClass]="{'hasData': timeSelection[0] ? timeSelection[0] < domainStart : false}">&lt;&lt;</button>
+            </div>
+            <div style="float: right;">
+                <button (click)="timeForward()"
+                    [ngClass]="{'hasData': timeSelection[1] ? timeSelection[1] > domainStop : false}">&gt;&gt;</button>
+            </div>
+            <div style="margin: 0 auto; width: calc(100% - 71px);">
+                <hyt-time-axis #timeAxis (dataTimeSelectionChanged)="dataTimeSelectionChanged($event)"
+                    (domainSet)="changeStep($event)">
+                </hyt-time-axis>
+            </div>
+            <div style="clear: both;"></div>
         </div>
     </div>
 </div>

@@ -98,6 +98,9 @@ export class TimelineComponent implements AfterViewInit, OnChanges {
    */
   ngOnChanges(): void {
     this.timelineDataRequest();
+    if (this.timeAxis) {
+      this.timeAxis.updateAxis(this.timeLineData, [this.domainStart, this.domainStop], this.domainInterval);
+    }
   }
 
   /**
@@ -159,6 +162,12 @@ export class TimelineComponent implements AfterViewInit, OnChanges {
   timelineDataRequest() {
 
     this.drowNewData();
+
+    if (this.dashboardPackets.length === 0) {
+      return;
+      // TODO send message (toast?) to tell the user to add packet in dashboard
+    }
+
     this.hBaseConnectorsService.timelineScan(
       `timeline_hproject_${this.projectId}`,
       this.dashboardPackets.toString(),
@@ -168,18 +177,14 @@ export class TimelineComponent implements AfterViewInit, OnChanges {
       this.domainStop.getTime()
     ).subscribe(
       res => {
-        //TODO IMPORTANT this converion has to be removed
-        // res.forEach(element => {
-        //   element.timestamp = element.timestamp + (new Date).getTimezoneOffset() * 60 * 1000;
-        // });
         this.timeLineData.forEach(element => {
           if (res.some(y => y.timestamp === element.timestamp.getTime())) {
-            element.value = res.find(y => y.timestamp === element.timestamp.getTime()).value;
+            element.value = res.find(y => y.timestamp === element.timestamp.getTime()).count;
           }
         });
-        //console.log(res)
         this.timeAxis.updateData(this.timeLineData);
       },
+      // TODO handle error
       err => console.log(err)
     );
 

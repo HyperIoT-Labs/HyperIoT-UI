@@ -12,7 +12,7 @@ interface WidgetClient {
   description?: string;
   widgetCategory?: Widget.WidgetCategoryEnum;
   domains?: Array<Widget.DomainsEnum>;
-  baseConfig?: string;
+  baseConfig?: any;
   type?: string;
   cols?: number;
   rows?: number;
@@ -128,18 +128,23 @@ export class AddWidgetDialogComponent extends HytModal implements OnInit {
 
   confirm() {
     const widgetOutput = [];
-    this.selectedWidgets.forEach(w => widgetOutput.push({
-      count: w.count,
-      x: 0,
-      y: 0,
-      type: w.type,
-      cols: w.cols,
-      rows: w.rows,
-      name: w.name,
-      dataUrl: '',
-      dataTableUrl: '',
-      config: w.baseConfig
-    }));
+    this.selectedWidgets.forEach(w => {
+      if (w.type === 'offline-table') {
+        w.baseConfig = { online: this.data.signalIsOn };
+      }
+      widgetOutput.push({
+        count: w.count,
+        x: 0,
+        y: 0,
+        type: w.type,
+        cols: w.cols,
+        rows: w.rows,
+        name: w.name,
+        dataUrl: '',
+        dataTableUrl: '',
+        config: w.baseConfig
+      });
+    });
     this.close(widgetOutput);
   }
 

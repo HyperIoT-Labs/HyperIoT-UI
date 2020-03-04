@@ -1,13 +1,12 @@
 import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { HytModalRef, HytModalService } from '@hyperiot/components';
-import { Dashboard, DashboardOfflineDataService, DashboardWidget, HProject, AreasService, Area } from '@hyperiot/core';
+import { Area, AreasService, Dashboard, DashboardOfflineDataService, HProject } from '@hyperiot/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { AddWidgetDialogComponent } from './add-widget-dialog/add-widget-dialog.component';
 import { DashboardConfigService } from './dashboard-config.service';
 import { DashboardViewComponent } from './dashboard-view/dashboard-view.component';
-import { ActivatedRoute } from '@angular/router';
-import { Route } from '@angular/compiler/src/core';
 
 enum PageStatus {
   Loading = 0,
@@ -128,19 +127,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }
   }
 
-  getPacketsFromWidgets(widgets: DashboardWidget[]) {
-    const packetsList = [];
-    widgets.forEach(w => {
-      try {
-        const wConfig = JSON.parse(w.widgetConf).config;
-        if (wConfig) {
-          packetsList.push(wConfig.packetId);
-        }
-      } catch (e) { }
-    });
-    this.packetsInDashboard = [...packetsList];
-  }
-
   changeSignalState(event) {
     if (this.signalIsOn) {
       this.signalIsOn = !this.signalIsOn;
@@ -208,7 +194,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   openWidgetModal() {
-    this.widgetModalRef = this.hytModalService.open(AddWidgetDialogComponent);
+    this.widgetModalRef = this.hytModalService.open(AddWidgetDialogComponent, { signalIsOn: this.signalIsOn });
     this.widgetModalRef.onClosed.subscribe(res => {
       this.dashboardView.onWidgetsAdd(res);
     });
@@ -216,18 +202,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   timeLineSelection(event: Date[]) {
     if (event[0] && event[1]) {
-      this.dashboardOfflineDataService.getHPacketMap(event[0].getTime(), event[1].getTime());
+      this.dashboardOfflineDataService.getEventCount(event[0].getTime(), event[1].getTime());
+    } else {
+      this.dashboardOfflineDataService.getEventCountEmpty();
     }
-  }
-
-  // TODO getOfflineDashboardFromProject() should not be called because currentDashboard should be updated automatically
-  // TODO settimeout is used to wait the dashboard configuration to be saved before getOfflineDashboardFromProject(). Remove it.
-  onWidgetEvent() {
-    setTimeout(() => {
-      if (!this.signalIsOn) {
-        this.getOfflineDashboard();
-      }
-    }, 500);
   }
 
   private getProjectList() {
@@ -285,8 +263,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
     const responseHandler = (res: Dashboard[]) => {
       this.currentDashboard = res[0];
       this.currentDashboardId = this.currentDashboard.id;
-      this.getPacketsFromWidgets(this.currentDashboard.widgets);
-      this.dashboardOfflineDataService.resetService(this.idProjectSelected, this.packetsInDashboard);
+      // this.extractPacketsFromWidgets(this.currentDashboard.widgets);
+      console.log(this.currentDashboard.widgets);
+      this.dashboardOfflineDataService.resetService(this.idProjectSelected).subscribe(res => {
+        this.packetsInDashboard = [...res];
+      });
       this.pageStatus = PageStatus.Standard;
     };
     const errorHandler = error => {

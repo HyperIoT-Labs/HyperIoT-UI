@@ -57,12 +57,12 @@
                             </span>
                         </div>
                         -->
-                        
+
                         <div id="add-widget-btn" *ngIf="showAreas" [routerLink]="['/areas', idProjectSelected, areaId]">
                             <span class="hyt-icon icon-hyt_areaB16"></span>
                             <p>Areas</p>
                         </div>
-    
+
                         <div id="add-widget-btn" *ngIf="pageStatus == PageStatus.Standard" (click)="openWidgetModal()">
                             <span class="hyt-icon icon-hyt_widgetPlus"></span>
                             <p i18n="@@HYT_add_a_widget">HYT_add_a_widget</p>
@@ -89,8 +89,11 @@
 
         <div id="standardStatus" *ngSwitchCase="PageStatus.Standard" class="row">
 
-            <hyt-timeline *ngIf="!signalIsOn" [projectId]="idProjectSelected" [dashboardPackets]="packetsInDashboard"
-                class="col-12" (dateOutput)="timeLineSelection($event)"></hyt-timeline>
+            <div *ngIf="!signalIsOn" class="timeline-container">
+                <hyt-timeline [projectId]="idProjectSelected"
+                    [dashboardPackets]="packetsInDashboard" (dateOutput)="timeLineSelection($event)">
+                </hyt-timeline>
+            </div>
 
             <!-- Standard -->
             <div *ngIf="!dataRecordingIsOn && signalIsOn && !recordStateInLoading" id="dashboard-overlay-blurred"
@@ -113,7 +116,7 @@
                 class="col-12 {{(!dataRecordingIsOn && signalIsOn) ? 'blurred-animation' : ''}}">
 
                 <hyt-dashboard-view [dashboard]="currentDashboard" [dashboardType]="currentDashboardType"
-                    [dashboardWidgets]="currentDashboard.widgets" (dashboardViewEvent)="onWidgetEvent()">
+                    [dashboardWidgets]="currentDashboard.widgets">
                 </hyt-dashboard-view>
 
             </div>
