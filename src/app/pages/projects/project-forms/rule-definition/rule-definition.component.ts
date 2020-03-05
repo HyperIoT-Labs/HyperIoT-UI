@@ -142,11 +142,8 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
     }
     this.fieldOptions = [];
     this.fieldFlatList = [];
-    this.extractField(fieldList, 'packet');
-    for (const el of this.fieldFlatList) {
-      this.fieldOptions.push({ value: el.label, label: el.field.name });
-    }
-    this.fieldOptions = [...this.fieldOptions];
+    this.extractField(fieldList, (this.currentPacket) ? this.currentPacket.id.toString() : '');
+    this.fieldOptions = [...this.fieldFlatList.map(f => ({ value: f.label, label: f.field.name }))];
   }
 
   addCondition(index) {
@@ -178,7 +175,7 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
         rule.form.value.ruleJoin === ' AND ' ||
         rule.form.value.ruleJoin === ' OR '
       ) ? rule.form.value.ruleJoin : '';
-      rd += element + condition + valueRule + joinRule;
+      rd += JSON.stringify(element) + condition + valueRule + joinRule;
     }
     return rd;
   }
@@ -233,7 +230,7 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
           const splitted: string[] = ruleArray[k].split(' ');
           if (k === 0) {
             ruleDef.push({
-              field: splitted[0],
+              field: JSON.parse(splitted[0]),
               condition: splitted[1],
               value: splitted[2] ? splitted[2] : null,
               join: null
@@ -241,7 +238,7 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
           } else {
             ruleDef[k - 1].join = splitted[1];
             ruleDef.push({
-              field: splitted[2],
+              field: JSON.parse(splitted[2]),
               condition: splitted[3],
               value: splitted[4] ? splitted[4] : null,
               join: null
