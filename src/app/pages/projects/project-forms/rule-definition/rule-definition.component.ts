@@ -1,11 +1,9 @@
-import { Component, OnInit, Input, OnChanges, ViewEncapsulation } from '@angular/core';
-import { HPacket, HPacketField } from '@hyperiot/core';
-import { SelectOption } from '@hyperiot/components';
+import { Component, Input, OnChanges, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { HytModalService, SelectOption } from '@hyperiot/components';
 import { Option } from '@hyperiot/components/lib/hyt-radio-button/hyt-radio-button.component';
+import { HPacket, HPacketField, HpacketsService } from '@hyperiot/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { HytModalConfService } from 'src/app/services/hyt-modal-conf.service';
-import { HytModalService } from '@hyperiot/components';
 import { RuleErrorModalComponent } from './rule-error/rule-error-modal.component';
 
 interface RuleForm {
@@ -15,6 +13,7 @@ interface RuleForm {
 }
 
 interface FieldList {
+  packet: HPacket;
   field: HPacketField;
   label: string;
 }
@@ -33,6 +32,10 @@ interface RuleDefinition {
   encapsulation: ViewEncapsulation.None
 })
 export class RuleDefinitionComponent implements OnInit, OnChanges {
+
+  @Input() projectId: number;
+
+  @Input() ruleType: 'event' | 'enrichment';
 
   @Input() currentPacket: HPacket;
 
@@ -88,6 +91,7 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
   constructor(
     public fb: FormBuilder,
     private hytModalService: HytModalService,
+    private hPacketsService: HpacketsService,
     private i18n: I18n
   ) { }
 
@@ -104,12 +108,12 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
     this.originalFormsValues = '{"ruleField":"","ruleCondition":"","ruleValue":"","ruleJoin":""}';
   }
 
-  extractField(fieldArr: HPacketField[], pre: string) {
+  extractField(fieldArr: HPacketField[], pre: string, packet: HPacket) {
     fieldArr.forEach(f => {
       const fieldName: string = pre + '.' + f.name;
-      this.fieldFlatList.push({ field: f, label: fieldName });
+      this.fieldFlatList.push({ field: f, label: fieldName, packet });
       if (f.innerFields) {
-        this.extractField(f.innerFields, fieldName);
+        this.extractField(f.innerFields, fieldName, packet);
       }
     });
   }
@@ -136,14 +140,29 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
 
   ngOnChanges() {
     this.resetRuleDefinition();
-    let fieldList: HPacketField[] = [];
-    if (this.currentPacket && this.currentPacket.id) {
-      fieldList = this.treefy(this.currentPacket.fields);
+    if (this.ruleType === 'enrichment') {
+      if (this.currentPacket && this.currentPacket.id) {
+        this.buildFieldOptions([this.currentPacket]);
+      }
+    } else {
+      // TODO valutare spinner
+      if (this.projectId) {
+        this.hPacketsService.findAllHPacketByProjectId(this.projectId).subscribe(
+          (res: HPacket[]) => this.buildFieldOptions(res)
+        );
+      }
     }
+  }
+
+  buildFieldOptions(hPackets: HPacket[]) {
+    let fieldList: HPacketField[] = [];
     this.fieldOptions = [];
     this.fieldFlatList = [];
-    this.extractField(fieldList, (this.currentPacket) ? this.currentPacket.id.toString() : '');
-    this.fieldOptions = [...this.fieldFlatList.map(f => ({ value: f.label, label: f.field.name }))];
+    hPackets.forEach(r => {
+      fieldList = this.treefy(r.fields);
+      this.extractField(fieldList, r.id.toString(), r);
+    });
+    this.fieldOptions = [...this.fieldFlatList.map(f => ({ value: f.label, label: f.field.name + ` (${f.packet.device.deviceName}->${f.packet.name})` }))];
   }
 
   addCondition(index) {
