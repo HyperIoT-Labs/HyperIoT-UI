@@ -103,8 +103,8 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
 
     setTimeout(() => {// TODO...setimeout 0 to avoid 'expression changed after view checked'. Replace with chenge detection
-      this.eventsForm.loadEmpty();
-      this.enrichmentForm.loadEmpty();
+      // this.eventsForm.loadEmpty();
+      // this.enrichmentForm.loadEmpty();
       this.fieldsForm.entityEvent.subscribe(
         res => {
           if (res.event === 'field:delete') {

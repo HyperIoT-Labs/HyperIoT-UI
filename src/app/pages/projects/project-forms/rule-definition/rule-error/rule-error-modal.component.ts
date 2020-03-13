@@ -1,4 +1,4 @@
-import { Component, OnInit, Injector, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { HytModal, HytModalService } from '@hyperiot/components';
 
 @Component({
