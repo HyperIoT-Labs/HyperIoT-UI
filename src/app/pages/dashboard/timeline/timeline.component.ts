@@ -5,11 +5,19 @@ import * as moment from 'moment';
 import 'moment-precise-range-plugin';
 import { TimeAxisComponent } from './time-axis/time-axis.component';
 
+/**
+ * HYTData is an interface to define the HytTimeline Data structure
+ */
 export interface HYTData {
   timestamp: Date;
   value: number;
 }
 
+/**
+ * TimelineComponent is an HyperIoT component. It is used by DashboardComponent.
+ * It works in the dashboard offline mode and its purpose is to show the amount of data of n packets as a function of time and
+ * to give the user the possibility to make a timeSelection to show old saved packet data.
+ */
 @Component({
   selector: 'hyt-timeline',
   templateUrl: './timeline.component.html',
@@ -29,6 +37,9 @@ export class TimelineComponent implements AfterViewInit, OnChanges {
   @Input()
   dashboardPackets: number[];
 
+  /**
+   * Map to domain is used to convert a time step to his next step
+   */
   mapToDomain = {
     month: 'year',
     day: 'month',
@@ -38,6 +49,9 @@ export class TimelineComponent implements AfterViewInit, OnChanges {
     millisecond: 'second'
   };
 
+  /**
+   * Map to domain is used to convert a time step to his previous step
+   */
   mapToStep = {
     year: 'month',
     month: 'day',
@@ -47,6 +61,9 @@ export class TimelineComponent implements AfterViewInit, OnChanges {
     second: 'millisecond'
   };
 
+  /**
+   * Map to granularity is used to convert a time step to his granularity step
+   */
   mapToGranularity = {
     year: 'hour',
     month: 'hour',
@@ -56,17 +73,34 @@ export class TimelineComponent implements AfterViewInit, OnChanges {
     second: 'second'
   };
 
+  /**
+   * TimeLineData stores the timeline data that will be shown in the timeline
+   */
   timeLineData = [];
 
+  /**
+   * TimeAxis is the instantiated TimeAxisComponent element
+   */
   @ViewChild('timeAxis', { static: false }) timeAxis: TimeAxisComponent;
 
-  @Output()
-  dateOutput = new EventEmitter<any>();
+  /**
+   * dateOutput is used to tell the dashboard the new timeSelection selected by the user
+   */
+  @Output() dateOutput = new EventEmitter<any>();
 
-  timeDifference: moment.PreciseRangeValueObject;
+  /**
+   * domainInterval is the current domain step interval
+   */
   domainInterval: TimeStep = 'month';
 
+  /**
+   * domainStart is the current domain date start
+   */
   domainStart: Date;
+
+  /**
+   * domainStop is the current domain date end
+   */
   domainStop: Date;
 
   /**
@@ -86,6 +120,10 @@ export class TimelineComponent implements AfterViewInit, OnChanges {
     { label: 'Months', value: 'month' }
   ];
 
+  /**
+   * TimelineComponent constructor
+   * @param hBaseConnectorsService service to require data for the timeline
+   */
   constructor(
     private hBaseConnectorsService: HbaseconnectorsService
   ) {
