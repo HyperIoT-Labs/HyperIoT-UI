@@ -10,15 +10,16 @@ interface RuleForm {
   form: FormGroup;
   conditionOptions: SelectOption[];
   compareWith: boolean;
+  fieldOptions: SelectOption[];
 }
 
 interface FieldList {
-  packet: HPacket;
   field: HPacketField;
   label: string;
 }
 
 interface RuleDefinition {
+  packet: string;
   field: string;
   condition: string;
   value?: string;
@@ -38,6 +39,10 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
   @Input() ruleType: 'event' | 'enrichment';
 
   @Input() currentPacket: HPacket;
+
+  allPackets: HPacket[] = [];
+
+  packetOptions: SelectOption[] = [];
 
   fieldOptions: SelectOption[] = [];
 
@@ -80,7 +85,9 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
   /**
    * originalFormsValues is used to keep record of the old ruleDefinition value (dirty)
    */
-  private originalFormsValues = '{"ruleField":"","ruleCondition":"","ruleValue":"","ruleJoin":""}';
+  private originalFormsValues = this.ruleType === 'enrichment' ?
+    '{"ruleField":"","ruleCondition":"","ruleValue":"","ruleJoin":""}' :
+    '{"rulePacket":"","ruleField":"","ruleCondition":"","ruleValue":"","ruleJoin":""}';
 
   /**
    * class constructor
@@ -96,24 +103,34 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
   ) { }
 
   ngOnInit() {
-    this.resetRuleDefinition();
+    // this.resetRuleDefinition();
   }
 
   resetRuleDefinition(): void {
     this.ruleForms = [({
       form: this.fb.group({}),
       conditionOptions: [],
-      compareWith: false
+      compareWith: false,
+      fieldOptions: []
     })];
-    this.originalFormsValues = '{"ruleField":"","ruleCondition":"","ruleValue":"","ruleJoin":""}';
+    // TODO purtroppo per problema form è necessario timeout
+    if (this.ruleType === 'enrichment') {
+      setTimeout(() => {
+        this.ruleForms[0].form.get('rulePacket').setValue(this.currentPacket.id || 0);
+        this.ruleForms[0].fieldOptions = this.buildFieldOptions(this.currentPacket);
+      }, 0);
+    }
+    this.originalFormsValues = this.ruleType === 'enrichment' ?
+      '{"ruleField":"","ruleCondition":"","ruleValue":"","ruleJoin":""}' :
+      '{"rulePacket":"","ruleField":"","ruleCondition":"","ruleValue":"","ruleJoin":""}';
   }
 
-  extractField(fieldArr: HPacketField[], pre: string, packet: HPacket) {
+  extractField(fieldArr: HPacketField[], pre?: string) {
     fieldArr.forEach(f => {
-      const fieldName: string = pre + '.' + f.name;
-      this.fieldFlatList.push({ field: f, label: fieldName, packet });
+      const fieldName: string = pre ? pre + '.' + f.name : f.name;
+      this.fieldFlatList.push({ field: f, label: fieldName });
       if (f.innerFields) {
-        this.extractField(f.innerFields, fieldName, packet);
+        this.extractField(f.innerFields, fieldName);
       }
     });
   }
@@ -139,30 +156,25 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
-    this.resetRuleDefinition();
-    if (this.ruleType === 'enrichment') {
-      if (this.currentPacket && this.currentPacket.id) {
-        this.buildFieldOptions([this.currentPacket]);
-      }
-    } else {
-      // TODO valutare spinner
-      if (this.projectId) {
-        this.hPacketsService.findAllHPacketByProjectId(this.projectId).subscribe(
-          (res: HPacket[]) => this.buildFieldOptions(res)
-        );
-      }
+    // TODO valutare spinner e se in enrichment è opportuno scaricare tutti i pacchetti
+    if (this.currentPacket && JSON.stringify(this.currentPacket) !== '{}' && this.projectId) {
+      this.hPacketsService.findAllHPacketByProjectId(this.projectId).subscribe(
+        (res: HPacket[]) => {
+          this.allPackets = res;
+          this.packetOptions = this.allPackets.map(p => ({ label: p.name, value: p.id }));
+          this.resetRuleDefinition();
+        }
+      );
     }
   }
 
-  buildFieldOptions(hPackets: HPacket[]) {
+  buildFieldOptions(hPacket: HPacket): SelectOption[] {
     let fieldList: HPacketField[] = [];
     this.fieldOptions = [];
     this.fieldFlatList = [];
-    hPackets.forEach(r => {
-      fieldList = this.treefy(r.fields);
-      this.extractField(fieldList, r.id.toString(), r);
-    });
-    this.fieldOptions = [...this.fieldFlatList.map(f => ({ value: f.label, label: f.field.name + ` (${f.packet.device.deviceName}->${f.packet.name})` }))];
+    fieldList = this.treefy(hPacket.fields);
+    this.extractField(fieldList);
+    return this.fieldFlatList.map(f => ({ value: f.label, label: f.field.name }));
   }
 
   addCondition(index) {
@@ -170,8 +182,15 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
       this.ruleForms.push({
         form: this.fb.group({}),
         conditionOptions: [],
-        compareWith: false
+        compareWith: false,
+        fieldOptions: this.ruleType === 'enrichment' ? this.buildFieldOptions(this.currentPacket) : []
       });
+      // TODO purtroppo per problema form è necessario timeout
+      if (this.ruleType === 'enrichment') {
+        setTimeout(() => {
+          this.ruleForms[index + 1].form.get('rulePacket').setValue(this.currentPacket.id);
+        }, 0);
+      }
     }
   }
 
@@ -183,7 +202,8 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
   buildRuleDefinition(): string {
     let rd = '';
     for (const rule of this.ruleForms) {
-      const element: string = (rule.form.value.ruleField) ? rule.form.value.ruleField : '';
+      const packet: string = (rule.form.controls.rulePacket.value) ? `${rule.form.controls.rulePacket.value}.` : '';
+      const field: string = (rule.form.value.ruleField) ? rule.form.value.ruleField : '';
       const condition: string = (rule.form.value.ruleCondition) ? ' ' + rule.form.value.ruleCondition : '';
       const valueRule: string = (
         rule.form.value.ruleValue
@@ -194,9 +214,13 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
         rule.form.value.ruleJoin === ' AND ' ||
         rule.form.value.ruleJoin === ' OR '
       ) ? rule.form.value.ruleJoin : '';
-      rd += JSON.stringify(element) + condition + valueRule + joinRule;
+      rd += JSON.stringify(`${packet}${field}`) + condition + valueRule + joinRule;
     }
     return rd;
+  }
+
+  packetChanged(event, index) {
+    this.ruleForms[index].fieldOptions = this.buildFieldOptions(this.allPackets.find(y => y.id === event));
   }
 
   fieldChanged(event, index) {
@@ -234,10 +258,22 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
     return false;
   }
 
+  setRuleDefinition(ruleDefinition: string) {
+    if (this.projectId) {
+      this.hPacketsService.findAllHPacketByProjectId(this.projectId).subscribe(
+        (res: HPacket[]) => {
+          this.allPackets = res;
+          this.packetOptions = this.allPackets.map(p => ({ label: p.name, value: p.id }));
+          this.setRuleDef(ruleDefinition);
+        }
+      );
+    }
+  }
+
   /**
    * TODO rework (remove setTimeout)
    */
-  setRuleDefinition(ruleDefinition: string): void {
+  setRuleDef(ruleDefinition: string): void {
     this.updating = true;
     const ruleDef: RuleDefinition[] = [];
     setTimeout(() => {
@@ -249,7 +285,8 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
           const splitted: string[] = ruleArray[k].split(' ');
           if (k === 0) {
             ruleDef.push({
-              field: JSON.parse(splitted[0]),
+              packet: JSON.parse(splitted[0]).split('.')[0],
+              field: JSON.parse(splitted[0]).substring(splitted[0].indexOf('.')),
               condition: splitted[1],
               value: splitted[2] ? splitted[2] : null,
               join: null
@@ -257,7 +294,8 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
           } else {
             ruleDef[k - 1].join = splitted[1];
             ruleDef.push({
-              field: JSON.parse(splitted[2]),
+              packet: JSON.parse(splitted[2]).split('.')[0],
+              field: JSON.parse(splitted[2]).substring(splitted[2].indexOf('.')),
               condition: splitted[3],
               value: splitted[4] ? splitted[4] : null,
               join: null
@@ -267,29 +305,40 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
 
         for (let k = 0; k < ruleDef.length; k++) {
 
-          const f = this.fieldFlatList.find(x => x.label === ruleDef[k].field);
-          if (!f) {
+          const actualPacket: HPacket = this.allPackets.find(pa => pa.id === +ruleDef[k].packet);
+          if (!actualPacket) {
             const modalRef = this.hytModalService.open(RuleErrorModalComponent);
             // this.modalService.open('hyt-rule-error-modal');
+            this.resetRuleDefinition();
             return;
           }
-          const actualField: HPacketField = f.field;
+
+          const fieldOptions: SelectOption[] = this.buildFieldOptions(actualPacket);
+          const actualFieldOption: SelectOption = fieldOptions.find(x => x.value === ruleDef[k].field);
+          if (!actualFieldOption) {
+            this.hytModalService.open(RuleErrorModalComponent);
+            this.resetRuleDefinition();
+            return;
+          }
 
           const conditionOptions = [];
+          const fieldType = this.fieldFlatList.find(ffl => ffl.label === actualFieldOption.value).field.type;
           this.allConditionOptions.forEach(x => {
-            if (x.type.includes(actualField.type)) {
+            if (x.type.includes(fieldType)) {
               conditionOptions.push({ value: x.value, label: x.label });
             }
           });
 
           this.ruleForms.push({
             form: this.fb.group({}),
-            conditionOptions: conditionOptions,
-            compareWith: actualField.type !== 'BOOLEAN'
+            conditionOptions,
+            compareWith: fieldType !== 'BOOLEAN',
+            fieldOptions
           });
 
           setTimeout(() => {
-            this.ruleForms[k].form.get('ruleField').setValue(this.fieldOptions.find(x => x.value === ruleDef[k].field).value);
+            this.ruleForms[k].form.get('rulePacket').setValue(actualPacket.id);
+            this.ruleForms[k].form.get('ruleField').setValue(actualFieldOption.value);
             this.ruleForms[k].form.get('ruleCondition').setValue(ruleDef[k].condition);
             if (this.ruleForms[k].compareWith) {
               this.ruleForms[k].form.get('ruleValue').setValue(ruleDef[k].value);

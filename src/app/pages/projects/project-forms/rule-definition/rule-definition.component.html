@@ -6,13 +6,19 @@
 
       <div class="form-group row">
 
-        <div class="container-first-form-field" [ngClass]="ruleForm.compareWith ? 'col-3' : 'col-4' ">
-          <hyt-select [form]="ruleForm.form" [options]="fieldOptions" formControlName="ruleField" name="ruleField"
+        <div class="container-first-form-field" [ngClass]="ruleForm.compareWith ? 'col-2' : 'col-3' ">
+          <hyt-select [disabled]="ruleType === 'enrichment'" [form]="ruleForm.form" [options]="packetOptions" formControlName="rulePacket" name="rulePacket"
+            [isRequired]="true" i18n-label="@@HYT_packet" label="HYT_packet" (changeFn)="packetChanged($event.value, i)">
+          </hyt-select>
+        </div> <!-- Field Packet -->
+
+        <div class="container-first-form-field" [ngClass]="ruleForm.compareWith ? 'col-2' : 'col-3' ">
+          <hyt-select [form]="ruleForm.form" [options]="ruleForm.fieldOptions" formControlName="ruleField" name="ruleField"
             [isRequired]="true" i18n-label="@@HYT_field" label="HYT_field" (changeFn)="fieldChanged($event, i)">
           </hyt-select>
         </div> <!-- Field Field -->
 
-        <div class="container-form-field" [ngClass]="ruleForm.compareWith ? 'col-3' : 'col-4' ">
+        <div class="container-form-field" [ngClass]="ruleForm.compareWith ? 'col-2' : 'col-3' ">
           <hyt-select [form]="ruleForm.form" [options]="ruleForm.conditionOptions" formControlName="ruleCondition"
             name="ruleCondition" [isRequired]="true" i18n-label="@@HYT_condition" label="HYT_condition">
           </hyt-select>
@@ -24,7 +30,7 @@
           </hyt-input-text>
         </div> <!-- Field Value -->
 
-        <div class="containerputRule-form-field" [ngClass]="ruleForm.compareWith ? 'col-3' : 'col-4' ">
+        <div class="containerputRule-form-field" [ngClass]="ruleForm.compareWith ? 'col-3' : 'col-3' ">
 
           <hyt-radio-button [form]="ruleForm.form" [options]="joinOptions" (changeFn)="addCondition(i)"
             formControlName="ruleJoin" name="ruleJoin">

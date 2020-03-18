@@ -1,22 +1,23 @@
-import { Component, OnInit, ViewChild, AfterViewInit, ViewEncapsulation } from '@angular/core';
-import { HProject, HDevice, HPacket, Rule, HdevicesService, HpacketsService } from '@hyperiot/core';
+import { AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { HytModalService, Option } from '@hyperiot/components';
+import { HytStepperComponent } from '@hyperiot/components/lib/hyt-stepper/hyt-stepper.component';
+import { HDevice, HdevicesService, HPacket, HpacketsService, HProject, Rule } from '@hyperiot/core';
 import { Observable, Observer } from 'rxjs';
-import { ProjectFormEntity } from '../project-forms/project-form-entity';
-import { ProjectFormComponent } from '../project-forms/project-form/project-form.component';
-import { DeviceFormComponent } from '../project-forms/device-form/device-form.component';
-import { PacketFormComponent } from '../project-forms/packet-form/packet-form.component';
-import { DeviceSelectComponent } from './device-select/device-select.component';
-import { PacketFieldsFormComponent } from '../project-forms/packet-fields-form/packet-fields-form.component';
+import { EntitiesService } from 'src/app/services/entities/entities.service';
 import { SummaryListItem } from '../project-detail/generic-summary-list/generic-summary-list.component';
-import { PacketSelectComponent } from './packet-select/packet-select.component';
+import { ApplicationFormComponent } from '../project-forms/application-form/application-form.component';
+import { DeviceFormComponent } from '../project-forms/device-form/device-form.component';
 import { PacketEnrichmentFormComponent } from '../project-forms/packet-enrichment-form/packet-enrichment-form.component';
 import { PacketEventsFormComponent } from '../project-forms/packet-events-form/packet-events-form.component';
+import { PacketFieldsFormComponent } from '../project-forms/packet-fields-form/packet-fields-form.component';
+import { PacketFormComponent } from '../project-forms/packet-form/packet-form.component';
 import { PacketStatisticsFormComponent } from '../project-forms/packet-statistics-form/packet-statistics-form.component';
-import { HytStepperComponent } from '@hyperiot/components/lib/hyt-stepper/hyt-stepper.component';
-import { EntitiesService } from 'src/app/services/entities/entities.service';
+import { ProjectFormEntity } from '../project-forms/project-form-entity';
+import { ProjectFormComponent } from '../project-forms/project-form/project-form.component';
+import { DeviceSelectComponent } from './device-select/device-select.component';
+import { PacketSelectComponent } from './packet-select/packet-select.component';
 import { WizardDeactivationModalComponent } from './wizard-deactivation-modal/wizard-deactivation-modal.component';
-import { Option, HytModalService } from '@hyperiot/components';
-import { ApplicationFormComponent } from '../project-forms/application-form/application-form.component';
 import { WizardOptionsModalComponent } from './wizard-options-modal/wizard-options-modal.component';
 import { WizardReportModalComponent } from './wizard-report-modal/wizard-report-modal.component';
 
@@ -93,7 +94,8 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
     private hDevicesService: HdevicesService,
     private hPacketsService: HpacketsService,
     public entitiesService: EntitiesService,
-    private hytModalService: HytModalService
+    private hytModalService: HytModalService,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit() { }
@@ -101,8 +103,8 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
 
     setTimeout(() => {// TODO...setimeout 0 to avoid 'expression changed after view checked'. Replace with chenge detection
-      this.eventsForm.loadEmpty();
-      this.enrichmentForm.loadEmpty();
+      // this.eventsForm.loadEmpty();
+      // this.enrichmentForm.loadEmpty();
       this.fieldsForm.entityEvent.subscribe(
         res => {
           if (res.event === 'field:delete') {
@@ -110,8 +112,8 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
           }
         }
       );
-      if (window.history.state.projectId) {
-        this.projectForm.id = window.history.state.projectId;
+      if (this.route.snapshot.paramMap.get('id')) {
+        this.projectForm.id = +this.route.snapshot.paramMap.get('id');
         this.projectForm.load();
         this.optionModalViewed = true;
       }

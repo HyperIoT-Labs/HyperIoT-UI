@@ -75,7 +75,7 @@ export class AddWidgetDialogComponent extends HytModal implements OnInit {
     this.selectedWidgets = [];
     this.widgetList = [];
 
-    this.widgetsService.findAllWidgetInCategories().subscribe(
+    this.widgetsService.findAllWidgetInCategories(this.data.signalIsOn ? 'realTime' : 'offline').subscribe(
       res => {
         this.widgetCategoryList = res.catInfo;
         this.widgetsByCategory = res.widgetMap;

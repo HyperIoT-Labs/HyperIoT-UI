@@ -1,20 +1,29 @@
-import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild, ViewEncapsulation, EventEmitter, Output } from '@angular/core';
-import { ResizeSensor } from 'css-element-queries';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Output, ViewChild, ViewEncapsulation } from '@angular/core';
+import { TimeStep } from '@hyperiot/components';
 import * as d3 from 'd3';
 import * as moment from 'moment';
 import { HYTData } from '../timeline.component';
-import { TimeStep } from '@hyperiot/components';
 
 const animation = false;
 
+// ! IMPORTANT
+// TODO ResizeSensor after dashboard style fix. import { ResizeSensor } from 'css-element-queries';
+
+/**
+ * TimeAxisComponent is an HyperIoT component. It is used by TimelineComponent.
+ * It is used to build the timeline through D3.
+ */
 @Component({
   selector: 'hyt-time-axis',
   templateUrl: './time-axis.component.html',
   styleUrls: ['./time-axis.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class TimeAxisComponent implements OnInit, AfterViewInit {
+export class TimeAxisComponent implements AfterViewInit {
 
+  /**
+   * timeStepMap is used to convert a step to a d3 TimeInterval
+   */
   timeStepMap = {
     year: d3.timeYear,
     month: d3.timeMonth,
@@ -25,53 +34,105 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
     millisecond: d3.timeMillisecond
   };
 
+  /**
+   * axis is the div that will be used by d3 to append the timeline svg element
+   */
   @ViewChild('axis', { static: false }) axis: ElementRef;
 
-  //green selection changed
-  @Output()
-  dataTimeSelectionChanged = new EventEmitter();
+  /**
+   * dataTimeSelectionChanged is uset to emits an event when the user makes a time selection. It emits the timeSelection
+   */
+  @Output() dataTimeSelectionChanged = new EventEmitter();
 
-  //cube selected
-  @Output()
-  domainSet: EventEmitter<Date> = new EventEmitter<Date>();
+  /**
+   * dataTimeSelectionChanged is uset to emits an event when the user click a cube to zoom on it. It emits the the time start of
+   * the selected cube
+   */
+  @Output() domainSet: EventEmitter<Date> = new EventEmitter<Date>();
 
+  /**
+   * data stores the timeline data that will be shown in the timeline
+   */
   data: HYTData[] = [];
 
+  /**
+   * svg stores the svg element used by d3 to build the the timeline
+   * It is the container of all the timeline components
+   */
   svg;
 
+  /**
+   * The selection in dates
+   */
   timeInterval = [];
+
+  /**
+   * The selection in pixels
+   */
   selectionPx = [null, null];
 
+  /**
+   * The axis domain
+   */
   domain: (number | Date)[] = [0, 0];
+  /**
+   * The timeline margin
+   */
   margin = { top: 5, right: 20, bottom: 20, left: 20 };
+
+  /**
+   * The axis scale
+   */
   axisScale: d3.ScaleTime<number, number>;
-  tickScale = d3.scaleLinear().domain([0, 10000]).range([0, 9]);
-  dataIntensityScale = d3.interpolate('#bababa', '#003cff');//('#0066ff', '#33ff00');
 
-  colorLogScale = d3.scaleLog().domain([0, 1000]).range([0, 100]);
+  /**
+   * dataIntensityScale is use to color the cube depending on the cube data intensity
+   */
+  dataIntensityScale = d3.interpolate('#bababa', '#003cff');
+
+  /**
+   * The axis svg appended on svg
+   */
   svgAxis: d3.Selection<SVGGElement, unknown, HTMLElement, any>;
-  axisInterval: d3.CountableTimeInterval = d3.timeHour;
-  element: any;
-  ticks;
 
+  /**
+   * The current step in d3 timeInterval format
+   */
+  axisInterval: d3.CountableTimeInterval = d3.timeHour;
+
+  /**
+   * Selection brush property: Handle radius (w and e)
+   */
   handleRadius = { w: 4, e: 4 };
+
+  /**
+   * Selection brush property: Brush area (width and height)
+   */
   brushArea = { w: -1, h: 10 };
+
+  /**
+   * Transition property (duration and type)
+   */
   transition = { duration: 1000, type: '' };
 
-  brush;
-
+  /**
+   * maxValue is the current maxValue of data in a singleStep. It is used to color the cube depending on data intensity
+   */
   maxValue = 1;
 
-  rangeMap = {
-    minute: d3.timeMinute,
-    hour: d3.timeHour,
-    day: d3.timeDay,
-    month: d3.timeMonth
-  };
-
+  /**
+   * The timeline chart width
+   */
   contentWidth;
+
+  /**
+   * The timeline chart height
+   */
   contentHeight;
 
+  /**
+   * stepInDomain is used to get the number of step in the domain
+   */
   stepInDomain = {
     year: 1,
     month: 12,
@@ -81,23 +142,47 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
     second: 60
   };
 
-  // BRUSH PROPERTIES
-  //TODO type
+  /**
+   * Brush Property: rect is the selection
+   */
   rect;
+
+  /**
+   * Brush Property: container is the brush container
+   */
   container;
+
+  /**
+   * Brush Property: selectionSvg is the effective svg selection
+   */
   selectionSvg;
+
+  /**
+   * Brush Property: selectionRenderSvg is the rendered svg selection
+   */
   selectionRenderSvg;
+
+  /**
+   * Brush Property: rightHandle is the e handle
+   */
   rightHandle;
+
+  /**
+   * Brush Property: leftHandle is the w handle
+   */
   leftHandle;
 
-  constructor() { }
-
-  ngOnInit() { }
-
+  /**
+   * A callback method that is invoked immediately after Angular has completed initialization of a component's view.
+   * It is used to build the timeline chart
+   */
   ngAfterViewInit() {
     this.buildAxis();
   }
 
+  /**
+   * Defintion of brushed function
+   */
   brushed = () => {
     const selection = d3.event.detail.selection;
     const mode = d3.event.detail.mode;
@@ -118,6 +203,9 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
     }
   }
 
+  /**
+   * Defintion of brushReleased function
+   */
   brushReleased = () => {
     const selection = d3.event.detail.selection;
     this.timeInterval = selection.map(d => this.axisInterval.round(this.axisScale.invert(d)));
@@ -132,10 +220,12 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
     }
   }
 
+  /**
+   * buildAxis() is used to build the timeline chart, the brush area and the info area
+   */
   buildAxis() {
-    this.element = this.axis.nativeElement;
-    this.contentWidth = this.element.offsetWidth - this.margin.left - this.margin.right;
-    this.contentHeight = this.element.offsetHeight - this.margin.top - this.margin.bottom;
+    this.contentWidth = this.axis.nativeElement.offsetWidth - this.margin.left - this.margin.right;
+    this.contentHeight = this.axis.nativeElement.offsetHeight - this.margin.top - this.margin.bottom;
     this.axisScale = d3.scaleTime().domain(this.domain).range([0, this.contentWidth]);
 
     this.svg = d3.select('#axis')
@@ -148,12 +238,11 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
       this.svgAxis = g
         .append('g')
         .attr('width', this.contentWidth)
-        .attr('height', this.contentHeight - 20) //TODO make variable
-        .attr('transform', `translate(0,${this.contentHeight - 20})`); //TODO make variable
+        .attr('height', this.contentHeight - 20)
+        .attr('transform', `translate(0,${this.contentHeight - 20})`);
     };
 
-    // Defining brush logic
-    this.brush = g => {
+    const brush = g => {
       g.call(this.appendBrush)
         .on('start brush end', this.brushed)
         .on('end', this.brushReleased);
@@ -170,26 +259,23 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
     // Append SelectionHelper
     this.svg
       .append('g')
-      .attr('transform', `translate(${this.contentWidth + this.margin.right},47) scale(0.6)`)//TODO make variable
+      .attr('transform', `translate(${this.contentWidth + this.margin.right},47) scale(0.6)`)
       .call(this.drawSelectionHelper);
 
     // Append brush logic
     this.svg
       .append('g')
       .attr('id', 'brush-group')
-      .attr('transform', `translate(${this.margin.left},55)`) //TODO make variable
-      .call(this.brush);
+      .attr('transform', `translate(${this.margin.left},55)`)
+      .call(brush);
   }
 
-  // updateRange() {
-  //   this.axisScale.range([this.margin.left, this.contentWidth - this.margin.right]);
-  //   this.svgAxis.call(d3.axisBottom(this.axisScale).ticks(this.axisInterval));
-
-  //   if (this.data) {
-  //     this.drowData(null);
-  //   }
-  // }
-
+  /**
+   * updateAxis is used to update the timeline axis data and to reset the brush area
+   * @param data the updated timeline data
+   * @param domain the updated domain
+   * @param interval the updated interval
+   */
   updateAxis(data: HYTData[], domain: (number | Date)[], interval: TimeStep) {
 
     this.domain = domain;
@@ -202,14 +288,14 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
       this.drowData(interval);
       this.axisScale.domain(this.domain);
       this.svgAxis
-        .transition().duration(1000)
+        .transition().duration(this.transition.duration)
         .call(d3.axisBottom(this.axisScale).ticks(this.axisInterval));
       const dist = this.contentWidth / this.stepInDomain[interval] / 2;
-      d3.selectAll('.data-cube').data(this.data).transition().duration(1000)
+      d3.selectAll('.data-cube').data(this.data).transition().duration(this.transition.duration)
         .attr('transform', (d, i, n) => `translate(${this.axisScale(d.timestamp) +
           dist},${-this.contentHeight + 20}) scale(1.8)`)
         .style('opacity', 1)
-      d3.selectAll('.old-data-cube').data(oldData).transition().duration(1000)
+      d3.selectAll('.old-data-cube').data(oldData).transition().duration(this.transition.duration)
         .attr('transform', (d, i, n) => `translate(${this.axisScale(d.timestamp) +
           dist},${-this.contentHeight + 20}) scale(1.8)`)
         .style('opacity', 0)
@@ -226,9 +312,12 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
 
   }
 
+  /**
+   * setBrush() is used to programmatically set the brush
+   */
   setBrush() {
     if (this.timeInterval[0] && this.timeInterval[1]) {
-      //TODO variable instead of select() ?
+      // ? TODO variable instead of select() ?
       if (this.timeInterval[1] > this.timeInterval[0]) {
         this.setSelection(this.timeInterval.map(this.axisScale), d3.select('#brush-group'));
       } else {
@@ -237,10 +326,10 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
     }
   }
 
-  destroyAxis() {
-    d3.select('#axisSvg').remove();
-  }
-
+  /**
+   * updateData is used to update the timeline data
+   * @param data the updated timeline data
+   */
   updateData(data) {
     this.maxValue = 1;
     for (let i = 0; i < data.length; i++) {
@@ -257,14 +346,18 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
     );
   }
 
+  /**
+   * Defintion of selectionHelper svg group
+   */
   selectionHelper = g => {
     g.append('path')
       .attr('class', 'selectionHelper')
       .attr('d', 'M 0 14 L 20 24 C 35 28, 35 0 20 4 Z');
-    // .attr('stroke', '#cccccc')
-    // .attr('fill', '#cccccc')
   }
 
+  /**
+   * drawSelectionHelper is used to draw the selectionHelper
+   */
   drawSelectionHelper = g => {
     g.call(this.selectionHelper)
       .on('mouseover', (d) => {
@@ -280,12 +373,14 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
       });
   }
 
-
+  /**
+   * setSelection() is used to update the rendered selection and to emit events of the new time selection
+   */
   setSelection(s, g, event?) {
 
-    //TODO add transitions
+    // ? TODO add transitions
     // .transition()
-    // .duration(100)
+    // .duration(this.transition.duration)
     this.selectionPx = s;
     this.selectionRenderSvg
       .attr('width', s[1] - s[0])
@@ -307,6 +402,9 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
     }
   }
 
+  /**
+   * resetSelection() is used to delete the time selection
+   */
   resetSelection() {
     this.selectionPx = [null, null];
     this.timeInterval = [null, null];
@@ -327,6 +425,9 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
       .style('display', 'none');
   }
 
+  /**
+   * appendBrush is used to append svg brush logic
+   */
   appendBrush = g => {
 
     g.append('path')
@@ -457,6 +558,9 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
       );
   }
 
+  /**
+   * appendCube is used to append the svg cube
+   */
   appendCube = g => {
     g.append('path')
       .attr('d', 'M0 0 L5 2 L5 8 L0 10 L-5 8 L-5 2 z');
@@ -466,9 +570,12 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
       .attr('d', 'M0 4 L0 10');
   }
 
+  /**
+   * drowData is used to draw the timeline data cube
+   * @param interval the updated step interval
+   */
   drowData(interval) {
     const distance = this.contentWidth / this.stepInDomain[interval] / 2;
-    // svg width:  (d3.select(n[i]) as any).node().getBBox().width
 
     if (!animation) {
       d3.selectAll('#cube-container').remove();
@@ -500,7 +607,6 @@ export class TimeAxisComponent implements OnInit, AfterViewInit {
       .on('click', (d, i, n) => {
         this.domainSet.emit(d.timestamp);
       });
-
   }
 
 }

@@ -108,6 +108,15 @@ const hyperiotRoutes: Routes = [
     }
   },
   {
+    path: 'project-wizard/:id',
+    component: ProjectWizardComponent,
+    canActivate: [LoggedInGuard],
+    canDeactivate: [CanDeactivateGuard],
+    data: {
+      showToolBar: true,
+    }
+  },
+  {
     path: 'projects',
     component: ProjectsComponent,
     canActivate: [LoggedInGuard],

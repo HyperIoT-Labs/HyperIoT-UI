@@ -38,6 +38,11 @@
                         [settingsForm]="settingsForm">
                     </hyt-time-chart-settings>
                 </div>
+                <div *ngSwitchCase="'realtime-table'">
+                    <hyt-time-chart-settings [widget]="widget" [areaId]="areaId" [modalApply]="modalApply.asObservable()"
+                        [settingsForm]="settingsForm">
+                    </hyt-time-chart-settings>
+                </div>
                 <div *ngSwitchCase="'gauge-value'">
                     <hyt-sensor-value-settings [widget]="widget" [areaId]="areaId" [modalApply]="modalApply.asObservable()"
                         [settingsForm]="settingsForm">

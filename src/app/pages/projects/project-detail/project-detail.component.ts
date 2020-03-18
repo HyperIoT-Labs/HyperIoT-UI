@@ -343,7 +343,7 @@ export class ProjectDetailComponent implements OnInit {
   }
 
   goToProjectWizard() {
-    this.router.navigateByUrl('/project-wizard', { state: { projectId: this.projectId } });
+    this.router.navigateByUrl(`/project-wizard/${this.projectId}`);
   }
 
 }
