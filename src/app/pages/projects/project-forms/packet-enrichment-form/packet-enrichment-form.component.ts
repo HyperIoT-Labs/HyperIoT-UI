@@ -11,6 +11,7 @@ import { LoadingStatusEnum, ProjectFormEntity } from '../project-form-entity';
 import { RuleDefinitionComponent } from '../rule-definition/rule-definition.component';
 import { AssetCategoryComponent } from './asset-category/asset-category.component';
 import { AssetTagComponent } from './asset-tag/asset-tag.component';
+import { FourierTransformComponent } from './fourier-transform/fourier-transform.component';
 
 @Component({
   selector: 'hyt-packet-enrichment-form',
@@ -38,6 +39,9 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
   @ViewChild('assetCategory', { static: false })
   assetCategoryComponent: AssetCategoryComponent;
 
+  @ViewChild('fourierTransform', { static: false})
+  fourierTransformComponent: FourierTransformComponent;
+
   packet: HPacket;
 
   entity = {} as Rule;
@@ -49,7 +53,8 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
   enrichmentRules: SelectOption[] = [
     { value: 'AddCategoryRuleAction', label: 'Categories' }, // TODO @I18N@
     { value: 'AddTagRuleAction', label: 'Tags' }, // TODO @I18N@
-    { value: 'ValidateHPacketRuleAction', label: 'Validation' } // TODO @I18N@
+    { value: 'ValidateHPacketRuleAction', label: 'Validation' }, // TODO @I18N@
+    { value: 'FourierTransformRuleAction', label: 'FourierTransform' } // TODO @I18N@
   ];
 
   enrichmentType = '';
@@ -117,6 +122,19 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
           } else {
             this.assetTags = JSON.parse(type) ? JSON.parse(type).tagIds : null;
           }
+        } else if (this.enrichmentType === 'FourierTransformRuleAction' && this.fourierTransformComponent) {
+          console.log('------_>', this.enrichmentType);
+          console.log(JSON.parse(type));
+          const fftAction = JSON.parse(type);
+          if (fftAction) {
+            this.fourierTransformComponent.selectedMethod = fftAction.transformMethod;
+            this.fourierTransformComponent.selectedNormalization = fftAction.fftNormalization;
+            this.fourierTransformComponent.selectedType = fftAction.fftTransformType;
+            // TODO: ...
+            // TODO: ... inputFields and outputFields
+            // TODO: ...
+            this.fourierTransformComponent.update();
+          }
         }
         this.form.get('rule-type').setValue(this.enrichmentType);
         if (readyCallback) {
@@ -178,6 +196,19 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
         break;
       case 'ValidateHPacketRuleAction':
         jac = JSON.stringify({ actionName: 'ValidateHPacketRuleAction' });
+        break;
+      case 'FourierTransformRuleAction':
+        jac = JSON.stringify({
+          actionName: 'FourierTransformRuleAction',
+          transformMethod: this.fourierTransformComponent.selectedMethod,
+          fftNormalization: this.fourierTransformComponent.selectedNormalization,
+          fftTransformType: this.fourierTransformComponent.selectedType,
+          // TODO: ...
+          // TODO: ... inputFields and outputFields
+          // TODO: ...
+          inputFields: String[0], // TODO: Input Fields!
+          outputFields: String[0] // TODO: Output Fields!
+        });
         break;
     }
     return JSON.stringify([jac]);
@@ -253,6 +284,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
   }
 
   enrichmentTypeChanged(event) {
+    console.log(event, event.value)
     if (event.value) {
       this.enrichmentType = event.value;
     }

@@ -63,6 +63,7 @@ import { AreaDeviceSelectDialogComponent } from './project-forms/areas-form/area
 import { AreaInnerareaSelectDialogComponent } from './project-forms/areas-form/area-innerarea-select-dialog/area-innerarea-select-dialog.component';
 import { AreasListComponent } from './project-forms/areas-form/areas-list/areas-list.component';
 import { GenericMessageDialogComponent } from 'src/app/components/modals/generic-message-dialog/generic-message-dialog.component';
+import { FourierTransformComponent } from './project-forms/packet-enrichment-form/fourier-transform/fourier-transform.component';
 
 @NgModule({
   declarations: [
@@ -102,7 +103,8 @@ import { GenericMessageDialogComponent } from 'src/app/components/modals/generic
     MapDirective,
     AreaDeviceSelectDialogComponent,
     AreaInnerareaSelectDialogComponent,
-    AreasListComponent
+    AreasListComponent,
+    FourierTransformComponent
   ],
   imports: [
     MatIconModule,

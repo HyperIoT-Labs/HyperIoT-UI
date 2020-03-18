@@ -1,0 +1,46 @@
+<div [formGroup]="form">
+
+    <label class="f-label">Fourier Transform method</label>       
+    <div class="radio-options pl-2 pr-2">
+        <hyt-radio-button [form]="form"
+            formControlName="transformMethod" name="transformMethod"
+            [options]="methodOptions" (changeFn)="onTransformMethodChange($event)">
+        </hyt-radio-button>
+    </div>
+
+    <div [ngClass]="{ hidden: selectedMethod !== 'FAST' }">
+        <div class="d-flex flex-row">
+
+            <div>
+                <label class="f-label">FFT Normalization</label>
+                <div class="radio-options pl-2 pr-2">
+                    <hyt-radio-button [form]="form"
+                        formControlName="transformNorm" name="transformNorm"
+                        [options]="normOptions"
+                        (changeFn)="onTransformNormChange($event)">
+                    </hyt-radio-button>
+                </div>    
+            </div>
+    
+            <div>
+                <label class="f-label">FFT Type</label>       
+                <div class="radio-options pl-2 pr-2">
+                    <hyt-radio-button [form]="form"
+                        formControlName="transformType" name="transformType"
+                        [options]="typeOptions"
+                        (changeFn)="onTransformTypeChange($event)">
+                    </hyt-radio-button>
+                </div>
+            </div>
+    
+        </div>
+    </div>
+
+</div>
+
+<div>
+    <label class="f-label">Input fields</label>       
+    <div *ngFor="let field of packet.fields; let i = index">
+        <hyt-checkbox [(ngModel)]="inputFields[i]" (changeFn)="onInputFieldChange($event)">{{ field.name }}</hyt-checkbox>
+    </div>
+</div>

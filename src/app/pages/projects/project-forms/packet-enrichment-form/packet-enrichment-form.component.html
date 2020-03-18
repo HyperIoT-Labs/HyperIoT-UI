@@ -53,14 +53,14 @@
       </div>
 
       <div 
-        *ngIf="enrichmentType=='AddTagRuleAction' || enrichmentType=='AddCategoryRuleAction'"
+        *ngIf="enrichmentType !== 'ValidateHPacketRuleAction'"
         id="ffield-col-enrich-tag-cat" 
         class="col-8 offset-2 col-tag-cat" 
       >
 
         <hyt-asset-tag 
           #assetTag
-          *ngIf="enrichmentType=='AddTagRuleAction'" 
+          *ngIf="enrichmentType === 'AddTagRuleAction'" 
           [project]="project" 
           [packet]="packet"
           [selectedTags]="assetTags">
@@ -68,12 +68,19 @@
 
         <hyt-asset-category
           #assetCategory
-          *ngIf="enrichmentType=='AddCategoryRuleAction'" 
+          *ngIf="enrichmentType === 'AddCategoryRuleAction'"
           [project]="project" 
           [packet]="packet"
           [selectedCategories]="assetCategories">
         </hyt-asset-category>
         
+        <hyt-fourier-transform
+         #fourierTransform
+         *ngIf="enrichmentType === 'FourierTransformRuleAction'"
+         [project]="project" 
+         [packet]="packet">
+        </hyt-fourier-transform>
+
       </div>
 
     </div> <!-- END FIRST FORM ROW -->
