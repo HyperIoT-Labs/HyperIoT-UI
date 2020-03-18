@@ -31,10 +31,13 @@ export class FourierTransformComponent implements OnInit {
     { label: 'Inverse', value: 'INVERSE' }
   ];
 
+  inputFieldOptions = [];
+
   selectedMethod = 'FAST';
   selectedNormalization = 'STANDARD';
   selectedType = 'FORWARD';
-  inputFields = [];
+  inputField = 0;
+  outputField = 0;
 
   constructor(
     private fb: FormBuilder,
@@ -43,14 +46,22 @@ export class FourierTransformComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.fb.group({});
-    console.log('FORM', this.form);
     this.update();
+    this.packet.fields.forEach((pf) => {
+      this.inputFieldOptions.push({
+        label: pf.name,
+        value: pf.id
+      });
+    });
   }
 
   update() {
     this.onTransformMethodChange(this.selectedMethod);
     this.onTransformNormChange(this.selectedNormalization);
     this.onTransformTypeChange(this.selectedType);
+    setTimeout(() => {
+      this.form.get('inputField').setValue(this.inputField);
+    });
   }
 
   onTransformMethodChange(method) {
@@ -76,7 +87,8 @@ export class FourierTransformComponent implements OnInit {
   }
 
   onInputFieldChange(field) {
-    console.log('Input field', field, this.inputFields);
+    console.log('packet field', field);
+    this.inputField = field.value;
   }
 
 }

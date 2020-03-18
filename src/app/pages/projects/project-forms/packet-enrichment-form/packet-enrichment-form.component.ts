@@ -122,18 +122,17 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
           } else {
             this.assetTags = JSON.parse(type) ? JSON.parse(type).tagIds : null;
           }
-        } else if (this.enrichmentType === 'FourierTransformRuleAction' && this.fourierTransformComponent) {
-          console.log('------_>', this.enrichmentType);
-          console.log(JSON.parse(type));
+        } else if (this.enrichmentType === 'FourierTransformRuleAction') {
           const fftAction = JSON.parse(type);
-          if (fftAction) {
+          if (fftAction && this.fourierTransformComponent) {
             this.fourierTransformComponent.selectedMethod = fftAction.transformMethod;
             this.fourierTransformComponent.selectedNormalization = fftAction.fftNormalization;
             this.fourierTransformComponent.selectedType = fftAction.fftTransformType;
-            // TODO: ...
-            // TODO: ... inputFields and outputFields
-            // TODO: ...
+            this.fourierTransformComponent.inputField = fftAction.inputField;
+            this.fourierTransformComponent.outputField = fftAction.outputField;
             this.fourierTransformComponent.update();
+          } else {
+            // TODO: ....
           }
         }
         this.form.get('rule-type').setValue(this.enrichmentType);
@@ -203,11 +202,8 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
           transformMethod: this.fourierTransformComponent.selectedMethod,
           fftNormalization: this.fourierTransformComponent.selectedNormalization,
           fftTransformType: this.fourierTransformComponent.selectedType,
-          // TODO: ...
-          // TODO: ... inputFields and outputFields
-          // TODO: ...
-          inputFields: String[0], // TODO: Input Fields!
-          outputFields: String[0] // TODO: Output Fields!
+          inputField: this.fourierTransformComponent.inputField,
+          outputField: this.fourierTransformComponent.outputField
         });
         break;
     }
