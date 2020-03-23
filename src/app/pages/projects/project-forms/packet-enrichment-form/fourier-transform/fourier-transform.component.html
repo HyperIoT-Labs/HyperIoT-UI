@@ -8,7 +8,7 @@
         </hyt-radio-button>
     </div>
 
-    <div [ngClass]="{ hidden: selectedMethod !== 'FAST' }">
+    <div [ngClass]="{ hidden: config.transformMethod !== 'FAST' }">
         <div class="d-flex flex-row">
 
             <div>
@@ -44,12 +44,20 @@
                 label="Input field">
             </hyt-select>
         </div>
-        <div class="m-4">
+        <div *ngIf="!config.outputFieldId" class="m-4">
             <hyt-input-text 
-                [form]="form" formControlName="output-field" name="output-field" [isRequired]="true"
+                [form]="form" formControlName="outputField" name="outputField" [isRequired]="true"
+                (change)="onOutputFieldChange($event)"
                 placeholder="Output field name"
                 hintMessage="Set the name of the transform result field">
-        </hyt-input-text>
+            </hyt-input-text>
+        </div>
+        <div *ngIf="config.outputFieldId" class="m-4">
+            Output field ID: {{ config.outputFieldId }}
+            <br>
+            Output field name: {{ outputFieldName }}
+            <br>
+            TODO: show button to remove outputField
         </div>
     </div>
 

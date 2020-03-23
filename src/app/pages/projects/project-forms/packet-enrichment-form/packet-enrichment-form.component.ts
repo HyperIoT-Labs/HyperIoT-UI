@@ -59,6 +59,8 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
 
   enrichmentType = '';
 
+  ruleConfig = {};
+
   assetTags: number[] = [];
   assetCategories: number[] = [];
 
@@ -123,17 +125,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
             this.assetTags = JSON.parse(type) ? JSON.parse(type).tagIds : null;
           }
         } else if (this.enrichmentType === 'FourierTransformRuleAction') {
-          const fftAction = JSON.parse(type);
-          if (fftAction && this.fourierTransformComponent) {
-            this.fourierTransformComponent.selectedMethod = fftAction.transformMethod;
-            this.fourierTransformComponent.selectedNormalization = fftAction.fftNormalization;
-            this.fourierTransformComponent.selectedType = fftAction.fftTransformType;
-            this.fourierTransformComponent.inputField = fftAction.inputField;
-            this.fourierTransformComponent.outputField = fftAction.outputField;
-            this.fourierTransformComponent.update();
-          } else {
-            // TODO: ....
-          }
+          this.ruleConfig = JSON.parse(type);
         }
         this.form.get('rule-type').setValue(this.enrichmentType);
         if (readyCallback) {
@@ -197,14 +189,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
         jac = JSON.stringify({ actionName: 'ValidateHPacketRuleAction' });
         break;
       case 'FourierTransformRuleAction':
-        jac = JSON.stringify({
-          actionName: 'FourierTransformRuleAction',
-          transformMethod: this.fourierTransformComponent.selectedMethod,
-          fftNormalization: this.fourierTransformComponent.selectedNormalization,
-          fftTransformType: this.fourierTransformComponent.selectedType,
-          inputField: this.fourierTransformComponent.inputField,
-          outputField: this.fourierTransformComponent.outputField
-        });
+        jac = JSON.stringify(this.ruleConfig);
         break;
     }
     return JSON.stringify([jac]);
@@ -280,7 +265,6 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
   }
 
   enrichmentTypeChanged(event) {
-    console.log(event, event.value)
     if (event.value) {
       this.enrichmentType = event.value;
     }
@@ -293,6 +277,9 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
   tagDirty() {
     return this.assetCategoryComponent ? this.assetCategoryComponent.isDirty() : false;
   }
+  fftDirty() {
+    return this.fourierTransformComponent ? this.fourierTransformComponent.isDirty() : false;
+  }
   isValid() {
     return super.isValid() && !this.invalidRules();
   }
@@ -302,7 +289,8 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
         super.isDirty() ||
         this.ruleDefinitionComponent.isDirty() ||
         this.categoryDirty() ||
-        this.tagDirty()
+        this.tagDirty() ||
+        this.fftDirty()
       );
   }
 
