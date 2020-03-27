@@ -281,7 +281,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
     return this.fourierTransformComponent ? this.fourierTransformComponent.isDirty() : false;
   }
   isValid() {
-    return super.isValid() && !this.invalidRules();
+    return super.isValid() && !this.invalidRules() && (!this.fourierTransformComponent || this.fourierTransformComponent.isValid());
   }
   isDirty() {
     return this.editMode &&

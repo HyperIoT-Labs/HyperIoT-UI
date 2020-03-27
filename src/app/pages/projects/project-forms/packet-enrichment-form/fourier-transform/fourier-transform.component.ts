@@ -40,7 +40,7 @@ export class FourierTransformComponent implements OnInit {
     this.update();
   }
   get config() { return this._config };
-  originalConfig: string;
+  originalConfig: any;
 
   outputFieldName: string;
 
@@ -86,13 +86,27 @@ export class FourierTransformComponent implements OnInit {
   }
 
   onOutputFieldChange(e) {
-    console.log(e.target);
-    this.addOutputField(e.target.value, (field) => {
-      this.config.outputFieldId = field.id;
-      this.outputFieldName = field.name;
-    }, (error) => {
-      // TODO: inject error on input text
-    })
+    const outputFieldName = e.target.value;
+    const outputField = this.packet.fields.find((pf) => pf.name === outputFieldName);
+    if (outputField) {
+      this.config.outputFieldId = outputField.id;
+      this.outputFieldName = outputFieldName;
+    } else {
+      this.addOutputField(outputFieldName, (field) => {
+        this.config.outputFieldId = this.originalConfig.outputFieldId = field.id;
+        this.outputFieldName = field.name;
+      }, (error) => {
+        // TODO: inject error on input text
+      });
+    }
+  }
+  onOutputFieldResetClick() {
+    this.hpacketService.deleteHPacketField(this.config.outputFieldId).subscribe((res) => {
+      this.config.outputFieldId = 0;
+      this.outputFieldName = '';
+    }, (err) => {
+      // TODO: report error
+    });
   }
 
   new() {
@@ -116,11 +130,17 @@ export class FourierTransformComponent implements OnInit {
         this.hpacketService.findHPacket(this.packet.id).subscribe((res) => {
           this.packet = res;
           const outputField = this.packet.fields.find((pf) => pf.id === this.config.outputFieldId);
-          this.outputFieldName = outputField.name;
+          if (outputField) {
+            this.outputFieldName = outputField.name;
+          } else {
+            this.config.outputFieldId = 0;
+            this.outputFieldName = '';
+          }
         });
       }
     });
-    this.originalConfig = JSON.stringify(this._config);
+    this.originalConfig = {};
+    Object.assign(this.originalConfig, this._config);
   }
   addOutputField(outputFieldName, successCallback, errorCallback) {
     if (!this.config.outputFieldId) {
@@ -136,13 +156,11 @@ export class FourierTransformComponent implements OnInit {
       });
     }
   }
-  deleteOutputField() {
-    // TODO: ...
-    // TODO: delete output field from packet
-    // TODO: ...
-  }
 
   isDirty() {
-    return this.originalConfig !== JSON.stringify(this._config);
+    return JSON.stringify(this.originalConfig) !== JSON.stringify(this._config);
+  }
+  isValid() {
+    return this._config && this._config.inputFieldId > 0 && this._config.outputFieldId > 0;
   }
 }
