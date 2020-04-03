@@ -63,7 +63,6 @@ export class PacketSelectComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('Packet Select area id', this.areaId);
     // If `areaId` is set, then show only packets belonging to the given area devices
     if (this.areaId) {
       this.areaService.getAreaDeviceList(this.areaId).subscribe((areaDevices: AreaDevice[]) => {

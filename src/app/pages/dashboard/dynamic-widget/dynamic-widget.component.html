@@ -5,6 +5,11 @@
   [widget]="widget"
   (widgetAction)="onWidgetAction($event)"></hyperiot-time-chart>
 
+<hyperiot-fourier-chart
+  *ngIf="widget.type === 'fourier-chart'"
+  [widget]="widget"
+  (widgetAction)="onWidgetAction($event)"></hyperiot-fourier-chart>
+
 <hyperiot-stats-chart
   *ngIf="widget.type === 'stats-chart'"
   [widget]="widget"

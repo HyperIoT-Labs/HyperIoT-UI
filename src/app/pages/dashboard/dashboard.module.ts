@@ -29,6 +29,7 @@ import { TextLabelSettingsComponent } from './widget-settings-dialog/text-label-
 import { TimeChartSettingsComponent } from './widget-settings-dialog/time-chart-settings/time-chart-settings.component';
 import { WidgetSettingsDialogComponent } from './widget-settings-dialog/widget-settings-dialog.component';
 import { WidgetsLayoutComponent } from './widgets-layout/widgets-layout.component';
+import { FourierChartSettingsComponent } from './widget-settings-dialog/fourier-chart-settings/fourier-chart-settings.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { WidgetsLayoutComponent } from './widgets-layout/widgets-layout.componen
     MyTelInputComponent,
     DashboardComponent,
     TimelineComponent,
-    TimeAxisComponent
+    TimeAxisComponent,
+    FourierChartSettingsComponent
   ],
   imports: [
     CommonModule,

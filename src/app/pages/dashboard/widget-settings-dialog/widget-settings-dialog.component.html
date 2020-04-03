@@ -63,6 +63,11 @@
                         [settingsForm]="settingsForm">
                     </hyt-text-label-settings>
                 </div>
+                <div *ngSwitchCase="'fourier-chart'">
+                    <hyt-fourier-chart-settings [widget]="widget" [areaId]="areaId" [modalApply]="modalApply.asObservable()"
+                        [settingsForm]="settingsForm">
+                    </hyt-fourier-chart-settings>
+                </div>
                 <div *ngSwitchDefault>
                     <em>TODO: ....</em>
                 </div>

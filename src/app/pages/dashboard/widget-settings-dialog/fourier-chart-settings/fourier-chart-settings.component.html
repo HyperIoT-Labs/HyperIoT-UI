@@ -1,0 +1,6 @@
+<hyt-packet-select [widget]="widget" [areaId]="areaId" [multiPacketSelect]="true" [selectedFields]="selectedFields"
+    (selectedFieldsChange)="onSelectedFieldsChange($event)"></hyt-packet-select>
+
+<hyt-input-template name="name" type="text" placeholder="Sample rate (ms)"
+    [(ngModel)]="sampleRate" #name="ngModel" [isRequired]="true" required pattern="[0-9]*">
+</hyt-input-template>
