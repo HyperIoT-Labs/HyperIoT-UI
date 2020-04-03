@@ -8,7 +8,7 @@
         </hyt-radio-button>
     </div>
 
-    <div [ngClass]="{ hidden: selectedMethod !== 'FAST' }">
+    <div [ngClass]="{ hidden: config.transformMethod !== 'FAST' }">
         <div class="d-flex flex-row">
 
             <div>
@@ -36,11 +36,31 @@
         </div>
     </div>
 
-</div>
-
-<div>
-    <label class="f-label">Input fields</label>       
-    <div *ngFor="let field of packet.fields; let i = index">
-        <hyt-checkbox [(ngModel)]="inputFields[i]" (changeFn)="onInputFieldChange($event)">{{ field.name }}</hyt-checkbox>
+    <div class="d-flex flex-row">
+        <div class="m-4">
+            <hyt-select 
+                [form]="form" [options]="inputFieldOptions" (changeFn)="onInputFieldChange($event)"
+                formControlName="inputField" name="inputField" [isRequired]="true"
+                label="Input field">
+            </hyt-select>
+        </div>
+        <div *ngIf="!config.outputFieldId || outputFieldName.length === 0" class="m-4">
+            <hyt-input-text 
+                [form]="form" formControlName="outputField" name="outputField" [isRequired]="true"
+                (change)="onOutputFieldChange($event)"
+                placeholder="Output field name"
+                hintMessage="Set the name of the transform result field">
+            </hyt-input-text>
+        </div>
+        <div *ngIf="config.outputFieldId && outputFieldName.length > 0" class="m-4">
+            <div class="d-flex flex-row">
+                <div class="d-flex flex-column mr-4">
+                    <label class="f-label">Output field</label>
+                    <strong>{{ outputFieldName }}</strong>
+                </div>
+                <hyt-button (clickFn)="onOutputFieldResetClick()">Change</hyt-button>
+            </div>
+        </div>
     </div>
+
 </div>
