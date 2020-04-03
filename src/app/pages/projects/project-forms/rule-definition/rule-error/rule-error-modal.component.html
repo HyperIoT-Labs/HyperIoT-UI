@@ -3,21 +3,21 @@
     <div class="dialog">
 
         <div class="dialog-header">
-            <h3>Error</h3>
-            <!--@I18N@-->
+            <h3 i18n="@@HYT_error">Error</h3>
             <span class="hyt-icon icon-hyt_cancelC" (click)="close()"></span>
         </div>
 
         <div class="dialog-body">
-            Errore nel caricamento della regola. Questo può accadere per uno o più dei seguenti motivi:
+            <ng-container i18n="@@HYT_error_loading_rule">An error occurred while loading the rule. This may have
+                happened for one or more of the following reasons:</ng-container>
             <ul>
-                <li>Il nome di un campo della regola è stato modificato</li>
-                <li>Un campo della regola è stato eliminato</li>
-                <li>Un pacchetto della regola è stato eliminato (solo eventi)</li>
-                <li>La definizione della sintassi delle regole è stata aggiornata pertanto la regola è ora obsoleta</li>
+                <li i18n="@@HYT_field_name_modified">The name of one rule's field has been modified</li>
+                <li i18n="@@HYT_field_deleted">A rule's field has been deleted</li>
+                <li i18n="@@HYT_packet_deleted">A rule's packet has been deleted (only events)</li>
+                <li i18n="@@HYT_obsolete_syntax_rule">Rule's syntax was updated making the rule now obsolete</li>
             </ul>
-            Per favore, ridefinisci la regola e cancella la vecchia.
-            <!--@I18N@-->
+            <ng-container i18n="@@HYT_error_loading_rule_2">Please, redefine a new rule and delete the old one.
+            </ng-container>
         </div>
 
     </div>

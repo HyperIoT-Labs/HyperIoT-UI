@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpErrorHandlerService } from './http-error-handler.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 import { HYTError } from './models/models';
 
 @Injectable({
@@ -9,8 +8,8 @@ import { HYTError } from './models/models';
 })
 export class AuthenticationHttpErrorHandlerService extends HttpErrorHandlerService {
 
-  constructor(i18n: I18n) {
-    super(i18n);
+  constructor() {
+    super();
   }
 
   handleRegistration(httpError: HttpErrorResponse): HYTError[] {
@@ -21,7 +20,7 @@ export class AuthenticationHttpErrorHandlerService extends HttpErrorHandlerServi
           case 'it.acsoftware.hyperiot.base.exception.HyperIoTDuplicateEntityException': {
             return [
               {
-                message: httpError.error.errorMessages[0] + ' ' + this.i18n('HYT_duplicate_entity'),
+                message: httpError.error.errorMessages[0] + ' ' + $localize`:@@HYT_duplicate_entity:Already in use`,
                 container: (httpError.error.errorMessages[0] === 'username') ? 'username' : 'email'
               }
             ];
@@ -38,7 +37,7 @@ export class AuthenticationHttpErrorHandlerService extends HttpErrorHandlerServi
           default: {
             return [
               {
-                message: this.i18n('HYT_unknown_error'),
+                message: $localize`:@@HYT_unknown_error:Error executing your request`,
                 container: 'general'
               }
             ];
@@ -59,7 +58,7 @@ export class AuthenticationHttpErrorHandlerService extends HttpErrorHandlerServi
       case 401: {
         return [
           {
-            message: this.i18n('HYT_wrong_user_or_password'),
+            message: $localize`:@@HYT_wrong_user_or_password:Wrong username or password`,
             container: 'general'
           }
         ];
@@ -68,7 +67,7 @@ export class AuthenticationHttpErrorHandlerService extends HttpErrorHandlerServi
       case 403: {
         return [
           {
-            message: this.i18n('HYT_error_403'),
+            message: $localize`:@@HYT_error_403:Your account is not activated. Please activate your account with the activation link we send you by email`,
             container: 'general'
           }
         ];

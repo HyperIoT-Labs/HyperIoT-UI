@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { HYTError } from './models/models';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpErrorHandlerService {
 
-  constructor(protected i18n: I18n) { }
+  constructor() { }
 
   handle(httpError: HttpErrorResponse): HYTError[] {
 
@@ -16,7 +15,7 @@ export class HttpErrorHandlerService {
       case 404: {
         return [
           {
-            message: this.i18n('HYT_service_temporarily_unavaiable'),
+            message: $localize`:@@HYT_service_temporarily_unavailable:Service temporarily unavailable`,
             container: 'general'
           }
         ];
@@ -25,7 +24,7 @@ export class HttpErrorHandlerService {
       case 500: {
         return [
           {
-            message: this.i18n('HYT_server_error_500'),
+            message: $localize`:@@HYT_server_error_500:Internal error`,
             container: 'general'
           }
         ];
@@ -34,7 +33,7 @@ export class HttpErrorHandlerService {
       case 504: {
         return [
           {
-            message: this.i18n('HYT_service_temporarily_unavaiable'),
+            message: $localize`:@@HYT_service_temporarily_unavailable:Service temporarily unavailable`,
             container: 'general'
           }
         ];
@@ -43,7 +42,7 @@ export class HttpErrorHandlerService {
       default: {
         return [
           {
-            message: this.i18n('HYT_unknown_error'),
+            message: $localize`:@@HYT_unknown_error:Error executing your request`,
             container: 'general'
           }
         ];

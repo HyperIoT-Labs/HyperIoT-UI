@@ -7,7 +7,7 @@
             <mat-form-field>
                 <mat-select [(ngModel)]="selectedPacket" [compareWith]="packetCompare"
                     (ngModelChange)="onPacketChange()" name="packet-select"
-                    placeholder="HYT_widget_settings_select_packet"
+                    placeholder="Select packet"
                     i18n-placeholder="@@HYT_widget_settings_select_packet" required disableRipple>
                     <mat-option *ngFor="let packet of projectPackets" [value]="packet" selected>
                         {{packet.name}}
@@ -27,8 +27,10 @@
             <mat-form-field>
                 <mat-select [(ngModel)]="selectedFields" [multiple]="multiPacketSelect"
                     (ngModelChange)="onPacketFieldChange($event)" name="field-select"
-                    placeholder="HYT_widget_settings_select_fields"
-                    i18n-placeholder="@@HYT_widget_settings_select_fields" required disableRipple>
+                    placeholder="Select field/s"
+                    required disableRipple>
+                    <!-- @@i18n -->
+                    <!-- placeholder="Select {multiPacketSelect?1:0, plural, =0 {campo} other {campi}}" -->
                     <mat-option *ngFor="let field of selectedPacket.fields" [value]="field" selected>
                         {{field.name}}
                     </mat-option>
@@ -91,7 +93,7 @@
                 </div>
                 <hyt-button (clickFn)="onAddFieldMapping(fieldConfig)">
                     <mat-icon>add</mat-icon>
-                    <span i18n="@@HYT_button_add">HYT_button_add</span>
+                    <span i18n="@@HYT_button_add">Add</span>
                 </hyt-button>
             </div>
         </div>

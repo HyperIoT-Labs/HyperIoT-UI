@@ -8,7 +8,7 @@
 
         <hyt-select 
           [form]="selectForm" formControlName="selectDevice" name="selectDevice" [options]="devicesOptions"
-          i18n-label="@@HYT_device" label="HYT_device" (changeFn)="deviceChanged($event)"
+          i18n-label="@@HYT_device" label="Devices" (changeFn)="deviceChanged($event)"
         >
         </hyt-select>
 
@@ -18,7 +18,7 @@
 
         <hyt-select 
           [form]="selectForm" formControlName="selectPacket" name="selectPacket" [options]="packetsOptions"
-          i18n-label="@@HYT_packet" label="HYT_packet" (changeFn)="packetChanged($event)" [disabled]="false"
+          i18n-label="@@HYT_packet" label="Packet" (changeFn)="packetChanged($event)" [disabled]="false"
         >
         </hyt-select>
 

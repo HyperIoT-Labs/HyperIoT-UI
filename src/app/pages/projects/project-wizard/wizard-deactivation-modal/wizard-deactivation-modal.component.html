@@ -3,7 +3,7 @@
     <div id="title-deact-mod" class="row">
 
         <div class="col-12">
-            <h3>Unsaved data</h3><!-- @I18N@ -->
+            <h3 i18n="@@HYT_unsaved_data">Unsaved data</h3>
         </div>
 
     </div>
@@ -12,7 +12,7 @@
 
         <div class="col-12">
 
-            <p>If you leave the page the unsaved changes will be lost</p><!-- @I18N@ -->
+            <p i18n="@@HYT_unsaved_changes_lost">If you leave the page the unsaved changes will be lost</p>
 
         </div>
 
@@ -23,7 +23,8 @@
         <div class="col-6">
 
             <hyt-button [color]="'hyt-base-total-green'" (click)="output(false)">
-                <span class="hyt-icon icon-hyt_arrowLeft"></span>  Remain <!-- @I18N@ -->
+                <span class="hyt-icon icon-hyt_arrowLeft"></span>
+                <ng-container i18n="@@HYT_remain">Remain</ng-container>
             </hyt-button>
 
         </div>
@@ -31,7 +32,8 @@
         <div class="col-6">
 
             <hyt-button [color]="'hyt-base-total-red'" (click)="output(true)">
-                Discard Changes <span class="hyt-icon icon-hyt_cancel"></span> <!-- @I18N@ -->
+                <ng-container i18n="@@HYT_discard_changes">Discard Changes</ng-container>
+                <span class="hyt-icon icon-hyt_cancel"></span>
             </hyt-button>
 
         </div>

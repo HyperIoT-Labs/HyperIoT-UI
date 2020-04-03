@@ -11,13 +11,13 @@ export class TopbarComponent implements OnInit {
 
   public winInnerWidth: any;
   isShow: boolean = false;
-  
+
   mobileBreakPoints = {
-    md : 991,
-    sm : 767,
-    xs : 575
+    md: 991,
+    sm: 767,
+    xs: 575
   };
-  
+
   constructor(private toggleSidebarService: ToggleSidebarService) { }
 
   @HostListener('window:resize', ['$event'])

@@ -24,13 +24,13 @@
                 <div class="single-element">
                     <mat-icon>devices_other</mat-icon>
                     <strong class="device-count px-2">{{ deviceCount }}</strong>
-                    <span i18n="@@projectCard-string-device">HYT_string_device</span>
+                    <span i18n="@@HYT_projectcard_string_device">Device{{ deviceCount == 1 ? '' : 's' }}</span>
                 </div> <!-- End Single Element -->
 
                 <div class="single-element">
                     <mat-icon>code</mat-icon>
                     <strong class="count-element px-2">{{ rulesCount }}</strong> 
-                    <span i18n="@@projectCard-string-rule">HYT_string_rule</span>
+                    <span i18n="@@HYT_projectcard_string_rule">Rule{{ rulesCount == 1 ? '' : 's' }}</span>
                 </div> <!-- End Single Element -->
                 
 

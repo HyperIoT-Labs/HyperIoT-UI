@@ -3,19 +3,19 @@
   <div class="header d-flex flex-row justify-content-stretch">
 
     <div class="breadcrumb flex-grow-1">
-      <span class="hyt-icon icon-hyt_projectSolo"></span> <a [routerLink]="['/']">Home</a> > <strong>Projects</strong>
-    </div> <!-- @I18N@ -->
+      <span class="hyt-icon icon-hyt_projectSolo"></span> <a [routerLink]="['/']" i18n="@@HYT_home">Home</a> > <strong i18n="@@HYT_projects">Projects</strong>
+    </div>
 
     <!-- button on the right side -->
     <div class="align-self-right">
       <!-- <hyt-button *ngIf="pageStatus === 1" id="add-project-btn-top" (click)="addProject()" type="button">
-        <ng-container i18n="@@HYT_add_new_project">HYT_add_new_project</ng-container>
+        <ng-container i18n="@@HYT_add_new_project">Add new project</ng-container>
       </hyt-button> -->
 
       <hyt-button *ngIf="pageStatus === 1" [isDisabled]="deletingInLoading" id="add-project-btn-top" (clickFn)="addProject()"
         [color]="'hyt-base-total-white'">
         <span class="hyt-icon icon-hyt_plusC"></span>
-        <ng-container i18n="@@HYT_add_new_project">HYT_add_new_project</ng-container>
+        <ng-container i18n="@@HYT_add_new_project">Add new project</ng-container>
       </hyt-button>
 
     </div>
@@ -26,8 +26,8 @@
 
     <div id="loadingStatus" *ngSwitchCase="PageStatus.Loading" class="mt-5 d-flex flex-column align-items-center justify-content-center">
 
-      <img id="animatedPreloaderImg" src="assets/images/hyperiot_logo_single_char_animated.svg" alt="Hyperiot Animated Logo"> <!-- @I18N@ -->
-      <h2 i18n="@@HYT_page_is_loading">HYT_page_is_loading</h2>
+      <img id="animatedPreloaderImg" src="assets/images/hyperiot_logo_single_char_animated.svg" alt="Hyperiot Animated Logo">
+      <h2 i18n="@@HYT_page_is_loading">Page is loading...</h2>
       <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 
       <!-- Page is loading... -->
@@ -42,7 +42,7 @@
         <div id="row-container-title" class="row">
 
           <div id="projects-title-box" class="col-12">
-            <h2 id="title-projects" i18n="@@HYT_project_list">HYT_project_list</h2>
+            <h2 id="title-projects" i18n="@@HYT_project_list">Project list</h2>
           </div>
 
           <div id="projects-topfilters-box" class="col-12">
@@ -50,25 +50,22 @@
               <div class="row">
                 <div class="col-6">
                   <hyt-input-text id="hyt-search-bottom" [form]="filteringForm" formControlName="textFilter"
-                    name="textFilter" placeholder="Search" (keyup)="onChangeInputSearch($event)"></hyt-input-text>
-                  <!--@I18N-->
+                    name="textFilter" i18n-placeholder="@@HYT_search" placeholder="Search" (keyup)="onChangeInputSearch($event)"></hyt-input-text>
                 </div>
                 <div class="col-6 sort-right">
                   <span id="sort-text">Sort by: </span>
-                  <!--@I18N-->
-                  <hyt-select [form]="filteringForm" [label]="'Select a sort type'" formControlName="sort" name="sort"
+                  <hyt-select [form]="filteringForm" i18n-label="@@HYT_select_sort_type" label="Select a sort type" formControlName="sort" name="sort"
                     (changeFn)="onChangeSelectSort($event)" [options]="sortOptions"></hyt-select>
-                  <!--@I18N-->
                 </div>
               </div>
             </form>
           </div>
 
           <div class="col-12">
+            <!-- <span i18n="@@HYT_show_projects_of">Showing {hProjectsFiltered.length, plural, =0 {{{hProjectsFiltered.lenght}} projects} =1 {{{hProjectsFiltered.length}} project} other {{{hProjectsFiltered.length}} projects}} of {{hProjects.length}} </span> -->
+            <!-- @@i18n -->
 
-            <span>Show {{hProjectsFiltered.length}} projects of {{hProjects.length}}</span>
-            <!--@I18N-->
-
+            <span >Showing {{hProjectsFiltered.length}} projects of {{hProjects.length}}</span>
           </div>
 
         </div> <!-- End Row Title -->
@@ -93,7 +90,7 @@
         <div id="row-cotainer-cards" [ngClass]="{'cards-blurred' : deletingInLoading}" class="row">
 
           <div *ngIf="hProjectsFiltered.length == 0" class="col-12">
-            <span i18n="@@HYT_no_project_found">HYT_no_project_found</span>
+            <span i18n="@@HYT_no_project_found">No project that matches the search found...</span>
           </div>
 
           <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2 single-card-container d-flex flex-row justify-content-center"
@@ -115,14 +112,14 @@
       <div class="mt-5 no-projects">
 
         <div id="content-no-projects" class="col-md-12">
-          <h3 id="title-no-project" i18n="@@HYT_no_project">HYT_no_project</h3>
-          <h4 id="subtitle-no-project" i18n="@@HYT_add_project_button_hint">HYT_add_project_button_hint</h4>
+          <h3 id="title-no-project" i18n="@@HYT_no_project">There are no projects!</h3>
+          <h4 id="subtitle-no-project" i18n="@@HYT_add_project_button_hint">To add a project click the button below.</h4>
         </div>
 
         <div id="btn-no-projects" class="col-md-12">
 
           <hyt-button id="add-project-btn" (click)="addProject()" type="button">
-            <ng-container i18n="@@HYT_create_first_project">HYT_create_first_project</ng-container>
+            <ng-container i18n="@@HYT_create_first_project">Create your first project</ng-container>
           </hyt-button>
 
         </div>
@@ -133,13 +130,12 @@
 
     <div id="errorStatus" *ngSwitchCase="PageStatus.Error" class="mt-5 d-flex flex-column align-items-center justify-content-center">
       
-      <h2 i18n="@@HYT_error_occurred_long">HYT_error_occurred_long</h2>
-      <!-- An error has occurred, contact the administrator! -->
+      <h2 i18n="@@HYT_error_occurred_long">An error has occurred, contact the administrator!</h2>
 
     </div> <!-- PageStatus.Error -->
 
     <div id="defaultStatus" *ngSwitchDefault class="mt-5 d-flex flex-column align-items-center justify-content-center">
-      <h2>Error!!</h2> <!-- @I18N@ -->
+      <h2 i18n="@@HYT_error">Error!</h2>
     </div>
 
   </div>

@@ -29,47 +29,47 @@ import { WizardReportModalComponent } from './wizard-report-modal/wizard-report-
 })
 export class ProjectWizardComponent implements OnInit, AfterViewInit {
 
-  @ViewChild('stepper', { static: false })
+  @ViewChild('stepper')
   stepper: HytStepperComponent;
 
   currentForm: ProjectFormEntity;
 
-  @ViewChild('projectForm', { static: false })
+  @ViewChild('projectForm')
   projectForm: ProjectFormComponent;
 
-  @ViewChild('devicesForm', { static: false })
+  @ViewChild('devicesForm')
   devicesForm: DeviceFormComponent;
 
-  @ViewChild('applicationsForm', { static: false })
+  @ViewChild('applicationsForm')
   applicationsForm: ApplicationFormComponent;
 
-  @ViewChild('deviceSelect', { static: false })
+  @ViewChild('deviceSelect')
   deviceSelect: DeviceSelectComponent;
 
-  @ViewChild('packetsForm', { static: false })
+  @ViewChild('packetsForm')
   packetsForm: PacketFormComponent;
 
-  @ViewChild('fieldPacketSelect', { static: false })
+  @ViewChild('fieldPacketSelect')
   fieldPacketSelect: PacketSelectComponent;
 
-  @ViewChild('fieldsForm', { static: false })
+  @ViewChild('fieldsForm')
   fieldsForm: PacketFieldsFormComponent;
 
-  @ViewChild('enrichmentPacketSelect', { static: false })
+  @ViewChild('enrichmentPacketSelect')
   enrichmentPacketSelect: PacketSelectComponent;
 
-  @ViewChild('enrichmentForm', { static: false })
+  @ViewChild('enrichmentForm')
   enrichmentForm: PacketEnrichmentFormComponent;
 
   statisticsForm: PacketStatisticsFormComponent;
 
-  @ViewChild('eventPacketSelect', { static: false })
+  @ViewChild('eventPacketSelect')
   eventPacketSelect: PacketSelectComponent;
 
-  @ViewChild('eventsForm', { static: false })
+  @ViewChild('eventsForm')
   eventsForm: PacketEventsFormComponent;
 
-  @ViewChild('deactivationModal', { static: false })
+  @ViewChild('deactivationModal')
   deactivationModal: WizardDeactivationModalComponent;
 
   panelIsVisible = true;
@@ -514,8 +514,8 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
   }
 
   sourceOptions: Option[] = [
-    { value: 'application', label: 'APPLICATION', checked: true },
-    { value: 'device', label: 'DEVICE' }
+    { value: 'application', label: $localize`:@@HYT_application:APPLICATION`, checked: true },
+    { value: 'device', label: $localize`:@@HYT_device:DEVICE` }
   ];
 
   selectedSource = 'application';

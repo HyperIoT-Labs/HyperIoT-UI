@@ -11,19 +11,19 @@
 
       <div id="column-welcome" class="col-md-6">
         <div id="head-welcome-box">
-          <ng-container i18n="@@HYT_welcome">HYT_welcome</ng-container>!
+          <ng-container i18n="@@HYT_welcome">Welcome</ng-container>!
         </div>
-        <div id="body-welcome-box" i18n="@@HYT_registration_1">HYT_registration_1</div>
+        <div id="body-welcome-box" i18n="@@HYT_registration_1">register and enjoy our benefits</div>
         <div id="footer-welcome-box">
-          <ng-container i18n="@@HYT_already_member_question">HYT_already_member_question</ng-container>
-          <br /><a routerLink="/auth/login" i18n="@@HYT_login_now">HYT_login_now</a>
-          &#160;<ng-container i18n="@@HYT_registration_login_message">HYT_registration_login_message</ng-container>
+          <ng-container i18n="@@HYT_already_member_question">Already a Member?</ng-container>
+          <br /><a routerLink="/auth/login" i18n="@@HYT_login_now">Login now</a>
+          &#160;<ng-container i18n="@@HYT_registration_login_message">and enjoy the experience</ng-container>
         </div>
       </div>
 
       <div id="column-registration-form" class="col-md-6">
 
-        <h3 id="registration-title" i18n="@@HYT_registration">HYT_registration</h3>
+        <h3 id="registration-title" i18n="@@HYT_registration">Registration</h3>
 
         <div class="row">
 
@@ -33,33 +33,33 @@
 
               <div class="container-form-field">
                 <hyt-input-text [form]="registrationForm" formControlName="name" name="name" [isRequired]="true"
-                  i18n-placeholder="@@HYT_name" placeholder="HYT_name" [injectedErrorMsg]="getError('name')">
+                  i18n-placeholder="@@HYT_name" placeholder="Name" [injectedErrorMsg]="getError('name')">
                 </hyt-input-text>
               </div> <!-- Field Name -->
 
               <div class="container-form-field">
                 <hyt-input-text [form]="registrationForm" formControlName="lastName" name="lastName" [isRequired]="true"
-                  i18n-placeholder="@@HYT_surname" placeholder="HYT_surname" [injectedErrorMsg]="getError('lastName')">
+                  i18n-placeholder="@@HYT_surname" placeholder="Surname" [injectedErrorMsg]="getError('lastName')">
                 </hyt-input-text>
               </div> <!-- Field Surname -->
 
               <div class="container-form-field">
                 <hyt-input-text [form]="registrationForm" formControlName="username" name="username" [isRequired]="true"
-                  i18n-placeholder="@@HYT_username" placeholder="HYT_username" pattern="[A-Za-z0-9 ]*"
+                  i18n-placeholder="@@HYT_username" placeholder="Username or email" pattern="[A-Za-z0-9 ]*"
                   [injectedErrorMsg]="getError('huser-username')" errorPosition="bottom">
                 </hyt-input-text>
               </div> <!-- Field Username -->
 
               <div class="container-form-field">
                 <hyt-input-text [form]="registrationForm" formControlName="email" name="email" [isEmail]="true"
-                  [isRequired]="true" i18n-placeholder="@@HYT_email" placeholder="HYT_email"
+                  [isRequired]="true" i18n-placeholder="@@HYT_email" placeholder="Email"
                   [injectedErrorMsg]="getError('email')">
                 </hyt-input-text>
               </div> <!-- Field Email -->
 
               <div class="container-form-field">
                 <hyt-input-text [form]="registrationForm" formControlName="huser-password" name="huser-password"
-                  [isRequired]="true" [isPassword]="true" i18n-placeholder="@@HYT_password" placeholder="HYT_password"
+                  [isRequired]="true" [isPassword]="true" i18n-placeholder="@@HYT_password" placeholder="Password"
                   [injectedErrorMsg]="getError('huser-password')" type="password" errorPosition="bottom">
                 </hyt-input-text>
               </div> <!-- Field Password -->
@@ -67,17 +67,17 @@
               <div class="container-form-field">
                 <hyt-input-text [form]="registrationForm" formControlName="huser-passwordConfirm"
                   name="huser-passwordConfirm" [isRequired]="true" i18n-placeholder="@@HYT_password_confirm"
-                  placeholder="HYT_password_confirm" [injectedErrorMsg]="getError('huser-passwordConfirm')"
+                  placeholder="Confirm password" [injectedErrorMsg]="getError('huser-passwordConfirm')"
                   type="password" confirmPassword="huser-password">
                 </hyt-input-text>
               </div> <!-- Field Repeat Password -->
 
               <div class="container-form-field">
                 <hyt-checkbox [(ngModel)]="checked" [ngModelOptions]="{standalone: true}" name="checkPrivacy" type="checkbox" id="checkPrivacy" (changeFn)="onClickCheckbox($event)">
-                  <ng-container i18n="@@HYT_check_per">HYT_check_per</ng-container>&nbsp;
-                  <a href="#" i18n="@@HYT_terms_of_use">HYT_terms_of_use</a>&nbsp;
-                  <ng-container i18n="@@HYT_and">HYT_and</ng-container>&nbsp;
-                  <a href="#" i18n="@@HYT_privacy_policy">HYT_privacy_policy</a>.
+                  <ng-container i18n="@@HYT_check_per">Check per</ng-container>&nbsp;
+                  <a href="#" i18n="@@HYT_terms_of_use">Terms of use</a>&nbsp;
+                  <ng-container i18n="@@HYT_and">and</ng-container>&nbsp;
+                  <a href="#" i18n="@@HYT_privacy_policy">Privacy policy</a>.
                 </hyt-checkbox>
               </div> <!-- Container CheckBox Privacy -->
 
@@ -89,7 +89,7 @@
 
               <div id="container-submit-btn" class="container-form-field">
                 <hyt-button [color]="'hyt-base-default-white'" id="submit-btn" type="submit" [isDisabled]="notValid() || registrationStatus == 1 || registrationStatus == 2">
-                  <ng-container i18n="@@HYT_registration_button">HYT_registration_button</ng-container>
+                  <ng-container i18n="@@HYT_registration_button">Sign In</ng-container>
                 </hyt-button>
               </div> <!-- Container Button -->
 
@@ -112,7 +112,7 @@
 
               <ng-container *ngIf="registrationStatus == 2">
 
-                <div id="successMessage" i18n="@@HYT_registration_form_ok">HYT_registration_form_ok</div>
+                <div id="successMessage" i18n="@@HYT_registration_form_ok">Please click on the link that has just been sent to your email account to complete the registration process</div>
 
               </ng-container> <!-- *ngIf="registrationStatus == 2" -->
 

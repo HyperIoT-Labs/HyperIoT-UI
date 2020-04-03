@@ -27,7 +27,7 @@ interface HytSelectOption extends HProject {
   encapsulation: ViewEncapsulation.None
 })
 export class DashboardComponent implements OnInit, OnDestroy {
-  @ViewChild(DashboardViewComponent, { static: false })
+  @ViewChild(DashboardViewComponent)
   dashboardView: DashboardViewComponent;
 
   /** Subject for manage the open subscriptions */

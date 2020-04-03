@@ -26,11 +26,11 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   filteringForm: FormGroup;
 
   sortOptions: SelectOption[] = [
-    { value: 'none', label: 'None' }, // @I18N@
-    { value: 'alfabetic-increasing', label: 'A-Z' }, // @I18N@
-    { value: 'alfabetic-decreasing', label: 'Z-A' }, // @I18N@
-    { value: 'date-increasing', label: 'Oldest' }, // @I18N@
-    { value: 'date-decreasing', label: 'Newest' } // @I18N@
+    { value: 'none', label: $localize`:@@HYT_none:None` },
+    { value: 'alfabetic-increasing', label: $localize`:@@HYT_a_z:A-Z` },
+    { value: 'alfabetic-decreasing', label: $localize`:@@HYT_z_a:Z-A` },
+    { value: 'date-increasing', label: $localize`:@@HYT_oldest:Oldest` },
+    { value: 'date-decreasing', label:  $localize`:@@HYT_newest:Newest` }
   ];
 
   deletingInLoading = false;
@@ -69,16 +69,16 @@ export class ProjectsComponent implements OnInit, OnDestroy {
           case 'delete-success':
             this.updateProjects(v.projectList);
             this.sortBy('date-decreasing');
-            this.typeMessageArea = 'success';
-            this.messageAreaText = 'The project was successfully deleted.';
+            this.typeMessageArea = $localize`:@@HYT_success:Success`;
+            this.messageAreaText = $localize`:@@HYT_project_successfully_deleted:The project was successfully deleted.`;
             this.deletingInLoading = false;
             setTimeout(() => {
               this.hideMessageArea();
             }, 5000);
             break;
           case 'delete-error':
-            this.typeMessageArea = 'error';
-            this.messageAreaText = 'An error occurred while deleting the project.';
+            this.typeMessageArea = $localize`:@@HYT_error:Error`;
+            this.messageAreaText = $localize`:@@HYT_error_deleting_project:An error occurred while deleting the project.`;
             this.deletingInLoading = false;
             setTimeout(() => {
               this.hideMessageArea();
@@ -188,9 +188,9 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   projectsInLoading(projectId: number) {
     this.displayMessageArea = true;
     this.deletingInLoading = true;
-    this.typeMessageArea = 'loading';
+    this.typeMessageArea = $localize`:@@HYT_loading:Loading`;
     const projectToDelete = this.projectsService.nextProjects.projectList.find(x => x.id == projectId);
-    this.messageAreaText = `Deleting of project "${projectToDelete.name}" in loading. It may take a while.`;
+    this.messageAreaText = $localize`:@@HYT_deleting_project:Deleting of project "${projectToDelete.name}" in loading. It may take a while.`;
   }
 
   updateProjects(projectList: HProject[]) {

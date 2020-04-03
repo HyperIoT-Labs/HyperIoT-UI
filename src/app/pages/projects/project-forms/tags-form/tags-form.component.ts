@@ -1,6 +1,5 @@
 import { Component, OnInit, Injector, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ProjectFormEntity } from '../project-form-entity';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 import { ElementRef } from '@angular/core';
 import { AssetTag, AssetstagsService } from '@hyperiot/core';
 import { FormGroup } from '@angular/forms';
@@ -37,11 +36,11 @@ export class TagsFormComponent extends ProjectFormEntity implements OnInit {
   filteringForm: FormGroup;
 
   sortOptions: SelectOption[] = [
-    { value: 'none', label: 'None' },
-    { value: 'alfabetic-increasing', label: 'A-Z' },
-    { value: 'alfabetic-decreasing', label: 'Z-A' },
-    { value: 'date-increasing', label: 'Oldest' },
-    { value: 'date-decreasing', label: 'Newest' }
+    { value: 'none', label: $localize`:@@HYT_none:None` },
+    { value: 'alfabetic-increasing', label: $localize`:@@HYT_a_z:A-Z` },
+    { value: 'alfabetic-decreasing', label: $localize`:@@HYT_z_a:Z-A` },
+    { value: 'date-increasing', label: $localize`:@@HYT_oldest:Oldest` },
+    { value: 'date-decreasing', label: $localize`:@@HYT_newest:Newest` }
   ];
 
   valueFilter = {
@@ -51,13 +50,12 @@ export class TagsFormComponent extends ProjectFormEntity implements OnInit {
 
   constructor(
     injector: Injector,
-    @ViewChild('form', { static: true }) formView: ElementRef,
-    private i18n: I18n,
     private router: Router,
     private assetsTagService: AssetstagsService,
     private modalService: HytModalService
   ) {
-    super(injector, i18n, formView);
+    super(injector);
+    this.formTemplateId = 'container-tag-form';
     this.formTitle = 'Project Tags';
     this.showSave = false;
     this.hideDelete = true;

@@ -4,11 +4,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, zip, Observer } from 'rxjs';
 
 import { HprojectsService, HProject, HdevicesService, HDevice, HpacketsService, HPacket, Rule } from '@hyperiot/core';
-import { TreeDataNode } from '@hyperiot/components';
+import { TreeDataNode, HytModalService } from '@hyperiot/components';
 
 import { HytTreeViewProjectComponent } from '@hyperiot/components/lib/hyt-tree-view-project/hyt-tree-view-project.component';
 import { ProjectFormEntity } from '../project-forms/project-form-entity';
-import { MatDialog } from '@angular/material';
 import { SaveChangesDialogComponent } from 'src/app/components/dialogs/save-changes-dialog/save-changes-dialog.component';
 import { PacketEnrichmentFormComponent } from '../project-forms/packet-enrichment-form/packet-enrichment-form.component';
 import { PacketEventsFormComponent } from '../project-forms/packet-events-form/packet-events-form.component';
@@ -52,7 +51,7 @@ export class ProjectDetailComponent implements OnInit {
     private packetService: HpacketsService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private dialog: MatDialog
+    private dialog: HytModalService
   ) { }
 
   ngOnInit() {
@@ -316,7 +315,8 @@ export class ProjectDetailComponent implements OnInit {
       const dialogRef = this.dialog.open(SaveChangesDialogComponent, {
         data: { title: 'Discard changes?', message: 'There are pending changes to be saved.' }
       });
-      dialogRef.afterClosed().subscribe((result) => {
+      dialogRef.onClosed.subscribe((result) => {
+        console.log(result);
         if (result === 'save') {
           this.validationErrors = [];
           this.currentEntity.save((res) => {

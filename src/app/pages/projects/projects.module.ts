@@ -62,8 +62,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { AreaDeviceSelectDialogComponent } from './project-forms/areas-form/area-device-select-dialog/area-device-select-dialog.component';
 import { AreaInnerareaSelectDialogComponent } from './project-forms/areas-form/area-innerarea-select-dialog/area-innerarea-select-dialog.component';
 import { AreasListComponent } from './project-forms/areas-form/areas-list/areas-list.component';
-import { GenericMessageDialogComponent } from 'src/app/components/modals/generic-message-dialog/generic-message-dialog.component';
 import { FourierTransformComponent } from './project-forms/packet-enrichment-form/fourier-transform/fourier-transform.component';
+import { GenericMessageDialogComponent } from 'src/app/components/modals/generic-message-dialog/generic-message-dialog.component';
 
 @NgModule({
   declarations: [
@@ -104,7 +104,8 @@ import { FourierTransformComponent } from './project-forms/packet-enrichment-for
     AreaDeviceSelectDialogComponent,
     AreaInnerareaSelectDialogComponent,
     AreasListComponent,
-    FourierTransformComponent
+    FourierTransformComponent,
+    GenericMessageDialogComponent
   ],
   imports: [
     MatIconModule,

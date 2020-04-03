@@ -15,28 +15,22 @@
 
                 <hyt-button 
                     [color]="'hyt-base-total-green'"
-                    (click)="close('cancel')"
-                > 
+                    (click)="close('cancel')"> 
                     <span class="hyt-icon icon-hyt_arrowLeft"></span>
-                    Cancel
-
+                    <ng-container i18n="@@HYT_cancel">Cancel</ng-container>
                 </hyt-button>
-                <!-- @I18N@ -->
+                
             </div>
 
             <div id="btn-right">
 
                 <hyt-button 
                     [color]="'hyt-base-total-red'"
-                    (click)="close('delete')"
-                > 
+                    (click)="close('delete')"> 
                     <span class="hyt-icon icon-hyt_trash"></span>
-                    Delete
-
+                    <ng-container i18n="@@HYT_delete">Delete</ng-container>
                 </hyt-button>
-                <!-- @I18N@ -->
             </div>
-
 
         </div>
 

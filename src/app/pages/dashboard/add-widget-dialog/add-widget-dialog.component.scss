@@ -329,6 +329,9 @@
     
                 star-rating {
 
+                    display: contents;
+                    text-align: center;
+
                     &.mac {
 
                         .star.half:after {

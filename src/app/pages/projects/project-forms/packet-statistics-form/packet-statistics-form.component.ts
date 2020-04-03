@@ -5,7 +5,6 @@ import { Subscription } from 'rxjs';
 
 import { HpacketsService } from '@hyperiot/core';
 import { ProjectFormEntity } from '../project-form-entity';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 
 @Component({
   selector: 'hyt-packet-statistics-form',
@@ -18,13 +17,11 @@ export class PacketStatisticsFormComponent extends ProjectFormEntity implements 
 
   constructor(
     injector: Injector,
-    @ViewChild('form', { static: true }) formView: ElementRef,
     private hPacketService: HpacketsService,
     private activatedRoute: ActivatedRoute,
-    private router: Router,
-    private i18n: I18n
+    private router: Router
   ) {
-    super(injector, i18n, formView);
+    super(injector);
     this.longDefinition = this.entitiesService.statistic.longDefinition;
     this.formTitle = this.entitiesService.statistic.formTitle;
     this.hideDelete = true; // hide 'Delete' button

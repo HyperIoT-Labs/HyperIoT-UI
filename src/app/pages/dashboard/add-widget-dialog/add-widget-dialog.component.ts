@@ -30,6 +30,7 @@ interface WidgetClient {
 })
 export class AddWidgetDialogComponent extends HytModal implements OnInit {
 
+  ratingTotalStars = 5;
   filteredWidgets: WidgetClient[] = [];
   widgetCategoryList: any;
   widgetList: WidgetClient[] = [];

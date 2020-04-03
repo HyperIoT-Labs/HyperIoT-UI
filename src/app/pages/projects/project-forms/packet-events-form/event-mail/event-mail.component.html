@@ -6,19 +6,19 @@
 
       <div id="eventmail-col-rec" class="col-4">
         <hyt-input-text [form]="mailForm" formControlName="mailRecipient" name="mailRecipient" [isRequired]="true"
-          i18n-placeholder="@@HYT_mail_to" placeholder="HYT_mail_to" hintMessage="Enter the mail Recipient">
+          i18n-placeholder="@@HYT_mail_to" placeholder="Recipient" hintMessage="Enter the mail Recipient">
         </hyt-input-text>
       </div> <!-- Mail Recipient -->
 
       <div id="eventmail-col-cc" class="col-4">
         <hyt-input-text [form]="mailForm" formControlName="mailCC" name="mailCC" i18n-placeholder="@@HYT_mail_cc"
-          placeholder="HYT_mail_cc" hintMessage="Enter the mail CC">
+          placeholder="CC" hintMessage="Enter the mail CC">
         </hyt-input-text>
       </div> <!-- Mail CC -->
 
       <div id="eventmail-col-obj" class="col-4">
         <hyt-input-text [form]="mailForm" formControlName="mailObject" name="mailObject"
-          i18n-placeholder="@@HYT_mail_object" placeholder="HYT_mail_object" hintMessage="Enter the mail object">
+          i18n-placeholder="@@HYT_mail_object" placeholder="Object" hintMessage="Enter the mail object">
         </hyt-input-text>
       </div> <!-- Mail Object -->
 
@@ -27,7 +27,7 @@
     <div class="form-group row">
       <div id="eventmail-col-body" class="col-12">
         <hyt-text-area id="mailBody" [form]="mailForm" formControlName="mailBody" name="mailBody"
-          i18n-placeholder="@@HYT_mail_body" placeholder="HYT_mail_body" hintMessage="Enter the mail body">
+          i18n-placeholder="@@HYT_mail_body" placeholder="Mail body" hintMessage="Enter the mail body">
         </hyt-text-area>
       </div> <!-- Mail Body -->
     </div>

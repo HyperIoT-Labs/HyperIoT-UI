@@ -6,7 +6,6 @@ import { Subscription } from 'rxjs';
 import { HprojectsService, HProject } from '@hyperiot/core';
 
 import { ProjectFormEntity, LoadingStatusEnum } from '../project-form-entity';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 import { HytModalService } from '@hyperiot/components';
 
 @Component({
@@ -21,20 +20,20 @@ export class ProjectFormComponent extends ProjectFormEntity implements AfterView
   showPreloader: boolean;
   divHeight: number;
 
-  @ViewChild('overlayHeight', {static: false}) set content(content: ElementRef) {
-    
-    if(!content){
-      
+  @ViewChild('overlayHeight') set content(content: ElementRef) {
+
+    if (!content) {
+
       this.showPreloader = false;
       return;
 
     } else {
-      
+
       this.showPreloader = true;
       this.overlayHeight = content;
 
     }
-      
+
   }
 
   entity = {} as HProject;
@@ -52,13 +51,12 @@ export class ProjectFormComponent extends ProjectFormEntity implements AfterView
 
   constructor(
     injector: Injector,
-    @ViewChild('form', { static: true }) formView: ElementRef,
     private hProjectService: HprojectsService,
     private activatedRoute: ActivatedRoute,
-    private cdr: ChangeDetectorRef,
-    private i18n: I18n
+    private cdr: ChangeDetectorRef
   ) {
-    super(injector, i18n, formView);
+    super(injector);
+    this.formTemplateId = 'project-form';
     this.longDefinition = this.entitiesService.project.longDefinition;
     this.formTitle = this.entitiesService.project.formTitle;
     this.icon = this.entitiesService.project.icon;
@@ -66,6 +64,7 @@ export class ProjectFormComponent extends ProjectFormEntity implements AfterView
 
   ngAfterViewInit() {
 
+    super.ngAfterViewInit();
     this.routerSubscription = this.activatedRoute.params.subscribe(params => {
       if (params.projectId) {
         this.id = params.projectId;
@@ -94,13 +93,13 @@ export class ProjectFormComponent extends ProjectFormEntity implements AfterView
     this.loadingStatus = LoadingStatusEnum.Loading;
 
     /******* VALUE LOADING OVERLAY *******/
-    
+
     setTimeout(() => {
 
       this.divHeight = this.overlayHeight.nativeElement.clientHeight;
 
     }, 0);
-    
+
     this.cdr.detectChanges();
 
     /******* END VALUE LOADING OVERLAY *******/
@@ -177,7 +176,7 @@ export class ProjectFormComponent extends ProjectFormEntity implements AfterView
     if (err.error && err.error.type) {
       switch (err.error.type) {
         case 'it.acsoftware.hyperiot.base.exception.HyperIoTDuplicateEntityException': {
-          this.validationError = [{ message: this.i18n('HYT_unavaiable_project_name'), field: 'hproject-name', invalidValue: '' }];
+          this.validationError = [{ message: $localize`:@@HYT_unavailable_project_name:Unavailable project name`, field: 'hproject-name', invalidValue: '' }];
           this.form.get('hproject-name').setErrors({
             validateInjectedError: {
               valid: false
@@ -202,25 +201,25 @@ export class ProjectFormComponent extends ProjectFormEntity implements AfterView
 
   getCustomClass() {
 
-    if(this.showPreloader) {
+    if (this.showPreloader) {
 
-      if(this.divHeight > 353) { /* BIG */
+      if (this.divHeight > 353) { /* BIG */
         return 'loading-logo display-logo big-bg';
       }
-  
-      if(this.divHeight >=  293 && this.divHeight <= 352) { /* MEDIUM */
+
+      if (this.divHeight >= 293 && this.divHeight <= 352) { /* MEDIUM */
         return 'loading-logo display-logo medium-bg';
       }
-  
-      if(this.divHeight >=  233 && this.divHeight <= 292) { /* SMALL */
+
+      if (this.divHeight >= 233 && this.divHeight <= 292) { /* SMALL */
         return 'loading-logo display-logo small-bg';
       }
-  
-      if(this.divHeight >=  182 && this.divHeight <= 232) { /* X-SMALL */
+
+      if (this.divHeight >= 182 && this.divHeight <= 232) { /* X-SMALL */
         return 'loading-logo display-logo x-small-bg';
       }
-  
-      if(this.divHeight < 182 ) { /* X-SMALL */
+
+      if (this.divHeight < 182) { /* X-SMALL */
         return '';
       }
 
