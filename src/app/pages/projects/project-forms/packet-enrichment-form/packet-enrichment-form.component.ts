@@ -3,7 +3,6 @@ import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SelectOption } from '@hyperiot/components';
 import { HPacket, HpacketsService, HProject, Rule, RulesService } from '@hyperiot/core';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Observable, Subscription } from 'rxjs';
 import { SummaryListItem } from '../../project-detail/generic-summary-list/generic-summary-list.component';
 // TODO: find a bettere placement for PageStatusEnum
@@ -30,16 +29,16 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
     }
   };
 
-  @ViewChild('ruleDef', { static: false })
+  @ViewChild('ruleDef')
   ruleDefinitionComponent: RuleDefinitionComponent;
 
-  @ViewChild('assetTag', { static: false })
+  @ViewChild('assetTag')
   assetTagComponent: AssetTagComponent;
 
-  @ViewChild('assetCategory', { static: false })
+  @ViewChild('assetCategory')
   assetCategoryComponent: AssetCategoryComponent;
 
-  @ViewChild('fourierTransform', { static: false})
+  @ViewChild('fourierTransform')
   fourierTransformComponent: FourierTransformComponent;
 
   packet: HPacket;
@@ -51,10 +50,10 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
   project: HProject = {} as HProject;
 
   enrichmentRules: SelectOption[] = [
-    { value: 'AddCategoryRuleAction', label: 'Categories' }, // TODO @I18N@
-    { value: 'AddTagRuleAction', label: 'Tags' }, // TODO @I18N@
-    { value: 'ValidateHPacketRuleAction', label: 'Validation' }, // TODO @I18N@
-    { value: 'FourierTransformRuleAction', label: 'FourierTransform' } // TODO @I18N@
+    { value: 'AddCategoryRuleAction', label: $localize`:@@HYT_categories:Categories` },
+    { value: 'AddTagRuleAction', label: $localize`:@@HYT_tags:Tags` },
+    { value: 'ValidateHPacketRuleAction', label: $localize`:@@HYT_validation:Validation` },
+    { value: 'FourierTransformRuleAction', label: $localize`:@@HYT_fourier_transform:FourierTransform` }
   ];
 
   enrichmentType = '';
@@ -72,15 +71,14 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
 
   constructor(
     injector: Injector,
-    @ViewChild('form', { static: true }) formView: ElementRef,
     private rulesService: RulesService,
     private packetService: HpacketsService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private cdr: ChangeDetectorRef,
-    private i18n: I18n
+    private cdr: ChangeDetectorRef
   ) {
-    super(injector, i18n, formView);
+    super(injector);
+    this.formTemplateId = 'container-enrichment-form';
     this.longDefinition = this.entitiesService.enrichment.longDefinition;
     this.formTitle = this.entitiesService.enrichment.formTitle;
     this.icon = this.entitiesService.enrichment.icon;
@@ -305,7 +303,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
     if (err.error && err.error.type) {
       switch (err.error.type) {
         case 'it.acsoftware.hyperiot.base.exception.HyperIoTDuplicateEntityException': {
-          this.validationError = [{ "message": this.i18n('HYT_unavaiable_rule_name'), "field": 'rule-name', "invalidValue": '' }];
+          this.validationError = [{ "message": $localize`:@@HYT_unavailable_rule_name:Unavailable rule name`, "field": 'rule-name', "invalidValue": '' }];
           this.form.get('rule-name').setErrors({
             validateInjectedError: {
               valid: false

@@ -5,7 +5,6 @@ import { Subscription } from 'rxjs';
 import { HdevicesService, HDevice, HProject } from '@hyperiot/core';
 
 import { ProjectFormEntity, LoadingStatusEnum } from '../project-form-entity';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Validators } from '@angular/forms';
 
 @Component({
@@ -20,21 +19,21 @@ export class ApplicationFormComponent extends ProjectFormEntity implements After
   showPreloader: boolean;
   divHeight: number;
 
-  @ViewChild('overlayHeight', {static: false}) set content(content: ElementRef) {
-    
-    if(!content){
-      
+  @ViewChild('overlayHeight') set content(content: ElementRef) {
+
+    if (!content) {
+
       this.showPreloader = false;
       return;
 
     } else {
-      
+
       this.showPreloader = true;
       this.overlayHeight = content;
       this.divHeight = this.overlayHeight.nativeElement.clientHeight;
 
     }
-      
+
   }
 
   entity: HDevice = {} as HDevice;
@@ -59,15 +58,15 @@ export class ApplicationFormComponent extends ProjectFormEntity implements After
   currentProject: HProject;
 
   private routerSubscription: Subscription;
+
   constructor(
     injector: Injector,
-    @ViewChild('form', { static: true }) formView: ElementRef,
     private hDeviceService: HdevicesService,
     private activatedRoute: ActivatedRoute,
     private cdr: ChangeDetectorRef,
-    private i18n: I18n
   ) {
-    super(injector, i18n, formView);
+    super(injector);
+    this.formTemplateId = 'container-application-form';
     this.longDefinition = this.entitiesService.application.longDefinition;
     this.formTitle = this.entitiesService.application.formTitle;
     this.icon = this.entitiesService.application.icon;
@@ -75,6 +74,7 @@ export class ApplicationFormComponent extends ProjectFormEntity implements After
 
   ngAfterViewInit(): void {
 
+    super.ngAfterViewInit();
     this.routerSubscription = this.activatedRoute.params.subscribe(params => {
       if (params.deviceId) {
         this.id = params.deviceId;
@@ -103,13 +103,13 @@ export class ApplicationFormComponent extends ProjectFormEntity implements After
     this.loadingStatus = LoadingStatusEnum.Loading;
 
     /******* VALUE LOADING OVERLAY *******/
-    
+
     setTimeout(() => {
 
       this.divHeight = this.overlayHeight.nativeElement.clientHeight;
 
     }, 0);
-    
+
     this.cdr.detectChanges();
 
     /******* END VALUE LOADING OVERLAY *******/
@@ -220,7 +220,7 @@ export class ApplicationFormComponent extends ProjectFormEntity implements After
       console.log(err.error.type)
       switch (err.error.type) {
         case 'it.acsoftware.hyperiot.base.exception.HyperIoTDuplicateEntityException': {
-          this.validationError = [{ message: 'Unavaiable application name', field: 'hdevice-devicename', invalidValue: '' }]; // @I18N@
+          this.validationError = [{ message: $localize`:@@HYT_unavailable_application_name:Unavailable application name`, field: 'hdevice-devicename', invalidValue: '' }];
           console.log(this.validationError);
           this.form.get('hdevice-devicename').setErrors({
             validateInjectedError: {
@@ -231,7 +231,7 @@ export class ApplicationFormComponent extends ProjectFormEntity implements After
           break;
         }
         case 'it.acsoftware.hyperiot.base.exception.HyperIoTScreenNameAlreadyExistsException': {
-          this.validationError = [{ message: 'Application name already in use', field: 'hdevice-devicename', invalidValue: '' }]; // @I18N@
+          this.validationError = [{ message: $localize`:@@HYT_application_name_in_use:Application name already in use`, field: 'hdevice-devicename', invalidValue: '' }]; // @I18N@
           this.form.get('hdevice-devicename').setErrors({
             validateInjectedError: {
               valid: false
@@ -256,32 +256,32 @@ export class ApplicationFormComponent extends ProjectFormEntity implements After
 
   getCustomClass() {
 
-    if(this.showPreloader) {
+    if (this.showPreloader) {
 
-      if(this.divHeight > 353) { /* BIG */
+      if (this.divHeight > 353) { /* BIG */
         return 'loading-logo display-logo big-bg';
       }
-  
-      if(this.divHeight >=  293 && this.divHeight <= 352) { /* MEDIUM */
+
+      if (this.divHeight >= 293 && this.divHeight <= 352) { /* MEDIUM */
         return 'loading-logo display-logo medium-bg';
       }
-  
-      if(this.divHeight >=  233 && this.divHeight <= 292) { /* SMALL */
+
+      if (this.divHeight >= 233 && this.divHeight <= 292) { /* SMALL */
         return 'loading-logo display-logo small-bg';
       }
-  
-      if(this.divHeight >=  182 && this.divHeight <= 232) { /* X-SMALL */
+
+      if (this.divHeight >= 182 && this.divHeight <= 232) { /* X-SMALL */
         return 'loading-logo display-logo x-small-bg';
       }
-  
-      if(this.divHeight < 182 ) { /* X-SMALL */
+
+      if (this.divHeight < 182) { /* X-SMALL */
         return '';
       }
 
     } else {
       return '';
     }
-    
+
   }
 
 }

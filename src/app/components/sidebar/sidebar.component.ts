@@ -14,32 +14,32 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public winInnerWidth: number;
 
-  navIsOpen : boolean = false;
+  navIsOpen: boolean = false;
 
   mobileBreakPoints = {
-    md : 991,
-    sm : 767
+    md: 991,
+    sm: 767
   };
 
-  private subscriptionToggleMenu : Subscription;
+  private subscriptionToggleMenu: Subscription;
 
   constructor(private toggleSidebarService: ToggleSidebarService) { }
 
   ngOnInit(): void {
-    
+
     this.winInnerWidth = window.innerWidth;
 
-    if(this.winInnerWidth > this.mobileBreakPoints.md && this.navIsOpen === true) {
+    if (this.winInnerWidth > this.mobileBreakPoints.md && this.navIsOpen === true) {
 
       this.navIsOpen = this.toggleSidebarService.resetStatus();
-      
+
     }
 
   }
 
   ngAfterViewInit(): void {
-    
-   this.subscriptionToggleMenu = this.toggleSidebarService.change.subscribe(
+
+    this.subscriptionToggleMenu = this.toggleSidebarService.change.subscribe(
       showSidebar => {
 
         this.navIsOpen = showSidebar;
@@ -51,16 +51,16 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnDestroy {
 
       }
     );
-    
+
   }
 
   @HostListener('window:resize', ['$event'])
-  
+
   onResize(event) {
 
     this.winInnerWidth = event.target.innerWidth;
 
-    if(this.winInnerWidth > this.mobileBreakPoints.md && this.navIsOpen === true) {
+    if (this.winInnerWidth > this.mobileBreakPoints.md && this.navIsOpen === true) {
 
       this.navIsOpen = this.toggleSidebarService.resetStatus();
 
@@ -69,7 +69,7 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    
+
     this.subscriptionToggleMenu.unsubscribe();
 
   }

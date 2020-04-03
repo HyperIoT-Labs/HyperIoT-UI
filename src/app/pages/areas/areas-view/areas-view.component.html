@@ -58,11 +58,11 @@
 
     <img class="loading-animation" src="assets/images/hyperiot_logo_single_char_animated.svg"
         alt="Hyperiot Animated Logo"> <!-- @I18N@ -->
-    <h2 i18n="@@HYT_page_is_loading">HYT_page_is_loading</h2>
+    <h2 i18n="@@HYT_page_is_loading">Page is loading...</h2>
     <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 </div>
 <!-- Loading Error -->
 <div *ngIf="pageStatus === PageStatus.Error"
     class="loading-status mt-5 d-flex flex-column row align-items-center justify-content-center">
-    <h2 i18n="@@HYT_error_occurred_long">HYT_error_occurred_long</h2>
+    <h2 i18n="@@HYT_error_occurred_long">An error has occurred, contact the administrator!</h2>
 </div>

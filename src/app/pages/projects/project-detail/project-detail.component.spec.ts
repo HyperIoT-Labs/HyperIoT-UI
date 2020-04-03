@@ -4,7 +4,7 @@ import { ProjectDetailComponent } from './project-detail.component';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { HprojectsService, HdevicesService, HpacketsService } from '@hyperiot/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatDialog } from '@angular/material';
+import { HytModalService } from '@hyperiot/components';
 
 describe('ProjectDetailComponent', () => {
   let component: ProjectDetailComponent;
@@ -14,7 +14,7 @@ describe('ProjectDetailComponent', () => {
   let packetService: HpacketsService;
   let activatedRoute: ActivatedRoute;
   let router: Router;
-  let dialog: MatDialog;
+  let dialog: HytModalService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -25,7 +25,7 @@ describe('ProjectDetailComponent', () => {
         {provide: HpacketsService, useValue: packetService},
         {provide: ActivatedRoute, useValue: activatedRoute},
         {provide: Router, useValue: router},
-        {provide: MatDialog, useValue: dialog}]
+        {provide: HytModalService, useValue: dialog}]
     })
     .compileComponents();
   }));

@@ -1,5 +1,4 @@
 import { Component, ViewChild, ElementRef, Injector, OnInit, OnDestroy } from '@angular/core';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Router, ActivatedRoute, Event, NavigationStart } from '@angular/router';
 import { HytModalService } from '@hyperiot/components';
 import { ProjectFormEntity, LoadingStatusEnum } from '../project-form-entity';
@@ -17,7 +16,7 @@ import { GenericMessageDialogComponent } from 'src/app/components/modals/generic
   styleUrls: ['./areas-form.component.scss']
 })
 export class AreasFormComponent extends ProjectFormEntity implements OnInit {
-  @ViewChild('map', { static: false })
+  @ViewChild('map')
   mapComponent: AreaMapComponent;
 
   entity = {} as Area;
@@ -45,8 +44,6 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit {
 
   constructor(
     injector: Injector,
-    @ViewChild('form', { static: true }) formView: ElementRef,
-    private i18n: I18n,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private areaService: AreasService,
@@ -54,8 +51,9 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit {
     private modalService: HytModalService,
     private httpClient: HttpClient
   ) {
-    super(injector, i18n, formView);
-    this.formTitle = 'Project Areas'; // @@I18N@@
+    super(injector);
+    this.formTemplateId = 'container-areas-form';
+    this.formTitle = $localize`:@@HYT_project_areas:Project Areas`;
     this.projectId = this.activatedRoute.snapshot.parent.params.projectId;
     this.areaId = +this.activatedRoute.snapshot.params.areaId;
     this.activatedRoute.params.subscribe(params => {
@@ -222,7 +220,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit {
             });
           } else {
             this.modalService.open(GenericMessageDialogComponent, {
-              message: `File size exceed limit of ${this.maxFileSize} bytes`
+              message: $localize`:@@HYT_file_size_exceed:File size exceed limit of ${this.maxFileSize} bytes`
             });
             this.loadingStatus = LoadingStatusEnum.Ready;
           }
@@ -231,7 +229,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit {
       } else {
         // wrong file type
         this.modalService.open(GenericMessageDialogComponent, {
-          message: `File type must be ${this.allowedImageTypes.join(', ')}`
+          message: $localize`:@@HYT_file_type_must_be:File type must be ${this.allowedImageTypes.join(', ')}`
         });
       }
     }

@@ -18,9 +18,9 @@ enum PageStatus {
   styleUrls: ['./areas-view.component.scss']
 })
 export class AreasViewComponent {
-  @ViewChild('map', { static: false })
+  @ViewChild('map')
   mapComponent: AreaMapComponent;
-  @ViewChild('treeView', { static: false })
+  @ViewChild('treeView')
   treeView: HytTreeViewProjectComponent;
 
   PageStatus = PageStatus;

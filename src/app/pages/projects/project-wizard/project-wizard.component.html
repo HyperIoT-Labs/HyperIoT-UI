@@ -2,8 +2,8 @@
 
   <div class="header d-flex flex-row justify-content-stretch">
     <div class="breadcrumb flex-grow-1">
-      <span class="hyt-icon icon-hyt_projectSolo"></span> <a [routerLink]="['/']">Home</a> >
-      <strong>Projects Wizard</strong>
+      <span class="hyt-icon icon-hyt_projectSolo"></span> <a [routerLink]="['/']" i18n="@@HYT_home">Home</a> >
+      <strong i18n="@@HYT_projects_wizard">Projects Wizard</strong>
     </div>
   </div>
 
@@ -23,7 +23,7 @@
 
             <div id="select-source" class="col-6">
 
-              <p id="label-sources">Select Source Type</p> <!-- @I18N@ -->
+              <p id="label-sources" i18n="@@HYT_select_source_type">Select Source Type</p>
               
               <div id="container-radio-btn-source">
                   <hyt-radio-button [options]="sourceOptions" (changeFn)="sourceChanged($event)"></hyt-radio-button>
@@ -125,12 +125,12 @@
 
             <hyt-button [color]="'hyt-base-default-white'" class="toRight" *ngIf="currentForm" (clickFn)="onSaveClick($event)"
             [isDisabled]="!currentForm.isValid() || !currentForm.isDirty() || currentForm.loadingStatus != 0">
-              <ng-container *ngIf="currentForm && currentForm.isNew()" i18n="@@HYT_save">HYT_save</ng-container>
-              <ng-container *ngIf="currentForm && !currentForm.isNew()" i18n="@@HYT_update">HYT_update</ng-container>
+              <ng-container *ngIf="currentForm && currentForm.isNew()" i18n="@@HYT_save">Save</ng-container>
+              <ng-container *ngIf="currentForm && !currentForm.isNew()" i18n="@@HYT_update">Update</ng-container>
             </hyt-button>
 
             <hyt-button [color]="'hyt-base-default-white'" class="toRight" *ngIf="currentForm && showCancel()" (clickFn)="onCancelClick($event)">
-              <ng-container i18n="@@HYT_cancel">HYT_cancel</ng-container>
+              <ng-container i18n="@@HYT_cancel">Cancel</ng-container>
             </hyt-button>
 
             <div class="clear"></div>
@@ -145,10 +145,10 @@
 
           <div *ngIf="currentStepIndex != 0" class="col-6">
             <!-- <hyt-button (clickFn)="stepper.previous()">
-              <ng-container i18n="@@HYT_back">HYT_back</ng-container>
+              <ng-container i18n="@@HYT_back">Back</ng-container>
             </hyt-button> -->
             <hyt-button [color]="'hyt-stepper-prev'" (clickFn)="stepper.previous()">
-              <span class="hyt-icon icon-hyt_arrowLeft"></span> <ng-container i18n="@@HYT_back">HYT_back</ng-container>
+              <span class="hyt-icon icon-hyt_arrowLeft"></span> <ng-container i18n="@@HYT_back">Back</ng-container>
             </hyt-button>
 
           </div>
@@ -156,13 +156,13 @@
           <div [ngClass]="{'offset-6': currentStepIndex == 0}" class="col-6">
             <!-- <hyt-button class="toRight" [isDisabled]="isNextDisabled()"
               (clickFn)="(currentStepIndex == 3 && !optionModalViewed || currentStepIndex == 6)? openOptionModal() : stepper.next()">
-              <ng-container i18n="@@HYT_next">HYT_next</ng-container>
+              <ng-container i18n="@@HYT_next">Next</ng-container>
             </hyt-button> -->
 
             <hyt-button class="toRight" [color]="'hyt-stepper-next'" [isDisabled]="isNextDisabled()" 
               (clickFn)="(currentStepIndex == 3 && !optionModalViewed || currentStepIndex == 6)? openOptionModal() : stepper.next()"
             >
-            <ng-container i18n="@@HYT_next">HYT_next</ng-container> <span class="hyt-icon icon-hyt_arrowRight"></span>
+            <ng-container i18n="@@HYT_next">Next</ng-container> <span class="hyt-icon icon-hyt_arrowRight"></span>
             </hyt-button>
 
           </div>

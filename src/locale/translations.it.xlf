@@ -1,1058 +1,1410 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
   <file source-language="en" datatype="plaintext">
     <body>
       <trans-unit id="HYT_service_temporarily_unavailable" datatype="html">
         <source>Service temporarily unavailable</source>
+        <target>Servizio temporaneamente non disponibile</target>
       </trans-unit>
       <trans-unit id="HYT_server_error_500" datatype="html">
         <source>Internal error</source>
+        <target>Errore interno al server</target>
       </trans-unit>
       <trans-unit id="HYT_unknown_error" datatype="html">
         <source>Error executing your request</source>
+        <target>Errore nell'esecuzione della richiesta</target>
       </trans-unit>
       <trans-unit id="HYT_duplicate_entity" datatype="html">
         <source>Already in use</source>
+        <target>già in uso</target>
       </trans-unit>
       <trans-unit id="HYT_wrong_user_or_password" datatype="html">
         <source>Wrong username or password</source>
+        <target>Username o password errati</target>
       </trans-unit>
       <trans-unit id="HYT_error_403" datatype="html">
         <source>Your account is not activated. Please activate your account with the activation link we send you by email</source>
+        <target>Il tuo account non è attivo. Per favore, attiva il tuo account con la mail che ti abbiamo inviato.</target>
       </trans-unit>
       <trans-unit id="HYT_field_required" datatype="html">
         <source>The field is required</source>
+        <target>Il campo è obbligatorio</target>
       </trans-unit>
       <trans-unit id="HYT_valid_email" datatype="html">
         <source>Please enter a valid email address</source>
+        <target>Inserire un indirizzo email valido</target>
       </trans-unit>
       <trans-unit id="HYT_min_length" datatype="html">
         <source>At least 8 character length</source>
+        <target>Almeno 8 caratteri</target>
       </trans-unit>
       <trans-unit id="HYT_min_one_number" datatype="html">
         <source>At least one enumber</source>
+        <target>Alemno un numero</target>
       </trans-unit>
       <trans-unit id="HYT_upper_case" datatype="html">
         <source>At least one uppercase character</source>
+        <target>Almeno un carattere maiuscolo</target>
       </trans-unit>
       <trans-unit id="HYT_special_char" datatype="html">
         <source>At least one special character</source>
+        <target>Almeno un carattere speciale</target>
       </trans-unit>
       <trans-unit id="HYT_password_reset_1" datatype="html">
         <source>Need to reset your password?</source>
+        <target>Hai bisogno di resettare la tua password?</target>
       </trans-unit>
       <trans-unit id="HYT_password_reset_2" datatype="html">
         <source>No problem! Fill in the fields below and we will send you a confirmation email</source>
+        <target>Nessun problema! Riempi i campi qui sotto e ti manderemo una mail di conferma</target>
       </trans-unit>
       <trans-unit id="HYT_password" datatype="html">
         <source>Password</source>
+        <target>Password</target>
       </trans-unit>
       <trans-unit id="HYT_passwordConfirm" datatype="html">
         <source>Confirm password</source>
+        <target>Conferma password</target>
       </trans-unit>
       <trans-unit id="HYT_reset_password" datatype="html">
         <source>Reset Password</source>
+        <target>Resetta password</target>
       </trans-unit>
       <trans-unit id="HYT_back_to_home" datatype="html">
         <source>Back to Home</source>
+        <target>Torna ad Home</target>
       </trans-unit>
       <trans-unit id="HYT_password_reset_3" datatype="html">
         <source>Check in your Email!</source>
+        <target>Controlla le tue email!</target>
       </trans-unit>
       <trans-unit id="HYT_password_reset_4" datatype="html">
         <source>We just emailed you with the new password</source>
+        <target>Ti abbiamo inviato una mail per resettare la tua passwotd</target>
       </trans-unit>
       <trans-unit id="HYT_back_to_login" datatype="html">
         <source>Back to login</source>
+        <target>Torna al Login</target>
       </trans-unit>
       <trans-unit id="HYT_something_went_wrong" datatype="html">
         <source>Something went wrong</source>
+        <target>Qualcosa è andato storto</target>
       </trans-unit>
       <trans-unit id="HYT_acivation_incorrect_data" datatype="html">
         <source>The data used is incorrect, check and try again.</source>
+        <target>I dati sono errati, riprova.</target>
       </trans-unit>
       <trans-unit id="HYT_return_to_home" datatype="html">
         <source>Return to Home</source>
+        <target>Ritorna ad Home</target>
       </trans-unit>
       <trans-unit id="HYT_activation_success_1" datatype="html">
         <source>Congratulations, Your account is now active!!</source>
+        <target>Congratulazioni, il tuo account è attivo</target>
       </trans-unit>
       <trans-unit id="HYT_activation_success_2" datatype="html">
         <source>Start now to find out what you can do and have fun.</source>
+        <target>Comincia ora a scoprire cosa puoi fare e divertiti</target>
       </trans-unit>
       <trans-unit id="HYT_go_to_home" datatype="html">
         <source>Go to Home</source>
+        <target>Vai a Home</target>
       </trans-unit>
       <trans-unit id="HYT_hello" datatype="html">
         <source>Hello</source>
+        <target>Ciao</target>
       </trans-unit>
       <trans-unit id="HYT_login_text" datatype="html">
         <source>We are happy to see you again!</source>
+        <target>Siamo felici di vederti di nuovo!</target>
       </trans-unit>
       <trans-unit id="HYT_login_no_account" datatype="html">
-        <source>Don&apos;t have an account?</source>
+        <source>Don't have an account?</source>
+        <target>Non hai un account?</target>
       </trans-unit>
       <trans-unit id="HYT_register_now" datatype="html">
         <source>Register Now</source>
+        <target>Registrati ora</target>
       </trans-unit>
       <trans-unit id="HYT_login_register_message" datatype="html">
         <source>and Enjoy all our benefits!</source>
+        <target>e goditi tutti i nostri benefici</target>
       </trans-unit>
       <trans-unit id="HYT_login_to_account" datatype="html">
         <source>Login to your Account</source>
+        <target>Login</target>
       </trans-unit>
       <trans-unit id="HYT_username_or_email" datatype="html">
         <source>Username or email</source>
+        <target>Username o email</target>
       </trans-unit>
       <trans-unit id="HYT_login_forgot_password" datatype="html">
         <source>Forgot password?</source>
+        <target>Password dimenticata?</target>
       </trans-unit>
       <trans-unit id="HYT_remember_me" datatype="html">
         <source>Remember me</source>
+        <target>Ricordati di me</target>
       </trans-unit>
       <trans-unit id="HYT_login" datatype="html">
         <source>Login</source>
+        <target>Login</target>
       </trans-unit>
       <trans-unit id="HYT_welcome" datatype="html">
         <source>Welcome</source>
+        <target>Benvenuto</target>
       </trans-unit>
       <trans-unit id="HYT_registration_1" datatype="html">
         <source>register and enjoy our benefits</source>
+        <target>Registrati e goditi i nosttri benefici</target>
       </trans-unit>
       <trans-unit id="HYT_already_member_question" datatype="html">
         <source>Already a Member?</source>
+        <target>Sei già registrato?</target>
       </trans-unit>
       <trans-unit id="HYT_login_now" datatype="html">
         <source>Login now</source>
+        <target>Fai il login</target>
       </trans-unit>
       <trans-unit id="HYT_registration_login_message" datatype="html">
         <source>and enjoy the experience</source>
+        <target>e goditi l'esperienza</target>
       </trans-unit>
       <trans-unit id="HYT_registration" datatype="html">
         <source>Registration</source>
+        <target>Registrazione</target>
       </trans-unit>
       <trans-unit id="HYT_name" datatype="html">
         <source>Name</source>
+        <target>Nome</target>
       </trans-unit>
       <trans-unit id="HYT_surname" datatype="html">
         <source>Surname</source>
+        <target>Cognome</target>
       </trans-unit>
       <trans-unit id="HYT_username" datatype="html">
         <source>Username or email</source>
+        <target>Username</target>
       </trans-unit>
       <trans-unit id="HYT_email" datatype="html">
         <source>Email</source>
+        <target>Email</target>
       </trans-unit>
       <trans-unit id="HYT_password_confirm" datatype="html">
         <source>Confirm password</source>
+        <target>Conferma password</target>
       </trans-unit>
       <trans-unit id="HYT_check_per" datatype="html">
         <source>Check per</source>
+        <target>Check per</target>
       </trans-unit>
       <trans-unit id="HYT_terms_of_use" datatype="html">
         <source>Terms of use</source>
+        <target>Termini di utilizzo</target>
       </trans-unit>
       <trans-unit id="HYT_and" datatype="html">
         <source>and</source>
+        <target>e</target>
       </trans-unit>
       <trans-unit id="HYT_privacy_policy" datatype="html">
         <source>Privacy policy</source>
+        <target>Privacy policy</target>
       </trans-unit>
       <trans-unit id="HYT_registration_button" datatype="html">
         <source>Sign In</source>
+        <target>Registrati</target>
       </trans-unit>
       <trans-unit id="HYT_registration_form_ok" datatype="html">
         <source>Please click on the link that has just been sent to your email account to complete the registration process</source>
+        <target>Controlla la tua casella email. Ti abbiamo inviato una mail per completare la registrazione</target>
       </trans-unit>
       <trans-unit id="HYT_password_recovery_1" datatype="html">
         <source>Did you forget your password?</source>
+        <target>Hai scordato la password?</target>
       </trans-unit>
       <trans-unit id="HYT_password_recovery_2" datatype="html">
-        <source>Can&apos;t log in? We will send you instructions to reset your password.</source>
+        <source>Can't log in? We will send you instructions to reset your password.</source>
+        <target>Non riesci a fare login? Ti manderemo le istruzioni per resettare la tua password.</target>
       </trans-unit>
       <trans-unit id="HYT_email_me" datatype="html">
         <source>Email me</source>
+        <target>Manda email</target>
       </trans-unit>
       <trans-unit id="HYT_password_recovery_3" datatype="html">
         <source>Check in your Email!</source>
+        <target>Controlla le tue email</target>
       </trans-unit>
       <trans-unit id="HYT_password_recovery_4" datatype="html">
         <source>We just emailed you with the instructions to reset your password</source>
+        <target>Ti abbiamo inviato le istruzioni per resettare la tua password</target>
       </trans-unit>
       <trans-unit id="HYT_cancel" datatype="html">
         <source>Cancel</source>
+        <target>Annulla</target>
       </trans-unit>
       <trans-unit id="HYT_delete" datatype="html">
         <source>Delete</source>
+        <target>Elimina</target>
       </trans-unit>
       <trans-unit id="HYT_source" datatype="html">
         <source>Source</source>
+        <target>Fonte</target>
       </trans-unit>
       <trans-unit id="HYT_application_short_definition" datatype="html">
         <source>Application short definition...</source>
+        <target>Applicazione definizione breve...</target>
       </trans-unit>
       <trans-unit id="HYT_application_definition" datatype="html">
         <source>Application definition...</source>
+        <target>Applicazione definizione...</target>
       </trans-unit>
       <trans-unit id="HYT_application_long_definition" datatype="html">
         <source>Application long definition...</source>
+        <target>Applicazione definizione lunga...</target>
       </trans-unit>
       <trans-unit id="HYT_project_displaylistname" datatype="html">
         <source>Project</source>
+        <target>Progetto</target>
       </trans-unit>
       <trans-unit id="HYT_project_form_title" datatype="html">
         <source>Project</source>
+        <target>Progetto</target>
       </trans-unit>
       <trans-unit id="HYT_project_short_definition" datatype="html">
         <source>Project short definition...</source>
+        <target>Progetto definizione breve...</target>
       </trans-unit>
       <trans-unit id="HYT_project_definition" datatype="html">
         <source>Project definition...</source>
+        <target>Progetto definizione...</target>
       </trans-unit>
       <trans-unit id="HYT_project_long_definition" datatype="html">
         <source>Project long definition...</source>
+        <target>Progetto lunga definizione...</target>
       </trans-unit>
       <trans-unit id="HYT_device_short_definition" datatype="html">
         <source>Device short definition...</source>
+        <target>Dispositivo definizione corta...</target>
       </trans-unit>
       <trans-unit id="HYT_device_definition" datatype="html">
         <source>Device definition...</source>
+        <target>Dispositivo definizione...</target>
       </trans-unit>
       <trans-unit id="HYT_device_long_definition" datatype="html">
         <source>Device long definition...</source>
+        <target>Dispositivo definizione lunga...</target>
       </trans-unit>
       <trans-unit id="HYT_packet_displaylistname" datatype="html">
         <source>Packets</source>
+        <target>Pacchetti</target>
       </trans-unit>
       <trans-unit id="HYT_packet_form_title" datatype="html">
         <source>Packets</source>
+        <target>Pacchetto</target>
       </trans-unit>
       <trans-unit id="HYT_packet_short_definition" datatype="html">
         <source>Packet short definition...</source>
+        <target>Pacchetto definizione breve...</target>
       </trans-unit>
       <trans-unit id="HYT_packet_definition" datatype="html">
         <source>Packet definition...</source>
+        <target>Pacchetto definizione...</target>
       </trans-unit>
       <trans-unit id="HYT_packet_long_definition" datatype="html">
         <source>Packet long definition...</source>
+        <target>Pacchetto lunga definizione...</target>
       </trans-unit>
       <trans-unit id="HYT_field_displaylistname" datatype="html">
         <source>Fields</source>
+        <target>Campi</target>
       </trans-unit>
       <trans-unit id="HYT_field_form_title" datatype="html">
         <source>Packet fields</source>
+        <target>Campi Pacchetto</target>
       </trans-unit>
       <trans-unit id="HYT_fields_short_definition" datatype="html">
         <source>Fields short definition...</source>
+        <target>Campo defizione breve...</target>
       </trans-unit>
       <trans-unit id="HYT_fields_definition" datatype="html">
         <source>Fields definition...</source>
+        <target>Campo defizione...</target>
       </trans-unit>
       <trans-unit id="HYT_fields_long_definition" datatype="html">
         <source>Fields long definition...</source>
+        <target>Campo definizione lunga...</target>
       </trans-unit>
       <trans-unit id="HYT_enrichment_displaylistname" datatype="html">
         <source>Enrichment</source>
+        <target>Arricchimente</target>
       </trans-unit>
       <trans-unit id="HYT_enrichment_form_title" datatype="html">
         <source>Packet Enrichments</source>
+        <target>Arricchimento Pacchetto</target>
       </trans-unit>
       <trans-unit id="HYT_enrichment_short_definition" datatype="html">
         <source>Enrichment short definition...</source>
+        <target>Arricchimento defizione breve...</target>
       </trans-unit>
       <trans-unit id="HYT_enrichment_definition" datatype="html">
         <source>Enrichment definition...</source>
+        <target>Arricchimento defizione...</target>
       </trans-unit>
       <trans-unit id="HYT_enrichment_long_definition" datatype="html">
         <source>Enrichment long definition...</source>
+        <target>Arricchimente definizione lunga...</target>
       </trans-unit>
       <trans-unit id="HYT_statistic_displaylistname" datatype="html">
         <source>Statistics</source>
+        <target>Statistiche</target>
       </trans-unit>
       <trans-unit id="HYT_statistic_form_title" datatype="html">
         <source>Packet Statistics</source>
+        <target>Statistiche Pacchetto</target>
       </trans-unit>
       <trans-unit id="HYT_statistics_short_definition" datatype="html">
         <source>Statistics short definition...</source>
+        <target>Statistiche definizione breve...</target>
       </trans-unit>
       <trans-unit id="HYT_statistics_definition" datatype="html">
         <source>Statistics definition...</source>
+        <target>Statistiche definizione...</target>
       </trans-unit>
       <trans-unit id="HYT_statistics_long_definition" datatype="html">
         <source>Statistics long definition...</source>
+        <target>Statistiche lunga definizione...</target>
       </trans-unit>
       <trans-unit id="HYT_event_displaylistname" datatype="html">
         <source>Events</source>
+        <target>Eventi</target>
       </trans-unit>
       <trans-unit id="HYT_event_form_title" datatype="html">
         <source>Packet Events</source>
+        <target>Eventi Pacchetto</target>
       </trans-unit>
       <trans-unit id="HYT_events_short_definition" datatype="html">
         <source>Events short definition</source>
+        <target>Eventi definizione breve...</target>
       </trans-unit>
       <trans-unit id="HYT_events_definition" datatype="html">
         <source>Events definition</source>
+        <target>Eventi definizione ...</target>
       </trans-unit>
       <trans-unit id="HYT_events_long_definition" datatype="html">
         <source>Events long definition</source>
+        <target>Eventi definizione lunga...</target>
       </trans-unit>
       <trans-unit id="HYT_delete_item_question" datatype="html">
         <source>Do you really want to delete this item?</source>
+        <target>Sei sicuro di voler eliminare l'oggetto?</target>
       </trans-unit>
       <trans-unit id="HYT_operation_can_not_be_undone" datatype="html">
         <source>This operation can not be undone</source>
+        <target>Questa operazione è definitiva</target>
       </trans-unit>
       <trans-unit id="HYT_hint_device_name" datatype="html">
         <source>Enter the device name.</source>
+        <target>Inserire il nome del dispositivo.</target>
       </trans-unit>
       <trans-unit id="HYT_hint_device_password" datatype="html">
         <source>Enter the device password.</source>
+        <target>Inserire la password del dispositivo.</target>
       </trans-unit>
       <trans-unit id="HYT_hint_password_confirm" datatype="html">
         <source>Confirm device password.</source>
+        <target>Confermare la password del dispositivo.</target>
       </trans-unit>
       <trans-unit id="HYT_description" datatype="html">
         <source>Description</source>
+        <target>Descrizione</target>
       </trans-unit>
       <trans-unit id="HYT_hint_device_description" datatype="html">
         <source>HYT_hint_device_description</source>
+        <target>Inserire la descrizione del dispositivo.</target>
       </trans-unit>
       <trans-unit id="HYT_loading_data" datatype="html">
         <source>Loading data...</source>
+        <target>Caricamento dati...</target>
       </trans-unit>
       <trans-unit id="HYT_error_occurred" datatype="html">
         <source>An unexpected error has occurred</source>
+        <target>Si è verificato un errore inaspettato</target>
       </trans-unit>
       <trans-unit id="HYT_close" datatype="html">
         <source>Close</source>
+        <target>Chiudi</target>
       </trans-unit>
       <trans-unit id="HYT_saving_data" datatype="html">
         <source>Saving data...</source>
+        <target>Salvataggio dati...</target>
       </trans-unit>
       <trans-unit id="HYT_unavailable_application_name" datatype="html">
         <source>Unavailable application name</source>
+        <target>Nome applicazione non disponibile</target>
       </trans-unit>
       <trans-unit id="HYT_application_name_in_use" datatype="html">
         <source>Application name already in use</source>
+        <target>Nome applicazione già in uso</target>
       </trans-unit>
       <trans-unit id="HYT_brand" datatype="html">
         <source>Brand</source>
+        <target>Marca</target>
       </trans-unit>
       <trans-unit id="HYT_hint_device_brand" datatype="html">
         <source>Enter the device brand.</source>
+        <target>Inserire la marca del dispositivo.</target>
       </trans-unit>
       <trans-unit id="HYT_model" datatype="html">
         <source>Model</source>
+        <target>Modello</target>
       </trans-unit>
       <trans-unit id="HYT_hint_device_model" datatype="html">
         <source>Enter the device model.</source>
+        <target>Inserire il modello del dispositivo.</target>
       </trans-unit>
       <trans-unit id="HYT_software_version" datatype="html">
         <source>Software version</source>
+        <target>Versione software</target>
       </trans-unit>
       <trans-unit id="HYT_hint_device_software" datatype="html">
         <source>Enter the device software version.</source>
+        <target>Inserire la versione del software del dispositivo.</target>
       </trans-unit>
       <trans-unit id="HYT_firmware_version" datatype="html">
         <source>Firmware version</source>
+        <target>Versione firmware</target>
       </trans-unit>
       <trans-unit id="HYT_hint_device_firmware" datatype="html">
         <source>Enter the device firmware version.</source>
+        <target>Inserire la versione del firmware del dispositivo.</target>
       </trans-unit>
       <trans-unit id="HYT_unavailable_device_name" datatype="html">
         <source>Unavailable device name</source>
+        <target>Nome device non disponibile</target>
       </trans-unit>
       <trans-unit id="HYT_device_name_already_in_use" datatype="html">
         <source>Device name already in use</source>
+        <target>Nome device già in uso</target>
       </trans-unit>
       <trans-unit id="HYT_error" datatype="html">
         <source>Error</source>
+        <target>Errore</target>
       </trans-unit>
       <trans-unit id="HYT_error_loading_rule" datatype="html">
         <source>An error occurred while loading the rule. This may have happened for one or more of the following reasons:</source>
+        <target>Errore nel caricamento della regola. Questo può essere legato ad una o più delle seguenti ragioni:</target>
       </trans-unit>
       <trans-unit id="HYT_field_name_modified" datatype="html">
-        <source>The name of one rule&apos;s field has been modified</source>
+        <source>The name of one rule's field has been modified</source>
+        <target>Il nome di un campo della regola è stato modificato</target>
       </trans-unit>
       <trans-unit id="HYT_field_deleted" datatype="html">
-        <source>A rule&apos;s field has been deleted</source>
+        <source>A rule's field has been deleted</source>
+        <target>Un campo della regola è stato eliminato</target>
       </trans-unit>
       <trans-unit id="HYT_packet_deleted" datatype="html">
-        <source>A rule&apos;s packet has been deleted (only events)</source>
+        <source>A rule's packet has been deleted (only events)</source>
+        <target>Un pacchetto della regola è stato eliminato (solo eventi)</target>
       </trans-unit>
       <trans-unit id="HYT_obsolete_syntax_rule" datatype="html">
-        <source>Rule&apos;s syntax was updated making the rule now obsolete</source>
+        <source>Rule's syntax was updated making the rule now obsolete</source>
+        <target>La sintassi delle regole è stata modificata e quindi ora la regola è obsoleta</target>
       </trans-unit>
       <trans-unit id="HYT_error_loading_rule_2" datatype="html">
         <source>Please, redefine a new rule and delete the old one. </source>
+        <target>Per favore, ricrea la regola ed elimina la vecchia</target>
       </trans-unit>
       <trans-unit id="HYT_packet" datatype="html">
         <source>Packet</source>
+        <target>Pacchetto</target>
       </trans-unit>
       <trans-unit id="HYT_field" datatype="html">
         <source>Field</source>
+        <target>Campo</target>
       </trans-unit>
       <trans-unit id="HYT_condition" datatype="html">
         <source>Condition</source>
+        <target>Condizione</target>
       </trans-unit>
       <trans-unit id="HYT_value" datatype="html">
         <source>Value</source>
+        <target>Valore</target>
       </trans-unit>
       <trans-unit id="HYT_(&gt;)_greater" datatype="html">
         <source>(&gt;) Greater</source>
+        <target>(&gt;) Maggiore</target>
       </trans-unit>
       <trans-unit id="HYT_(&gt;=)_greater_equal" datatype="html">
         <source>(&gt;=) Greater/Equal</source>
+        <target>(&gt;=) Maggiore/Uguale</target>
       </trans-unit>
       <trans-unit id="HYT_(&lt;)_lower" datatype="html">
         <source>(&lt;) Lower</source>
+        <target>(&lt;) Minore</target>
       </trans-unit>
       <trans-unit id="HYT_(&lt;=)_lower_equal" datatype="html">
         <source>(&lt;=) Lower/Equal</source>
+        <target>(&lt;=) Minore/Uguale</target>
       </trans-unit>
       <trans-unit id="HYT_(==)_equal" datatype="html">
         <source>(=) Equal</source>
+        <target>(=) Uguale</target>
       </trans-unit>
       <trans-unit id="HYT_(!=)_different" datatype="html">
         <source>(!=) Different</source>
+        <target>(!=) Diverso</target>
       </trans-unit>
       <trans-unit id="HYT_(())_like" datatype="html">
         <source>(()) Like</source>
+        <target>(()) Like</target>
       </trans-unit>
       <trans-unit id="HYT_is_true" datatype="html">
         <source>Is true</source>
+        <target>è vero</target>
       </trans-unit>
       <trans-unit id="HYT_is_false" datatype="html">
         <source>Is false</source>
+        <target>è falso</target>
       </trans-unit>
       <trans-unit id="HYT_or" datatype="html">
         <source>OR</source>
+        <target>OR</target>
       </trans-unit>
       <trans-unit id="HYT_title_categories" datatype="html">
         <source>Categories</source>
+        <target>Categorie</target>
       </trans-unit>
       <trans-unit id="HYT_hint_rule_name" datatype="html">
         <source>Enter the rule name</source>
+        <target>Inserire il nome della regola.</target>
       </trans-unit>
       <trans-unit id="HYT_rule_type" datatype="html">
         <source>Rule type</source>
+        <target>Tipo regola</target>
       </trans-unit>
       <trans-unit id="HYT_hint_rule_description" datatype="html">
         <source>Enter the rule description.</source>
+        <target>Inserire la descrizione della regola.</target>
       </trans-unit>
       <trans-unit id="HYT_categories" datatype="html">
         <source>Categories</source>
+        <target>Categorie</target>
       </trans-unit>
       <trans-unit id="HYT_tags" datatype="html">
         <source>Tags</source>
+        <target>Tag</target>
       </trans-unit>
       <trans-unit id="HYT_validation" datatype="html">
         <source>Validation</source>
+        <target>Validazione</target>
       </trans-unit>
       <trans-unit id="HYT_fourier_transform" datatype="html">
         <source>FourierTransform</source>
+        <target>Trasformata di Fourier</target>
       </trans-unit>
       <trans-unit id="HYT_unavailable_rule_name" datatype="html">
         <source>Unavailable rule name</source>
+        <target>Nome regola non disponibile</target>
       </trans-unit>
       <trans-unit id="HYT_definition_of_terms" datatype="html">
         <source>Definition of terms</source>
+        <target>Definizione dei termini</target>
       </trans-unit>
       <trans-unit id="HYT_mail_to" datatype="html">
         <source>Recipient</source>
+        <target>Destinatari</target>
       </trans-unit>
       <trans-unit id="HYT_mail_cc" datatype="html">
         <source>CC</source>
+        <target>Copia</target>
       </trans-unit>
       <trans-unit id="HYT_mail_object" datatype="html">
         <source>Object</source>
+        <target>Oggetto</target>
       </trans-unit>
       <trans-unit id="HYT_mail_body" datatype="html">
         <source>Mail body</source>
+        <target>Corpo della mail</target>
       </trans-unit>
       <trans-unit id="HYT_name_of_device" datatype="html">
         <source>The name of the device</source>
+        <target>Nome del device</target>
       </trans-unit>
       <trans-unit id="HYT_name_of_packet" datatype="html">
         <source>The name of the packet</source>
+        <target>Nome del pacchetto</target>
       </trans-unit>
       <trans-unit id="HYT_name_of_field" datatype="html">
         <source>The name of the field</source>
+        <target>Nome del campo</target>
       </trans-unit>
       <trans-unit id="HYT_name_of_event_mail" datatype="html">
         <source>The name of the event mail</source>
+        <target>Nome dell'evento mail</target>
       </trans-unit>
       <trans-unit id="HYT_hint_event_name" datatype="html">
         <source>Enter the event name</source>
+        <target>Inserire il nome dell'evento.</target>
       </trans-unit>
       <trans-unit id="HYT_hint_event_description" datatype="html">
         <source>Enter the event description</source>
+        <target>Inserire la descrizione dell'evento.</target>
       </trans-unit>
       <trans-unit id="HYT_output_data" datatype="html">
         <source>Event output</source>
+        <target>Output evento</target>
       </trans-unit>
       <trans-unit id="HYT_add_event" datatype="html">
         <source>Add event</source>
+        <target>Aggiungi evento</target>
       </trans-unit>
       <trans-unit id="HYT_send_email" datatype="html">
         <source>SEND E-MAIL</source>
+        <target>MANDA E-MAIL</target>
       </trans-unit>
       <trans-unit id="HYT_unavailable_event_name" datatype="html">
         <source>Unavailable event name</source>
+        <target>Nome evento non disponibile</target>
       </trans-unit>
       <trans-unit id="HYT_hint_field_name" datatype="html">
         <source>Enter the field name.</source>
+        <target>Inserire il nome del campo.</target>
       </trans-unit>
       <trans-unit id="HYT_type" datatype="html">
         <source>Type</source>
+        <target>Tipo</target>
       </trans-unit>
       <trans-unit id="HYT_hint_field_type" datatype="html">
         <source>Select field type.</source>
+        <target>Selezionare il tipo di campo.</target>
       </trans-unit>
       <trans-unit id="HYT_hint_field_description" datatype="html">
         <source>Enter the field description.</source>
+        <target>Inserire la descrizione del campo.</target>
       </trans-unit>
       <trans-unit id="HYT_multiplicity" datatype="html">
         <source>Multiplicity</source>
+        <target>Molteplicità</target>
       </trans-unit>
       <trans-unit id="HYT_hint_select_measure_type" datatype="html">
         <source>Select measurement type.</source>
+        <target>Selezionare il tipo di misurazione.</target>
       </trans-unit>
       <trans-unit id="HYT_hint_select_measure_unit" datatype="html">
         <source>Select measure unit.</source>
+        <target>Selezionare unità di misura.</target>
       </trans-unit>
       <trans-unit id="HYT_not_specified" datatype="html">
         <source>(not specified)</source>
+        <target>(non specificato)</target>
       </trans-unit>
       <trans-unit id="HYT_delete_item" datatype="html">
         <source>Delete item?</source>
+        <target>Eliminare oggetto?</target>
       </trans-unit>
       <trans-unit id="HYT_operation_cannot_be_undone" datatype="html">
         <source>This operation cannot be undone.</source>
+        <target>Questa operazione non può essere annullata.</target>
       </trans-unit>
       <trans-unit id="HYT_hint_packet_name" datatype="html">
         <source>Enter the packet name.</source>
+        <target>Inserire nome pacchetto.</target>
       </trans-unit>
       <trans-unit id="HYT_traffic_plan" datatype="html">
         <source>Traffic plan</source>
+        <target>Piano traffico dati</target>
       </trans-unit>
       <trans-unit id="HYT_hint_packet_traffic_plan" datatype="html">
         <source>Select traffic plan.</source>
+        <target>Selezionare piano traffico.</target>
       </trans-unit>
       <trans-unit id="HYT_hint_packet_type" datatype="html">
         <source>Set the packet type.</source>
+        <target>Selezionare il tipo di pacchetto.</target>
       </trans-unit>
       <trans-unit id="HYT_format" datatype="html">
         <source>Format</source>
+        <target>Formato</target>
       </trans-unit>
       <trans-unit id="HYT_serialization" datatype="html">
         <source>Serialization</source>
+        <target>Serializzazione</target>
       </trans-unit>
       <trans-unit id="HYT_timestamp_field" datatype="html">
         <source>Timestamp field</source>
+        <target>Campo Timestamp</target>
       </trans-unit>
       <trans-unit id="HYT_hint_packet_timestamp_field" datatype="html">
         <source>Enter the timestamp field name.</source>
+        <target>Inserire nome del campo timestamp.</target>
       </trans-unit>
       <trans-unit id="HYT_timestamp_format" datatype="html">
         <source>Timestamp format</source>
+        <target>Formato Timestamp</target>
       </trans-unit>
       <trans-unit id="HYT_hint_packet_enter_timestamp_format" datatype="html">
-        <source>Enter the timestamp field format: eg. &apos;dd/MM/yyyy HH.mmZ&apos;.</source>
+        <source>Enter the timestamp field format: eg. 'dd/MM/yyyy HH.mmZ'.</source>
+        <target>Inserire il formato del campo timestamp: e.g. 'dd/MM/yyyy HH.mmZ'.</target>
       </trans-unit>
       <trans-unit id="HYT_mqtt_url" datatype="html">
         <source>MQTT Url</source>
+        <target>Url MQTT</target>
       </trans-unit>
       <trans-unit id="HYT_mqtt_topic" datatype="html">
         <source>MQTT Topic</source>
+        <target>MQTT Topic</target>
       </trans-unit>
       <trans-unit id="HYT_unavailable_packet_name" datatype="html">
         <source>Unavailable packet name</source>
+        <target>Nome pacchetto non disponibile</target>
       </trans-unit>
       <trans-unit id="HYT_hint_project_name" datatype="html">
         <source>Enter the project name.</source>
+        <target>Inserire nome progetto.</target>
       </trans-unit>
       <trans-unit id="HYT_hint_project_description" datatype="html">
         <source>Enter the project description.</source>
+        <target>Inserire descrizione progetto.</target>
       </trans-unit>
       <trans-unit id="HYT_unavailable_project_name" datatype="html">
         <source>Unavailable project name</source>
+        <target>Nome progetto non disponibile</target>
       </trans-unit>
       <trans-unit id="HYT_unsaved_data" datatype="html">
         <source>Unsaved data</source>
+        <target>Dati non salvati</target>
       </trans-unit>
       <trans-unit id="HYT_unsaved_changes_lost" datatype="html">
         <source>If you leave the page the unsaved changes will be lost</source>
+        <target>Se lasci la pagina le modifiche non salvate saranno perse</target>
       </trans-unit>
       <trans-unit id="HYT_remain" datatype="html">
         <source>Remain</source>
+        <target>Rimani</target>
       </trans-unit>
       <trans-unit id="HYT_discard_changes" datatype="html">
         <source>Discard Changes</source>
+        <target>Scarta modifiche</target>
       </trans-unit>
       <trans-unit id="HYT_choose_how_proceed" datatype="html">
         <source>Choose how to proceed</source>
+        <target>Scegli come procedere</target>
       </trans-unit>
       <trans-unit id="HYT_enrichment_data" datatype="html">
         <source>Enrichment data</source>
+        <target>Arricchimento dati</target>
       </trans-unit>
       <trans-unit id="HYT_enrichment_definition_long" datatype="html">
         <source>Long enrichment data definition. Long enrichment data definition. Long enrichment data definition. Long enrichment data definition. Long enrichment data definition. Long enrichment data definition. Long enrichment data definition.</source>
+        <target>Lunga definizione di arricchimento dati. Lunga definizione di arricchimento dati. Lunga definizione di arricchimento dati. Lunga definizione di arricchimento dati. Lunga definizione di arricchimento dati.</target>
       </trans-unit>
       <trans-unit id="HYT_statistics" datatype="html">
         <source>Statistics</source>
+        <target>Statistiche</target>
       </trans-unit>
       <trans-unit id="HYT_statistics_definition_long" datatype="html">
         <source>Long statistics definition. Long statistics definition. Long statistics definition. Long statistics definition. Long statistics definition. Long statistics definition. Long statistics definition. Long statistics definition.</source>
+        <target>Lunga definizione di statistiche. Lunga definizione di statistiche. Lunga definizione di statistiche. Lunga definizione di statistiche. Lunga definizione di statistiche. Lunga definizione di statistiche. Lunga definizione di statistiche. </target>
       </trans-unit>
       <trans-unit id="HYT_events" datatype="html">
         <source>Events</source>
+        <target>Eventi</target>
       </trans-unit>
       <trans-unit id="HYT_events_definition_long" datatype="html">
         <source>Long events definition. Long events definition. Long events definition. Long events definition. Long events definition. Long events definition. Long events definition. Long events definition. Long events definition. Long events definition.</source>
+        <target>Lunga definizione di eventi. Lunga definizione di eventi. Lunga definizione di eventi. Lunga definizione di eventi. Lunga definizione di eventi. Lunga definizione di eventi. Lunga definizione di eventi. </target>
       </trans-unit>
       <trans-unit id="HYT_finish" datatype="html">
         <source>Finish</source>
+        <target>Finisci</target>
       </trans-unit>
       <trans-unit id="HYT_congratulations" datatype="html">
         <source>Congratulations</source>
+        <target>Congratulazioni</target>
       </trans-unit>
       <trans-unit id="HYT_pw_finsh" datatype="html">
         <source>You have finished to configure your project</source>
+        <target>Hai finito di configurare il tuo progetto</target>
       </trans-unit>
       <trans-unit id="HYT_go_to_project_list" datatype="html">
         <source>Go to project list</source>
+        <target>Vai alla lista progetti</target>
       </trans-unit>
       <trans-unit id="HYT_go_to_project_list_long" datatype="html">
         <source>Go to project list definition. Go to project list definition. Go to project list definition. Go to project list definition. Go to project list definition. Go to project list definition. Go to project list definition. Go to project list definition.</source>
+        <target>Vai alla lista progetti lunga definizione. Vai alla lista progetti lunga definizione. Vai alla lista progetti lunga definizione. Vai alla lista progetti lunga definizione. Vai alla lista progetti lunga definizione. </target>
       </trans-unit>
       <trans-unit id="HYT_go_to_dashboard" datatype="html">
         <source>Go to dashboard</source>
+        <target>Vai alla dashboard</target>
       </trans-unit>
       <trans-unit id="HYT_go_to_dashboard_long" datatype="html">
         <source>Go to dashboard definition. Go to dashboard definition. Go to dashboard definition. Go to dashboard definition. Go to dashboard definition. Go to dashboard definition. Go to dashboard definition. Go to dashboard definition. Go to dashboard definition.</source>
+        <target>Vai alla dashboard lunga definizione. Vai alla dashboard lunga definizione. Vai alla dashboard lunga definizione. Vai alla dashboard lunga definizione. Vai alla dashboard lunga definizione. Vai alla dashboard lunga definizione. </target>
       </trans-unit>
       <trans-unit id="HYT_device" datatype="html">
         <source>Devices</source>
+        <target>Dispositivo</target>
       </trans-unit>
       <trans-unit id="HYT_algorithm" datatype="html">
         <source>Algorithm</source>
+        <target>Algoritmo</target>
       </trans-unit>
       <trans-unit id="HYT_fields" datatype="html">
         <source>Fields</source>
+        <target>Campi</target>
       </trans-unit>
       <trans-unit id="HYT_time_range" datatype="html">
         <source>Time range</source>
+        <target>Range tempo</target>
       </trans-unit>
       <trans-unit id="HYT_source_data" datatype="html">
         <source>Source Data</source>
+        <target>Fonte dati</target>
       </trans-unit>
       <trans-unit id="HYT_average" datatype="html">
         <source>Average</source>
+        <target>Media</target>
       </trans-unit>
       <trans-unit id="HYT_media_2_fields" datatype="html">
         <source>Media 2 fields</source>
+        <target>Media a 2 campi</target>
       </trans-unit>
       <trans-unit id="HYT_media_3_fields" datatype="html">
         <source>Media 3 fields</source>
+        <target>Media a 3 campi</target>
       </trans-unit>
       <trans-unit id="HYT_predictive" datatype="html">
         <source>Predictive</source>
+        <target>Predittivo</target>
       </trans-unit>
       <trans-unit id="HYT_regression" datatype="html">
         <source>Regression</source>
+        <target>Regressione</target>
       </trans-unit>
       <trans-unit id="HYT_string" datatype="html">
         <source>String</source>
+        <target>Stringa</target>
       </trans-unit>
       <trans-unit id="HYT_variance" datatype="html">
         <source>Variance</source>
+        <target>Varianza</target>
       </trans-unit>
       <trans-unit id="HYT_hourly" datatype="html">
         <source>Hourly</source>
+        <target></target>
       </trans-unit>
       <trans-unit id="HYT_daily" datatype="html">
         <source>Daily</source>
+        <target>Ogni ora</target>
       </trans-unit>
       <trans-unit id="HYT_weekly" datatype="html">
         <source>Weekly</source>
+        <target>Settimanale</target>
       </trans-unit>
       <trans-unit id="HYT_monthly" datatype="html">
         <source>Monthly</source>
+        <target>Mensile</target>
       </trans-unit>
       <trans-unit id="HYT_quarterly" datatype="html">
         <source>Quarterly</source>
+        <target>Trimestrale</target>
       </trans-unit>
       <trans-unit id="HYT_four_monthly" datatype="html">
         <source>Four monthly</source>
+        <target>Quadrimestrale</target>
       </trans-unit>
       <trans-unit id="HYT_half_yearly" datatype="html">
         <source>Half yearly</source>
+        <target>Semestrale</target>
       </trans-unit>
       <trans-unit id="HYT_annual" datatype="html">
         <source>Annual</source>
+        <target>Annuale</target>
       </trans-unit>
       <trans-unit id="HYT_temperature" datatype="html">
         <source>Temperature</source>
+        <target>Temperatura</target>
       </trans-unit>
       <trans-unit id="HYT_humidity" datatype="html">
         <source>Humidity</source>
+        <target>Umidità</target>
       </trans-unit>
       <trans-unit id="HYT_home" datatype="html">
         <source>Home</source>
+        <target>Home</target>
       </trans-unit>
       <trans-unit id="HYT_projects_wizard" datatype="html">
         <source>Projects Wizard</source>
+        <target>Wizard Progetto</target>
       </trans-unit>
       <trans-unit id="HYT_next" datatype="html">
         <source>Next</source>
+        <target>Avanti</target>
       </trans-unit>
       <trans-unit id="HYT_select_source_type" datatype="html">
         <source>Select Source Type</source>
+        <target>Seleziona tipo fonte</target>
       </trans-unit>
       <trans-unit id="HYT_save" datatype="html">
         <source>Save</source>
+        <target>Salva</target>
       </trans-unit>
       <trans-unit id="HYT_update" datatype="html">
         <source>Update</source>
+        <target>Aggiorna</target>
       </trans-unit>
       <trans-unit id="HYT_back" datatype="html">
         <source>Back</source>
+        <target>Indietro</target>
       </trans-unit>
       <trans-unit id="HYT_application" datatype="html">
         <source>APPLICATION</source>
+        <target>APPLICAZIONE</target>
       </trans-unit>
       <trans-unit id="HYT_projectcard_string_device" datatype="html">
-        <source>Device<x id="INTERPOLATION"/></source>
+        <source>Device<x id="INTERPOLATION" /></source>
+        <target>Device</target>
       </trans-unit>
       <trans-unit id="HYT_projectcard_string_rule" datatype="html">
-        <source>Rule<x id="INTERPOLATION"/></source>
+        <source>Rule<x id="INTERPOLATION" /></source>
+        <target>Regola</target>
       </trans-unit>
       <trans-unit id="HYT_projects" datatype="html">
         <source>Projects</source>
+        <target>Progetti</target>
       </trans-unit>
       <trans-unit id="HYT_add_new_project" datatype="html">
         <source>Add new project</source>
+        <target>Aggiungi un progetto</target>
       </trans-unit>
       <trans-unit id="HYT_page_is_loading" datatype="html">
         <source>Page is loading...</source>
+        <target>Pagina in caricamento...</target>
       </trans-unit>
       <trans-unit id="HYT_project_list" datatype="html">
         <source>Project list</source>
+        <target>Lista progetti</target>
       </trans-unit>
       <trans-unit id="HYT_search" datatype="html">
         <source>Search</source>
+        <target>Cerca</target>
       </trans-unit>
       <trans-unit id="HYT_select_sort_type" datatype="html">
         <source>Select a sort type</source>
+        <target>Seleziona tipo ordinamento</target>
       </trans-unit>
       <trans-unit id="HYT_no_project_found" datatype="html">
         <source>No project that matches the search found...</source>
+        <target>Nessun progetto trovato che soddisfi la ricerca</target>
       </trans-unit>
       <trans-unit id="HYT_no_project" datatype="html">
         <source>There are no projects!</source>
+        <target>Non ci sono progetti</target>
       </trans-unit>
       <trans-unit id="HYT_add_project_button_hint" datatype="html">
         <source>To add a project click the button below.</source>
+        <target>Per aggiungere un progetto clicca il bottone qui sotto</target>
       </trans-unit>
       <trans-unit id="HYT_create_first_project" datatype="html">
         <source>Create your first project</source>
+        <target>Crea il tuo primo progetto</target>
       </trans-unit>
       <trans-unit id="HYT_error_occurred_long" datatype="html">
         <source>An error has occurred, contact the administrator!</source>
+        <target>Si è verificato un errore. Contatta l'amministratore</target>
       </trans-unit>
       <trans-unit id="HYT_none" datatype="html">
         <source>None</source>
+        <target>Nessuno</target>
       </trans-unit>
       <trans-unit id="HYT_a_z" datatype="html">
         <source>A-Z</source>
+        <target>A-Z</target>
       </trans-unit>
       <trans-unit id="HYT_z_a" datatype="html">
         <source>Z-A</source>
+        <target>Z-A</target>
       </trans-unit>
       <trans-unit id="HYT_oldest" datatype="html">
         <source>Oldest</source>
+        <target>Dal più vecchio al più nuovo</target>
       </trans-unit>
       <trans-unit id="HYT_newest" datatype="html">
         <source>Newest</source>
+        <target>Dal più unovo al più vecchio</target>
       </trans-unit>
       <trans-unit id="HYT_success" datatype="html">
         <source>Success</source>
+        <target>Successo</target>
       </trans-unit>
       <trans-unit id="HYT_project_successfully_deleted" datatype="html">
         <source>The project was successfully deleted.</source>
+        <target>Il progetto è stato eliminato correttamente</target>
       </trans-unit>
       <trans-unit id="HYT_error_deleting_project" datatype="html">
         <source>An error occurred while deleting the project.</source>
+        <target>Errore nell'eliminazione del progetto</target>
       </trans-unit>
       <trans-unit id="HYT_loading" datatype="html">
         <source>Loading</source>
+        <target>Caricamento</target>
       </trans-unit>
       <trans-unit id="HYT_deleting_project" datatype="html">
-        <source>Deleting of project &quot;<x id="PH"/>&quot; in loading. It may take a while.</source>
+        <source>Deleting of project "<x id="PH" />" in loading. It may take a while.</source>
+        <target>Eliminazione del progetto in corso. Questa operazione potrebbe richiedere un po' di tempo.</target>
       </trans-unit>
       <trans-unit id="HYT_plan_info" datatype="html">
         <source>Plan Info</source>
+        <target>Info piano</target>
       </trans-unit>
       <trans-unit id="HYT_your_role_is" datatype="html">
         <source>Your role is</source>
+        <target>Il tuo ruolo è</target>
       </trans-unit>
       <trans-unit id="HYT_your_current_plan_is" datatype="html">
         <source>Your current plan is:</source>
+        <target>Il tuo piano attuale è</target>
       </trans-unit>
       <trans-unit id="HYT_this_plan_includes" datatype="html">
         <source>This plan includes</source>
+        <target>Questo piano include</target>
       </trans-unit>
       <trans-unit id="HYT_devices" datatype="html">
         <source>Devices</source>
+        <target>Dispositivi</target>
       </trans-unit>
       <trans-unit id="HYT_personal_info" datatype="html">
         <source>Personal Info</source>
+        <target>Info personali</target>
       </trans-unit>
       <trans-unit id="HYT_update_personal_info" datatype="html">
         <source>Update Personal Info</source>
+        <target>Aggiorna info personali</target>
       </trans-unit>
       <trans-unit id="HYT_change_password" datatype="html">
         <source>Change password</source>
+        <target>Cambia password</target>
       </trans-unit>
       <trans-unit id="HYT_company_info" datatype="html">
         <source>Company Info</source>
+        <target>Info azienda</target>
       </trans-unit>
       <trans-unit id="HYT_generic_error" datatype="html">
         <source>Something went wrong</source>
+        <target>Qualcosa è andato storto</target>
       </trans-unit>
       <trans-unit id="HYT_user_updated" datatype="html">
         <source>Personal information updated correctly</source>
+        <target>Informazioni personali aggiornate con successo</target>
       </trans-unit>
       <trans-unit id="HYT_password_changed" datatype="html">
         <source>Password changed correctly</source>
+        <target>Password modificata con successo</target>
       </trans-unit>
       <trans-unit id="HYT_discard" datatype="html">
         <source>Discard</source>
+        <target>Scarta</target>
       </trans-unit>
       <trans-unit id="HYT_edit_in_wizard" datatype="html">
         <source>Edit in wizard</source>
+        <target>Modifica nel wizard</target>
       </trans-unit>
       <trans-unit id="HYT_loading_project_tree" datatype="html">
         <source>Loading project tree</source>
+        <target>Caricamento project tree</target>
       </trans-unit>
       <trans-unit id="HYT_error_project_tree" datatype="html">
         <source>Error loading project tree</source>
+        <target>Errore caricamento project tree</target>
       </trans-unit>
       <trans-unit id="HYT_loading_tags" datatype="html">
         <source>Loading Tags</source>
+        <target>Caricamento Tags</target>
       </trans-unit>
       <trans-unit id="HYT_sort_by" datatype="html">
         <source>Sort by: </source>
+        <target>Ordina per: </target>
       </trans-unit>
       <trans-unit id="HYT_add_tag" datatype="html">
         <source>Add Tag </source>
+        <target>Aggiungi tag </target>
       </trans-unit>
       <trans-unit id="HYT_no_tags_found" datatype="html">
         <source>No tags found, create one!</source>
+        <target>Nessun tag trovato, creane uno!</target>
       </trans-unit>
       <trans-unit id="HYT_list_tags" datatype="html">
         <source>List of Tags</source>
+        <target>Lista di Tag</target>
       </trans-unit>
       <trans-unit id="HYT_error_loading_tags_data" datatype="html">
         <source>Error loading tags data</source>
+        <target>Errore nel caricamento dei dati dei tag</target>
       </trans-unit>
       <trans-unit id="HYT_project_categories" datatype="html">
         <source>Project Categories</source>
+        <target>Categorie progetto</target>
       </trans-unit>
       <trans-unit id="HYT_widget_add_widget" datatype="html">
         <source>Add widget</source>
+        <target>Aggiungi un widget</target>
       </trans-unit>
       <trans-unit id="HYT_add" datatype="html">
         <source>Add</source>
+        <target>Aggiungi</target>
       </trans-unit>
       <trans-unit id="HYT_widget_add_quantity" datatype="html">
         <source>Quantity</source>
+        <target>Quantità</target>
       </trans-unit>
       <trans-unit id="HYT_widget_info_type" datatype="html">
         <source>Type</source>
+        <target>Tipo</target>
       </trans-unit>
       <trans-unit id="HYT_widget_info_intro" datatype="html">
         <source>Select one or more widgets to add in the dashboard.. etc... etc...</source>
+        <target>Seleziona uno o più widget da aggiungere alla dashboard.. etc.. etc...</target>
       </trans-unit>
       <trans-unit id="HYT_add_widget" datatype="html">
         <source>Add widget</source>
+        <target>Aggiungi widget</target>
       </trans-unit>
       <trans-unit id="HYT_widget_settings_select_packet" datatype="html">
         <source>Select packet</source>
+        <target>Seleziona pacchetto</target>
       </trans-unit>
       <trans-unit id="HYT_button_add" datatype="html">
         <source>Add</source>
+        <target>Aggiungi</target>
       </trans-unit>
       <trans-unit id="HYT_widget_settings_title" datatype="html">
         <source>Widget Settings</source>
+        <target>Impostazioni Widget</target>
       </trans-unit>
       <trans-unit id="HYT_apply" datatype="html">
         <source>Apply</source>
+        <target>Applica</target>
       </trans-unit>
       <trans-unit id="HYT_toolbar_move" datatype="html">
         <source>Move</source>
+        <target>Sposta</target>
       </trans-unit>
       <trans-unit id="HYT_toolbar_settings" datatype="html">
         <source>Settings</source>
+        <target>Impostazioni</target>
       </trans-unit>
       <trans-unit id="HYT_toolbar_refresh" datatype="html">
         <source>Refresh</source>
+        <target>Aggiorna</target>
       </trans-unit>
       <trans-unit id="HYT_toolbar_close" datatype="html">
         <source>Close</source>
+        <target>Chiudi</target>
       </trans-unit>
       <trans-unit id="HYT_common_not_configured" datatype="html">
-        <source>Click &apos;Settings&apos; button to configure.</source>
+        <source>Click 'Settings' button to configure.</source>
+        <target>Premi il pulsante 'Impostazioni' per configurare il widget.</target>
       </trans-unit>
       <trans-unit id="HYT_no_widget_in_dashboard" datatype="html">
         <source>You have no widgets in this dashboard.</source>
+        <target>Non ci sono widget in questa dashboard</target>
       </trans-unit>
       <trans-unit id="HYT_start_adding_widget" datatype="html">
         <source>Start adding widgets.</source>
+        <target>Comincia ad aggiungere widget</target>
       </trans-unit>
       <trans-unit id="HYT_data_recording" datatype="html">
         <source>Data recording</source>
+        <target>Registrazione dati</target>
       </trans-unit>
       <trans-unit id="HYT_widget_settings_apply" datatype="html">
         <source>Apply</source>
+        <target>Applica</target>
       </trans-unit>
       <trans-unit id="HYT_widget_settings_cancel" datatype="html">
         <source>Cancel</source>
+        <target>Annulla</target>
       </trans-unit>
       <trans-unit id="HYT_loading_request" datatype="html">
         <source>Loading request</source>
+        <target>Caricamento richiesta</target>
       </trans-unit>
       <trans-unit id="HYT_submitting" datatype="html">
         <source>Submitting...</source>
+        <target></target>
       </trans-unit>
       <trans-unit id="HYT_submitting failed" datatype="html">
         <source>Submitting failed</source>
+        <target>Attivazione fallita</target>
       </trans-unit>
       <trans-unit id="HYT_connecting" datatype="html">
         <source>Connecting...</source>
+        <target>Connessione...</target>
       </trans-unit>
       <trans-unit id="HYT_connecting_failed" datatype="html">
         <source>Connecting failed</source>
+        <target>Connessione fallita</target>
       </trans-unit>
       <trans-unit id="HYT_starting" datatype="html">
         <source>Starting...</source>
+        <target>Avvio...</target>
       </trans-unit>
       <trans-unit id="HYT_starting_failed" datatype="html">
         <source>Starting failed</source>
+        <target>Avvio fallito</target>
       </trans-unit>
       <trans-unit id="HYT_started" datatype="html">
         <source>Started!</source>
+        <target>Avviato!</target>
       </trans-unit>
       <trans-unit id="HYT_try_again" datatype="html">
         <source>Try again</source>
+        <target>Prova ancora</target>
       </trans-unit>
       <trans-unit id="HYT_request_failed" datatype="html">
         <source>Request failed</source>
+        <target>Richiesta fallita</target>
       </trans-unit>
       <trans-unit id="HYT_loading_to_off" datatype="html">
         <source>Loading to off...</source>
+        <target>Caricamento in corso...</target>
       </trans-unit>
       <trans-unit id="HYT_completed" datatype="html">
         <source>Completed</source>
+        <target>Completato</target>
       </trans-unit>
       <trans-unit id="HYT_attention" datatype="html">
         <source>Attention!</source>
+        <target>Attenzione!</target>
       </trans-unit>
       <trans-unit id="HYT_dashboard_end_registration" datatype="html">
         <source>Proceeding with this action you will disable the registration of the data and they will not be stored until the rehabilitation of this property</source>
+        <target>Procedendo con questa azione disabiliterai la registrazione dei dati che non saranno salvati fino alla riabilitazione di questa proprietà</target>
       </trans-unit>
       <trans-unit id="HYT_reload" datatype="html">
         <source>Reload</source>
+        <target>Ricarica</target>
       </trans-unit>
       <trans-unit id="HYT_add_a_widget" datatype="html">
         <source>Add a widget</source>
+        <target>Aggiungi un widget</target>
       </trans-unit>
       <trans-unit id="HYT_no_dashboard_yet" datatype="html">
         <source>You have not configured any dashboard yet.</source>
+        <target>Non hai ancora configurato nessuna dashboard</target>
       </trans-unit>
       <trans-unit id="HYT_welcome_to_hyperiot" datatype="html">
         <source>Welcome to HyperIoT</source>
+        <target>Benvenuto su HyperIoT</target>
       </trans-unit>
       <trans-unit id="HYT_home_message_1" datatype="html">
         <source>For now the page is empty but if you want you can view your projects by clicking the button below</source>
+        <target>Per adesso la pagina è vuota ma se vuoi puoi vedere i tuoi progetti cliccando il bottone qui sotto</target>
       </trans-unit>
       <trans-unit id="HYT_go_to_your_projects" datatype="html">
         <source>Go to your Projects</source>
+        <target>Vai ai tuoi progetti</target>
       </trans-unit>
       <trans-unit id="HYT_area_map_select_device" datatype="html">
         <source>Select device</source>
+        <target>Seleziona dispositivo</target>
       </trans-unit>
       <trans-unit id="HYT_area_map_select_area" datatype="html">
         <source>Select area</source>
+        <target>Seleziona area</target>
       </trans-unit>
       <trans-unit id="HYT_area_list_noimage" datatype="html">
         <source>(no image)</source>
+        <target>(immagine assente)</target>
       </trans-unit>
       <trans-unit id="HYT_area_draggable_title" datatype="html">
-        <source>Move <x id="INTERPOLATION"/></source>
+        <source>Move <x id="INTERPOLATION" /></source>
+        <target>Sposta {{itemData.device ? itemData.device.deviceName : itemData.name}}</target>
       </trans-unit>
       <trans-unit id="HYT_area_draggable_remove" datatype="html">
-        <source>Remove <x id="INTERPOLATION"/></source>
+        <source>Remove <x id="INTERPOLATION" /></source>
+        <target>Rimuovi {{itemData.device ? itemData.device.deviceName : itemData.name}}</target>
       </trans-unit>
       <trans-unit id="HYT_area_draggable_open" datatype="html">
-        <source>Open <x id="INTERPOLATION"/></source>
+        <source>Open <x id="INTERPOLATION" /></source>
+        <target>Apri {{itemData.device ? itemData.device.deviceName : itemData.name}}</target>
       </trans-unit>
       <trans-unit id="HYT_area_path_main" datatype="html">
         <source>Main</source>
+        <target>Principale</target>
       </trans-unit>
       <trans-unit id="HYT_area_section_info" datatype="html">
         <source>Info</source>
+        <target>Info</target>
       </trans-unit>
       <trans-unit id="HYT_hint_area_name" datatype="html">
         <source>Enter area name</source>
+        <target>Inserire nome area</target>
       </trans-unit>
       <trans-unit id="HYT_hint_area_description" datatype="html">
         <source>Enter area description</source>
+        <target>Inserire descrizione area</target>
       </trans-unit>
       <trans-unit id="HYT_area_add" datatype="html">
         <source>Add area</source>
+        <target>Aggiungi area</target>
       </trans-unit>
       <trans-unit id="HYT_area_section_inner" datatype="html">
-        <source>Sub-areas (<x id="INTERPOLATION"/>)</source>
+        <source>Sub-areas (<x id="INTERPOLATION" />)</source>
+        <target>Sottoaree ({{ areaList.length }})</target>
       </trans-unit>
       <trans-unit id="HYT_area_inner_add" datatype="html">
         <source>Add sub-area</source>
+        <target>Aggiungi sotto-area</target>
       </trans-unit>
       <trans-unit id="HYT_area_section_map" datatype="html">
         <source>Map</source>
+        <target>Mappa</target>
       </trans-unit>
       <trans-unit id="HYT_area_map_set_image" datatype="html">
         <source>Set map image</source>
+        <target>Imposta immagine mappa</target>
       </trans-unit>
       <trans-unit id="HYT_area_map_device_add" datatype="html">
         <source>Add device</source>
+        <target>Aggiungi dispositivo</target>
       </trans-unit>
       <trans-unit id="HYT_area_map_area_add" datatype="html">
         <source>Add sub-area</source>
+        <target>Aggiungi sotto-area</target>
       </trans-unit>
       <trans-unit id="HYT_project_areas" datatype="html">
         <source>Project Areas</source>
+        <target>Aree progetti</target>
       </trans-unit>
       <trans-unit id="HYT_file_size_exceed" datatype="html">
-        <source>File size exceed limit of <x id="PH"/> bytes</source>
+        <source>File size exceed limit of <x id="PH" /> bytes</source>
+        <target>Il </target>
       </trans-unit>
       <trans-unit id="HYT_file_type_must_be" datatype="html">
-        <source>File type must be <x id="PH"/></source>
+        <source>File type must be <x id="PH" /></source>
+        <target>@@I18N@@</target>
       </trans-unit>
       <trans-unit id="HYT_download_pwa" datatype="html">
-        <source>Download PWA <x id="START_TAG_BUTTON"/>OK<x id="CLOSE_TAG_BUTTON"/><x id="START_TAG_BUTTON_1"/>NO<x id="CLOSE_TAG_BUTTON"/></source>
+        <source>Download PWA <x id="START_TAG_BUTTON" />OK<x id="CLOSE_TAG_BUTTON" /><x id="START_TAG_BUTTON_1" />NO<x id="CLOSE_TAG_BUTTON" /></source>
+        <target>@@I18N@@</target>
       </trans-unit>
       <trans-unit id="HYT_dashboard" datatype="html">
         <source>Dashboard</source>
+        <target>Dashboard</target>
       </trans-unit>
       <trans-unit id="HYT_areas" datatype="html">
         <source>Areas</source>
+        <target>Aree</target>
       </trans-unit>
       <trans-unit id="HYT_dashboard_list" datatype="html">
         <source>Dashboard list</source>
+        <target>Lista dashboard</target>
       </trans-unit>
       <trans-unit id="HYT_no_dashboard_for_user" datatype="html">
         <source>No dashboards found for this user</source>
+        <target>Nessuna dashboard trovata</target>
       </trans-unit>
     </body>
   </file>

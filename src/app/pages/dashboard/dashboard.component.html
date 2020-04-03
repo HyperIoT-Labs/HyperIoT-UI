@@ -21,15 +21,18 @@
                     <div class="col-6 left-tools">
 
                         <div id="signal-btn" (click)="changeSignalState($event)">
-                            <span
-                                class="hyt-icon {{(signalIsOn)?'icon-hyt_wifiOnFilled':'icon-hyt_wifiOffFilled'}}"></span>
-                            <p i18n="@@HYT_signal_is_on">HYT_signal_is_on</p>
+                            <span class="hyt-icon {{(signalIsOn)?'icon-hyt_wifiOnFilled':'icon-hyt_wifiOffFilled'}}"></span>
+                            <!-- <p i18n="@@HYT_signal_is_on">{signalIsOn, select, true {Online} false {Offline}}</p> -->
+                            <p>{{(signalIsOn)?'Online':'Offline'}}</p>
+                            <!-- @@i18n -->
                         </div>
 
 
                         <div *ngIf="signalIsOn" id="play-btn" (click)="changeStreamState($event)">
                             <span class="hyt-icon {{(streamIsOn)?'icon-hyt_play':'icon-hyt_pause'}}"></span>
-                            <p i18n="@@HYT_stream_is_on">HYT_stream_is_on</p>
+                            <p>{{(streamIsOn)?'Play':'Pause'}}</p>
+                            <!-- @@i18n -->
+                            <!-- <p i18n="@@HYT_stream_is_on">{streamIsOn, select, true {Play} false {Pause}}</p> -->
                         </div>
 
                         <hyt-topology-toolbar [dataRecordingIsOn]="dataRecordingIsOn" [upTimeSec]="upTimeSec"
@@ -65,7 +68,7 @@
 
                         <div id="add-widget-btn" *ngIf="pageStatus == PageStatus.Standard" (click)="openWidgetModal()">
                             <span class="hyt-icon icon-hyt_widgetPlus"></span>
-                            <p i18n="@@HYT_add_a_widget">HYT_add_a_widget</p>
+                            <p i18n="@@HYT_add_a_widget">Add a widget</p>
                         </div>
 
                     </div>
@@ -82,7 +85,7 @@
 
             <img id="animatedPreloaderImg" src="assets/images/hyperiot_logo_single_char_animated.svg"
                 alt="Hyperiot Animated Logo"> <!-- @I18N@ -->
-            <h2 i18n="@@HYT_page_is_loading">HYT_page_is_loading</h2>
+            <h2 i18n="@@HYT_page_is_loading">Page is loading...</h2>
             <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 
         </div>
@@ -129,7 +132,7 @@
 
                 <div id="content-no-dashboards" class="col-md-12">
                     <i class="fa fa-bar-chart-o"></i>
-                    <h3 id="title-no-dashboards" i18n="@@HYT_no_dashboard_yet">HYT_no_dashboard_yet</h3>
+                    <h3 id="title-no-dashboards" i18n="@@HYT_no_dashboard_yet">You have not configured any dashboard yet.</h3>
                     <!-- <h4 id="subtitle-no-dashboards">Start adding widgets.</h4> -->
                 </div>
 
@@ -142,7 +145,7 @@
         <div id="errorStatus" *ngSwitchCase="PageStatus.Error"
             class="mt-5 d-flex flex-column row align-items-center justify-content-center">
             <!-- Error -->
-            <h2 i18n="@@HYT_error_occurred_long">HYT_error_occurred_long</h2>
+            <h2 i18n="@@HYT_error_occurred_long">An error has occurred, contact the administrator!</h2>
 
         </div>
 

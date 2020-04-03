@@ -17,11 +17,11 @@
                     formControlName="hdevice-devicename"
                     errorPosition="bottom"
                     i18n-placeholder="@@HYT_name"
-                    placeholder="HYT_name"
+                    placeholder="Name"
                     patternz="[A-Za-z0-9_-]*"
                     [injectedErrorMsg]="getError('hdevice-devicename')"
                     i18n-hintMessage="@@HYT_hint_device_name"
-                    hintMessage="HYT_hint_device_name"
+                    hintMessage="Enter the device name."
                     isRequired="true"
                 >
                 </hyt-input-text>
@@ -31,10 +31,10 @@
                     name="hdevice-brand"
                     formControlName="hdevice-brand"
                     i18n-placeholder="@@HYT_brand"
-                    placeholder="HYT_brand"
+                    placeholder="Brand"
                     [injectedErrorMsg]="getError('hdevice-brand')"
                     i18n-hintMessage="@@HYT_hint_device_brand"
-                    hintMessage="HYT_hint_device_brand"
+                    hintMessage="Enter the device brand."
                     [form]="form"
                 >
                 </hyt-input-text>
@@ -50,10 +50,10 @@
                     name="hdevice-model"
                     formControlName="hdevice-model"
                     i18n-placeholder="@@HYT_model"
-                    placeholder="HYT_model"
+                    placeholder="Model"
                     [injectedErrorMsg]="getError('hdevice-model')"
                     i18n-hintMessage="@@HYT_hint_device_model"
-                    hintMessage="HYT_hint_device_model"
+                    hintMessage="Enter the device model."
                     [form]="form"
                 >
                 </hyt-input-text>
@@ -66,10 +66,10 @@
                     name="hdevice-softwareversion"
                     formControlName="hdevice-softwareversion"
                     i18n-placeholder="@@HYT_software_version"
-                    placeholder="HYT_software_version"
+                    placeholder="Software version"
                     [injectedErrorMsg]="getError('hdevice-softwareversion')"
                     i18n-hintMessage="@@HYT_hint_device_software"
-                    hintMessage="HYT_hint_device_software"
+                    hintMessage="Enter the device software version."
                     [form]="form"
                 >
                 </hyt-input-text>
@@ -86,10 +86,10 @@
                     name="hdevice-firmwareversion"
                     formControlName="hdevice-firmwareversion"
                     i18n-placeholder="@@HYT_firmware_version"
-                    placeholder="HYT_firmware_version"
+                    placeholder="Firmware version"
                     [injectedErrorMsg]="getError('hdevice-firmwareversion')"
                     i18n-hintMessage="@@HYT_hint_device_firmware"
-                    hintMessage="HYT_hint_device_firmware"
+                    hintMessage="Enter the device firmware version."
                     [form]="form"
                 >
                 </hyt-input-text>
@@ -98,20 +98,22 @@
                         [form]="form" 
                         name="hdevice-password"
                         formControlName="hdevice-password"
-                        [isRequired]="!entity.id" [isPassword]="true" i18n-placeholder="@@HYT_password" placeholder="HYT_password"
+                        [isRequired]="!entity.id" [isPassword]="true" i18n-placeholder="@@HYT_password"
+                        placeholder="Password"
                         type="password" [injectedErrorMsg]="getError('hdevice-password')"
                         i18n-hintMessage="@@HYT_hint_device_password"
-                        hintMessage="HYT_hint_device_password"
+                        hintMessage="Enter the device password."
                     >
                     </hyt-input-text>
                     <hyt-input-text 
                         [form]="form" 
                         name="hdevice-passwordConfirm"
                         formControlName="hdevice-passwordConfirm"
-                        [isRequired]="!entity.id" i18n-placeholder="@@HYT_password_confirm" placeholder="HYT_password_confirm"
+                        [isRequired]="!entity.id" i18n-placeholder="@@HYT_password_confirm"
+                        placeholder="Confirm password"
                         type="password" [injectedErrorMsg]="getError('hdevice-passwordConfirm')"
                         i18n-hintMessage="@@HYT_hint_password_confirm"
-                        hintMessage="HYT_hint_password_confirm"
+                        hintMessage="Confirm device password."
                     >
                     </hyt-input-text>
                 </div>
@@ -122,10 +124,10 @@
                 <hyt-text-area 
                     name="hdevice-description"
                     i18n-placeholder="@@HYT_description"
-                    placeholder="HYT_description"
+                    placeholder="Description"
                     [injectedErrorMsg]="getError('hdevice-description')"
                     i18n-hintMessage="@@HYT_hint_device_description"
-                    hintMessage="HYT_hint_device_description"
+                    hintMessage="Enter the device description."
                     [form]="form"
                 >
                 </hyt-text-area>
@@ -151,22 +153,22 @@
             [ngClass]="getCustomClass()"
         >
 
-            <h4 i18n="@@HYT_loading_data">HYT_loading_data</h4>
+            <h4 i18n="@@HYT_loading_data">Loading data...</h4>
 
         </div> 
         
         <div *ngIf="loadingStatus === LoadingStatus.Error" class="error-overlay d-flex flex-column justify-content-center">
-            <h4 i18n="@@HYT_error_occurred">HYT_error_occurred</h4>
+            <h4 i18n="@@HYT_error_occurred">An unexpected error has occurred</h4>
 
             <hyt-button 
                 [color]="'hyt-base-default-white'" 
                 (click)="loadingStatus = LoadingStatus.Ready"
             >
-                <span i18n="@@HYT_close">HYT_close</span> <span class="icon-hyt_cancelC"></span> 
+                <span i18n="@@HYT_close">Close</span> <span class="icon-hyt_cancelC"></span> 
             </hyt-button>
         </div>
 
-        <h4 *ngIf="loadingStatus === LoadingStatus.Saving" i18n="@@HYT_saving_data">HYT_saving_data</h4>
+        <h4 *ngIf="loadingStatus === LoadingStatus.Saving" i18n="@@HYT_saving_data">Saving data...</h4>
 
         <mat-progress-bar 
             *ngIf="loadingStatus === LoadingStatus.Loading || loadingStatus === LoadingStatus.Saving"

@@ -1,7 +1,7 @@
 <div id="container-option-modal" class="dialog">
 
     <div class="dialog-header">
-        <span i18n="@@HYT_choose_how_proceed">HYT_choose_how_proceed</span>
+        <span i18n="@@HYT_choose_how_proceed">Choose how to proceed</span>
         <span class="hyt-icon icon-hyt_cancelC" (click)="close()"></span>
     </div>
 
@@ -13,27 +13,27 @@
 
                 <hyt-hexagon [iconPath]="entitiesService.enrichment.icon"></hyt-hexagon>
 
-                <span class="title-block" i18n="@@HYT_enrichment_data">HYT_enrichment_data</span>
+                <span class="title-block" i18n="@@HYT_enrichment_data">Enrichment data</span>
                 
-                <p class="body-block" i18n="@@HYT_enrichment_definition_long">HYT_enrichment_definition_long</p>
+                <p class="body-block" i18n="@@HYT_enrichment_definition_long">Long enrichment data definition. Long enrichment data definition. Long enrichment data definition. Long enrichment data definition. Long enrichment data definition. Long enrichment data definition. Long enrichment data definition.</p>
 
             </div>
             <div id="stats-block" class="col-4 single-box" (click)="output('goToStep', 5);">
                 
                 <hyt-hexagon [iconPath]="entitiesService.statistic.icon"></hyt-hexagon>
 
-                <span class="title-block" i18n="@@HYT_statistics">HYT_statistics</span>
+                <span class="title-block" i18n="@@HYT_statistics">Statistics</span>
                 
-                <p class="body-block" i18n="@@HYT_statistics_definition_long">HYT_statistics_definition_long</p>
+                <p class="body-block" i18n="@@HYT_statistics_definition_long">Long statistics definition. Long statistics definition. Long statistics definition. Long statistics definition. Long statistics definition. Long statistics definition. Long statistics definition. Long statistics definition.</p>
             
             </div>
             <div id="events-block" class="col-4 single-box" (click)="output('goToStep', 6);">
 
                 <hyt-hexagon [iconPath]="entitiesService.event.icon"></hyt-hexagon>
 
-                <span class="title-block"i18n="@@HYT_events">HYT_events</span>
+                <span class="title-block" i18n="@@HYT_events">Events</span>
                 
-                <p class="body-block" i18n="@@HYT_events_definition_long">HYT_events_definition_long</p>
+                <p class="body-block" i18n="@@HYT_events_definition_long">Long events definition. Long events definition. Long events definition. Long events definition. Long events definition. Long events definition. Long events definition. Long events definition. Long events definition. Long events definition.</p>
 
             </div>
 
@@ -44,7 +44,7 @@
     <div class="dialog-footer">
 
         <hyt-button (clickFn)="output('goToFinish', null);">
-            <ng-container i18n="@@HYT_finish">HYT_finish</ng-container>
+            <ng-container i18n="@@HYT_finish">Finish</ng-container>
         </hyt-button>
 
     </div>

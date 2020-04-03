@@ -8,7 +8,7 @@
 
                     <hyt-select 
                         [form]="selectForm" formControlName="selectDevice" name="selectDevice"
-                        [options]="devicesOptions" label="Source"
+                        [options]="devicesOptions" i18n-label="@@HYT_source" label="Source"
                         (changeFn)="deviceChanged($event)"
                     >
                     </hyt-select>

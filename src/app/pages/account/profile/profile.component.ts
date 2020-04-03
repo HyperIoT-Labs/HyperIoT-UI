@@ -3,7 +3,6 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { HusersService, HUser } from '@hyperiot/core';
 import { AuthenticationHttpErrorHandlerService } from '../../../services/errorHandler/authentication-http-error-handler.service';
 import { HYTError } from 'src/app/services/errorHandler/models/models';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Router } from '@angular/router';
 
 @Component({
@@ -54,17 +53,17 @@ export class ProfileComponent implements OnInit {
   /**
    * This variable contains the string to display in case of error while trying to update personal information or change password.
    */
-  errMsg = this.i18n('HYT_generic_error');
+  errMsg = $localize`:@@HYT_generic_error:Something went wrong`;
 
  /**
   * This variable contains the string to display when the personal information update is successful.
   */
-  successMsg = this.i18n('HYT_user_updated');
+  successMsg = $localize`:@@HYT_user_updated:Personal information updated correctly`;
 
   /**
    * This variable contains the string to display when the password change is successful.
    */
-  succesMsgPwd = this.i18n('HYT_password_changed');
+  succesMsgPwd = $localize`:@@HYT_password_changed:Password changed correctly`;
 
   // TODO... implement or remove error logic in single fields
   error: any;
@@ -101,7 +100,6 @@ export class ProfileComponent implements OnInit {
     private hUserService: HusersService,
     private fb: FormBuilder,
     private httperrorHandler: AuthenticationHttpErrorHandlerService,
-    private i18n: I18n,
     private router: Router
   ) { }
 

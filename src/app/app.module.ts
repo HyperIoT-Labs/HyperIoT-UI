@@ -1,9 +1,8 @@
 // angular
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule, TRANSLATIONS, LOCALE_ID, TRANSLATIONS_FORMAT, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
+import { NgModule, TRANSLATIONS, LOCALE_ID, TRANSLATIONS_FORMAT, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA, Injectable } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-
 import { CookieService } from 'ngx-cookie-service';
 
 // modules
@@ -13,7 +12,6 @@ import { AuthenticationModule } from './pages/authentication/authentication.modu
 
 // components
 import { AppComponent } from './app.component';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 import { DashboardModule } from './pages/dashboard/dashboard.module';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { ProfileComponent } from './pages/account/profile/profile.component';
@@ -29,7 +27,6 @@ import { MatButtonModule, MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS, MatTabsMo
 // hyperiot
 import { Configuration, ConfigurationParameters, HyperiotClientModule } from '@hyperiot/core';
 import { ComponentsModule } from '@hyperiot/components';
-import { HytConfirmDialogComponent } from '@hyperiot/components';
 import { RouterModule, DefaultUrlSerializer, UrlSerializer, UrlTree } from '@angular/router';
 
 // local
@@ -49,9 +46,11 @@ import { WizardReportModalComponent } from './pages/projects/project-wizard/wiza
 import { RuleErrorModalComponent } from './pages/projects/project-forms/rule-definition/rule-error/rule-error-modal.component';
 import { AddWidgetDialogComponent } from './pages/dashboard/add-widget-dialog/add-widget-dialog.component';
 import { WidgetSettingsDialogComponent } from './pages/dashboard/widget-settings-dialog/widget-settings-dialog.component';
-import { GenericMessageDialogComponent } from './components/modals/generic-message-dialog/generic-message-dialog.component';
 import { AreasViewComponent } from './pages/areas/areas-view/areas-view.component';
 
+import * as PlotlyJS from 'plotly.js/dist/plotly.js';
+import { PlotlyModule } from 'angular-plotly.js';
+PlotlyModule.plotlyjs = PlotlyJS;
 
 export class MyUrlSerializer extends DefaultUrlSerializer implements UrlSerializer {
   /** Converts a `UrlTree` into a url */
@@ -84,14 +83,12 @@ export function apiConfigFactory(): Configuration {
     NotificationbarComponent,
     ConfirmRecordingActionComponent,
     InfoRecordingActionComponent,
-    GenericMessageDialogComponent,
     AreasViewComponent
   ],
   // dynamically created components
   entryComponents: [
     SaveChangesDialogComponent,
     DeleteConfirmDialogComponent,
-    HytConfirmDialogComponent,
     ConfirmRecordingActionComponent,
     InfoRecordingActionComponent,
     WizardDeactivationModalComponent,
@@ -126,16 +123,6 @@ export function apiConfigFactory(): Configuration {
     { provide: UrlSerializer, useClass: MyUrlSerializer },
     CanDeactivateGuard,
     CookieService,
-    I18n,
-    { provide: TRANSLATIONS_FORMAT, useValue: 'xlf' },
-    {
-      provide: TRANSLATIONS,
-      useFactory: (locale) => {
-        locale = locale || 'en-US';
-        return require(`raw-loader!../locale/translations.${locale}.xlf`);
-      },
-      deps: [LOCALE_ID]
-    },
     { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: true } }
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

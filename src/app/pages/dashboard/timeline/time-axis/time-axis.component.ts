@@ -37,7 +37,7 @@ export class TimeAxisComponent implements AfterViewInit {
   /**
    * axis is the div that will be used by d3 to append the timeline svg element
    */
-  @ViewChild('axis', { static: false }) axis: ElementRef;
+  @ViewChild('axis') axis: ElementRef;
 
   /**
    * dataTimeSelectionChanged is uset to emits an event when the user makes a time selection. It emits the timeSelection

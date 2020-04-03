@@ -1,12 +1,12 @@
 import { Component, OnDestroy, ElementRef, ViewChild, Input, Injector, AfterViewInit, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 import { HdevicesService, HDevice, HProject } from '@hyperiot/core';
 
 import { ProjectFormEntity, LoadingStatusEnum } from '../project-form-entity';
-import { I18n } from '@ngx-translate/i18n-polyfill';
-import { Validators } from '@angular/forms';
+
 
 @Component({
   selector: 'hyt-device-form',
@@ -20,21 +20,21 @@ export class DeviceFormComponent extends ProjectFormEntity implements AfterViewI
   showPreloader: boolean;
   divHeight: number;
 
-  @ViewChild('overlayHeight', {static: false}) set content(content: ElementRef) {
-    
-    if(!content){
+  @ViewChild('overlayHeight') set content(content: ElementRef) {
+
+    if (!content) {
 
       this.showPreloader = false;
       return;
 
     } else {
-      
+
       this.showPreloader = true;
       this.overlayHeight = content;
       this.divHeight = this.overlayHeight.nativeElement.clientHeight;
 
     }
-      
+
   }
 
   entity: HDevice = {} as HDevice;
@@ -71,15 +71,15 @@ export class DeviceFormComponent extends ProjectFormEntity implements AfterViewI
   currentProject: HProject;
 
   private routerSubscription: Subscription;
+
   constructor(
     injector: Injector,
-    @ViewChild('form', { static: true }) formView: ElementRef,
     private hDeviceService: HdevicesService,
     private activatedRoute: ActivatedRoute,
-    private cdr: ChangeDetectorRef,
-    private i18n: I18n
+    private cdr: ChangeDetectorRef
   ) {
-    super(injector, i18n, formView);
+    super(injector);
+    this.formTemplateId = 'container-device-form';
     this.longDefinition = this.entitiesService.device.longDefinition;
     this.formTitle = this.entitiesService.device.formTitle;
     this.icon = this.entitiesService.device.icon;
@@ -87,16 +87,18 @@ export class DeviceFormComponent extends ProjectFormEntity implements AfterViewI
 
   ngAfterViewInit(): void {
 
+    super.ngAfterViewInit();
+
     // setTimeout(() => {
 
     //   if(this.showPreloader) {
 
     //     this.divHeight = this.overlayHeight.nativeElement.clientHeight;
-        
+
     //   } 
-      
+
     // }, 0);
-    
+
 
     this.routerSubscription = this.activatedRoute.params.subscribe(params => {
       if (params.deviceId) {
@@ -107,7 +109,7 @@ export class DeviceFormComponent extends ProjectFormEntity implements AfterViewI
       }
       this.cdr.detectChanges();
     });
-    
+
   }
 
   ngOnDestroy() {
@@ -126,13 +128,13 @@ export class DeviceFormComponent extends ProjectFormEntity implements AfterViewI
     this.loadingStatus = LoadingStatusEnum.Loading;
 
     /******* VALUE LOADING OVERLAY *******/
-    
+
     setTimeout(() => {
 
       this.divHeight = this.overlayHeight.nativeElement.clientHeight;
 
     }, 0);
-    
+
     this.cdr.detectChanges();
 
     /******* END VALUE LOADING OVERLAY *******/
@@ -245,7 +247,7 @@ export class DeviceFormComponent extends ProjectFormEntity implements AfterViewI
     if (err.error && err.error.type) {
       switch (err.error.type) {
         case 'it.acsoftware.hyperiot.base.exception.HyperIoTDuplicateEntityException': {
-          this.validationError = [{ message: 'Unavaiable device name', field: 'hdevice-devicename', invalidValue: '' }]; // @I18N@
+          this.validationError = [{ message: $localize`:@@HYT_unavailable_device_name:Unavailable device name`, field: 'hdevice-devicename', invalidValue: '' }];
           console.log(this.validationError);
           this.form.get('hdevice-devicename').setErrors({
             validateInjectedError: {
@@ -256,7 +258,7 @@ export class DeviceFormComponent extends ProjectFormEntity implements AfterViewI
           break;
         }
         case 'it.acsoftware.hyperiot.base.exception.HyperIoTScreenNameAlreadyExistsException': {
-          this.validationError = [{ message: 'Device name already in use', field: 'hdevice-devicename', invalidValue: '' }]; // @I18N@
+          this.validationError = [{ message: $localize`:@@HYT_device_name_already_in_use:Device name already in use`, field: 'hdevice-devicename', invalidValue: '' }];
           this.form.get('hdevice-devicename').setErrors({
             validateInjectedError: {
               valid: false
@@ -281,25 +283,25 @@ export class DeviceFormComponent extends ProjectFormEntity implements AfterViewI
 
   getCustomClass() {
 
-    if(this.showPreloader) {
+    if (this.showPreloader) {
 
-      if(this.divHeight > 353) { /* BIG */
+      if (this.divHeight > 353) { /* BIG */
         return 'loading-logo display-logo big-bg';
       }
-  
-      if(this.divHeight >=  293 && this.divHeight <= 352) { /* MEDIUM */
+
+      if (this.divHeight >= 293 && this.divHeight <= 352) { /* MEDIUM */
         return 'loading-logo display-logo medium-bg';
       }
-  
-      if(this.divHeight >=  233 && this.divHeight <= 292) { /* SMALL */
+
+      if (this.divHeight >= 233 && this.divHeight <= 292) { /* SMALL */
         return 'loading-logo display-logo small-bg';
       }
-  
-      if(this.divHeight >=  182 && this.divHeight <= 232) { /* X-SMALL */
+
+      if (this.divHeight >= 182 && this.divHeight <= 232) { /* X-SMALL */
         return 'loading-logo display-logo x-small-bg';
       }
-  
-      if(this.divHeight < 182 ) { /* X-SMALL */
+
+      if (this.divHeight < 182) { /* X-SMALL */
         return '';
       }
 
@@ -307,7 +309,7 @@ export class DeviceFormComponent extends ProjectFormEntity implements AfterViewI
       return '';
     }
 
-    
+
 
   }
 

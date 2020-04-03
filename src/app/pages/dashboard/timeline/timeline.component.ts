@@ -81,7 +81,7 @@ export class TimelineComponent implements AfterViewInit, OnChanges {
   /**
    * TimeAxis is the instantiated TimeAxisComponent element
    */
-  @ViewChild('timeAxis', { static: false }) timeAxis: TimeAxisComponent;
+  @ViewChild('timeAxis') timeAxis: TimeAxisComponent;
 
   /**
    * dateOutput is used to tell the dashboard the new timeSelection selected by the user

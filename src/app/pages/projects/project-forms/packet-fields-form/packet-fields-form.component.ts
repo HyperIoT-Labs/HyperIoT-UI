@@ -11,7 +11,6 @@ import { Node, HytTreeViewEditableComponent } from '@hyperiot/components/lib/hyt
 import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
 import { UnitConversionService } from 'src/app/services/unit-conversion.service';
 import { HytSelectComponent } from '@hyperiot/components/lib/hyt-select/hyt-select.component';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 
 @Component({
   selector: 'hyt-packet-fields-form',
@@ -21,8 +20,8 @@ import { I18n } from '@ngx-translate/i18n-polyfill';
 })
 export class PacketFieldsFormComponent extends ProjectFormEntity implements OnDestroy {
 
-  @ViewChild('treeViewFields', { static: false }) treeViewFields: HytTreeViewEditableComponent;
-  @ViewChild('measureSelect', { static: false }) measureSelect: HytSelectComponent;
+  @ViewChild('treeViewFields') treeViewFields: HytTreeViewEditableComponent;
+  @ViewChild('measureSelect') measureSelect: HytSelectComponent;
   private routerSubscription: Subscription;
   private activatedRouteSubscription: Subscription;
 
@@ -73,15 +72,14 @@ export class PacketFieldsFormComponent extends ProjectFormEntity implements OnDe
 
   constructor(
     injector: Injector,
-    @ViewChild('form', { static: true }) formView: ElementRef,
     private hPacketService: HpacketsService,
     private unitConversionService: UnitConversionService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private cdr: ChangeDetectorRef,
-    private i18n: I18n
+    private cdr: ChangeDetectorRef
   ) {
-    super(injector, i18n, formView);
+    super(injector);
+    this.formTemplateId = 'container-packet-field';
     this.longDefinition = this.entitiesService.field.longDefinition;
     this.formTitle = this.entitiesService.field.formTitle;
     this.icon = this.entitiesService.field.icon;
@@ -100,7 +98,7 @@ export class PacketFieldsFormComponent extends ProjectFormEntity implements OnDe
       }
     });
     // add empty option to measurement type select
-    this.measureOptions.unshift({ label: '(not specified)', value: '' });
+    this.measureOptions.unshift({ label: $localize`:@@HYT_not_specified:(not specified)`, value: '' });
   }
 
   ngOnDestroy() {
@@ -110,7 +108,7 @@ export class PacketFieldsFormComponent extends ProjectFormEntity implements OnDe
 
   onMeasurementTypeChange(measurementType) {
     const measurementUnit = UnitConversionService.measurements.find((m) => m.type === measurementType);
-    this.unitOptions = [{ label: '(not specified)', value: '' }];
+    this.unitOptions = [{ label: $localize`:@@HYT_not_specified:(not specified)`, value: '' }];
     if (measurementUnit) {
       this.unitOptions.push(...measurementUnit.list
         .map((u) => ({
@@ -249,9 +247,9 @@ export class PacketFieldsFormComponent extends ProjectFormEntity implements OnDe
 
   private openDelete(fieldId: number) {
     const dialogRef = this.dialog.open(DeleteConfirmDialogComponent, {
-      data: { title: 'Delete item?', message: 'This operation cannot be undone.' }
+      data: { title: $localize`:@@HYT_delete_item:Delete item?`, message: $localize`:@@HYT_operation_cannot_be_undone:This operation cannot be undone.` }
     });
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.onClosed.subscribe((result) => {
       if (result === 'delete') {
         if (this.currentField && this.currentField.id === fieldId) {
           this.currentField = null;

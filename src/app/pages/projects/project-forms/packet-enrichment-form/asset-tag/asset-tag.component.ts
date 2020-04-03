@@ -34,7 +34,7 @@ export class AssetTagComponent implements OnInit {
   allTags: AssetTag[];
   tagChoice: AssetTag[] = [];
 
-  @ViewChild('tagInput', { static: false })
+  @ViewChild('tagInput')
   tagInput: ElementRef<HTMLInputElement>;
 
   assetRequest: Subscription;

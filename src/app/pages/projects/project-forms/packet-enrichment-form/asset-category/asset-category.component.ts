@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { MatDialog } from '@angular/material';
 import { HytModalService, TreeNodeCategory } from '@hyperiot/components';
 import { AssetCategory, AssetscategoriesService, HPacket, HProject } from '@hyperiot/core';
 import { Observable, Subscription } from 'rxjs';
@@ -38,7 +37,6 @@ export class AssetCategoryComponent implements OnInit {
 
   constructor(
     private assetCategoriesService: AssetscategoriesService,
-    private dialog: MatDialog,
     private modalService: HytModalService
   ) { }
 

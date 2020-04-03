@@ -1,10 +1,8 @@
 import { Component, OnInit, Injector, ViewChild, ElementRef, ViewEncapsulation } from '@angular/core';
 import { ProjectFormEntity } from '../project-form-entity';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 import { TreeNodeCategory, HytModalService } from '@hyperiot/components';
 import { AssetscategoriesService, AssetCategory } from '@hyperiot/core';
 import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
-import { HytModalConfService } from 'src/app/services/hyt-modal-conf.service';
 import { Router } from '@angular/router';
 import { LoadStatus } from 'src/app/models/loadStatus';
 import { Observable } from 'rxjs';
@@ -32,14 +30,13 @@ export class CategoriesFormComponent extends ProjectFormEntity implements OnInit
 
   constructor(
     injector: Injector,
-    @ViewChild('form', { static: true }) formView: ElementRef,
-    private i18n: I18n,
     private router: Router,
     private assetCategoriesService: AssetscategoriesService,
     private modalService: HytModalService,
   ) {
-    super(injector, i18n, formView);
-    this.formTitle = 'Project Categories';
+    super(injector);
+    this.formTemplateId= 'container-category-form';
+    this.formTitle = $localize`:@@HYT_project_categories:Project Categories`;
     this.hideDelete = true;
     this.showSave = false;
     this.projectId = +this.router.url.split('/')[2];
@@ -98,7 +95,7 @@ export class CategoriesFormComponent extends ProjectFormEntity implements OnInit
     return new Observable(sub => {
       const dialogRef = this.modalService.open(
         DeleteConfirmDialogComponent,
-        { title: 'Delete item?', message: 'This operation cannot be undone.' }
+        { title: $localize`:@@HYT_delete_item:Delete item?`, message: $localize`:@@HYT_operation_cannot_be_undone:This operation cannot be undone.`}
       );
       dialogRef.onClosed.subscribe((result) => {
         if (result === 'delete') {

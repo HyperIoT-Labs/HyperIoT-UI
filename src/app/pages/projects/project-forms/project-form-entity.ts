@@ -2,11 +2,10 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 
 import { Observable } from 'rxjs';
 
-import { MatRadioChange, MatDialog } from '@angular/material';
-import { ElementRef, ViewChild, OnInit, Output, EventEmitter, Injector } from '@angular/core';
+import { MatRadioChange } from '@angular/material';
+import { OnInit, Output, EventEmitter, Injector, AfterViewInit } from '@angular/core';
 import { SummaryList } from '../project-detail/generic-summary-list/generic-summary-list.component';
 import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 import { EntitiesService } from 'src/app/services/entities/entities.service';
 import { HytModalService } from '@hyperiot/components';
 
@@ -16,8 +15,7 @@ export enum LoadingStatusEnum {
     Saving,
     Error
 }
-
-export abstract class ProjectFormEntity implements OnInit {
+export abstract class ProjectFormEntity implements OnInit, AfterViewInit {
     @Output() entityEvent = new EventEmitter<any>();
 
     entity: any = {};
@@ -34,6 +32,7 @@ export abstract class ProjectFormEntity implements OnInit {
     hideDelete = false;
     showSave = true;
     showCancel = false;
+    formTemplateId = '';
     longDefinition = 'entity long definition';
     icon = '';
     summaryList: SummaryList;
@@ -44,28 +43,27 @@ export abstract class ProjectFormEntity implements OnInit {
     unsavedChangesCallback;
 
     protected formBuilder: FormBuilder;
-    protected dialog: MatDialog;
+    protected dialog: HytModalService;
     protected entitiesService: EntitiesService;
-    protected hytDialogService: HytModalService;
 
     constructor(
-        injector: Injector,
-        private i18nD: I18n,    // TODO https://github.com/ngx-translate/i18n-polyfill/issues/30
-        @ViewChild('form', { static: true }) private formView: ElementRef
+        injector: Injector
     ) {
         this.formBuilder = injector.get(FormBuilder);
-        this.dialog = injector.get(MatDialog);
         this.entitiesService = injector.get(EntitiesService);
-        this.hytDialogService = injector.get(HytModalService);
-        this.i18nD = injector.get(I18n);
+        this.dialog = injector.get(HytModalService);
         this.form = this.formBuilder.group({});
     }
 
     ngOnInit() {
         this.entity = { ...this.newEntity() };
         //this.serialize();
-        // build hint messages
-        this.buildHintMessages();
+    }
+
+    ngAfterViewInit() {
+        setTimeout(() => {
+            this.buildHintMessages();
+        }, 0);
     }
 
     canDeactivate(): Observable<any> | boolean {
@@ -172,7 +170,7 @@ export abstract class ProjectFormEntity implements OnInit {
 
     resetForm() {
         this.originalValue = this.serialize();
-        this.buildHintMessages();
+        // this.buildHintMessages();
     }
 
     private serialize() {
@@ -189,8 +187,8 @@ export abstract class ProjectFormEntity implements OnInit {
 
     private buildHintMessages() {
         const hintElements =
-            (this.formView.nativeElement as Element)
-                .querySelectorAll('[hintMessage]');
+            // (this.formView.nativeElement as Element)
+            document.querySelectorAll(`#${this.formTemplateId} [hintMessage]`);
         hintElements.forEach((el: Element) => {
             const message = el.getAttribute('hintMessage');
             const tmp = el.querySelector('.hyt-input,mat-select');
@@ -233,9 +231,8 @@ export abstract class ProjectFormEntity implements OnInit {
     }
 
     openDeleteDialog(successCallback?: any, errorCallback?: any) {
-        const dialogRef = this.hytDialogService.open(DeleteConfirmDialogComponent, {
-            data: { title: this.i18nD('HYT_delete_item_question'), message: this.i18nD('HYT_operation_can_not_be_undone') }
-            // TODO This translation does not work
+        const dialogRef = this.dialog.open(DeleteConfirmDialogComponent, {
+            data: { title: $localize`:@@HYT_delete_item_question:Do you really want to delete this item?`, message: $localize`:@@HYT_operation_can_not_be_undone:This operation can not be undone`}
         });
         dialogRef.onClosed.subscribe((result) => {
             if (result === 'delete') {

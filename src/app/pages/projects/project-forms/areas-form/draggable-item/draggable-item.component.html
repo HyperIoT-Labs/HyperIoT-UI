@@ -1,5 +1,5 @@
 <div class="item"
-    title="HYT_area_draggable_title"
+    title="Move {{itemData.device ? itemData.device.deviceName : itemData.name}}"
     i18n-title="@@HYT_area_draggable_title"
     [ngStyle]="style"
     cdkDrag
@@ -12,13 +12,13 @@
     (cdkDragReleased)="onDragReleased($event)">
 
     <button class="remove-button"
-        title="HYT_area_draggable_remove"
+        title="Remove {{itemData.device ? itemData.device.deviceName : itemData.name}}"
         i18n-title="@@HYT_area_draggable_remove"
         (mousedown)="$event.stopPropagation()"
         (click)="onRemoveButtonClick($event)"
         [ngStyle]="{ display: editMode ? '' : 'none' }">X</button>
     <div class="title" [ngClass]="{ 'area-title': !itemData.device }"
-        title="HYT_area_draggable_open"
+        title="Open {{itemData.device ? itemData.device.deviceName : itemData.name}}"
         i18n-title="@@HYT_area_draggable_open"
         (mousedown)="$event.stopPropagation()"
         (click)="onOpenButtonClick($event)">

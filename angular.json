@@ -13,6 +13,11 @@
       "root": "",
       "sourceRoot": "src",
       "prefix": "hyt",
+      "i18n": {
+        "locales": {
+          "it": "src/locale/translations.it.xlf"
+        }
+      },
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -22,7 +27,7 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
-            "aot": false,
+            "aot": true,
             "assets": [
               "src/favicon.ico",
               "src/assets",
@@ -44,74 +49,36 @@
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
               "budgets": [{
-                "type": "initial",
-                "maximumWarning": "8mb",
-                "maximumError": "15mb"
-              }],
-              "i18nFile": "src/locale/translations.en-US.xlf",
-              "i18nFormat": "xlf",
-              "i18nLocale": "en-US",
-              "i18nMissingTranslation": "error",
+                  "type": "initial",
+                  "maximumWarning": "8mb",
+                  "maximumError": "15mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "serviceWorker": true,
               "ngswConfigPath": "ngsw-config.json"
             },
-            "production-it": {
-              "fileReplacements": [{
-                "replace": "src/environments/environment.ts",
-                "with": "src/environments/environment.prod.ts"
-              }],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "aot": true,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true
-            },
             "it": {
-              "aot": true,
-              "outputPath": "dist/hyperiot-it/",
-              "i18nFile": "src/locale/translations.it-IT.xlf",
-              "i18nFormat": "xlf",
-              "i18nLocale": "it-IT",
-              "i18nMissingTranslation": "ignore"
-            },
-            "production-en": {
-              "fileReplacements": [{
-                "replace": "src/environments/environment.ts",
-                "with": "src/environments/environment.prod.ts"
-              }],
-              "optimization": true,
-              "outputHashing": "all",
+              "localize": ["it"],
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
-              "aot": true,
-              "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true
-            },
-            "en": {
-              "aot": true,
-              "outputPath": "dist/hyperiot-en/",
-              "i18nFile": "src/locale/translations.en-US.xlf",
-              "i18nFormat": "xlf",
-              "i18nLocale": "en-US",
-              "i18nMissingTranslation": "error"
             }
           }
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "hyperiot:build:en",
+            "browserTarget": "hyperiot:build",
             "proxyConfig": "proxy.config.json"
           },
           "configurations": {
@@ -120,9 +87,6 @@
             },
             "it": {
               "browserTarget": "hyperiot:build:it"
-            },
-            "en": {
-              "browserTarget": "hyperiot:build:en"
             }
           }
         },
@@ -178,5 +142,8 @@
       }
     }
   },
-  "defaultProject": "hyperiot"
+  "defaultProject": "hyperiot",
+  "cli": {
+    "analytics": false
+  }
 }

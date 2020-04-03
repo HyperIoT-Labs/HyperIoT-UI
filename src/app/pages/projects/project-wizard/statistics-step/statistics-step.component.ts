@@ -23,35 +23,35 @@ export class StatisticsStepComponent implements OnInit {
   errors: HYTError[] = [];
 
   algorithmOptions: SelectOption[] = [
-    { value: '0', label: 'Average' },
-    { value: '1', label: 'Media 2 fields' },
-    { value: '3', label: 'Media 3 fields' },
-    { value: '4', label: 'Predective' },
-    { value: '5', label: 'Regression' },
-    { value: '6', label: 'String' },
-    { value: '7', label: 'Variance' }
+    { value: '0', label: $localize`:@@HYT_average:Average` },
+    { value: '1', label: $localize`:@@HYT_media_2_fields:Media 2 fields` },
+    { value: '3', label: $localize`:@@HYT_media_3_fields:Media 3 fields` },
+    { value: '4', label: $localize`:@@HYT_predictive:Predictive` },
+    { value: '5', label: $localize`:@@HYT_regression:Regression` },
+    { value: '6', label: $localize`:@@HYT_string:String` },
+    { value: '7', label: $localize`:@@HYT_variance:Variance` }
   ];
 
   timeRangeOptions: SelectOption[] = [
-    { value: '0', label: 'Hours' },
-    { value: '1', label: 'Daily' },
-    { value: '3', label: 'Weekly' },
-    { value: '4', label: 'Monthly' },
-    { value: '5', label: 'Quarterly' },
-    { value: '6', label: 'Four monthly' },
-    { value: '7', label: 'Half yearly' },
-    { value: '8', label: 'Annual' }
+    { value: '0', label: $localize`:@@HYT_hourly:Hourly` },
+    { value: '1', label: $localize`:@@HYT_daily:Daily` },
+    { value: '3', label: $localize`:@@HYT_weekly:Weekly` },
+    { value: '4', label: $localize`:@@HYT_monthly:Monthly` },
+    { value: '5', label: $localize`:@@HYT_quarterly:Quarterly` },
+    { value: '6', label: $localize`:@@HYT_four_monthly:Four monthly` },
+    { value: '7', label: $localize`:@@HYT_half_yearly:Half yearly` },
+    { value: '8', label: $localize`:@@HYT_annual:Annual` }
   ];
 
   statisticsFields: SelectOption[] = [
-    { value: 'Temperature', label: 'Temperature' },
-    { value: 'Humidity', label: 'Humidity' }
+    { value: 'Temperature', label: $localize`:@@HYT_temperature:Temperature` },
+    { value: 'Humidity', label: $localize`:@@HYT_humidity:Humidity` }
   ];
 
   enrichmentRules: SelectOption[] = [
-    { value: JSON.stringify({ actionName: 'AddCategoryRuleAction', ruleId: 0, categoryIds: null }), label: 'Categories' },
-    { value: JSON.stringify({ actionName: 'AddTagRuleAction', ruleId: 0, tagIds: null }), label: 'Tags' },
-    { value: JSON.stringify({ actionName: 'ValidateHPacketRuleAction', ruleId: 0 }), label: 'Packet' }// TODO actionName is wrong
+    { value: JSON.stringify({ actionName: 'AddCategoryRuleAction', ruleId: 0, categoryIds: null }), label: $localize`:@@HYT_categories:Categories` },
+    { value: JSON.stringify({ actionName: 'AddTagRuleAction', ruleId: 0, tagIds: null }), label: $localize`:@@HYT_tags:Tags` },
+    { value: JSON.stringify({ actionName: 'ValidateHPacketRuleAction', ruleId: 0 }), label: $localize`:@@HYT_packet:Packet` }// TODO actionName is wrong
   ];
 
   enrichmentType = '';
@@ -67,7 +67,7 @@ export class StatisticsStepComponent implements OnInit {
   ngOnInit() {
     this.statisticsForm = this.fb.group({});
     this.rulesService.findAllRuleActions('ENRICHMENT').subscribe(
-      res => { }// TODO this.enrichmentRules = res
+      res => { } // TODO this.enrichmentRules = res
     );
   }
 

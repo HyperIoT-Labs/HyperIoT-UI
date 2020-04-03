@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { HytModalService, SelectOption } from '@hyperiot/components';
 import { Option } from '@hyperiot/components/lib/hyt-radio-button/hyt-radio-button.component';
 import { HPacket, HPacketField, HpacketsService } from '@hyperiot/core';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 import { RuleErrorModalComponent } from './rule-error/rule-error-modal.component';
 
 interface RuleForm {
@@ -63,23 +62,23 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
    * allConditionOptions stores the information of the condition option.
    */
   allConditionOptions = [
-    { value: '>', label: this.i18n('HYT_(>)_greater'), type: ['OBJECT', 'INTEGER', 'DOUBLE', 'FLOAT', 'DATE'] },
-    { value: '>=', label: this.i18n('HYT_(>=)_greater_equal'), type: ['OBJECT', 'INTEGER', 'DOUBLE', 'FLOAT', 'DATE'] },
-    { value: '<', label: this.i18n('HYT_(<)_lower'), type: ['OBJECT', 'INTEGER', 'DOUBLE', 'FLOAT', 'DATE'] },
-    { value: '<=', label: this.i18n('HYT_(<=)_lower_equal'), type: ['OBJECT', 'INTEGER', 'DOUBLE', 'FLOAT', 'DATE'] },
-    { value: '==', label: this.i18n('HYT_(==)_equal'), type: ['OBJECT', 'INTEGER', 'DOUBLE', 'FLOAT', 'DATE', 'TEXT'] },
-    { value: '!=', label: this.i18n('HYT_(!=)_different'), type: ['OBJECT', 'INTEGER', 'DOUBLE', 'FLOAT', 'DATE', 'TEXT'] },
-    { value: '()', label: this.i18n('HYT_(())_like'), type: ['OBJECT', 'INTEGER', 'DOUBLE', 'FLOAT', 'BOOLEAN', 'DATE'] },
-    { value: 'isTrue', label: this.i18n('HYT_is_true'), type: ['OBJECT', 'BOOLEAN'] },
-    { value: 'isFalse', label: this.i18n('HYT_is_false'), type: ['OBJECT', 'BOOLEAN'] }
+    { value: '>', label:  $localize`:@@HYT_(>)_greater:(>) Greater`, type: ['OBJECT', 'INTEGER', 'DOUBLE', 'FLOAT', 'DATE'] },
+    { value: '>=', label: $localize`:@@HYT_(>=)_greater_equal:(>=) Greater/Equal`, type: ['OBJECT', 'INTEGER', 'DOUBLE', 'FLOAT', 'DATE'] },
+    { value: '<', label: $localize`:@@HYT_(<)_lower:(<) Lower`, type: ['OBJECT', 'INTEGER', 'DOUBLE', 'FLOAT', 'DATE'] },
+    { value: '<=', label: $localize`:@@HYT_(<=)_lower_equal:(<=) Lower/Equal`, type: ['OBJECT', 'INTEGER', 'DOUBLE', 'FLOAT', 'DATE'] },
+    { value: '==', label: $localize`:@@HYT_(==)_equal:(=) Equal`, type: ['OBJECT', 'INTEGER', 'DOUBLE', 'FLOAT', 'DATE', 'TEXT'] },
+    { value: '!=', label: $localize`:@@HYT_(!=)_different:(!=) Different`, type: ['OBJECT', 'INTEGER', 'DOUBLE', 'FLOAT', 'DATE', 'TEXT'] },
+    { value: '()', label: $localize`:@@HYT_(())_like:(()) Like`, type: ['OBJECT', 'INTEGER', 'DOUBLE', 'FLOAT', 'BOOLEAN', 'DATE'] },
+    { value: 'isTrue', label: $localize`:@@HYT_is_true:Is true`, type: ['OBJECT', 'BOOLEAN'] },
+    { value: 'isFalse', label: $localize`:@@HYT_is_false:Is false`, type: ['OBJECT', 'BOOLEAN'] }
   ];
 
   /**
    * joinOptions stores the information of the join option.
    */
   joinOptions: Option[] = [
-    { value: ' AND ', label: this.i18n('HYT_AND'), checked: false },
-    { value: ' OR ', label: this.i18n('HYT_OR'), checked: false }
+    { value: ' AND ', label: $localize`:@@HYT_and:AND`, checked: false },
+    { value: ' OR ', label: $localize`:@@HYT_or:OR`, checked: false }
   ];
 
   /**
@@ -92,14 +91,13 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
   /**
    * class constructor
    * @param fb FormBuilder service instance
-   * @param wizardService service needed to handle fields
-   * @param i18n service for translations
+   * @param hytModalService service to use modal
+   * @param hPacketsService service for hPackets
    */
   constructor(
     public fb: FormBuilder,
     private hytModalService: HytModalService,
     private hPacketsService: HpacketsService,
-    private i18n: I18n
   ) { }
 
   ngOnInit() {

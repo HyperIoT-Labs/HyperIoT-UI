@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { SelectableText } from './selectableText';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 
 @Component({
   selector: 'hyt-event-mail',
@@ -15,15 +14,14 @@ export class EventMailComponent implements OnInit {
   private originalFormsValues = '';
 
   placeHolders: SelectableText[] = [
-    { placeholder: '[$NAME_DEVICE$]', description: this.i18n('HYT_name_of_device') },
-    { placeholder: '[$NAME_PACKET$]', description: this.i18n('HYT_name_of_packet') },
-    { placeholder: '[$NAME_FIELD$]', description: this.i18n('HYT_name_of_field') },
-    { placeholder: '[$DATA_EVENT$]', description: this.i18n('HYT_name_of_event_mail') }
+    { placeholder: '[$NAME_DEVICE$]', description: $localize`:@@HYT_name_of_device:The name of the device` },
+    { placeholder: '[$NAME_PACKET$]', description: $localize`:@@HYT_name_of_packet:The name of the packet` },
+    { placeholder: '[$NAME_FIELD$]', description: $localize`:@@HYT_name_of_field:The name of the field` },
+    { placeholder: '[$DATA_EVENT$]', description: $localize`:@@HYT_name_of_event_mail:The name of the event mail` }
   ];
 
   constructor(
-    private fb: FormBuilder,
-    private i18n: I18n
+    private fb: FormBuilder
   ) { }
 
   buildMail(): any {

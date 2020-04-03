@@ -12,9 +12,8 @@
 
     <div id="container-loading-tags" *ngIf="tagStatus == 0" class="col-12"> <!-- tagStatus==0 -->
       
-      <span class="text-loading">Loading Tags</span>
+      <span class="text-loading" i18n="@@HYT_loading_tags">Loading Tags</span>
       <div class="loader"></div>
-      <!--@I18N@-->
 
     </div>
 
@@ -28,25 +27,23 @@
 
             <div id="container-filter-tags" class="col-6">
 
-              <hyt-input-text [form]="filteringForm" formControlName="textFilter" name="textFilter" placeholder="Search"
+              <hyt-input-text [form]="filteringForm" formControlName="textFilter" name="textFilter" i18n-placeholder="@@HYT_search" placeholder="Search"
                 (keyup)="onChangeInputSearch()"></hyt-input-text>
-              <!--@I18N-->
 
             </div> <!-- END COL 1 -->
 
             <div id="container-sort-tags" class="col-6">
 
-              <span id="sort-text">Sort by: </span>
-              <!--@I18N-->
+              <span id="sort-text" i18n="@@HYT_sort_by">Sort by: </span>
               <hyt-select 
                 [form]="filteringForm" 
-                [label]="'Select a sort type'" 
+                i18n-label="@@HYT_select_sort_type"
+                label="Select a sort type" 
                 formControlName="sort" 
                 name="sort"
                 (changeFn)="onChangeSelectSort()" 
                 [options]="sortOptions"
               ></hyt-select>
-              <!--@I18N-->
 
             </div> <!-- END COL 2 -->
 
@@ -57,10 +54,13 @@
       </div>
 
       <div id="tags-resume" class="row">
-        <div class="col-12">
+        <!-- <div class="col-12" i18n="@@HYT_showing_tags_of">
+          Showing {filteredTags.length, plural, =0 {{{filteredTags.length}} tags} =1 {{{filteredTags.length}} tag} other {{{filteredTags.length}} tags}} of {{allTags.length}}
+        </div> -->
+        <div class="col-12" >
           Showing {{filteredTags.length}} tags of {{allTags.length}}
-          <!--@I18N@-->
         </div>
+      <!-- @@i18n -->
       </div>
 
       <div id="container-add-tags" class="row">
@@ -70,13 +70,12 @@
           <hyt-button 
             mat-mini-fab 
             (click)="addTagModal()"
-            [color]="'hyt-base-default-white'"
-          >
-            Add Tag 
-            <span class="hyt-icon icon-hyt_plusC"></span>
+            [color]="'hyt-base-default-white'">
+  
+              <ng-container i18n="@@HYT_add_tag">Add Tag </ng-container>
+              <span class="hyt-icon icon-hyt_plusC"></span>
 
           </hyt-button>
-          <!--@I18N@-->
 
         </div>
 
@@ -85,13 +84,12 @@
       <div id="tag-box" class="row">
 
         <div id="no-tags-found" class="col-12" *ngIf="filteredTags.length == 0"> 
-          <span>No tags found, create one!!</span>
-          <!--@I18N@-->
+          <span i18n="@@HYT_no_tags_found">No tags found, create one!</span>
         </div>
 
         <div id="tags-container" class="col-12" *ngIf="filteredTags.length > 0">
 
-          <p id="subtitle-tags">List of Tags</p> <!-- @I18N@ -->
+          <p id="subtitle-tags" i18n="@@HYT_list_tags">List of Tags</p>
           <hyt-tag-list>
             <hyt-tag *ngFor="let tag of filteredTags" [selectable]="true" [selected]="true" [removable]="true"
               [editable]="true" (removed)="delete(tag)" (edited)="editTagModal(tag)" [value]="tag.name">
@@ -106,9 +104,7 @@
 
     <div id="container-error-tags" *ngIf="tagStatus == -1" class="col-12"> <!-- tagStatus==-1 -->
 
-      <span class="text-error">Error loading tags data</span>
-      <!--@I18N@-->
-
+      <span class="text-error" i18n="@@HYT_error_loading_tags_data">Error loading tags data</span>
     </div>
 
   </div>

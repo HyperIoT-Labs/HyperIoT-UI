@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angu
 import { Router } from '@angular/router';
 import { WidgetsLayoutComponent } from '../widgets-layout/widgets-layout.component';
 import { Subject } from 'rxjs';
-import { HytModalConfService } from 'src/app/services/hyt-modal-conf.service';
 import { Dashboard } from '@hyperiot/core';
 
 @Component({
@@ -11,7 +10,7 @@ import { Dashboard } from '@hyperiot/core';
   styleUrls: ['./dashboard-view.component.css']
 })
 export class DashboardViewComponent implements OnInit {
-  @ViewChild(WidgetsLayoutComponent, { static: false })
+  @ViewChild(WidgetsLayoutComponent)
   dashboardLayout: WidgetsLayoutComponent;
 
   @Input() dashboard: Dashboard;
@@ -26,8 +25,7 @@ export class DashboardViewComponent implements OnInit {
   protected ngUnsubscribe: Subject<void> = new Subject<void>();
 
   constructor(
-    private router: Router,
-    private hytModalService: HytModalConfService
+    private router: Router
   ) { }
 
   ngOnInit() { }

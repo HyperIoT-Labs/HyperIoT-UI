@@ -2,12 +2,12 @@
     [ngSwitch]="dialogDataState">
 
     <div *ngSwitchCase="0">
-        <header i18n="@@HYT_widget_settings_title">HYT_widget_settings_title</header>
+        <header i18n="@@HYT_widget_settings_title">Widget Settings</header>
         <div class="loader"></div>
     </div>
 
     <div *ngSwitchCase="1">
-        <header i18n="@@HYT_widget_settings_title">HYT_widget_settings_title</header>
+        <header i18n="@@HYT_widget_settings_title">Widget Settings</header>
 
         <form class="content flex-grow-1" #settingsForm="ngForm">
 
@@ -15,13 +15,13 @@
                 <div class="d-flex flex-row">
                     <div class="mt-4 mx-2 d-flex flex-column align-items-stretch">
                         <hyt-input-template name="name" id="name" type="text"
-                            i18n-placeholder="@@HYT_name" placeholder="HYT_name"
+                            i18n-placeholder="@@HYT_name" placeholder="Name"
                             [(ngModel)]="widgetName" #name="ngModel" [isRequired]="true" required
                             pattern="[A-Za-z0-9 ]*"></hyt-input-template>
                     </div>
                     <div class="mt-4 mx-2 d-flex flex-column align-items-stretch">
                         <hyt-input-template type="text" disabled [isDisabled]="true"
-                            i18n-placeholder="@@HYT_type" placeholder="HYT_type"
+                            i18n-placeholder="@@HYT_type" placeholder="Type"
                             fieldValue="{{widget.type}}"></hyt-input-template>
                     </div>
                 </div>
@@ -78,20 +78,20 @@
         <footer class="d-flex flex-row align-items-center justify-content-end">
             <hyt-button class="button-confirm" [color]="'hyt-base-default-white'" (click)="confirm()" [isDisabled]="settingsForm.invalid">
                 <mat-icon>check</mat-icon>
-                <span i18n="@@HYT_apply">HYT_apply</span>
+                <span i18n="@@HYT_apply">Apply</span>
             </hyt-button>
             <hyt-button class="button-close" [color]="'hyt-base-default-white'" (click)="closeModal($event)">
                 <mat-icon>close</mat-icon>
-                <span i18n="@@HYT_cancel">HYT_cancel</span>
+                <span i18n="@@HYT_cancel">Cancel</span>
             </hyt-button>
         </footer>
 
     </div>
 
     <div *ngSwitchCase="-1">
-        <header i18n="@@HYT_widget_settings_title">HYT_widget_settings_title</header>
+        <header i18n="@@HYT_widget_settings_title">Widget Settings</header>
         <div class="mt-5 d-flex flex-column align-items-center justify-content-center">
-            <h2 i18n="@@HYT_error_occurred_long">HYT_error_occurred_long</h2>
+            <h2 i18n="@@HYT_error_occurred_long">An error has occurred, contact the administrator!</h2>
         </div>
     </div>
 

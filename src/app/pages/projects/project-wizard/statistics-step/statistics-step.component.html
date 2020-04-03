@@ -11,6 +11,7 @@
             formControlName="statisticsName" 
             name="statisticsName"
             [isRequired]="true" 
+            i18n-placeholder="@@HYT_name"
             placeholder="Name">
           </hyt-input-text>
 
@@ -23,7 +24,8 @@
             [options]="algorithmOptions" 
             formControlName="statisticsAlgorithm"
             name="statisticsAlgorithm" 
-            [isRequired]="true" 
+            [isRequired]="true"
+            i18n-label="@@HYT_algorithm" 
             label="Algorithm">
           </hyt-select>
 
@@ -41,6 +43,7 @@
             formControlName="statisticsInputFields" 
             name="statisticsInputFields" 
             [isRequired]="true" 
+            i18n-label="@@HYT_fields"
             label="Fields">
           </hyt-select>
 
@@ -48,7 +51,7 @@
         <div id="fstat-col-trange" class="col-6">
 
           <hyt-select [form]="statisticsForm" [options]="timeRangeOptions" formControlName="statisticsTimeRange"
-            name="statisticsTimeRange" [isRequired]="true" label="Time range">
+            name="statisticsTimeRange" [isRequired]="true" i18n-label="@@HYT_time_range" label="Time range">
           </hyt-select>
 
         </div>
@@ -70,6 +73,7 @@
             formControlName="statisticsSourceData" 
             name="statisticsSourceData" 
             [isRequired]="true" 
+            i18n-label="@@HYT_source_data"
             label="Source Data">
           </hyt-select>
 
@@ -110,19 +114,19 @@
 
           <div class="container-form-field">
             <hyt-input-text [form]="statisticsForm" formControlName="statisticsName" name="statisticsName"
-              [isRequired]="true" placeholder="Name">
+              [isRequired]="true" i18n-placeholder="@@HYT_name" placeholder="Name">
             </hyt-input-text>
           </div> <!-- Field Name --
 
           <div class="container-form-field">
             <hyt-select [form]="statisticsForm" [options]="algorithmOptions" formControlName="statisticsAlgorithm"
-              name="statisticsAlgorithm" [isRequired]="true" label="Algorithm">
+              name="statisticsAlgorithm" [isRequired]="true" i18n-label="@@HYT_algorithm" label="Algorithm">
             </hyt-select> <!-- Field Algorithm --
           </div>
 
           <div class="container-form-field">
             <hyt-text-area [form]="statisticsForm" formControlName="statisticsInputFields" name="statisticsInputFields"
-              placeholder="Description">
+             i18n-placeholder="@@HYT_description" placeholder="Description">
             </hyt-text-area> <!-- Field Field --
           </div>
 
@@ -132,19 +136,19 @@
 
           <div class="container-form-field">
             <hyt-input-text [form]="statisticsForm" formControlName="statisticsPacket" name="statisticsPacket"
-              placeholder="Packet">
+             i18n-placeholder="@@HYT_packet" placeholder="Packet">
             </hyt-input-text> <!-- Field Packet --
           </div>
 
           <div class="container-form-field">
             <hyt-select [form]="statisticsForm" [options]="enrichmentRules" (changeFn)="enrichmentTypeChanged($event)"
-              formControlName="statisticsSourceData" name="statisticsSourceData" [isRequired]="true" label="Source Data">
+              formControlName="statisticsSourceData" name="statisticsSourceData" [isRequired]="true" i18n-label="@@HYT_source_data" label="Source Data">
             </hyt-select> <!-- Field Sourde Data --
           </div>
 
           <div class="container-form-field">
             <hyt-select [form]="statisticsForm" [options]="timeRangeOptions" formControlName="statisticsTimeRange"
-              name="statisticsTimeRange" [isRequired]="true" label="Time range">
+              name="statisticsTimeRange" [isRequired]="true" i18n-label="@@HYT_time_range" label="Time range">
             </hyt-select> <!-- Field Time Range --
           </div>
 

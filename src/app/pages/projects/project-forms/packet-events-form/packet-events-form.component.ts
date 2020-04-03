@@ -9,7 +9,6 @@ import { RuleDefinitionComponent } from '../rule-definition/rule-definition.comp
 import { EventMailComponent } from './event-mail/event-mail.component';
 import { Option } from '@hyperiot/components';
 import { SummaryListItem } from '../../project-detail/generic-summary-list/generic-summary-list.component';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 
 @Component({
   selector: 'hyt-packet-events-form',
@@ -36,27 +35,26 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
   packet: HPacket = {} as HPacket;
   project: HProject = {} as HProject;
 
-  @ViewChild('eventDef', { static: false })
+  @ViewChild('eventDef')
   ruleDefinitionComponent: RuleDefinitionComponent;
 
-  @ViewChild('eventMail', { static: false })
+  @ViewChild('eventMail')
   eventMailComponent: EventMailComponent;
 
   outputOptions: Option[] = [
-    { value: 'events.SendMailAction', label: 'SEND E-MAIL', checked: true } // TODO i18n
-    // { value: '', label: 'START STATISTIC' }
+    { value: 'events.SendMailAction', label: $localize`:@@HYT_send_email:SEND E-MAIL`, checked: true }
+    // { value: '', label: $localize`:@@HYT_start_statistic:START STATISTIC` }
   ];
 
   constructor(
     injector: Injector,
-    @ViewChild('form', { static: true }) formView: ElementRef,
     private hPacketService: HpacketsService,
     private rulesService: RulesService,
     private activatedRoute: ActivatedRoute,
-    private cdr: ChangeDetectorRef,
-    private i18n: I18n
+    private cdr: ChangeDetectorRef
   ) {
-    super(injector, i18n, formView);
+    super(injector);
+    this.formTemplateId = 'container-events';
     this.longDefinition = this.entitiesService.event.longDefinition;
     this.formTitle = this.entitiesService.event.formTitle;
     this.icon = this.entitiesService.event.icon;
@@ -226,7 +224,7 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
     if (err.error && err.error.type) {
       switch (err.error.type) {
         case 'it.acsoftware.hyperiot.base.exception.HyperIoTDuplicateEntityException': {
-          this.validationError = [{ "message": this.i18n('HYT_unavaiable_event_name'), "field": 'rule-name', "invalidValue": '' }];
+          this.validationError = [{ "message": $localize`:@@HYT_unavailable_event_name:Unavailable event name`, "field": 'rule-name', "invalidValue": '' }];
           this.form.get('rule-name').setErrors({
             validateInjectedError: {
               valid: false

@@ -7,7 +7,6 @@ import { HPacket, HpacketsService, HDevice } from '@hyperiot/core';
 import { Option } from '@hyperiot/components';
 
 import { ProjectFormEntity, LoadingStatusEnum } from '../project-form-entity';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 
 @Component({
   selector: 'hyt-packet-form',
@@ -21,21 +20,21 @@ export class PacketFormComponent extends ProjectFormEntity implements AfterViewI
   showPreloader: boolean;
   divHeight: number;
 
-  @ViewChild('overlayHeight', {static: false}) set content(content: ElementRef) {
-    
-    if(!content){
-      
+  @ViewChild('overlayHeight') set content(content: ElementRef) {
+
+    if (!content) {
+
       this.showPreloader = false;
       return;
 
     } else {
-      
+
       this.showPreloader = true;
       this.overlayHeight = content;
       this.divHeight = this.overlayHeight.nativeElement.clientHeight;
 
     }
-      
+
   }
 
   entity: HPacket = {} as HPacket;
@@ -95,13 +94,12 @@ export class PacketFormComponent extends ProjectFormEntity implements AfterViewI
 
   constructor(
     injector: Injector,
-    @ViewChild('form', { static: true }) formView: ElementRef,
     private hPacketService: HpacketsService,
     private activatedRoute: ActivatedRoute,
-    private cdr: ChangeDetectorRef,
-    private i18n: I18n
+    private cdr: ChangeDetectorRef
   ) {
-    super(injector, i18n, formView);
+    super(injector);
+    this.formTemplateId = 'container-packet-form';
     this.longDefinition = this.entitiesService.packet.longDefinition;
     this.formTitle = this.entitiesService.packet.formTitle;
     this.icon = this.entitiesService.packet.icon;
@@ -109,6 +107,7 @@ export class PacketFormComponent extends ProjectFormEntity implements AfterViewI
 
   ngAfterViewInit(): void {
 
+    super.ngAfterViewInit();
     this.routerSubscription = this.activatedRoute.params.subscribe(params => {
       if (params.packetId) {
         this.id = params.packetId;
@@ -137,13 +136,13 @@ export class PacketFormComponent extends ProjectFormEntity implements AfterViewI
     this.loadingStatus = LoadingStatusEnum.Loading;
 
     /******* VALUE LOADING OVERLAY *******/
-    
+
     setTimeout(() => {
 
       this.divHeight = this.overlayHeight.nativeElement.clientHeight;
 
     }, 0);
-    
+
     this.cdr.detectChanges();
 
     /******* END VALUE LOADING OVERLAY *******/
@@ -223,8 +222,8 @@ export class PacketFormComponent extends ProjectFormEntity implements AfterViewI
         event: 'entity:delete',
         exitRoute: 'project'
         // exitRoute: [
-          //'/projects', this.entity.device.project.id,
-          // { outlets: { projectDetails: ['device', this.entity.device.id] } }
+        //'/projects', this.entity.device.project.id,
+        // { outlets: { projectDetails: ['device', this.entity.device.id] } }
         // ]
       });
       this.entityEvent.emit({ event: 'treeview:refresh' });
@@ -240,7 +239,7 @@ export class PacketFormComponent extends ProjectFormEntity implements AfterViewI
     if (err.error && err.error.type) {
       switch (err.error.type) {
         case 'it.acsoftware.hyperiot.base.exception.HyperIoTDuplicateEntityException': {
-          this.validationError = [{ message: 'Unavaiable packet name', field: 'hpacket-name', invalidValue: '' }]; // @I18N@
+          this.validationError = [{ message: $localize`:@@HYT_unavailable_packet_name:Unavailable packet name`, field: 'hpacket-name', invalidValue: '' }];
           this.form.get('hpacket-name').setErrors({
             validateInjectedError: {
               valid: false
@@ -265,25 +264,25 @@ export class PacketFormComponent extends ProjectFormEntity implements AfterViewI
 
   getCustomClass() {
 
-    if(this.showPreloader) {
+    if (this.showPreloader) {
 
-      if(this.divHeight > 353) { /* BIG */
+      if (this.divHeight > 353) { /* BIG */
         return 'loading-logo display-logo big-bg';
       }
-  
-      if(this.divHeight >=  293 && this.divHeight <= 352) { /* MEDIUM */
+
+      if (this.divHeight >= 293 && this.divHeight <= 352) { /* MEDIUM */
         return 'loading-logo display-logo medium-bg';
       }
-  
-      if(this.divHeight >=  233 && this.divHeight <= 292) { /* SMALL */
+
+      if (this.divHeight >= 233 && this.divHeight <= 292) { /* SMALL */
         return 'loading-logo display-logo small-bg';
       }
-  
-      if(this.divHeight >=  182 && this.divHeight <= 232) { /* X-SMALL */
+
+      if (this.divHeight >= 182 && this.divHeight <= 232) { /* X-SMALL */
         return 'loading-logo display-logo x-small-bg';
       }
-  
-      if(this.divHeight < 182 ) { /* X-SMALL */
+
+      if (this.divHeight < 182) { /* X-SMALL */
         return '';
       }
 

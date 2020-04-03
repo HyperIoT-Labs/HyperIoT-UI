@@ -1,18 +1,38 @@
-<h1 mat-dialog-title>{{data.title}}</h1>
+<!-- <h1 mat-dialog-title>{{data.title}}</h1>
 <mat-dialog-content class="mb-3">
     {{data.message}}
 </mat-dialog-content>
 <mat-dialog-actions class="d-flex flex-row justify-content-around">
     <button color="primary" mat-button mat-dialog-close="cancel" class="m-2 btn-left">
         <mat-icon>arrow_back</mat-icon>
-        <span i18n="@@HYT_cancel">HYT_cancel</span>
+        <span i18n="@@HYT_cancel">Cancel</span>
     </button>
     <button mat-button mat-dialog-close="save" class="m-2">
         <mat-icon>save</mat-icon>
-        <span i18n="@@HYT_save">HYT_save</span>
+        <span i18n="@@HYT_save">Save</span>
     </button>
     <button defaultButton color="warn" mat-button mat-dialog-close="discard" class="m-2 btn-right">
         <mat-icon>close</mat-icon>
-        <span i18n="@@HYT_discard">HYT_discard</span>
+        <span i18n="@@HYT_discard">Discard</span>
     </button>
-</mat-dialog-actions>
+</mat-dialog-actions> -->
+
+<div id="container-save-changes-modal">
+
+    <div class="dialog-header">
+        <span>{{data.data.title}}</span>
+        <span class="hyt-icon icon-hyt_cancelC" (click)="close('cancel')"></span>
+    </div>
+
+    <div class="dialog-body">
+        {{data.data.message}}
+        <div class="container-btn">
+            <hyt-button [color]="'hyt-base-total-white'" (click)="close('cancel')" i18n="@@HYT_cancel">Cancel
+            </hyt-button>
+            <hyt-button [color]="'hyt-base-total-green'" (click)="close('save')" i18n="@@HYT_save">Save</hyt-button>
+            <hyt-button [color]="'hyt-base-total-red'" (click)="close('discard')" i18n="@@HYT_discard">Discard
+            </hyt-button>
+        </div>
+    </div>
+
+</div>
