@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatInputModule, MatSelectModule } from '@angular/material';
+import { MatInputModule, MatSelectModule, MatSlider, MatSliderModule } from '@angular/material';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -64,6 +64,7 @@ import { FourierChartSettingsComponent } from './widget-settings-dialog/fourier-
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
+    MatSliderModule,
     MatButtonToggleModule,
     MatProgressBarModule,
     SharedComponentsModule

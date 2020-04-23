@@ -16,11 +16,12 @@ export class FourierChartSettingsComponent  implements OnInit, OnDestroy {
   @Input() widget;
   @Input() areaId;
   sampleRate = 500;
+  showSamples = 2;
+  bufferSamples = 20;
   selectedFields = [];
   private defaultConfig = {
-      timeAxisRange: 10,
-      maxDataPoints: 100,
-      timeWindow: 60,
+      showSamples: 2,
+      bufferSamples: 20,
       layout: {
           showlegend: true,
           legend: {
@@ -35,8 +36,37 @@ export class FourierChartSettingsComponent  implements OnInit, OnDestroy {
               },
               bgcolor: '#FFFFFF85',
               borderwidth: 0
-          }
-      }
+          },
+          xaxis: {
+              type: 'linear',
+              title: {
+                  text: 'Frequency (Hz)'
+              },
+              autorange: true,
+              showticklabels: true,
+              showgrid: true,
+              showline: false,
+              zeroline: false,
+              anchor: 'y',
+              side: 'bottom'
+          },
+          yaxis: {
+            type: 'linear',
+            title: {
+                text: 'Magnitude'
+            },
+            autorange: true,
+            showticklabels: true,
+            showgrid: true,
+            showline: false,
+            zeroline: false,
+            anchor: 'x',
+            side: 'left'
+          },
+          autosize: true,
+          dragmode: 'zoom',
+          hovermode: 'closest'
+    }
   };
 
   constructor(public settingsForm: NgForm) { }
@@ -50,6 +80,12 @@ export class FourierChartSettingsComponent  implements OnInit, OnDestroy {
       }
       if (this.widget.config.sampleRate) {
         this.sampleRate = +this.widget.config.sampleRate;
+      }
+      if (this.widget.config.showSamples) {
+        this.showSamples = +this.widget.config.showSamples;
+      }
+      if (this.widget.config.bufferSamples) {
+        this.bufferSamples = +this.widget.config.bufferSamples;
       }
       this.subscription = this.modalApply.subscribe((event) => {
           if (event === 'apply') {
@@ -69,6 +105,8 @@ export class FourierChartSettingsComponent  implements OnInit, OnDestroy {
 
   apply() {
     this.widget.config.sampleRate = this.sampleRate;
+    this.widget.config.showSamples = this.showSamples;
+    this.widget.config.bufferSamples = this.bufferSamples;
     this.packetSelect.apply();
   }
 }

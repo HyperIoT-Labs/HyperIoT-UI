@@ -1,6 +1,19 @@
 <hyt-packet-select [widget]="widget" [areaId]="areaId" [multiPacketSelect]="true" [selectedFields]="selectedFields"
-    (selectedFieldsChange)="onSelectedFieldsChange($event)"></hyt-packet-select>
+    (selectedFieldsChange)="onSelectedFieldsChange($event)">
+</hyt-packet-select>
 
-<hyt-input-template name="name" type="text" placeholder="Sample rate (ms)"
-    [(ngModel)]="sampleRate" #name="ngModel" [isRequired]="true" required pattern="[0-9]*">
-</hyt-input-template>
+<div class="d-flex flex-row align-items-stretch justify-content-between">
+    <hyt-input-template name="rate" type="text" placeholder="Sample rate (ms)"
+        [(ngModel)]="sampleRate" #name="ngModel" [isRequired]="true" required pattern="[0-9]*">
+    </hyt-input-template>
+    <!--
+    <mat-slider thumbLabel min="1" max="20" step="1" value="2" style="width: 100%;"></mat-slider>
+    <mat-slider thumbLabel min="1" max="100" step="1" value="20" style="width: 100%;"></mat-slider>
+    -->
+    <hyt-input-template name="samples" type="text" placeholder="Samples to show"
+        [(ngModel)]="showSamples" #name="ngModel" [isRequired]="true" required pattern="[0-9]*">
+    </hyt-input-template>
+    <hyt-input-template name="buffer" type="text" placeholder="Samples buffer size"
+        [(ngModel)]="bufferSamples" #name="ngModel" [isRequired]="true" required pattern="[0-9]*">
+    </hyt-input-template>
+</div>
