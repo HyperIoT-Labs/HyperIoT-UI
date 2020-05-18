@@ -59,7 +59,7 @@
                 </hyt-select-template>
             </div>
         </div>
-        <div *ngIf="packetFieldsMapping && packetFieldsMapping.length > 0 && multiPacketSelect">
+        <div *ngIf="showFieldsMapping && packetFieldsMapping.length > 0 && multiPacketSelect">
             <h3>Fields Mapping</h3>
             <div *ngFor="let fieldConfig of packetFieldsMapping">
                 <label class="label">{{ fieldConfig.field.name }}</label>

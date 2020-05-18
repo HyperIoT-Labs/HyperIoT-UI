@@ -41,6 +41,8 @@ export class PacketSelectComponent implements OnInit {
   multiPacketSelect: false;
   @Input()
   areaId: number;
+  @Input()
+  showFieldsMapping = true;
 
   packetFieldsMapping: FieldMatrixConfiguration[];
   packetUnitsConversion: FieldUnitConversion[];
