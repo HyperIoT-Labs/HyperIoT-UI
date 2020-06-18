@@ -76,9 +76,9 @@ export class FourierTransformComponent implements OnInit {
   }
 
   onTransformTypeChange(type) {
-    this.config.fftTransformType = type;
+    this.config.transformType = type;
     setTimeout(() => {
-      this.form.get('transformType').setValue(this.config.fftTransformType);
+      this.form.get('transformType').setValue(this.config.transformType);
     });
   }
 
@@ -115,7 +115,7 @@ export class FourierTransformComponent implements OnInit {
       actionName: 'FourierTransformRuleAction',
       transformMethod: 'FAST',
       fftNormalization: 'STANDARD',
-      fftTransformType: 'FORWARD',
+      transformType: 'FORWARD',
       inputFieldId: 0,
       outputFieldId: 0
     };
@@ -125,7 +125,7 @@ export class FourierTransformComponent implements OnInit {
     this.outputFieldName = '';
     this.onTransformMethodChange(this.config.transformMethod);
     this.onTransformNormChange(this.config.fftNormalization);
-    this.onTransformTypeChange(this.config.fftTransformType);
+    this.onTransformTypeChange(this.config.transformType);
     setTimeout(() => {
       this.form.get('inputField').setValue(this.config.inputFieldId);
       if (this.config.outputFieldId) {
