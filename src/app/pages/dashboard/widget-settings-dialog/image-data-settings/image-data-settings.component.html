@@ -1,0 +1,15 @@
+<hyt-packet-select [widget]="widget" [areaId]="areaId"
+    [showFieldsMapping]="false"
+    [multiPacketSelect]="false"
+    [selectedFields]="selectedFields"
+    (selectedFieldsChange)="onSelectedFieldsChange($event)">
+</hyt-packet-select>
+
+<div class="d-flex flex-row align-items-stretch justify-content-end">
+    <hyt-input-template class="mr-4" name="width" type="text" placeholder="Image width"
+        [(ngModel)]="imageWidth" #name="ngModel" [isRequired]="true" required pattern="[0-9]*">
+    </hyt-input-template>
+    <hyt-input-template name="height" type="text" placeholder="Image height"
+        [(ngModel)]="imageHeight" #name="ngModel" [isRequired]="true" required pattern="[0-9]*">
+    </hyt-input-template>
+</div>

@@ -30,6 +30,7 @@ import { TimeChartSettingsComponent } from './widget-settings-dialog/time-chart-
 import { WidgetSettingsDialogComponent } from './widget-settings-dialog/widget-settings-dialog.component';
 import { WidgetsLayoutComponent } from './widgets-layout/widgets-layout.component';
 import { FourierChartSettingsComponent } from './widget-settings-dialog/fourier-chart-settings/fourier-chart-settings.component';
+import { ImageDataSettingsComponent } from './widget-settings-dialog/image-data-settings/image-data-settings.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { FourierChartSettingsComponent } from './widget-settings-dialog/fourier-
     DashboardComponent,
     TimelineComponent,
     TimeAxisComponent,
-    FourierChartSettingsComponent
+    FourierChartSettingsComponent,
+    ImageDataSettingsComponent
   ],
   imports: [
     CommonModule,
