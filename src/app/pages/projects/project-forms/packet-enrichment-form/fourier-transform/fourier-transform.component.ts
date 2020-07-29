@@ -37,6 +37,7 @@ export class FourierTransformComponent implements OnInit {
   @Input()
   set config(cfg: any) {
     this._config = cfg;
+    cfg.actionName = 'FourierTransformRuleAction';
     this.update();
   }
   get config() { return this._config };
@@ -75,9 +76,9 @@ export class FourierTransformComponent implements OnInit {
   }
 
   onTransformTypeChange(type) {
-    this.config.fftTransformType = type;
+    this.config.transformType = type;
     setTimeout(() => {
-      this.form.get('transformType').setValue(this.config.fftTransformType);
+      this.form.get('transformType').setValue(this.config.transformType);
     });
   }
 
@@ -111,9 +112,10 @@ export class FourierTransformComponent implements OnInit {
 
   new() {
     return {
+      actionName: 'FourierTransformRuleAction',
       transformMethod: 'FAST',
       fftNormalization: 'STANDARD',
-      fftTransformType: 'FORWARD',
+      transformType: 'FORWARD',
       inputFieldId: 0,
       outputFieldId: 0
     };
@@ -123,7 +125,7 @@ export class FourierTransformComponent implements OnInit {
     this.outputFieldName = '';
     this.onTransformMethodChange(this.config.transformMethod);
     this.onTransformNormChange(this.config.fftNormalization);
-    this.onTransformTypeChange(this.config.fftTransformType);
+    this.onTransformTypeChange(this.config.transformType);
     setTimeout(() => {
       this.form.get('inputField').setValue(this.config.inputFieldId);
       if (this.config.outputFieldId) {
@@ -147,8 +149,8 @@ export class FourierTransformComponent implements OnInit {
       this.hpacketService.addHPacketField(this.packet.id, {
         name: outputFieldName,
         description: 'Fourier Transform output field',
-        multiplicity: 'SINGLE',
-        type: 'OBJECT'
+        multiplicity: 'ARRAY',
+        type: 'DOUBLE'
       } as HPacketField).subscribe((res) => {
         successCallback(res);
       }, (error) => {

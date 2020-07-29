@@ -68,6 +68,11 @@
                         [settingsForm]="settingsForm">
                     </hyt-fourier-chart-settings>
                 </div>
+                <div *ngSwitchCase="'image-data'">
+                    <hyt-image-data-settings [widget]="widget" [areaId]="areaId" [modalApply]="modalApply.asObservable()"
+                        [settingsForm]="settingsForm">
+                    </hyt-image-data-settings>
+                </div>
                 <div *ngSwitchDefault>
                     <em>TODO: ....</em>
                 </div>

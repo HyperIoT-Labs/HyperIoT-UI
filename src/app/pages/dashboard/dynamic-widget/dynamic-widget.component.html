@@ -20,6 +20,11 @@
   [widget]="widget"
   (widgetAction)="onWidgetAction($event)"></hyperiot-sensor-value>
 
+<hyperiot-image-data
+  *ngIf="widget.type === 'image-data'"
+  [widget]="widget"
+  (widgetAction)="onWidgetAction($event)"></hyperiot-image-data>
+
 <hyperiot-gauge-value
   *ngIf="widget.type === 'gauge-value'"
   [widget]="widget"

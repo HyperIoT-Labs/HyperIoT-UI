@@ -335,20 +335,22 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
           });
 
           setTimeout(() => {
-            this.ruleForms[k].form.get('rulePacket').setValue(actualPacket.id);
-            this.ruleForms[k].form.get('ruleField').setValue(actualFieldOption.value);
-            this.ruleForms[k].form.get('ruleCondition').setValue(ruleDef[k].condition);
-            if (this.ruleForms[k].compareWith) {
-              this.ruleForms[k].form.get('ruleValue').setValue(ruleDef[k].value);
+            const rulePacket = this.ruleForms[k].form.get('rulePacket');
+            if (rulePacket) {
+              rulePacket.setValue(actualPacket.id);
+              this.ruleForms[k].form.get('ruleField').setValue(actualFieldOption.value);
+              this.ruleForms[k].form.get('ruleCondition').setValue(ruleDef[k].condition);
+              if (this.ruleForms[k].compareWith) {
+                this.ruleForms[k].form.get('ruleValue').setValue(ruleDef[k].value);
+              }
+              this.ruleForms[k].form.get('ruleJoin').setValue((ruleDef[k].join) ? ' ' + ruleDef[k].join + ' ' : '');
             }
-            this.ruleForms[k].form.get('ruleJoin').setValue((ruleDef[k].join) ? ' ' + ruleDef[k].join + ' ' : '');
             if (k === this.ruleForms.length - 1) {
               this.originalValueUpdate();
               this.updating = false;
             }
           }, 0);
         }
-
       }
     }, 0);
   }

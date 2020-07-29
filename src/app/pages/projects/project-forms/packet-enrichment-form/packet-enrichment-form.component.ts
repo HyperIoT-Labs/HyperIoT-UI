@@ -106,7 +106,6 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
       this.editMode = true;
       super.edit(rule, () => {
         const type = JSON.parse(this.entity.jsonActions)[0] || null;
-        this.ruleDefinitionComponent.setRuleDefinition(this.entity.ruleDefinition);
         this.enrichmentType = JSON.parse(type) ? JSON.parse(type).actionName : null;
         if (this.enrichmentType === 'AddCategoryRuleAction') {
           if (this.assetCategoryComponent) {
@@ -126,6 +125,11 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
           this.ruleConfig = JSON.parse(type);
         }
         this.form.get('rule-type').setValue(this.enrichmentType);
+        setTimeout(() => {
+          if (this.ruleDefinitionComponent) {
+            this.ruleDefinitionComponent.setRuleDefinition(this.entity.ruleDefinition);
+          }
+        }, 100);
         if (readyCallback) {
           readyCallback();
         }
@@ -198,10 +202,10 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
     this.resetErrors();
 
     const rule = this.entity;
-
+    const rd = this.ruleDefinitionComponent ? this.ruleDefinitionComponent.buildRuleDefinition() : null;
     Object.assign(rule, {
       name: this.form.get('rule-name').value,
-      ruleDefinition: this.ruleDefinitionComponent.buildRuleDefinition(),
+      ruleDefinition: rd,
       description: this.form.get('rule-description').value,
       project: {
         id: this.project.id
@@ -244,7 +248,9 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
     this.enrichmentType = null;
     this.assetTags = [];
     this.assetCategories = [];
-    this.ruleDefinitionComponent.resetRuleDefinition();
+    setTimeout(() => {
+      this.ruleDefinitionComponent.resetRuleDefinition();
+    }, 100);
     this.entity = { ...this.entitiesService.enrichment.emptyModel };
     this.edit();
   }
@@ -285,7 +291,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
     return this.editMode &&
       (
         super.isDirty() ||
-        this.ruleDefinitionComponent.isDirty() ||
+        (this.ruleDefinitionComponent && this.ruleDefinitionComponent.isDirty()) ||
         this.categoryDirty() ||
         this.tagDirty() ||
         this.fftDirty()
@@ -294,7 +300,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
 
   private invalidRules(): boolean {
     return (
-      ((this.ruleDefinitionComponent) ? this.ruleDefinitionComponent.isInvalid() : true)
+      ((this.ruleDefinitionComponent) ? this.ruleDefinitionComponent.isInvalid() : false)
     );
   }
 
