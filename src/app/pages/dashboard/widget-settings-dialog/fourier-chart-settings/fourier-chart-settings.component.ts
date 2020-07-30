@@ -15,6 +15,7 @@ export class FourierChartSettingsComponent  implements OnInit, OnDestroy {
   @Input() modalApply: Observable<any>;
   @Input() widget;
   @Input() areaId;
+  timeAxis = false;
   sampleRate = 500;
   showSamples = 2;
   bufferSamples = 20;
@@ -37,32 +38,6 @@ export class FourierChartSettingsComponent  implements OnInit, OnDestroy {
               bgcolor: '#FFFFFF85',
               borderwidth: 0
           },
-          xaxis: {
-              type: 'linear',
-              title: {
-                  text: 'Frequency (Hz)'
-              },
-              autorange: true,
-              showticklabels: true,
-              showgrid: true,
-              showline: false,
-              zeroline: false,
-              anchor: 'y',
-              side: 'bottom'
-          },
-          yaxis: {
-            type: 'linear',
-            title: {
-                text: 'Magnitude'
-            },
-            autorange: true,
-            showticklabels: true,
-            showgrid: true,
-            showline: false,
-            zeroline: false,
-            anchor: 'x',
-            side: 'left'
-          },
           autosize: true,
           dragmode: 'zoom',
           hovermode: 'closest'
@@ -77,6 +52,9 @@ export class FourierChartSettingsComponent  implements OnInit, OnDestroy {
       }
       if (this.widget.config.seriesConfig == null || this.widget.config.seriesConfig.length === 0) {
           Object.assign(this.widget.config, this.defaultConfig);
+      }
+      if (this.widget.config.timeAxis) {
+        this.timeAxis = this.widget.config.timeAxis;
       }
       if (this.widget.config.sampleRate) {
         this.sampleRate = +this.widget.config.sampleRate;
@@ -107,6 +85,43 @@ export class FourierChartSettingsComponent  implements OnInit, OnDestroy {
     this.widget.config.sampleRate = this.sampleRate;
     this.widget.config.showSamples = this.showSamples;
     this.widget.config.bufferSamples = this.bufferSamples;
+    this.widget.config.timeAxis = this.timeAxis;
+    if (this.timeAxis) {
+      this.widget.config.layout.xaxis = {
+        showgrid: false,
+        range: []
+      };
+      this.widget.config.layout.yaxis = {
+        domain: [ 0.15, 0.85 ]
+      };
+    } else {
+      this.widget.config.layout.xaxis = {
+        type: 'linear',
+        title: {
+            text: 'Frequency (Hz)'
+        },
+        autorange: true,
+        showticklabels: true,
+        showgrid: true,
+        showline: false,
+        zeroline: false,
+        anchor: 'y',
+        side: 'bottom'
+      };
+      this.widget.config.layout.yaxis = {
+        type: 'linear',
+        title: {
+            text: 'Magnitude'
+        },
+        autorange: true,
+        showticklabels: true,
+        showgrid: true,
+        showline: false,
+        zeroline: false,
+        anchor: 'x',
+        side: 'left'
+      };
+    }
     this.packetSelect.apply();
   }
 }
