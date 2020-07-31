@@ -43,8 +43,6 @@ export class FourierTransformComponent implements OnInit {
   get config() { return this._config };
   originalConfig: any;
 
-  outputFieldName: string;
-
   constructor(
     private fb: FormBuilder,
     private hpacketService: HpacketsService,
@@ -91,11 +89,11 @@ export class FourierTransformComponent implements OnInit {
     const outputField = this.packet.fields.find((pf) => pf.name === outputFieldName);
     if (outputField) {
       this.config.outputFieldId = outputField.id;
-      this.outputFieldName = outputFieldName;
+      this.config.outputFieldName = outputFieldName;
     } else {
       this.addOutputField(outputFieldName, (field) => {
         this.config.outputFieldId = this.originalConfig.outputFieldId = field.id;
-        this.outputFieldName = field.name;
+        this.config.outputFieldName = this.originalConfig.outputFieldName = field.name;
       }, (error) => {
         // TODO: inject error on input text
       });
@@ -104,7 +102,7 @@ export class FourierTransformComponent implements OnInit {
   onOutputFieldResetClick() {
     this.hpacketService.deleteHPacketField(this.config.outputFieldId).subscribe((res) => {
       this.config.outputFieldId = 0;
-      this.outputFieldName = '';
+      this.config.outputFieldName = '';
     }, (err) => {
       // TODO: report error
     });
@@ -117,12 +115,12 @@ export class FourierTransformComponent implements OnInit {
       fftNormalization: 'STANDARD',
       transformType: 'FORWARD',
       inputFieldId: 0,
-      outputFieldId: 0
+      outputFieldId: 0,
+      outputFieldName: ''
     };
-    this.outputFieldName = '';
   }
   update() {
-    this.outputFieldName = '';
+    this.config.outputFieldName = '';
     this.onTransformMethodChange(this.config.transformMethod);
     this.onTransformNormChange(this.config.fftNormalization);
     this.onTransformTypeChange(this.config.transformType);
@@ -133,10 +131,10 @@ export class FourierTransformComponent implements OnInit {
           this.packet = res;
           const outputField = this.packet.fields.find((pf) => pf.id === this.config.outputFieldId);
           if (outputField) {
-            this.outputFieldName = outputField.name;
+            this.config.outputFieldName = outputField.name;
           } else {
             this.config.outputFieldId = 0;
-            this.outputFieldName = '';
+            this.config.outputFieldName = '';
           }
         });
       }

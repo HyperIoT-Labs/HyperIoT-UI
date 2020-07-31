@@ -192,6 +192,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
         break;
       case 'FourierTransformRuleAction':
         jac = JSON.stringify(this.ruleConfig);
+        console.log(jac, this.ruleConfig)
         break;
     }
     return JSON.stringify([jac]);

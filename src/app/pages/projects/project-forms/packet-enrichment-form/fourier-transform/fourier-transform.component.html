@@ -44,7 +44,7 @@
                 label="Input field">
             </hyt-select>
         </div>
-        <div *ngIf="!config.outputFieldId || outputFieldName.length === 0" class="m-4">
+        <div *ngIf="!config.outputFieldId || this.config.outputFieldName.length === 0" class="m-4">
             <hyt-input-text 
                 [form]="form" formControlName="outputField" name="outputField" [isRequired]="true"
                 (change)="onOutputFieldChange($event)"
@@ -52,11 +52,11 @@
                 hintMessage="Set the name of the transform result field">
             </hyt-input-text>
         </div>
-        <div *ngIf="config.outputFieldId && outputFieldName.length > 0" class="m-4">
+        <div *ngIf="config.outputFieldId && this.config.outputFieldName.length > 0" class="m-4">
             <div class="d-flex flex-row">
                 <div class="d-flex flex-column mr-4">
                     <label class="f-label">Output field</label>
-                    <strong>{{ outputFieldName }}</strong>
+                    <strong>{{ this.config.outputFieldName }}</strong>
                 </div>
                 <hyt-button (clickFn)="onOutputFieldResetClick()">Change</hyt-button>
             </div>
