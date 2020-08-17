@@ -1,6 +1,6 @@
 <hyt-packet-select [widget]="widget" [areaId]="areaId"
     [showFieldsMapping]="false"
-    [multiPacketSelect]="true"
+    [multiPacketSelect]="false"
     [selectedFields]="selectedFields"
     (selectedFieldsChange)="onSelectedFieldsChange($event)">
 </hyt-packet-select>
@@ -20,3 +20,4 @@
         [(ngModel)]="bufferSamples" #name="ngModel" [isRequired]="true" required pattern="[0-9]*">
     </hyt-input-template>
 </div>
+<hyt-checkbox [(ngModel)]="timeAxis" [ngModelOptions]="{standalone: true}">Show as value/time chart</hyt-checkbox>
