@@ -7,7 +7,8 @@ import { LOG_LEVEL } from '@hyperiot/core';
 export const environment = {
   production: false,
   logLevel: 5,
-  registry: {}
+  registry: {},
+  cookieSecure: false
 };
 
 /*

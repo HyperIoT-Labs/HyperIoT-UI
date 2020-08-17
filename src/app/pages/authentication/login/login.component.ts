@@ -8,6 +8,7 @@ import { HYTError } from 'src/app/services/errorHandler/models/models';
 
 import * as CryptoJS from 'crypto-js';
 import { SubmissionStatus } from '../models/pageStatus';
+import { environment } from 'src/environments/environment';
 
 /**
  * LoginComponent is a component of AuthenticationModule.
@@ -129,13 +130,13 @@ export class LoginComponent implements OnInit {
 
     this.authenticationService.login(this.loginForm.value.username, this.loginForm.value.password).subscribe(
       res => {
-        this.cookieService.set('HIT-AUTH', res.token, 2, '/');
+        this.cookieService.set('HIT-AUTH', res.token, 2, '/', '', environment.cookieSecure);
         localStorage.setItem('userInfo', JSON.stringify(res));
         localStorage.setItem('user', JSON.stringify(res.authenticable));
         this.logger.trace('userInfo', JSON.stringify(res.authenticable));
 
         if (this.checked === true) {
-          if (!this.cookieService.check('rememberme')) { this.cookieService.set('rememberme', this.loginForm.value.username, 2, '/'); }
+          if (!this.cookieService.check('rememberme')) { this.cookieService.set('rememberme', this.loginForm.value.username, 2, '/', '', environment.cookieSecure); }
         } else {
           if (this.cookieService.check('rememberme')) { this.cookieService.delete('rememberme', '/'); }
         }
