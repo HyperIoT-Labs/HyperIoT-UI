@@ -171,6 +171,18 @@ const hyperiotRoutes: Routes = [
         component: PacketEventsFormComponent,
         outlet: 'projectDetails'
       },
+      // {
+      //   canDeactivate: [CanDeactivateGuard],
+      //   path: 'statistics',
+      //   component: PacketStatisticsFormComponent,
+      //   outlet: 'projectDetails'
+      // },
+      // {
+      //   canDeactivate: [CanDeactivateGuard],
+      //   path: 'events',
+      //   component: PacketEventsFormComponent,
+      //   outlet: 'projectDetails'
+      // },
       {
         canDeactivate: [CanDeactivateGuard],
         path: 'tags',

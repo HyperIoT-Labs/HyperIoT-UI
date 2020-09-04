@@ -156,19 +156,46 @@ export class ProjectFormComponent extends ProjectFormEntity implements AfterView
   }
   private deleteProject(successCallback?, errorCallback?) {
     this.loadingStatus = LoadingStatusEnum.Saving;
-    this.hProjectService.deleteHProject(this.entity.id).subscribe((res) => {
-      this.loadingStatus = LoadingStatusEnum.Ready;
-      successCallback && successCallback(res);
-      // request navigate to project list when the project itself is deleted
-      this.entityEvent.emit({
-        event: 'entity:delete',
-        exitRoute: 'out'
-        // exitRoute: ['/projects']
-      });
-    }, (err) => {
-      this.loadingStatus = LoadingStatusEnum.Error;
-      errorCallback && errorCallback(err);
-    });
+    // this.hProjectService.deleteHProject(this.entity.id).subscribe((res) => {
+    //   this.loadingStatus = LoadingStatusEnum.Ready;
+    //   successCallback && successCallback(res);
+    //   // request navigate to project list when the project itself is deleted
+    //   this.entityEvent.emit({
+    //     event: 'entity:delete',
+    //     exitRoute: 'out'
+    //     // exitRoute: ['/projects']
+    //   });
+    // }, (err) => {
+    //   this.loadingStatus = LoadingStatusEnum.Error;
+    //   errorCallback && errorCallback(err);
+    // });
+
+    this.projectsService.deleteProject(this.entity.id);
+    this.projectsService.subProjects.subscribe({
+      next: (v) => {
+        switch (v.state) {
+          case 'delete-loading':
+            this.loadingStatus = LoadingStatusEnum.Saving;
+            break;
+          case 'delete-success':
+            this.loadingStatus = LoadingStatusEnum.Ready;
+            successCallback && successCallback(v.projectToDelete);
+            // request navigate to project list when the project itself is deleted
+            this.entityEvent.emit({
+              event: 'entity:delete',
+              exitRoute: 'out'
+              // exitRoute: ['/projects']
+            });
+            break;
+          case 'delete-error':
+            this.loadingStatus = LoadingStatusEnum.Error;
+            errorCallback && errorCallback;
+            break;
+          default:
+            break;
+        }
+      }
+    })
   }
 
   setErrors(err) {

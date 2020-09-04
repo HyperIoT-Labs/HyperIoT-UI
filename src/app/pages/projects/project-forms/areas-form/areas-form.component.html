@@ -68,7 +68,7 @@
 
             <mat-tab *ngIf="areaId > 0" label="Sub-areas ({{ areaList.length }})" i18n-label="@@HYT_area_section_inner">
                 <div class="actions">
-                    <hyt-button mat-mini-fab (clickFn)="onAddInnerAreaClick($event)">
+                    <hyt-button [color]="'hyt-base-default-white'" mat-mini-fab (clickFn)="onAddInnerAreaClick($event)">
                         <span i18n="@@HYT_area_inner_add">Add sub-area</span>
                         <span class="hyt-icon icon-hyt_plusC"></span>
                     </hyt-button>
@@ -82,7 +82,7 @@
             <mat-tab *ngIf="areaId > 0" label="Map" i18n-label="@@HYT_area_section_map">
                 <div class="mt-4 mb-2 d-flex flex-row justify-content-center">
 
-                    <hyt-button>
+                    <hyt-button [color]="'hyt-base-default-white'">
                         <label class="m-0 p-0" for="map-image-input" i18n="@@HYT_area_map_set_image">Set map image</label>
                     </hyt-button>
                     <input class="hidden" id="map-image-input"
@@ -90,8 +90,8 @@
                         (change)="onFileChange($event)"
                         type="file" placeholder="Upload file" accept="{{ allowedImageTypes.join('|') }}">
 
-                    <hyt-button (clickFn)="onMapDeviceAddClick($event)" i18n="@@HYT_area_map_device_add">Add device</hyt-button>
-                    <hyt-button [isDisabled]="areaList.length === 0" (clickFn)="onMapAreaAddClick($event)" i18n="@@HYT_area_map_area_add">Add sub-area</hyt-button>
+                    <hyt-button [color]="'hyt-base-default-white'" (clickFn)="onMapDeviceAddClick($event)" i18n="@@HYT_area_map_device_add">Add device</hyt-button>
+                    <hyt-button [color]="'hyt-base-default-white'" [isDisabled]="areaList.length === 0" (clickFn)="onMapAreaAddClick($event)" i18n="@@HYT_area_map_area_add">Add sub-area</hyt-button>
 
                 </div>
                 <hyt-area-map #map [editMode]="true"></hyt-area-map>

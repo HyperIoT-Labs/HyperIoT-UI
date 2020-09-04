@@ -96,7 +96,7 @@ export class AreasViewComponent {
         // select current project // TODO: this is not working =/ FIXME: !!!!
         if (!this.selectedProjectOption && projectList.length > 0) {
           this.projectId = this.selectedProjectOption = projectList[0].id;
-console.log("auto selecting first project", this.selectedProjectOption)
+          console.log("auto selecting first project", this.selectedProjectOption)
         }
         // populate hyt-select options
         this.userProjectsOptions = [];

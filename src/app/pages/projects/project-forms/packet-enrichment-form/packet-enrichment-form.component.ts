@@ -193,6 +193,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
       case 'FourierTransformRuleAction':
         jac = JSON.stringify(this.ruleConfig);
         console.log(jac, this.ruleConfig)
+        jac = JSON.stringify({ actionName: 'FourierTransformRuleAction' });
         break;
     }
     return JSON.stringify([jac]);

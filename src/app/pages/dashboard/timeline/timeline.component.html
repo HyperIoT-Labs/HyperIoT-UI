@@ -9,7 +9,11 @@
 
             <mat-button-toggle-group name="fontStyle" aria-label="Font Style" [value]="domainInterval"
                 style="height: 40px;">
-                <mat-button-toggle *ngFor="let time of timeRange" [value]="time.value"
+                <!-- <hyt-button *ngFor="let time of timeRange" [value]="time.value"
+                    (change)="rangeChanged($event.value)">
+                    {{time.label}}</hyt-button> -->
+
+                    <mat-button-toggle *ngFor="let time of timeRange" [value]="time.value"
                     (change)="rangeChanged($event.value)">
                     {{time.label}}</mat-button-toggle>
             </mat-button-toggle-group>
@@ -21,12 +25,12 @@
         <!--TODO move inline style in scss-->
         <div class="chartBox" style="border-top: 1px solid #1e58a594; padding-top: 8px; margin-top: 4px;" class="col-12">
             <div style="float: left;">
-                <button (click)="timeBack()"
-                    [ngClass]="{'hasData': timeSelection[0] ? timeSelection[0] < domainStart : false}">&lt;&lt;</button>
+                <hyt-button (click)="timeBack()"
+                    [ngClass]="{'hasData': timeSelection[0] ? timeSelection[0] < domainStart : false}">&lt;&lt;</hyt-button>
             </div>
             <div style="float: right;">
-                <button (click)="timeForward()"
-                    [ngClass]="{'hasData': timeSelection[1] ? timeSelection[1] > domainStop : false}">&gt;&gt;</button>
+                <hyt-button (click)="timeForward()"
+                    [ngClass]="{'hasData': timeSelection[1] ? timeSelection[1] > domainStop : false}">&gt;&gt;</hyt-button>
             </div>
             <div style="margin: 0 auto; width: calc(100% - 71px);">
                 <hyt-time-axis #timeAxis (dataTimeSelectionChanged)="dataTimeSelectionChanged($event)"

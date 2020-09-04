@@ -207,6 +207,20 @@ export class ProjectDetailComponent implements OnInit {
               };
             });
           });
+          // const statistics: TreeDataNode = {
+          //   data: { type: 'statistics' },
+          //   name: 'Statistics',
+          //   icon: 'icon-hyt_statistics',
+          //   visible: true,
+          //   children: []
+          // };
+          // const events: TreeDataNode = {
+          //   data: { type: 'events' },
+          //   name: 'Events',
+          //   icon: 'icon-hyt_event',
+          //   visible: true,
+          //   children: []
+          // };
           // Add tags, categories and areas
           const tags: TreeDataNode = {
             data: { type: 'tags' },
@@ -316,7 +330,6 @@ export class ProjectDetailComponent implements OnInit {
         data: { title: 'Discard changes?', message: 'There are pending changes to be saved.' }
       });
       dialogRef.onClosed.subscribe((result) => {
-        console.log(result);
         if (result === 'save') {
           this.validationErrors = [];
           this.currentEntity.save((res) => {

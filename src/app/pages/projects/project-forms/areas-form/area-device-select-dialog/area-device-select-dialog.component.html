@@ -1,50 +1,54 @@
 <!-- device list -->
-<div *ngIf="projectDevices.length > 0 && loadingStatus === LoadingStatus.Ready" class="dialog pt-2 pb-2 d-flex flex-column">
-    <h3 class="ml-3 mr-3" i18n="@@HYT_area_map_select_device">Select device</h3>
+<div id="area-device-select-dialog" class="dialog">
 
-    <mat-list role="list" class="flex-grow-1">
-        <mat-list-item *ngFor="let device of projectDevices" role="listitem">
-            <button mat-button
-                [disabled]="device.added"
-                [ngClass]="{ selected: device === selectedDevice }"
-                (click)="selectedDevice = device">
-                {{ device.deviceName }}
-                <span *ngIf="device.added && device.area">
-                    ({{device.area}})
-                </span>
-            </button>
-        </mat-list-item>
-    </mat-list>
+    <div *ngIf="projectDevices.length > 0 && loadingStatus === LoadingStatus.Ready" class="pt-2 pb-2 d-flex flex-column">
+        <h3 class="ml-3 mr-3" i18n="@@HYT_area_map_select_device">Select device</h3>
 
-    <div *ngIf="selectedDevice" class="d-flex flex-row align-items-center justify-content-center">
-        <hyt-select-template class="m-2"
-            [(ngModel)]="selectedDeviceIcon"
-            [options]="deviceIconOptions"
-            label="Device icon"></hyt-select-template>
+        <mat-list role="list" class="flex-grow-1">
+            <mat-list-item *ngFor="let device of projectDevices" role="listitem">
+                <button mat-button
+                    [disabled]="device.added"
+                    [ngClass]="{ selected: device === selectedDevice }"
+                    (click)="selectedDevice = device">
+                    {{ device.deviceName }}
+                    <span *ngIf="device.added && device.area">
+                        ({{device.area}})
+                    </span>
+                </button>
+            </mat-list-item>
+        </mat-list>
+
+        <div *ngIf="selectedDevice" class="d-flex flex-row align-items-center justify-content-center">
+            <hyt-select-template id="area-device-multi-selector" class="m-2"
+                [(ngModel)]="selectedDeviceIcon"
+                [options]="deviceIconOptions"
+                label="Device icon"></hyt-select-template>
+        </div>
+
+        <div id="buttons-container" class="ml-3 mr-3 d-flex flex-row justify-content-between">
+            <hyt-button [color]="'hyt-base-default-white'" (clickFn)="close()" i18n="@@HYT_cancel">Cancel</hyt-button>
+            <hyt-button [color]="'hyt-base-default-white'" [isDisabled]="!selectedDevice || !selectedDeviceIcon" (clickFn)="close({
+                device: selectedDevice,
+                icon: selectedDeviceIcon
+            })" i18n="@@HYT_add">Add</hyt-button>
+        </div>
+
     </div>
 
-    <div class="ml-3 mr-3 d-flex flex-row justify-content-between">
-        <hyt-button (clickFn)="close()" i18n="@@HYT_cancel">Cancel</hyt-button>
-        <hyt-button [isDisabled]="!selectedDevice || !selectedDeviceIcon" (clickFn)="close({
-            device: selectedDevice,
-            icon: selectedDeviceIcon
-        })" i18n="@@HYT_add">Add</hyt-button>
+    <!-- no devices defined -->
+    <div *ngIf="projectDevices.length === 0 && loadingStatus === LoadingStatus.Ready">
+        <!-- @I18N@ -->
+        No devices defined for this project. Add a device first.
     </div>
 
-</div>
+    <!-- loading progress / error -->
+    <div *ngIf="loadingStatus === LoadingStatus.Loading" class="loading">
+        <!-- @I18N@ -->
+        Loading...
+    </div>
+    <div *ngIf="loadingStatus === LoadingStatus.Error" class="loading">
+        <!-- @I18N@ -->
+        An error occurred while loading data.
+    </div>
 
-<!-- no devices defined -->
-<div *ngIf="projectDevices.length === 0 && loadingStatus === LoadingStatus.Ready">
-    <!-- @I18N@ -->
-    No devices defined for this project. Add a device first.
-</div>
-
-<!-- loading progress / error -->
-<div *ngIf="loadingStatus === LoadingStatus.Loading" class="loading">
-    <!-- @I18N@ -->
-    Loading...
-</div>
-<div *ngIf="loadingStatus === LoadingStatus.Error" class="loading">
-    <!-- @I18N@ -->
-    An error occurred while loading data.
 </div>

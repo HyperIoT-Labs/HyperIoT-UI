@@ -1,4 +1,4 @@
-<div class="dialog pt-2 pb-2 d-flex flex-column">
+<div id="area-innerarea-select" class="dialog pt-2 pb-2 d-flex flex-column">
     <h3 class="ml-3 mr-3" i18n="@@HYT_area_map_select_area">Select area</h3>
 
     <mat-list role="list" class="flex-grow-1">
@@ -10,8 +10,8 @@
         </mat-list-item>
     </mat-list>
 
-    <div class="ml-3 mr-3 d-flex flex-row justify-content-end">
-        <hyt-button (clickFn)="close()" i18n="@@HYT_cancel">Cancel</hyt-button>
+    <div id="buttons-container" class="ml-3 mr-3 d-flex flex-row justify-content-end">
+        <hyt-button [color]="'hyt-base-default-white'" (clickFn)="close()" i18n="@@HYT_cancel">Cancel</hyt-button>
     </div>
 
 </div>
