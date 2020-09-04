@@ -13,13 +13,14 @@ import {
 import {
   DataStreamService,
   Dashboard,
-  DashboardWidget
+  DashboardWidget,
+  HPacket
 } from '@hyperiot/core';
 
 import { DashboardConfigService } from '../dashboard-config.service';
 import { HytModalService } from '@hyperiot/components';
 import { WidgetSettingsDialogComponent } from '../widget-settings-dialog/widget-settings-dialog.component';
-import { Subject, Observable } from 'rxjs';
+import { Subject, Observable, Subscription } from 'rxjs';
 import { takeUntil, map } from 'rxjs/operators';
 
 enum PageStatus {
@@ -59,6 +60,11 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
 
   /** Subject for manage the open subscriptions */
   protected ngUnsubscribe: Subject<void> = new Subject<void>();
+
+  /** Topology healt status monitor */
+  public TOPOLOGY_NOT_RESPONDING = -1;
+  private streamSubscription: Subscription;
+  private topologyResponseTimeMs: number = this.TOPOLOGY_NOT_RESPONDING;
 
   // private responsiveBreakPoints = [
   //   { breakPoint: 1200, columns: 6, cell: 250},
@@ -114,6 +120,11 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
 
     this.dashboard = [];
 
+    if (this.streamSubscription) {
+      this.streamSubscription.unsubscribe();
+      this.streamSubscription = null;
+    }
+
     this.configService.getDashboard(+this.dashboardValue.id)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
@@ -123,8 +134,17 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
           this.projectId = this.dashboardEntity.hproject.id;
           // connect to data upstream
           this.dataStreamService.connect(this.projectId);
+          this.streamSubscription = this.dataStreamService.eventStream.subscribe((p) => {
+            const packet = p.data;
+            if (packet.id === 0 && packet.name === 'systemTick') {
+              const remoteTimestamp: number = packet.fields.map.timestamp.value.long;
+              const localTimestamp = new Date().getTime();
+              this.topologyResponseTimeMs = localTimestamp - remoteTimestamp;
+              console.log('Received topology tick (ms)', remoteTimestamp);
+              console.log('Topology response time (ms)', this.topologyResponseTimeMs);
+            }
+          });
           // get dashboard config
-
           this.getWidgetsMapped(d.widgets)
             .pipe(takeUntil(this.ngUnsubscribe))
             .subscribe(
@@ -155,6 +175,10 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
 
     if (this.ngUnsubscribe) {
       this.ngUnsubscribe.next();
+    }
+
+    if (this.streamSubscription) {
+      this.streamSubscription.unsubscribe();
     }
 
     this.saveDashboard();
