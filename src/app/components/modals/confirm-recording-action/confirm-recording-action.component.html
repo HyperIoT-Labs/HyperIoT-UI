@@ -45,20 +45,17 @@
                     <span *ngSwitchCase="2" i18n="@@HYT_submitting failed">Submitting failed</span>
                     <span *ngSwitchCase="3" i18n="@@HYT_connecting">Connecting...</span>
                     <span *ngSwitchCase="4" i18n="@@HYT_connecting_failed">Connecting failed</span>
-                    <span *ngSwitchCase="5" i18n="@@HYT_starting">Starting...</span>
-                    <span *ngSwitchCase="6" i18n="@@HYT_starting_failed">Starting failed</span>
-                    <span *ngSwitchCase="7" i18n="@@HYT_started">Started!</span>
+                    <span *ngSwitchCase="5" i18n="@@HYT_connected">Connected!</span>
                 </div>
                 <div class="wrapper-progressbar">
                     <ul class="progressbar">
                         <li class="{{(topologyRequestState > 2)?'active':''}} {{(topologyRequestState == 2)?'failed':''}}">Submit</li>
                         <li class="{{(topologyRequestState > 4)?'active':''}} {{(topologyRequestState  == 4)?'failed':''}}">Connect</li>
-                        <li class="{{(topologyRequestState > 6)?'active':''}} {{(topologyRequestState  == 6)?'failed':''}}">Start</li>
                     </ul>
                 </div>
             </div>
         </div>
-        <div *ngIf="topologyRequestState == 2 || topologyRequestState == 4 || topologyRequestState == 6; else emptyFooter" id="footer-row" class="row">
+        <div *ngIf="topologyRequestState == 2 || topologyRequestState == 4; else emptyFooter" id="footer-row" class="row">
             <div class="col-6">
                 <hyt-button [color]="'hyt-base-total-green'" (clickFn)="confirm()">
                     <span class="hyt-icon icon-hyt_valid"></span> 

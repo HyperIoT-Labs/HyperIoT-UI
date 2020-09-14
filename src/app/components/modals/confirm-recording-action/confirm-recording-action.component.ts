@@ -17,9 +17,7 @@ enum TopologyRequestState {
   SubmittingFailed = 2,
   Connecting = 3,
   ConnectingFailed = 4,
-  Starting = 5,
-  StartingFailed = 6,
-  Completed = 7
+  Completed = 5
 }
 
 @Component({
@@ -39,6 +37,8 @@ export class ConfirmRecordingActionComponent extends HytModal implements OnDestr
   /** Subject for manage the open subscriptions */
   protected ngUnsubscribe: Subject<void> = new Subject<void>();
 
+  checkTopology = true;
+
   constructor(
     private hytTopologyService: HytTopologyService,
     hytModalService: HytModalService
@@ -52,37 +52,31 @@ export class ConfirmRecordingActionComponent extends HytModal implements OnDestr
       this.changeRecordingStateToOff();
     } else {
       this.topologyActionState = TopologyActionState.LoadingOn;
+      this.topologyRequestState = TopologyRequestState.Submitting;
       this.topologyRequest();
     }
   }
 
   topologyRequest() {
+    this.topologyRequestState = TopologyRequestState.Connecting;
 
-    this.topologyRequestState = TopologyRequestState.Submitting;
-
-    setTimeout(() => {
-      this.topologyRequestState = TopologyRequestState.Connecting;
-      setTimeout(() => {
-        this.topologyRequestState = TopologyRequestState.Starting;
+    this.hytTopologyService.postRecordingStateOn(this.data.projectId)
+    .pipe(takeUntil(this.ngUnsubscribe))
+    .subscribe(
+      res => {
+        this.topologyRequestState = TopologyRequestState.Completed;
         setTimeout(() => {
-          this.hytTopologyService.postRecordingStateOn(this.data.projectId)
-          .pipe(takeUntil(this.ngUnsubscribe))
-          .subscribe(
-            res => {
-              this.topologyRequestState = TopologyRequestState.Completed;
-              this.close({
-                dataRecordingIsOn: true,
-                upTimeSec: 0
-              });
-            },
-            error => {
-              this.topologyRequestState = TopologyRequestState.StartingFailed;
-              console.error(error);
-            }
-          );
-        }, 1000);
-      }, 1000);
-    }, 1000);
+          this.close({
+            dataRecordingIsOn: true,
+            upTimeSec: 0
+          });
+        }, 1000)
+      },
+      error => {
+        this.topologyRequestState = TopologyRequestState.ConnectingFailed;
+        console.error(error);
+      }
+    );
 
   }
 

@@ -15,6 +15,13 @@ enum PageStatus {
   Error = -1
 }
 
+enum TopologyStatus {
+  Off = -1,
+  Loading = 0,
+  Activated = 1,
+  On = 2
+}
+
 interface HytSelectOption extends HProject {
   label: string;
   value?: number;
@@ -48,6 +55,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
   streamIsOn = true;
 
   dataRecordingIsOn = false;
+
+  dataRecordingStatus = TopologyStatus.Off;
 
   idProjectSelected: number;
 
@@ -149,6 +158,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   changeTopologyState(event) {
     this.dataRecordingIsOn = event.dataRecordingIsOn;
+    this.dataRecordingStatus = (event.dataRecordingIsOn) ? TopologyStatus.Activated : TopologyStatus.Off;
     this.upTimeSec = event.upTimeSec;
   }
 
@@ -159,6 +169,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         res => {
           if (res != null && res != undefined && res.status.toLowerCase() === 'active') {
             this.dataRecordingIsOn = true;
+            this.dataRecordingStatus = (this.dataRecordingStatus == 2) ? TopologyStatus.On : TopologyStatus.Activated;
             if (res.upTimeSec) {
               let seconds = res.upTimeSec;
               const days = Math.floor(seconds / (3600 * 24));
@@ -173,12 +184,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
             }
           } else {
             this.dataRecordingIsOn = false;
+            this.dataRecordingStatus = TopologyStatus.Off;
             this.upTimeSec = undefined;
           }
           this.recordStateInLoading = false;
         },
         error => {
           this.dataRecordingIsOn = false;
+          this.dataRecordingStatus = TopologyStatus.Off;
           this.recordStateInLoading = false;
           this.upTimeSec = undefined;
           console.error(error);
@@ -264,7 +277,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.currentDashboard = res[0];
       this.currentDashboardId = this.currentDashboard.id;
       // this.extractPacketsFromWidgets(this.currentDashboard.widgets);
-      console.log(this.currentDashboard.widgets);
       this.dashboardOfflineDataService.resetService(this.idProjectSelected).subscribe(res => {
         this.packetsInDashboard = [...res];
       });
@@ -306,6 +318,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.dashboardConfigService.getRealtimeDashboardFromProject(id)
         .pipe(takeUntil(this.ngUnsubscribe))
         .subscribe(responseHandler, errorHandler);
+    }
+  }
+
+  topologyResTimeChange(value) {
+    if (this.dataRecordingStatus == 1 && value.timeMs >= 0) {
+      this.dataRecordingStatus = TopologyStatus.On;
     }
   }
 }

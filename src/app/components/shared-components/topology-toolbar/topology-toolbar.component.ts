@@ -17,7 +17,6 @@ export class TopologyToolbarComponent implements OnInit {
   @Input() dataRecordingIsOn: boolean;
   @Input() upTimeSec: boolean;
   @Input() recordStateInLoading: boolean;
-
   @Output() recordingStateChange: EventEmitter<any> = new EventEmitter();
 
   recordReloading = false;

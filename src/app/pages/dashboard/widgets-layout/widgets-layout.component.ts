@@ -22,6 +22,7 @@ import { HytModalService } from '@hyperiot/components';
 import { WidgetSettingsDialogComponent } from '../widget-settings-dialog/widget-settings-dialog.component';
 import { Subject, Observable, Subscription } from 'rxjs';
 import { takeUntil, map } from 'rxjs/operators';
+import { HytTopologyService } from 'src/app/services/topology-services/hyt-topology.service';
 
 enum PageStatus {
   Loading = 0,
@@ -43,6 +44,8 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
   @Input() widgets;
 
   @Output() widgetLayoutEvent: EventEmitter<any> = new EventEmitter<any>();
+
+  @Output() topologyResTimeChange: EventEmitter<any> = new EventEmitter<any>();
 
   dashboard: Array<GridsterItem>;
   dashboardEntity: Dashboard;
@@ -108,7 +111,8 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
     private dataStreamService: DataStreamService,
     private configService: DashboardConfigService,
     private activatedRoute: ActivatedRoute,
-    private hytModalService: HytModalService
+    private hytModalService: HytModalService,
+    private hytTopologyService: HytTopologyService
   ) { }
 
   ngOnInit() {
@@ -130,6 +134,8 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
       .subscribe(
         (d) => {
           this.dashboardEntity = d;
+          const widgetConfFounded = this.dashboardEntity.widgets.find( x => (x.widgetConf.includes('"config"')));
+
           this.dashboardType = this.dashboardEntity.dashboardType;
           this.projectId = this.dashboardEntity.hproject.id;
           // connect to data upstream
@@ -140,8 +146,10 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
               const remoteTimestamp: number = packet.fields.map.timestamp.value.long;
               const localTimestamp = new Date().getTime();
               this.topologyResponseTimeMs = localTimestamp - remoteTimestamp;
-              console.log('Received topology tick (ms)', remoteTimestamp);
-              console.log('Topology response time (ms)', this.topologyResponseTimeMs);
+              // this.hytTopologyService.topologyTimeStatus = this.topologyResponseTimeMs;
+              this.topologyResTimeChange.emit({timeMs: this.topologyResponseTimeMs})
+              // console.log('Received topology tick (ms)', remoteTimestamp);
+              // console.log('Topology response time (ms)', this.topologyResponseTimeMs);
             }
           });
           // get dashboard config
