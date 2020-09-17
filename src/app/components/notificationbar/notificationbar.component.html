@@ -1,4 +1,33 @@
-<div id="notification-bar" *ngIf="notificationDisplay" i18n="@@HYT_download_pwa">Download PWA 
-    <button id="btn-dwd-ok">OK</button> 
-    <button id="btn-dwd-no" (click)="closeNotification()">NO</button>
+<div id="notification-bar" i18n="@@HYT_download_pwa">
+    
+    <div class="pwa-row">
+
+        <div id="pwa-icon">
+            <img alt="hyt-icon" src="../../../assets/images/hyperiot_logo_single_char.png" />
+        </div>
+
+        <div id="body-pwa">
+            
+            <div id="text-pwa">
+                <span>Scarica ed installa l'applicazione web</span>
+            </div>
+
+            <div id="pwa-close-btn" (click)="closeNotificationBar()">
+                <span>X</span>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="pwa-row">
+
+        <div id="pwa-btn">
+            <hyt-button [color]="'hyt-base-total-white'" (click)="addToHomeScreen()">
+                <span class="hyt-icon icon-hyt_arrowDown"></span> Aggiungi alla Home
+            </hyt-button>
+        </div>
+
+    </div>
+
 </div>

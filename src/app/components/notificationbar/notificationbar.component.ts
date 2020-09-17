@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
+import { LoggerService, Logger } from '@hyperiot/core';
+import { PlatformService } from '../../services/platform/platform.service'
 
 @Component({
   selector: 'hyt-notificationbar',
@@ -7,12 +9,45 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NotificationbarComponent implements OnInit {
 
+  /**
+   * logger service
+   */
+  private logger: Logger;
+
+  plBrowser: string;
+
   notificationDisplay = false;
   deferredPrompt: any;
 
-  constructor() { }
+  @HostListener('window:beforeinstallprompt', ['$event'])
+  onBeforeInstallPrompt(e) {
+    this.logger.info('onBeforeInstallPrompt');
+    // Prevent Chrome 67 and earlier from automatically showing the prompt
+    e.preventDefault();
+    // Stash the event so it can be triggered later.
+    this.deferredPrompt = e;
+    this.showNotificationBar();
+  }
+
+  constructor(
+    private loggerService: LoggerService,
+    private platformService: PlatformService
+  ) {
+
+    this.logger = new Logger(this.loggerService);
+    this.logger.registerClass('NotificationbarComponent');
+
+  }
 
   ngOnInit() {
+
+    this.plBrowser = this.platformService.getPlBrowser();
+    this.logger.info('Current Browser: '+ this.plBrowser);
+
+    if (this.plBrowser === 'ios' || this.plBrowser === 'android') {
+      this.showNotificationBar()
+    }
+
     const self = this;
 
     window.addEventListener('beforeinstallprompt', (e) => {
@@ -20,36 +55,64 @@ export class NotificationbarComponent implements OnInit {
       e.preventDefault();
       // Stash the event so it can be triggered later.
       self.deferredPrompt = e;
-      self.showAddToHomeScreen();
+      self.showNotificationBar();
     });
 
   }
 
+  showNotificationBar() {
+
+    this.logger.info('SHOW NOTIFICATION BAR');
+
+    const notificationBar: HTMLElement = document.getElementById('notification-bar') as HTMLElement;
+    notificationBar.style.display = 'flex';
+
+  }
+
   addToHomeScreen() {
-    this.deferredPrompt.prompt();
-    this.deferredPrompt.userChoice
-      .then((choiceResult) => {
-        if (choiceResult.outcome === 'accepted') {
-          console.log('User accepted the A2HS prompt');
-          this.notificationDisplay = false;
-        } else {
-          console.log('User dismissed the A2HS prompt');
-          this.notificationDisplay = false;
-        }
-        this.deferredPrompt = null;
-      });
+
+    this.logger.info('ADD TO SCREEN');
+
+    const notificationBar: HTMLElement = document.getElementById('notification-bar') as HTMLElement;
+
+    if (this.plBrowser === 'safari' || this.plBrowser === 'ios') {
+
+      document.body.classList.add('stop-scrolling');
+      notificationBar.style.display = 'none';
+      this.platformService.showSafariPrompt = true;
+
+    } else if (this.plBrowser === 'firefox') {
+
+      document.body.classList.add('stop-scrolling');
+      notificationBar.style.display = 'none';
+      this.platformService.showFirefoxPrompt = true;
+
+    } else {
+      
+      notificationBar.style.display = 'none';
+      
+      this.deferredPrompt.prompt();
+      this.deferredPrompt.userChoice
+        .then((choiceResult) => {
+          if (choiceResult.outcome === 'accepted') {
+            console.log('User accepted the A2HS prompt');
+          } else {
+            console.log('User dismissed the A2HS prompt');
+          }
+          this.deferredPrompt = null;
+        });
+
+    }
+
   }
 
-  closeNotification() {
-    this.notificationDisplay = false;
-  }
+  closeNotificationBar() {
 
-  showAddToHomeScreen() {
-    this.notificationDisplay = true;
-    console.log('Notify: ', this.notificationDisplay);
-    const adToHomeBtn: HTMLElement = document.getElementById('btn-dwd-ok') as HTMLElement;
-    // adToHomeBtn.style.display = 'block';
-    adToHomeBtn.addEventListener('click', this.addToHomeScreen);
+    this.logger.info('CLOSE NOTIFICATION BAR');
+
+    const notificationBar: HTMLElement = document.getElementById('notification-bar') as HTMLElement;
+    notificationBar.style.display = 'none';
+
   }
 
 }

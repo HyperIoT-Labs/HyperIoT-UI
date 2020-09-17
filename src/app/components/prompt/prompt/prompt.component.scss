@@ -1,0 +1,187 @@
+body.stop-scrolling {
+    overflow: hidden auto;
+}
+
+#prompt-overlay {
+    position: fixed;
+    z-index: 1003;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, .60);
+    -webkit-transition: all .1s cubic-bezier(.25, .8, .25, 1);
+    -moz-transition: all .1s cubic-bezier(.25, .8, .25, 1);
+    transition: all .1s cubic-bezier(.25, .8, .25, 1);
+    opacity: 1;
+    -webkit-animation: overlayOpacity .2s;
+    -moz-animation: overlayOpacity .2s;
+    -o-animation: overlayOpacity .2s;
+    -ms-animation: overlayOpacity .2s;
+    animation: overlayOpacity .2s;
+
+}
+
+#prompt {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1004;
+    background-color: white;
+    text-align: center;
+    color: black;
+    box-shadow: 0px -10px 12px #b1b1b1;
+    -webkit-animation: fadein 1s;
+    -moz-animation: fadein 1s;
+    -o-animation: fadein 1s;
+    -ms-animation: fadein 1s;
+    animation: fadein 1s;
+    transform: none;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    border-radius: 5px;
+    box-sizing: border-box;
+    overflow: auto;
+    outline: 0;
+    box-shadow:
+      0 11px 15px -7px rgba(0, 0, 0, .2),
+      0 24px 38px 3px rgba(0, 0, 0, .14),
+      0 9px 46px 8px rgba(0, 0, 0, .12);
+    
+    background-color: rgb(37 46 55 / 90%);
+    color: #a8ffff;
+    border: 1px solid #a2f6f6;
+
+    &.firefox {
+        padding: 35px 25px 25px 25px;
+    }
+
+    #safari-action-list {
+        text-align: center;
+
+        .install-text {
+            font-size: 1.25em;
+        }
+        
+        .install-img {
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+
+    }
+
+    #firefox-action-list {
+        text-align: center;
+
+        .install-text {
+            font-size: 1.25em;
+
+            p {
+                margin-bottom: 0px;
+            }
+        }
+        
+        .install-img {
+            margin-top: 15px;
+            margin-bottom: 15px;
+
+            img {
+                width: 100%;
+                max-width: 80px;
+            }
+        }
+
+    }
+
+    button {
+        &.safari, &.firefox {
+           position: absolute;
+           top: 10px;
+           right: 20px;
+           border: none;
+           background-color: transparent;
+           color: aliceblue;
+
+           &:hover {
+               color: red;
+           }
+        }
+    }
+
+}
+
+/************* CSS ANIMATIONS *************/
+
+@keyframes fadein {
+    from { bottom: -370px; }
+    to   { bottom: 0; }
+}
+
+@keyframes overlayOpacity {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+
+/************* RESPONSIVE *************/
+
+@media (max-width: 992px) {
+    
+    #prompt {
+        #safari-action-list {
+            .install-text {
+                font-size: 1em;
+            }
+        }
+
+        #firefox-action-list {
+            .install-text {
+                font-size: 1em;
+            }
+        }
+    }
+
+}
+
+@media (max-width: 599px) {
+    
+    #prompt {
+        #safari-action-list {
+            margin-top: 30px;
+
+            .install-img {
+                img {
+                    width: 100%;
+                    max-width: 320px;
+                }
+            }
+        }
+
+        #firefox-action-list {
+            margin-top: 30px;
+        }
+    }
+
+}
+
+@media (max-width: 400px) {
+    
+    #prompt {
+        #safari-action-list {
+            .install-text {
+                font-size: .9em;
+            }
+        }
+
+        #firefox-action-list {
+            .install-text {
+                font-size: .9em;
+            }
+        }
+    }
+
+}

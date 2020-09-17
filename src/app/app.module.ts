@@ -50,6 +50,7 @@ import { AreasViewComponent } from './pages/areas/areas-view/areas-view.componen
 
 import * as PlotlyJS from 'plotly.js/dist/plotly.js';
 import { PlotlyModule } from 'angular-plotly.js';
+import { PromptComponent } from './components/prompt/prompt/prompt.component';
 PlotlyModule.plotlyjs = PlotlyJS;
 
 export class MyUrlSerializer extends DefaultUrlSerializer implements UrlSerializer {
@@ -83,7 +84,8 @@ export function apiConfigFactory(): Configuration {
     NotificationbarComponent,
     ConfirmRecordingActionComponent,
     InfoRecordingActionComponent,
-    AreasViewComponent
+    AreasViewComponent,
+    PromptComponent
   ],
   // dynamically created components
   entryComponents: [

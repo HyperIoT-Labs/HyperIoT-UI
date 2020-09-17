@@ -1,0 +1,29 @@
+<div *ngIf="safariPrompt || firefoxPrompt" id="prompt-overlay"></div>
+
+<div *ngIf="safariPrompt || firefoxPrompt" id="prompt" [ngClass]="{'firefox': firefoxPrompt}">
+  <div *ngIf="safariPrompt" id="safari-action-list">
+    <div class="install-text">
+      <p i18n="@@HYT_to_install_the_app_from_safari">To install the app from Safari, tap the share button</p>
+    </div>
+    <div class="install-img">
+      <img id="safari-share" src="assets/images/ios-share.png">
+    </div>
+    <div class="install-text">
+      <p i18n="@@HYT_then_swipe_up_to_find_and_tap_add_to_home_screen">Then swipe up to find and tap "Add to home screen"</p>
+    </div>
+  </div>
+
+  <div *ngIf="firefoxPrompt"  id="firefox-action-list">
+    <div class="install-text">
+        <p i18n="@@HYT_to_install_the_app_from_firefox">To install the app from Firefox, tap the settings button</p>
+      </div>
+      <div class="install-img">
+        <img id="safari-share" src="assets/images/firefox-settings.jpeg">
+      </div>
+      <div class="install-text">
+        <p i18n="@@HYT_then_tap_install">Then tap "Install"</p>
+      </div>
+  </div>
+
+  <button class="btn btn-outline-dark" (click)="close()" i18n="@@HYT_close" [ngClass]="{'firefox': firefoxPrompt, 'safari': safariPrompt}">Close</button>
+</div>

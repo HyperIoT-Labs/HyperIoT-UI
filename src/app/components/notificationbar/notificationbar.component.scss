@@ -1,34 +1,149 @@
 #notification-bar {
     color: #0956b6;
     background-color: #fff;
-    position: absolute;
+    position: fixed;
     left: 50%;
-    bottom: 0px;
+    bottom: 40px;
     min-height: 80px;
-    width: 40%;
+    width: 100%;
+    max-width: 800px;
     transform: translateX(-50%);
     padding: 10px;
-    border: 1px solid #145a96;
-    -moz-box-shadow: 0px 0px 13px -2px #b6b6b6;
-    -webkit-box-shadow: 0px 0px 13px -2px #b6b6b6;
-    box-shadow: 0px 0px 13px -2px #b6b6b6;
-    display: flex;
+    border: 1px solid #a7a7a7;
+
+    -moz-box-shadow: 0px 0px 13px -2px #3c3c3c;
+    -webkit-box-shadow: 0px 0px 13px -2px #3c3c3c;
+    box-shadow: 0px 0px 13px -2px #3c3c3c;
+    
+    display: none;
+    flex-direction: column;
     -webkit-box-pack: center;
     z-index: 9999;
     justify-content: center;
     -webkit-box-align: center;
-    align-items: center;
+    align-items: stretch;
     text-transform: capitalize;
     font-weight: bold;
-    border-top-right-radius: 10px;
-    border-top-left-radius: 10px;
-    border-bottom: 0px;
 
-    button {
-        &#btn-dwd-ok {
-            margin-left: 20px;
-            margin-right: 15pX;
+
+    .pwa-row {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+
+        #pwa-icon {
+
+            // background-color: #daf7ff;
+    
+            -webkit-border-radius: 50%; 
+            -moz-border-radius: 50%; 
+            border-radius: 50%;
+
+            // border: .5px solid #92aad6;
+            padding: 8px 5px;
+            display: flex;
+            align-items: center;
+    
+            img {
+                width: 100%;
+                max-width: 50px;
+            }
+    
+        }
+    
+        #body-pwa {
+            display: flex;
+            flex-grow: 1;
+            align-items: flex-start;
+    
+            #text-pwa {
+                margin-left: 10px;
+                margin-top: 17px;
+                font-weight: 400;
+                font-size: 1.2em;
+                color: #1d3c54;
+                text-transform: none;
+            }
+    
+            #pwa-close-btn {
+                margin-left: auto;
+                margin-right: 10px;
+                cursor: pointer;
+                color: #1d3c54;
+
+                &:hover {
+                    color: red;
+                }
+            }
+    
+        }
+
+        #pwa-btn {
+            margin-left: auto;
+            font-size: 0.8em;
+            margin-right: 30px;
+        }
+
+    }
+
+}
+
+
+/************ START NOTIFICATION RESPONSIVE ************/
+
+@media (max-width: 991px) {
+
+    #notification-bar {
+        max-width: 600px;
+
+        .pwa-row {
+
+            #pwa-icon {
+                img {
+                    max-width: 45px;
+                }
+            }
+    
+            #body-pwa {
+                #text-pwa {
+                    font-size: 1em;
+                }
+            }
+
+        }
+
+    }
+
+}
+
+@media (max-width: 630px) {
+
+    #notification-bar {
+        max-width: 95%;
+    }
+
+}
+
+@media (max-width: 429px) {
+
+    #notification-bar {
+
+        .pwa-row {
+
+            #body-pwa {
+                #text-pwa {
+                    font-size: .9em;
+                }
+            }
+
+            #pwa-btn {
+                font-size: 0.7em;
+                margin-right: 10px;
+                margin-top: 12px;
+            }
         }
     }
 
 }
+
+/************ END NOTIFICATION RESPONSIVE ************/

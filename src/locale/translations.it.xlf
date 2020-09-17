@@ -1406,6 +1406,22 @@
         <source>No dashboards found for this user</source>
         <target>Nessuna dashboard trovata</target>
       </trans-unit>
+      <trans-unit id="HYT_to_install_the_app_from_safari" datatype="html">
+        <source>To install the app from Safari, tap the share button</source>
+        <target>Per installare l'app da Safari, fai tap sul bottone della condivisione</target>
+      </trans-unit>
+      <trans-unit id="HYT_then_swipe_up_to_find_and_tap_add_to_home_screen" datatype="html">
+        <source>Then swipe up to find and tap "Add to home screen"</source>
+        <target>Dopo scorri fino a trovare "Aggiungi alla Home" e fai tap</target>
+      </trans-unit>
+      <trans-unit id="HYT_to_install_the_app_from_firefox" datatype="html">
+        <source>To install the app from Firefox, tap the settings button</source>
+        <target>Per installare l'appda Firefox, fai tap sul bottone delle impostazioni</target>
+      </trans-unit>
+      <trans-unit id="HYT_then_tap_install" datatype="html">
+        <source>Then tap "Install"</source>
+        <target>Dopo fai tap sulla voce "Installa"</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
