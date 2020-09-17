@@ -19,6 +19,8 @@ export class DashboardViewComponent implements OnInit {
 
   @Output() dashboardViewEvent: EventEmitter<any> = new EventEmitter<any>();
 
+  @Output() dsTopologyResTimeChange: EventEmitter<any> = new EventEmitter<any>();
+
   bool = false;
 
   /** Subject for manage the open subscriptions */

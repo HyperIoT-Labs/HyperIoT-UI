@@ -8,6 +8,7 @@ import { SummaryList } from '../project-detail/generic-summary-list/generic-summ
 import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
 import { EntitiesService } from 'src/app/services/entities/entities.service';
 import { HytModalService } from '@hyperiot/components';
+import { ProjectsService } from 'src/app/services/projects.service';																	
 
 export enum LoadingStatusEnum {
     Ready,
@@ -45,6 +46,7 @@ export abstract class ProjectFormEntity implements OnInit, AfterViewInit {
     protected formBuilder: FormBuilder;
     protected dialog: HytModalService;
     protected entitiesService: EntitiesService;
+	protected projectsService: ProjectsService;										   
 
     constructor(
         injector: Injector
@@ -53,6 +55,7 @@ export abstract class ProjectFormEntity implements OnInit, AfterViewInit {
         this.entitiesService = injector.get(EntitiesService);
         this.dialog = injector.get(HytModalService);
         this.form = this.formBuilder.group({});
+		this.projectsService = injector.get(ProjectsService);													 
     }
 
     ngOnInit() {

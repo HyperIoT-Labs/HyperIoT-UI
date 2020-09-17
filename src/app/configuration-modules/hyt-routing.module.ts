@@ -159,15 +159,27 @@ const hyperiotRoutes: Routes = [
         component: PacketEnrichmentFormComponent,
         outlet: 'projectDetails'
       },
+      // {
+      //   canDeactivate: [CanDeactivateGuard],
+      //   path: 'packet-statistics/:packetId',
+      //   component: PacketStatisticsFormComponent,
+      //   outlet: 'projectDetails'
+      // },
+      // {
+      //   canDeactivate: [CanDeactivateGuard],
+      //   path: 'packet-events/:packetId',
+      //   component: PacketEventsFormComponent,
+      //   outlet: 'projectDetails'
+      // },
       {
         canDeactivate: [CanDeactivateGuard],
-        path: 'packet-statistics/:packetId',
+        path: 'statistics',
         component: PacketStatisticsFormComponent,
         outlet: 'projectDetails'
       },
       {
         canDeactivate: [CanDeactivateGuard],
-        path: 'packet-events/:packetId',
+        path: 'events',
         component: PacketEventsFormComponent,
         outlet: 'projectDetails'
       },

@@ -8,23 +8,28 @@
 </div>
 
 <div class="toolbar d-flex flex-row justify-content-center">
-    <h3 *ngIf="areaId && areaPath && areaPath.length > 0" style="float:left; margin-top: 18px; color: blue">
-        {{ areaPath[0].name }}
-    </h3>
 
-    <div class="flex-grow-1 d-flex flex-row justify-content-center">
-        <hyt-select *ngIf="pageStatus === PageStatus.Ready" label="Select a project" name="project"
-            [options]="userProjectsOptions" [selected]="selectedProjectOption"
-            (changeFn)="onSelectedProjectChange($event)" [disabled]="false"></hyt-select>
-        <div *ngIf="areaId" class="icon-button" [routerLink]="['/areas', projectId]">
-            <span class="hyt-icon hyt-icon icon-hyt_areaB16"></span>
+    <div class="col-6 left-tools">
+        <h3 *ngIf="areaId && areaPath && areaPath.length > 0" style="float:left; margin-top: 18px; color: blue">
+            {{ areaPath[0].name }}
+        </h3>
+        <div id="areas-btn" *ngIf="areaId" class="button" [routerLink]="['/areas', projectId]">
+            <span class="hyt-icon hyt-icon icon-hyt_connectorNoFrame"></span>
             <p>Areas List</p>
         </div>
     </div>
 
-    <div *ngIf="areaId" class="icon-button" [routerLink]="['/areas', projectId, areaId, 'dashboards']">
-        <span class="hyt-icon hyt-icon icon-hyt_dash"></span>
-        <p>Dashboard</p>
+    <!-- flex-grow-1 d-flex flex-row -->
+
+    <div class="col-6 right-tools justify-content-center">
+        <hyt-select *ngIf="pageStatus === PageStatus.Ready" label="Select a project" name="project"
+            [options]="userProjectsOptions" [selected]="selectedProjectOption"
+            (changeFn)="onSelectedProjectChange($event)" [disabled]="false"></hyt-select>
+
+        <div id="dashboard-btn" *ngIf="areaId" class="button" [routerLink]="['/areas', projectId, areaId, 'dashboards']">
+            <span class="hyt-icon hyt-icon icon-hyt_dash"></span>
+            <p>Dashboard</p>
+        </div>
     </div>
 
 </div>
@@ -42,7 +47,7 @@
             <div class="d-flex flex-row justify-content-between">
                 <h3>{{ areaName }}</h3>
                 <div>Sub-areas: {{areaList.length}} Devices: {{areaDevices.length}}</div>
-                <hyt-button (clickFn)="onEditButtonClick()">Edit</hyt-button><!-- @I18N@ -->
+                <hyt-button [color]="'hyt-base-default-white'" (clickFn)="onEditButtonClick()">Edit</hyt-button><!-- @I18N@ -->
             </div>
             <div>
                 <hyt-area-map #map></hyt-area-map>

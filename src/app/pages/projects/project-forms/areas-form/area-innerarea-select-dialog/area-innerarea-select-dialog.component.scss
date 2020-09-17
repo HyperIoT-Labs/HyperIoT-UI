@@ -1,18 +1,33 @@
-h3 {
-    color: #0956b6;
+#area-innerarea-select {
+
+    &.dialog {
+        background-color: white;
+        width: 280px;
+        min-height: 200px;
+        border-radius: 8px;
+        padding: 12px;
+        padding-top: 20px !important;
+        padding-bottom: 20px !important;
+
+        h3 {
+            color: #0956b6;
+        }
+ 
+        .mat-button {
+            width: 100%;
+            text-align: left;
+ 
+
+            &.selected {
+                background-color: #aaa;
+            }
+        }
+
+        #buttons-container {
+            padding-top: 15px;
+        }
+    
+    }
+
 }
 
-.dialog {
-    background-color: white;
-    width: 280px;
-    min-height: 200px;
-}
-
-.mat-button {
-    width: 100%;
-    text-align: left;
-}
-
-.selected {
-    background-color: #aaa;
-}

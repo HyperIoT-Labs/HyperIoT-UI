@@ -1,25 +1,46 @@
-h3 {
-    color: #0956b6;
-}
+#area-device-select-dialog {
 
-.dialog {
-    background-color: white;
-    width: 280px;
-    min-height: 200px;
-}
+    &.dialog {
+        background-color: white;
+        width: 370px;
+        min-height: 200px;
+        border-radius: 8px;
+        padding: 12px;
+        padding-top: 20px !important;
+        padding-bottom: 20px !important;
 
-.mat-button {
-    width: 100%;
-    text-align: left;
-}
+        h3 {
+            color: #0956b6;
+        }
 
-.selected {
-    background-color: #aaa;
-}
+        .mat-button {
+            width: 100%;
+            text-align: left;
 
-.loading {
-    font-size: 280%;
-    color: white;
-    font-weight: bolder;
-    text-align: center;
+            &.selected {
+                background-color: #aaa;
+            }
+        }
+
+        #buttons-container {
+            padding-top: 15px;
+        }
+
+        #area-device-multi-selector {
+            width: 100%;
+            padding: 0px 12px;
+            
+            .mat-form-field {
+                width: inherit;
+            }
+        }
+
+        .loading {
+            // font-size: 280%;
+            font-weight: bolder;
+            text-align: center;
+        }
+    
+    }
+
 }

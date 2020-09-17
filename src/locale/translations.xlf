@@ -1066,6 +1066,22 @@
       <trans-unit id="HYT_then_tap_install" datatype="html">
         <source>Then tap "Install"</source>
       </trans-unit>
+      <trans-unit id="HYT_data_recording_is_disabled" datatype="html">
+        <source>Data recording is disabled</source>
+      </trans-unit>
+      <trans-unit id="HYT_data_recording_is_disabled_text" datatype="html">
+        <source>The online dashboard cannot be used in this state.
+        You can activate data recording by pressing the "RUN" button
+        or you can use the dasboard offline taking the "OFFLINE" button.</source>
+      </trans-unit>
+      <trans-unit id="HYT_waiting_for_data" datatype="html">
+        <source>Waiting for data</source>
+      </trans-unit>
+      <trans-unit id="HYT_waiting_for_data_text" datatype="html">
+        <source>The data recording is activated but we waiting for the data.
+        Please waiting...
+        If the loading state persist click "Reload" or contact the administrator.</source>
+      </trans-unit>
     </body>
   </file>
 </xliff>

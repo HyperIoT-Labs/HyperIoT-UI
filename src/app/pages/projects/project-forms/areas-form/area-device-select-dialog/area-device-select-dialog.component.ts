@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { HytModal, HytModalService } from '@hyperiot/components';
 import { AreasService, HprojectsService, HdevicesService, AreaDevice, HDevice, Area } from '@hyperiot/core';
 import { LoadingStatusEnum } from '../../project-form-entity';
@@ -6,7 +6,8 @@ import { LoadingStatusEnum } from '../../project-form-entity';
 @Component({
   selector: 'hyt-area-device-select-dialog',
   templateUrl: './area-device-select-dialog.component.html',
-  styleUrls: ['./area-device-select-dialog.component.scss']
+  styleUrls: ['./area-device-select-dialog.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class AreaDeviceSelectDialogComponent extends HytModal implements OnInit {
   projectDevices = [] as HDevice[];

@@ -99,13 +99,13 @@
             </div>
 
             <!-- Standard -->
-            <div *ngIf="!dataRecordingIsOn && signalIsOn && !recordStateInLoading" id="dashboard-overlay-blurred"
+            <div *ngIf="dataRecordingStatus < 2 && signalIsOn && !recordStateInLoading" id="dashboard-overlay-blurred"
                 class="row no-gutters justify-content-center">
 
-                <div class="col-md-4">
-                    <h2 id="overlay-blurred-title">Data recording is disabled</h2>
+                <div *ngIf="dataRecordingStatus <= 0" class="col-md-4">
+                    <h2 i18n="HYT_data_recording_is_disabled" id="overlay-blurred-title">Data recording is disabled</h2>
                     <!--@I18N-->
-                    <h3 id="overlay-blurred-text">
+                    <h3 i18n="HYT_data_recording_is_disabled_text" id="overlay-blurred-text">
                         The online dashboard cannot be used in this state.
                         You can activate data recording by pressing the "RUN" button
                         or you can use the dasboard offline taking the "OFFLINE" button.
@@ -113,13 +113,25 @@
                     <!--@I18N-->
                 </div>
 
+                <div *ngIf="dataRecordingStatus == 1" class="col-md-4">
+                    <h2 i18n="HYT_waiting_for_data" id="overlay-blurred-title">Waiting for data</h2>
+                    <!--@I18N-->
+                    <h3 i18n="HYT_waiting_for_data_text" id="overlay-blurred-text">
+                        The data recording is activated but we waiting for the data.
+                        Please waiting...
+                        If the loading state persist click "Reload" or contact the administrator.
+                    </h3>
+                    <!--@I18N-->
+                    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                </div>
+
             </div>
 
             <div id="container-box-dashboard"
-                class="col-12 {{(!dataRecordingIsOn && signalIsOn) ? 'blurred-animation' : ''}}">
+                class="col-12 {{(dataRecordingStatus < 2 && signalIsOn) ? 'blurred-animation' : ''}}">
 
                 <hyt-dashboard-view [dashboard]="currentDashboard" [dashboardType]="currentDashboardType"
-                    [dashboardWidgets]="currentDashboard.widgets">
+                    [dashboardWidgets]="currentDashboard.widgets" (dsTopologyResTimeChange)="topologyResTimeChange($event)">
                 </hyt-dashboard-view>
 
             </div>
