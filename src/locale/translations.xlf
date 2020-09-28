@@ -1067,8 +1067,8 @@
       </trans-unit>
       <trans-unit id="HYT_waiting_for_data_text" datatype="html">
         <source>The data recording is activated but we waiting for the data.
-        Please waiting...
-        If the loading state persist click "Reload" or contact the administrator.</source>
+        This operation might take a while (from 20 seconds, up to 1 minute),
+        if the loading state persist click "Reload" or contact the administrator.</source>
       </trans-unit>
     </body>
   </file>

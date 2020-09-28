@@ -103,9 +103,9 @@
                 class="row no-gutters justify-content-center">
 
                 <div *ngIf="dataRecordingStatus <= 0" class="col-md-4">
-                    <h2 i18n="HYT_data_recording_is_disabled" id="overlay-blurred-title">Data recording is disabled</h2>
+                    <h2 i18n="@@HYT_data_recording_is_disabled" id="overlay-blurred-title">Data recording is disabled</h2>
                     <!--@I18N-->
-                    <h3 i18n="HYT_data_recording_is_disabled_text" id="overlay-blurred-text">
+                    <h3 i18n="@@HYT_data_recording_is_disabled_text" id="overlay-blurred-text">
                         The online dashboard cannot be used in this state.
                         You can activate data recording by pressing the "RUN" button
                         or you can use the dasboard offline taking the "OFFLINE" button.
@@ -114,12 +114,12 @@
                 </div>
 
                 <div *ngIf="dataRecordingStatus == 1" class="col-md-4">
-                    <h2 i18n="HYT_waiting_for_data" id="overlay-blurred-title">Waiting for data</h2>
+                    <h2 i18n="@@HYT_waiting_for_data" id="overlay-blurred-title">Waiting for data</h2>
                     <!--@I18N-->
-                    <h3 i18n="HYT_waiting_for_data_text" id="overlay-blurred-text">
+                    <h3 i18n="@@HYT_waiting_for_data_text" id="overlay-blurred-text">
                         The data recording is activated but we waiting for the data.
-                        Please waiting...
-                        If the loading state persist click "Reload" or contact the administrator.
+                        This operation might take a while (from 20 seconds, up to 1 minute),
+                        if the loading state persist click "Reload" or contact the administrator.
                     </h3>
                     <!--@I18N-->
                     <mat-progress-bar mode="indeterminate"></mat-progress-bar>
