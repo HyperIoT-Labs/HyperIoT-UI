@@ -1,0 +1,111 @@
+#wiz-report-modal {
+
+    height: 80%;
+    overflow: auto;
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+    border-radius: 8px;
+  
+    &.dialog {
+      overflow: hidden;
+      background: white;
+      border: solid 1px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 0 5px 2px rgba(0, 0, 0, .35);
+      border-radius: 8px;
+      overflow-y: auto;
+    
+      .header-box {
+    
+        background-color: #70b800;
+        padding: 10px 5px;
+        text-align: center;
+        font-weight: bold;
+        font-size: 1.2em;
+        color: white;
+  
+        .row {
+  
+          &.row-box {
+            margin: 0px;
+          }
+  
+        }
+    
+      }
+    
+      .sub-header {
+    
+        font-size: 1.1em;
+        font-weight: bold;
+        padding: 5px;
+        text-align: center;
+  
+        .row {
+  
+          &.row-box {
+            margin: 0px;
+          }
+  
+        }
+    
+      }
+    
+      .container-resume {
+    
+        margin-top: 15px;
+        padding-bottom: 20px;
+        cursor: pointer;
+  
+        .row {
+  
+          &.row-box {
+            margin: 0px;
+      
+            .col-icon {
+      
+              text-align: center;
+      
+              .hexagon-container {
+      
+                margin: 0px auto 10px;
+      
+              }
+      
+              p {
+                &.title-icon {
+                  font-weight: bold;
+                  margin-bottom: 5px;
+                }
+      
+                &.body-icon {
+      
+                  font-size: .9em;
+                  color: #565656;
+                  text-align: justify;
+      
+                }
+              }
+      
+            }
+  
+          }
+  
+        }
+    
+      }
+    
+    }
+
+}
+
+.center {
+  text-align: center;
+}
+
+.white-font {
+  color: white;
+}
+
+.img-size {
+  width:70px;
+}

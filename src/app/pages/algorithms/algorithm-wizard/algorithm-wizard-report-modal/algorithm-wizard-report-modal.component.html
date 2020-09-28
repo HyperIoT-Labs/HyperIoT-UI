@@ -1,0 +1,31 @@
+<div id="wiz-report-modal" class="dialog">
+
+    <div class="header-box">
+        <div class="row row-box">
+            <div class="col-12">
+                    <ng-container i18n="@@HYT_congratulations">Congratulations</ng-container>
+            </div>
+        </div> 
+    </div> <!-- END HEADER BOX -->
+
+    <div class="sub-header">
+        <div class="row row-box">
+            <div class="col-12">
+                <p i18n="@@HYT_pw_finsh">You have finished to configure your algorithm</p>
+            </div>
+        </div>
+    </div> <!-- END SUB HEADER -->
+
+    <div class="container-resume">
+        <div class="row row-box">
+            <div class="col-3 col-icon">
+                <hyt-hexagon iconPath="icon-hyt_projects" (clicked)="goToAlgorithmsWizard()">
+                </hyt-hexagon>
+                <p class="title-icon" i18n="@@HYT_go_to_project_list">Go to algorithms list</p>
+                <br>
+                <p class="body-icon" i18n="@@HYT_go_to_project_list_long">Go to algorithms list definition. </p>
+            </div>
+        </div>
+    </div> <!-- END CONTAINER RESUME -->
+
+</div>

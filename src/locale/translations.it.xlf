@@ -1445,6 +1445,106 @@
         Questa operazione potrebbe richiedere del tempo (da 20 secondi fino a 1 minuto),
         se lo stato di caricamento persiste, fare clic su "RELOAD" o contattare l'amministratore.</target>
       </trans-unit>
+      <trans-unit id="HYT_deleting_algorithm" datatype="html">
+        <source>Deleting of algorithm "<x id="PH" />" in loading. It may take a while.</source>
+        <target>Eliminazione dell'algoritmo in corso. Questa operazione potrebbe richiedere un po' di tempo.</target>
+      </trans-unit>
+      <trans-unit id="HYT_algorithm_successfully_deleted" datatype="html">
+        <source>The algorithm was successfully deleted.</source>
+        <target>L'algoritmo è stato eliminato correttamente</target>
+      </trans-unit>
+      <trans-unit id="HYT_error_deleting_algorithm" datatype="html">
+        <source>An error occurred while deleting the algorithm.</source>
+        <target>Errore nell'eliminazione dell'algoritmo</target>
+      </trans-unit>
+      <trans-unit id="HYT_algorithms" datatype="html">
+        <source>Algorithms</source>
+        <target>Algoritmi</target>
+      </trans-unit>
+      <trans-unit id="HYT_add_new_algorithm" datatype="html">
+        <source>Add new algorithm</source>
+        <target>Aggiungi un algoritmo</target>
+      </trans-unit>
+      <trans-unit id="HYT_algorithm_list" datatype="html">
+        <source>Algorithm list</source>
+        <target>Lista algoritmi</target>
+      </trans-unit>
+      <trans-unit id="HYT_no_algorithm_found" datatype="html">
+        <source>No algorithm that matches the search found...</source>
+        <target>Nessun algoritmo trovato che soddisfi la ricerca</target>
+      </trans-unit>
+      <trans-unit id="HYT_no_algorithm" datatype="html">
+        <source>There are no algorithms!</source>
+        <target>Non ci sono algoritmi</target>
+      </trans-unit>
+      <trans-unit id="HYT_add_algorithm_button_hint" datatype="html">
+        <source>To add an algorithm click the button below.</source>
+        <target>Per aggiungere un algoritmo clicca il bottone qui sotto</target>
+      </trans-unit>
+      <trans-unit id="HYT_create_first_algorithm" datatype="html">
+        <source>Create your first algorithm</source>
+        <target>Crea il tuo primo algoritmo</target>
+      </trans-unit>
+      <trans-unit id="HYT_algorithms_wizard" datatype="html">
+        <source>Algorithms Wizard</source>
+        <target>Wizard Algoritmo</target>
+      </trans-unit>
+      <trans-unit id="HYT_algorithm_displaylistname" datatype="html">
+        <source>Algorithms</source>
+        <target>Algoritmi</target>
+      </trans-unit>
+      <trans-unit id="HYT_algorithm_form_title" datatype="html">
+        <source>Algorithms</source>
+        <target>Algoritmi</target>
+      </trans-unit>
+      <trans-unit id="HYT_algorithms_short_definition" datatype="html">
+        <source>Algorithms short definition</source>
+        <target>Algoritmi definizione breve...</target>
+      </trans-unit>
+      <trans-unit id="HYT_algorithms_definition" datatype="html">
+        <source>Algorithms definition</source>
+        <target>Algoritmi definizione ...</target>
+      </trans-unit>
+      <trans-unit id="HYT_algorithms_long_definition" datatype="html">
+        <source>Algorithms long definition</source>
+        <target>Algoritmi definizione lunga...</target>
+      </trans-unit>
+      <trans-unit id="HYT_unavailable_algorithm_name" datatype="html">
+        <source>Unavailable algorithm name</source>
+        <target>Nome algoritmo non disponibile</target>
+      </trans-unit>
+      <trans-unit id="HYT_hint_algorithm_name" datatype="html">
+        <source>Enter the algorithm name.</source>
+        <target>Inserire nome algoritmo.</target>
+      </trans-unit>
+      <trans-unit id="HYT_algorithm_packets" datatype="html">
+        <source>Packets</source>
+        <target>Pacchetti</target>
+      </trans-unit>
+      <trans-unit id="HYT_hint_algorithm_packets" datatype="html">
+        <source>Set input</source>
+        <target>Selezionare l'input</target>
+      </trans-unit>
+      <trans-unit id="HYT_hint_algorithm_description" datatype="html">
+        <source>Enter the algorithm description.</source>
+        <target>Inserire descrizione algoritmo.</target>
+      </trans-unit>
+      <trans-unit id="HYT_algorithm_input_single_packet" datatype="html">
+        <source>One packet only</source>
+        <target>Singolo pacchetto</target>
+      </trans-unit>
+      <trans-unit id="HYT_algorithm_input_more_packets" datatype="html">
+        <source>More packets</source>
+        <target>Più pacchetti</target>
+      </trans-unit>
+      <trans-unit id="HYT_algorithm_output_field" datatype="html">
+        <source>Output field</source>
+        <target>Campo output</target>
+      </trans-unit>
+      <trans-unit id="HYT_unavailable_output_field_name" datatype="html">
+        <source>Unavailable output field name</source>
+        <target>Nome campo output non disponibile</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

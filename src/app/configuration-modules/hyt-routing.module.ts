@@ -27,6 +27,8 @@ import { PacketEventsFormComponent } from '../pages/projects/project-forms/packe
 import { HomeComponent } from '../pages/home/home.component';
 import { AreasFormComponent } from '../pages/projects/project-forms/areas-form/areas-form.component';
 import { AreasViewComponent } from '../pages/areas/areas-view/areas-view.component';
+import { AlgorithmsComponent } from '../pages/algorithms/algorithms.component';
+import { AlgorithmWizardComponent } from '../pages/algorithms/algorithm-wizard/algorithm-wizard.component';
 
 @Injectable()
 export class LoggedInGuard implements CanActivate {
@@ -248,6 +250,32 @@ const hyperiotRoutes: Routes = [
     path: 'areas/:projectId/:areaId/dashboards',
     component: DashboardComponent,
     canActivate: [LoggedInGuard],
+    data: {
+      showToolBar: true,
+    }
+  },
+  {
+    path: 'algorithms',
+    component: AlgorithmsComponent,
+    canActivate: [LoggedInGuard],
+    data: {
+      showToolBar: true,
+    }
+  },
+  {
+    path: 'algorithm-wizard',
+    component: AlgorithmWizardComponent,
+    canActivate: [LoggedInGuard],
+    canDeactivate: [CanDeactivateGuard],
+    data: {
+      showToolBar: true,
+    }
+  },
+  {
+    path: 'algorithm-wizard/:id',
+    component: AlgorithmWizardComponent,
+    canActivate: [LoggedInGuard],
+    canDeactivate: [CanDeactivateGuard],
     data: {
       showToolBar: true,
     }
