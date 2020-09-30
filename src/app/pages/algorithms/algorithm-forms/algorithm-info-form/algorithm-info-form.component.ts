@@ -2,9 +2,7 @@ import { Component, ViewChild, ElementRef, Injector, ChangeDetectorRef, ViewEnca
 
 import { Observable, Subject, PartialObserver } from 'rxjs';
 
-import { Option } from '@hyperiot/components';
-
-import { AlgorithmsService, Algorithm, AlgorithmInput } from '@hyperiot/core';
+import { AlgorithmsService, Algorithm } from '@hyperiot/core';
 
 import { AlgorithmFormEntity, LoadingStatusEnum } from '../algorithm-form-entity';
 
@@ -17,11 +15,6 @@ import { AlgorithmFormEntity, LoadingStatusEnum } from '../algorithm-form-entity
 export class AlgorithmInfoFormComponent extends AlgorithmFormEntity implements AfterViewInit, OnInit {
 
   algorithm: Algorithm;
-
-  algorithmInputPacketsOptions: Option[] = [
-    { value: 'packets.single', label: $localize`:@@HYT_algorithm_input_single_packet:One packet only`, checked: true },
-    { value: 'packets.more', label: $localize`:@@HYT_algorithm_input_more_packets:More packets`}
-  ];
 
   algorithmObserver: PartialObserver<Algorithm> = {
     next: res => {
@@ -81,34 +74,6 @@ export class AlgorithmInfoFormComponent extends AlgorithmFormEntity implements A
     this.cdr.detectChanges();
   }
 
-  edit(algorithm?: Algorithm, readyCallback?) {
-    const proceedWithEdit = () => {
-      this.showCancel = true;
-      this.editMode = true;
-      super.edit(algorithm, () => {
-        const baseConfig = JSON.parse(this.entity.baseConfig);
-        if (baseConfig.input.multiplicity === AlgorithmInput.MultiplicityEnum.SINGLE) {
-          this.form.get('algorithm-packets').setValue(this.algorithmInputPacketsOptions[0].value);
-        } else {
-          this.form.get('algorithm-packets').setValue(this.algorithmInputPacketsOptions[1].value);
-        }
-        if (readyCallback) {
-          readyCallback();
-        }
-      });
-    };
-    const canDeactivate = this.canDeactivate();
-    if (typeof canDeactivate === 'boolean' && canDeactivate === true) {
-      proceedWithEdit();
-    } else {
-      (canDeactivate as Observable<any>).subscribe((res) => {
-        if (res) {
-          proceedWithEdit();
-        }
-      });
-    }
-  }
-
   getCustomClass() {
     if (this.showPreloader) {
       if (this.divHeight > 353) { /* BIG */
@@ -163,12 +128,6 @@ export class AlgorithmInfoFormComponent extends AlgorithmFormEntity implements A
 
     let p = this.entity;
     const baseConfigObject = JSON.parse(p.baseConfig);
-    if (this.form.get('algorithm-packets').value === 'packets.single') {
-      baseConfigObject.input.multiplicity = AlgorithmInput.MultiplicityEnum.SINGLE;
-    }
-    else {
-      baseConfigObject.input.multiplicity = AlgorithmInput.MultiplicityEnum.ARRAY;
-    }
     p.name = this.form.get('algorithm-name').value;
     p.description = this.form.get('algorithm-description').value;
     p.baseConfig = JSON.stringify(baseConfigObject);

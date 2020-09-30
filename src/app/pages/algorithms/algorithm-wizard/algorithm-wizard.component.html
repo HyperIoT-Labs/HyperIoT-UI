@@ -15,6 +15,10 @@
         <hyt-algorithm-info-form [currentAlgorithmSubject]="currentAlgorithmSubject" #algorithmInfoForm (entityEvent)="onEntityEvent($event)"></hyt-algorithm-info-form>
       </ng-template>
 
+      <ng-template #inputFieldsTemplate>
+        <hyt-input-fields-form [currentAlgorithmSubject]="currentAlgorithmSubject" #inputFieldsForm (entityEvent)="onEntityEvent($event)"></hyt-input-fields-form>
+      </ng-template>
+
       <ng-template #outputFieldsTemplate>
         <hyt-output-fields-form [currentAlgorithmSubject]="currentAlgorithmSubject" #outputFieldsForm (entityEvent)="onEntityEvent($event)"></hyt-output-fields-form>
       </ng-template>
@@ -28,20 +32,24 @@
           <hyt-stepper #stepper (selectionChange)="stepChanged($event)" [isLinear]="true" style="width: 100%"
             [stepArray]="[
               algorithmInfoTemplate,
+              inputFieldsTemplate,
               outputFieldsTemplate,
               algorithmJarTemplate
             ]" [labelArray]="[
               entitiesService.algorithm.displayListName,
+              'Input',
               'Output',
               'JAR'
             ]" [completedArray]="[
               currentAlgorithm != null,
+              currentInput.length > 0,
               currentOutput.length > 0,
-              currentAlgorithm != null && currentAlgorithm.jarName
+              currentAlgorithm != null && currentAlgorithm.jarName != null
             ]" [isDirty]="[
               getDirty(0),
               getDirty(1),
-              getDirty(2)
+              getDirty(2),
+              getDirty(3)
             ]">
           </hyt-stepper>
         </div>
@@ -82,7 +90,7 @@
           <div [ngClass]="{'offset-6': currentStepIndex == 0}" class="col-6">
 
             <hyt-button class="toRight" [color]="'hyt-stepper-next'" [isDisabled]="isNextDisabled()" 
-              (clickFn)="currentStepIndex == 2 ? openFinishModal() : stepper.next()"
+              (clickFn)="currentStepIndex == 3 ? openFinishModal() : stepper.next()"
             >
             <ng-container i18n="@@HYT_next">Next</ng-container> <span class="hyt-icon icon-hyt_arrowRight"></span>
             </hyt-button>

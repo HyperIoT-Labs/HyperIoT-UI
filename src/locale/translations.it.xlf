@@ -1545,6 +1545,14 @@
         <source>Unavailable output field name</source>
         <target>Nome campo output non disponibile</target>
       </trans-unit>
+      <trans-unit id="HYT_unavailable_input_field_name" datatype="html">
+        <source>Unavailable input field name</source>
+        <target>Nome campo input non disponibile</target>
+      </trans-unit>
+      <trans-unit id="HYT_algorithm_input_field" datatype="html">
+        <source>Input field</source>
+        <target>Campo input</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

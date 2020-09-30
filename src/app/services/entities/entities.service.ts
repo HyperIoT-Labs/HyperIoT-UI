@@ -226,9 +226,9 @@ export class EntitiesService {
     emptyModel: {
       name: '',
       description: '',
-      baseConfig: '{\"input\":{\"multiplicity\":\"SINGLE\"}, \"output\":[]}',
+      baseConfig: '{\"input\":[], \"output\":[]}',
       entityVersion: 1,
-      jarName: ''
+      jarName: null
     }
   };
 

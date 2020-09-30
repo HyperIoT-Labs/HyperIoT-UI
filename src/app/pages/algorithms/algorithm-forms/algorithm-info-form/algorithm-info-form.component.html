@@ -6,7 +6,7 @@
 
         <div class="form-group row">
 
-            <div id="fpack-col-name" class="col-6">
+            <div id="fpack-col-name" class="col-12">
 
                 <hyt-input-text 
                     name="algorithm-name" i18n-placeholder="@@HYT_name" placeholder="Name" [form]="form"
@@ -18,22 +18,6 @@
                 </hyt-input-text>
 
             </div>
-
-            <div id="falgorithm-col-event" class="col-6">
-
-                <p id="label-algorithm-input" i18n="@@HYT_algorithm_packets">Packets</p>
-                
-                <div id="container-radio-algorithms">
-        
-                  <hyt-radio-button 
-                    [form]="form" 
-                    [options]="algorithmInputPacketsOptions" 
-                    name="algorithm-packets">
-                  </hyt-radio-button>
-        
-                </div>
-        
-              </div>
 
         </div> <!-- First Row -->
 

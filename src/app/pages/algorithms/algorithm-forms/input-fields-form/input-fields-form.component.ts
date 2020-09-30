@@ -10,31 +10,25 @@ import { Node, HytTreeViewEditableComponent } from '@hyperiot/components/lib/hyt
 import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
 
 @Component({
-  selector: 'hyt-output-fields-form',
-  templateUrl: './output-fields-form.component.html',
-  styleUrls: ['./output-fields-form.component.scss'],
+  selector: 'hyt-input-fields-form',
+  templateUrl: './input-fields-form.component.html',
+  styleUrls: ['./input-fields-form.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class OutputFieldsFormComponent extends AlgorithmFormEntity implements OnInit, AfterViewInit {
+export class InputFieldsFormComponent extends AlgorithmFormEntity implements OnInit, AfterViewInit {
 
   @Input() currentAlgorithmSubject: Subject<Algorithm>;
-  output: AlgorithmIOField[];
+  input: AlgorithmIOField[];
 
   private overlayHeight: ElementRef;
   @ViewChild('overlayHeight') set content(content: ElementRef) {
-
     if (!content) {
-
       this.showPreloader = false;
       return;
-
     } else {
-
       this.showPreloader = true;
       this.overlayHeight = content;
-
     }
-
   }
 
   algorithmObserver: PartialObserver<Algorithm> = {
@@ -55,26 +49,26 @@ export class OutputFieldsFormComponent extends AlgorithmFormEntity implements On
   fieldTypeOptions: Option[] = Object.keys(AlgorithmIOField.FieldTypeEnum)
     .map((k) => ({ label: k, value: k }));
 
-  currentOutputField: AlgorithmIOField;
+  currentInputField: AlgorithmIOField;
 
-  outputFieldsTree = [] as Node[];
+  inputFieldsTree = [] as Node[];
 
-  formTitle = 'Algorithm Output Fields';
+  formTitle = 'Algorithm Input Fields';
 
   entityFormMap = {
-    'outputField-name': {
+    'inputField-name': {
       field: 'name',
       default: null
     },
-    'outputField-description': {
+    'inputField-description': {
       field: 'description',
       default: null
     },
-    'outputField-type': {
+    'inputField-type': {
       field: 'fieldType',
       default: null
     },
-    'outputField-multiplicity': {
+    'inputField-multiplicity': {
       field: 'multiplicity',
       default: 'SINGLE'
     }
@@ -86,7 +80,7 @@ export class OutputFieldsFormComponent extends AlgorithmFormEntity implements On
     private cdr: ChangeDetectorRef
   ) {
     super(injector);
-    this.formTemplateId = 'container-output-field';
+    this.formTemplateId = 'container-input-field';
     this.longDefinition = this.entitiesService.algorithm.longDefinition;
     this.formTitle = this.entitiesService.algorithm.formTitle;
     this.icon = this.entitiesService.algorithm.icon;
@@ -108,7 +102,7 @@ export class OutputFieldsFormComponent extends AlgorithmFormEntity implements On
 
   // fields treeview methods
   addField(e) {
-    this.currentOutputField = this.newEntity() as AlgorithmIOField;
+    this.currentInputField = this.newEntity() as AlgorithmIOField;
     this.showCancel = true;
     this.loadFormData();
   }
@@ -116,7 +110,7 @@ export class OutputFieldsFormComponent extends AlgorithmFormEntity implements On
   cancel() {
     this.resetForm();
     this.showCancel = false;
-    this.currentOutputField = null;
+    this.currentInputField = null;
   }
 
   private createFieldsTree(nodes: any) {
@@ -132,7 +126,7 @@ export class OutputFieldsFormComponent extends AlgorithmFormEntity implements On
 
   editField(e) {
     const proceedWithEdit = () => {
-      this.currentOutputField = e.data;
+      this.currentInputField = e.data;
       this.showCancel = true;
       this.loadFormData();
     };
@@ -150,9 +144,9 @@ export class OutputFieldsFormComponent extends AlgorithmFormEntity implements On
 
   loadData() {
     this.algorithmsService.getBaseConfig(this.entity.id).subscribe(res => {
-      this.outputFieldsTree = this.createFieldsTree(res.output);
+      this.inputFieldsTree = this.createFieldsTree(res.input);
       if (this.treeViewFields) {
-        this.treeViewFields.refresh(this.outputFieldsTree, this.entity.name);
+        this.treeViewFields.refresh(this.inputFieldsTree, this.entity.name);
       }
       this.resetForm();
     });
@@ -160,10 +154,10 @@ export class OutputFieldsFormComponent extends AlgorithmFormEntity implements On
   }
 
   private loadFormData() {
-    this.form.get('outputField-name').setValue(this.currentOutputField.name);
-    this.form.get('outputField-description').setValue(this.currentOutputField.description);
-    this.form.get('outputField-multiplicity').setValue(this.currentOutputField.multiplicity);
-    this.form.get('outputField-type').setValue(this.currentOutputField.fieldType);
+    this.form.get('inputField-name').setValue(this.currentInputField.name);
+    this.form.get('inputField-description').setValue(this.currentInputField.description);
+    this.form.get('inputField-multiplicity').setValue(this.currentInputField.multiplicity);
+    this.form.get('inputField-type').setValue(this.currentInputField.fieldType);
     // reset form
     this.resetForm();
   }
@@ -180,10 +174,10 @@ export class OutputFieldsFormComponent extends AlgorithmFormEntity implements On
     });
     dialogRef.onClosed.subscribe((result) => {
       if (result === 'delete') {
-        if (this.currentOutputField && this.currentOutputField.id === fieldId) {
-          this.currentOutputField = null;
+        if (this.currentInputField && this.currentInputField.id === fieldId) {
+          this.currentInputField = null;
         }
-        this.algorithmsService.deleteIOField(this.entity.id, AlgorithmIOField.TypeEnum.OUTPUT, fieldId).subscribe(
+        this.algorithmsService.deleteIOField(this.entity.id, AlgorithmIOField.TypeEnum.INPUT, fieldId).subscribe(
           res => {
             this.entityEvent.emit({
               event: 'pw:algorithm-updated',
@@ -210,21 +204,21 @@ export class OutputFieldsFormComponent extends AlgorithmFormEntity implements On
   private saveAlgorithm(successCallback, errorCallback) {
     this.loadingStatus = LoadingStatusEnum.Saving;
     this.resetErrors();
-    this.currentOutputField.name = this.form.get('outputField-name').value;
-    this.currentOutputField.description = this.form.get('outputField-description').value;
-    this.currentOutputField.multiplicity = this.form.get('outputField-multiplicity').value;
-    this.currentOutputField.fieldType = this.form.get('outputField-type').value;
-    this.currentOutputField.type = AlgorithmIOField.TypeEnum.OUTPUT;
+    this.currentInputField.name = this.form.get('inputField-name').value;
+    this.currentInputField.description = this.form.get('inputField-description').value;
+    this.currentInputField.multiplicity = this.form.get('inputField-multiplicity').value;
+    this.currentInputField.fieldType = this.form.get('inputField-type').value;
+    this.currentInputField.type = AlgorithmIOField.TypeEnum.INPUT;
     let saveObservable: Observable<any>;
-    if (this.currentOutputField.id > 0) {
+    if (this.currentInputField.id > 0) {
       saveObservable = this.algorithmsService
-        .updateIOField(this.entity.id, this.currentOutputField);
+        .updateIOField(this.entity.id, this.currentInputField);
     } else {
       saveObservable = this.algorithmsService
-        .addIOField(this.entity.id, this.currentOutputField);
+        .addIOField(this.entity.id, this.currentInputField);
     }
     saveObservable.subscribe((res) => {
-      this.currentOutputField = null; // closes the field editing form
+      this.currentInputField = null; // closes the field editing form
       this.form.reset();
       this.showCancel = false;
       this.entityEvent.emit({
@@ -243,8 +237,8 @@ export class OutputFieldsFormComponent extends AlgorithmFormEntity implements On
       switch (err.error.type) {
         case 'it.acsoftware.hyperiot.base.exception.HyperIoTDuplicateEntityException': {
           this.validationError = [
-            { message: $localize`:@@HYT_unavailable_output_field_name:Unavailable output field name`, field: 'outputField-name', invalidValue: '' }];
-          this.form.get('outputField-name').setErrors({
+            { message: $localize`:@@HYT_unavailable_input_field_name:Unavailable input field name`, field: 'inputField-name', invalidValue: '' }];
+          this.form.get('inputField-name').setErrors({
             validateInjectedError: {
               valid: false
             }
@@ -264,5 +258,4 @@ export class OutputFieldsFormComponent extends AlgorithmFormEntity implements On
       this.loadingStatus = LoadingStatusEnum.Error;
     }
   }
-
 }

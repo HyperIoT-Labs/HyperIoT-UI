@@ -1157,6 +1157,12 @@
       <trans-unit id="HYT_unavailable_output_field_name" datatype="html">
         <source>Unavailable output field name</source>
       </trans-unit>
+      <trans-unit id="HYT_unavailable_input_field_name" datatype="html">
+        <source>Unavailable input field name</source>
+      </trans-unit>
+      <trans-unit id="HYT_algorithm_input_field" datatype="html">
+        <source>Input field</source>
+      </trans-unit>
     </body>
   </file>
 </xliff>

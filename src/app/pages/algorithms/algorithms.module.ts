@@ -27,6 +27,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { OutputFieldsFormComponent } from './algorithm-forms/output-fields-form/output-fields-form.component';
 import { AlgorithmJarFormComponent } from './algorithm-forms/algorithm-jar-form/algorithm-jar-form.component';
 import { AlgorithmWizardReportModalComponent } from './algorithm-wizard/algorithm-wizard-report-modal/algorithm-wizard-report-modal.component';
+import { InputFieldsFormComponent } from './algorithm-forms/input-fields-form/input-fields-form.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { AlgorithmWizardReportModalComponent } from './algorithm-wizard/algorith
     AlgorithmWizardComponent,
     OutputFieldsFormComponent,
     AlgorithmJarFormComponent,
-    AlgorithmWizardReportModalComponent
+    AlgorithmWizardReportModalComponent,
+    InputFieldsFormComponent
   ],
   imports: [
     MatIconModule,

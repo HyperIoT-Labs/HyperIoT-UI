@@ -2,12 +2,13 @@ import { AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation } from '
 import { ActivatedRoute } from '@angular/router';
 import { HytModalService } from '@hyperiot/components';
 import { HytStepperComponent } from '@hyperiot/components/lib/hyt-stepper/hyt-stepper.component';
-import { Algorithm, AlgorithmOutputField, AlgorithmsService } from '@hyperiot/core';
+import { Algorithm, AlgorithmIOField, AlgorithmsService } from '@hyperiot/core';
 import { Subject } from 'rxjs';
 import { EntitiesService } from 'src/app/services/entities/entities.service';
 import { AlgorithmFormEntity, LoadingStatusEnum } from '../algorithm-forms/algorithm-form-entity';
 import { AlgorithmInfoFormComponent } from '../algorithm-forms/algorithm-info-form/algorithm-info-form.component';
 import { AlgorithmJarFormComponent } from '../algorithm-forms/algorithm-jar-form/algorithm-jar-form.component';
+import { InputFieldsFormComponent } from '../algorithm-forms/input-fields-form/input-fields-form.component';
 import { OutputFieldsFormComponent } from '../algorithm-forms/output-fields-form/output-fields-form.component';
 import { AlgorithmWizardReportModalComponent } from './algorithm-wizard-report-modal/algorithm-wizard-report-modal.component';
 
@@ -24,7 +25,8 @@ export class AlgorithmWizardComponent implements OnInit, AfterViewInit {
   currentAlgorithm: Algorithm;
   currentAlgorithmSubject: Subject<Algorithm> = new Subject<Algorithm>();
   currentForm: AlgorithmFormEntity;
-  currentOutput: AlgorithmOutputField[] = [];
+  currentInput: AlgorithmIOField[] = [];
+  currentOutput: AlgorithmIOField[] = [];
   currentStepIndex = 0;
 
   finishData: { iconPath: string, type: string, entities: string[] }[] = [];
@@ -35,6 +37,9 @@ export class AlgorithmWizardComponent implements OnInit, AfterViewInit {
 
   @ViewChild('algorithmInfoForm')
   algorithmInfoForm: AlgorithmInfoFormComponent;
+
+  @ViewChild('inputFieldsForm')
+  inputFieldsForm: InputFieldsFormComponent;
 
   @ViewChild('outputFieldsForm')
   outputFieldsForm: OutputFieldsFormComponent;
@@ -62,6 +67,7 @@ export class AlgorithmWizardComponent implements OnInit, AfterViewInit {
       if (this.algorithmId) {
         this.algorithmsService.findAlgorithm(this.algorithmId).subscribe((a: Algorithm) => {
           this.currentAlgorithm = a;
+          this.currentInput = JSON.parse(this.currentAlgorithm.baseConfig).input;
           this.currentOutput = JSON.parse(this.currentAlgorithm.baseConfig).output;
           this.currentAlgorithmSubject.next(this.currentAlgorithm);
         });
@@ -79,9 +85,12 @@ export class AlgorithmWizardComponent implements OnInit, AfterViewInit {
         return (this.algorithmInfoForm) ? this.algorithmInfoForm.isDirty() : false;
       }
       case 1: {
-        return (this.outputFieldsForm) ? this.outputFieldsForm.isDirty() : false;
+        return (this.inputFieldsForm) ? this.inputFieldsForm.isDirty() : false;
       }
       case 2: {
+        return (this.outputFieldsForm) ? this.outputFieldsForm.isDirty() : false;
+      }
+      case 3: {
         return (this.algorithmJarForm) ? this.algorithmJarForm.isDirty() : false;
       }
       default: {
@@ -100,9 +109,12 @@ export class AlgorithmWizardComponent implements OnInit, AfterViewInit {
         return !this.currentAlgorithm;
       }
       case 1: {
-        return this.currentOutput.length === 0;
+        return this.currentInput.length === 0;
       }
       case 2: {
+        return this.currentOutput.length === 0;
+      }
+      case 3: {
         return !this.currentAlgorithm.jarName || this.currentAlgorithm.jarName.length === 0;
       }
     }
@@ -126,6 +138,7 @@ export class AlgorithmWizardComponent implements OnInit, AfterViewInit {
         break;
       case 'pw:algorithm-updated':
         this.currentAlgorithm = data.algorithm;
+        this.currentInput = JSON.parse(this.currentAlgorithm.baseConfig).input;
         this.currentOutput = JSON.parse(this.currentAlgorithm.baseConfig).output;
         this.currentAlgorithmSubject.next(this.currentAlgorithm);
         break;
@@ -153,7 +166,7 @@ export class AlgorithmWizardComponent implements OnInit, AfterViewInit {
   }
 
   showCancel(): boolean {
-    return this.currentForm instanceof OutputFieldsFormComponent;
+    return this.currentForm instanceof InputFieldsFormComponent || this.currentForm instanceof OutputFieldsFormComponent;
   }
 
   showHintMessage(message: string): void {
@@ -170,10 +183,14 @@ export class AlgorithmWizardComponent implements OnInit, AfterViewInit {
         break;
       }
       case 1: {
-        this.currentForm = this.outputFieldsForm;
+        this.currentForm = this.inputFieldsForm;
         break;
       }
       case 2: {
+        this.currentForm = this.outputFieldsForm;
+        break;
+      }
+      case 3: {
         this.currentForm = this.algorithmJarForm;
         break;
       }
