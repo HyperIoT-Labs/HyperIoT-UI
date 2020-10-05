@@ -98,11 +98,6 @@ export class OutputFieldsFormComponent extends AlgorithmFormEntity implements On
   }
 
   ngAfterViewInit() {
-    if (this.entity) {
-      this.load();
-    } else {
-      this.loadEmpty();
-    }
     this.cdr.detectChanges();
   }
 
@@ -166,12 +161,6 @@ export class OutputFieldsFormComponent extends AlgorithmFormEntity implements On
     this.form.get('outputField-type').setValue(this.currentOutputField.fieldType);
     // reset form
     this.resetForm();
-  }
-
-  loadEmpty() {
-    this.form.reset();
-    this.entity = { ...this.entitiesService.algorithm.emptyModel };
-    this.edit();
   }
 
   private openDelete(fieldId: number) {

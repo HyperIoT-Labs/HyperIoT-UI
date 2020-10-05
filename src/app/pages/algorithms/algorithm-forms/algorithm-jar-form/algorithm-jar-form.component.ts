@@ -73,11 +73,7 @@ export class AlgorithmJarFormComponent extends AlgorithmFormEntity implements Af
   }
 
   ngAfterViewInit() {
-    if (this.algorithm) {
-      this.load();
-    } else {
-      this.loadEmpty();
-    }
+    this.loadEmpty();
     this.cdr.detectChanges();
   }
 

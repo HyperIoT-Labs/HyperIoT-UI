@@ -92,11 +92,6 @@ export class InputFieldsFormComponent extends AlgorithmFormEntity implements OnI
   }
 
   ngAfterViewInit() {
-    if (this.entity) {
-      this.load();
-    } else {
-      this.loadEmpty();
-    }
     this.cdr.detectChanges();
   }
 
@@ -160,12 +155,6 @@ export class InputFieldsFormComponent extends AlgorithmFormEntity implements OnI
     this.form.get('inputField-type').setValue(this.currentInputField.fieldType);
     // reset form
     this.resetForm();
-  }
-
-  loadEmpty() {
-    this.form.reset();
-    this.entity = { ...this.entitiesService.algorithm.emptyModel };
-    this.edit();
   }
 
   private openDelete(fieldId: number) {

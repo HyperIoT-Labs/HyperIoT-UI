@@ -66,11 +66,7 @@ export class AlgorithmInfoFormComponent extends AlgorithmFormEntity implements A
   }
 
   ngAfterViewInit() {
-    if (this.algorithm) {
-      this.load();
-    } else {
-      this.loadEmpty();
-    }
+    this.loadEmpty();
     this.cdr.detectChanges();
   }
 
