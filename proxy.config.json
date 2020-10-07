@@ -101,5 +101,11 @@
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
+  },
+  "/hyperiot/hprojectalgorithms/*": {
+    "target": "http://karaf-microservices-test.hyperiot.cloud",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
   }
 }

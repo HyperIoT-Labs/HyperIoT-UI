@@ -269,7 +269,7 @@
         <source>Statistics</source>
       </trans-unit>
       <trans-unit id="HYT_statistic_form_title" datatype="html">
-        <source>Packet Statistics</source>
+        <source>Project Statistics</source>
       </trans-unit>
       <trans-unit id="HYT_statistics_short_definition" datatype="html">
         <source>Statistics short definition...</source>

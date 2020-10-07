@@ -178,12 +178,18 @@ export class EntitiesService {
     // displayName: 'Statistic',
     displayListName: $localize`:@@HYT_statistic_displaylistname:Statistics`,
     // pluralName: 'Statistics',
-    formTitle: $localize`:@@HYT_statistic_form_title:Packet Statistics`,
+    formTitle: $localize`:@@HYT_statistic_form_title:Project Statistics`,
     shortDefinition: $localize`:@@HYT_statistics_short_definition:Statistics short definition...`,
     definition: $localize`:@@HYT_statistics_definition:Statistics definition...`,
     longDefinition: $localize`:@@HYT_statistics_long_definition:Statistics long definition...`,
     icon: 'icon-hyt_statistics',
-    iconPlus: 'icon-hyt_statisticsPlus'
+    iconPlus: 'icon-hyt_statisticsPlus',
+    emptyModel: {
+      config: '',
+      algorithm: null,
+      cronExpression: '0 0 1/1 * *',
+      entityVersion: 1
+    }
   };
 
   /**

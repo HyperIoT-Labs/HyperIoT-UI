@@ -16,7 +16,6 @@ import { PacketFormComponent } from './project-forms/packet-form/packet-form.com
 import { PacketFieldsFormComponent } from './project-forms/packet-fields-form/packet-fields-form.component';
 import { PacketEnrichmentFormComponent } from './project-forms/packet-enrichment-form/packet-enrichment-form.component';
 import { RuleDefinitionComponent } from './project-forms/rule-definition/rule-definition.component';
-import { PacketStatisticsFormComponent } from './project-forms/packet-statistics-form/packet-statistics-form.component';
 import { PacketEventsFormComponent } from './project-forms/packet-events-form/packet-events-form.component';
 import { EventMailComponent } from './project-forms/packet-events-form/event-mail/event-mail.component';
 import { SelectableTextComponent } from './project-forms/packet-events-form/event-mail/selectable-text/selectable-text.component';
@@ -43,6 +42,8 @@ import {
 } from '@angular/material';
 import { MatExpansionModule } from '@angular/material/expansion';
 
+import { CronEditorModule } from 'ngx-cron-editor';
+
 import { StatisticsStepComponent } from './project-wizard/statistics-step/statistics-step.component';
 import { WizardReportModalComponent } from './project-wizard/wizard-report-modal/wizard-report-modal.component';
 import { WizardOptionsModalComponent } from './project-wizard/wizard-options-modal/wizard-options-modal.component';
@@ -64,6 +65,8 @@ import { AreaInnerareaSelectDialogComponent } from './project-forms/areas-form/a
 import { AreasListComponent } from './project-forms/areas-form/areas-list/areas-list.component';
 import { FourierTransformComponent } from './project-forms/packet-enrichment-form/fourier-transform/fourier-transform.component';
 import { GenericMessageDialogComponent } from 'src/app/components/modals/generic-message-dialog/generic-message-dialog.component';
+import { ProjectStatisticsFormComponent } from './project-forms/project-statistics-form/project-statistics-form.component';
+import { StatisticInputDefinitionComponent } from './project-forms/project-statistics-form/statistic-input-definition/statistic-input-definition.component';
 
 @NgModule({
   declarations: [
@@ -81,7 +84,6 @@ import { GenericMessageDialogComponent } from 'src/app/components/modals/generic
     SelectableTextComponent,
     PacketFieldsFormComponent,
     PacketEnrichmentFormComponent,
-    PacketStatisticsFormComponent,
     PacketEventsFormComponent,
     SelectableTextComponent,
     PacketSelectComponent,
@@ -105,7 +107,9 @@ import { GenericMessageDialogComponent } from 'src/app/components/modals/generic
     AreaInnerareaSelectDialogComponent,
     AreasListComponent,
     FourierTransformComponent,
-    GenericMessageDialogComponent
+    GenericMessageDialogComponent,
+    ProjectStatisticsFormComponent,
+    StatisticInputDefinitionComponent
   ],
   imports: [
     MatIconModule,
@@ -126,7 +130,8 @@ import { GenericMessageDialogComponent } from 'src/app/components/modals/generic
     MatInputModule,
     MatExpansionModule,
     DragDropModule,
-    MatListModule
+    MatListModule,
+    CronEditorModule
   ],
   entryComponents: [
     AddTagModalComponent,

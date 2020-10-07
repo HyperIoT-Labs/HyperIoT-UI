@@ -65,9 +65,7 @@
       </ng-template>
 
       <ng-template #statisticsTemplate>
-        <hyt-pw-packet-select [hDevices]="hDevices" [hPackets]="hPackets">
-        </hyt-pw-packet-select>
-        <hyt-statistics-step></hyt-statistics-step>
+        <hyt-project-statistics-form #statisticsForm [currentProject]="currentProject"></hyt-project-statistics-form>
       </ng-template>
 
       <ng-template #eventsTemplate>
