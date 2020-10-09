@@ -1,0 +1,33 @@
+<div class="row statisticInputDefinition">
+
+    <div class="col-12">
+        <span class="add-statistic-input hyt-icon icon-hyt_plusC" (click)="addStatisticInput()"></span>
+    </div>
+
+    <div *ngFor="let statisticInputForm of statisticInputForms; let i = index" class="col-12">
+        <form [formGroup]="statisticInputForm.form" autocomplete="on">
+            <div class="form-group row">
+
+                <div class="container-first-form-field col-5">
+                    <hyt-select [form]="statisticInputForm.form" [options]="packetOptions" formControlName="packet" name="packet"
+                        [isRequired]="true" i18n-label="@@HYT_packet" label="Packet" (changeFn)="packetChanged($event.value, i)">
+                    </hyt-select>
+                </div> <!-- Field Packet -->
+
+                <div class="container-first-form-field col-5">
+                    <hyt-select [form]="statisticInputForm.form" [options]="statisticInputForm.fieldOptions" formControlName="field" name="field"
+                        [isRequired]="true" i18n-label="@@HYT_field" label="Field">
+                    </hyt-select>
+                </div> <!-- Field Field -->
+
+                <div class="container-delete-statistic-input col-2">
+
+                    <span *ngIf="i!=0" class="hyt-icon icon-hyt_cancel" (click)="removeStatisticInput(i)"></span>
+
+                </div> <!-- Remove packet -->
+
+            </div>
+        </form>
+    </div>
+  
+</div>

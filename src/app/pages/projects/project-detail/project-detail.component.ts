@@ -11,6 +11,7 @@ import { ProjectFormEntity } from '../project-forms/project-form-entity';
 import { SaveChangesDialogComponent } from 'src/app/components/dialogs/save-changes-dialog/save-changes-dialog.component';
 import { PacketEnrichmentFormComponent } from '../project-forms/packet-enrichment-form/packet-enrichment-form.component';
 import { PacketEventsFormComponent } from '../project-forms/packet-events-form/packet-events-form.component';
+import { ProjectStatisticsFormComponent } from '../project-forms/project-statistics-form/project-statistics-form.component';
 
 enum TreeStatusEnum {
   Ready,
@@ -95,13 +96,17 @@ export class ProjectDetailComponent implements OnInit {
       if (this.currentEntity instanceof PacketEnrichmentFormComponent) {
         (this.currentEntity as PacketEnrichmentFormComponent).showCover = true;
       }
+      if (this.currentEntity instanceof ProjectStatisticsFormComponent) {
+        (this.currentEntity as ProjectStatisticsFormComponent).showCover = true;
+      }
     }
   }
 
   onSaveClick() {
     this.validationErrors = [];
     this.currentEntity.save((res) => {
-      if (this.currentEntity instanceof PacketEnrichmentFormComponent || this.currentEntity instanceof PacketEventsFormComponent) {
+      if (this.currentEntity instanceof PacketEnrichmentFormComponent || this.currentEntity instanceof PacketEventsFormComponent 
+        || this.currentEntity instanceof ProjectStatisticsFormComponent) {
         this.currentEntity.editMode = false;
       }
     }, (err) => {
@@ -119,17 +124,17 @@ export class ProjectDetailComponent implements OnInit {
 
   onSummaryMenuClick(e) {
 
-    const rule = Object.assign({}, e.item.data as Rule);
+    const entity = Object.assign({}, e.item.data);
 
     switch (e.action) {
       case 'edit':
-        this.currentEntity.edit(rule);
+        this.currentEntity.edit(entity);
         break;
       case 'duplicate':
-        this.currentEntity.clone(rule);
+        this.currentEntity.clone(entity);
         break;
       case 'delete':
-        this.currentEntity.edit(rule, this.currentEntity.openDeleteDialog((del) => {
+        this.currentEntity.edit(entity, this.currentEntity.openDeleteDialog((del) => {
           this.currentEntity.editMode = false;
         }));
         break;

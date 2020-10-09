@@ -2,7 +2,7 @@ import { AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation } from '
 import { ActivatedRoute } from '@angular/router';
 import { HytModalService, Option } from '@hyperiot/components';
 import { HytStepperComponent } from '@hyperiot/components/lib/hyt-stepper/hyt-stepper.component';
-import { HDevice, HdevicesService, HPacket, HpacketsService, HProject, Rule } from '@hyperiot/core';
+import { HDevice, HdevicesService, HPacket, HpacketsService, HProject, HProjectAlgorithm, HprojectalgorithmsService, Rule } from '@hyperiot/core';
 import { Observable, Observer } from 'rxjs';
 import { EntitiesService } from 'src/app/services/entities/entities.service';
 import { SummaryListItem } from '../project-detail/generic-summary-list/generic-summary-list.component';
@@ -12,9 +12,9 @@ import { PacketEnrichmentFormComponent } from '../project-forms/packet-enrichmen
 import { PacketEventsFormComponent } from '../project-forms/packet-events-form/packet-events-form.component';
 import { PacketFieldsFormComponent } from '../project-forms/packet-fields-form/packet-fields-form.component';
 import { PacketFormComponent } from '../project-forms/packet-form/packet-form.component';
-import { PacketStatisticsFormComponent } from '../project-forms/packet-statistics-form/packet-statistics-form.component';
 import { ProjectFormEntity } from '../project-forms/project-form-entity';
 import { ProjectFormComponent } from '../project-forms/project-form/project-form.component';
+import { ProjectStatisticsFormComponent } from '../project-forms/project-statistics-form/project-statistics-form.component';
 import { DeviceSelectComponent } from './device-select/device-select.component';
 import { PacketSelectComponent } from './packet-select/packet-select.component';
 import { WizardDeactivationModalComponent } from './wizard-deactivation-modal/wizard-deactivation-modal.component';
@@ -61,7 +61,8 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
   @ViewChild('enrichmentForm')
   enrichmentForm: PacketEnrichmentFormComponent;
 
-  statisticsForm: PacketStatisticsFormComponent;
+  @ViewChild('statisticsForm')
+  statisticsForm: ProjectStatisticsFormComponent;
 
   @ViewChild('eventPacketSelect')
   eventPacketSelect: PacketSelectComponent;
@@ -118,6 +119,11 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
         this.optionModalViewed = true;
       }
       this.currentForm = this.projectForm;
+
+      this.statisticsForm.loadEmpty();  // this form does not load a particular entity
+                                        // it retrieves all HProjectAlgorithm of a particular project,
+                                        // which acts as input of form component.
+                                        // Load empty model in order to detect form input changes
 
     }, 0);
 
@@ -259,7 +265,9 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
       } else if (this.currentForm instanceof PacketEnrichmentFormComponent) {
         this.enrichmentRules = [...this.updateList(ent, this.enrichmentRules)];
         this.currentForm.loadEmpty();
-      } else if (this.currentForm instanceof PacketEventsFormComponent) {
+      } else if (this.currentForm instanceof ProjectStatisticsFormComponent) {
+        this.currentForm.loadEmpty();
+      }else if (this.currentForm instanceof PacketEventsFormComponent) {
         this.eventRules = [...this.updateList(ent, this.eventRules)];
         this.currentForm.loadEmpty();
       }
@@ -563,8 +571,7 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
         break;
       }
       case 5: {
-        return false;
-        break;
+        return (this.statisticsForm) ? this.statisticsForm.isDirty() : false;
       }
       case 6: {
         return (this.eventsForm && this.eventsForm.editMode) ? this.eventsForm.isDirty() : false;

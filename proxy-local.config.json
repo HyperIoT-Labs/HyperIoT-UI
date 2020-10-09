@@ -94,5 +94,17 @@
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
+  },
+  "/hyperiot/algorithms/*": {
+    "target": "http://localhost:8181",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/hyperiot/hprojectalgorithms/*": {
+    "target": "http://localhost:8181",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
   }
 }

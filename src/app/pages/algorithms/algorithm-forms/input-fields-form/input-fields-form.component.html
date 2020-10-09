@@ -1,0 +1,127 @@
+<div id="container-input-field" class="container">
+
+    <div class="row">
+
+        <div id="ffield-col-tree" class="col-12">
+
+            <!-- i18n TODO -->
+            <hyt-tree-view-editable *ngIf="entity" class="flex-fill" #treeViewFields
+                i18n-deviceName="@@HYT_algorithm_input_field"
+                deviceName="Input Field"
+                [treeData]="inputFieldsTree"
+                (addFn)="addField($event)"
+                (removeFn)="removeField($event)"
+                (editFn)="editField($event)"
+            >
+            </hyt-tree-view-editable>
+
+        </div>
+
+    </div> <!-- Second Row -->
+
+    <form [formGroup]="form" class="flex-fill mt-4" [ngClass]="{hidden: currentInputField == null, 'blurred': loadingStatus !== LoadingStatus.Ready}">
+
+        <div class="form-group row">
+
+            <div id="ffield-col-name" class="col-6">
+
+                <hyt-input-text 
+                    [form]="form" name="inputField-name"
+                    [isRequired]="true"
+                    i18n-placeholder="@@HYT_name"
+                    placeholder="Name"
+                    [injectedErrorMsg]="getError('inputField-name')"
+                    i18n-hintMessage="@@HYT_hint_field_name"
+                    hintMessage="Enter the field name."
+                >
+                </hyt-input-text>
+
+            </div>
+            <div id="ffield-col-type" class="col-6">
+
+                <hyt-select 
+                    [form]="form"
+                    name="inputField-type"
+                    [options]="fieldTypeOptions"
+                    [isRequired]="true"
+                    i18n-label="@@HYT_type"
+                    label="Type"
+                    i18n-hintMessage="@@HYT_hint_field_type"
+                    hintMessage="Select field type." #fieldType
+                >
+                </hyt-select>
+
+            </div>
+
+        </div> <!-- First Row Form -->
+
+        <div class="form-group row">
+
+            <div id="ffield-col-desc" class="col-6">
+
+                <hyt-text-area 
+                    [form]="form" name="inputField-description" class="flex-fill"
+                    i18n-placeholder="@@HYT_description"
+                    placeholder="Description"
+                    i18n-hintMessage="@@HYT_hint_field_description"
+                    hintMessage="Enter the field description."
+                >
+                </hyt-text-area>
+
+            </div>
+            <div id="ffield-col-mult" class="col-6">
+
+                <strong i18n="@@HYT_multiplicity">Multiplicity</strong>
+
+                <hyt-radio-button 
+                    [form]="form" name="inputField-multiplicity"
+                    [isRequired]="true"
+                    [options]="fieldMultiplicityOptions"
+                    [verticalAlign]="true"
+                >
+                </hyt-radio-button>
+
+            </div>
+
+        </div> <!-- Second Row Form -->
+
+    </form>
+
+    <!-- 
+        TODO: This HTML block is repeated
+        across all 'entity' components,
+        consider making a component out of it 
+    -->
+
+    <div *ngIf="loadingStatus !== LoadingStatus.Ready" class="overlay d-flex flex-column align-items-center justify-content-center">
+        
+        <div 
+            *ngIf="loadingStatus === LoadingStatus.Loading" 
+        >
+
+            <h4 i18n="@@HYT_loading_data">Loading data...</h4>
+        
+        </div> 
+        
+        <div *ngIf="loadingStatus === LoadingStatus.Error" class="error-overlay d-flex flex-column justify-content-center">
+            <h4 i18n="@@HYT_error_occurred">An unexpected error has occurred</h4>
+
+            <hyt-button 
+                [color]="'hyt-base-default-white'" 
+                (click)="loadingStatus = LoadingStatus.Ready"
+            >
+                <span i18n="@@HYT_close">Close</span> <span class="icon-hyt_cancelC"></span> 
+            </hyt-button>
+        </div> 
+
+        <h4 *ngIf="loadingStatus === LoadingStatus.Saving" i18n="@@HYT_saving_data">Saving data...</h4>
+
+        <mat-progress-bar 
+            *ngIf="loadingStatus === LoadingStatus.Loading || loadingStatus === LoadingStatus.Saving"
+            mode="indeterminate"
+        ></mat-progress-bar> 
+
+    </div>
+
+</div>
+

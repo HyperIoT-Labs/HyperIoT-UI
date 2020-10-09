@@ -1,0 +1,161 @@
+
+#container-statistic-form {
+    padding-top: 20px;
+
+    &.container {
+        position: relative;
+
+        p {
+
+            &.subtitle-section {
+    
+                font-size: .9em;
+                font-style: italic;
+                line-height: 25px;
+                margin-bottom: 30px;
+    
+            }
+    
+        }
+
+        #container-add-statistic {
+
+            text-align: center;
+            padding-top: 20px;
+            padding-bottom: 20px;
+
+        }
+    }
+
+    form {
+        
+        &.blurred {
+
+            -webkit-filter: blur(1px);
+            -moz-filter: blur(1px);
+            -ms-filter: blur(1px);
+            -o-filter: blur(1px);    
+            filter: blur(1px);
+            
+        }
+
+        .form-group {
+            &.row {
+
+                margin-bottom: 25px;
+                #fstat-col-algorithm {
+                    text-align: center;
+                }
+
+                hyt-select {
+
+                    mat-form-field {
+                        width: 100%;
+
+                        mat-select {
+                            font-family: 'Exo';
+                        }
+                        
+                        label {
+                            &.mat-form-field-label {
+                                font-family: 'Exo';
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+
+    .overlay {
+        position: absolute;
+        background-color: rgba(255, 255, 255, .50);
+        left: 0; top: 0; right: 0; bottom: 0;
+
+        .loading-logo {
+            
+            position: relative;
+            text-align: center;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+
+            &.display-logo {
+
+                height: 63%;
+                width: 100%;
+                
+                background-repeat: no-repeat;
+                background-position: top center;
+                background-image: url('~/assets/images/hyperiot_logo_single_char_animated.svg');
+
+                &.big-bg {
+
+                    background-size: 220px;
+    
+                }
+
+                &.medium-bg {
+
+                    background-size: 170px;
+    
+                }
+
+                &.small-bg {
+
+                    background-size: 125px;
+    
+                }
+
+                &.x-small-bg {
+
+                    background-size: 90px;
+    
+                }
+
+            }
+            
+            h4 {
+                text-align: center;
+            }
+        }
+
+        mat-progress-bar {
+            max-width: 200px;
+            margin: 8px;
+        }
+
+        .error-overlay {
+
+            hyt-button {
+
+                margin: 20px auto 0px auto;
+
+                span {
+
+                    &.icon-hyt_cancelC {
+
+                        font-size: 1.3em;
+                        vertical-align: sub;
+                        margin-left: 5px;
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    }
+
+}
+
+.hidden {
+    display: none;
+}
+
+.displayNone {
+    display: none;
+}
