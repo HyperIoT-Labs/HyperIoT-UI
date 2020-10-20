@@ -37,6 +37,46 @@
 
   #container-projects {
 
+    #page-up-btn {
+
+      position: fixed;
+      background-color: #523dd6;
+      color: #ffffff;
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      bottom: 120px;
+      right: 23px;
+      z-index: 1;
+      box-shadow: 0px 0px 9px -2px #110846;
+      font-size: 1.6em;
+      cursor: pointer;
+
+    }
+
+    #mobile-add-new-project-btn {
+
+      position: fixed;
+      background-color: #523dd6;
+      color: #ffffff;
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      bottom: 40px;
+      right: 23px;
+      z-index: 1;
+      box-shadow: 0px 0px 9px -2px #110846;
+      font-size: 2.2em;
+      cursor: pointer;
+
+    }
+
     #loadingStatus {
 
       img {
@@ -328,15 +368,58 @@ mat-option {
 
 }
 
-/**********************************
-*
-*        RESPONSIVE
-*
-**********************************/
+/*********************************
+*                                *
+*          RESPONSIVE            *
+*                                *
+*********************************/
 
 @media (max-width: 767px) { /* BOOTSTRAP BREACKPOINT */
 
   #projects-page {
+
+    .header {
+
+      .breadcrumb {
+
+        font-size: 1.1em;
+
+      }
+
+      .align-self-right {
+
+        button {
+
+          font-size: .9em;
+
+          span {
+
+            &.mat-button-wrapper {
+
+              display: flex;
+              align-items: center;
+              justify-content: center;
+
+              span {
+
+                &.hyt-icon {
+
+                  font-size: 1.4em;
+                  margin-top: -2px;
+
+                }
+
+              }
+
+            }
+
+          }
+
+        }
+
+      }
+
+    }
 
     #container-projects {
 
@@ -359,6 +442,65 @@ mat-option {
         mat-progress-bar {
 
           max-width: 250px;
+
+        }
+
+      }
+
+      #standardStatus {
+
+        #row-container-title {
+
+          #projects-title-box {
+
+            h2 {
+
+              &#title-projects {
+
+                font-size: 2.1em;
+                text-align: center;
+
+              }
+
+            }
+
+          }
+
+          #projects-topfilters-box {
+
+            form {
+
+              #container-search {
+
+                max-width: 100%;
+                flex: 0 0 100%;
+                order: 2;
+                text-align: center;
+
+                input {
+
+                  &:-webkit-autofill, &:-webkit-autofill:hover, &:-webkit-autofill:focus {
+                    
+                    box-shadow: 0 0 0px 1000px #ffffff inset;
+
+                  }
+
+                }
+
+              }
+
+              #container-sort {
+
+                max-width: 100%;
+                flex: 0 0 100%;
+                order: 1;
+                margin-bottom: 10px;
+
+              }
+
+            }
+
+          }
 
         }
 
@@ -404,6 +546,132 @@ mat-option {
 
   }
 
+
+}
+
+@media (max-width: 500px) {
+
+  #projects-page {
+
+    .header {
+
+      flex-direction: column !important;
+      border-bottom: none;
+
+      .breadcrumb {
+
+        font-size: 1em;
+        display: flex;
+        flex: 0 0 100%;
+        order: 1;
+        width: 100%;
+        max-width: 100%;
+        align-items: center;
+        border-bottom: 1px solid #1e58a5;
+        margin-bottom: 10px;
+
+        a {
+          margin-right: 5px;
+        }
+
+        strong {
+          margin-left: 5px;
+        }
+
+      }
+
+      .align-self-right {
+
+        display: none;
+
+      }
+
+    }
+
+    #container-projects {
+
+      #mobile-add-new-project-btn {
+
+        display: flex;
+
+      }
+
+      #standardStatus {
+
+        #row-container-title {
+
+          margin-top: 25px;
+
+          #projects-title-box {
+
+            h2 {
+
+              &#title-projects {
+
+                font-size: 2em;
+
+              }
+
+            }
+
+          }
+
+          #projects-topfilters-box {
+
+            form {
+
+              #container-search {
+
+                hyt-input-text {
+
+                  &#hyt-search-bottom {
+
+                    mat-form-field {
+
+                      width: 90%;
+
+                    }
+
+                  }
+
+                }
+
+                input {
+
+                  &:-webkit-autofill, &:-webkit-autofill:hover, &:-webkit-autofill:focus {
+                    
+                    box-shadow: 0 0 0px 1000px #ffffff inset;
+
+                  }
+
+                }
+
+              }
+
+              #container-sort {
+
+                text-align: center;
+                font-size: .8em;
+
+              }
+
+            }
+
+          }
+
+          #projects-counter {
+
+            font-size: .9em;
+
+          }
+
+        }
+
+      }
+
+    }
+
+  }
 
 }
 

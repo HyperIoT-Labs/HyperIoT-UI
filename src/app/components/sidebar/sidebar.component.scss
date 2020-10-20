@@ -78,11 +78,11 @@
                 position: relative;
                 display: block;
                 width: 59px; /* 250px */
-                border-bottom: 1px solid #e5e5e5;
+                // border-bottom: 1px solid #e5e5e5;
                 transition: width 0.1s ease-in-out;
 
                 &.selected {
-                    border-bottom: solid 1px #ffffff;
+                    // border-bottom: solid 1px #ffffff;
                     background-color: #003679;
                 }
 

@@ -42,18 +42,38 @@
     box-shadow: 0 2px 6px 0px rgba(0, 0, 0, 0.2);
     font-family: "Exo" !important;
 
-    #dashboard-btn {
-        float: right;
-    }
-
-    #areas-btn {
-        float: left;
-    }
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
 
     .left-tools,
     .right-tools {
         padding: 0;
     }
+
+    .left-tools {
+        background-color: gray;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+    }
+
+    .center-tools {
+        background-color: yellowgreen;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+
+    .right-tools {
+        background-color: gold;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+    }
+
+
 }
 
 .content {

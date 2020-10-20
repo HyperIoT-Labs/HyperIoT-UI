@@ -77,6 +77,10 @@
 
             .left-tools {
 
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+
                 .dash-container-btn {
                     margin: 1px;
                     padding:2px;
@@ -112,7 +116,28 @@
 
             }
 
+            .center-tools {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                hyt-select {
+                    max-width: 350px;
+                    width: 100%;
+
+                    mat-form-field {
+                        width: 100%;
+                    }
+
+                }
+
+            }
+
             .right-tools {
+
+                display: flex;
+                align-items: center;
+                justify-content: flex-end;
 
                 hyt-select {
                     
@@ -181,13 +206,32 @@
                 z-index: 20;
                 text-align: center;
                 padding-top: 80px;
+
+                h2 {
+                    &#overlay-blurred-title {
+                        text-shadow: 1px 2px 5px #da757f;
+                        color: #960505;
+                    }
+                }
+
+                h3 {
+                    &#overlay-blurred-text {
+                        text-shadow: 1px 2px 5px #797979;
+                        color: #313131;
+                    }
+                }
+
             }
 
             #container-box-dashboard {
                 margin-top: 20px;
 
                 &.blurred-animation {
-                    filter: blur(5px);
+                    -webkit-filter: blur(7px);
+                    -moz-filter: blur(7px);
+                    -ms-filter: blur(7px);
+                    -o-filter: blur(7px); 
+                    filter: blur(7px);
                     animation: blurredAnimation .5s ease-in-out;
                 }
             }
@@ -279,6 +323,293 @@ mat-option {
     }
 
 }
+
+/*********************************
+*                                *
+*          RESPONSIVE            *
+*                                *
+*********************************/
+
+@media (max-width: 991px) {
+    
+    #dashboard-page {
+        #container-dashboard {
+            #tools-dashboard-box {
+
+                .left-tools {
+
+                    #signal-btn, #play-btn {
+                        margin: 0.3em;
+                        text-align: center;
+                        cursor: pointer;
+                        text-transform: uppercase;
+                        width: 3em;
+                        height: 2.7em;
+
+                        span {
+
+                            font-size: 2em;
+
+                        }
+
+                        p {
+
+                            font-size: .7em;
+
+                        }
+
+                    }
+
+                    #topology-toolbar {
+                        .recording {
+                            &:not(.inLoading) {
+
+                                #reload-btn {
+                                    float: none;
+                                    margin: .3em;
+                                    width: 3em;
+                                    height: 2.7em;
+
+                                    span {
+                                        &.icon-hyt_off {
+                                            font-size: 1.7em;
+                                            margin-bottom: 5px;
+                                        }
+                                    }
+
+                                    p {
+                                        font-size: .7em;
+                                    }
+                                }
+
+                                #play-pause-btn {
+                                    float: none;
+                                    margin: .3em;
+                                    width: 3em;
+                                    height: 2.7em;
+
+                                    span {
+                                        &.icon-hyt_off {
+                                            font-size: 1.7em;
+                                            margin-bottom: 5px;
+                                        }
+                                    }
+
+                                    p {
+                                        font-size: .7em;
+                                    }
+                                }
+
+                            }
+                        }
+                    }
+
+                }
+
+                .right-tools {
+                    #add-widget-btn, #save-dashboard-btn {
+                        float: none;
+                        margin: .3em 1.2em;
+
+                        span {
+                            font-size: 2em;
+                        }
+
+                        p {
+                            font-size: .75em;
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+
+}
+
+@media (max-width: 767px) {
+    
+    #dashboard-page {
+
+        .header {
+
+            .breadcrumb {
+      
+              font-size: 1.1em;
+      
+            }
+      
+            .align-self-right {
+      
+              button {
+      
+                font-size: .9em;
+      
+                span {
+      
+                  &.mat-button-wrapper {
+      
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+      
+                    span {
+      
+                      &.hyt-icon {
+      
+                        font-size: 1.4em;
+                        margin-top: -2px;
+      
+                      }
+      
+                    }
+      
+                  }
+      
+                }
+      
+              }
+      
+            }
+      
+        }
+
+        #container-dashboard {
+            
+            #tools-dashboard-box {
+
+                .left-tools {
+
+                    width: 50%;
+                    max-width: 50%;
+                    order: 2;
+                    flex: 0 0 50%;
+
+                }
+
+                .center-tools {
+
+                    width: 100%;
+                    max-width: 100%;
+                    order: 1;
+                    flex: 0 0 100%; 
+
+                    hyt-select {
+                        max-width: 300px;
+
+                    }
+
+                }
+
+                .right-tools {
+                    
+                    width: 50%;
+                    max-width: 50%;
+                    order: 3;
+                    flex: 0 0 50%;
+
+                }
+
+            }
+
+            #standardStatus {
+
+                #dashboard-overlay-blurred {
+
+                    padding: 60px 15px;
+
+                    h2 {
+                        &#overlay-blurred-title {
+                            font-size: 1.4em;
+                        }
+                    }
+
+                    h3 {
+                        &#overlay-blurred-text {
+                            font-size: 1.1em;
+                        }
+                    }
+
+                }
+
+            }
+
+        }
+    }
+
+}
+
+@media (max-width: 395px) {
+    
+    #dashboard-page {
+
+        #container-dashboard {
+
+            #tools-dashboard-box {
+
+                .left-tools {
+
+                    width: 100%;
+                    max-width: 100%;
+                    flex: 0 0 100%;
+                    justify-content: center;
+                    margin-bottom: 15px;
+                    
+
+                }
+
+                .center-tools {
+
+                    hyt-select {
+                        width: 95%;
+                        max-width: 95%;
+
+                    }
+
+                }
+
+                .right-tools {
+                    
+                    width: 100%;
+                    max-width: 100%;
+                    flex: 0 0 100%;
+                    justify-content: center;
+
+                }
+
+            }
+
+            #standardStatus {
+
+                #dashboard-overlay-blurred {
+                    
+
+                    h2 {
+                        &#overlay-blurred-title {
+                            font-size: 1.2em;
+                        }
+                    }
+
+                    h3 {
+                        &#overlay-blurred-text {
+                            font-size: .95em;
+                        }
+                    }
+
+                }
+
+            }
+
+        }
+    }
+
+}
+
+/*********************************
+*                                *
+*          ANIMATION             *
+*                                *
+*********************************/
 
 @keyframes blurredAnimation {
 
