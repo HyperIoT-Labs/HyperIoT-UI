@@ -269,7 +269,7 @@
         <source>Statistics</source>
       </trans-unit>
       <trans-unit id="HYT_statistic_form_title" datatype="html">
-        <source>Packet Statistics</source>
+        <source>Project Statistics</source>
       </trans-unit>
       <trans-unit id="HYT_statistics_short_definition" datatype="html">
         <source>Statistics short definition...</source>
@@ -1081,6 +1081,87 @@
         <source>The data recording is activated but we waiting for the data.
         This operation might take a while (from 20 seconds, up to 1 minute),
         if the loading state persist click "Reload" or contact the administrator.</source>
+      </trans-unit>
+      <trans-unit id="HYT_deleting_algorithm" datatype="html">
+        <source>Deleting of algorithm &quot;<x id="PH"/>&quot; in loading. It may take a while.</source>
+      </trans-unit>
+      <trans-unit id="HYT_algorithm_successfully_deleted" datatype="html">
+        <source>The algorithm was successfully deleted.</source>
+      </trans-unit>
+      <trans-unit id="HYT_error_deleting_algorithm" datatype="html">
+        <source>An error occurred while deleting the algorithm.</source>
+      </trans-unit>
+      <trans-unit id="HYT_algorithms" datatype="html">
+        <source>Algorithms</source>
+      </trans-unit>
+      <trans-unit id="HYT_add_new_algorithm" datatype="html">
+        <source>Add new algorithm</source>
+      </trans-unit>
+      <trans-unit id="HYT_algorithm_list" datatype="html">
+        <source>Algorithm list</source>
+      </trans-unit>
+      <trans-unit id="HYT_no_algorithm_found" datatype="html">
+        <source>No algorithm that matches the search found...</source>
+      </trans-unit>
+      <trans-unit id="HYT_no_algorithm" datatype="html">
+        <source>There are no algorithms!</source>
+      </trans-unit>
+      <trans-unit id="HYT_add_algorithm_button_hint" datatype="html">
+        <source>To add an algorithm click the button below.</source>
+      </trans-unit>
+      <trans-unit id="HYT_create_first_algorithm" datatype="html">
+        <source>Create your first algorithm</source>
+      </trans-unit>
+      <trans-unit id="HYT_algorithms_wizard" datatype="html">
+        <source>Algorithms Wizard</source>
+      </trans-unit>
+      <trans-unit id="HYT_algorithm_displaylistname" datatype="html">
+        <source>Algorithms</source>
+      </trans-unit>
+      <trans-unit id="HYT_algorithm_form_title" datatype="html">
+        <source>Algorithms</source>
+      </trans-unit>
+      <trans-unit id="HYT_algorithms_short_definition" datatype="html">
+        <source>Algorithms short definition</source>
+      </trans-unit>
+      <trans-unit id="HYT_algorithms_definition" datatype="html">
+        <source>Algorithms definition</source>
+      </trans-unit>
+      <trans-unit id="HYT_algorithms_long_definition" datatype="html">
+        <source>Algorithms long definition</source>
+      </trans-unit>
+      <trans-unit id="HYT_unavailable_algorithm_name" datatype="html">
+        <source>Unavailable algorithm name</source>
+      </trans-unit>
+      <trans-unit id="HYT_hint_algorithm_name" datatype="html">
+        <source>Enter the algorithm name.</source>
+      </trans-unit>
+      <trans-unit id="HYT_algorithm_packets" datatype="html">
+        <source>Packets</source>
+      </trans-unit>
+      <trans-unit id="HYT_hint_algorithms_packets" datatype="html">
+        <source>Set the input</source>
+      </trans-unit>
+      <trans-unit id="HYT_hint_algorithm_description" datatype="html">
+        <source>Enter the algorithm description.</source>
+      </trans-unit>
+      <trans-unit id="HYT_algorithm_input_single_packet" datatype="html">
+        <source>One packet only</source>
+      </trans-unit>
+      <trans-unit id="HYT_algorithm_input_more_packets" datatype="html">
+        <source>More packets</source>
+      </trans-unit>
+      <trans-unit id="HYT_algorithm_output_field" datatype="html">
+        <source>Output field</source>
+      </trans-unit>
+      <trans-unit id="HYT_unavailable_output_field_name" datatype="html">
+        <source>Unavailable output field name</source>
+      </trans-unit>
+      <trans-unit id="HYT_unavailable_input_field_name" datatype="html">
+        <source>Unavailable input field name</source>
+      </trans-unit>
+      <trans-unit id="HYT_algorithm_input_field" datatype="html">
+        <source>Input field</source>
       </trans-unit>
     </body>
   </file>

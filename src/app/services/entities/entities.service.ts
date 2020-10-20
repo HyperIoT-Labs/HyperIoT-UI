@@ -17,7 +17,7 @@ interface Entity {
 
 /**
  * EntitiesService is a service used to provide and configure usefull information about the following entities:
- * Project, Device, Packet, field, Enrichment, Statistic, Event.
+ * Project, Device, Packet, field, Enrichment, Statistic, Event, Algorithm.
  */
 @Injectable({
   providedIn: 'root'
@@ -178,12 +178,18 @@ export class EntitiesService {
     // displayName: 'Statistic',
     displayListName: $localize`:@@HYT_statistic_displaylistname:Statistics`,
     // pluralName: 'Statistics',
-    formTitle: $localize`:@@HYT_statistic_form_title:Packet Statistics`,
+    formTitle: $localize`:@@HYT_statistic_form_title:Project Statistics`,
     shortDefinition: $localize`:@@HYT_statistics_short_definition:Statistics short definition...`,
     definition: $localize`:@@HYT_statistics_definition:Statistics definition...`,
     longDefinition: $localize`:@@HYT_statistics_long_definition:Statistics long definition...`,
     icon: 'icon-hyt_statistics',
-    iconPlus: 'icon-hyt_statisticsPlus'
+    iconPlus: 'icon-hyt_statisticsPlus',
+    emptyModel: {
+      config: '',
+      algorithm: null,
+      cronExpression: '0 0 1/1 * *',
+      entityVersion: 1
+    }
   };
 
   /**
@@ -207,6 +213,28 @@ export class EntitiesService {
       type: 'ENRICHMENT',
       jsonActions: '[\"{\\\"actionName\\\":\\\"events.SendMailAction\\\",\\\"recipients\\\":\\\"\\\",\\\"ccRecipients\\\":\\\"\\\",\\\"subject\\\":\\\"\\\",\\\"body\\\":\\\"\\\"}\"]',
       entityVersion: 1
+    }
+  };
+
+  /**
+   * information about algorithm
+   */
+  public readonly algorithm: Entity = {
+    id: 0,
+    entityName: 'algorithm',
+    displayListName: $localize`:@@HYT_algorithm_displaylistname:Algorithms`,
+    formTitle: $localize`:@@HYT_algorithm_form_title:Algorithms`,
+    shortDefinition: $localize`:@@HYT_algorithms_short_definition:Algorithms short definition`,
+    definition: $localize`:@@HYT_algorithms_definition:Algorithms definition`,
+    longDefinition: $localize`:@@HYT_algorithms_long_definition:Algorithms long definition`,
+    icon: 'icon-hyt_statistics',
+    iconPlus: 'icon-hyt_statisticsPlus',
+    emptyModel: {
+      name: '',
+      description: '',
+      baseConfig: '{\"input\":[], \"output\":[]}',
+      entityVersion: 1,
+      jarName: null
     }
   };
 

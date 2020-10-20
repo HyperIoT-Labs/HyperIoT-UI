@@ -212,7 +212,8 @@ export class TimelineComponent implements AfterViewInit, OnChanges {
       this.domainInterval,
       this.mapToGranularity[this.domainInterval],
       this.domainStart.getTime(),
-      this.domainStop.getTime()
+      this.domainStop.getTime(),
+      Intl.DateTimeFormat().resolvedOptions().timeZone
     ).subscribe(
       res => {
         this.timeLineData.forEach(element => {

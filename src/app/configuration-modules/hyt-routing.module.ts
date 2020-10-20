@@ -22,11 +22,13 @@ import { CanDeactivateGuard } from '../components/CanDeactivateGuard';
 import { DashboardComponent } from '../pages/dashboard/dashboard.component';
 import { PacketFieldsFormComponent } from '../pages/projects/project-forms/packet-fields-form/packet-fields-form.component';
 import { PacketEnrichmentFormComponent } from '../pages/projects/project-forms/packet-enrichment-form/packet-enrichment-form.component';
-import { PacketStatisticsFormComponent } from '../pages/projects/project-forms/packet-statistics-form/packet-statistics-form.component';
 import { PacketEventsFormComponent } from '../pages/projects/project-forms/packet-events-form/packet-events-form.component';
 import { HomeComponent } from '../pages/home/home.component';
 import { AreasFormComponent } from '../pages/projects/project-forms/areas-form/areas-form.component';
 import { AreasViewComponent } from '../pages/areas/areas-view/areas-view.component';
+import { AlgorithmsComponent } from '../pages/algorithms/algorithms.component';
+import { AlgorithmWizardComponent } from '../pages/algorithms/algorithm-wizard/algorithm-wizard.component';
+import { ProjectStatisticsFormComponent } from '../pages/projects/project-forms/project-statistics-form/project-statistics-form.component';
 
 @Injectable()
 export class LoggedInGuard implements CanActivate {
@@ -159,24 +161,18 @@ const hyperiotRoutes: Routes = [
         component: PacketEnrichmentFormComponent,
         outlet: 'projectDetails'
       },
-      // {
-      //   canDeactivate: [CanDeactivateGuard],
-      //   path: 'packet-statistics/:packetId',
-      //   component: PacketStatisticsFormComponent,
-      //   outlet: 'projectDetails'
-      // },
+      {
+        canDeactivate: [CanDeactivateGuard],
+        path: 'statistics',
+        component: ProjectStatisticsFormComponent,
+        outlet: 'projectDetails'
+      },
       // {
       //   canDeactivate: [CanDeactivateGuard],
       //   path: 'packet-events/:packetId',
       //   component: PacketEventsFormComponent,
       //   outlet: 'projectDetails'
       // },
-      {
-        canDeactivate: [CanDeactivateGuard],
-        path: 'statistics',
-        component: PacketStatisticsFormComponent,
-        outlet: 'projectDetails'
-      },
       {
         canDeactivate: [CanDeactivateGuard],
         path: 'events',
@@ -248,6 +244,32 @@ const hyperiotRoutes: Routes = [
     path: 'areas/:projectId/:areaId/dashboards',
     component: DashboardComponent,
     canActivate: [LoggedInGuard],
+    data: {
+      showToolBar: true,
+    }
+  },
+  {
+    path: 'algorithms',
+    component: AlgorithmsComponent,
+    canActivate: [LoggedInGuard],
+    data: {
+      showToolBar: true,
+    }
+  },
+  {
+    path: 'algorithm-wizard',
+    component: AlgorithmWizardComponent,
+    canActivate: [LoggedInGuard],
+    canDeactivate: [CanDeactivateGuard],
+    data: {
+      showToolBar: true,
+    }
+  },
+  {
+    path: 'algorithm-wizard/:id',
+    component: AlgorithmWizardComponent,
+    canActivate: [LoggedInGuard],
+    canDeactivate: [CanDeactivateGuard],
     data: {
       showToolBar: true,
     }
