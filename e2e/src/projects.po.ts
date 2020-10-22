@@ -64,12 +64,12 @@ export class ProjectsPage {
      */
 
     setNameWizard(keys: string) {
-        
+
         return this.nameInput.sendKeys(keys);
     }
 
     setDescriptionWizard(keys: string) {
-        
+
         return this.descriptionInput.sendKeys(keys);
     }
 

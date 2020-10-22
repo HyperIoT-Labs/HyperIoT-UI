@@ -1,0 +1,9 @@
+<div id="container-events" class="container">
+
+  <hyt-pw-packet-select #eventPacketSelect [hDevices]="hDevices" [hPackets]="hPackets"
+    (currentPacket)="eventPacketChanged($event)">
+  </hyt-pw-packet-select>
+
+  <hyt-packet-events-form #eventsForm></hyt-packet-events-form>
+
+</div>
