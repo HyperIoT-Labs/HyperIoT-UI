@@ -23,7 +23,13 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private subscriptionToggleMenu: Subscription;
 
-  constructor(private toggleSidebarService: ToggleSidebarService) { }
+  private algorithmResourceName: string;
+  private controlPanelAction: string;
+
+  constructor(private toggleSidebarService: ToggleSidebarService) {
+    this.algorithmResourceName = 'it.acsoftware.hyperiot.algorithm.model.Algorithm';
+    this.controlPanelAction = 'control_panel';
+  }
 
   ngOnInit(): void {
 
@@ -72,6 +78,29 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.subscriptionToggleMenu.unsubscribe();
 
+  }
+
+  /**
+   * This method return true if user is admin or has permission to access to control panel
+   */
+  hasControlPanelAuthorization(): boolean {
+    if (localStorage.getItem('userInfo')) {
+      const userInfo = JSON.parse(localStorage.getItem('userInfo'))
+      if (userInfo.authenticable.admin || this.hasControlPanelAccess(userInfo.profile)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  private hasControlPanelAccess(profile: any): boolean {
+    if(profile.hasOwnProperty(this.algorithmResourceName)) {
+      const permissions: string[] = profile[this.algorithmResourceName].permissions;
+      if (permissions.includes(this.controlPanelAction)) {
+        return true;
+      }
+    }
+    return false;
   }
 
 }
