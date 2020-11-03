@@ -100,6 +100,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
   save(successCallback, errorCallback) {
     this.saveRule(successCallback, errorCallback);
   }
+
   edit(rule?: Rule, readyCallback?) {
     const proceedWithEdit = () => {
       this.showCancel = true;
@@ -192,8 +193,6 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
         break;
       case 'FourierTransformRuleAction':
         jac = JSON.stringify(this.ruleConfig);
-        console.log(jac, this.ruleConfig)
-        jac = JSON.stringify({ actionName: 'FourierTransformRuleAction' });
         break;
     }
     return JSON.stringify([jac]);
@@ -205,6 +204,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
 
     const rule = this.entity;
     const rd = this.ruleDefinitionComponent ? this.ruleDefinitionComponent.buildRuleDefinition() : null;
+
     Object.assign(rule, {
       name: this.form.get('rule-name').value,
       ruleDefinition: rd,
@@ -216,6 +216,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
       jsonActions: this.buildJActions(),
       type: 'ENRICHMENT'
     });
+
     delete rule.actions;
     delete rule.parent;
     const responseHandler = (res) => {

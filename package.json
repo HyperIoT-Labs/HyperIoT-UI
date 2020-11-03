@@ -39,6 +39,7 @@
     "@types/d3": "^5.7.2",
     "@types/moment-precise-range-plugin": "^0.2.0",
     "angular-gridster2": "^9.1.0",
+    "angular-plotly.js": "^2.0.0",
     "bootstrap": "^4.3.1",
     "convert-units": "^2.3.4",
     "crypto-js": "^3.1.9-1",
@@ -55,6 +56,7 @@
     "ngx-cron-editor": "^0.6.4",
     "ngx-mask": "^8.1.7",
     "ngx-moment": "^3.4.0",
+    "plotly": "^1.0.6",
     "rxjs": "~6.5.4",
     "tslib": "^1.11.1",
     "zone.js": "~0.10.3"

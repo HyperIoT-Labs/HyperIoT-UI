@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { HPacket, HProject, HpacketsService, HPacketField } from '@hyperiot/core';
 
@@ -34,12 +34,14 @@ export class FourierTransformComponent implements OnInit {
   inputFieldOptions = [];
 
   _config = this.new();
+
   @Input()
   set config(cfg: any) {
     this._config = cfg;
     cfg.actionName = 'FourierTransformRuleAction';
     this.update();
   }
+
   get config() { return this._config };
   originalConfig: any;
 
@@ -61,7 +63,7 @@ export class FourierTransformComponent implements OnInit {
   onTransformMethodChange(method) {
     this.config.transformMethod = method;
     setTimeout(() => {
-      this.form.patchValue({ transformMethod: this.config.transformMethod});
+      this.form.patchValue({ transformMethod: this.config.transformMethod });
       this.form.get('transformMethod').setValue(this.config.transformMethod);
     });
   }

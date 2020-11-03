@@ -46,6 +46,40 @@ export class LoggedInGuard implements CanActivate {
 
 }
 
+
+/**
+ * This guard checks if user is admin or he has access the permission to do something on a resource
+ */
+@Injectable()
+export class IsProtectedResourceGuard implements CanActivate {
+
+  constructor(private router: Router, private cookieService: CookieService) {}
+
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):
+    Observable<boolean> | Promise<boolean> | boolean {
+    if (localStorage.getItem('userInfo')) {
+      const userInfo = JSON.parse(localStorage.getItem('userInfo'))
+      if (userInfo.authenticable.admin ||
+        this.hasControlPanelAccess(userInfo.profile, route.data.resourceName, route.data.action)) {
+        return true;
+      }
+    }
+    this.router.navigate(['/notFound'], { state: { returnUrl: state.url } });
+    return false;
+  }
+
+  private hasControlPanelAccess(profile: any, resourceName: string, action: string): boolean {
+    if(profile.hasOwnProperty(resourceName)) {
+      const permissions: string[] = profile[resourceName].permissions;
+      if (permissions.includes(action)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+}
+
 // {
 //   path: '',
 //   redirectTo: 'dashboards',
@@ -251,27 +285,33 @@ const hyperiotRoutes: Routes = [
   {
     path: 'algorithms',
     component: AlgorithmsComponent,
-    canActivate: [LoggedInGuard],
+    canActivate: [LoggedInGuard, IsProtectedResourceGuard],
     data: {
       showToolBar: true,
+      resourceName: 'it.acsoftware.hyperiot.algorithm.model.Algorithm',
+      action: 'control_panel'
     }
   },
   {
     path: 'algorithm-wizard',
     component: AlgorithmWizardComponent,
-    canActivate: [LoggedInGuard],
+    canActivate: [LoggedInGuard, IsProtectedResourceGuard],
     canDeactivate: [CanDeactivateGuard],
     data: {
       showToolBar: true,
+      resourceName: 'it.acsoftware.hyperiot.algorithm.model.Algorithm',
+      action: 'control_panel'
     }
   },
   {
     path: 'algorithm-wizard/:id',
     component: AlgorithmWizardComponent,
-    canActivate: [LoggedInGuard],
+    canActivate: [LoggedInGuard, IsProtectedResourceGuard],
     canDeactivate: [CanDeactivateGuard],
     data: {
       showToolBar: true,
+      resourceName: 'it.acsoftware.hyperiot.algorithm.model.Algorithm',
+      action: 'control_panel'
     }
   },
   {
@@ -283,6 +323,10 @@ const hyperiotRoutes: Routes = [
     }
   },
   {
+    path: 'notFound',
+    component: NotFoundComponent
+  },
+  {
     path: '**',
     component: NotFoundComponent
   }
@@ -291,6 +335,6 @@ const hyperiotRoutes: Routes = [
 @NgModule({
   imports: [RouterModule.forRoot(hyperiotRoutes)],
   exports: [RouterModule],
-  providers: [LoggedInGuard, CanDeactivateGuard]
+  providers: [LoggedInGuard, IsProtectedResourceGuard, CanDeactivateGuard]
 })
 export class HytRoutingModule { }
