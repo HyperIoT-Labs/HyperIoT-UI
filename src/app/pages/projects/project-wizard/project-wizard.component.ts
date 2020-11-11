@@ -64,9 +64,6 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
   @ViewChild('statisticsForm')
   statisticsForm: ProjectStatisticsFormComponent;
 
-  @ViewChild('eventPacketSelect')
-  eventPacketSelect: PacketSelectComponent;
-
   @ViewChild('eventsForm')
   eventsForm: PacketEventsFormComponent;
 
@@ -124,6 +121,8 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
                                         // it retrieves all HProjectAlgorithm of a particular project,
                                         // which acts as input of form component.
                                         // Load empty model in order to detect form input changes
+
+      this.eventsForm.loadEmpty();
 
     }, 0);
 
@@ -185,7 +184,6 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
       }
       case 6: {
         this.currentForm = this.eventsForm;
-        this.eventPacketSelect.updateSelect();
         break;
       }
       default: {
@@ -368,17 +366,11 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
     if (!this.hPackets.some(p => p.id === this.enrichmentPacketId)) {
       this.enrichmentPacketSelect.autoSelect();
     }
-    if (!this.hPackets.some(p => p.id === this.eventPacketId)) {
-      this.eventPacketSelect.autoSelect();
-    }
   }
 
   updateSelectFieldChanged(idPacketChanged: number) {
     if (idPacketChanged === this.enrichmentPacketId) {
       this.enrichmentPacketSelect.autoSelect();
-    }
-    if (idPacketChanged === this.eventPacketId) {
-      this.eventPacketSelect.autoSelect();
     }
   }
 
@@ -396,15 +388,6 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
       this.enrichmentPacketId = event;
       this.enrichmentForm.loadData(this.enrichmentPacketId);
       this.enrichmentForm.loadEmpty();
-    }
-  }
-
-  eventPacketId: number;
-  eventPacketChanged(event: number): void {
-    if (event) {
-      this.eventPacketId = event;
-      this.eventsForm.loadData(this.eventPacketId);
-      this.eventsForm.loadEmpty();
     }
   }
 

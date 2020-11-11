@@ -70,7 +70,7 @@
     <div class="form-group row">
 
       <div id="fevent-col-container-rules" class="col-12">
-        <hyt-rule-definition #eventDef [currentPacket]="packet" ruleType="event" [projectId]="project.id"></hyt-rule-definition>
+        <hyt-rule-definition #eventDef [currentPacket]="null" ruleType="event" [projectId]="currentProject ? currentProject.id : null"></hyt-rule-definition>
       </div> <!-- Field RuleDefinition -->
 
     </div> <!-- END THIRD ROW -->

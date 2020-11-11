@@ -69,10 +69,7 @@
       </ng-template>
 
       <ng-template #eventsTemplate>
-        <hyt-pw-packet-select #eventPacketSelect [hDevices]="hDevices" [hPackets]="hPackets"
-          (currentPacket)="eventPacketChanged($event)">
-        </hyt-pw-packet-select>
-        <hyt-packet-events-form #eventsForm></hyt-packet-events-form>
+        <hyt-packet-events-form #eventsForm [currentProject]="currentProject"></hyt-packet-events-form>
       </ng-template>
 
       <div class="row">
