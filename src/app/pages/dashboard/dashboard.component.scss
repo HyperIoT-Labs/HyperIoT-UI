@@ -120,6 +120,7 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                padding-top: 10px;
 
                 hyt-select {
                     max-width: 350px;
@@ -206,6 +207,7 @@
                 z-index: 20;
                 text-align: center;
                 padding-top: 80px;
+                user-select: none;
 
                 h2 {
                     &#overlay-blurred-title {
@@ -539,6 +541,63 @@ mat-option {
 
 }
 
+@media (max-width: 500px) {
+
+
+    #dashboard-page {
+
+        .header {
+
+            flex-direction: column !important;
+            border-bottom: none;
+      
+            .breadcrumb {
+      
+              font-size: 1em;
+              display: flex;
+              flex: 0 0 100%;
+              order: 1;
+              width: 100%;
+              max-width: 100%;
+              align-items: center;
+              border-bottom: 1px solid #1e58a5;
+              margin-bottom: 10px;
+      
+              a {
+                margin-right: 5px;
+              }
+      
+              strong {
+                margin-left: 5px;
+              }
+      
+            }
+      
+            .align-self-right {
+      
+              display: none;
+      
+            }
+      
+        }
+
+        #container-dashboard {
+            #tools-dashboard-box {
+                .center-tools {
+                    hyt-select {
+                        mat-form-field {
+                            mat-select {
+                                font-size: .9em;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+}
+
 @media (max-width: 395px) {
     
     #dashboard-page {
@@ -601,6 +660,43 @@ mat-option {
             }
 
         }
+    }
+
+    .cdk-overlay-pane {
+        min-width: 280px !important;
+        left: 50% !important;
+        transform: translateX(-140px) !important;
+
+        .mat-select-panel-wrap {
+
+            .mat-select-panel {
+                min-width: 280px !important;
+                max-width: 280px;
+                font-size: .95em !important;
+            }
+
+        }
+    
+    }
+
+}
+
+@media (max-width: 300px) {
+
+    .cdk-overlay-pane {
+        min-width: 250px !important;
+        transform: translateX(-125px) !important;
+
+        .mat-select-panel-wrap {
+
+            .mat-select-panel {
+                min-width: 250px !important;
+                max-width: 250px;
+                font-size: .9em !important;
+            }
+
+        }
+    
     }
 
 }

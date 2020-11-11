@@ -1,90 +1,161 @@
-<div class="header">
+<div id="area-view">
 
-    <div class="breadcrumb">
-        <span class="hyt-icon icon-hyt_projectSolo"></span> <a [routerLink]="['/']">Home</a> >
-        <strong>Areas</strong>
-    </div>
+    <div class="header">
 
-</div>
-
-<div class="toolbar">
-
-    <div class="col-4 left-tools">
-        <!-- 
-            DISPLAY CURRENT AREA NAME
-
-            <h3 *ngIf="areaId && areaPath && areaPath.length > 0" style="float:left; margin-top: 18px; color: blue">
-            {{ areaPath[0].name }}
-            </h3> 
-        -->
-        <div id="areas-btn" *ngIf="areaId" class="button" [routerLink]="['/areas', projectId]">
-            <span class="hyt-icon hyt-icon icon-hyt_connectorNoFrame"></span>
-            <p>Areas List</p>
+        <div class="breadcrumb">
+            <span class="hyt-icon icon-hyt_projectSolo"></span> <a [routerLink]="['/']">Home</a> >
+            <strong>Areas</strong>
         </div>
+    
     </div>
 
-    <div class="col-4 center-tools">
+    <div id="area-title">
 
-        <hyt-select 
-            *ngIf="pageStatus === PageStatus.Ready" 
-            label="Select a project" 
-            name="project"
-            [options]="userProjectsOptions" 
-            [selected]="selectedProjectOption"
-            (changeFn)="onSelectedProjectChange($event)" 
-            [disabled]="false"
+        <h2 
+            *ngIf="areaId && areaPath && areaPath.length > 0"
         >
-        </hyt-select>
+            Area: <span id="specific-area-name">{{ areaPath[0].name }}</span>
+        </h2> 
 
     </div>
+    
+    <div class="toolbar">
 
-    <div class="col-4 right-tools justify-content-center">
-        <!-- <hyt-select *ngIf="pageStatus === PageStatus.Ready" label="Select a project" name="project"
-            [options]="userProjectsOptions" [selected]="selectedProjectOption"
-            (changeFn)="onSelectedProjectChange($event)" [disabled]="false"></hyt-select> -->
+        <div class="row no-gutters">
 
-        <div id="dashboard-btn" *ngIf="areaId" class="button" [routerLink]="['/areas', projectId, areaId, 'dashboards']">
-            <span class="hyt-icon hyt-icon icon-hyt_dash"></span>
-            <p>Dashboard</p>
-        </div>
-    </div>
-
-</div>
-
-<div class="content d-flex flex-row justify-content-center">
-
-    <hyt-areas-list *ngIf="projectId && !areaId"
-        [areaList]="areaList"
-        (itemSelected)="onMainAreaClick($event)">
-    </hyt-areas-list>
-
-    <div *ngIf="areaId" class="d-flex flex-row" style="width: 100%;">
-        <hyt-tree-view-project #treeView class="treeview" (nodeClick)="onTreeNodeClick($event)"></hyt-tree-view-project>
-        <div class="flex-grow-1 d-flex flex-column m-4">
-            <div class="d-flex flex-row justify-content-between">
-                <h3>{{ areaName }}</h3>
-                <div>Sub-areas: {{areaList.length}} Devices: {{areaDevices.length}}</div>
-                <hyt-button [color]="'hyt-base-default-white'" (clickFn)="onEditButtonClick()">Edit</hyt-button><!-- @I18N@ -->
+            <div class="col-4 left-tools">
+            
+                <div id="areas-btn" *ngIf="areaId" class="button" [routerLink]="['/areas', projectId]">
+                    <span class="hyt-icon hyt-icon icon-hyt_connectorNoFrame"></span>
+                    <p>Areas List</p>
+                </div>
             </div>
-            <div>
-                <hyt-area-map #map></hyt-area-map>
+        
+            <div class="col-4 center-tools">
+        
+                <hyt-select 
+                    *ngIf="pageStatus === PageStatus.Ready" 
+                    label="Select a project" 
+                    name="project"
+                    [options]="userProjectsOptions" 
+                    [selected]="selectedProjectOption"
+                    (changeFn)="onSelectedProjectChange($event)" 
+                    [disabled]="false"
+                >
+                </hyt-select>
+        
             </div>
+        
+            <div class="col-4 right-tools">
+        
+                <div id="dashboard-btn" *ngIf="areaId" class="button" [routerLink]="['/areas', projectId, areaId, 'dashboards']">
+                    <span class="hyt-icon hyt-icon icon-hyt_dash"></span>
+                    <p>Dashboard</p>
+                </div>
+    
+            </div>
+
         </div>
+
+    </div>
+    
+    <div id="area-body" class="content">
+    
+        <hyt-areas-list 
+            *ngIf="projectId && !areaId"
+            [areaList]="areaList"
+            (itemSelected)="onMainAreaClick($event)">
+        </hyt-areas-list>
+    
+        <div id="container-area-map" *ngIf="areaId"> 
+
+            <div 
+                id="container-treeview-project" 
+                [ngClass]="{'displayBlock': treeViewIsOpen, 'displayNone': !treeViewIsOpen}"
+                cdkDragBoundary="#container-area-map" cdkDrag
+            >
+
+                <div id="treeViewHeader" cdkDragHandle>
+                    
+                </div>
+
+                <div id="treeViewBody">
+
+                    <hyt-tree-view-project #treeView class="treeview" (nodeClick)="onTreeNodeClick($event)"></hyt-tree-view-project>
+
+                </div>
+                
+            </div>
+
+            <div id="container-map">
+
+                <div id="map-header">
+
+                    <div id="head-left">
+
+                        <hyt-button [color]="'hyt-base-total-white'" (clickFn)="toggleTreeViewProject()">
+                        
+                            <span 
+                                [ngClass]="{'icon-hyt_eyeClose': treeViewIsOpen, 'icon-hyt_eyeOpen': !treeViewIsOpen}" 
+                            ></span>
+                            {{ preTitleTreeView }} Treeview Project
+    
+                        </hyt-button><!-- @I18N@ -->
+
+                    </div>
+        
+                    <div id="head-center">
+        
+                        <div>Sub-areas: {{areaList.length}} Devices: {{areaDevices.length}}</div>
+        
+                    </div>
+        
+                    <div id="head-right">
+        
+                        <hyt-button [color]="'hyt-base-total-white'" (clickFn)="onEditButtonClick()">
+                        
+                            <span class="icon-hyt_pencil"></span>
+                            Edit
+    
+                        </hyt-button><!-- @I18N@ -->    
+        
+                    </div>
+
+                </div>
+
+                <div id="map-body">
+
+                    <hyt-area-map #map></hyt-area-map>
+
+                </div>
+
+            </div>
+
+        </div>
+    
+    </div>
+    
+    <!-- Loading Status -->
+    <div 
+        id="area-view-loading" 
+        *ngIf="pageStatus === PageStatus.Loading"
+        class="loading-status mt-5 d-flex flex-column row align-items-center justify-content-center"
+    >
+    
+        <img class="loading-animation" src="assets/images/hyperiot_logo_single_char_animated.svg"
+            alt="Hyperiot Animated Logo"> <!-- @I18N@ pageStatus -->
+        <h2 i18n="@@HYT_page_is_loading">Page is loading...</h2>
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
     </div>
 
-</div>
+    <!-- Loading Error -->
+    <div 
+        id="area-view-error" 
+        *ngIf="pageStatus === PageStatus.Error"
+        class="loading-status mt-5 d-flex flex-column row align-items-center justify-content-center"
+    >
+        <h2 i18n="@@HYT_error_occurred_long">An error has occurred, contact the administrator!</h2>
+    </div>
+    
 
-<!-- Loading Status -->
-<div *ngIf="pageStatus === PageStatus.Loading"
-    class="loading-status mt-5 d-flex flex-column row align-items-center justify-content-center">
-
-    <img class="loading-animation" src="assets/images/hyperiot_logo_single_char_animated.svg"
-        alt="Hyperiot Animated Logo"> <!-- @I18N@ -->
-    <h2 i18n="@@HYT_page_is_loading">Page is loading...</h2>
-    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-</div>
-<!-- Loading Error -->
-<div *ngIf="pageStatus === PageStatus.Error"
-    class="loading-status mt-5 d-flex flex-column row align-items-center justify-content-center">
-    <h2 i18n="@@HYT_error_occurred_long">An error has occurred, contact the administrator!</h2>
 </div>
