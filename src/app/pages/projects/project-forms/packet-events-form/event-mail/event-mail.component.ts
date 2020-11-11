@@ -14,10 +14,8 @@ export class EventMailComponent implements OnInit {
   private originalFormsValues = '';
 
   placeHolders: SelectableText[] = [
-    { placeholder: '[$NAME_DEVICE$]', description: $localize`:@@HYT_name_of_device:The name of the device` },
-    { placeholder: '[$NAME_PACKET$]', description: $localize`:@@HYT_name_of_packet:The name of the packet` },
-    { placeholder: '[$NAME_FIELD$]', description: $localize`:@@HYT_name_of_field:The name of the field` },
-    { placeholder: '[$DATA_EVENT$]', description: $localize`:@@HYT_name_of_event_mail:The name of the event mail` }
+    { placeholder: '[$RULE_NAME$]', description: $localize`:@@HYT_name_of_rule:The name of the rule` },
+    { placeholder: '[$RULE_DESCRIPTION$]', description: $localize`:@@HYT_description_of_rule:The description of the rule` }
   ];
 
   constructor(

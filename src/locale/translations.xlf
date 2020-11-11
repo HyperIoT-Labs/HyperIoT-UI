@@ -469,11 +469,11 @@
       <trans-unit id="HYT_mail_body" datatype="html">
         <source>Mail body</source>
       </trans-unit>
-      <trans-unit id="HYT_name_of_device" datatype="html">
-        <source>The name of the device</source>
+      <trans-unit id="HYT_name_of_rule" datatype="html">
+        <source>The name of the rule</source>
       </trans-unit>
-      <trans-unit id="HYT_name_of_packet" datatype="html">
-        <source>The name of the packet</source>
+      <trans-unit id="HYT_description_of_rule" datatype="html">
+        <source>The description of the rule</source>
       </trans-unit>
       <trans-unit id="HYT_name_of_field" datatype="html">
         <source>The name of the field</source>
