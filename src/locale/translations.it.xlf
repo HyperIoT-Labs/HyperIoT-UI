@@ -626,13 +626,13 @@
         <source>Mail body</source>
         <target>Corpo della mail</target>
       </trans-unit>
-      <trans-unit id="HYT_name_of_device" datatype="html">
-        <source>The name of the device</source>
-        <target>Nome del device</target>
+      <trans-unit id="HYT_name_of_rule" datatype="html">
+        <source>The name of the rule</source>
+        <target>Nome della regola</target>
       </trans-unit>
-      <trans-unit id="HYT_name_of_packet" datatype="html">
-        <source>The name of the packet</source>
-        <target>Nome del pacchetto</target>
+      <trans-unit id="HYT_description_of_rule" datatype="html">
+        <source>The description of the rule</source>
+        <target>Descrizione della regola</target>
       </trans-unit>
       <trans-unit id="HYT_name_of_field" datatype="html">
         <source>The name of the field</source>
