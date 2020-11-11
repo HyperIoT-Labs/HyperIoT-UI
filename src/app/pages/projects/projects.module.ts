@@ -5,6 +5,8 @@ import { ComponentsModule } from '@hyperiot/components';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
+import { CronEditorModule } from 'ngx-cron-editor';
+
 import { ProjectCardComponent } from './project-card/project-card.component';
 
 import { ProjectDetailComponent } from './project-detail/project-detail.component';
@@ -41,8 +43,6 @@ import {
   MatListModule
 } from '@angular/material';
 import { MatExpansionModule } from '@angular/material/expansion';
-
-import { CronEditorModule } from 'ngx-cron-editor';
 
 import { StatisticsStepComponent } from './project-wizard/statistics-step/statistics-step.component';
 import { WizardReportModalComponent } from './project-wizard/wizard-report-modal/wizard-report-modal.component';
@@ -112,6 +112,7 @@ import { StatisticInputDefinitionComponent } from './project-forms/project-stati
     StatisticInputDefinitionComponent
   ],
   imports: [
+    //CronEditorModule,
     MatIconModule,
     MatButtonModule,
     MatTabsModule,
@@ -131,7 +132,6 @@ import { StatisticInputDefinitionComponent } from './project-forms/project-stati
     MatExpansionModule,
     DragDropModule,
     MatListModule,
-    CronEditorModule
   ],
   entryComponents: [
     AddTagModalComponent,

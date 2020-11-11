@@ -1,24 +1,141 @@
-.area-item {
-    cursor: pointer;
-    outline: none;
-    width: 180px;
-    height: 180px;
-    overflow: hidden;
-    margin: 8px;
+#title-areas-list {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    margin-top: 20px;
+
+    h2 {
+
+        font-size: 1.6em;
+        color: #0956b6;
+        text-align: center;
+
+    }
 }
-.mat-card {
-    padding: 0;
-    height: 240px !important;
-    .mat-card-header {
-        padding-top: 8px;
+
+#container-areas-list {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .areas-list {
+
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+
+        .area-item {
+            cursor: pointer;
+            outline: none;
+            width: 180px;
+            height: 180px;
+            overflow: hidden;
+            margin: 8px;
+        }
+
+        .mat-card {
+            padding: 0;
+            height: 240px !important;
+
+            .mat-card-header {
+                padding-top: 8px;
+            }
+
+            .map-image {
+                color: gray;
+                width: 100%;
+                height: auto;
+                overflow: hidden;
+                background-position: center center;
+                background-repeat: no-repeat;
+                background-size: cover;
+            }
+        }
+
     }
-    .map-image {
-        color: gray;
-        width: 100%;
-        height: auto;
-        overflow: hidden;
-        background-position: center center;
-        background-repeat: no-repeat;
-        background-size: cover;
+
+    .areas-no-list {
+
+        margin-top: 30px;
+
+        h2 {
+
+            font-size: 1.5em;
+            color: #960505;
+       
+        }
+
     }
+
+}
+
+/*********************************
+*                                *
+*          RESPONSIVE            *
+*                                *
+*********************************/
+
+@media (max-width: 991px) {
+
+    #title-areas-list {
+    
+        h2 {
+    
+            font-size: 1.5em;
+    
+        }
+    }
+    
+
+    #container-areas-list {
+
+        .areas-no-list {
+
+            h2 {
+
+                font-size: 1.4em;
+                text-align: center;
+
+            }
+
+        }
+
+    }
+
+}
+
+@media (max-width: 500px) {
+
+    #title-areas-list {
+    
+        h2 {
+    
+            font-size: 1.3em;
+            line-height: 24px;
+            word-break: break-word;
+    
+        }
+    }
+    
+
+    #container-areas-list {
+
+        .areas-no-list {
+
+            h2 {
+
+                font-size: 1.2em;
+                line-height: 24px;
+                word-break: break-word;
+
+            }
+
+        }
+
+    }
+
 }

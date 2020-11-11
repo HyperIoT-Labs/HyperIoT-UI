@@ -88,6 +88,16 @@
 
   #home-page {
 
+    .header {
+
+      .breadcrumb {
+
+        font-size: 1.1em;
+
+      }
+      
+    }
+
     #container-home {
 
       #welcome-message {
@@ -126,10 +136,30 @@
 
     .header {
 
+      flex-direction: column !important;
+      border-bottom: none;
+
       .breadcrumb {
 
-        font-size: 1em;
+          font-size: 1em;
+          display: flex;
+          flex: 0 0 100%;
+          order: 1;
+          width: 100%;
+          max-width: 100%;
+          align-items: center;
+          border-bottom: 1px solid #1e58a5;
+          margin-bottom: 10px;
+          flex-wrap: wrap;
+          line-height: 30px;
+  
+        a {
+          margin-right: 5px;
+        }
 
+        strong {
+          margin-left: 5px;
+        }
       }
 
     }

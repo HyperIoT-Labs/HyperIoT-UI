@@ -48,6 +48,7 @@ import { RuleErrorModalComponent } from './pages/projects/project-forms/rule-def
 import { AddWidgetDialogComponent } from './pages/dashboard/add-widget-dialog/add-widget-dialog.component';
 import { WidgetSettingsDialogComponent } from './pages/dashboard/widget-settings-dialog/widget-settings-dialog.component';
 import { AreasViewComponent } from './pages/areas/areas-view/areas-view.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 import * as PlotlyJS from 'plotly.js/dist/plotly.js';
 import { PlotlyModule } from 'angular-plotly.js';
@@ -102,6 +103,7 @@ export function apiConfigFactory(): Configuration {
     WidgetSettingsDialogComponent
   ],
   imports: [
+    DragDropModule,
     RouterModule,
     BrowserModule,
     BrowserAnimationsModule,

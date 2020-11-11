@@ -1,9 +1,12 @@
   .map-container {
     height: 500px;
     background-size: 100% 100%;
-    max-width: 100%;
+    //max-width: 100%;
     border: dotted #ddd 2px;
     border-radius: 8px;
     overflow: hidden;
+
+    width: 100%;
+    
   }
   
