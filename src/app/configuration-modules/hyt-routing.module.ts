@@ -22,7 +22,7 @@ import { CanDeactivateGuard } from '../components/CanDeactivateGuard';
 import { DashboardComponent } from '../pages/dashboard/dashboard.component';
 import { PacketFieldsFormComponent } from '../pages/projects/project-forms/packet-fields-form/packet-fields-form.component';
 import { PacketEnrichmentFormComponent } from '../pages/projects/project-forms/packet-enrichment-form/packet-enrichment-form.component';
-import { PacketEventsFormComponent } from '../pages/projects/project-forms/packet-events-form/packet-events-form.component';
+import { ProjectEventsFormComponent } from '../pages/projects/project-forms/project-events-form/project-events-form.component';
 import { HomeComponent } from '../pages/home/home.component';
 import { AreasFormComponent } from '../pages/projects/project-forms/areas-form/areas-form.component';
 import { AreasViewComponent } from '../pages/areas/areas-view/areas-view.component';
@@ -203,14 +203,14 @@ const hyperiotRoutes: Routes = [
       },
       // {
       //   canDeactivate: [CanDeactivateGuard],
-      //   path: 'packet-events/:packetId',
-      //   component: PacketEventsFormComponent,
+      //   path: 'project-events/:packetId',
+      //   component: ProjectEventsFormComponent,
       //   outlet: 'projectDetails'
       // },
       {
         canDeactivate: [CanDeactivateGuard],
         path: 'events',
-        component: PacketEventsFormComponent,
+        component: ProjectEventsFormComponent,
         outlet: 'projectDetails'
       },
       {

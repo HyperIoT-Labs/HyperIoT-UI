@@ -1,22 +1,22 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PacketEventsFormComponent } from './packet-events-form.component';
+import { ProjectEventsFormComponent } from './project-events-form.component';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 
-describe('PacketEventsFormComponent', () => {
-  let component: PacketEventsFormComponent;
-  let fixture: ComponentFixture<PacketEventsFormComponent>;
+describe('ProjectEventsFormComponent', () => {
+  let component: ProjectEventsFormComponent;
+  let fixture: ComponentFixture<ProjectEventsFormComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PacketEventsFormComponent ],
+      declarations: [ ProjectEventsFormComponent ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PacketEventsFormComponent);
+    fixture = TestBed.createComponent(ProjectEventsFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -11,12 +11,12 @@ import { Option } from '@hyperiot/components';
 import { SummaryListItem } from '../../project-detail/generic-summary-list/generic-summary-list.component';
 
 @Component({
-  selector: 'hyt-packet-events-form',
-  templateUrl: './packet-events-form.component.html',
-  styleUrls: ['./packet-events-form.component.scss'],
+  selector: 'hyt-project-events-form',
+  templateUrl: './project-events-form.component.html',
+  styleUrls: ['./project-events-form.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class PacketEventsFormComponent extends ProjectFormEntity implements OnChanges, OnDestroy {
+export class ProjectEventsFormComponent extends ProjectFormEntity implements OnChanges, OnDestroy {
 
   entity: Rule = {} as Rule;
   entityFormMap = {
@@ -116,7 +116,7 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnCh
     this.updateSummaryList();
     this.entityEvent.emit({
       event: 'treeview:focus',
-      id: this.currentProject.id, type: 'packet-events'
+      id: this.currentProject.id, type: 'project-events'
     });
   }
 

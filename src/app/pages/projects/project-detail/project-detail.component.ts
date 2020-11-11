@@ -10,7 +10,7 @@ import { HytTreeViewProjectComponent } from '@hyperiot/components/lib/hyt-tree-v
 import { ProjectFormEntity } from '../project-forms/project-form-entity';
 import { SaveChangesDialogComponent } from 'src/app/components/dialogs/save-changes-dialog/save-changes-dialog.component';
 import { PacketEnrichmentFormComponent } from '../project-forms/packet-enrichment-form/packet-enrichment-form.component';
-import { PacketEventsFormComponent } from '../project-forms/packet-events-form/packet-events-form.component';
+import { ProjectEventsFormComponent } from '../project-forms/project-events-form/project-events-form.component';
 import { ProjectStatisticsFormComponent } from '../project-forms/project-statistics-form/project-statistics-form.component';
 
 enum TreeStatusEnum {
@@ -105,7 +105,7 @@ export class ProjectDetailComponent implements OnInit {
   onSaveClick() {
     this.validationErrors = [];
     this.currentEntity.save((res) => {
-      if (this.currentEntity instanceof PacketEnrichmentFormComponent || this.currentEntity instanceof PacketEventsFormComponent 
+      if (this.currentEntity instanceof PacketEnrichmentFormComponent || this.currentEntity instanceof ProjectEventsFormComponent 
         || this.currentEntity instanceof ProjectStatisticsFormComponent) {
         this.currentEntity.editMode = false;
       }
@@ -204,7 +204,7 @@ export class ProjectDetailComponent implements OnInit {
                   //   icon: 'icon-hyt_statistics'
                   // },
                   // {
-                  //   data: { id: k.id, type: 'packet-events' },
+                  //   data: { id: k.id, type: 'project-events' },
                   //   name: 'Events',
                   //   icon: 'icon-hyt_event'
                   // }

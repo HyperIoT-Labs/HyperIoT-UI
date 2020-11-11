@@ -18,9 +18,9 @@ import { PacketFormComponent } from './project-forms/packet-form/packet-form.com
 import { PacketFieldsFormComponent } from './project-forms/packet-fields-form/packet-fields-form.component';
 import { PacketEnrichmentFormComponent } from './project-forms/packet-enrichment-form/packet-enrichment-form.component';
 import { RuleDefinitionComponent } from './project-forms/rule-definition/rule-definition.component';
-import { PacketEventsFormComponent } from './project-forms/packet-events-form/packet-events-form.component';
-import { EventMailComponent } from './project-forms/packet-events-form/event-mail/event-mail.component';
-import { SelectableTextComponent } from './project-forms/packet-events-form/event-mail/selectable-text/selectable-text.component';
+import { ProjectEventsFormComponent } from './project-forms/project-events-form/project-events-form.component';
+import { EventMailComponent } from './project-forms/project-events-form/event-mail/event-mail.component';
+import { SelectableTextComponent } from './project-forms/project-events-form/event-mail/selectable-text/selectable-text.component';
 import { AssetCategoryComponent } from './project-forms/packet-enrichment-form/asset-category/asset-category.component';
 import { AssetTagComponent } from './project-forms/packet-enrichment-form/asset-tag/asset-tag.component';
 
@@ -84,7 +84,7 @@ import { StatisticInputDefinitionComponent } from './project-forms/project-stati
     SelectableTextComponent,
     PacketFieldsFormComponent,
     PacketEnrichmentFormComponent,
-    PacketEventsFormComponent,
+    ProjectEventsFormComponent,
     SelectableTextComponent,
     PacketSelectComponent,
     GenericSummaryListComponent,

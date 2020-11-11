@@ -9,7 +9,7 @@ import { SummaryListItem } from '../project-detail/generic-summary-list/generic-
 import { ApplicationFormComponent } from '../project-forms/application-form/application-form.component';
 import { DeviceFormComponent } from '../project-forms/device-form/device-form.component';
 import { PacketEnrichmentFormComponent } from '../project-forms/packet-enrichment-form/packet-enrichment-form.component';
-import { PacketEventsFormComponent } from '../project-forms/packet-events-form/packet-events-form.component';
+import { ProjectEventsFormComponent } from '../project-forms/project-events-form/project-events-form.component';
 import { PacketFieldsFormComponent } from '../project-forms/packet-fields-form/packet-fields-form.component';
 import { PacketFormComponent } from '../project-forms/packet-form/packet-form.component';
 import { ProjectFormEntity } from '../project-forms/project-form-entity';
@@ -65,7 +65,7 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
   statisticsForm: ProjectStatisticsFormComponent;
 
   @ViewChild('eventsForm')
-  eventsForm: PacketEventsFormComponent;
+  eventsForm: ProjectEventsFormComponent;
 
   @ViewChild('deactivationModal')
   deactivationModal: WizardDeactivationModalComponent;
@@ -265,7 +265,7 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
         this.currentForm.loadEmpty();
       } else if (this.currentForm instanceof ProjectStatisticsFormComponent) {
         this.currentForm.loadEmpty();
-      }else if (this.currentForm instanceof PacketEventsFormComponent) {
+      }else if (this.currentForm instanceof ProjectEventsFormComponent) {
         this.eventRules = [...this.updateList(ent, this.eventRules)];
         this.currentForm.loadEmpty();
       }
@@ -336,7 +336,7 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
             this.deviceSelect.unfreezeSelection();
           } else if (this.currentForm instanceof PacketEnrichmentFormComponent) {
             this.enrichmentRules = [...this.deleteFromList(event.item.data.id, this.enrichmentRules)];
-          } else if (this.currentForm instanceof PacketEventsFormComponent) {
+          } else if (this.currentForm instanceof ProjectEventsFormComponent) {
             this.eventRules = [...this.deleteFromList(event.item.data.id, this.eventRules)];
           }
           this.currentForm.loadEmpty();
