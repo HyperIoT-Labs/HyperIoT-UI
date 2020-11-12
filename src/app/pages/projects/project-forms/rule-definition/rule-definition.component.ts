@@ -155,6 +155,10 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
 
   ngOnChanges() {
     // TODO valutare spinner e se in enrichment è opportuno scaricare tutti i pacchetti
+    this.loadHPackets();
+  }
+
+  loadHPackets() {
     if (this.projectId) {
       this.hPacketsService.findAllHPacketByProjectId(this.projectId).subscribe(
         (res: HPacket[]) => {

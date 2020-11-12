@@ -120,6 +120,10 @@ export class ProjectEventsFormComponent extends ProjectFormEntity implements OnC
     });
   }
 
+  loadHPackets() {
+    this.ruleDefinitionComponent.loadHPackets();
+  }
+
   updateSummaryList() {
     this.rulesService.findAllRuleByProjectId(this.currentProject.id).subscribe((rules: Rule[]) => {
       this.summaryList = {
