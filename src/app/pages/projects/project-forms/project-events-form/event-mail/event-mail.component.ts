@@ -14,8 +14,8 @@ export class EventMailComponent implements OnInit {
   private originalFormsValues = '';
 
   placeHolders: SelectableText[] = [
-    { placeholder: '[$RULE_NAME$]', description: $localize`:@@HYT_name_of_rule:The name of the rule` },
-    { placeholder: '[$RULE_DESCRIPTION$]', description: $localize`:@@HYT_description_of_rule:The description of the rule` }
+    { placeholder: '${RULE_NAME}', description: $localize`:@@HYT_name_of_rule:The name of the rule` },
+    { placeholder: '${RULE_DESCRIPTION}', description: $localize`:@@HYT_description_of_rule:The description of the rule` }
   ];
 
   constructor(
