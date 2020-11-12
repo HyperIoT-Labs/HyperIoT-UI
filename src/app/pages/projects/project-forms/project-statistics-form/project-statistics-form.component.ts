@@ -10,6 +10,7 @@ import { Algorithm, AlgorithmsService, HProject, HProjectAlgorithm, Hprojectalgo
 import { ProjectFormEntity, LoadingStatusEnum } from '../project-form-entity';
 import { CronOptions } from 'ngx-cron-editor';
 import { SummaryListItem } from '../../project-detail/generic-summary-list/generic-summary-list.component';
+import { StatisticInputDefinitionComponent } from './statistic-input-definition/statistic-input-definition.component';
 
 @Component({
   selector: 'hyt-project-statistics-form',
@@ -51,6 +52,9 @@ export class ProjectStatisticsFormComponent extends ProjectFormEntity implements
   algorithmList: Algorithm[];
   algorithmOptions: SelectOption[] = [];
   selectedAlgorithm: Algorithm;
+
+  @ViewChild('statisticInputDefinition')
+  statisticInputDefinition: StatisticInputDefinitionComponent;
 
   public cronOptions: CronOptions = {
     formInputClass: 'form-control cron-editor-input',
@@ -223,6 +227,10 @@ export class ProjectStatisticsFormComponent extends ProjectFormEntity implements
     this.entity = { ...this.entitiesService.statistic.emptyModel };
     this.selectedAlgorithm = this.entity.algorithm;
     this.edit();
+  }
+
+  loadHPackets() {
+    this.statisticInputDefinition.loadHPackets();
   }
 
   save(successCallback, errorCallback) {

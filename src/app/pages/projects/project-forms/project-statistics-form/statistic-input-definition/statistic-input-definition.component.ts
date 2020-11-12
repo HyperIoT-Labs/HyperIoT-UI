@@ -39,15 +39,7 @@ export class StatisticInputDefinitionComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
-    if (this.project) {
-      this.hPacketsService.findAllHPacketByProjectId(this.project.id).subscribe(
-        (res: HPacket[]) => {
-          this.allPackets = res;
-          this.packetOptions = this.allPackets.map(p => ({ label: p.name, value: p.id }));
-          this.resetRuleDefinition();
-        }
-      );
-    }
+    this.loadHPackets();
   }
 
   addStatisticInput() {
@@ -82,6 +74,18 @@ export class StatisticInputDefinitionComponent implements OnInit, OnChanges {
       return this.findParent(fieldList, parent);
     } else {
       return packetField;
+    }
+  }
+
+  loadHPackets() {
+    if (this.project) {
+      this.hPacketsService.findAllHPacketByProjectId(this.project.id).subscribe(
+        (res: HPacket[]) => {
+          this.allPackets = res;
+          this.packetOptions = this.allPackets.map(p => ({ label: p.name, value: p.id }));
+          this.resetRuleDefinition();
+        }
+      );
     }
   }
 

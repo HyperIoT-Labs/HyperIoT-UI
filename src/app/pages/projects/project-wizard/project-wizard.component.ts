@@ -258,6 +258,7 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
         this.hPackets = [...this.updateList(ent, this.hPackets)];
         this.deviceSelect.unfreezeSelection();
         this.eventsForm.loadHPackets();
+        this.statisticsForm.loadHPackets();
         this.updatePacketTable();
       } else if (this.currentForm instanceof PacketFieldsFormComponent) {
         this.updateSelectFieldChanged(isNew);
@@ -331,11 +332,13 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
             this.updatePacketTable();
             this.updateDeletePacketDep();
             this.eventsForm.loadHPackets();
+            this.statisticsForm.loadHPackets();
           } else if (this.currentForm instanceof PacketFormComponent) {
             this.hPackets = [...this.deleteFromList(event.item.data.id, this.hPackets)];
             this.updatePacketTable();
             this.updateDeletePacketDep();
             this.eventsForm.loadHPackets();
+            this.statisticsForm.loadHPackets();
             this.deviceSelect.unfreezeSelection();
           } else if (this.currentForm instanceof PacketEnrichmentFormComponent) {
             this.enrichmentRules = [...this.deleteFromList(event.item.data.id, this.enrichmentRules)];
