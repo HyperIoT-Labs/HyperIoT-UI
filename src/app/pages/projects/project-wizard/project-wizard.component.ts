@@ -261,6 +261,8 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
         this.statisticsForm.loadHPackets();
         this.updatePacketTable();
       } else if (this.currentForm instanceof PacketFieldsFormComponent) {
+        this.eventsForm.loadHPackets();
+        this.statisticsForm.loadHPackets();
         this.updateSelectFieldChanged(isNew);
       } else if (this.currentForm instanceof PacketEnrichmentFormComponent) {
         this.enrichmentRules = [...this.updateList(ent, this.enrichmentRules)];
