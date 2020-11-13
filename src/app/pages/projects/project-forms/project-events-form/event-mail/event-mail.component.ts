@@ -26,8 +26,8 @@ export class EventMailComponent implements OnInit {
     return {
       mailRecipient: this.mailForm.value.mailRecipient,
       mailCC: this.mailForm.value.mailCC,
-      mailObject: this.mailForm.value.mailObject,
-      mailBody: this.mailForm.value.mailBody
+      mailObject: btoa(this.mailForm.value.mailObject),
+      mailBody: btoa(this.mailForm.value.mailBody)
     };
   }
 
@@ -43,8 +43,8 @@ export class EventMailComponent implements OnInit {
     const data = JSON.parse(dataArr[0]);
     this.mailForm.get('mailRecipient').setValue(data.recipients);
     this.mailForm.get('mailCC').setValue(data.ccRecipients);
-    this.mailForm.get('mailObject').setValue(data.subject);
-    this.mailForm.get('mailBody').setValue(data.body);
+    this.mailForm.get('mailObject').setValue(atob(data.subject));
+    this.mailForm.get('mailBody').setValue(atob(data.body));
     this.originalValueUpdate();
   }
 
