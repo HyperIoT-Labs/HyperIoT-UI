@@ -35,8 +35,8 @@
         <div class="form-group row">
             <div *ngIf="entity.algorithm">
                 <h4>Current Cron Expression: {{entity.cronExpression}}</h4> 
-            </div> 
-            <cron-editor formControlName="cronExpression" [options]="cronOptions"></cron-editor> 
+            </div>
+            <cron-editor ngDefaultControl formControlName="cronExpressionFC" [(cron)]="cronExpression" [disabled]="isCronDisabled" [(options)]="cronOptions"></cron-editor>
         </div> <!-- END SECOND ROW -->
 
         <div class="form-group row">
