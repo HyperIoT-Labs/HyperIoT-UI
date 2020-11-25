@@ -142,15 +142,8 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
           this.dataStreamService.connect(this.projectId);
           this.streamSubscription = this.dataStreamService.eventStream.subscribe((p) => {
             const packet = p.data;
-            if (packet.id === 0 && packet.name === 'systemTick') {
-              const remoteTimestamp: number = packet.fields.map.timestamp.value.long;
-              const localTimestamp = new Date().getTime();
-              this.topologyResponseTimeMs = localTimestamp - remoteTimestamp;
-              // this.hytTopologyService.topologyTimeStatus = this.topologyResponseTimeMs;
-              this.topologyResTimeChange.emit({timeMs: this.topologyResponseTimeMs})
-              // console.log('Received topology tick (ms)', remoteTimestamp);
-              // console.log('Topology response time (ms)', this.topologyResponseTimeMs);
-            }
+            const remoteTimestamp: number = packet.fields.map.timestamp.value.long;
+            this.topologyResTimeChange.emit({timeMs: remoteTimestamp});
           });
           // get dashboard config
           this.getWidgetsMapped(d.widgets)
