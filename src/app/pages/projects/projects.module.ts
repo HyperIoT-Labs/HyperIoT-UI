@@ -5,7 +5,8 @@ import { ComponentsModule } from '@hyperiot/components';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
-import { CronEditorModule } from 'ngx-cron-editor';
+// import { CronEditorModule } from 'ngx-cron-editor';
+import { CronEditorModule } from 'cron-editor';
 
 import { ProjectCardComponent } from './project-card/project-card.component';
 
@@ -112,7 +113,7 @@ import { StatisticInputDefinitionComponent } from './project-forms/project-stati
     StatisticInputDefinitionComponent
   ],
   imports: [
-    //CronEditorModule,
+    CronEditorModule,
     MatIconModule,
     MatButtonModule,
     MatTabsModule,
