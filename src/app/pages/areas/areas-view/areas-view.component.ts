@@ -118,6 +118,12 @@ export class AreasViewComponent {
       }, this.apiError);
   }
 
+  public onItemMapClicked(itemMap){
+    if(itemMap.innerArea){
+      this.loadArea(itemMap);
+    }
+  }
+
   private loadArea(area: Area) {
     this.areaId = area.id;
     this.areaName = area.name;

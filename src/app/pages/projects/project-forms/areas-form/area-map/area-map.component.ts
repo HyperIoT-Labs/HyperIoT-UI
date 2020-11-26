@@ -6,7 +6,8 @@ import {
   ElementRef,
   HostListener,
   EventEmitter,
-  Input
+  Input,
+  Output
 } from '@angular/core';
 import { DraggableItemComponent } from '../draggable-item/draggable-item.component';
 import { MapDirective } from '../map.directive';
@@ -32,6 +33,7 @@ export class AreaMapComponent {
   @Input()
   editMode = false;
   // events
+  @Output()
   itemOpen = new EventEmitter<any>();
   itemRemove = new EventEmitter<any>();
   itemUpdate = new EventEmitter<any>();
