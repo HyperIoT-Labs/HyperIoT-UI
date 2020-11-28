@@ -37,8 +37,15 @@ export class AreasViewComponent {
   areaList: Area[] = [];
   areaDevices = [] as AreaDevice[];
   areaPath: Area[] = [];
-
+  
+  /**
+   * variable used to determine if the treeview should be visible or not
+   */
   treeViewIsOpen: boolean = false;
+
+  /**
+   * variable used to dynamically set the first part of toggle treeview button title
+   */
   preTitleTreeView: string = 'Show'; /* @I18N@ */
 
   constructor(
@@ -280,7 +287,11 @@ export class AreasViewComponent {
     console.log('API ERROR', err);
     this.pageStatus = PageStatus.Error;
   }
+  
 
+  /**
+   * function used to toggle display treeview project in area map
+   */
   toggleTreeViewProject() {
 
     this.treeViewIsOpen = !this.treeViewIsOpen;

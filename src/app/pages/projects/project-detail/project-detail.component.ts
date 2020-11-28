@@ -45,6 +45,26 @@ export class ProjectDetailComponent implements OnInit {
 
   projectName: string;
   validationErrors: [];
+  
+  /**
+   * variable used to determine if the treeview should be visible or not
+   */
+  treeViewIsOpen: boolean = false;
+
+  /**
+   * variable used to dynamically set the first part of toggle treeview button title
+   */
+  preTitleTreeView: string = 'Show'; /* @I18N@ */
+  
+  /**
+   * variable used to determine if the Info/Action column should be visible or not
+   */
+  displayInfoAction: boolean = true;
+  
+  /**
+   * variable used to determine basic position of draggable treeview item
+   */
+  dragPosition = {x: 0, y: 25};
 
   constructor(
     private hProjectService: HprojectsService,
@@ -62,6 +82,9 @@ export class ProjectDetailComponent implements OnInit {
 
   onActivate(childComponent: ProjectFormEntity) {
     if (childComponent.isProjectEntity) {
+      
+      this.toggleInfoActionColumn(childComponent.formTemplateId);
+
       this.currentEntity = childComponent;
       this.currentEntity.unsavedChangesCallback = () => {
         return this.openSaveDialog();
@@ -362,6 +385,43 @@ export class ProjectDetailComponent implements OnInit {
 
   goToProjectWizard() {
     this.router.navigateByUrl(`/project-wizard/${this.projectId}`);
+  }
+
+  /**
+   * function used to toggle display treeview project in area map
+   */
+  toggleTreeViewProject() {
+
+    this.treeViewIsOpen = !this.treeViewIsOpen;
+
+    if(this.treeViewIsOpen) {
+      
+      this.preTitleTreeView = 'Hide'; /* @I18N@ */
+      this.dragPosition = {x: this.dragPosition.x, y: this.dragPosition.y};
+
+    } else {
+
+      this.preTitleTreeView = 'Show'; /* @I18N@ */
+
+    }
+
+  }
+  
+  /**
+   * function used to toggle display Info/Action Column
+   */
+  toggleInfoActionColumn(formTempalteID: string) {
+
+    if(
+      formTempalteID.includes('areas-form') || 
+      formTempalteID.includes('tag-form') ||
+      formTempalteID.includes('category-form')
+    ) {
+      this.displayInfoAction = false;
+    } else {
+      this.displayInfoAction = true;
+    }
+
   }
 
 }

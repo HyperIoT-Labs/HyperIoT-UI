@@ -210,9 +210,11 @@
                     border-style: dotted;
 
                     .treeview {
-                        min-width: 230px;
+                        min-width: 300px;
                         width: max-content;
                         max-width: 100%;
+                        padding-left: 10px;
+                        padding-right: 10px;
 
                     }
 
@@ -272,10 +274,11 @@
                             span {
                                 &.mat-button-wrapper {
 
-                                    vertical-align: sub;
-
                                     span {
-                                        font-size: 1.8em;
+
+                                        vertical-align: sub;
+                                        font-size: 1.45em;
+                                        
                                     }
 
                                 }
