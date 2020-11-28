@@ -187,7 +187,7 @@ export class EntitiesService {
     emptyModel: {
       config: '',
       algorithm: null,
-      cronExpression: '0 0 1/1 * *',
+      cronExpression: '0/5 * * * * ? *',
       entityVersion: 1
     }
   };

@@ -71,11 +71,12 @@ export class PacketSelectComponent implements OnInit {
     this.buildDeviceOptions();
     let index = 0;
     if (this.devicesOptions.length !== 0) {
-      while (this.devicesOptions[index].disabled) {
+      while (index < this.devicesOptions.length && this.devicesOptions[index].disabled) {
         index++;
       }
-      this.selectForm.get('selectDevice').setValue(this.devicesOptions[index].value);
-      this.deviceChanged(this.devicesOptions[index]);
+      this.selectForm.get('selectDevice').setValue(this.devicesOptions[index] ?
+        this.devicesOptions[index].value : null);
+      this.deviceChanged(this.devicesOptions[index] ? this.devicesOptions[index] : null);
     } else {
       this.selectForm.get('selectDevice').setValue(null);
       this.deviceChanged(null);

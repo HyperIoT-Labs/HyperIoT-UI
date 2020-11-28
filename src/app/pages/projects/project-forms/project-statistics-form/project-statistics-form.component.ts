@@ -1,6 +1,6 @@
-import { Component, OnDestroy, ElementRef, ViewChild, Input, Injector, OnInit, OnChanges, AfterViewInit, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
+import { Component, OnDestroy, ElementRef, ViewChild, Input, Injector, OnInit, OnChanges, AfterViewInit, ViewEncapsulation, ChangeDetectorRef, forwardRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 
 import { SelectOption } from '@hyperiot/components';
@@ -8,7 +8,7 @@ import { SelectOption } from '@hyperiot/components';
 import { Algorithm, AlgorithmsService, HProject, HProjectAlgorithm, HprojectalgorithmsService } from '@hyperiot/core';
 
 import { ProjectFormEntity, LoadingStatusEnum } from '../project-form-entity';
-import { CronOptions } from 'ngx-cron-editor';
+import { CronOptions } from 'cron-editor/lib/CronOptions';
 import { SummaryListItem } from '../../project-detail/generic-summary-list/generic-summary-list.component';
 import { StatisticInputDefinitionComponent } from './statistic-input-definition/statistic-input-definition.component';
 
@@ -38,7 +38,7 @@ export class ProjectStatisticsFormComponent extends ProjectFormEntity implements
   entity = {} as HProjectAlgorithm;
 
   entityFormMap = {
-    cronExpression: {
+    cronExpressionFC: {
       field: 'cronExpression',
       default: ''
     }
@@ -56,12 +56,17 @@ export class ProjectStatisticsFormComponent extends ProjectFormEntity implements
   @ViewChild('statisticInputDefinition')
   statisticInputDefinition: StatisticInputDefinitionComponent;
 
+  public cronExpression = '0 12 1W 1/1 ? * *';
+  public isCronDisabled = false;
   public cronOptions: CronOptions = {
     formInputClass: 'form-control cron-editor-input',
     formSelectClass: 'form-control cron-editor-select',
     formRadioClass: 'cron-editor-radio',
     formCheckboxClass: 'cron-editor-checkbox',
-    defaultTime: '00:00:00',
+
+    defaultTime: '10:00:00',
+    use24HourTime: true,
+
     hideMinutesTab: false,
     hideHourlyTab: false,
     hideDailyTab: false,
@@ -69,11 +74,10 @@ export class ProjectStatisticsFormComponent extends ProjectFormEntity implements
     hideMonthlyTab: false,
     hideYearlyTab: false,
     hideAdvancedTab: false,
-    hideSpecificWeekDayTab: false,
-    hideSpecificMonthWeekTab: false,
-    use24HourTime: true,
-    hideSeconds: false,
-    cronFlavor: 'standard'
+    hideSeconds: true,
+
+    removeSeconds: false,
+    removeYears: false
   };
 
   showCover = false;
@@ -81,7 +85,7 @@ export class ProjectStatisticsFormComponent extends ProjectFormEntity implements
   private activatedRouteSubscription: Subscription;
 
   form = new FormGroup({
-    cronExpression: new FormControl('0 0 1/1 * *')
+    cronExpressionFC: new FormControl('0 0 1/1 * *')
   });
 
   constructor(
@@ -111,7 +115,7 @@ export class ProjectStatisticsFormComponent extends ProjectFormEntity implements
       this.algorithmOptions = this.algorithmList
       .map(algorithm => ({ value: algorithm, label: algorithm.name }));
     });
-    this.form.patchValue({cronExpression: '0 0 1/1 * *'});
+    this.form.patchValue({cronExpressionFC: '0 0 1/1 * *'});
   }
 
   ngOnChanges() {
@@ -245,7 +249,7 @@ export class ProjectStatisticsFormComponent extends ProjectFormEntity implements
     hProjectAlgorithm.algorithm = this.selectedAlgorithm;
     hProjectAlgorithm.project = this.currentProject;
     hProjectAlgorithm.config = this.selectedAlgorithm.baseConfig;
-    hProjectAlgorithm.cronExpression = this.form.get('cronExpression').value;
+    hProjectAlgorithm.cronExpression = this.form.get('cronExpressionFC').value;
 
     const wasNew = this.isNew();
     const responseHandler = (res) => {

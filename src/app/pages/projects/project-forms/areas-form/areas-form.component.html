@@ -88,7 +88,7 @@
                     <input class="hidden" id="map-image-input"
                         name="area-image"
                         (change)="onFileChange($event)"
-                        type="file" placeholder="Upload file" accept="{{ allowedImageTypes.join('|') }}">
+                        type="file" placeholder="Upload file" accept="{{ acceptFiles }}">
 
                     <hyt-button [color]="'hyt-base-default-white'" (clickFn)="onMapDeviceAddClick($event)" i18n="@@HYT_area_map_device_add">Add device</hyt-button>
                     <hyt-button [color]="'hyt-base-default-white'" [isDisabled]="areaList.length === 0" (clickFn)="onMapAreaAddClick($event)" i18n="@@HYT_area_map_area_add">Add sub-area</hyt-button>

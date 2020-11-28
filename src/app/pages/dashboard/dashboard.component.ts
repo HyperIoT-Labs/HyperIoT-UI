@@ -101,8 +101,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
           this.areaPath = areas;
         });
       }
-    }
-    if (this.showAreas) {
       this.showDashboard();
     } else {
       this.getProjectList();
@@ -170,7 +168,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
           if (res != null && res != undefined && res.status.toLowerCase() === 'active') {
             this.dataRecordingIsOn = true;
             this.dataRecordingStatus = (this.dataRecordingStatus == 2) ? TopologyStatus.On : TopologyStatus.Activated;
-            if (res.upTimeSec) {
+            if (res.uptimeSecs) {
               let seconds = res.upTimeSec;
               const days = Math.floor(seconds / (3600 * 24));
               seconds -= days * 3600 * 24;
