@@ -86,7 +86,6 @@ html {
         position: relative;
 
         /* z-index must be higher than .hyt-modal-background */
-        //z-index: 1004;
         z-index: 1002;
 
         /* enables scrolling for tall modals */
@@ -130,7 +129,6 @@ html {
         opacity: 0;
 
         /* z-index must be below .hyt-modal and above everything else  */
-        //z-index: 1003;
         z-index: 1001;
 
         -webkit-animation-name: modalOpacity;
