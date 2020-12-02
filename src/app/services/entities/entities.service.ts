@@ -185,7 +185,7 @@ export class EntitiesService {
     icon: 'icon-hyt_statistics',
     iconPlus: 'icon-hyt_statisticsPlus',
     emptyModel: {
-      config: '',
+      config: '{\"input\":[], \"output\":[]}',
       algorithm: null,
       cronExpression: '0/5 * * * * ? *',
       entityVersion: 1

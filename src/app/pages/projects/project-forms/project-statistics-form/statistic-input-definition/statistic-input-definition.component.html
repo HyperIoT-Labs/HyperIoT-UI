@@ -12,13 +12,23 @@
                     <hyt-select [form]="statisticInputForm.form" [options]="packetOptions" formControlName="packet" name="packet"
                         [isRequired]="true" i18n-label="@@HYT_packet" label="Packet" (changeFn)="packetChanged($event.value, i)">
                     </hyt-select>
-                </div> <!-- Field Packet -->
+                </div>
 
-                <div class="container-first-form-field col-5">
-                    <hyt-select [form]="statisticInputForm.form" [options]="statisticInputForm.fieldOptions" formControlName="field" name="field"
-                        [isRequired]="true" i18n-label="@@HYT_field" label="Field">
-                    </hyt-select>
-                </div> <!-- Field Field -->
+                <div class="col-3 container-form-field hidden-form-value">
+                    <hyt-input-text [form]="statisticInputForm.form" formControlName="mappedInput" name="mappedInput" [isRequired]="true">
+                    </hyt-input-text>
+                </div>
+
+                <div *ngIf="!canBindInputFields(statisticInputForm.leafFieldList)" class="container-first-form-field col-5">
+                    <p i18n="@@HYT_select_algorithm_packet_before">Select algorithm and packet before</p>
+                </div>
+
+                <div *ngIf="canBindInputFields(statisticInputForm.leafFieldList)" class="container-first-form-field col-5">
+                    <hyt-button class="toRight" [color]="'hyt-stepper-next'" (clickFn)="openInputFieldsModal(i)" >
+                        <ng-container *ngIf="!inputHaveBeenBounded(i)" i18n="@@HYT_bind_input_fields">Bind input fields</ng-container>
+                        <ng-container *ngIf="inputHaveBeenBounded(i)" i18n="@@HYT_input_binding_done">Input binding done</ng-container>
+                    </hyt-button>
+                </div>
 
                 <div class="container-delete-statistic-input col-2">
 
@@ -29,5 +39,5 @@
             </div>
         </form>
     </div>
-  
+
 </div>

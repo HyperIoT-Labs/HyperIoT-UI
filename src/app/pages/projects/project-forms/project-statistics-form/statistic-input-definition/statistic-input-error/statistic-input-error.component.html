@@ -1,0 +1,26 @@
+<div id="container-option-modal">
+
+    <div class="dialog">
+
+        <div class="dialog-header">
+            <h3 i18n="@@HYT_error">Error</h3>
+            <span class="hyt-icon icon-hyt_cancelC" (click)="close()"></span>
+        </div>
+
+        <div class="dialog-body">
+            <ng-container i18n="@@HYT_error_loading_statistic_input">An error occurred while loading statistic input. This may have happened for one or more of the following reasons:</ng-container>
+            <ul>
+
+                <li i18n="@@HYT_statistic_input_packet_deleted">A packet has been deleted</li>
+                <li i18n="@@HYT_statistic_input_field_deleted">A field has been deleted</li>
+
+            </ul>
+            <ng-container i18n="@@HYT_error_loading_statistic_input_hint">Please, redefine a new statistic and delete the old one.
+            </ng-container>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- <div class="hyt-modal-background"></div> -->

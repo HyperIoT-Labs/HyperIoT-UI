@@ -1163,6 +1163,40 @@
       <trans-unit id="HYT_algorithm_input_field" datatype="html">
         <source>Input field</source>
       </trans-unit>
+      <trans-unit id="HYT_bind_input_fields" datatype="html">
+        <source>Bind input fields</source>
+      </trans-unit>
+      <trans-unit id="HYT_select_algorithm_packet_before" datatype="html">
+        <source>Select algorithm and packet before</source>
+        <target>Seleziona prima l'algoritmo e il pacchetto</target>
+      </trans-unit>
+      <trans-unit id="HYT_input_definition_modal_title" datatype="html">
+        <source>Bind packet fields to algorithm input</source>
+      </trans-unit>
+      <trans-unit id="HYT_available_packet_fields" datatype="html">
+        <source>Available packet fields</source>
+      </trans-unit>
+      <trans-unit id="HYT_error_loading_statistic_input" datatype="html">
+        <source>An error occurred while loading statistic input. This may have happened for one or more of the following reasons:</source>
+      </trans-unit>
+      <trans-unit id="HYT_statistic_input_packet_deleted" datatype="html">
+        <source>A packet has been deleted</source>
+      </trans-unit>
+      <trans-unit id="HYT_statistic_input_field_deleted" datatype="html">
+        <source>A field has been deleted</source>
+      </trans-unit>
+      <trans-unit id="HYT_error_loading_statistic_input_hint" datatype="html">
+        <source>Please, redefine a new statistic and delete the old one.</source>
+      </trans-unit>
+      <trans-unit id="HYT_no_available_fields" datatype="html">
+        <source>There are not available fields anymore</source>
+      </trans-unit>
+      <trans-unit id="HYT_no_field_found" datatype="html">
+        <source>No field found</source>
+      </trans-unit>
+      <trans-unit id="HYT_input_binding_done" datatype="html">
+        <source>Input binding done</source>
+      </trans-unit>
     </body>
   </file>
 </xliff>
