@@ -52,7 +52,7 @@
               class="example-list"
               cdkDropListSortingDisabled
               (cdkDropListDropped)="drop($event)">
-              <div class="example-box" *ngFor="let hPacketField of hPacketFieldList" 
+              <div class="example-box" *ngFor="let hPacketField of (hPacketFieldList | filter: searchText)" 
                 cdkDragBoundary=".example-boundary" cdkDrag>{{hPacketField.name}}
               </div>
             </div>
