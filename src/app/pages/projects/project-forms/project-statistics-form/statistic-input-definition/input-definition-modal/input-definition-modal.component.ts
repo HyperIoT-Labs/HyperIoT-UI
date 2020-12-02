@@ -149,6 +149,7 @@ export class InputDefinitionModalComponent extends HytModal implements OnInit {
                         event.previousIndex,
                         event.currentIndex);
     }
+    this.searchText = '';
   }
 
   getChosenInput(input: AlgorithmIOField): HPacketField[] {

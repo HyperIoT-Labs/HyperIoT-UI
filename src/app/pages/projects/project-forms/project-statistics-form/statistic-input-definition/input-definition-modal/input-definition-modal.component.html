@@ -48,7 +48,7 @@
             </p>
             <div
               cdkDropList
-              [cdkDropListData]="hPacketFieldList | filter: searchText"
+              [cdkDropListData]="hPacketFieldList"
               class="example-list"
               cdkDropListSortingDisabled
               (cdkDropListDropped)="drop($event)">
