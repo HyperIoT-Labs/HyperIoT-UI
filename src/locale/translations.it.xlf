@@ -1597,6 +1597,14 @@
         <source>Input binding done</source>
         <target>Associazione input effettuata</target>
       </trans-unit>
+      <trans-unit id="HYT_algorithm_main_classname" datatype="html">
+        <source>Main classname</source>
+        <target>Nome classe contenente il metodo main</target>
+      </trans-unit>
+      <trans-unit id="HYT_hint_algorithm_main_classname" datatype="html">
+        <source>Enter the main classname</source>
+        <target>Inserisci il nome della classe contenente il metodo main</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

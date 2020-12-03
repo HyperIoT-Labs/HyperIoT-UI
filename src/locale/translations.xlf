@@ -1197,6 +1197,12 @@
       <trans-unit id="HYT_input_binding_done" datatype="html">
         <source>Input binding done</source>
       </trans-unit>
+      <trans-unit id="HYT_algorithm_main_classname" datatype="html">
+        <source>Main classname</source>
+      </trans-unit>
+      <trans-unit id="HYT_hint_algorithm_main_classname" datatype="html">
+        <source>Enter the main classname</source>
+      </trans-unit>
     </body>
   </file>
 </xliff>
