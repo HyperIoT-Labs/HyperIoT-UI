@@ -234,7 +234,8 @@ export class EntitiesService {
       description: '',
       baseConfig: '{\"input\":[], \"output\":[]}',
       entityVersion: 1,
-      jarName: null
+      jarName: null,
+      mainClassName: ''
     }
   };
 
