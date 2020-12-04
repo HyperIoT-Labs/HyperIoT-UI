@@ -2,8 +2,8 @@ import { Component, OnInit, OnChanges, Input } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { HytModalService, SelectOption } from '@hyperiot/components';
 import { Algorithm, HPacket, HPacketField, HpacketsService, HProject, HProjectAlgorithmConfig, HProjectAlgorithmInputField } from '@hyperiot/core';
-import { RuleErrorModalComponent } from '../../rule-definition/rule-error/rule-error-modal.component';
 import { InputDefinitionModalComponent } from './input-definition-modal/input-definition-modal.component';
+import { StatisticInputErrorComponent } from './statistic-input-error/statistic-input-error.component';
 
 interface StatisticInputForm {
   form: FormGroup;
@@ -36,7 +36,7 @@ export class StatisticInputDefinitionComponent implements OnInit, OnChanges {
   packetOptions: SelectOption[] = [];
   statisticInputForms: StatisticInputForm[] = [];
 
-  private originalFormsValues = '{"packet":"","mappedInput":""}';
+  private originalFormsValues = '{"packet":"","mappedInputList":""}';
 
   /**
    * Updating is true when the rule-definition is loaded. It is used to avoid expressionchangedafterviewchecked (isDirty)
@@ -95,7 +95,7 @@ export class StatisticInputDefinitionComponent implements OnInit, OnChanges {
   isFormInvalid(k: number): boolean {
     const valArr = this.statisticInputForms[k].form;
     return (Object.entries(valArr.value).length === 0) ? true :
-      valArr.get('packet').invalid || valArr.get('mappedInput').invalid;
+      valArr.get('packet').invalid || valArr.get('mappedInputList').invalid;
   }
 
   isInvalid(): boolean {
@@ -130,21 +130,21 @@ export class StatisticInputDefinitionComponent implements OnInit, OnChanges {
   }
 
   inputHaveBeenBounded(i: number): boolean {
-    return this.statisticInputForms[i].form.get('mappedInput').valid;
+    return this.statisticInputForms[i].form.get('mappedInputList').valid;
   }
 
   openInputFieldsModal(i: number) {
     const leafFieldList: HPacketField[] = this.statisticInputForms[i].leafFieldList;
-    const mappedInput = this.statisticInputForms[i].form.value.mappedInput;
+    const mappedInputList = this.statisticInputForms[i].form.value.mappedInputList;
     const currentPacketId = this.statisticInputForms[i].form.value.packet;
-    const data = {hPacketFieldList: leafFieldList, algorithm: this.algorithm, mappedInput};
+    const data = {hPacketFieldList: leafFieldList, algorithm: this.algorithm, mappedInputList};
     const modalRef = this.hytModalService.open(InputDefinitionModalComponent, data);
     modalRef.onClosed.subscribe(
       res => {
-        const mappedInputResponse = res.data.mappedInput;
-        this.config.input[i] = {packetId: currentPacketId, mappedInput: mappedInputResponse};
-        const mappedInputFormControl = this.statisticInputForms[i].form.get('mappedInput');
-        mappedInputFormControl.setValue(JSON.stringify(mappedInputResponse));
+        const mappedInputListResponse = res.data.mappedInputList;
+        this.config.input[i] = {packetId: currentPacketId, mappedInputList: mappedInputListResponse};
+        const mappedInputListFormControl = this.statisticInputForms[i].form.get('mappedInputList');
+        mappedInputListFormControl.setValue(JSON.stringify(mappedInputListResponse));
       },
       err => {
       }
@@ -165,10 +165,10 @@ export class StatisticInputDefinitionComponent implements OnInit, OnChanges {
     this.selectedPacketId = event;
     this.statisticInputForms[index].leafFieldList = this.buildLeafFieldList(this.allPackets.find(y => y.id === event));
     this.config.input.splice(index, 1);
-    this.statisticInputForms[index].form.value.mappedInput = '';
-    const mappedInput = this.statisticInputForms[index].form.get('mappedInput');
-    if (mappedInput) {
-      mappedInput.setValue('');
+    this.statisticInputForms[index].form.value.mappedInputList = '';
+    const mappedInputList = this.statisticInputForms[index].form.get('mappedInputList');
+    if (mappedInputList) {
+      mappedInputList.setValue('');
     }
   }
 
@@ -182,7 +182,7 @@ export class StatisticInputDefinitionComponent implements OnInit, OnChanges {
       form: this.fb.group({}),
       leafFieldList: []
     }];
-    this.originalFormsValues = '{"packet":"","mappedInput":""}';
+    this.originalFormsValues = '{"packet":"","mappedInputList":""}';
   }
 
   /**
@@ -198,16 +198,16 @@ export class StatisticInputDefinitionComponent implements OnInit, OnChanges {
 
           const currentPacket: HPacket = this.allPackets.find(p => p.id === input[k].packetId);
           if (!currentPacket) {
-            const modalRef = this.hytModalService.open(RuleErrorModalComponent);
+            const modalRef = this.hytModalService.open(StatisticInputErrorComponent);
             this.resetRuleDefinition();
             return;
           }
 
           const fields: HPacketField[] = this.buildLeafFieldList(currentPacket);
           // check if all fields still exist
-          Object.keys(input[k].mappedInput).forEach( hPacketFieldId => {
-            if(!fields.find(f => f.id === +hPacketFieldId)) {
-              this.hytModalService.open(RuleErrorModalComponent);
+          input[k].mappedInputList.forEach( mappedInput => {
+            if(!fields.find(f => f.id === mappedInput.packetFieldId)) {
+              this.hytModalService.open(StatisticInputErrorComponent);
               this.resetRuleDefinition();
               return;
             }
@@ -223,9 +223,9 @@ export class StatisticInputDefinitionComponent implements OnInit, OnChanges {
             if (packet) {
               packet.setValue(currentPacket.id);
             }
-            const mappedInput = this.statisticInputForms[k].form.get('mappedInput');
-            if (mappedInput) {
-              mappedInput.setValue(JSON.stringify(input[k].mappedInput));
+            const mappedInputList = this.statisticInputForms[k].form.get('mappedInputList');
+            if (mappedInputList) {
+              mappedInputList.setValue(JSON.stringify(input[k].mappedInputList));
             }
             if (k === this.statisticInputForms.length - 1) {
               this.originalValueUpdate();

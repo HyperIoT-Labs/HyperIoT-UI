@@ -1,7 +1,7 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { HytModal, HytModalService } from '@hyperiot/components';
-import { Algorithm, AlgorithmConfig, AlgorithmIOField, HPacketField, HProjectAlgorithmConfig, HProjectAlgorithmInputField } from '@hyperiot/core';
+import { Algorithm, AlgorithmConfig, AlgorithmIOField, HPacketField, HProjectAlgorithmConfig, HProjectAlgorithmInputField, MappedInput } from '@hyperiot/core';
 
 
 interface ChosenInput {
@@ -46,7 +46,7 @@ export class InputDefinitionModalComponent extends HytModal implements OnInit {
   /**
    * This is the mapping between algorithm inputs and fields of a packet
    */
-  mappedInput: any;
+  mappedInputList: MappedInput[];
 
   panelOpenState: boolean;
   searchText: string;
@@ -64,12 +64,12 @@ export class InputDefinitionModalComponent extends HytModal implements OnInit {
     this.inputArray = this.algorithmBaseConfig.input;
     // deep copy of available packet fields
     this.hPacketFieldList = [...this.data.hPacketFieldList];
-    this.mappedInput = this.data.mappedInput.length === 0 ? {} : JSON.parse(this.data.mappedInput);
+    this.mappedInputList = this.data.mappedInputList.length === 0 ? [] : JSON.parse(this.data.mappedInputList);
     this.buildChosenInputList();
   }
 
   private buildChosenInputList(): void {
-    if (Object.keys(this.mappedInput).length > 0) {
+    if (Object.keys(this.mappedInputList).length > 0) {
       // edit mode, load previous input
 
       /**
@@ -79,15 +79,15 @@ export class InputDefinitionModalComponent extends HytModal implements OnInit {
        *    "input": [
        *      {
        *        "packetId": <packetId>,
-       *        "mappedInput": {
-       *          "<first_hPacketFieldId>": {
-       *            <AlgoritmIOField_model>
-       *          },
-       *          "<second_hPacketFieldId>": {
-       *            <AlgoritmIOField_model>
+       *        "mappedInputList": [
+       *          {
+       *            "packetFieldId": <packetFieldId>,
+       *            "algorithmInput" : {
+       *              <AlgoritmIOField_model>
+       *             }
        *          },
        *          ...
-       *        }
+       *        ]
        *      }
        *    ],
        *    "output": [...]
@@ -114,11 +114,11 @@ export class InputDefinitionModalComponent extends HytModal implements OnInit {
        * Of course, when this modal will be close, there is the opposite conversion (see method output)
        */
 
-      Object.entries(this.mappedInput).forEach(([key, value]) => {
-        const numberKey: number = Number(key);
+      this.mappedInputList.forEach( mappedInput => {
+        const packetFieldId: number = mappedInput.packetFieldId;
         const chosenInput: ChosenInput = {
-          input: value,
-          hPacketField: [this.hPacketFieldList.find(x =>  x.id === numberKey)]
+          input: mappedInput.algorithmInput,
+          hPacketField: [this.hPacketFieldList.find(x =>  x.id === packetFieldId)]
         };
         this.hPacketFieldList.forEach((x, index) => {
           if (x.id === chosenInput.hPacketField[0].id) {
@@ -166,11 +166,11 @@ export class InputDefinitionModalComponent extends HytModal implements OnInit {
 
   output(action: string, data: any) {
     // do the conversion between frontend data structure and backend one
-    const mappedInput = {};
+    const mappedInputList = [];
     this.chosenInputList.forEach(x => {
-      mappedInput[x.hPacketField[0].id] = x.input;
+      mappedInputList.push({packetFieldId: x.hPacketField[0].id, algorithmInput: x.input});
     });
-    data.mappedInput = mappedInput;
+    data.mappedInputList = mappedInputList;
     this.close({ action, data });
   }
 
