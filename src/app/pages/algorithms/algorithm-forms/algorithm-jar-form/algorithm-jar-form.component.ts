@@ -137,7 +137,7 @@ export class AlgorithmJarFormComponent extends AlgorithmFormEntity implements Af
     this.loadingStatus = LoadingStatusEnum.Saving;
     this.resetErrors();
     let p = this.entity;
-    p.mainClassname = this.form.get('mainClassname').value;
+    p.mainClassname = this.form.get('algorithm-mainClassname').value;
     const responseHandler = (res) => {
       this.entity = p = res;
       this.resetForm();
