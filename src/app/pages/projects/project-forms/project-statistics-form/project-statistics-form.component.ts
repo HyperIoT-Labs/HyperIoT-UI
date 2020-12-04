@@ -59,7 +59,7 @@ export class ProjectStatisticsFormComponent extends ProjectFormEntity implements
   @ViewChild('statisticInputDefinition')
   statisticInputDefinition: StatisticInputDefinitionComponent;
 
-  public cronExpression = '0 12 1W 1/1 ? * *';
+  public cronExpression = '0 0 10 1 1/1 ? *';
   public isCronDisabled = false;
   public cronOptions: CronOptions = {
     formInputClass: 'form-control cron-editor-input',
@@ -88,7 +88,7 @@ export class ProjectStatisticsFormComponent extends ProjectFormEntity implements
   private activatedRouteSubscription: Subscription;
 
   form = new FormGroup({
-    cronExpressionFC: new FormControl('0 0 1/1 * *')
+    cronExpressionFC: new FormControl(this.cronExpression)
   });
 
   constructor(
@@ -118,7 +118,7 @@ export class ProjectStatisticsFormComponent extends ProjectFormEntity implements
       this.algorithmOptions = this.algorithmList
       .map(algorithm => ({ value: algorithm, label: algorithm.name }));
     });
-    this.form.patchValue({cronExpressionFC: '0 0 1/1 * *'});
+    // this.form.patchValue({cronExpressionFC: '0 0 1/1 * *'});
   }
 
   ngOnChanges() {
@@ -181,6 +181,7 @@ export class ProjectStatisticsFormComponent extends ProjectFormEntity implements
         if (hProjectAlgorithm && this.algorithmOptions.some(x => x.value.id === this.entity.algorithm.id)) {
           this.selectedAlgorithm = this.algorithmOptions.find(x => x.value.id === this.entity.algorithm.id).value;
           this.config = JSON.parse(hProjectAlgorithm.config);
+          this.cronExpression = hProjectAlgorithm.cronExpression;
         }
         this.form.get('algorithm-name').setValue(this.selectedAlgorithm);
         if (readyCallback) {
@@ -268,7 +269,7 @@ export class ProjectStatisticsFormComponent extends ProjectFormEntity implements
     this.config.output = baseConfig.output;
 
     hProjectAlgorithm.config = JSON.stringify(this.config);
-    hProjectAlgorithm.cronExpression = this.form.get('cronExpressionFC').value;
+    hProjectAlgorithm.cronExpression = this.cronExpression;
 
     const wasNew = this.isNew();
     const responseHandler = (res) => {
