@@ -187,7 +187,7 @@ export class EntitiesService {
     emptyModel: {
       config: '{\"input\":[], \"output\":[]}',
       algorithm: null,
-      cronExpression: '0/5 * * * * ? *',
+      cronExpression: '0/50 * * * * ? *',
       entityVersion: 1
     }
   };
