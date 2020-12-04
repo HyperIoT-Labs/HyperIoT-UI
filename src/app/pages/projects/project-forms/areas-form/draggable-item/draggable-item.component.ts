@@ -18,6 +18,7 @@ export class DraggableItemComponent {
   position = { x: 0, y: 0 };
   style: any = {};
   renderData = {} as any;
+  showName = false;
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
@@ -66,5 +67,13 @@ export class DraggableItemComponent {
       y: this.itemData.mapInfo.y * this.container.clientHeight
     };
     this.renderDataRequest.emit();
+  }
+
+  showNameLabel(){
+    this.showName = true;
+  }
+
+  hideNameLabel(){
+    this.showName = false;
   }
 }

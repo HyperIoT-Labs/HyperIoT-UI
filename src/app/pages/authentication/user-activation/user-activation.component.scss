@@ -164,6 +164,216 @@
   }
 }
 
+/*********************************
+*                                *
+*          RESPONSIVE            *
+*                                *
+*********************************/
+
+@media (max-width: 991px) {
+
+  #container-act {
+   
+    #box-act-success, #box-act {
+
+      #icon-success-block, #icon-block {
+
+        span {
+
+          &#icon-act-success, &#error-act-icon {
+
+            height: 12.625rem;
+            width: 10.625rem;
+
+          }
+
+        }
+
+        h2 {
+
+          &#title-act-success, &#title-act {
+
+            font-size: 1.6em;
+
+          }
+
+        }
+
+        h3 {
+
+          &#subtitle-act-success, &#subtitle-act {
+
+            font-size: 1em;
+
+          }
+
+        }
+
+        hr {
+
+          &#divisor-success, &#divisor-error {
+
+            width: 500px;
+
+          }
+
+        }
+
+        a {
+
+          font-size: 1.1em;
+
+        }
+
+      }
+
+      #btn-block {
+
+        a {
+
+          font-size: 1.1em;
+
+        }
+
+      }
+
+    }
+
+  }
+
+}
+
+@media (max-width: 767px) {
+
+  #container-act {
+
+    #box-act-success, #box-act {
+
+      #icon-success-block, #icon-block {
+
+        span {
+
+          &#icon-act-success, &#error-act-icon {
+
+            height: 9.625rem;
+            width: 8.625rem;
+
+          }
+
+        }
+
+        h2 {
+
+          &#title-act-success, &#title-act {
+
+            font-size: 1.3em;
+
+          }
+
+        }
+
+        h3 {
+
+          &#subtitle-act-success, &#subtitle-act {
+
+            font-size: .9em;
+
+          }
+
+        }
+
+        hr {
+
+          &#divisor-success, &#divisor-error {
+
+            width: 400px;
+
+          }
+
+        }
+
+      }
+
+    }
+
+  }
+
+}
+
+@media (max-width: 500px) {
+
+  #container-act {
+
+    #box-act-success, #box-act  {
+
+      #icon-success-block, #icon-block {
+
+        span {
+
+          &#icon-act-success, &#error-act-icon {
+
+            height: 6.625rem;
+            width: 4.625rem;
+
+          }
+
+        }
+
+        h2 {
+
+          &#title-act-success, &#title-act {
+
+            font-size: 1em;
+
+          }
+
+        }
+
+        h3 {
+
+          &#subtitle-act-success, &#subtitle-act {
+
+            font-size: .8em;
+
+          }
+
+        }
+
+        hr {
+
+          &#divisor-success, &#divisor-error {
+
+            width: 90%;
+            margin-top: 2em;
+
+          }
+
+        }
+
+        a {
+
+          font-size: 1em;
+
+        }
+
+      }
+
+      #btn-block {
+
+        a {
+
+          font-size: 1em;
+
+        }
+
+      }
+
+    }
+
+  }
+
+}
+
 /******************************************
 *******************************************
 *

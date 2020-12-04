@@ -1,79 +1,235 @@
 #home-page {
 
-    font-family: "Exo";
-    font-size: 1em;
-    padding-left: 15px;
-    padding-right: 15px;
-    padding-top: 15px;
+  font-family: "Exo";
+  font-size: 1em;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 15px;
     
-    .header {
-      border-bottom: 1px solid #1e58a5;
-      min-height: 50px;
-    
-      .breadcrumb {
-        font-weight: 400;
-        font-size: 1.2em;
-        line-height: 48px;
-        vertical-align: middle;
+  .header {
+    border-bottom: 1px solid #1e58a5;
+    min-height: 50px;
   
-        span {
-  
-          &.icon-hyt_projectSolo {
-            font-size: 1.8em;
-            vertical-align: middle;
-            margin-right: 3px;
-            color: #bec3c7;        
-          }
-  
+    .breadcrumb {
+      font-weight: 400;
+      font-size: 1.2em;
+      line-height: 48px;
+      vertical-align: middle;
+
+      span {
+
+        &.icon-hyt_projectSolo {
+          font-size: 1.8em;
+          vertical-align: middle;
+          margin-right: 3px;
+          color: #bec3c7;        
         }
+
+      }
+
+      a {
+        color: #000000;
+      }
+
+    }
   
-        a {
-          color: #000000;
+  }
+
+  #container-home {
+    margin-top: 48px;
+
+    #welcome-message {
+      text-align: center;
+
+      h3 {
+        &#welcome-title {
+          font-size: 2.2em;
+          text-transform: uppercase;
+          color: #0d416d;
+          margin-bottom: 0px;
+        }
+      }
+
+      h4 {
+        &#welcome-subtitle {
+          font-size: 1.1em;
+          color: #2d82cb;
+          margin-bottom: 60px;
+          font-style: italic;
+        }
+      }
+    }
+
+    #btn-no-home {
+      text-align: center;
+
+      hyt-button {
+
+        &#go-to-projects {
+
+          margin-top: 2px;
+
         }
   
       }
-    
+    }
+
+  }
+
+}
+
+/*********************************
+*                                *
+*          RESPONSIVE            *
+*                                *
+*********************************/
+
+@media (max-width: 767px) {
+
+  #home-page {
+
+    .header {
+
+      .breadcrumb {
+
+        font-size: 1.1em;
+
+      }
+      
     }
 
     #container-home {
-        margin-top: 48px;
 
-        #welcome-message {
-            text-align: center;
+      #welcome-message {
 
-            h3 {
-                &#welcome-title {
-                    font-size: 2.2em;
-                    text-transform: uppercase;
-                    color: #0d416d;
-                    margin-bottom: 0px;
-                }
-            }
+        h3 {
 
-            h4 {
-                &#welcome-subtitle {
-                    font-size: 1.1em;
-                    color: #2d82cb;
-                    margin-bottom: 60px;
-                    font-style: italic;
-                }
-            }
+          &#welcome-title {
+
+            font-size: 2em;
+
+          }
+
         }
 
-        #btn-no-home {
-            text-align: center;
+        h4 {
 
-            hyt-button {
+          &#welcome-subtitle {
 
-                &#go-to-projects {
+            font-size: 1em;
 
-                  margin-top: 2px;
-        
-                }
-        
-            }
+          }
+
         }
+
+      }
 
     }
+
+  }
+
+}
+
+@media (max-width: 500px) {
+
+  #home-page {
+
+    .header {
+
+      flex-direction: column !important;
+      border-bottom: none;
+
+      .breadcrumb {
+
+          font-size: 1em;
+          display: flex;
+          flex: 0 0 100%;
+          order: 1;
+          width: 100%;
+          max-width: 100%;
+          align-items: center;
+          border-bottom: 1px solid #1e58a5;
+          margin-bottom: 10px;
+          flex-wrap: wrap;
+          line-height: 30px;
+  
+        a {
+          margin-right: 5px;
+        }
+
+        strong {
+          margin-left: 5px;
+        }
+      }
+
+    }
+
+    #container-home {
+
+      #welcome-message {
+
+        h3 {
+
+          &#welcome-title {
+
+            font-size: 1.4em;
+            line-height: 25px;
+
+          }
+
+        }
+
+        h4 {
+
+          &#welcome-subtitle {
+
+            font-size: .9em;
+            margin-top: 10px;
+            margin-bottom: 40px;
+
+          }
+
+        }
+
+      }
+
+      #btn-no-home {
+
+        button {
+
+          font-size: .9em;
+
+          span {
+
+            &.mat-button-wrapper {
+
+              display: flex;
+              align-items: center;
+              justify-content: center;
+
+              span {
+
+                &.hyt-icon {
+
+                  font-size: 1.4em;
+                  margin-right: 3px;
+                  margin-left: 3px;
+                  margin-top: -2px;
+
+                }
+
+              }
+
+            }
+
+          }
+
+        }
+
+      }
+
+    }
+
+  }
 
 }

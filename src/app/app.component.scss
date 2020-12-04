@@ -55,13 +55,13 @@ html {
             padding-right: 0;
             top: 64px;
             padding-bottom: 60px;
-            overflow: auto;
+            overflow: visible;
             height: 100%;
 
-            -webkit-transition: all .5 ease-in-out;
-            -moz-transition: all .5 ease-in-out;
-            -o-transition: all .5 ease-in-out;
-            transition: all .5 ease-in-out;
+            -webkit-transition: all .5s ease-in-out;
+            -moz-transition: all .5s ease-in-out;
+            -o-transition: all .5s ease-in-out;
+            transition: all .5s ease-in-out;
           }
 
           &.container-full-screen {
@@ -86,7 +86,7 @@ html {
         position: relative;
 
         /* z-index must be higher than .hyt-modal-background */
-        z-index: 1004;
+        z-index: 1002;
 
         /* enables scrolling for tall modals */
         //overflow: auto;
@@ -129,7 +129,7 @@ html {
         opacity: 0;
 
         /* z-index must be below .hyt-modal and above everything else  */
-        z-index: 1003;
+        z-index: 1001;
 
         -webkit-animation-name: modalOpacity;
         /* Safari 4.0 - 8.0 */

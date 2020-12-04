@@ -8,9 +8,6 @@
 
     <!-- button on the right side -->
     <div class="align-self-right">
-      <!-- <hyt-button *ngIf="pageStatus === 1" id="add-project-btn-top" (click)="addProject()" type="button">
-        <ng-container i18n="@@HYT_add_new_project">Add new project</ng-container>
-      </hyt-button> -->
 
       <hyt-button *ngIf="pageStatus === 1" [isDisabled]="deletingInLoading" id="add-project-btn-top" (clickFn)="addProject()"
         [color]="'hyt-base-total-white'">
@@ -23,6 +20,10 @@
   </div>
 
   <div id="container-projects" [ngSwitch]="pageStatus" class="container-fluid">
+
+    <div id="page-up-btn" *ngIf="scrolled" (click)="scrollToTopPage()">&#8686;</div>
+
+    <div id="mobile-add-new-project-btn" (click)="addProject()">&#x2B;</div>
 
     <div id="loadingStatus" *ngSwitchCase="PageStatus.Loading" class="mt-5 d-flex flex-column align-items-center justify-content-center">
 
@@ -47,25 +48,27 @@
 
           <div id="projects-topfilters-box" class="col-12">
             <form #f="ngForm" [formGroup]="filteringForm" (ngSubmit)="filter()">
+
               <div class="row">
-                <div class="col-6">
+
+                <div id="container-search" class="col-6">
                   <hyt-input-text id="hyt-search-bottom" [form]="filteringForm" formControlName="textFilter"
                     name="textFilter" i18n-placeholder="@@HYT_search" placeholder="Search" (keyup)="onChangeInputSearch($event)"></hyt-input-text>
                 </div>
-                <div class="col-6 sort-right">
+
+                <div id="container-sort" class="col-6 sort-right">
                   <span id="sort-text">Sort by: </span>
                   <hyt-select [form]="filteringForm" i18n-label="@@HYT_select_sort_type" label="Select a sort type" formControlName="sort" name="sort"
                     (changeFn)="onChangeSelectSort($event)" [options]="sortOptions"></hyt-select>
                 </div>
+
               </div>
+
             </form>
           </div>
 
-          <div class="col-12">
-            <!-- <span i18n="@@HYT_show_projects_of">Showing {hProjectsFiltered.length, plural, =0 {{{hProjectsFiltered.lenght}} projects} =1 {{{hProjectsFiltered.length}} project} other {{{hProjectsFiltered.length}} projects}} of {{hProjects.length}} </span> -->
-            <!-- @@i18n -->
-
-            <span >Showing {{hProjectsFiltered.length}} projects of {{hProjects.length}}</span>
+          <div id="projects-counter" class="col-12">
+            <span>Showing {{hProjectsFiltered.length}} projects of {{hProjects.length}}</span>
           </div>
 
         </div> <!-- End Row Title -->

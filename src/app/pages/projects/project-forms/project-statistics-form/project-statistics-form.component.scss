@@ -64,6 +64,34 @@
                     }
 
                 }
+
+                cron-editor {
+                    display: flex;
+                    flex-direction: column;
+                    ul {
+                        &.nav {
+                            padding-left: 0;
+                            margin-bottom: 0;
+                            list-style: none;
+                            border-bottom: 1px solid #ddd;
+                            li {
+                                float: left;
+                                &:not(:last-child) {
+                                    margin-right: 10px;
+                                }
+                            }
+                        }
+                    }
+                    .tab-content {
+                        .tab-pane {
+                            display: none;
+                            &.active {
+                                display: block;
+                            }
+                        }
+                    }
+                }
+
             }
         }
     }

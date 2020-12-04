@@ -3,12 +3,29 @@
     <div class="row">
         <div class="col-12 header-table">
             {{_summaryList.title}}
-            <!-- <button *ngIf="addButtonActive" (click)="addEntity()">+</button> -->
             <span *ngIf="addButtonActive" class="hyt-icon icon-hyt_plusC" (click)="addEntity()"></span>
         </div>
     </div>
 
-    <div id="container-table-elements">
+    <div  class="container-body-table-elements">
+
+        <div class="row-table-element" *ngFor="let item of _summaryList.list; let i = index">
+
+            <div class="name-table-element" (click)="onEditOptionClick(item)">
+                {{item.name}}
+            </div>
+            <div class="cancel-table-element">
+                <span class="hyt-icon icon-hyt_trash" (click)="onDeleteOptionClick(item)"></span>
+            </div>
+            <div class="duplicate-table-element">
+                <span class="hyt-icon icon-hyt_duplicate" (click)="onDuplicateOptionClick(item)"></span>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- <div id="container-table-elements">
 
         <div *ngFor="let item of _summaryList.list; let i = index" class="row single-row-table">
 
@@ -24,6 +41,6 @@
     
         </div>
 
-    </div>
+    </div> -->
 
 </div>

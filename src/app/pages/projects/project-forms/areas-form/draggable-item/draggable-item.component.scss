@@ -62,3 +62,23 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+@-webkit-keyframes pulsate {
+    0% {opacity: 0.1;}
+    40% {opacity: 1.0;}
+    60% {opacity: 1.0;}
+    100% {opacity: 0.1;}
+}
+
+
+.status-circle {
+    height: 8px;
+    width: 8px;
+    border-radius: 50%;
+    display: inline-block;
+    background-color: grey;
+  }
+
+.status-circle-incoming-data {
+    background-color: yellowgreen;
+  }

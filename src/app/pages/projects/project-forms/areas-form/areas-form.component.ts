@@ -39,7 +39,8 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit {
   areaList: Area[] = [];
   areaPath: Area[] = [];
 
-  allowedImageTypes = ['.jpg']; // eg.  ['.jpg', '.png', '.svg']
+  allowedImageTypes = ['.jpg','.jpeg','.png','.svg']; 
+  acceptFiles = this.allowedImageTypes.join(",").replace(/\./,"image/");
   maxFileSize = 0; // this will be set in constructor via areaService.getConfig()...
 
   constructor(
@@ -158,7 +159,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit {
     if (event.target.files && event.target.files.length) {
       const [file] = event.target.files;
       const fileName = (file.name as string);
-      const extension = fileName.substr(fileName.lastIndexOf('.'));
+      const extension = fileName.substr(fileName.lastIndexOf('.')).toLocaleLowerCase();
       // reset file input
       event.target.value = '';
       // if file type is allowed, continue reading and uploading file

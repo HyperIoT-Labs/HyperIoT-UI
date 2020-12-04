@@ -1,4 +1,4 @@
-import { Component, OnDestroy, ViewChild, ElementRef, Injector, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
+import { Component, OnChanges, OnDestroy, ViewChild, Input, Injector, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { Subscription, Observable } from 'rxjs';
@@ -11,12 +11,12 @@ import { Option } from '@hyperiot/components';
 import { SummaryListItem } from '../../project-detail/generic-summary-list/generic-summary-list.component';
 
 @Component({
-  selector: 'hyt-packet-events-form',
-  templateUrl: './packet-events-form.component.html',
-  styleUrls: ['./packet-events-form.component.scss'],
+  selector: 'hyt-project-events-form',
+  templateUrl: './project-events-form.component.html',
+  styleUrls: ['./project-events-form.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class PacketEventsFormComponent extends ProjectFormEntity implements OnDestroy {
+export class ProjectEventsFormComponent extends ProjectFormEntity implements OnChanges, OnDestroy {
 
   entity: Rule = {} as Rule;
   entityFormMap = {
@@ -30,10 +30,8 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
 
   private activatedRouteSubscription: Subscription;
 
-  private packetId: number;
-
-  packet: HPacket = {} as HPacket;
-  project: HProject = {} as HProject;
+  @Input()
+  currentProject: HProject;
 
   @ViewChild('eventDef')
   ruleDefinitionComponent: RuleDefinitionComponent;
@@ -59,12 +57,18 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
     this.formTitle = this.entitiesService.event.formTitle;
     this.icon = this.entitiesService.event.icon;
     this.hideDelete = true; // hide 'Delete' button
-    this.activatedRouteSubscription = this.activatedRoute.params.subscribe(routeParams => {
-      this.packetId = +(activatedRoute.snapshot.params.packetId);
-      if (this.packetId) {
+    this.activatedRouteSubscription = this.activatedRoute.parent.params.subscribe(routeParams => {
+      if (routeParams.projectId) {
+        this.currentProject = {id: routeParams.projectId, entityVersion: null}; // read id of project
         this.loadData();
       }
     });
+  }
+
+  ngOnChanges() {
+    if (this.currentProject) {
+      this.updateSummaryList();
+    }
   }
 
   ngOnDestroy() {
@@ -108,21 +112,20 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
     }
   }
 
-  loadData(packetId?: number) {
-    if (packetId) { this.packetId = packetId; }
-    this.hPacketService.findHPacket(this.packetId).subscribe((p: HPacket) => {
-      this.packet = p;
-      this.project = p.device.project;
-      this.updateSummaryList();
-      this.entityEvent.emit({
-        event: 'treeview:focus',
-        id: p.id, type: 'packet-events'
-      });
+  loadData() {
+    this.updateSummaryList();
+    this.entityEvent.emit({
+      event: 'treeview:focus',
+      id: this.currentProject.id, type: 'project-events'
     });
   }
 
+  loadHPackets() {
+    this.ruleDefinitionComponent.loadHPackets();
+  }
+
   updateSummaryList() {
-    this.rulesService.findAllRuleByPacketId(this.packet.id).subscribe((rules: Rule[]) => {
+    this.rulesService.findAllRuleByProjectId(this.currentProject.id).subscribe((rules: Rule[]) => {
       this.summaryList = {
         title: this.formTitle,
         list: rules
@@ -178,8 +181,8 @@ export class PacketEventsFormComponent extends ProjectFormEntity implements OnDe
       });
     } else {
       e.entityVersion = 1;
-      e.project = { id: this.project.id, entityVersion: this.project.entityVersion };
-      e.packet = { id: this.packet.id, entityVersion: this.packet.entityVersion };
+      e.project = { id: this.currentProject.id, entityVersion: this.currentProject.entityVersion };
+      e.packet = null;  // event rules are not bound to packets anymore
       e.type = 'EVENT';
       this.rulesService.saveRule(e).subscribe(responseHandler, (err) => {
         this.setErrors(err);

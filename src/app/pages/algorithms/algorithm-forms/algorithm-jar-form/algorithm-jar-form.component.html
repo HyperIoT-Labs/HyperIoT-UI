@@ -3,6 +3,7 @@
     <!-- FIRST FORM -->
 
     <form [formGroup]="form" #formReference [ngClass]="{'blurred': loadingStatus !== LoadingStatus.Ready}">
+        
         <div>
             <div>
                 <span *ngIf="algorithm && algorithm.jarName">JAR exists</span>
@@ -13,10 +14,22 @@
                 formControlName="jarName"
                 accept=".jar"
                 (change)="handleFileInput($event.target.files)">
-        </div>
-    </form>
+        </div> <!-- First Row -->
 
-    <!-- END FIRST FORM -->
+        <div class="form-group row">
+            <div id="fproj-col-descr" class="col-12"> 
+                <hyt-input-text 
+                    name="algorithm-mainClassname" i18n-placeholder="@@HYT_algorithm_main_classname" placeholder="Main classname" [form]="form"
+                    [injectedErrorMsg]="getError('algorithm-mainClassName')"
+                    i18n-hintMessage="@@HYT_hint_algorithm_main_className"
+                    hintMessage="Enter the main classname"
+                    errorPosition="bottom" minlength="3" isRequired="true"
+                >
+                </hyt-input-text>
+            </div>
+        </div> <!-- Second Row -->
+
+    </form>
 
     <!-- 
         TODO: This HTML block is repeated

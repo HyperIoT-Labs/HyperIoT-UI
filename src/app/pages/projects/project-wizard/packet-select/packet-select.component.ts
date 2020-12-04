@@ -70,24 +70,37 @@ export class PacketSelectComponent implements OnInit {
   autoSelect(): void {
     this.buildDeviceOptions();
     let index = 0;
-    while (this.devicesOptions[index].disabled) {
-      index++;
+    if (this.devicesOptions.length !== 0) {
+      while (index < this.devicesOptions.length && this.devicesOptions[index].disabled) {
+        index++;
+      }
+      this.selectForm.get('selectDevice').setValue(this.devicesOptions[index] ?
+        this.devicesOptions[index].value : null);
+      this.deviceChanged(this.devicesOptions[index] ? this.devicesOptions[index] : null);
+    } else {
+      this.selectForm.get('selectDevice').setValue(null);
+      this.deviceChanged(null);
     }
-    this.selectForm.get('selectDevice').setValue(this.devicesOptions[index].value);
-    this.deviceChanged(this.devicesOptions[index]);
   }
 
   deviceChanged(event): void {
-    this.selectedDeviceId = event.value;
-    this.packetsOptions = [];
-    this.selectForm.get('selectPacket').setValue(null);
-    this.currentPacket.emit(null);
-    this.buildPacketOptions();
-    if (this.packetsOptions.length !== 0) {
-      this.selectForm.get('selectPacket').setValue(this.packetsOptions[0].value);
-      this.packetChanged(this.packetsOptions[0]);
-    } else {
+    if (event) {
+      this.selectedDeviceId = event.value;
+      this.packetsOptions = [];
+      this.selectForm.get('selectPacket').setValue(null);
       this.currentPacket.emit(null);
+      this.buildPacketOptions();
+      if (this.packetsOptions.length !== 0) {
+        this.selectForm.get('selectPacket').setValue(this.packetsOptions[0].value);
+        this.packetChanged(this.packetsOptions[0]);
+      } else {
+        this.currentPacket.emit(null);
+      }
+    } else {
+      this.packetsOptions = [];
+      this.selectForm.get('selectPacket').setValue(null);
+      this.currentPacket.emit(null);
+      this.buildPacketOptions();
     }
   }
 

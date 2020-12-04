@@ -1,10 +1,6 @@
 <!-- REGISTRATION FORM BLOCK -->
 <div id="container-registration">
 
-  <!-- <div class="preload" style="display: none">
-    <img src="../../../../assets/images/compressed/registration_bg_600x338-min.jpg" />
-  </div> -->
-
   <div class="container" id="box-login">
 
     <div class="row">
@@ -72,7 +68,7 @@
                 </hyt-input-text>
               </div> <!-- Field Repeat Password -->
 
-              <div class="container-form-field">
+              <div class="container-form-field container-privacy-checkbox">
                 <hyt-checkbox [(ngModel)]="checked" [ngModelOptions]="{standalone: true}" name="checkPrivacy" type="checkbox" id="checkPrivacy" (changeFn)="onClickCheckbox($event)">
                   <ng-container i18n="@@HYT_check_per">Check per</ng-container>&nbsp;
                   <a href="#" i18n="@@HYT_terms_of_use">Terms of use</a>&nbsp;

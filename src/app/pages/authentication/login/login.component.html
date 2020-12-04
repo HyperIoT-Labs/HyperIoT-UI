@@ -1,10 +1,6 @@
 <!-- LOGIN FORM BLOCK -->
 <div id="container-login">
-
-  <!-- <div class="preload" style="display: none">
-    <img src="assets/images/compressed/login_bg_600x400-min.jpg" />
-  </div> -->
-
+  
   <div class="container" id="box-login">
 
     <div class="row">
@@ -71,7 +67,7 @@
                 </ng-container>
               </div> <!-- Error Box -->
 
-              <div class="container-form-field">
+              <div class="container-form-field container-submit-btn">
                 <hyt-button [color]="'hyt-base-default-white'" id="submit-btn" [ngClass]="{'submit-valid-form' : !notValid() }" type="submit"
                   [isDisabled]="notValid() || loginStatus == 1">
                   <ng-container i18n="@@HYT_login">Login</ng-container>

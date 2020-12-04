@@ -9,8 +9,10 @@
     [cdkDragFreeDragPosition]="position"
     (cdkDragMoved)="onDragMoved($event)"
     (cdkDragEnded)="onDragEnded($event)"
-    (cdkDragReleased)="onDragReleased($event)">
-
+    (cdkDragReleased)="onDragReleased($event)"
+    (mouseover)="showNameLabel()" 
+    (mouseout)="hideNameLabel()" >
+    
     <button class="remove-button"
         title="Remove {{itemData.device ? itemData.device.deviceName : itemData.name}}"
         i18n-title="@@HYT_area_draggable_remove"
@@ -21,7 +23,8 @@
         title="Open {{itemData.device ? itemData.device.deviceName : itemData.name}}"
         i18n-title="@@HYT_area_draggable_open"
         (mousedown)="$event.stopPropagation()"
-        (click)="onOpenButtonClick($event)">
+        (click)="onOpenButtonClick($event)"
+        [ngStyle]="{ display: (showName || editMode) ? '' : 'none' }">
         <div class="name">{{itemData.device ? itemData.device.deviceName : itemData.name}}</div>
         <!-- BEGIN -- custom render data passed on component refresh event -->
         <div class="stats" *ngIf="renderData.deviceCount">
@@ -29,5 +32,5 @@
         </div>
         <!-- END -- custom render data passed on component refresh event -->
     </div>
-
+    <span class="status-circle status-circle-idle" [ngStyle]="{ display: editMode ? 'none' : '' }"></span>
 </div>

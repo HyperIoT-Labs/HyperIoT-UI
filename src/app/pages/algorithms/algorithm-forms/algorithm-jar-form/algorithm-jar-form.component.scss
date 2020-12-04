@@ -17,6 +17,19 @@
 
         .form-group {
             margin-bottom: 15px;
+
+            &.row {
+                
+                hyt-input-text {
+                    
+                    mat-form-field {
+                        margin-bottom: 10px;
+                        font-family: 'Exo';
+                    }
+    
+                }
+
+            }
         }
 
     }

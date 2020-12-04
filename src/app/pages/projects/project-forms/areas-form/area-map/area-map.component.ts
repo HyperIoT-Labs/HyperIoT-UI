@@ -6,7 +6,8 @@ import {
   ElementRef,
   HostListener,
   EventEmitter,
-  Input
+  Input,
+  Output
 } from '@angular/core';
 import { DraggableItemComponent } from '../draggable-item/draggable-item.component';
 import { MapDirective } from '../map.directive';
@@ -17,15 +18,22 @@ import { AreaDevice, Area } from '@hyperiot/core';
   templateUrl: './area-map.component.html',
   styleUrls: ['./area-map.component.scss']
 })
+
+
 export class AreaMapComponent {
+
   @ViewChild(MapDirective, {static: true})
   mapContainer: MapDirective;
+
   @ViewChild('mapBoundary', {static: true})
   mapBoundary: ElementRef;
-  mapImageSize = { width: 800, height: 600 };
+
+  mapImageSize = { width: 800, height: 600 }; 
+
   @Input()
   editMode = false;
   // events
+  @Output()
   itemOpen = new EventEmitter<any>();
   itemRemove = new EventEmitter<any>();
   itemUpdate = new EventEmitter<any>();
@@ -35,7 +43,9 @@ export class AreaMapComponent {
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
+    
     this.refresh();
+    
   }
 
   constructor(private componentFactoryResolver: ComponentFactoryResolver) {}
@@ -105,14 +115,20 @@ export class AreaMapComponent {
   }
 
   refresh() {
+
     const boundary: HTMLElement = this.mapBoundary.nativeElement;
     const mapHost = boundary.parentElement.parentElement;
+
     if (mapHost) {
-      boundary.style.width = mapHost.clientWidth + 'px';
+      
+      boundary.style.maxWidth = mapHost.clientWidth + 'px'; /* modified from 'boundary.style.width' */
       const h = boundary.clientWidth / this.mapImageSize.width * this.mapImageSize.height;
       boundary.style.height = h + 'px';
+
     }
+
     this.mapComponents.forEach((c) => c.instance.refresh());
+
   }
 
   reset() {

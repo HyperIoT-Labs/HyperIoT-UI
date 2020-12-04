@@ -34,14 +34,14 @@
 
         <div class="form-group row">
             <div *ngIf="entity.algorithm">
-                <h4>Current Cron Expression: {{entity.cronExpression}}</h4>
-            </div> 
-            <cron-editor formControlName="cronExpression" [options]="cronOptions"></cron-editor>
+                <h4>Current Cron Expression: {{entity.cronExpression}}</h4> 
+            </div>
+            <cron-editor ngDefaultControl formControlName="cronExpressionFC" [(cron)]="cronExpression" [disabled]="isCronDisabled" [(options)]="cronOptions"></cron-editor>
         </div> <!-- END SECOND ROW -->
 
         <div class="form-group row">
             <div class="col-12">
-                <hyt-statistic-input-definition [project]='currentProject'></hyt-statistic-input-definition>
+                <hyt-statistic-input-definition #statisticInputDefinition [project]="currentProject" [algorithm]="selectedAlgorithm" [config]="config"></hyt-statistic-input-definition>
             </div>
         </div> <!-- END THIRD FORM ROW -->
 

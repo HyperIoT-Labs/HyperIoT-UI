@@ -18,7 +18,7 @@
 
                 <div class="row no-gutters">
 
-                    <div class="col-6 left-tools">
+                    <div class="col-4 left-tools">
 
                         <div id="signal-btn" (click)="changeSignalState($event)">
                             <span class="hyt-icon {{(signalIsOn)?'icon-hyt_wifiOnFilled':'icon-hyt_wifiOffFilled'}}"></span>
@@ -42,11 +42,25 @@
 
                     </div>
 
-                    <div class="col-6 right-tools">
+                    <div class="col-4 center-tools">
 
-                        <hyt-select *ngIf="!showAreas && pageStatus == 1" [label]="'Select a project'" name="project"
+                        <hyt-select 
+                            *ngIf="!showAreas && pageStatus == 1" [label]="'Select a project'" name="project"
                             [options]="hProjectListOptions" [selected]="idProjectSelected"
-                            (changeFn)="onSelectChange($event)" [disabled]="false"></hyt-select>
+                            (changeFn)="onSelectChange($event)" [disabled]="false"
+                        >
+                        </hyt-select>
+
+                    </div>
+
+                    <div class="col-4 right-tools">
+
+                        <!-- <hyt-select 
+                            *ngIf="!showAreas && pageStatus == 1" [label]="'Select a project'" name="project"
+                            [options]="hProjectListOptions" [selected]="idProjectSelected"
+                            (changeFn)="onSelectChange($event)" [disabled]="false"
+                        >
+                        </hyt-select> -->
 
                         <h3 *ngIf="showAreas" style="float:left; margin-top: 18px; color: blue">
                             {{ areaPath && areaPath[areaPath.length - 1].name }}

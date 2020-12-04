@@ -10,7 +10,7 @@ import { HytTreeViewProjectComponent } from '@hyperiot/components/lib/hyt-tree-v
 import { ProjectFormEntity } from '../project-forms/project-form-entity';
 import { SaveChangesDialogComponent } from 'src/app/components/dialogs/save-changes-dialog/save-changes-dialog.component';
 import { PacketEnrichmentFormComponent } from '../project-forms/packet-enrichment-form/packet-enrichment-form.component';
-import { PacketEventsFormComponent } from '../project-forms/packet-events-form/packet-events-form.component';
+import { ProjectEventsFormComponent } from '../project-forms/project-events-form/project-events-form.component';
 import { ProjectStatisticsFormComponent } from '../project-forms/project-statistics-form/project-statistics-form.component';
 
 enum TreeStatusEnum {
@@ -45,6 +45,26 @@ export class ProjectDetailComponent implements OnInit {
 
   projectName: string;
   validationErrors: [];
+  
+  /**
+   * variable used to determine if the treeview should be visible or not
+   */
+  treeViewIsOpen: boolean = false;
+
+  /**
+   * variable used to dynamically set the first part of toggle treeview button title
+   */
+  preTitleTreeView: string = 'Show'; /* @I18N@ */
+  
+  /**
+   * variable used to determine if the Info/Action column should be visible or not
+   */
+  displayInfoAction: boolean = true;
+  
+  /**
+   * variable used to determine basic position of draggable treeview item
+   */
+  dragPosition = {x: 0, y: 25};
 
   constructor(
     private hProjectService: HprojectsService,
@@ -62,6 +82,9 @@ export class ProjectDetailComponent implements OnInit {
 
   onActivate(childComponent: ProjectFormEntity) {
     if (childComponent.isProjectEntity) {
+      
+      this.toggleInfoActionColumn(childComponent.formTemplateId);
+
       this.currentEntity = childComponent;
       this.currentEntity.unsavedChangesCallback = () => {
         return this.openSaveDialog();
@@ -105,7 +128,7 @@ export class ProjectDetailComponent implements OnInit {
   onSaveClick() {
     this.validationErrors = [];
     this.currentEntity.save((res) => {
-      if (this.currentEntity instanceof PacketEnrichmentFormComponent || this.currentEntity instanceof PacketEventsFormComponent 
+      if (this.currentEntity instanceof PacketEnrichmentFormComponent || this.currentEntity instanceof ProjectEventsFormComponent 
         || this.currentEntity instanceof ProjectStatisticsFormComponent) {
         this.currentEntity.editMode = false;
       }
@@ -204,7 +227,7 @@ export class ProjectDetailComponent implements OnInit {
                   //   icon: 'icon-hyt_statistics'
                   // },
                   // {
-                  //   data: { id: k.id, type: 'packet-events' },
+                  //   data: { id: k.id, type: 'project-events' },
                   //   name: 'Events',
                   //   icon: 'icon-hyt_event'
                   // }
@@ -362,6 +385,43 @@ export class ProjectDetailComponent implements OnInit {
 
   goToProjectWizard() {
     this.router.navigateByUrl(`/project-wizard/${this.projectId}`);
+  }
+
+  /**
+   * function used to toggle display treeview project in area map
+   */
+  toggleTreeViewProject() {
+
+    this.treeViewIsOpen = !this.treeViewIsOpen;
+
+    if(this.treeViewIsOpen) {
+      
+      this.preTitleTreeView = 'Hide'; /* @I18N@ */
+      this.dragPosition = {x: this.dragPosition.x, y: this.dragPosition.y};
+
+    } else {
+
+      this.preTitleTreeView = 'Show'; /* @I18N@ */
+
+    }
+
+  }
+  
+  /**
+   * function used to toggle display Info/Action Column
+   */
+  toggleInfoActionColumn(formTempalteID: string) {
+
+    if(
+      formTempalteID.includes('areas-form') || 
+      formTempalteID.includes('tag-form') ||
+      formTempalteID.includes('category-form')
+    ) {
+      this.displayInfoAction = false;
+    } else {
+      this.displayInfoAction = true;
+    }
+
   }
 
 }

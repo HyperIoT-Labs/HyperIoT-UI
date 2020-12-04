@@ -1,10 +1,11 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import { HytTreeViewProjectComponent } from '@hyperiot/components/lib/hyt-tree-view-project/hyt-tree-view-project.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AreasService, Area, AreaDevice, HprojectsService, HProject } from '@hyperiot/core';
 import { HytModalService } from '@hyperiot/components';
 import { AreaMapComponent } from '../../projects/project-forms/areas-form/area-map/area-map.component';
 import { HttpClient } from '@angular/common/http';
+import { ignoreElements } from 'rxjs/operators';
 
 enum PageStatus {
   Loading = 0,
@@ -15,9 +16,11 @@ enum PageStatus {
 @Component({
   selector: 'hyt-areas-view',
   templateUrl: './areas-view.component.html',
-  styleUrls: ['./areas-view.component.scss']
+  styleUrls: ['./areas-view.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class AreasViewComponent {
+
   @ViewChild('map')
   mapComponent: AreaMapComponent;
   @ViewChild('treeView')
@@ -34,6 +37,16 @@ export class AreasViewComponent {
   areaList: Area[] = [];
   areaDevices = [] as AreaDevice[];
   areaPath: Area[] = [];
+  
+  /**
+   * variable used to determine if the treeview should be visible or not
+   */
+  treeViewIsOpen: boolean = false;
+
+  /**
+   * variable used to dynamically set the first part of toggle treeview button title
+   */
+  preTitleTreeView: string = 'Show'; /* @I18N@ */
 
   constructor(
     private projectService: HprojectsService,
@@ -110,6 +123,12 @@ export class AreasViewComponent {
         }));
         this.apiSuccess(projectList);
       }, this.apiError);
+  }
+
+  public onItemMapClicked(itemMap){
+    if(itemMap.innerArea){
+      this.loadArea(itemMap);
+    }
   }
 
   private loadArea(area: Area) {
@@ -269,8 +288,30 @@ export class AreasViewComponent {
   apiSuccess(res) {
     this.pageStatus = PageStatus.Ready;
   }
+
   apiError(err) {
     console.log('API ERROR', err);
     this.pageStatus = PageStatus.Error;
   }
+  
+
+  /**
+   * function used to toggle display treeview project in area map
+   */
+  toggleTreeViewProject() {
+
+    this.treeViewIsOpen = !this.treeViewIsOpen;
+
+    if(this.treeViewIsOpen) {
+      
+      this.preTitleTreeView = 'Hide'; /* @I18N@ */
+
+    } else {
+
+      this.preTitleTreeView = 'Show'; /* @I18N@ */
+
+    }
+
+  }
+
 }

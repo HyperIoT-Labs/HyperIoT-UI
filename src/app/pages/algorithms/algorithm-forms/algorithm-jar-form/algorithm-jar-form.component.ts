@@ -31,6 +31,10 @@ export class AlgorithmJarFormComponent extends AlgorithmFormEntity implements Af
     'algorithm-jarName': {
       field: 'jarName',
       default: null
+    },
+    'algorithm-mainClassname': {
+      field: 'mainClassname',
+      default: null
     }
   };
 
@@ -133,6 +137,7 @@ export class AlgorithmJarFormComponent extends AlgorithmFormEntity implements Af
     this.loadingStatus = LoadingStatusEnum.Saving;
     this.resetErrors();
     let p = this.entity;
+    p.mainClassname = this.form.get('algorithm-mainClassname').value;
     const responseHandler = (res) => {
       this.entity = p = res;
       this.resetForm();
@@ -144,7 +149,7 @@ export class AlgorithmJarFormComponent extends AlgorithmFormEntity implements Af
       successCallback && successCallback(res);
     };
     p.entityVersion = 1;
-    this.algorithmsService.updateJar(p.id, this.jarToUpload).subscribe(responseHandler, (err) => {
+    this.algorithmsService.updateJar(p.id, p.mainClassname, this.jarToUpload).subscribe(responseHandler, (err) => {
       this.setErrors(err);
       errorCallback && errorCallback(err);
     });

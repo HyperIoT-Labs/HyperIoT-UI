@@ -22,7 +22,7 @@ import { CanDeactivateGuard } from '../components/CanDeactivateGuard';
 import { DashboardComponent } from '../pages/dashboard/dashboard.component';
 import { PacketFieldsFormComponent } from '../pages/projects/project-forms/packet-fields-form/packet-fields-form.component';
 import { PacketEnrichmentFormComponent } from '../pages/projects/project-forms/packet-enrichment-form/packet-enrichment-form.component';
-import { PacketEventsFormComponent } from '../pages/projects/project-forms/packet-events-form/packet-events-form.component';
+import { ProjectEventsFormComponent } from '../pages/projects/project-forms/project-events-form/project-events-form.component';
 import { HomeComponent } from '../pages/home/home.component';
 import { AreasFormComponent } from '../pages/projects/project-forms/areas-form/areas-form.component';
 import { AreasViewComponent } from '../pages/areas/areas-view/areas-view.component';
@@ -41,6 +41,40 @@ export class LoggedInGuard implements CanActivate {
       return true;
     }
     this.router.navigate(['/auth/login'], { state: { returnUrl: state.url } });
+    return false;
+  }
+
+}
+
+
+/**
+ * This guard checks if user is admin or he has access the permission to do something on a resource
+ */
+@Injectable()
+export class IsProtectedResourceGuard implements CanActivate {
+
+  constructor(private router: Router, private cookieService: CookieService) {}
+
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):
+    Observable<boolean> | Promise<boolean> | boolean {
+    if (localStorage.getItem('userInfo')) {
+      const userInfo = JSON.parse(localStorage.getItem('userInfo'))
+      if (userInfo.authenticable.admin ||
+        this.hasControlPanelAccess(userInfo.profile, route.data.resourceName, route.data.action)) {
+        return true;
+      }
+    }
+    this.router.navigate(['/notFound'], { state: { returnUrl: state.url } });
+    return false;
+  }
+
+  private hasControlPanelAccess(profile: any, resourceName: string, action: string): boolean {
+    if(profile.hasOwnProperty(resourceName)) {
+      const permissions: string[] = profile[resourceName].permissions;
+      if (permissions.includes(action)) {
+        return true;
+      }
+    }
     return false;
   }
 
@@ -169,14 +203,14 @@ const hyperiotRoutes: Routes = [
       },
       // {
       //   canDeactivate: [CanDeactivateGuard],
-      //   path: 'packet-events/:packetId',
-      //   component: PacketEventsFormComponent,
+      //   path: 'project-events/:packetId',
+      //   component: ProjectEventsFormComponent,
       //   outlet: 'projectDetails'
       // },
       {
         canDeactivate: [CanDeactivateGuard],
         path: 'events',
-        component: PacketEventsFormComponent,
+        component: ProjectEventsFormComponent,
         outlet: 'projectDetails'
       },
       {
@@ -251,27 +285,33 @@ const hyperiotRoutes: Routes = [
   {
     path: 'algorithms',
     component: AlgorithmsComponent,
-    canActivate: [LoggedInGuard],
+    canActivate: [LoggedInGuard, IsProtectedResourceGuard],
     data: {
       showToolBar: true,
+      resourceName: 'it.acsoftware.hyperiot.algorithm.model.Algorithm',
+      action: 'control_panel'
     }
   },
   {
     path: 'algorithm-wizard',
     component: AlgorithmWizardComponent,
-    canActivate: [LoggedInGuard],
+    canActivate: [LoggedInGuard, IsProtectedResourceGuard],
     canDeactivate: [CanDeactivateGuard],
     data: {
       showToolBar: true,
+      resourceName: 'it.acsoftware.hyperiot.algorithm.model.Algorithm',
+      action: 'control_panel'
     }
   },
   {
     path: 'algorithm-wizard/:id',
     component: AlgorithmWizardComponent,
-    canActivate: [LoggedInGuard],
+    canActivate: [LoggedInGuard, IsProtectedResourceGuard],
     canDeactivate: [CanDeactivateGuard],
     data: {
       showToolBar: true,
+      resourceName: 'it.acsoftware.hyperiot.algorithm.model.Algorithm',
+      action: 'control_panel'
     }
   },
   {
@@ -283,6 +323,10 @@ const hyperiotRoutes: Routes = [
     }
   },
   {
+    path: 'notFound',
+    component: NotFoundComponent
+  },
+  {
     path: '**',
     component: NotFoundComponent
   }
@@ -291,6 +335,6 @@ const hyperiotRoutes: Routes = [
 @NgModule({
   imports: [RouterModule.forRoot(hyperiotRoutes)],
   exports: [RouterModule],
-  providers: [LoggedInGuard, CanDeactivateGuard]
+  providers: [LoggedInGuard, IsProtectedResourceGuard, CanDeactivateGuard]
 })
 export class HytRoutingModule { }

@@ -1,11 +1,9 @@
-import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, OnDestroy, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { PageStatus } from './models/pageStatus';
 import { HProject, HprojectsService } from '@hyperiot/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { SelectOption } from '@hyperiot/components/lib/hyt-select-template/hyt-select-template.component';
-import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
 import { ProjectsService } from 'src/app/services/projects.service';
 
 @Component({
@@ -25,6 +23,16 @@ export class ProjectsComponent implements OnInit, OnDestroy {
 
   filteringForm: FormGroup;
 
+  /**
+   * this variariable is used to set scrollToTop div on show or hide
+   */
+
+  scrolled: boolean = false;
+  /**
+   * this variariable is used to measure the value of vertical scroll
+   */
+  scrollTop: number;
+
   sortOptions: SelectOption[] = [
     { value: 'none', label: $localize`:@@HYT_none:None` },
     { value: 'alfabetic-increasing', label: $localize`:@@HYT_a_z:A-Z` },
@@ -43,7 +51,22 @@ export class ProjectsComponent implements OnInit, OnDestroy {
     private hProjectService: HprojectsService,
     private fb: FormBuilder,
     private projectsService: ProjectsService
-  ) { }
+  ) {}
+  
+  /**
+   * This is a scroll window event listener
+   */
+  @HostListener('document:scroll', ['$event'])
+  onScroll() {
+   this.scrollTop = document.documentElement.scrollTop;
+
+   if(this.scrollTop > 250) {
+     this.scrolled = true;
+   } else {
+     this.scrolled = false;
+   }
+
+  }
 
   ngOnInit() {
 
@@ -226,6 +249,19 @@ export class ProjectsComponent implements OnInit, OnDestroy {
     this.displayMessageArea = false;
     this.typeMessageArea = undefined;
     this.messageAreaText = undefined;
+  }
+
+  scrollToTopPage() {
+    
+    let scrollToTop = window.setInterval(() => {
+      let pos = window.pageYOffset;
+      if (pos > 0) {
+        window.scroll(0, pos - 20); // how far to scroll on each step
+      } else {
+          window.clearInterval(scrollToTop);
+      }
+    }, 5);
+
   }
 
 }
