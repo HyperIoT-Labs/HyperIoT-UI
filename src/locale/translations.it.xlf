@@ -1605,6 +1605,10 @@
         <source>Enter the main classname</source>
         <target>Inserisci il nome della classe contenente il metodo main</target>
       </trans-unit>
+      <trans-unit id="HYT_widget_settings_select_algorithm" datatype="html">
+        <source>Select algorithm</source>
+        <target>Seleziona algoritmo</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
