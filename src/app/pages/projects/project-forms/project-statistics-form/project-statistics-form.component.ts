@@ -1,11 +1,11 @@
-import { Component, OnDestroy, ElementRef, ViewChild, Input, Injector, OnInit, OnChanges, AfterViewInit, ViewEncapsulation, ChangeDetectorRef, forwardRef } from '@angular/core';
+import { Component, OnDestroy, ElementRef, ViewChild, Input, Injector, OnInit, OnChanges, AfterViewInit, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 
 import { SelectOption } from '@hyperiot/components';
 
-import { Algorithm, AlgorithmConfig, AlgorithmIOField, AlgorithmsService, HPacketField, HProject, HProjectAlgorithm, HProjectAlgorithmConfig, HprojectalgorithmsService } from '@hyperiot/core';
+import { Algorithm, AlgorithmConfig, AlgorithmsService, HProject, HProjectAlgorithm, HProjectAlgorithmConfig, HprojectalgorithmsService } from '@hyperiot/core';
 
 import { ProjectFormEntity, LoadingStatusEnum } from '../project-form-entity';
 import { CronOptions } from 'cron-editor/lib/CronOptions';
@@ -270,9 +270,12 @@ export class ProjectStatisticsFormComponent extends ProjectFormEntity implements
 
     hProjectAlgorithm.config = JSON.stringify(this.config);
     hProjectAlgorithm.cronExpression = this.cronExpression;
-    // create hprojectalgorithm name concatenating algorithm name and input packet IDs
+    // create hprojectalgorithm name concatenating algorithm name input packet IDs and input packet field IDs
     hProjectAlgorithm.name = this.selectedAlgorithm.name;
-    this.config.input.forEach(input => hProjectAlgorithm.name += '_' + input.packetId);
+    this.config.input.forEach(input => {
+      hProjectAlgorithm.name += '_' + input.packetId;
+      input.mappedInputList.forEach(mappedInput => hProjectAlgorithm.name += '_' + mappedInput.packetFieldId);
+    });
 
     const wasNew = this.isNew();
     const responseHandler = (res) => {
