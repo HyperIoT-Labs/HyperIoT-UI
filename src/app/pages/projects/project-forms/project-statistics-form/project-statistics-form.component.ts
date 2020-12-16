@@ -270,6 +270,9 @@ export class ProjectStatisticsFormComponent extends ProjectFormEntity implements
 
     hProjectAlgorithm.config = JSON.stringify(this.config);
     hProjectAlgorithm.cronExpression = this.cronExpression;
+    // create hprojectalgorithm name concatenating algorithm name and input packet IDs
+    hProjectAlgorithm.name = this.selectedAlgorithm.name;
+    this.config.input.forEach(input => hProjectAlgorithm.name += '_' + input.packetId);
 
     const wasNew = this.isNew();
     const responseHandler = (res) => {
@@ -319,7 +322,7 @@ export class ProjectStatisticsFormComponent extends ProjectFormEntity implements
     this.hProjectAlgorithmsService.findByHProjectId(this.currentProject.id).subscribe((hProjectAlgorithms: HProjectAlgorithm[]) => {
       this.summaryList = {
         title: this.formTitle,
-        list: hProjectAlgorithms.map((x) => ({ name: x.algorithm.name, description: x.algorithm.description, data: x }) as SummaryListItem)
+        list: hProjectAlgorithms.map((x) => ({ name: x.name, description: x.algorithm.description, data: x }) as SummaryListItem)
       };
     });
   }

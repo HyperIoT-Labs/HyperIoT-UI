@@ -1,6 +1,6 @@
-import { Component, OnInit, Input, EventEmitter, Output, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core';
 import { ControlContainer, NgForm } from '@angular/forms';
-import { AlgorithmsService, Algorithm, AlgorithmConfig, HprojectalgorithmsService } from '@hyperiot/core';
+import { HprojectalgorithmsService, HProjectAlgorithm, HProjectAlgorithmConfig } from '@hyperiot/core';
 
 
 @Component({
@@ -13,13 +13,11 @@ import { AlgorithmsService, Algorithm, AlgorithmConfig, HprojectalgorithmsServic
 export class AlgorithmSelectComponent implements OnInit {
 
   @Input() widget;
-  @Input()
-  selectedAlgorithm: Algorithm = null;
+  @Input() selectedHProjectAlgorithm: HProjectAlgorithm = null;
 
-  projectAlgorithms: Algorithm[] = [];
+  hProjectAlgorithmList: HProjectAlgorithm[] = [];
 
   constructor(
-    private algorithmsService: AlgorithmsService,
     private hProjectAlgorithmsService: HprojectalgorithmsService,
     public settingsForm: NgForm
   ) { }
@@ -33,29 +31,29 @@ export class AlgorithmSelectComponent implements OnInit {
 
 
   apply() {
-    if (this.selectedAlgorithm) {
-      this.widget.config.algorithmId = this.selectedAlgorithm.id;
-      const config: AlgorithmConfig = JSON.parse(this.selectedAlgorithm.baseConfig);
+    if (this.selectedHProjectAlgorithm) {
+      this.widget.config.hProjectAlgorithmId = this.selectedHProjectAlgorithm.id;
+      this.widget.config.hProjectAlgorithmName = this.selectedHProjectAlgorithm.name;
+      const config: HProjectAlgorithmConfig = JSON.parse(this.selectedHProjectAlgorithm.config);
       this.widget.config.outputFields = config.output.map(o => o.name);
     }
   }
 
-  algorithmCompare(a1: Algorithm, a2: Algorithm) {
+  algorithmCompare(a1: HProjectAlgorithm, a2: HProjectAlgorithm) {
     return a1 != null && a2 != null && a1.id === a2.id;
   }
 
   loadAlgorithms() {
     // fetch all algorithms
-    this.hProjectAlgorithmsService.findByHProjectId(this.widget.projectId).subscribe((hProjectAlgorithmList) => {
-      hProjectAlgorithmList.map(hProjectAlgorithm => this.projectAlgorithms.push(hProjectAlgorithm.algorithm));
-    });
-    // set previous algorithm if widget has been already configured
-    if (this.widget.config && this.widget.config.algorithmId) {
-      this.algorithmsService.findAlgorithm(this.widget.config.algorithmId)
-        .subscribe((algorithm: Algorithm) => {
-          this.selectedAlgorithm = algorithm;
-        });
-    }
+    this.hProjectAlgorithmsService.findByHProjectId(this.widget.projectId)
+      .subscribe( hProjectAlgorithmList => {
+        this.hProjectAlgorithmList = hProjectAlgorithmList;
+        if (this.widget.config && this.widget.config.hProjectAlgorithmId) {
+          // set previous algorithm if widget has been already configured
+          this.selectedHProjectAlgorithm = 
+            this.hProjectAlgorithmList.find(x => x.id === this.widget.config.hProjectAlgorithmId)
+        }
+      });
   }
 
 }
