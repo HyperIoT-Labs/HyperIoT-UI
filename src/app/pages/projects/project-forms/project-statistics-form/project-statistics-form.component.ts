@@ -41,6 +41,10 @@ export class ProjectStatisticsFormComponent extends ProjectFormEntity implements
     cronExpressionFC: {
       field: 'cronExpression',
       default: ''
+    },
+    'hprojectalgorithm-name': {
+      field: 'name',
+      default: ''
     }
   };
 
@@ -270,12 +274,7 @@ export class ProjectStatisticsFormComponent extends ProjectFormEntity implements
 
     hProjectAlgorithm.config = JSON.stringify(this.config);
     hProjectAlgorithm.cronExpression = this.cronExpression;
-    // create hprojectalgorithm name concatenating algorithm name input packet IDs and input packet field IDs
-    hProjectAlgorithm.name = this.selectedAlgorithm.name;
-    this.config.input.forEach(input => {
-      hProjectAlgorithm.name += '_' + input.packetId;
-      input.mappedInputList.forEach(mappedInput => hProjectAlgorithm.name += '_' + mappedInput.packetFieldId);
-    });
+    hProjectAlgorithm.name = this.form.get('hprojectalgorithm-name').value;
 
     const wasNew = this.isNew();
     const responseHandler = (res) => {
@@ -297,7 +296,6 @@ export class ProjectStatisticsFormComponent extends ProjectFormEntity implements
       this.hProjectAlgorithmsService.saveHProjectAlgorithm(hProjectAlgorithm).subscribe(responseHandler, (err) => {
         this.setErrors(err);
         errorCallback && errorCallback(err);
-        this.loadingStatus = LoadingStatusEnum.Error;
       });
     }
 
@@ -307,6 +305,16 @@ export class ProjectStatisticsFormComponent extends ProjectFormEntity implements
 
     if (err.error && err.error.type) {
       switch (err.error.type) {
+        case 'it.acsoftware.hyperiot.base.exception.HyperIoTDuplicateEntityException': {
+          this.validationError = [{ message: $localize`:@@HYT_unavailable_hprojectalgorithm_name:Unavailable statistic name`, field: 'hprojectalgorithm-name', invalidValue: '' }];
+          this.form.get('hprojectalgorithm-name').setErrors({
+            validateInjectedError: {
+              valid: false
+            }
+          });
+          this.loadingStatus = LoadingStatusEnum.Ready;
+          break;
+        }
         case 'it.acsoftware.hyperiot.base.exception.HyperIoTValidationException': {
           super.setErrors(err);
           break;

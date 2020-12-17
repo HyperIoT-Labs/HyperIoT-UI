@@ -32,6 +32,19 @@
             </div>
         </div> <!-- END FIRST ROW -->
 
+        <hyt-input-text [form]="form"
+            name="hprojectalgorithm-name"
+            i18n-placeholder="@@HYT_name"
+            placeholder="Name"
+            errorPosition="bottom"
+            minlength="3"
+            [injectedErrorMsg]="getError('hprojectalgorithm-name')"
+            i18n-hintMessage="@@HYT_hint_hproject_algorithm_name"
+            hintMessage="Enter statistic name"
+            [isRequired]="true"
+        >
+        </hyt-input-text>
+
         <div class="form-group row">
             <div *ngIf="entity.algorithm">
                 <h4>Current Cron Expression: {{entity.cronExpression}}</h4> 

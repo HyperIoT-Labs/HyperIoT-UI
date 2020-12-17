@@ -1206,6 +1206,12 @@
       <trans-unit id="HYT_widget_settings_select_algorithm" datatype="html">
         <source>Select algorithm</source>
       </trans-unit>
+      <trans-unit id="HYT_hint_hproject_algorithm_name" datatype="html">
+        <source>Enter statistic name</source>
+      </trans-unit>
+      <trans-unit id="HYT_unavailable_hprojectalgorithm_name" datatype="html">
+        <source>Unavailable statistic name</source>
+      </trans-unit>
     </body>
   </file>
 </xliff>
