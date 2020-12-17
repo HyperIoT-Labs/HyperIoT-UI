@@ -70,8 +70,8 @@ export class ProjectStatisticsFormComponent extends ProjectFormEntity implements
     defaultTime: '10:00:00',
     use24HourTime: true,
 
-    hideMinutesTab: false,
-    hideHourlyTab: false,
+    hideMinutesTab: true,
+    hideHourlyTab: true,
     hideDailyTab: false,
     hideWeeklyTab: false,
     hideMonthlyTab: false,
