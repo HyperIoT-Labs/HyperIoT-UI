@@ -1,11 +1,11 @@
-import { Component, OnDestroy, ElementRef, ViewChild, Input, Injector, OnInit, OnChanges, AfterViewInit, ViewEncapsulation, ChangeDetectorRef, forwardRef } from '@angular/core';
+import { Component, OnDestroy, ElementRef, ViewChild, Input, Injector, OnInit, OnChanges, AfterViewInit, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 
 import { SelectOption } from '@hyperiot/components';
 
-import { Algorithm, AlgorithmConfig, AlgorithmIOField, AlgorithmsService, HPacketField, HProject, HProjectAlgorithm, HProjectAlgorithmConfig, HprojectalgorithmsService } from '@hyperiot/core';
+import { Algorithm, AlgorithmConfig, AlgorithmsService, HProject, HProjectAlgorithm, HProjectAlgorithmConfig, HprojectalgorithmsService } from '@hyperiot/core';
 
 import { ProjectFormEntity, LoadingStatusEnum } from '../project-form-entity';
 import { CronOptions } from 'cron-editor/lib/CronOptions';
@@ -41,6 +41,10 @@ export class ProjectStatisticsFormComponent extends ProjectFormEntity implements
     cronExpressionFC: {
       field: 'cronExpression',
       default: ''
+    },
+    'hprojectalgorithm-name': {
+      field: 'name',
+      default: ''
     }
   };
 
@@ -70,8 +74,8 @@ export class ProjectStatisticsFormComponent extends ProjectFormEntity implements
     defaultTime: '10:00:00',
     use24HourTime: true,
 
-    hideMinutesTab: false,
-    hideHourlyTab: false,
+    hideMinutesTab: true,
+    hideHourlyTab: true,
     hideDailyTab: false,
     hideWeeklyTab: false,
     hideMonthlyTab: false,
@@ -270,6 +274,7 @@ export class ProjectStatisticsFormComponent extends ProjectFormEntity implements
 
     hProjectAlgorithm.config = JSON.stringify(this.config);
     hProjectAlgorithm.cronExpression = this.cronExpression;
+    hProjectAlgorithm.name = this.form.get('hprojectalgorithm-name').value;
 
     const wasNew = this.isNew();
     const responseHandler = (res) => {
@@ -291,7 +296,6 @@ export class ProjectStatisticsFormComponent extends ProjectFormEntity implements
       this.hProjectAlgorithmsService.saveHProjectAlgorithm(hProjectAlgorithm).subscribe(responseHandler, (err) => {
         this.setErrors(err);
         errorCallback && errorCallback(err);
-        this.loadingStatus = LoadingStatusEnum.Error;
       });
     }
 
@@ -301,6 +305,16 @@ export class ProjectStatisticsFormComponent extends ProjectFormEntity implements
 
     if (err.error && err.error.type) {
       switch (err.error.type) {
+        case 'it.acsoftware.hyperiot.base.exception.HyperIoTDuplicateEntityException': {
+          this.validationError = [{ message: $localize`:@@HYT_unavailable_hprojectalgorithm_name:Unavailable statistic name`, field: 'hprojectalgorithm-name', invalidValue: '' }];
+          this.form.get('hprojectalgorithm-name').setErrors({
+            validateInjectedError: {
+              valid: false
+            }
+          });
+          this.loadingStatus = LoadingStatusEnum.Ready;
+          break;
+        }
         case 'it.acsoftware.hyperiot.base.exception.HyperIoTValidationException': {
           super.setErrors(err);
           break;
@@ -319,7 +333,7 @@ export class ProjectStatisticsFormComponent extends ProjectFormEntity implements
     this.hProjectAlgorithmsService.findByHProjectId(this.currentProject.id).subscribe((hProjectAlgorithms: HProjectAlgorithm[]) => {
       this.summaryList = {
         title: this.formTitle,
-        list: hProjectAlgorithms.map((x) => ({ name: x.algorithm.name, description: x.algorithm.description, data: x }) as SummaryListItem)
+        list: hProjectAlgorithms.map((x) => ({ name: x.name, description: x.algorithm.description, data: x }) as SummaryListItem)
       };
     });
   }

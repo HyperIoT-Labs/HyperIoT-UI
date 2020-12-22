@@ -1605,6 +1605,18 @@
         <source>Enter the main classname</source>
         <target>Inserisci il nome della classe contenente il metodo main</target>
       </trans-unit>
+      <trans-unit id="HYT_widget_settings_select_algorithm" datatype="html">
+        <source>Select algorithm</source>
+        <target>Seleziona algoritmo</target>
+      </trans-unit>
+      <trans-unit id="HYT_hint_hproject_algorithm_name" datatype="html">
+        <source>Enter statistic name</source>
+        <target>Inserisci il nome della statistica</target>
+      </trans-unit>
+      <trans-unit id="HYT_unavailable_hprojectalgorithm_name" datatype="html">
+        <source>Unavailable statistic name</source>
+        <target>Nome statistica non disponibile</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

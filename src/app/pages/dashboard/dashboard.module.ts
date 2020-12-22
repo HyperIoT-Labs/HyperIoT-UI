@@ -31,6 +31,8 @@ import { WidgetSettingsDialogComponent } from './widget-settings-dialog/widget-s
 import { WidgetsLayoutComponent } from './widgets-layout/widgets-layout.component';
 import { FourierChartSettingsComponent } from './widget-settings-dialog/fourier-chart-settings/fourier-chart-settings.component';
 import { ImageDataSettingsComponent } from './widget-settings-dialog/image-data-settings/image-data-settings.component';
+import { AlgorithmSelectComponent } from './widget-settings-dialog/algorithm-settings/algorithm-select/algorithm-select.component';
+import { AlgorithmSettingsComponent } from './widget-settings-dialog/algorithm-settings/algorithm-settings.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +53,9 @@ import { ImageDataSettingsComponent } from './widget-settings-dialog/image-data-
     TimelineComponent,
     TimeAxisComponent,
     FourierChartSettingsComponent,
-    ImageDataSettingsComponent
+    ImageDataSettingsComponent,
+    AlgorithmSelectComponent,
+    AlgorithmSettingsComponent
   ],
   imports: [
     CommonModule,

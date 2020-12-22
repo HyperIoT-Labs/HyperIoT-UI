@@ -49,3 +49,9 @@
   *ngIf="widget.type === 'realtime-table'"
   [widget]="widget"
   (widgetAction)="onWidgetAction($event)"></hyperiot-realtime-hpacket-table>
+
+  <hyperiot-algorithm-table
+    *ngIf="widget.type === 'algorithm-offline-table'"
+    [widget]="widget"
+    (widgetAction)="onWidgetAction($event)">
+  </hyperiot-algorithm-table>
