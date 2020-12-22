@@ -148,6 +148,8 @@ export class PacketSelectComponent implements OnInit {
           });
         }
         this.projectPackets = packetList;
+        this.projectPackets.sort((a, b) => a.name < b.name ? -1 : 1)
+ 
         const w = this.widget;
         // load curent packet data and set selected fields
         if (w.config && w.config.packetId) {
@@ -163,7 +165,8 @@ export class PacketSelectComponent implements OnInit {
                       this.selectedFields = pf;
                     }
                   }
-                });
+                })
+                packet.fields.sort((a, b) => a.name < b.name ? -1 : 1);
                 this.syncUnitsConversion();
                 this.syncFieldMapping();
               }

@@ -4,6 +4,14 @@
 
         <div class="d-flex flex-column">
 
+            <!-- <hyt-select-template
+                [(ngModel)]="selectedPacket" [compareFn]="packetCompare"
+                (ngModelChange)="onPacketChange()" name="packet-select"
+                placeholder="Select packet" i18n-placeholder="@@HYT_widget_settings_select_packet"
+                [options]="packetOptions" [sortingAlgorithm]="'A-Z'" [isSortable]="true"
+                required disableRipple>
+            </hyt-select-template> -->
+
             <mat-form-field>
                 <mat-select [(ngModel)]="selectedPacket" [compareWith]="packetCompare"
                     (ngModelChange)="onPacketChange()" name="packet-select"
@@ -23,14 +31,20 @@
     <ng-container *ngIf="selectedPacket != null">
 
         <div class="d-flex flex-column">
+ 
+            <!-- <hyt-select-template
+                [(ngModel)]="selectedFields" [isMultiple]="multiPacketSelect"
+                (ngModelChange)="onPacketFieldChange($event)" name="field-select"
+                placeholder="Select field/s" i18n-placeholder="@@HYT_widget_settings_select_packet"
+                [options]="packetOptions" [sortingAlgorithm]="'A-Z'" [isSortable]="true"
+                required disableRipple>
+            </hyt-select-template> -->
 
             <mat-form-field>
                 <mat-select [(ngModel)]="selectedFields" [multiple]="multiPacketSelect"
                     (ngModelChange)="onPacketFieldChange($event)" name="field-select"
                     placeholder="Select field/s"
                     required disableRipple>
-                    <!-- @@i18n -->
-                    <!-- placeholder="Select {multiPacketSelect?1:0, plural, =0 {campo} other {campi}}" -->
                     <mat-option *ngFor="let field of selectedPacket.fields" [value]="field" selected>
                         {{field.name}}
                     </mat-option>
@@ -49,13 +63,17 @@
                     name="hpacketfield-unit-{{i}}"
                     [(ngModel)]="conversion.convertTo"
                     [options]="conversion.options"
-                    label="Convert to">
+                    label="Convert to"
+                    [sortingAlgorithm]="'A-Z'" 
+                    [isSortable]="true">
                 </hyt-select-template>
                 <hyt-select-template class="ml-4"
                     name="hpacketfield-decimals-{{i}}"
                     [(ngModel)]="conversion.decimals"
                     [options]="conversionDecimalsOptions"
-                    label="Decimal digits">
+                    label="Decimal digits"
+                    [sortingAlgorithm]="'A-Z'" 
+                    [isSortable]="true">
                 </hyt-select-template>
             </div>
         </div>
