@@ -310,7 +310,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
       }
     };
     if (this.showAreas) {
-      console.log('Maledetta Timidezza')
       this.dashboardConfigService.getRealtimeDashboardFromArea(id)
         .pipe(takeUntil(this.ngUnsubscribe))
         .subscribe(responseHandler, errorHandler);
