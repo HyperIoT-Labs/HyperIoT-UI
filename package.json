@@ -33,7 +33,7 @@
     "@angular/pwa": "^0.803.17",
     "@angular/router": "~9.1.0",
     "@angular/service-worker": "~9.1.0",
-    "@hyperiot/components": "^0.1.5",
+    "@hyperiot/components": "^0.1.8",
     "@hyperiot/core": "^0.6.9",
     "@hyperiot/widgets": "^0.1.26",
     "@types/d3": "^5.7.2",
