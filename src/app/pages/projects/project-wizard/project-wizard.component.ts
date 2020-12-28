@@ -380,6 +380,7 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
     if (idPacketChanged === this.enrichmentPacketId) {
       this.enrichmentPacketSelect.autoSelect();
     }
+    this.statisticsForm.loadHPackets();
   }
 
   fieldPacketId: number;

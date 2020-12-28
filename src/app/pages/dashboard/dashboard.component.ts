@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HytModalRef, HytModalService } from '@hyperiot/components';
-import { Area, AreasService, Dashboard, DashboardOfflineDataService, HProject } from '@hyperiot/core';
+import { AlgorithmOfflineDataService, Area, AreasService, Dashboard, DashboardOfflineDataService, HProject } from '@hyperiot/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { AddWidgetDialogComponent } from './add-widget-dialog/add-widget-dialog.component';
@@ -85,6 +85,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   constructor(
     private dashboardConfigService: DashboardConfigService,
     private dashboardOfflineDataService: DashboardOfflineDataService,
+    private algorithmOfflineDataService: AlgorithmOfflineDataService,
     private areaService: AreasService,
     private hytModalService: HytModalService,
     private activatedRoute: ActivatedRoute
@@ -278,6 +279,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.dashboardOfflineDataService.resetService(this.idProjectSelected).subscribe(res => {
         this.packetsInDashboard = [...res];
       });
+      this.algorithmOfflineDataService.resetService(this.idProjectSelected);
       this.pageStatus = PageStatus.Standard;
     };
     const errorHandler = error => {
@@ -308,7 +310,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
       }
     };
     if (this.showAreas) {
-      console.log('Maledetta Timidezza')
       this.dashboardConfigService.getRealtimeDashboardFromArea(id)
         .pipe(takeUntil(this.ngUnsubscribe))
         .subscribe(responseHandler, errorHandler);

@@ -1,0 +1,18 @@
+<div class="padding-6 d-flex flex-column justify-content-stretch">
+
+    <ng-container *ngIf="widget.config">
+        <div class="d-flex flex-column">
+            <mat-form-field>
+                <mat-select [(ngModel)]="selectedHProjectAlgorithm" [compareWith]="algorithmCompare"
+                    (ngModelChange)="onAlgorithmChange()" name="algorithm-select"
+                    placeholder="Select Algorithm"
+                    i18n-placeholder="@@HYT_widget_settings_select_algorithm" required disableRipple>
+                    <mat-option *ngFor="let hProjectAlgorithm of hProjectAlgorithmList" [value]="hProjectAlgorithm" selected>
+                        {{hProjectAlgorithm.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </ng-container>
+
+</div>

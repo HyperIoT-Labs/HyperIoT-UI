@@ -116,6 +116,7 @@ export class PacketSelectComponent implements OnInit {
   apply() {
     if (this.selectedPacket) {
       this.widget.config.packetId = this.selectedPacket.id;
+      this.widget.config.timestampFieldName = this.selectedPacket.timestampField;
       this.widget.config.packetFields = {};
       if (!this.multiPacketSelect) {
         this.selectedFields = [ this.selectedFields ];
@@ -148,6 +149,8 @@ export class PacketSelectComponent implements OnInit {
           });
         }
         this.projectPackets = packetList;
+        this.projectPackets.sort((a, b) => a.name < b.name ? -1 : 1)
+ 
         const w = this.widget;
         // load curent packet data and set selected fields
         if (w.config && w.config.packetId) {
@@ -163,7 +166,8 @@ export class PacketSelectComponent implements OnInit {
                       this.selectedFields = pf;
                     }
                   }
-                });
+                })
+                packet.fields.sort((a, b) => a.name < b.name ? -1 : 1);
                 this.syncUnitsConversion();
                 this.syncFieldMapping();
               }

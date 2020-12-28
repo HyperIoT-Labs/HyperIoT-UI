@@ -185,9 +185,9 @@ export class EntitiesService {
     icon: 'icon-hyt_statistics',
     iconPlus: 'icon-hyt_statisticsPlus',
     emptyModel: {
-      config: '',
+      config: '{\"input\":[], \"output\":[]}',
       algorithm: null,
-      cronExpression: '0/5 * * * * ? *',
+      cronExpression: '0/50 * * * * ? *',
       entityVersion: 1
     }
   };
@@ -234,7 +234,8 @@ export class EntitiesService {
       description: '',
       baseConfig: '{\"input\":[], \"output\":[]}',
       entityVersion: 1,
-      jarName: null
+      jarName: null,
+      mainClassname: ''
     }
   };
 

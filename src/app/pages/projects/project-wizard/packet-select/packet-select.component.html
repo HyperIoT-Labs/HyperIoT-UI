@@ -8,7 +8,8 @@
 
         <hyt-select 
           [form]="selectForm" formControlName="selectDevice" name="selectDevice" [options]="devicesOptions"
-          i18n-label="@@HYT_device" label="Devices" (changeFn)="deviceChanged($event)"
+          i18n-label="@@HYT_device" label="Devices" (changeFn)="deviceChanged($event)" 
+          [sortingAlgorithm]="'A-Z'" [isSortable]="true"
         >
         </hyt-select>
 
@@ -19,6 +20,7 @@
         <hyt-select 
           [form]="selectForm" formControlName="selectPacket" name="selectPacket" [options]="packetsOptions"
           i18n-label="@@HYT_packet" label="Packet" (changeFn)="packetChanged($event)" [disabled]="false"
+          [sortingAlgorithm]="'A-Z'" [isSortable]="true"
         >
         </hyt-select>
 
@@ -29,3 +31,5 @@
   </form>
 
 </div>
+
+<hyt-packet-events-form #eventsForm></hyt-packet-events-form>

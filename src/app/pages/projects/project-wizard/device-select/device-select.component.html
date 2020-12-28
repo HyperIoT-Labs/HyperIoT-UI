@@ -9,7 +9,7 @@
                     <hyt-select 
                         [form]="selectForm" formControlName="selectDevice" name="selectDevice"
                         [options]="devicesOptions" i18n-label="@@HYT_source" label="Source"
-                        (changeFn)="deviceChanged($event)"
+                        (changeFn)="deviceChanged($event)" [sortingAlgorithm]="'A-Z'" [isSortable]="true"
                     >
                     </hyt-select>
 

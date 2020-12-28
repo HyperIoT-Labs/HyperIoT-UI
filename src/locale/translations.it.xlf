@@ -1553,6 +1553,70 @@
         <source>Input field</source>
         <target>Campo input</target>
       </trans-unit>
+      <trans-unit id="HYT_bind_input_fields" datatype="html">
+        <source>Bind input fields</source>
+        <target>Associa campi input</target>
+      </trans-unit>
+      <trans-unit id="HYT_select_algorithm_packet_before" datatype="html">
+        <source>Select algorithm and packet before</source>
+        <target>Seleziona prima l'algoritmo e il pacchetto</target>
+      </trans-unit>
+      <trans-unit id="HYT_input_definition_modal_title" datatype="html">
+        <source>Bind packet fields to algorithm input</source>
+        <target>Associa i campi del pacchetto agli input dell'algoritmo</target>
+      </trans-unit>
+      <trans-unit id="HYT_available_packet_fields" datatype="html">
+        <source>Available packet fields</source>
+        <target>Campi del pacchetto disponibili</target>
+      </trans-unit>
+      <trans-unit id="HYT_error_loading_statistic_input" datatype="html">
+        <source>An error occurred while loading statistic input. This may have happened for one or more of the following reasons:</source>
+        <target>Errore nel caricamento dell'input della statistica. Questo può essere legato ad una o più delle seguenti ragioni:</target>
+      </trans-unit>
+      <trans-unit id="HYT_statistic_input_packet_deleted" datatype="html">
+        <source>A packet has been deleted</source>
+        <target>Un pacchetto è stato eliminato</target>
+      </trans-unit>
+      <trans-unit id="HYT_statistic_input_field_deleted" datatype="html">
+        <source>A field has been deleted</source>
+        <target>Un campo è stato eliminato</target>
+      </trans-unit>
+      <trans-unit id="HYT_error_loading_statistic_input_hint" datatype="html">
+        <source>Please, redefine a new statistic and delete the old one.</source>
+        <target>Per favore, definisci una nuova statistica ed elimina la precedente</target>
+      </trans-unit>
+      <trans-unit id="HYT_no_available_fields" datatype="html">
+        <source>There are not available fields anymore</source>
+        <target>Non ci sono ulteriori campi disponibili</target>
+      </trans-unit>
+      <trans-unit id="HYT_no_field_found" datatype="html">
+        <source>No field found</source>
+        <target>Nessun campo trovato</target>
+      </trans-unit>
+      <trans-unit id="HYT_input_binding_done" datatype="html">
+        <source>Input binding done</source>
+        <target>Associazione input effettuata</target>
+      </trans-unit>
+      <trans-unit id="HYT_algorithm_main_classname" datatype="html">
+        <source>Main classname</source>
+        <target>Nome classe contenente il metodo main</target>
+      </trans-unit>
+      <trans-unit id="HYT_hint_algorithm_main_classname" datatype="html">
+        <source>Enter the main classname</source>
+        <target>Inserisci il nome della classe contenente il metodo main</target>
+      </trans-unit>
+      <trans-unit id="HYT_widget_settings_select_algorithm" datatype="html">
+        <source>Select algorithm</source>
+        <target>Seleziona algoritmo</target>
+      </trans-unit>
+      <trans-unit id="HYT_hint_hproject_algorithm_name" datatype="html">
+        <source>Enter statistic name</source>
+        <target>Inserisci il nome della statistica</target>
+      </trans-unit>
+      <trans-unit id="HYT_unavailable_hprojectalgorithm_name" datatype="html">
+        <source>Unavailable statistic name</source>
+        <target>Nome statistica non disponibile</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -68,6 +68,9 @@ import { FourierTransformComponent } from './project-forms/packet-enrichment-for
 import { GenericMessageDialogComponent } from 'src/app/components/modals/generic-message-dialog/generic-message-dialog.component';
 import { ProjectStatisticsFormComponent } from './project-forms/project-statistics-form/project-statistics-form.component';
 import { StatisticInputDefinitionComponent } from './project-forms/project-statistics-form/statistic-input-definition/statistic-input-definition.component';
+import { InputDefinitionModalComponent } from './project-forms/project-statistics-form/statistic-input-definition/input-definition-modal/input-definition-modal.component';
+import { StatisticInputErrorComponent } from './project-forms/project-statistics-form/statistic-input-definition/statistic-input-error/statistic-input-error.component';
+import { HPacketFieldFilterPipe } from './hPacketFieldFilter.pipe';
 
 @NgModule({
   declarations: [
@@ -110,7 +113,10 @@ import { StatisticInputDefinitionComponent } from './project-forms/project-stati
     FourierTransformComponent,
     GenericMessageDialogComponent,
     ProjectStatisticsFormComponent,
-    StatisticInputDefinitionComponent
+    StatisticInputDefinitionComponent,
+    InputDefinitionModalComponent,
+    StatisticInputErrorComponent,
+    HPacketFieldFilterPipe
   ],
   imports: [
     CronEditorModule,

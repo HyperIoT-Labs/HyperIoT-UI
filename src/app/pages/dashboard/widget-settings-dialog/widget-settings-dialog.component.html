@@ -73,6 +73,11 @@
                         [settingsForm]="settingsForm">
                     </hyt-image-data-settings>
                 </div>
+                <div *ngSwitchCase="'algorithm-offline-table'">
+                    <hyt-algorithm-settings [widget]="widget" [modalApply]="modalApply.asObservable()"
+                        [settingsForm]="settingsForm">
+                    </hyt-algorithm-settings>
+                </div>
                 <div *ngSwitchDefault>
                     <em>TODO: ....</em>
                 </div>

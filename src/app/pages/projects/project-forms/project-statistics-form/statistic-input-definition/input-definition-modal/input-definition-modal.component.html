@@ -1,0 +1,70 @@
+<div id="container-input-definition-modal" class="dialog">
+    <div class="dialog-header">
+        <span class="hyt-icon icon-hyt_cancelC" (click)="close()"></span>
+    </div>
+    <div class="dialog-body">
+
+      <p i18n="@@HYT_input_definition_modal_title">
+          Bind packet fields to algorithm input
+      </p>
+
+      <div cdkDropListGroup class="example-boundary">
+        <div class="container-fields">
+          <div *ngFor="let input of inputArray" class="example-container">
+            <h2>{{input.name}}</h2>
+        
+            <div
+              cdkDropList
+              [cdkDropListData]="getChosenInput(input)"
+              class="example-list"
+              cdkDropListSortingDisabled
+              (cdkDropListDropped)="drop($event)"
+              [cdkDropListEnterPredicate]="hasBeenSelected">
+              <div class="example-box" *ngFor="let hPacketField of getChosenInput(input)" 
+                cdkDragBoundary=".example-boundary" cdkDrag>{{hPacketField.name}}
+              </div>
+  
+            </div>
+          </div>
+        </div>
+      
+        <div class="container-field-list">
+          <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <h2>
+                  <ng-container i18n="@@HYT_available_packet_fields">Available packet fields</ng-container>
+                </h2>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="form-group mb-4">
+              <input type="text" [(ngModel)]="searchText" placeholder="Search">
+            </div>
+            <p *ngIf="searchText.length > 0 && (hPacketFieldList | filter: searchText).length === 0" i18n="@@HYT_no_field_found">
+              No field found
+            </p>
+            <p *ngIf="searchText.length === 0 && hPacketFieldList.length === 0" i18n="@@HYT_no_available_fields">
+              There are not available fields anymore
+            </p>
+            <div
+              cdkDropList
+              [cdkDropListData]="hPacketFieldList"
+              class="example-list"
+              cdkDropListSortingDisabled
+              (cdkDropListDropped)="drop($event)">
+              <div class="example-box" *ngFor="let hPacketField of (hPacketFieldList | filter: searchText)" 
+                cdkDragBoundary=".example-boundary" cdkDrag>{{hPacketField.name}}
+              </div>
+            </div>
+          </mat-expansion-panel>
+        </div>
+      </div>
+
+    </div>
+    <div class="dialog-footer">
+        <hyt-button [isDisabled]="!hasFinished()" (clickFn)="output('finish', {});" >
+            <ng-container i18n="@@HYT_finish">Finish</ng-container>
+        </hyt-button>
+    </div>
+    
+</div>
