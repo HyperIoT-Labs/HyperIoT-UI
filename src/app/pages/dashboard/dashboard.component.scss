@@ -236,6 +236,34 @@
                     filter: blur(7px);
                     animation: blurredAnimation .5s ease-in-out;
                 }
+
+                #loadingOfflineData {
+
+                    position: absolute;
+                    z-index: 2;
+                    background-color: rgba(255, 255, 255, .7);
+                    left: 0; top: 0; right: 0; bottom: 0;
+                    justify-content: flex-start;
+                    padding-top: 50px;
+
+                    img {
+                        &#animatedPreloaderImg {
+                            width: 300px;
+                            margin-bottom: 50px;
+                        }
+                    }
+
+                    h2 {
+                        font-size: 1.1em;
+                    }
+            
+                    mat-progress-bar {
+                        max-width: 200px;
+                        margin: 8px;
+                    }
+              
+                }
+
             }
     
         }
