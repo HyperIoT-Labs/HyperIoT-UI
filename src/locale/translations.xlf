@@ -1212,6 +1212,9 @@
       <trans-unit id="HYT_unavailable_hprojectalgorithm_name" datatype="html">
         <source>Unavailable statistic name</source>
       </trans-unit>
+      <trans-unit id="HYT_tag_select_color" datatype="html">
+        <source>Select color</source>
+      </trans-unit>
     </body>
   </file>
 </xliff>
