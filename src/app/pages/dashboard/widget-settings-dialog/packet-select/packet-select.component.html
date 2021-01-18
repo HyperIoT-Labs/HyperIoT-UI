@@ -4,14 +4,13 @@
 
         <div class="d-flex flex-column">
 
-            <!-- <hyt-select-template
-                [(ngModel)]="selectedPacket" [compareFn]="packetCompare"
-                (ngModelChange)="onPacketChange()" name="packet-select"
-                placeholder="Select packet" i18n-placeholder="@@HYT_widget_settings_select_packet"
+            <hyt-select-template [(ngModel)]="selectedPacketOption" [compareFn]="packetCompare"
+                (ngModelChange)="onPacketChange($event)" name="packet-select"
+                [label]="'Select packet'" i18n-placeholder="@@HYT_widget_settings_select_packet"
                 [options]="packetOptions" [sortingAlgorithm]="'A-Z'" [isSortable]="true"
                 required disableRipple>
-            </hyt-select-template> -->
-
+            </hyt-select-template>
+<!-- 
             <mat-form-field>
                 <mat-select [(ngModel)]="selectedPacket" [compareWith]="packetCompare"
                     (ngModelChange)="onPacketChange()" name="packet-select"
@@ -22,7 +21,7 @@
                         ({{packet.id}})
                     </mat-option>
                 </mat-select>
-            </mat-form-field>
+            </mat-form-field> -->
 
         </div>
 
@@ -32,13 +31,13 @@
 
         <div class="d-flex flex-column">
  
-            <!-- <hyt-select-template
-                [(ngModel)]="selectedFields" [isMultiple]="multiPacketSelect"
+            <hyt-select-template
+                [(ngModel)]="packetOptions" [isMultiple]="multiPacketSelect"
                 (ngModelChange)="onPacketFieldChange($event)" name="field-select"
-                placeholder="Select field/s" i18n-placeholder="@@HYT_widget_settings_select_packet"
-                [options]="packetOptions" [sortingAlgorithm]="'A-Z'" [isSortable]="true"
+                placeholder="Select field/s" [options]="selectedFieldsOption" 
+                [sortingAlgorithm]="'A-Z'" [isSortable]="true"
                 required disableRipple>
-            </hyt-select-template> -->
+            </hyt-select-template>
 
             <mat-form-field>
                 <mat-select [(ngModel)]="selectedFields" [multiple]="multiPacketSelect"

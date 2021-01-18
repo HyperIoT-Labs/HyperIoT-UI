@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output, ViewEncapsulation } from '@angular/core';
 import { ControlContainer, NgForm } from '@angular/forms';
+import { SelectOption } from '@hyperiot/components';
 
 import { HPacket, HPacketField, HpacketsService, AreasService, AreaDevice, HDevice } from '@hyperiot/core';
 import { UnitConversionService } from 'src/app/services/unit-conversion.service';
@@ -32,11 +33,14 @@ export class PacketSelectComponent implements OnInit {
   @Input() widget;
   @Input()
   selectedPacket: HPacket = null;
+  selectedPacketOption: SelectOption = null;
   @Input()
   selectedFields: any = [];
+  selectedFieldsOption: SelectOption[] = [];
   @Output()
   selectedFieldsChange = new EventEmitter();
   projectPackets: HPacket[] = [];
+  packetOptions: any = [];
   @Input()
   multiPacketSelect: false;
   @Input()
@@ -74,9 +78,18 @@ export class PacketSelectComponent implements OnInit {
     } else {
       this.loadPackets();
     }
+
   }
 
-  onPacketChange() {
+  onPacketChange($event) {
+    console.log('onPacketChange ' + JSON.stringify($event));
+    this.selectedPacket = this.projectPackets.find(p => p.id === $event);
+    this.selectedPacket.fields.map(f => {
+      this.selectedFieldsOption.push({
+        value: f.name,
+        label: f.name
+      })
+    });
     this.selectedFields = [];
     this.selectedFieldsChange.emit(this.selectedFields);
   }
@@ -114,7 +127,8 @@ export class PacketSelectComponent implements OnInit {
   }
 
   apply() {
-    if (this.selectedPacket) {
+    if (this.selectedPacketOption) {
+      this.selectedPacket = this.projectPackets.find(p => p.id === this.selectedPacketOption.value)
       this.widget.config.packetId = this.selectedPacket.id;
       this.widget.config.timestampFieldName = this.selectedPacket.timestampField;
       this.widget.config.packetFields = {};
@@ -149,7 +163,16 @@ export class PacketSelectComponent implements OnInit {
           });
         }
         this.projectPackets = packetList;
-        this.projectPackets.sort((a, b) => a.name < b.name ? -1 : 1)
+        this.projectPackets.map((p) => {
+          this.packetOptions.push({
+            value: p.id,
+            label: p.name
+          })
+        });
+        if (this.selectedPacket) {
+          this.selectedPacketOption = this.packetOptions.find(o => o.value === this.selectedPacket.name);
+        }
+        // this.projectPackets.sort((a, b) => a.name < b.name ? -1 : 1)
  
         const w = this.widget;
         // load curent packet data and set selected fields
@@ -157,6 +180,7 @@ export class PacketSelectComponent implements OnInit {
           this.packetService.findHPacket(w.config.packetId)
             .subscribe((packet: HPacket) => {
               this.selectedPacket = packet;
+              this.selectedPacketOption = this.packetOptions.find((o) => { o.value == packet.id });
               if (this.widget.config.packetFields) {
                 packet.fields.map((pf) => {
                   if (this.widget.config.packetFields[pf.id]) {
