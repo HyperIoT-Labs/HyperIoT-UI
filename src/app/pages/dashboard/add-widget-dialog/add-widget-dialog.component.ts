@@ -130,7 +130,7 @@ export class AddWidgetDialogComponent extends HytModal implements OnInit {
   confirm() {
     const widgetOutput = [];
     this.selectedWidgets.forEach(w => {
-      if (w.type === 'offline-table') {
+      if (w.type === 'offline-table' || w.type === 'event-offline-table') {
         w.baseConfig = { online: this.data.signalIsOn };
       }
       widgetOutput.push({
