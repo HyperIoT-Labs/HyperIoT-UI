@@ -28,6 +28,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
    */
 
   scrolled: boolean = false;
+  
   /**
    * this variariable is used to measure the value of vertical scroll
    */

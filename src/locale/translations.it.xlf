@@ -1617,6 +1617,10 @@
         <source>Unavailable statistic name</source>
         <target>Nome statistica non disponibile</target>
       </trans-unit>
+      <trans-unit id="HYT_tag_select_color" datatype="html">
+        <source>Select color</source>
+        <target>Seleziona colore</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

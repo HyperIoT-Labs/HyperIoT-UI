@@ -86,6 +86,7 @@ export class ProjectDetailComponent implements OnInit {
       this.toggleInfoActionColumn(childComponent.formTemplateId);
 
       this.currentEntity = childComponent;
+      console.log('CHILD COMPONENT: ', childComponent)
       this.currentEntity.unsavedChangesCallback = () => {
         return this.openSaveDialog();
       };
@@ -413,7 +414,7 @@ export class ProjectDetailComponent implements OnInit {
   toggleInfoActionColumn(formTempalteID: string) {
 
     if(
-      formTempalteID.includes('areas-form') || 
+      // formTempalteID.includes('areas-form') || 
       formTempalteID.includes('tag-form') ||
       formTempalteID.includes('category-form')
     ) {

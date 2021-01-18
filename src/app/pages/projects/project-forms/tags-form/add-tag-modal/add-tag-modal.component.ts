@@ -20,6 +20,7 @@ export class AddTagModalComponent extends HytModal implements OnInit, AfterViewI
   nameError: string;
 
   nameValue = '';
+  descriptionValue: string;
 
   resObserver = {
     next: (res) => {
@@ -32,6 +33,9 @@ export class AddTagModalComponent extends HytModal implements OnInit, AfterViewI
     complete: () => { }
   };
 
+  private DEFAULT_COLOR = '#2258a5';
+  public color: string = this.DEFAULT_COLOR;
+
   constructor(
     service: HytModalService,
     private assetTagService: AssetstagsService,
@@ -39,21 +43,27 @@ export class AddTagModalComponent extends HytModal implements OnInit, AfterViewI
     private errorHandler: HttpErrorHandlerService
   ) {
     super(service);
+    this.descriptionValue = '';
   }
 
   ngOnInit() {
     if (this.data.mode === 'edit') {
       this.nameValue = this.data.tag.name;
+      this.color = this.data.tag.color;
+      this.descriptionValue = this.data.tag.description;
     }
     this.tagForm = this.formBuilder.group({});
   }
 
   ngAfterViewInit(): void {
     setTimeout(() => {
-
       (document.querySelector('#add-tag-modal .hyt-input.mat-input-element') as HTMLElement).focus();
 
     }, 0);
+  }
+
+  resetColor(): void {
+    this.color = this.DEFAULT_COLOR;
   }
 
   submitTag() {
@@ -63,11 +73,15 @@ export class AddTagModalComponent extends HytModal implements OnInit, AfterViewI
         id: this.data.tag.id,
         owner: this.data.tag.owner,
         name: this.tagForm.value.name,
+        description: this.tagForm.value.description,
+        color: this.color,
         entityVersion: this.data.tag.entityVersion
       }).subscribe(this.resObserver);
     } else {
       this.assetTagService.saveAssetTag({
         name: this.tagForm.value.name,
+        color: this.color,
+        description: this.tagForm.value.description,
         owner: {
           ownerResourceName: 'it.acsoftware.hyperiot.hproject',
           ownerResourceId: this.data.projectId

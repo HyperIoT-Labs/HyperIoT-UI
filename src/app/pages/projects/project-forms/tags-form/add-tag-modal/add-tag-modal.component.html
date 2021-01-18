@@ -46,6 +46,19 @@
             </hyt-input-text>
             <!--@I18N-->
 
+            <hyt-text-area [form]="tagForm" formControlName="description" name="description"
+                placeholder="Description" i18n-placeholder="@@HYT_description" [fieldValue]="descriptionValue">
+            </hyt-text-area>
+
+            <div id="colorPickerContainer">
+                <p i18n="@@HYT_tag_select_color">Select color</p>
+                <label id="colorPickerLabel" for="inputColorPicker" [style.background-color]="color"></label>
+                <input id="inputColorPicker" name="inputColorPicker" class="colorPicker"
+                    [(colorPicker)]="color" [cpPosition]="'top'"
+                />
+                <span id="colorPickerReset" (click)="resetColor()">Reset</span>
+            </div>
+
             <div id="container-btn">
 
                 <hyt-button 
