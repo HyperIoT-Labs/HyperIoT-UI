@@ -40,6 +40,11 @@
                             (recordingStateChange)="changeTopologyState($event)">
                         </hyt-topology-toolbar>
 
+                        <div id="event-notification-btn" (click)="changeEventNotificationState($event)">
+                            <span class="hyt-icon {{(eventNotificationIsOn)?'icon-hyt_notification':'icon-hyt_notification'}}"></span>
+                            <p>{{(eventNotificationIsOn)?'On':'Off'}}</p>
+                        </div>
+
                     </div>
 
                     <div class="col-4 center-tools">
@@ -143,6 +148,17 @@
 
             <div id="container-box-dashboard"
                 class="col-12 {{(dataRecordingStatus < 2 && signalIsOn) ? 'blurred-animation' : ''}}">
+
+                <div id="loadingOfflineData" *ngIf="offlineWidgetStatus === 0"
+                    class="d-flex flex-column align-items-center">
+                    <!-- Loading -->
+
+                    <img id="animatedPreloaderImg" src="assets/images/hyperiot_logo_single_char_animated.svg"
+                        alt="Hyperiot Animated Logo"> <!-- @I18N@ -->
+                    <h2 i18n="@@HYT_page_is_loading">Page is loading...</h2>
+                    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+
+                </div>
 
                 <hyt-dashboard-view [dashboard]="currentDashboard" [dashboardType]="currentDashboardType"
                     [dashboardWidgets]="currentDashboard.widgets" (dsTopologyResTimeChange)="topologyResTimeChange($event)">

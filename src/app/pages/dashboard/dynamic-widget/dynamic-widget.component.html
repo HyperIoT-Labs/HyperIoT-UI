@@ -55,3 +55,9 @@
     [widget]="widget"
     (widgetAction)="onWidgetAction($event)">
   </hyperiot-algorithm-table>
+
+  <hyperiot-event-table
+    *ngIf="widget.type === 'event-offline-table'"
+    [widget]="widget"
+    (widgetAction)="onWidgetAction($event)">
+  </hyperiot-event-table>

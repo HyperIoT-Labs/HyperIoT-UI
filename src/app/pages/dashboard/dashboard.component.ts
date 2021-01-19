@@ -56,6 +56,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   dataRecordingIsOn = false;
 
+  eventNotificationIsOn = false;
+
   dataRecordingStatus = TopologyStatus.Off;
 
   idProjectSelected: number;
@@ -82,6 +84,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
   areaListOptions = [] as any[];
   selectedAreaId: number;
 
+  /**
+   * It checks when offline data have been loaded
+   */
+  offlineWidgetStatus: PageStatus;
+
   constructor(
     private dashboardConfigService: DashboardConfigService,
     private dashboardOfflineDataService: DashboardOfflineDataService,
@@ -89,7 +96,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
     private areaService: AreasService,
     private hytModalService: HytModalService,
     private activatedRoute: ActivatedRoute
-  ) { }
+  ) {
+    this.offlineWidgetStatus = PageStatus.Standard;
+    dashboardOfflineDataService.countEventSubject.subscribe(res => {
+      this.offlineWidgetStatus = res;
+    });
+  }
 
   ngOnInit() {
     this.showAreas = this.activatedRoute.snapshot.routeConfig.path.startsWith('areas/');
@@ -155,6 +167,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.streamIsOn = !this.streamIsOn;
   }
 
+  changeEventNotificationState(event) {
+    this.eventNotificationIsOn = !this.eventNotificationIsOn;
+    this.dashboardConfigService.eventNotificationState.next(this.eventNotificationIsOn);
+  }
+
   changeTopologyState(event) {
     this.dataRecordingIsOn = event.dataRecordingIsOn;
     this.dataRecordingStatus = (event.dataRecordingIsOn) ? TopologyStatus.Activated : TopologyStatus.Off;
@@ -214,6 +231,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   timeLineSelection(event: Date[]) {
     if (event[0] && event[1]) {
+      this.offlineWidgetStatus = PageStatus.Loading;
       this.dashboardOfflineDataService.getEventCount(event[0].getTime(), event[1].getTime());
     } else {
       this.dashboardOfflineDataService.getEventCountEmpty();

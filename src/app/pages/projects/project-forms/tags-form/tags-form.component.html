@@ -92,7 +92,7 @@
           <p id="subtitle-tags" i18n="@@HYT_list_tags">List of Tags</p>
           <hyt-tag-list>
             <hyt-tag *ngFor="let tag of filteredTags" [selectable]="true" [selected]="true" [removable]="true"
-              [editable]="true" (removed)="delete(tag)" (edited)="editTagModal(tag)" [value]="tag.name">
+              [editable]="true" (removed)="delete(tag)" (edited)="editTagModal(tag)" [value]="tag.name" [color]="tag.color">
             </hyt-tag>
           </hyt-tag-list>
 

@@ -54,6 +54,7 @@
 
                 #signal-btn,
                 #play-btn,
+                #event-notification-btn,
                 #add-widget-btn {
                     
                     color: #cccccc;
@@ -68,6 +69,7 @@
 
                 #signal-btn,
                 #play-btn,
+                #event-notification-btn,
                 #add-widget-btn {
                     &:hover {
                         color: #008aff;
@@ -88,7 +90,8 @@
                 }
 
                 #signal-btn,
-                #play-btn {
+                #play-btn,
+                #event-notification-btn {
                     float: left;
                     margin: 0.3em 0.3em 0.3em 0.3em;
                     text-align: center;
@@ -236,6 +239,34 @@
                     filter: blur(7px);
                     animation: blurredAnimation .5s ease-in-out;
                 }
+
+                #loadingOfflineData {
+
+                    position: absolute;
+                    z-index: 2;
+                    background-color: rgba(255, 255, 255, .7);
+                    left: 0; top: 0; right: 0; bottom: 0;
+                    justify-content: flex-start;
+                    padding-top: 50px;
+
+                    img {
+                        &#animatedPreloaderImg {
+                            width: 300px;
+                            margin-bottom: 50px;
+                        }
+                    }
+
+                    h2 {
+                        font-size: 1.1em;
+                    }
+            
+                    mat-progress-bar {
+                        max-width: 200px;
+                        margin: 8px;
+                    }
+              
+                }
+
             }
     
         }
@@ -340,7 +371,7 @@ mat-option {
 
                 .left-tools {
 
-                    #signal-btn, #play-btn {
+                    #signal-btn, #play-btn, #event-notification-btn {
                         margin: 0.3em;
                         text-align: center;
                         cursor: pointer;

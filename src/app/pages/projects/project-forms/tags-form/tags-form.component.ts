@@ -78,9 +78,11 @@ export class TagsFormComponent extends ProjectFormEntity implements OnInit {
   }
 
   tagCreated(tag: AssetTag) {
-    console.log(tag)
-    if (this.allTags.some(t => t.id === tag.id)) {
-      this.allTags.find(t => t.id === tag.id).name = tag.name;
+    const existingTag = this.allTags.find(t => t.id === tag.id);
+    if (existingTag) {
+      existingTag.name = tag.name;
+      existingTag.description = tag.description;
+      existingTag.color = tag.color;
     } else {
       this.allTags.push(tag);
     }

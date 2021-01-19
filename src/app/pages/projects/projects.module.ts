@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 
 // import { CronEditorModule } from 'ngx-cron-editor';
 import { CronEditorModule } from 'cron-editor';
+import { ColorPickerModule } from 'ngx-color-picker';
 
 import { ProjectCardComponent } from './project-card/project-card.component';
 
@@ -120,6 +121,7 @@ import { HPacketFieldFilterPipe } from './hPacketFieldFilter.pipe';
   ],
   imports: [
     CronEditorModule,
+    ColorPickerModule,
     MatIconModule,
     MatButtonModule,
     MatTabsModule,
