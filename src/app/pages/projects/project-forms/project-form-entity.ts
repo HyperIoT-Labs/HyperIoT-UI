@@ -43,6 +43,8 @@ export abstract class ProjectFormEntity implements OnInit, AfterViewInit {
 
     unsavedChangesCallback;
 
+    @Output() clickedTab: EventEmitter<any> = new EventEmitter();
+
     protected formBuilder: FormBuilder;
     protected dialog: HytModalService;
     protected entitiesService: EntitiesService;

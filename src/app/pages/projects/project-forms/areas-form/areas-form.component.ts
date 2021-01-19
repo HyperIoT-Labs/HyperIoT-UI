@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, Injector, OnInit, OnDestroy } from '@angular/core';
+import { Component, ViewChild, ElementRef, Injector, OnInit, OnDestroy, Output, EventEmitter, AfterViewInit } from '@angular/core';
 import { Router, ActivatedRoute, Event, NavigationStart } from '@angular/router';
 import { HytModalService } from '@hyperiot/components';
 import { ProjectFormEntity, LoadingStatusEnum } from '../project-form-entity';
@@ -15,7 +15,7 @@ import { GenericMessageDialogComponent } from 'src/app/components/modals/generic
   templateUrl: './areas-form.component.html',
   styleUrls: ['./areas-form.component.scss']
 })
-export class AreasFormComponent extends ProjectFormEntity implements OnInit {
+export class AreasFormComponent extends ProjectFormEntity implements OnInit, AfterViewInit {
   @ViewChild('map')
   mapComponent: AreaMapComponent;
 
@@ -42,6 +42,8 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit {
   allowedImageTypes = ['.jpg','.jpeg','.png','.svg']; 
   acceptFiles = this.allowedImageTypes.join(",").replace(/\./,"image/");
   maxFileSize = 0; // this will be set in constructor via areaService.getConfig()...
+
+  @Output() clickedTab: EventEmitter<any> = new EventEmitter();
 
   constructor(
     injector: Injector,
@@ -79,14 +81,22 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit {
   }
 
   ngOnInit() {
+
     this.activatedRoute.queryParams
-      .subscribe(params => {
-        this.parentAreaId = params.parent;
-        if (this.parentAreaId) {
-          this.entity = { ...this.newEntity() } as Area;
-          this.form.reset();
-        }
-      });
+    .subscribe(params => {
+      this.parentAreaId = params.parent;
+      if (this.parentAreaId) {
+        this.entity = { ...this.newEntity() } as Area;
+        this.form.reset();
+      }
+    });
+
+  }
+
+  ngAfterViewInit() {
+  
+    this.clickedTab.emit('Tab-Info');
+
   }
 
   load() {
@@ -340,14 +350,22 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit {
     if (this.currentSection === 0) {
       this.showSave = true;
       this.hideDelete = this.areaId ? false : true;
+      this.clickedTab.emit('Tab-Info');
     } else {
       this.showSave = false;
       this.showCancel = false;
       this.hideDelete = true;
     }
+
+    if(this.currentSection == 1){
+      this.clickedTab.emit('Tab-Sub-Area');
+    }
+
     if (this.currentSection === 2) {
       this.loadAreaData();
+      this.clickedTab.emit('Tab-Map');
     }
+
   }
 
   private countAreaItems(area: Area) {
@@ -544,4 +562,5 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit {
   private apiError(err) {
     this.loadingStatus = LoadingStatusEnum.Error;
   }
+
 }

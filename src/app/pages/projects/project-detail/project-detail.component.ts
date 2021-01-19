@@ -12,6 +12,7 @@ import { SaveChangesDialogComponent } from 'src/app/components/dialogs/save-chan
 import { PacketEnrichmentFormComponent } from '../project-forms/packet-enrichment-form/packet-enrichment-form.component';
 import { ProjectEventsFormComponent } from '../project-forms/project-events-form/project-events-form.component';
 import { ProjectStatisticsFormComponent } from '../project-forms/project-statistics-form/project-statistics-form.component';
+import { CdkDragEnd, CdkDragMove, CdkDragRelease, CdkDragStart } from '@angular/cdk/drag-drop';
 
 enum TreeStatusEnum {
   Ready,
@@ -64,7 +65,10 @@ export class ProjectDetailComponent implements OnInit {
   /**
    * variable used to determine basic position of draggable treeview item
    */
-  dragPosition = {x: 0, y: 25};
+  dragPosition = {x: 0, y: 0};
+  basicDragPosition = {x: 0, y: 25};
+
+  areaSection: string;
 
   constructor(
     private hProjectService: HprojectsService,
@@ -81,12 +85,18 @@ export class ProjectDetailComponent implements OnInit {
   }
 
   onActivate(childComponent: ProjectFormEntity) {
+    
+    childComponent.clickedTab.subscribe(val => {
+      this.areaSection = val;
+      this.toggleInfoActionColumn(childComponent);
+    });
+
+
     if (childComponent.isProjectEntity) {
       
-      this.toggleInfoActionColumn(childComponent.formTemplateId);
+      this.toggleInfoActionColumn(childComponent);
 
       this.currentEntity = childComponent;
-      console.log('CHILD COMPONENT: ', childComponent)
       this.currentEntity.unsavedChangesCallback = () => {
         return this.openSaveDialog();
       };
@@ -398,7 +408,7 @@ export class ProjectDetailComponent implements OnInit {
     if(this.treeViewIsOpen) {
       
       this.preTitleTreeView = 'Hide'; /* @I18N@ */
-      this.dragPosition = {x: this.dragPosition.x, y: this.dragPosition.y};
+      this.dragPosition = {x: this.basicDragPosition.x, y: this.basicDragPosition.y};
 
     } else {
 
@@ -411,17 +421,75 @@ export class ProjectDetailComponent implements OnInit {
   /**
    * function used to toggle display Info/Action Column
    */
-  toggleInfoActionColumn(formTempalteID: string) {
-
+  toggleInfoActionColumn(childComponent: any) {
+    
     if(
-      // formTempalteID.includes('areas-form') || 
-      formTempalteID.includes('tag-form') ||
-      formTempalteID.includes('category-form')
+      
+      (childComponent.formTemplateId.includes('areas-form') && this.areaSection == 'Tab-Sub-Area') ||
+      (childComponent.formTemplateId.includes('areas-form') && this.areaSection == 'Tab-Map') ||
+      childComponent.editMode == false ||
+      childComponent.formTemplateId.includes('tag-form') ||
+      childComponent.formTemplateId.includes('category-form')
+
     ) {
+
       this.displayInfoAction = false;
+      
     } else {
+
       this.displayInfoAction = true;
+      
     }
+
+  }
+
+  dragEnded(ended: CdkDragEnd) {
+
+    // CALC CONSTANTS
+    const constY = 250;
+    const constX = 75;
+
+    const topY = -150; // limit top Y
+    const leftX = -7; // limit left X 
+
+    let dropX: number = 0; 
+    let dropY: number = 0;
+
+    // WINDOW LIMIT
+    let windowW = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+    let windowH = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+
+    // TREEVIEW DIV MEASURES
+    let ptW = ended.source.element.nativeElement.clientWidth;
+    let ptH = ended.source.element.nativeElement.clientHeight;
+    
+    // TREEVIEW DIV POSITION X/Y
+    let posX = ended.source._dragRef['_activeTransform'].x;
+    let posY = ended.source._dragRef['_activeTransform'].y;
+
+    // FORMULA
+    let verticalBottomOff =  windowH - constY - ptH - posY;
+    let horizontalRightOff = windowW - constX - ptW - posX;
+
+    // Verify X position
+    if(posX < leftX) {
+      dropX = leftX;
+    } else if(horizontalRightOff < 10) {
+      dropX = (windowW - constX - ptW) - 20;
+    } else {
+      dropX = posX;
+    }
+
+    // Verify Y position
+    if(posY < topY) {
+      dropY = topY;
+    } else if(verticalBottomOff < 10) {
+      dropY = (windowH - constY - ptH) - 20;
+    } else {
+      dropY = posY;
+    }
+
+    this.dragPosition = {x: dropX, y: dropY}
 
   }
 

@@ -15,38 +15,24 @@
             <div 
                 id="container-project-treeview"
                 [ngClass]="{'displayBlock': treeViewIsOpen, 'displayNone': !treeViewIsOpen}"
-                cdkDragBoundary="#container-general-form" 
+                 
                 cdkDrag
                 [cdkDragFreeDragPosition]="dragPosition"
-            >
+                (cdkDragEnded)="dragEnded($event)"
+            > <!--cdkDragBoundary="#single-project-page" cdkDragBoundary="#container-general-form"  -->
+
+                <div id="close-tree-btn" (click)="toggleTreeViewProject()">
+                    <span class="hyt-icon icon-hyt_cancel"></span>
+                </div>
 
                 <div id="treeViewHeader"></div>
 
                 <div id="treeViewBody">
-
-                    <!-- <a 
-                        class="back-btn d-flex flex-column align-items-center justify-content-center"
-                        [routerLink]="['/projects']"
-                    >
-                        <span class="icon-hyt_caretDown hyt-icon-back"></span>
-
-                    </a> -->
                     
                     <!-- BEGIN TreeView -->
                     <div [ngStyle]="{display: treeStatus == TreeStatus.Ready ? '' : 'none'}" class="treeview pb-2 flex-grow-1 flex-sm-grow-0 flex-fill">
                         
                         <hyt-tree-view-project #treeView (nodeClick)="onNodeClick($event)"></hyt-tree-view-project>
-                        
-                        <!-- <div id="editInWizardContent">
-
-                            <hyt-button 
-                                [color]="'hyt-base-default-white'" 
-                                (clickFn)="goToProjectWizard()"
-                            >
-                                <span class="hyt-icon icon-hyt_pencil"></span> <ng-container i18n="@@HYT_edit_in_wizard">Edit in wizard</ng-container>
-                            </hyt-button>
-
-                        </div> -->
 
                     </div>   
 
@@ -84,7 +70,7 @@
                     </div>
 
                     <div class="container-form-title">
-
+                        
                         <div id="container-show-tree-btn">
 
                             <hyt-button [color]="'hyt-base-total-white'" (clickFn)="toggleTreeViewProject()">
