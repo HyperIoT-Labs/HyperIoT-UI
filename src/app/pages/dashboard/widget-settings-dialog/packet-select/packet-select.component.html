@@ -4,7 +4,7 @@
 
         <div class="d-flex flex-column">
 
-            <hyt-select-template [(ngModel)]="selectedPacketOption" [compareFn]="packetCompare"
+            <hyt-select-template [(ngModel)]="selectedPacketOption"
                 (ngModelChange)="onPacketChange($event)" name="packet-select"
                 [label]="'Select packet'" i18n-placeholder="@@HYT_widget_settings_select_packet"
                 [options]="packetOptions" [sortingAlgorithm]="'A-Z'" [isSortable]="true"
@@ -32,14 +32,14 @@
         <div class="d-flex flex-column">
  
             <hyt-select-template
-                [(ngModel)]="packetOptions" [isMultiple]="multiPacketSelect"
+                [(ngModel)]="selectedFields" [isMultiple]="multiPacketSelect"
                 (ngModelChange)="onPacketFieldChange($event)" name="field-select"
-                placeholder="Select field/s" [options]="selectedFieldsOption" 
+                [label]="'Select field/s'" [options]="selectedFieldsOption" 
                 [sortingAlgorithm]="'A-Z'" [isSortable]="true"
                 required disableRipple>
             </hyt-select-template>
 
-            <mat-form-field>
+            <!-- <mat-form-field>
                 <mat-select [(ngModel)]="selectedFields" [multiple]="multiPacketSelect"
                     (ngModelChange)="onPacketFieldChange($event)" name="field-select"
                     placeholder="Select field/s"
@@ -48,7 +48,7 @@
                         {{field.name}}
                     </mat-option>
                 </mat-select>
-            </mat-form-field>
+            </mat-form-field> -->
 
         </div>
         <div *ngIf="hasFieldsUnit() && packetUnitsConversion && packetUnitsConversion.length > 0">

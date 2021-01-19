@@ -33,14 +33,14 @@ export class PacketSelectComponent implements OnInit {
   @Input() widget;
   @Input()
   selectedPacket: HPacket = null;
-  selectedPacketOption: SelectOption = null;
+  selectedPacketOption: string = null;
   @Input()
   selectedFields: any = [];
   selectedFieldsOption: SelectOption[] = [];
   @Output()
   selectedFieldsChange = new EventEmitter();
   projectPackets: HPacket[] = [];
-  packetOptions: any = [];
+  packetOptions: SelectOption[] = [];
   @Input()
   multiPacketSelect: false;
   @Input()
@@ -91,8 +91,8 @@ export class PacketSelectComponent implements OnInit {
   }
 
   onPacketChange($event) {
-    console.log('onPacketChange ' + JSON.stringify($event));
     this.selectedPacket = this.projectPackets.find(p => p.id === $event);
+    this.selectedFieldsOption = [];
     this.selectedPacket.fields.map(f => {
       this.selectedFieldsOption.push({
         value: f.name,
@@ -104,6 +104,11 @@ export class PacketSelectComponent implements OnInit {
   }
 
   onPacketFieldChange($event) {
+    const selected = $event as any[];
+    selected.map(s => {
+      this.selectedFields.push(this.selectedPacket.fields.find(p => p.name === s))
+    })
+
     if (this.multiPacketSelect) {
       // multiple select
       const nullIndex = this.selectedFields.indexOf(null);
@@ -112,7 +117,7 @@ export class PacketSelectComponent implements OnInit {
       }
     } else {
       // single select
-      this.selectedFields = $event;
+      // this.selectedFields = $event;
     }
     // units conversion
     this.syncUnitsConversion();
@@ -137,7 +142,7 @@ export class PacketSelectComponent implements OnInit {
 
   apply() {
     if (this.selectedPacketOption) {
-      this.selectedPacket = this.projectPackets.find(p => p.id === this.selectedPacketOption.value)
+      this.selectedPacket = this.projectPackets.find(p => p.id === +this.selectedPacketOption);
       this.widget.config.packetId = this.selectedPacket.id;
       this.widget.config.timestampFieldName = this.selectedPacket.timestampField;
       this.widget.config.packetFields = {};
@@ -150,8 +155,12 @@ export class PacketSelectComponent implements OnInit {
     }
   }
 
-  packetCompare(p1: HPacket, p2: HPacket) {
-    return p1 != null && p2 != null && p1.id === p2.id;
+  // packetCompare(p1: HPacket, p2: HPacket) {
+  //   return p1 != null && p2 != null && p1.id === p2.id;
+  // }
+
+  packetCompare(p1: SelectOption, p2: SelectOption) {
+    return p1 != null && p2 != null && p1.value === p2.value;
   }
 
   loadPackets(devices?: HDevice[]) {
@@ -177,9 +186,10 @@ export class PacketSelectComponent implements OnInit {
             value: p.id,
             label: p.name
           })
-        });
+        })
+        this.packetOptions.sort((a, b) => a.label < b.label ? -1 : 1);
         if (this.selectedPacket) {
-          this.selectedPacketOption = this.packetOptions.find(o => o.value === this.selectedPacket.name);
+          this.selectedPacketOption = String(this.selectedPacket.id);
         }
         // this.projectPackets.sort((a, b) => a.name < b.name ? -1 : 1)
         this.projectPackets.sort((a, b) => a.name < b.name ? -1 : 1)
