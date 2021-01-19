@@ -1,8 +1,15 @@
+@import "~ngx-toastr/toastr";
+
 :host {
     display: flex;
     flex-direction: column;
     align-items: center;
     /*height: 100vh;*/
+}
+
+.event-toast {
+  @extend .ngx-toastr;
+  background-color: blueviolet;
 }
 
 gridster {

@@ -160,7 +160,7 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
               // show toast if packet is a event
               const event = JSON.parse(packet.fields.map.event.value.string);
               event.backgroundColor
-              this.toastr.show(this.toastMessage, event.ruleName);
+              this.toastr.show(this.toastMessage, event.ruleName, {toastClass: 'event-toast'});
             }
           });
           // get dashboard config
