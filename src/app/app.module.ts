@@ -9,6 +9,8 @@ import { CookieService } from 'ngx-cookie-service';
 import { HytRoutingModule } from './configuration-modules/hyt-routing.module';
 import { CustomMaterialModule } from './configuration-modules/custom-material.module';
 import { AuthenticationModule } from './pages/authentication/authentication.module';
+// toastr module
+import { ToastrModule } from 'ngx-toastr';
 
 // components
 import { AppComponent } from './app.component';
@@ -122,7 +124,8 @@ export function apiConfigFactory(): Configuration {
     AlgorithmsModule,
     ProjectsModule,
     HyperiotClientModule.forRoot(apiConfigFactory),
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production, registrationStrategy: 'registerImmediately' })
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production, registrationStrategy: 'registerImmediately' }),
+    ToastrModule.forRoot()
   ],
   providers: [
     // ActivatedRouteSnapshot,

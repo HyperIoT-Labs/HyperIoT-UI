@@ -57,6 +57,7 @@
     "ngx-cookie-service": "^10.0.0",
     "ngx-mask": "^8.1.7",
     "ngx-moment": "^3.4.0",
+    "ngx-toastr": "^13.2.0",
     "plotly": "^1.0.6",
     "rxjs": "~6.5.4",
     "tslib": "^1.11.1",

@@ -1,5 +1,6 @@
-import { Component, OnInit, Input, OnDestroy, HostListener, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, HostListener, ViewChild, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 import {
   GridsterConfig,
@@ -33,7 +34,8 @@ enum PageStatus {
 @Component({
   selector: 'hyt-widgets-layout',
   templateUrl: './widgets-layout.component.html',
-  styleUrls: ['./widgets-layout.component.scss']
+  styleUrls: ['./widgets-layout.component.scss'],
+  encapsulation:ViewEncapsulation.None
 })
 export class WidgetsLayoutComponent implements OnInit, OnDestroy {
   @ViewChild(GridsterComponent, { static: true }) gridster: GridsterComponent;
@@ -101,6 +103,11 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
 
   lastWindowSize;
 
+  eventNotificationIsOn: boolean;
+
+  private eventPacketSuffix = '_event';
+  private toastMessage = 'The event has been fired';
+
   /**
    * This is a demo dashboard for testing widgets
    *
@@ -112,8 +119,13 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
     private configService: DashboardConfigService,
     private activatedRoute: ActivatedRoute,
     private hytModalService: HytModalService,
-    private hytTopologyService: HytTopologyService
-  ) { }
+    private hytTopologyService: HytTopologyService,
+    private toastr: ToastrService
+  ) { 
+    this.configService.eventNotificationState.subscribe(res => {
+      this.eventNotificationIsOn = res;
+    });
+  }
 
   ngOnInit() {
     this.loadDashboard();
@@ -144,6 +156,12 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
             const packet = p.data;
             const remoteTimestamp: number = packet.fields.map.timestamp.value.long;
             this.topologyResTimeChange.emit({timeMs: remoteTimestamp});
+            if (this.eventNotificationIsOn && packet.id === 0 && packet.name.endsWith(this.eventPacketSuffix)) {
+              // show toast if packet is a event
+              const event = JSON.parse(packet.fields.map.event.value.string);
+              event.backgroundColor
+              this.toastr.show(this.toastMessage, event.ruleName);
+            }
           });
           // get dashboard config
           this.getWidgetsMapped(d.widgets)

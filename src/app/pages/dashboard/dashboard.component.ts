@@ -56,6 +56,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   dataRecordingIsOn = false;
 
+  eventNotificationIsOn = false;
+
   dataRecordingStatus = TopologyStatus.Off;
 
   idProjectSelected: number;
@@ -163,6 +165,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   changeStreamState(event) {
     this.streamIsOn = !this.streamIsOn;
+  }
+
+  changeEventNotificationState(event) {
+    this.eventNotificationIsOn = !this.eventNotificationIsOn;
+    this.dashboardConfigService.eventNotificationState.next(this.eventNotificationIsOn);
   }
 
   changeTopologyState(event) {

@@ -54,6 +54,7 @@
 
                 #signal-btn,
                 #play-btn,
+                #event-notification-btn,
                 #add-widget-btn {
                     
                     color: #cccccc;
@@ -68,6 +69,7 @@
 
                 #signal-btn,
                 #play-btn,
+                #event-notification-btn,
                 #add-widget-btn {
                     &:hover {
                         color: #008aff;
@@ -88,7 +90,8 @@
                 }
 
                 #signal-btn,
-                #play-btn {
+                #play-btn,
+                #event-notification-btn {
                     float: left;
                     margin: 0.3em 0.3em 0.3em 0.3em;
                     text-align: center;
@@ -368,7 +371,7 @@ mat-option {
 
                 .left-tools {
 
-                    #signal-btn, #play-btn {
+                    #signal-btn, #play-btn, #event-notification-btn {
                         margin: 0.3em;
                         text-align: center;
                         cursor: pointer;

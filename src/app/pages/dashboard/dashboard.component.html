@@ -40,6 +40,11 @@
                             (recordingStateChange)="changeTopologyState($event)">
                         </hyt-topology-toolbar>
 
+                        <div id="event-notification-btn" (click)="changeEventNotificationState($event)">
+                            <span class="hyt-icon {{(eventNotificationIsOn)?'icon-hyt_notification':'icon-hyt_notification'}}"></span>
+                            <p>{{(eventNotificationIsOn)?'On':'Off'}}</p>
+                        </div>
+
                     </div>
 
                     <div class="col-4 center-tools">
