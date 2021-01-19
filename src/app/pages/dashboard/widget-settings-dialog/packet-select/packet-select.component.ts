@@ -71,10 +71,6 @@ export class PacketSelectComponent implements OnInit {
     private unitConversionService: UnitConversionService,
   ) {
     this.multiPacketSelect = this.multiPacketSelect || false;
-    this.eventPacketId = -1;
-    this.eventPacketTimestampFieldName = 'timestamp';
-    this.eventPacketFieldName = 'event';
-    this.offlineTableWidgetType = 'offline-table';
   }
 
   ngOnInit() {
@@ -193,58 +189,30 @@ export class PacketSelectComponent implements OnInit {
         }
         // this.projectPackets.sort((a, b) => a.name < b.name ? -1 : 1)
         this.projectPackets.sort((a, b) => a.name < b.name ? -1 : 1)
-
-        // add event packet
-        if (this.widget.type === this.offlineTableWidgetType)
-          this.projectPackets.unshift(this.createEventPacket());
  
         const w = this.widget;
         // load curent packet data and set selected fields
         if (w.config && w.config.packetId) {
-          if (w.config.packetId === this.eventPacketId) {
-            this.selectedPacket = this.createEventPacket();
-            this.selectedFields.push(this.createEventPacketField());
-          } else {
-            this.packetService.findHPacket(w.config.packetId)
-              .subscribe((packet: HPacket) => {
-                this.selectedPacket = packet;
-                if (this.widget.config.packetFields) {
-                  packet.fields.map((pf) => {
-                    if (this.widget.config.packetFields[pf.id]) {
-                      if (this.multiPacketSelect) {
-                        this.selectedFields.push(pf);
-                      } else {
-                        this.selectedFields = pf;
-                      }
+          this.packetService.findHPacket(w.config.packetId)
+            .subscribe((packet: HPacket) => {
+              this.selectedPacket = packet;
+              if (this.widget.config.packetFields) {
+                packet.fields.map((pf) => {
+                  if (this.widget.config.packetFields[pf.id]) {
+                    if (this.multiPacketSelect) {
+                      this.selectedFields.push(pf);
+                    } else {
+                      this.selectedFields = pf;
                     }
-                  })
-                  packet.fields.sort((a, b) => a.name < b.name ? -1 : 1);
-                  this.syncUnitsConversion();
-                  this.syncFieldMapping();
-                }
-              });
-          }
+                  }
+                })
+                packet.fields.sort((a, b) => a.name < b.name ? -1 : 1);
+                this.syncUnitsConversion();
+                this.syncFieldMapping();
+              }
+            });
         }
       });
-  }
-
-  private createEventPacket(): HPacket {
-    const packet: HPacket = {
-      id: this.eventPacketId,
-      name: 'Events',
-      entityVersion: 0,
-      timestampField: this.eventPacketTimestampFieldName
-    };
-    return packet;
-  }
-
-  public createEventPacketField(): HPacketField {
-    const packetField: HPacketField = {
-      id: this.eventPacketId,
-      name: this.eventPacketFieldName,
-      entityVersion: 0
-    };
-    return packetField;
   }
 
   hasFieldsUnit() {

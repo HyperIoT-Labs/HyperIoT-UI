@@ -67,9 +67,6 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
     }
 
     apply() {
-        if (this.packetSelect.selectedPacket.id === this.packetSelect.eventPacketId) {
-            this.selectedFields.push(this.packetSelect.createEventPacketField());
-        }
         this.packetSelect.apply();
     }
 }
