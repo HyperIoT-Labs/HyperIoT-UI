@@ -212,7 +212,8 @@ export class EntitiesService {
       description: '',
       type: 'ENRICHMENT',
       jsonActions: '[\"{\\\"actionName\\\":\\\"events.SendMailAction\\\",\\\"recipients\\\":\\\"\\\",\\\"ccRecipients\\\":\\\"\\\",\\\"subject\\\":\\\"\\\",\\\"body\\\":\\\"\\\"}\"]',
-      entityVersion: 1
+      entityVersion: 1,
+      tagIds: []
     }
   };
 
