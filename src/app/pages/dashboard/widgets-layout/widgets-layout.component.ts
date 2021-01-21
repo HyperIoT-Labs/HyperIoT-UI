@@ -159,7 +159,8 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
             if (this.eventNotificationIsOn && packet.id === 0 && packet.name.endsWith(this.eventPacketSuffix)) {
               // show toast if packet is a event
               const event = JSON.parse(packet.fields.map.event.value.string);
-              event.backgroundColor
+              const tag = event.tags[0]; // retrieve only first tag
+              const toastBackgroundColor = tag.color;
               this.toastr.show(this.toastMessage, event.ruleName, {toastClass: 'event-toast'});
             }
           });
