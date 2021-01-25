@@ -7,11 +7,6 @@
     /*height: 100vh;*/
 }
 
-.event-toast {
-  @extend .ngx-toastr;
-  background-color: blueviolet;
-}
-
 gridster {
     background: transparent!important;
     transition: all .2s ease .1s;

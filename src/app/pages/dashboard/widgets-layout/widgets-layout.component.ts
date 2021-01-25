@@ -161,7 +161,12 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
               const event = JSON.parse(packet.fields.map.event.value.string);
               const tag = event.tags[0]; // retrieve only first tag
               const toastBackgroundColor = tag.color;
-              this.toastr.show(this.toastMessage, event.ruleName, {toastClass: 'event-toast'});
+              const textColor = '#ffffff';  // TODO retrieve from tag when this property will have been added
+              this.toastr.show(this.toastMessage, event.ruleName)
+                .onShown.subscribe(((res) => {}), (err) => {}, () => {
+                    document.querySelector('.overlay-container #toast-container .ngx-toastr')
+                      .setAttribute('style', 'background-color: ' + toastBackgroundColor + '; color:' + textColor + ';');
+                  });
             }
           });
           // get dashboard config
