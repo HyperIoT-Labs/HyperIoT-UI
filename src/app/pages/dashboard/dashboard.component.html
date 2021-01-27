@@ -29,8 +29,8 @@
 
 
                         <div *ngIf="signalIsOn" id="play-btn" (click)="changeStreamState($event)">
-                            <span class="hyt-icon {{(streamIsOn)?'icon-hyt_play':'icon-hyt_pause'}}"></span>
-                            <p>{{(streamIsOn)?'Play':'Pause'}}</p>
+                            <span class="hyt-icon {{(streamIsOn)?'icon-hyt_pause':'icon-hyt_play'}}"></span>
+                            <p>{{(streamIsOn)?'Pause':'Play'}}</p>
                             <!-- @@i18n -->
                             <!-- <p i18n="@@HYT_stream_is_on">{streamIsOn, select, true {Play} false {Pause}}</p> -->
                         </div>
