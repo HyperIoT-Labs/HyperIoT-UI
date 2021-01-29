@@ -48,6 +48,39 @@
     </div> <!-- END FIRST ROW -->
 
     <div class="form-group row">
+      <div id="fevent-col-tag" class="col-6">
+        <!-- TODO remove warning on FormControl -->
+        <mat-form-field class="tag-selection">
+          <mat-label>Selected tag</mat-label>
+          <mat-chip-list #chipList>
+            <mat-chip
+              *ngFor="let tag of selectedTags"
+              [selectable]="true"
+              [removable]="true"
+              (removed)="remove()" [style.backgroundColor]="tag.color">
+              {{tag.name}}
+              <mat-icon matChipRemove>cancel</mat-icon>
+            </mat-chip>
+            <input
+              placeholder="Select tag"
+              #tagInput
+              [formControl]="tagCtrl"
+              [matAutocomplete]="auto"
+              [matChipInputFor]="chipList"
+              (matChipInputTokenEnd)="add($event)"
+              #trigger="matAutocompleteTrigger"
+              (keydown.enter)="$event.target.blur(); trigger.closePanel()">
+          </mat-chip-list>
+          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+            <mat-option *ngFor="let tag of allTags" [value]="tag">
+              {{tag.name}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div> <!-- Tag selection -->
+    </div> <!-- END SECOND ROW -->
+
+    <div class="form-group row">
 
       <div id="fevent-col-event" class="col-6">
 

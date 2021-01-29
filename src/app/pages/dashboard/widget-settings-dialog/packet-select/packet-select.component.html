@@ -10,7 +10,7 @@
                 [options]="packetOptions" [sortingAlgorithm]="'A-Z'" [isSortable]="true"
                 required disableRipple>
             </hyt-select-template>
-<!-- 
+<!-- (compareFn)="packetCompare($event)"
             <mat-form-field>
                 <mat-select [(ngModel)]="selectedPacket" [compareWith]="packetCompare"
                     (ngModelChange)="onPacketChange()" name="packet-select"
@@ -32,9 +32,9 @@
         <div class="d-flex flex-column">
  
             <hyt-select-template
-                [(ngModel)]="selectedFields" [isMultiple]="multiPacketSelect"
+                [(ngModel)]="selectedFieldsOptions" [isMultiple]="multiPacketSelect"
                 (ngModelChange)="onPacketFieldChange($event)" name="field-select"
-                [label]="'Select field/s'" [options]="selectedFieldsOption" 
+                [label]="'Select field/s'" [options]="fieldsOption" 
                 [sortingAlgorithm]="'A-Z'" [isSortable]="true"
                 required disableRipple>
             </hyt-select-template>
