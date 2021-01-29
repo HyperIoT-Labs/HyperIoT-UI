@@ -5,7 +5,7 @@ import { AreasService, Area, AreaDevice, HprojectsService, HProject } from '@hyp
 import { HytModalService } from '@hyperiot/components';
 import { AreaMapComponent } from '../../projects/project-forms/areas-form/area-map/area-map.component';
 import { HttpClient } from '@angular/common/http';
-import { ignoreElements } from 'rxjs/operators';
+import { CdkDragEnd } from '@angular/cdk/drag-drop';
 
 enum PageStatus {
   Loading = 0,
@@ -47,6 +47,12 @@ export class AreasViewComponent {
    * variable used to dynamically set the first part of toggle treeview button title
    */
   preTitleTreeView: string = 'Show'; /* @I18N@ */
+
+  /**
+   * variable used to determine basic position of draggable treeview item
+   */
+  dragPosition = {x: 0, y: 0};
+  basicDragPosition = {x: 0, y: 25};
 
   constructor(
     private projectService: HprojectsService,
@@ -305,12 +311,81 @@ export class AreasViewComponent {
     if(this.treeViewIsOpen) {
       
       this.preTitleTreeView = 'Hide'; /* @I18N@ */
+      this.dragPosition = {x: this.basicDragPosition.x, y: this.basicDragPosition.y};
 
     } else {
 
       this.preTitleTreeView = 'Show'; /* @I18N@ */
 
     }
+
+  }
+  
+  /**
+   * Used to calculate the position in space and prevent the treeview from going out of bounds 
+   * @param ended 
+   */
+  dragEnded(ended: CdkDragEnd) {
+
+    // CALC CONSTANTS
+    const constY = 250;
+    const constX = 75;
+
+    const topY = -150; // limit top Y
+    const leftX = -7; // limit left X 
+
+    let dropX: number = 0; 
+    let dropY: number = 0;
+
+    // WINDOW LIMIT
+    let windowW = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+    let windowH = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+
+    // #HYT-CONTAINER LIMIT
+    let hytContainerCH = document.getElementById('hyt-container').clientHeight;
+    let hytContainerCOFF = document.getElementById('hyt-container').offsetHeight;
+    let styleHeight = document.getElementById('hyt-container').style.height;
+    let anotherHeight = document.getElementById('hyt-container').getBoundingClientRect();
+    console.log('HYT CONTAINER CLIENT H: '+hytContainerCH+' CLIENT OFF: '+hytContainerCOFF)
+    console.log('HYT WINDOW H: '+windowH)
+    console.log('HYT another H: ', anotherHeight)
+
+    // TREEVIEW DIV MEASURES
+    let ptW = ended.source.element.nativeElement.clientWidth;
+    let ptH = ended.source.element.nativeElement.clientHeight;
+    
+    // TREEVIEW DIV POSITION X/Y
+    let posX = ended.source._dragRef['_activeTransform'].x;
+    let posY = ended.source._dragRef['_activeTransform'].y;
+
+    // FORMULA
+    let verticalBottomOff =  windowH - constY - ptH - posY;
+    let horizontalRightOff = windowW - constX - ptW - posX;
+    console.log('VERTICAL DATA VERTICAL BOTTOM OFF: '+ verticalBottomOff )
+    console.log('WINDOWH: '+windowH)
+    console.log('CONSTY: '+constY)
+    console.log('PTH: '+ptH)
+    console.log('POSY: '+posY)
+
+    // Verify X position
+    if(posX < leftX) {
+      dropX = leftX;
+    } else if(horizontalRightOff < 10) {
+      dropX = (windowW - constX - ptW) - 20;
+    } else {
+      dropX = posX;
+    }
+
+    // Verify Y position
+    if(posY < topY) {
+      dropY = topY;
+    } else if(verticalBottomOff < 10) {
+      dropY = (windowH - constY - ptH) - 20;
+    } else {
+      dropY = posY;
+    }
+
+    this.dragPosition = {x: dropX, y: dropY}
 
   }
 

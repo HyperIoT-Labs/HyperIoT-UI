@@ -72,8 +72,10 @@
             <div 
                 id="container-treeview-project" 
                 [ngClass]="{'displayBlock': treeViewIsOpen, 'displayNone': !treeViewIsOpen}"
-                cdkDragBoundary="#container-area-map" cdkDrag
-            >
+                cdkDrag
+                [cdkDragFreeDragPosition]="dragPosition"
+                (cdkDragEnded)="dragEnded($event)"
+            > <!--  cdkDragBoundary="#container-area-map" -->
 
                 <div id="close-tree-btn" (click)="toggleTreeViewProject()">
                     <span class="hyt-icon icon-hyt_cancel"></span>
