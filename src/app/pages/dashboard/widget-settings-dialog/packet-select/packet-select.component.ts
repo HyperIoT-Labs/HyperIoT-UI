@@ -101,6 +101,7 @@ export class PacketSelectComponent implements OnInit {
   }
 
   onPacketFieldChange($event) {
+    this.selectedFields = [];
     if (this.multiPacketSelect) {
       // multiple select
       const nullIndex = this.selectedFields.indexOf(null);
@@ -113,7 +114,8 @@ export class PacketSelectComponent implements OnInit {
       })
     } else {
       // single select
-      this.selectedFields = $event;
+      let selected = $event as any;
+      this.selectedFields = this.selectedPacket.fields.find(p => p.name === selected);
     }
     // units conversion
     this.syncUnitsConversion();
@@ -202,6 +204,7 @@ export class PacketSelectComponent implements OnInit {
                 })
               });
               if (this.widget.config.packetFields) {
+                this.selectedFields = [];
                 packet.fields.map((pf) => {
                   if (this.widget.config.packetFields[pf.id]) {
                     if (this.multiPacketSelect) {
@@ -251,10 +254,12 @@ export class PacketSelectComponent implements OnInit {
           decimals: 1,
           options: this.getUnitOptions(f.unit)
         };
-        tempMap.push(unitConvert);
+        if (!tempMap.includes(unitConvert))
+          tempMap.push(unitConvert);
       } else {
         unitConvert.convertFrom = f.unit;
-        tempMap.push(unitConvert);
+        if (!tempMap.includes(unitConvert))
+          tempMap.push(unitConvert);
       }
       unitConvert.field.name = f.name;
     };
