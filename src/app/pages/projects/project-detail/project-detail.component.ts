@@ -12,7 +12,7 @@ import { SaveChangesDialogComponent } from 'src/app/components/dialogs/save-chan
 import { PacketEnrichmentFormComponent } from '../project-forms/packet-enrichment-form/packet-enrichment-form.component';
 import { ProjectEventsFormComponent } from '../project-forms/project-events-form/project-events-form.component';
 import { ProjectStatisticsFormComponent } from '../project-forms/project-statistics-form/project-statistics-form.component';
-import { CdkDragEnd, CdkDragMove, CdkDragRelease, CdkDragStart } from '@angular/cdk/drag-drop';
+import { CdkDragEnd } from '@angular/cdk/drag-drop';
 
 enum TreeStatusEnum {
   Ready,
@@ -423,26 +423,36 @@ export class ProjectDetailComponent implements OnInit {
    */
   toggleInfoActionColumn(childComponent: any) {
     
-    if(
+    // if(
       
-      (childComponent.formTemplateId.includes('areas-form') && this.areaSection == 'Tab-Sub-Area') ||
-      (childComponent.formTemplateId.includes('areas-form') && this.areaSection == 'Tab-Map') ||
-      childComponent.editMode == false ||
-      childComponent.formTemplateId.includes('tag-form') ||
-      childComponent.formTemplateId.includes('category-form')
+    //   // (childComponent.formTemplateId.includes('areas-form') && this.areaSection == 'Tab-Sub-Area') ||
+    //   // (childComponent.formTemplateId.includes('areas-form') && this.areaSection == 'Tab-Map') ||
+    //   // childComponent.editMode == false ||
+    //   // childComponent.formTemplateId.includes('tag-form') ||
+    //   // childComponent.formTemplateId.includes('category-form')
 
-    ) {
+    //   (childComponent.formTemplateId.includes('areas-form') ) ||
+    //   (childComponent.formTemplateId.includes('areas-form') ) ||
+    //   childComponent.editMode == false ||
+    //   childComponent.formTemplateId.includes('tag-form') ||
+    //   childComponent.formTemplateId.includes('category-form')
 
-      this.displayInfoAction = false;
+    // ) {
+
+    //   this.displayInfoAction = false;
       
-    } else {
+    // } else {
 
-      this.displayInfoAction = true;
+    //   this.displayInfoAction = true;
       
-    }
+    // }
 
   }
-
+  
+  /**
+   * Used to calculate the position in space and prevent the treeview from going out of bounds 
+   * @param ended 
+   */
   dragEnded(ended: CdkDragEnd) {
 
     // CALC CONSTANTS
