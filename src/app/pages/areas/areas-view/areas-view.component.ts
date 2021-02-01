@@ -326,66 +326,41 @@ export class AreasViewComponent {
    * @param ended 
    */
   dragEnded(ended: CdkDragEnd) {
+  
+    let constLeftX = 115; /* -115 after 0 point */
 
-    // CALC CONSTANTS
-    const constY = 250;
-    const constX = 75;
-
-    const topY = -150; // limit top Y
-    const leftX = -7; // limit left X 
-
-    let dropX: number = 0; 
-    let dropY: number = 0;
-
-    // WINDOW LIMIT
-    let windowW = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-    let windowH = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
-
-    // #HYT-CONTAINER LIMIT
-    let hytContainerCH = document.getElementById('hyt-container').clientHeight;
-    let hytContainerCOFF = document.getElementById('hyt-container').offsetHeight;
-    let styleHeight = document.getElementById('hyt-container').style.height;
-    let anotherHeight = document.getElementById('hyt-container').getBoundingClientRect();
-    console.log('HYT CONTAINER CLIENT H: '+hytContainerCH+' CLIENT OFF: '+hytContainerCOFF)
-    console.log('HYT WINDOW H: '+windowH)
-    console.log('HYT another H: ', anotherHeight)
+    // TREEVIEW DIV POSITION X/Y
+    let posY = ended.source._dragRef['_activeTransform'].y;
+    let posX = ended.source._dragRef['_activeTransform'].x;
 
     // TREEVIEW DIV MEASURES
-    let ptW = ended.source.element.nativeElement.clientWidth;
-    let ptH = ended.source.element.nativeElement.clientHeight;
+    let ptW = ended.source.element.nativeElement.clientWidth + 15;
+
+    // #HYT-CONTAINER LIMIT
+    let hytContainerHClient = document.getElementById('hyt-container').clientWidth;
     
-    // TREEVIEW DIV POSITION X/Y
-    let posX = ended.source._dragRef['_activeTransform'].x;
-    let posY = ended.source._dragRef['_activeTransform'].y;
-
-    // FORMULA
-    let verticalBottomOff =  windowH - constY - ptH - posY;
-    let horizontalRightOff = windowW - constX - ptW - posX;
-    console.log('VERTICAL DATA VERTICAL BOTTOM OFF: '+ verticalBottomOff )
-    console.log('WINDOWH: '+windowH)
-    console.log('CONSTY: '+constY)
-    console.log('PTH: '+ptH)
-    console.log('POSY: '+posY)
-
-    // Verify X position
-    if(posX < leftX) {
-      dropX = leftX;
-    } else if(horizontalRightOff < 10) {
-      dropX = (windowW - constX - ptW) - 20;
-    } else {
-      dropX = posX;
-    }
-
+    // horizontal limit beyond which it is not possible to scroll the treeview box to the right
+    let horizontalLimit = hytContainerHClient - constLeftX - ptW;
+    
+    let dragX, dragY: number;
+  
     // Verify Y position
-    if(posY < topY) {
-      dropY = topY;
-    } else if(verticalBottomOff < 10) {
-      dropY = (windowH - constY - ptH) - 20;
-    } else {
-      dropY = posY;
+    if(posY < -330){
+      dragY = -330;
+    }else{
+      dragY = posY;
+    }
+    
+    // Verify X position
+    if(posX < -45){
+      dragX = -50
+    }else if(posX >= horizontalLimit){
+      dragX = horizontalLimit - 20;
+    }else{
+      dragX = posX;
     }
 
-    this.dragPosition = {x: dropX, y: dropY}
+    this.dragPosition = { x: dragX, y: dragY }
 
   }
 

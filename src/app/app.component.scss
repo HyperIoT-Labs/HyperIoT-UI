@@ -34,13 +34,13 @@ html {
     #hyt-container {
 
       position: relative;
-      // background-color: pink;
       top: 0px;
       left: 0px;
       right: 0px;
       bottom: 0px;
       height: 100%;
       overflow-x: hidden;
+      overflow-y: auto;
 
       #hyt-container-topbar {
         

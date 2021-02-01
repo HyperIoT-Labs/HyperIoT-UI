@@ -13,6 +13,7 @@ import { PacketEnrichmentFormComponent } from '../project-forms/packet-enrichmen
 import { ProjectEventsFormComponent } from '../project-forms/project-events-form/project-events-form.component';
 import { ProjectStatisticsFormComponent } from '../project-forms/project-statistics-form/project-statistics-form.component';
 import { CdkDragEnd } from '@angular/cdk/drag-drop';
+import { ChangeDetectorRef } from '@angular/core';
 
 enum TreeStatusEnum {
   Ready,
@@ -76,7 +77,8 @@ export class ProjectDetailComponent implements OnInit {
     private packetService: HpacketsService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private dialog: HytModalService
+    private dialog: HytModalService,
+    private cdRef:ChangeDetectorRef
   ) { }
 
   ngOnInit() {
@@ -423,29 +425,28 @@ export class ProjectDetailComponent implements OnInit {
    */
   toggleInfoActionColumn(childComponent: any) {
     
-    // if(
+    if(
+    
+      (childComponent.formTemplateId.includes('areas-form') && this.areaSection == 'Tab-Sub-Area') ||
+      (childComponent.formTemplateId.includes('areas-form') && this.areaSection == 'Tab-Map') ||
+
+      (childComponent.formTemplateId.includes('areas-form') && this.areaSection == 'Tab-Info') && 
+      childComponent.editMode == false ||
+
+      childComponent.formTemplateId.includes('tag-form') ||
+      childComponent.formTemplateId.includes('category-form')
+
+    ) {
+
+      this.displayInfoAction = false;
+      this.cdRef.detectChanges();
       
-    //   // (childComponent.formTemplateId.includes('areas-form') && this.areaSection == 'Tab-Sub-Area') ||
-    //   // (childComponent.formTemplateId.includes('areas-form') && this.areaSection == 'Tab-Map') ||
-    //   // childComponent.editMode == false ||
-    //   // childComponent.formTemplateId.includes('tag-form') ||
-    //   // childComponent.formTemplateId.includes('category-form')
+    } else {
 
-    //   (childComponent.formTemplateId.includes('areas-form') ) ||
-    //   (childComponent.formTemplateId.includes('areas-form') ) ||
-    //   childComponent.editMode == false ||
-    //   childComponent.formTemplateId.includes('tag-form') ||
-    //   childComponent.formTemplateId.includes('category-form')
-
-    // ) {
-
-    //   this.displayInfoAction = false;
+      this.displayInfoAction = true;
+      this.cdRef.detectChanges();
       
-    // } else {
-
-    //   this.displayInfoAction = true;
-      
-    // }
+    }
 
   }
   
@@ -454,52 +455,40 @@ export class ProjectDetailComponent implements OnInit {
    * @param ended 
    */
   dragEnded(ended: CdkDragEnd) {
+    let constLeftX = 75; /* -75 after 0 point */
 
-    // CALC CONSTANTS
-    const constY = 250;
-    const constX = 75;
-
-    const topY = -150; // limit top Y
-    const leftX = -7; // limit left X 
-
-    let dropX: number = 0; 
-    let dropY: number = 0;
-
-    // WINDOW LIMIT
-    let windowW = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-    let windowH = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+    // TREEVIEW DIV POSITION X/Y
+    let posY = ended.source._dragRef['_activeTransform'].y;
+    let posX = ended.source._dragRef['_activeTransform'].x;
 
     // TREEVIEW DIV MEASURES
-    let ptW = ended.source.element.nativeElement.clientWidth;
-    let ptH = ended.source.element.nativeElement.clientHeight;
+    let ptW = ended.source.element.nativeElement.clientWidth + 15;
+
+    // #HYT-CONTAINER LIMIT
+    let hytContainerHClient = document.getElementById('hyt-container').clientWidth;
     
-    // TREEVIEW DIV POSITION X/Y
-    let posX = ended.source._dragRef['_activeTransform'].x;
-    let posY = ended.source._dragRef['_activeTransform'].y;
-
-    // FORMULA
-    let verticalBottomOff =  windowH - constY - ptH - posY;
-    let horizontalRightOff = windowW - constX - ptW - posX;
-
-    // Verify X position
-    if(posX < leftX) {
-      dropX = leftX;
-    } else if(horizontalRightOff < 10) {
-      dropX = (windowW - constX - ptW) - 20;
-    } else {
-      dropX = posX;
-    }
-
+    // horizontal limit beyond which it is not possible to scroll the treeview box to the right
+    let horizontalLimit = hytContainerHClient - constLeftX - ptW;
+    
+    let dragX, dragY: number;
+    
     // Verify Y position
-    if(posY < topY) {
-      dropY = topY;
-    } else if(verticalBottomOff < 10) {
-      dropY = (windowH - constY - ptH) - 20;
-    } else {
-      dropY = posY;
+    if(posY < -175){
+      dragY = -175;
+    }else{
+      dragY = posY;
+    }
+    
+    // Verify X position
+    if(posX < -13){
+      dragX = 0;
+    }else if(posX >= horizontalLimit){
+      dragX = horizontalLimit - 20;
+    }else{
+      dragX = posX;
     }
 
-    this.dragPosition = {x: dropX, y: dropY}
+    this.dragPosition = { x: dragX, y: dragY }
 
   }
 

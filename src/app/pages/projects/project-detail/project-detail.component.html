@@ -17,6 +17,7 @@
                 [ngClass]="{'displayBlock': treeViewIsOpen, 'displayNone': !treeViewIsOpen}"
                 cdkDrag
                 [cdkDragFreeDragPosition]="dragPosition"
+                cdkDragBoundary="#hyt-container"
                 (cdkDragEnded)="dragEnded($event)"
             >
 
@@ -49,7 +50,7 @@
 
             </div> <!-- ------------------- End Container TREE ------------------- -->
 
-            <div id="container-project-content" [ngClass]="{'displayFluidRow': !displayInfoAction}">
+            <div id="container-project-content" [ngClass]="{'displayFluidRow': !displayInfoAction, 'rightSeparator': displayInfoAction }">
                 
                 <div class="content">
 
@@ -134,7 +135,6 @@
                             [ngClass]="currentEntity.hideDelete ? 'hidden' : 'last-btn'"
                             id="delete-btn"
                             (clickFn)="onDeleteClick()">
-                            <!-- <mat-icon>delete</mat-icon> -->
                             <span class="hyt-icon icon-hyt_trash"></span>
                             <span i18n="@@HYT_delete">Delete</span>
                         </hyt-button>
@@ -144,7 +144,6 @@
                             [ngClass]="!currentEntity.showCancel ? 'hidden' : 'last-btn' "
                             id="cancel-btn"
                             (clickFn)="onCancelClick()">
-                            <!-- <mat-icon>undo</mat-icon> -->
                             <span class="hyt-icon icon-hyt_arrowLeft"></span>
                             <span i18n="@@HYT_cancel">Cancel</span>
                         </hyt-button>
