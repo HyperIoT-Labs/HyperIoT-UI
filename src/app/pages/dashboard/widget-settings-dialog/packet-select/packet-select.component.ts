@@ -226,14 +226,22 @@ export class PacketSelectComponent implements OnInit {
   }
 
   hasFieldsUnit() {
-    if (this.multiPacketSelect) {
-      if (this.selectedFields.length === 0) {
-        return 0;
-      }
-      const unitCount = this.selectedFields.reduce((a, b) => (a + b.unit ? 1 : 0));
-      return unitCount > 0;
-    }
-    return this.selectedFields.unit;
+    return true;
+    /*
+      Condition commented out as not working correctly when only one field is selected.
+    */
+    // if (this.multiPacketSelect) {
+    //   if (this.selectedFields.length === 0) {
+    //     return 0;
+    //   }
+    //   const unitCount = this.selectedFields.reduce((a, b) => (a + b.unit ? 1 : 0));
+    //   if (unitCount > 0)
+    //     console.log('unitCount > 0 ');
+    //   else
+    //     console.log('unitCount < 0 ');
+    //   return unitCount > 0;
+    // }
+    // return this.selectedFields.unit;
   }
 
   private syncUnitsConversion() {
