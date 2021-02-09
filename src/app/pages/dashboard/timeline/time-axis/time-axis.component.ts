@@ -233,11 +233,12 @@ export class TimeAxisComponent implements AfterViewInit {
       .attr('id', 'containerSvg')
       .attr('width', this.contentWidth + this.margin.left + this.margin.right)
       .attr('height', this.contentHeight + this.margin.top + this.margin.bottom);
+      //.attr('viewbox', '0 0 100 100');
 
     const xAxis = g => {
       this.svgAxis = g
         .append('g')
-        .attr('width', this.contentWidth)
+        .attr('width', this.contentWidth-300)
         .attr('height', this.contentHeight - 20)
         .attr('transform', `translate(0,${this.contentHeight - 20})`);
     };
@@ -352,7 +353,22 @@ export class TimeAxisComponent implements AfterViewInit {
   selectionHelper = g => {
     g.append('path')
       .attr('class', 'selectionHelper')
-      .attr('d', 'M 0 14 L 20 24 C 35 28, 35 0 20 4 Z');
+      // .attr('d', 'M 0 14 L 20 24 C 35 28, 35 0 20 4 Z');
+      .attr('d', 'M11.6,13.5H0V2.5h11.6L16,8L11.6,13.5z M1,12.5h10.2L14.7,8l-3.6-4.5H1V12.5z');
+
+    g.append('rect')
+      .attr('transform', 'matrix(.7071 -.7071 .7071 .7071 -3.753 6.9393)')
+      .attr('x', '6')
+      .attr('y', '5.2')
+      .attr('width', '1')
+      .attr('height', '5.7');
+
+    g.append('rect')
+      .attr('transform', 'matrix(.7071 -.7071 .7071 .7071 -3.753 6.9393)')
+      .attr('x', '3.7')
+      .attr('y', '7.5')
+      .attr('width', '5.7')
+      .attr('height', '1');
   }
 
   /**

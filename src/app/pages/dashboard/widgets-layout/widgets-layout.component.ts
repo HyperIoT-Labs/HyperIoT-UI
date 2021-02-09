@@ -35,7 +35,7 @@ enum PageStatus {
   selector: 'hyt-widgets-layout',
   templateUrl: './widgets-layout.component.html',
   styleUrls: ['./widgets-layout.component.scss'],
-  encapsulation:ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.Emulated
 })
 export class WidgetsLayoutComponent implements OnInit, OnDestroy {
   @ViewChild(GridsterComponent, { static: true }) gridster: GridsterComponent;

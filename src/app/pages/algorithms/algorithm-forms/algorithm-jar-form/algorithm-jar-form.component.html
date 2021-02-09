@@ -1,22 +1,86 @@
 <div id="container-algorithm-jar" class="container">
 
+    <div id="jar-section-head">
+
+        <div id="jar-section-subtitle">
+
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean libero lorem, finibus et vehicula fermentum, rutrum vel augue. Suspendisse a volutpat quam, non dignissim diam. Curabitur accumsan aliquam lorem, vel hendrerit arcu. Cras vestibulum eleifend purus, in egestas velit condimentum iaculis. Suspendisse id nisi eu felis hendrerit sodales. Integer eu tincidunt ex, et accumsan ipsum. Phasellus dictum eros at rhoncus eleifend
+            </p>
+
+        </div>
+
+    </div>
+
     <!-- FIRST FORM -->
 
     <form [formGroup]="form" #formReference [ngClass]="{'blurred': loadingStatus !== LoadingStatus.Ready}">
         
-        <div>
-            <div>
-                <span *ngIf="algorithm && algorithm.jarName">JAR exists</span>
-                <span *ngIf="!(algorithm && algorithm.jarName)">No JAR exists</span>
+        <div id="container-upload-jar">
+
+            <div id="upload-jar-package">
+
+                <span id="upload-jar-title" i18n="@@HYT_algorithm_jar_package">JAR package:</span>
+                <span 
+                    i18n="@@HYT_algorithm_jar_package_exists" 
+                    class="upload-jar-content exists" 
+                    *ngIf="algorithm && algorithm.jarName; else jarContent"
+                >
+                    exists
+                </span>
+                <ng-template #jarContent>
+                    
+                    <span class="upload-jar-content not-exists" i18n="@@HYT_algorithm_jar_package_not_exists">does not exist</span>
+
+                </ng-template>
+
+                <!-- <span *ngIf="algorithm && algorithm.jarName">JAR exists</span>
+                <span *ngIf="!(algorithm && algorithm.jarName)">No JAR exists</span> -->
             </div>
-            <label for="file">Choose File</label>
-            <input type="file" 
-                formControlName="jarName"
-                accept=".jar"
-                (change)="handleFileInput($event.target.files)">
+
+            <div id="upload-jar-container">
+
+                <!-- <label for="jarName">Choose File</label>
+
+                <input 
+                    name="jarName"
+                    id="jarName"
+                    type="file" 
+                    formControlName="jarName"
+                    accept=".jar"
+                    (change)="handleFileInput($event.target.files)"
+                > -->
+
+                <hyt-button 
+                    [color]="'hyt-base'" 
+                    (clickFn)="clickChooseLabel()"
+                    [isDisabled]="btnChooseIsDisabled"
+                >
+                    <ng-container i18n="@@HYT_algorithm_choose_file">Choose File</ng-container>
+                </hyt-button>
+
+                <input 
+                    name="jarName"
+                    id="jarName"
+                    type="file" 
+                    formControlName="jarName"
+                    accept=".jar"
+                    (change)="handleFileInput($event.target.files)"
+                >
+
+                <span id="container-title-selected">{{this.form.controls.jarName.value}}</span>
+
+                <div 
+                    *ngIf="jarToUpload" 
+                    id="reset-title-selected"
+                    (click)="resetTitleSelected()"
+                >X</div>
+
+            </div>
+
         </div> <!-- First Row -->
 
-        <div class="form-group row">
+        <!-- <div class="form-group row">
             <div id="fproj-col-descr" class="col-12"> 
                 <hyt-input-text 
                     name="algorithm-mainclassname"
@@ -32,6 +96,28 @@
                 >
                 </hyt-input-text>
             </div>
+        </div> --> <!-- Second Row -->
+
+        <div id="container-form-group" class="form-group">
+
+            <div id="fproj-col-descr"> 
+
+                <hyt-input-text 
+                    name="algorithm-mainclassname"
+                    formControlName="algorithm-mainclassname"
+                    i18n-placeholder="@@HYT_algorithm_main_classname" 
+                    placeholder="Main classname" 
+                    pattern="^[a-z][a-z0-9_]*(\.[a-z0-9_]+)+\.[A-Z][A-Za-z0-9_]*$"
+                    [form]="form"
+                    [injectedErrorMsg]="getError('algorithm-mainclassname')"
+                    i18n-hintMessage="@@HYT_hint_algorithm_main_className"
+                    hintMessage="Enter the main classname"
+                    errorPosition="bottom" minlength="3" isRequired="true"
+                >
+                </hyt-input-text>
+
+            </div>
+
         </div> <!-- Second Row -->
 
     </form>
@@ -45,7 +131,7 @@
     <div #overlayHeight *ngIf="loadingStatus !== LoadingStatus.Ready" class="overlay d-flex flex-column align-items-center justify-content-center">
         
         <div 
-            *ngIf="loadingStatus === LoadingStatus.Loading" 
+            *ngIf="loadingStatus === LoadingStatus.Loading"
             [ngClass]="getCustomClass()"
         >
 

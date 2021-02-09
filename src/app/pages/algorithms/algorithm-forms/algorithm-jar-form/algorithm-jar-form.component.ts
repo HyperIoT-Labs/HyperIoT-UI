@@ -41,18 +41,30 @@ export class AlgorithmJarFormComponent extends AlgorithmFormEntity implements Af
   jarToUpload: File = null;
 
   showPreloader: boolean;
+  
+  /**
+   * Variable used to prevent multiple click on choose file button 
+   */
+  btnChooseIsDisabled: boolean = false;
 
   @Input() currentAlgorithmSubject: Subject<Algorithm>;
 
   private overlayHeight: ElementRef;
+
   @ViewChild('overlayHeight') set content(content: ElementRef) {
+    
     if (!content) {
+
       this.showPreloader = false;
       return;
+
     } else {
+
       this.showPreloader = true;
       this.overlayHeight = content;
+
     }
+
   }
 
   form = new FormGroup({
@@ -74,6 +86,7 @@ export class AlgorithmJarFormComponent extends AlgorithmFormEntity implements Af
 
   ngOnInit() {
     this.currentAlgorithmSubject.subscribe(this.algorithmObserver);
+    //this.form.controls.jarName.setValue('');
   }
 
   ngAfterViewInit() {
@@ -104,7 +117,20 @@ export class AlgorithmJarFormComponent extends AlgorithmFormEntity implements Af
   }
 
   handleFileInput(files: FileList) {
-    this.jarToUpload = files.item(0);
+    console.log("files:", files.length);
+    console.log("files2:", files);
+    if(files.length > 0) { 
+  
+      this.jarToUpload = files.item(0);
+      this.form.value['jarName'] = files[0].name;
+      console.log("JAR:",this.jarToUpload);
+
+    }else{
+      this.form.value['jarName'] = '';
+    }
+    
+    this.cdr.detectChanges();
+    
   }
 
   load() {
@@ -174,6 +200,34 @@ export class AlgorithmJarFormComponent extends AlgorithmFormEntity implements Af
   // AlgorithmDetailEntity interface
   save(successCallback, errorCallback) {
     this.updateJar(successCallback, errorCallback);
+  }
+  
+  /**
+   * Function used to simulate click on choose file
+   */
+  clickChooseLabel(){
+
+    this.btnChooseIsDisabled = true;
+    const inputChooseFile = document.getElementById('jarName');
+    inputChooseFile.click();
+    setTimeout(() => this.btnChooseIsDisabled = false, 600);
+
+  }
+
+  isJarName(): string {
+    if(this.jarToUpload && this.jarToUpload != null){
+      return this.jarToUpload.name;
+      //return this.form.controls.jarName.value;
+    }else{
+      return "";
+    }
+  }
+
+  resetTitleSelected() {
+    this.jarToUpload = null;
+    this.form.controls['jarName'].setValue('');;
+    console.log('RESET UPLOAD:', this.jarToUpload)
+    this.cdr.detectChanges();
   }
 
 }

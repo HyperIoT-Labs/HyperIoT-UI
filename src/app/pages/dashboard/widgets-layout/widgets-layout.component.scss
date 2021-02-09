@@ -4,24 +4,27 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    /*height: 100vh;*/
 }
 
 gridster {
-    background: transparent!important;
-    transition: all .2s ease .1s;
-    /*height: 100vh;*/
-}
-gridster.fixed {
+
+  background: transparent!important;
+  transition: all .2s ease .1s;
+
+  &.fixed {
     overflow: visible;
-}
-gridster.mobile {
+  }
+  
+  &.mobile {
     overflow-y: hidden;
-}
-gridster-item {
-  background: transparent;
-  box-shadow: rgb(0, 0, 0) 0px 0px 11px -4px;
-  border-radius: 4px;
+  }
+
+  gridster-item {
+    background: transparent;
+    box-shadow: rgb(0, 0, 0) 0px 0px 11px -4px;
+    border-radius: 4px;
+  }
+
 }
 
 label {

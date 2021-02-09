@@ -1621,6 +1621,22 @@
         <source>Select color</source>
         <target>Seleziona colore</target>
       </trans-unit>
+      <trans-unit id="HYT_algorithm_jar_package" datatype="html">
+        <source>JAR package:</source>
+        <target>Pacchetto JAR</target>
+      </trans-unit>
+      <trans-unit id="HYT_algorithm_jar_package_exists" datatype="html">
+        <source>exists</source>
+        <target>è presente</target>
+      </trans-unit>
+      <trans-unit id="HYT_algorithm_jar_package_not_exists" datatype="html">
+        <source>does not exist</source>
+        <target>non è presente</target>
+      </trans-unit>
+      <trans-unit id="HYT_algorithm_choose_file" datatype="html">
+        <source>Choose File</source>
+        <target>Scegli File</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -22,4 +22,59 @@
 
   }
 
+  /***********************/
+
+  #container-top-timeline {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    #title-timeline {
+
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+
+      h2 {
+
+        color: #1e58a5;
+        font-size: 1.6em;
+
+      }
+
+    }
+
+    #picker-timeline {
+
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+
+    }
+
+  }
+
+  #container-timeline {
+
+    background-color: antiquewhite;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+
+    #timeline-axis {
+      // margin: 0 auto; 
+      // width: calc(100% - 100px);
+      width: 100%;
+      background: burlywood;
+      height: 100px;
+      padding-top: 20px;
+    }
+
+  }
+
 }
