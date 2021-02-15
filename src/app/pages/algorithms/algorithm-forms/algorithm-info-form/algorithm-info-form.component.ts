@@ -1,6 +1,6 @@
 import { Component, ViewChild, ElementRef, Injector, ChangeDetectorRef, ViewEncapsulation, Input, AfterViewInit, OnInit } from '@angular/core';
 
-import { Observable, Subject, PartialObserver } from 'rxjs';
+import { Subject, PartialObserver } from 'rxjs';
 
 import { AlgorithmsService, Algorithm } from '@hyperiot/core';
 

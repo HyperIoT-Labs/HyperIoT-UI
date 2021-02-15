@@ -47,10 +47,26 @@
         </hyt-input-text>
 
         <div class="form-group row">
-            <div *ngIf="entity.algorithm">
-                <h4>Current Cron Expression: {{entity.cronExpression}}</h4> 
+
+            <div id="container-entity-algorithm" class="col-12" *ngIf="entity.algorithm">
+                <h4><span>Current Cron Expression:</span> {{entity.cronExpression}}</h4> 
             </div>
-            <cron-editor ngDefaultControl formControlName="cronExpressionFC" [(cron)]="cronExpression" [disabled]="isCronDisabled" [(options)]="cronOptions"></cron-editor>
+
+            <div id="container-cron-editor" class="col-12">
+
+                <p id="title-cron-editor-section">Setting Cron</p>
+
+                <cron-editor 
+                    ngDefaultControl 
+                    formControlName="cronExpressionFC" 
+                    [(cron)]="cronExpression" 
+                    [disabled]="isCronDisabled" 
+                    [(options)]="cronOptions"
+                    id="cron-editor"
+                ></cron-editor>
+
+            </div>
+            
         </div> <!-- END SECOND ROW -->
 
         <div class="form-group row">

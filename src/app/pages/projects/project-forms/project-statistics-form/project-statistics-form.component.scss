@@ -65,31 +65,193 @@
 
                 }
 
-                cron-editor {
-                    display: flex;
-                    flex-direction: column;
-                    ul {
-                        &.nav {
-                            padding-left: 0;
-                            margin-bottom: 0;
-                            list-style: none;
-                            border-bottom: 1px solid #ddd;
-                            li {
-                                float: left;
-                                &:not(:last-child) {
-                                    margin-right: 10px;
+                #container-entity-algorithm {
+
+                    h4 {
+
+                        margin-top: 30px;
+                        font-family: 'Exo';
+                        font-size: 1.1em;
+
+                        span {
+
+                            color: #1e58a5;
+                            font-weight: bold;
+                            margin-right: 10px;
+    
+                        }
+
+                    }
+
+                }
+
+                #container-cron-editor {
+
+                    font-family: 'Exo';
+                    margin: 30px 0px;
+                    border: 1px solid #cacaca;
+                    padding: 20px 30px 40px 30px;
+
+                    -webkit-border-radius: 8px;
+                    -moz-border-radius: 8px;
+                    border-radius: 8px;
+
+                    #title-cron-editor-section {
+
+                        margin-bottom: 25px;
+                        font-size: 1.2em;
+                        text-transform: uppercase;
+                        font-weight: bold;
+                        color: #1e58a5;
+
+                    }
+
+                    #cron-editor {
+                        display: flex;
+                        flex-direction: column;
+
+                        ul {
+                            &.nav {
+
+                                padding-left: 0;
+                                margin-bottom: 20px;
+                                list-style: none;
+                                border-bottom: 1px solid #ddd;
+                                display: inline-flex;
+
+                                li {
+
+                                    padding: 0px 5px 8px 5px;
+                                    border-bottom: 3px solid transparent;
+                                    transition: all .2s ease-out;
+                                    user-select: none;
+
+                                    &:not(:last-child) {
+
+                                        margin-right: 20px;
+
+                                    }
+
+                                    &.active {
+
+                                        border-bottom: 3px solid #1f8fff;
+
+                                        a {
+
+                                            transform: translate(0px, -4px);
+                                            color: #000000;
+                                            text-shadow: 1px 1px #9f9f9f;
+
+                                        }
+
+                                    }
+
+                                    a {
+
+                                        transition: all .2s ease-in-out;
+                                        display: block;
+                                        color: #a5a5a5;
+
+                                    }
+
                                 }
+
                             }
+
                         }
-                    }
-                    .tab-content {
-                        .tab-pane {
-                            display: none;
-                            &.active {
-                                display: block;
+
+                        .cron-editor-container {
+
+                            .row {
+
+                                margin-right: 0px;
+                                margin-left: 0px;
+
+                                .tab-content {
+
+                                    .tab-pane {
+
+                                        display: none;
+
+                                        &.active {
+
+                                            display: block;
+
+                                        }
+
+                                        .well {
+
+                                            &:not(:last-child) {
+
+                                                margin-bottom: 15px;
+        
+                                            }
+
+                                            input {
+
+                                                &[type="radio"] {
+                                                    margin-right: 5px;
+                                                }
+
+                                            }
+
+                                            select {
+
+                                                &.cron-editor-select {
+
+                                                    margin-left: 10px;
+                                                    margin-right: 10px;
+
+                                                    outline: none;
+                                                    border: none;
+                                                    border-bottom: 1px solid darkgrey;
+                                                    color: #006ddb;
+                                                    font-weight: bold;
+
+                                                }
+
+                                            }
+
+                                            label {
+                                                &.advanced-cron-editor-label {
+                                                    font-weight: 400;
+                                                    margin-left: 5px;
+
+                                                    input {
+                                                        &[type="checkbox"] {
+                                                            margin-right: 5px;
+                                                        }
+                                                    }
+
+                                                }
+                                            }
+
+                                        }
+
+                                        input {
+
+                                            &.advanced-cron-editor-input {
+
+                                                outline: none;
+                                                border: none;
+                                                border-bottom: 1px solid darkgrey;
+                                                color: #006ddb;
+                                                font-weight: bold;
+                                                margin-left: 10px;
+
+                                            }
+
+                                        }
+
+                                    }
+                                }
+
                             }
+
                         }
+
                     }
+
                 }
 
             }

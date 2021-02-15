@@ -171,6 +171,16 @@ export class TimeAxisComponent implements AfterViewInit {
    * Brush Property: leftHandle is the w handle
    */
   leftHandle;
+  
+  /**
+   * Variable used to monitoring button to reset timeline selection
+   */
+  @ViewChild("resetSelBtn") resetSelBtn: ElementRef;
+
+  /**
+   * Variable used to monitoring text used as a timeline tip
+   */
+  @ViewChild("selectionInitialTip") selectionInitialTip: ElementRef;
 
   /**
    * A callback method that is invoked immediately after Angular has completed initialization of a component's view.
@@ -184,6 +194,7 @@ export class TimeAxisComponent implements AfterViewInit {
    * Defintion of brushed function
    */
   brushed = () => {
+    
     const selection = d3.event.detail.selection;
     const mode = d3.event.detail.mode;
     if (selection) {
@@ -232,13 +243,12 @@ export class TimeAxisComponent implements AfterViewInit {
       .append('svg')
       .attr('id', 'containerSvg')
       .attr('width', this.contentWidth + this.margin.left + this.margin.right)
-      .attr('height', this.contentHeight + this.margin.top + this.margin.bottom);
-      //.attr('viewbox', '0 0 100 100');
+      .attr('height', this.contentHeight + this.margin.top + this.margin.bottom + 50);
 
     const xAxis = g => {
       this.svgAxis = g
         .append('g')
-        .attr('width', this.contentWidth-300)
+        .attr('width', this.contentWidth - 300)
         .attr('height', this.contentHeight - 20)
         .attr('transform', `translate(0,${this.contentHeight - 20})`);
     };
@@ -267,7 +277,7 @@ export class TimeAxisComponent implements AfterViewInit {
     this.svg
       .append('g')
       .attr('id', 'brush-group')
-      .attr('transform', `translate(${this.margin.left},55)`)
+      .attr('transform', `translate(${this.margin.left}, 65)`)
       .call(brush);
   }
 
@@ -351,6 +361,9 @@ export class TimeAxisComponent implements AfterViewInit {
    * Defintion of selectionHelper svg group
    */
   selectionHelper = g => {
+    
+    g.attr('id', 'container-selectionHelper');
+
     g.append('path')
       .attr('class', 'selectionHelper')
       // .attr('d', 'M 0 14 L 20 24 C 35 28, 35 0 20 4 Z');
@@ -377,7 +390,6 @@ export class TimeAxisComponent implements AfterViewInit {
   drawSelectionHelper = g => {
     g.call(this.selectionHelper)
       .on('mouseover', (d) => {
-        console.log(d);
         d3.select(d).attr('fill', 'red');
       })
       .on('mouseover', (d) => {
@@ -390,10 +402,20 @@ export class TimeAxisComponent implements AfterViewInit {
   }
 
   /**
+   * Function used to reset timeline selection by button
+   */
+  resetSelectionByBtn() {
+    this.resetSelection();
+    this.rect.attr('fill', d => this.dataIntensityScale(d.value / this.maxValue));
+    this.resetSelBtn.nativeElement.style.display = 'none';
+    /* show text tip */
+    this.selectionInitialTip.nativeElement.style.display = 'block';
+  }
+
+  /**
    * setSelection() is used to update the rendered selection and to emit events of the new time selection
    */
   setSelection(s, g, event?) {
-
     // ? TODO add transitions
     // .transition()
     // .duration(this.transition.duration)
@@ -455,7 +477,7 @@ export class TimeAxisComponent implements AfterViewInit {
       .attr('x', 0)
       .attr('y', 0)
       .attr('pointer-events', 'all')
-      .attr('cursor', 'pointer')
+      // .attr('cursor', 'col-resize')
       .attr('fill', 'transparent')
       .attr('width', this.contentWidth)
       .attr('height', this.brushArea.h)
@@ -467,6 +489,12 @@ export class TimeAxisComponent implements AfterViewInit {
           this.leftHandle.attr('style', '').attr('y', 0);
           this.rightHandle.attr('style', '').attr('y', 0);
           this.setSelection([d3.event.subject.x, d3.event.subject.x], g, { type: 'start', mode: 'container' });
+          
+          /* hide reset selection button */
+          this.resetSelBtn.nativeElement.style.display = 'none';
+          /* show text tip */
+          this.selectionInitialTip.nativeElement.style.display = 'block';
+
         })
         .on('drag', (d) => {
           const sel = d3.event.x > d3.event.subject.x ?
@@ -477,6 +505,15 @@ export class TimeAxisComponent implements AfterViewInit {
         .on('end', (d) => {
           g.attr('pointer-events', 'all');
           g.dispatch('end', { detail: { selection: this.selectionPx, mode: 'container' } });
+          /* show reset selection button */
+          let elSelectionRender = document.querySelector('#brush-group .selection').getAttribute('style');
+          if(!elSelectionRender) {
+            this.resetSelBtn.nativeElement.style.display = 'block';
+            /* hide text tip */
+            this.selectionInitialTip.nativeElement.style.display = 'none';
+          }
+          
+          
         })
       );
 
@@ -495,12 +532,12 @@ export class TimeAxisComponent implements AfterViewInit {
       .attr('y', 0)
       .attr('height', this.brushArea.h)
       .attr('fill', 'transparent')
-      .attr('cursor', 'grab')
+      // .attr('cursor', 'grab')
       .style('display', 'none')
       .call(d3.drag()
         .on('start', (d) => {
           g.attr('pointer-events', 'none');
-          this.container.attr('cursor', 'grabbing');
+          // this.container.attr('cursor', 'grabbing');
           g.dispatch('start', { detail: { selection: this.selectionPx, mode: 'contaselectioniner' } });
         })
         .on('drag', (d) => {
