@@ -18,6 +18,26 @@
                     text-align: left;
                 }
 
+                #algAndPackBefore {
+                    display: flex;
+                    flex-direction: revert;
+                    align-items: center;
+                    justify-content: flex-start;
+
+                    p {
+                        margin-bottom: 0px;
+                        color: red;
+                    }
+
+                }
+
+                #container-bind-input {
+                    display: flex;
+                    flex-direction: revert;
+                    align-items: center;
+                    justify-content: flex-start;
+                }
+
                 .container-form-field {
                     text-align: center;
                 }

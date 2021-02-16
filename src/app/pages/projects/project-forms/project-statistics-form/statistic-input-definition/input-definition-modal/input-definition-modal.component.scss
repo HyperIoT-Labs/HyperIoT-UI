@@ -13,6 +13,7 @@
         text-align: center;
         font-size: 1.3em;
         position: relative;
+        min-height: 40px;
 
         span {
 
@@ -26,7 +27,7 @@
             color: #fff;
 
             &:hover {
-              color: #002456;
+              color: #5fdeea;
             }
 
           }
@@ -38,7 +39,18 @@
       .dialog-body {
 
         background-color: #fff;
-        padding: 30px;
+        padding: 20px 25px;
+        
+        p {
+          &#modal-body-title {
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.1em;
+            color: #2258a5;
+            text-transform: uppercase;
+            font-weight: bold;
+          }
+        }
 
         .row-block {
 
@@ -63,35 +75,116 @@
 
         }
 
-        .example-container {
-          width: 400px;
-          max-width: 100%;
-          margin: 0 25px 25px 0;
-          display: inline-block;
-          vertical-align: top;
+        .container-fields {
+
+          .example-container {
+
+            margin: 0 auto 25px auto;
+  
+            h2 {
+              color: #191818;
+              font-size: 1.1em;
+              text-transform: capitalize;
+            }
+  
+            .example-list {
+
+              border: 1px dashed #ccc;
+              min-height: 60px;
+              background: white;
+              border-radius: 4px;
+              overflow: hidden;
+              display: block;
+
+              .cdk-drag {
+                &.example-box {
+                  background-color: #f5faff;
+                  display: flex;
+                  flex-direction: row;
+                  height: 59px;
+                  align-items: center;
+                  justify-content: flex-start;
+                  padding: 10px;
+                  font-weight: bold;
+                }
+              }
+
+            }
+  
+          }
+
         }
-        
-        .example-list {
-          border: solid 1px #ccc;
-          min-height: 60px;
-          background: white;
-          border-radius: 4px;
-          overflow: hidden;
-          display: block;
-        }
-        
-        .example-box {
-          padding: 20px 10px;
-          border-bottom: solid 1px #ccc;
-          color: rgba(0, 0, 0, 0.87);
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          justify-content: space-between;
-          box-sizing: border-box;
-          cursor: move;
-          background: white;
-          font-size: 14px;
+
+        .container-field-list {
+
+          .mat-expansion-panel-header-title {
+
+            h2 {
+              color: #191818;
+              font-size: 1.2em;
+              text-transform: capitalize;
+              font-family: 'Exo';
+              margin-bottom: 0px;
+            }
+
+          }
+
+          .mat-expansion-panel-content {
+
+            input {
+              &#searchText {
+                border: 0px;
+                width: 100%;
+                min-height: 40px;
+                outline: none;
+                font-family: 'Exo';
+                border-bottom: 1px solid #2258a5;
+              }
+            }
+
+            .example-list {
+
+              border: 1px solid #e6e6e6;
+              min-height: 60px;
+              background: white;
+              border-radius: 4px;
+              overflow: hidden;
+              display: block;
+
+              -webkit-box-shadow: 0px 0px 10px -8px #000;
+              -moz-box-shadow: 0px 0px 10px -8px #000;
+              box-shadow: 0px 0px 10px -8px #000;
+
+              &:hover {
+
+                -webkit-box-shadow: 0px 0px 12px -8px #000;
+                -moz-box-shadow: 0px 0px 12px -8px #000;
+                box-shadow: 0px 0px 12px -8px #000;
+
+              }
+
+              .cdk-drag {
+                &.example-box {
+
+                  padding: 20px 10px;
+                  color: rgb(0 0 0);
+                  display: flex;
+                  flex-direction: row;
+                  align-items: center;
+                  justify-content: flex-start;
+                  cursor: move;
+                  background: white;
+                  font-size: 1em;
+                  font-family: 'Exo';
+                  font-weight: bold;
+
+                }
+              }
+
+            }
+
+          }
+
         }
         
         .cdk-drag-preview {
@@ -131,3 +224,14 @@
     }
 
 }
+
+// .cdk-drag.cdk-drag-dragging {
+//   background-color: blueviolet;
+//   z-index: 9999;
+// }
+
+// .dk-drop-list.dk-drop-list-dragging {
+//   background-color: rgb(15, 197, 121);
+//   z-index: 9999;
+//   scroll-snap-type: none;
+// }

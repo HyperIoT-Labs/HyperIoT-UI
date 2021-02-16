@@ -19,12 +19,12 @@
                     </hyt-input-text>
                 </div>
 
-                <div *ngIf="!canBindInputFields(statisticInputForm.leafFieldList)" class="container-first-form-field col-5">
+                <div id="algAndPackBefore" *ngIf="!canBindInputFields(statisticInputForm.leafFieldList)" class="col-5">
                     <p i18n="@@HYT_select_algorithm_packet_before">Select algorithm and packet before</p>
                 </div>
 
-                <div *ngIf="canBindInputFields(statisticInputForm.leafFieldList)" class="container-first-form-field col-5">
-                    <hyt-button class="toRight" [color]="'hyt-stepper-next'" (clickFn)="openInputFieldsModal(i)" >
+                <div id="container-bind-input" *ngIf="canBindInputFields(statisticInputForm.leafFieldList)" class="col-5">
+                    <hyt-button [color]="'hyt-base-total-green'" (clickFn)="openInputFieldsModal(i)" >
                         <ng-container *ngIf="!inputHaveBeenBounded(i)" i18n="@@HYT_bind_input_fields">Bind input fields</ng-container>
                         <ng-container *ngIf="inputHaveBeenBounded(i)" i18n="@@HYT_input_binding_done">Input binding done</ng-container>
                     </hyt-button>

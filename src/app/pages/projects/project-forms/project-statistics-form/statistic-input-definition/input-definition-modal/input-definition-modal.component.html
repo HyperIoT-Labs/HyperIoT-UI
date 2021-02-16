@@ -1,14 +1,17 @@
 <div id="container-input-definition-modal" class="dialog">
+
     <div class="dialog-header">
         <span class="hyt-icon icon-hyt_cancelC" (click)="close()"></span>
     </div>
+
     <div class="dialog-body">
 
-      <p i18n="@@HYT_input_definition_modal_title">
+      <p id="modal-body-title" i18n="@@HYT_input_definition_modal_title">
           Bind packet fields to algorithm input
       </p>
 
       <div cdkDropListGroup class="example-boundary">
+
         <div class="container-fields">
           <div *ngFor="let input of inputArray" class="example-container">
             <h2>{{input.name}}</h2>
@@ -38,7 +41,7 @@
               </mat-panel-title>
             </mat-expansion-panel-header>
             <div class="form-group mb-4">
-              <input type="text" [(ngModel)]="searchText" placeholder="Search">
+              <input id="searchText" type="text" [(ngModel)]="searchText" placeholder="Search">
             </div>
             <p *ngIf="searchText.length > 0 && (hPacketFieldList | filter: searchText).length === 0" i18n="@@HYT_no_field_found">
               No field found
@@ -58,11 +61,16 @@
             </div>
           </mat-expansion-panel>
         </div>
+
       </div>
 
     </div>
     <div class="dialog-footer">
-        <hyt-button [isDisabled]="!hasFinished()" (clickFn)="output('finish', {});" >
+        <hyt-button 
+          [isDisabled]="!hasFinished()" 
+          (clickFn)="output('finish', {});" 
+          [color]="'hyt-base-total-green'"
+        >
             <ng-container i18n="@@HYT_finish">Finish</ng-container>
         </hyt-button>
     </div>

@@ -68,7 +68,7 @@
                     (change)="handleFileInput($event.target.files)"
                 >
 
-                <span id="container-title-selected">{{this.form.controls.jarName.value}}</span>
+                <span id="container-title-selected">{{nameOfJarFile}}</span> <!-- {{this.form.controls.jarName.value}} -->
 
                 <div 
                     *ngIf="jarToUpload" 
@@ -76,6 +76,10 @@
                     (click)="resetTitleSelected()"
                 >X</div>
 
+            </div>
+
+            <div id="upload-error">
+                Upload Error
             </div>
 
         </div> <!-- First Row -->

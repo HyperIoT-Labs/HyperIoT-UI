@@ -41,6 +41,8 @@ export class AlgorithmJarFormComponent extends AlgorithmFormEntity implements Af
   jarToUpload: File = null;
 
   showPreloader: boolean;
+
+  nameOfJarFile: string = '';
   
   /**
    * Variable used to prevent multiple click on choose file button 
@@ -85,8 +87,41 @@ export class AlgorithmJarFormComponent extends AlgorithmFormEntity implements Af
   }
 
   ngOnInit() {
+
     this.currentAlgorithmSubject.subscribe(this.algorithmObserver);
-    //this.form.controls.jarName.setValue('');
+    
+    this.form.controls.jarName.valueChanges.subscribe(
+      (change: string) => {
+
+        if(change){
+
+          console.log('CHANGE:', change);
+          let fakeStr = change.includes('fake');
+
+          if(fakeStr) {
+
+            let splitStr = change.split("\\");
+            console.log('SPLIT', splitStr);
+            let controlFileName = splitStr[splitStr.length - 1].split('.');
+            if(controlFileName[controlFileName.length - 1].toLowerCase() == 'jar') {
+              // JAR extension
+            } else {
+              // NOT JAR extension
+            }
+            // this.form.controls.jarName.setValue(splitStr[splitStr.length - 1]);
+            // this.form.controls.jarName.updateValueAndValidity();
+
+          } else {
+
+            
+
+          }
+
+        }
+        
+      }
+    );
+    
   }
 
   ngAfterViewInit() {
@@ -217,7 +252,6 @@ export class AlgorithmJarFormComponent extends AlgorithmFormEntity implements Af
   isJarName(): string {
     if(this.jarToUpload && this.jarToUpload != null){
       return this.jarToUpload.name;
-      //return this.form.controls.jarName.value;
     }else{
       return "";
     }
@@ -225,7 +259,8 @@ export class AlgorithmJarFormComponent extends AlgorithmFormEntity implements Af
 
   resetTitleSelected() {
     this.jarToUpload = null;
-    this.form.controls['jarName'].setValue('');;
+    this.form.controls.jarName.setValue('');
+    this.form.controls.jarName.updateValueAndValidity();
     console.log('RESET UPLOAD:', this.jarToUpload)
     this.cdr.detectChanges();
   }
