@@ -154,7 +154,8 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
           this.dataStreamService.connect(this.projectId);
           this.streamSubscription = this.dataStreamService.eventStream.subscribe((p) => {
             const packet = p.data;
-            const remoteTimestamp: number = packet.fields.map.timestamp.value.long;
+            //console.log('WIDGETS LAYOUT PACKET', packet);
+            const remoteTimestamp: number = (packet.fields.map.timestamp) ? packet.fields.map.timestamp.value.long : packet.fields.map['timestamp-default'].value.long; 
             this.topologyResTimeChange.emit({timeMs: remoteTimestamp});
             if (this.eventNotificationIsOn && packet.id === 0 && packet.name.endsWith(this.eventPacketSuffix)) {
               // show toast if packet is a event
