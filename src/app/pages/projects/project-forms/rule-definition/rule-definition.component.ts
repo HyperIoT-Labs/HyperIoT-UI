@@ -68,7 +68,7 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
     { value: '<=', label: $localize`:@@HYT_(<=)_lower_equal:(<=) Lower/Equal`, type: ['OBJECT', 'INTEGER', 'DOUBLE', 'FLOAT', 'DATE'] },
     { value: '==', label: $localize`:@@HYT_(==)_equal:(=) Equal`, type: ['OBJECT', 'INTEGER', 'DOUBLE', 'FLOAT', 'DATE', 'TEXT'] },
     { value: '!=', label: $localize`:@@HYT_(!=)_different:(!=) Different`, type: ['OBJECT', 'INTEGER', 'DOUBLE', 'FLOAT', 'DATE', 'TEXT'] },
-    { value: '()', label: $localize`:@@HYT_(())_like:(()) Like`, type: ['OBJECT', 'INTEGER', 'DOUBLE', 'FLOAT', 'BOOLEAN', 'DATE'] },
+    { value: 'matches', label: $localize`:@@HYT_(())_like:(()) Like`, type: ['TEXT'] },
     { value: 'isTrue', label: $localize`:@@HYT_is_true:Is true`, type: ['OBJECT', 'BOOLEAN'] },
     { value: 'isFalse', label: $localize`:@@HYT_is_false:Is false`, type: ['OBJECT', 'BOOLEAN'] }
   ];
