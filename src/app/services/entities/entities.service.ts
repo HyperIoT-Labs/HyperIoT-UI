@@ -115,17 +115,7 @@ export class EntitiesService {
     definition: $localize`:@@HYT_packet_definition:Packet definition...`,
     longDefinition: $localize`:@@HYT_packet_long_definition:Packet long definition...`,
     icon: 'icon-hyt_packets',
-    iconPlus: 'icon-hyt_packetsPlus',
-    emptyModel: {
-      name: '',
-      type: 'INPUT',
-      serialization: 'AVRO',
-      format: 'JSON',
-      timestampField: 'timestamp',
-      timestampFormat: 'dd/MM/yyyy hh.mmZ',
-      trafficPlan: 'HIGH',
-      entityVersion: 1
-    }
+    iconPlus: 'icon-hyt_packetsPlus'
   };
 
   /**

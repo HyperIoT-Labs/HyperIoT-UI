@@ -37,7 +37,6 @@ export class PacketFormComponent extends ProjectFormEntity implements AfterViewI
 
   }
 
-  entity: HPacket = {} as HPacket;
   entityFormMap = {
     'hpacket-name': {
       field: 'name',
@@ -49,7 +48,7 @@ export class PacketFormComponent extends ProjectFormEntity implements AfterViewI
     },
     'hpacket-serialization': {
       field: 'serialization',
-      default: 'AVRO'
+      default: 'NONE'
     },
     'hpacket-format': {
       field: 'format',
@@ -65,7 +64,11 @@ export class PacketFormComponent extends ProjectFormEntity implements AfterViewI
     },
     'hpacket-trafficplan': {
       field: 'trafficPlan',
-      default: 'HIGH'
+      default: 'LOW'
+    },
+    'hpacket-entityVersion':{
+      field: 'entityVersion',
+      default: 1
     }
   };
 
@@ -167,7 +170,7 @@ export class PacketFormComponent extends ProjectFormEntity implements AfterViewI
 
   loadEmpty() {
     this.form.reset();
-    this.entity = { ...this.entitiesService.packet.emptyModel };
+    this.entity = this.newEntity();
     this.edit();
   }
 
