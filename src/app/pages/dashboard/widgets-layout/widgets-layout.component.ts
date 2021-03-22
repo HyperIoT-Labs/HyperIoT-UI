@@ -125,6 +125,7 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
     private hytTopologyService: HytTopologyService,
     private toastr: ToastrService
   ) { 
+    this.eventNotificationIsOn = true;
     this.configService.eventNotificationState.subscribe(res => {
       this.eventNotificationIsOn = res;
     });

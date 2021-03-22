@@ -56,7 +56,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   dataRecordingIsOn = false;
 
-  eventNotificationIsOn = false;
+  eventNotificationIsOn = true;
 
   dataRecordingStatus = TopologyStatus.Off;
 
