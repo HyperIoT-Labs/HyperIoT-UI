@@ -38,6 +38,9 @@ enum PageStatus {
   encapsulation: ViewEncapsulation.Emulated
 })
 export class WidgetsLayoutComponent implements OnInit, OnDestroy {
+
+  private DEFAULT_TOAST_BACKGROUND_COLOUR = '#1f58a5';
+
   @ViewChild(GridsterComponent, { static: true }) gridster: GridsterComponent;
   @ViewChild(WidgetSettingsDialogComponent, { static: true }) widgetSetting: WidgetSettingsDialogComponent;
   @Input() options: GridsterConfig;
@@ -161,7 +164,7 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
               // show toast if packet is a event
               const event = JSON.parse(packet.fields.map.event.value.string);
               const tag = event.tags[0]; // retrieve only first tag
-              const toastBackgroundColor = tag.color;
+              const toastBackgroundColor = tag ? tag.color : this.DEFAULT_TOAST_BACKGROUND_COLOUR;
               const textColor = '#ffffff';  // TODO retrieve from tag when this property will have been added
               this.toastr.show(this.toastMessage, event.ruleName)
                 .onShown.subscribe(((res) => {}), (err) => {}, () => {
