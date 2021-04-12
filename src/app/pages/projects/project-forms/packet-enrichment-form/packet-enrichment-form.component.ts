@@ -69,7 +69,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
 
   private packetId: number;
 
-  isActive: boolean;  // TODO bind this property to Rule object
+  isActive: boolean;  // TODO bind this property to RuleAction object
 
   constructor(
     injector: Injector,
@@ -85,7 +85,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
     this.formTitle = this.entitiesService.enrichment.formTitle;
     this.icon = this.entitiesService.enrichment.icon;
     this.hideDelete = true; // hide 'Delete' button
-    this.isActive = false;  // TODO bind this property to Rule object
+    this.isActive = false;  // TODO bind this property to RuleAction object
     this.activatedRouteSubscription = this.activatedRoute.params.subscribe(routeParams => {
       this.packetId = +(activatedRoute.snapshot.params.packetId);
       if (this.packetId) {

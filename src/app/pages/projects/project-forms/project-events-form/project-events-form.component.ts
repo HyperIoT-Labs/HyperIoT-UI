@@ -56,7 +56,7 @@ export class ProjectEventsFormComponent extends ProjectFormEntity implements OnI
   selectedTags: AssetTag[];  // remember, at the moment one entry at most, btw here it is an array to support more than one
   tagCtrl = new FormControl();
 
-  isActive: boolean;
+  isActive: boolean; // TODO bind this property to RuleAction object
 
   constructor(
     injector: Injector,
@@ -72,7 +72,7 @@ export class ProjectEventsFormComponent extends ProjectFormEntity implements OnI
     this.formTitle = this.entitiesService.event.formTitle;
     this.icon = this.entitiesService.event.icon;
     this.hideDelete = true; // hide 'Delete' button
-    this.isActive = false;  // TODO bind this property to Rule object
+    this.isActive = false;  // TODO bind this property to RuleAction object
     this.activatedRouteSubscription = this.activatedRoute.parent.params.subscribe(routeParams => {
       if (routeParams.projectId) {
         this.currentProject = {id: routeParams.projectId, entityVersion: null}; // read id of project
