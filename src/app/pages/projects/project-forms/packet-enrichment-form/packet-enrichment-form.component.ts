@@ -69,6 +69,8 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
 
   private packetId: number;
 
+  isActive: boolean;  // TODO bind this property to Rule object
+
   constructor(
     injector: Injector,
     private rulesService: RulesService,
@@ -83,6 +85,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
     this.formTitle = this.entitiesService.enrichment.formTitle;
     this.icon = this.entitiesService.enrichment.icon;
     this.hideDelete = true; // hide 'Delete' button
+    this.isActive = false;  // TODO bind this property to Rule object
     this.activatedRouteSubscription = this.activatedRoute.params.subscribe(routeParams => {
       this.packetId = +(activatedRoute.snapshot.params.packetId);
       if (this.packetId) {
@@ -183,15 +186,16 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
     let jac = '';
     switch (this.form.get('rule-type').value) {
       case 'AddCategoryRuleAction':
-        jac = JSON.stringify({ actionName: 'AddCategoryRuleAction', categoryIds: this.assetCategoryComponent.selectedCategories });
+        jac = JSON.stringify({ actionName: 'AddCategoryRuleAction', categoryIds: this.assetCategoryComponent.selectedCategories, active: this.isActive });
         break;
       case 'AddTagRuleAction':
-        jac = JSON.stringify({ actionName: 'AddTagRuleAction', tagIds: this.assetTagComponent.selectedTags });
+        jac = JSON.stringify({ actionName: 'AddTagRuleAction', tagIds: this.assetTagComponent.selectedTags, active: this.isActive });
         break;
       case 'ValidateHPacketRuleAction':
-        jac = JSON.stringify({ actionName: 'ValidateHPacketRuleAction' });
+        jac = JSON.stringify({ actionName: 'ValidateHPacketRuleAction', active: this.isActive });
         break;
       case 'FourierTransformRuleAction':
+        this.ruleConfig['active'] = this.isActive;
         jac = JSON.stringify(this.ruleConfig);
         break;
     }
