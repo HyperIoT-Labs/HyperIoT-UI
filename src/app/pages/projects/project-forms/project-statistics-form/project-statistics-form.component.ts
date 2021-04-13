@@ -95,6 +95,8 @@ export class ProjectStatisticsFormComponent extends ProjectFormEntity implements
     cronExpressionFC: new FormControl(this.cronExpression)
   });
 
+  active: boolean;  // TODO bind this property to Hprojectalgorithm object
+
   constructor(
     injector: Injector,
     private algorithmsService: AlgorithmsService,
@@ -108,6 +110,7 @@ export class ProjectStatisticsFormComponent extends ProjectFormEntity implements
     this.longDefinition = this.entitiesService.statistic.longDefinition;
     this.formTitle = this.entitiesService.statistic.formTitle;
     this.icon = this.entitiesService.statistic.icon;
+    this.active = false;  // TODO bind this property to Hprojectalgorithm object
     this.activatedRouteSubscription = this.activatedRoute.parent.params.subscribe(routeParams => {
       if (routeParams.projectId) {
         this.currentProject = {id: routeParams.projectId, entityVersion: null}; // read id of project
@@ -275,6 +278,7 @@ export class ProjectStatisticsFormComponent extends ProjectFormEntity implements
     hProjectAlgorithm.config = JSON.stringify(this.config);
     hProjectAlgorithm.cronExpression = this.cronExpression;
     hProjectAlgorithm.name = this.form.get('hprojectalgorithm-name').value;
+    hProjectAlgorithm.active = this.active; // TODO bind this property to Hprojectalgorithm object
 
     const wasNew = this.isNew();
     const responseHandler = (res) => {
