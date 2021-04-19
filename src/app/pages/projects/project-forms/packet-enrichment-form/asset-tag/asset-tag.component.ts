@@ -91,7 +91,7 @@ export class AssetTagComponent implements OnInit {
         this.assetsTagService.saveAssetTag(assetTag).subscribe(
           res => {
             this.allTags.push(res);
-            this.tags.push(res);
+            this.selected({ option: { value: res } });
           },
           err => { }
         );
