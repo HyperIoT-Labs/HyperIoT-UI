@@ -91,7 +91,8 @@
           <hyt-radio-button 
             [form]="form" 
             [options]="outputOptions" 
-            name="eventOutput">
+            name="eventOutput"
+            (changeFn)="changeEventView($event)">
           </hyt-radio-button>
 
         </div>
@@ -108,7 +109,7 @@
 
     </div> <!-- END THIRD ROW -->
 
-    <hyt-event-component-container #eventComponentContainer></hyt-event-component-container>
+    <hyt-event-component-container [currentProjectId]="currentProject ? currentProject.id : null" #eventComponentContainer></hyt-event-component-container>
 
     <!-- TODO: This HTML block is repeated
       across all 'entity' components,

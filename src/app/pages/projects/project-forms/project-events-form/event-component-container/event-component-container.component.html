@@ -1,1 +1,2 @@
-<hyt-event-mail #eventMail></hyt-event-mail>
+<hyt-event-mail [style.display]="(currentShownComponentId === eventComponentType.SEND_MAIL_ACTION)? 'block':'none'" #eventMail></hyt-event-mail>
+<hyt-event-mqtt-command [style.display]="(currentShownComponentId === eventComponentType.SEND_MQTT_COMMAND_ACTION)?'block':'none'" [currentProjectId]="currentProjectId" #eventMqttCommand></hyt-event-mqtt-command>

@@ -1,0 +1,14 @@
+
+<form class="eventMqttCommand-form col-12" [formGroup]="mqttFieldsFormGroup" autocomplete="on">
+    <hyt-select [form]="mqttFieldsFormGroup" [options]="packetOptions" formControlName="packet" name="packet"
+                 i18n-label="@@HYT_packet" label="Packet" (changeFn)="packetChanged($event.value)">
+    </hyt-select>
+    <ng-container *ngIf="currentOutputPacket !== undefined && currentOutputPacket !== null">
+        <ng-container *ngFor="let field of currentOutputPacket.fields" class="form-row">
+            <hyt-input-text [form]="mqttFieldsFormGroup" formControlName="{{field.name}}" name="{{field.name}}" [fieldValue]="mqttFieldsFormGroup.get(field.name).value"
+                i18n-placeholder="@@HYT_{{field.name}}" placeholder="{{field.name}}" hintMessage="Enter {{field.name}}" (change)="inputChanged($event.target,field.name)">
+            </hyt-input-text>
+        </ng-container>
+    </ng-container>
+</form>
+

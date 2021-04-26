@@ -73,6 +73,7 @@ import { InputDefinitionModalComponent } from './project-forms/project-statistic
 import { StatisticInputErrorComponent } from './project-forms/project-statistics-form/statistic-input-definition/statistic-input-error/statistic-input-error.component';
 import { HPacketFieldFilterPipe } from './hPacketFieldFilter.pipe';
 import { EventComponentContainerComponent } from './project-forms/project-events-form/event-component-container/event-component-container.component';
+import { EventMqttCommandComponent } from './project-forms/project-events-form/event-mqtt-command/event-mqtt-command.component';
 
 @NgModule({
   declarations: [
@@ -119,7 +120,8 @@ import { EventComponentContainerComponent } from './project-forms/project-events
     InputDefinitionModalComponent,
     StatisticInputErrorComponent,
     HPacketFieldFilterPipe,
-    EventComponentContainerComponent
+    EventComponentContainerComponent,
+    EventMqttCommandComponent
   ],
   imports: [
     CronEditorModule,

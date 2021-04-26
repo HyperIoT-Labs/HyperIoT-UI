@@ -149,6 +149,7 @@ export class ProjectEventsFormComponent extends ProjectFormEntity implements OnI
     this.ruleDefinitionComponent.resetRuleDefinition();
     this.eventComponentContainer.reset();
     this.entity = { ... this.entitiesService.event.emptyModel };
+    this.changeEventView(EventComponentType.SEND_MAIL_ACTION)
     this.edit();
   }
 
@@ -165,8 +166,9 @@ export class ProjectEventsFormComponent extends ProjectFormEntity implements OnI
         // if a tag has been found, set it to selectedTag property (at the moment, only one tag inside array)
         this.selectedTags = oldTag ? [oldTag] : [];
         this.ruleDefinitionComponent.setRuleDefinition(this.entity.ruleDefinition);
-        this.eventComponentContainer.setData(JSON.parse(this.entity.jsonActions));
-        this.form.get('eventOutput').setValue(JSON.parse(JSON.parse(this.entity.jsonActions)[0]).actionName);
+        let actionName = JSON.parse(JSON.parse(this.entity.jsonActions)[0]).actionName;
+        this.changeEventView(actionName,JSON.parse(this.entity.jsonActions));
+        this.form.get('eventOutput').setValue(actionName);
         if (readyCallback) {
           readyCallback();
         }
@@ -219,8 +221,6 @@ export class ProjectEventsFormComponent extends ProjectFormEntity implements OnI
   private saveEvent(successCallback?, errorCallback?) {
     this.loadingStatus = LoadingStatusEnum.Saving;
     this.resetErrors();
-
-    //TODO: add here
     let jActionStr = this.eventComponentContainer.buildJsonAction();
     const e = this.entity;
     e.name = this.form.get('rule-name').value;
@@ -264,12 +264,14 @@ export class ProjectEventsFormComponent extends ProjectFormEntity implements OnI
     }
 
   }
+  
   cancel() {
     this.resetErrors();
     this.resetForm();
     this.editMode = false;
     this.showCancel = false;
   }
+
   delete(successCallback, errorCallback) {
     this.rulesService.deleteRule(this.entity.id).subscribe((res) => {
       this.resetErrors();
@@ -324,6 +326,10 @@ export class ProjectEventsFormComponent extends ProjectFormEntity implements OnI
       this.loadingStatus = LoadingStatusEnum.Error;
     }
 
+  }
+
+  changeEventView(eventComponentId,data?){
+    this.eventComponentContainer.show(eventComponentId,data);
   }
 
 }
