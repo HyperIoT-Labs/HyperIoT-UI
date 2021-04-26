@@ -12,6 +12,8 @@ import { SummaryListItem } from '../../project-detail/generic-summary-list/gener
 import { TagStatus } from '../packet-enrichment-form/asset-tag/asset-tag.component';
 import { FormControl } from '@angular/forms';
 import { MatAutocomplete, MatAutocompleteSelectedEvent, MatChipInputEvent } from '@angular/material';
+import { EventComponentContainerComponent } from './event-component-container/event-component-container.component';
+import { EventComponentType } from './event-component-type.enum';
 
 @Component({
   selector: 'hyt-project-events-form',
@@ -39,11 +41,12 @@ export class ProjectEventsFormComponent extends ProjectFormEntity implements OnI
   @ViewChild('eventDef')
   ruleDefinitionComponent: RuleDefinitionComponent;
 
-  @ViewChild('eventMail')
-  eventMailComponent: EventMailComponent;
+  @ViewChild('eventComponentContainer')
+  eventComponentContainer: EventComponentContainerComponent;
 
   outputOptions: Option[] = [
-    { value: 'events.SendMailAction', label: $localize`:@@HYT_send_email:SEND E-MAIL`, checked: true }
+    { value: EventComponentType.SEND_MAIL_ACTION, label: $localize`:@@HYT_send_email:SEND E-MAIL`, checked: true },
+    { value: EventComponentType.SEND_MQTT_COMMAND_ACTION, label: $localize`:@@HYT_send_mqtt_command:SEND MQTT COMMAND`}
     // { value: '', label: $localize`:@@HYT_start_statistic:START STATISTIC` }
   ];
 
@@ -144,8 +147,8 @@ export class ProjectEventsFormComponent extends ProjectFormEntity implements OnI
   loadEmpty() {
     this.form.reset();
     this.ruleDefinitionComponent.resetRuleDefinition();
-    this.eventMailComponent.reset();
-    this.entity = { ...this.entitiesService.event.emptyModel };
+    this.eventComponentContainer.reset();
+    this.entity = { ... this.entitiesService.event.emptyModel };
     this.edit();
   }
 
@@ -162,7 +165,7 @@ export class ProjectEventsFormComponent extends ProjectFormEntity implements OnI
         // if a tag has been found, set it to selectedTag property (at the moment, only one tag inside array)
         this.selectedTags = oldTag ? [oldTag] : [];
         this.ruleDefinitionComponent.setRuleDefinition(this.entity.ruleDefinition);
-        this.eventMailComponent.setMail(JSON.parse(this.entity.jsonActions));
+        this.eventComponentContainer.setData(JSON.parse(this.entity.jsonActions));
         this.form.get('eventOutput').setValue(JSON.parse(JSON.parse(this.entity.jsonActions)[0]).actionName);
         if (readyCallback) {
           readyCallback();
@@ -217,22 +220,8 @@ export class ProjectEventsFormComponent extends ProjectFormEntity implements OnI
     this.loadingStatus = LoadingStatusEnum.Saving;
     this.resetErrors();
 
-    let jActionStr = '';
-
-    if (this.form.value.eventOutput === 'events.SendMailAction') {
-      const mail = this.eventMailComponent.buildMail();
-      const act = {
-        actionName: this.form.get('eventOutput').value,
-        recipients: mail.mailRecipient,
-        ccRecipients: mail.mailCC,
-        subject: mail.mailObject,
-        body: mail.mailBody,
-        active: this.isActive
-      };
-      const jActions = [JSON.stringify(act)];
-      jActionStr = JSON.stringify(jActions);
-    }
-
+    //TODO: add here
+    let jActionStr = this.eventComponentContainer.buildJsonAction();
     const e = this.entity;
     e.name = this.form.get('rule-name').value;
     e.description = this.form.get('rule-description').value;
@@ -295,7 +284,7 @@ export class ProjectEventsFormComponent extends ProjectFormEntity implements OnI
 
   isDirty() {
     return this.editMode && (super.isDirty() || this.ruleDefinitionComponent.isDirty() || 
-      this.eventMailComponent.isDirty() || this.tagSelectionIsDirty());
+      this.eventComponentContainer.isDirty() || this.tagSelectionIsDirty());
   }
 
   private tagSelectionIsDirty() {
@@ -303,15 +292,14 @@ export class ProjectEventsFormComponent extends ProjectFormEntity implements OnI
   }
 
   isValid(): boolean {
-    return (this.editMode && this.ruleDefinitionComponent && this.eventMailComponent) ?
+    return (this.editMode && this.ruleDefinitionComponent && this.eventComponentContainer) ?
       (super.isValid() &&
         !this.ruleDefinitionComponent.isInvalid() &&
-        !this.eventMailComponent.isInvalid()
+        !this.eventComponentContainer.isInvalid()
       ) : false;
   }
 
   setErrors(err) {
-
     if (err.error && err.error.type) {
       switch (err.error.type) {
         case 'it.acsoftware.hyperiot.base.exception.HyperIoTDuplicateEntityException': {

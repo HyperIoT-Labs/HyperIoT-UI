@@ -72,6 +72,7 @@ import { StatisticInputDefinitionComponent } from './project-forms/project-stati
 import { InputDefinitionModalComponent } from './project-forms/project-statistics-form/statistic-input-definition/input-definition-modal/input-definition-modal.component';
 import { StatisticInputErrorComponent } from './project-forms/project-statistics-form/statistic-input-definition/statistic-input-error/statistic-input-error.component';
 import { HPacketFieldFilterPipe } from './hPacketFieldFilter.pipe';
+import { EventComponentContainerComponent } from './project-forms/project-events-form/event-component-container/event-component-container.component';
 
 @NgModule({
   declarations: [
@@ -117,7 +118,8 @@ import { HPacketFieldFilterPipe } from './hPacketFieldFilter.pipe';
     StatisticInputDefinitionComponent,
     InputDefinitionModalComponent,
     StatisticInputErrorComponent,
-    HPacketFieldFilterPipe
+    HPacketFieldFilterPipe,
+    EventComponentContainerComponent
   ],
   imports: [
     CronEditorModule,

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { EventComponentType } from 'src/app/pages/projects/project-forms/project-events-form/event-component-type.enum';
 
 interface Entity {
   readonly id: number;
@@ -201,7 +202,7 @@ export class EntitiesService {
       name: '',
       description: '',
       type: 'ENRICHMENT',
-      jsonActions: '[\"{\\\"actionName\\\":\\\"events.SendMailAction\\\",\\\"recipients\\\":\\\"\\\",\\\"ccRecipients\\\":\\\"\\\",\\\"subject\\\":\\\"\\\",\\\"body\\\":\\\"\\\"}\"]',
+      jsonActions: '[\"{\\\"actionName\\\":\\\"'+EventComponentType.SEND_MAIL_ACTION+'\\\",\\\"recipients\\\":\\\"\\\",\\\"ccRecipients\\\":\\\"\\\",\\\"subject\\\":\\\"\\\",\\\"body\\\":\\\"\\\"}\"]',
       entityVersion: 1,
       tagIds: []
     }

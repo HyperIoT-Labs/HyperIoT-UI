@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { EventComponent } from '../event-component';
+import { EventComponentType } from '../event-component-type.enum';
 import { SelectableText } from './selectableText';
 
 @Component({
@@ -7,7 +9,7 @@ import { SelectableText } from './selectableText';
   templateUrl: './event-mail.component.html',
   styleUrls: ['./event-mail.component.scss']
 })
-export class EventMailComponent implements OnInit {
+export class EventMailComponent implements OnInit,EventComponent {
 
   mailForm: FormGroup;
 
@@ -21,6 +23,29 @@ export class EventMailComponent implements OnInit {
   constructor(
     private fb: FormBuilder
   ) { }
+
+  getId(): string {
+    return EventComponentType.SEND_MAIL_ACTION;
+  }
+
+  setData(data: String[]): void {
+    return this.setMail(data);
+  }
+
+  buildJsonAction(): string {
+    let jActionStr = '';
+    const mail = this.buildMail();
+    const act = {
+        actionName: this.getId(),
+        recipients: mail.mailRecipient,
+        ccRecipients: mail.mailCC,
+        subject: mail.mailObject,
+        body: mail.mailBody,
+      };
+      const jActions = [JSON.stringify(act)];
+      jActionStr = JSON.stringify(jActions);
+      return jActionStr;
+  }
 
   buildMail(): any {
     return {
@@ -71,5 +96,7 @@ export class EventMailComponent implements OnInit {
   private getJsonForms(): string {
     return JSON.stringify(this.mailForm.value);
   }
+
+  
 
 }
