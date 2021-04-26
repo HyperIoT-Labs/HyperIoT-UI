@@ -268,6 +268,7 @@ export class ProjectEventsFormComponent extends ProjectFormEntity implements OnI
   cancel() {
     this.resetErrors();
     this.resetForm();
+    this.eventComponentContainer.cancel();
     this.editMode = false;
     this.showCancel = false;
   }

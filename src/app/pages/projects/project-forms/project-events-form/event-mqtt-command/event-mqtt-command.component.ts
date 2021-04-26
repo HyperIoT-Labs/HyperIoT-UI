@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { SelectOption } from '@hyperiot/components';
 import { HPacket, HpacketsService } from '@hyperiot/core';
@@ -23,13 +23,15 @@ export class EventMqttCommandComponent implements OnInit,EventComponent {
   
   currentOutputPacket: HPacket;
   currentOutputPacketId;
+  
   allPackets:HPacket[];
   packetOptions: SelectOption[] = [];
+  packetsPromise: Promise<HPacket[]>;
 
-  constructor(private hPacketsService: HpacketsService,private cd: ChangeDetectorRef) { }
+  constructor(private hPacketsService: HpacketsService) { }
 
   ngOnInit(): void {
-    this.loadHPackets();
+    this.getHPackets();
   }
 
   getId(): string {
@@ -43,17 +45,7 @@ export class EventMqttCommandComponent implements OnInit,EventComponent {
   setData(dataArr): void {
     const data = JSON.parse(dataArr[0]);
     if(data && data["packet"]){
-      let keys = Object.keys(data);
-      this.packetChanged(data["packet"]);
-      keys.forEach(key => {
-        if(this.mqttFieldsFormGroup.get(key)){
-          console.log("adding key: ",key,data[key])
-          this.mqttFieldsFormGroup.get(key).setValue(data[key]);
-        }
-      });
-      this.originalValueUpdate();
-      console.log(this.mqttFieldsFormGroup);
-      this.cd.detectChanges();
+      this.packetChanged(data["packet"],data);
     }
   }
 
@@ -79,32 +71,30 @@ export class EventMqttCommandComponent implements OnInit,EventComponent {
     return this.getJsonForms() !== this.originalFormsValues;
   }
 
-  packetChanged(packetId){
+  packetChanged(packetId,data?){
     this.currentOutputPacketId = packetId;
-    if(!this.allPackets)
-      this.loadHPackets(this.reloadSelectedPacketInformation);
-    else
-      this.reloadSelectedPacketInformation(this)
+    this.getHPackets().then(packets => {
+      let packet = packets.find(packet => packet.id === packetId)
+      this.addOrUpdateFormControls(packet,data);
+      this.originalValueUpdate();
+      this.currentOutputPacket = packet;
+    })
   }
 
   inputChanged(target,fieldName){
     this.mqttFieldsFormGroup.get(fieldName).setValue(target.value);
-    console.log(this.mqttFieldsFormGroup);
   }
 
-  private reloadSelectedPacketInformation(self){
-    let packet = self.allPackets.find(packet => packet.id === self.currentOutputPacketId);
-    self.addOrUpdateFormControls(packet);
-    self.currentOutputPacket = packet;
-  }
-
-  private addOrUpdateFormControls(packet:HPacket){
+  private addOrUpdateFormControls(packet:HPacket,data?){
     if(packet){
       packet.fields.forEach(field => {
         if(!this.mqttFieldsFormGroup.get(field.name)){
           this.mqttFieldsFormGroup.addControl(field.name,new FormControl());
         }
+        if(data)
+            this.mqttFieldsFormGroup.get(field.name).setValue(data[field.name]);
       })
+      this.mqttFieldsFormGroup.get("packet").setValue(packet.id);
     }
   }
 
@@ -116,15 +106,18 @@ export class EventMqttCommandComponent implements OnInit,EventComponent {
     return JSON.stringify(this.mqttFieldsFormGroup.value);
   }
 
-  private loadHPackets(callback?) {
-      let self = this;
-      this.hPacketsService.findAllHPacketByProjectIdAndType(this.currentProjectId,"OUTPUT,IO").subscribe(
-        (res: HPacket[]) => {
-          this.allPackets = res;
-          this.packetOptions = this.allPackets.map(p => ({ label: p.name, value: p.id }));
-          if(callback)
-            callback(self);
-        }
-      );
+  private getHPackets() : Promise<HPacket[]> {
+      if(this.allPackets)
+        return new Promise((resolve,reject) => {
+          resolve(this.allPackets);
+        });
+      else
+        return new Promise((resolve,reject) => {
+          this.hPacketsService.findAllHPacketByProjectIdAndType(this.currentProjectId,"OUTPUT,IO").toPromise().then(res => {
+            this.allPackets = res;
+            this.packetOptions = this.allPackets.map(p => ({ label: p.name, value: p.id }));
+            resolve(this.allPackets);
+          })
+        });
   }
 }

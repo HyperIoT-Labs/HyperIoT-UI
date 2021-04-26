@@ -111,11 +111,6 @@
 
     <hyt-event-component-container [currentProjectId]="currentProject ? currentProject.id : null" #eventComponentContainer></hyt-event-component-container>
 
-    <!-- TODO: This HTML block is repeated
-      across all 'entity' components,
-      consider making a component out of it 
-    -->
-
     <div *ngIf="loadingStatus !== LoadingStatus.Ready" class="overlay d-flex flex-column align-items-center justify-content-center">
         
       <div 

@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { EventComponent } from '../event-component';
 import { EventComponentType } from '../event-component-type.enum';
@@ -21,7 +21,7 @@ export class EventMailComponent implements OnInit,EventComponent {
   ];
 
   constructor(
-    private fb: FormBuilder,private cd: ChangeDetectorRef
+    private fb: FormBuilder
   ) { }
 
   getId(): string {
@@ -30,7 +30,6 @@ export class EventMailComponent implements OnInit,EventComponent {
 
   setData(data: String[]): void {
     this.setMail(data);
-    //this.cd.detectChanges();
   }
 
   buildJsonAction(): string {
@@ -75,6 +74,7 @@ export class EventMailComponent implements OnInit,EventComponent {
   }
 
   reset(): void {
+    console.log("RESETTING");
     this.mailForm.reset();
     this.originalValueUpdate();
   }
@@ -97,7 +97,4 @@ export class EventMailComponent implements OnInit,EventComponent {
   private getJsonForms(): string {
     return JSON.stringify(this.mailForm.value);
   }
-
-  
-
 }
