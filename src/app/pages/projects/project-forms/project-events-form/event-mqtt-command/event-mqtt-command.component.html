@@ -29,9 +29,9 @@
         </div>
         <div class="form-group row">
             <ng-container *ngIf="currentOutputPacket !== undefined && currentOutputPacket !== null">
-                <ng-container *ngFor="let field of currentOutputPacket.fields" class="form-row">
-                    <hyt-input-text [form]="mqttFieldsFormGroup" formControlName="{{field.name}}" name="{{field.name}}" [fieldValue]="mqttFieldsFormGroup.get(field.name).value"
-                        i18n-placeholder="@@HYT_{{field.name}}" placeholder="{{field.name}}" hintMessage="Enter {{field.name}}" (change)="inputChanged($event.target,field.name)">
+                <ng-container *ngFor="let field of fieldsOptions" class="form-row">
+                    <hyt-input-text [form]="mqttFieldsFormGroup" formControlName="{{field.label}}" name="{{field.label}}" [fieldValue]="mqttFieldsFormGroup.get(field.label).value"
+                        i18n-placeholder="@@HYT_{{field.label}}" placeholder="{{field.label}}" hintMessage="Enter {{field.label}}" (change)="inputChanged($event.target,field.label)">
                     </hyt-input-text>
                 </ng-container>
             </ng-container>

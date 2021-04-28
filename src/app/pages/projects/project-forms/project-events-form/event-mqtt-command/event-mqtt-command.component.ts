@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Option, SelectOption } from '@hyperiot/components';
-import { HPacket, HpacketsService } from '@hyperiot/core';
+import { HPacket, HPacketField, HpacketsService } from '@hyperiot/core';
 import { EventComponent } from '../event-component';
 import { EventComponentType } from '../event-component-type.enum';
 
@@ -25,9 +25,10 @@ export class EventMqttCommandComponent implements OnInit,EventComponent {
   currentOutputPacketId;
   
   allPackets:HPacket[];
+  fieldsOptions:Option[];
   packetOptions: SelectOption[] = [];
   packetsPromise: Promise<HPacket[]>;
-
+  
   activeOptions: Option[] = [
     { value: "true", label: $localize`:@@HYT_send_mqtt_command_active:ACTIVE`, checked: true },
     { value: "false", label: $localize`:@@HYT_send_mqtt_command_disabled:DISABLED`}
@@ -70,6 +71,44 @@ export class EventMqttCommandComponent implements OnInit,EventComponent {
     return jActionStr;
   }
 
+  buildFieldOptions(hPacket: HPacket):Option[] {
+    let fieldList: HPacketField[] = [];
+    let fieldFlatList = [];
+    fieldList = this.treefy(hPacket.fields);
+    this.extractField(fieldList,fieldFlatList);
+    return fieldFlatList.map(f => ({ value: f.label, label: f.field.name }));
+  }
+
+  extractField(fieldArr: HPacketField[],fieldFlatList, pre?: string) {
+    fieldArr.forEach(f => {
+      const fieldName: string = pre ? pre + '.' + f.name : f.name;
+      fieldFlatList.push({ field: f, label: fieldName });
+      if (f.innerFields) {
+        this.extractField(f.innerFields, fieldName);
+      }
+    });
+  }
+
+  treefy(fieldList: HPacketField[]): HPacketField[] {
+    const treefiedFields = [];
+    fieldList.forEach(x => {
+      const parent: HPacketField = this.findParent(fieldList, x);
+      if (parent && !treefiedFields.some(y => y.id === parent.id)) {
+        treefiedFields.push(parent);
+      }
+    });
+    return treefiedFields;
+  }
+
+  findParent(fieldList: HPacketField[], packetField: HPacketField): HPacketField {
+    const parent: HPacketField = fieldList.find(x => x.innerFields.some(y => y.id === packetField.id));
+    if (parent) {
+      return this.findParent(fieldList, parent);
+    } else {
+      return packetField;
+    }
+  }
+
   isInvalid(): boolean {
     return false;
   }
@@ -98,12 +137,13 @@ export class EventMqttCommandComponent implements OnInit,EventComponent {
 
   private addOrUpdateFormControls(packet:HPacket,data?){
     if(packet){
-      packet.fields.forEach(field => {
-        if(!this.mqttFieldsFormGroup.get(field.name)){
-          this.mqttFieldsFormGroup.addControl(field.name,new FormControl());
+      this.fieldsOptions = this.buildFieldOptions(packet);
+      this.fieldsOptions.forEach(field => {
+        if(!this.mqttFieldsFormGroup.get(field.label)){
+          this.mqttFieldsFormGroup.addControl(field.label,new FormControl());
         }
         if(data)
-            this.mqttFieldsFormGroup.get(field.name).setValue(data[field.name]);
+            this.mqttFieldsFormGroup.get(field.label).setValue(data[field.value]);
       })
       if(data)
         this.mqttFieldsFormGroup.get("active").setValue(data.active);
