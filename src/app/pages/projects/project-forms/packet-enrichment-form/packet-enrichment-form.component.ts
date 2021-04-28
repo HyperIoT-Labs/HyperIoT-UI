@@ -1,7 +1,7 @@
 import { Component, ElementRef, Injector, OnDestroy, OnInit, ViewChild, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SelectOption } from '@hyperiot/components';
+import { Option, SelectOption } from '@hyperiot/components';
 import { HPacket, HpacketsService, HProject, Rule, RulesService } from '@hyperiot/core';
 import { Observable, Subscription } from 'rxjs';
 import { SummaryListItem } from '../../project-detail/generic-summary-list/generic-summary-list.component';
@@ -56,6 +56,12 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
     { value: 'FourierTransformRuleAction', label: $localize`:@@HYT_fourier_transform:FourierTransform` }
   ];
 
+  activeOptions: Option[] = [
+    { value: "true", label: $localize`:@@HYT_enrichment_active:ACTIVE`, checked: true },
+    { value: "false", label: $localize`:@@HYT_enrichment_disabled:DISABLED`}
+    // { value: '', label: $localize`:@@HYT_start_statistic:START STATISTIC` }
+  ];
+
   enrichmentType = '';
 
   ruleConfig = {};
@@ -69,7 +75,6 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
 
   private packetId: number;
 
-  isActive: boolean;  // TODO bind this property to RuleAction object
 
   constructor(
     injector: Injector,
@@ -85,7 +90,6 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
     this.formTitle = this.entitiesService.enrichment.formTitle;
     this.icon = this.entitiesService.enrichment.icon;
     this.hideDelete = true; // hide 'Delete' button
-    this.isActive = false;  // TODO bind this property to RuleAction object
     this.activatedRouteSubscription = this.activatedRoute.params.subscribe(routeParams => {
       this.packetId = +(activatedRoute.snapshot.params.packetId);
       if (this.packetId) {
@@ -110,7 +114,8 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
       this.editMode = true;
       super.edit(rule, () => {
         const type = JSON.parse(this.entity.jsonActions)[0] || null;
-        this.enrichmentType = JSON.parse(type) ? JSON.parse(type).actionName : null;
+        let typeJSON = JSON.parse(type) ? JSON.parse(type) : null;
+        this.enrichmentType = typeJSON ? typeJSON.actionName : null;
         if (this.enrichmentType === 'AddCategoryRuleAction') {
           if (this.assetCategoryComponent) {
             this.assetCategoryComponent.selectedCategories = JSON.parse(type) ? JSON.parse(type).categoryIds : null;
@@ -129,6 +134,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
           this.ruleConfig = JSON.parse(type);
         }
         this.form.get('rule-type').setValue(this.enrichmentType);
+        this.form.get('active').setValue(typeJSON.active);
         setTimeout(() => {
           if (this.ruleDefinitionComponent) {
             this.ruleDefinitionComponent.setRuleDefinition(this.entity.ruleDefinition);
@@ -157,6 +163,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
     this.editMode = false;
     this.showCancel = false;
   }
+
   delete(successCallback, errorCallback) {
     this.rulesService.deleteRule(this.entity.id).subscribe((res) => {
       this.resetErrors();
@@ -186,19 +193,20 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
     let jac = '';
     switch (this.form.get('rule-type').value) {
       case 'AddCategoryRuleAction':
-        jac = JSON.stringify({ actionName: 'AddCategoryRuleAction', categoryIds: this.assetCategoryComponent.selectedCategories, active: this.isActive });
+        jac = JSON.stringify({ actionName: 'AddCategoryRuleAction', categoryIds: this.assetCategoryComponent.selectedCategories, active: this.form.get("active").value });
         break;
       case 'AddTagRuleAction':
-        jac = JSON.stringify({ actionName: 'AddTagRuleAction', tagIds: this.assetTagComponent.selectedTags, active: this.isActive });
+        jac = JSON.stringify({ actionName: 'AddTagRuleAction', tagIds: this.assetTagComponent.selectedTags, active: this.form.get("active").value });
         break;
       case 'ValidateHPacketRuleAction':
-        jac = JSON.stringify({ actionName: 'ValidateHPacketRuleAction', active: this.isActive });
+        jac = JSON.stringify({ actionName: 'ValidateHPacketRuleAction', active: this.form.get("active").value});
         break;
       case 'FourierTransformRuleAction':
-        this.ruleConfig['active'] = this.isActive;
+        this.ruleConfig['active'] = this.form.get("active").value;
         jac = JSON.stringify(this.ruleConfig);
         break;
     }
+    console.log(jac);
     return JSON.stringify([jac]);
   }
 
@@ -278,6 +286,13 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
   enrichmentTypeChanged(event) {
     if (event.value) {
       this.enrichmentType = event.value;
+    }
+  }
+
+  changeEventActive(event){
+    console.log(event);
+    if(event){
+      this.form.get('active').setValue(event);
     }
   }
 

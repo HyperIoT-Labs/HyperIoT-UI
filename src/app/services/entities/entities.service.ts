@@ -154,7 +154,7 @@ export class EntitiesService {
     emptyModel: {
       name: '',
       description: '',
-      jsonActions: '[]',
+      jsonActions: '[\"{\\\"active\\\":\\\"true\\\"}\"]',
       type: 'ENRICHMENT',
       entityVersion: 1
     }
@@ -179,7 +179,8 @@ export class EntitiesService {
       config: '{\"input\":[], \"output\":[]}',
       algorithm: null,
       cronExpression: '0/50 * * * * ? *',
-      entityVersion: 1
+      entityVersion: 1,
+      active:true
     }
   };
 
@@ -202,7 +203,7 @@ export class EntitiesService {
       name: '',
       description: '',
       type: 'ENRICHMENT',
-      jsonActions: '[\"{\\\"actionName\\\":\\\"'+EventComponentType.SEND_MAIL_ACTION+'\\\",\\\"recipients\\\":\\\"\\\",\\\"ccRecipients\\\":\\\"\\\",\\\"subject\\\":\\\"\\\",\\\"body\\\":\\\"\\\"}\"]',
+      jsonActions: '[\"{\\\"active\\\":\\\"true\\\",\\\"actionName\\\":\\\"'+EventComponentType.SEND_MAIL_ACTION+'\\\",\\\"recipients\\\":\\\"\\\",\\\"ccRecipients\\\":\\\"\\\",\\\"subject\\\":\\\"\\\",\\\"body\\\":\\\"\\\"}\"]',
       entityVersion: 1,
       tagIds: []
     }

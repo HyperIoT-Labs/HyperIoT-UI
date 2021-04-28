@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 
-import { SelectOption } from '@hyperiot/components';
+import { Option, SelectOption } from '@hyperiot/components';
 
 import { Algorithm, AlgorithmConfig, AlgorithmsService, HProject, HProjectAlgorithm, HProjectAlgorithmConfig, HprojectalgorithmsService } from '@hyperiot/core';
 
@@ -95,7 +95,11 @@ export class ProjectStatisticsFormComponent extends ProjectFormEntity implements
     cronExpressionFC: new FormControl(this.cronExpression)
   });
 
-  active: boolean;  // TODO bind this property to Hprojectalgorithm object
+  activeOptions: Option[] = [
+    { value: "true", label: $localize`:@@HYT_statistics_active:ACTIVE`, checked: true },
+    { value: "false", label: $localize`:@@HYT_statistics_disabled:DISABLED`}
+    // { value: '', label: $localize`:@@HYT_start_statistic:START STATISTIC` }
+  ];
 
   constructor(
     injector: Injector,
@@ -110,7 +114,6 @@ export class ProjectStatisticsFormComponent extends ProjectFormEntity implements
     this.longDefinition = this.entitiesService.statistic.longDefinition;
     this.formTitle = this.entitiesService.statistic.formTitle;
     this.icon = this.entitiesService.statistic.icon;
-    this.active = false;  // TODO bind this property to Hprojectalgorithm object
     this.activatedRouteSubscription = this.activatedRoute.parent.params.subscribe(routeParams => {
       if (routeParams.projectId) {
         this.currentProject = {id: routeParams.projectId, entityVersion: null}; // read id of project
@@ -185,12 +188,13 @@ export class ProjectStatisticsFormComponent extends ProjectFormEntity implements
       super.edit(hProjectAlgorithm, () => {
         delete this.entity['name']; // this property is set on cloning, but HProjectAlgorithm does not have it
         this.statisticInputDefinition.setConfigDefinition(this.entity.config);
-        if (hProjectAlgorithm && this.algorithmOptions.some(x => x.value.id === this.entity.algorithm.id)) {
+        if (hProjectAlgorithm && hProjectAlgorithm.algorithm && this.algorithmOptions.some(x => x.value.id === this.entity.algorithm.id)) {
           this.selectedAlgorithm = this.algorithmOptions.find(x => x.value.id === this.entity.algorithm.id).value;
           this.config = JSON.parse(hProjectAlgorithm.config);
           this.cronExpression = hProjectAlgorithm.cronExpression;
         }
         this.form.get('algorithm-name').setValue(this.selectedAlgorithm);
+        this.form.get('active').setValue(""+hProjectAlgorithm.active);
         if (readyCallback) {
           readyCallback();
         }
@@ -253,7 +257,11 @@ export class ProjectStatisticsFormComponent extends ProjectFormEntity implements
     this.entity = { ...this.entitiesService.statistic.emptyModel };
     this.config = JSON.parse(this.entity.config);
     this.selectedAlgorithm = this.entity.algorithm;
-    this.edit();
+    this.edit(this.entity);
+  }
+
+  changeEventActive(event){
+    this.form.get("active").setValue(event);
   }
 
   loadHPackets() {
@@ -278,7 +286,7 @@ export class ProjectStatisticsFormComponent extends ProjectFormEntity implements
     hProjectAlgorithm.config = JSON.stringify(this.config);
     hProjectAlgorithm.cronExpression = this.cronExpression;
     hProjectAlgorithm.name = this.form.get('hprojectalgorithm-name').value;
-    hProjectAlgorithm.active = this.active; // TODO bind this property to Hprojectalgorithm object
+    hProjectAlgorithm.active = this.form.get('active').value;
 
     const wasNew = this.isNew();
     const responseHandler = (res) => {

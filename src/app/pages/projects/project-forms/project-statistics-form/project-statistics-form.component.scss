@@ -2,6 +2,17 @@
 #container-statistic-form {
     padding-top: 20px;
 
+    #fstatistic-col-active {
+        
+        #container-radio-statistic-active {
+            border: lightgray solid 1px;
+            border-radius: 4px;
+            padding-top: 9px;
+            padding-left: 9px;
+        }
+
+    }
+
     &.container {
         position: relative;
 

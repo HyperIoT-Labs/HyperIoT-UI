@@ -3,6 +3,27 @@
     padding-top: 15px;
     padding-bottom: 35px;
 
+    
+    #fenrichment-col-active {
+
+        p#label-active {
+        
+        margin-bottom: 10px;
+        color: #909090;
+        font-size: 0.98em;
+
+        }
+
+        #container-radio-enrichment-active {
+        border: lightgray solid 1px;
+        border-radius: 4px;
+        padding-top: 9px;
+        padding-left: 9px;
+        }
+
+    }
+
+
     &.container {
         position: relative;
 

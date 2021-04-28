@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { SelectOption } from '@hyperiot/components';
+import { Option, SelectOption } from '@hyperiot/components';
 import { HPacket, HpacketsService } from '@hyperiot/core';
 import { EventComponent } from '../event-component';
 import { EventComponentType } from '../event-component-type.enum';
@@ -28,6 +28,12 @@ export class EventMqttCommandComponent implements OnInit,EventComponent {
   packetOptions: SelectOption[] = [];
   packetsPromise: Promise<HPacket[]>;
 
+  activeOptions: Option[] = [
+    { value: "true", label: $localize`:@@HYT_send_mqtt_command_active:ACTIVE`, checked: true },
+    { value: "false", label: $localize`:@@HYT_send_mqtt_command_disabled:DISABLED`}
+    // { value: '', label: $localize`:@@HYT_start_statistic:START STATISTIC` }
+  ];
+
   constructor(private hPacketsService: HpacketsService) { }
 
   ngOnInit(): void {
@@ -52,7 +58,8 @@ export class EventMqttCommandComponent implements OnInit,EventComponent {
   buildJsonAction(): any {
     let action = {
       actionName: EventComponentType.SEND_MQTT_COMMAND_ACTION,
-      packet:this.mqttFieldsFormGroup.get("packet").value
+      packet:this.mqttFieldsFormGroup.get("packet").value,
+      active: this.mqttFieldsFormGroup.get("active").value
     };
     this.currentOutputPacket.fields.forEach(field => {
       action[field.name] = this.mqttFieldsFormGroup.get(field.name).value;
@@ -85,6 +92,10 @@ export class EventMqttCommandComponent implements OnInit,EventComponent {
     this.mqttFieldsFormGroup.get(fieldName).setValue(target.value);
   }
 
+  changeEventActive(event){
+    this.mqttFieldsFormGroup.get("active").setValue(event);
+  }
+
   private addOrUpdateFormControls(packet:HPacket,data?){
     if(packet){
       packet.fields.forEach(field => {
@@ -94,7 +105,10 @@ export class EventMqttCommandComponent implements OnInit,EventComponent {
         if(data)
             this.mqttFieldsFormGroup.get(field.name).setValue(data[field.name]);
       })
+      if(data)
+        this.mqttFieldsFormGroup.get("active").setValue(data.active);
       this.mqttFieldsFormGroup.get("packet").setValue(packet.id);
+      
     }
   }
 

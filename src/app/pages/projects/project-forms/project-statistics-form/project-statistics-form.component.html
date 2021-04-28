@@ -17,7 +17,7 @@
     </div>
 
     <form [formGroup]="form" #formReference [ngClass]="{hidden: !editMode, 'blurred': loadingStatus !== LoadingStatus.Ready}">
-
+        
         <div class="form-group row">
             <div id="fstat-col-algorithm" class="col-12">
               <hyt-select 
@@ -48,6 +48,28 @@
 
         <div class="form-group row">
 
+            <div id="fstatistic-col-active" class="col-6">
+    
+            <p id="label-statistic-active" i18n="@@HYT_active">Active</p>
+            
+            <div id="container-radio-statistic-active">
+    
+                <hyt-radio-button 
+                [form]="form" 
+                [options]="activeOptions" 
+                name="active"
+                (changeFn)="changeEventActive($event)">
+                </hyt-radio-button>
+    
+            </div>
+    
+            </div> <!-- Field Oputput -->
+    
+    
+        </div> <!-- END SECOND ROW -->
+
+        <div class="form-group row">
+
             <div id="container-entity-algorithm" class="col-12" *ngIf="entity.algorithm">
                 <h4><span>Current Cron Expression:</span> {{entity.cronExpression}}</h4> 
             </div>
@@ -67,13 +89,14 @@
 
             </div>
             
-        </div> <!-- END SECOND ROW -->
+        </div> <!-- END THIRD ROW -->
+
 
         <div class="form-group row">
             <div class="col-12">
                 <hyt-statistic-input-definition #statisticInputDefinition [project]="currentProject" [algorithm]="selectedAlgorithm" [config]="config"></hyt-statistic-input-definition>
             </div>
-        </div> <!-- END THIRD FORM ROW -->
+        </div> <!-- END FOURTH FORM ROW -->
 
     </form>
 

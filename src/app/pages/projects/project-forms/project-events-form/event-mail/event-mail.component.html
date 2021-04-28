@@ -4,6 +4,28 @@
 
     <div class="form-group row">
 
+      <div id="fevent-col-active" class="col-6">
+
+        <p id="label-event-active" i18n="@@HYT_active">Active</p>
+        
+        <div id="container-radio-events-active">
+
+          <hyt-radio-button 
+            [form]="mailForm" 
+            [options]="activeOptions" 
+            name="active"
+            (changeFn)="changeEventActive($event)">
+          </hyt-radio-button>
+
+        </div>
+
+      </div> <!-- Field Oputput -->
+
+
+    </div> <!-- END SECOND ROW -->
+
+    <div class="form-group row">
+
       <div id="eventmail-col-rec" class="col-4">
         <hyt-input-text [form]="mailForm" formControlName="mailRecipient" name="mailRecipient" [isRequired]="true"
           i18n-placeholder="@@HYT_mail_to" placeholder="Recipient" hintMessage="Enter the mail Recipient">

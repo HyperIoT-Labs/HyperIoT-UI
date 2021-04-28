@@ -88,6 +88,28 @@
 
     <div class="form-group row">
 
+      <div id="fenrichment-col-active" class="col-6">
+
+        <p id="label-enrichment-active" i18n="@@HYT_active">Active</p>
+        
+        <div id="container-radio-enrichment-active">
+
+          <hyt-radio-button 
+            [form]="form" 
+            [options]="activeOptions" 
+            name="active"
+            (changeFn)="changeEventActive($event)">
+          </hyt-radio-button>
+
+        </div>
+
+      </div> <!-- Field Oputput -->
+
+
+    </div> <!-- END SECOND ROW -->
+
+    <div class="form-group row">
+
       <div class="col-12">
 
         <hyt-text-area 
@@ -99,7 +121,7 @@
 
       </div>
 
-    </div> <!-- END SECOND FORM ROW -->
+    </div> <!-- END THIRD FORM ROW -->
 
     <div *ngIf="enrichmentType !== 'FourierTransformRuleAction'" class="form-group row">
 
@@ -112,7 +134,7 @@
 
       </div>
 
-    </div> <!-- END THIRD FORM ROW -->
+    </div> <!-- END FOURTH FORM ROW -->
 
     <!-- 
       TODO: This HTML block is repeated
