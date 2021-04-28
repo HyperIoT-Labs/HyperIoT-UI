@@ -27,6 +27,36 @@
                         i18n-label="@@HYT_packet" label="Packet" (changeFn)="packetChanged($event.value)">
             </hyt-select>
         </div>
+
+        <div *ngIf="mqttUrl && mqttTopic" class="form-group row">
+
+            <div id="fpack-col-mqtt-url" class="col-6">
+
+                <hyt-input-text
+                    i18n-placeholder="@@HYT_mqtt_url"
+                    placeholder="MQTT Url"
+                    name="hpacket-mqttUrl"
+                    disabled="true"
+                    [fieldValue]="mqttUrl"
+                >
+                </hyt-input-text>
+
+            </div>
+            <div id="fpack-col-mqtt-topic" class="col-6">
+
+                <hyt-input-text
+                    i18n-placeholder="@@HYT_mqtt_topic"
+                    placeholder="MQTT Topic"
+                    name="hpacket-mqttTopic"
+                    disabled="true"
+                    [fieldValue]="mqttTopic"
+                >
+                </hyt-input-text>
+
+            </div>
+
+        </div>
+
         <div class="form-group row">
             <ng-container *ngIf="currentOutputPacket !== undefined && currentOutputPacket !== null">
                 <ng-container *ngFor="let field of fieldsOptions" class="form-row">

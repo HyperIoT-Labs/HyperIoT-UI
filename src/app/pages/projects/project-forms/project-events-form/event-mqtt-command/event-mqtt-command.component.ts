@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Option, SelectOption } from '@hyperiot/components';
 import { HPacket, HPacketField, HpacketsService } from '@hyperiot/core';
+import { environment } from 'src/environments/environment';
 import { EventComponent } from '../event-component';
 import { EventComponentType } from '../event-component-type.enum';
 
@@ -28,6 +29,9 @@ export class EventMqttCommandComponent implements OnInit,EventComponent {
   fieldsOptions:Option[];
   packetOptions: SelectOption[] = [];
   packetsPromise: Promise<HPacket[]>;
+
+  mqttUrl:string = environment.mqttUrl;
+  mqttTopic:string;
   
   activeOptions: Option[] = [
     { value: "true", label: $localize`:@@HYT_send_mqtt_command_active:ACTIVE`, checked: true },
@@ -123,6 +127,7 @@ export class EventMqttCommandComponent implements OnInit,EventComponent {
       let packet = packets.find(packet => packet.id === packetId)
       this.addOrUpdateFormControls(packet,data);
       this.originalValueUpdate();
+      this.mqttTopic = "/"+packet.device.id+"/receive"
       this.currentOutputPacket = packet;
     })
   }

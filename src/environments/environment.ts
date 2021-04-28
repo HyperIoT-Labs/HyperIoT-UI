@@ -8,7 +8,8 @@ export const environment = {
   production: false,
   logLevel: 5,
   registry: {},
-  cookieSecure: false
+  cookieSecure: false,
+  mqttUrl: "tcp://karaf-activemq-mqtt-test.hyperiot.cloud"
 };
 
 /*

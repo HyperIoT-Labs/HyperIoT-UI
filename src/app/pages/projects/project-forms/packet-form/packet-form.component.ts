@@ -7,6 +7,7 @@ import { HPacket, HpacketsService, HDevice } from '@hyperiot/core';
 import { Option } from '@hyperiot/components';
 
 import { ProjectFormEntity, LoadingStatusEnum } from '../project-form-entity';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'hyt-packet-form',
@@ -79,7 +80,10 @@ export class PacketFormComponent extends ProjectFormEntity implements AfterViewI
   deviceName: '---';
 
   mqttUrl;
+  //Streaming topic
   mqttTopic;
+  //read topic
+  mqttReadTopic;
 
   typeOptions: Option[] = Object.keys(HPacket.TypeEnum)
     .map((k) => ({ label: k, value: k }));
@@ -155,8 +159,18 @@ export class PacketFormComponent extends ProjectFormEntity implements AfterViewI
       // update form data
       this.edit();
       // update static data (not part of this form)
-      this.mqttUrl = 'tcp://karaf-activemq-mqtt-test.hyperiot.cloud';
-      this.mqttTopic = 'streaming/' + p.device.project.id + '/' + p.device.id + '/' + p.id;
+      this.mqttUrl = environment.mqttUrl;
+      if(p.type == "INPUT" || p.type == "IO"){
+        this.mqttTopic = 'streaming/' + p.device.project.id + '/' + p.device.id + '/' + p.id;
+      } else {
+        this.mqttTopic = null;
+      }
+
+      if(p.type == "OUTPUT" || p.type == "IO"){
+        this.mqttReadTopic = '/'+p.device.id+"/receive";
+      } else {
+        this.mqttReadTopic = null;
+      }
       // emit event for updating UI
       this.entityEvent.emit({
         event: 'treeview:focus',

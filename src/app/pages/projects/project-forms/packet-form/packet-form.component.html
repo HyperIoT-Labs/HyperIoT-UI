@@ -114,7 +114,7 @@
 
         </div> <!-- Fourth Row -->
 
-        <div *ngIf="mqttUrl && mqttTopic" class="form-group row">
+        <div *ngIf="mqttUrl && (mqttTopic || mqttReadTopic)" class="form-group row">
 
             <div id="fpack-col-mqtt-url" class="col-6">
 
@@ -128,14 +128,27 @@
                 </hyt-input-text>
 
             </div>
-            <div id="fpack-col-mqtt-topic" class="col-6">
+            <div *ngIf="mqttTopic" id="fpack-col-mqtt-topic" class="col-6">
 
                 <hyt-input-text
                     i18n-placeholder="@@HYT_mqtt_topic"
-                    placeholder="MQTT Topic"
+                    placeholder="MQTT Streaming Topic"
                     name="hpacket-mqttTopic"
                     disabled="true"
                     [fieldValue]="mqttTopic"
+                >
+                </hyt-input-text>
+
+            </div>
+
+            <div *ngIf="mqttReadTopic" id="fpack-col-mqtt-topic"  [ngClass]="mqttTopic != null ? 'col-6 offset-6':'col-6'" >
+
+                <hyt-input-text
+                    i18n-placeholder="@@HYT_mqtt_read_topic"
+                    placeholder="MQTT Read Topic"
+                    name="hpacket-mqttReadTopic"
+                    disabled="true"
+                    [fieldValue]="mqttReadTopic"
                 >
                 </hyt-input-text>
 

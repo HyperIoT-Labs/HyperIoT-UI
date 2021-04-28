@@ -39,7 +39,7 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
 
   @Input() currentPacket: HPacket;
 
-  allPackets: HPacket[] = [];
+  allPackets: HPacket[] = null;
 
   packetOptions: SelectOption[] = [];
 
@@ -158,15 +158,22 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
     this.loadHPackets();
   }
 
-  loadHPackets() {
+  loadHPackets():Promise<HPacket[]> {
     if (this.projectId) {
-      this.hPacketsService.findAllHPacketByProjectId(this.projectId).subscribe(
-        (res: HPacket[]) => {
-          this.allPackets = res;
-          this.packetOptions = this.allPackets.map(p => ({ label: p.name, value: p.id }));
-          this.resetRuleDefinition();
-        }
-      );
+      if(this.allPackets){
+        return new Promise((resolve,reject) => {
+          resolve(this.allPackets);
+        });
+      } else {
+        return new Promise((resolve,reject) => {
+          this.hPacketsService.findAllHPacketByProjectIdAndType(this.projectId,"INPUT,IO").toPromise().then(res => {
+            this.allPackets = res;
+            this.packetOptions = this.allPackets.map(p => ({ label: p.name, value: p.id }));
+            this.resetRuleDefinition();
+            resolve(this.allPackets);
+          })
+        }); 
+      }
     }
   }
 
@@ -262,10 +269,8 @@ export class RuleDefinitionComponent implements OnInit, OnChanges {
 
   setRuleDefinition(ruleDefinition: string) {
     if (this.projectId) {
-      this.hPacketsService.findAllHPacketByProjectId(this.projectId).subscribe(
+      this.loadHPackets().then(
         (res: HPacket[]) => {
-          this.allPackets = res;
-          this.packetOptions = this.allPackets.map(p => ({ label: p.name, value: p.id }));
           this.setRuleDef(ruleDefinition);
         }
       );

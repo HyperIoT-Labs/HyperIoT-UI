@@ -52,7 +52,6 @@ export class EventMailComponent implements OnInit,EventComponent {
       };
       const jActions = [JSON.stringify(act)];
       jActionStr = JSON.stringify(jActions);
-      console.log(jActions)
       return jActionStr;
   }
 
