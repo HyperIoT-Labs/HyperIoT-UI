@@ -10,6 +10,7 @@ import { LoadingStatusEnum, ProjectFormEntity } from '../project-form-entity';
 import { RuleDefinitionComponent } from '../rule-definition/rule-definition.component';
 import { AssetCategoryComponent } from './asset-category/asset-category.component';
 import { AssetTagComponent } from './asset-tag/asset-tag.component';
+import { EnrichmentType } from './enrichment-type.enum';
 import { FourierTransformComponent } from './fourier-transform/fourier-transform.component';
 
 @Component({
@@ -41,6 +42,8 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
   @ViewChild('fourierTransform')
   fourierTransformComponent: FourierTransformComponent;
 
+  enrichmentTypes = EnrichmentType;
+
   packet: HPacket;
 
   entity = {} as Rule;
@@ -50,10 +53,10 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
   project: HProject = {} as HProject;
 
   enrichmentRules: SelectOption[] = [
-    { value: 'AddCategoryRuleAction', label: $localize`:@@HYT_categories:Categories` },
-    { value: 'AddTagRuleAction', label: $localize`:@@HYT_tags:Tags` },
-    { value: 'ValidateHPacketRuleAction', label: $localize`:@@HYT_validation:Validation` },
-    { value: 'FourierTransformRuleAction', label: $localize`:@@HYT_fourier_transform:FourierTransform` }
+    { value: EnrichmentType.ADD_CATEGORY_ENRICHMENT, label: $localize`:@@HYT_categories:Categories` },
+    { value: EnrichmentType.ADD_TAG_ENRICHMENT, label: $localize`:@@HYT_tags:Tags` },
+    { value: EnrichmentType.VALIDATION_ENRICHMENT, label: $localize`:@@HYT_validation:Validation` },
+    { value: EnrichmentType.FOURIER_TRANSFORM_ENRICHMENT, label: $localize`:@@HYT_fourier_transform:FourierTransform` }
   ];
 
   activeOptions: Option[] = [
@@ -116,21 +119,21 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
         const type = JSON.parse(this.entity.jsonActions)[0] || null;
         let typeJSON = JSON.parse(type) ? JSON.parse(type) : null;
         this.enrichmentType = typeJSON ? typeJSON.actionName : null;
-        if (this.enrichmentType === 'AddCategoryRuleAction') {
+        if (this.enrichmentType === EnrichmentType.ADD_CATEGORY_ENRICHMENT) {
           if (this.assetCategoryComponent) {
             this.assetCategoryComponent.selectedCategories = JSON.parse(type) ? JSON.parse(type).categoryIds : null;
             this.assetCategoryComponent.getAssetCategories();
           } else {
             this.assetCategories = JSON.parse(type) ? JSON.parse(type).categoryIds : null;
           }
-        } else if (this.enrichmentType === 'AddTagRuleAction') {
+        } else if (this.enrichmentType === EnrichmentType.ADD_TAG_ENRICHMENT) {
           if (this.assetTagComponent) {
             this.assetTagComponent.selectedTags = JSON.parse(type) ? JSON.parse(type).tagIds : null;
             this.assetTagComponent.getAssetTags();
           } else {
             this.assetTags = JSON.parse(type) ? JSON.parse(type).tagIds : null;
           }
-        } else if (this.enrichmentType === 'FourierTransformRuleAction') {
+        } else if (this.enrichmentType === EnrichmentType.FOURIER_TRANSFORM_ENRICHMENT) {
           this.ruleConfig = JSON.parse(type);
         }
         this.form.get('rule-type').setValue(this.enrichmentType);
@@ -192,16 +195,16 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
   buildJActions(): string {
     let jac = '';
     switch (this.form.get('rule-type').value) {
-      case 'AddCategoryRuleAction':
-        jac = JSON.stringify({ actionName: 'AddCategoryRuleAction', categoryIds: this.assetCategoryComponent.selectedCategories, active: this.form.get("active").value });
+      case EnrichmentType.ADD_CATEGORY_ENRICHMENT:
+        jac = JSON.stringify({ actionName: EnrichmentType.ADD_CATEGORY_ENRICHMENT, categoryIds: this.assetCategoryComponent.selectedCategories, active: this.form.get("active").value });
         break;
-      case 'AddTagRuleAction':
-        jac = JSON.stringify({ actionName: 'AddTagRuleAction', tagIds: this.assetTagComponent.selectedTags, active: this.form.get("active").value });
+      case EnrichmentType.ADD_TAG_ENRICHMENT:
+        jac = JSON.stringify({ actionName: EnrichmentType.ADD_TAG_ENRICHMENT, tagIds: this.assetTagComponent.selectedTags, active: this.form.get("active").value });
         break;
-      case 'ValidateHPacketRuleAction':
-        jac = JSON.stringify({ actionName: 'ValidateHPacketRuleAction', active: this.form.get("active").value});
+      case EnrichmentType.VALIDATION_ENRICHMENT:
+        jac = JSON.stringify({ actionName: EnrichmentType.VALIDATION_ENRICHMENT, active: this.form.get("active").value});
         break;
-      case 'FourierTransformRuleAction':
+      case EnrichmentType.FOURIER_TRANSFORM_ENRICHMENT:
         this.ruleConfig['active'] = this.form.get("active").value;
         jac = JSON.stringify(this.ruleConfig);
         break;

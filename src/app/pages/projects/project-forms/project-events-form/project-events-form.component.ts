@@ -279,6 +279,7 @@ export class ProjectEventsFormComponent extends ProjectFormEntity implements OnI
       this.resetForm();
       this.showCancel = false;
       this.updateSummaryList();
+      this.cancel();
       if (successCallback) { successCallback(); }
     }, (err) => {
       if (errorCallback) { errorCallback(); }

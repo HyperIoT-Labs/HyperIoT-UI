@@ -55,23 +55,30 @@ export class EventMqttCommandComponent implements OnInit,EventComponent {
 
   setData(dataArr): void {
     const data = JSON.parse(dataArr[0]);
-    if(data && data["packet"]){
-      this.packetChanged(data["packet"],data);
+    if(data && data["packetId"]){
+      this.packetChanged(data["packetId"],data);
     }
   }
 
   buildJsonAction(): any {
+    let innerJSON = {};
+
     let action = {
       actionName: EventComponentType.SEND_MQTT_COMMAND_ACTION,
-      packet:this.mqttFieldsFormGroup.get("packet").value,
-      active: this.mqttFieldsFormGroup.get("active").value
+      packetId:this.mqttFieldsFormGroup.get("packet").value,
+      packetFormat: this.currentOutputPacket.format,
+      active: this.mqttFieldsFormGroup.get("active").value,
+      topic: this.mqttTopic,
+      message : ""
     };
+
     this.currentOutputPacket.fields.forEach(field => {
-      action[field.name] = this.mqttFieldsFormGroup.get(field.name).value;
+      innerJSON[field.name] = this.mqttFieldsFormGroup.get(field.name).value;
     })
+
+    action.message = JSON.stringify(innerJSON);
     const jActions = [JSON.stringify(action)];
     let jActionStr = JSON.stringify(jActions);
-    console.log(jActionStr);
     return jActionStr;
   }
 
@@ -125,9 +132,9 @@ export class EventMqttCommandComponent implements OnInit,EventComponent {
     this.currentOutputPacketId = packetId;
     this.getHPackets().then(packets => {
       let packet = packets.find(packet => packet.id === packetId)
+      this.mqttTopic = "/"+packet.device.id+"/receive"
       this.addOrUpdateFormControls(packet,data);
       this.originalValueUpdate();
-      this.mqttTopic = "/"+packet.device.id+"/receive"
       this.currentOutputPacket = packet;
     })
   }
