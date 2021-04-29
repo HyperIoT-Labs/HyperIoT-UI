@@ -169,7 +169,7 @@ export class PacketSelectComponent implements OnInit {
         JSON.parse(JSON.stringify(this.widget.config.packetUnitsConversion)) : [];
     // fetch all packets
     this.packetService
-      .findAllHPacketByProjectId(this.widget.projectId)
+      .findAllHPacketByProjectIdAndType(this.widget.projectId,"INPUT,IO")
       .subscribe((packetList) => {
         // Filter out packets not belonging to the given `devices` list (if set)
         if (devices) {
