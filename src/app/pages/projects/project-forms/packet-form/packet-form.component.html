@@ -45,7 +45,7 @@
                         [form]="form" name="hpacket-type" [options]="typeOptions"
                         [injectedErrorMsg]="getError('hpacket-type')"
                         i18n-hintMessage="@@HYT_hint_packet_type"
-                        hintMessage="Set the packet type."
+                        hintMessage="Set the packet type." (changeFn)="hpacketTypeChange($event)"
                     >
                     </hyt-radio-button>
                 </div>

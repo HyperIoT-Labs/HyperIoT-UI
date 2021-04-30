@@ -159,18 +159,7 @@ export class PacketFormComponent extends ProjectFormEntity implements AfterViewI
       // update form data
       this.edit();
       // update static data (not part of this form)
-      this.mqttUrl = environment.mqttUrl;
-      if(p.type == "INPUT" || p.type == "IO"){
-        this.mqttTopic = 'streaming/' + p.device.project.id + '/' + p.device.id + '/' + p.id;
-      } else {
-        this.mqttTopic = null;
-      }
-
-      if(p.type == "OUTPUT" || p.type == "IO"){
-        this.mqttReadTopic = '/'+p.device.id+"/receive";
-      } else {
-        this.mqttReadTopic = null;
-      }
+      this.defineTopics(this.entity);
       // emit event for updating UI
       this.entityEvent.emit({
         event: 'treeview:focus',
@@ -186,6 +175,26 @@ export class PacketFormComponent extends ProjectFormEntity implements AfterViewI
     this.form.reset();
     this.entity = this.newEntity();
     this.edit();
+  }
+
+  hpacketTypeChange(event){
+    this.entity.type = event;
+    this.defineTopics(this.entity);
+  }
+
+  private defineTopics(packet:HPacket){
+    this.mqttUrl = environment.mqttUrl;
+    if(packet.type == "INPUT" || packet.type == "IO"){
+      this.mqttTopic = 'streaming/' + packet.device.project.id + '/' + packet.device.id + '/' + packet.id;
+    } else {
+      this.mqttTopic = null;
+    }
+
+    if(packet.type == "OUTPUT" || packet.type == "IO"){
+      this.mqttReadTopic = '/'+packet.device.id+"/receive";
+    } else {
+      this.mqttReadTopic = null;
+    }
   }
 
   private savePacket(successCallback?, errorCallback?) {
