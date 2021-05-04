@@ -159,7 +159,7 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
           this.streamSubscription = this.dataStreamService.eventStream.subscribe((p) => {
             const packet = p.data;
             //console.log('WIDGETS LAYOUT PACKET', packet);
-            const remoteTimestamp: number = (packet.fields.map.timestamp) ? packet.fields.map.timestamp.value.long : packet.fields.map['timestamp-default'].value.long; 
+            const remoteTimestamp: number = this.getTimestampFieldValue(packet);
             this.topologyResTimeChange.emit({timeMs: remoteTimestamp});
             if (this.eventNotificationIsOn && packet.id === 0 && packet.name.endsWith(this.eventPacketSuffix)) {
               // show toast if packet is a event
@@ -496,6 +496,11 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
     }
 
     return singleCell;
+  }
+
+  private getTimestampFieldValue(packet:HPacket){   
+    let timestampFieldName = packet.timestampField;
+    return (packet.fields.map[timestampFieldName]) ? packet.fields.map[timestampFieldName].value.long : packet.fields.map['timestamp-default'].value.long; 
   }
 
 }
