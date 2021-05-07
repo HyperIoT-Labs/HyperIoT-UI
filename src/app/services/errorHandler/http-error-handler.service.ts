@@ -15,7 +15,25 @@ export class HttpErrorHandlerService {
       case 404: {
         return [
           {
-            message: $localize`:@@HYT_service_temporarily_unavailable:Service temporarily unavailable`,
+            message: $localize`:@@HYT_resource_not_found:The resource requested has not been found`,
+            container: 'general'
+          }
+        ];
+        break;
+      }
+      case 422: {
+        return [
+          {
+            message: $localize`:@@HYT_resource_validation_failed:Entity is not valid`,
+            container: 'general'
+          }
+        ];
+        break;
+      }
+      case 409: {
+        return [
+          {
+            message: $localize`:@@HYT_resource_duplicated:Entity already present`,
             container: 'general'
           }
         ];
@@ -50,5 +68,4 @@ export class HttpErrorHandlerService {
     }
 
   }
-
 }

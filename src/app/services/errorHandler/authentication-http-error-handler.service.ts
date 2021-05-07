@@ -81,6 +81,12 @@ export class AuthenticationHttpErrorHandlerService extends HttpErrorHandlerServi
   }
 
   handlePwdRecovery(httpError: HttpErrorResponse): HYTError[] {
+    if(httpError.status === 404){
+      return [{
+        message: $localize`:@@HYT_email_not_found:Your email is not on our system,sorry.`,
+        container: 'general'
+      }]
+    }
     return this.handle(httpError);
   }
 
