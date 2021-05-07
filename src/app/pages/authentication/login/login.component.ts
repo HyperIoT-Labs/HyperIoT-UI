@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormControl } from '@angular/forms';
 import { AuthenticationService, LoggerService, Logger } from '@hyperiot/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
@@ -35,7 +35,9 @@ export class LoginComponent implements OnInit {
   /**
    * loginForm stores the login form
    */
-  loginForm: FormGroup;
+  loginForm: FormGroup =  new FormGroup({
+    
+  });
 
   /**
    * The key used to encrypt username and password
@@ -74,7 +76,6 @@ export class LoginComponent implements OnInit {
    */
   constructor(
     private authenticationService: AuthenticationService,
-    private fb: FormBuilder,
     private cookieService: CookieService,
     private router: Router,
     private httperrorHandler: AuthenticationHttpErrorHandlerService,
@@ -88,19 +89,10 @@ export class LoginComponent implements OnInit {
    */
   ngOnInit() {
     if (this.cookieService.check('rememberme')) {
-      // this.decrypting(this.cookieService.get('hytUser'), this.key);
-
-      this.loginForm = this.fb.group({
-        username: this.cookieService.get('rememberme'),
-      });
-
-      this.initialValue = this.loginForm.value.username;
+      this.initialValue = this.cookieService.get("rememberme");  
       this.checked = true;
-
-    } else {
-      this.loginForm = this.fb.group({});
     }
-
+  
     this.returnUrl = window.history.state.returnUrl || '/';
   }
 
@@ -136,9 +128,10 @@ export class LoginComponent implements OnInit {
         this.logger.trace('userInfo', JSON.stringify(res.authenticable));
 
         if (this.checked === true) {
-          if (!this.cookieService.check('rememberme')) { this.cookieService.set('rememberme', this.loginForm.value.username, 2, '/', '', environment.cookieSecure); }
+          this.cookieService.set('rememberme', this.loginForm.value.username, 2, '/', '', environment.cookieSecure); 
         } else {
-          if (this.cookieService.check('rememberme')) { this.cookieService.delete('rememberme', '/'); }
+          let deleteCookie = this.loginForm.value.username === this.cookieService.get('rememberme') && this.cookieService.check("rememberme");
+          if (deleteCookie) { this.cookieService.delete('rememberme', '/'); }
         }
 
         this.loginStatus = SubmissionStatus.Submitted;
