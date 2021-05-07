@@ -17,7 +17,7 @@
 
       <ng-template #devicesTemplate>
 
-        <div id="container-source" class="container">
+        <div *ngIf="!currentForm || !currentForm.entity.id" id="container-source" class="container">
 
           <div class="row">
 
@@ -35,9 +35,7 @@
         
         </div>
 
-        <hyt-application-form *ngIf="selectedSource == 'application'" #applicationsForm
-          [currentProject]="currentProject" (entityEvent)="onEntityEvent($event)"></hyt-application-form>
-        <hyt-device-form *ngIf="selectedSource == 'device'" #devicesForm [currentProject]="currentProject"
+        <hyt-device-form #devicesForm [currentProject]="currentProject"
           (entityEvent)="onEntityEvent($event)">
         </hyt-device-form>
 

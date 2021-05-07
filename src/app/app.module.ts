@@ -29,6 +29,7 @@ import { MatButtonModule, MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS, MatTabsMo
 // hyperiot
 import { Configuration, ConfigurationParameters, HyperiotClientModule } from '@hyperiot/core';
 import { ComponentsModule } from '@hyperiot/components';
+import { WidgetsModule } from '@hyperiot/widgets';
 import { RouterModule, DefaultUrlSerializer, UrlSerializer, UrlTree } from '@angular/router';
 
 // local
@@ -123,6 +124,7 @@ export function apiConfigFactory(): Configuration {
     ComponentsModule,
     AlgorithmsModule,
     ProjectsModule,
+    WidgetsModule,
     HyperiotClientModule.forRoot(apiConfigFactory),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production, registrationStrategy: 'registerImmediately' }),
     ToastrModule.forRoot()

@@ -91,10 +91,14 @@ export abstract class ProjectFormEntity implements OnInit, AfterViewInit {
         if (entity) {
             this.entity = { ...entity };
         }
+        
         Object.keys(this.entityFormMap).forEach((key) => {
             if (this.form.get(key)) {
+                //TODO: check why form control value inside the form control must be a string
+                //it should accept other values
+                let value = (this.entity[this.entityFormMap[key].field] != null && this.entity[this.entityFormMap[key].field] != undefined)?(""+this.entity[this.entityFormMap[key].field]):null;
                 this.form.get(key)
-                    .setValue(this.entity[this.entityFormMap[key].field]);
+                    .setValue(value);
             }
         });
         if (readyCallback) {
@@ -114,7 +118,7 @@ export abstract class ProjectFormEntity implements OnInit, AfterViewInit {
 
     newEntity() {
         const entity = {};
-        // create default entity object
+        // create default entity object)
         if (this.entityFormMap) {
             const keys = Object.keys(this.entityFormMap);
             keys.map((k) => {

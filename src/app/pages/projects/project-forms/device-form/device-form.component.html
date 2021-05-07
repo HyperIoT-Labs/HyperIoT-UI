@@ -93,6 +93,7 @@
                     [form]="form"
                 >
                 </hyt-input-text>
+               
                 <div [ngClass]="(entity.id) ? 'displayNone' : ''">
                     <hyt-input-text 
                         [form]="form" 
@@ -117,7 +118,81 @@
                     >
                     </hyt-input-text>
                 </div>
+                <!-- CHANGE PASSWORD FORM-->
+                <form *ngIf="entity.id && devicePasswordChangeEnabled" #cpf="ngForm" id="form-password" [formGroup]="changePasswordForm" (ngSubmit)="updatePassword()" (keydown)="keyDownFunction($event)">
+                    <!--form id="form-password"-->
 
+                        <div class="row row-field-password">
+
+                            <div class="container-form-field col-12">
+
+                                <hyt-input-text 
+                                    [form]="changePasswordForm"
+                                    formControlName="oldPassword" 
+                                    name="oldPassword" 
+                                    [isRequired]="true"
+                                    placeholder="Old Password"
+                                    [injectedErrorMsg]="getError('hdevice-oldPassword')" 
+                                    type="password"
+                                    [isPassword]="true"
+                                >
+                                </hyt-input-text>
+
+                            </div> <!-- Field Old Password -->
+
+                            <div class="container-form-field col-12">
+
+                                <hyt-input-text 
+                                    [form]="changePasswordForm" 
+                                    formControlName="newPassword"
+                                    name="newPassword"
+                                    [isPassword]="true"
+                                    type="password"
+                                    [isRequired]="true" 
+                                    placeholder="New Password"
+                                    errorPosition="bottom"
+                                >
+                                </hyt-input-text>
+
+                            </div> <!-- Field New Password -->
+
+                            <div class="container-form-field col-12">
+
+                                <hyt-input-text
+                                    [form]="changePasswordForm"
+                                    formControlName="confirmPassword"
+                                    name="confirmPassword"
+                                    confirmPassword="newPassword"
+                                    type="password"
+                                    [isRequired]="true" 
+                                    placeholder="Confirm password"
+                                >
+                                </hyt-input-text>
+
+                            </div> <!-- Field Confirm Password -->
+
+                            <div class="container-form-field col-12 btn-form-account">
+                                <hyt-button class="mr-3"
+                                    id ="change-password-btn" 
+                                    type="submit"
+                                    [isDisabled]="notValidCpf() || passwordChanged"
+                                >
+                                    <ng-container i18n="@@HYT_change_password">Update password</ng-container>
+                                </hyt-button>
+                                <hyt-button id ="cancel-change-password-btn" (click)="cancelPasswordChange($event)">
+                                    <ng-container i18n="@@HYT_change_password">Cancel</ng-container>
+                                </hyt-button>
+                            </div> <!-- Container Change Password Button -->
+
+                        </div>
+
+                    </form>
+                    <div>
+                        <hyt-button [ngClass]="(entity.id && !devicePasswordChangeEnabled) ?  'mr-3':'displayNone' "  id ="enable-change-password-btn" (click)="enablePasswordChange($event)">
+                            <ng-container i18n="@@HYT_change_password">Change password</ng-container>
+                        </hyt-button>
+                    </div>
+                <!--    END CHANGE PASSWORD FORM  -->
             </div>
             <div id="fdev-col-desc" class="col-6">
 

@@ -55,6 +55,14 @@ export class PacketFormComponent extends ProjectFormEntity implements AfterViewI
       field: 'format',
       default: 'JSON'
     },
+    'hpacket-unixTimestamp': {
+      field: 'unixTimestamp',
+      default: 'true'
+    },
+    'hpacket-unixTimestampFormatSeconds': {
+      field: 'unixTimestampFormatSeconds',
+      default: 'false'
+    },
     'hpacket-timestampfield': {
       field: 'timestampField',
       default: 'timestamp'
@@ -72,6 +80,7 @@ export class PacketFormComponent extends ProjectFormEntity implements AfterViewI
       default: 1
     }
   };
+  
 
   @Input()
   currentDevice: HDevice;
@@ -97,7 +106,24 @@ export class PacketFormComponent extends ProjectFormEntity implements AfterViewI
   trafficPlanOptions: Option[] = Object.keys(HPacket.TrafficPlanEnum)
     .map((k) => ({ label: k, value: k }));
 
+  timestampTypeOptions : Option[] = [{
+      label:"String",
+      value: 'false'
+    },{
+      label:"UNIX Timestamp"
+      ,value: 'true' ,checked:true}]
+
+  unixTimestampOptions : Option[] = [{
+        label:"Seconds",
+        value: 'true'
+      },{
+        label:"Milliseconds"
+        ,value: 'false' ,checked:true}]
+
+
+
   private routerSubscription: Subscription;
+
 
   constructor(
     injector: Injector,
@@ -209,6 +235,8 @@ export class PacketFormComponent extends ProjectFormEntity implements AfterViewI
     p.trafficPlan = this.form.value['hpacket-trafficplan'];
     p.timestampField = this.form.value['hpacket-timestampfield'];
     p.timestampFormat = this.form.value['hpacket-timestampformat'];
+    p.unixTimestamp =  (/true/i).test(this.form.value['hpacket-unixTimestamp']);
+    p.unixTimestampFormatSeconds = (/true/i).test(this.form.value['hpacket-unixTimestampFormatSeconds']);
 
     const wasNew = this.isNew();
     const responseHandler = (res) => {

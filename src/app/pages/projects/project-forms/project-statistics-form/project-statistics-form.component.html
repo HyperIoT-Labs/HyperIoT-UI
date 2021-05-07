@@ -78,14 +78,14 @@
 
                 <p id="title-cron-editor-section">Setting Cron</p>
 
-                <cron-editor 
+                <hyt-cron-editor 
                     ngDefaultControl 
                     formControlName="cronExpressionFC" 
                     [(cron)]="cronExpression" 
                     [disabled]="isCronDisabled" 
                     [(options)]="cronOptions"
                     id="cron-editor"
-                ></cron-editor>
+                ></hyt-cron-editor>
 
             </div>
             

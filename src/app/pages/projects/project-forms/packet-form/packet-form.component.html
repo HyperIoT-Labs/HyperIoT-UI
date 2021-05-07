@@ -83,9 +83,9 @@
 
         </div> <!-- Third Row -->
 
-        <div class="form-group row">
+        <div class="form-group row d-flex align-items-center">
 
-            <div id="fpack-col-tfield" class="col-6">
+            <div id="fpack-col-tfield" class="col-2">
 
                 <hyt-input-text 
                     i18n-placeholder="@@HYT_timestamp_field" placeholder="Timestamp field" [form]="form" name="hpacket-timestampfield"
@@ -98,19 +98,46 @@
                 </hyt-input-text>
 
             </div>
+
+            <div id="fpack-col-ttype" class="col-4">
+            
+                <label class="f-label" i18n="@@HYT_timestamp_type">Timestamp Type</label>
+
+                <div class="radio-options pl-2 pr-2">
+                    <hyt-radio-button 
+                        [form]="form" name="hpacket-unixTimestamp" [options]="timestampTypeOptions"
+                        [injectedErrorMsg]="getError('hpacket-unixTimestamp')"
+                    >
+                    </hyt-radio-button>
+                </div>
+
+            </div>
+
             <div id="fpack-col-tformat" class="col-6">
 
-                <hyt-input-text 
+                <div [style.display]="form.get('hpacket-unixTimestamp').value == 'false'?'block':'none'">
+                    <hyt-input-text 
                     i18n-placeholder="@@HYT_timestamp_format" placeholder="Timestamp format" [form]="form" name="hpacket-timestampformat"
                     [injectedErrorMsg]="getError('hpacket-timestampformat')"
                     i18n-hintMessage="@@HYT_hint_packet_enter_timestamp_format"
                     hintMessage="Enter the timestamp field format: eg. 'dd/MM/yyyy HH.mmZ'."
                     errorPosition="bottom"
                     minlength="3" isRequired="true"
-                >
-                </hyt-input-text>
-
-            </div>
+                    >
+                    </hyt-input-text>
+                </div>
+                 <div [style.display]="form.get('hpacket-unixTimestamp').value == 'true'?'block':'none'">
+                    <label class="f-label" i18n="@@HYT_unix_timestamp_format">Unix Timestamp Format</label>
+ 
+                    <div class="radio-options pl-2 pr-2">
+                        <hyt-radio-button 
+                            [form]="form" name="hpacket-unixTimestampFormatSeconds" [options]="unixTimestampOptions"
+                            [injectedErrorMsg]="getError('hpacket-unixTimestampFormatSeconds')"
+                        >
+                        </hyt-radio-button>
+                    </div>
+                </div>
+             </div>
 
         </div> <!-- Fourth Row -->
 

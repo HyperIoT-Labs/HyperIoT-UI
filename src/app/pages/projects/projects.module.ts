@@ -5,8 +5,6 @@ import { ComponentsModule } from '@hyperiot/components';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
-// import { CronEditorModule } from 'ngx-cron-editor';
-import { CronEditorModule } from 'cron-editor';
 import { ColorPickerModule } from 'ngx-color-picker';
 
 import { ProjectCardComponent } from './project-card/project-card.component';
@@ -74,6 +72,7 @@ import { StatisticInputErrorComponent } from './project-forms/project-statistics
 import { HPacketFieldFilterPipe } from './hPacketFieldFilter.pipe';
 import { EventComponentContainerComponent } from './project-forms/project-events-form/event-component-container/event-component-container.component';
 import { EventMqttCommandComponent } from './project-forms/project-events-form/event-mqtt-command/event-mqtt-command.component';
+import { WidgetsModule } from '@hyperiot/widgets';
 
 @NgModule({
   declarations: [
@@ -124,7 +123,6 @@ import { EventMqttCommandComponent } from './project-forms/project-events-form/e
     EventMqttCommandComponent
   ],
   imports: [
-    CronEditorModule,
     ColorPickerModule,
     MatIconModule,
     MatButtonModule,
@@ -145,6 +143,7 @@ import { EventMqttCommandComponent } from './project-forms/project-events-form/e
     MatExpansionModule,
     DragDropModule,
     MatListModule,
+    WidgetsModule
   ],
   entryComponents: [
     AddTagModalComponent,

@@ -6,7 +6,6 @@ import { HDevice, HdevicesService, HPacket, HpacketsService, HProject, HProjectA
 import { Observable, Observer } from 'rxjs';
 import { EntitiesService } from 'src/app/services/entities/entities.service';
 import { SummaryListItem } from '../project-detail/generic-summary-list/generic-summary-list.component';
-import { ApplicationFormComponent } from '../project-forms/application-form/application-form.component';
 import { DeviceFormComponent } from '../project-forms/device-form/device-form.component';
 import { PacketEnrichmentFormComponent } from '../project-forms/packet-enrichment-form/packet-enrichment-form.component';
 import { ProjectEventsFormComponent } from '../project-forms/project-events-form/project-events-form.component';
@@ -39,9 +38,6 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
 
   @ViewChild('devicesForm')
   devicesForm: DeviceFormComponent;
-
-  @ViewChild('applicationsForm')
-  applicationsForm: ApplicationFormComponent;
 
   @ViewChild('deviceSelect')
   deviceSelect: DeviceSelectComponent;
@@ -131,7 +127,7 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
   isWizardDirty() {
     return (
       this.projectForm.isDirty() ||
-      ((this.selectedSource === 'application') ? this.applicationsForm.isDirty() : this.devicesForm.isDirty()) ||
+      this.devicesForm.isDirty() ||
       // this.devicesForm.isDirty() ||
       this.packetsForm.isDirty() ||
       this.fieldsForm.isDirty() ||
@@ -157,9 +153,7 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
         break;
       }
       case 1: {
-        (this.selectedSource === 'application') ?
-          this.currentForm = this.applicationsForm :
-          this.currentForm = this.devicesForm;
+        this.currentForm = this.devicesForm;
         this.getDevices();
         break;
       }
@@ -214,21 +208,12 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
   }
 
   updateDeviceTable() {
-    if (this.selectedSource === 'application') {
-      this.applicationsForm.summaryList = {
+    this.devicesForm.summaryList = {
         title: this.entitiesService.device.displayListName,
         list: this.hDevices.map((d) => {
           return { name: d.deviceName, description: d.description, data: d };
         }) as SummaryListItem[]
       };
-    } else {
-      this.devicesForm.summaryList = {
-        title: this.entitiesService.device.displayListName,
-        list: this.hDevices.map((d) => {
-          return { name: d.deviceName, description: d.description, data: d };
-        }) as SummaryListItem[]
-      };
-    }
   }
 
   updatePacketTable() {
@@ -249,7 +234,7 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
         setTimeout(() => {
           this.stepper.next();
         }, 0);
-      } else if (this.currentForm instanceof DeviceFormComponent || this.currentForm instanceof ApplicationFormComponent) {
+      } else if (this.currentForm instanceof DeviceFormComponent) {
         this.currentForm.loadEmpty();
         this.hDevices = [...this.updateList(ent, this.hDevices)];
         this.updateDeviceTable();
@@ -327,7 +312,7 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
           this.deviceSelect.freezeSelection();
         }
         this.currentForm.edit(event.item.data, this.currentForm.openDeleteDialog((del) => {
-          if (this.currentForm instanceof DeviceFormComponent || this.currentForm instanceof ApplicationFormComponent) {
+          if (this.currentForm instanceof DeviceFormComponent ) {
             this.hDevices = [...this.deleteFromList(event.item.data.id, this.hDevices)];
             this.hPackets = [...this.hPackets.filter(p => p.device.id !== event.item.data.id)];
             this.updateDeviceTable();
@@ -522,18 +507,10 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
 
   sourceChanged(value) {
     this.selectedSource = value;
-    if (this.selectedSource === 'application') {
-      //TODO find better way to wait form recreation
-      setTimeout(() => {
-        this.currentForm = this.applicationsForm;
-        this.updateDeviceTable();
-      }, 0);
-    } else {
       setTimeout(() => {
         this.currentForm = this.devicesForm;
         this.updateDeviceTable();
-      }, 0);
-    }
+    }, 0);
   }
 
   getDirty(index: number): boolean {
@@ -543,11 +520,7 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
         break;
       }
       case 1: {
-        if (this.selectedSource === 'application') {
-          return (this.applicationsForm) ? this.applicationsForm.isDirty() : false;
-        } else {
-          return (this.devicesForm) ? this.devicesForm.isDirty() : false;
-        }
+        return (this.devicesForm) ? this.devicesForm.isDirty() : false;
         break;
       }
       case 2: {

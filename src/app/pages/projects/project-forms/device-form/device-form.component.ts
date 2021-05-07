@@ -1,11 +1,12 @@
-import { Component, OnDestroy, ElementRef, ViewChild, Input, Injector, AfterViewInit, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
+import { Component, OnDestroy, ElementRef, ViewChild, Input, Injector, AfterViewInit, ViewEncapsulation, ChangeDetectorRef, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 import { HdevicesService, HDevice, HProject } from '@hyperiot/core';
 
 import { ProjectFormEntity, LoadingStatusEnum } from '../project-form-entity';
+import { HttpErrorHandlerService } from 'src/app/services/errorHandler/http-error-handler.service';
 
 
 @Component({
@@ -14,11 +15,22 @@ import { ProjectFormEntity, LoadingStatusEnum } from '../project-form-entity';
   styleUrls: ['./device-form.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class DeviceFormComponent extends ProjectFormEntity implements AfterViewInit, OnDestroy {
+export class DeviceFormComponent extends ProjectFormEntity implements AfterViewInit,OnInit, OnDestroy {
 
   private overlayHeight: ElementRef;
   showPreloader: boolean;
   divHeight: number;
+  changePasswordForm: FormGroup;
+  devicePasswordChangeEnabled: boolean = false;
+  /**
+   * This variable is used as a flag to make a success message appear when changing password goes well.
+   */
+   passwordChanged = false;
+
+   /**
+    * This variable is used as a flag to make an alert appear when an error occurs.
+    */
+   wentWrong = false;
 
   @ViewChild('overlayHeight') set content(content: ElementRef) {
 
@@ -62,6 +74,9 @@ export class DeviceFormComponent extends ProjectFormEntity implements AfterViewI
     },
     'hdevice-passwordConfirm': {
       field: 'passwordConfirm'
+    },
+    'hdevice-oldPassword': {
+      field: 'password'
     }
   };
 
@@ -76,13 +91,19 @@ export class DeviceFormComponent extends ProjectFormEntity implements AfterViewI
     injector: Injector,
     private hDeviceService: HdevicesService,
     private activatedRoute: ActivatedRoute,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private fb: FormBuilder,
+    private httperrorHandler:HttpErrorHandlerService
   ) {
     super(injector);
     this.formTemplateId = 'container-device-form';
     this.longDefinition = this.entitiesService.device.longDefinition;
     this.formTitle = this.entitiesService.device.formTitle;
     this.icon = this.entitiesService.device.icon;
+  }
+
+  ngOnInit():void{
+    this.changePasswordForm = this.fb.group({});
   }
 
   ngAfterViewInit(): void {
@@ -99,7 +120,6 @@ export class DeviceFormComponent extends ProjectFormEntity implements AfterViewI
 
     // }, 0);
 
-
     this.routerSubscription = this.activatedRoute.params.subscribe(params => {
       if (params.deviceId) {
         this.id = params.deviceId;
@@ -108,6 +128,7 @@ export class DeviceFormComponent extends ProjectFormEntity implements AfterViewI
         this.loadEmpty();
       }
       this.cdr.detectChanges();
+      
     });
 
   }
@@ -154,6 +175,8 @@ export class DeviceFormComponent extends ProjectFormEntity implements AfterViewI
 
   loadEmpty() {
     this.form.reset();
+    this.devicePasswordChangeEnabled = false;
+    this.passwordChanged = false;
     this.entity = { ...this.entitiesService.device.emptyModel };
     this.edit();
   }
@@ -172,6 +195,7 @@ export class DeviceFormComponent extends ProjectFormEntity implements AfterViewI
     }
     super.edit(d, readyCallback);
   }
+
   clone(entity?: HDevice): HDevice {
     const device = { ...entity } || this.entity;
     device.id = 0;
@@ -180,6 +204,57 @@ export class DeviceFormComponent extends ProjectFormEntity implements AfterViewI
     this.edit(device);
     return device;
   }
+
+  enablePasswordChange(event){
+    this.devicePasswordChangeEnabled = true;
+  }
+
+  cancelPasswordChange(event){
+    this.devicePasswordChangeEnabled = false;
+    this.changePasswordForm.reset();
+  }
+
+  /**
+   * This method gets the information entered by the user in the 'change password' form, sends it to the back-end and handles possible
+   * errors.
+   */
+   updatePassword(): void {
+    
+    let oldPassword = this.changePasswordForm.value.oldPassword;
+    let newPassword = this.changePasswordForm.value.newPassword;
+    let confirmPassword = this.changePasswordForm.value.confirmPassword;
+
+    this.hDeviceService.updateHDevicePassword(this.entity.id,oldPassword,newPassword,confirmPassword).subscribe(
+      res => {
+        this.passwordChanged = true;
+        this.cancelPasswordChange(null);
+      },
+      err => {
+        this.setErrors(this.httperrorHandler.handle(err));
+        this.passwordChanged = false;
+        this.wentWrong = true;
+        this.changePasswordForm.reset();
+      }
+    );
+  }
+
+  keyDownFunction(event): void {
+    if (event.keyCode === 13) {
+      this.updatePassword();
+    }
+  }
+
+  /**
+   * This method performs the form control on input elements for the "change password" form and returns the status of the elements
+   */
+   notValidCpf(): boolean {
+    return (
+      this.changePasswordForm.get('oldPassword').invalid ||
+      this.changePasswordForm.get('newPassword').invalid ||
+      this.changePasswordForm.get('confirmPassword').invalid
+    );
+  }
+
 
   private saveDevice(successCallback?, errorCallback?) {
     this.loadingStatus = LoadingStatusEnum.Saving;

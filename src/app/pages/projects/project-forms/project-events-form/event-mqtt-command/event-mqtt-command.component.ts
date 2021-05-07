@@ -154,8 +154,11 @@ export class EventMqttCommandComponent implements OnInit,EventComponent {
         if(!this.mqttFieldsFormGroup.get(field.label)){
           this.mqttFieldsFormGroup.addControl(field.label,new FormControl());
         }
-        if(data)
-            this.mqttFieldsFormGroup.get(field.label).setValue(data[field.value]);
+        if(data){
+            //converting option value to string (it can be also boolean or number)
+            let fieldName = (field.value != null && field.value != undefined)?""+field.value:null;
+            this.mqttFieldsFormGroup.get(field.label).setValue(data[fieldName]);
+        }
       })
       if(data)
         this.mqttFieldsFormGroup.get("active").setValue(data.active);
