@@ -1637,6 +1637,9 @@
         <source>Choose File</source>
         <target>Scegli File</target>
       </trans-unit>
+      <trans-unit id="HYT_reload_topology_alert" datatype="html">
+        <source>La configurazione del recording delle informazione è stata modificata. Per renderla effettuva è necessario riavvare la registrazione, vuoi riavvarla adesso? In ogni caso i dati che stai inviando non verranno persi.</source>
+      </trans-unit>
     </body>
   </file>
 </xliff>
