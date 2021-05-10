@@ -20,6 +20,7 @@
   },
   "private": true,
   "dependencies": {
+    "@hyperiot/components": "file:../HyperIoT-component/dist/components/hyperiot-components-0.1.15.tgz",
     "@hyperiot/widgets": "0.2.0",
     "@types/d3": "^5.7.2",
     "@types/moment-precise-range-plugin": "^0.2.0",
