@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HytModalRef, HytModalService } from '@hyperiot/components';
 import { AlgorithmOfflineDataService, Area, AreasService, Dashboard, DashboardOfflineDataService, HProject } from '@hyperiot/core';
 import { Subject } from 'rxjs';
@@ -95,6 +95,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     private algorithmOfflineDataService: AlgorithmOfflineDataService,
     private areaService: AreasService,
     private hytModalService: HytModalService,
+    private router: Router,
     private activatedRoute: ActivatedRoute
   ) {
     this.offlineWidgetStatus = PageStatus.Standard;
@@ -189,6 +190,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         res => {
+          console.log('res ',  res);
           if (res != null && res != undefined && res.status.toLowerCase() === 'active') {
             this.dataRecordingIsOn = true;
             this.dataRecordingStatus = (this.dataRecordingStatus == 2) ? TopologyStatus.On : TopologyStatus.Activated;
@@ -242,6 +244,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
     } else {
       this.dashboardOfflineDataService.getEventCountEmpty();
     }
+  }
+
+  goToProjectWizard() {
+    this.router.navigateByUrl(`/project-wizard/${this.idProjectSelected}`);
   }
 
   private getProjectList() {
