@@ -832,6 +832,9 @@
       <trans-unit id="HYT_edit_in_wizard" datatype="html">
         <source>Edit in wizard</source>
       </trans-unit>
+      <trans-unit id="HYT_edit" datatype="html">
+        <source>Edit</source>
+      </trans-unit>
       <trans-unit id="HYT_loading_project_tree" datatype="html">
         <source>Loading project tree</source>
       </trans-unit>

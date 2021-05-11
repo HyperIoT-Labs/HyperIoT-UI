@@ -1110,6 +1110,10 @@
         <source>Edit in wizard</source>
         <target>Modifica nel wizard</target>
       </trans-unit>
+      <trans-unit id="HYT_edit" datatype="html">
+        <source>Edit</source>
+        <target>Modifica</target>
+      </trans-unit>
       <trans-unit id="HYT_loading_project_tree" datatype="html">
         <source>Loading project tree</source>
         <target>Caricamento project tree</target>

@@ -92,7 +92,7 @@
 
             }
 
-            #editInWizardContent{
+            #editInWizardContent {
                 text-align: center;
                 margin-top: 25px;
 
@@ -469,7 +469,7 @@
 
                         }
 
-                        #editInWizardContent {
+                        #editInWizardContent #goToDashboardContent {
 
                             display: flex;
                             flex-direction: row;
@@ -635,7 +635,7 @@
                                 }
                             }
 
-                            #editInWizardContent {
+                            #editInWizardContent #goToDashboardContent {
                                 hyt-button {
                                     button {
 
@@ -685,7 +685,7 @@
     
                             }
     
-                            #editInWizardContent {
+                            #editInWizardContent #goToDashboardContent {
     
                                 flex: 0 0 50%;
                                 order: 3;
@@ -857,6 +857,22 @@
                                 justify-content: center;
                                 order: 2;
                                 margin-top: 10px;
+
+                                hyt-button {
+
+                                    margin-right: 0px;
+
+                                }
+
+                            }
+
+                            #goToDashboardContent {
+
+                                flex: 0 0 100%;
+                                justify-content: center;
+                                order: 2;
+                                margin-top: 10px;
+                                padding-right: 25px;
 
                                 hyt-button {
 
