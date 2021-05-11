@@ -21,6 +21,9 @@ import { WizardOptionsModalComponent } from './wizard-options-modal/wizard-optio
 import { WizardReportModalComponent } from './wizard-report-modal/wizard-report-modal.component';
 import { InfoRecordingActionComponent } from 'src/app/components/modals/info-recording-action/info-recording-action.component';
 import { ConfirmRecordingActionComponent } from 'src/app/components/modals/confirm-recording-action/confirm-recording-action.component';
+import { DashboardConfigService } from 'src/app/pages/dashboard/dashboard-config.service';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'hyt-project-wizard',
@@ -88,11 +91,15 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
 
   recordStateInLoading = false;
 
+  /** Subject for manage the open subscriptions */
+  protected ngUnsubscribe: Subject<void> = new Subject<void>();
+
   constructor(
     private hDevicesService: HdevicesService,
     private hPacketsService: HpacketsService,
     public entitiesService: EntitiesService,
     private hytModalService: HytModalService,
+    private dashboardConfigService: DashboardConfigService,
     private route: ActivatedRoute
   ) { }
 
@@ -269,15 +276,23 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
       }
 
       if (shouldUpdateTopology) {
-        setTimeout(() => {
-          this.openConfirmChangeRecordingModal(true);
-        }, 500);
+        this.dashboardConfigService.getRecordingStatus(this.currentProject.id)
+        .pipe(takeUntil(this.ngUnsubscribe))
+        .subscribe(
+          res => {
+            const recordingStatus = res;
+            if (recordingStatus.status === 'ACTIVE') {
+              this.openConfirmChangeRecordingModal(false);
+            }
+          },
+          error => {
+            console.error(error);
+          });
       }
-
-    }, (error) => {
-      // TODO: ...
+    },
+    error => {
+      console.error(error);
     });
-
 
   }
 
@@ -287,7 +302,7 @@ export class ProjectWizardComponent implements OnInit, AfterViewInit {
       {
         textBodyModal: $localize`:@@HYT_reload_topology_alert:Changes have been made to the registration configuration. To make them effective you need to restart the registration, do you want to start it now? Anyway, the data you are sending won't be lost.`,
         dataRecordingIsOn: rocordingState,
-        actionType: 'start-stop',
+        actionType: 'restart',
         projectId: this.currentProject.id
       },
       false

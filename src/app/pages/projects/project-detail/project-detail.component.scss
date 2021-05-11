@@ -92,7 +92,7 @@
 
             }
 
-            #editInWizardContent {
+            #navButtonsContent {
                 text-align: center;
                 margin-top: 25px;
 
@@ -113,7 +113,6 @@
                 }
 
             }
-            
 
         }
 
@@ -469,7 +468,7 @@
 
                         }
 
-                        #editInWizardContent #goToDashboardContent {
+                        #navButtonsContent {
 
                             display: flex;
                             flex-direction: row;
@@ -635,7 +634,7 @@
                                 }
                             }
 
-                            #editInWizardContent #goToDashboardContent {
+                            #navButtonsContent {
                                 hyt-button {
                                     button {
 
@@ -644,7 +643,6 @@
                                     }
                                 }
                             }
-
                         }
                     }
                 }
@@ -685,8 +683,8 @@
     
                             }
     
-                            #editInWizardContent #goToDashboardContent {
-    
+                            #navButtonsContent {
+
                                 flex: 0 0 50%;
                                 order: 3;
     
@@ -851,12 +849,13 @@
 
                             }
 
-                            #editInWizardContent {
+                            #navButtonsContent {
 
                                 flex: 0 0 100%;
                                 justify-content: center;
                                 order: 2;
                                 margin-top: 10px;
+                                font-size: 0.85em;
 
                                 hyt-button {
 
@@ -872,7 +871,8 @@
                                 justify-content: center;
                                 order: 2;
                                 margin-top: 10px;
-                                padding-right: 25px;
+                                margin-right: 20px;
+                                font-size: 0.85em;
 
                                 hyt-button {
 
