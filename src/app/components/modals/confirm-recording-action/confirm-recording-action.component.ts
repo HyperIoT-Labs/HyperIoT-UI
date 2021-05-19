@@ -50,6 +50,19 @@ export class ConfirmRecordingActionComponent extends HytModal implements OnDestr
     if (this.data.actionType === 'start-stop' && this.data.dataRecordingIsOn) {
       this.topologyActionState = TopologyActionState.LoadingOff;
       this.changeRecordingStateToOff();
+    } else if (this.data.actionType === 'restart') {
+      this.hytTopologyService.postRecordingStateOff(this.data.projectId)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        res => {
+          this.topologyActionState = TopologyActionState.LoadingOn;
+          this.topologyRequestState = TopologyRequestState.Submitting;
+          this.topologyRequest();
+        },
+        error => {
+            this.topologyRequestState = TopologyRequestState.ToOffFailed;
+            console.error(error);
+        });
     } else {
       this.topologyActionState = TopologyActionState.LoadingOn;
       this.topologyRequestState = TopologyRequestState.Submitting;
@@ -80,7 +93,7 @@ export class ConfirmRecordingActionComponent extends HytModal implements OnDestr
 
   }
 
-  changeRecordingStateToOff() {
+  changeRecordingStateToOff(callback?: Function) {
     this.topologyRequestState = TopologyRequestState.Submitting;
 
     this.hytTopologyService.postRecordingStateOff(this.data.projectId)

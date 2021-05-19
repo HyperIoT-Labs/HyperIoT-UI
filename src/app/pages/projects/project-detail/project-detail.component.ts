@@ -400,6 +400,10 @@ export class ProjectDetailComponent implements OnInit {
     this.router.navigateByUrl(`/project-wizard/${this.projectId}`);
   }
 
+  goToDashboard() {
+    this.router.navigate(['/dashboards'], { queryParams: { projectId: this.projectId } });
+  }
+
   /**
    * function used to toggle display treeview project in area map
    */
