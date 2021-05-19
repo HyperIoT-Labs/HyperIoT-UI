@@ -29,7 +29,9 @@ export class EventMailComponent implements OnInit,EventComponent {
 
   constructor(
     private fb: FormBuilder
-  ) { }
+  ) {
+      this.originalFormsValues = this.getJsonForms();
+   }
 
   getId(): string {
     return EventComponentType.SEND_MAIL_ACTION;

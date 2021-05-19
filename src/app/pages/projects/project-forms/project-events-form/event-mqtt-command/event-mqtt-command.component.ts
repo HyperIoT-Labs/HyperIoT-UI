@@ -39,7 +39,9 @@ export class EventMqttCommandComponent implements OnInit,EventComponent {
     // { value: '', label: $localize`:@@HYT_start_statistic:START STATISTIC` }
   ];
 
-  constructor(private hPacketsService: HpacketsService) { }
+  constructor(private hPacketsService: HpacketsService) { 
+    this.originalFormsValues = this.getJsonForms();
+  }
 
   ngOnInit(): void {
     this.getHPackets();
