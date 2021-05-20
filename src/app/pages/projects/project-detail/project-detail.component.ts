@@ -234,16 +234,6 @@ export class ProjectDetailComponent implements OnInit {
                     name: 'Enrichments',
                     icon: 'icon-hyt_enrichments'
                   }
-                  // {
-                  //   data: { id: k.id, type: 'packet-statistics' },
-                  //   name: 'Statistics',
-                  //   icon: 'icon-hyt_statistics'
-                  // },
-                  // {
-                  //   data: { id: k.id, type: 'project-events' },
-                  //   name: 'Events',
-                  //   icon: 'icon-hyt_event'
-                  // }
                 ]
               };
             });
