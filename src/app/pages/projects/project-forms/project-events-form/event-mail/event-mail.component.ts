@@ -30,7 +30,7 @@ export class EventMailComponent implements OnInit,EventComponent {
   constructor(
     private fb: FormBuilder
   ) {
-      this.originalFormsValues = this.getJsonForms();
+      
    }
 
   getId(): string {
@@ -103,7 +103,9 @@ export class EventMailComponent implements OnInit,EventComponent {
   }
 
   isDirty() {
-    return this.getJsonForms() !== this.originalFormsValues;
+    return this.originalFormsValues !==  "" && this.originalFormsValues !== null &&
+           this.originalFormsValues !== undefined &&
+            this.getJsonForms() !== this.originalFormsValues;
   }
 
   changeEventActive(active){
