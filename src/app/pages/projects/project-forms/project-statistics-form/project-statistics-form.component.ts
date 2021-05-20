@@ -13,18 +13,20 @@ import { SummaryListItem } from '../../project-detail/generic-summary-list/gener
 import { StatisticInputDefinitionComponent } from './statistic-input-definition/statistic-input-definition.component';
 
 @Component({
-  selector: 'hyt-project-statistics-form',
-  templateUrl: './project-statistics-form.component.html',
-  styleUrls: ['./project-statistics-form.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  selector: "hyt-project-statistics-form",
+  templateUrl: "./project-statistics-form.component.html",
+  styleUrls: ["./project-statistics-form.component.scss"],
+  encapsulation: ViewEncapsulation.None,
 })
-export class ProjectStatisticsFormComponent extends ProjectFormEntity implements OnInit, OnChanges, AfterViewInit, OnDestroy {
-
+export class ProjectStatisticsFormComponent
+  extends ProjectFormEntity
+  implements OnInit, OnChanges, AfterViewInit, OnDestroy
+{
   private overlayHeight: ElementRef;
   showPreloader: boolean;
   divHeight: number;
 
-  @ViewChild('overlayHeight') set content(content: ElementRef) {
+  @ViewChild("overlayHeight") set content(content: ElementRef) {
     if (!content) {
       this.showPreloader = false;
       return;
@@ -39,13 +41,13 @@ export class ProjectStatisticsFormComponent extends ProjectFormEntity implements
 
   entityFormMap = {
     cronExpressionFC: {
-      field: 'cronExpression',
-      default: ''
+      field: "cronExpression",
+      default: "",
     },
-    'hprojectalgorithm-name': {
-      field: 'name',
-      default: ''
-    }
+    "hprojectalgorithm-name": {
+      field: "name",
+      default: "",
+    },
   };
 
   id: number; // <-- this could be made private
@@ -60,18 +62,18 @@ export class ProjectStatisticsFormComponent extends ProjectFormEntity implements
 
   selectedAlgorithm: Algorithm;
 
-  @ViewChild('statisticInputDefinition')
+  @ViewChild("statisticInputDefinition")
   statisticInputDefinition: StatisticInputDefinitionComponent;
 
-  public cronExpression = '0 0 10 1 1/1 ? *';
+  public cronExpression = "0 0 10 1 1/1 ? *";
   public isCronDisabled = false;
   public cronOptions: CronOptions = {
-    formInputClass: 'form-control cron-editor-input',
-    formSelectClass: 'form-control cron-editor-select',
-    formRadioClass: 'cron-editor-radio',
-    formCheckboxClass: 'cron-editor-checkbox',
+    formInputClass: "form-control cron-editor-input",
+    formSelectClass: "form-control cron-editor-select",
+    formRadioClass: "cron-editor-radio",
+    formCheckboxClass: "cron-editor-checkbox",
 
-    defaultTime: '10:00:00',
+    defaultTime: "10:00:00",
     use24HourTime: true,
 
     hideMinutesTab: true,
@@ -84,7 +86,7 @@ export class ProjectStatisticsFormComponent extends ProjectFormEntity implements
     hideSeconds: true,
 
     removeSeconds: false,
-    removeYears: false
+    removeYears: false,
   };
 
   showCover = false;
@@ -92,12 +94,19 @@ export class ProjectStatisticsFormComponent extends ProjectFormEntity implements
   private activatedRouteSubscription: Subscription;
 
   form = new FormGroup({
-    cronExpressionFC: new FormControl(this.cronExpression)
+    cronExpressionFC: new FormControl({
+      value: this.cronExpression,
+      disabled: this.isCronDisabled,
+    })
   });
 
   activeOptions: Option[] = [
-    { value: "true", label: $localize`:@@HYT_statistics_active:ACTIVE`, checked: true },
-    { value: "false", label: $localize`:@@HYT_statistics_disabled:DISABLED`}
+    {
+      value: "true",
+      label: $localize`:@@HYT_statistics_active:ACTIVE`,
+      checked: true,
+    },
+    { value: "false", label: $localize`:@@HYT_statistics_disabled:DISABLED` },
     // { value: '', label: $localize`:@@HYT_start_statistic:START STATISTIC` }
   ];
 
@@ -109,24 +118,30 @@ export class ProjectStatisticsFormComponent extends ProjectFormEntity implements
     private cdr: ChangeDetectorRef
   ) {
     super(injector);
-    this.formTemplateId = 'container-statistic-form';
+    this.formTemplateId = "container-statistic-form";
     this.hideDelete = true;
     this.longDefinition = this.entitiesService.statistic.longDefinition;
     this.formTitle = this.entitiesService.statistic.formTitle;
     this.icon = this.entitiesService.statistic.icon;
-    this.activatedRouteSubscription = this.activatedRoute.parent.params.subscribe(routeParams => {
-      if (routeParams.projectId) {
-        this.currentProject = {id: routeParams.projectId, entityVersion: null}; // read id of project
-        this.loadData();
-      }
-    });
+    this.activatedRouteSubscription =
+      this.activatedRoute.parent.params.subscribe((routeParams) => {
+        if (routeParams.projectId) {
+          this.currentProject = {
+            id: routeParams.projectId,
+            entityVersion: null,
+          }; // read id of project
+          this.loadData();
+        }
+      });
   }
 
   ngOnInit() {
     this.algorithmsService.findAllAlgorithm().subscribe((res) => {
       this.algorithmList = res;
-      this.algorithmOptions = this.algorithmList
-      .map(algorithm => ({ value: algorithm, label: algorithm.name }));
+      this.algorithmOptions = this.algorithmList.map((algorithm) => ({
+        value: algorithm,
+        label: algorithm.name,
+      }));
     });
     // this.form.patchValue({cronExpressionFC: '0 0 1/1 * *'});
   }
@@ -150,15 +165,20 @@ export class ProjectStatisticsFormComponent extends ProjectFormEntity implements
   algorithmChanged(event): void {
     this.selectedAlgorithm = event.value;
     this.buildConfig();
-    this.statisticInputDefinition.setConfigDefinition(JSON.stringify(this.config));
+    this.statisticInputDefinition.setConfigDefinition(
+      JSON.stringify(this.config)
+    );
   }
 
   private buildConfig(): void {
-    if (this.entity.id > 0 && this.selectedAlgorithm.id === this.entity.algorithm.id) {
+    if (
+      this.entity.id > 0 &&
+      this.selectedAlgorithm.id === this.entity.algorithm.id
+    ) {
       // edit mode and selected algorithm was bound yet
       this.config = JSON.parse(this.entity.config);
     } else {
-      this.config = {input: [], output: []};
+      this.config = { input: [], output: [] };
     }
   }
 
@@ -170,15 +190,24 @@ export class ProjectStatisticsFormComponent extends ProjectFormEntity implements
   }
 
   delete(successCallback, errorCallback) {
-    this.hProjectAlgorithmsService.deleteHProjectAlgorithm(this.entity.id).subscribe((res) => {
-      this.resetErrors();
-      this.resetForm();
-      this.updateSummaryList();
-      this.showCancel = false;
-      if (successCallback) { successCallback(); }
-    }, (err) => {
-      if (errorCallback) { errorCallback(); }
-    });
+    this.hProjectAlgorithmsService
+      .deleteHProjectAlgorithm(this.entity.id)
+      .subscribe(
+        (res) => {
+          this.resetErrors();
+          this.resetForm();
+          this.updateSummaryList();
+          this.showCancel = false;
+          if (successCallback) {
+            successCallback();
+          }
+        },
+        (err) => {
+          if (errorCallback) {
+            errorCallback();
+          }
+        }
+      );
   }
 
   edit(hProjectAlgorithm?: HProjectAlgorithm, readyCallback?) {
@@ -186,22 +215,30 @@ export class ProjectStatisticsFormComponent extends ProjectFormEntity implements
       this.editMode = true;
       this.showCancel = true;
       super.edit(hProjectAlgorithm, () => {
-        delete this.entity['name']; // this property is set on cloning, but HProjectAlgorithm does not have it
+        delete this.entity["name"]; // this property is set on cloning, but HProjectAlgorithm does not have it
         this.statisticInputDefinition.setConfigDefinition(this.entity.config);
-        if (hProjectAlgorithm && hProjectAlgorithm.algorithm && this.algorithmOptions.some(x => x.value.id === this.entity.algorithm.id)) {
-          this.selectedAlgorithm = this.algorithmOptions.find(x => x.value.id === this.entity.algorithm.id).value;
+        if (
+          hProjectAlgorithm &&
+          hProjectAlgorithm.algorithm &&
+          this.algorithmOptions.some(
+            (x) => x.value.id === this.entity.algorithm.id
+          )
+        ) {
+          this.selectedAlgorithm = this.algorithmOptions.find(
+            (x) => x.value.id === this.entity.algorithm.id
+          ).value;
           this.config = JSON.parse(hProjectAlgorithm.config);
           this.cronExpression = hProjectAlgorithm.cronExpression;
         }
-        this.form.get('algorithm-name').setValue(this.selectedAlgorithm);
-        this.form.get('active').setValue(""+hProjectAlgorithm.active);
+        this.form.get("algorithm-name").setValue(this.selectedAlgorithm);
+        this.form.get("active").setValue("" + hProjectAlgorithm.active);
         if (readyCallback) {
           readyCallback();
         }
       });
     };
     const canDeactivate = this.canDeactivate();
-    if (typeof canDeactivate === 'boolean' && canDeactivate === true) {
+    if (typeof canDeactivate === "boolean" && canDeactivate === true) {
       proceedWithEdit();
     } else {
       (canDeactivate as Observable<any>).subscribe((res) => {
@@ -214,40 +251,50 @@ export class ProjectStatisticsFormComponent extends ProjectFormEntity implements
 
   getCustomClass() {
     if (this.showPreloader) {
-      if (this.divHeight > 353) { /* BIG */
-        return 'loading-logo display-logo big-bg';
+      if (this.divHeight > 353) {
+        /* BIG */
+        return "loading-logo display-logo big-bg";
       }
-      if (this.divHeight >= 293 && this.divHeight <= 352) { /* MEDIUM */
-        return 'loading-logo display-logo medium-bg';
+      if (this.divHeight >= 293 && this.divHeight <= 352) {
+        /* MEDIUM */
+        return "loading-logo display-logo medium-bg";
       }
-      if (this.divHeight >= 233 && this.divHeight <= 292) { /* SMALL */
-        return 'loading-logo display-logo small-bg';
+      if (this.divHeight >= 233 && this.divHeight <= 292) {
+        /* SMALL */
+        return "loading-logo display-logo small-bg";
       }
-      if (this.divHeight >= 182 && this.divHeight <= 232) { /* X-SMALL */
-        return 'loading-logo display-logo x-small-bg';
+      if (this.divHeight >= 182 && this.divHeight <= 232) {
+        /* X-SMALL */
+        return "loading-logo display-logo x-small-bg";
       }
-      if (this.divHeight < 182) { /* X-SMALL */
-        return '';
+      if (this.divHeight < 182) {
+        /* X-SMALL */
+        return "";
       }
     } else {
-      return '';
+      return "";
     }
   }
 
   isDirty() {
-    return this.editMode && (super.isDirty() || this.statisticInputDefinition.isDirty());
+    return (
+      this.editMode &&
+      (super.isDirty() || this.statisticInputDefinition.isDirty())
+    );
   }
 
   isValid(): boolean {
-    return (this.editMode && this.statisticInputDefinition) ?
-      (super.isValid() && !this.statisticInputDefinition.isInvalid()) : false;
+    return this.editMode && this.statisticInputDefinition
+      ? super.isValid() && !this.statisticInputDefinition.isInvalid()
+      : false;
   }
 
   loadData() {
     this.updateSummaryList();
     this.entityEvent.emit({
-      event: 'treeview:focus',
-      id: this.currentProject.id, type: 'statistics'
+      event: "treeview:focus",
+      id: this.currentProject.id,
+      type: "statistics",
     });
   }
 
@@ -260,7 +307,7 @@ export class ProjectStatisticsFormComponent extends ProjectFormEntity implements
     this.edit(this.entity);
   }
 
-  changeEventActive(event){
+  changeEventActive(event) {
     this.form.get("active").setValue(event);
   }
 
@@ -280,13 +327,15 @@ export class ProjectStatisticsFormComponent extends ProjectFormEntity implements
     hProjectAlgorithm.algorithm = this.selectedAlgorithm;
     hProjectAlgorithm.project = this.currentProject;
     // set output configuration (it does not ever change from algorithm base configuration)
-    const baseConfig: AlgorithmConfig = JSON.parse(this.selectedAlgorithm.baseConfig);
+    const baseConfig: AlgorithmConfig = JSON.parse(
+      this.selectedAlgorithm.baseConfig
+    );
     this.config.output = baseConfig.output;
 
     hProjectAlgorithm.config = JSON.stringify(this.config);
     hProjectAlgorithm.cronExpression = this.cronExpression;
-    hProjectAlgorithm.name = this.form.get('hprojectalgorithm-name').value;
-    hProjectAlgorithm.active = this.form.get('active').value;
+    hProjectAlgorithm.name = this.form.get("hprojectalgorithm-name").value;
+    hProjectAlgorithm.active = this.form.get("active").value;
 
     const wasNew = this.isNew();
     const responseHandler = (res) => {
@@ -299,35 +348,43 @@ export class ProjectStatisticsFormComponent extends ProjectFormEntity implements
     };
 
     if (hProjectAlgorithm.id) {
-      this.hProjectAlgorithmsService.updateHProjectAlgorithm(hProjectAlgorithm).subscribe(responseHandler, (err) => {
-        this.setErrors(err);
-        errorCallback && errorCallback(err);
-      });
+      this.hProjectAlgorithmsService
+        .updateHProjectAlgorithm(hProjectAlgorithm)
+        .subscribe(responseHandler, (err) => {
+          this.setErrors(err);
+          errorCallback && errorCallback(err);
+        });
     } else {
       hProjectAlgorithm.entityVersion = 1;
-      this.hProjectAlgorithmsService.saveHProjectAlgorithm(hProjectAlgorithm).subscribe(responseHandler, (err) => {
-        this.setErrors(err);
-        errorCallback && errorCallback(err);
-      });
+      this.hProjectAlgorithmsService
+        .saveHProjectAlgorithm(hProjectAlgorithm)
+        .subscribe(responseHandler, (err) => {
+          this.setErrors(err);
+          errorCallback && errorCallback(err);
+        });
     }
-
   }
 
   setErrors(err) {
-
     if (err.error && err.error.type) {
       switch (err.error.type) {
-        case 'it.acsoftware.hyperiot.base.exception.HyperIoTDuplicateEntityException': {
-          this.validationError = [{ message: $localize`:@@HYT_unavailable_hprojectalgorithm_name:Unavailable statistic name`, field: 'hprojectalgorithm-name', invalidValue: '' }];
-          this.form.get('hprojectalgorithm-name').setErrors({
+        case "it.acsoftware.hyperiot.base.exception.HyperIoTDuplicateEntityException": {
+          this.validationError = [
+            {
+              message: $localize`:@@HYT_unavailable_hprojectalgorithm_name:Unavailable statistic name`,
+              field: "hprojectalgorithm-name",
+              invalidValue: "",
+            },
+          ];
+          this.form.get("hprojectalgorithm-name").setErrors({
             validateInjectedError: {
-              valid: false
-            }
+              valid: false,
+            },
           });
           this.loadingStatus = LoadingStatusEnum.Ready;
           break;
         }
-        case 'it.acsoftware.hyperiot.base.exception.HyperIoTValidationException': {
+        case "it.acsoftware.hyperiot.base.exception.HyperIoTValidationException": {
           super.setErrors(err);
           break;
         }
@@ -338,16 +395,23 @@ export class ProjectStatisticsFormComponent extends ProjectFormEntity implements
     } else {
       this.loadingStatus = LoadingStatusEnum.Error;
     }
-
   }
 
   updateSummaryList() {
-    this.hProjectAlgorithmsService.findByHProjectId(this.currentProject.id).subscribe((hProjectAlgorithms: HProjectAlgorithm[]) => {
-      this.summaryList = {
-        title: this.formTitle,
-        list: hProjectAlgorithms.map((x) => ({ name: x.name, description: x.algorithm.description, data: x }) as SummaryListItem)
-      };
-    });
+    this.hProjectAlgorithmsService
+      .findByHProjectId(this.currentProject.id)
+      .subscribe((hProjectAlgorithms: HProjectAlgorithm[]) => {
+        this.summaryList = {
+          title: this.formTitle,
+          list: hProjectAlgorithms.map(
+            (x) =>
+              ({
+                name: x.name,
+                description: x.algorithm.description,
+                data: x,
+              } as SummaryListItem)
+          ),
+        };
+      });
   }
-
 }
