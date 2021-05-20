@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation,ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { HusersService, HUser } from '@hyperiot/core';
 import { AuthenticationHttpErrorHandlerService } from '../../../services/errorHandler/authentication-http-error-handler.service';
@@ -100,21 +100,25 @@ export class ProfileComponent implements OnInit {
     private hUserService: HusersService,
     private fb: FormBuilder,
     private httperrorHandler: AuthenticationHttpErrorHandlerService,
-    private router: Router
+    private router: Router,
+    private cd: ChangeDetectorRef
   ) { }
 
   /**
    * This is an angular lifecycle hook that executes certain operations on initialization of the application.
    */
   ngOnInit(): void {
+    this.personalInfoForm = this.fb.group({});
+    this.changePasswordForm = this.fb.group({});
     if (localStorage.getItem('user') !== null) {
       this.user = JSON.parse(localStorage.getItem('user'));
       this.userId = this.user.id;
+      this.cd.detectChanges();
+      this.personalInfoForm.get("username").setValue(this.user.username);
+      this.personalInfoForm.get("username").disable();
     } else {
       this.router.navigate(['/auth/login']);
     }
-    this.personalInfoForm = this.fb.group({});
-    this.changePasswordForm = this.fb.group({});
   }
 
   /**
@@ -132,23 +136,24 @@ export class ProfileComponent implements OnInit {
       entityVersion: this.user.entityVersion
     };
 
-    this.hUserService.updateAccountInfo(modifiedUser).subscribe(
-      res => {
-        this.user = res;
-        localStorage.setItem('user', JSON.stringify(res));
-        this.personalInfoUpdated = true;
-        this.loading = false;
-        setTimeout(() => {
+    this.hUserService
+      .updateAccountInfo(modifiedUser)
+      .toPromise()
+      .then(
+        (res) => {
+          this.user = res;
+          localStorage.setItem("user", JSON.stringify(res));
+          this.personalInfoUpdated = true;
+          this.loading = false;
           this.personalInfoUpdated = false;
-        }, 3000);
-      },
-      err => {
-        // TODO handle errors
-        this.errors = this.httperrorHandler.handle(err);
-        this.loading = false;
-        this.personalInfoUpdated = false;
-      }
-    );
+        },
+        (err) => {
+          // TODO handle errors
+          this.errors = this.httperrorHandler.handle(err);
+          this.loading = false;
+          this.personalInfoUpdated = false;
+        }
+      );
   }
 
   /**
