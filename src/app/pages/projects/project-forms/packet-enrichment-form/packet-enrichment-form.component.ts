@@ -48,8 +48,6 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
 
   entity = {} as Rule;
 
-  form: FormGroup;
-
   project: HProject = {} as HProject;
 
   enrichmentRules: SelectOption[] = [
@@ -209,7 +207,6 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
         jac = JSON.stringify(this.ruleConfig);
         break;
     }
-    console.log(jac);
     return JSON.stringify([jac]);
   }
 
@@ -266,9 +263,8 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
     this.enrichmentType = null;
     this.assetTags = [];
     this.assetCategories = [];
-    setTimeout(() => {
-      this.ruleDefinitionComponent.resetRuleDefinition();
-    }, 100);
+    this.cdr.detectChanges();
+    this.ruleDefinitionComponent.resetRuleDefinition();
     this.entity = { ...this.entitiesService.enrichment.emptyModel };
     this.edit();
   }
