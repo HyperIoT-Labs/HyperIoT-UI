@@ -178,15 +178,19 @@ export class EventMqttCommandComponent implements OnInit,EventComponent {
   }
 
   private getHPackets() : Promise<HPacket[]> {
-      if(this.allPackets)
+      if(this.allPackets && this.allPackets.length > 0)
         return new Promise((resolve,reject) => {
           resolve(this.allPackets);
         });
       else
         return new Promise((resolve,reject) => {
           this.hPacketsService.findAllHPacketByProjectIdAndType(this.currentProjectId,"OUTPUT,IO").toPromise().then(res => {
-            this.allPackets = res;
-            this.packetOptions = this.allPackets.map(p => ({ label: p.name, value: p.id }));
+            if(this.allPackets.length == 0){
+              this.packetOptions = [{label:"No output packets defined",value:"-1"}]
+            } else {
+              this.allPackets = res;
+              this.packetOptions = this.allPackets.map(p => ({ label: p.name, value: p.id }));
+            }
             resolve(this.allPackets);
           })
         });

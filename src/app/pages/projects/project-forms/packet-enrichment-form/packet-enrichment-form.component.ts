@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Option, SelectOption } from '@hyperiot/components';
 import { HPacket, HpacketsService, HProject, Rule, RulesService } from '@hyperiot/core';
 import { Observable, Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { SummaryListItem } from '../../project-detail/generic-summary-list/generic-summary-list.component';
 // TODO: find a bettere placement for PageStatusEnum
 import { LoadingStatusEnum, ProjectFormEntity } from '../project-form-entity';
@@ -85,7 +86,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
     private router: Router,
     private cdr: ChangeDetectorRef
   ) {
-    super(injector);
+    super(injector,cdr);
     this.formTemplateId = 'container-enrichment-form';
     this.longDefinition = this.entitiesService.enrichment.longDefinition;
     this.formTitle = this.entitiesService.enrichment.formTitle;
@@ -136,11 +137,10 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
         }
         this.form.get('rule-type').setValue(this.enrichmentType);
         this.form.get('active').setValue(typeJSON.active);
-        setTimeout(() => {
-          if (this.ruleDefinitionComponent) {
-            this.ruleDefinitionComponent.setRuleDefinition(this.entity.ruleDefinition);
-          }
-        }, 100);
+        this.cdr.detectChanges();
+        if (this.ruleDefinitionComponent) {
+          this.ruleDefinitionComponent.setRuleDefinition(this.entity.ruleDefinition);
+        }
         if (readyCallback) {
           readyCallback();
         }
@@ -177,9 +177,9 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
     });
   }
 
-  loadData(packetId?: number) {
+  loadData(packetId?: number){
     if (packetId) { this.packetId = packetId; }
-    this.packetService.findHPacket(this.packetId).subscribe((p: HPacket) => {
+    return this.packetService.findHPacket(this.packetId).pipe(map((p: HPacket) => {
       this.project = p.device.project;
       this.packet = p;
       this.updateSummaryList();
@@ -187,7 +187,8 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
         event: 'treeview:focus',
         id: p.id, type: 'packet-enrichments'
       });
-    });
+      return p;
+    }));
   }
 
   buildJActions(): string {
@@ -289,7 +290,6 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
   }
 
   changeEventActive(event){
-    console.log(event);
     if(event){
       this.form.get('active').setValue(event);
     }

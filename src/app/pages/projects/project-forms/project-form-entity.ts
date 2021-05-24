@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { Observable } from 'rxjs';
 
 import { MatRadioChange } from '@angular/material';
-import { OnInit, Output, EventEmitter, Injector, AfterViewInit } from '@angular/core';
+import { OnInit, Output, EventEmitter, Injector, AfterViewInit,ChangeDetectorRef } from '@angular/core';
 import { SummaryList } from '../project-detail/generic-summary-list/generic-summary-list.component';
 import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
 import { EntitiesService } from 'src/app/services/entities/entities.service';
@@ -51,7 +51,8 @@ export abstract class ProjectFormEntity implements OnInit, AfterViewInit {
 	protected projectsService: ProjectsService;										   
 
     constructor(
-        injector: Injector
+        injector: Injector,
+        private cd:ChangeDetectorRef
     ) {
         this.formBuilder = injector.get(FormBuilder);
         this.entitiesService = injector.get(EntitiesService);
@@ -62,13 +63,11 @@ export abstract class ProjectFormEntity implements OnInit, AfterViewInit {
 
     ngOnInit() {
         this.entity = { ...this.newEntity() };
-        //this.serialize();
     }
 
-    ngAfterViewInit() {
-        setTimeout(() => {
-            this.buildHintMessages();
-        }, 0);
+    ngAfterViewInit(){
+        this.cd.detectChanges();
+        this.buildHintMessages();
     }
 
     canDeactivate(): Observable<any> | boolean {

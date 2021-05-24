@@ -55,7 +55,7 @@ export class ProjectFormComponent extends ProjectFormEntity implements AfterView
     private activatedRoute: ActivatedRoute,
     private cdr: ChangeDetectorRef
   ) {
-    super(injector);
+    super(injector,cdr);
     this.formTemplateId = 'project-form';
     this.longDefinition = this.entitiesService.project.longDefinition;
     this.formTitle = this.entitiesService.project.formTitle;
@@ -91,19 +91,10 @@ export class ProjectFormComponent extends ProjectFormEntity implements AfterView
 
   load() {
     this.loadingStatus = LoadingStatusEnum.Loading;
-
-    /******* VALUE LOADING OVERLAY *******/
-
-    setTimeout(() => {
-
-      this.divHeight = this.overlayHeight.nativeElement.clientHeight;
-
-    }, 0);
-
     this.cdr.detectChanges();
-
+    /******* VALUE LOADING OVERLAY *******/
+    this.divHeight = this.overlayHeight.nativeElement.clientHeight;
     /******* END VALUE LOADING OVERLAY *******/
-
     this.hProjectService.findHProject(this.id).subscribe((p: HProject) => {
       this.entity = p;
       this.entityEvent.emit({
@@ -156,20 +147,6 @@ export class ProjectFormComponent extends ProjectFormEntity implements AfterView
   }
   private deleteProject(successCallback?, errorCallback?) {
     this.loadingStatus = LoadingStatusEnum.Saving;
-    // this.hProjectService.deleteHProject(this.entity.id).subscribe((res) => {
-    //   this.loadingStatus = LoadingStatusEnum.Ready;
-    //   successCallback && successCallback(res);
-    //   // request navigate to project list when the project itself is deleted
-    //   this.entityEvent.emit({
-    //     event: 'entity:delete',
-    //     exitRoute: 'out'
-    //     // exitRoute: ['/projects']
-    //   });
-    // }, (err) => {
-    //   this.loadingStatus = LoadingStatusEnum.Error;
-    //   errorCallback && errorCallback(err);
-    // });
-
     this.projectsService.deleteProject(this.entity.id);
     this.projectsService.subProjects.subscribe({
       next: (v) => {

@@ -150,7 +150,7 @@ export class PacketFormComponent
     private activatedRoute: ActivatedRoute,
     private cdr: ChangeDetectorRef
   ) {
-    super(injector);
+    super(injector,cdr);
     this.formTemplateId = "container-packet-form";
     this.longDefinition = this.entitiesService.packet.longDefinition;
     this.formTitle = this.entitiesService.packet.formTitle;
@@ -184,15 +184,9 @@ export class PacketFormComponent
 
   load() {
     this.loadingStatus = LoadingStatusEnum.Loading;
-
-    /******* VALUE LOADING OVERLAY *******/
-
-    setTimeout(() => {
-      this.divHeight = this.overlayHeight.nativeElement.clientHeight;
-    }, 0);
-
     this.cdr.detectChanges();
-
+    /******* VALUE LOADING OVERLAY *******/
+    this.divHeight = this.overlayHeight.nativeElement.clientHeight;
     /******* END VALUE LOADING OVERLAY *******/
 
     this.hPacketService.findHPacket(this.id).subscribe(
@@ -224,7 +218,7 @@ export class PacketFormComponent
 
   hpacketTypeChange(event) {
     this.entity.type = event;
-    console.log(this.entity);
+    
     let optionFormatText = this.formatOptions.find(
         (opt) => opt.value === HPacket.FormatEnum.TEXT
     );
@@ -242,23 +236,25 @@ export class PacketFormComponent
   }
 
   private defineTopics(packet: HPacket) {
-    this.mqttUrl = environment.mqttUrl;
-    if (packet.type == "INPUT" || packet.type == "IO") {
-      this.mqttTopic =
-        "streaming/" +
-        packet.device.project.id +
-        "/" +
-        packet.device.id +
-        "/" +
-        packet.id;
-    } else {
-      this.mqttTopic = null;
-    }
+    if(packet.device && packet.device.project) {
+      this.mqttUrl = environment.mqttUrl;
+      if (packet.type == "INPUT" || packet.type == "IO") {
+        this.mqttTopic =
+          "streaming/" +
+          packet.device.project.id +
+          "/" +
+          packet.device.id +
+          "/" +
+          packet.id;
+      } else {
+        this.mqttTopic = null;
+      }
 
-    if (packet.type == "OUTPUT" || packet.type == "IO") {
-      this.mqttReadTopic = "/" + packet.device.id + "/receive";
-    } else {
-      this.mqttReadTopic = null;
+      if (packet.type == "OUTPUT" || packet.type == "IO") {
+        this.mqttReadTopic = "/" + packet.device.id + "/receive";
+      } else {
+        this.mqttReadTopic = null;
+      }
     }
   }
 

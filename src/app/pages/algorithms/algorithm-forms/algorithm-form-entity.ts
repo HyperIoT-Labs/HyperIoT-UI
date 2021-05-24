@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { Observable } from 'rxjs';
 
 import { MatRadioChange } from '@angular/material';
-import { OnInit, Output, EventEmitter, Injector, AfterViewInit } from '@angular/core';
+import { OnInit, Output, EventEmitter, Injector, AfterViewInit,ChangeDetectorRef } from '@angular/core';
 import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
 import { EntitiesService } from 'src/app/services/entities/entities.service';
 import { HytModalService } from '@hyperiot/components';
@@ -46,7 +46,8 @@ export abstract class AlgorithmFormEntity implements OnInit, AfterViewInit {
 	protected algorithmService: AlgorithmService;
 
     constructor(
-        injector: Injector
+        injector: Injector,
+        private cd: ChangeDetectorRef
     ) {
         this.formBuilder = injector.get(FormBuilder);
         this.entitiesService = injector.get(EntitiesService);
@@ -60,9 +61,8 @@ export abstract class AlgorithmFormEntity implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit() {
-        setTimeout(() => {
-            this.buildHintMessages();
-        }, 0);
+        this.cd.detectChanges();
+        this.buildHintMessages();
     }
 
     private buildHintMessages() {

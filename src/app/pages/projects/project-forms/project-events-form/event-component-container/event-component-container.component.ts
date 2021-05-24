@@ -1,4 +1,4 @@
-import {  Component, Input, OnInit, ViewChild } from '@angular/core';
+import {  Component, Input, OnInit, ViewChild,ChangeDetectorRef } from '@angular/core';
 import { json } from 'd3-fetch';
 import { EventComponent } from '../event-component';
 import { EventComponentType } from '../event-component-type.enum';
@@ -38,7 +38,7 @@ class FakeEventComponent implements EventComponent{
 })
 export class EventComponentContainerComponent implements OnInit {
 
-  constructor() { }
+  constructor(private cd: ChangeDetectorRef) { }
 
   @Input()
   currentProjectId;
@@ -50,6 +50,7 @@ export class EventComponentContainerComponent implements OnInit {
   currentShownComponentId: string;
 
   data: any;
+
 
   ngOnInit(): void {
   }
@@ -63,11 +64,9 @@ export class EventComponentContainerComponent implements OnInit {
         this.data = null;
     }
     //avoiding error on change detection
-    setTimeout(() => { 
-      if(this.data)
-        this.currentComponentShown.setData(this.data); 
-      })
-    
+    this.cd.detectChanges();
+    if(this.data)
+      this.currentComponentShown.setData(this.data); 
  }
 
   getCurrentComponentShown():EventComponent{

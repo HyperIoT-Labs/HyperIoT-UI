@@ -79,7 +79,7 @@ export class InputFieldsFormComponent extends AlgorithmFormEntity implements OnI
     private algorithmsService: AlgorithmsService,
     private cdr: ChangeDetectorRef
   ) {
-    super(injector);
+    super(injector,cdr);
     this.formTemplateId = 'container-input-field';
     this.longDefinition = this.entitiesService.algorithm.longDefinition;
     this.formTitle = this.entitiesService.algorithm.formTitle;

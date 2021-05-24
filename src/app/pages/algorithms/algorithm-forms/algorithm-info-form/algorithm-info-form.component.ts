@@ -53,7 +53,7 @@ export class AlgorithmInfoFormComponent extends AlgorithmFormEntity implements A
     injector: Injector,
     private cdr: ChangeDetectorRef
   ) {
-    super(injector);
+    super(injector,cdr);
     this.formTemplateId = 'algorithm-info-form';
     this.longDefinition = this.entitiesService.algorithm.longDefinition;
     this.formTitle = this.entitiesService.algorithm.formTitle;
@@ -94,17 +94,9 @@ export class AlgorithmInfoFormComponent extends AlgorithmFormEntity implements A
 
   load() {
     this.loadingStatus = LoadingStatusEnum.Loading;
-
-    /******* VALUE LOADING OVERLAY *******/
-
-    setTimeout(() => {
-
-      this.divHeight = this.overlayHeight.nativeElement.clientHeight;
-
-    }, 0);
-
     this.cdr.detectChanges();
-
+    /******* VALUE LOADING OVERLAY *******/
+    this.divHeight = this.overlayHeight.nativeElement.clientHeight;  
     /******* END VALUE LOADING OVERLAY *******/
 
     this.entity = this.algorithm;

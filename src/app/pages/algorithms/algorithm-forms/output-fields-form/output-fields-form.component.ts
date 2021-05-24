@@ -85,7 +85,7 @@ export class OutputFieldsFormComponent extends AlgorithmFormEntity implements On
     private algorithmsService: AlgorithmsService,
     private cdr: ChangeDetectorRef
   ) {
-    super(injector);
+    super(injector,cdr);
     this.formTemplateId = 'container-output-field';
     this.longDefinition = this.entitiesService.algorithm.longDefinition;
     this.formTitle = this.entitiesService.algorithm.formTitle;

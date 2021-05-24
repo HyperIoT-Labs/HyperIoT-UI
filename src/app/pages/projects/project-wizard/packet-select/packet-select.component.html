@@ -19,7 +19,7 @@
 
         <hyt-select 
           [form]="selectForm" formControlName="selectPacket" name="selectPacket" [options]="packetsOptions"
-          i18n-label="@@HYT_packet" label="Packet" (changeFn)="packetChanged($event)" [disabled]="false"
+          i18n-label="@@HYT_packet" label="Packet" (changeFn)="packetChanged($event)" 
           [sortingAlgorithm]="'A-Z'" [isSortable]="true"
         >
         </hyt-select>

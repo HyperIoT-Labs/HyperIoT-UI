@@ -78,7 +78,7 @@ export class PacketFieldsFormComponent extends ProjectFormEntity implements OnDe
     private router: Router,
     private cdr: ChangeDetectorRef
   ) {
-    super(injector);
+    super(injector,cdr);
     this.formTemplateId = 'container-packet-field';
     this.longDefinition = this.entitiesService.field.longDefinition;
     this.formTitle = this.entitiesService.field.formTitle;

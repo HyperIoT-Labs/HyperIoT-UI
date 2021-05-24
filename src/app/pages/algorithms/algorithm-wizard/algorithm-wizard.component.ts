@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation,ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HytModalService } from '@hyperiot/components';
 import { HytStepperComponent } from '@hyperiot/components/lib/hyt-stepper/hyt-stepper.component';
@@ -54,7 +54,8 @@ export class AlgorithmWizardComponent implements OnInit, AfterViewInit {
       private algorithmsService: AlgorithmsService,
       public entitiesService: EntitiesService,
       private hytModalService: HytModalService,
-      private route: ActivatedRoute) {
+      private route: ActivatedRoute,
+      private cd: ChangeDetectorRef) {
     this.route.params.subscribe(routeParams => {
       this.algorithmId = +(route.snapshot.params.id);
     });
@@ -63,20 +64,19 @@ export class AlgorithmWizardComponent implements OnInit, AfterViewInit {
   ngOnInit() {}
 
   ngAfterViewInit() {
-    setTimeout(() => {// TODO...setimeout 0 to avoid 'expression changed after view checked'. Replace with chenge detection
-      if (this.algorithmId) {
-        this.algorithmsService.findAlgorithm(this.algorithmId).subscribe((a: Algorithm) => {
-          this.currentAlgorithm = a;
-          this.currentInput = JSON.parse(this.currentAlgorithm.baseConfig).input;
-          this.currentOutput = JSON.parse(this.currentAlgorithm.baseConfig).output;
-          this.currentAlgorithmSubject.next(this.currentAlgorithm);
-        });
-      }
-      else {
-        this.algorithmInfoForm.loadingStatus = LoadingStatusEnum.Ready;
-      }
-      this.currentForm = this.algorithmInfoForm;
-    }, 0);
+    this.cd.detectChanges();
+    if (this.algorithmId) {
+      this.algorithmsService.findAlgorithm(this.algorithmId).subscribe((a: Algorithm) => {
+        this.currentAlgorithm = a;
+        this.currentInput = JSON.parse(this.currentAlgorithm.baseConfig).input;
+        this.currentOutput = JSON.parse(this.currentAlgorithm.baseConfig).output;
+        this.currentAlgorithmSubject.next(this.currentAlgorithm);
+      });
+    }
+    else {
+      this.algorithmInfoForm.loadingStatus = LoadingStatusEnum.Ready;
+    }
+    this.currentForm = this.algorithmInfoForm;
   }
 
   getDirty(index: number): boolean {
@@ -150,9 +150,8 @@ export class AlgorithmWizardComponent implements OnInit, AfterViewInit {
       if (this.currentForm instanceof AlgorithmInfoFormComponent) {
         this.currentAlgorithm = ent;
         // wait for step 0 validation (next cicle)
-        setTimeout(() => {
-          this.stepper.next();
-        }, 0);
+        this.cd.detectChanges();
+        this.stepper.next();
       }
     }, (error) => {
       // TODO: ...
@@ -160,9 +159,8 @@ export class AlgorithmWizardComponent implements OnInit, AfterViewInit {
   }
 
   openFinishModal() {
-    setTimeout(() => {
-      const modalRef = this.hytModalService.open(AlgorithmWizardReportModalComponent, this.finishData);
-    }, 0);
+    this.cd.detectChanges();
+    const modalRef = this.hytModalService.open(AlgorithmWizardReportModalComponent, this.finishData);
   }
 
   showCancel(): boolean {

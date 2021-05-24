@@ -65,7 +65,7 @@ export class ApplicationFormComponent extends ProjectFormEntity implements After
     private activatedRoute: ActivatedRoute,
     private cdr: ChangeDetectorRef,
   ) {
-    super(injector);
+    super(injector,cdr);
     this.formTemplateId = 'container-application-form';
     this.longDefinition = this.entitiesService.application.longDefinition;
     this.formTitle = this.entitiesService.application.formTitle;
@@ -101,17 +101,9 @@ export class ApplicationFormComponent extends ProjectFormEntity implements After
 
   load() {
     this.loadingStatus = LoadingStatusEnum.Loading;
-
-    /******* VALUE LOADING OVERLAY *******/
-
-    setTimeout(() => {
-
-      this.divHeight = this.overlayHeight.nativeElement.clientHeight;
-
-    }, 0);
-
     this.cdr.detectChanges();
-
+    /******* VALUE LOADING OVERLAY *******/
+    this.divHeight = this.overlayHeight.nativeElement.clientHeight;
     /******* END VALUE LOADING OVERLAY *******/
 
     this.hDeviceService.findHDevice(this.id).subscribe((d: HDevice) => {

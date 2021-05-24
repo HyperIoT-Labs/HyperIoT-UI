@@ -78,7 +78,7 @@ export class AlgorithmJarFormComponent extends AlgorithmFormEntity implements Af
     injector: Injector,
     private cdr: ChangeDetectorRef
   ) {
-    super(injector);
+    super(injector,cdr);
     this.formTemplateId = 'container-algorithm-jar';
     this.longDefinition = this.entitiesService.algorithm.longDefinition;
     this.formTitle = this.entitiesService.algorithm.formTitle;
@@ -170,17 +170,9 @@ export class AlgorithmJarFormComponent extends AlgorithmFormEntity implements Af
 
   load() {
     this.loadingStatus = LoadingStatusEnum.Loading;
-
-    /******* VALUE LOADING OVERLAY *******/
-
-    setTimeout(() => {
-
-      this.divHeight = this.overlayHeight.nativeElement.clientHeight;
-
-    }, 0);
-
     this.cdr.detectChanges();
-
+    /******* VALUE LOADING OVERLAY *******/
+    this.divHeight = this.overlayHeight.nativeElement.clientHeight;
     /******* END VALUE LOADING OVERLAY *******/
 
     this.entity = this.algorithm;
@@ -241,7 +233,6 @@ export class AlgorithmJarFormComponent extends AlgorithmFormEntity implements Af
    * Function used to simulate click on choose file
    */
   clickChooseLabel(){
-
     this.btnChooseIsDisabled = true;
     const inputChooseFile = document.getElementById('jarName');
     inputChooseFile.click();

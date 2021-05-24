@@ -379,21 +379,9 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
       this.pageStatus = PageStatus.Loading;
       this.lastWindowSize = setTimeout(() => {
         this.loadDashboard();
-        // this.pageStatus = PageStatus.Standard;
       }, 500);
 
     }
-
-    // if (columns !== this.options.maxCols || cell !== this.options.maxCellSize) {
-
-    //   // TODO: Angular-Gridster2 won't apply maxCols option on change (bug??)
-    //   this.options.maxCols = columns;
-    //   if (this.options.maxCols > 1) {
-    //     this.options.mobileBreakpoint = 0;
-    //   }
-    //   this.options.api.optionsChanged();
-
-    // }
   }
 
   // Gridster events/methods

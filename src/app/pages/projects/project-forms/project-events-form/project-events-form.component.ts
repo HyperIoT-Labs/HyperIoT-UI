@@ -69,7 +69,7 @@ export class ProjectEventsFormComponent extends ProjectFormEntity implements OnI
     private cdr: ChangeDetectorRef,
     private assetsTagService: AssetstagsService
   ) {
-    super(injector);
+    super(injector,cdr);
     this.formTemplateId = 'container-events';
     this.longDefinition = this.entitiesService.event.longDefinition;
     this.formTitle = this.entitiesService.event.formTitle;

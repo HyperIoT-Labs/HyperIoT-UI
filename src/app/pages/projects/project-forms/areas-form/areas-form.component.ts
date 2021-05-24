@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, Injector, OnInit, OnDestroy, Output, EventEmitter, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, ElementRef, Injector, OnInit, OnDestroy, Output, EventEmitter, AfterViewInit,ChangeDetectorRef } from '@angular/core';
 import { Router, ActivatedRoute, Event, NavigationStart } from '@angular/router';
 import { HytModalService } from '@hyperiot/components';
 import { ProjectFormEntity, LoadingStatusEnum } from '../project-form-entity';
@@ -52,9 +52,10 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
     private areaService: AreasService,
     private projectService: HprojectsService,
     private modalService: HytModalService,
-    private httpClient: HttpClient
+    private httpClient: HttpClient,
+    private cdr: ChangeDetectorRef
   ) {
-    super(injector);
+    super(injector,cdr);
     this.formTemplateId = 'container-areas-form';
     this.formTitle = $localize`:@@HYT_project_areas:Project Areas`;
     this.projectId = this.activatedRoute.snapshot.parent.params.projectId;
@@ -111,10 +112,9 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
     if (this.areaId === 0) {
       // Add New Area
       this.areaPath.push({ name: 'New', id: 0} as Area);
-      setTimeout(() => {
-        this.resetForm();
-        this.loadingStatus = LoadingStatusEnum.Ready;
-      }, 500);
+      this.cdr.detectChanges();
+      this.resetForm();
+      this.loadingStatus = LoadingStatusEnum.Ready;
       this.editMode = true;
       this.showSave = true;
       this.showCancel = true;

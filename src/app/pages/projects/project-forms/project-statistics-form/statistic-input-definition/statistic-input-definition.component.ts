@@ -2,6 +2,7 @@ import { Component, OnInit, OnChanges, Input,ChangeDetectorRef } from '@angular/
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { HytModalService, SelectOption } from '@hyperiot/components';
 import { Algorithm, HPacket, HPacketField, HpacketsService, HProject, HProjectAlgorithmConfig, HProjectAlgorithmInputField } from '@hyperiot/core';
+import { resolve } from 'dns';
 import { InputDefinitionModalComponent } from './input-definition-modal/input-definition-modal.component';
 import { StatisticInputErrorComponent } from './statistic-input-error/statistic-input-error.component';
 
@@ -20,7 +21,7 @@ interface FieldList {
   templateUrl: "./statistic-input-definition.component.html",
   styleUrls: ["./statistic-input-definition.component.scss"],
 })
-export class StatisticInputDefinitionComponent implements OnInit, OnChanges {
+export class StatisticInputDefinitionComponent implements OnInit {
   @Input() project: HProject;
   @Input() algorithm: Algorithm;
   @Input() config: HProjectAlgorithmConfig;
@@ -50,9 +51,7 @@ export class StatisticInputDefinitionComponent implements OnInit, OnChanges {
     private cd: ChangeDetectorRef
   ) {}
 
-  ngOnInit() {}
-
-  ngOnChanges() {
+  ngOnInit() {
     if (this.packetOptions.length === 0) this.loadHPackets();
   }
 
@@ -126,7 +125,7 @@ export class StatisticInputDefinitionComponent implements OnInit, OnChanges {
 
   loadHPackets(): Promise<HPacket[]> {
     if (this.project) {
-      if (this.allPackets) {
+      if (this.allPackets && this.allPackets.length > 0) {
         return new Promise((resolve, reject) => {
           resolve(this.allPackets);
         });
@@ -147,6 +146,11 @@ export class StatisticInputDefinitionComponent implements OnInit, OnChanges {
             });
         });
       }
+    } else {
+      //return empty result
+      return new Promise((resolve, reject) => {
+        resolve([]);
+      });
     }
   }
 
@@ -229,9 +233,6 @@ export class StatisticInputDefinitionComponent implements OnInit, OnChanges {
     this.originalFormsValues = '{"packet":"","mappedInputList":""}';
   }
 
-  /**
-   * TODO rework (remove setTimeout)
-   */
   setInputConfigDefinition(input: HProjectAlgorithmInputField[]): void {
     this.updating = true;
     this.loadHPackets().then(packets => {
@@ -291,10 +292,8 @@ export class StatisticInputDefinitionComponent implements OnInit, OnChanges {
   }
 
   setConfigDefinition(configDefinition: string) {
-    this.loadHPackets().then(packets => {
-        const config: HProjectAlgorithmConfig = JSON.parse(configDefinition);
-        this.setInputConfigDefinition(config.input);
-    });
+    const config: HProjectAlgorithmConfig = JSON.parse(configDefinition);
+    this.setInputConfigDefinition(config.input);
   }
 
   treefy(fieldList: HPacketField[]): HPacketField[] {

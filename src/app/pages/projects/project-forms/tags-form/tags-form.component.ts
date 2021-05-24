@@ -1,4 +1,4 @@
-import { Component, OnInit, Injector, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, Injector, ViewChild, ViewEncapsulation,ChangeDetectorRef } from '@angular/core';
 import { ProjectFormEntity } from '../project-form-entity';
 import { ElementRef } from '@angular/core';
 import { AssetTag, AssetstagsService } from '@hyperiot/core';
@@ -52,9 +52,10 @@ export class TagsFormComponent extends ProjectFormEntity implements OnInit {
     injector: Injector,
     private router: Router,
     private assetsTagService: AssetstagsService,
-    private modalService: HytModalService
+    private modalService: HytModalService,
+    private cdr:ChangeDetectorRef
   ) {
-    super(injector);
+    super(injector,cdr);
     this.formTemplateId = 'container-tag-form';
     this.formTitle = 'Project Tags';
     this.showSave = false;

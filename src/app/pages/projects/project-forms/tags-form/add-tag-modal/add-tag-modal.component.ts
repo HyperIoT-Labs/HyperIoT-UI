@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewEncapsulation,ChangeDetectorRef } from '@angular/core';
 import { HytModal, HytModalService } from '@hyperiot/components';
 import { PageStatus } from 'src/app/pages/projects/models/pageStatus';
 import { AssetstagsService } from '@hyperiot/core';
@@ -11,7 +11,7 @@ import { HttpErrorHandlerService } from 'src/app/services/errorHandler/http-erro
   styleUrls: ['./add-tag-modal.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class AddTagModalComponent extends HytModal implements OnInit, AfterViewInit {
+export class AddTagModalComponent extends HytModal implements OnInit,AfterViewInit {
 
   pageStatus: PageStatus = PageStatus.Standard;
 
@@ -40,7 +40,8 @@ export class AddTagModalComponent extends HytModal implements OnInit, AfterViewI
     service: HytModalService,
     private assetTagService: AssetstagsService,
     private formBuilder: FormBuilder,
-    private errorHandler: HttpErrorHandlerService
+    private errorHandler: HttpErrorHandlerService,
+    private cd : ChangeDetectorRef
   ) {
     super(service);
     this.descriptionValue = '';
@@ -55,11 +56,13 @@ export class AddTagModalComponent extends HytModal implements OnInit, AfterViewI
     this.tagForm = this.formBuilder.group({});
   }
 
-  ngAfterViewInit(): void {
-    setTimeout(() => {
-      (document.querySelector('#add-tag-modal .hyt-input.mat-input-element') as HTMLElement).focus();
-
-    }, 0);
+  ngAfterViewInit(){
+    this.cd.detectChanges();
+    (
+      document.querySelector(
+        "#add-tag-modal .hyt-input.mat-input-element"
+      ) as HTMLElement
+    ).focus();
   }
 
   resetColor(): void {

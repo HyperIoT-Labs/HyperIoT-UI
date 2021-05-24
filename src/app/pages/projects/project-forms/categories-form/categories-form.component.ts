@@ -1,4 +1,4 @@
-import { Component, OnInit, Injector, ViewChild, ElementRef, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, Injector, ViewChild, ElementRef, ViewEncapsulation,ChangeDetectorRef } from '@angular/core';
 import { ProjectFormEntity } from '../project-form-entity';
 import { TreeNodeCategory, HytModalService } from '@hyperiot/components';
 import { AssetscategoriesService, AssetCategory } from '@hyperiot/core';
@@ -33,8 +33,9 @@ export class CategoriesFormComponent extends ProjectFormEntity implements OnInit
     private router: Router,
     private assetCategoriesService: AssetscategoriesService,
     private modalService: HytModalService,
+    private cdr:ChangeDetectorRef 
   ) {
-    super(injector);
+    super(injector,cdr);
     this.formTemplateId= 'container-category-form';
     this.formTitle = $localize`:@@HYT_project_categories:Project Categories`;
     this.hideDelete = true;

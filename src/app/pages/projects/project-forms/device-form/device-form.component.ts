@@ -22,6 +22,7 @@ export class DeviceFormComponent extends ProjectFormEntity implements AfterViewI
   divHeight: number;
   changePasswordForm: FormGroup;
   devicePasswordChangeEnabled: boolean = false;
+  typeApplication: boolean = true;
   /**
    * This variable is used as a flag to make a success message appear when changing password goes well.
    */
@@ -95,7 +96,7 @@ export class DeviceFormComponent extends ProjectFormEntity implements AfterViewI
     private fb: FormBuilder,
     private httperrorHandler:HttpErrorHandlerService
   ) {
-    super(injector);
+    super(injector,cdr);
     this.formTemplateId = 'container-device-form';
     this.longDefinition = this.entitiesService.device.longDefinition;
     this.formTitle = this.entitiesService.device.formTitle;
@@ -104,22 +105,7 @@ export class DeviceFormComponent extends ProjectFormEntity implements AfterViewI
 
   ngOnInit():void{
     this.changePasswordForm = this.fb.group({});
-  }
-
-  ngAfterViewInit(): void {
-
-    super.ngAfterViewInit();
-
-    // setTimeout(() => {
-
-    //   if(this.showPreloader) {
-
-    //     this.divHeight = this.overlayHeight.nativeElement.clientHeight;
-
-    //   } 
-
-    // }, 0);
-
+    this.cdr.detectChanges();
     this.routerSubscription = this.activatedRoute.params.subscribe(params => {
       if (params.deviceId) {
         this.id = params.deviceId;
@@ -127,14 +113,24 @@ export class DeviceFormComponent extends ProjectFormEntity implements AfterViewI
       } else {
         this.loadEmpty();
       }
-      this.cdr.detectChanges();
-      
     });
+  }
 
+  ngAfterViewInit(): void {
+    super.ngAfterViewInit();
+    
   }
 
   ngOnDestroy() {
     this.routerSubscription.unsubscribe();
+  }
+
+  changeType(type){
+    console.log("change type: "+type);
+    if(type === 'application')
+      this.typeApplication = true;
+    else
+      this.typeApplication = false;
   }
 
   // ProjectDetailEntity interface
@@ -147,19 +143,10 @@ export class DeviceFormComponent extends ProjectFormEntity implements AfterViewI
 
   load() {
     this.loadingStatus = LoadingStatusEnum.Loading;
-
-    /******* VALUE LOADING OVERLAY *******/
-
-    setTimeout(() => {
-
-      this.divHeight = this.overlayHeight.nativeElement.clientHeight;
-
-    }, 0);
-
     this.cdr.detectChanges();
-
+    /******* VALUE LOADING OVERLAY *******/
+    this.divHeight = this.overlayHeight.nativeElement.clientHeight;
     /******* END VALUE LOADING OVERLAY *******/
-
     this.hDeviceService.findHDevice(this.id).subscribe((d: HDevice) => {
       // update form data
       this.edit(d);

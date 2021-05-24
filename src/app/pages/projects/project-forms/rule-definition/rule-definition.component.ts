@@ -152,11 +152,9 @@ export class RuleDefinitionComponent {
     if (this.ruleType === "enrichment") {
       this.ruleForms[0].form.get("rulePacket").disable();
       this.ruleForms[0].form
-        .get("rulePacket")
-        .setValue(this.currentPacket.id || 0);
-      this.ruleForms[0].fieldOptions = this.buildFieldOptions(
-        this.currentPacket
-      );
+          .get("rulePacket")
+          .setValue(this.currentPacket.id);
+        this.ruleForms[0].fieldOptions = this.buildFieldOptions(this.currentPacket);      
     }
 
     this.originalFormsValues =
@@ -203,7 +201,7 @@ export class RuleDefinitionComponent {
 
   loadHPackets(): Promise<HPacket[]> {
     if (this.projectId) {
-      if (this.allPackets) {
+      if (this.allPackets && this.allPackets.length > 0) {
         return new Promise((resolve, reject) => {
           resolve(this.allPackets);
         });

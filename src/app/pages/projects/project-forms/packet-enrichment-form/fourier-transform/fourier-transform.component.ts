@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output } from '@angular/core';
+import { Component, OnInit, Input, Output,ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { HPacket, HProject, HpacketsService, HPacketField } from '@hyperiot/core';
 
@@ -48,6 +48,7 @@ export class FourierTransformComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private hpacketService: HpacketsService,
+    private cd: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
@@ -62,24 +63,21 @@ export class FourierTransformComponent implements OnInit {
 
   onTransformMethodChange(method) {
     this.config.transformMethod = method;
-    setTimeout(() => {
-      this.form.patchValue({ transformMethod: this.config.transformMethod });
-      this.form.get('transformMethod').setValue(this.config.transformMethod);
-    });
+    this.cd.detectChanges();
+    this.form.patchValue({ transformMethod: this.config.transformMethod });
+    this.form.get('transformMethod').setValue(this.config.transformMethod);
   }
 
   onTransformNormChange(norm) {
     this.config.fftNormalization = norm;
-    setTimeout(() => {
-      this.form.get('transformNorm').setValue(this.config.fftNormalization);
-    });
+    this.cd.detectChanges();
+    this.form.get('transformNorm').setValue(this.config.fftNormalization);
   }
 
   onTransformTypeChange(type) {
     this.config.transformType = type;
-    setTimeout(() => {
-      this.form.get('transformType').setValue(this.config.transformType);
-    });
+    this.cd.detectChanges();
+    this.form.get('transformType').setValue(this.config.transformType);
   }
 
   onInputFieldChange(field) {
@@ -126,21 +124,21 @@ export class FourierTransformComponent implements OnInit {
     this.onTransformMethodChange(this.config.transformMethod);
     this.onTransformNormChange(this.config.fftNormalization);
     this.onTransformTypeChange(this.config.transformType);
-    setTimeout(() => {
-      this.form.get('inputField').setValue(this.config.inputFieldId);
-      if (this.config.outputFieldId) {
-        this.hpacketService.findHPacket(this.packet.id).subscribe((res) => {
-          this.packet = res;
-          const outputField = this.packet.fields.find((pf) => pf.id === this.config.outputFieldId);
-          if (outputField) {
-            this.config.outputFieldName = outputField.name;
-          } else {
-            this.config.outputFieldId = 0;
-            this.config.outputFieldName = '';
-          }
-        });
-      }
-    });
+    this.cd.detectChanges();
+    this.form.get('inputField').setValue(this.config.inputFieldId);
+    if (this.config.outputFieldId) {
+      this.hpacketService.findHPacket(this.packet.id).subscribe((res) => {
+        this.packet = res;
+        const outputField = this.packet.fields.find((pf) => pf.id === this.config.outputFieldId);
+        if (outputField) {
+          this.config.outputFieldName = outputField.name;
+        } else {
+          this.config.outputFieldId = 0;
+          this.config.outputFieldName = '';
+        }
+      });
+    }
+    
     this.originalConfig = {};
     Object.assign(this.originalConfig, this._config);
   }

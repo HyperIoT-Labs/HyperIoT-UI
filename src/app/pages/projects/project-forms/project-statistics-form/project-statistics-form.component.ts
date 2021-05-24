@@ -117,7 +117,7 @@ export class ProjectStatisticsFormComponent
     private activatedRoute: ActivatedRoute,
     private cdr: ChangeDetectorRef
   ) {
-    super(injector);
+    super(injector,cdr);
     this.formTemplateId = "container-statistic-form";
     this.hideDelete = true;
     this.longDefinition = this.entitiesService.statistic.longDefinition;
@@ -143,7 +143,6 @@ export class ProjectStatisticsFormComponent
         label: algorithm.name,
       }));
     });
-    // this.form.patchValue({cronExpressionFC: '0 0 1/1 * *'});
   }
 
   ngOnChanges() {
@@ -154,7 +153,6 @@ export class ProjectStatisticsFormComponent
 
   ngAfterViewInit() {
     super.ngAfterViewInit();
-    // this.loadEmpty();
     this.cdr.detectChanges();
   }
 

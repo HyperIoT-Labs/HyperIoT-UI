@@ -1,9 +1,5 @@
 <div id="container-device-form" class="container">
 
-    <!-- <p class="subtitle-section">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer rutrum magna lacus, a lacinia orci feugiat non. Quisque pharetra quam vitae pharetra euismod. Curabitur sodales eget elit id aliquam. In hac habitasse platea dictumst. Nam in dignissim leo. Pellentesque in lorem at justo mollis volutpat. Nam rutrum, orci vel fermentum semper, felis ante dictum nisl, vitae ultricies lectus ante iaculis nibh. Donec facilisis sagittis ligula, ut consequat elit facilisis non. Nam non enim magna. Mauris euismod velit sit amet porta fermentum.
-    </p> ONLY FOR PROJECT DETAIL -->
-
     <!-- SECOND FORM -->
 
     <form [formGroup]="form" #formReference [ngClass]="{'blurred': loadingStatus !== LoadingStatus.Ready}">
@@ -55,12 +51,33 @@
                     i18n-hintMessage="@@HYT_hint_device_model"
                     hintMessage="Enter the device model."
                     [form]="form"
+                    [ngClass]="(typeApplication === false)?'':'displayNone'"
                 >
                 </hyt-input-text>
 
             </div>
 
-            <div id="fdev-col-soft-desc" class="col-6">
+            <div  id="fdev-col-firmware" class="col-6">
+                 <hyt-input-text 
+                    name="hdevice-firmwareversion"
+                    formControlName="hdevice-firmwareversion"
+                    i18n-placeholder="@@HYT_firmware_version"
+                    placeholder="Firmware version"
+                    [injectedErrorMsg]="getError('hdevice-firmwareversion')"
+                    i18n-hintMessage="@@HYT_hint_device_firmware"
+                    hintMessage="Enter the device firmware version."
+                    [form]="form"
+                    [ngClass]="(typeApplication === false)?'':'displayNone'"
+                >
+                </hyt-input-text>
+            </div>
+
+
+        </div> <!-- Second Row -->
+
+        <div class="form-group row">
+
+            <div id="fdev-col-group-firm" class="col-6">
 
                 <hyt-input-text 
                     name="hdevice-softwareversion"
@@ -74,26 +91,6 @@
                 >
                 </hyt-input-text>
 
-            </div>
-
-        </div> <!-- Second Row -->
-
-        <div class="form-group row">
-
-            <div id="fdev-col-group-firm" class="col-6">
-
-                <hyt-input-text 
-                    name="hdevice-firmwareversion"
-                    formControlName="hdevice-firmwareversion"
-                    i18n-placeholder="@@HYT_firmware_version"
-                    placeholder="Firmware version"
-                    [injectedErrorMsg]="getError('hdevice-firmwareversion')"
-                    i18n-hintMessage="@@HYT_hint_device_firmware"
-                    hintMessage="Enter the device firmware version."
-                    [form]="form"
-                >
-                </hyt-input-text>
-               
                 <div [ngClass]="(entity.id) ? 'displayNone' : ''">
                     <hyt-input-text 
                         [form]="form" 
