@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnChanges, Output, ViewChild } from '@angular/core';
+import { AfterContentInit, Component, EventEmitter, Input, OnChanges, Output, ViewChild } from '@angular/core';
 import { TimeStep } from '@hyperiot/components';
 import { HprojectsService } from '@hyperiot/core';
 import * as moment from 'moment';
@@ -23,7 +23,7 @@ export interface HYTData {
   templateUrl: './timeline.component.html',
   styleUrls: ['./timeline.component.scss']
 })
-export class TimelineComponent implements AfterViewInit, OnChanges {
+export class TimelineComponent implements OnChanges {
 
   /**
    * Project id of the select dashboard
@@ -135,19 +135,15 @@ export class TimelineComponent implements AfterViewInit, OnChanges {
    * ngOnChanges() is called after the input has changed. It updates the timeline data.
    */
   ngOnChanges(): void {
+    this.updateTimeline();
+  }
+
+  updateTimeline():void {
     this.timelineDataRequest();
     if (this.timeAxis) {
       this.timeAxis.updateAxis(this.timeLineData, [this.domainStart, this.domainStop], this.domainInterval);
     }
   }
-
-  /**
-   * ngAfterViewInit() builds the chart.
-   */
-  ngAfterViewInit() {
-    this.timeAxis.updateAxis(this.timeLineData, [this.domainStart, this.domainStop], this.domainInterval);
-  }
-
 
   /**
    * This function is called after the user select a step from the mat-button-toggle-group.

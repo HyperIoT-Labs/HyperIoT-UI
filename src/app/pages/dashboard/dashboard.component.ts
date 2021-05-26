@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation,ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HytModalRef, HytModalService } from '@hyperiot/components';
 import { AlgorithmOfflineDataService, Area, AreasService, Dashboard, DashboardOfflineDataService, HProject } from '@hyperiot/core';
@@ -96,7 +96,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
     private areaService: AreasService,
     private hytModalService: HytModalService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private cd: ChangeDetectorRef
   ) {
     this.offlineWidgetStatus = PageStatus.Standard;
     dashboardOfflineDataService.countEventSubject.subscribe(res => {
@@ -190,7 +191,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         res => {
-          console.log('res ',  res);
           if (res != null && res != undefined && res.status.toLowerCase() === 'active') {
             this.dataRecordingIsOn = true;
             this.dataRecordingStatus = (this.dataRecordingStatus == 2) ? TopologyStatus.On : TopologyStatus.Activated;
@@ -305,9 +305,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
     const responseHandler = (res: Dashboard[]) => {
       this.currentDashboard = res[0];
       this.currentDashboardId = this.currentDashboard.id;
-      // this.extractPacketsFromWidgets(this.currentDashboard.widgets);
       this.dashboardOfflineDataService.resetService(this.idProjectSelected).subscribe(res => {
         this.packetsInDashboard = [...res];
+        this.cd.detectChanges();
       });
       this.algorithmOfflineDataService.resetService(this.idProjectSelected);
       this.pageStatus = PageStatus.Standard;
