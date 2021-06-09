@@ -11,6 +11,17 @@
 
     <div id="container-steps" class="col-md-10">
 
+      <div id="navButtonsContent">
+
+        <hyt-button 
+          [color]="'hyt-base-total-white'" 
+          (clickFn)="goToProjectEdit()"
+          >
+          <span class="hyt-icon icon-hyt_pencil"></span> <ng-container i18n="@@HYT_edit">Edit</ng-container>
+        </hyt-button>
+
+      </div>
+
       <ng-template #projectTemplate>
         <hyt-project-form #projectForm (entityEvent)="onEntityEvent($event)"></hyt-project-form>
       </ng-template>

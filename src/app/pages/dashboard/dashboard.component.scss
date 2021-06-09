@@ -55,6 +55,7 @@
                 #signal-btn,
                 #play-btn,
                 #event-notification-btn,
+                #edit-btn,
                 #add-widget-btn {
                     
                     color: #cccccc;
@@ -70,6 +71,7 @@
                 #signal-btn,
                 #play-btn,
                 #event-notification-btn,
+                #edit-btn,
                 #add-widget-btn {
                     &:hover {
                         color: #008aff;
@@ -124,6 +126,32 @@
                 align-items: center;
                 justify-content: center;
                 padding-top: 10px;
+
+                #edit-btn {
+                    float: left;
+                    margin: 0.3em 0.3em 0.3em 0.3em;
+                    text-align: center;
+                    cursor: pointer;
+                    text-transform: uppercase;
+                    width: 4em;
+                    height: 3.2em;
+
+                    span {
+                        font-size: 2.3em;
+                        display: block;
+                    }
+
+                    p {
+                        margin-bottom: 0;
+                        margin-top: -5px;
+                        font-size: .8em;
+                        -moz-user-select: none;
+                        -webkit-user-select: none;
+                        -ms-user-select: none;
+                        user-select: none;
+                    }
+
+                }
 
                 hyt-select {
                     max-width: 350px;
@@ -440,7 +468,34 @@ mat-option {
 
                 }
 
+                .center-tools {
+
+                    #edit-btn {
+                        margin: 0.3em;
+                        text-align: center;
+                        cursor: pointer;
+                        text-transform: uppercase;
+                        width: 3em;
+                        height: 2.7em;
+
+                        span {
+
+                            font-size: 2em;
+
+                        }
+
+                        p {
+
+                            font-size: .7em;
+
+                        }
+
+                    }
+                    
+                }
+
                 .right-tools {
+
                     #add-widget-btn, #save-dashboard-btn {
                         float: none;
                         margin: .3em 1.2em;

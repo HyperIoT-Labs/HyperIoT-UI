@@ -56,15 +56,9 @@
                         >
                         </hyt-select>
 
-                        <div id="editInWizardContent">
-
-                            <hyt-button 
-                                [color]="'hyt-base-total-white'" 
-                                (clickFn)="goToProjectWizard()"
-                            >
-                                <span class="hyt-icon icon-hyt_pencil"></span> <ng-container i18n="@@HYT_edit">Edit</ng-container>
-                            </hyt-button>
-
+                        <div id="edit-btn" (click)="goToEditProject()">
+                            <span class="hyt-icon icon-hyt_pencil"></span>
+                            <p i18n="@@HYT_edit">Edit</p>
                         </div>
 
                     </div>

@@ -1,7 +1,8 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { Observable, zip, Observer } from 'rxjs';
+import { Observable, zip, Observer, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { HprojectsService, HProject, HdevicesService, HDevice, HpacketsService, HPacket, Rule } from '@hyperiot/core';
 import { TreeDataNode, HytModalService } from '@hyperiot/components';
@@ -14,6 +15,9 @@ import { ProjectEventsFormComponent } from '../project-forms/project-events-form
 import { ProjectStatisticsFormComponent } from '../project-forms/project-statistics-form/project-statistics-form.component';
 import { CdkDragEnd } from '@angular/cdk/drag-drop';
 import { ChangeDetectorRef } from '@angular/core';
+import { PacketFieldsFormComponent } from '../project-forms/packet-fields-form/packet-fields-form.component';
+import { DashboardConfigService } from '../../dashboard/dashboard-config.service';
+import { ConfirmRecordingActionComponent } from 'src/app/components/modals/confirm-recording-action/confirm-recording-action.component';
 
 enum TreeStatusEnum {
   Ready,
@@ -28,7 +32,7 @@ enum TreeStatusEnum {
   styleUrls: ['./project-detail.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class ProjectDetailComponent implements OnInit {
+export class ProjectDetailComponent implements OnInit, OnDestroy {
   @ViewChild('treeView', { static: true }) treeView: HytTreeViewProjectComponent;
 
   hintMessage = '';
@@ -71,10 +75,14 @@ export class ProjectDetailComponent implements OnInit {
 
   areaSection: string;
 
+  /** Subject for manage the open subscriptions */
+  protected ngUnsubscribe: Subject<void> = new Subject<void>();
+
   constructor(
     private hProjectService: HprojectsService,
     private hDeviceService: HdevicesService,
     private packetService: HpacketsService,
+    private dashboardConfigService: DashboardConfigService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private dialog: HytModalService,
@@ -84,6 +92,12 @@ export class ProjectDetailComponent implements OnInit {
   ngOnInit() {
     this.projectId = this.activatedRoute.snapshot.params.projectId;
     this.refresh();
+  }
+
+  ngOnDestroy() {
+    if (this.ngUnsubscribe) {
+      this.ngUnsubscribe.next();
+    }
   }
 
   onActivate(childComponent: ProjectFormEntity) {
@@ -145,17 +159,65 @@ export class ProjectDetailComponent implements OnInit {
         || this.currentEntity instanceof ProjectStatisticsFormComponent) {
         this.currentEntity.editMode = false;
       }
+
+      // Trigger reload topology
+      if (this.currentEntity instanceof PacketEnrichmentFormComponent || this.currentEntity instanceof PacketFieldsFormComponent 
+        || this.currentEntity instanceof ProjectStatisticsFormComponent) {
+        this.shouldUpdateTopology();
+      }
     }, (err) => {
       // TODO: ...
     });
   }
 
   onDeleteClick() {
-    this.currentEntity.openDeleteDialog();
+    this.currentEntity.openDeleteDialog(() => {
+      // Trigger reload topology
+      if (this.currentEntity instanceof PacketEnrichmentFormComponent || this.currentEntity instanceof PacketFieldsFormComponent 
+        || this.currentEntity instanceof ProjectStatisticsFormComponent) {
+        this.shouldUpdateTopology();
+      }
+    });
   }
 
   onCancelClick() {
     this.currentEntity.cancel();
+  }
+
+  shouldUpdateTopology() {
+    this.dashboardConfigService
+    .getRecordingStatus(this.projectId)
+    .pipe(takeUntil(this.ngUnsubscribe))
+    .subscribe(
+      (res) => {
+        const recordingStatus = res;
+        if (recordingStatus.status === "ACTIVE") {
+          this.openConfirmChangeRecordingModal(false);
+        }
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  }
+
+  openConfirmChangeRecordingModal(rocordingState: boolean) {
+    const modalRef = this.dialog.open(
+      ConfirmRecordingActionComponent,
+      {
+        textBodyModal: $localize`:@@HYT_reload_topology_alert:Changes have been made to data recording configuration. To make them effective you need to restart data recording, do you want to start it now? Anyway, the data you are sending won’t be lost.`,
+        dataRecordingIsOn: rocordingState,
+        actionType: "restart",
+        projectId: this.projectId,
+      },
+      false
+    );
+    modalRef.onClosed.subscribe(
+      (result) => { },
+      (error) => {
+        console.error(error);
+      }
+    );
   }
 
   onSummaryMenuClick(e) {

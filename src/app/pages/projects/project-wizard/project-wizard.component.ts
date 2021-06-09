@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation,ChangeDetectorRef } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HytModalService, Option } from '@hyperiot/components';
 import { HytStepperComponent } from '@hyperiot/components/lib/hyt-stepper/hyt-stepper.component';
 import { HDevice, HdevicesService, HPacket, HpacketsService, HProject, HProjectAlgorithm, HprojectalgorithmsService, Rule } from '@hyperiot/core';
@@ -19,10 +19,6 @@ import { PacketSelectComponent } from './packet-select/packet-select.component';
 import { WizardDeactivationModalComponent } from './wizard-deactivation-modal/wizard-deactivation-modal.component';
 import { WizardOptionsModalComponent } from './wizard-options-modal/wizard-options-modal.component';
 import { WizardReportModalComponent } from './wizard-report-modal/wizard-report-modal.component';
-import { InfoRecordingActionComponent } from 'src/app/components/modals/info-recording-action/info-recording-action.component';
-import { ConfirmRecordingActionComponent } from 'src/app/components/modals/confirm-recording-action/confirm-recording-action.component';
-import { DashboardConfigService } from 'src/app/pages/dashboard/dashboard-config.service';
-import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 @Component({
@@ -98,7 +94,7 @@ export class ProjectWizardComponent implements AfterViewInit,OnInit {
     private hPacketsService: HpacketsService,
     public entitiesService: EntitiesService,
     private hytModalService: HytModalService,
-    private dashboardConfigService: DashboardConfigService,
+    private router: Router,
     private route: ActivatedRoute,
     private cd: ChangeDetectorRef
   ) {}
@@ -232,8 +228,6 @@ export class ProjectWizardComponent implements AfterViewInit,OnInit {
   onSaveClick(e) {
     this.currentForm.save(
       (ent, isNew) => {
-        let shouldUpdateTopology: boolean = false;
-
         if (this.currentForm instanceof ProjectFormComponent) {
           this.currentProject = ent;
           // wait for step 0 validation (next cicle)
@@ -251,12 +245,10 @@ export class ProjectWizardComponent implements AfterViewInit,OnInit {
           this.statisticsForm.loadHPackets();
           this.updatePacketTable();
         } else if (this.currentForm instanceof PacketFieldsFormComponent) {
-          shouldUpdateTopology = true;
           this.eventsForm.loadHPackets();
           this.statisticsForm.loadHPackets();
           this.updateSelectFieldChanged(isNew);
         } else if (this.currentForm instanceof PacketEnrichmentFormComponent) {
-          shouldUpdateTopology = true;
           this.enrichmentRules = [
             ...this.updateList(ent, this.enrichmentRules),
           ];
@@ -264,56 +256,12 @@ export class ProjectWizardComponent implements AfterViewInit,OnInit {
         } else if (this.currentForm instanceof ProjectStatisticsFormComponent) {
           this.currentForm.loadEmpty();
         } else if (this.currentForm instanceof ProjectEventsFormComponent) {
-          shouldUpdateTopology = true;
           this.eventRules = [...this.updateList(ent, this.eventRules)];
           this.currentForm.loadEmpty();
         }
-
-        if (shouldUpdateTopology) {
-          this.dashboardConfigService
-            .getRecordingStatus(this.currentProject.id)
-            .pipe(takeUntil(this.ngUnsubscribe))
-            .subscribe(
-              (res) => {
-                const recordingStatus = res;
-                if (recordingStatus.status === "ACTIVE") {
-                  this.openConfirmChangeRecordingModal(false);
-                }
-              },
-              (error) => {
-                console.error(error);
-              }
-            );
-        }
       },
       (error) => {
         console.error(error);
-      }
-    );
-  }
-
-  openConfirmChangeRecordingModal(rocordingState: boolean) {
-    const modalRef = this.hytModalService.open(
-      ConfirmRecordingActionComponent,
-      {
-        textBodyModal: $localize`:@@HYT_reload_topology_alert:Changes have been made to the registration configuration. To make them effective you need to restart the registration, do you want to start it now? Anyway, the data you are sending won't be lost.`,
-        dataRecordingIsOn: rocordingState,
-        actionType: "restart",
-        projectId: this.currentProject.id,
-      },
-      false
-    );
-    modalRef.onClosed.subscribe(
-      (result) => {
-        this.recordStateInLoading = false;
-        // this.updateTopologyData(result);
-      },
-      (error) => {
-        this.recordStateInLoading = false;
-        console.error(error);
-      },
-      () => {
-        this.recordStateInLoading = false;
       }
     );
   }
@@ -568,6 +516,10 @@ export class ProjectWizardComponent implements AfterViewInit,OnInit {
         return false;
       }
     }
+  }
+
+  goToProjectEdit() {
+    this.router.navigateByUrl(`/projects/${this.projectForm.id}`);
   }
 
   showCancel(): boolean {

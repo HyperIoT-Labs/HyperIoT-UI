@@ -1642,7 +1642,8 @@
         <target>Scegli File</target>
       </trans-unit>
       <trans-unit id="HYT_reload_topology_alert" datatype="html">
-        <source>La configurazione del recording delle informazione è stata modificata. Per renderla effettuva è necessario riavvare la registrazione, vuoi riavvarla adesso? In ogni caso i dati che stai inviando non verranno persi.</source>
+        <source>Changes have been made to data recording configuration. To make them effective you need to restart data recording, do you want to start it now? Anyway, the data you are sending won’t be lost.</source>
+        <target>La configurazione del data recording è stata modificata. Per renderla effettiva è necessario riavviare il data recording, vuoi riavviare adesso? In ogni caso non prederai i dati che stai inviando.</target>
       </trans-unit>
     </body>
   </file>

@@ -246,8 +246,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }
   }
 
-  goToProjectWizard() {
-    this.router.navigateByUrl(`/project-wizard/${this.idProjectSelected}`);
+  goToEditProject() {
+    this.router.navigateByUrl(`/projects/${this.idProjectSelected}`);
   }
 
   private getProjectList() {

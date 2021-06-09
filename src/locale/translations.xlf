@@ -1231,7 +1231,7 @@
         <source>Choose File</source>
       </trans-unit>
       <trans-unit id="HYT_reload_topology_alert" datatype="html">
-        <source>Changes have been made to the registration configuration. To make them effective you need to restart the registration, do you want to start it now? Anyway, the data you are sending won't be lost.</source>
+        <source>Changes have been made to data recording configuration. To make them effective you need to restart data recording, do you want to start it now? Anyway, the data you are sending won’t be lost.</source>
       </trans-unit>
     </body>
   </file>

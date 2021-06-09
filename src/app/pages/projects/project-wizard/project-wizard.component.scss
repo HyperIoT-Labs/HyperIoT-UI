@@ -37,6 +37,15 @@
 
     #container-steps {
 
+      position: relative;
+
+      #navButtonsContent {
+        position: absolute;
+        top: 150px;
+        right: 40px;
+        z-index: 1;
+      }
+
       mat-step-header {
 
         .mat-step-label {
