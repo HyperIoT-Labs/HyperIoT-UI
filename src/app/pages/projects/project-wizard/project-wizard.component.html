@@ -11,16 +11,19 @@
 
     <div id="container-steps" class="col-md-10">
 
-      <div id="navButtonsContent">
+      <div class="container-form-title">
 
+        <div id="container-title">
+          <h2 id="form-title">Project Wizard</h2>
+        </div>
+  
         <hyt-button 
           [color]="'hyt-base-total-white'" 
           (clickFn)="goToProjectEdit()"
-          >
-          <span class="hyt-icon icon-hyt_pencil"></span>
-          <p id="detail-btn">Project <br> Detail</p>
+        >
+        <span class="hyt-icon icon-hyt_pencil"></span> <ng-container>Project Detail</ng-container>
         </hyt-button>
-
+  
       </div>
 
       <ng-template #projectTemplate>
