@@ -92,15 +92,16 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
     this.formTitle = this.entitiesService.enrichment.formTitle;
     this.icon = this.entitiesService.enrichment.icon;
     this.hideDelete = true; // hide 'Delete' button
+  }
+
+  ngOnInit() { 
     this.activatedRouteSubscription = this.activatedRoute.params.subscribe(routeParams => {
-      this.packetId = +(activatedRoute.snapshot.params.packetId);
+      this.packetId = +(this.activatedRoute.snapshot.params.packetId);
       if (this.packetId) {
         this.loadData();
       }
     });
   }
-
-  ngOnInit() { }
 
   ngOnDestroy() {
     this.activatedRouteSubscription.unsubscribe();
@@ -179,7 +180,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
 
   loadData(packetId?: number){
     if (packetId) { this.packetId = packetId; }
-    return this.packetService.findHPacket(this.packetId).pipe(map((p: HPacket) => {
+    return this.packetService.findHPacket(this.packetId).subscribe(p => {
       this.project = p.device.project;
       this.packet = p;
       this.updateSummaryList();
@@ -188,7 +189,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
         id: p.id, type: 'packet-enrichments'
       });
       return p;
-    }));
+    });
   }
 
   buildJActions(): string {
