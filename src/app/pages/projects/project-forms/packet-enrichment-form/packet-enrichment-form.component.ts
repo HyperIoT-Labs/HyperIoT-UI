@@ -98,7 +98,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
     this.activatedRouteSubscription = this.activatedRoute.params.subscribe(routeParams => {
       this.packetId = +(this.activatedRoute.snapshot.params.packetId);
       if (this.packetId) {
-        this.loadData();
+        this.loadData().subscribe(res => {});
       }
     });
   }
@@ -180,7 +180,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
 
   loadData(packetId?: number){
     if (packetId) { this.packetId = packetId; }
-    return this.packetService.findHPacket(this.packetId).subscribe(p => {
+    return this.packetService.findHPacket(this.packetId).pipe(map((p => {
       this.project = p.device.project;
       this.packet = p;
       this.updateSummaryList();
@@ -189,7 +189,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
         id: p.id, type: 'packet-enrichments'
       });
       return p;
-    });
+    })));
   }
 
   buildJActions(): string {
