@@ -12,7 +12,7 @@ import { AlgorithmFormEntity, LoadingStatusEnum } from '../algorithm-form-entity
   styleUrls: ['./algorithm-info-form.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class AlgorithmInfoFormComponent extends AlgorithmFormEntity implements AfterViewInit, OnInit {
+export class AlgorithmInfoFormComponent extends AlgorithmFormEntity implements AfterViewInit,OnInit {
 
   algorithm: Algorithm;
 

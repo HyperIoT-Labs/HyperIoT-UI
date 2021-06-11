@@ -13,7 +13,7 @@ import { FormControl, FormGroup } from '@angular/forms';
   styleUrls: ['./algorithm-jar-form.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class AlgorithmJarFormComponent extends AlgorithmFormEntity implements AfterViewInit, OnInit {
+export class AlgorithmJarFormComponent extends AlgorithmFormEntity implements OnInit {
 
   algorithm: Algorithm;
 
@@ -87,44 +87,18 @@ export class AlgorithmJarFormComponent extends AlgorithmFormEntity implements Af
   }
 
   ngOnInit() {
-
     this.currentAlgorithmSubject.subscribe(this.algorithmObserver);
-    
     this.form.controls.jarName.valueChanges.subscribe(
       (change: string) => {
-
         if(change){
-
-          console.log('CHANGE:', change);
-          let fakeStr = change.includes('fake');
-
-          if(fakeStr) {
-
-            let splitStr = change.split("\\");
-            console.log('SPLIT', splitStr);
-            let controlFileName = splitStr[splitStr.length - 1].split('.');
-            if(controlFileName[controlFileName.length - 1].toLowerCase() == 'jar') {
-              // JAR extension
-            } else {
-              // NOT JAR extension
-            }
-            // this.form.controls.jarName.setValue(splitStr[splitStr.length - 1]);
-            // this.form.controls.jarName.updateValueAndValidity();
-
-          } else {
-
-            
-
-          }
-
+          if(change.indexOf("\\") > 0)
+            change = change.substr(change.lastIndexOf("\\")+1);
+          else if (change.indexOf("/") > 0)
+            change = change.substr(change.lastIndexOf("/")+1);
+          this.nameOfJarFile = change;
         }
-        
       }
     );
-    
-  }
-
-  ngAfterViewInit() {
     this.loadEmpty();
     this.cdr.detectChanges();
   }
@@ -152,20 +126,13 @@ export class AlgorithmJarFormComponent extends AlgorithmFormEntity implements Af
   }
 
   handleFileInput(files: FileList) {
-    console.log("files:", files.length);
-    console.log("files2:", files);
     if(files.length > 0) { 
-  
       this.jarToUpload = files.item(0);
       this.form.value['jarName'] = files[0].name;
-      console.log("JAR:",this.jarToUpload);
-
     }else{
       this.form.value['jarName'] = '';
     }
-    
     this.cdr.detectChanges();
-    
   }
 
   load() {
@@ -252,7 +219,7 @@ export class AlgorithmJarFormComponent extends AlgorithmFormEntity implements Af
     this.jarToUpload = null;
     this.form.controls.jarName.setValue('');
     this.form.controls.jarName.updateValueAndValidity();
-    console.log('RESET UPLOAD:', this.jarToUpload)
+    this.nameOfJarFile = "";
     this.cdr.detectChanges();
   }
 

@@ -19,7 +19,7 @@ import { AlgorithmWizardReportModalComponent } from './algorithm-wizard-report-m
   styleUrls: ['./algorithm-wizard.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class AlgorithmWizardComponent implements OnInit, AfterViewInit {
+export class AlgorithmWizardComponent implements OnInit {
 
   algorithmId: number;
   currentAlgorithm: Algorithm;
@@ -61,9 +61,7 @@ export class AlgorithmWizardComponent implements OnInit, AfterViewInit {
     });
    }
 
-  ngOnInit() {}
-
-  ngAfterViewInit() {
+  ngOnInit() {
     this.cd.detectChanges();
     if (this.algorithmId) {
       this.algorithmsService.findAlgorithm(this.algorithmId).subscribe((a: Algorithm) => {
