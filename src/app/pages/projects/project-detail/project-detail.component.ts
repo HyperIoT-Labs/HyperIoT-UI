@@ -162,7 +162,7 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
 
       // Trigger reload topology
       if (this.currentEntity instanceof PacketEnrichmentFormComponent || this.currentEntity instanceof PacketFieldsFormComponent 
-        || this.currentEntity instanceof ProjectStatisticsFormComponent) {
+        || this.currentEntity instanceof ProjectStatisticsFormComponent || this.currentEntity instanceof ProjectEventsFormComponent) {
         this.shouldUpdateTopology();
       }
     }, (err) => {
@@ -174,7 +174,7 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
     this.currentEntity.openDeleteDialog(() => {
       // Trigger reload topology
       if (this.currentEntity instanceof PacketEnrichmentFormComponent || this.currentEntity instanceof PacketFieldsFormComponent 
-        || this.currentEntity instanceof ProjectStatisticsFormComponent) {
+        || this.currentEntity instanceof ProjectStatisticsFormComponent || this.currentEntity instanceof ProjectEventsFormComponent) {
         this.shouldUpdateTopology();
       }
     });
