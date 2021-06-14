@@ -60,11 +60,25 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
     this.formTitle = $localize`:@@HYT_project_areas:Project Areas`;
     this.projectId = this.activatedRoute.snapshot.parent.params.projectId;
     this.areaId = +this.activatedRoute.snapshot.params.areaId;
+  }
+
+  ngOnInit() {
+
+    this.activatedRoute.queryParams
+    .subscribe(params => {
+      this.parentAreaId = params.parent;
+      if (this.parentAreaId) {
+        this.entity = { ...this.newEntity() } as Area;
+        this.form.reset();
+      }
+    });
+
     this.activatedRoute.params.subscribe(params => {
       this.areaId = +params.areaId;
       this.load();
     });
-    router.events.subscribe( (event: Event) => {
+    
+    this.router.events.subscribe( (event: Event) => {
       if (event instanceof NavigationStart) {
           if (this.isDirty()) {
             this.currentSection = 0;
@@ -77,18 +91,6 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
         this.maxFileSize = +res.maxFileSize;
       } else {
         // TODO: maybe report a message ("Could not get Area service config")
-      }
-    });
-  }
-
-  ngOnInit() {
-
-    this.activatedRoute.queryParams
-    .subscribe(params => {
-      this.parentAreaId = params.parent;
-      if (this.parentAreaId) {
-        this.entity = { ...this.newEntity() } as Area;
-        this.form.reset();
       }
     });
 
