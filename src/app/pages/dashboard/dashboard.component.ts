@@ -100,13 +100,16 @@ export class DashboardComponent implements OnInit, OnDestroy {
     private cd: ChangeDetectorRef
   ) {
     this.offlineWidgetStatus = PageStatus.Standard;
-    dashboardOfflineDataService.countEventSubject.subscribe(res => {
-      this.offlineWidgetStatus = res;
-    });
+   
   }
 
   ngOnInit() {
     this.showAreas = this.activatedRoute.snapshot.routeConfig.path.startsWith('areas/');
+    
+    this.dashboardOfflineDataService.countEventSubject.subscribe(res => {
+      this.offlineWidgetStatus = res;
+    });
+
     if (this.showAreas) {
       // load area realtime Dashboard
       this.areaId = +this.activatedRoute.snapshot.params.areaId;
@@ -114,9 +117,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
       if (this.areaId) {
         this.areaService.getAreaPath(this.areaId).subscribe((areas: Area[]) => {
           this.areaPath = areas;
+          this.showDashboard();
         });
       }
-      this.showDashboard();
     } else {
       this.getProjectList();
     }
@@ -332,6 +335,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     };
     const responseHandler = (dashboardRes: Dashboard[]) => {
       try {
+        console.log(dashboardRes)
         this.currentDashboard = dashboardRes[0];
         this.currentDashboardId = this.currentDashboard.id;
         this.pageStatus = PageStatus.Standard;

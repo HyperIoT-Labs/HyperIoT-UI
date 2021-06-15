@@ -27,7 +27,7 @@ import { Subject } from 'rxjs';
   styleUrls: ["./project-wizard.component.scss"],
   encapsulation: ViewEncapsulation.None,
 })
-export class ProjectWizardComponent implements AfterViewInit,OnInit {
+export class ProjectWizardComponent implements OnInit {
   @ViewChild("stepper")
   stepper: HytStepperComponent;
 
@@ -98,10 +98,6 @@ export class ProjectWizardComponent implements AfterViewInit,OnInit {
     private route: ActivatedRoute,
     private cd: ChangeDetectorRef
   ) {}
-
-  ngAfterViewInit() {
-    
-  }
 
   ngOnInit(){
     this.cd.detectChanges();
