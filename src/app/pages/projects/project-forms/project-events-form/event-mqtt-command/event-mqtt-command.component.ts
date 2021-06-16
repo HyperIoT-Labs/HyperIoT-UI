@@ -131,14 +131,16 @@ export class EventMqttCommandComponent implements OnInit,EventComponent {
   }
 
   packetChanged(packetId,data?){
-    this.currentOutputPacketId = packetId;
-    this.getHPackets().then(packets => {
-      let packet = packets.find(packet => packet.id === packetId)
-      this.mqttTopic = "/"+packet.device.id+"/receive"
-      this.addOrUpdateFormControls(packet,data);
-      this.originalValueUpdate();
-      this.currentOutputPacket = packet;
-    })
+    if(packetId > 0){
+      this.currentOutputPacketId = packetId;
+      this.getHPackets().then(packets => {
+        let packet = packets.find(packet => packet.id === packetId)
+        this.mqttTopic = "/"+packet.device.id+"/receive"
+        this.addOrUpdateFormControls(packet,data);
+        this.originalValueUpdate();
+        this.currentOutputPacket = packet;
+      })
+    }
   }
 
   inputChanged(target,fieldName){
@@ -185,10 +187,10 @@ export class EventMqttCommandComponent implements OnInit,EventComponent {
       else
         return new Promise((resolve,reject) => {
           this.hPacketsService.findAllHPacketByProjectIdAndType(this.currentProjectId,"OUTPUT,IO").toPromise().then(res => {
-            if(this.allPackets.length == 0){
+            this.allPackets = res;
+            if(this.allPackets.length === 0){
               this.packetOptions = [{label:"No output packets defined",value:"-1"}]
             } else {
-              this.allPackets = res;
               this.packetOptions = this.allPackets.map(p => ({ label: p.name, value: p.id }));
             }
             resolve(this.allPackets);
