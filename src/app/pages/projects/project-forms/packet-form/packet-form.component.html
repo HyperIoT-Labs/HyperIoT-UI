@@ -74,7 +74,7 @@
                 <div class="radio-options pl-2 pr-2">
                     <hyt-radio-button 
                         [form]="form" name="hpacket-serialization" [options]="serializationOptions"
-                        [injectedErrorMsg]="getError('hpacket-serialization')"
+                        [injectedErrorMsg]="getError('hpacket-serialization')" (changeFn)="serializationChanged($event)"
                     >
                     </hyt-radio-button>
                 </div>

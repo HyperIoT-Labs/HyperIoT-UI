@@ -194,8 +194,7 @@ export class PacketFormComponent
         this.entity = p;
         // update form data
         this.edit();
-        // update static data (not part of this form)
-        this.defineTopics(this.entity);
+        this.serializationChanged(this.entity.serialization);
         // emit event for updating UI
         this.entityEvent.emit({
           event: "treeview:focus",
@@ -223,7 +222,7 @@ export class PacketFormComponent
         (opt) => opt.value === HPacket.FormatEnum.TEXT
     );
     
-    if (this.entity.type === "OUTPUT") {
+    if (this.entity.type === "OUTPUT" && this.entity.serialization !== 'AVRO') {
       optionFormatText.disabled = false;
     } else {
       optionFormatText.disabled = true;
@@ -233,6 +232,30 @@ export class PacketFormComponent
       }
     }
     this.defineTopics(this.entity);
+  }
+
+  serializationChanged(event) {
+    this.entity.serialization = event;
+    //when avro is selected , format must be json
+    if(event === 'AVRO'){
+      this.formatOptions.forEach((opt) => {
+          if(opt.value !== HPacket.FormatEnum.JSON){
+              opt.disabled = true;
+              opt.checked = false;
+          } else {
+            opt.checked = true;
+            this.entity.format = opt.value;
+          }
+      });
+    } else {
+      this.formatOptions.forEach((opt) => {
+          if(opt.value !== HPacket.FormatEnum.JSON){
+              opt.disabled = false;
+          }
+      });
+    }
+    //forcing recalculatin radio status
+    this.hpacketTypeChange(this.entity.type);
   }
 
   private defineTopics(packet: HPacket) {
