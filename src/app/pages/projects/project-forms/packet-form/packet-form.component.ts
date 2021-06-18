@@ -235,6 +235,7 @@ export class PacketFormComponent
   }
 
   serializationChanged(event) {
+    console.log("Serialization changed!");
     this.entity.serialization = event;
     //when avro is selected , format must be json
     if(event === 'AVRO'){
