@@ -201,12 +201,7 @@ export class RuleDefinitionComponent {
 
   loadHPackets(): Promise<HPacket[]> {
     if (this.projectId) {
-      if (this.allPackets && this.allPackets.length > 0) {
-        return new Promise((resolve, reject) => {
-          resolve(this.allPackets);
-        });
-      } else {
-        return new Promise((resolve, reject) => {
+      return new Promise((resolve, reject) => {
           this.hPacketsService
             .findAllHPacketByProjectIdAndType(this.projectId, "INPUT,IO")
             .toPromise()
@@ -216,11 +211,10 @@ export class RuleDefinitionComponent {
                 label: p.name,
                 value: p.id,
               }));
-              this.resetRuleDefinition();
+              this.cd.detectChanges();
               resolve(this.allPackets);
             });
         });
-      }
     }
   }
 
