@@ -95,7 +95,7 @@ export class StatisticInputDefinitionComponent implements OnInit {
 
   isFormInvalid(k: number): boolean {
     const valArr = this.statisticInputForms[k].form;
-    return Object.entries(valArr.value).length === 0
+    return Object.entries(valArr.value).length === 0 || valArr.get("packet") === undefined || valArr.get("mappedInputList") === undefined
       ? true
       : valArr.get("packet").invalid || valArr.get("mappedInputList").invalid;
   }
@@ -125,27 +125,21 @@ export class StatisticInputDefinitionComponent implements OnInit {
 
   loadHPackets(): Promise<HPacket[]> {
     if (this.project) {
-      if (this.allPackets && this.allPackets.length > 0) {
-        return new Promise((resolve, reject) => {
-          resolve(this.allPackets);
-        });
-      } else {
-        return new Promise((resolve, reject) => {
-          this.hPacketsService
-            .findAllHPacketByProjectId(this.project.id)
-            .toPromise()
-            .then((res) => {
-              this.allPackets = res;
-              this.packetOptions = this.allPackets.map((p) => ({
-                label: p.name,
-                value: p.id,
-              }));
-              this.leafFieldList = [];
-              this.resetRuleDefinition();
-              resolve(this.allPackets);
-            });
-        });
-      }
+      return new Promise((resolve, reject) => {
+        this.hPacketsService
+          .findAllHPacketByProjectId(this.project.id)
+          .toPromise()
+          .then((res) => {
+            this.allPackets = res;
+            this.packetOptions = this.allPackets.map((p) => ({
+              label: p.name,
+              value: p.id,
+            }));
+            this.leafFieldList = [];
+            this.cd.detectChanges();
+            resolve(this.allPackets);
+          });
+      });
     } else {
       //return empty result
       return new Promise((resolve, reject) => {
