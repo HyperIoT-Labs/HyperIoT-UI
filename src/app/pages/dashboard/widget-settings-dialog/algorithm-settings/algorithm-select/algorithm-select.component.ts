@@ -32,7 +32,6 @@ export class AlgorithmSelectComponent implements OnInit {
 
   apply() {
     if (this.selectedHProjectAlgorithm) {
-      this.widget.config.algorithmId = this.selectedHProjectAlgorithm.algorithm.id;
       this.widget.config.hProjectAlgorithmId = this.selectedHProjectAlgorithm.id;
       this.widget.config.hProjectAlgorithmName = this.selectedHProjectAlgorithm.name;
       const config: HProjectAlgorithmConfig = JSON.parse(this.selectedHProjectAlgorithm.config);
