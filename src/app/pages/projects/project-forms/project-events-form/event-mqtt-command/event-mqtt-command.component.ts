@@ -161,6 +161,7 @@ export class EventMqttCommandComponent implements OnInit,EventComponent {
         if(data){
             //converting option value to string (it can be also boolean or number)
             let fieldName = (field.value != null && field.value != undefined)?""+field.value:null;
+            //extracting fields configuration from data
             let jsonValue = JSON.parse(data.message);
             this.mqttFieldsFormGroup.get(field.label).setValue(jsonValue[fieldName]);
             
