@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit,ChangeDetectorRef } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Option, SelectOption } from '@hyperiot/components';
 import { HPacket, HPacketField, HpacketsService } from '@hyperiot/core';
@@ -39,7 +39,7 @@ export class EventMqttCommandComponent implements OnInit,EventComponent {
     // { value: '', label: $localize`:@@HYT_start_statistic:START STATISTIC` }
   ];
 
-  constructor(private hPacketsService: HpacketsService) { 
+  constructor(private hPacketsService: HpacketsService,private cd: ChangeDetectorRef) { 
     this.originalFormsValues = this.getJsonForms();
   }
 
@@ -161,13 +161,15 @@ export class EventMqttCommandComponent implements OnInit,EventComponent {
         if(data){
             //converting option value to string (it can be also boolean or number)
             let fieldName = (field.value != null && field.value != undefined)?""+field.value:null;
-            this.mqttFieldsFormGroup.get(field.label).setValue(data[fieldName]);
+            let jsonValue = JSON.parse(data.message);
+            this.mqttFieldsFormGroup.get(field.label).setValue(jsonValue[fieldName]);
+            
         }
       })
       if(data)
         this.mqttFieldsFormGroup.get("active").setValue(data.active);
       this.mqttFieldsFormGroup.get("packet").setValue(packet.id);
-      
+      this.cd.detectChanges();
     }
   }
 
