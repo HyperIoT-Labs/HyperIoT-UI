@@ -20,8 +20,10 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
     selectedFields = [];
     private defaultConfig = {
         timeAxisRange: 10,
-        maxDataPoints: 100,
+        //no limits in data points
+        maxDataPoints: 0,
         timeWindow: 60,
+        refreshIntervalMillis:1000,
         layout: {
             showlegend: true,
             legend: {
