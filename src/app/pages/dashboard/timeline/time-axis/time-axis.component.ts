@@ -207,10 +207,10 @@ export class TimeAxisComponent implements AfterViewInit {
       this.rect.attr('fill', (d) =>
         d.timestamp >= this.timeInterval[0] && d.timestamp < this.timeInterval[1] ?
           '#35d443' :
-          this.dataIntensityScale(d.value / this.maxValue)
+          this.setCubeIntensitiScale(d.value, this.maxValue)
       );
     } else {
-      this.rect.attr('fill', d => this.dataIntensityScale(d.value / this.maxValue));
+      this.rect.attr('fill', d => this.setCubeIntensitiScale(d.value , this.maxValue));
     }
   }
 
@@ -353,7 +353,7 @@ export class TimeAxisComponent implements AfterViewInit {
     });
     this.rect.attr('fill', (d) => d.timestamp >= this.timeInterval[0] && d.timestamp < this.timeInterval[1] ?
       '#35d443' :
-      this.dataIntensityScale(d.value / this.maxValue)
+      this.setCubeIntensitiScale(d.value , this.maxValue)
     );
   }
 
@@ -406,10 +406,27 @@ export class TimeAxisComponent implements AfterViewInit {
    */
   resetSelectionByBtn() {
     this.resetSelection();
-    this.rect.attr('fill', d => this.dataIntensityScale(d.value / this.maxValue));
+    this.rect.attr('fill', d => this.setCubeIntensitiScale(d.value,this.maxValue));
     this.resetSelBtn.nativeElement.style.display = 'none';
     /* show text tip */
     this.selectionInitialTip.nativeElement.style.display = 'block';
+  }
+
+  /**
+   * Wrapping d3 dataIntensityScale
+   * @param value 
+   * @param maxValue 
+   * @returns 
+   */
+  setCubeIntensitiScale(value,maxValue){
+    let ratio = value / maxValue;
+    
+    //avoiding filling with grey even if there's data
+    if(ratio < 0.2 && value > 0)
+      ratio = 0.2;
+    let intensity = this.dataIntensityScale(ratio);
+    
+    return intensity;
   }
 
   /**
@@ -642,7 +659,7 @@ export class TimeAxisComponent implements AfterViewInit {
       .selectAll('g')
       .data(this.data)
       .join('g')
-      .attr('fill', d => d.timestamp >= this.timeInterval[0] && d.timestamp < this.timeInterval[1] ? '#35d443' : this.dataIntensityScale(d.value / this.maxValue))
+      .attr('fill', d => d.timestamp >= this.timeInterval[0] && d.timestamp < this.timeInterval[1] ? '#35d443' : this.setCubeIntensitiScale(d.value , this.maxValue))
       .attr('class', 'data-cube')
       .call(this.appendCube)
       .attr('cursor', 'pointer')
