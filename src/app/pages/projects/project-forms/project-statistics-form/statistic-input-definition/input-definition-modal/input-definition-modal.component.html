@@ -10,11 +10,20 @@
           Bind packet fields to algorithm input
       </p>
 
-      <div cdkDropListGroup class="example-boundary">
+      <!-- INIZIO DRAG & DROP  -->
 
-        <div class="container-fields">
+       <div cdkDropListGroup class="example-boundary">
+
+        <div class="container-fields boundary-field">
+
+          <h2 class="section-title">Available Packet Fields</h2>
+          
           <div *ngFor="let input of inputArray" class="example-container">
-            <h2>{{input.name}}</h2>
+            
+            <h2 class="input-title">
+              {{input.name}}
+              <label class="tooltip" [matTooltip]="input.description" matTooltipClass="infoTooltip">i</label>
+            </h2>
         
             <div
               cdkDropList
@@ -24,22 +33,25 @@
               (cdkDropListDropped)="drop($event)"
               [cdkDropListEnterPredicate]="hasBeenSelected">
               <div class="example-box" *ngFor="let hPacketField of getChosenInput(input)" 
-                cdkDragBoundary=".example-boundary" cdkDrag>{{hPacketField.name}}
+                cdkDragBoundary=".example-boundary" cdkDrag (cdkDragStarted)="onDragStarted($event)">{{hPacketField.name}}
               </div>
   
             </div>
           </div>
-        </div>
+        </div> 
       
-        <div class="container-field-list">
-          <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                <h2>
-                  <ng-container i18n="@@HYT_available_packet_fields">Available packet fields</ng-container>
-                </h2>
-              </mat-panel-title>
-            </mat-expansion-panel-header>
+        <div class="container-field-list boundary-field">
+
+          <div id="fields-list-title">
+
+            <h2 class="section-title">
+              <ng-container i18n="@@HYT_available_packet_fields">Available packet fields</ng-container>
+            </h2>
+
+          </div>
+
+          <div id="fields-list-body">
+
             <div class="form-group mb-4">
               <input id="searchText" type="text" [(ngModel)]="searchText" placeholder="Search">
             </div>
@@ -56,15 +68,23 @@
               cdkDropListSortingDisabled
               (cdkDropListDropped)="drop($event)">
               <div class="example-box" *ngFor="let hPacketField of (hPacketFieldList | filter: searchText)" 
-                cdkDragBoundary=".example-boundary" cdkDrag>{{hPacketField.name}}
+                cdkDragBoundary=".example-boundary" cdkDrag (cdkDragStarted)="onDragStarted($event)"
+              >
+                <div class="custom-placeholder" *cdkDragPlaceholder></div> <!-- to override placeholder style -->
+                {{hPacketField.name}}
               </div>
             </div>
-          </mat-expansion-panel>
-        </div>
+
+          </div>
+
+        </div> 
 
       </div>
 
+      <!-- FINE DRAG & DROP  -->
+
     </div>
+
     <div class="dialog-footer">
         <hyt-button 
           [isDisabled]="!hasFinished()" 

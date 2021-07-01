@@ -1,7 +1,8 @@
-import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, CdkDragEnd, CdkDragStart, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { HytModal, HytModalService } from '@hyperiot/components';
 import { Algorithm, AlgorithmConfig, AlgorithmIOField, HPacketField, HProjectAlgorithmConfig, HProjectAlgorithmInputField, MappedInput } from '@hyperiot/core';
+import { eventNames } from 'process';
 
 
 interface ChosenInput {
@@ -16,7 +17,7 @@ interface ChosenInput {
   encapsulation: ViewEncapsulation.None
 })
 export class InputDefinitionModalComponent extends HytModal implements OnInit {
-
+  
   /**
    * The selected algorithm
    */
@@ -38,9 +39,9 @@ export class InputDefinitionModalComponent extends HytModal implements OnInit {
    */
   chosenInputList: ChosenInput[];
 
-/**
- * Index of input. We need this to update an existing input
- */
+  /**
+   * Index of input. We need this to update an existing input
+   */
   inputIndex: number;
 
   /**
@@ -157,6 +158,8 @@ export class InputDefinitionModalComponent extends HytModal implements OnInit {
   }
 
   hasBeenSelected(): boolean {
+    console.log('HASBEENSELECTED', this.data)
+    console.log('HASBEENSELECTED LENGTH', this.data.length)
     return this.data.length === 0;
   }
 
@@ -173,5 +176,24 @@ export class InputDefinitionModalComponent extends HytModal implements OnInit {
     data.mappedInputList = mappedInputList;
     this.close({ action, data });
   }
+  
+  /**
+   * this method is used to override zindex paramenter for dragged element
+   * @param event 
+   */
+  onDragStarted(event: CdkDragStart): void {
+    
+    let fisrtMove: boolean = true; 
+    event.source.moved.subscribe((res)=> {
+      if(fisrtMove){
+        let zIndexSerial: number = 10000;
+        let preview: HTMLElement = document.querySelector('.cdk-drag.example-box.cdk-drag-preview');
+        preview.style.zIndex = zIndexSerial+"";
+        fisrtMove = false;
+      }
+    })
+    
+  }
+  
 
 }

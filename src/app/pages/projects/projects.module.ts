@@ -42,6 +42,7 @@ import {
   MatTabsModule,
   MatListModule
 } from '@angular/material';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatExpansionModule } from '@angular/material/expansion';
 
 import { StatisticsStepComponent } from './project-wizard/statistics-step/statistics-step.component';
@@ -143,7 +144,8 @@ import { WidgetsModule } from '@hyperiot/widgets';
     MatExpansionModule,
     DragDropModule,
     MatListModule,
-    WidgetsModule
+    WidgetsModule,
+    MatTooltipModule
   ],
   entryComponents: [
     AddTagModalComponent,
