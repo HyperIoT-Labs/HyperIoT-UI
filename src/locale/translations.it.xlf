@@ -1645,6 +1645,10 @@
         <source>Changes have been made to data recording configuration. To make them effective you need to restart data recording, do you want to start it now? Anyway, the data you are sending won’t be lost.</source>
         <target>La configurazione del data recording è stata modificata. Per renderla effettiva è necessario riavviare il data recording, vuoi riavviare adesso? In ogni caso non prederai i dati che stai inviando.</target>
       </trans-unit>
+      <trans-unit id="HYT_algorithm_required_input_fields" datatype="html">
+        <source>Campi richiesti per l'algoritmo</source>
+        <target></target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

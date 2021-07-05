@@ -1,7 +1,21 @@
 .statisticInputDefinition {
 
-    .add-statistic-input {
-        float: right;
+    .row-icon-hyt_plusC {
+        margin: 0px;
+
+        .add-statistic-input {
+            position: absolute;
+            top: -27px;
+            right: 0;
+            font-size: 1.6em;
+            cursor: pointer;
+
+            &:hover {
+                color: #1f59a5;
+            }
+
+        }
+
     }
 
     form {
