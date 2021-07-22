@@ -17,7 +17,7 @@
                         <hyt-input-template name="name" id="name" type="text"
                             i18n-placeholder="@@HYT_name" placeholder="Name"
                             [(ngModel)]="widgetName" #name="ngModel" [isRequired]="true" required
-                            pattern="[A-Za-z0-9 ]*"></hyt-input-template>
+                            pattern="[A-Za-z0-9 -\.]*"></hyt-input-template>
                     </div>
                     <div class="mt-4 mx-2 d-flex flex-column align-items-stretch">
                         <hyt-input-template type="text" disabled [isDisabled]="true"
