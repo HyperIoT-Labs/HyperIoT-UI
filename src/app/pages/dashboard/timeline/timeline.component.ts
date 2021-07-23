@@ -204,12 +204,12 @@ export class TimelineComponent implements OnChanges {
 
     this.hprojectsService.timelineScan(
       `timeline_hproject_${this.projectId}`,
-      this.dashboardPackets.toString(),
       this.domainInterval,
       this.mapToGranularity[this.domainInterval],
       this.domainStart.getTime(),
       this.domainStop.getTime(),
-      Intl.DateTimeFormat().resolvedOptions().timeZone
+      Intl.DateTimeFormat().resolvedOptions().timeZone,
+      this.dashboardPackets.toString()
     ).subscribe(
       res => {
         this.timeLineData.forEach(element => {
