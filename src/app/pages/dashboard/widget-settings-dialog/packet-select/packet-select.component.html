@@ -1,4 +1,4 @@
-<div class="padding-6 d-flex flex-column justify-content-stretch">
+<div id="packet-select-component" class="padding-6 d-flex flex-column justify-content-stretch">
 
     <ng-container *ngIf="widget.config">
 
@@ -10,19 +10,6 @@
                 [options]="packetOptions" [sortingAlgorithm]="'A-Z'" [isSortable]="true"
                 required disableRipple>
             </hyt-select-template>
-<!-- (compareFn)="packetCompare($event)"
-            <mat-form-field>
-                <mat-select [(ngModel)]="selectedPacket" [compareWith]="packetCompare"
-                    (ngModelChange)="onPacketChange()" name="packet-select"
-                    placeholder="Select packet"
-                    i18n-placeholder="@@HYT_widget_settings_select_packet" required disableRipple>
-                    <mat-option *ngFor="let packet of projectPackets" [value]="packet" selected>
-                        {{packet.name}}
-                        ({{packet.id}})
-                    </mat-option>
-                </mat-select>
-            </mat-form-field> -->
-
         </div>
 
     </ng-container>
@@ -39,41 +26,39 @@
                 required disableRipple>
             </hyt-select-template>
 
-            <!-- <mat-form-field>
-                <mat-select [(ngModel)]="selectedFields" [multiple]="multiPacketSelect"
-                    (ngModelChange)="onPacketFieldChange($event)" name="field-select"
-                    placeholder="Select field/s"
-                    required disableRipple>
-                    <mat-option *ngFor="let field of selectedPacket.fields" [value]="field" selected>
-                        {{field.name}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field> -->
-
         </div>
         <div *ngIf="hasFieldsUnit() && packetUnitsConversion && packetUnitsConversion.length > 0">
             <h3>Unit Conversion</h3>
             <div *ngFor="let conversion of packetUnitsConversion; let i = index;">
                 <label class="label">{{ conversion.field.name }}</label>:
-                {{ getUnit(conversion.convertFrom).singular }}
-                ({{ getUnit(conversion.convertFrom).abbr }})
+                <ng-container *ngIf="conversion.convertFrom != null">
+                    {{ getUnit(conversion.convertFrom).singular }}
+                    ({{ getUnit(conversion.convertFrom).abbr }})
+                </ng-container>
                 <br/>
-                <hyt-select-template class="ml-4"
-                    name="hpacketfield-unit-{{i}}"
-                    [(ngModel)]="conversion.convertTo"
-                    [options]="conversion.options"
-                    label="Convert to"
-                    [sortingAlgorithm]="'A-Z'" 
-                    [isSortable]="true">
-                </hyt-select-template>
-                <hyt-select-template class="ml-4"
-                    name="hpacketfield-decimals-{{i}}"
-                    [(ngModel)]="conversion.decimals"
-                    [options]="conversionDecimalsOptions"
-                    label="Decimal digits"
-                    [sortingAlgorithm]="'A-Z'" 
-                    [isSortable]="true">
-                </hyt-select-template>
+                <div class="container-unit-conversion">
+                    <hyt-select-template class="ml-4"
+                        name="hpacketfield-unit-{{i}}"
+                        [(ngModel)]="conversion.convertTo"
+                        [options]="conversion.options"
+                        label="Convert to"
+                        [sortingAlgorithm]="'A-Z'" 
+                        [isSortable]="true" *ngIf="conversion.convertFrom != null">
+                    </hyt-select-template>
+                    <hyt-input-template  class="ml-4" name="hpacketfield-custom-unit-{{i}}" id="customUnitLabel-{{i}}" type="text"
+                        i18n-placeholder="@@HYT_customUnitLabel" placeholder="Custom Unit Label"
+                        [(ngModel)]="conversion.conversionCustomLabel" #name="ngModel" [isRequired]="false"
+                         *ngIf="conversion.convertFrom == null">
+                    </hyt-input-template>
+                    <hyt-select-template class="ml-4"
+                        name="hpacketfield-decimals-{{i}}"
+                        [(ngModel)]="conversion.decimals"
+                        [options]="conversionDecimalsOptions"
+                        label="Decimal digits"
+                        [sortingAlgorithm]="'A-Z'" 
+                        [isSortable]="true">
+                    </hyt-select-template>
+                </div>
             </div>
         </div>
         <div *ngIf="showFieldsMapping && packetFieldsMapping.length > 0 && multiPacketSelect">

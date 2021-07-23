@@ -250,22 +250,21 @@ export class PacketSelectComponent implements OnInit {
     }
     const tempMap = [] as FieldUnitConversion[];
     const addFieldConversion = (f: HPacketField) => {
-      if (!f.unit) {
-        return;
-      }
+      let unit = null
       let unitConvert = this.packetUnitsConversion.find((uc) => uc.field.id === f.id);
+      unit = (f.unit == "")?null:f.unit;
       if (!unitConvert) {
         unitConvert = {
           field: {id: f.id, name: f.name},
-          convertFrom: f.unit,
-          convertTo: f.unit,
+          convertFrom: unit,
+          convertTo: unit,
           decimals: 1,
-          options: this.getUnitOptions(f.unit)
+          options: this.getUnitOptions(unit)
         };
         if (!tempMap.includes(unitConvert))
           tempMap.push(unitConvert);
       } else {
-        unitConvert.convertFrom = f.unit;
+        unitConvert.convertFrom = unit;
         if (!tempMap.includes(unitConvert))
           tempMap.push(unitConvert);
       }
@@ -280,11 +279,16 @@ export class PacketSelectComponent implements OnInit {
     }
     this.packetUnitsConversion = tempMap;
   }
+
   getUnit(unit: string) {
+    if(!unit)
+      return "";
     return this.unitConversionService.convert().describe(unit);
   }
 
   private getUnitOptions(unit: string): any[] {
+    if(!unit)
+      return [];
     const measurement = this.getUnit(unit);
     const measurementUnit = UnitConversionService.measurements.find((m) => m.type === measurement.measure);
     const unitOptions = [];
