@@ -163,7 +163,7 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
             this.topologyResTimeChange.emit({timeMs: remoteTimestamp});
             if (this.eventNotificationIsOn && packet.id === 0 && packet.name.endsWith(this.eventPacketSuffix)) {
               // show toast if packet is a event
-              const event = JSON.parse(packet.fields.map.event.value.string);
+              const event = JSON.parse(packet.fields.map.event.value.string).data;
               const tag = event.tags[0]; // retrieve only first tag
               const toastBackgroundColor = tag ? tag.color : this.DEFAULT_TOAST_BACKGROUND_COLOUR;
               const textColor = '#ffffff';  // TODO retrieve from tag when this property will have been added
