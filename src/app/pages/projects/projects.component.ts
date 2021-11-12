@@ -5,6 +5,7 @@ import { HProject, HprojectsService } from '@hyperiot/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { SelectOption } from '@hyperiot/components/lib/hyt-select-template/hyt-select-template.component';
 import { ProjectsService } from 'src/app/services/projects.service';
+import { NotificationService } from '@hyperiot/components';
 
 @Component({
   selector: 'hyt-projects',
@@ -51,7 +52,8 @@ export class ProjectsComponent implements OnInit, OnDestroy {
     private router: Router,
     private hProjectService: HprojectsService,
     private fb: FormBuilder,
-    private projectsService: ProjectsService
+    private projectsService: ProjectsService,
+    private notificationservice: NotificationService
   ) {}
   
   /**
@@ -96,17 +98,15 @@ export class ProjectsComponent implements OnInit, OnDestroy {
             this.typeMessageArea = $localize`:@@HYT_success:Success`;
             this.messageAreaText = $localize`:@@HYT_project_successfully_deleted:The project was successfully deleted.`;
             this.deletingInLoading = false;
-            setTimeout(() => {
-              this.hideMessageArea();
-            }, 5000);
+            this.launchNotification('success', this.typeMessageArea, this.messageAreaText);
+            this.hideMessageArea()
             break;
           case 'delete-error':
             this.typeMessageArea = $localize`:@@HYT_error:Error`;
             this.messageAreaText = $localize`:@@HYT_error_deleting_project:An error occurred while deleting the project.`;
             this.deletingInLoading = false;
-            setTimeout(() => {
-              this.hideMessageArea();
-            }, 5000);
+            this.launchNotification('error', this.typeMessageArea, this.messageAreaText);
+            this.hideMessageArea()
             break;
           default:
             break;
@@ -143,12 +143,10 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   }
 
   onChangeInputSearch(event) {
-    this.displayMessageArea = false;
     this.search(this.filteringForm.value.textFilter);
   }
 
   onChangeSelectSort(event) {
-    this.displayMessageArea = false;
     this.sortBy(event.value);
   }
 
@@ -210,11 +208,11 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   }
 
   projectsInLoading(projectId: number) {
-    this.displayMessageArea = true;
     this.deletingInLoading = true;
     this.typeMessageArea = $localize`:@@HYT_loading:Loading`;
     const projectToDelete = this.projectsService.nextProjects.projectList.find(x => x.id == projectId);
     this.messageAreaText = $localize`:@@HYT_deleting_project:Deleting of project "${projectToDelete.name}" in loading. It may take a while.`;
+    this.launchNotification('info', this.typeMessageArea, this.messageAreaText);
   }
 
   updateProjects(projectList: HProject[]) {
@@ -247,7 +245,6 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   }
 
   hideMessageArea() {
-    this.displayMessageArea = false;
     this.typeMessageArea = undefined;
     this.messageAreaText = undefined;
   }
@@ -263,6 +260,31 @@ export class ProjectsComponent implements OnInit, OnDestroy {
       }
     }, 5);
 
+  }
+
+  /**
+   * Method used to launch a notification message when a project is deleted 
+   * @param type 
+   * @param title 
+   * @param message 
+   */
+  launchNotification(type: string, title: string, message: string) {
+    switch (type) {
+      case 'success':
+        this.notificationservice.success(title, message);
+        break;
+
+      case 'info':
+        this.notificationservice.info(title, message);
+        break;
+
+      case 'error':
+        this.notificationservice.error(title, message);
+        break;
+    
+      default:
+        break;
+    }
   }
 
 }

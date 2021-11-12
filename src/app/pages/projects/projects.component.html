@@ -73,24 +73,7 @@
 
         </div> <!-- End Row Title -->
 
-        <div *ngIf="displayMessageArea" id="row-messages-area" class="row">
-
-          <div class="col-12 alert-box"
-            [ngClass]="{'alert-loading' : typeMessageArea == 'loading', 'alert-error' : typeMessageArea == 'error', 'alert-success' : typeMessageArea == 'success'}">
-            <!-- alert-error | alert-success -->
-            <p>{{ messageAreaText }}</p>
-            <mat-progress-bar *ngIf="typeMessageArea == 'loading'" mode="indeterminate"></mat-progress-bar>
-
-            <span *ngIf="typeMessageArea != 'loading'" class="cls-msg-area"
-              [ngClass]="{'btn-error' : typeMessageArea == 'error', 'btn-success' : typeMessageArea == 'success'}"
-              (click)="hideMessageArea()">
-            </span>
-
-          </div>
-
-        </div> <!-- END DISPLAY MESSAGE AREA -->
-
-        <div id="row-cotainer-cards" [ngClass]="{'cards-blurred' : deletingInLoading}" class="row">
+        <div id="row-cotainer-cards" [ngClass]="{'cards-blurred' : deletingInLoading}" class="row cards-blurred">
 
           <div *ngIf="hProjectsFiltered.length == 0" class="col-12">
             <span i18n="@@HYT_no_project_found">No project that matches the search found...</span>
@@ -144,3 +127,5 @@
   </div>
 
 </div>
+
+<hyt-notification-box [notify-position]="'TOP_CENTER'"></hyt-notification-box>
