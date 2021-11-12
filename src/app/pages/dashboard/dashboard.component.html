@@ -21,10 +21,8 @@
                     <div class="col-4 left-tools">
 
                         <div id="signal-btn" (click)="changeSignalState($event)">
-                            <span class="hyt-icon {{(signalIsOn)?'icon-hyt_wifiOnFilled':'icon-hyt_wifiOffFilled'}}"></span>
-                            <!-- <p i18n="@@HYT_signal_is_on">{signalIsOn, select, true {Online} false {Offline}}</p> -->
-                            <p>{{(signalIsOn)?'Online':'Offline'}}</p>
-                            <!-- @@i18n -->
+                            <span class="hyt-icon {{(signalIsOn)?'icon-hyt_wifiOffFilled':'icon-hyt_wifiOnFilled'}}"></span>
+                            <p>{{(signalIsOn)?'Offline':'Online'}}</p>
                         </div>
 
 
