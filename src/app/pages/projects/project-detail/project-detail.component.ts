@@ -78,6 +78,52 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
   /** Subject for manage the open subscriptions */
   protected ngUnsubscribe: Subject<void> = new Subject<void>();
 
+  defaultData = [
+    {
+      "data": {
+          "type": "source"
+      },
+      "name": "Sources",
+      "icon": "icon-hyt_StreamCloud_Lamp",
+      "children": []
+    },
+    {
+      "data": {
+        "type": "statistics"
+      },
+      "name": "Statistics",
+      "icon": "icon-hyt_statistics"
+    },
+    {
+      "data": {
+        "type": "events"
+      },
+      "name": "Events",
+      "icon": "icon-hyt_event"
+    },
+    {
+      "data": {
+        "type": "tags"
+      },
+      "name": "Tags",
+      "icon": "icon-hyt_tags"
+    },
+    {
+      "data": {
+        "type": "categories"
+      },
+      "name": "Categories",
+      "icon": "icon-hyt_categories"
+    },
+    {
+      "data": {
+        "type": "areas"
+      },
+      "name": "Areas",
+      "icon": "icon-hyt_areaB16"
+    }
+  ];
+
   constructor(
     private hProjectService: HprojectsService,
     private hDeviceService: HdevicesService,
@@ -243,6 +289,7 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
     this.treeStatus = TreeStatusEnum.Loading;
     this.treeData = [];
     this.hProjectService.findHProject(+this.projectId).subscribe((p: HProject) => {
+
       const projectNode: TreeDataNode = {
         data: { id: p.id },
         name: p.name,
@@ -342,6 +389,7 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
             this.treeView.treeControl.expand(this.treeView.treeControl.dataNodes[0]);
           }
           this.treeStatus = TreeStatusEnum.Ready;
+          console.log('DATA', projectNode)
         }, (err) => {
           this.treeStatus = TreeStatusEnum.Error;
         });
@@ -350,10 +398,30 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
         }
       }, (err) => {
         this.treeStatus = TreeStatusEnum.Error;
-      });
+      },
+      () => {
+        
+        if(this.treeData[0].children.length == 0){
+          
+          let myTreeData = [...this.treeData];
+          this.defaultData.map((d) => {
+            myTreeData[0]['children'].push(d)
+          })
+          this.treeView.setData(myTreeData);
+
+        }
+        
+      }
+      );
     }, (err) => {
       this.treeStatus = TreeStatusEnum.Error;
+    },
+    () => {
+      console.log('ON COMPLETE REFRESH', this.treeData)
+      console.log('ON COMPLETE REFRESH DATA', this.treeData[0].children)
+      console.log('ON COMPLETE REFRESH DATA', this.treeData[0].children.length)
     });
+    
   }
 
   onNodeClick(node) {
