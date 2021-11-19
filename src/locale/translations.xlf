@@ -298,6 +298,9 @@
       <trans-unit id="HYT_delete_item_question" datatype="html">
         <source>Do you really want to delete this item?</source>
       </trans-unit>
+      <trans-unit id="HYT_packet_delete_packet_question" datatype="html">
+        <source>Do you really want to delete this packet?</source>
+      </trans-unit>
       <trans-unit id="HYT_operation_can_not_be_undone" datatype="html">
         <source>This operation can not be undone</source>
       </trans-unit>
@@ -526,8 +529,17 @@
       <trans-unit id="HYT_delete_item" datatype="html">
         <source>Delete item?</source>
       </trans-unit>
+      <trans-unit id="HYT_field_delete_item" datatype="html">
+        <source>Delete the field?</source>
+      </trans-unit>
       <trans-unit id="HYT_operation_cannot_be_undone" datatype="html">
         <source>This operation cannot be undone.</source>
+      </trans-unit>
+      <trans-unit id="HYT_field_operation_cannot_be_undone" datatype="html">
+        <source>If you delete the field, any configurations inside the widgets will be reset and will have to be set again.</source>
+      </trans-unit>
+      <trans-unit id="HYT_packet_operation_cannot_be_undone" datatype="html">
+        <source>If you delete the packet, any configurations inside the widgets will be reset and will have to be set again.</source>
       </trans-unit>
       <trans-unit id="HYT_hint_packet_name" datatype="html">
         <source>Enter the packet name.</source>

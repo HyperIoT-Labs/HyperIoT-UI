@@ -398,6 +398,10 @@
         <source>Do you really want to delete this item?</source>
         <target>Sei sicuro di voler eliminare l'oggetto?</target>
       </trans-unit>
+      <trans-unit id="HYT_packet_delete_packet_question" datatype="html">
+        <source>Do you really want to delete this packet?</source>
+        <target>Sei sicuro di voler eliminare il pacchetto?</target>
+      </trans-unit>
       <trans-unit id="HYT_operation_can_not_be_undone" datatype="html">
         <source>This operation can not be undone</source>
         <target>Questa operazione è definitiva</target>
@@ -702,9 +706,21 @@
         <source>Delete item?</source>
         <target>Eliminare oggetto?</target>
       </trans-unit>
+      <trans-unit id="HYT_field_delete_item" datatype="html">
+        <source>Delete the field?</source>
+        <target>Eliminare il campo?</target>
+      </trans-unit>
       <trans-unit id="HYT_operation_cannot_be_undone" datatype="html">
         <source>This operation cannot be undone.</source>
         <target>Questa operazione non può essere annullata.</target>
+      </trans-unit>
+      <trans-unit id="HYT_field_operation_cannot_be_undone" datatype="html">
+        <source>If you delete the field, any configurations inside the widgets will be reset and will have to be set again.</source>
+        <target>Se elimini il campo eventuali configurazioni all'interno dei widget verranno resettate ed andranno impostate nuovamente.</target>
+      </trans-unit>
+      <trans-unit id="HYT_packet_operation_cannot_be_undone" datatype="html">
+        <source>If you delete the packet, any configurations inside the widgets will be reset and will have to be set again.</source>
+        <target>Se elimini il pacchetto eventuali configurazioni all'interno dei widget verranno resettate ed andranno impostate nuovamente.</target>
       </trans-unit>
       <trans-unit id="HYT_hint_packet_name" datatype="html">
         <source>Enter the packet name.</source>
