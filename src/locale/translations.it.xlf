@@ -811,24 +811,24 @@
         <target>Arricchimento dati</target>
       </trans-unit>
       <trans-unit id="HYT_enrichment_definition_long" datatype="html">
-        <source>Long enrichment data definition. Long enrichment data definition. Long enrichment data definition. Long enrichment data definition. Long enrichment data definition. Long enrichment data definition. Long enrichment data definition.</source>
-        <target>Lunga definizione di arricchimento dati. Lunga definizione di arricchimento dati. Lunga definizione di arricchimento dati. Lunga definizione di arricchimento dati. Lunga definizione di arricchimento dati.</target>
+        <source>Create custom rules and connect them together to enrich the data.</source>        
+        <target>Crea delle regole personalizzate e collegale tra di loro per arricchire i dati.</target>
       </trans-unit>
       <trans-unit id="HYT_statistics" datatype="html">
         <source>Statistics</source>
         <target>Statistiche</target>
       </trans-unit>
       <trans-unit id="HYT_statistics_definition_long" datatype="html">
-        <source>Long statistics definition. Long statistics definition. Long statistics definition. Long statistics definition. Long statistics definition. Long statistics definition. Long statistics definition. Long statistics definition.</source>
-        <target>Lunga definizione di statistiche. Lunga definizione di statistiche. Lunga definizione di statistiche. Lunga definizione di statistiche. Lunga definizione di statistiche. Lunga definizione di statistiche. Lunga definizione di statistiche. </target>
+        <source>Select an algorithm and set the data monitoring frequency.</source>
+        <target>Seleziona un algoritmo e stabilisci la frequenza di monitoraggio dei dati.</target>
       </trans-unit>
       <trans-unit id="HYT_events" datatype="html">
         <source>Events</source>
         <target>Eventi</target>
       </trans-unit>
       <trans-unit id="HYT_events_definition_long" datatype="html">
-        <source>Long events definition. Long events definition. Long events definition. Long events definition. Long events definition. Long events definition. Long events definition. Long events definition. Long events definition. Long events definition.</source>
-        <target>Lunga definizione di eventi. Lunga definizione di eventi. Lunga definizione di eventi. Lunga definizione di eventi. Lunga definizione di eventi. Lunga definizione di eventi. Lunga definizione di eventi. </target>
+        <source>Establish the conditions of the events to be monitored and the actions to be performed when they occur.</source>
+        <target>Stabilisci le condizioni degli eventi da monitorare e le azioni da eseguire al loro verificarsi.</target>
       </trans-unit>
       <trans-unit id="HYT_finish" datatype="html">
         <source>Finish</source>

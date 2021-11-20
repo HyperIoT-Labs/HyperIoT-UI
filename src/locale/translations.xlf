@@ -608,19 +608,19 @@
         <source>Enrichment data</source>
       </trans-unit>
       <trans-unit id="HYT_enrichment_definition_long" datatype="html">
-        <source>Long enrichment data definition. Long enrichment data definition. Long enrichment data definition. Long enrichment data definition. Long enrichment data definition. Long enrichment data definition. Long enrichment data definition.</source>
+        <source>Create custom rules and connect them together to enrich the data.</source>
       </trans-unit>
       <trans-unit id="HYT_statistics" datatype="html">
         <source>Statistics</source>
       </trans-unit>
       <trans-unit id="HYT_statistics_definition_long" datatype="html">
-        <source>Long statistics definition. Long statistics definition. Long statistics definition. Long statistics definition. Long statistics definition. Long statistics definition. Long statistics definition. Long statistics definition.</source>
+        <source>Select an algorithm and set the data monitoring frequency.</source>
       </trans-unit>
       <trans-unit id="HYT_events" datatype="html">
         <source>Events</source>
       </trans-unit>
       <trans-unit id="HYT_events_definition_long" datatype="html">
-        <source>Long events definition. Long events definition. Long events definition. Long events definition. Long events definition. Long events definition. Long events definition. Long events definition. Long events definition. Long events definition.</source>
+        <source>Establish the conditions of the events to be monitored and the actions to be performed when they occur.</source>
       </trans-unit>
       <trans-unit id="HYT_finish" datatype="html">
         <source>Finish</source>
