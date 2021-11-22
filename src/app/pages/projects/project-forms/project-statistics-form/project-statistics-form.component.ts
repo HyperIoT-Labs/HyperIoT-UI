@@ -399,17 +399,19 @@ export class ProjectStatisticsFormComponent
     this.hProjectAlgorithmsService
       .findByHProjectId(this.currentProject.id)
       .subscribe((hProjectAlgorithms: HProjectAlgorithm[]) => {
+        console.log('HPROJECTALGORITHMS', hProjectAlgorithms)
         this.summaryList = {
           title: this.formTitle,
           list: hProjectAlgorithms.map(
             (x) =>
               ({
                 name: x.name,
-                description: x.algorithm.description,
+                description: x.algorithm?.description,
                 data: x,
               } as SummaryListItem)
           ),
         };
+        console.log('SUMMARYLIST', this.summaryList)
       });
   }
 }

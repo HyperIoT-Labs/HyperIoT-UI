@@ -846,17 +846,17 @@
         <source>Go to project list</source>
         <target>Vai alla lista progetti</target>
       </trans-unit>
-      <trans-unit id="HYT_go_to_project_list_long" datatype="html">
-        <source>Go to project list definition. Go to project list definition. Go to project list definition. Go to project list definition. Go to project list definition. Go to project list definition. Go to project list definition. Go to project list definition.</source>
-        <target>Vai alla lista progetti lunga definizione. Vai alla lista progetti lunga definizione. Vai alla lista progetti lunga definizione. Vai alla lista progetti lunga definizione. Vai alla lista progetti lunga definizione. </target>
+      <trans-unit id="HYT_wizard_report_modal_go_to_project_list_long" datatype="html">
+        <source>You will find the list of all your projects in card format.</source>
+        <target>Troverai la lista di tutti i tuoi progetti in formato card.</target>
       </trans-unit>
       <trans-unit id="HYT_go_to_dashboard" datatype="html">
         <source>Go to dashboard</source>
         <target>Vai alla dashboard</target>
       </trans-unit>
       <trans-unit id="HYT_go_to_dashboard_long" datatype="html">
-        <source>Go to dashboard definition. Go to dashboard definition. Go to dashboard definition. Go to dashboard definition. Go to dashboard definition. Go to dashboard definition. Go to dashboard definition. Go to dashboard definition. Go to dashboard definition.</source>
-        <target>Vai alla dashboard lunga definizione. Vai alla dashboard lunga definizione. Vai alla dashboard lunga definizione. Vai alla dashboard lunga definizione. Vai alla dashboard lunga definizione. Vai alla dashboard lunga definizione. </target>
+        <source>You will be able to configure widgets to monitor the data within your projects.</source>
+        <target>Potrai configurare i widget per monitorare i dati all'interno dei tuoi progetti.</target>
       </trans-unit>
       <trans-unit id="HYT_device" datatype="html">
         <source>Devices</source>
@@ -865,6 +865,9 @@
       <trans-unit id="HYT_algorithm" datatype="html">
         <source>Algorithm</source>
         <target>Algoritmo</target>
+      </trans-unit>
+      <trans-unit id="HYT_go_to_algorithms_list_long" datatype="html">
+        <source>Vai alla lista degli algoritmi.</source>
       </trans-unit>
       <trans-unit id="HYT_fields" datatype="html">
         <source>Fields</source>

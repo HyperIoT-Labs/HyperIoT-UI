@@ -634,20 +634,23 @@
       <trans-unit id="HYT_go_to_project_list" datatype="html">
         <source>Go to project list</source>
       </trans-unit>
-      <trans-unit id="HYT_go_to_project_list_long" datatype="html">
-        <source>Go to project list definition. Go to project list definition. Go to project list definition. Go to project list definition. Go to project list definition. Go to project list definition. Go to project list definition. Go to project list definition.</source>
+      <trans-unit id="HYT_wizard_report_modal_go_to_project_list_long" datatype="html">
+        <source>You will find the list of all your projects in card format.</source>
       </trans-unit>
       <trans-unit id="HYT_go_to_dashboard" datatype="html">
         <source>Go to dashboard</source>
       </trans-unit>
       <trans-unit id="HYT_go_to_dashboard_long" datatype="html">
-        <source>Go to dashboard definition. Go to dashboard definition. Go to dashboard definition. Go to dashboard definition. Go to dashboard definition. Go to dashboard definition. Go to dashboard definition. Go to dashboard definition. Go to dashboard definition.</source>
+        <source>You will be able to configure widgets to monitor the data within your projects.</source>
       </trans-unit>
       <trans-unit id="HYT_device" datatype="html">
         <source>Devices</source>
       </trans-unit>
       <trans-unit id="HYT_algorithm" datatype="html">
         <source>Algorithm</source>
+      </trans-unit>
+      <trans-unit id="HYT_go_to_algorithms_list_long" datatype="html">
+        <source>Go to algorithms list definition.</source>
       </trans-unit>
       <trans-unit id="HYT_fields" datatype="html">
         <source>Fields</source>

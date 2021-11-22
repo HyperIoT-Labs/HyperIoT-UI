@@ -430,6 +430,7 @@ export class ProjectWizardComponent implements OnInit {
   }
 
   optionsModalClosed(event: { action: string; data: any }) {
+    
     switch (event.action) {
       case "goToStep": {
         this.stepper.changeStep(event.data);
@@ -443,6 +444,7 @@ export class ProjectWizardComponent implements OnInit {
   }
 
   openFinishModal() {
+
     this.finishData = [];
     this.finishData.push({
       iconPath: this.entitiesService.project.icon,
@@ -469,11 +471,17 @@ export class ProjectWizardComponent implements OnInit {
       type: this.entitiesService.event.displayListName,
       entities: this.eventRules.map((e) => e.name),
     });
+    
     this.cd.detectChanges();
-    const modalRef = this.hytModalService.open(
-      WizardReportModalComponent,
-      this.finishData
-    );
+    
+    // Move delay within the "modal" library
+    setTimeout(()=> {
+      const modalRef = this.hytModalService.open(
+        WizardReportModalComponent,
+        this.finishData
+      );
+
+    }, 100);
   }
 
   getDevices(): void {
