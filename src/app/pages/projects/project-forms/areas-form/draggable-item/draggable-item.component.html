@@ -1,6 +1,6 @@
-<div class="item"
-    title="Move {{itemData.device ? itemData.device.deviceName : itemData.name}}"
-    i18n-title="@@HYT_area_draggable_title"
+<div 
+    class="draggable-item"
+    [title]="setTitleAttribute(itemData, editMode, 'move')"
     [ngStyle]="style"
     cdkDrag
     [cdkDragDisabled]="!editMode"
@@ -11,20 +11,30 @@
     (cdkDragEnded)="onDragEnded($event)"
     (cdkDragReleased)="onDragReleased($event)"
     (mouseover)="showNameLabel()" 
-    (mouseout)="hideNameLabel()" >
+    (mouseout)="hideNameLabel()" 
+>
+<!-- i18n-title="@@HYT_area_draggable_title" -->
     
-    <button class="remove-button"
-        title="Remove {{itemData.device ? itemData.device.deviceName : itemData.name}}"
+    <button 
+        class="remove-button"
+        [title]="setTitleAttribute(itemData, editMode, 'remove')"
         i18n-title="@@HYT_area_draggable_remove"
         (mousedown)="$event.stopPropagation()"
         (click)="onRemoveButtonClick($event)"
-        [ngStyle]="{ display: editMode ? '' : 'none' }">X</button>
-    <div class="title" [ngClass]="{ 'area-title': !itemData.device }"
+        [ngStyle]="{ display: editMode ? '' : 'none' }"
+    >
+        X
+    </button>
+    <!--Remove {{itemData.device ? itemData.device.deviceName : itemData.name}}-->
+
+    <div 
+        class="title" [ngClass]="{ 'area-title': !itemData.device }"
         title="Open {{itemData.device ? itemData.device.deviceName : itemData.name}}"
         i18n-title="@@HYT_area_draggable_open"
         (mousedown)="$event.stopPropagation()"
         (click)="onOpenButtonClick($event)"
-        [ngStyle]="{ display: (showName || editMode) ? '' : 'none' }">
+        [ngStyle]="{ display: (showName || editMode) ? '' : 'none' }"
+    >
         <div class="name">{{itemData.device ? itemData.device.deviceName : itemData.name}}</div>
         <!-- BEGIN -- custom render data passed on component refresh event -->
         <div class="stats" *ngIf="renderData.deviceCount">

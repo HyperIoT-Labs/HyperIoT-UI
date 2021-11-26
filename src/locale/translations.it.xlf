@@ -1353,6 +1353,14 @@
         <source>Open <x id="INTERPOLATION" /></source>
         <target>Apri {{itemData.device ? itemData.device.deviceName : itemData.name}}</target>
       </trans-unit>
+      <trans-unit id="HYT_draggableitem_move" datatype="html">
+        <source>Move</source>
+        <target>Muovi</target>
+      </trans-unit>
+      <trans-unit id="HYT_draggableitem_remove" datatype="html">
+        <source>Remove</source>
+        <target>Rimuovi</target>
+      </trans-unit>
       <trans-unit id="HYT_area_path_main" datatype="html">
         <source>Main</source>
         <target>Principale</target>

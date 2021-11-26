@@ -1015,6 +1015,12 @@
       <trans-unit id="HYT_area_draggable_open" datatype="html">
         <source>Open <x id="INTERPOLATION"/></source>
       </trans-unit>
+      <trans-unit id="HYT_draggableitem_move" datatype="html">
+        <source>Move</source>
+      </trans-unit>
+      <trans-unit id="HYT_draggableitem_remove" datatype="html">
+        <source>Remove</source>
+      </trans-unit>
       <trans-unit id="HYT_area_path_main" datatype="html">
         <source>Main</source>
       </trans-unit>
