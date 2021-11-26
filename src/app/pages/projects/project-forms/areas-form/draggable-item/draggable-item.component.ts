@@ -20,6 +20,8 @@ export class DraggableItemComponent {
   renderData = {} as any;
   showName = false;
 
+  titleToDisplay = 'ciao';
+
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     this.refresh();
@@ -51,7 +53,9 @@ export class DraggableItemComponent {
     this.container = container;
     this.itemData = itemData;
     this.style['background-image'] = `url(assets/icons/${itemData.mapInfo.icon})`;
-    this.style['background-size'] = `64px 64px`;
+    this.style['background-size'] = `contain`;
+    this.style['background-repeat'] = `no-repeat`;
+    this.style['background-position'] = `top center`;
     this.style['cursor'] = this.editMode ? 'move' : '';
     this.refresh();
   }
@@ -76,4 +80,41 @@ export class DraggableItemComponent {
   hideNameLabel(){
     this.showName = false;
   }
+
+  setTitleAttribute(itemData: any, editMode: boolean, action: string): string {
+
+    const deviceName = itemData.device ? itemData.device.deviceName : itemData.name;
+    
+    switch (action) {
+      case 'move':
+
+        if(!editMode){
+      
+          return deviceName;
+    
+        } else {
+          
+          const moveText = $localize`:@@HYT_draggableitem_move:Move`;
+          return moveText + ' ' + deviceName;
+    
+        }
+
+      case 'remove':
+        
+        if(!editMode){
+      
+          return deviceName;
+    
+        } else {
+          
+          const removeText = $localize`:@@HYT_draggableitem_remove:Remove`;
+          return removeText + ' ' + deviceName;
+    
+        }
+
+    }
+
+    
+  }
+
 }

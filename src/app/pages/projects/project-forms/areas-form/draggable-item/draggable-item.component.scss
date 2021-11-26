@@ -1,21 +1,17 @@
 :host {
-    position: absolute;
+  position: absolute;
 }
 
-.item {
-    display: inline-flex;
-    position: relative;
-    width: 64px;
-    height: 64px;
-/*    background-color: rgba(255,255,255,0.9);
-    border-radius: 8px;
-    box-shadow: 0 0 12px 6px #00f; */
-    /* center the element */
-    margin-left: -32px;
-    margin-top: -32px;
-}
+.draggable-item {
+  display: inline-flex;
+  position: relative;
+  width: 64px;
+  height: 64px;
+  /* center the element */
+  margin-left: -32px;
+  margin-top: -32px;
 
-.remove-button {
+  .remove-button {
     outline: none;
     position: absolute;
     right: -12px;
@@ -27,12 +23,12 @@
     border-radius: 12px;
     width: 24px;
     height: 24px;
-}
+  }
 
-.title {
+  .title {
     position: absolute;
     height: auto;
-    bottom: -24px;
+    bottom: -27px;
     width: 128px;
     left: -32px;
     right: 96px;
@@ -44,34 +40,29 @@
     font-weight: bold;
     text-align: center;
     cursor: pointer;
-}
-.area-title {
-    background-color: rgba($color: yellow, $alpha: 0.65);
-}
 
-.name {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-.stats {
-    font-weight: bolder;
-    font-size: smaller;
-    text-align: center;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
+    &.area-title {
+      background-color: rgba($color: yellow, $alpha: 0.65);
+    }
 
-@-webkit-keyframes pulsate {
-    0% {opacity: 0.1;}
-    40% {opacity: 1.0;}
-    60% {opacity: 1.0;}
-    100% {opacity: 0.1;}
-}
+    .name {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-align: center;
+    }
 
+    .stats {
+      font-weight: bolder;
+      font-size: smaller;
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
 
-.status-circle {
+  .status-circle {
     height: 8px;
     width: 8px;
     border-radius: 50%;
@@ -79,6 +70,84 @@
     background-color: grey;
   }
 
-.status-circle-incoming-data {
+  .status-circle-incoming-data {
     background-color: yellowgreen;
   }
+}
+
+@keyframes pulsate {
+  0% {
+    opacity: 0.1;
+  }
+  40% {
+    opacity: 1;
+  }
+  60% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.1;
+  }
+}
+
+@-webkit-keyframes pulsate {
+  0% {
+    opacity: 0.1;
+  }
+  40% {
+    opacity: 1;
+  }
+  60% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.1;
+  }
+}
+
+@-moz-keyframes pulsate {
+  0% {
+    opacity: 0.1;
+  }
+  40% {
+    opacity: 1;
+  }
+  60% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.1;
+  }
+}
+
+/************ START DRAGGABLE ITEM (DEVICE / SENSOR) RESPONSIVE ************/
+
+@media (max-width: 1400px) {
+  .draggable-item {
+    width: 54px;
+    height: 54px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .draggable-item {
+    width: 44px;
+    height: 44px;
+  }
+}
+
+@media (max-width: 900px) {
+  .draggable-item {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@media (max-width: 700px) {
+  .draggable-item {
+    width: 35px;
+    height: 35px;
+  }
+}
+
+/************ END DRAGGABLE ITEM (DEVICE / SENSOR) RESPONSIVE ************/
