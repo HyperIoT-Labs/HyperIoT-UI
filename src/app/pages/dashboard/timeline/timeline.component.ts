@@ -62,18 +62,6 @@ export class TimelineComponent implements OnChanges {
   };
 
   /**
-   * Map to granularity is used to convert a time step to his granularity step
-   */
-  mapToGranularity = {
-    year: 'hour',
-    month: 'hour',
-    day: 'hour',
-    hour: 'hour',
-    minute: 'minute',
-    second: 'second'
-  };
-
-  /**
    * TimeLineData stores the timeline data that will be shown in the timeline
    */
   timeLineData = [];
@@ -205,7 +193,6 @@ export class TimelineComponent implements OnChanges {
     this.hprojectsService.timelineScan(
       `timeline_hproject_${this.projectId}`,
       this.domainInterval,
-      this.mapToGranularity[this.domainInterval],
       this.domainStart.getTime(),
       this.domainStop.getTime(),
       Intl.DateTimeFormat().resolvedOptions().timeZone,
