@@ -225,7 +225,7 @@ export class RuleDefinitionComponent {
     fieldList = this.treefy(hPacket.fields);
     this.extractField(fieldList);
     return this.fieldFlatList.map((f) => ({
-      value: f.label,
+      value: f.field.id,
       label: f.field.name,
     }));
   }
@@ -264,7 +264,7 @@ export class RuleDefinitionComponent {
         ? `${rule.form.controls.rulePacket.value}.`
         : "";
       const field: string = rule.form.value.ruleField
-        ? rule.form.value.ruleField
+        ? rule.fieldOptions.filter(x => x.value === rule.form.value.ruleField)[0].value
         : "";
       const condition: string = rule.form.value.ruleCondition
         ? " " + rule.form.value.ruleCondition
@@ -293,7 +293,7 @@ export class RuleDefinitionComponent {
   }
 
   fieldChanged(event, index) {
-    const type = this.fieldFlatList.find((y) => y.label === event.value).field
+    const type = this.fieldFlatList.find((y) => y.field.id === event.value).field
       .type;
     this.ruleForms[index].conditionOptions = [];
 
@@ -392,7 +392,7 @@ export class RuleDefinitionComponent {
             const fieldOptions: SelectOption[] =
               this.buildFieldOptions(actualPacket);
             const actualFieldOption: SelectOption = fieldOptions.find(
-              (x) => x.value === ruleDef[k].field
+              (x) => x.value === parseInt(ruleDef[k].field)
             );
             if (!actualFieldOption) {
               this.hytModalService.open(RuleErrorModalComponent);
@@ -402,7 +402,7 @@ export class RuleDefinitionComponent {
 
             const conditionOptions = [];
             const fieldType = this.fieldFlatList.find(
-              (ffl) => ffl.label === actualFieldOption.value
+              (ffl) => ffl.field.id === actualFieldOption.value
             ).field.type;
             this.allConditionOptions.forEach((x) => {
               if (x.type.includes(fieldType)) {
