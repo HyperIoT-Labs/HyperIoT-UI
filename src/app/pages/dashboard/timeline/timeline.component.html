@@ -1,50 +1,5 @@
 <div id="hyt-timeline" class="container-fluid">
-
-    <!-- <div class="row">
-
-        <div class="col-5">
-            <h2>Timeline</h2>
-        </div>
-        <div id="set-time-group" class="col-7">
-
-            <mat-button-toggle-group name="fontStyle" aria-label="Font Style" [value]="domainInterval">
-
-                <mat-button-toggle 
-                    *ngFor="let time of timeRange" 
-                    [value]="time.value"
-                    (change)="rangeChanged($event.value)"
-                >
-                    {{time.label}}
-                </mat-button-toggle>
-
-            </mat-button-toggle-group>
-
-            <hyt-date-picker 
-                id="timeline-picker" 
-                [date]="domainStart" 
-                [minStep]="mapToDomain[domainInterval]"
-                (selectedDate)="selectedDateChanged($event)"
-            ></hyt-date-picker>
-
-        </div>
-        <!--TODO move inline style in scss--
-        <div class="col-12 chartBox">
-            <div>
-                <hyt-button (click)="timeBack()"
-                    [ngClass]="{'hasData': timeSelection[0] ? timeSelection[0] < domainStart : false}">&lt;&lt;</hyt-button>
-            </div>
-            <div style="margin: 0 auto; width: calc(100% - 71px);">
-                <hyt-time-axis #timeAxis (dataTimeSelectionChanged)="dataTimeSelectionChanged($event)"
-                    (domainSet)="changeStep($event)">
-                </hyt-time-axis>
-            </div>
-            <div style="float: right;">
-                <hyt-button (click)="timeForward()"
-                    [ngClass]="{'hasData': timeSelection[1] ? timeSelection[1] > domainStop : false}">&gt;&gt;</hyt-button>
-            </div>
-        </div>
-    </div> -->
-
+    
     <div id="title-timeline">
 
         <h2>Timeline Picker</h2><!-- @I18N@ -->
@@ -69,23 +24,8 @@
 
         </div>
 
-        <!-------------------------------->
-
         <div id="picker-timeline">
             
-            <!-- VERIFICARE SE LA SOSTITUZIONE è CORRETTA
-            <mat-button-toggle-group name="fontStyle" aria-label="Font Style" [value]="domainInterval">
-
-                <mat-button-toggle 
-                    *ngFor="let time of timeRange" 
-                    [value]="time.value"
-                    (change)="rangeChanged($event.value)"
-                >
-                    {{time.label}}
-                </mat-button-toggle>
-
-            </mat-button-toggle-group> -->
-
             <hyt-button-toggle 
                 [selectedValue]="domainInterval" 
                 [range]="timeRange" 
@@ -102,8 +42,6 @@
             ></hyt-date-picker>
 
         </div>
-
-        <!-------------------------------->
 
         <div id="container-timeline-arrows-right">
     
@@ -125,17 +63,6 @@
 
     <div id="container-timeline">
 
-        <!-- <div id="timeline-arrow-left">
-
-            <hyt-button 
-                (click)="timeBack()"
-                [ngClass]="{'hasData': timeSelection[0] ? timeSelection[0] < domainStart : false}"
-            >
-                &lt;&lt;
-            </hyt-button>
-
-        </div> -->
-
         <div id="timeline-axis">
 
             <hyt-time-axis 
@@ -146,17 +73,6 @@
             </hyt-time-axis>
 
         </div>
-
-        <!-- <div id="timeline-arrow-right">
-
-            <hyt-button 
-                (click)="timeForward()"
-                [ngClass]="{'hasData': timeSelection[1] ? timeSelection[1] > domainStop : false}"
-            >
-                &gt;&gt;
-            </hyt-button>
-
-        </div> -->
 
     </div>
 
