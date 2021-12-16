@@ -41,6 +41,8 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
 
   private DEFAULT_TOAST_BACKGROUND_COLOUR = '#1f58a5';
 
+  widgetReadyCounter = 0;
+
   @ViewChild(GridsterComponent, { static: true }) gridster: GridsterComponent;
   @ViewChild(WidgetSettingsDialogComponent, { static: true }) widgetSetting: WidgetSettingsDialogComponent;
   @Input() options: GridsterConfig;
@@ -343,6 +345,12 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
         const widget = this.getItemById(data.widget.id);
 
         this.openModal(widget);
+        break;
+      case 'widget:ready':
+        this.widgetReadyCounter++;
+        if (this.widgetReadyCounter === this.widgets.length) {
+          this.widgetLayoutEvent.emit('widgetsLayout:ready');
+        }
         break;
     }
   }

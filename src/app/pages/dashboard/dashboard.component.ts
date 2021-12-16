@@ -37,6 +37,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
   @ViewChild(DashboardViewComponent)
   dashboardView: DashboardViewComponent;
 
+  widgetLayoutReady = false;
+
   /** Subject for manage the open subscriptions */
   protected ngUnsubscribe: Subject<void> = new Subject<void>();
 
@@ -308,9 +310,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
     const responseHandler = (res: Dashboard[]) => {
       this.currentDashboard = res[0];
       this.currentDashboardId = this.currentDashboard.id;
+      this.widgetLayoutReady = false;
       this.dashboardOfflineDataService.resetService(this.idProjectSelected).subscribe(res => {
         this.packetsInDashboard = [...res];
-        this.cd.detectChanges();
+        if (this.widgetLayoutReady) {
+          this.cd.detectChanges();
+        }
       });
       this.algorithmOfflineDataService.resetService(this.idProjectSelected);
       this.pageStatus = PageStatus.Standard;
@@ -358,6 +363,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
   topologyResTimeChange(value) {
     if (this.dataRecordingStatus == 1 && value.timeMs >= 0) {
       this.dataRecordingStatus = TopologyStatus.On;
+    }
+  }
+
+  onDashboardViewEvent(event){
+    if (event === 'widgetsLayout:ready') {
+      if (!this.widgetLayoutReady) {
+        this.cd.detectChanges();
+      }
+      this.widgetLayoutReady = true;
     }
   }
 }

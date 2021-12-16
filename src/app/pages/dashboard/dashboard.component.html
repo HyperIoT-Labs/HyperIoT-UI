@@ -164,7 +164,8 @@
                 </div>
 
                 <hyt-dashboard-view [dashboard]="currentDashboard" [dashboardType]="currentDashboardType"
-                    [dashboardWidgets]="currentDashboard.widgets" (dsTopologyResTimeChange)="topologyResTimeChange($event)">
+                    [dashboardWidgets]="currentDashboard.widgets" (dsTopologyResTimeChange)="topologyResTimeChange($event)"
+                    (dashboardViewEvent)="onDashboardViewEvent($event)">
                 </hyt-dashboard-view>
 
             </div>
