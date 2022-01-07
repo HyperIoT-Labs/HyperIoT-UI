@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output,ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef} from '@angular/core';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { HPacket, HProject, HpacketsService, HPacketField } from '@hyperiot/core';
 
@@ -14,7 +14,15 @@ export class FourierTransformComponent implements OnInit {
   @Input()
   project: HProject;
 
-  form: FormGroup;
+  // form: FormGroup = new FormGroup({
+  //   transformMethod: new FormControl(),
+  //   transformNorm: new FormControl(),
+  //   transformType: new FormControl(),
+  //   inputField: new FormControl(),
+  //   outputField: new FormControl(),
+  // }) ; 
+
+  form: FormGroup = this.fb.group({});
 
   methodOptions = [
     { label: 'Fast', value: 'FAST' },
@@ -38,7 +46,7 @@ export class FourierTransformComponent implements OnInit {
   @Input()
   set config(cfg: any) {
     this._config = cfg;
-    cfg.actionName = 'FourierTransformRuleAction';
+    cfg.actionName = 'it.acsoftware.hyperiot.rule.service.actions.FourierTransformRuleAction';
     this.update();
   }
 
@@ -52,32 +60,44 @@ export class FourierTransformComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.form = this.fb.group({});
+
     this.packet.fields.forEach((pf) => {
       this.inputFieldOptions.push({
         label: pf.name,
         value: pf.id
       });
     });
+    
   }
 
   onTransformMethodChange(method) {
-    this.config.transformMethod = method;
-    this.cd.detectChanges();
-    this.form.patchValue({ transformMethod: this.config.transformMethod });
-    this.form.get('transformMethod').setValue(this.config.transformMethod);
+    if(method) {
+      
+      this.config.transformMethod = method;
+      this.cd.detectChanges();
+      this.form.patchValue({ transformMethod: this.config.transformMethod });
+      this.form.get('transformMethod').setValue(this.config.transformMethod);
+      
+    }
+    
   }
 
   onTransformNormChange(norm) {
-    this.config.fftNormalization = norm;
-    this.cd.detectChanges();
-    this.form.get('transformNorm').setValue(this.config.fftNormalization);
+    if(norm) {
+      this.config.fftNormalization = norm;
+      this.cd.detectChanges();
+      this.form.get('transformNorm').setValue(this.config.fftNormalization);
+    }
+    
   }
 
   onTransformTypeChange(type) {
-    this.config.transformType = type;
+    if(type) {
+      this.config.transformType = type;
     this.cd.detectChanges();
     this.form.get('transformType').setValue(this.config.transformType);
+    }
+    
   }
 
   onInputFieldChange(field) {
@@ -110,7 +130,7 @@ export class FourierTransformComponent implements OnInit {
 
   new() {
     return {
-      actionName: 'FourierTransformRuleAction',
+      actionName: 'it.acsoftware.hyperiot.rule.service.actions.FourierTransformRuleAction',
       transformMethod: 'FAST',
       fftNormalization: 'STANDARD',
       transformType: 'FORWARD',
