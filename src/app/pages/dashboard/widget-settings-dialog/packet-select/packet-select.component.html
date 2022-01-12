@@ -1,14 +1,16 @@
-<div id="packet-select-component" class="padding-6 d-flex flex-column justify-content-stretch">
+<div id="packet-select-component" class="padding-6 d-flex flex-row justify-content-stretch">
 
     <ng-container *ngIf="widget.config">
 
-        <div class="d-flex flex-column">
+        <div id="packet-selection" class="d-flex flex-column">
 
-            <hyt-select-template [(ngModel)]="selectedPacketOption"
+            <hyt-select-template 
+                [(ngModel)]="selectedPacketOption"
                 (ngModelChange)="onPacketChange($event)" name="packet-select"
                 [label]="'Select packet'" i18n-placeholder="@@HYT_widget_settings_select_packet"
                 [options]="packetOptions" [sortingAlgorithm]="'A-Z'" [isSortable]="true"
-                required disableRipple>
+                required disableRipple
+            >
             </hyt-select-template>
         </div>
 
@@ -16,7 +18,7 @@
 
     <ng-container *ngIf="selectedPacket != null">
 
-        <div class="d-flex flex-column">
+        <div id="field-selection" class="d-flex flex-column">
  
             <hyt-select-template
                 [(ngModel)]="selectedFieldsOptions" [isMultiple]="multiPacketSelect"
@@ -27,9 +29,9 @@
             </hyt-select-template>
 
         </div>
-        <div *ngIf="hasFieldsUnit() && packetUnitsConversion && packetUnitsConversion.length > 0">
-            <h3>Unit Conversion</h3>
-            <div *ngFor="let conversion of packetUnitsConversion; let i = index;">
+        <div id="box-unit-conversion" *ngIf="hasFieldsUnit() && packetUnitsConversion && packetUnitsConversion.length > 0">
+            <h3 id="title-unit-conversion">Unit Conversion</h3>
+            <div *ngFor="let conversion of packetUnitsConversion; let i = index;" class="row-unit-conversion">
                 <label class="label">{{ conversion.field.name }}</label>:
                 <ng-container *ngIf="conversion.convertFrom != null">
                     {{ getUnit(conversion.convertFrom).singular }}
@@ -37,7 +39,8 @@
                 </ng-container>
                 <br/>
                 <div class="container-unit-conversion">
-                    <hyt-select-template class="ml-4"
+                    <hyt-select-template 
+                        class="ml-4"
                         name="hpacketfield-unit-{{i}}"
                         [(ngModel)]="conversion.convertTo"
                         [options]="conversion.options"
@@ -45,7 +48,8 @@
                         [sortingAlgorithm]="'A-Z'" 
                         [isSortable]="true" *ngIf="conversion.convertFrom != null">
                     </hyt-select-template>
-                    <hyt-input-template  class="ml-4" name="hpacketfield-custom-unit-{{i}}" id="customUnitLabel-{{i}}" type="text"
+                    <hyt-input-template  
+                        class="ml-4" name="hpacketfield-custom-unit-{{i}}" id="customUnitLabel-{{i}}" type="text"
                         i18n-placeholder="@@HYT_customUnitLabel" placeholder="Custom Unit Label"
                         [(ngModel)]="conversion.conversionCustomLabel" #name="ngModel" [isRequired]="false"
                          *ngIf="conversion.convertFrom == null">

@@ -1673,8 +1673,12 @@
         <target>La configurazione del data recording è stata modificata. Per renderla effettiva è necessario riavviare il data recording, vuoi riavviare adesso? In ogni caso non prederai i dati che stai inviando.</target>
       </trans-unit>
       <trans-unit id="HYT_algorithm_required_input_fields" datatype="html">
-        <source>Campi richiesti per l'algoritmo</source>
-        <target></target>
+        <source>Algorithm required input fields</source>
+        <target>Campi richiesti per l'algoritmo</target>
+      </trans-unit>
+      <trans-unit id="HYT_summary_list_no_packets" datatype="html">
+        <source>No Packets</source>
+        <target>Nessun Pacchetto</target>
       </trans-unit>
     </body>
   </file>

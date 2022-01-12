@@ -1,3 +1,4 @@
+import { EnrichmentsService } from './../../../services/enrichments/enrichments.service';
 import { Component, OnInit, OnDestroy, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -18,6 +19,7 @@ import { ChangeDetectorRef } from '@angular/core';
 import { PacketFieldsFormComponent } from '../project-forms/packet-fields-form/packet-fields-form.component';
 import { DashboardConfigService } from '../../dashboard/dashboard-config.service';
 import { ConfirmRecordingActionComponent } from 'src/app/components/modals/confirm-recording-action/confirm-recording-action.component';
+import { pack } from 'd3';
 
 enum TreeStatusEnum {
   Ready,
@@ -124,6 +126,9 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
     }
   ];
 
+  currentPacket: number = null;
+  currentDeviceName: string = '';
+
   constructor(
     private hProjectService: HprojectsService,
     private hDeviceService: HdevicesService,
@@ -132,12 +137,27 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private dialog: HytModalService,
-    private cdRef:ChangeDetectorRef
+    private cdRef:ChangeDetectorRef,
+    private enrichmentsService: EnrichmentsService
   ) { }
 
   ngOnInit() {
+    
     this.projectId = this.activatedRoute.snapshot.params.projectId;
     this.refresh();
+    
+    this.enrichmentsService.changeDeviceName$
+    .pipe(takeUntil(this.ngUnsubscribe))
+    .subscribe(deviceName => {
+      this.currentDeviceName = deviceName;
+    });
+
+    this.enrichmentsService.changePacket$
+    .pipe(takeUntil(this.ngUnsubscribe))
+    .subscribe(packetID => {
+      this.currentPacket = packetID;
+    });
+
   }
 
   ngOnDestroy() {
@@ -389,7 +409,7 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
             this.treeView.treeControl.expand(this.treeView.treeControl.dataNodes[0]);
           }
           this.treeStatus = TreeStatusEnum.Ready;
-          console.log('DATA', projectNode)
+          
         }, (err) => {
           this.treeStatus = TreeStatusEnum.Error;
         });
@@ -415,11 +435,6 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
       );
     }, (err) => {
       this.treeStatus = TreeStatusEnum.Error;
-    },
-    () => {
-      console.log('ON COMPLETE REFRESH', this.treeData)
-      console.log('ON COMPLETE REFRESH DATA', this.treeData[0].children)
-      console.log('ON COMPLETE REFRESH DATA', this.treeData[0].children.length)
     });
     
   }

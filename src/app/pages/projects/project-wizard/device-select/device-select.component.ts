@@ -36,6 +36,11 @@ export class DeviceSelectComponent implements OnChanges {
     this.autoSelect();
   }
 
+  getSelectedDevice():string {
+    const deviceSelected = this.selectForm.get('selectDevice').value;
+    return deviceSelected.deviceName;
+  }
+
   deviceChanged(event): void {
     this.selectedDevice.emit(event.value);
   }

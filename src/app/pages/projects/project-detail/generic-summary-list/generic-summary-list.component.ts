@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewEncapsulation, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 
 export class SummaryList {
   title: string;
@@ -17,7 +17,7 @@ export class SummaryListItem {
   styleUrls: ['./generic-summary-list.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class GenericSummaryListComponent {
+export class GenericSummaryListComponent implements OnInit, OnChanges {
 
   @Output() menuAction = new EventEmitter<{
     action: 'add' | 'edit' | 'duplicate' | 'delete',
@@ -33,10 +33,60 @@ export class GenericSummaryListComponent {
   @Input()
   addButtonActive = false;
 
+  @Input()
+  currentDevice = null;
+
+  @Input()
+  enrichmentPacketId = null;
+
   selectedItem: SummaryListItem;
 
-  constructor(
-  ) { }
+  filteredElementList: SummaryListItem[] = [];
+
+  constructor() {
+  }
+
+  ngOnInit() {
+    
+    switch (this._summaryList.title) {
+      case 'Packets':
+        
+        this.getFilteredElement(this._summaryList.list, this.currentDevice, false);
+        break;
+
+      case 'Packet Enrichments':
+        
+        this.getFilteredElement(this._summaryList.list, this.currentDevice, true, this.enrichmentPacketId);
+        break;
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+
+    switch (this._summaryList.title) {
+
+      case 'Packets':
+        
+        const pDeviceName = (changes['currentDevice'] && changes['currentDevice']?.currentValue !== changes['currentDevice']?.previousValue) ?
+          changes['currentDevice']?.currentValue : this.currentDevice;
+
+        this.getFilteredElement(this._summaryList.list, pDeviceName, false );
+
+        break;
+
+      case 'Packet Enrichments':
+        
+        const peDeviceName = (changes['currentDevice'] && (changes['currentDevice']?.currentValue !== changes['currentDevice']?.previousValue)) ?
+          changes['currentDevice']?.currentValue : this.currentDevice;
+
+        const pePacketID = (changes['enrichmentPacketId'] && (changes['enrichmentPacketId']?.currentValue !== changes['enrichmentPacketId']?.previousValue)) ?
+          changes['enrichmentPacketId']?.currentValue : this.enrichmentPacketId;
+
+          this.getFilteredElement(this._summaryList.list, peDeviceName, true, pePacketID);
+
+        break;
+    }
+  }
 
   addEntity() {
     this.menuAction.emit({
@@ -63,6 +113,34 @@ export class GenericSummaryListComponent {
       action: 'delete',
       item: itemT
     });
+  }
+
+  getFilteredElement(itemList: SummaryListItem[], deviceToFilter: string, isEnrichment: boolean = false, packetIDToFilter?: number){
+
+    this.filteredElementList = [];
+
+    if(isEnrichment) {
+      
+      itemList.map((singleItem) => {
+
+        if(singleItem.data.packet.id === packetIDToFilter && singleItem.data.packet.device.deviceName === deviceToFilter) {
+          this.filteredElementList.push(singleItem);
+        }
+
+      });
+
+    } else {
+      
+      itemList.map((singleItem) => {
+        
+        if(singleItem.data.device.deviceName === deviceToFilter) {
+          this.filteredElementList.push(singleItem);
+        }
+
+      });
+
+    }
+
   }
 
 }

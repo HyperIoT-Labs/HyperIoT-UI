@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation,ChangeDetectorRef } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HytModalService, Option } from '@hyperiot/components';
 import { HytStepperComponent } from '@hyperiot/components/lib/hyt-stepper/hyt-stepper.component';
@@ -25,7 +25,7 @@ import { Subject } from 'rxjs';
   selector: "hyt-project-wizard",
   templateUrl: "./project-wizard.component.html",
   styleUrls: ["./project-wizard.component.scss"],
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class ProjectWizardComponent implements OnInit {
   @ViewChild("stepper")
@@ -70,6 +70,7 @@ export class ProjectWizardComponent implements OnInit {
 
   currentProject: HProject;
   currentDevice: HDevice;
+  currentDeviceName: string = null;
   hDevices: HDevice[] = [];
   hPackets: HPacket[] = [];
   enrichmentRules: Rule[] = [];
@@ -141,6 +142,7 @@ export class ProjectWizardComponent implements OnInit {
   }
 
   stepChanged(event) {
+    
     this.currentStepIndex = event.selectedIndex;
     // setting current form...
     switch (event.selectedIndex) {
@@ -156,6 +158,7 @@ export class ProjectWizardComponent implements OnInit {
       case 2: {
         this.currentForm = this.packetsForm;
         this.getPackets();
+        this.currentDeviceName = this.deviceSelect.getSelectedDevice();
         break;
       }
       case 3: {
@@ -222,6 +225,7 @@ export class ProjectWizardComponent implements OnInit {
   }
 
   onSaveClick(e) {
+  
     this.currentForm.save(
       (ent, isNew) => {
         if (this.currentForm instanceof ProjectFormComponent) {
@@ -245,10 +249,13 @@ export class ProjectWizardComponent implements OnInit {
           this.statisticsForm.loadHPackets();
           this.updateSelectFieldChanged(isNew);
         } else if (this.currentForm instanceof PacketEnrichmentFormComponent) {
+          
           this.enrichmentRules = [
             ...this.updateList(ent, this.enrichmentRules),
           ];
+          
           this.currentForm.loadEmpty();
+
         } else if (this.currentForm instanceof ProjectStatisticsFormComponent) {
           this.currentForm.loadEmpty();
         } else if (this.currentForm instanceof ProjectEventsFormComponent) {
@@ -293,10 +300,12 @@ export class ProjectWizardComponent implements OnInit {
   menuAction(event): void {
     switch (event.action) {
       case "edit":
+        
         if (this.currentForm instanceof PacketFormComponent) {
           this.deviceSelect.selectSpecific(event.item.data.device.id);
           this.deviceSelect.freezeSelection();
         }
+        
         this.currentForm.edit(event.item.data);
         break;
       case "duplicate":
@@ -367,6 +376,10 @@ export class ProjectWizardComponent implements OnInit {
 
   deviceChanged(event): void {
     this.currentDevice = event;
+    if(event){
+      this.currentDeviceName = event.deviceName;
+      this.cd.detectChanges()
+    }
   }
 
   /**
@@ -396,13 +409,19 @@ export class ProjectWizardComponent implements OnInit {
     }
   }
 
-  enrichmentPacketId: number;
+  enrichmentPacketId: number = null;
   enrichmentPacketChanged(event: number): void {
     if (event) {
       this.enrichmentPacketId = event;
       this.enrichmentForm.loadData(this.enrichmentPacketId).subscribe(res =>{
         this.enrichmentForm.loadEmpty();
       });
+    }
+  }
+
+  enrichmentDeviceChanged(event: string): void {
+    if(event) {
+      this.currentDeviceName = event;
     }
   }
 
@@ -554,6 +573,7 @@ export class ProjectWizardComponent implements OnInit {
   }
 
   getDirty(index: number): boolean {
+    
     switch (index) {
       case 0: {
         return this.projectForm ? this.projectForm.isDirty() : false;

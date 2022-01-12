@@ -1,61 +1,87 @@
 <div id="eventMqttCommand" class="form-group row">
+
     <form class="eventMqttCommand-form col-12" [formGroup]="mqttFieldsFormGroup" autocomplete="on">
-        <div class="form-group row">
+
+       <!-- <div id="event-is-active" class="form-group row">
 
             <div id="fevent-col-active" class="col-6">
     
-            <p id="label-event-active" i18n="@@HYT_active">Active</p>
+                <p id="label-event-active" i18n="@@HYT_active">Active</p>
+                
+                <div id="container-radio-events-active">
+        
+                    <hyt-radio-button 
+                    [form]="mqttFieldsFormGroup" 
+                    [options]="activeOptions" 
+                    name="active"
+                    (changeFn)="changeEventActive($event)">
+                    </hyt-radio-button>
+        
+                </div>
+    
+            </div> <!-- Field Oputput --
+    
+    
+        </div> <!-- END EVENT IS ACTIVE ROW --
+
+        <div id="mqtt-disabled-elements" *ngIf="mqttUrl && mqttTopic" class="form-group row">
+
+
+            <div class="col-12">
+
+                <fieldset>
+
+                    <legend>Ciao</legend>
+    
+                    <div id="fpack-col-mqtt-url" class="col-6">
+    
+                        <hyt-input-text
+                            i18n-placeholder="@@HYT_mqtt_url"
+                            placeholder="MQTT Url"
+                            name="hpacket-mqttUrl"
+                            disabled="true"
+                            [fieldValue]="mqttUrl"
+                        >
+                        </hyt-input-text>
+        
+                    </div>
+                    <div id="fpack-col-mqtt-topic" class="col-6">
+        
+                        <hyt-input-text
+                            i18n-placeholder="@@HYT_mqtt_topic"
+                            placeholder="MQTT Topic"
+                            name="hpacket-mqttTopic"
+                            disabled="true"
+                            [fieldValue]="mqttTopic"
+                        >
+                        </hyt-input-text>
+        
+                    </div>
+    
+                </fieldset>
+
+            </div>
+
+        </div> <!-- END MQTT DISALBLED ELEMENTS ROW --
+        
+        <div id="event-packet" class="form-group row">
+
+            <div class="col-4">
+
+                <hyt-select 
+                    [form]="mqttFieldsFormGroup" 
+                    [options]="packetOptions" 
+                    formControlName="packet" 
+                    name="packet"
+                    i18n-label="@@HYT_packet" 
+                    label="Packet" 
+                    (changeFn)="packetChanged($event.value)"
+                >
+                </hyt-select>
+
+            </div>
             
-            <div id="container-radio-events-active">
-    
-                <hyt-radio-button 
-                [form]="mqttFieldsFormGroup" 
-                [options]="activeOptions" 
-                name="active"
-                (changeFn)="changeEventActive($event)">
-                </hyt-radio-button>
-    
-            </div>
-    
-            </div> <!-- Field Oputput -->
-    
-    
-        </div> <!-- END FIRST ROW -->
-
-        <div class="form-group row">
-            <hyt-select [form]="mqttFieldsFormGroup" [options]="packetOptions" formControlName="packet" name="packet"
-                        i18n-label="@@HYT_packet" label="Packet" (changeFn)="packetChanged($event.value)">
-            </hyt-select>
-        </div>
-
-        <div *ngIf="mqttUrl && mqttTopic" class="form-group row">
-
-            <div id="fpack-col-mqtt-url" class="col-6">
-
-                <hyt-input-text
-                    i18n-placeholder="@@HYT_mqtt_url"
-                    placeholder="MQTT Url"
-                    name="hpacket-mqttUrl"
-                    disabled="true"
-                    [fieldValue]="mqttUrl"
-                >
-                </hyt-input-text>
-
-            </div>
-            <div id="fpack-col-mqtt-topic" class="col-6">
-
-                <hyt-input-text
-                    i18n-placeholder="@@HYT_mqtt_topic"
-                    placeholder="MQTT Topic"
-                    name="hpacket-mqttTopic"
-                    disabled="true"
-                    [fieldValue]="mqttTopic"
-                >
-                </hyt-input-text>
-
-            </div>
-
-        </div>
+        </div> <!-- END EVENT PACKET ROW --
 
         <div class="form-group row">
             <ng-container *ngIf="currentOutputPacket !== undefined && currentOutputPacket !== null">
@@ -65,6 +91,101 @@
                     </hyt-input-text>
                 </ng-container>
             </ng-container>
-        </div>
+        </div> -->
+
+        <fieldset id="fieldset-mqtt">
+
+            <legend>MQTT Rules</legend>
+
+            <div id="event-is-active" class="fieldset-row-mqtt">
+
+                <div id="fevent-col-active" class="">
+        
+                    <div id="container-radio-events-active">
+            
+                        <hyt-radio-button 
+                        [form]="mqttFieldsFormGroup" 
+                        [options]="activeOptions" 
+                        name="active"
+                        (changeFn)="changeEventActive($event)">
+                        </hyt-radio-button>
+            
+                    </div>
+        
+                </div> <!-- Field Oputput -->
+        
+        
+            </div> <!-- END EVENT IS ACTIVE ROW -->
+    
+            <div id="mqtt-disabled-elements" *ngIf="mqttUrl && mqttTopic" class="fieldset-row-mqtt">
+    
+    
+                <div id="fpack-col-mqtt-url" class="mqtt-basis-50">
+
+                    <hyt-input-text
+                        i18n-placeholder="@@HYT_mqtt_url"
+                        placeholder="MQTT Url"
+                        name="hpacket-mqttUrl"
+                        disabled="true"
+                        [fieldValue]="mqttUrl"
+                        class="width-100"
+                    >
+                    </hyt-input-text>
+    
+                </div>
+                <div id="fpack-col-mqtt-topic" class="mqtt-basis-50">
+    
+                    <hyt-input-text
+                        i18n-placeholder="@@HYT_mqtt_topic"
+                        placeholder="MQTT Topic"
+                        name="hpacket-mqttTopic"
+                        disabled="true"
+                        [fieldValue]="mqttTopic"
+                        class="width-100"
+                    >
+                    </hyt-input-text>
+    
+                </div>
+    
+            </div> <!-- END MQTT DISALBLED ELEMENTS ROW -->
+            
+            <div id="event-packet" class="fieldset-row-mqtt">
+    
+                <div id="container-select-packet">
+    
+                    <hyt-select 
+                        [form]="mqttFieldsFormGroup" 
+                        [options]="packetOptions" 
+                        formControlName="packet" 
+                        name="packet"
+                        i18n-label="@@HYT_packet" 
+                        label="Packet" 
+                        (changeFn)="packetChanged($event.value)"
+                        style="width: 100%;"
+                    >
+                    </hyt-select>
+    
+                </div>
+                
+            </div> <!-- END EVENT PACKET ROW -->
+            
+            <div *ngIf="currentOutputPacket !== undefined && currentOutputPacket !== null" id="container-mqtt-fields">
+
+                <div id="mqtt-fields-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vel nisi quis erat maximus dignissim. Praesent faucibus augue at ornare interdum. Proin commodo metus vel metus venenatis auctor et blandit enim. Mauris hendrerit ante odio, vel elementum risus dictum sit amet. Cras convallis neque eget laoreet tempor</div>
+
+                <ng-container *ngFor="let field of fieldsOptions">
+
+                    <div class="mqtt-sigle-field">
+                        <hyt-input-text [form]="mqttFieldsFormGroup" formControlName="{{field.label}}" name="{{field.label}}" [fieldValue]="mqttFieldsFormGroup.get(field.label).value"
+                            i18n-placeholder="@@HYT_{{field.label}}" placeholder="{{field.label}}" hintMessage="Enter {{field.label}}" (change)="inputChanged($event.target,field.label)">
+                        </hyt-input-text>
+                    </div>
+                    
+                </ng-container>
+            </div>
+
+        </fieldset>
+
     </form>
+
 </div>

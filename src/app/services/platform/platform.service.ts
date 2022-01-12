@@ -78,6 +78,7 @@ export class PlatformService {
       } else {
         return 'other => '+ window.navigator.userAgent;
       }
+      
     } else {
 
       return 'No Browser';

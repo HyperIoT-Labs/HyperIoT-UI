@@ -172,6 +172,8 @@
                             [ngClass]="{ disabled: currentEntity.isDirty() }"
                             [summaryList]="currentEntity.summaryList"
                             (menuAction)="onSummaryMenuClick($event)"
+                            [currentDevice]="currentDeviceName"
+                            [enrichmentPacketId]="currentPacket"
                         ></hyt-generic-summary-list> 
 
                     </div> <!-- END TABLE -->

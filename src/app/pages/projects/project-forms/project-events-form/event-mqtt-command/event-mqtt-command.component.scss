@@ -1,12 +1,88 @@
 #eventMqttCommand {
-    #fevent-col-active {
+  // #fevent-col-active {
 
-        #container-radio-events-active {
-            border: lightgray solid 1px;
-            border-radius: 4px;
-            padding-top: 9px;
-            padding-left: 9px;
-        }
+  //     #container-radio-events-active {
+  //         border: lightgray solid 1px;
+  //         border-radius: 4px;
+  //         padding-top: 9px;
+  //         padding-left: 9px;
+  //     }
 
+  // }
+
+  font-family: "EXO";
+
+  #fieldset-mqtt {
+    margin: 0px -15px 25px -15px;
+    padding: 10px 25px;
+    border: 1px solid #2558a5;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+
+    legend {
+      width: auto;
+      margin-left: 20px;
+      padding: 5px 10px;
+      font-size: 1.2em;
+      color: #2558a5;
     }
+
+    .fieldset-row-mqtt {
+      margin-bottom: 25px;
+    }
+
+    #mqtt-disabled-elements {
+      display: flex;
+      width: 100%;
+      flex-wrap: wrap;
+
+      #fpack-col-mqtt-url,
+      #fpack-col-mqtt-topic {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+    }
+
+    #event-packet {
+      padding: 0 10px;
+
+      #container-select-packet {
+        display: flex;
+        width: -webkit-fit-contet;
+        width: -moz-fit-contet;
+        width: fit-content;
+      }
+    }
+
+    #container-mqtt-fields {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+
+      #mqtt-fields-description {
+        padding: 0px 10px;
+        font-size: 0.9em;
+        color: #757575;
+        font-style: italic;
+        margin-bottom: 14px;
+      }
+
+      .mqtt-sigle-field {
+        width: 25%;
+        padding: 0px 10px 10px 10px;
+      }
+    }
+  }
+
+  .mqtt-basis-50 {
+    display: flex;
+    flex-basis: 50%;
+  }
+
+  .width-100 {
+    width: 100%;
+  }
 }

@@ -80,12 +80,6 @@ export class IsProtectedResourceGuard implements CanActivate {
 
 }
 
-// {
-//   path: '',
-//   redirectTo: 'dashboards',
-//   pathMatch: 'full'
-// }
-
 const hyperiotRoutes: Routes = [
   {
     path: '',
@@ -201,12 +195,6 @@ const hyperiotRoutes: Routes = [
         component: ProjectStatisticsFormComponent,
         outlet: 'projectDetails'
       },
-      // {
-      //   canDeactivate: [CanDeactivateGuard],
-      //   path: 'project-events/:packetId',
-      //   component: ProjectEventsFormComponent,
-      //   outlet: 'projectDetails'
-      // },
       {
         canDeactivate: [CanDeactivateGuard],
         path: 'events',

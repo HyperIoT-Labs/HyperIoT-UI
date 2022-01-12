@@ -1257,6 +1257,9 @@
       <trans-unit id="HYT_algorithm_required_input_fields" datatype="html">
         <source>Algorithm required input fields</source>
       </trans-unit>
+      <trans-unit id="HYT_summary_list_no_packets" datatype="html">
+        <source>No Packets</source>
+      </trans-unit>
     </body>
   </file>
 </xliff>

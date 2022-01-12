@@ -1,5 +1,15 @@
-<hyt-packet-select [widget]="widget" [areaId]="areaId" [multiPacketSelect]="true" [selectedFields]="selectedFields"
-    (selectedFieldsChange)="onSelectedFieldsChange($event)"></hyt-packet-select>
+<div id="time-chart-settings">
+
+    <hyt-packet-select 
+        [widget]="widget" 
+        [areaId]="areaId" 
+        [multiPacketSelect]="true" 
+        [selectedFields]="selectedFields"
+        (selectedFieldsChange)="onSelectedFieldsChange($event)"
+    ></hyt-packet-select>
+
+</div>
+
 <!--
 <div *ngFor="let field of selectedFields">{{field.name}}</div>
 -->

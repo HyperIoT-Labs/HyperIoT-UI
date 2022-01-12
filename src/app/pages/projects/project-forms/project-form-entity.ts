@@ -3,12 +3,12 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { Observable } from 'rxjs';
 
 import { MatRadioChange } from '@angular/material';
-import { OnInit, Output, EventEmitter, Injector, AfterViewInit,ChangeDetectorRef } from '@angular/core';
+import { OnInit, Output, EventEmitter, Injector, AfterViewInit,ChangeDetectorRef, Component } from '@angular/core';
 import { SummaryList } from '../project-detail/generic-summary-list/generic-summary-list.component';
 import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
 import { EntitiesService } from 'src/app/services/entities/entities.service';
 import { HytModalService } from '@hyperiot/components';
-import { ProjectsService } from 'src/app/services/projects.service';																	
+import { ProjectsService } from 'src/app/services/projects.service';	
 
 export enum LoadingStatusEnum {
     Ready,
@@ -16,6 +16,11 @@ export enum LoadingStatusEnum {
     Saving,
     Error
 }
+
+@Component({
+    template: ''
+})
+
 export abstract class ProjectFormEntity implements OnInit, AfterViewInit {
     @Output() entityEvent = new EventEmitter<any>();
 
@@ -87,6 +92,7 @@ export abstract class ProjectFormEntity implements OnInit, AfterViewInit {
     }
 
     edit(entity?: any, readyCallback?) {
+
         if (entity) {
             this.entity = { ...entity };
         }
@@ -96,8 +102,7 @@ export abstract class ProjectFormEntity implements OnInit, AfterViewInit {
                 //TODO: check why form control value inside the form control must be a string
                 //it should accept other values
                 let value = (this.entity[this.entityFormMap[key].field] != null && this.entity[this.entityFormMap[key].field] != undefined)?(""+this.entity[this.entityFormMap[key].field]):null;
-                this.form.get(key)
-                    .setValue(value);
+                this.form.get(key).setValue(value);
             }
         });
         if (readyCallback) {
@@ -105,6 +110,7 @@ export abstract class ProjectFormEntity implements OnInit, AfterViewInit {
         }
         this.resetForm();
     }
+
     clone(entity?: any): any {
         const cloned = { ...entity } || this.entity;
         cloned.id = 0;
@@ -250,3 +256,4 @@ export abstract class ProjectFormEntity implements OnInit, AfterViewInit {
     }
 
 }
+

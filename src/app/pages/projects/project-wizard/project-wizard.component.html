@@ -72,7 +72,8 @@
 
       <ng-template #enrichmentTemplate>
         <hyt-pw-packet-select #enrichmentPacketSelect [hDevices]="hDevices" [hPackets]="hPackets"
-          (currentPacket)="enrichmentPacketChanged($event)">
+          (currentPacket)="enrichmentPacketChanged($event)"
+          (currentDevice)="enrichmentDeviceChanged($event)">
         </hyt-pw-packet-select>
         <hyt-packet-enrichment-form #enrichmentForm></hyt-packet-enrichment-form>
       </ng-template>
@@ -208,6 +209,8 @@
 
       <hyt-generic-summary-list *ngIf="currentForm && currentForm.summaryList"
         [ngClass]="{ disabled: currentForm.isDirty() && !currentForm.isNew() }" [addButtonActive]="true"
+        [currentDevice]="currentDeviceName"
+        [enrichmentPacketId]="enrichmentPacketId"
         [summaryList]="currentForm.summaryList" (menuAction)="menuAction($event)"></hyt-generic-summary-list>
 
       <div *ngIf="hintVisible" class="info-message m-2 mt-4 d-flex flex-row">

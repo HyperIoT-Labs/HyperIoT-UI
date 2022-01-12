@@ -8,7 +8,7 @@ import { PacketSelectComponent } from '../packet-select/packet-select.component'
 @Component({
     selector: 'hyt-time-chart-settings',
     templateUrl: './time-chart-settings.component.html',
-    styleUrls: ['./time-chart-settings.component.css'],
+    styleUrls: ['./time-chart-settings.component.scss'],
     viewProviders: [{ provide: ControlContainer, useExisting: NgForm }]
 })
 export class TimeChartSettingsComponent implements OnInit, OnDestroy {

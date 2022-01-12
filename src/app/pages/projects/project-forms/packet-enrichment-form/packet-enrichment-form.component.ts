@@ -1,10 +1,10 @@
-import { Component, ElementRef, Injector, OnDestroy, OnInit, ViewChild, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { Component, ElementRef, Injector, OnDestroy, OnInit, ViewChild, ViewEncapsulation, ChangeDetectorRef, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Option, SelectOption } from '@hyperiot/components';
 import { HPacket, HpacketsService, HProject, Rule, RulesService } from '@hyperiot/core';
-import { Observable, Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, Subscription, of } from 'rxjs';
+import { map, switchMap, filter } from 'rxjs/operators';
+import { EnrichmentsService } from 'src/app/services/enrichments/enrichments.service';
 import { SummaryListItem } from '../../project-detail/generic-summary-list/generic-summary-list.component';
 // TODO: find a bettere placement for PageStatusEnum
 import { LoadingStatusEnum, ProjectFormEntity } from '../project-form-entity';
@@ -77,14 +77,14 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
 
   private packetId: number;
 
-
   constructor(
     injector: Injector,
     private rulesService: RulesService,
     private packetService: HpacketsService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private enrichmentService: EnrichmentsService
   ) {
     super(injector,cdr);
     this.formTemplateId = 'container-enrichment-form';
@@ -101,6 +101,17 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
         this.loadData().subscribe(res => {});
       }
     });
+
+    this.activatedRoute.url.pipe(
+      filter((val) => val.length === 2 && val[0].path === 'packet-enrichments'),
+      switchMap((val) => {
+        return this.packetService.findHPacket(+val[1].path)
+      })
+    ).subscribe((el) => {
+      this.enrichmentService.emitDeviceName(el.device.deviceName);
+      this.enrichmentService.emitPacket(this.packetId);
+    })
+
   }
 
   ngOnDestroy() {
@@ -133,8 +144,9 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
           } else {
             this.assetTags = JSON.parse(type) ? JSON.parse(type).tagIds : null;
           }
-        } else if (this.enrichmentType === EnrichmentType.FOURIER_TRANSFORM_ENRICHMENT) {
+        } else if (this.enrichmentType === EnrichmentType.FOURIER_TRANSFORM_ENRICHMENT) { 
           this.ruleConfig = JSON.parse(type);
+          
         }
         this.form.get('rule-type').setValue(this.enrichmentType);
         this.form.get('active').setValue(typeJSON.active);
@@ -355,3 +367,4 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
   }
 
 }
+

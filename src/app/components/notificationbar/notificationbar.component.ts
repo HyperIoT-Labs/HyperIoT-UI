@@ -51,11 +51,13 @@ export class NotificationbarComponent implements OnInit {
     const self = this;
 
     window.addEventListener('beforeinstallprompt', (e) => {
+      console.log('entrato event', e)
       // Prevent Chrome 67 and earlier from automatically showing the prompt
       e.preventDefault();
       // Stash the event so it can be triggered later.
       self.deferredPrompt = e;
       self.showNotificationBar();
+
     });
 
   }

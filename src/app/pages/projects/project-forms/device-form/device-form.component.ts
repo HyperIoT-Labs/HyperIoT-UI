@@ -126,7 +126,6 @@ export class DeviceFormComponent extends ProjectFormEntity implements AfterViewI
   }
 
   changeType(type){
-    console.log("change type: "+type);
     if(type === 'application')
       this.typeApplication = true;
     else
