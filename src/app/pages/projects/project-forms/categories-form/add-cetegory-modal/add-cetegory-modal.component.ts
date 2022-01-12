@@ -1,9 +1,11 @@
-import { Component, OnInit, AfterViewInit, ViewEncapsulation,ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
 import { HytModal, HytModalService } from '@hyperiot/components';
 import { PageStatus } from 'src/app/pages/projects/models/pageStatus';
 import { AssetscategoriesService } from '@hyperiot/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { HttpErrorHandlerService } from 'src/app/services/errorHandler/http-error-handler.service';
+import { interval } from 'rxjs';
+import { take} from 'rxjs/operators';
 
 @Component({
   selector: 'hyt-add-cetegory-modal',
@@ -11,7 +13,7 @@ import { HttpErrorHandlerService } from 'src/app/services/errorHandler/http-erro
   styleUrls: ['./add-cetegory-modal.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class AddCetegoryModalComponent extends HytModal implements OnInit,AfterViewInit {
+export class AddCetegoryModalComponent extends HytModal implements OnInit, AfterViewInit {
 
   pageStatus: PageStatus = PageStatus.Standard;
 
@@ -49,16 +51,19 @@ export class AddCetegoryModalComponent extends HytModal implements OnInit,AfterV
     this.categoryForm = this.formBuilder.group({});
   }
 
-  ngAfterViewInit(){
+  ngAfterViewInit() {
+
     this.cd.detectChanges();
-    (
-      document.querySelector(
-        "#add-category-modal .hyt-input.mat-input-element"
-      ) as HTMLElement
-    ).focus();
+    
+    let el = document.querySelector("#add-category-modal .hyt-input.mat-input-element") as HTMLElement;
+    interval(50).pipe(take(1)).subscribe((val) => {
+      el.focus();
+    })
+    
   }
 
   submitCategory() {
+    
     this.pageStatus = PageStatus.Loading;
     if (this.data.mode === 'edit') {
       this.assetCategoryService.updateAssetCategory({
