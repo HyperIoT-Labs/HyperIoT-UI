@@ -219,6 +219,9 @@ export class ProjectWizardComponent implements OnInit {
     this.packetsForm.summaryList = {
       title: this.entitiesService.packet.displayListName,
       list: this.hPackets.map((p) => {
+        if(!p.device.deviceName){
+          p.device.deviceName = this.currentDeviceName;
+        }
         return { name: p.name, description: p.trafficPlan, data: p };
       }) as SummaryListItem[],
     };

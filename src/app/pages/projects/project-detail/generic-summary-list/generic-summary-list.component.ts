@@ -1,3 +1,4 @@
+import { eventNames } from 'process';
 import { Component, Input, Output, EventEmitter, ViewEncapsulation, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 
 export class SummaryList {
@@ -70,7 +71,10 @@ export class GenericSummaryListComponent implements OnInit, OnChanges {
         const pDeviceName = (changes['currentDevice'] && changes['currentDevice']?.currentValue !== changes['currentDevice']?.previousValue) ?
           changes['currentDevice']?.currentValue : this.currentDevice;
 
-        this.getFilteredElement(this._summaryList.list, pDeviceName, false );
+        const pSummaryList = (changes['summaryList'] && changes['summaryList']?.currentValue !== changes['summaryList']?.previousValue) ?
+        changes['summaryList']?.currentValue : this._summaryList;
+
+        this.getFilteredElement(pSummaryList.list, pDeviceName, false );
 
         break;
 
@@ -116,7 +120,7 @@ export class GenericSummaryListComponent implements OnInit, OnChanges {
   }
 
   getFilteredElement(itemList: SummaryListItem[], deviceToFilter: string, isEnrichment: boolean = false, packetIDToFilter?: number){
-
+    
     this.filteredElementList = [];
 
     if(isEnrichment) {
