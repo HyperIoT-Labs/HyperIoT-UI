@@ -295,6 +295,21 @@
       <trans-unit id="HYT_events_long_definition" datatype="html">
         <source>Events long definition</source>
       </trans-unit>
+      <trans-unit id="HYT_alarm_displaylistname" datatype="html">
+        <source>Alarms</source>
+      </trans-unit>
+      <trans-unit id="HYT_alarm_form_title" datatype="html">
+        <source>Alarms</source>
+      </trans-unit>
+      <trans-unit id="HYT_alarms_short_definition" datatype="html">
+        <source>Alarms short definition</source>
+      </trans-unit>
+      <trans-unit id="HYT_alarms_definition" datatype="html">
+        <source>Alarms definition</source>
+      </trans-unit>
+      <trans-unit id="HYT_alarms_long_definition" datatype="html">
+        <source>Alarms long definition</source>
+      </trans-unit>
       <trans-unit id="HYT_delete_item_question" datatype="html">
         <source>Do you really want to delete this item?</source>
       </trans-unit>
@@ -1256,6 +1271,21 @@
       </trans-unit> 
       <trans-unit id="HYT_algorithm_required_input_fields" datatype="html">
         <source>Algorithm required input fields</source>
+      </trans-unit>
+      <trans-unit id="HYT_unavailable_alarm_name" datatype="html">
+        <source>Unavailable alarm name</source>
+      </trans-unit>
+       <trans-unit id="HYT_add_alarm" datatype="html">
+        <source>Add alarm</source>
+      </trans-unit>
+       <trans-unit id="HYT_hint_alarm_name" datatype="html">
+        <source>Enter the alarm name</source>
+      </trans-unit>
+       <trans-unit id="HYT_alarm_event_severity" datatype="html">
+        <source>Severity</source>
+      </trans-unit>
+      <trans-unit id="HYT_alarm_event_actions" datatype="html">
+        <source>Actions</source>
       </trans-unit>
     </body>
   </file>

@@ -1,0 +1,45 @@
+#container-alarm-events-table {
+    
+    table.mat-table {
+        display: table;
+        width: 100%;
+    }
+
+    th.mat-header-cell {
+        font-size: 1.1em;
+        color: #fff;
+        background-color: #376caf;        
+    }
+    th.mat-header-cell {
+        background-color: #fff;
+        font-weight: 700;
+        border-bottom: .5px solid #c7c7c7;
+        border-top: 1.5px solid #0956b6;
+        color: #000;
+        font-size: 13px;
+    }
+    
+    td.mat-cell, td.mat-footer-cell, th.mat-header-cell {
+        text-align: center;
+    }
+
+    .severity-0 {
+        background-color: green;
+     }
+
+    .severity-1 {
+       background-color: yellow;
+     }
+    .severity-2 {
+         background-color: orange;
+     }
+     .severity-3 {
+         background-color: red;
+     }
+
+     .hyt-icon {
+        font-size: 1.5em;
+        cursor: pointer;
+      }
+
+}
