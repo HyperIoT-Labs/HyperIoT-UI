@@ -101,6 +101,8 @@ export class AssetCategoryComponent implements OnInit {
           data: result,
           active: false
         });
+
+        this.getAssetCategories(); // it is necessary refresh categories after adding a new category
         sub.complete();
       });
     });
