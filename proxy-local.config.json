@@ -47,6 +47,18 @@
     "logLevel": "debug",
     "changeOrigin": true
   },
+  "/hyperiot/alarms/*": {
+    "target": "http://localhost:8181",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  }, 
+  "/hyperiot/alarmevents/*": {
+    "target": "http://localhost:8181",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
   "/hyperiot/dashboards/*": {
     "target": "http://localhost:8181",
     "secure": false,

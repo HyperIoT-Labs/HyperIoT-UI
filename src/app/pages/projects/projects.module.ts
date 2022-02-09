@@ -44,7 +44,7 @@ import {
 } from '@angular/material';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatExpansionModule } from '@angular/material/expansion';
-
+import {MatTableModule} from '@angular/material/table';
 import { StatisticsStepComponent } from './project-wizard/statistics-step/statistics-step.component';
 import { WizardReportModalComponent } from './project-wizard/wizard-report-modal/wizard-report-modal.component';
 import { WizardOptionsModalComponent } from './project-wizard/wizard-options-modal/wizard-options-modal.component';
@@ -74,6 +74,8 @@ import { HPacketFieldFilterPipe } from './hPacketFieldFilter.pipe';
 import { EventComponentContainerComponent } from './project-forms/project-events-form/event-component-container/event-component-container.component';
 import { EventMqttCommandComponent } from './project-forms/project-events-form/event-mqtt-command/event-mqtt-command.component';
 import { WidgetsModule } from '@hyperiot/widgets';
+import { ProjectAlarmsFormComponent } from './project-forms/project-alarms-form/project-alarms-form.component';
+import { AlarmEventsTableComponent } from './project-forms/project-alarms-form/alarm-events-table/alarm-events-table.component';
 
 @NgModule({
   declarations: [
@@ -92,6 +94,7 @@ import { WidgetsModule } from '@hyperiot/widgets';
     PacketFieldsFormComponent,
     PacketEnrichmentFormComponent,
     ProjectEventsFormComponent,
+    ProjectAlarmsFormComponent,
     SelectableTextComponent,
     PacketSelectComponent,
     GenericSummaryListComponent,
@@ -121,7 +124,8 @@ import { WidgetsModule } from '@hyperiot/widgets';
     StatisticInputErrorComponent,
     HPacketFieldFilterPipe,
     EventComponentContainerComponent,
-    EventMqttCommandComponent
+    EventMqttCommandComponent ,
+    AlarmEventsTableComponent
   ],
   imports: [
     ColorPickerModule,
@@ -145,7 +149,8 @@ import { WidgetsModule } from '@hyperiot/widgets';
     DragDropModule,
     MatListModule,
     WidgetsModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatTableModule
   ],
   entryComponents: [
     AddTagModalComponent,

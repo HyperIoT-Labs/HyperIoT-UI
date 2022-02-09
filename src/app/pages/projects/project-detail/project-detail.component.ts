@@ -19,7 +19,7 @@ import { ChangeDetectorRef } from '@angular/core';
 import { PacketFieldsFormComponent } from '../project-forms/packet-fields-form/packet-fields-form.component';
 import { DashboardConfigService } from '../../dashboard/dashboard-config.service';
 import { ConfirmRecordingActionComponent } from 'src/app/components/modals/confirm-recording-action/confirm-recording-action.component';
-import { pack } from 'd3';
+import { ProjectAlarmsFormComponent } from '../project-forms/project-alarms-form/project-alarms-form.component';
 
 enum TreeStatusEnum {
   Ready,
@@ -179,6 +179,9 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
       this.toggleInfoActionColumn(childComponent);
 
       this.currentEntity = childComponent;
+
+      console.log("##########this.currentEntity");
+      console.log(this.currentEntity);
       this.currentEntity.unsavedChangesCallback = () => {
         return this.openSaveDialog();
       };
@@ -222,7 +225,7 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
     this.validationErrors = [];
     this.currentEntity.save((res) => {
       if (this.currentEntity instanceof PacketEnrichmentFormComponent || this.currentEntity instanceof ProjectEventsFormComponent 
-        || this.currentEntity instanceof ProjectStatisticsFormComponent) {
+        || this.currentEntity instanceof ProjectStatisticsFormComponent || this.currentEntity instanceof ProjectAlarmsFormComponent) {
         this.currentEntity.editMode = false;
       }
 
@@ -238,7 +241,8 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
   onDeleteClick() {
     this.currentEntity.openDeleteDialog(() => {
       // Trigger reload topology
-      if (this.currentEntity instanceof PacketEnrichmentFormComponent || this.currentEntity instanceof PacketFieldsFormComponent || this.currentEntity instanceof ProjectEventsFormComponent) {
+      if (this.currentEntity instanceof PacketEnrichmentFormComponent || this.currentEntity instanceof PacketFieldsFormComponent 
+        || this.currentEntity instanceof ProjectStatisticsFormComponent || this.currentEntity instanceof ProjectEventsFormComponent || this.currentEntity instanceof ProjectAlarmsFormComponent) {
         this.shouldUpdateTopology();
       }
     });
@@ -379,6 +383,13 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
             visible: true,
             children: []
           };
+          const alarms: TreeDataNode = {
+            data: { type: 'alarms' },
+            name: 'Alarms',
+            icon: 'icon-hyt_notification',
+            visible: true,
+            children: []
+          };
           // Add tags, categories and areas
           const tags: TreeDataNode = {
             data: { type: 'tags' },
@@ -401,7 +412,7 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
             visible: true,
             children: []
           };
-          projectNode.children.push(...[statistics, events, tags, categories, areas]);
+          projectNode.children.push(...[statistics, events, alarms, tags, categories, areas]);
           this.treeView.setData(this.treeData);
           if (this.treeView.treeControl.dataNodes.length > 0) {
             this.treeView.treeControl.expand(this.treeView.treeControl.dataNodes[0]);

@@ -1,0 +1,263 @@
+#container-alarms {
+
+    &.container {
+      position: relative;
+      padding-top: 20px;
+  
+      p {
+  
+        &.subtitle-section {
+  
+          font-size: .9em;
+          font-style: italic;
+          line-height: 25px;
+          margin-bottom: 30px;
+  
+        }
+  
+      }
+  
+    
+        #btn-edit-mode {
+  
+          text-align: center;
+          padding-top: 20px;
+          padding-bottom: 20px;
+  
+        }
+
+        .toRight{
+          float: right;
+          margin-left: 20px;
+        }
+  
+      .rule-form {
+
+        font-family: "Exo";
+        margin: 30px 0px;
+        border: 1px solid #cacaca;
+        padding: 20px 30px 40px 30px;
+        border-radius: 8px;
+
+        .hyt-icon {
+          font-size: 1.5em;
+          cursor: pointer;
+        }
+        .event-name {
+          font-weight: bolder;
+        }
+
+        .severity-0 {
+           background-color: green;
+        }
+
+       .severity-1 {
+          background-color: yellow;
+        }
+       .severity-2 {
+            background-color: orange;
+        }
+        .severity-3 {
+            background-color: red;
+        }
+
+        mat-chip {
+          font-weight: bolder;
+        }
+      }
+  
+      form {
+  
+        &.blurred {
+  
+          -webkit-filter: blur(1px);
+          -moz-filter: blur(1px);
+          -ms-filter: blur(1px);
+          -o-filter: blur(1px);    
+          filter: blur(1px);
+          
+        }
+  
+        .form-group {
+  
+          &.row {
+  
+            margin-bottom: 25px;
+  
+            #fevent-col-event {
+  
+              p#label-event-aoutput {
+                
+                margin-bottom: 10px;
+                color: #909090;
+                font-size: 0.98em;
+  
+              }
+  
+              
+  
+            }
+
+            #container-radio-alarms {
+              border: lightgray solid 1px;
+              border-radius: 4px;
+              padding-top: 9px;
+              padding-left: 9px;
+            }
+  
+            #fevent-col-tag {
+              .tag-selection {
+                width: 100%;
+              }
+            }
+  
+            hyt-input-text,
+            hyt-text-area {
+  
+              mat-form-field {
+  
+                  font-family: 'Exo';
+  
+              }
+  
+          }
+  
+          hyt-select {
+  
+              mat-form-field {
+  
+                  width: 100%;
+  
+                  mat-select {
+  
+                      font-family: 'Exo';
+  
+                  }
+  
+              }
+  
+          }
+  
+          hyt-radio-button {
+  
+              mat-radio-group {
+  
+                  mat-radio-button {
+  
+                      &.mat-radio-button {
+  
+                          font-family: 'Exo';
+  
+                          .mat-radio-label-content {
+  
+                              line-height: 27px;
+  
+                          }
+  
+                      }
+  
+                  }
+  
+              }
+  
+          }
+
+         
+  
+          }
+  
+        }
+  
+      }
+  
+    }  
+  
+  }
+  
+  
+  .overlay {
+    position: absolute;
+    background-color: rgba(255, 255, 255, .50);
+    left: 0; top: 0; right: 0; bottom: 0;
+  
+    .loading-logo {
+        
+        position: relative;
+        text-align: center;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+  
+        &.display-logo {
+  
+            height: 63%;
+            width: 100%;
+            
+            background-repeat: no-repeat;
+            background-position: top center;
+            background-image: url('~/assets/images/hyperiot_logo_single_char_animated.svg');
+  
+            &.big-bg {
+  
+                background-size: 220px;
+  
+            }
+  
+            &.medium-bg {
+  
+                background-size: 170px;
+  
+            }
+  
+            &.small-bg {
+  
+                background-size: 125px;
+  
+            }
+  
+            &.x-small-bg {
+  
+                background-size: 90px;
+  
+            }
+  
+        }
+        
+        h4 {
+            text-align: center;
+        }
+    }
+  
+    mat-progress-bar {
+        max-width: 200px;
+        margin: 8px;
+    }
+  
+    .error-overlay {
+  
+        hyt-button {
+  
+            margin: 20px auto 0px auto;
+  
+            span {
+  
+                &.icon-hyt_cancelC {
+  
+                    font-size: 1.3em;
+                    vertical-align: sub;
+                    margin-left: 5px;
+  
+                }
+  
+            }
+  
+        }
+  
+    }
+  
+  }
+  
+  .hidden {
+    display: none;
+  }
+  
