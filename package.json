@@ -9,6 +9,7 @@
     "startLoc": "ng serve --proxy-config proxy-local.config.json",
     "startProd": "ng serve --prod --proxy-config proxy.config.json",
     "startNoAot": "ng serve --aot false --proxy-config proxy.config.json",
+    "startWithCert": "ng serve --proxy-config proxy.config.json --ssl --ssl-key localhost.key --ssl-cert localhost.crt",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
