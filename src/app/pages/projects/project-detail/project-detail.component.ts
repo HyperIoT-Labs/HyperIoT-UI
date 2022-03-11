@@ -182,6 +182,7 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
 
       console.log("##########this.currentEntity");
       console.log(this.currentEntity);
+      console.log("# bool", this.currentEntity instanceof ProjectAlarmsFormComponent);
       this.currentEntity.unsavedChangesCallback = () => {
         return this.openSaveDialog();
       };
@@ -638,6 +639,16 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
 
     this.dragPosition = { x: dragX, y: dragY }
 
+  }
+
+  /*
+  / Method to verify if you can save or not the alarm
+  */
+  isDisableProjectAlarmsFormComponent(e: any){
+    if ((e instanceof ProjectAlarmsFormComponent) == false) return true;
+    else if (e.form.status == "VALID" && e.form.get("alarm-event-number").value > 0) return false;
+    else if (e.form.status == "INVALID") return true;
+    else return true;
   }
 
 }

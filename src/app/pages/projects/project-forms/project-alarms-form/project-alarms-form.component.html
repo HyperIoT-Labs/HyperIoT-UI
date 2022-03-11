@@ -46,22 +46,54 @@
 
       </div> <!-- Field Oputput -->
 
+    <hyt-input-text class="hidden" [form]="form"  name="alarm-event-number"></hyt-input-text>
+
+      <!-- Summary table of EVENTS -->
+      <div class="col-6">
+        <table style="border:1px solid #1e58a5; width: 100%">
+          <th colspan="2" style="background-color: #1e58a5; 
+                                 color:white; text-transform: uppercase;
+                                 font-size: 1em;
+                                 line-height: 20px;
+                                 font-weight: bold;
+                                 padding: 5px 0px;
+                                 text-align: center;">Event List</th>
+          <tbody>
+            <!-- real event list -->
+            <tr *ngFor="let event of eventListMap.get(selectedId); let i = index" [ngClass]="{ hidden: selectedId == 0 || eventListMap.get(selectedId).length == 0}">
+              <td style="padding: 5px 7px 5px 10px; cursor: pointer;">  
+                <span (click)="loadEvent(event, i)">{{event.event.name}}</span>
+              </td> 
+              <td style="padding: 5px 7px 5px 3px; float: right">
+                <span (click)="deleteEvent(i)" class="hyt-icon icon-hyt_trash" ></span>
+                <span (click)="duplicateEvent(event)" class="hyt-icon icon-hyt_duplicate"></span>
+              </td>
+            </tr>
+            <!-- message when there are no event in table-->
+            <tr [ngClass]="{ hidden: selectedId != 0 && eventListMap.get(selectedId).length != 0}">
+              <td colspan="2" style="padding: 5px 7px 5px 10px; cursor: pointer;"><ng-container i18n="@@HYT_alarmEvent_message">At least one new event must be added to save the new alarm!</ng-container></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- end Summary table for events-->
 
     </div>
     <div class="form-group row">
-    <div id="btn-edit-mode" class="col-12">
+    <div id="btn-edit-mode" class="col-6"></div>
+    <div class="col-6" style="text-align: center; padding: 20px 0px;">
+
       <hyt-button 
         [color]="'hyt-base-default-white'"
-        (clickFn)="addEvent()" [isDisabled]="!entity?.id || entity?.id <= 0"
-      >
+        (clickFn)="addEvent()" [isDisabled]="!form.valid || addEventMode">
         <span class="hyt-icon icon-hyt_plus"></span>
         <span i18n="@@HYT_add_event">Add event</span>
-
       </hyt-button>
 
     </div>
   </div>
 </form>
+
   <div *ngIf="loadingStatus !== LoadingStatus.Ready" class="overlay d-flex flex-column align-items-center justify-content-center">
         
     <div 
@@ -92,13 +124,15 @@
 
   </div>
  
+  <h3 id="form-title" [ngClass]="{ hidden: !addEventMode }" class="ng-star-inserted">Event Settings</h3>
+
   <form [ngClass]="{ hidden: !addEventMode, 'blurred': loadingStatus !== LoadingStatus.Ready }" class="alarms-form rule-form" [formGroup]="formEvent" autocomplete="on">
 
     <div class="form-group row">
 
       <div id="falarm-col-name" class="col-6">
 
-        <hyt-input-text [form]="formEvent" name="rule-name" [isRequired]="true" i18n-placeholder="@@HYT_name"
+        <hyt-input-text [form]="formEvent" name="event-name" [isRequired]="true" i18n-placeholder="@@HYT_name"
           placeholder="Name"
           i18n-hintMessage="@@HYT_hint_event_name"
           hintMessage="Enter the event name">
@@ -108,7 +142,7 @@
 
       <div id="falarm-col-descr" class="col-6">
 
-        <hyt-text-area [form]="formEvent" name="rule-description" i18n-placeholder="@@HYT_description"
+        <hyt-text-area [form]="formEvent" name="event-description" i18n-placeholder="@@HYT_description"
           placeholder="Description"
           i18n-hintMessage="@@HYT_hint_event_description"
           hintMessage="Enter the event description">
@@ -158,7 +192,7 @@
       </div> <!-- Tag selection -->
         <div id="falarm-col-container-rules" class="col-6">
           <hyt-select 
-                        [form]="formEvent" i18n-label="@@HYT_alarm_event_severity" label="Severity" name="rule-severity"
+                        [form]="formEvent" i18n-label="@@HYT_alarm_event_severity" label="Severity" name="event-severity"
                         hintMessage="Select Severity."
                         [isRequired]="true" [options]="severityList"
                     ></hyt-select>
@@ -166,55 +200,21 @@
 
     </div> <!-- END FOURTH ROW -->
 
-<!--
-    <hyt-alarm-component-container [currentProjectId]="currentProject ? currentProject.id : null" #alarmComponentContainer></hyt-alarm-component-container>
--->
-   
-            <div id="container-save-update" class="container">
-
-            <div id="row-save-update" class="row">
-    
-              <div class="col-12">
-    
-                <hyt-button type="button"  [color]="'hyt-base-default-white'" class="toRight"  (clickFn)="saveEvent()"
-                [isDisabled]="!formEvent.valid" *ngIf="entity.id">
-                  <ng-container *ngIf="true" i18n="@@HYT_save">Save</ng-container>
-                  <ng-container *ngIf="false" i18n="@@HYT_update">Update</ng-container>
-                </hyt-button>
-    <!--
-                <hyt-button [color]="'hyt-base-default-white'" class="toRight" *ngIf="currentForm && showCancel()" (clickFn)="onCancelClick($event)">
-                  <ng-container i18n="@@HYT_cancel">Cancel</ng-container>
-                </hyt-button>
-              -->
-                <div class="clear"></div>
-              </div>
-            </div>
-    
-          </div>
-    
-  </form>
+  <!-- Save button for event only-->
+  <div id="btn-edit-mode" class="col-12">
+    <hyt-button 
+        [color]="'hyt-base-default-white'"
+        (clickFn)="saveEvent()" [isDisabled]="!formEvent.valid">
+        <span class="hyt-icon icon-hyt_save"></span>
+        <ng-container *ngIf="!this.updateLabel" i18n="@@HYT_save_event">Save Event</ng-container>    
+        <ng-container *ngIf="this.updateLabel" i18n="@@HYT_update_event">Update Event</ng-container>
+      </hyt-button>
+      <hyt-checkbox [(ngModel)]="addAnother" [ngModelOptions]="{standalone: true}" name="another_event" type="checkbox" id="another_event">
+        <ng-container i18n="@@HYT_another_event">Add another Event</ng-container>    
+      </hyt-checkbox>
+    </div>
+</form>
 <div>
-  <!--
-  <div class="rule-form row" *ngFor="let eventAlarm of eventsAlarm; let i = index;">
-    <div class="col-4 event-name">
-    {{eventAlarm?.event.name}}
-    </div>
-    <div class="col-4">
-      {{eventAlarm?.event.description}}
-      </div>
-    <div class="col-2">        
-      <mat-chip [selectable]="false"
-      [removable]="false"  class="severity-{{eventAlarm?.severity}}" >
-      {{getSeverityLabel(eventAlarm?.severity)}}
-    </mat-chip>
-    </div>
-    <div class="col-2">
-      <span class="hyt-icon icon-hyt_pencil" (click)="editEvent(i)"></span>
-      &nbsp;&nbsp;
-       <span class="hyt-icon icon-hyt_cancel" (click)="openDeleteEventDialog(i)"></span>
-    </div>
-</div>
--->
-<hyt-alarm-events-table *ngIf="eventsAlarm && eventsAlarm?.length > 0" [alarmEventsList]="eventsAlarm" (editAlarmEvent)="editEvent($event)" (deleteAlarmEvent)="openDeleteEventDialog($event)"></hyt-alarm-events-table>
+<!--<hyt-alarm-events-table *ngIf="eventsAlarm && eventsAlarm?.length > 0" [alarmEventsList]="eventsAlarm" (editAlarmEvent)="editEvent($event)" (deleteAlarmEvent)="openDeleteEventDialog($event)"></hyt-alarm-events-table>-->
 </div>
 </div>

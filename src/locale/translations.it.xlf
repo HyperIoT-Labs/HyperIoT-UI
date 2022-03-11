@@ -993,6 +993,30 @@
         <source>Update</source>
         <target>Aggiorna</target>
       </trans-unit>
+      <trans-unit id="HYT_save_event" datatype="html">
+        <source>Save Event</source>
+        <target>Salva Evento</target>
+      </trans-unit>
+      <trans-unit id="HYT_update_event" datatype="html">
+        <source>Update Event</source>
+        <target>Aggiorna Evento</target>
+      </trans-unit>
+      <trans-unit id="HYT_another_event" datatype="html">
+        <source>Add another Event</source>
+        <target>Aggiunti un altro Evento</target>
+      </trans-unit>
+      <trans-unit id="HYT_alarm_save_changes" datatype="html">
+        <source>Do you want to save the alarm and lost the pending changes?</source>
+        <target>Vuoi davvvero salvare l'allarme e perdere le modifiche in sospeso?</target>
+      </trans-unit>
+      <trans-unit id="HYT_back_to_event" datatype="html">
+        <source>Back to Alarm</source>
+        <target>Torna all'allarme</target>
+      </trans-unit>
+      <trans-unit id="HYT_event_will_be_lost" datatype="html">
+        <source>The current event will be lost</source>
+        <target>L'evento attuale andrà perso</target>
+      </trans-unit>
       <trans-unit id="HYT_back" datatype="html">
         <source>Back</source>
         <target>Indietro</target>
@@ -1719,6 +1743,10 @@
       <trans-unit id="HYT_alarm_event_actions" datatype="html">
         <source>Actions</source>
         <target>Azioni</target>
+      </trans-unit>
+      <trans-unit id="HYT_alarmEvent_message" datatype="html">
+        <source>At least one new event must be added to save the new alarm!</source>
+        <target>Almeno un nuovo evento deve essere aggiunto per salvare un nuovo allarme!</target>
       </trans-unit>
     </body>
   </file>

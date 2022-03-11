@@ -745,6 +745,24 @@
       <trans-unit id="HYT_update" datatype="html">
         <source>Update</source>
       </trans-unit>
+      <trans-unit id="HYT_save_event" datatype="html">
+        <source>Save Event</source>
+      </trans-unit>
+      <trans-unit id="HYT_update_event" datatype="html">
+        <source>Update Event</source>
+      </trans-unit>
+      <trans-unit id="HYT_another_event" datatype="html">
+        <source>Add another Event</source>
+      </trans-unit>
+      <trans-unit id="HYT_alarm_save_changes" datatype="html">
+        <source>Do you want to save the alarm and lost the pending changes?</source>
+      </trans-unit>
+      <trans-unit id="HYT_event_will_be_lost" datatype="html">
+        <source>The current event will be lost</source>
+      </trans-unit>
+      <trans-unit id="HYT_back_to_event" datatype="html">
+        <source>Back to Alarm</source>
+      </trans-unit>
       <trans-unit id="HYT_back" datatype="html">
         <source>Back</source>
       </trans-unit>
@@ -1288,6 +1306,9 @@
       </trans-unit>
       <trans-unit id="HYT_alarm_event_actions" datatype="html">
         <source>Actions</source>
+      </trans-unit>
+      <trans-unit id="HYT_alarmEvent_message" datatype="html">
+        <source>At least one new event must be added to save the new alarm!</source>
       </trans-unit>
     </body>
   </file>

@@ -56,6 +56,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import * as PlotlyJS from 'plotly.js/dist/plotly.js';
 import { PlotlyModule } from 'angular-plotly.js';
 import { PromptComponent } from './components/prompt/prompt/prompt.component';
+import { PendingChangesDialogComponent } from './components/dialogs/pending-changes-dialog/pending-changes-dialog.component';
 PlotlyModule.plotlyjs = PlotlyJS;
 
 export class MyUrlSerializer extends DefaultUrlSerializer implements UrlSerializer {
@@ -84,6 +85,7 @@ export function apiConfigFactory(): Configuration {
     AccountButtonComponent,
     ProfileComponent,
     SaveChangesDialogComponent,
+    PendingChangesDialogComponent,
     DeleteConfirmDialogComponent,
     HomeComponent,
     NotificationbarComponent,
@@ -95,6 +97,7 @@ export function apiConfigFactory(): Configuration {
   // dynamically created components
   entryComponents: [
     SaveChangesDialogComponent,
+    PendingChangesDialogComponent,
     DeleteConfirmDialogComponent,
     ConfirmRecordingActionComponent,
     InfoRecordingActionComponent,

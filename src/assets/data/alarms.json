@@ -1,0 +1,25 @@
+    
+[
+    {
+    "alarm": {
+        "name": "primoAllarme",
+        "inhibited": false
+    },
+    "alarmEvents": [
+        {
+            "event": {
+                "name": "Evento-di-primoAllarme",
+                "description": "",
+                "ruleDefinition": "\"99.100\" > 30",
+                "project": {
+                    "id": 31
+                },
+                "packet": null,
+                "jsonActions": "[\"{\\\"actionName\\\": \\\"it.acsoftware.hyperiot.alarm.service.actions.NoAlarmAction\\\", \\\"active\\\": true}\"]",
+                "type": 1
+            },
+            "severity": 1
+        }
+    ]
+    }
+]
