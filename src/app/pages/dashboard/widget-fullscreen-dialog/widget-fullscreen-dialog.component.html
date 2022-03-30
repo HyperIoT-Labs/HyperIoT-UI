@@ -1,0 +1,25 @@
+<div id="container-widget-fullscreen">
+
+    <div id="header-fullscreen">
+        {{widgetName}}
+        <div id="close-fullscreen">
+            <span class="hyt-icon icon-hyt_lessX" (click)="closeModal($event)"></span>
+        </div>
+    </div>
+    <div id="body-fullscreen">
+
+        <hyt-dynamic-widget
+            *ngIf="isConfigured; else notConfiguredBlock"
+            [widget]="widget"
+        ></hyt-dynamic-widget>
+
+        <ng-template #notConfiguredBlock>
+            
+            <div id="not-configured-block">
+                The widget is not configured! <span (click)="configureWidget()">Configure it</span> 
+            </div>
+
+        </ng-template>
+    </div>
+
+</div>

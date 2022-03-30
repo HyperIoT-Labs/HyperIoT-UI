@@ -25,6 +25,7 @@ export class DynamicWidgetComponent implements OnInit {
   }
 
   onWidgetAction(data) {
+    console.log('onWidgetAction', data)
     this.widgetAction.emit(data);
   }
 
