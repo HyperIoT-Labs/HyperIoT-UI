@@ -9,10 +9,11 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 export class WidgetFullscreenDialogComponent extends HytModal implements OnInit {
 
   @Output() widgetAction: EventEmitter<any> = new EventEmitter();
-  
+
   widget: any = null;
   widgetName: string = '';
   isConfigured: boolean = false;
+  fullScreenData = '';
 
   constructor(
     hytModalService: HytModalService,
@@ -27,10 +28,12 @@ export class WidgetFullscreenDialogComponent extends HytModal implements OnInit 
     this.widget = this.data?.widget;
     this.widgetName = this.data?.widget?.name;
     this.isConfigured = this.data?.widget?.instance?.isConfigured;
+    this.fullScreenData = this.data.data;
   }
 
   closeModal(event?): void {
     console.log('closeModal', event)
+    this.fullScreenData = ''
     this.close(event);
   }
 

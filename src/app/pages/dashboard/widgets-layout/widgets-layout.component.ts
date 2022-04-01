@@ -127,7 +127,7 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
     private hytModalService: HytModalService,
     private hytTopologyService: HytTopologyService,
     private toastr: ToastrService
-  ) { 
+  ) {
     this.eventNotificationIsOn = true;
     this.configService.eventNotificationState.subscribe(res => {
       this.eventNotificationIsOn = res;
@@ -323,7 +323,7 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
   }
 
   onWidgetFullscreenClose(data: any) {
-    
+
     console.log('WIDGET FULLSCREE CLOSE', data)
     if(data && data?.action == 'widget:setting') {
       console.log('WIDGET FULLSCREE CLOSE 2', data)
@@ -331,7 +331,7 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
         console.log('WIDGET FULLSCREE CLOSE 3', data)
         this.openModal(data.widget)
       }, 100);
-      
+
     }
 
   }
@@ -385,7 +385,8 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
 
   openFullScreenModal(widget: any) {
     const modalRef = this.hytModalService.open(WidgetFullscreenDialogComponent, {
-      widget: widget
+      widget: widget,
+      data: 'modal'
     });
     modalRef.onClosed.subscribe(event => {
       console.log('openFullScreenModal', event)
@@ -513,9 +514,9 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
     return singleCell;
   }
 
-  private getTimestampFieldValue(packet:HPacket){   
+  private getTimestampFieldValue(packet:HPacket){
     let timestampFieldName = packet.timestampField;
-    return (packet.fields.map[timestampFieldName]) ? packet.fields.map[timestampFieldName].value.long : packet.fields.map['timestamp-default'].value.long; 
+    return (packet.fields.map[timestampFieldName]) ? packet.fields.map[timestampFieldName].value.long : packet.fields.map['timestamp-default'].value.long;
   }
 
 }

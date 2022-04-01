@@ -11,12 +11,13 @@
         <hyt-dynamic-widget
             *ngIf="isConfigured; else notConfiguredBlock"
             [widget]="widget"
+            [fullScreenData]="fullScreenData"
         ></hyt-dynamic-widget>
 
         <ng-template #notConfiguredBlock>
-            
+
             <div id="not-configured-block">
-                The widget is not configured! <span (click)="configureWidget()">Configure it</span> 
+                The widget is not configured! <span (click)="configureWidget()">Configure it</span>
             </div>
 
         </ng-template>

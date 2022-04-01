@@ -16,12 +16,15 @@ import {
 export class DynamicWidgetComponent implements OnInit {
   @Input()
   widget;
+  @Input()
+  fullScreenData = '';
   @Output()
   widgetAction: EventEmitter<any> = new EventEmitter();
 
   constructor() { }
 
   ngOnInit() {
+
   }
 
   onWidgetAction(data) {

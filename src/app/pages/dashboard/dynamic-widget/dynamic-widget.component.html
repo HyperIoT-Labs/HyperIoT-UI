@@ -3,6 +3,8 @@
 <hyperiot-time-chart
   *ngIf="widget.type === 'time-chart'"
   [widget]="widget"
+  [data]="fullScreenData"
+  [commonToolbarHideButton]="fullScreenData !== 'modal'"
   (widgetAction)="onWidgetAction($event)"></hyperiot-time-chart>
 
 <hyperiot-fourier-chart
