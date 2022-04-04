@@ -46,7 +46,7 @@
 
       </div> <!-- Field Oputput -->
 
-    <hyt-input-text class="hidden" [form]="form"  name="alarm-event-number"></hyt-input-text>
+    <!--<hyt-input-text class="hidden" [form]="form"  name="alarm-event-number"></hyt-input-text>-->
 
       <!-- Summary table of EVENTS -->
       <div class="col-6">
@@ -70,7 +70,7 @@
               </td>
             </tr>
             <!-- message when there are no event in table-->
-            <tr [ngClass]="{ hidden: selectedId != 0 && eventListMap.get(selectedId).length != 0}">
+            <tr [ngClass]="{ hidden: selectedId != 0 }">
               <td colspan="2" style="padding: 5px 7px 5px 10px; cursor: pointer;"><ng-container i18n="@@HYT_alarmEvent_message">At least one new event must be added to save the new alarm!</ng-container></td>
             </tr>
           </tbody>

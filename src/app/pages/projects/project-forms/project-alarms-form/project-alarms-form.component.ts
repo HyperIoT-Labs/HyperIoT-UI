@@ -1,7 +1,7 @@
 import { Component, OnChanges, OnDestroy, ViewChild, Input, Injector, ViewEncapsulation, ChangeDetectorRef, OnInit, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription, Observable } from 'rxjs';
-import { HpacketsService, HPacket, HProject, RulesService, Rule, AssetstagsService, AssetTag, AlarmEvent, Alarm, AlarmeventsService, AlarmsService  } from '@hyperiot/core';
+import { LoggerService, Logger, HpacketsService, HPacket, HProject, RulesService, Rule, AssetstagsService, AssetTag, AlarmEvent, Alarm, AlarmeventsService, AlarmsService  } from '@hyperiot/core';
 import { ProjectFormEntity, LoadingStatusEnum } from '../project-form-entity';
 import { RuleDefinitionComponent } from '../rule-definition/rule-definition.component';
 import { Option } from '@hyperiot/components';
@@ -12,6 +12,7 @@ import { MatAutocomplete, MatAutocompleteSelectedEvent, MatChipInputEvent } from
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
 import { PendingChangesDialogComponent } from 'src/app/components/dialogs/pending-changes-dialog/pending-changes-dialog.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'hyt-project-alarms-form',
@@ -56,11 +57,19 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity  implements  O
   ];
 
   // Nuovi param
+  newAlarm : boolean;
   eventListMap : Map<number, any>;
   updateLabel: boolean;
   selectedId: number;
   indexMap: number;
   addAnother: boolean;
+  selectedEventId : number;
+  ruleEventId: number;
+
+    /**
+   * logger service
+   */
+     private logger: Logger;
 
   inhibitedOptions: Option[] = [
     { value: "false", label: 'Enabled' , checked: true },
@@ -93,7 +102,10 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity  implements  O
     private  alarmeventsService: AlarmeventsService  ,
     private activatedRoute: ActivatedRoute,
     private cdr: ChangeDetectorRef,
-    private assetsTagService: AssetstagsService) {
+    private assetsTagService: AssetstagsService,
+    private toastr: ToastrService,
+    private loggerService: LoggerService
+    ) {
     
     super(injector,cdr);
     this.formTemplateId = 'container-alarms';
@@ -102,7 +114,10 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity  implements  O
     this.icon = this.entitiesService.alarm.icon;
     this.hideDelete = true; // hide 'Delete' button
     this.isActive = false;  // TODO bind this property to RuleAction object
-   
+    this.newAlarm = false;
+    this.selectedEventId = undefined;
+    this.logger = new Logger(this.loggerService);
+
     this.activatedRouteSubscription = this.activatedRoute.parent.params.subscribe(routeParams => {
       if (routeParams.projectId) {
         this.currentProject = {id: routeParams.projectId, entityVersion: null}; // read id of project
@@ -117,12 +132,10 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity  implements  O
   ngOnInit(): void {
     this.eventListMap = new Map<number, any>();
     this.selectedId = 0;
-    console.log(this.currentProject);
+    this.logger.debug("Current Project", this.currentProject)
     this.getAssetTags();
     this.updateSummaryList();
     this.updateLabel = false;
-    console.log(this.form);
-    console.log(this.formEvent);
   }
 
   ngOnChanges() {
@@ -195,23 +208,27 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity  implements  O
     //Qui selezioni l'id per filtrare la lista
     this.selectedId = alarm.id;
 
-    console.log(alarm);
+    this.logger.debug("Alarm", alarm);
     this.editMode = true;
     this.addEventMode = false;
     this.formEvent.reset();
     const proceedWithEdit = () => {
-      console.log('proceedWithEdit');
       
       this.showCancel = true;
       //this.addEventMode = true;
 
-      this.alarmeventsService.findAllAlarmEvents(alarm.id).subscribe(
-        result =>  {
-          this.eventsAlarm = result;
-          
-          if(!this.eventsAlarm || this.eventsAlarm.length <= 0 ) this.addEvent();// this.addEventMode = true;
-        }
-      );
+      //this.alarmeventsService.findAllAlarmEventByAlarmId(alarm.id).subscribe(
+        //result =>  {
+          // Map the eventList
+          let eventList = []
+          for (let el of alarm.alarmEventList) {
+           eventList.push({"event": el.event , "severity":el.severity, "id": el.id})
+          } 
+          //Add to dictionary 
+          this.eventListMap.set(alarm.id, eventList);      
+        //}
+      //);
+      
       super.edit(alarm, () => {
 
         if(this.eventToEdit){
@@ -254,6 +271,7 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity  implements  O
     / Method to add a new alarm
     */ 
     addAlarm(){
+      this.newAlarm = true;
       this.editMode = true;
       this.showCancel = true;
       this.eventsAlarm = [];
@@ -269,7 +287,6 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity  implements  O
     addEvent(){
       this.indexMap = undefined;
       this.updateLabel = false;
-      console.log(this.entity);
       this.addEventMode = true;
       this.formEvent.reset();
       this.ruleDefinitionComponent.resetRuleDefinition();
@@ -288,11 +305,19 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity  implements  O
       // Modify user interface for update
       this.updateLabel = true;
       this.addEventMode = true;
+      //Upload rule id for current event
+      this.ruleEventId = e.event.id
       // Set pre-existent fields
       this.formEvent.get('event-name').setValue(e.event.name);
       this.formEvent.get('event-description').setValue(e.event.description);
       this.formEvent.get('event-severity').setValue(e.severity.toString());      
       this.eventToEdit =  { ... this.entitiesService.event.emptyModel };
+      try {
+        this.selectedEventId = e.id
+      }
+      catch {
+        this.selectedEventId = undefined
+      }
       this.ruleDefinitionComponent.resetRuleDefinition();
       this.ruleDefinitionComponent.setRuleDefinition(e.event.ruleDefinition.toString());
       this.eventToEdit.type = Rule.TypeEnum.ALARMEVENT;    
@@ -306,6 +331,7 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity  implements  O
     */ 
     saveEvent(){
       let addEditEvent = {
+        "id": undefined,
         "event": {
           "name": this.formEvent.get('event-name').value,
           "description": this.formEvent.get('event-description').value,
@@ -321,15 +347,92 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity  implements  O
         "severity": this.formEvent.get('event-severity').value,
       }
 
+      // CASO 1: NUOVO ALLARME
+      if (this.newAlarm == true) {
+        this.toastr.info($localize`:@@HYT_remember_changes:Remember to save the alarm to maintain the changes`, $localize`:@@HYT_event_saved:Event saved!`, {toastClass: "alarm-toastr alarm-info"});
+
       // Update eventListMap for all the 5 possibles scenario:
       if (this.indexMap != undefined && this.selectedId > 0) this.eventListMap.get(this.selectedId)[this.indexMap] = addEditEvent;
       else if (!this.indexMap && this.selectedId > 0) this.eventListMap.get(this.selectedId).push(addEditEvent);
       else if (this.indexMap != undefined && this.selectedId == -1) this.eventListMap.get(-1)[this.indexMap] = addEditEvent;
       else if (!this.indexMap && this.selectedId  == 0){ this.eventListMap.set(-1, [addEditEvent]); this.selectedId = -1;}
       else this.eventListMap.get(-1).push(addEditEvent);
+      }
 
-      // update number of event in the table
-      this.form.get('alarm-event-number').setValue(this.eventListMap.get(this.selectedId).length);
+
+      // CASO 2: ALLARME VECCHIO, NUOVO EVENTO
+      else if (this.newAlarm == false && this.selectedEventId == undefined){
+        let obj = { "alarm": {
+                      "id" : this.selectedId
+                    },
+                    "event": {
+                    "name": addEditEvent.event.name,
+                    "description": addEditEvent.event.description,
+                    "ruleDefinition": addEditEvent.event.ruleDefinition,
+                    "project": {
+                        "id": this.currentProject.id
+                    },
+                    "packet": null,
+                    "jsonActions": "[\"{\\\"actionName\\\": \\\"it.acsoftware.hyperiot.alarm.service.actions.NoAlarmAction\\\", \\\"active\\\": true}\"]",
+                    "type": Rule.TypeEnum.ALARMEVENT,
+                    },
+                    "severity": addEditEvent.severity
+        } as AlarmEvent
+
+        this.alarmeventsService.saveAlarmEvent(obj).subscribe((res) => {
+          this.logger.debug("New event added", res);
+          this.toastr.success($localize`:@@HYT_event_new_desc:New event saved correctly`, $localize`:@@HYT_event_new:New event!`, {toastClass: "alarm-toastr alarm-success"});
+
+          // Update eventListMap for all the 5 possibles scenario:
+          addEditEvent.id = res.id;
+          if (this.indexMap != undefined && this.selectedId > 0) this.eventListMap.get(this.selectedId)[this.indexMap] = addEditEvent;
+          else if (!this.indexMap && this.selectedId > 0) this.eventListMap.get(this.selectedId).push(addEditEvent);
+          else if (this.indexMap != undefined && this.selectedId == -1) this.eventListMap.get(-1)[this.indexMap] = addEditEvent;
+          else if (!this.indexMap && this.selectedId  == 0){ this.eventListMap.set(-1, [addEditEvent]); this.selectedId = -1;}
+          else this.eventListMap.get(-1).push(addEditEvent);
+
+          if (this.form.touched == true) this.toastr.info($localize`:@@HYT_event_still_changes:You still have to save the alarm changes`, $localize`:@@HYT_event_remember:Remember!`, {toastClass: "alarm-toastr alarm-info"});
+        });
+
+      }
+
+      //CASO 3: ALLARME VECCHIO, EVENTO VECCHIO (UPDATE)
+      else{
+                    let obj = { "alarm": {
+                      "id" : this.selectedId
+                    },
+                    "id": this.selectedEventId,                 
+                    "event": {
+                    "id": this.ruleEventId,
+                    "name": addEditEvent.event.name,
+                    "description": addEditEvent.event.description,
+                    "ruleDefinition": addEditEvent.event.ruleDefinition,
+                    "project": {
+                        "id": this.currentProject.id
+                    },
+                    "packet": null,
+                    "jsonActions": "[\"{\\\"actionName\\\": \\\"it.acsoftware.hyperiot.alarm.service.actions.NoAlarmAction\\\", \\\"active\\\": true}\"]",
+                    "type": Rule.TypeEnum.ALARMEVENT,
+                    },
+                    "severity": addEditEvent.severity
+            } as AlarmEvent
+
+        this.alarmeventsService.updateAlarmEvent(obj).subscribe((res) => {
+        this.logger.debug("Event updated", res)
+        this.toastr.success($localize`:@@HYT_event_updated_desc:Event updated correctly`, $localize`:@@HYT_event_updated:Event updated!`, {toastClass: "alarm-toastr alarm-success"});
+          
+        // Update eventListMap for all the 5 possibles scenario:
+        addEditEvent.id = res.id;
+        if (this.indexMap != undefined && this.selectedId > 0) this.eventListMap.get(this.selectedId)[this.indexMap] = addEditEvent;
+        else if (!this.indexMap && this.selectedId > 0) this.eventListMap.get(this.selectedId).push(addEditEvent);
+        else if (this.indexMap != undefined && this.selectedId == -1) this.eventListMap.get(-1)[this.indexMap] = addEditEvent;
+        else if (!this.indexMap && this.selectedId  == 0){ this.eventListMap.set(-1, [addEditEvent]); this.selectedId = -1;}
+        else this.eventListMap.get(-1).push(addEditEvent);
+
+        if (this.form.touched == true) this.toastr.info($localize`:@@HYT_event_still_changes:You still have to save the alarm changes`, $localize`:@@HYT_event_remember:Remember!`, {toastClass: "alarm-toastr alarm-info"});
+      });
+
+      }
 
       // addAnother boolean
       if (this.addAnother == undefined || !this.addAnother) this.addEventMode = false;
@@ -345,11 +448,10 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity  implements  O
     removeEvent(index : number) {
       if(this.eventsAlarm[index]){
         this.alarmeventsService.deleteAlarmEvent(this.eventsAlarm[index].id).subscribe( res => {
-        console.log('removeEvent' ,res, this.eventsAlarm , index);
+        this.logger.debug("remove event", 'removeEvent' ,res, this.eventsAlarm , index);
         this.addEventMode = false;
         this.eventsAlarm.splice(index, 1);
         this.eventsAlarm = [... this.eventsAlarm];
-        console.log('removeEvent' , this.eventsAlarm);
       });
       }
     }
@@ -372,17 +474,14 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity  implements  O
     }
 
     changeAlarmInhibited(event) {
-      console.log(this.entity);
+      this.logger.debug("Entity", this.entity)
       this.changedAlarmData = true;
       this.entity.inhibited = event;
 
-      console.log(this.entity);
     }
 
-    updateSummaryList() {
-      
-      // ------- MOCK ---------
-      this.alarmsService.findAllAlarm().subscribe((alarms: Alarm[]) => {
+    updateSummaryList() {   
+      this.alarmsService.findAllAlarmByProjectId(this.currentProject.id).subscribe((alarms: Alarm[]) => {
         this.summaryList = {
           title: this.formTitle,
           list: alarms
@@ -390,28 +489,6 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity  implements  O
               return { name: l.name, data: l };
             }) as SummaryListItem[]
         };
-
-        let eventList = [{
-          "event": {
-              "name": "Evento-di-primoAllarme",
-              "description": "descrizione di prova, daiiii",
-              "ruleDefinition": "\"5885.5886\" >= 100",
-              "project": {
-                  "id": 31
-              },
-              "packet": null,
-              "jsonActions": "[\"{\\\"actionName\\\": \\\"it.acsoftware.hyperiot.alarm.service.actions.NoAlarmAction\\\", \\\"active\\\": true}\"]",
-              "type": "ALARMEVENTS",
-              "tagIds": [4523]
-          },
-          "severity": 1
-      }]; 
-
-        this.eventListMap.set(this.summaryList.list[0].data.id, eventList);      
-
-        // ------- MOCK ---------
-        //update map event list size for save check control (MOCKKKK)
-        this.form.get('alarm-event-number').setValue(eventList.length);
       });
       
     }
@@ -426,29 +503,62 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity  implements  O
   }
 
   saveAlarm(){
-    let alarm = {
-      "alarm": {
-        "name": this.form.get('alarm-name').value,
-        "inhibited": this.form.get('alarm-inhibited').value, 
-      },
-      "alarmEvents": this.selectedId == -1? this.eventListMap.get(-1) : this.eventListMap.get(this.selectedId)
-    }
+
+    let alarmName = this.form.get('alarm-name').value;
+    let alarmInhibited = this.form.get('alarm-inhibited').value;
+    let listOfAlarmEvents = this.selectedId == -1? this.eventListMap.get(-1) : this.eventListMap.get(this.selectedId);
 
     // Do the call to POST to server
-    // ------- MOCK ---------
-    console.info("ALARM_TO_ADD", alarm);
-    this.addEventMode = false;
-    this.loadingStatus = LoadingStatusEnum.Ready;
-  
+     if (this.newAlarm == true){
+       this.alarmsService.saveAlarmAndEvents(listOfAlarmEvents, alarmName, alarmInhibited).subscribe((res) => {
+         this.logger.debug("New alarm added", res)
+         this.toastr.success($localize`:@@HYT_alarm_and_events_desc:Alarm and events added correctly`, $localize`:@@HYT_alarm_and_events:Alarm and events added!`, {toastClass: "alarm-toastr alarm-success"});
+         this.addEventMode = false;
+         this.loadingStatus = LoadingStatusEnum.Ready;
+    
+         //re-default values
+         this.updateSummaryList();
+         this.newAlarm = false;
+         this.cancel();
+       });
+     }
+
+    // salvo solo allarme
+    else {
+      let alarmToSave = {
+        "id": this.selectedId,
+        "name": this.form.get('alarm-name').value,
+        "inhibited": this.form.get('alarm-inhibited').value, 
+      } as Alarm
+
+      this.alarmsService.updateAlarm(alarmToSave).subscribe((res) => {this.toastr.success($localize`:@@HYT_alarm_updated_desc:Event updated correctly`, $localize`:@@HYT_alarm_updated:Event updated!`, {toastClass: "alarm-toastr alarm-success"});});
+      this.addEventMode = false;
+      this.loadingStatus = LoadingStatusEnum.Ready;
+              
+      //re-default values
+      this.updateSummaryList();
+      this.newAlarm = false;
+      this.cancel();
+    }
   }
 
   deleteEvent(i){
-    this.eventListMap.get(this.selectedId).splice(i, 1);
+    //CASO 1: nuovo allarme, no eventi pre-esistenti
+    if (this.newAlarm == true){
+      this.eventListMap.get(this.selectedId).splice(i, 1);
+      this.updateSummaryList();
+    }
 
-    // update number of event in the table
-    this.form.get('alarm-event-number').setValue(this.eventListMap.get(this.selectedId).length);
+    //CASO 2:vecchio allarme, eventi pre-esistenti
+    else {
+    this.alarmeventsService.deleteAlarmEvent(this.eventListMap.get(this.selectedId)[i].id).subscribe((res) => {
+      this.toastr.success($localize`:@@HYT_event_deleted_desc:Event deleted correctly`, $localize`:@@HYT_event_deleted:Event deleted!`, {toastClass: "alarm-toastr alarm-success"});
+      // update number of event in the table
+      this.eventListMap.get(this.selectedId).splice(i, 1);
+      this.updateSummaryList();
+    });
+   }
   }
-
 
 
   isValid(): boolean {
@@ -456,7 +566,6 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity  implements  O
   }
 
   isDirty() : boolean {
-   //console.log(' isDirty ' +this.form.dirty );
    return  this.editMode && this.form.dirty ;
   }
 
@@ -468,10 +577,14 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity  implements  O
     this.showCancel = false;
     this.eventsAlarm = [];
     this.addEventMode = false;
+    
+    // if there are pending changes, propose to save
+    if (this.form.touched == true) this.openConfirmEventDialog();
 
     // cancel pending params
     this.eventListMap = new Map<number, any>();
     this.selectedId = 0;
+    this.newAlarm = false;
 
     // reload saved data
     this.updateSummaryList();

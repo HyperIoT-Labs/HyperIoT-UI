@@ -1,4 +1,4 @@
-import { EnrichmentsService } from './../../../services/enrichments/enrichments.service';
+import { EnrichmentsService } from '../../../services/enrichments/enrichments.service';
 import { Component, OnInit, OnDestroy, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -646,7 +646,8 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
   */
   isDisableProjectAlarmsFormComponent(e: any){
     if ((e instanceof ProjectAlarmsFormComponent) == false) return true;
-    else if (e.form.status == "VALID" && e.form.get("alarm-event-number").value > 0) return false;
+    else if (e.form.touched == false) return true;
+    else if (e.form.status == "VALID") return false;
     else if (e.form.status == "INVALID") return true;
     else return true;
   }

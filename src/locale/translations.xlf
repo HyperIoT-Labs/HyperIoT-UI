@@ -766,6 +766,48 @@
       <trans-unit id="HYT_back" datatype="html">
         <source>Back</source>
       </trans-unit>
+      <trans-unit id="HYT_event_saved" datatype="html">
+        <source>Event saved!</source>
+      </trans-unit>
+            <trans-unit id="HYT_remember_changes" datatype="html">
+        <source>Remember to save the alarm to maintain the changes</source>
+      </trans-unit>
+      <trans-unit id="HYT_event_new" datatype="html">
+        <source>New event!</source>
+      </trans-unit>
+      <trans-unit id="HYT_event_new_desc" datatype="html">
+        <source>New event saved correctly</source>
+      </trans-unit>
+      <trans-unit id="HYT_event_remember" datatype="html">
+        <source>Remember!</source>
+      </trans-unit>
+      <trans-unit id="HYT_event_still_changes" datatype="html">
+        <source>You still have to save the alarm changes</source>
+      </trans-unit>
+      <trans-unit id="HYT_event_updated" datatype="html">
+        <source>Event updated!</source>
+      </trans-unit>
+      <trans-unit id="HYT_event_updated_desc" datatype="html">
+        <source>Event updated correctly</source>
+      </trans-unit>
+      <trans-unit id="HYT_alarm_and_events" datatype="html">
+        <source>Alarm and events added!</source>
+      </trans-unit>
+      <trans-unit id="HYT_alarm_and_events_desc" datatype="html">
+        <source>Alarm and events added correctly</source>
+      </trans-unit>
+      <trans-unit id="HYT_alarm_updated" datatype="html">
+        <source>Alarm updated!</source>
+      </trans-unit>
+      <trans-unit id="HYT_alarm_updated_desc" datatype="html">
+        <source>Alarm updated correctly</source>
+      </trans-unit>
+      <trans-unit id="HYT_event_deleted" datatype="html">
+        <source>Event deleted!</source>
+      </trans-unit>
+      <trans-unit id="HYT_event_deleted_desc" datatype="html">
+        <source>Event deleted correctly</source>
+      </trans-unit>
       <trans-unit id="HYT_application" datatype="html">
         <source>APPLICATION</source>
       </trans-unit>

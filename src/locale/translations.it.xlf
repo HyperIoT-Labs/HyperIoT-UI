@@ -1013,6 +1013,62 @@
         <source>Back to Alarm</source>
         <target>Torna all'allarme</target>
       </trans-unit>
+      <trans-unit id="HYT_event_saved" datatype="html">
+        <source>Event saved!</source>
+        <target>Evento salvato!</target>
+      </trans-unit>
+            <trans-unit id="HYT_remember_changes" datatype="html">
+        <source>Remember to save the alarm to maintain the changes</source>
+        <target>Ricorda di salvare l'allarme per mantenere le modifiche</target>
+      </trans-unit>
+      <trans-unit id="HYT_event_new" datatype="html">
+        <source>New event!</source>
+        <target>Nuovo evento!</target>
+      </trans-unit>
+      <trans-unit id="HYT_event_new_desc" datatype="html">
+        <source>New event saved correctly</source>
+        <target>Nuovo evento salvato correttamente</target>
+      </trans-unit>
+      <trans-unit id="HYT_event_remember" datatype="html">
+        <source>Remember!</source>
+        <target>Ricorda!</target>
+      </trans-unit>
+      <trans-unit id="HYT_event_still_changes" datatype="html">
+        <source>You still have to save the alarm changes</source>
+        <target>Devi ancora salvare le modifiche dell'allarme</target>
+      </trans-unit>
+      <trans-unit id="HYT_event_updated" datatype="html">
+        <source>Event updated!</source>
+        <target>Evento aggiornato!</target>
+      </trans-unit>
+      <trans-unit id="HYT_event_updated_desc" datatype="html">
+        <source>Event updated correctly</source>
+        <target>Evento aggiornato correttamente</target>
+      </trans-unit>
+      <trans-unit id="HYT_alarm_and_events" datatype="html">
+        <source>Alarm and events added!</source>
+        <target>Allarme ed Eventi aggiunti!</target>
+      </trans-unit>
+      <trans-unit id="HYT_alarm_and_events_desc" datatype="html">
+        <source>Alarm and events added correctly</source>
+        <target>Allarme ed Eventi aggiunti correttamente</target>
+      </trans-unit>
+      <trans-unit id="HYT_alarm_updated" datatype="html">
+        <source>Alarm updated!</source>
+        <target>Allarme aggiornato!</target>
+      </trans-unit>
+      <trans-unit id="HYT_alarm_updated_desc" datatype="html">
+        <source>Alarm updated correctly</source>
+        <target>Allarme aggiornato correttamente</target>
+      </trans-unit>
+      <trans-unit id="HYT_event_deleted" datatype="html">
+        <source>Event deleted!</source>
+        <target>Evento eliminato!</target>
+      </trans-unit>
+      <trans-unit id="HYT_event_deleted_desc" datatype="html">
+        <source>Event deleted correctly</source>
+        <target>Evento eliminato correttamente</target>
+      </trans-unit>
       <trans-unit id="HYT_event_will_be_lost" datatype="html">
         <source>The current event will be lost</source>
         <target>L'evento attuale andrà perso</target>
