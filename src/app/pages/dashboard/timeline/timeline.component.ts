@@ -196,7 +196,8 @@ export class TimelineComponent implements OnChanges {
       this.domainStart.getTime(),
       this.domainStop.getTime(),
       Intl.DateTimeFormat().resolvedOptions().timeZone,
-      this.dashboardPackets.toString()
+      this.dashboardPackets.toString(),
+      "" // TODO: da implementare packetIds
     ).subscribe(
       res => {
         this.timeLineData.forEach(element => {
