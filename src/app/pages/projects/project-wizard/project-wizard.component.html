@@ -16,14 +16,14 @@
         <div id="container-title">
           <h2 id="form-title">Project Wizard</h2>
         </div>
-  
-        <hyt-button 
-          [color]="'hyt-base-total-white'" 
+
+        <hyt-button
+          [color]="'hyt-base-total-white'"
           (clickFn)="goToProjectEdit()"
         >
         <span class="hyt-icon icon-hyt_pencil"></span> <ng-container>Project Detail</ng-container>
         </hyt-button>
-  
+
       </div>
 
       <ng-template #projectTemplate>
@@ -39,7 +39,7 @@
             <div id="select-source" class="col-6">
 
               <p id="label-sources" i18n="@@HYT_select_source_type">Select Source Type</p>
-              
+
               <div id="container-radio-btn-source">
                   <hyt-radio-button [options]="sourceOptions" (changeFn)="sourceChanged($event)"></hyt-radio-button>
               </div>
@@ -47,7 +47,7 @@
             </div>
 
           </div>
-        
+
         </div>
 
         <hyt-device-form #devicesForm [currentProject]="currentProject"
@@ -168,7 +168,7 @@
               <ng-container i18n="@@HYT_next">Next</ng-container>
             </hyt-button> -->
 
-            <hyt-button class="toRight" [color]="'hyt-stepper-next'" [isDisabled]="isNextDisabled()" 
+            <hyt-button class="toRight" [color]="'hyt-stepper-next'" [isDisabled]="isNextDisabled()"
               (clickFn)="(currentStepIndex == 3 && !optionModalViewed || currentStepIndex == 6)? openOptionModal() : stepper.next()"
             >
             <ng-container i18n="@@HYT_next">Next</ng-container> <span class="hyt-icon icon-hyt_arrowRight"></span>

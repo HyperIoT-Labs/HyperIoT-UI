@@ -48,15 +48,17 @@ export class GenericSummaryListComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    
     switch (this._summaryList.title) {
       case 'Packets':
-        
+
         this.getFilteredElement(this._summaryList.list, this.currentDevice, false);
         break;
+      case 'Packet Events':
 
+        this.getFilteredElement(this._summaryList.list, this.currentDevice, false,-1, true);
+        break;
       case 'Packet Enrichments':
-        
+
         this.getFilteredElement(this._summaryList.list, this.currentDevice, true, this.enrichmentPacketId);
         break;
     }
@@ -67,7 +69,7 @@ export class GenericSummaryListComponent implements OnInit, OnChanges {
     switch (this._summaryList.title) {
 
       case 'Packets':
-        
+
         const pDeviceName = (changes['currentDevice'] && changes['currentDevice']?.currentValue !== changes['currentDevice']?.previousValue) ?
           changes['currentDevice']?.currentValue : this.currentDevice;
 
@@ -79,7 +81,7 @@ export class GenericSummaryListComponent implements OnInit, OnChanges {
         break;
 
       case 'Packet Enrichments':
-        
+
         const peDeviceName = (changes['currentDevice'] && (changes['currentDevice']?.currentValue !== changes['currentDevice']?.previousValue)) ?
           changes['currentDevice']?.currentValue : this.currentDevice;
 
@@ -119,12 +121,12 @@ export class GenericSummaryListComponent implements OnInit, OnChanges {
     });
   }
 
-  getFilteredElement(itemList: SummaryListItem[], deviceToFilter: string, isEnrichment: boolean = false, packetIDToFilter?: number){
-    
+  getFilteredElement(itemList: SummaryListItem[], deviceToFilter: string, isEnrichment: boolean = false, packetIDToFilter?: number, isEvent: boolean = false){
+
     this.filteredElementList = [];
 
     if(isEnrichment) {
-      
+
       itemList.map((singleItem) => {
 
         if(singleItem.data.packet.id === packetIDToFilter && singleItem.data.packet.device.deviceName === deviceToFilter) {
@@ -132,11 +134,16 @@ export class GenericSummaryListComponent implements OnInit, OnChanges {
         }
 
       });
-
-    } else {
-      
+    } else if(isEvent) {
       itemList.map((singleItem) => {
-        
+        if (singleItem.data.type === 'EVENT') {
+          this.filteredElementList.push(singleItem);
+        }
+      })
+    } else {
+
+      itemList.map((singleItem) => {
+
         if(singleItem.data.device.deviceName === deviceToFilter) {
           this.filteredElementList.push(singleItem);
         }
