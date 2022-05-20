@@ -5,7 +5,7 @@ import { HytStepperComponent } from '@hyperiot/components/lib/hyt-stepper/hyt-st
 import { HDevice, HdevicesService, HPacket, HpacketsService, HProject, HProjectAlgorithm, HprojectalgorithmsService, Rule } from '@hyperiot/core';
 import { Observable, Observer } from 'rxjs';
 import { EntitiesService } from 'src/app/services/entities/entities.service';
-import { SummaryListItem } from '../project-detail/generic-summary-list/generic-summary-list.component';
+import {SummaryList, SummaryListItem} from '../project-detail/generic-summary-list/generic-summary-list.component';
 import { DeviceFormComponent } from '../project-forms/device-form/device-form.component';
 import { PacketEnrichmentFormComponent } from '../project-forms/packet-enrichment-form/packet-enrichment-form.component';
 import { ProjectEventsFormComponent } from '../project-forms/project-events-form/project-events-form.component';
@@ -142,7 +142,7 @@ export class ProjectWizardComponent implements OnInit {
   }
 
   stepChanged(event) {
-    
+
     this.currentStepIndex = event.selectedIndex;
     // setting current form...
     switch (event.selectedIndex) {
@@ -228,7 +228,7 @@ export class ProjectWizardComponent implements OnInit {
   }
 
   onSaveClick(e) {
-  
+
     this.currentForm.save(
       (ent, isNew) => {
         if (this.currentForm instanceof ProjectFormComponent) {
@@ -252,11 +252,11 @@ export class ProjectWizardComponent implements OnInit {
           this.statisticsForm.loadHPackets();
           this.updateSelectFieldChanged(isNew);
         } else if (this.currentForm instanceof PacketEnrichmentFormComponent) {
-          
+
           this.enrichmentRules = [
             ...this.updateList(ent, this.enrichmentRules),
           ];
-          
+
           this.currentForm.loadEmpty();
 
         } else if (this.currentForm instanceof ProjectStatisticsFormComponent) {
@@ -303,12 +303,12 @@ export class ProjectWizardComponent implements OnInit {
   menuAction(event): void {
     switch (event.action) {
       case "edit":
-        
+
         if (this.currentForm instanceof PacketFormComponent) {
           this.deviceSelect.selectSpecific(event.item.data.device.id);
           this.deviceSelect.freezeSelection();
         }
-        
+
         this.currentForm.edit(event.item.data);
         break;
       case "duplicate":
@@ -452,7 +452,7 @@ export class ProjectWizardComponent implements OnInit {
   }
 
   optionsModalClosed(event: { action: string; data: any }) {
-    
+
     switch (event.action) {
       case "goToStep": {
         this.stepper.changeStep(event.data);
@@ -493,9 +493,9 @@ export class ProjectWizardComponent implements OnInit {
       type: this.entitiesService.event.displayListName,
       entities: this.eventRules.map((e) => e.name),
     });
-    
+
     this.cd.detectChanges();
-    
+
     // Move delay within the "modal" library
     setTimeout(()=> {
       const modalRef = this.hytModalService.open(
@@ -576,7 +576,7 @@ export class ProjectWizardComponent implements OnInit {
   }
 
   getDirty(index: number): boolean {
-    
+
     switch (index) {
       case 0: {
         return this.projectForm ? this.projectForm.isDirty() : false;
@@ -614,4 +614,5 @@ export class ProjectWizardComponent implements OnInit {
       }
     }
   }
+
 }

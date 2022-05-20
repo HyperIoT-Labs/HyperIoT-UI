@@ -132,7 +132,7 @@
                             [ngClass]="{hidden: !currentEntity.showSave}"
                             id="save-btn"
                             (clickFn)="onSaveClick()" 
-                            [isDisabled]="!currentEntity.isValid() || !currentEntity.isDirty()">
+                            [isDisabled]="(!currentEntity.isValid() || !currentEntity.isDirty()) && (isDisableProjectAlarmsFormComponent(this.currentEntity))">
                             <span class="hyt-icon icon-hyt_save"></span>
                             <span i18n="@@HYT_save">Save</span>
                         </hyt-button>

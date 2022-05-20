@@ -209,6 +209,30 @@ export class EntitiesService {
     }
   };
 
+   /**
+   * information about alarm
+   */
+    public readonly alarm: Entity = {
+      id: 0,
+      entityName: 'alarm',
+      // displayName: 'Event',
+      displayListName: $localize`:@@HYT_alarm_displaylistname:Alarms`,
+      // pluralName: 'Events',
+      formTitle: $localize`:@@HYT_alarm_form_title:Alarms`,
+      shortDefinition: $localize`:@@HYT_alarms_short_definition:Alarms short definition`,
+      definition: $localize`:@@HYT_alarms_definition:Alarms definition`,
+      longDefinition: $localize`:@@HYT_alarms_long_definition:Alarms long definition`,
+      icon: 'icon-hyt_notification',
+      iconPlus: 'icon-hyt_eventPlus',
+      emptyModel: {
+        name: '',
+        inhibited: false,
+        categoryIds:[],
+        tagIds:[],
+        entityVersion: 1
+      }
+    };
+
   /**
    * information about algorithm
    */

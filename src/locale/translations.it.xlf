@@ -394,6 +394,26 @@
         <source>Events long definition</source>
         <target>Eventi definizione lunga...</target>
       </trans-unit>
+       <trans-unit id="HYT_alarm_displaylistname" datatype="html">
+        <source>Alarms</source>
+        <target>Allarmi</target>
+      </trans-unit>
+      <trans-unit id="HYT_alarm_form_title" datatype="html">
+        <source>Alarms</source>
+        <target>Allarmi</target>
+      </trans-unit>
+      <trans-unit id="HYT_alarms_short_definition" datatype="html">
+        <source>Alarms short definition</source>
+        <target>Allarmi definizione breve...</target>
+      </trans-unit>
+      <trans-unit id="HYT_alarms_definition" datatype="html">
+        <source>Alarms definition</source>
+        <target>Allarmi definizione</target>
+      </trans-unit>
+      <trans-unit id="HYT_alarms_long_definition" datatype="html">
+        <source>Alarms long definition</source>
+        <target>Allarmi definizione lunga...</target>
+      </trans-unit>
       <trans-unit id="HYT_delete_item_question" datatype="html">
         <source>Do you really want to delete this item?</source>
         <target>Sei sicuro di voler eliminare l'oggetto?</target>
@@ -972,6 +992,86 @@
       <trans-unit id="HYT_update" datatype="html">
         <source>Update</source>
         <target>Aggiorna</target>
+      </trans-unit>
+      <trans-unit id="HYT_save_event" datatype="html">
+        <source>Save Event</source>
+        <target>Salva Evento</target>
+      </trans-unit>
+      <trans-unit id="HYT_update_event" datatype="html">
+        <source>Update Event</source>
+        <target>Aggiorna Evento</target>
+      </trans-unit>
+      <trans-unit id="HYT_another_event" datatype="html">
+        <source>Add another Event</source>
+        <target>Aggiunti un altro Evento</target>
+      </trans-unit>
+      <trans-unit id="HYT_alarm_save_changes" datatype="html">
+        <source>Do you want to save the alarm and lost the pending changes?</source>
+        <target>Vuoi davvvero salvare l'allarme e perdere le modifiche in sospeso?</target>
+      </trans-unit>
+      <trans-unit id="HYT_back_to_event" datatype="html">
+        <source>Back to Alarm</source>
+        <target>Torna all'allarme</target>
+      </trans-unit>
+      <trans-unit id="HYT_event_saved" datatype="html">
+        <source>Event saved!</source>
+        <target>Evento salvato!</target>
+      </trans-unit>
+            <trans-unit id="HYT_remember_changes" datatype="html">
+        <source>Remember to save the alarm to maintain the changes</source>
+        <target>Ricorda di salvare l'allarme per mantenere le modifiche</target>
+      </trans-unit>
+      <trans-unit id="HYT_event_new" datatype="html">
+        <source>New event!</source>
+        <target>Nuovo evento!</target>
+      </trans-unit>
+      <trans-unit id="HYT_event_new_desc" datatype="html">
+        <source>New event saved correctly</source>
+        <target>Nuovo evento salvato correttamente</target>
+      </trans-unit>
+      <trans-unit id="HYT_event_remember" datatype="html">
+        <source>Remember!</source>
+        <target>Ricorda!</target>
+      </trans-unit>
+      <trans-unit id="HYT_event_still_changes" datatype="html">
+        <source>You still have to save the alarm changes</source>
+        <target>Devi ancora salvare le modifiche dell'allarme</target>
+      </trans-unit>
+      <trans-unit id="HYT_event_updated" datatype="html">
+        <source>Event updated!</source>
+        <target>Evento aggiornato!</target>
+      </trans-unit>
+      <trans-unit id="HYT_event_updated_desc" datatype="html">
+        <source>Event updated correctly</source>
+        <target>Evento aggiornato correttamente</target>
+      </trans-unit>
+      <trans-unit id="HYT_alarm_and_events" datatype="html">
+        <source>Alarm and events added!</source>
+        <target>Allarme ed Eventi aggiunti!</target>
+      </trans-unit>
+      <trans-unit id="HYT_alarm_and_events_desc" datatype="html">
+        <source>Alarm and events added correctly</source>
+        <target>Allarme ed Eventi aggiunti correttamente</target>
+      </trans-unit>
+      <trans-unit id="HYT_alarm_updated" datatype="html">
+        <source>Alarm updated!</source>
+        <target>Allarme aggiornato!</target>
+      </trans-unit>
+      <trans-unit id="HYT_alarm_updated_desc" datatype="html">
+        <source>Alarm updated correctly</source>
+        <target>Allarme aggiornato correttamente</target>
+      </trans-unit>
+      <trans-unit id="HYT_event_deleted" datatype="html">
+        <source>Event deleted!</source>
+        <target>Evento eliminato!</target>
+      </trans-unit>
+      <trans-unit id="HYT_event_deleted_desc" datatype="html">
+        <source>Event deleted correctly</source>
+        <target>Evento eliminato correttamente</target>
+      </trans-unit>
+      <trans-unit id="HYT_event_will_be_lost" datatype="html">
+        <source>The current event will be lost</source>
+        <target>L'evento attuale andrà perso</target>
       </trans-unit>
       <trans-unit id="HYT_back" datatype="html">
         <source>Back</source>
@@ -1679,6 +1779,30 @@
       <trans-unit id="HYT_summary_list_no_packets" datatype="html">
         <source>No Packets</source>
         <target>Nessun Pacchetto</target>
+      </trans-unit>
+      <trans-unit id="HYT_unavailable_alarm_name" datatype="html">
+        <source>Unavailable alarm name</source>
+        <target>Nome allarme non disponibile</target>
+      </trans-unit>
+       <trans-unit id="HYT_add_alarm" datatype="html">
+        <source>Add alarm</source>
+        <target>Aggiungi allarme</target>
+      </trans-unit>
+       <trans-unit id="HYT_hint_alarm_name" datatype="html">
+        <source>Enter the alarm name</source>
+        <target>Inserire il nome dell'allarme.</target>
+      </trans-unit>
+       <trans-unit id="HYT_alarm_event_severity" datatype="html">
+        <source>Severity</source>
+        <target>Severity</target>
+      </trans-unit>
+      <trans-unit id="HYT_alarm_event_actions" datatype="html">
+        <source>Actions</source>
+        <target>Azioni</target>
+      </trans-unit>
+      <trans-unit id="HYT_alarmEvent_message" datatype="html">
+        <source>At least one new event must be added to save the new alarm!</source>
+        <target>Almeno un nuovo evento deve essere aggiunto per salvare un nuovo allarme!</target>
       </trans-unit>
     </body>
   </file>
