@@ -2,6 +2,10 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "./out-tsc/app",
+    "angularCompilerOptions": {
+      "compilationMode": "partial",
+      "enableIvy": true
+    },
     "types": [
       "node"
     ]
