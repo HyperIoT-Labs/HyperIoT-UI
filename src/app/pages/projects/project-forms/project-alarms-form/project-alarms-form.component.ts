@@ -8,11 +8,12 @@ import { Option } from '@hyperiot/components';
 import { SummaryListItem } from '../../project-detail/generic-summary-list/generic-summary-list.component';
 import { TagStatus } from '../packet-enrichment-form/asset-tag/asset-tag.component';
 import { FormControl } from '@angular/forms';
-import { MatAutocomplete, MatAutocompleteSelectedEvent, MatChipInputEvent } from '@angular/material';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
 import { PendingChangesDialogComponent } from 'src/app/components/dialogs/pending-changes-dialog/pending-changes-dialog.component';
 import { ToastrService } from 'ngx-toastr';
+import {MatAutocomplete, MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
+import {MatChipInputEvent} from '@angular/material/chips';
 
 @Component({
   selector: 'hyt-project-alarms-form',
@@ -34,7 +35,7 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity  implements  O
   eventToEdit: Rule;
   editEventIndex: number;
   eventsAlarm: AlarmEvent[];
-  //inhibited: boolean;
+  // inhibited: boolean;
   alarmName : string;
   severityList: Option[] = [
     {
@@ -83,7 +84,7 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity  implements  O
 
   @ViewChild('alarmDef')
   ruleDefinitionComponent: RuleDefinitionComponent;
-  
+
   // the following properties allow tag management
   // at the moment, on tag can be assigned to event at most
   @ViewChild('tagInput') tagInput: ElementRef<HTMLInputElement>;
@@ -96,7 +97,7 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity  implements  O
   isActive: boolean; // TODO bind this property to RuleAction object
   addEventMode = false;
   changedAlarmData = false;
-  
+
   constructor(injector: Injector,
     private  alarmsService: AlarmsService  ,
     private  alarmeventsService: AlarmeventsService  ,
@@ -106,7 +107,7 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity  implements  O
     private toastr: ToastrService,
     private loggerService: LoggerService
     ) {
-    
+
     super(injector,cdr);
     this.formTemplateId = 'container-alarms';
     this.longDefinition = this.entitiesService.alarm.longDefinition;
@@ -167,7 +168,7 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity  implements  O
       input.value = '';
     }
     this.tagCtrl.setValue(null);
-    
+
   }
 
   getAssetTags() {
@@ -197,10 +198,10 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity  implements  O
    */
 
 
-  loadEmpty() { 
+  loadEmpty() {
     this.form.reset();
     this.formEvent.reset();
-    this.ruleDefinitionComponent.resetRuleDefinition(); 
+    this.ruleDefinitionComponent.resetRuleDefinition();
     this.entity = { ... this.entitiesService.alarm.emptyModel };
   }
 
@@ -213,7 +214,7 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity  implements  O
     this.addEventMode = false;
     this.formEvent.reset();
     const proceedWithEdit = () => {
-      
+
       this.showCancel = true;
       //this.addEventMode = true;
 
@@ -223,12 +224,12 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity  implements  O
           let eventList = []
           for (let el of alarm.alarmEventList) {
            eventList.push({"event": el.event , "severity":el.severity, "id": el.id})
-          } 
-          //Add to dictionary 
-          this.eventListMap.set(alarm.id, eventList);      
-        //}
-      //);
-      
+          }
+          // Add to dictionary
+          this.eventListMap.set(alarm.id, eventList);
+        // }
+      // );
+
       super.edit(alarm, () => {
 
         if(this.eventToEdit){
@@ -240,13 +241,13 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity  implements  O
         // if a tag has been found, set it to selectedTag property (at the moment, only one tag inside array)
         this.selectedTags = oldTag ? [oldTag] : [];
       }
-      
+
         if (readyCallback) {
           readyCallback();
         }
       });
     }
-      
+
     const canDeactivate = this.canDeactivate();
     if (typeof canDeactivate === 'boolean' && canDeactivate === true) {
       proceedWithEdit();
@@ -266,10 +267,10 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity  implements  O
         id: this.currentProject.id, type: 'project-alarms'
       });
     }
-    
+
     /*
     / Method to add a new alarm
-    */ 
+    */
     addAlarm(){
       this.newAlarm = true;
       this.editMode = true;
@@ -292,12 +293,12 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity  implements  O
       this.ruleDefinitionComponent.resetRuleDefinition();
       this.eventToEdit =  { ... this.entitiesService.event.emptyModel };
       this.eventToEdit.type = Rule.TypeEnum.ALARMEVENT;
-      this.selectedTags = []; 
+      this.selectedTags = [];
       this.ruleDefinitionComponent.setRuleDefinition(this.eventToEdit.ruleDefinition);
     }
 
     /*
-    / Method to load event from the event's table 
+    / Method to load event from the event's table
     */
     loadEvent(e, index){
       // Set index of map
@@ -310,7 +311,7 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity  implements  O
       // Set pre-existent fields
       this.formEvent.get('event-name').setValue(e.event.name);
       this.formEvent.get('event-description').setValue(e.event.description);
-      this.formEvent.get('event-severity').setValue(e.severity.toString());      
+      this.formEvent.get('event-severity').setValue(e.severity.toString());
       this.eventToEdit =  { ... this.entitiesService.event.emptyModel };
       try {
         this.selectedEventId = e.id
@@ -320,15 +321,15 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity  implements  O
       }
       this.ruleDefinitionComponent.resetRuleDefinition();
       this.ruleDefinitionComponent.setRuleDefinition(e.event.ruleDefinition.toString());
-      this.eventToEdit.type = Rule.TypeEnum.ALARMEVENT;    
+      this.eventToEdit.type = Rule.TypeEnum.ALARMEVENT;
       // Empty and load tags
       this.selectedTags = []
-      for (let tagId of e.event.tagIds) this.selectedTags.push(this.allTags.find(o=> o.id == tagId));     
+      for (let tagId of e.event.tagIds) this.selectedTags.push(this.allTags.find(o=> o.id == tagId));
     }
 
     /*
     Same methods both for save/update an event
-    */ 
+    */
     saveEvent(){
       let addEditEvent = {
         "id": undefined,
@@ -401,7 +402,7 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity  implements  O
                     let obj = { "alarm": {
                       "id" : this.selectedId
                     },
-                    "id": this.selectedEventId,                 
+                    "id": this.selectedEventId,
                     "event": {
                     "id": this.ruleEventId,
                     "name": addEditEvent.event.name,
@@ -420,7 +421,7 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity  implements  O
         this.alarmeventsService.updateAlarmEvent(obj).subscribe((res) => {
         this.logger.debug("Event updated", res)
         this.toastr.success($localize`:@@HYT_event_updated_desc:Event updated correctly`, $localize`:@@HYT_event_updated:Event updated!`, {toastClass: "alarm-toastr alarm-success"});
-          
+
         // Update eventListMap for all the 5 possibles scenario:
         addEditEvent.id = res.id;
         if (this.indexMap != undefined && this.selectedId > 0) this.eventListMap.get(this.selectedId)[this.indexMap] = addEditEvent;
@@ -463,14 +464,14 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity  implements  O
       this.addEvent();
       this.formEvent.get('event-name').setValue(e.event.name+"_copy");
       this.formEvent.get('event-description').setValue(e.event.description);
-      this.formEvent.get('event-severity').setValue(e.severity.toString());      
+      this.formEvent.get('event-severity').setValue(e.severity.toString());
       this.eventToEdit =  { ... this.entitiesService.event.emptyModel };
       this.ruleDefinitionComponent.resetRuleDefinition();
       this.ruleDefinitionComponent.setRuleDefinition(e.event.ruleDefinition.toString());
-      this.eventToEdit.type = Rule.TypeEnum.ALARMEVENT;    
+      this.eventToEdit.type = Rule.TypeEnum.ALARMEVENT;
       // Empty and load tags
       this.selectedTags = []
-      for (let tagId of e.event.tagIds) this.selectedTags.push(this.allTags.find(o=> o.id == tagId));   
+      for (let tagId of e.event.tagIds) this.selectedTags.push(this.allTags.find(o=> o.id == tagId));
     }
 
     changeAlarmInhibited(event) {
@@ -480,7 +481,7 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity  implements  O
 
     }
 
-    updateSummaryList() {   
+    updateSummaryList() {
       this.alarmsService.findAllAlarmByProjectId(this.currentProject.id).subscribe((alarms: Alarm[]) => {
         this.summaryList = {
           title: this.formTitle,
@@ -490,10 +491,10 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity  implements  O
             }) as SummaryListItem[]
         };
       });
-      
+
     }
 
-    save(successCallback, errorCallback) {   
+    save(successCallback, errorCallback) {
       this.loadingStatus = LoadingStatusEnum.Saving;
       this.resetErrors();
       //Confirmation dialog if there are unsaved changes
@@ -515,7 +516,7 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity  implements  O
          this.toastr.success($localize`:@@HYT_alarm_and_events_desc:Alarm and events added correctly`, $localize`:@@HYT_alarm_and_events:Alarm and events added!`, {toastClass: "alarm-toastr alarm-success"});
          this.addEventMode = false;
          this.loadingStatus = LoadingStatusEnum.Ready;
-    
+
          //re-default values
          this.updateSummaryList();
          this.newAlarm = false;
@@ -528,13 +529,13 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity  implements  O
       let alarmToSave = {
         "id": this.selectedId,
         "name": this.form.get('alarm-name').value,
-        "inhibited": this.form.get('alarm-inhibited').value, 
+        "inhibited": this.form.get('alarm-inhibited').value,
       } as Alarm
 
       this.alarmsService.updateAlarm(alarmToSave).subscribe((res) => {this.toastr.success($localize`:@@HYT_alarm_updated_desc:Event updated correctly`, $localize`:@@HYT_alarm_updated:Event updated!`, {toastClass: "alarm-toastr alarm-success"});});
       this.addEventMode = false;
       this.loadingStatus = LoadingStatusEnum.Ready;
-              
+
       //re-default values
       this.updateSummaryList();
       this.newAlarm = false;
@@ -577,7 +578,7 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity  implements  O
     this.showCancel = false;
     this.eventsAlarm = [];
     this.addEventMode = false;
-    
+
     // if there are pending changes, propose to save
     if (this.form.touched == true) this.openConfirmEventDialog();
 
@@ -590,7 +591,7 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity  implements  O
     this.updateSummaryList();
   }
 
-  
+
 
   delete(successCallback, errorCallback) {
     this.alarmsService.deleteAlarm(this.entity.id).subscribe((res) => {
@@ -604,7 +605,7 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity  implements  O
       if (errorCallback) { errorCallback(); }
     });
   }
-    
+
     openDeleteEventDialog(indexToremove : number) {
       if(indexToremove >= 0){
       const dialogRef = this.dialog.open(DeleteConfirmDialogComponent, {

@@ -2,12 +2,12 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 
 import { Observable } from 'rxjs';
 
-import { MatRadioChange } from '@angular/material';
-import { OnInit, Output, EventEmitter, Injector, AfterViewInit,ChangeDetectorRef } from '@angular/core';
+import {OnInit, Output, EventEmitter, Injector, AfterViewInit, ChangeDetectorRef, Component} from '@angular/core';
 import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
 import { EntitiesService } from 'src/app/services/entities/entities.service';
 import { HytModalService } from '@hyperiot/components';
 import { AlgorithmService } from 'src/app/services/algorithms/algorithm.service';
+import {MatRadioChange} from '@angular/material/radio';
 
 export enum LoadingStatusEnum {
     Ready,
@@ -15,6 +15,11 @@ export enum LoadingStatusEnum {
     Saving,
     Error
 }
+@Component({
+  selector: 'hyt-algorithm-form-entity',
+  template: ''
+})
+// tslint:disable-next-line:component-class-suffix
 export abstract class AlgorithmFormEntity implements OnInit, AfterViewInit {
     @Output() entityEvent = new EventEmitter<any>();
 

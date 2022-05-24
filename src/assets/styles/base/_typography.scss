@@ -1,88 +1,88 @@
 @import "../abstracts/mixins";
 
 /*************************************
-*  
+*
 *  EXO
 *
 *************************************/
 
 /* font-weight: 200 | font-style: normal */
-@include font-face(Exo, assets/fonts/exo-v8-latin/exo-v8-latin-200, 200, normal);
+@include font-face(Exo, "../../../assets/fonts/exo-v8-latin/exo-v8-latin-200", 200, normal);
 
 /* font-weight: 200 | font-style: italic */
-@include font-face(Exo, assets/fonts/exo-v8-latin/exo-v8-latin-200italic, 200, italic);
+@include font-face(Exo, "../../../assets/fonts/exo-v8-latin/exo-v8-latin-200italic", 200, italic);
 
 /* font-weight: 400 | font-style: normal */
-@include font-face(Exo, assets/fonts/exo-v8-latin/exo-v8-latin-regular, 400, normal);
+@include font-face(Exo, "../../../assets/fonts/exo-v8-latin/exo-v8-latin-regular", 400, normal);
 
 /* font-weight: 400 | font-style: italic */
-@include font-face(Exo, assets/fonts/exo-v8-latin/exo-v8-latin-italic, 400, italic);
+@include font-face(Exo, "../../../assets/fonts/exo-v8-latin/exo-v8-latin-italic", 400, italic);
 
 /* font-weight: 600 | font-style: normal */
-@include font-face(Exo, assets/fonts/exo-v8-latin/exo-v8-latin-600, 600, normal);
+@include font-face(Exo, "../../../assets/fonts/exo-v8-latin/exo-v8-latin-600", 600, normal);
 
 /* font-weight: 600 | font-style: italic */
-@include font-face(Exo, assets/fonts/exo-v8-latin/exo-v8-latin-600italic, 600, italic);
+@include font-face(Exo, "../../../assets/fonts/exo-v8-latin/exo-v8-latin-600italic", 600, italic);
 
 
 /*************************************
-*  
+*
 *  KOHO
 *
 *************************************/
 
 /* font-weight: 300 | font-style: normal */
-@include font-face(KoHo, assets/fonts/koho-v2-latin/koho-v2-latin-300, 300, normal);
+@include font-face(KoHo, "../../../assets/fonts/koho-v2-latin/koho-v2-latin-300", 300, normal);
 
 /* font-weight: 300 | font-style: italic */
-@include font-face(KoHo, assets/fonts/koho-v2-latin/koho-v2-latin-300italic, 300, italic);
+@include font-face(KoHo, "../../../assets/fonts/koho-v2-latin/koho-v2-latin-300italic", 300, italic);
 
 /* font-weight: 400 | font-style: normal */
-@include font-face(KoHo, assets/fonts/koho-v2-latin/koho-v2-latin-regular, 400, normal);
+@include font-face(KoHo, "../../../assets/fonts/koho-v2-latin/koho-v2-latin-regular", 400, normal);
 
 /* font-weight: 400 | font-style: italic */
-@include font-face(KoHo, assets/fonts/koho-v2-latin/koho-v2-latin-italic, 400, italic);
+@include font-face(KoHo, "../../../assets/fonts/koho-v2-latin/koho-v2-latin-italic", 400, italic);
 
 /* font-weight: 600 | font-style: normal */
-@include font-face(KoHo, assets/fonts/koho-v2-latin/koho-v2-latin-600, 600, normal);
+@include font-face(KoHo, "../../../assets/fonts/koho-v2-latin/koho-v2-latin-600", 600, normal);
 
 /* font-weight: 600 | font-style: italic */
-@include font-face(KoHo, assets/fonts/koho-v2-latin/koho-v2-latin-600italic, 600, italic);
+@include font-face(KoHo, "../../../assets/fonts/koho-v2-latin/koho-v2-latin-600italic", 600, italic);
 
 /* font-weight: 700 | font-style: normal */
-@include font-face(KoHo, assets/fonts/koho-v2-latin/koho-v2-latin-700, 700, normal);
+@include font-face(KoHo, "../../../assets/fonts/koho-v2-latin/koho-v2-latin-700", 700, normal);
 
 /* font-weight: 700 | font-style: italic */
-@include font-face(KoHo, assets/fonts/koho-v2-latin/koho-v2-latin-700italic, 700, italic);
+@include font-face(KoHo, "../../../assets/fonts/koho-v2-latin/koho-v2-latin-700italic", 700, italic);
 
 
 /*************************************
-*  
+*
 *  MONSERRAT
 *
 *************************************/
 
 /* font-weight: 200 | font-style: normal */
-@include font-face(Montserrat, assets/fonts/montserrat-v13-latin/montserrat-v13-latin-200, 200, normal);
+@include font-face(Montserrat, "../../../assets/fonts/montserrat-v13-latin/montserrat-v13-latin-200", 200, normal);
 
 /* font-weight: 200 | font-style: italic */
-@include font-face(Montserrat, assets/fonts/montserrat-v13-latin/montserrat-v13-latin-200italic, 200, italic);
+@include font-face(Montserrat, "../../../assets/fonts/montserrat-v13-latin/montserrat-v13-latin-200italic", 200, italic);
 
 /* font-weight: 400 | font-style: normal */
-@include font-face(Montserrat, assets/fonts/montserrat-v13-latin/montserrat-v13-latin-regular, 400, normal);
+@include font-face(Montserrat, "../../../assets/fonts/montserrat-v13-latin/montserrat-v13-latin-regular", 400, normal);
 
 /* font-weight: 400 | font-style: italic */
-@include font-face(Montserrat, assets/fonts/montserrat-v13-latin/montserrat-v13-latin-italic, 400, italic);
+@include font-face(Montserrat, "../../../assets/fonts/montserrat-v13-latin/montserrat-v13-latin-italic", 400, italic);
 
 /* font-weight: 600 | font-style: normal */
-@include font-face(Montserrat, assets/fonts/montserrat-v13-latin/montserrat-v13-latin-600, 600, normal);
+@include font-face(Montserrat, "../../../assets/fonts/montserrat-v13-latin/montserrat-v13-latin-600", 600, normal);
 
 /* font-weight: 600 | font-style: italic */
-@include font-face(Montserrat, assets/fonts/montserrat-v13-latin/montserrat-v13-latin-600italic, 600, italic);
+@include font-face(Montserrat, "../../../assets/fonts/montserrat-v13-latin/montserrat-v13-latin-600italic", 600, italic);
 
 
 /*************************************
-*  
+*
 *  HYT FONT ICONS
 *
 *************************************/
@@ -101,11 +101,11 @@
 
 @font-face {
   font-family: 'HytFonts';
-  src:  url('assets/fonts/hyperiot-fonts/HytFonts.eot?t0xkvs');
-  src:  url('assets/fonts/hyperiot-fonts/HytFonts.eot?t0xkvs#iefix') format('embedded-opentype'),
-    url('assets/fonts/hyperiot-fonts/HytFonts.ttf?t0xkvs') format('truetype'),
-    url('assets/fonts/hyperiot-fonts/HytFonts.woff?t0xkvs') format('woff'),
-    url('assets/fonts/hyperiot-fonts/HytFonts.svg?t0xkvs#HytFonts') format('svg');
+  src:  url('../../../assets/fonts/hyperiot-fonts/HytFonts.eot?t0xkvs');
+  src:  url('../../../assets/fonts/hyperiot-fonts/HytFonts.eot?t0xkvs#iefix') format('embedded-opentype'),
+    url('../../../assets/fonts/hyperiot-fonts/HytFonts.ttf?t0xkvs') format('truetype'),
+    url('../../../assets/fonts/hyperiot-fonts/HytFonts.woff?t0xkvs') format('woff'),
+    url('../../../assets/fonts/hyperiot-fonts/HytFonts.svg?t0xkvs#HytFonts') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;

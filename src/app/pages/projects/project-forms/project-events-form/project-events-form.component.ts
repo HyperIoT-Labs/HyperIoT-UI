@@ -3,17 +3,17 @@ import { ActivatedRoute } from '@angular/router';
 
 import { Subscription, Observable } from 'rxjs';
 
-import { HpacketsService, HPacket, HProject, RulesService, Rule, AssetstagsService, AssetTag } from '@hyperiot/core';
+import { HpacketsService, HProject, RulesService, Rule, AssetstagsService, AssetTag } from '@hyperiot/core';
 import { ProjectFormEntity, LoadingStatusEnum } from '../project-form-entity';
 import { RuleDefinitionComponent } from '../rule-definition/rule-definition.component';
-import { EventMailComponent } from './event-mail/event-mail.component';
 import { Option } from '@hyperiot/components';
 import { SummaryListItem } from '../../project-detail/generic-summary-list/generic-summary-list.component';
 import { TagStatus } from '../packet-enrichment-form/asset-tag/asset-tag.component';
 import { FormControl } from '@angular/forms';
-import { MatAutocomplete, MatAutocompleteSelectedEvent, MatChipInputEvent } from '@angular/material';
 import { EventComponentContainerComponent } from './event-component-container/event-component-container.component';
 import { EventComponentType } from './event-component-type.enum';
+import {MatAutocomplete, MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
+import {MatChipInputEvent} from '@angular/material/chips';
 
 @Component({
   selector: 'hyt-project-events-form',
@@ -264,7 +264,7 @@ export class ProjectEventsFormComponent extends ProjectFormEntity implements OnI
     }
 
   }
-  
+
   cancel() {
     this.resetErrors();
     this.resetForm();
@@ -287,7 +287,7 @@ export class ProjectEventsFormComponent extends ProjectFormEntity implements OnI
   }
 
   isDirty() {
-    return this.editMode && (super.isDirty() || this.ruleDefinitionComponent.isDirty() || 
+    return this.editMode && (super.isDirty() || this.ruleDefinitionComponent.isDirty() ||
       this.eventComponentContainer.isDirty() || this.tagSelectionIsDirty());
   }
 

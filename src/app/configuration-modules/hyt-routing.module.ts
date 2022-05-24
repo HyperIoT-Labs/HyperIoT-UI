@@ -19,7 +19,6 @@ import { PacketFormComponent } from '../pages/projects/project-forms/packet-form
 import { TagsFormComponent } from '../pages/projects/project-forms/tags-form/tags-form.component';
 import { CategoriesFormComponent } from '../pages/projects/project-forms/categories-form/categories-form.component';
 import { CanDeactivateGuard } from '../components/CanDeactivateGuard';
-import { DashboardComponent } from '../pages/dashboard/dashboard.component';
 import { PacketFieldsFormComponent } from '../pages/projects/project-forms/packet-fields-form/packet-fields-form.component';
 import { PacketEnrichmentFormComponent } from '../pages/projects/project-forms/packet-enrichment-form/packet-enrichment-form.component';
 import { ProjectEventsFormComponent } from '../pages/projects/project-forms/project-events-form/project-events-form.component';
@@ -30,6 +29,7 @@ import { AlgorithmsComponent } from '../pages/algorithms/algorithms.component';
 import { AlgorithmWizardComponent } from '../pages/algorithms/algorithm-wizard/algorithm-wizard.component';
 import { ProjectStatisticsFormComponent } from '../pages/projects/project-forms/project-statistics-form/project-statistics-form.component';
 import { ProjectAlarmsFormComponent } from '../pages/projects/project-forms/project-alarms-form/project-alarms-form.component';
+import {DashComponent} from '../pages/dash/dash.component';
 
 @Injectable()
 export class LoggedInGuard implements CanActivate {
@@ -207,7 +207,7 @@ const hyperiotRoutes: Routes = [
         path: 'alarms',
         component: ProjectAlarmsFormComponent,
         outlet: 'projectDetails'
-      },      
+      },
       {
         canDeactivate: [CanDeactivateGuard],
         path: 'tags',
@@ -239,7 +239,7 @@ const hyperiotRoutes: Routes = [
   },
   {
     path: 'dashboards',
-    component: DashboardComponent,
+    component: DashComponent,
     canActivate: [LoggedInGuard],
     data: {
       showToolBar: true,
@@ -271,7 +271,7 @@ const hyperiotRoutes: Routes = [
   },
   {
     path: 'areas/:projectId/:areaId/dashboards',
-    component: DashboardComponent,
+    component: DashComponent,
     canActivate: [LoggedInGuard],
     data: {
       showToolBar: true,

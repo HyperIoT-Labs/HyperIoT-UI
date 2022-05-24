@@ -2,13 +2,13 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 
 import { Observable } from 'rxjs';
 
-import { MatRadioChange } from '@angular/material';
 import { OnInit, Output, EventEmitter, Injector, AfterViewInit,ChangeDetectorRef, Component } from '@angular/core';
 import { SummaryList } from '../project-detail/generic-summary-list/generic-summary-list.component';
 import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
 import { EntitiesService } from 'src/app/services/entities/entities.service';
 import { HytModalService } from '@hyperiot/components';
-import { ProjectsService } from 'src/app/services/projects.service';	
+import { ProjectsService } from 'src/app/services/projects.service';
+import {MatRadioChange} from '@angular/material/radio';
 
 export enum LoadingStatusEnum {
     Ready,
@@ -29,7 +29,7 @@ export abstract class ProjectFormEntity implements OnInit, AfterViewInit {
     formTitle = 'Project Form Entity';
 
     form: FormGroup;
-    //formAlarm :  FormGroup;
+    // formAlarm :  FormGroup;
     private originalValue = '{}';
     protected validationError = [];
 
@@ -54,7 +54,7 @@ export abstract class ProjectFormEntity implements OnInit, AfterViewInit {
     protected formBuilder: FormBuilder;
     protected dialog: HytModalService;
     protected entitiesService: EntitiesService;
-	protected projectsService: ProjectsService;										   
+	protected projectsService: ProjectsService;
 
     constructor(
         injector: Injector,
@@ -66,7 +66,7 @@ export abstract class ProjectFormEntity implements OnInit, AfterViewInit {
         this.form = this.formBuilder.group({});
         console.log(this.form);
         //this.formAlarm = this.formBuilder.group({});
-		this.projectsService = injector.get(ProjectsService);													 
+		this.projectsService = injector.get(ProjectsService);
     }
 
     ngOnInit() {
@@ -100,7 +100,7 @@ export abstract class ProjectFormEntity implements OnInit, AfterViewInit {
         if (entity) {
             this.entity = { ...entity };
         }
-        
+
         Object.keys(this.entityFormMap).forEach((key) => {
             console.log(this.form);
             console.log(key);
@@ -258,7 +258,7 @@ export abstract class ProjectFormEntity implements OnInit, AfterViewInit {
         if (this.entity.trafficPlan && this.entity.type) textDialog = { title: $localize`:@@HYT_packet_delete_packet_question:Do you really want to delete this packet?`, message: $localize`:@@HYT_packet_operation_cannot_be_undone:If you delete the packet, any configurations inside the widgets will be reset and will have to be set again.`}
         // All other cases
         else textDialog = { title: $localize`:@@HYT_delete_item_question:Do you really want to delete this item?`, message: $localize`:@@HYT_operation_can_not_be_undone:This operation can not be undone`}
-        
+
         const dialogRef = this.dialog.open(DeleteConfirmDialogComponent, {
             data: textDialog
         });
