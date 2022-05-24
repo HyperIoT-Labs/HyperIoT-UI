@@ -2,8 +2,8 @@ import { Component, OnInit, ElementRef, ViewChild, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { AssetTag, AssetstagsService, HProject } from '@hyperiot/core';
-import { MatChipInputEvent } from '@angular/material';
 import { startWith, map } from 'rxjs/operators';
+import {MatChipInputEvent} from '@angular/material/chips';
 
 export enum TagStatus {
   Default = 0,

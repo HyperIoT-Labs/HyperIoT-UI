@@ -32,16 +32,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
-import {
-  MatCardModule,
-  MatButtonModule,
-  MatProgressSpinnerModule,
-  MatProgressBarModule,
-  MatMenuModule,
-  MatRippleModule,
-  MatTabsModule,
-  MatListModule
-} from '@angular/material';
+
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatExpansionModule } from '@angular/material/expansion';
 import {MatTableModule} from '@angular/material/table';
@@ -76,6 +67,14 @@ import { EventMqttCommandComponent } from './project-forms/project-events-form/e
 import { WidgetsModule } from '@hyperiot/widgets';
 import { ProjectAlarmsFormComponent } from './project-forms/project-alarms-form/project-alarms-form.component';
 import { AlarmEventsTableComponent } from './project-forms/project-alarms-form/alarm-events-table/alarm-events-table.component';
+import {MatButtonModule} from '@angular/material/button';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatCardModule} from '@angular/material/card';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatRippleModule} from '@angular/material/core';
+import {MatListModule} from '@angular/material/list';
 
 @NgModule({
   declarations: [

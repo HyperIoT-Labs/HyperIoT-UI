@@ -13,36 +13,36 @@
             -webkit-filter: blur(1px);
             -moz-filter: blur(1px);
             -ms-filter: blur(1px);
-            -o-filter: blur(1px);    
+            -o-filter: blur(1px);
             filter: blur(1px);
-            
+
         }
 
         .form-group {
 
             &.row {
-                
+
                 hyt-input-text {
-                    
+
                     mat-form-field {
                         margin-bottom: 10px;
                     }
-    
+
                 }
 
                 hyt-input-text,
                 hyt-text-area {
-                    
+
                     mat-form-field {
                         font-family: 'Exo';
                     }
-    
+
                 }
 
                 hyt-text-area {
-                    
+
                     mat-form-field {
-                        
+
                         textarea {
 
                             min-height: 173px;
@@ -50,7 +50,7 @@
                         }
 
                     }
-    
+
                 }
 
                 #fdev-col-desc {
@@ -80,7 +80,7 @@
             align-items: flex-end;
             justify-content: center;
 
-            background-image: url('~/assets/images/hyperiot_logo_single_char_animated.svg');
+            background-image: url('/assets/images/hyperiot_logo_single_char_animated.svg');
             background-size: 220px;
             background-repeat: no-repeat;
             background-position: top center;
@@ -91,7 +91,7 @@
                 max-height: 178px;
                 width: auto;
             }
-            
+
             h4 {
                 text-align: center;
             }

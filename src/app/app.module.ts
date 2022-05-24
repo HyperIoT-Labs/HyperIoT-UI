@@ -24,7 +24,6 @@ import { AccountButtonComponent } from './components/topbar/account-button/accou
 
 // angular-material
 import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule, MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS, MatTabsModule, MatCardModule } from '@angular/material';
 
 // hyperiot
 import { Configuration, ConfigurationParameters, HyperiotClientModule } from '@hyperiot/core';
@@ -57,6 +56,10 @@ import * as PlotlyJS from 'plotly.js/dist/plotly.js';
 import { PlotlyModule } from 'angular-plotly.js';
 import { PromptComponent } from './components/prompt/prompt/prompt.component';
 import { PendingChangesDialogComponent } from './components/dialogs/pending-changes-dialog/pending-changes-dialog.component';
+import {MatButtonModule} from '@angular/material/button';
+import {MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule} from '@angular/material/dialog';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatCardModule} from '@angular/material/card';
 PlotlyModule.plotlyjs = PlotlyJS;
 
 export class MyUrlSerializer extends DefaultUrlSerializer implements UrlSerializer {

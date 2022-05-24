@@ -35,7 +35,7 @@
             width: 1em;
             height: 4em;
         }
-    
+
         .loader {
             color: #0956B6;
             text-indent: -9999em;
@@ -48,20 +48,20 @@
             -webkit-animation-delay: -0.16s;
             animation-delay: -0.16s;
         }
-    
+
         .loader:before,
         .loader:after {
             position: absolute;
             top: 0;
             content: '';
         }
-    
+
         .loader:before {
             left: -1.5em;
             -webkit-animation-delay: -0.32s;
             animation-delay: -0.32s;
         }
-        
+
         .loader:after {
             left: 1.5em;
         }
@@ -109,7 +109,7 @@
 
                 &:not([class]) {
 
-                    cursor: url('~/assets/images/edit_colored.png') 0 24, auto;
+                    cursor: url('/assets/images/edit_colored.png') 0 24, auto;
 
                 }
 
