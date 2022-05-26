@@ -613,6 +613,7 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity  implements  O
     if (this.form.touched === true) this.openConfirmEventDialog();
 
     // cancel pending params
+    // cancel pending params
     this.eventListMap = new Map<number, any>();
     this.selectedId = 0;
     this.newAlarm = false;
@@ -706,6 +707,9 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity  implements  O
         break;
       case 'remove':
         this.alarmCounter--;
+        if (this.alarmCounter <= 0) {
+          this.selectedId = 0;
+        }
         break;
     }
     this.form.get('alarm-counter').setValue(this.alarmCounter);
