@@ -1,9 +1,9 @@
 <div id="single-project-page">
 
     <div class="header d-flex flex-row justify-content-stretch">
-        
+
         <div class="breadcrumb flex-grow-1">
-            <span class="hyt-icon icon-hyt_projectSolo"></span> <a [routerLink]="['/']">Home</a> > <strong>Project Detail</strong> 
+            <span class="hyt-icon icon-hyt_projectSolo"></span> <a [routerLink]="['/']">Home</a> > <strong>Project Detail</strong>
         </div> <!-- @I18N@ -->
 
     </div> <!-- End of Breadcrumb -->
@@ -12,7 +12,7 @@
 
         <div id="row-detail" class="row">
 
-            <div 
+            <div
                 id="container-project-treeview"
                 [ngClass]="{'displayBlock': treeViewIsOpen, 'displayNone': !treeViewIsOpen}"
                 cdkDrag
@@ -28,13 +28,13 @@
                 <div id="treeViewHeader"></div>
 
                 <div id="treeViewBody">
-                    
+
                     <!-- BEGIN TreeView -->
                     <div [ngStyle]="{display: treeStatus == TreeStatus.Ready ? '' : 'none'}" class="treeview pb-2 flex-grow-1 flex-sm-grow-0 flex-fill">
-                        
+
                         <hyt-tree-view-project #treeView (nodeClick)="onNodeClick($event)"></hyt-tree-view-project>
 
-                    </div>   
+                    </div>
 
                     <div *ngIf="treeStatus == TreeStatus.Loading || treeStatus == TreeStatus.LoadingComplete" class="treeview mt-2 d-flex flex-column align-items-center justify-content-center">
                         <h4 i18n="@@HYT_loading_project_tree">Loading project tree</h4>
@@ -51,35 +51,35 @@
             </div> <!-- ------------------- End Container TREE ------------------- -->
 
             <div id="container-project-content" [ngClass]="{'displayFluidRow': !displayInfoAction, 'rightSeparator': displayInfoAction }">
-                
+
                 <div class="content">
 
                     <div id="back-to-back-btn">
 
-                        <a 
+                        <a
                             class="box-back-btn"
                             [routerLink]="['/projects']"
                         >
                             <span class="icon-hyt_caretDown hyt-icon-back"></span>
 
                             <span id="title-back-btn">Back to projects</span>
-                            
-        
+
+
                         </a>
-        
+
                     </div>
 
                     <div class="container-form-title">
-                        
+
                         <div id="container-show-tree-btn">
 
                             <hyt-button [color]="'hyt-base-total-white'" (clickFn)="toggleTreeViewProject()">
-                        
-                                <span 
-                                    [ngClass]="{'icon-hyt_eyeClose': treeViewIsOpen, 'icon-hyt_eyeOpen': !treeViewIsOpen}" 
+
+                                <span
+                                    [ngClass]="{'icon-hyt_eyeClose': treeViewIsOpen, 'icon-hyt_eyeOpen': !treeViewIsOpen}"
                                 ></span>
                                 {{ preTitleTreeView }} Treeview
-        
+
                             </hyt-button><!-- @I18N@ -->
 
                         </div>
@@ -92,15 +92,15 @@
 
                         <div id="navButtonsContent">
 
-                            <hyt-button 
-                                [color]="'hyt-base-total-white'" 
+                            <hyt-button
+                                [color]="'hyt-base-total-white'"
                                 (clickFn)="goToDashboard()"
                             >
                                 <span class="hyt-icon icon-hyt_dash"></span> <ng-container i18n="@@HYT_go_to_dashboard">Go to dashboard</ng-container>
                             </hyt-button>
 
-                            <hyt-button 
-                                [color]="'hyt-base-total-white'" 
+                            <hyt-button
+                                [color]="'hyt-base-total-white'"
                                 (clickFn)="goToProjectWizard()"
                             >
                                 <span class="hyt-icon icon-hyt_pencil"></span> <ng-container i18n="@@HYT_edit_in_wizard">Edit in wizard</ng-container>
@@ -124,20 +124,20 @@
             <div id="container-project-info-action" *ngIf="displayInfoAction">
 
                 <div *ngIf="currentEntity" class="side-bar">
-                    
+
                     <div id="container-action-btn">
 
-                        <hyt-button 
+                        <hyt-button
                             [color]="'hyt-base-total-white'"
                             [ngClass]="{hidden: !currentEntity.showSave}"
                             id="save-btn"
-                            (clickFn)="onSaveClick()" 
+                            (clickFn)="onSaveClick()"
                             [isDisabled]="(!currentEntity.isValid() || !currentEntity.isDirty()) && (isDisableProjectAlarmsFormComponent(this.currentEntity))">
                             <span class="hyt-icon icon-hyt_save"></span>
                             <span i18n="@@HYT_save">Save</span>
                         </hyt-button>
-        
-                        <hyt-button 
+
+                        <hyt-button
                             [color]="'hyt-base-total-white'"
                             [ngClass]="currentEntity.hideDelete ? 'hidden' : 'last-btn'"
                             id="delete-btn"
@@ -145,8 +145,8 @@
                             <span class="hyt-icon icon-hyt_trash"></span>
                             <span i18n="@@HYT_delete">Delete</span>
                         </hyt-button>
-        
-                        <hyt-button 
+
+                        <hyt-button
                             [color]="'hyt-base-total-white'"
                             [ngClass]="!currentEntity.showCancel ? 'hidden' : 'last-btn' "
                             id="cancel-btn"
@@ -154,30 +154,29 @@
                             <span class="hyt-icon icon-hyt_arrowLeft"></span>
                             <span i18n="@@HYT_cancel">Cancel</span>
                         </hyt-button>
-        
+
                     </div> <!-- END BTN -->
 
-                    <div id="container-hint" *ngIf="hintVisible"> 
+                    <div id="container-hint" *ngIf="hintVisible">
 
                         <div class="info-message">
                             <span class="text">{{hintMessage}}</span>
                             <mat-icon class="">info</mat-icon> <!-- mt-2 mr-2 -->
-                        </div> 
+                        </div>
 
                     </div> <!-- END HINT -->
 
                     <div *ngIf="currentEntity.summaryList" id="container-summary-list" class="col-12">
-
                         <hyt-generic-summary-list
                             [ngClass]="{ disabled: currentEntity.isDirty() }"
                             [summaryList]="currentEntity.summaryList"
                             (menuAction)="onSummaryMenuClick($event)"
                             [currentDevice]="currentDeviceName"
                             [enrichmentPacketId]="currentPacket"
-                        ></hyt-generic-summary-list> 
+                        ></hyt-generic-summary-list>
 
                     </div> <!-- END TABLE -->
-        
+
                 </div>
 
             </div> <!-- ------------------- End Container ACTION BTN ------------------- -->

@@ -20,6 +20,7 @@ import { PacketFieldsFormComponent } from '../project-forms/packet-fields-form/p
 import { DashboardConfigService } from '../../dashboard/dashboard-config.service';
 import { ConfirmRecordingActionComponent } from 'src/app/components/modals/confirm-recording-action/confirm-recording-action.component';
 import { ProjectAlarmsFormComponent } from '../project-forms/project-alarms-form/project-alarms-form.component';
+import {SummaryList} from './generic-summary-list/generic-summary-list.component';
 
 enum TreeStatusEnum {
   Ready,
@@ -53,7 +54,7 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
 
   projectName: string;
   validationErrors: [];
-  
+
   /**
    * variable used to determine if the treeview should be visible or not
    */
@@ -63,12 +64,12 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
    * variable used to dynamically set the first part of toggle treeview button title
    */
   preTitleTreeView: string = 'Show'; /* @I18N@ */
-  
+
   /**
    * variable used to determine if the Info/Action column should be visible or not
    */
   displayInfoAction: boolean = true;
-  
+
   /**
    * variable used to determine basic position of draggable treeview item
    */
@@ -126,6 +127,8 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
     }
   ];
 
+  summaryList: SummaryList;
+
   currentPacket: number = null;
   currentDeviceName: string = '';
 
@@ -142,10 +145,9 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    
+
     this.projectId = this.activatedRoute.snapshot.params.projectId;
     this.refresh();
-    
     this.enrichmentsService.changeDeviceName$
     .pipe(takeUntil(this.ngUnsubscribe))
     .subscribe(deviceName => {
@@ -167,7 +169,7 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
   }
 
   onActivate(childComponent: ProjectFormEntity) {
-    
+
     childComponent.clickedTab.subscribe(val => {
       this.areaSection = val;
       this.toggleInfoActionColumn(childComponent);
@@ -175,7 +177,7 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
 
 
     if (childComponent.isProjectEntity) {
-      
+
       this.toggleInfoActionColumn(childComponent);
 
       this.currentEntity = childComponent;
@@ -188,6 +190,11 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
       };
       this.currentEntity.entityEvent.subscribe((data) => {
         switch (data.event) {
+          case 'summaryList:reload':
+            // this.summaryList = data.data.summaryList;
+            this.currentEntity.summaryList = data.summaryList
+            console.log('reloadSummaryList: ', data.summaryList);
+            break;
           case 'treeview:refresh':
             this.refresh();
             break;
@@ -211,6 +218,7 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
             }
             break;
         }
+
       });
       // handle type specific fields and methods
       if (this.currentEntity instanceof PacketEnrichmentFormComponent) {
@@ -225,7 +233,7 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
   onSaveClick() {
     this.validationErrors = [];
     this.currentEntity.save((res) => {
-      if (this.currentEntity instanceof PacketEnrichmentFormComponent || this.currentEntity instanceof ProjectEventsFormComponent 
+      if (this.currentEntity instanceof PacketEnrichmentFormComponent || this.currentEntity instanceof ProjectEventsFormComponent
         || this.currentEntity instanceof ProjectStatisticsFormComponent || this.currentEntity instanceof ProjectAlarmsFormComponent) {
         this.currentEntity.editMode = false;
       }
@@ -242,7 +250,7 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
   onDeleteClick() {
     this.currentEntity.openDeleteDialog(() => {
       // Trigger reload topology
-      if (this.currentEntity instanceof PacketEnrichmentFormComponent || this.currentEntity instanceof PacketFieldsFormComponent 
+      if (this.currentEntity instanceof PacketEnrichmentFormComponent || this.currentEntity instanceof PacketFieldsFormComponent
         || this.currentEntity instanceof ProjectStatisticsFormComponent || this.currentEntity instanceof ProjectEventsFormComponent || this.currentEntity instanceof ProjectAlarmsFormComponent) {
         this.shouldUpdateTopology();
       }
@@ -312,6 +320,7 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
     this.treeStatus = TreeStatusEnum.Loading;
     this.treeData = [];
     this.hProjectService.findHProject(+this.projectId).subscribe((p: HProject) => {
+      this.summaryList = this.currentEntity.summaryList;
 
       const projectNode: TreeDataNode = {
         data: { id: p.id },
@@ -419,7 +428,7 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
             this.treeView.treeControl.expand(this.treeView.treeControl.dataNodes[0]);
           }
           this.treeStatus = TreeStatusEnum.Ready;
-          
+
         }, (err) => {
           this.treeStatus = TreeStatusEnum.Error;
         });
@@ -430,9 +439,9 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
         this.treeStatus = TreeStatusEnum.Error;
       },
       () => {
-        
+
         if(this.treeData[0].children.length == 0){
-          
+
           let myTreeData = [...this.treeData];
           this.defaultData.map((d) => {
             myTreeData[0]['children'].push(d)
@@ -440,13 +449,13 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
           this.treeView.setData(myTreeData);
 
         }
-        
+
       }
       );
     }, (err) => {
       this.treeStatus = TreeStatusEnum.Error;
     });
-    
+
   }
 
   onNodeClick(node) {
@@ -557,7 +566,7 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
     this.treeViewIsOpen = !this.treeViewIsOpen;
 
     if(this.treeViewIsOpen) {
-      
+
       this.preTitleTreeView = 'Hide'; /* @I18N@ */
       this.dragPosition = {x: this.basicDragPosition.x, y: this.basicDragPosition.y};
 
@@ -568,18 +577,18 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
     }
 
   }
-  
+
   /**
    * function used to toggle display Info/Action Column
    */
   toggleInfoActionColumn(childComponent: any) {
-    
+
     if(
-    
+
       (childComponent.formTemplateId.includes('areas-form') && this.areaSection == 'Tab-Sub-Area') ||
       (childComponent.formTemplateId.includes('areas-form') && this.areaSection == 'Tab-Map') ||
 
-      (childComponent.formTemplateId.includes('areas-form') && this.areaSection == 'Tab-Info') && 
+      (childComponent.formTemplateId.includes('areas-form') && this.areaSection == 'Tab-Info') &&
       childComponent.editMode == false ||
 
       childComponent.formTemplateId.includes('tag-form') ||
@@ -589,19 +598,19 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
 
       this.displayInfoAction = false;
       this.cdRef.detectChanges();
-      
+
     } else {
 
       this.displayInfoAction = true;
       this.cdRef.detectChanges();
-      
+
     }
 
   }
-  
+
   /**
-   * Used to calculate the position in space and prevent the treeview from going out of bounds 
-   * @param ended 
+   * Used to calculate the position in space and prevent the treeview from going out of bounds
+   * @param ended
    */
   dragEnded(ended: CdkDragEnd) {
     let constLeftX = 75; /* -75 after 0 point */
@@ -615,19 +624,19 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
 
     // #HYT-CONTAINER LIMIT
     let hytContainerHClient = document.getElementById('hyt-container').clientWidth;
-    
+
     // horizontal limit beyond which it is not possible to scroll the treeview box to the right
     let horizontalLimit = hytContainerHClient - constLeftX - ptW;
-    
+
     let dragX, dragY: number;
-    
+
     // Verify Y position
     if(posY < -175){
       dragY = -175;
     }else{
       dragY = posY;
     }
-    
+
     // Verify X position
     if(posX < -13){
       dragX = 0;

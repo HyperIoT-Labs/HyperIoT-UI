@@ -57,6 +57,7 @@ import * as PlotlyJS from 'plotly.js/dist/plotly.js';
 import { PlotlyModule } from 'angular-plotly.js';
 import { PromptComponent } from './components/prompt/prompt/prompt.component';
 import { PendingChangesDialogComponent } from './components/dialogs/pending-changes-dialog/pending-changes-dialog.component';
+import {ScrollingModule} from '@angular/cdk/scrolling';
 PlotlyModule.plotlyjs = PlotlyJS;
 
 export class MyUrlSerializer extends DefaultUrlSerializer implements UrlSerializer {
@@ -108,30 +109,31 @@ export function apiConfigFactory(): Configuration {
     AddWidgetDialogComponent,
     WidgetSettingsDialogComponent
   ],
-  imports: [
-    DragDropModule,
-    RouterModule,
-    BrowserModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    MatIconModule,
-    MatButtonModule,
-    MatDialogModule,
-    MatTabsModule,
-    MatCardModule,
-    CustomMaterialModule,
-    DashboardModule,
-    ReactiveFormsModule,
-    HytRoutingModule,
-    AuthenticationModule,
-    ComponentsModule,
-    AlgorithmsModule,
-    ProjectsModule,
-    WidgetsModule,
-    HyperiotClientModule.forRoot(apiConfigFactory),
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production, registrationStrategy: 'registerImmediately' }),
-    ToastrModule.forRoot()
-  ],
+    imports: [
+        DragDropModule,
+        RouterModule,
+        BrowserModule,
+        BrowserAnimationsModule,
+        HttpClientModule,
+        MatIconModule,
+        MatButtonModule,
+        MatDialogModule,
+        MatTabsModule,
+        MatCardModule,
+        CustomMaterialModule,
+        DashboardModule,
+        ReactiveFormsModule,
+        HytRoutingModule,
+        AuthenticationModule,
+        ComponentsModule,
+        AlgorithmsModule,
+        ProjectsModule,
+        WidgetsModule,
+        HyperiotClientModule.forRoot(apiConfigFactory),
+        ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production, registrationStrategy: 'registerImmediately'}),
+        ToastrModule.forRoot(),
+        ScrollingModule
+    ],
   providers: [
     // ActivatedRouteSnapshot,
     { provide: UrlSerializer, useClass: MyUrlSerializer },
