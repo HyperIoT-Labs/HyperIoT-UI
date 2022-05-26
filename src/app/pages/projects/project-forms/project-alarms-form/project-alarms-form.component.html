@@ -18,7 +18,7 @@
   <form [formGroup]="form"   [ngClass]="{ hidden: !editMode }"  class="alarms-form rule-form" autocomplete="on">
   <div class="form-group row align-items-end" >
 
-    <div id="falarm-col-name" class="col-6">
+    <div id="falarm-col-name" class="col-12">
 
       <hyt-input-text  [form]="form"  name="alarm-name" [isRequired]="true" i18n-placeholder="@@HYT_name"
         placeholder="Name" i18n-hintMessage="@@HYT_hint_alarm_name"  hintMessage="Enter the alarm name">
@@ -29,15 +29,6 @@
       </hyt-input-template>
        -->
     </div> <!-- Field Name -->
-    <div id="falarm-col-active" class="col-6">
-      <label id="label-alarm-active" i18n="@@HYT_inhibited">Inhibited</label>
-      <hyt-checkbox
-        [(ngModel)]="inhibited"
-        [ngModelOptions]="{standalone: true}"
-        type="checkbox"
-        name="alarm-inhibited"
-        (click)="changeAlarmInhibited($event)"></hyt-checkbox>
-    </div>
   </div>
     <div class="form-group row">
 
@@ -65,7 +56,8 @@
                 <span (click)="loadEvent(event, i)">{{event.event.name}}</span>
               </td>
               <td style="padding: 5px 7px 5px 3px; float: right">
-                <span (click)="deleteEvent(i)" class="hyt-icon icon-hyt_trash" ></span>
+                <!--<span (click)="deleteEvent(i)" class="hyt-icon icon-hyt_trash" ></span>-->
+                <span (click)="openConfirmDeleteLastEventDialog(i)" class="hyt-icon icon-hyt_trash" ></span>
                 <span (click)="duplicateEvent(event)" class="hyt-icon icon-hyt_duplicate"></span>
               </td>
             </tr>

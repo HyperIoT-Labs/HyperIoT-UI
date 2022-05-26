@@ -310,6 +310,14 @@
       <trans-unit id="HYT_alarms_long_definition" datatype="html">
         <source>Alarms long definition</source>
       </trans-unit>
+
+      <trans-unit id="HYT_alarm_delete_last_event_title" datatype="html">
+        <source>Confirmation of cancellation last event</source>
+      </trans-unit>
+      <trans-unit id="HYT_alarm_delete_last_event" datatype="html">
+        <source>Alarms long definitionDo you want to cancel the last event as well? If you confirm the alarm will also be cancelled.</source>
+      </trans-unit>
+
       <trans-unit id="HYT_delete_item_question" datatype="html">
         <source>Do you really want to delete this item?</source>
       </trans-unit>
@@ -1152,7 +1160,7 @@
       </trans-unit>
       <trans-unit id="HYT_no_dashboard_for_user" datatype="html">
         <source>No dashboards found for this user</source>
-      </trans-unit> 
+      </trans-unit>
       <trans-unit id="HYT_to_install_the_app_from_safari" datatype="html">
         <source>To install the app from Safari, tap the share button</source>
       </trans-unit>
@@ -1328,7 +1336,7 @@
       </trans-unit>
       <trans-unit id="HYT_reload_topology_alert" datatype="html">
         <source>Changes have been made to data recording configuration. To make them effective you need to restart data recording, do you want to start it now? Anyway, the data you are sending won’t be lost.</source>
-      </trans-unit> 
+      </trans-unit>
       <trans-unit id="HYT_algorithm_required_input_fields" datatype="html">
         <source>Algorithm required input fields</source>
       </trans-unit>

@@ -414,6 +414,16 @@
         <source>Alarms long definition</source>
         <target>Allarmi definizione lunga...</target>
       </trans-unit>
+
+      <trans-unit id="HYT_alarm_delete_last_event_title" datatype="html">
+        <source>Confirmation of cancellation last event</source>
+        <target>Conferma della cancellazione dell'ultimo evento</target>
+      </trans-unit>
+      <trans-unit id="HYT_alarm_delete_last_event" datatype="html">
+        <source>Do you want to cancel the last event as well? If you confirm the alarm will also be cancelled.</source>
+        <target>Vuoi cancellare l'ultimo evento? Se convermi anche l'allarme verrà eliminato.</target>
+      </trans-unit>
+
       <trans-unit id="HYT_delete_item_question" datatype="html">
         <source>Do you really want to delete this item?</source>
         <target>Sei sicuro di voler eliminare l'oggetto?</target>
@@ -831,7 +841,7 @@
         <target>Arricchimento dati</target>
       </trans-unit>
       <trans-unit id="HYT_enrichment_definition_long" datatype="html">
-        <source>Create custom rules and connect them together to enrich the data.</source>        
+        <source>Create custom rules and connect them together to enrich the data.</source>
         <target>Crea delle regole personalizzate e collegale tra di loro per arricchire i dati.</target>
       </trans-unit>
       <trans-unit id="HYT_statistics" datatype="html">

@@ -591,6 +591,31 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity  implements  O
     this.setEventCounter('remove');
   }
 
+  /*
+/ Modal useful to not discard/discard pending changes on event form
+*/
+  openConfirmDeleteLastEventDialog(i) {
+    if (this.alarmCounter === 1) {
+      const dialogRef = this.dialog.open(DeleteConfirmDialogComponent, {
+        data: {
+          message: $localize`:@@HYT_alarm_delete_last_event:Do you want to cancel the last event as well? If you confirm the alarm will also be cancelled.`,
+          title: $localize`:@@HYT_alarm_delete_last_event_title:Confirmation of cancellation last event`
+        }
+      });
+      dialogRef.onClosed.subscribe((result) => {
+        if (result === 'delete') {
+          this.deleteEvent(i)
+          this.updateSummaryList();
+          this.newAlarm = false;
+          this.cancel();
+        } // DISCARD
+        else this.loadingStatus = LoadingStatusEnum.Ready; // NOT DISCARD
+      });
+    } else {
+      this.deleteEvent(i);
+    }
+  }
+
 
   isValid(): boolean {
     return  this.editMode && super.isValid() && this.formEvent.valid ;
