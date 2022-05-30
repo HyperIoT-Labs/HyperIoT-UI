@@ -1,7 +1,7 @@
 import { Component, OnChanges, OnDestroy, ViewChild, Input, Injector, ViewEncapsulation, ChangeDetectorRef, OnInit, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription, Observable } from 'rxjs';
-import { LoggerService, Logger, HpacketsService, HPacket, HProject, RulesService, Rule, AssetstagsService, AssetTag, AlarmEvent, Alarm, AlarmeventsService, AlarmsService  } from '@hyperiot/core';
+import { LoggerService, Logger, HProject, Rule, AssetstagsService, AssetTag, AlarmEvent, Alarm, AlarmeventsService, AlarmsService  } from '@hyperiot/core';
 import { ProjectFormEntity, LoadingStatusEnum } from '../project-form-entity';
 import { RuleDefinitionComponent } from '../rule-definition/rule-definition.component';
 import { Option } from '@hyperiot/components';
@@ -9,11 +9,10 @@ import { SummaryListItem } from '../../project-detail/generic-summary-list/gener
 import { TagStatus } from '../packet-enrichment-form/asset-tag/asset-tag.component';
 import {FormControl, Validators} from '@angular/forms';
 import { MatAutocomplete, MatAutocompleteSelectedEvent, MatChipInputEvent, MatAutocompleteTrigger } from '@angular/material';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
 import { PendingChangesDialogComponent } from 'src/app/components/dialogs/pending-changes-dialog/pending-changes-dialog.component';
 import { ToastrService } from 'ngx-toastr';
-import {coerceBooleanProperty} from '@angular/cdk/coercion';
 
 @Component({
   selector: 'hyt-project-alarms-form',
@@ -228,21 +227,13 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity  implements  O
     const proceedWithEdit = () => {
 
       this.showCancel = true;
-      // this.addEventMode = true;
 
-      // this.alarmeventsService.findAllAlarmEventByAlarmId(alarm.id).subscribe(
-        // result =>  {
-          // Map the eventList
-          const eventList = []
-          for (const el of alarm.alarmEventList) {
-           eventList.push({event: el.event , severity:el.severity, id: el.id})
-          }
-          // Add to dictionary
-          this.eventListMap.set(alarm.id, eventList);
-          console.log('Event listmap: ', this.eventListMap);
-
-        // }
-      // );
+      const eventList = []
+      for (const el of alarm.alarmEventList) {
+       eventList.push({event: el.event , severity:el.severity, id: el.id})
+      }
+      // Add to dictionary
+      this.eventListMap.set(alarm.id, eventList);
 
       super.edit(alarm, () => {
 
@@ -368,7 +359,7 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity  implements  O
         severity: this.formEvent.get('event-severity').value,
       }
 
-      // CASO 1: NUOVO ALLARME
+      // Case 1: new alarm
       if (this.newAlarm === true) {
         this.toastr.info($localize`:@@HYT_remember_changes:Remember to save the alarm to maintain the changes`, $localize`:@@HYT_event_saved:Event saved!`, {toastClass: 'alarm-toastr alarm-info'});
 
@@ -382,7 +373,7 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity  implements  O
       }
 
 
-      // CASO 2: ALLARME VECCHIO, NUOVO EVENTO
+      // Case 2: old alarm, new event
       else if (this.newAlarm == false && this.selectedEventId == undefined){
         const obj = { alarm: {
                       id : this.selectedId
@@ -420,7 +411,7 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity  implements  O
         this.setEventCounter('add');
       }
 
-      // CASO 3: ALLARME VECCHIO, EVENTO VECCHIO (UPDATE)
+      // Case 3: old alarm, old event (UPDATE)
       else{
                     const obj = { alarm: {
                       id : this.selectedId
@@ -442,8 +433,6 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity  implements  O
             } as AlarmEvent
         this.alarmeventsService.updateAlarmEvent(obj).subscribe((res) => {
           this.updateSummaryList();
-          // this.entity = res;
-          console.log('UPDATE EVENT: ', res, this.entity);
           this.logger.debug('Event updated', res)
           this.toastr.success($localize`:@@HYT_event_updated_desc:Event updated correctly`, $localize`:@@HYT_event_updated:Event updated!`,
             {toastClass: 'alarm-toastr alarm-success'});
@@ -499,13 +488,6 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity  implements  O
       this.setEventCounter()
     }
 
-    changeAlarmInhibited(event) {
-      this.logger.debug('Entity', this.entity, event)
-      this.changedAlarmData = true;
-      this.entity.inhibited = event;
-
-    }
-
     updateSummaryList() {
       this.alarmsService.findAllAlarmByProjectId(this.currentProject.id).subscribe((alarms: Alarm[]) => {
         this.summaryList = {
@@ -515,7 +497,6 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity  implements  O
               return { name: l.name, data: l };
             }) as SummaryListItem[]
         };
-        console.log('SummaryList new: ', this.summaryList);
         this.entityEvent.emit({
           event: 'summaryList:reload',
           summaryList: this.summaryList, type: 'project-alarms'
@@ -554,7 +535,7 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity  implements  O
        });
      }
 
-    // salvo solo allarme
+    // save alarm only
     else {
       const alarmToSave = {
         id: this.selectedId,
@@ -574,19 +555,20 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity  implements  O
   }
 
   deleteEvent(i){
-    // CASO 1: nuovo allarme, no eventi pre-esistenti
+    // case 1: new alarm, without pre-existing event
     if (this.newAlarm === true){
       this.eventListMap.get(this.selectedId).splice(i, 1);
       this.updateSummaryList();
     }
-    // CASO 2:vecchio allarme, eventi pre-esistenti
+    // Case 2: old alarm, pre-existing event
     else {
-    this.alarmeventsService.deleteAlarmEvent(this.eventListMap.get(this.selectedId)[i].id).subscribe((res) => {
-      this.toastr.success($localize`:@@HYT_event_deleted_desc:Event deleted correctly`, $localize`:@@HYT_event_deleted:Event deleted!`, {toastClass: 'alarm-toastr alarm-success'});
-      // update number of event in the table
-      this.eventListMap.get(this.selectedId).splice(i, 1);
-      this.updateSummaryList();
-    });
+      this.alarmeventsService.deleteAlarmEvent(this.eventListMap.get(this.selectedId)[i].id).subscribe((res) => {
+        this.toastr.success($localize`:@@HYT_event_deleted_desc:Event deleted correctly`, $localize`:@@HYT_event_deleted:Event deleted!`,
+          {toastClass: 'alarm-toastr alarm-success'});
+        // update number of event in the table
+        this.eventListMap.get(this.selectedId).splice(i, 1);
+        this.updateSummaryList();
+      });
     }
     this.setEventCounter('remove');
   }
