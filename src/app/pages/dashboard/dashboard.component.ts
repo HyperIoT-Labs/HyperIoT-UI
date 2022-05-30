@@ -102,12 +102,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
     private cd: ChangeDetectorRef
   ) {
     this.offlineWidgetStatus = PageStatus.Standard;
-   
+
   }
 
   ngOnInit() {
     this.showAreas = this.activatedRoute.snapshot.routeConfig.path.startsWith('areas/');
-    
     this.dashboardOfflineDataService.countEventSubject.subscribe(res => {
       this.offlineWidgetStatus = res;
     });
@@ -311,8 +310,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.currentDashboard = res[0];
       this.currentDashboardId = this.currentDashboard.id;
       this.widgetLayoutReady = false;
-      this.dashboardOfflineDataService.resetService(this.idProjectSelected).subscribe(res => {
-        this.packetsInDashboard = [...res];
+      this.dashboardOfflineDataService.resetService(this.idProjectSelected).subscribe(resp => {
+        this.packetsInDashboard = [...resp];
         if (this.widgetLayoutReady) {
           this.cd.detectChanges();
         }
