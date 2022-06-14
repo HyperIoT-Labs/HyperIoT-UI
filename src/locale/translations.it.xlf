@@ -1017,7 +1017,7 @@
         <source>Event saved!</source>
         <target>Evento salvato!</target>
       </trans-unit>
-            <trans-unit id="HYT_remember_changes" datatype="html">
+      <trans-unit id="HYT_remember_changes" datatype="html">
         <source>Remember to save the alarm to maintain the changes</source>
         <target>Ricorda di salvare l'allarme per mantenere le modifiche</target>
       </trans-unit>
@@ -1552,6 +1552,7 @@
       <trans-unit id="HYT_then_tap_install" datatype="html">
         <source>Then tap "Install"</source>
         <target>Dopo fai tap sulla voce "Installa"</target>
+      </trans-unit>
       <trans-unit id="HYT_data_recording_is_disabled" datatype="html">
         <source>Data recording is disabled</source>
         <target>La registrazione dei dati è disabilitata</target>
