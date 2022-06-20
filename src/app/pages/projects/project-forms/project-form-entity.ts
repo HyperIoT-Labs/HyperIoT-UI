@@ -9,7 +9,6 @@ import { EntitiesService } from 'src/app/services/entities/entities.service';
 import { HytModalService } from '@hyperiot/components';
 import { ProjectsService } from 'src/app/services/projects.service';
 import {MatRadioChange} from '@angular/material/radio';
-import { ProjectsService } from 'src/app/services/projects.service';
 
 export enum LoadingStatusEnum {
     Ready,

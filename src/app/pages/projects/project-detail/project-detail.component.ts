@@ -17,10 +17,10 @@ import { ProjectStatisticsFormComponent } from '../project-forms/project-statist
 import { CdkDragEnd } from '@angular/cdk/drag-drop';
 import { ChangeDetectorRef } from '@angular/core';
 import { PacketFieldsFormComponent } from '../project-forms/packet-fields-form/packet-fields-form.component';
-import { DashboardConfigService } from '../../dashboard/dashboard-config.service';
 import { ConfirmRecordingActionComponent } from 'src/app/components/modals/confirm-recording-action/confirm-recording-action.component';
 import { ProjectAlarmsFormComponent } from '../project-forms/project-alarms-form/project-alarms-form.component';
 import {SummaryList} from './generic-summary-list/generic-summary-list.component';
+import {DashboardConfigService} from '@hyperiot/widgets';
 
 enum TreeStatusEnum {
   Ready,

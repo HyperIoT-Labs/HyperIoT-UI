@@ -7,12 +7,12 @@ import { RuleDefinitionComponent } from '../rule-definition/rule-definition.comp
 import { Option } from '@hyperiot/components';
 import { SummaryListItem } from '../../project-detail/generic-summary-list/generic-summary-list.component';
 import { TagStatus } from '../packet-enrichment-form/asset-tag/asset-tag.component';
-import { FormControl } from '@angular/forms';
+import {FormControl, Validators} from '@angular/forms';
 import { FormGroup } from '@angular/forms';
 import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
 import { PendingChangesDialogComponent } from 'src/app/components/dialogs/pending-changes-dialog/pending-changes-dialog.component';
 import { ToastrService } from 'ngx-toastr';
-import {MatAutocomplete, MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
+import {MatAutocomplete, MatAutocompleteSelectedEvent, MatAutocompleteTrigger} from '@angular/material/autocomplete';
 import {MatChipInputEvent} from '@angular/material/chips';
 
 @Component({
@@ -229,21 +229,16 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity  implements  O
     const proceedWithEdit = () => {
 
       this.showCancel = true;
-      //this.addEventMode = true;
+      // Map the eventList
+      let eventList = []
+      for (let el of alarm.alarmEventList) {
+       eventList.push({"event": el.event , "severity":el.severity, "id": el.id})
+      }
+      // Add to dictionary
+      this.eventListMap.set(alarm.id, eventList);
 
-      //this.alarmeventsService.findAllAlarmEventByAlarmId(alarm.id).subscribe(
-        //result =>  {
-          // Map the eventList
-          let eventList = []
-          for (let el of alarm.alarmEventList) {
-           eventList.push({"event": el.event , "severity":el.severity, "id": el.id})
-          }
-          // Add to dictionary
-          this.eventListMap.set(alarm.id, eventList);
-        // }
-      // );
 
-      const eventList = []
+      eventList = []
       for (const el of alarm.alarmEventList) {
        eventList.push({event: el.event , severity:el.severity, id: el.id})
       }
@@ -269,7 +264,7 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity  implements  O
       });
     }
 
-    const canDeactivate = this.canDeactivate();
+    let canDeactivate = this.canDeactivate();
     if (typeof canDeactivate === 'boolean' && canDeactivate === true) {
       proceedWithEdit();
     } else {
@@ -280,7 +275,7 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity  implements  O
       });
     }
 
-      const canDeactivate = this.canDeactivate();
+      canDeactivate = this.canDeactivate();
       if (typeof canDeactivate === 'boolean' && canDeactivate === true) {
         proceedWithEdit();
       } else {
