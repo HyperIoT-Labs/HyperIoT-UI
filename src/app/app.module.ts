@@ -60,6 +60,7 @@ import {MatCardModule} from '@angular/material/card';
 import {WidgetsOnlineModule} from '@hyperiot/widgets/lib/widget-online/widgets-online.module';
 import { DashComponent } from './pages/dash/dash.component';
 
+import {ScrollingModule} from '@angular/cdk/scrolling';
 PlotlyModule.plotlyjs = PlotlyJS;
 
 export class MyUrlSerializer extends DefaultUrlSerializer implements UrlSerializer {
@@ -134,7 +135,8 @@ export function apiConfigFactory(): Configuration {
     WidgetsModule,
     HyperiotClientModule.forRoot(apiConfigFactory),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production, registrationStrategy: 'registerImmediately' }),
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    ScrollingModule
   ],
   providers: [
     // ActivatedRouteSnapshot,

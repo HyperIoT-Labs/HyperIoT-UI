@@ -9,6 +9,7 @@ import { EntitiesService } from 'src/app/services/entities/entities.service';
 import { HytModalService } from '@hyperiot/components';
 import { ProjectsService } from 'src/app/services/projects.service';
 import {MatRadioChange} from '@angular/material/radio';
+import { ProjectsService } from 'src/app/services/projects.service';
 
 export enum LoadingStatusEnum {
     Ready,
@@ -21,6 +22,7 @@ export enum LoadingStatusEnum {
     template: ''
 })
 
+// tslint:disable-next-line:component-class-suffix
 export abstract class ProjectFormEntity implements OnInit, AfterViewInit {
     @Output() entityEvent = new EventEmitter<any>();
 
@@ -66,7 +68,7 @@ export abstract class ProjectFormEntity implements OnInit, AfterViewInit {
         this.form = this.formBuilder.group({});
         console.log(this.form);
         //this.formAlarm = this.formBuilder.group({});
-		this.projectsService = injector.get(ProjectsService);
+		    this.projectsService = injector.get(ProjectsService);
     }
 
     ngOnInit() {
