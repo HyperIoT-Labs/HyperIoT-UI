@@ -29,6 +29,25 @@
             </hyt-select-template>
 
         </div>
+
+        <div id="box-aliases" *ngIf="selectedFields && selectedFields.length > 0">
+            <h3 id="title-aliases" i18n="@@HYT_aliases_title">Field Aliases</h3>
+            <hyt-info [text]="aliasesDescription"></hyt-info>
+            <div class="aliases-container">
+                <div *ngFor="let field of selectedFields" class="block-aliases">
+                    <label class="label">{{ field.name }}</label>:
+                    <br/>
+                    <div class="container-aliases">
+                        <hyt-input-template
+                            name="hpacketfield-custom-aliases-{{field.id}}" id="customAliasesLabel-{{field.id}}" type="text"
+                            placeholder="Alias {{ field.name }}" fieldValue="{{fieldAliases[field.id]}}"
+                            [(ngModel)]="fieldAliases[field.id]" #name="ngModel" [isRequired]="false">
+                        </hyt-input-template>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div id="box-unit-conversion" *ngIf="hasFieldsUnit() && packetUnitsConversion && packetUnitsConversion.length > 0">
             <h3 id="title-unit-conversion">Unit Conversion</h3>
             <div *ngFor="let conversion of packetUnitsConversion; let i = index;" class="row-unit-conversion">

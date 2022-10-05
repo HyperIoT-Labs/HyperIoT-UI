@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, EventEmitter, Output, ViewEncapsulation } from '@angular/core';
 import { ControlContainer, NgForm } from '@angular/forms';
 import { SelectOption } from '@hyperiot/components';
+import { LoggerService, Logger } from '@hyperiot/core'
 
 import { HPacket, HPacketField, HpacketsService, AreasService, AreaDevice, HDevice } from '@hyperiot/core';
 import { UnitConversionService } from 'src/app/services/unit-conversion.service';
@@ -20,6 +21,10 @@ export class FieldUnitConversion {
   convertTo: string;
   decimals: number;
   options: any[];
+}
+
+export class FieldAlias {
+  [fieldId: string]: any;
 }
 
 @Component({
@@ -51,6 +56,7 @@ export class PacketSelectComponent implements OnInit {
 
   packetFieldsMapping: FieldMatrixConfiguration[];
   packetUnitsConversion: FieldUnitConversion[];
+  fieldAliases: FieldAlias;
   conversionDecimalsOptions = [
     {label: '0', value: 0},
     {label: '1', value: 1},
@@ -60,18 +66,24 @@ export class PacketSelectComponent implements OnInit {
     {label: '5', value: 5},
   ];
 
+  aliasesDescription = $localize`:@@HYT_aliases_description:Enter an alternate name to be displayed as column header, in case the alias is empty the field name will be displayed`;
+
   eventPacketId: number;
   eventPacketTimestampFieldName: string;
   eventPacketFieldName: string;
   offlineTableWidgetType: string;
+  private logger: Logger;
 
   constructor(
     private packetService: HpacketsService,
     public settingsForm: NgForm,
     private areaService: AreasService,
     private unitConversionService: UnitConversionService,
+    private loggerService: LoggerService
   ) {
     this.multiPacketSelect = this.multiPacketSelect || false;
+    this.logger = new Logger(this.loggerService);
+    this.logger.registerClass(PacketSelectComponent.name);
   }
 
   ngOnInit() {
@@ -150,6 +162,8 @@ export class PacketSelectComponent implements OnInit {
       this.selectedFields.map((pf) => this.widget.config.packetFields[pf.id] = pf.name);
       this.widget.config.packetFieldsMapping = this.packetFieldsMapping;
       this.widget.config.packetUnitsConversion = this.packetUnitsConversion;
+      this.widget.config.fieldAliases = this.fieldAliases;
+      this.logger.debug('Saving widget congiguration:', this.widget.config);
     }
   }
 
@@ -167,6 +181,8 @@ export class PacketSelectComponent implements OnInit {
         JSON.parse(JSON.stringify(this.widget.config.packetFieldsMapping)) : [];
     this.packetUnitsConversion = this.widget.config.packetUnitsConversion ?
         JSON.parse(JSON.stringify(this.widget.config.packetUnitsConversion)) : [];
+    this.fieldAliases = this.widget.config.fieldAliases ?
+        JSON.parse(JSON.stringify(this.widget.config.fieldAliases)) : { };
     // fetch all packets
     this.packetService
       .findAllHPacketByProjectIdAndType(this.widget.projectId,"INPUT,IO")
