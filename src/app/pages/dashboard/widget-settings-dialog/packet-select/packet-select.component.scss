@@ -20,6 +20,51 @@
     padding-left: 10px;
   }
 
+  #box-aliases {
+    width: 100%;
+
+    #title-aliases {
+      text-transform: uppercase;
+      margin-top: 10px;
+      color: #0856b6;
+      margin-bottom: 20px;
+      display: inline-block;
+    }
+    .btn-tooltip {
+      margin-left: 4px;
+      vertical-align: text-bottom;
+      color: #4050a2;
+    }  
+
+    .aliases-container {
+      display: flex;
+      flex-wrap: wrap;
+      .block-aliases {
+        flex: 0 1 50%;
+        .label {
+          color: black;
+          font-weight: bold;
+        }
+  
+        .container-aliases {
+          display: flex;
+          hyt-input-template {
+            width: 100%;
+          }
+        }
+      }
+
+      .block-aliases:nth-child(odd) {
+        padding-right: 10px;
+      }
+
+      .block-aliases:nth-child(even) {
+        padding-left: 10px;
+      }
+    }
+
+  }
+
   #box-unit-conversion {
     width: 100%;
 

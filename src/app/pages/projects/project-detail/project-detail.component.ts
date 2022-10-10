@@ -1,4 +1,4 @@
-import { EnrichmentsService } from './../../../services/enrichments/enrichments.service';
+import { EnrichmentsService } from '../../../services/enrichments/enrichments.service';
 import { Component, OnInit, OnDestroy, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -19,7 +19,8 @@ import { ChangeDetectorRef } from '@angular/core';
 import { PacketFieldsFormComponent } from '../project-forms/packet-fields-form/packet-fields-form.component';
 import { DashboardConfigService } from '../../dashboard/dashboard-config.service';
 import { ConfirmRecordingActionComponent } from 'src/app/components/modals/confirm-recording-action/confirm-recording-action.component';
-import { pack } from 'd3';
+import { ProjectAlarmsFormComponent } from '../project-forms/project-alarms-form/project-alarms-form.component';
+import {SummaryList} from './generic-summary-list/generic-summary-list.component';
 
 enum TreeStatusEnum {
   Ready,
@@ -53,22 +54,22 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
 
   projectName: string;
   validationErrors: [];
-  
+
   /**
    * variable used to determine if the treeview should be visible or not
    */
-  treeViewIsOpen: boolean = false;
+  treeViewIsOpen = false;
 
   /**
    * variable used to dynamically set the first part of toggle treeview button title
    */
-  preTitleTreeView: string = 'Show'; /* @I18N@ */
-  
+  preTitleTreeView = 'Show'; /* @I18N@ */
+
   /**
    * variable used to determine if the Info/Action column should be visible or not
    */
-  displayInfoAction: boolean = true;
-  
+  displayInfoAction = true;
+
   /**
    * variable used to determine basic position of draggable treeview item
    */
@@ -82,52 +83,54 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
 
   defaultData = [
     {
-      "data": {
-          "type": "source"
+      data: {
+          type: 'source'
       },
-      "name": "Sources",
-      "icon": "icon-hyt_StreamCloud_Lamp",
-      "children": []
+      name: 'Sources',
+      icon: 'icon-hyt_StreamCloud_Lamp',
+      children: []
     },
     {
-      "data": {
-        "type": "statistics"
+      data: {
+        type: 'statistics'
       },
-      "name": "Statistics",
-      "icon": "icon-hyt_statistics"
+      name: 'Statistics',
+      icon: 'icon-hyt_statistics'
     },
     {
-      "data": {
-        "type": "events"
+      data: {
+        type: 'events'
       },
-      "name": "Events",
-      "icon": "icon-hyt_event"
+      name: 'Events',
+      icon: 'icon-hyt_event'
     },
     {
-      "data": {
-        "type": "tags"
+      data: {
+        type: 'tags'
       },
-      "name": "Tags",
-      "icon": "icon-hyt_tags"
+      name: 'Tags',
+      icon: 'icon-hyt_tags'
     },
     {
-      "data": {
-        "type": "categories"
+      data: {
+        type: 'categories'
       },
-      "name": "Categories",
-      "icon": "icon-hyt_categories"
+      name: 'Categories',
+      icon: 'icon-hyt_categories'
     },
     {
-      "data": {
-        "type": "areas"
+      data: {
+        type: 'areas'
       },
-      "name": "Areas",
-      "icon": "icon-hyt_areaB16"
+      name: 'Areas',
+      icon: 'icon-hyt_areaB16'
     }
   ];
 
+  summaryList: SummaryList;
+
   currentPacket: number = null;
-  currentDeviceName: string = '';
+  currentDeviceName = '';
 
   constructor(
     private hProjectService: HprojectsService,
@@ -142,10 +145,9 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    
+
     this.projectId = this.activatedRoute.snapshot.params.projectId;
     this.refresh();
-    
     this.enrichmentsService.changeDeviceName$
     .pipe(takeUntil(this.ngUnsubscribe))
     .subscribe(deviceName => {
@@ -167,7 +169,7 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
   }
 
   onActivate(childComponent: ProjectFormEntity) {
-    
+
     childComponent.clickedTab.subscribe(val => {
       this.areaSection = val;
       this.toggleInfoActionColumn(childComponent);
@@ -175,15 +177,21 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
 
 
     if (childComponent.isProjectEntity) {
-      
+
       this.toggleInfoActionColumn(childComponent);
 
       this.currentEntity = childComponent;
+
       this.currentEntity.unsavedChangesCallback = () => {
         return this.openSaveDialog();
       };
       this.currentEntity.entityEvent.subscribe((data) => {
         switch (data.event) {
+          case 'summaryList:reload':
+            // this.summaryList = data.data.summaryList;
+            this.currentEntity.summaryList = data.summaryList
+            console.log('reloadSummaryList: ', data.summaryList);
+            break;
           case 'treeview:refresh':
             this.refresh();
             break;
@@ -200,13 +208,14 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
             this.hideHintMessage();
             break;
           case 'entity:delete':
-            if (data.exitRoute == 'project') {
+            if (data.exitRoute === 'project') {
               this.router.navigate(['/projects/' + this.projectId]);
-            } else if (data.exitRoute == 'out') {
+            } else if (data.exitRoute === 'out') {
               this.router.navigate(['/projects']);
             }
             break;
         }
+
       });
       // handle type specific fields and methods
       if (this.currentEntity instanceof PacketEnrichmentFormComponent) {
@@ -221,13 +230,15 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
   onSaveClick() {
     this.validationErrors = [];
     this.currentEntity.save((res) => {
-      if (this.currentEntity instanceof PacketEnrichmentFormComponent || this.currentEntity instanceof ProjectEventsFormComponent 
-        || this.currentEntity instanceof ProjectStatisticsFormComponent) {
+      if (this.currentEntity instanceof PacketEnrichmentFormComponent || this.currentEntity instanceof ProjectEventsFormComponent
+        || this.currentEntity instanceof ProjectStatisticsFormComponent || this.currentEntity instanceof ProjectAlarmsFormComponent) {
         this.currentEntity.editMode = false;
       }
 
       // Trigger reload topology
-      if (this.currentEntity instanceof PacketEnrichmentFormComponent || this.currentEntity instanceof PacketFieldsFormComponent || this.currentEntity instanceof ProjectEventsFormComponent) {
+      if (this.currentEntity instanceof PacketEnrichmentFormComponent ||
+        this.currentEntity instanceof PacketFieldsFormComponent ||
+        this.currentEntity instanceof ProjectEventsFormComponent) {
         this.shouldUpdateTopology();
       }
     }, (err) => {
@@ -238,7 +249,11 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
   onDeleteClick() {
     this.currentEntity.openDeleteDialog(() => {
       // Trigger reload topology
-      if (this.currentEntity instanceof PacketEnrichmentFormComponent || this.currentEntity instanceof PacketFieldsFormComponent || this.currentEntity instanceof ProjectEventsFormComponent) {
+      if (this.currentEntity instanceof PacketEnrichmentFormComponent ||
+        this.currentEntity instanceof PacketFieldsFormComponent ||
+        this.currentEntity instanceof ProjectStatisticsFormComponent ||
+        this.currentEntity instanceof ProjectEventsFormComponent ||
+        this.currentEntity instanceof ProjectAlarmsFormComponent) {
         this.shouldUpdateTopology();
       }
     });
@@ -255,7 +270,7 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
     .subscribe(
       (res) => {
         const recordingStatus = res;
-        if (recordingStatus.status === "ACTIVE") {
+        if (recordingStatus.status === 'ACTIVE') {
           this.openConfirmChangeRecordingModal(false);
         }
       },
@@ -265,13 +280,13 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
     );
   }
 
-  openConfirmChangeRecordingModal(rocordingState: boolean) {
+  openConfirmChangeRecordingModal(recordingState: boolean) {
     const modalRef = this.dialog.open(
       ConfirmRecordingActionComponent,
       {
         textBodyModal: $localize`:@@HYT_reload_topology_alert:Changes have been made to data recording configuration. To make them effective you need to restart data recording, do you want to start it now? Anyway, the data you are sending won’t be lost.`,
-        dataRecordingIsOn: rocordingState,
-        actionType: "restart",
+        dataRecordingIsOn: recordingState,
+        actionType: 'restart',
         projectId: this.projectId,
       },
       false
@@ -307,6 +322,7 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
     this.treeStatus = TreeStatusEnum.Loading;
     this.treeData = [];
     this.hProjectService.findHProject(+this.projectId).subscribe((p: HProject) => {
+      this.summaryList = this.currentEntity.summaryList;
 
       const projectNode: TreeDataNode = {
         data: { id: p.id },
@@ -379,6 +395,13 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
             visible: true,
             children: []
           };
+          const alarms: TreeDataNode = {
+            data: { type: 'alarms' },
+            name: 'Alarms',
+            icon: 'icon-hyt_notification',
+            visible: true,
+            children: []
+          };
           // Add tags, categories and areas
           const tags: TreeDataNode = {
             data: { type: 'tags' },
@@ -401,13 +424,13 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
             visible: true,
             children: []
           };
-          projectNode.children.push(...[statistics, events, tags, categories, areas]);
+          projectNode.children.push(...[statistics, events, alarms, tags, categories, areas]);
           this.treeView.setData(this.treeData);
           if (this.treeView.treeControl.dataNodes.length > 0) {
             this.treeView.treeControl.expand(this.treeView.treeControl.dataNodes[0]);
           }
           this.treeStatus = TreeStatusEnum.Ready;
-          
+
         }, (err) => {
           this.treeStatus = TreeStatusEnum.Error;
         });
@@ -418,23 +441,23 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
         this.treeStatus = TreeStatusEnum.Error;
       },
       () => {
-        
-        if(this.treeData[0].children.length == 0){
-          
-          let myTreeData = [...this.treeData];
+
+        if(this.treeData[0].children.length === 0){
+
+          const myTreeData = [...this.treeData];
           this.defaultData.map((d) => {
-            myTreeData[0]['children'].push(d)
+            myTreeData[0].children.push(d)
           })
           this.treeView.setData(myTreeData);
 
         }
-        
+
       }
       );
     }, (err) => {
       this.treeStatus = TreeStatusEnum.Error;
     });
-    
+
   }
 
   onNodeClick(node) {
@@ -545,7 +568,7 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
     this.treeViewIsOpen = !this.treeViewIsOpen;
 
     if(this.treeViewIsOpen) {
-      
+
       this.preTitleTreeView = 'Hide'; /* @I18N@ */
       this.dragPosition = {x: this.basicDragPosition.x, y: this.basicDragPosition.y};
 
@@ -556,19 +579,19 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
     }
 
   }
-  
+
   /**
    * function used to toggle display Info/Action Column
    */
   toggleInfoActionColumn(childComponent: any) {
-    
+
     if(
-    
+
       (childComponent.formTemplateId.includes('areas-form') && this.areaSection == 'Tab-Sub-Area') ||
       (childComponent.formTemplateId.includes('areas-form') && this.areaSection == 'Tab-Map') ||
 
-      (childComponent.formTemplateId.includes('areas-form') && this.areaSection == 'Tab-Info') && 
-      childComponent.editMode == false ||
+      (childComponent.formTemplateId.includes('areas-form') && this.areaSection == 'Tab-Info') &&
+      childComponent.editMode === false ||
 
       childComponent.formTemplateId.includes('tag-form') ||
       childComponent.formTemplateId.includes('category-form')
@@ -577,45 +600,47 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
 
       this.displayInfoAction = false;
       this.cdRef.detectChanges();
-      
+
     } else {
 
       this.displayInfoAction = true;
       this.cdRef.detectChanges();
-      
+
     }
 
   }
-  
+
   /**
-   * Used to calculate the position in space and prevent the treeview from going out of bounds 
-   * @param ended 
+   * Used to calculate the position in space and prevent the treeview from going out of bounds
+   * @param ended
    */
   dragEnded(ended: CdkDragEnd) {
-    let constLeftX = 75; /* -75 after 0 point */
+    const constLeftX = 75; /* -75 after 0 point */
 
     // TREEVIEW DIV POSITION X/Y
-    let posY = ended.source._dragRef['_activeTransform'].y;
-    let posX = ended.source._dragRef['_activeTransform'].x;
+    // @ts-ignore
+    const posY = ended.source._dragRef._activeTransform.y;
+    // @ts-ignore
+    const posX = ended.source._dragRef._activeTransform.x;
 
     // TREEVIEW DIV MEASURES
-    let ptW = ended.source.element.nativeElement.clientWidth + 15;
+    const ptW = ended.source.element.nativeElement.clientWidth + 15;
 
     // #HYT-CONTAINER LIMIT
-    let hytContainerHClient = document.getElementById('hyt-container').clientWidth;
-    
+    const hytContainerHClient = document.getElementById('hyt-container').clientWidth;
+
     // horizontal limit beyond which it is not possible to scroll the treeview box to the right
-    let horizontalLimit = hytContainerHClient - constLeftX - ptW;
-    
+    const horizontalLimit = hytContainerHClient - constLeftX - ptW;
+
     let dragX, dragY: number;
-    
+
     // Verify Y position
     if(posY < -175){
       dragY = -175;
     }else{
       dragY = posY;
     }
-    
+
     // Verify X position
     if(posX < -13){
       dragX = 0;
@@ -627,6 +652,17 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
 
     this.dragPosition = { x: dragX, y: dragY }
 
+  }
+
+  /*
+  / Method to verify if you can save or not the alarm
+  */
+  isDisableProjectAlarmsFormComponent(e: any){
+    if ((e instanceof ProjectAlarmsFormComponent) == false) return true;
+    else if (e.form.touched == false) return true;
+    else if (e.form.status == 'VALID') return false;
+    else if (e.form.status == 'INVALID') return true;
+    else return true;
   }
 
 }

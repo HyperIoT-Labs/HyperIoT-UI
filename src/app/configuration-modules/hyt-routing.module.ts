@@ -1,5 +1,5 @@
 import { NgModule, Injectable } from '@angular/core';
-import { Routes, RouterModule, CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot, CanDeactivate } from '@angular/router';
+import { Routes, RouterModule, CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { AuthenticationComponent } from '../pages/authentication/authentication.component';
 import { PasswordResetComponent } from '../pages/authentication/password-reset/password-reset.component';
 import { UserActivationComponent } from '../pages/authentication/user-activation/user-activation.component';
@@ -29,6 +29,7 @@ import { AreasViewComponent } from '../pages/areas/areas-view/areas-view.compone
 import { AlgorithmsComponent } from '../pages/algorithms/algorithms.component';
 import { AlgorithmWizardComponent } from '../pages/algorithms/algorithm-wizard/algorithm-wizard.component';
 import { ProjectStatisticsFormComponent } from '../pages/projects/project-forms/project-statistics-form/project-statistics-form.component';
+import { ProjectAlarmsFormComponent } from '../pages/projects/project-forms/project-alarms-form/project-alarms-form.component';
 
 @Injectable()
 export class LoggedInGuard implements CanActivate {
@@ -199,6 +200,12 @@ const hyperiotRoutes: Routes = [
         canDeactivate: [CanDeactivateGuard],
         path: 'events',
         component: ProjectEventsFormComponent,
+        outlet: 'projectDetails'
+      },
+{
+        canDeactivate: [CanDeactivateGuard],
+        path: 'alarms',
+        component: ProjectAlarmsFormComponent,
         outlet: 'projectDetails'
       },
       {

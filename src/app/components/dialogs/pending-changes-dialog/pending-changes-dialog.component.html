@@ -1,4 +1,4 @@
-<div id="container-save-changes-modal">
+<div id="container-pending-changes-modal">
 
     <div class="dialog-header">
         <span>{{data.data.title}}</span>
@@ -8,11 +8,9 @@
     <div class="dialog-body">
         {{data.data.message}}
         <div class="container-btn">
-            <hyt-button [color]="'hyt-base-total-white'" (click)="close('cancel')" i18n="@@HYT_cancel">Cancel
+            <hyt-button [color]="'hyt-base-total-white'" (click)="close('cancel')" i18n="@@HYT_back_to_event">Back to Alarm
             </hyt-button>
             <hyt-button [color]="'hyt-base-total-green'" (click)="close('save')" i18n="@@HYT_save">Save</hyt-button>
-            <hyt-button [color]="'hyt-base-total-red'" (click)="close('discard')" i18n="@@HYT_discard">Discard
-            </hyt-button>
         </div>
     </div>
 

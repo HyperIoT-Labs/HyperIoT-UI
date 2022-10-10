@@ -21,6 +21,7 @@
   },
   "private": true,
   "dependencies": {
+    "@angular/localize": "^9.1.13",
     "@hyperiot/widgets": "file:../hyperiot-widgets/dist/widgets/hyperiot-widgets-0.3.7.tgz",
     "@types/d3": "^5.7.2",
     "@types/moment-precise-range-plugin": "^0.2.0",

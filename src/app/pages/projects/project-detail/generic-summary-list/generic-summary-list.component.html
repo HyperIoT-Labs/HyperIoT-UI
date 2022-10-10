@@ -1,5 +1,5 @@
 <div  id="container-table-device" class="container-fluid">
-    
+
     <div class="row">
         <div class="col-12 header-table">
             {{_summaryList.title}}
@@ -11,11 +11,11 @@
 
         <ng-container [ngSwitch]="_summaryList.title">
 
-            <ng-container *ngSwitchCase="'Packets'"> 
+            <ng-container *ngSwitchCase="'Packets'">
                 <ng-container *ngIf="filteredElementList.length > 0; else emptyPacketBox">
 
                     <div class="row-table-element" *ngFor="let item of filteredElementList; let i = index">
-        
+
                         <div class="name-table-element" (click)="onEditOptionClick(item)">
                             {{item.name}}
                         </div>
@@ -25,26 +25,26 @@
                         <div class="duplicate-table-element">
                             <span class="hyt-icon icon-hyt_duplicate" (click)="onDuplicateOptionClick(item)"></span>
                         </div>
-            
+
                     </div>
-        
+
                 </ng-container>
-        
+
                 <ng-template #emptyPacketBox>
-                    
+
                     <div id="row-table-no-element" i18n="@@HYT_summary_list_no_packets">
                         No Packets
                     </div>
-        
+
                 </ng-template>
             </ng-container> <!-- DISPLAY FILTERED PACKETS ELEMENTS -->
 
-            <ng-container *ngSwitchCase="'Packet Enrichments'"> 
-                
+            <ng-container *ngSwitchCase="'Packet Enrichments'">
+
                 <ng-container *ngIf="filteredElementList.length > 0; else emptyPacketBox">
 
                     <div class="row-table-element" *ngFor="let item of filteredElementList; let i = index">
-        
+
                         <div class="name-table-element" (click)="onEditOptionClick(item)">
                             {{item.name}}
                         </div>
@@ -54,29 +54,59 @@
                         <div class="duplicate-table-element">
                             <span class="hyt-icon icon-hyt_duplicate" (click)="onDuplicateOptionClick(item)"></span>
                         </div>
-            
+
                     </div>
-        
+
                 </ng-container>
-        
+
                 <ng-template #emptyPacketBox>
-                    
+
                     <div id="row-table-no-element" i18n="@@HYT_summary_list_no_packets">
                         No Enrichment
                     </div>
-        
+
                 </ng-template>
 
             </ng-container> <!-- DISPLAY FILTERED ENRICHMENTS ELEMENTS -->
 
-            <ng-container *ngSwitchDefault> 
+          <ng-container *ngSwitchCase="'Packet Events'">
+
+            <ng-container *ngIf="filteredElementList.length > 0; else emptyEventBox">
+
+              <div class="row-table-element" *ngFor="let item of filteredElementList; let i = index">
+
+                <div class="name-table-element" (click)="onEditOptionClick(item)">
+                  {{item?.name}}
+                </div>
+                <div class="cancel-table-element">
+                  <span class="hyt-icon icon-hyt_trash" (click)="onDeleteOptionClick(item)"></span>
+                </div>
+                <div class="duplicate-table-element">
+                  <span class="hyt-icon icon-hyt_duplicate" (click)="onDuplicateOptionClick(item)"></span>
+                </div>
+
+              </div>
+
+            </ng-container>
+
+            <ng-template #emptyEventBox>
+
+              <div id="row-table-no-element" i18n="@@HYT_summary_list_no_packets">
+                No events
+              </div>
+
+            </ng-template>
+
+          </ng-container> <!-- DISPLAY FILTERED Events ELEMENTS -->
+
+            <ng-container *ngSwitchDefault>
 
                 <ng-container *ngIf="_summaryList.list.length > 0; else emptyGenericBox">
 
                     <div  class="row-table-element" *ngFor="let item of _summaryList.list; let i = index">
 
                         <div class="name-table-element" (click)="onEditOptionClick(item)">
-                            {{item.name}}
+                            {{item?.name}}
                         </div>
                         <div class="cancel-table-element">
                             <span class="hyt-icon icon-hyt_trash" (click)="onDeleteOptionClick(item)"></span>
@@ -84,17 +114,17 @@
                         <div class="duplicate-table-element">
                             <span class="hyt-icon icon-hyt_duplicate" (click)="onDuplicateOptionClick(item)"></span>
                         </div>
-            
+
                     </div>
 
                 </ng-container>
 
                 <ng-template #emptyGenericBox>
-                
+
                     <div id="row-table-no-element" i18n="@@HYT_summary_list_no_packets">
                         No {{_summaryList.title}}
                     </div>
-        
+
                 </ng-template>
 
             </ng-container> <!-- DISPLAY ALL LIST ELEMENTS -->

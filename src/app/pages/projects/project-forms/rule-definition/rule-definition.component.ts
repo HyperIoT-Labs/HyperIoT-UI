@@ -119,8 +119,7 @@ export class RuleDefinitionComponent {
   /**
    * originalFormsValues is used to keep record of the old ruleDefinition value (dirty)
    */
-  private originalFormsValues =
-    this.ruleType === "enrichment"
+  private originalFormsValues = this.ruleType === "enrichment"
       ? '{"ruleField":"","ruleCondition":"","ruleValue":"","ruleJoin":""}'
       : '{"rulePacket":"","ruleField":"","ruleCondition":"","ruleValue":"","ruleJoin":""}';
 
