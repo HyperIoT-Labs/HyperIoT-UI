@@ -22,7 +22,8 @@
   "private": true,
   "dependencies": {
     "@angular/localize": "^9.1.13",
-    "@hyperiot/widgets": "file:../hyperiot-widgets/dist/widgets/hyperiot-widgets-0.3.9.tgz",
+    "@hyperiot/core": "file:../hyperiot-core/dist/core/hyperiot-core-0.7.15.tgz",
+    "@hyperiot/widgets": "file:../hyperiot-widgets/dist/widgets/hyperiot-widgets-0.3.19.tgz",
     "@types/d3": "^5.7.2",
     "@types/moment-precise-range-plugin": "^0.2.0",
     "angular-gridster2": "^9.1.13",
