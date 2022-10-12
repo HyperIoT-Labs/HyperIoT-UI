@@ -30,7 +30,7 @@
 
         </div>
 
-        <div id="box-aliases" *ngIf="selectedFields && selectedFields.length > 0">
+        <div id="box-aliases" *ngIf="selectedFields && selectedFields.length > 0 && (widget.type === 'realtime-table' || widget.type === 'offline-table')">
             <h3 id="title-aliases" i18n="@@HYT_aliases_title">Field Aliases</h3>
             <hyt-info [text]="aliasesDescription"></hyt-info>
             <div class="aliases-container">
