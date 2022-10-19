@@ -385,7 +385,7 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
 
   openFullScreenModal(widget: any) {
     const modalRef = this.hytModalService.open(WidgetFullscreenDialogComponent, {
-      widget: widget,
+      widget: { ...widget },
       data: 'modal'
     });
     modalRef.onClosed.subscribe(event => {
