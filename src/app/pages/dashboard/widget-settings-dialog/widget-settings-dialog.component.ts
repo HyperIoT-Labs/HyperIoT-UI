@@ -66,28 +66,6 @@ export class WidgetSettingsDialogComponent extends HytModal implements OnInit {
     // reconfigure widget instance with new values
     this.widget.instance.configure();
     // close dialog
-    // this.close($event);
-
-    // this.modalClose.emit($event);
     this.close('save');
   }
-
-  // dismiss(e: any) {
-  //   if (e.target === this.viewContainer.nativeElement) {
-  //     // this.close(e);
-  //     this.close();
-  //   }
-  // }
-
-  // open() {
-  //   // TODO: init stuff goes here
-  // }
-
-  // close($event?) {
-  //   this.router.navigate(
-  //     ['../', { outlets: { modal: null } }],
-  //     { relativeTo: this.activatedRoute }
-  //   );
-  //   this.modalClose.emit($event);
-  // }
 }

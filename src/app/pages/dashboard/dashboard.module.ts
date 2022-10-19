@@ -33,6 +33,7 @@ import { FourierChartSettingsComponent } from './widget-settings-dialog/fourier-
 import { ImageDataSettingsComponent } from './widget-settings-dialog/image-data-settings/image-data-settings.component';
 import { AlgorithmSelectComponent } from './widget-settings-dialog/algorithm-settings/algorithm-select/algorithm-select.component';
 import { AlgorithmSettingsComponent } from './widget-settings-dialog/algorithm-settings/algorithm-settings.component';
+import { WidgetFullscreenDialogComponent } from './widget-fullscreen-dialog/widget-fullscreen-dialog.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { AlgorithmSettingsComponent } from './widget-settings-dialog/algorithm-s
     FourierChartSettingsComponent,
     ImageDataSettingsComponent,
     AlgorithmSelectComponent,
-    AlgorithmSettingsComponent
+    AlgorithmSettingsComponent,
+    WidgetFullscreenDialogComponent
   ],
   imports: [
     CommonModule,

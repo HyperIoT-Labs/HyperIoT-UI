@@ -1,3 +1,4 @@
+import { WidgetFullscreenDialogComponent } from './../widget-fullscreen-dialog/widget-fullscreen-dialog.component';
 import { Component, OnInit, Input, OnDestroy, HostListener, ViewChild, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -126,7 +127,7 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
     private hytModalService: HytModalService,
     private hytTopologyService: HytTopologyService,
     private toastr: ToastrService
-  ) { 
+  ) {
     this.eventNotificationIsOn = true;
     this.configService.eventNotificationState.subscribe(res => {
       this.eventNotificationIsOn = res;
@@ -315,18 +316,28 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
   // Widget events
 
   onWidgetSettingClose(event) {
-    // const widgetId = event.getWidgetId();
-    // const widget = this.getItemById(widgetId);
-    // event.setWidget(widget);
     this.showSettingWidget = false;
     this.changes++;
     this.activeAutoSave();
     this.widgetLayoutEvent.emit();
-    // if(this.ngUnsubscribe)
-    //   this.ngUnsubscribe.next();
+  }
+
+  onWidgetFullscreenClose(data: any) {
+
+    console.log('WIDGET FULLSCREE CLOSE', data)
+    if(data && data?.action == 'widget:setting') {
+      console.log('WIDGET FULLSCREE CLOSE 2', data)
+      setTimeout(() => {
+        console.log('WIDGET FULLSCREE CLOSE 3', data)
+        this.openModal(data.widget)
+      }, 100);
+
+    }
+
   }
 
   onWidgetAction(data) {
+    console.log('Widget action...', data);
     switch (data.action) {
       case 'toolbar:close':
         if (!this.removingWidget) {
@@ -345,6 +356,11 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
         const widget = this.getItemById(data.widget.id);
 
         this.openModal(widget);
+        break;
+      case 'toolbar:fullscreen':
+        console.log('FULLSCREENN DATA', data);
+        const currentWidget = this.getItemById(data.widget.id);
+        this.openFullScreenModal(currentWidget);
         break;
       case 'widget:ready':
         this.widgetReadyCounter++;
@@ -367,12 +383,16 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
     );
   }
 
-  // closeModal(id: string) {
-  //   this.hytModalService.close(id);
-  //   if (this.ngUnsubscribe) {
-  //     this.ngUnsubscribe.next();
-  //   }
-  // }
+  openFullScreenModal(widget: any) {
+    const modalRef = this.hytModalService.open(WidgetFullscreenDialogComponent, {
+      widget: { ...widget },
+      data: 'modal'
+    });
+    modalRef.onClosed.subscribe(event => {
+      console.log('openFullScreenModal', event)
+      this.onWidgetFullscreenClose(event);
+    })
+  }
 
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
@@ -494,9 +514,9 @@ export class WidgetsLayoutComponent implements OnInit, OnDestroy {
     return singleCell;
   }
 
-  private getTimestampFieldValue(packet:HPacket){   
+  private getTimestampFieldValue(packet:HPacket){
     let timestampFieldName = packet.timestampField;
-    return (packet.fields.map[timestampFieldName]) ? packet.fields.map[timestampFieldName].value.long : packet.fields.map['timestamp-default'].value.long; 
+    return (packet.fields.map[timestampFieldName]) ? packet.fields.map[timestampFieldName].value.long : packet.fields.map['timestamp-default'].value.long;
   }
 
 }
