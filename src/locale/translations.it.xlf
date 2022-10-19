@@ -1823,6 +1823,14 @@
         <source>Enter an alternate name to be displayed as column header, in case the alias is empty the field name will be displayed</source>
         <target>Inserisci un nome alternativo da visualizzare come intestazione delle colonne, in caso l'alias sia vuoto verrà visualizzato il nome del field</target>
       </trans-unit>
+      <trans-unit id="HYT_toolbar_full_screen" datatype="html">
+        <source>Full Screen</source>
+        <target>Full Screen</target>
+      </trans-unit>
+      <trans-unit id="HYT_unavailble_widget_description" datatype="html">
+        <source>This widget is unavailable</source>
+        <target>Questo widget non è disponibile</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

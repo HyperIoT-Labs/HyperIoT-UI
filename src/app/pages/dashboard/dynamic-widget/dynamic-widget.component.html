@@ -1,83 +1,90 @@
 <!-- List of widget that can be dynamically loaded -->
 
-<hyperiot-time-chart
-  *ngIf="widget.type === 'time-chart'"
-  [widget]="widget"
-  [data]="fullScreenData"
-  [isModalView]="fullScreenData === 'modal'"
-  (widgetAction)="onWidgetAction($event)"></hyperiot-time-chart>
+<ng-container [ngSwitch]="widget.type">
 
-<hyperiot-fourier-chart
-  *ngIf="widget.type === 'fourier-chart'"
-  [widget]="widget"
-  [isModalView]="fullScreenData === 'modal'"
-  (widgetAction)="onWidgetAction($event)"></hyperiot-fourier-chart>
+  <hyperiot-time-chart
+    *ngSwitchCase="'time-chart'"
+    [widget]="widget"
+    [data]="fullScreenData"
+    [isModalView]="fullScreenData === 'modal'"
+    (widgetAction)="onWidgetAction($event)"></hyperiot-time-chart>
 
-<hyperiot-stats-chart
-  *ngIf="widget.type === 'stats-chart'"
-  [widget]="widget"
-  [isModalView]="fullScreenData === 'modal'"
-  (widgetAction)="onWidgetAction($event)"></hyperiot-stats-chart>
+  <hyperiot-fourier-chart
+    *ngSwitchCase="'fourier-chart'"
+    [widget]="widget"
+    [isModalView]="fullScreenData === 'modal'"
+    (widgetAction)="onWidgetAction($event)"></hyperiot-fourier-chart>
 
-<hyperiot-sensor-value
-  *ngIf="widget.type === 'sensor-value'"
-  [widget]="widget"
-  [isModalView]="fullScreenData === 'modal'"
-  (widgetAction)="onWidgetAction($event)"></hyperiot-sensor-value>
+  <hyperiot-stats-chart
+    *ngSwitchCase="'stats-chart'"
+    [widget]="widget"
+    [isModalView]="fullScreenData === 'modal'"
+    (widgetAction)="onWidgetAction($event)"></hyperiot-stats-chart>
 
-<hyperiot-image-data
-  *ngIf="widget.type === 'image-data'"
-  [widget]="widget"
-  [isModalView]="fullScreenData === 'modal'"
-  (widgetAction)="onWidgetAction($event)"></hyperiot-image-data>
+  <hyperiot-sensor-value
+    *ngSwitchCase="'sensor-value'"
+    [widget]="widget"
+    [isModalView]="fullScreenData === 'modal'"
+    (widgetAction)="onWidgetAction($event)"></hyperiot-sensor-value>
 
-<hyperiot-gauge-value
-  *ngIf="widget.type === 'gauge-value'"
-  [widget]="widget"
-  [isModalView]="fullScreenData === 'modal'"
-  (widgetAction)="onWidgetAction($event)"></hyperiot-gauge-value>
+  <hyperiot-image-data
+    *ngSwitchCase="'image-data'"
+    [widget]="widget"
+    [isModalView]="fullScreenData === 'modal'"
+    (widgetAction)="onWidgetAction($event)"></hyperiot-image-data>
 
-<hyperiot-events-log
-  *ngIf="widget.type === 'events-log'"
-  [widget]="widget"
-  [isModalView]="fullScreenData === 'modal'"
-  (widgetAction)="onWidgetAction($event)"></hyperiot-events-log>
+  <hyperiot-gauge-value
+    *ngSwitchCase="'gauge-value'"
+    [widget]="widget"
+    [isModalView]="fullScreenData === 'modal'"
+    (widgetAction)="onWidgetAction($event)"></hyperiot-gauge-value>
 
-<hyperiot-text-label
-  *ngIf="widget.type === 'text-label'"
-  [widget]="widget"
-  [isModalView]="fullScreenData === 'modal'"
-  (widgetAction)="onWidgetAction($event)"></hyperiot-text-label>
+  <hyperiot-events-log
+    *ngSwitchCase="'events-log'"
+    [widget]="widget"
+    [isModalView]="fullScreenData === 'modal'"
+    (widgetAction)="onWidgetAction($event)"></hyperiot-events-log>
 
-<hyperiot-hpacket-table
-  *ngIf="widget.type === 'offline-table'"
-  [widget]="widget"
-  [isModalView]="fullScreenData === 'modal'"
-  (widgetAction)="onWidgetAction($event)"></hyperiot-hpacket-table>
+  <hyperiot-text-label
+    *ngSwitchCase="'text-label'"
+    [widget]="widget"
+    [isModalView]="fullScreenData === 'modal'"
+    (widgetAction)="onWidgetAction($event)"></hyperiot-text-label>
 
-<hyperiot-realtime-hpacket-table
-  *ngIf="widget.type === 'realtime-table'"
-  [widget]="widget"
-  [isModalView]="fullScreenData === 'modal'"
-  (widgetAction)="onWidgetAction($event)"></hyperiot-realtime-hpacket-table>
+  <hyperiot-hpacket-table
+    *ngSwitchCase="'offline-table'"
+    [widget]="widget"
+    [isModalView]="fullScreenData === 'modal'"
+    (widgetAction)="onWidgetAction($event)"></hyperiot-hpacket-table>
+
+  <hyperiot-realtime-hpacket-table
+    *ngSwitchCase="'realtime-table'"
+    [widget]="widget"
+    [isModalView]="fullScreenData === 'modal'"
+    (widgetAction)="onWidgetAction($event)"></hyperiot-realtime-hpacket-table>
 
   <hyperiot-algorithm-table
-    *ngIf="widget.type === 'algorithm-offline-table'"
+    *ngSwitchCase="'algorithm-offline-table'"
     [widget]="widget"
     [isModalView]="fullScreenData === 'modal'"
-    (widgetAction)="onWidgetAction($event)">
-  </hyperiot-algorithm-table>
+    (widgetAction)="onWidgetAction($event)"></hyperiot-algorithm-table>
 
   <hyperiot-event-table
-    *ngIf="widget.type === 'event-offline-table'"
+    *ngSwitchCase="'event-offline-table'"
     [widget]="widget"
     [isModalView]="fullScreenData === 'modal'"
-    (widgetAction)="onWidgetAction($event)">
-  </hyperiot-event-table>
+    (widgetAction)="onWidgetAction($event)"></hyperiot-event-table>
 
   <hyperiot-error-table
-    *ngIf="widget.type === 'error-table'"
+    *ngSwitchCase="'error-table'"
     [widget]="widget"
     [isModalView]="fullScreenData === 'modal'"
-    (widgetAction)="onWidgetAction($event)">
-  </hyperiot-error-table>
+    (widgetAction)="onWidgetAction($event)"></hyperiot-error-table>
+
+  <hyperiot-default-widget
+    *ngSwitchDefault
+    [widget]="widget"
+    [isModalView]="fullScreenData === 'modal'"
+    (widgetAction)="onWidgetAction($event)"></hyperiot-default-widget>
+
+</ng-container>

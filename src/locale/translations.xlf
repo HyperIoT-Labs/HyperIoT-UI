@@ -1367,6 +1367,12 @@
       <trans-unit id="HYT_aliases_description" datatype="html">
         <source>Enter an alternate name to be displayed as column header, in case the alias is empty the field name will be displayed</source>
       </trans-unit>
+      <trans-unit id="HYT_toolbar_full_screen" datatype="html">
+        <source>Full Screen</source>
+      </trans-unit>
+      <trans-unit id="HYT_unavailble_widget_description" datatype="html">
+        <source>This widget is unavailable</source>
+      </trans-unit>
     </body>
   </file>
 </xliff>
