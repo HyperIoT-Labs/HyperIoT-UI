@@ -897,7 +897,8 @@
         <target>Algoritmo</target>
       </trans-unit>
       <trans-unit id="HYT_go_to_algorithms_list_long" datatype="html">
-        <source>Vai alla lista degli algoritmi.</source>
+        <source>Go to algorithms list definition.</source>
+        <target>Vai alla lista degli algoritmi.</target>
       </trans-unit>
       <trans-unit id="HYT_fields" datatype="html">
         <source>Fields</source>
