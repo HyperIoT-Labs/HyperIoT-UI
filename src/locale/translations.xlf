@@ -1342,6 +1342,7 @@
       </trans-unit>
       <trans-unit id="HYT_summary_list_no_packets" datatype="html">
         <source>No Packets</source>
+      </trans-unit>
       <trans-unit id="HYT_unavailable_alarm_name" datatype="html">
         <source>Unavailable alarm name</source>
       </trans-unit>
@@ -1359,6 +1360,18 @@
       </trans-unit>
       <trans-unit id="HYT_alarmEvent_message" datatype="html">
         <source>At least one new event must be added to save the new alarm!</source>
+      </trans-unit>
+      <trans-unit id="HYT_aliases_title" datatype="html">
+        <source>Field Aliases</source>
+      </trans-unit>
+      <trans-unit id="HYT_aliases_description" datatype="html">
+        <source>Enter an alternate name to be displayed as column header, in case the alias is empty the field name will be displayed</source>
+      </trans-unit>
+      <trans-unit id="HYT_toolbar_full_screen" datatype="html">
+        <source>Full Screen</source>
+      </trans-unit>
+      <trans-unit id="HYT_unavailble_widget_description" datatype="html">
+        <source>This widget is unavailable</source>
       </trans-unit>
     </body>
   </file>
