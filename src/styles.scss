@@ -2,3 +2,17 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 @import './assets/styles/main';
 
+.cdk-overlay-pane .base-dialog {
+    width: 100%;
+    height: 100%;
+}
+
+#bodyMap {
+    .blue{fill-rule:evenodd;clip-rule:evenodd;fill:#144B64;}
+    .blueDark{fill:#001A24;}
+    .Glow{fill:#001A24;filter:url(#glow);}
+    .st0{filter:url(#glow);}
+    .st1{fill:#001A24;}
+    .st2{opacity:0.0;fill:none;}
+    .st3{opacity:0.6;fill:#EA0707;}
+}
