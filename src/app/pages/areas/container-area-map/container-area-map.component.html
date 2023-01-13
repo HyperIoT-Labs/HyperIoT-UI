@@ -1,0 +1,77 @@
+<div id="container-area-map">
+  <p>Ecco la area map</p>
+</div>
+<!--div id="container-area-map" *ngIf="areaId">
+
+            <div
+                id="container-treeview-project"
+                [ngClass]="{'displayBlock': treeViewIsOpen, 'displayNone': !treeViewIsOpen}"
+                cdkDrag
+                [cdkDragFreeDragPosition]="dragPosition"
+                cdkDragBoundary="#hyt-container"
+                (cdkDragEnded)="dragEnded($event)"
+            >
+
+                <div id="close-tree-btn" (click)="toggleTreeViewProject()">
+                    <span class="hyt-icon icon-hyt_cancel"></span>
+                </div>
+
+                <div id="treeViewHeader" cdkDragHandle>
+
+                </div>
+
+                <div id="treeViewBody">
+
+                    <hyt-tree-view-project #treeView class="treeview" (nodeClick)="onTreeNodeClick($event)"></hyt-tree-view-project>
+
+                </div>
+
+            </div>
+
+            <div id="container-map">
+
+                <div id="map-header">
+
+                    <div id="head-left">
+
+                        <hyt-button [color]="'hyt-base-total-white'" (clickFn)="toggleTreeViewProject()">
+
+                            <span
+                                [ngClass]="{'icon-hyt_eyeClose': treeViewIsOpen, 'icon-hyt_eyeOpen': !treeViewIsOpen}"
+                            ></span>
+                            {{ preTitleTreeView }} Treeview Project
+
+                        </hyt-button><!-- @I18N@ --
+
+                    </div>
+
+                    <div id="head-center">
+
+                        <div>Sub-areas: {{areaList.length}} Devices: {{areaDevices.length}}</div>
+
+                    </div>
+
+                    <div id="head-right">
+
+                        <hyt-button [color]="'hyt-base-total-white'" (clickFn)="onEditButtonClick()">
+
+                            <span class="icon-hyt_pencil"></span>
+                            Edit
+
+                        </hyt-button><!-- @I18N@ --
+
+                    </div>
+
+                </div>
+
+                <div id="map-body">
+
+                    <hyt-area-map #map (itemOpen)="onItemMapClicked($event)"></hyt-area-map>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div -->
