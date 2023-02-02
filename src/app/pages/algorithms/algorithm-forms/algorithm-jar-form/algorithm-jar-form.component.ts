@@ -28,8 +28,8 @@ export class AlgorithmJarFormComponent extends AlgorithmFormEntity implements On
   entity = {} as Algorithm;
 
   entityFormMap = {
-    'algorithm-jarName': {
-      field: 'jarName',
+    'algorithm-algorithmFileName': {
+      field: 'algorithmFileName',
       default: null
     },
     'algorithm-mainclassname': {
@@ -70,7 +70,7 @@ export class AlgorithmJarFormComponent extends AlgorithmFormEntity implements On
   }
 
   form = new FormGroup({
-    jarName: new FormControl('')
+    algorithmFileName: new FormControl('')
   });
 
   constructor(
@@ -88,7 +88,7 @@ export class AlgorithmJarFormComponent extends AlgorithmFormEntity implements On
 
   ngOnInit() {
     this.currentAlgorithmSubject.subscribe(this.algorithmObserver);
-    this.form.controls.jarName.valueChanges.subscribe(
+    this.form.controls.algorithmFileName.valueChanges.subscribe(
       (change: string) => {
         if(change){
           if(change.indexOf("\\") > 0)
@@ -128,9 +128,9 @@ export class AlgorithmJarFormComponent extends AlgorithmFormEntity implements On
   handleFileInput(files: FileList) {
     if(files.length > 0) { 
       this.jarToUpload = files.item(0);
-      this.form.value['jarName'] = files[0].name;
+      this.form.value['algorithmFileName'] = files[0].name;
     }else{
-      this.form.value['jarName'] = '';
+      this.form.value['algorithmFileName'] = '';
     }
     this.cdr.detectChanges();
   }
@@ -169,7 +169,7 @@ export class AlgorithmJarFormComponent extends AlgorithmFormEntity implements On
       successCallback && successCallback(res);
     };
     p.entityVersion = 1;
-    this.algorithmsService.updateJar(p.id, p.mainClassname, this.jarToUpload).subscribe(responseHandler, (err) => {
+    this.algorithmsService.updateAlgorithmFile(p.id, p.mainClassname, this.jarToUpload).subscribe(responseHandler, (err) => {
       this.setErrors(err);
       errorCallback && errorCallback(err);
     });
@@ -201,7 +201,7 @@ export class AlgorithmJarFormComponent extends AlgorithmFormEntity implements On
    */
   clickChooseLabel(){
     this.btnChooseIsDisabled = true;
-    const inputChooseFile = document.getElementById('jarName');
+    const inputChooseFile = document.getElementById('algorithmFileName');
     inputChooseFile.click();
     setTimeout(() => this.btnChooseIsDisabled = false, 600);
 
@@ -217,8 +217,8 @@ export class AlgorithmJarFormComponent extends AlgorithmFormEntity implements On
 
   resetTitleSelected() {
     this.jarToUpload = null;
-    this.form.controls.jarName.setValue('');
-    this.form.controls.jarName.updateValueAndValidity();
+    this.form.controls.algorithmFileName.setValue('');
+    this.form.controls.algorithmFileName.updateValueAndValidity();
     this.nameOfJarFile = "";
     this.cdr.detectChanges();
   }

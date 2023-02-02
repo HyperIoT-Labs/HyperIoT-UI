@@ -39,12 +39,12 @@
               entitiesService.algorithm.displayListName,
               'Input',
               'Output',
-              'JAR'
+              'File'
             ]" [completedArray]="[
               currentAlgorithm != null,
               currentInput.length > 0,
               currentOutput.length > 0,
-              currentAlgorithm != null && currentAlgorithm.jarName != null
+              currentAlgorithm != null && currentAlgorithm.algorithmFileName != null
             ]" [isDirty]="[
               getDirty(0),
               getDirty(1),

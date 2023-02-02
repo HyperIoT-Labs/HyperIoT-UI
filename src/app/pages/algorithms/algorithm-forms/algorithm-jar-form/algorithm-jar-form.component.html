@@ -20,17 +20,17 @@
 
             <div id="upload-jar-package">
 
-                <span id="upload-jar-title" i18n="@@HYT_algorithm_jar_package">JAR package:</span>
+                <span id="upload-jar-title" i18n="@@HYT_algorithm_file">File:</span>
                 <span 
-                    i18n="@@HYT_algorithm_jar_package_exists" 
+                    i18n="@@HYT_algorithm_file_exists" 
                     class="upload-jar-content exists" 
-                    *ngIf="algorithm && algorithm.jarName; else jarContent"
+                    *ngIf="algorithm && algorithm.algorithmFileName; else jarContent"
                 >
                     exists
                 </span>
                 <ng-template #jarContent>
                     
-                    <span class="upload-jar-content not-exists" i18n="@@HYT_algorithm_jar_package_not_exists">does not exist</span>
+                    <span class="upload-jar-content not-exists" i18n="@@HYT_algorithm_file_not_exists">does not exist</span>
 
                 </ng-template>
 
@@ -59,10 +59,10 @@
                 </hyt-button>
 
                 <input 
-                    name="jarName"
-                    id="jarName"
+                    name="algorithmFileName"
+                    id="algorithmFileName"
                     type="file" 
-                    formControlName="jarName"
+                    formControlName="algorithmFileName"
                     accept=".jar"
                     (change)="handleFileInput($event.target.files)"
                 >

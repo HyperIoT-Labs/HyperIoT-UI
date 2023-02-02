@@ -113,7 +113,7 @@ export class AlgorithmWizardComponent implements OnInit {
         return this.currentOutput.length === 0;
       }
       case 3: {
-        return !this.currentAlgorithm.jarName || this.currentAlgorithm.jarName.length === 0;
+        return !this.currentAlgorithm.algorithmFileName || this.currentAlgorithm.algorithmFileName.length === 0;
       }
     }
   }

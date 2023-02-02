@@ -1322,13 +1322,13 @@
       <trans-unit id="HYT_tag_select_color" datatype="html">
         <source>Select color</source>
       </trans-unit>
-      <trans-unit id="HYT_algorithm_jar_package" datatype="html">
-        <source>JAR package:</source>
+      <trans-unit id="HYT_algorithm_file" datatype="html">
+        <source>File:</source>
       </trans-unit>
-      <trans-unit id="HYT_algorithm_jar_package_exists" datatype="html">
+      <trans-unit id="HYT_algorithm_file_exists" datatype="html">
         <source>exists</source>
       </trans-unit>
-      <trans-unit id="HYT_algorithm_jar_package_not_exists" datatype="html">
+      <trans-unit id="HYT_algorithm_file_not_exists" datatype="html">
         <source>does not exist</source>
       </trans-unit>
       <trans-unit id="HYT_algorithm_choose_file" datatype="html">

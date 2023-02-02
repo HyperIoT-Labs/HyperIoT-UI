@@ -136,7 +136,7 @@ export class ProjectStatisticsFormComponent
   }
 
   ngOnInit() {
-    this.algorithmsService.findAllAlgorithm().subscribe((res) => {
+    this.algorithmsService.findAllAlgorithm('STATISTICS').subscribe((res) => {
       this.algorithmList = res;
       this.algorithmOptions = this.algorithmList.map((algorithm) => ({
         value: algorithm,
