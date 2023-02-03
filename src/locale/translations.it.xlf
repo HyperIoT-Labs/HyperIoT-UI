@@ -1765,8 +1765,8 @@
         <target>Seleziona colore</target>
       </trans-unit>
       <trans-unit id="HYT_algorithm_file" datatype="html">
-        <source>File:</source>
-        <target>File:</target>
+        <source>JAR package:</source>
+        <target>JAR package:</target>
       </trans-unit>
       <trans-unit id="HYT_algorithm_file_exists" datatype="html">
         <source>exists</source>

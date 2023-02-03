@@ -1323,7 +1323,7 @@
         <source>Select color</source>
       </trans-unit>
       <trans-unit id="HYT_algorithm_file" datatype="html">
-        <source>File:</source>
+        <source>JAR package:</source>
       </trans-unit>
       <trans-unit id="HYT_algorithm_file_exists" datatype="html">
         <source>exists</source>
