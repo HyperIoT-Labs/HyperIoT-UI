@@ -54,7 +54,7 @@
               </div> <!-- Field Email -->
 
               <div class="container-form-field">
-                <hyt-input-text [form]="registrationForm" formControlName="huser-password" name="huser-password"
+                <hyt-input-text [form]="registrationForm" formControlName="huser-password" name="huser-password" password="huser-passwordConfirm"
                   [isRequired]="true" [isPassword]="true" i18n-placeholder="@@HYT_password" placeholder="Password"
                   [injectedErrorMsg]="getError('huser-password')" type="password" errorPosition="bottom"
                   autocomplete="new-password">
