@@ -1416,6 +1416,10 @@
         <source>Proceeding with this action you will disable the registration of the data and they will not be stored until the rehabilitation of this property</source>
         <target>Procedendo con questa azione disabiliterai la registrazione dei dati che non saranno salvati fino alla riabilitazione di questa proprietà</target>
       </trans-unit>
+      <trans-unit id="HYT_dashboard_event_fired" datatype="html">
+        <source>The event has been fired</source>
+        <target>L'evento è stato emesso</target>
+      </trans-unit>
       <trans-unit id="HYT_reload" datatype="html">
         <source>Reload</source>
         <target>Ricarica</target>
@@ -1764,15 +1768,15 @@
         <source>Select color</source>
         <target>Seleziona colore</target>
       </trans-unit>
-      <trans-unit id="HYT_algorithm_jar_package" datatype="html">
+      <trans-unit id="HYT_algorithm_file" datatype="html">
         <source>JAR package:</source>
-        <target>Pacchetto JAR</target>
+        <target>JAR package:</target>
       </trans-unit>
-      <trans-unit id="HYT_algorithm_jar_package_exists" datatype="html">
+      <trans-unit id="HYT_algorithm_file_exists" datatype="html">
         <source>exists</source>
         <target>è presente</target>
       </trans-unit>
-      <trans-unit id="HYT_algorithm_jar_package_not_exists" datatype="html">
+      <trans-unit id="HYT_algorithm_file_not_exists" datatype="html">
         <source>does not exist</source>
         <target>non è presente</target>
       </trans-unit>

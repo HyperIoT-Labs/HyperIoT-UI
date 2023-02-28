@@ -1062,6 +1062,9 @@
       <trans-unit id="HYT_dashboard_end_registration" datatype="html">
         <source>Proceeding with this action you will disable the registration of the data and they will not be stored until the rehabilitation of this property</source>
       </trans-unit>
+      <trans-unit id="HYT_dashboard_event_fired" datatype="html">
+        <source>The event has been fired</source>
+      </trans-unit>
       <trans-unit id="HYT_reload" datatype="html">
         <source>Reload</source>
       </trans-unit>
@@ -1322,13 +1325,13 @@
       <trans-unit id="HYT_tag_select_color" datatype="html">
         <source>Select color</source>
       </trans-unit>
-      <trans-unit id="HYT_algorithm_jar_package" datatype="html">
+      <trans-unit id="HYT_algorithm_file" datatype="html">
         <source>JAR package:</source>
       </trans-unit>
-      <trans-unit id="HYT_algorithm_jar_package_exists" datatype="html">
+      <trans-unit id="HYT_algorithm_file_exists" datatype="html">
         <source>exists</source>
       </trans-unit>
-      <trans-unit id="HYT_algorithm_jar_package_not_exists" datatype="html">
+      <trans-unit id="HYT_algorithm_file_not_exists" datatype="html">
         <source>does not exist</source>
       </trans-unit>
       <trans-unit id="HYT_algorithm_choose_file" datatype="html">
