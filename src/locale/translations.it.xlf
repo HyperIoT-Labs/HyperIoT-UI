@@ -1836,6 +1836,10 @@
         <source>This widget is unavailable</source>
         <target>Questo widget non è disponibile</target>
       </trans-unit>
+      <trans-unit id="HYT_widget_settings_text_color" datatype="html">
+        <source>Text color:</source>
+        <target>Colore del testo:</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

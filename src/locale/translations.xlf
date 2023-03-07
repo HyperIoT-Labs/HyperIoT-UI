@@ -1376,6 +1376,9 @@
       <trans-unit id="HYT_unavailble_widget_description" datatype="html">
         <source>This widget is unavailable</source>
       </trans-unit>
+      <trans-unit id="HYT_widget_settings_text_color" datatype="html">
+        <source>Text color:</source>
+      </trans-unit>
     </body>
   </file>
 </xliff>
