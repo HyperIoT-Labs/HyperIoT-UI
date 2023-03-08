@@ -57,7 +57,6 @@ import {MatButtonModule} from '@angular/material/button';
 import {MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule} from '@angular/material/dialog';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatCardModule} from '@angular/material/card';
-import {WidgetsOnlineModule} from '@hyperiot/widgets/lib/widget-online/widgets-online.module';
 import { DashComponent } from './pages/dash/dash.component';
 
 import {ScrollingModule} from '@angular/cdk/scrolling';
