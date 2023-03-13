@@ -45,10 +45,18 @@ export class DeviceSelectComponent implements OnChanges {
     this.selectedDevice.emit(event.value);
   }
 
+  /**
+   * Sets a value to selected based on previous value or deafults to the first element 
+   */
   autoSelect(): void {
     if (this.devicesOptions.length !== 0) {
-      this.selectForm.get('selectDevice').setValue(this.devicesOptions[0].value);
-      this.deviceChanged(this.devicesOptions[0]);
+      if (this.selectForm.get('selectDevice').value) {
+        const option = this.devicesOptions.find(option => option.label === this.selectForm.get('selectDevice').value.deviceName);
+        this.deviceChanged(option);
+      } else {
+        this.selectForm.get('selectDevice').setValue(this.devicesOptions[0].value);
+        this.deviceChanged(this.devicesOptions[0]);
+      }
     } else {
       this.selectedDevice.emit(null);
     }

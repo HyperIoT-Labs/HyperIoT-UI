@@ -2,28 +2,28 @@
 
     <div class="row">
         <div class="col-12 header-table">
-            {{_summaryList.title}}
-            <span *ngIf="addButtonActive" class="hyt-icon icon-hyt_plusC" (click)="addEntity()"></span>
+            {{summaryList.title}}
+            <span *ngIf="addButtonActive" class="hyt-icon icon-hyt_plusC" (click)="onOptionClick('add')"></span>
         </div>
     </div>
 
     <div  class="container-body-table-elements">
 
-        <ng-container [ngSwitch]="_summaryList.title">
+        <ng-container [ngSwitch]="summaryList.title">
 
             <ng-container *ngSwitchCase="'Packets'">
                 <ng-container *ngIf="filteredElementList.length > 0; else emptyPacketBox">
 
                     <div class="row-table-element" *ngFor="let item of filteredElementList; let i = index">
 
-                        <div class="name-table-element" (click)="onEditOptionClick(item)">
+                        <div class="name-table-element" (click)="onOptionClick('edit', item)">
                             {{item.name}}
                         </div>
                         <div class="cancel-table-element">
-                            <span class="hyt-icon icon-hyt_trash" (click)="onDeleteOptionClick(item)"></span>
+                            <span class="hyt-icon icon-hyt_trash" (click)="onOptionClick('delete', item)"></span>
                         </div>
                         <div class="duplicate-table-element">
-                            <span class="hyt-icon icon-hyt_duplicate" (click)="onDuplicateOptionClick(item)"></span>
+                            <span class="hyt-icon icon-hyt_duplicate" (click)="onOptionClick('duplicate', item)"></span>
                         </div>
 
                     </div>
@@ -45,14 +45,14 @@
 
                     <div class="row-table-element" *ngFor="let item of filteredElementList; let i = index">
 
-                        <div class="name-table-element" (click)="onEditOptionClick(item)">
+                        <div class="name-table-element" (click)="onOptionClick('edit', item)">
                             {{item.name}}
                         </div>
                         <div class="cancel-table-element">
-                            <span class="hyt-icon icon-hyt_trash" (click)="onDeleteOptionClick(item)"></span>
+                            <span class="hyt-icon icon-hyt_trash" (click)="onOptionClick('delete', item)"></span>
                         </div>
                         <div class="duplicate-table-element">
-                            <span class="hyt-icon icon-hyt_duplicate" (click)="onDuplicateOptionClick(item)"></span>
+                            <span class="hyt-icon icon-hyt_duplicate" (click)="onOptionClick('duplicate', item)"></span>
                         </div>
 
                     </div>
@@ -75,14 +75,14 @@
 
               <div class="row-table-element" *ngFor="let item of filteredElementList; let i = index">
 
-                <div class="name-table-element" (click)="onEditOptionClick(item)">
+                <div class="name-table-element" (click)="onOptionClick('edit', item)">
                   {{item?.name}}
                 </div>
                 <div class="cancel-table-element">
-                  <span class="hyt-icon icon-hyt_trash" (click)="onDeleteOptionClick(item)"></span>
+                  <span class="hyt-icon icon-hyt_trash" (click)="onOptionClick('delete', item)"></span>
                 </div>
                 <div class="duplicate-table-element">
-                  <span class="hyt-icon icon-hyt_duplicate" (click)="onDuplicateOptionClick(item)"></span>
+                  <span class="hyt-icon icon-hyt_duplicate" (click)="onOptionClick('duplicate', item)"></span>
                 </div>
 
               </div>
@@ -101,18 +101,18 @@
 
             <ng-container *ngSwitchDefault>
 
-                <ng-container *ngIf="_summaryList.list.length > 0; else emptyGenericBox">
+                <ng-container *ngIf="summaryList.list.length > 0; else emptyGenericBox">
 
-                    <div  class="row-table-element" *ngFor="let item of _summaryList.list; let i = index">
+                    <div  class="row-table-element" *ngFor="let item of summaryList.list; let i = index">
 
-                        <div class="name-table-element" (click)="onEditOptionClick(item)">
+                        <div class="name-table-element" (click)="onOptionClick('edit', item)">
                             {{item?.name}}
                         </div>
                         <div class="cancel-table-element">
-                            <span class="hyt-icon icon-hyt_trash" (click)="onDeleteOptionClick(item)"></span>
+                            <span class="hyt-icon icon-hyt_trash" (click)="onOptionClick('delete', item)"></span>
                         </div>
                         <div class="duplicate-table-element">
-                            <span class="hyt-icon icon-hyt_duplicate" (click)="onDuplicateOptionClick(item)"></span>
+                            <span class="hyt-icon icon-hyt_duplicate" (click)="onOptionClick('duplicate', item)"></span>
                         </div>
 
                     </div>
@@ -122,7 +122,7 @@
                 <ng-template #emptyGenericBox>
 
                     <div id="row-table-no-element" i18n="@@HYT_summary_list_no_packets">
-                        No {{_summaryList.title}}
+                        No {{summaryList.title}}
                     </div>
 
                 </ng-template>

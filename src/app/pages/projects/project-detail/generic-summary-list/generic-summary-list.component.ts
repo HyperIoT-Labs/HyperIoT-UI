@@ -1,6 +1,5 @@
-import { eventNames } from 'process';
 import { Component, Input, Output, EventEmitter, ViewEncapsulation, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-
+import { Logger, LoggerService } from '@hyperiot/core';
 export class SummaryList {
   title: string;
   list: SummaryListItem[];
@@ -25,11 +24,8 @@ export class GenericSummaryListComponent implements OnInit, OnChanges {
     item?: any
   }>();
 
-  _summaryList: SummaryList;
   @Input()
-  set summaryList(summary: SummaryList) {
-    this._summaryList = summary;
-  }
+  summaryList: SummaryList;
 
   @Input()
   addButtonActive = false;
@@ -40,118 +36,93 @@ export class GenericSummaryListComponent implements OnInit, OnChanges {
   @Input()
   enrichmentPacketId = null;
 
-  selectedItem: SummaryListItem;
-
   filteredElementList: SummaryListItem[] = [];
 
-  constructor() {
-  }
+  /**
+   * logger service
+   */
+  private logger: Logger;
+
+  constructor(private loggerService: LoggerService) {
+    this.logger = new Logger(this.loggerService);
+    this.logger.registerClass('GenericSummaryListComponent');
+}
 
   ngOnInit() {
-    switch (this._summaryList.title) {
-      case 'Packets':
-
-        this.getFilteredElement(this._summaryList.list, this.currentDevice, false);
-        break;
-      case 'Packet Events':
-
-        this.getFilteredElement(this._summaryList.list, this.currentDevice, false,-1, true);
-        break;
-      case 'Packet Enrichments':
-
-        this.getFilteredElement(this._summaryList.list, this.currentDevice, true, this.enrichmentPacketId);
-        break;
-    }
+    this.filterElements(this.summaryList, this.currentDevice,this.enrichmentPacketId);
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    const currentDevice = this.getCurrentElementByField(changes, 'currentDevice');
+    const currentSummaryList = this.getCurrentElementByField(changes, 'summaryList');
+    const currentPacketID = this.getCurrentElementByField(changes, 'enrichmentPacketId');
+    this.filterElements(currentSummaryList, currentDevice, currentSummaryList.title == 'Packet Enrichments' && currentPacketID);
+  }
 
-    switch (this._summaryList.title) {
-
+  /**
+   * Fn called onInit and onChange where based on the packet name it filters the elements
+   * @param list 
+   * @param device 
+   * @param packetId optional
+   */
+  filterElements(list: SummaryList, device: any, packetId?: number) {
+    this.logger.debug('filterElements: list', list);
+    switch (list.title) {
       case 'Packets':
-
-        const pDeviceName = (changes['currentDevice'] && changes['currentDevice']?.currentValue !== changes['currentDevice']?.previousValue) ?
-          changes['currentDevice']?.currentValue : this.currentDevice;
-
-        const pSummaryList = (changes['summaryList'] && changes['summaryList']?.currentValue !== changes['summaryList']?.previousValue) ?
-        changes['summaryList']?.currentValue : this._summaryList;
-
-        this.getFilteredElement(pSummaryList.list, pDeviceName, false );
-
+        this.getFilteredElement(list.list, device, false);
         break;
-
+      case 'Packet Events':
+        this.getFilteredElement(this.summaryList.list, device, false,-1, true);
+        break;
       case 'Packet Enrichments':
-
-        const peDeviceName = (changes['currentDevice'] && (changes['currentDevice']?.currentValue !== changes['currentDevice']?.previousValue)) ?
-          changes['currentDevice']?.currentValue : this.currentDevice;
-
-        const pePacketID = (changes['enrichmentPacketId'] && (changes['enrichmentPacketId']?.currentValue !== changes['enrichmentPacketId']?.previousValue)) ?
-          changes['enrichmentPacketId']?.currentValue : this.enrichmentPacketId;
-
-          this.getFilteredElement(this._summaryList.list, peDeviceName, true, pePacketID);
-
+        this.getFilteredElement(this.summaryList.list, device, true, packetId);
         break;
     }
   }
 
-  addEntity() {
-    this.menuAction.emit({
-      action: 'add'
-    });
+  /**
+   * Takes in the current context and field and filters the corrected value
+   * @param changes current summary list
+   * @param field 
+   * @returns the current element or the field
+   */
+  getCurrentElementByField(changes: SimpleChanges, field: string) {
+    return (changes[field] && (changes[field]?.currentValue !== changes[field]?.previousValue)) ?
+      changes[field]?.currentValue : this[field];
   }
 
-  onEditOptionClick(itemT: SummaryListItem) {
+  /**
+   * Generic function called for the actions available in the component
+   * @param action possible values: 'add' | 'edit' | 'duplicate' | 'delete'
+   * @param itemT (optional)
+   */
+  onOptionClick(action: any, itemT?: SummaryListItem) {
+    itemT ? 
     this.menuAction.emit({
-      action: 'edit',
+      action: action,
       item: itemT
-    });
-  }
-
-  onDuplicateOptionClick(itemT: SummaryListItem) {
-    this.menuAction.emit({
-      action: 'duplicate',
-      item: itemT
-    });
-  }
-
-  onDeleteOptionClick(itemT: SummaryListItem) {
-    this.menuAction.emit({
-      action: 'delete',
-      item: itemT
+    })
+    : this.menuAction.emit({
+      action: action
     });
   }
 
   getFilteredElement(itemList: SummaryListItem[], deviceToFilter: string, isEnrichment: boolean = false, packetIDToFilter?: number, isEvent: boolean = false){
-
     this.filteredElementList = [];
-
-    if(isEnrichment) {
-
-      itemList.map((singleItem) => {
-
+    itemList.forEach((singleItem) => {
+      if (isEnrichment) {
         if(singleItem.data.packet.id === packetIDToFilter && singleItem.data.packet.device.deviceName === deviceToFilter) {
           this.filteredElementList.push(singleItem);
         }
-
-      });
-    } else if(isEvent) {
-      itemList.map((singleItem) => {
+      } else if (isEvent) {
         if (singleItem.data.type === 'EVENT') {
           this.filteredElementList.push(singleItem);
         }
-      })
-    } else {
-
-      itemList.map((singleItem) => {
-
+      } else {
         if(singleItem.data.device.deviceName === deviceToFilter) {
           this.filteredElementList.push(singleItem);
         }
-
-      });
-
-    }
-
+      }
+    });
   }
-
 }
