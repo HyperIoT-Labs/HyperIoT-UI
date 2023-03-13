@@ -157,7 +157,7 @@ export class AreasViewComponent {
   private loadAreaImage(area: Area) {
     // load area map image
     this.mapComponent.unsetMapImage();
-    if (area.imagePath) {
+    if ((area as any).imagePath) {  // TODO 'imagePath' has been removed from 'Area' interface
       // TODO: no way to make this work with Area API
       //this.areaService.getAreaImage(this.areaId).subscribe((res) => {
       //});

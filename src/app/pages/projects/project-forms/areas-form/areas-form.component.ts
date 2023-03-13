@@ -434,7 +434,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
 
   private loadAreaImage() {
     this.mapComponent.unsetMapImage();
-    if (this.entity.imagePath) {
+    if ((this.entity as any).imagePath) { // TODO 'imagePath' has been removed from 'Area' interface
       // TODO: no way to make this work with Area API
       //this.areaService.getAreaImage(this.areaId).subscribe((res) => {
       //});

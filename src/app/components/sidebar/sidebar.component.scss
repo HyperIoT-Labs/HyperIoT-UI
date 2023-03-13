@@ -23,7 +23,7 @@
             bottom:0;
             height:100%;
             left:0;
-            z-index:1001;
+            z-index: 998;
             background-color: #1e58a5;
 
             -webkit-transition: left .15s ease-in-out;
@@ -33,6 +33,9 @@
             
     
             ul {
+                display: flex;
+                flex-direction: column;
+                height: 100%;
                 padding-top: 65px;
                 overflow: hidden;
                 background: #1e58a5;
@@ -140,6 +143,11 @@
                   
                 }
 
+            }
+
+            li:last-child {
+                margin-top: auto;
+                cursor: pointer;
             }
     
             .nav-icon {

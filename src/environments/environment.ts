@@ -1,4 +1,5 @@
 import { LOG_LEVEL } from '@hyperiot/core';
+import packageInfo from 'package.json';
 
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
@@ -9,7 +10,8 @@ export const environment = {
   logLevel: 5,
   registry: {},
   cookieSecure: false,
-  mqttUrl: "tcp://karaf-activemq-mqtt-test.hyperiot.cloud"
+  mqttUrl: "tcp://karaf-activemq-mqtt-test.hyperiot.cloud",
+  version: packageInfo.version,
 };
 
 /*
