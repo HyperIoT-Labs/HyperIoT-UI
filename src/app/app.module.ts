@@ -57,10 +57,11 @@ import {MatButtonModule} from '@angular/material/button';
 import {MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule} from '@angular/material/dialog';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatCardModule} from '@angular/material/card';
-import {WidgetsOnlineModule} from '@hyperiot/widgets/lib/widget-online/widgets-online.module';
 import { DashComponent } from './pages/dash/dash.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import {ScrollingModule} from '@angular/cdk/scrolling';
+import { InfoComponent } from './components/info/info.component';
 PlotlyModule.plotlyjs = PlotlyJS;
 
 export class MyUrlSerializer extends DefaultUrlSerializer implements UrlSerializer {
@@ -97,7 +98,8 @@ export function apiConfigFactory(): Configuration {
     InfoRecordingActionComponent,
     AreasViewComponent,
     PromptComponent,
-    DashComponent
+    DashComponent,
+    InfoComponent,
   ],
   // dynamically created components
   entryComponents: [
@@ -124,6 +126,7 @@ export function apiConfigFactory(): Configuration {
     MatDialogModule,
     MatTabsModule,
     MatCardModule,
+    MatProgressSpinnerModule,
     CustomMaterialModule,
     DashboardModule,
     ReactiveFormsModule,

@@ -1,0 +1,20 @@
+.hyt-info {
+    display: flex;
+    padding: 20px 32px;
+    color: #225a95;
+    gap: 64px;
+    align-items: center;
+
+    img {
+        height: 130px;
+    }
+
+    .version-row {
+        display: flex;
+        align-items: center;
+    }
+
+    span {
+        font-weight: bold;
+    }
+}

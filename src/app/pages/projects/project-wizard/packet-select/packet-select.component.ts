@@ -81,17 +81,12 @@ export class PacketSelectComponent implements OnInit {
     }
   }
 
-  autoSelect(): void {
-    
+  autoSelect(deviceId?: number): void {
     this.buildDeviceOptions();
-    let index = 0;
     if (this.devicesOptions.length !== 0) {
-      while (index < this.devicesOptions.length && this.devicesOptions[index].disabled) {
-        index++;
-      }
-      this.selectForm.get('selectDevice').setValue(this.devicesOptions[index] ?
-        this.devicesOptions[index].value : null);
-      this.deviceChanged(this.devicesOptions[index] ? this.devicesOptions[index] : null);
+      const device = this.devicesOptions.find(device => device.value === deviceId);
+      this.selectForm.get('selectDevice').setValue(device ? device.value : null);
+      this.deviceChanged(device ? device : null);
     } else {
       this.selectForm.get('selectDevice').setValue(null);
       this.deviceChanged(null);

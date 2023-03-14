@@ -1,4 +1,6 @@
 #hyt-topbar {
+    display: flex;
+    justify-content: space-between;
     height: 64px;
 
     background-color: #fdfdfd;
@@ -11,22 +13,18 @@
     box-shadow: 4px -7px 13px 2px #aeaeae;
 
     #logo-container {
-        float: left;
-        display: table;
-        max-width: 205px;
-        width: 180px;
+        align-self: center;
+        display: flex;
+        height: 38px;
         margin-left: -7px;
-        margin-top: 2px;
 
         a {
-            display: block;
 
             img {
 
                 &#img-logo-hyt {
 
-                    width: 100%;
-                    margin-top: 10px;
+                    height: 100%;
 
                 }
 
@@ -34,11 +32,15 @@
 
         }
 
+        .fe-version {
+          align-self: end;
+          font-size: 14px;
+          line-height: 12px;
+        }
+
     }
     
     #main-container {
-      
-      float: right;
       
       #hamburger-btn {
 
@@ -159,14 +161,12 @@
 
         #logo-container {
 
-            float: none;
-            display: flex;
             align-items: center;
             justify-content: center;
             width: 100%;
             max-width: 100%;
-            height: 64px;
             margin-top: 0px;
+            margin-left: 0px;
 
             a {
             

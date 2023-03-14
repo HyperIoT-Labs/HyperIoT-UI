@@ -1,0 +1,19 @@
+<div class="hyt-info">
+    <img class="info-image" src="assets/images/hyperiot_logo_single_char.png">
+    <div class="info-content">
+        <h2>HyperIoT</h2>
+        <div class="version-row">
+            <span i18n="@@HYT_ui_version">UI version</span>: {{ feVersion }}
+        </div>
+        <div class="version-row">
+            <span i18n="@@HYT_services_version">Services version</span>: 
+            <ng-container *ngIf="!beVersionPending">{{ beVersion }}</ng-container>
+            <mat-spinner *ngIf="beVersionPending" strokeWidth="6px" [diameter]="14"></mat-spinner>
+        </div>
+        <hr>
+        <div class="info-links">
+            <a href="https://github.com/HyperIoT-Labs" target="_blank">GitHub</a> |
+            <a href="https://hyperiot.cloud/" target="_blank">Website</a>
+        </div>
+    </div>
+</div>
