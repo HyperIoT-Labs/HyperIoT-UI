@@ -1083,6 +1083,8 @@
       <trans-unit id="HYT_go_to_your_projects" datatype="html">
         <source>Go to your Projects</source>
       </trans-unit>
+
+      <!-- AREAS START -->
       <trans-unit id="HYT_area_map_select_device" datatype="html">
         <source>Select device</source>
       </trans-unit>
@@ -1158,6 +1160,23 @@
       <trans-unit id="HYT_areas" datatype="html">
         <source>Areas</source>
       </trans-unit>
+      <trans-unit id="HYT_areas_no_areas_defined" datatype="html">
+        <source>No areas defined.</source>
+      </trans-unit>
+      <trans-unit id="HYT_areas_select_area_from_list" datatype="html">
+        <source>Select an area from the list below</source>
+      </trans-unit>
+      <trans-unit id="HYT_areas_show_treeview" datatype="html">
+        <source>Show</source>
+      </trans-unit>
+      <trans-unit id="HYT_areas_hide_treeview" datatype="html">
+        <source>Hide</source>
+      </trans-unit>
+      <trans-unit id="HYT_areaa_go_to_create_area" datatype="html">
+        <source>Create the first area for this project</source>
+      </trans-unit>
+      <!-- AREAS END -->
+
       <trans-unit id="HYT_dashboard_list" datatype="html">
         <source>Dashboard list</source>
       </trans-unit>

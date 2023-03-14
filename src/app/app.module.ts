@@ -62,6 +62,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import {ScrollingModule} from '@angular/cdk/scrolling';
 import { InfoComponent } from './components/info/info.component';
+import { ContainerAreaMapComponent } from './pages/areas/container-area-map/container-area-map.component';
 PlotlyModule.plotlyjs = PlotlyJS;
 
 export class MyUrlSerializer extends DefaultUrlSerializer implements UrlSerializer {
@@ -100,6 +101,7 @@ export function apiConfigFactory(): Configuration {
     PromptComponent,
     DashComponent,
     InfoComponent,
+    ContainerAreaMapComponent,
   ],
   // dynamically created components
   entryComponents: [

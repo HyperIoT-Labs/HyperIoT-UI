@@ -228,6 +228,7 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
   }
 
   onSaveClick() {
+    console.log('onSaveClick', this.currentEntity)
     this.validationErrors = [];
     this.currentEntity.save((res) => {
       if (this.currentEntity instanceof PacketEnrichmentFormComponent || this.currentEntity instanceof ProjectEventsFormComponent

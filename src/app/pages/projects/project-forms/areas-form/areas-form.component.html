@@ -1,28 +1,31 @@
 <div id="container-areas-form">
-    <!-- Main areas list -->
+    AREA FORM EDIT MODE {{ editMode }}
+    <!-- Main areas list // Verificare effettivo Utilizzo // -->
     <div *ngIf="!editMode" class="content">
-
+        <p>AREA FORM</p>
         <div class="overview">
             <!--@I18N@-->
+          <p>OVERVIEW AREA FORM</p>
         </div>
 
         <div class="actions">
-            <hyt-button 
-                mat-mini-fab 
+            <hyt-button
+                mat-mini-fab
                 [color]="'hyt-base-default-white'"
                 [routerLink]="[ '/projects/', projectId, {outlets: { projectDetails: ['areas', 0 ] } } ]">
                 <span i18n="@@HYT_area_add">Add area</span>
                 <span class="hyt-icon icon-hyt_plusC"></span>
             </hyt-button>
         </div>
-
+        AREA: {{ areaList | json }}
         <hyt-areas-list
-            [areaList]="areaList"
+            [projectId]="projectId"
+            [isInFormArea]="true"
             (itemSelected)="onEditAreaClick($event)">
         </hyt-areas-list>
 
     </div>
-   
+
     <!-- Area detail form -->
     <div [ngClass]="{ hidden: !editMode }" class="content">
 
@@ -30,11 +33,12 @@
             <a [routerLink]="[ '/projects/', projectId, {outlets: { projectDetails: ['areas'] } } ]" i18n="@@HYT_area_path_main">Main</a>
             <span *ngFor="let area of areaPath; let i = index; let c = count">
                 &nbsp;&raquo;&nbsp;
-                <a *ngIf="i < c - 1" [routerLink]="[ '/projects/', projectId, {outlets: { projectDetails: ['areas', area.id ] } } ]">{{area.name}}</a>    
+                <a *ngIf="i < c - 1" [routerLink]="[ '/projects/', projectId, {outlets: { projectDetails: ['areas', area.id ] } } ]">{{area.name}}</a>
                 <span *ngIf="i === c - 1"><strong>{{area.name}}</strong></span>
             </span>
         </div>
 
+      <!-- START TAB -->
         <mat-tab-group [(selectedIndex)]="currentSection" (selectedTabChange)="onTabChange($event)">
 
             <mat-tab label="Info" i18n-label="@@HYT_area_section_info">
@@ -49,7 +53,8 @@
                         [injectedErrorMsg]="getError('area-name')"
                         i18n-hintMessage="@@HYT_hint_area_name"
                         hintMessage="Enter area name"
-                        [isRequired]="true"></hyt-input-text>
+                        [isRequired]="true"
+                    ></hyt-input-text>
 
                     <hyt-text-area [form]="form"
                         name="area-description"
@@ -57,9 +62,20 @@
                         i18n-hintMessage="@@HYT_hint_area_description"
                         hintMessage="Enter area description"
                         i18n-placeholder="@@HYT_description"
-                        placeholder="Description"></hyt-text-area>
-
-                </form>                    
+                        placeholder="Description"
+                    ></hyt-text-area>
+                  <hyt-select
+                    [form]="form"
+                    name="area-type"
+                    [options]="fieldAreaTypeOptions"
+                    [isRequired]="true"
+                    i18n-label="@@HYT_type"
+                    label="Type"
+                    i18n-hintMessage="@@HYT_hint_field_type"
+                    hintMessage="Select field type."
+                  >
+                  </hyt-select>
+                </form>
             </mat-tab>
 
             <mat-tab *ngIf="areaId > 0" label="Sub-areas ({{ areaList.length }})" i18n-label="@@HYT_area_section_inner">
@@ -69,8 +85,10 @@
                         <span class="hyt-icon icon-hyt_plusC"></span>
                     </hyt-button>
                 </div>
+                LIST: {{areaList | json}}
                 <hyt-areas-list
-                    [areaList]="areaList"
+                    [projectId]="projectId"
+                    [subAreaList]="areaList"
                     (itemSelected)="onEditInnerAreaClick($event)">
                 </hyt-areas-list>
             </mat-tab>
@@ -94,13 +112,13 @@
             </mat-tab>
 
         </mat-tab-group>
-
+      <!-- END TAB -->
     </div>
 
-    <!-- 
+    <!--
         TODO: This HTML block is repeated
         across all 'entity' components,
-        consider making a component out of it 
+        consider making a component out of it
     -->
 
     <div *ngIf="loadingStatus !== LoadingStatus.Ready" class="overlay d-flex flex-column align-items-center justify-content-center">
@@ -109,23 +127,24 @@
 
             <h4 i18n="@@HYT_loading_data">Loading data...</h4>
 
-        </div> 
+        </div>
 
         <div *ngIf="loadingStatus === LoadingStatus.Error" class="error-overlay d-flex flex-column justify-content-center">
             <h4 i18n="@@HYT_error_occurred">An unexpected error has occurred</h4>
 
-            <hyt-button 
-                [color]="'hyt-base-default-white'" 
+            <hyt-button
+                [color]="'hyt-base-default-white'"
                 (click)="loadingStatus = LoadingStatus.Ready">
-                <span i18n="@@HYT_close">Close</span> <span class="icon-hyt_cancelC"></span> 
+                <span i18n="@@HYT_close">Close</span> <span class="icon-hyt_cancelC"></span>
             </hyt-button>
         </div>
 
         <h4 *ngIf="loadingStatus === LoadingStatus.Saving" i18n="@@HYT_saving_data">Saving data...</h4>
 
-        <mat-progress-bar 
+        <mat-progress-bar
             *ngIf="loadingStatus === LoadingStatus.Loading || loadingStatus === LoadingStatus.Saving"
-            mode="indeterminate"></mat-progress-bar> 
+            mode="indeterminate"
+        ></mat-progress-bar>
 
     </div>
 

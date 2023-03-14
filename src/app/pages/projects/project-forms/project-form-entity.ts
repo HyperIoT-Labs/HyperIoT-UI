@@ -96,20 +96,22 @@ export abstract class ProjectFormEntity implements OnInit, AfterViewInit {
     }
 
     edit(entity?: any, readyCallback?) {
-
-        console.log(entity);
+        console.log('EDIT FUNCTION -1', this.entityFormMap);
+        console.log('EDIT FUNCTION 0', entity);
         if (entity) {
             this.entity = { ...entity };
         }
 
         Object.keys(this.entityFormMap).forEach((key) => {
-            console.log(this.form);
-            console.log(key);
-            console.log(this.form.get(key));
+            console.log('EDIT FUNCTION ENTITY', this.entityFormMap);
+            console.log('EDIT FUNCTION 1', this.form);
+            console.log('EDIT FUNCTION 2',key);
+            console.log('EDIT FUNCTION 3', this.form.get(key));
             if (this.form.get(key)) {
-                //TODO: check why form control value inside the form control must be a string
-                //it should accept other values
-                let value = (this.entity[this.entityFormMap[key].field] != null && this.entity[this.entityFormMap[key].field] != undefined)?(""+this.entity[this.entityFormMap[key].field]):null;
+                // TODO: check why form control value inside the form control must be a string
+                // it should accept other values
+                const value = (this.entity[this.entityFormMap[key].field] != null && this.entity[this.entityFormMap[key].field] !== undefined)
+                              ? (''+this.entity[this.entityFormMap[key].field]) : null;
                 this.form.get(key).setValue(value);
             }
         });

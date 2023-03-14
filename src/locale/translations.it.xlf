@@ -1444,6 +1444,8 @@
         <source>Go to your Projects</source>
         <target>Vai ai tuoi progetti</target>
       </trans-unit>
+
+      <!-- AREAS START -->
       <trans-unit id="HYT_area_map_select_device" datatype="html">
         <source>Select device</source>
         <target>Seleziona dispositivo</target>
@@ -1544,6 +1546,28 @@
         <source>Areas</source>
         <target>Aree</target>
       </trans-unit>
+      <trans-unit id="HYT_areas_no_areas_defined" datatype="html">
+        <source>No areas defined.</source>
+        <target>Nessuna Area è stata definita</target>
+      </trans-unit>
+      <trans-unit id="HYT_areas_select_area_from_list" datatype="html">
+        <source>Select an area from the list below</source>
+        <target>Seleziona un'area dalla lista sottostante</target>
+      </trans-unit>
+      <trans-unit id="HYT_areas_show_treeview" datatype="html">
+        <source>Show</source>
+        <target>Mostra</target>
+      </trans-unit>
+      <trans-unit id="HYT_areas_hide_treeview" datatype="html">
+        <source>Hide</source>
+        <target>Nascondi</target>
+      </trans-unit>
+      <trans-unit id="HYT_areaa_go_to_create_area" datatype="html">
+        <source>Create the first area for this project</source>
+        <target>Crea la prima area per questo progetto</target>
+      </trans-unit>
+      <!-- AREAS END -->
+
       <trans-unit id="HYT_dashboard_list" datatype="html">
         <source>Dashboard list</source>
         <target>Lista dashboard</target>

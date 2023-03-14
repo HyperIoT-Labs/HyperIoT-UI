@@ -1,14 +1,42 @@
+
+/*
+ *
+ *  * Copyright 2019-2023 HyperIoT
+ *  *
+ *  * Licensed under the Apache License, Version 2.0 (the "License")
+ *  * you may not use this file except in compliance with the License.
+ *  * You may obtain a copy of the License at
+ *  *
+ *  *     http://www.apache.org/licenses/LICENSE-2.0
+ *  *
+ *  * Unless required by applicable law or agreed to in writing, software
+ *  * distributed under the License is distributed on an "AS IS" BASIS,
+ *  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  * See the License for the specific language governing permissions and
+ *  * limitations under the License.
+ *  *
+ *
+ */
+
 import { Component, ViewChild, ElementRef, Injector, OnInit, OnDestroy, Output, EventEmitter, AfterViewInit,ChangeDetectorRef } from '@angular/core';
 import { Router, ActivatedRoute, Event, NavigationStart } from '@angular/router';
-import { HytModalService } from '@hyperiot/components';
+import {HytModalService, Option} from '@hyperiot/components';
 import { ProjectFormEntity, LoadingStatusEnum } from '../project-form-entity';
-import { AreasService, HprojectsService, Area, AreaDevice } from '@hyperiot/core';
+import {AreasService, HprojectsService, Area, AreaDevice, AlgorithmIOField} from '@hyperiot/core';
 import { AreaMapComponent } from './area-map/area-map.component';
 import { HttpClient } from '@angular/common/http';
 import { AreaDeviceSelectDialogComponent } from './area-device-select-dialog/area-device-select-dialog.component';
 import { AreaInnerareaSelectDialogComponent } from './area-innerarea-select-dialog/area-innerarea-select-dialog.component';
 import { DraggableItemComponent } from './draggable-item/draggable-item.component';
 import { GenericMessageDialogComponent } from 'src/app/components/modals/generic-message-dialog/generic-message-dialog.component';
+
+// TODO: get Area Type ENUM from core service
+enum AreaTypeEnum {
+  MAP = 'MAP',
+  BIM_XKT = 'BIM_XKT',
+  BIM_IFC = 'BIM_IFC',
+  IMAGE = 'IMAGE'
+}
 
 @Component({
   selector: 'hyt-areas-form',
@@ -27,8 +55,8 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
     'area-description': {
       field: 'description'
     },
-    'area-image': {
-      field: 'imagePath'
+    'area-type': {
+      field: 'areaViewType'
     }
   };
 
@@ -39,11 +67,25 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
   areaList: Area[] = [];
   areaPath: Area[] = [];
 
-  allowedImageTypes = ['.jpg','.jpeg','.png','.svg']; 
+  allowedImageTypes = ['.jpg','.jpeg','.png','.svg', '.webp'];
   acceptFiles = this.allowedImageTypes.join(",").replace(/\./,"image/");
   maxFileSize = 0; // this will be set in constructor via areaService.getConfig()...
 
   @Output() clickedTab: EventEmitter<any> = new EventEmitter();
+  // TODO: change this function !!!
+  fieldAreaTypeOptions: Option[] = Object.keys(AreaTypeEnum)
+    .map((k) => {
+      switch (k) {
+        case 'IMAGE':
+          return {label: 'STATIC IMAGE', value: k}
+        case 'MAP':
+          return {label: 'DYNAMIC MAP', value: k, disabled: true}
+        case 'BIM_XKT':
+          return {label: 'BIM IN XKT FORMAT', value: k, disabled: true}
+        case 'BIM_IFC':
+          return {label: 'BIM IN IFC FORMAT', value: k, disabled: true}
+      }
+    });
 
   constructor(
     injector: Injector,
@@ -77,7 +119,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
       this.areaId = +params.areaId;
       this.load();
     });
-    
+
     this.router.events.subscribe( (event: Event) => {
       if (event instanceof NavigationStart) {
           if (this.isDirty()) {
@@ -97,9 +139,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
   }
 
   ngAfterViewInit() {
-  
     this.clickedTab.emit('Tab-Info');
-
   }
 
   load() {
@@ -124,6 +164,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
     } else if (this.areaId > 0) {
       // Load Area with id = this.areaId
       this.areaService.findArea(this.areaId).subscribe((area) => {
+        console.log('AREA FORM EDIT', area)
         this.edit(area);
         this.areaService.getAreaPath(this.areaId).subscribe((path) => {
           this.areaPath = path;
@@ -169,6 +210,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
 
   onFileChange(event) {
     if (event.target.files && event.target.files.length) {
+      console.log('ONFILECHANGE', event);
       const [file] = event.target.files;
       const fileName = (file.name as string);
       const extension = fileName.substr(fileName.lastIndexOf('.')).toLocaleLowerCase();
@@ -201,22 +243,23 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
         };
         reader.readAsDataURL(file);
         */
-        //this.areaService.setAreaImage(this.areaId, file).subscribe((res) => {
-        //  console.log(res);
-        //});
-
-        //this.mapComponent.setMapImage(null);
+        /*this.areaService.setAreaImage(this.areaId, file).subscribe((res) => {
+          console.log(res);
+        });*/
+        // this.mapComponent.setMapImage(null);
 
         this.loadingStatus = LoadingStatusEnum.Saving;
         // check image file size on the client side before effective upload
         const reader = new FileReader();
         reader.onload = (e) => {
           const kiloBytesLength = file.size;
+          console.log('MAX SIZE', this.maxFileSize)
           // Check if `kiloBytesLength` does not exceed the maximum allowed size
           if (kiloBytesLength <= this.maxFileSize) {
             // TODO: using standard HttpClient for this request (see early comment in this method)
             const formData = new FormData();
-            formData.append('image_file', file, file.name);
+            formData.append('image_file', file, file.name)
+            console.log('FORM DATA IMAGE', formData);
             this.httpClient.post(`/hyperiot/areas/${this.areaId}/image`, formData).subscribe((res) => {
               this.entity = res as Area;
               this.apiSuccess(res);
@@ -359,7 +402,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
       this.hideDelete = true;
     }
 
-    if(this.currentSection == 1){
+    if(this.currentSection === 1){
       this.clickedTab.emit('Tab-Sub-Area');
     }
 
@@ -434,7 +477,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
 
   private loadAreaImage() {
     this.mapComponent.unsetMapImage();
-    if ((this.entity as any).imagePath) { // TODO 'imagePath' has been removed from 'Area' interface
+    //if (this.entity.imagePath) {
       // TODO: no way to make this work with Area API
       //this.areaService.getAreaImage(this.areaId).subscribe((res) => {
       //});
@@ -446,13 +489,14 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
         reader.onload = () => {
           const img = new Image();
           img.onload = () => {
+            console.log('ONLOAD IMAGE', reader);
             this.mapComponent.setMapImage(`/hyperiot/areas/${this.areaId}/image?` + (new Date().getTime()), img.width, img.height);
           };
           img.src = reader.result as string;
         };
         reader.readAsDataURL(res);
       });
-    }
+    //}
   }
 
   private getParentAreaId() {
@@ -489,10 +533,12 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
   }
 
   private saveArea(successCallback: any, errorCallback: any) {
+    console.log('saveArea', this.entity)
     this.loadingStatus = LoadingStatusEnum.Saving;
     let area = this.entity;
     area.name = this.form.get('area-name').value;
     area.description = this.form.get('area-description').value;
+    // TEST CONFIGURATION
     area = this.patchArea(area);
     const parentAreaId = this.getParentAreaId();
     area.parentArea = parentAreaId ? { id: parentAreaId, entityVersion: null } : null;

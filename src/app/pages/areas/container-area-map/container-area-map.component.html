@@ -1,77 +1,81 @@
 <div id="container-area-map">
-  <p>Ecco la area map</p>
-</div>
-<!--div id="container-area-map" *ngIf="areaId">
+  <ng-container *ngIf="pageStatus === 1">
+    <div
+      id="container-treeview-project"
+      [ngClass]="{'displayBlock': treeViewIsOpen, 'displayNone': !treeViewIsOpen}"
+      cdkDrag
+      [cdkDragFreeDragPosition]="dragPosition"
+      cdkDragBoundary="#hyt-container"
+      (cdkDragEnded)="dragEnded($event)"
+    >
+      <div id="close-tree-btn" (click)="toggleTreeViewProject()">
+        <span class="hyt-icon icon-hyt_cancel"></span>
+      </div>
 
-            <div
-                id="container-treeview-project"
-                [ngClass]="{'displayBlock': treeViewIsOpen, 'displayNone': !treeViewIsOpen}"
-                cdkDrag
-                [cdkDragFreeDragPosition]="dragPosition"
-                cdkDragBoundary="#hyt-container"
-                (cdkDragEnded)="dragEnded($event)"
-            >
+      <div id="treeViewHeader" cdkDragHandle></div>
 
-                <div id="close-tree-btn" (click)="toggleTreeViewProject()">
-                    <span class="hyt-icon icon-hyt_cancel"></span>
-                </div>
+      <div id="treeViewBody">
 
-                <div id="treeViewHeader" cdkDragHandle>
+        <hyt-tree-view-project #treeView class="treeview" (nodeClick)="onTreeNodeClick($event)"></hyt-tree-view-project>
 
-                </div>
+      </div>
 
-                <div id="treeViewBody">
+    </div>
 
-                    <hyt-tree-view-project #treeView class="treeview" (nodeClick)="onTreeNodeClick($event)"></hyt-tree-view-project>
+    <div id="container-map">
 
-                </div>
+      <div id="map-header">
 
-            </div>
+        <div id="head-left">
 
-            <div id="container-map">
+          <hyt-button [color]="'hyt-base-total-white'" (clickFn)="toggleTreeViewProject()">
 
-                <div id="map-header">
+          <span
+            [ngClass]="{'icon-hyt_eyeClose': treeViewIsOpen, 'icon-hyt_eyeOpen': !treeViewIsOpen}"
+          ></span>
+            {{ preTitleTreeView }} Treeview Project
 
-                    <div id="head-left">
-
-                        <hyt-button [color]="'hyt-base-total-white'" (clickFn)="toggleTreeViewProject()">
-
-                            <span
-                                [ngClass]="{'icon-hyt_eyeClose': treeViewIsOpen, 'icon-hyt_eyeOpen': !treeViewIsOpen}"
-                            ></span>
-                            {{ preTitleTreeView }} Treeview Project
-
-                        </hyt-button><!-- @I18N@ --
-
-                    </div>
-
-                    <div id="head-center">
-
-                        <div>Sub-areas: {{areaList.length}} Devices: {{areaDevices.length}}</div>
-
-                    </div>
-
-                    <div id="head-right">
-
-                        <hyt-button [color]="'hyt-base-total-white'" (clickFn)="onEditButtonClick()">
-
-                            <span class="icon-hyt_pencil"></span>
-                            Edit
-
-                        </hyt-button><!-- @I18N@ --
-
-                    </div>
-
-                </div>
-
-                <div id="map-body">
-
-                    <hyt-area-map #map (itemOpen)="onItemMapClicked($event)"></hyt-area-map>
-
-                </div>
-
-            </div>
+          </hyt-button><!-- @I18N@ -->
 
         </div>
 
-    </div -->
+        <div id="head-center">
+
+          <div>Sub-areas: {{areaList.length}} Devices: {{areaDevices.length}}</div>
+
+        </div>
+
+        <div id="head-right">
+
+          <hyt-button [color]="'hyt-base-total-white'" (clickFn)="onEditButtonClick()">
+
+            <span class="icon-hyt_pencil"></span>
+            Edit
+
+          </hyt-button><!-- @I18N@ -->
+
+        </div>
+
+      </div>
+
+      <div id="map-body">
+
+        <hyt-area-map #map (itemOpen)="onItemMapClicked($event)"></hyt-area-map>
+
+      </div>
+
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="pageStatus === 0">
+    <div class="area-map-loading">
+      <h2 i18n="HYT_page_is_loading">Page is loading...</h2>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="pageStatus === -1">
+    <div class="area-map-error">
+      <h2 i18n="@@HYT_error_occurred_long">An error has occurred, contact the administrator!</h2>
+    </div>
+  </ng-container>
+</div>

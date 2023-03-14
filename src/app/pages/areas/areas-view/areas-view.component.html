@@ -6,162 +6,92 @@
             <span class="hyt-icon icon-hyt_projectSolo"></span> <a [routerLink]="['/']">Home</a> >
             <strong>Areas</strong>
         </div>
-    
+
     </div>
 
-    <div id="area-title">
+    <div
+      id="area-title"
+      *ngIf="areaId && areaPath && areaPath.length > 0"
+    >
 
-        <h2 
-            *ngIf="areaId && areaPath && areaPath.length > 0"
-        >
+        <h2>
             Area: <span id="specific-area-name">{{ areaPath[0].name }}</span>
-        </h2> 
+        </h2>
 
     </div>
-    
+
     <div class="toolbar">
 
         <div class="row no-gutters">
 
             <div class="col-4 left-tools">
-            
+
                 <div id="areas-btn" *ngIf="areaId" class="button" [routerLink]="['/areas', projectId]">
                     <span class="hyt-icon hyt-icon icon-hyt_connectorNoFrame"></span>
                     <p>Areas List</p>
                 </div>
             </div>
-        
+
             <div class="col-4 center-tools">
-        
-                <hyt-select 
-                    *ngIf="pageStatus === PageStatus.Ready" 
-                    label="Select a project" 
+
+                <hyt-select
+                    *ngIf="pageStatus === PageStatus.Ready"
+                    label="Select a project"
                     name="project"
-                    [options]="userProjectsOptions" 
+                    [options]="userProjectsOptions"
                     [selected]="selectedProjectOption"
-                    (changeFn)="onSelectedProjectChange($event)" 
+                    (changeFn)="onSelectedProjectChange($event)"
                 >
                 </hyt-select>
-        
+
             </div>
-        
+
             <div class="col-4 right-tools">
-        
+
                 <div id="dashboard-btn" *ngIf="areaId" class="button" [routerLink]="['/areas', projectId, areaId, 'dashboards']">
                     <span class="hyt-icon hyt-icon icon-hyt_dash"></span>
                     <p>Dashboard</p>
                 </div>
-    
+
             </div>
 
         </div>
 
     </div>
-    
+
     <div id="area-body" class="content">
-    
-        <hyt-areas-list 
+        <hyt-areas-list
             *ngIf="projectId && !areaId"
-            [areaList]="areaList"
+            [projectId]="projectId"
             (itemSelected)="onMainAreaClick($event)">
         </hyt-areas-list>
-    
-        <div id="container-area-map" *ngIf="areaId"> 
 
-            <div 
-                id="container-treeview-project" 
-                [ngClass]="{'displayBlock': treeViewIsOpen, 'displayNone': !treeViewIsOpen}"
-                cdkDrag
-                [cdkDragFreeDragPosition]="dragPosition"
-                cdkDragBoundary="#hyt-container"
-                (cdkDragEnded)="dragEnded($event)"
-            > 
+        <hyt-container-area-map
+          *ngIf="projectId && areaId"
+          [areaId]="areaId"
+          [projectId]="projectId"
+        ></hyt-container-area-map>
+      <!-- Loading Status -->
+      <div
+          id="area-view-loading"
+          *ngIf="pageStatus === PageStatus.Loading"
+          class="loading-status mt-5 d-flex flex-column row align-items-center justify-content-center"
+      >
 
-                <div id="close-tree-btn" (click)="toggleTreeViewProject()">
-                    <span class="hyt-icon icon-hyt_cancel"></span>
-                </div>
+          <img class="loading-animation" src="assets/images/hyperiot_logo_single_char_animated.svg"
+              alt="Hyperiot Animated Logo"> <!-- @I18N@ pageStatus -->
+          <h2 i18n="@@HYT_page_is_loading">Page is loading...</h2>
+          <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      </div>
 
-                <div id="treeViewHeader" cdkDragHandle>
-                    
-                </div>
+      <!-- Loading Error -->
+      <div
+          id="area-view-error"
+          *ngIf="pageStatus === PageStatus.Error"
+          class="loading-status mt-5 d-flex flex-column row align-items-center justify-content-center"
+      >
+          <h2 i18n="@@HYT_error_occurred_long">An error has occurred, contact the administrator!</h2>
+      </div>
 
-                <div id="treeViewBody">
 
-                    <hyt-tree-view-project #treeView class="treeview" (nodeClick)="onTreeNodeClick($event)"></hyt-tree-view-project>
-
-                </div>
-                
-            </div>
-
-            <div id="container-map">
-
-                <div id="map-header">
-
-                    <div id="head-left">
-
-                        <hyt-button [color]="'hyt-base-total-white'" (clickFn)="toggleTreeViewProject()">
-                        
-                            <span 
-                                [ngClass]="{'icon-hyt_eyeClose': treeViewIsOpen, 'icon-hyt_eyeOpen': !treeViewIsOpen}" 
-                            ></span>
-                            {{ preTitleTreeView }} Treeview Project
-    
-                        </hyt-button><!-- @I18N@ -->
-
-                    </div>
-        
-                    <div id="head-center">
-        
-                        <div>Sub-areas: {{areaList.length}} Devices: {{areaDevices.length}}</div>
-        
-                    </div>
-        
-                    <div id="head-right">
-        
-                        <hyt-button [color]="'hyt-base-total-white'" (clickFn)="onEditButtonClick()">
-                        
-                            <span class="icon-hyt_pencil"></span>
-                            Edit
-    
-                        </hyt-button><!-- @I18N@ -->    
-        
-                    </div>
-
-                </div>
-
-                <div id="map-body">
-
-                    <hyt-area-map #map (itemOpen)="onItemMapClicked($event)"></hyt-area-map>
-
-                </div>
-
-            </div>
-
-        </div>
-    
-    </div>
-    
-    <!-- Loading Status -->
-    <div 
-        id="area-view-loading" 
-        *ngIf="pageStatus === PageStatus.Loading"
-        class="loading-status mt-5 d-flex flex-column row align-items-center justify-content-center"
-    >
-    
-        <img class="loading-animation" src="assets/images/hyperiot_logo_single_char_animated.svg"
-            alt="Hyperiot Animated Logo"> <!-- @I18N@ pageStatus -->
-        <h2 i18n="@@HYT_page_is_loading">Page is loading...</h2>
-        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-    </div>
-
-    <!-- Loading Error -->
-    <div 
-        id="area-view-error" 
-        *ngIf="pageStatus === PageStatus.Error"
-        class="loading-status mt-5 d-flex flex-column row align-items-center justify-content-center"
-    >
-        <h2 i18n="@@HYT_error_occurred_long">An error has occurred, contact the administrator!</h2>
-    </div>
-    
-
-</div>
+  </div>
