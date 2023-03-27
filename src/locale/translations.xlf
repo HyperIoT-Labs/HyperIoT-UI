@@ -1449,6 +1449,15 @@
       <trans-unit id="HYT_services_version" datatype="html">
         <source>Services version</source>
       </trans-unit>
+      <trans-unit id="HYT_widget_settings_bg_color" datatype="html">
+        <source>Background color:</source>
+      </trans-unit>
+      <trans-unit id="HYT_widget_settings_bg_color_bright" datatype="html">
+        <source>Bright</source>
+      </trans-unit>
+      <trans-unit id="HYT_widget_settings_bg_color_dark" datatype="html">
+        <source>Dark</source>
+      </trans-unit>
     </body>
   </file>
 </xliff>
