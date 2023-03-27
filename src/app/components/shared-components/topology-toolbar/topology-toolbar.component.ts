@@ -1,9 +1,8 @@
-import { Component, Input, OnInit, ViewEncapsulation, AfterContentChecked, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation, Output, EventEmitter } from '@angular/core';
 import { HytModalService } from '@hyperiot/components';
 import { Subject } from 'rxjs';
 import { ConfirmRecordingActionComponent } from './../../modals/confirm-recording-action/confirm-recording-action.component';
 import { InfoRecordingActionComponent } from './../../modals/info-recording-action/info-recording-action.component';
-import { HytTopologyService } from 'src/app/services/topology-services/hyt-topology.service';
 
 @Component({
   selector: 'hyt-topology-toolbar',

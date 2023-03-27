@@ -1,12 +1,5 @@
 <div id="container-areas-form">
-    AREA FORM EDIT MODE {{ editMode }}
-    <!-- Main areas list // Verificare effettivo Utilizzo // -->
     <div *ngIf="!editMode" class="content">
-        <p>AREA FORM</p>
-        <div class="overview">
-            <!--@I18N@-->
-          <p>OVERVIEW AREA FORM</p>
-        </div>
 
         <div class="actions">
             <hyt-button
@@ -17,7 +10,6 @@
                 <span class="hyt-icon icon-hyt_plusC"></span>
             </hyt-button>
         </div>
-        AREA: {{ areaList | json }}
         <hyt-areas-list
             [projectId]="projectId"
             [isInFormArea]="true"
@@ -43,8 +35,51 @@
 
             <mat-tab label="Info" i18n-label="@@HYT_area_section_info">
                 <form [formGroup]="form" enctype="multipart/form-data" class="mt-4 d-flex flex-column justify-content-center">
-
-                    <hyt-input-text [form]="form"
+                    <div class="container-form-area-info">
+                      <div class="superior-row">
+                        <div class="inner-superior-row container-area-name">
+                          <hyt-input-text
+                            [form]="form"
+                            name="area-name"
+                            i18n-placeholder="@@HYT_name"
+                            placeholder="Name"
+                            errorPosition="bottom"
+                            minlength="3"
+                            [injectedErrorMsg]="getError('area-name')"
+                            i18n-hintMessage="@@HYT_hint_area_name"
+                            hintMessage="Enter area name"
+                            [isRequired]="true"
+                          ></hyt-input-text>
+                        </div>
+                        <div class="inner-superior-row container-area-type">
+                          <hyt-select
+                            [form]="form"
+                            name="area-type"
+                            [options]="fieldAreaTypeOptions"
+                            [isRequired]="true"
+                            i18n-label="@@HYT_type"
+                            label="Type"
+                            i18n-hintMessage="@@HYT_hint_field_type"
+                            hintMessage="Select field type."
+                          >
+                          </hyt-select>
+                        </div>
+                      </div>
+                      <div class="inferior-row">
+                        <div class="inner-inferior-row container-area-description">
+                          <hyt-text-area
+                            [form]="form"
+                            name="area-description"
+                            [injectedErrorMsg]="getError('area-description')"
+                            i18n-hintMessage="@@HYT_hint_area_description"
+                            hintMessage="Enter area description"
+                            i18n-placeholder="@@HYT_description"
+                            placeholder="Description"
+                          ></hyt-text-area>
+                        </div>
+                      </div>
+                    </div>
+                    <!--<hyt-input-text [form]="form"
                         name="area-name"
                         i18n-placeholder="@@HYT_name"
                         placeholder="Name"
@@ -74,7 +109,7 @@
                     i18n-hintMessage="@@HYT_hint_field_type"
                     hintMessage="Select field type."
                   >
-                  </hyt-select>
+                  </hyt-select>-->
                 </form>
             </mat-tab>
 
@@ -85,24 +120,30 @@
                         <span class="hyt-icon icon-hyt_plusC"></span>
                     </hyt-button>
                 </div>
-                LIST: {{areaList | json}}
                 <hyt-areas-list
                     [projectId]="projectId"
                     [subAreaList]="areaList"
-                    (itemSelected)="onEditInnerAreaClick($event)">
+                    (itemSelected)="onEditInnerAreaClick($event)"
+                    [isSubAreaList]="true"
+                >
                 </hyt-areas-list>
             </mat-tab>
 
-            <mat-tab *ngIf="areaId > 0" label="Map" i18n-label="@@HYT_area_section_map">
+            <mat-tab *ngIf="areaId > 0" label="Image" i18n-label="@@HYT_area_section_static_image">
                 <div class="mt-4 mb-2 d-flex flex-row justify-content-center">
 
                     <hyt-button [color]="'hyt-base-default-white'">
-                        <label class="m-0 p-0" for="map-image-input" i18n="@@HYT_area_map_set_image">Set map image</label>
+                        <label class="m-0 p-0" for="map-image-input" i18n="@@HYT_area_set_image">Set image</label>
                     </hyt-button>
-                    <input class="hidden" id="map-image-input"
-                        name="area-image"
-                        (change)="onFileChange($event)"
-                        type="file" placeholder="Upload file" accept="{{ acceptFiles }}">
+                    <input
+                      class="hidden"
+                      id="map-image-input"
+                      name="area-image"
+                      (change)="onFileChange($event)"
+                      type="file"
+                      placeholder="Upload file"
+                      accept="{{ acceptFiles }}"
+                  >
 
                     <hyt-button [color]="'hyt-base-default-white'" (clickFn)="onMapDeviceAddClick($event)" i18n="@@HYT_area_map_device_add">Add device</hyt-button>
                     <hyt-button [color]="'hyt-base-default-white'" [isDisabled]="areaList.length === 0" (clickFn)="onMapAreaAddClick($event)" i18n="@@HYT_area_map_area_add">Add sub-area</hyt-button>
@@ -130,12 +171,11 @@
         </div>
 
         <div *ngIf="loadingStatus === LoadingStatus.Error" class="error-overlay d-flex flex-column justify-content-center">
-            <h4 i18n="@@HYT_error_occurred">An unexpected error has occurred</h4>
-
+            <p class="error-message" i18n="@@HYT_error_occurred">An unexpected error has occurred</p>
             <hyt-button
-                [color]="'hyt-base-default-white'"
-                (click)="loadingStatus = LoadingStatus.Ready">
-                <span i18n="@@HYT_close">Close</span> <span class="icon-hyt_cancelC"></span>
+                [color]="'hyt-base-total-blue'"
+                (click)="returnToAreaProjectDetails()">
+                <span i18n="@@HYT_return_area_project">Return to project areas</span> <span class="icon-hyt_cancelC"></span>
             </hyt-button>
         </div>
 

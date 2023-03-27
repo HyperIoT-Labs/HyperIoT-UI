@@ -1094,6 +1094,9 @@
       <trans-unit id="HYT_area_list_noimage" datatype="html">
         <source>(no image)</source>
       </trans-unit>
+      <trans-unit id="HYT_area_list_nomedia" datatype="html">
+        <source>(No Media Uploaded)</source>
+      </trans-unit>
       <trans-unit id="HYT_area_draggable_title" datatype="html">
         <source>Move <x id="INTERPOLATION"/></source>
       </trans-unit>
@@ -1130,11 +1133,14 @@
       <trans-unit id="HYT_area_inner_add" datatype="html">
         <source>Add sub-area</source>
       </trans-unit>
+      <trans-unit id="HYT_area_section_static_image" datatype="html">
+        <source>Image</source>
+      </trans-unit>
       <trans-unit id="HYT_area_section_map" datatype="html">
         <source>Map</source>
       </trans-unit>
-      <trans-unit id="HYT_area_map_set_image" datatype="html">
-        <source>Set map image</source>
+      <trans-unit id="HYT_area_set_image" datatype="html">
+        <source>Set image</source>
       </trans-unit>
       <trans-unit id="HYT_area_map_device_add" datatype="html">
         <source>Add device</source>
@@ -1144,6 +1150,39 @@
       </trans-unit>
       <trans-unit id="HYT_project_areas" datatype="html">
         <source>Project Areas</source>
+      </trans-unit>
+      <trans-unit id="HYT_project_areas_static_image" datatype="html">
+        <source>STATIC IMAGE</source>
+      </trans-unit>
+      <trans-unit id="HYT_project_areas_dynamic_map" datatype="html">
+        <source>DYNAMIC MAP</source>
+      </trans-unit>
+      <trans-unit id="HYT_project_areas_bim_xkt_format" datatype="html">
+        <source>BIM IN XKT FORMAT</source>
+      </trans-unit>
+      <trans-unit id="HYT_project_areas_bim_ifc_format" datatype="html">
+        <source>BIM IN IFC FORMAT</source>
+      </trans-unit>
+      <trans-unit id="HYT_area_treeview" datatype="html">
+        <source>Area Treeview</source>
+      </trans-unit>
+      <trans-unit id="HYT_return_area_project" datatype="html">
+        <source>Return to project areas</source>
+      </trans-unit>
+      <trans-unit id="HYT_loading_area_media" datatype="html">
+        <source>Loading Area Media</source>
+      </trans-unit>
+      <trans-unit id="HYT_loading_media_error" datatype="html">
+        <source>Loading Media Error</source>
+      </trans-unit>
+      <trans-unit id="HYT_no_area_media" datatype="html">
+        <source>No Media</source>
+      </trans-unit>
+      <trans-unit id="HYT_area_tree_loading" datatype="html">
+        <source>Loading Treeview</source>
+      </trans-unit>
+      <trans-unit id="HYT_area_tree_error" datatype="html">
+        <source>Error Loading</source>
       </trans-unit>
       <trans-unit id="HYT_file_size_exceed" datatype="html">
         <source>File size exceed limit of <x id="PH"/> bytes</source>

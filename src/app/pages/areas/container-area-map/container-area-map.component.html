@@ -15,7 +15,7 @@
       <div id="treeViewHeader" cdkDragHandle></div>
 
       <div id="treeViewBody">
-
+        <div *ngIf="overlayTreeView" class="overlay-treeview">{{overlayTreeViewMsg}}</div>
         <hyt-tree-view-project #treeView class="treeview" (nodeClick)="onTreeNodeClick($event)"></hyt-tree-view-project>
 
       </div>
@@ -23,6 +23,17 @@
     </div>
 
     <div id="container-map">
+
+      <div
+        id="area-title"
+        *ngIf="areaId && areaPath && areaPath.length > 0"
+      >
+
+        <h2>
+          Area: <span id="specific-area-name">{{ areaName }}</span>
+        </h2>
+
+      </div>
 
       <div id="map-header">
 
@@ -33,7 +44,7 @@
           <span
             [ngClass]="{'icon-hyt_eyeClose': treeViewIsOpen, 'icon-hyt_eyeOpen': !treeViewIsOpen}"
           ></span>
-            {{ preTitleTreeView }} Treeview Project
+            {{ preTitleTreeView }} <span i18n="HYT_area_treeview">Area Treeview</span>
 
           </hyt-button><!-- @I18N@ -->
 

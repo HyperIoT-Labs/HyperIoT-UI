@@ -92,6 +92,23 @@
       border-width: 0px 1px 1px 1px;
       border-color: #003679;
       border-style: dotted;
+      position: relative;
+
+      .overlay-treeview {
+        background-color: #FFFFFF;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1;
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        padding-top: 10%;
+        color: #2558a5;
+        font-weight: bold;
+      }
 
       .treeview {
         min-width: 300px;
@@ -112,6 +129,35 @@
     flex-direction: column;
     flex-grow: 1;
     margin: 24px;
+
+    #area-title {
+
+      h2 {
+
+        width: 96%;
+        margin: 0 auto 0px auto;
+        padding: 10px;
+        text-align: center;
+        color: #3674c3;
+        font-size: 1.8em;
+        word-break: break-word;
+
+        span {
+
+          &#specific-area-name {
+
+            font-style: italic;
+            color: #3c8ed3;
+            font-weight: 400;
+            margin-left: 10px;
+
+          }
+
+        }
+
+      }
+
+    }
 
     #map-header {
 

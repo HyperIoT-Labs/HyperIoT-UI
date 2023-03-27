@@ -31,15 +31,47 @@ import {PageStatus} from '../../../../../models/pageStatus';
   encapsulation: ViewEncapsulation.None
 })
 export class AreasListComponent implements OnChanges, OnDestroy {
+  /**
+   * Output event on click of the element inside the selected area
+   */
   @Output() itemSelected = new EventEmitter<Area>();
+  /**
+   * ID of current project
+   */
   @Input() projectId: number;
+  /**
+   * Variable used to indicate if we are in a form
+   */
   @Input() isInFormArea?: boolean;
+  /**
+   * variable used to contain a list of sub areas
+   */
   @Input() subAreaList?: Area[];
+  /**
+   * variable used to indicate if we are in a list of sub areas
+   */
+  @Input() isSubAreaList?: boolean;
+  /**
+   * Init value of Pagestatus
+   */
   pageStatus: PageStatus = PageStatus.Ready;
+  /**
+   * variable used to contain a list area object
+   */
   areaList: Area[] = [];
+  /**
+   * Total count of device present in the current area
+   */
   deviceCount = 0;
+  /**
+   * Total count of sub-areas present in the current area
+   */
   innerAreaCount = 0;
-  private readonly ngUnsubscribe: Subject<void> = new Subject<void>();
+  /**
+   * Subject for manage the open subscriptions
+   * @protected
+   */
+  protected ngUnsubscribe: Subject<void> = new Subject<void>();
   /*
   * logger service
   */
@@ -85,7 +117,7 @@ export class AreasListComponent implements OnChanges, OnDestroy {
   }
 
   /**
-   * TODO Inserire desfcrizione del metodo
+   * Get of the list of areas and counting of the elements contained therein
    * @private
    */
   private getAreasList() {
@@ -110,6 +142,11 @@ export class AreasListComponent implements OnChanges, OnDestroy {
     });
   }
 
+  /**
+   * Total count of sub-areas of an area
+   * @param area
+   * @private
+   */
   private countInnerArea(area: Area) {
     this.areaService.findInnerAreas(area.id).pipe(
       takeUntil(this.ngUnsubscribe)
@@ -130,6 +167,12 @@ export class AreasListComponent implements OnChanges, OnDestroy {
         }
       })
   }
+
+  /**
+   * Total count of devices of an area
+   * @param area
+   * @private
+   */
   private countAreaDevice(area: Area) {
     this.areaService.getAreaDeviceDeepList(area.id).pipe(
       takeUntil(this.ngUnsubscribe)
@@ -144,11 +187,20 @@ export class AreasListComponent implements OnChanges, OnDestroy {
       }
     });
   }
+
+  /**
+   * Reset count of sub-areas and devices of an area
+   * @private
+   */
   private resetAreaCounter(): void {
     this.deviceCount = 0;
     this.innerAreaCount = 0;
   }
 
+  /**
+   * Function that manages the elevation effect of a card of an area on mouseover
+   * @param e
+   */
   toggleClassCard(e): void {
     const classElIsIn = e.target.classList.contains('mat-elevation-z2');
     const cl = e.target.classList;

@@ -65,7 +65,6 @@ export abstract class ProjectFormEntity implements OnInit, AfterViewInit {
         this.entitiesService = injector.get(EntitiesService);
         this.dialog = injector.get(HytModalService);
         this.form = this.formBuilder.group({});
-        console.log(this.form);
         //this.formAlarm = this.formBuilder.group({});
 		    this.projectsService = injector.get(ProjectsService);
     }
@@ -96,17 +95,11 @@ export abstract class ProjectFormEntity implements OnInit, AfterViewInit {
     }
 
     edit(entity?: any, readyCallback?) {
-        console.log('EDIT FUNCTION -1', this.entityFormMap);
-        console.log('EDIT FUNCTION 0', entity);
         if (entity) {
             this.entity = { ...entity };
         }
 
         Object.keys(this.entityFormMap).forEach((key) => {
-            console.log('EDIT FUNCTION ENTITY', this.entityFormMap);
-            console.log('EDIT FUNCTION 1', this.form);
-            console.log('EDIT FUNCTION 2',key);
-            console.log('EDIT FUNCTION 3', this.form.get(key));
             if (this.form.get(key)) {
                 // TODO: check why form control value inside the form control must be a string
                 // it should accept other values
@@ -193,20 +186,19 @@ export abstract class ProjectFormEntity implements OnInit, AfterViewInit {
     }
 
     resetForm() {
-        this.originalValue = this.serialize();
-        // this.buildHintMessages();
+      this.originalValue = this.serialize();
     }
 
     private serialize() {
-        const keys = Object.keys(this.form.value);
-        keys.sort((a, b) => {
-            return a > b ? 1 : (a === b ? 0 : -1);
-        });
-        const copy = {};
-        keys.forEach((k) => {
-            copy[k] = this.form.value[k];
-        });
-        return JSON.stringify(copy, this.circularFix);
+      const keys = Object.keys(this.form.value);
+      keys.sort((a, b) => {
+          return a > b ? 1 : (a === b ? 0 : -1);
+      });
+      const copy = {};
+      keys.forEach((k) => {
+          copy[k] = this.form.value[k];
+      });
+      return JSON.stringify(copy, this.circularFix);
     }
 
     private buildHintMessages() {

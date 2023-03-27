@@ -1458,6 +1458,10 @@
         <source>(no image)</source>
         <target>(immagine assente)</target>
       </trans-unit>
+      <trans-unit id="HYT_area_list_nomedia" datatype="html">
+        <source>(No Media Uploaded)</source>
+        <target>(Nessun Media caricato)</target>
+      </trans-unit>
       <trans-unit id="HYT_area_draggable_title" datatype="html">
         <source>Move <x id="INTERPOLATION" /></source>
         <target>Sposta {{itemData.device ? itemData.device.deviceName : itemData.name}}</target>
@@ -1506,13 +1510,17 @@
         <source>Add sub-area</source>
         <target>Aggiungi sotto-area</target>
       </trans-unit>
+      <trans-unit id="HYT_area_section_static_image" datatype="html">
+        <source>Image</source>
+        <target>Immagine</target>
+      </trans-unit>
       <trans-unit id="HYT_area_section_map" datatype="html">
         <source>Map</source>
         <target>Mappa</target>
       </trans-unit>
-      <trans-unit id="HYT_area_map_set_image" datatype="html">
-        <source>Set map image</source>
-        <target>Imposta immagine mappa</target>
+      <trans-unit id="HYT_area_set_image" datatype="html">
+        <source>Set image</source>
+        <target>Imposta immagine</target>
       </trans-unit>
       <trans-unit id="HYT_area_map_device_add" datatype="html">
         <source>Add device</source>
@@ -1526,17 +1534,61 @@
         <source>Project Areas</source>
         <target>Aree progetti</target>
       </trans-unit>
+      <trans-unit id="HYT_project_areas_static_image" datatype="html">
+        <source>STATIC IMAGE</source>
+        <target>IMMAGINE STATICA</target>
+      </trans-unit>
+      <trans-unit id="HYT_project_areas_dynamic_map" datatype="html">
+        <source>DYNAMIC MAP</source>
+        <target>MAPPA DINAMICA</target>
+      </trans-unit>
+      <trans-unit id="HYT_project_areas_bim_xkt_format" datatype="html">
+        <source>BIM IN XKT FORMAT</source>
+        <target>BIM IN FORMATO XKT</target>
+      </trans-unit>
+      <trans-unit id="HYT_project_areas_bim_ifc_format" datatype="html">
+        <source>BIM IN IFC FORMAT</source>
+        <target>BIM IN FORMATO IFC</target>
+      </trans-unit>
+      <trans-unit id="HYT_area_treeview" datatype="html">
+        <source>Area Treeview</source>
+        <target>alberatura Area</target>
+      </trans-unit>
+      <trans-unit id="HYT_return_area_project" datatype="html">
+        <source>Return to project areas</source>
+        <target>Ritorna alle aree del progetto</target>
+      </trans-unit>
+      <trans-unit id="HYT_loading_area_media" datatype="html">
+        <source>Loading Area Media</source>
+        <target>Caricamento Media</target>
+      </trans-unit>
+      <trans-unit id="HYT_loading_media_error" datatype="html">
+        <source>Loading Media Error</source>
+        <target>Errore Caricamento Media</target>
+      </trans-unit>
+      <trans-unit id="HYT_no_area_media" datatype="html">
+        <source>No Media</source>
+        <target>No Media</target>
+      </trans-unit>
+      <trans-unit id="HYT_area_tree_loading" datatype="html">
+        <source>Loading Treeview</source>
+        <target>Caricamento Treeview</target>
+      </trans-unit>
+      <trans-unit id="HYT_area_tree_error" datatype="html">
+        <source>Error Loading</source>
+        <target>Errore nel Caricamento</target>
+      </trans-unit>
       <trans-unit id="HYT_file_size_exceed" datatype="html">
         <source>File size exceed limit of <x id="PH" /> bytes</source>
-        <target>Il </target>
+        <target>Il file supera il limite di <x id="PH" /> bytes</target>
       </trans-unit>
       <trans-unit id="HYT_file_type_must_be" datatype="html">
         <source>File type must be <x id="PH" /></source>
-        <target>@@I18N@@</target>
+        <target>Il file deve essere di tipo <x id="PH" /></target>
       </trans-unit>
       <trans-unit id="HYT_download_pwa" datatype="html">
         <source>Download PWA <x id="START_TAG_BUTTON" />OK<x id="CLOSE_TAG_BUTTON" /><x id="START_TAG_BUTTON_1" />NO<x id="CLOSE_TAG_BUTTON" /></source>
-        <target>@@I18N@@</target>
+        <target>Scarica PWA <x id="START_TAG_BUTTON" />OK<x id="CLOSE_TAG_BUTTON" /><x id="START_TAG_BUTTON_1" />NO<x id="CLOSE_TAG_BUTTON" /></target>
       </trans-unit>
       <trans-unit id="HYT_dashboard" datatype="html">
         <source>Dashboard</source>

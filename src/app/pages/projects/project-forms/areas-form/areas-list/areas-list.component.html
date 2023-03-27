@@ -17,18 +17,6 @@
           <mat-card-header>
             <mat-card-title>{{area.name}}</mat-card-title>
           </mat-card-header>
-          <!--<div
-            *ngIf="area.imagePath != null && area.imagePath.length > 0"
-            class="map-image flex-grow-1"
-            [ngStyle]="{ 'background-image': 'url(/hyperiot/areas/'+area.id+'/image)' }"
-          ></div>
-          <div
-            *ngIf="area.imagePath == null || area.imagePath.length == 0"
-            class="map-image flex-grow-1 d-flex flex-column justify-content-center align-items-center"
-            i18n="@@HYT_area_list_noimage"
-          >
-            (no image)
-          </div>-->
           <div
             *ngIf="area.areaViewType === 'IMAGE' && area.areaConfiguration !== null"
             class="map-image flex-grow-1"
@@ -44,6 +32,7 @@
           <div
             *ngIf="area.areaViewType !== null && area.areaConfiguration === null"
             class="map-image flex-grow-1 d-flex flex-column justify-content-center align-items-center"
+            i18n="@@HYT_area_list_nomedia"
           >
             (No Media Uploaded)
           </div>
@@ -59,6 +48,7 @@
       <h2 i18n="@@HYT_areas_no_areas_defined">No areas defined.</h2>
       <div class="container-btn-no-list" *ngIf="!isInFormArea">
         <hyt-button
+          *ngIf="!isSubAreaList"
           [color]="'hyt-base-total-white'"
           id="create-first-area"
           [routerLink]="[ '/projects/', projectId, {outlets: { projectDetails: ['areas'] } } ]"

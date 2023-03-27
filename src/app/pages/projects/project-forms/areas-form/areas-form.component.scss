@@ -1,130 +1,180 @@
-.content {
+#container-areas-form {
+  .content {
     padding: 16px;
     padding-top: 0;
-}
-.area-item {
+  }
+  .area-item {
     cursor: pointer;
     outline: none;
     width: 180px;
     height: 180px;
     overflow: hidden;
     margin: 8px;
-}
-.mat-card {
+  }
+  .mat-card {
     padding: 0;
     height: 240px !important;
     .mat-card-header {
-        padding-top: 8px;
+      padding-top: 8px;
     }
     .map-image {
-        color: gray;
-        width: 100%;
-        height: auto;
-        overflow: hidden;
-        background-position: center center;
-        background-repeat: no-repeat;
-        background-size: cover;
+      color: gray;
+      width: 100%;
+      height: auto;
+      overflow: hidden;
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-size: cover;
     }
-}
-.overview {
-    font-size: 0.9em;
-    font-style: italic;
-    line-height: 25px;
-    padding-top: 20px;
-}
-.actions {
+  }
+  .actions {
     margin-top: 16px;
     margin-bottom: 16px;
     text-align: center;
-}
-.current-path {
+  }
+  .current-path {
     font-size: 90%;
     text-transform: uppercase;
-}
-.current-path label {
-    font-weight: bold;
-    margin-right: 8px;
-}
+    label {
+      font-weight: bold;
+      margin-right: 8px;
+    }
+  }
 
-.overlay {
+  .container-form-area-info {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    .superior-row {
+      display: flex;
+      .inner-superior-row {
+        display: flex;
+        width: 50%;
+        padding: 0 10px 15px;
+        hyt-input-text {
+          width: 100%;
+        }
+        hyt-select {
+          width: 100%;
+          .mat-form-field {
+            width: 100%;
+          }
+        }
+      }
+    }
+
+    .inferior-row {
+      display: flex;
+      .inner-inferior-row {
+        display: flex;
+        width: 100%;
+        padding: 0 10px 15px;
+        hyt-text-area {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  .overlay {
     position: absolute;
     z-index: 100;
-    background-color: rgba(255, 255, 255, .50);
+    background-color: rgba(255, 255, 255, .8);
     left: 0; top: 0; right: 0; bottom: 0;
 
     .loading-logo {
 
-        position: relative;
+      position: relative;
+      text-align: center;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+
+      &.display-logo {
+
+        height: 63%;
+        width: 100%;
+
+        background-repeat: no-repeat;
+        background-position: top center;
+        background-image: url('/assets/images/hyperiot_logo_single_char_animated.svg');
+
+        &.big-bg {
+
+          background-size: 220px;
+
+        }
+
+        &.medium-bg {
+
+          background-size: 170px;
+
+        }
+
+        &.small-bg {
+
+          background-size: 125px;
+
+        }
+
+        &.x-small-bg {
+
+          background-size: 90px;
+
+        }
+
+      }
+
+      h4 {
         text-align: center;
-        display: flex;
-        align-items: flex-end;
-        justify-content: center;
-
-        &.display-logo {
-
-            height: 63%;
-            width: 100%;
-
-            background-repeat: no-repeat;
-            background-position: top center;
-            background-image: url('/assets/images/hyperiot_logo_single_char_animated.svg');
-
-            &.big-bg {
-
-                background-size: 220px;
-
-            }
-
-            &.medium-bg {
-
-                background-size: 170px;
-
-            }
-
-            &.small-bg {
-
-                background-size: 125px;
-
-            }
-
-            &.x-small-bg {
-
-                background-size: 90px;
-
-            }
-
-        }
-
-        h4 {
-            text-align: center;
-        }
+      }
     }
 
     mat-progress-bar {
-        max-width: 200px;
-        margin: 8px;
+      max-width: 200px;
+      margin: 8px;
     }
 
     .error-overlay {
 
-        hyt-button {
+      p {
+        &.error-message {
+          font-size: 1.4em;
+        }
+      }
 
-            margin: 20px auto 0px auto;
+      hyt-button {
 
-            span {
+        margin: 20px auto 0px auto;
 
-                &.icon-hyt_cancelC {
+        span {
 
-                    font-size: 1.3em;
-                    vertical-align: sub;
-                    margin-left: 5px;
+          &.icon-hyt_cancelC {
 
-                }
+            font-size: 1.3em;
+            vertical-align: sub;
+            margin-left: 5px;
 
-            }
+          }
 
         }
 
+      }
+
     }
 
+  }
+}
+
+@media (max-width: 740px) {
+  #container-areas-form {
+    .container-form-area-info {
+      .superior-row {
+        flex-direction: column;
+        .inner-superior-row {
+          width: 100%;
+        }
+      }
+    }
+  }
 }

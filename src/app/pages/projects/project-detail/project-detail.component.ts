@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, zip, Observer, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { HprojectsService, HProject, HdevicesService, HDevice, HpacketsService, HPacket, Rule } from '@hyperiot/core';
+import {HprojectsService, HProject, HdevicesService, HDevice, HpacketsService, HPacket, Rule, Logger, LoggerService} from '@hyperiot/core';
 import { TreeDataNode, HytModalService } from '@hyperiot/components';
 
 import { HytTreeViewProjectComponent } from '@hyperiot/components/lib/hyt-tree-view-project/hyt-tree-view-project.component';
@@ -77,6 +77,10 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
   basicDragPosition = {x: 0, y: 25};
 
   areaSection: string;
+  /*
+   * logger service
+   */
+  private logger: Logger;
 
   /** Subject for manage the open subscriptions */
   protected ngUnsubscribe: Subject<void> = new Subject<void>();
@@ -141,8 +145,13 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
     private router: Router,
     private dialog: HytModalService,
     private cdRef:ChangeDetectorRef,
-    private enrichmentsService: EnrichmentsService
-  ) { }
+    private enrichmentsService: EnrichmentsService,
+    private loggerService: LoggerService
+  ) {
+    // Init Logger
+    this.logger = new Logger(this.loggerService);
+    this.logger.registerClass('ProjectDetailComponent');
+  }
 
   ngOnInit() {
 
@@ -151,12 +160,14 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
     this.enrichmentsService.changeDeviceName$
     .pipe(takeUntil(this.ngUnsubscribe))
     .subscribe(deviceName => {
+      this.logger.debug('Current Device name', deviceName);
       this.currentDeviceName = deviceName;
     });
 
     this.enrichmentsService.changePacket$
     .pipe(takeUntil(this.ngUnsubscribe))
     .subscribe(packetID => {
+      this.logger.debug('Current Packet ID', packetID);
       this.currentPacket = packetID;
     });
 
@@ -165,14 +176,18 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     if (this.ngUnsubscribe) {
       this.ngUnsubscribe.next();
+      this.ngUnsubscribe.complete();
     }
   }
 
   onActivate(childComponent: ProjectFormEntity) {
 
-    childComponent.clickedTab.subscribe(val => {
-      this.areaSection = val;
-      this.toggleInfoActionColumn(childComponent);
+    childComponent.clickedTab
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(val => {
+        this.logger.debug('Info Clicked Tab', val);
+        this.areaSection = val;
+        this.toggleInfoActionColumn(childComponent);
     });
 
 
@@ -185,12 +200,13 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
       this.currentEntity.unsavedChangesCallback = () => {
         return this.openSaveDialog();
       };
-      this.currentEntity.entityEvent.subscribe((data) => {
+      this.currentEntity.entityEvent
+        .pipe(takeUntil(this.ngUnsubscribe))
+        .subscribe((data) => {
+        this.logger.debug('Enntity Event Data', data);
         switch (data.event) {
           case 'summaryList:reload':
-            // this.summaryList = data.data.summaryList;
             this.currentEntity.summaryList = data.summaryList
-            console.log('reloadSummaryList: ', data.summaryList);
             break;
           case 'treeview:refresh':
             this.refresh();
@@ -228,9 +244,10 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
   }
 
   onSaveClick() {
-    console.log('onSaveClick', this.currentEntity)
+    this.logger.debug('onSaveClick Clicked');
     this.validationErrors = [];
     this.currentEntity.save((res) => {
+      this.logger.debug('onSaveClick save response', res);
       if (this.currentEntity instanceof PacketEnrichmentFormComponent || this.currentEntity instanceof ProjectEventsFormComponent
         || this.currentEntity instanceof ProjectStatisticsFormComponent || this.currentEntity instanceof ProjectAlarmsFormComponent) {
         this.currentEntity.editMode = false;
@@ -243,12 +260,15 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
         this.shouldUpdateTopology();
       }
     }, (err) => {
+      this.logger.error('onSaveClick save Error', err);
       // TODO: ...
     });
   }
 
   onDeleteClick() {
+    this.logger.debug('onDeleteClick Clicked');
     this.currentEntity.openDeleteDialog(() => {
+      this.logger.debug('onDeleteClick openDeleteDialog');
       // Trigger reload topology
       if (this.currentEntity instanceof PacketEnrichmentFormComponent ||
         this.currentEntity instanceof PacketFieldsFormComponent ||
@@ -259,8 +279,8 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
       }
     });
   }
-
   onCancelClick() {
+    this.logger.debug('onCancelClick Clicked');
     this.currentEntity.cancel();
   }
 
@@ -270,13 +290,15 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
     .pipe(takeUntil(this.ngUnsubscribe))
     .subscribe(
       (res) => {
+        this.logger.debug('shouldUpdateTopology response', res);
         const recordingStatus = res;
         if (recordingStatus.status === 'ACTIVE') {
           this.openConfirmChangeRecordingModal(false);
         }
       },
       (error) => {
-        console.error(error);
+        this.logger.error('shouldUpdateTopology error', error);
+        // TODO Handle error state
       }
     );
   }
@@ -292,16 +314,20 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
       },
       false
     );
-    modalRef.onClosed.subscribe(
-      (result) => { },
+    modalRef.onClosed
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+      (result) => {
+        this.logger.debug('openConfirmChangeRecordingModal modal on closed', result);
+      },
       (error) => {
-        console.error(error);
+        this.logger.debug('openConfirmChangeRecordingModal modal on closed Error', error);
       }
     );
   }
 
   onSummaryMenuClick(e) {
-
+    this.logger.debug('onSummaryMenuClick Event', e);
     const entity = Object.assign({}, e.item.data);
 
     switch (e.action) {
@@ -313,6 +339,7 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
         break;
       case 'delete':
         this.currentEntity.edit(entity, this.currentEntity.openDeleteDialog((del) => {
+          this.logger.debug('openDeleteDialog', del);
           this.currentEntity.editMode = false;
         }));
         break;
@@ -320,9 +347,13 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
   }
 
   refresh() {
+    this.logger.debug('refresh function start');
     this.treeStatus = TreeStatusEnum.Loading;
     this.treeData = [];
-    this.hProjectService.findHProject(+this.projectId).subscribe((p: HProject) => {
+    this.hProjectService.findHProject(+this.projectId)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((p: HProject) => {
+      this.logger.debug('HProject Found', p);
       this.summaryList = this.currentEntity.summaryList;
 
       const projectNode: TreeDataNode = {
@@ -334,7 +365,10 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
       this.projectName = p.name;
       this.treeData.push(projectNode);
       this.treeView.setData(this.treeData);
-      this.hDeviceService.findAllHDeviceByProjectId(p.id).subscribe((deviceList: HDevice[]) => {
+      this.hDeviceService.findAllHDeviceByProjectId(p.id)
+        .pipe(takeUntil(this.ngUnsubscribe))
+        .subscribe((deviceList: HDevice[]) => {
+        this.logger.debug('Found device list by project ID', deviceList);
         const sourcesNode = { // sources node
           data: { id: 0, type: 'sources' },
           name: 'Sources',
@@ -356,7 +390,10 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
           sourcesNode.children.push(node);
           requests.push(this.packetService.getHDevicePacketList(d.id));
         });
-        zip(...requests).subscribe((packetList: Array<HPacket[]>) => {
+        zip(...requests)
+          .pipe(takeUntil(this.ngUnsubscribe))
+          .subscribe((packetList: Array<HPacket[]>) => {
+          this.logger.debug('Packet list', packetList);
           packetList.map((kd: HPacket[]) => {
             if (kd.length === 0) {
               return;
@@ -462,6 +499,7 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
   }
 
   onNodeClick(node) {
+    this.logger.debug('onNodeClick', node);
     if (node.data && node.data.type) {
       this.router.navigate(
         [{ outlets: { projectDetails: node.data.id ? [node.data.type, node.data.id] : node.data.type } }],
@@ -486,12 +524,14 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
   }
 
   find(data: any) {
+    this.logger.debug('find', data);
     return this.treeView
       .treeControl
       .dataNodes.find((d) => d.data.id === data.id && d.data.type === data.type);
   }
 
   focus(data) {
+    this.logger.debug('focus', data);
     if (this.treeStatus !== TreeStatusEnum.Ready) {
       if (this.focusTimeout !== null) {
         clearTimeout(this.focusTimeout);
@@ -516,6 +556,7 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
   }
 
   updateNode(data) {
+    this.logger.debug('updateNode', data);
     // refresh treeview node data
     const node = this.find(data);
     node.name = data.name;
@@ -523,11 +564,15 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
   }
 
   openSaveDialog(): Observable<boolean> {
+    this.logger.debug('openSaveDialog');
     return new Observable((observer: Observer<boolean>) => {
       const dialogRef = this.dialog.open(SaveChangesDialogComponent, {
         data: { title: 'Discard changes?', message: 'There are pending changes to be saved.' }
       });
-      dialogRef.onClosed.subscribe((result) => {
+      dialogRef.onClosed
+        .pipe(takeUntil(this.ngUnsubscribe))
+        .subscribe((result) => {
+        this.logger.debug('openSaveDialog on closed', result);
         if (result === 'save') {
           this.validationErrors = [];
           this.currentEntity.save((res) => {
@@ -546,18 +591,22 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
   }
 
   showHintMessage(message: string) {
+    this.logger.debug('showHintMessage', message);
     this.hintMessage = message;
     this.hintVisible = true;
   }
   hideHintMessage() {
+    this.logger.debug('hideHintMessage');
     this.hintVisible = false;
   }
 
   goToProjectWizard() {
+    this.logger.debug('goToProjectWizard');
     this.router.navigateByUrl(`/project-wizard/${this.projectId}`);
   }
 
   goToDashboard() {
+    this.logger.debug('goToDashboard');
     this.router.navigate(['/dashboards'], { queryParams: { projectId: this.projectId } });
   }
 
@@ -565,7 +614,7 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
    * function used to toggle display treeview project in area map
    */
   toggleTreeViewProject() {
-
+    this.logger.debug('toggleTreeViewProject');
     this.treeViewIsOpen = !this.treeViewIsOpen;
 
     if(this.treeViewIsOpen) {
@@ -585,7 +634,7 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
    * function used to toggle display Info/Action Column
    */
   toggleInfoActionColumn(childComponent: any) {
-
+    this.logger.debug('toggleInfoActionColumn', childComponent);
     if(
 
       (childComponent.formTemplateId.includes('areas-form') && this.areaSection == 'Tab-Sub-Area') ||
@@ -616,6 +665,7 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
    * @param ended
    */
   dragEnded(ended: CdkDragEnd) {
+    this.logger.debug('dragEnded', ended);
     const constLeftX = 75; /* -75 after 0 point */
 
     // TREEVIEW DIV POSITION X/Y
@@ -633,7 +683,8 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
     // horizontal limit beyond which it is not possible to scroll the treeview box to the right
     const horizontalLimit = hytContainerHClient - constLeftX - ptW;
 
-    let dragX, dragY: number;
+    let dragX: number;
+    let dragY: number;
 
     // Verify Y position
     if(posY < -175){
@@ -659,7 +710,8 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
   / Method to verify if you can save or not the alarm
   */
   isDisableProjectAlarmsFormComponent(e: any){
-    if ((e instanceof ProjectAlarmsFormComponent) == false) return true;
+    this.logger.debug('isDisableProjectAlarmsFormComponent', e);
+    if ((e instanceof ProjectAlarmsFormComponent) === false) return true;
     else if (e.form.touched == false) return true;
     else if (e.form.status == 'VALID') return false;
     else if (e.form.status == 'INVALID') return true;
