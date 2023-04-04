@@ -33,7 +33,7 @@
       <!-- START TAB -->
         <mat-tab-group [(selectedIndex)]="currentSection" (selectedTabChange)="onTabChange($event)">
 
-            <mat-tab label="Info" i18n-label="@@HYT_area_section_info">
+            <mat-tab label="Info" i18n-label="@@HYT_area_section_info" aria-label="INFO">
                 <form [formGroup]="form" enctype="multipart/form-data" class="mt-4 d-flex flex-column justify-content-center">
                     <div class="container-form-area-info">
                       <div class="superior-row">
@@ -113,7 +113,7 @@
                 </form>
             </mat-tab>
 
-            <mat-tab *ngIf="areaId > 0" label="Sub-areas ({{ areaList.length }})" i18n-label="@@HYT_area_section_inner">
+            <mat-tab *ngIf="areaId > 0" label="Sub-areas ({{ areaList.length }})" i18n-label="@@HYT_area_section_inner" aria-label="SUB-AREA">
                 <div class="actions">
                     <hyt-button [color]="'hyt-base-default-white'" mat-mini-fab (clickFn)="onAddInnerAreaClick($event)">
                         <span i18n="@@HYT_area_inner_add">Add sub-area</span>
@@ -129,7 +129,7 @@
                 </hyt-areas-list>
             </mat-tab>
 
-            <mat-tab *ngIf="areaId > 0" label="Image" i18n-label="@@HYT_area_section_static_image">
+            <mat-tab *ngIf="areaId > 0" label="Image" i18n-label="@@HYT_area_section_static_image" aria-label="IMAGE">
                 <div class="mt-4 mb-2 d-flex flex-row justify-content-center">
 
                     <hyt-button [color]="'hyt-base-default-white'">

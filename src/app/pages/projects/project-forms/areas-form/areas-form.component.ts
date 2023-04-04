@@ -30,6 +30,8 @@ import {DraggableItemComponent} from './draggable-item/draggable-item.component'
 import {GenericMessageDialogComponent} from 'src/app/components/modals/generic-message-dialog/generic-message-dialog.component';
 import {mergeMap, Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
+import {AreaType} from '../../../../models/areaType';
+import {areAllEquivalent} from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'hyt-areas-form',
@@ -94,6 +96,10 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
   overlayLoadingString = $localize`:@@HYT_loading_area_media:Loading Area Media`;
   ovelayErrorString = $localize`:@@HYT_loading_media_error:Loading Media Error`;
   overlayEmptyString = $localize`:@@HYT_no_area_media:No Media`;
+  /**
+   *  Types of areas used to identify the value of the current tab
+   */
+  currentTabAreaType?: AreaType;
   /*
    * logger service
    */
@@ -638,6 +644,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
     }
 
     if (this.currentSection === 2) {
+      const ariaLabelValue = e.tab.ariaLabel;
       this.loadAreaData();
       this.clickedTab.emit('Tab-Map');
       this.logger.debug('onTabChange Tab-Map', e);

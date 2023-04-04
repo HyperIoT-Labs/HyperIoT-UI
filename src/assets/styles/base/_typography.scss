@@ -83,29 +83,17 @@
 
 /*************************************
 *
-*  HYT FONT ICONS
+*  HYT FONT ICONS v1.27
 *
 *************************************/
 
-// @font-face {
-//   font-family: 'HytFonts';
-//   src:  url('assets/fonts/hyperiot-fonts/HytFonts.eot?yhhqhv');
-//   src:  url('assets/fonts/hyperiot-fonts/HytFonts.eot?yhhqhv#iefix') format('embedded-opentype'),
-//     url('assets/fonts/hyperiot-fonts/HytFonts.ttf?yhhqhv') format('truetype'),
-//     url('assets/fonts/hyperiot-fonts/HytFonts.woff?yhhqhv') format('woff'),
-//     url('assets/fonts/hyperiot-fonts/HytFonts.svg?yhhqhv#HytFonts') format('svg');
-//   font-weight: normal;
-//   font-style: normal;
-//   font-display: block;
-// }
-
 @font-face {
   font-family: 'HytFonts';
-  src:  url('../../../assets/fonts/hyperiot-fonts/HytFonts.eot?t0xkvs');
-  src:  url('../../../assets/fonts/hyperiot-fonts/HytFonts.eot?t0xkvs#iefix') format('embedded-opentype'),
-    url('../../../assets/fonts/hyperiot-fonts/HytFonts.ttf?t0xkvs') format('truetype'),
-    url('../../../assets/fonts/hyperiot-fonts/HytFonts.woff?t0xkvs') format('woff'),
-    url('../../../assets/fonts/hyperiot-fonts/HytFonts.svg?t0xkvs#HytFonts') format('svg');
+  src:  url('../../../assets/fonts/hyperiot-fonts/HytFonts.eot?k8py53');
+  src:  url('../../../assets/fonts/hyperiot-fonts/HytFonts.eot?k8py53#iefix') format('embedded-opentype'),
+    url('../../../assets/fonts/hyperiot-fonts/HytFonts.ttf?k8py53') format('truetype'),
+    url('../../../assets/fonts/hyperiot-fonts/HytFonts.woff?k8py53') format('woff'),
+    url('../../../assets/fonts/hyperiot-fonts/HytFonts.svg?k8py53#HytFonts') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -114,7 +102,7 @@
 [class^="icon-"], [class*=" icon-"] {
   /* use !important to prevent issues with browser extensions that change fonts */
   font-family: 'HytFonts' !important;
-  speak: none;
+  speak: never;
   font-style: normal;
   font-weight: normal;
   font-variant: normal;
@@ -225,10 +213,10 @@
 .icon-hyt_fieldsPlus:before {
   content: "\e920";
 }
-.icon-hyt_hamMenuClose:before {
+.icon-hyt_hamClose:before {
   content: "\e921";
 }
-.icon-hyt_HamOpen:before {
+.icon-hyt_hamOpen:before {
   content: "\e922";
 }
 .icon-hyt_helpM:before {
@@ -417,7 +405,7 @@
 .icon-hyt_arrowRight:before {
   content: "\e960";
 }
-.icon-hyt_fieldsPlusHalf:before {
+.icon-hyt_fieldsPlus-copia:before {
   content: "\e962";
 }
 .icon-hyt_homeNew:before {
@@ -477,42 +465,111 @@
 .icon-hyt_Undo-copia:before {
   content: "\e96d";
 }
-.icon-hyt_off1:before {
+.icon-hyt_power1:before {
   content: "\e96e";
 }
-.icon-hyt_StreamData_Wifi:before {
+.icon-hyt_streamData_Wifi:before {
   content: "\e96f";
 }
-.icon-hyt_StreamData_Play:before {
+.icon-hyt_streamData_Play:before {
   content: "\e970";
 }
-.icon-hyt_StreamData_Power:before {
+.icon-hyt_streamData_Power:before {
   content: "\e971";
 }
-.icon-hyt_StreamData_Mobile:before {
+.icon-hyt_streamData_Mobile:before {
   content: "\e979";
 }
-.icon-hyt_StreamData_Save:before {
+.icon-hyt_streamData_Save:before {
   content: "\e97a";
 }
-.icon-hyt_StreamData_Lamp:before {
+.icon-hyt_streamData_Lamp:before {
   content: "\e97b";
 }
-.icon-hyt_StreamCloud_Wifi:before {
+.icon-hyt_streamCloud_Wifi:before {
   content: "\e97c";
 }
-.icon-hyt_StreamCloud_Save:before {
+.icon-hyt_streamCloud_Save:before {
   content: "\e97d";
 }
-.icon-hyt_StreamCloud_Power:before {
+.icon-hyt_streamCloud_Power:before {
   content: "\e97e";
 }
-.icon-hyt_StreamCloud_Play:before {
+.icon-hyt_streamCloud_Play:before {
   content: "\e97f";
 }
-.icon-hyt_StreamCloud_Mobile:before {
+.icon-hyt_streamCloud_Mobile:before {
   content: "\e980";
 }
-.icon-hyt_StreamCloud_Lamp:before {
+.icon-hyt_streamCloud_Lamp:before {
   content: "\e981";
+}
+.icon-hyt_app:before {
+  content: "\e982";
+}
+.icon-hyt_appB:before {
+  content: "\e983";
+}
+.icon-hyt_area12:before {
+  content: "\e984";
+}
+.icon-hyt_area16:before {
+  content: "\e985";
+}
+.icon-hyt_areaB12:before {
+  content: "\e986";
+}
+.icon-hyt_areaB16:before {
+  content: "\e987";
+}
+.icon-hyt_db:before {
+  content: "\e988";
+}
+.icon-hyt_algorithm:before {
+  content: "\e989";
+}
+.icon-hyt_deviceOUT:before {
+  content: "\e98a";
+}
+.icon-hyt_deviceIN:before {
+  content: "\e98b";
+}
+.icon-hyt_file:before {
+  content: "\e98c";
+}
+.icon-hyt_upload:before {
+  content: "\e98d";
+}
+.icon-hyt_filter:before {
+  content: "\e98e";
+}
+.icon-hyt_filterSetting:before {
+  content: "\e98f";
+}
+.icon-hyt_filterRound:before {
+  content: "\e990";
+}
+.icon-hyt_power:before {
+  content: "\e991";
+}
+.icon-hyt_run:before {
+  content: "\e992";
+}
+.icon-hyt_maximize:before {
+  content: "\e993";
+}
+.icon-hyt_maximizeRounded:before {
+  content: "\e994";
+}
+.icon-hyt_maximizeArrow:before {
+  content: "\e995";
+}
+.icon-hyt_minimize:before {
+  content: "\e996";
+}
+.icon-hyt_minimizeRounded:before {
+  content: "\e997";
+}
+.icon-hyt_minimizeArrow:before {
+  content: "\e998";
 }

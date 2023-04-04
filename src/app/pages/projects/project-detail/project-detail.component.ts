@@ -181,7 +181,6 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
   }
 
   onActivate(childComponent: ProjectFormEntity) {
-
     childComponent.clickedTab
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(val => {
@@ -203,7 +202,7 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
       this.currentEntity.entityEvent
         .pipe(takeUntil(this.ngUnsubscribe))
         .subscribe((data) => {
-        this.logger.debug('Enntity Event Data', data);
+        this.logger.debug('Entity Event Data', data);
         switch (data.event) {
           case 'summaryList:reload':
             this.currentEntity.summaryList = data.summaryList
@@ -634,13 +633,14 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
    * function used to toggle display Info/Action Column
    */
   toggleInfoActionColumn(childComponent: any) {
+    console.log('childComponent.formTemplateId', childComponent.formTemplateId)
     this.logger.debug('toggleInfoActionColumn', childComponent);
     if(
 
-      (childComponent.formTemplateId.includes('areas-form') && this.areaSection == 'Tab-Sub-Area') ||
-      (childComponent.formTemplateId.includes('areas-form') && this.areaSection == 'Tab-Map') ||
+      (childComponent.formTemplateId.includes('areas-form') && this.areaSection === 'Tab-Sub-Area') ||
+      (childComponent.formTemplateId.includes('areas-form') && this.areaSection === 'Tab-Map') ||
 
-      (childComponent.formTemplateId.includes('areas-form') && this.areaSection == 'Tab-Info') &&
+      (childComponent.formTemplateId.includes('areas-form') && this.areaSection === 'Tab-Info') &&
       childComponent.editMode === false ||
 
       childComponent.formTemplateId.includes('tag-form') ||
