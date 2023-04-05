@@ -251,8 +251,9 @@ export class EntitiesService {
       description: '',
       baseConfig: '{\"input\":[], \"output\":[]}',
       entityVersion: 1,
-      jarName: null,
-      mainClassname: ''
+      algorithmFileName: null,
+      mainClassname: '',
+      type: 'STATISTICS'
     }
   };
 

@@ -202,7 +202,7 @@ export class AlgorithmsComponent implements OnInit {
   refreshComponent() {
     this.filteringForm = this.fb.group({});
 
-    this.algorithmsService.findAllAlgorithm().subscribe(
+    this.algorithmsService.findAllAlgorithm('STATISTICS').subscribe(
       res => {
         this.algorithms = res;
         this.pageStatus = (this.algorithms.length !== 0)

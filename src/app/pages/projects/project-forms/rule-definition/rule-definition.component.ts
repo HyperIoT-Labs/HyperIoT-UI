@@ -26,15 +26,15 @@ interface RuleDefinition {
 }
 
 @Component({
-  selector: "hyt-rule-definition",
-  templateUrl: "./rule-definition.component.html",
-  styleUrls: ["./rule-definition.component.scss"],
+  selector: 'hyt-rule-definition',
+  templateUrl: './rule-definition.component.html',
+  styleUrls: ['./rule-definition.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
 export class RuleDefinitionComponent {
   @Input() projectId: number;
 
-  @Input() ruleType: "event" | "enrichment";
+  @Input() ruleType: 'event' | 'enrichment' = 'event';
 
   @Input() currentPacket: HPacket;
 
@@ -62,49 +62,49 @@ export class RuleDefinitionComponent {
    */
   allConditionOptions = [
     {
-      value: ">",
+      value: '>',
       label: $localize`:@@HYT_(>)_greater:(>) Greater`,
-      type: ["OBJECT", "INTEGER", "DOUBLE", "FLOAT", "DATE"],
+      type: ['OBJECT', 'INTEGER', 'DOUBLE', 'FLOAT', 'DATE'],
     },
     {
-      value: ">=",
+      value: '>=',
       label: $localize`:@@HYT_(>=)_greater_equal:(>=) Greater/Equal`,
-      type: ["OBJECT", "INTEGER", "DOUBLE", "FLOAT", "DATE"],
+      type: ['OBJECT', 'INTEGER', 'DOUBLE', 'FLOAT', 'DATE'],
     },
     {
-      value: "<",
+      value: '<',
       label: $localize`:@@HYT_(<)_lower:(<) Lower`,
-      type: ["OBJECT", "INTEGER", "DOUBLE", "FLOAT", "DATE"],
+      type: ['OBJECT', 'INTEGER', 'DOUBLE', 'FLOAT', 'DATE'],
     },
     {
-      value: "<=",
+      value: '<=',
       label: $localize`:@@HYT_(<=)_lower_equal:(<=) Lower/Equal`,
-      type: ["OBJECT", "INTEGER", "DOUBLE", "FLOAT", "DATE"],
+      type: ['OBJECT', 'INTEGER', 'DOUBLE', 'FLOAT', 'DATE'],
     },
     {
-      value: "==",
+      value: '==',
       label: $localize`:@@HYT_(==)_equal:(=) Equal`,
-      type: ["OBJECT", "INTEGER", "DOUBLE", "FLOAT", "DATE", "TEXT"],
+      type: ['OBJECT', 'INTEGER', 'DOUBLE', 'FLOAT', 'DATE', 'TEXT'],
     },
     {
-      value: "!=",
+      value: '!=',
       label: $localize`:@@HYT_(!=)_different:(!=) Different`,
-      type: ["OBJECT", "INTEGER", "DOUBLE", "FLOAT", "DATE", "TEXT"],
+      type: ['OBJECT', 'INTEGER', 'DOUBLE', 'FLOAT', 'DATE', 'TEXT'],
     },
     {
-      value: "matches",
+      value: 'matches',
       label: $localize`:@@HYT_(())_like:(()) Like`,
-      type: ["TEXT"],
+      type: ['TEXT'],
     },
     {
-      value: "isTrue",
+      value: 'isTrue',
       label: $localize`:@@HYT_is_true:Is true`,
-      type: ["OBJECT", "BOOLEAN"],
+      type: ['OBJECT', 'BOOLEAN'],
     },
     {
-      value: "isFalse",
+      value: 'isFalse',
       label: $localize`:@@HYT_is_false:Is false`,
-      type: ["OBJECT", "BOOLEAN"],
+      type: ['OBJECT', 'BOOLEAN'],
     },
   ];
 
@@ -112,14 +112,14 @@ export class RuleDefinitionComponent {
    * joinOptions stores the information of the join option.
    */
   joinOptions: Option[] = [
-    { value: " AND ", label: $localize`:@@HYT_and:AND`, checked: false },
-    { value: " OR ", label: $localize`:@@HYT_or:OR`, checked: false },
+    { value: ' AND ', label: $localize`:@@HYT_and:AND`, checked: false },
+    { value: ' OR ', label: $localize`:@@HYT_or:OR`, checked: false },
   ];
 
   /**
    * originalFormsValues is used to keep record of the old ruleDefinition value (dirty)
    */
-  private originalFormsValues = this.ruleType === "enrichment"
+  private originalFormsValues = this.ruleType === 'enrichment'
       ? '{"ruleField":"","ruleCondition":"","ruleValue":"","ruleJoin":""}'
       : '{"rulePacket":"","ruleField":"","ruleCondition":"","ruleValue":"","ruleJoin":""}';
 
@@ -145,27 +145,27 @@ export class RuleDefinitionComponent {
         fieldOptions: [],
       },
     ];
-    //sync between form inside html with formControls and next invocation on fields
+    // sync between form inside html with formControls and next invocation on fields
     this.cd.detectChanges();
 
-    if (this.ruleType === "enrichment") {
-      this.ruleForms[0].form.get("rulePacket").disable();
+    if (this.ruleType === 'enrichment') {
+      this.ruleForms[0].form.get('rulePacket').disable();
       this.ruleForms[0].form
-          .get("rulePacket")
+          .get('rulePacket')
           .setValue(this.currentPacket.id);
-        this.ruleForms[0].fieldOptions = this.buildFieldOptions(this.currentPacket);      
+        this.ruleForms[0].fieldOptions = this.buildFieldOptions(this.currentPacket);
     }
 
     this.originalFormsValues =
-      this.ruleType === "enrichment"
+      this.ruleType === 'enrichment'
         ? '{"ruleField":"","ruleCondition":"","ruleValue":"","ruleJoin":""}'
         : '{"rulePacket":"","ruleField":"","ruleCondition":"","ruleValue":"","ruleJoin":""}';
   }
-  
+
 
   extractField(fieldArr: HPacketField[], pre?: string) {
     fieldArr.forEach((f) => {
-      const fieldName: string = pre ? pre + "." + f.name : f.name;
+      const fieldName: string = pre ? pre + '.' + f.name : f.name;
       this.fieldFlatList.push({ field: f, label: fieldName });
       if (f.innerFields) {
         this.extractField(f.innerFields, fieldName);
@@ -202,7 +202,7 @@ export class RuleDefinitionComponent {
     if (this.projectId) {
       return new Promise((resolve, reject) => {
           this.hPacketsService
-            .findAllHPacketByProjectIdAndType(this.projectId, "INPUT,IO")
+            .findAllHPacketByProjectIdAndType(this.projectId, 'INPUT,IO')
             .toPromise()
             .then((res) => {
               this.allPackets = res;
@@ -236,16 +236,16 @@ export class RuleDefinitionComponent {
         conditionOptions: [],
         compareWith: false,
         fieldOptions:
-          this.ruleType === "enrichment"
+          this.ruleType === 'enrichment'
             ? this.buildFieldOptions(this.currentPacket)
             : [],
       });
 
       this.cd.detectChanges();
-      
-      if (this.ruleType === "enrichment") {
+
+      if (this.ruleType === 'enrichment') {
         this.ruleForms[index + 1].form
-          .get("rulePacket")
+          .get('rulePacket')
           .setValue(this.currentPacket.id);
       }
     }
@@ -253,32 +253,32 @@ export class RuleDefinitionComponent {
 
   removeCondition(index) {
     this.ruleForms.splice(index, 1);
-    this.ruleForms[this.ruleForms.length - 1].form.get("ruleJoin").setValue("");
+    this.ruleForms[this.ruleForms.length - 1].form.get('ruleJoin').setValue('');
   }
 
   buildRuleDefinition(): string {
-    let rd = "";
+    let rd = '';
     for (const rule of this.ruleForms) {
       const packet: string = rule.form.controls.rulePacket.value
         ? `${rule.form.controls.rulePacket.value}.`
-        : "";
+        : '';
       const field: string = rule.form.value.ruleField
         ? rule.fieldOptions.filter(x => x.value === rule.form.value.ruleField)[0].value
-        : "";
+        : '';
       const condition: string = rule.form.value.ruleCondition
-        ? " " + rule.form.value.ruleCondition
-        : "";
+        ? ' ' + rule.form.value.ruleCondition
+        : '';
       const valueRule: string =
         rule.form.value.ruleValue &&
-        rule.form.value.ruleCondition !== "isTrue" &&
-        rule.form.value.ruleCondition !== "isFalse"
-          ? " " + rule.form.value.ruleValue
-          : "";
+        rule.form.value.ruleCondition !== 'isTrue' &&
+        rule.form.value.ruleCondition !== 'isFalse'
+          ? ' ' + rule.form.value.ruleValue
+          : '';
       const joinRule: string =
-        rule.form.value.ruleJoin === " AND " ||
-        rule.form.value.ruleJoin === " OR "
+        rule.form.value.ruleJoin === ' AND ' ||
+        rule.form.value.ruleJoin === ' OR '
           ? rule.form.value.ruleJoin
-          : "";
+          : '';
       rd +=
         JSON.stringify(`${packet}${field}`) + condition + valueRule + joinRule;
     }
@@ -304,22 +304,22 @@ export class RuleDefinitionComponent {
         });
       }
     });
-    this.ruleForms[index].compareWith = type !== "BOOLEAN";
+    this.ruleForms[index].compareWith = type !== 'BOOLEAN';
   }
 
   isFormInvalid(k: number): boolean {
     const valArr = this.ruleForms[k].form;
     return Object.entries(valArr.value).length === 0
       ? true
-      : valArr.get("ruleField").invalid ||
-          valArr.get("ruleCondition").invalid ||
+      : valArr.get('ruleField').invalid ||
+          valArr.get('ruleCondition').invalid ||
           (this.ruleForms[k].compareWith
-            ? valArr.get("ruleValue").invalid
+            ? valArr.get('ruleValue').invalid
             : false);
   }
 
   isDirty(): boolean {
-    return this.getJsonForms() === "{}" || this.updating
+    return this.getJsonForms() === '{}' || this.updating
       ? false
       : this.getJsonForms() !== this.originalFormsValues;
   }
@@ -350,12 +350,12 @@ export class RuleDefinitionComponent {
             ruleDefinition.split(/(?= AND )|(?= OR )/);
 
           for (let k = 0; k < ruleArray.length; k++) {
-            const splitted: string[] = ruleArray[k].split(" ");
+            const splitted: string[] = ruleArray[k].split(' ');
             if (k === 0) {
               ruleDef.push({
-                packet: JSON.parse(splitted[0]).split(".")[0],
+                packet: JSON.parse(splitted[0]).split('.')[0],
                 field: JSON.parse(splitted[0]).substring(
-                  splitted[0].indexOf(".")
+                  splitted[0].indexOf('.')
                 ),
                 condition: splitted[1],
                 value: splitted[2] ? splitted[2] : null,
@@ -364,9 +364,9 @@ export class RuleDefinitionComponent {
             } else {
               ruleDef[k - 1].join = splitted[1];
               ruleDef.push({
-                packet: JSON.parse(splitted[2]).split(".")[0],
+                packet: JSON.parse(splitted[2]).split('.')[0],
                 field: JSON.parse(splitted[2]).substring(
-                  splitted[2].indexOf(".")
+                  splitted[2].indexOf('.')
                 ),
                 condition: splitted[3],
                 value: splitted[4] ? splitted[4] : null,
@@ -412,29 +412,29 @@ export class RuleDefinitionComponent {
             this.ruleForms.push({
               form: this.fb.group({}),
               conditionOptions,
-              compareWith: fieldType !== "BOOLEAN",
+              compareWith: fieldType !== 'BOOLEAN',
               fieldOptions,
             });
 
             this.cd.detectChanges();
 
-            const rulePacket = this.ruleForms[k].form.get("rulePacket");
+            const rulePacket = this.ruleForms[k].form.get('rulePacket');
             if (rulePacket) {
               rulePacket.setValue(actualPacket.id);
               this.ruleForms[k].form
-                .get("ruleField")
+                .get('ruleField')
                 .setValue(actualFieldOption.value);
               this.ruleForms[k].form
-                .get("ruleCondition")
+                .get('ruleCondition')
                 .setValue(ruleDef[k].condition);
               if (this.ruleForms[k].compareWith) {
                 this.ruleForms[k].form
-                  .get("ruleValue")
+                  .get('ruleValue')
                   .setValue(ruleDef[k].value);
               }
               this.ruleForms[k].form
-                .get("ruleJoin")
-                .setValue(ruleDef[k].join ? " " + ruleDef[k].join + " " : "");
+                .get('ruleJoin')
+                .setValue(ruleDef[k].join ? ' ' + ruleDef[k].join + ' ' : '');
             }
             if (k === this.ruleForms.length - 1) {
               this.originalValueUpdate();
@@ -450,7 +450,7 @@ export class RuleDefinitionComponent {
   }
 
   private getJsonForms() {
-    let currentValue = "";
+    let currentValue = '';
     this.ruleForms.map((rf) => (currentValue += JSON.stringify(rf.form.value)));
     return currentValue;
   }

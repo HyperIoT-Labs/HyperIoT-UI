@@ -3,7 +3,7 @@
     padding-top: 20px;
 
     #fstatistic-col-active {
-        
+
         #container-radio-statistic-active {
             border: lightgray solid 1px;
             border-radius: 4px;
@@ -19,14 +19,14 @@
         p {
 
             &.subtitle-section {
-    
+
                 font-size: .9em;
                 font-style: italic;
                 line-height: 25px;
                 margin-bottom: 30px;
-    
+
             }
-    
+
         }
 
         #container-add-statistic {
@@ -39,15 +39,15 @@
     }
 
     form {
-        
+
         &.blurred {
 
             -webkit-filter: blur(1px);
             -moz-filter: blur(1px);
             -ms-filter: blur(1px);
-            -o-filter: blur(1px);    
+            -o-filter: blur(1px);
             filter: blur(1px);
-            
+
         }
 
         .form-group {
@@ -66,7 +66,7 @@
                         mat-select {
                             font-family: 'Exo';
                         }
-                        
+
                         label {
                             &.mat-form-field-label {
                                 font-family: 'Exo';
@@ -89,7 +89,7 @@
                             color: #1e58a5;
                             font-weight: bold;
                             margin-right: 10px;
-    
+
                         }
 
                     }
@@ -195,7 +195,7 @@
                                             &:not(:last-child) {
 
                                                 margin-bottom: 15px;
-        
+
                                             }
 
                                             input {
@@ -275,7 +275,7 @@
         left: 0; top: 0; right: 0; bottom: 0;
 
         .loading-logo {
-            
+
             position: relative;
             text-align: center;
             display: flex;
@@ -286,37 +286,37 @@
 
                 height: 63%;
                 width: 100%;
-                
+
                 background-repeat: no-repeat;
                 background-position: top center;
-                background-image: url('~/assets/images/hyperiot_logo_single_char_animated.svg');
+                background-image: url('/assets/images/hyperiot_logo_single_char_animated.svg');
 
                 &.big-bg {
 
                     background-size: 220px;
-    
+
                 }
 
                 &.medium-bg {
 
                     background-size: 170px;
-    
+
                 }
 
                 &.small-bg {
 
                     background-size: 125px;
-    
+
                 }
 
                 &.x-small-bg {
 
                     background-size: 90px;
-    
+
                 }
 
             }
-            
+
             h4 {
                 text-align: center;
             }

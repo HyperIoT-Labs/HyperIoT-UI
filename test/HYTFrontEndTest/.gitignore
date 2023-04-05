@@ -1,0 +1,10 @@
+/.gradle/
+**/.idea/**
+/gradle/wrapper/
+/target/**
+/.gradle/
+/.idea/
+/build/
+/gradle/
+/gradlew
+/gradlew.bat

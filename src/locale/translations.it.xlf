@@ -1028,7 +1028,7 @@
         <source>Event saved!</source>
         <target>Evento salvato!</target>
       </trans-unit>
-            <trans-unit id="HYT_remember_changes" datatype="html">
+      <trans-unit id="HYT_remember_changes" datatype="html">
         <source>Remember to save the alarm to maintain the changes</source>
         <target>Ricorda di salvare l'allarme per mantenere le modifiche</target>
       </trans-unit>
@@ -1416,6 +1416,10 @@
         <source>Proceeding with this action you will disable the registration of the data and they will not be stored until the rehabilitation of this property</source>
         <target>Procedendo con questa azione disabiliterai la registrazione dei dati che non saranno salvati fino alla riabilitazione di questa proprietà</target>
       </trans-unit>
+      <trans-unit id="HYT_dashboard_event_fired" datatype="html">
+        <source>The event has been fired</source>
+        <target>L'evento è stato emesso</target>
+      </trans-unit>
       <trans-unit id="HYT_reload" datatype="html">
         <source>Reload</source>
         <target>Ricarica</target>
@@ -1440,6 +1444,8 @@
         <source>Go to your Projects</source>
         <target>Vai ai tuoi progetti</target>
       </trans-unit>
+
+      <!-- AREAS START -->
       <trans-unit id="HYT_area_map_select_device" datatype="html">
         <source>Select device</source>
         <target>Seleziona dispositivo</target>
@@ -1451,6 +1457,10 @@
       <trans-unit id="HYT_area_list_noimage" datatype="html">
         <source>(no image)</source>
         <target>(immagine assente)</target>
+      </trans-unit>
+      <trans-unit id="HYT_area_list_nomedia" datatype="html">
+        <source>(No Media Uploaded)</source>
+        <target>(Nessun Media caricato)</target>
       </trans-unit>
       <trans-unit id="HYT_area_draggable_title" datatype="html">
         <source>Move <x id="INTERPOLATION" /></source>
@@ -1500,13 +1510,17 @@
         <source>Add sub-area</source>
         <target>Aggiungi sotto-area</target>
       </trans-unit>
+      <trans-unit id="HYT_area_section_static_image" datatype="html">
+        <source>Image</source>
+        <target>Immagine</target>
+      </trans-unit>
       <trans-unit id="HYT_area_section_map" datatype="html">
         <source>Map</source>
         <target>Mappa</target>
       </trans-unit>
-      <trans-unit id="HYT_area_map_set_image" datatype="html">
-        <source>Set map image</source>
-        <target>Imposta immagine mappa</target>
+      <trans-unit id="HYT_area_set_image" datatype="html">
+        <source>Set image</source>
+        <target>Imposta immagine</target>
       </trans-unit>
       <trans-unit id="HYT_area_map_device_add" datatype="html">
         <source>Add device</source>
@@ -1520,17 +1534,61 @@
         <source>Project Areas</source>
         <target>Aree progetti</target>
       </trans-unit>
+      <trans-unit id="HYT_project_areas_static_image" datatype="html">
+        <source>STATIC IMAGE</source>
+        <target>IMMAGINE STATICA</target>
+      </trans-unit>
+      <trans-unit id="HYT_project_areas_dynamic_map" datatype="html">
+        <source>DYNAMIC MAP</source>
+        <target>MAPPA DINAMICA</target>
+      </trans-unit>
+      <trans-unit id="HYT_project_areas_bim_xkt_format" datatype="html">
+        <source>BIM IN XKT FORMAT</source>
+        <target>BIM IN FORMATO XKT</target>
+      </trans-unit>
+      <trans-unit id="HYT_project_areas_bim_ifc_format" datatype="html">
+        <source>BIM IN IFC FORMAT</source>
+        <target>BIM IN FORMATO IFC</target>
+      </trans-unit>
+      <trans-unit id="HYT_area_treeview" datatype="html">
+        <source>Area Treeview</source>
+        <target>alberatura Area</target>
+      </trans-unit>
+      <trans-unit id="HYT_return_area_project" datatype="html">
+        <source>Return to project areas</source>
+        <target>Ritorna alle aree del progetto</target>
+      </trans-unit>
+      <trans-unit id="HYT_loading_area_media" datatype="html">
+        <source>Loading Area Media</source>
+        <target>Caricamento Media</target>
+      </trans-unit>
+      <trans-unit id="HYT_loading_media_error" datatype="html">
+        <source>Loading Media Error</source>
+        <target>Errore Caricamento Media</target>
+      </trans-unit>
+      <trans-unit id="HYT_no_area_media" datatype="html">
+        <source>No Media</source>
+        <target>No Media</target>
+      </trans-unit>
+      <trans-unit id="HYT_area_tree_loading" datatype="html">
+        <source>Loading Treeview</source>
+        <target>Caricamento Treeview</target>
+      </trans-unit>
+      <trans-unit id="HYT_area_tree_error" datatype="html">
+        <source>Error Loading</source>
+        <target>Errore nel Caricamento</target>
+      </trans-unit>
       <trans-unit id="HYT_file_size_exceed" datatype="html">
         <source>File size exceed limit of <x id="PH" /> bytes</source>
-        <target>Il </target>
+        <target>Il file supera il limite di <x id="PH" /> bytes</target>
       </trans-unit>
       <trans-unit id="HYT_file_type_must_be" datatype="html">
         <source>File type must be <x id="PH" /></source>
-        <target>@@I18N@@</target>
+        <target>Il file deve essere di tipo <x id="PH" /></target>
       </trans-unit>
       <trans-unit id="HYT_download_pwa" datatype="html">
         <source>Download PWA <x id="START_TAG_BUTTON" />OK<x id="CLOSE_TAG_BUTTON" /><x id="START_TAG_BUTTON_1" />NO<x id="CLOSE_TAG_BUTTON" /></source>
-        <target>@@I18N@@</target>
+        <target>Scarica PWA <x id="START_TAG_BUTTON" />OK<x id="CLOSE_TAG_BUTTON" /><x id="START_TAG_BUTTON_1" />NO<x id="CLOSE_TAG_BUTTON" /></target>
       </trans-unit>
       <trans-unit id="HYT_dashboard" datatype="html">
         <source>Dashboard</source>
@@ -1540,6 +1598,28 @@
         <source>Areas</source>
         <target>Aree</target>
       </trans-unit>
+      <trans-unit id="HYT_areas_no_areas_defined" datatype="html">
+        <source>No areas defined.</source>
+        <target>Nessuna Area è stata definita</target>
+      </trans-unit>
+      <trans-unit id="HYT_areas_select_area_from_list" datatype="html">
+        <source>Select an area from the list below</source>
+        <target>Seleziona un'area dalla lista sottostante</target>
+      </trans-unit>
+      <trans-unit id="HYT_areas_show_treeview" datatype="html">
+        <source>Show</source>
+        <target>Mostra</target>
+      </trans-unit>
+      <trans-unit id="HYT_areas_hide_treeview" datatype="html">
+        <source>Hide</source>
+        <target>Nascondi</target>
+      </trans-unit>
+      <trans-unit id="HYT_areaa_go_to_create_area" datatype="html">
+        <source>Create the first area for this project</source>
+        <target>Crea la prima area per questo progetto</target>
+      </trans-unit>
+      <!-- AREAS END -->
+
       <trans-unit id="HYT_dashboard_list" datatype="html">
         <source>Dashboard list</source>
         <target>Lista dashboard</target>
@@ -1764,15 +1844,15 @@
         <source>Select color</source>
         <target>Seleziona colore</target>
       </trans-unit>
-      <trans-unit id="HYT_algorithm_jar_package" datatype="html">
+      <trans-unit id="HYT_algorithm_file" datatype="html">
         <source>JAR package:</source>
-        <target>Pacchetto JAR</target>
+        <target>JAR package:</target>
       </trans-unit>
-      <trans-unit id="HYT_algorithm_jar_package_exists" datatype="html">
+      <trans-unit id="HYT_algorithm_file_exists" datatype="html">
         <source>exists</source>
         <target>è presente</target>
       </trans-unit>
-      <trans-unit id="HYT_algorithm_jar_package_not_exists" datatype="html">
+      <trans-unit id="HYT_algorithm_file_not_exists" datatype="html">
         <source>does not exist</source>
         <target>non è presente</target>
       </trans-unit>
@@ -1831,6 +1911,38 @@
       <trans-unit id="HYT_unavailble_widget_description" datatype="html">
         <source>This widget is unavailable</source>
         <target>Questo widget non è disponibile</target>
+      </trans-unit>
+      <trans-unit id="HYT_widget_settings_text_color" datatype="html">
+        <source>Text color:</source>
+        <target>Colore del testo:</target>
+      </trans-unit>
+      <trans-unit id="HYT_info" datatype="html">
+        <source>Info</source>
+        <target>Info</target>
+      </trans-unit>
+      <trans-unit id="HYT_system_information" datatype="html">
+        <source>System information</source>
+        <target>Informazioni di sistema</target>
+      </trans-unit>
+      <trans-unit id="HYT_ui_version" datatype="html">
+        <source>UI version</source>
+        <target>Version UI</target>
+      </trans-unit>
+      <trans-unit id="HYT_services_version" datatype="html">
+        <source>Services version</source>
+        <target>Versione Servizi</target>
+      </trans-unit>
+      <trans-unit id="HYT_widget_settings_bg_color" datatype="html">
+        <source>Background color:</source>
+        <target>Colore dello sfondo:</target>
+      </trans-unit>
+      <trans-unit id="HYT_widget_settings_bg_color_bright" datatype="html">
+        <source>Bright</source>
+        <target>Chiaro</target>
+      </trans-unit>
+      <trans-unit id="HYT_widget_settings_bg_color_dark" datatype="html">
+        <source>Dark</source>
+        <target>Scuro</target>
       </trans-unit>
     </body>
   </file>

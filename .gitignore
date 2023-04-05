@@ -6,6 +6,7 @@
 /out-tsc
 # Only exists if Bazel was run
 /bazel-out
+/test
 
 # dependencies
 /node_modules
@@ -50,5 +51,5 @@ package-lock.json
 
 # Self Sign Certificate
 cert.cnf
-localhost.crt 
+localhost.crt
 localhost.key

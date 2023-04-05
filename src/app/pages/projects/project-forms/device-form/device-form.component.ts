@@ -1,6 +1,6 @@
 import { Component, OnDestroy, ElementRef, ViewChild, Input, Injector, AfterViewInit, ViewEncapsulation, ChangeDetectorRef, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 import { HdevicesService, HDevice, HProject } from '@hyperiot/core';
@@ -169,15 +169,14 @@ export class DeviceFormComponent extends ProjectFormEntity implements AfterViewI
 
   edit(d?: HDevice, readyCallback?) {
     if (d && d.id) {
-      this.form.get('hdevice-password').setValidators([]);
-      this.form.get('hdevice-password').updateValueAndValidity();
-      this.form.get('hdevice-passwordConfirm').setValidators([]);
-      this.form.get('hdevice-passwordConfirm').updateValueAndValidity();
-    } else {
-      this.form.get('hdevice-password').setValidators([Validators.required]);
-      this.form.get('hdevice-password').updateValueAndValidity();
-      this.form.get('hdevice-passwordConfirm').setValidators([Validators.required]);
-      this.form.get('hdevice-passwordConfirm').updateValueAndValidity();
+      if (this.form.contains('hdevice-password') && this.form.contains('hdevice-passwordConfirm')) {
+        this.form.get('hdevice-password').setValidators([]);
+        this.form.get('hdevice-password').updateValueAndValidity();
+        this.form.removeControl('hdevice-password');
+        this.form.get('hdevice-passwordConfirm').setValidators([]);
+        this.form.get('hdevice-passwordConfirm').updateValueAndValidity();
+        this.form.removeControl('hdevice-passwordConfirm');
+      }
     }
     super.edit(d, readyCallback);
   }

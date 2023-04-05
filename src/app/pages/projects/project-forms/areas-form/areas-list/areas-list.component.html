@@ -1,25 +1,72 @@
-<div id="title-areas-list" *ngIf="areaList && areaList.length > 0">
+<div id="container-area-list-component">
 
-    <h2>Select an area from the list below</h2> <!--@I18N-->
+  <div class="area-list-element" *ngIf="pageStatus === 1">
+    <div id="title-areas-list" *ngIf="areaList && areaList.length > 0;">
+      <h2 i18n="@@HYT_areas_select_area_from_list">Select an area from the list below</h2>
+    </div>
 
-</div>
-
-<div id="container-areas-list">
-
-    <div class="areas-list" *ngIf="areaList && areaList.length > 0"> <!-- d-flex flex-row flex-wrap justify-content-center -->
-        <mat-card *ngFor="let area of areaList"
-            class="area-item mat-elevation-z2 d-flex flex-column"
-            (click)="onAreaItemClick(area)">
-            <mat-card-header>
-                <mat-card-title>{{area.name}}</mat-card-title>
-            </mat-card-header>
-            <div *ngIf="area.imagePath != null && area.imagePath.length > 0" class="map-image flex-grow-1" [ngStyle]="{ 'background-image': 'url(/hyperiot/areas/'+area.id+'/image)' }"></div>
-            <div *ngIf="area.imagePath == null || area.imagePath.length == 0" class="map-image flex-grow-1 d-flex flex-column justify-content-center align-items-center" i18n="@@HYT_area_list_noimage">(no image)</div>
-            <mat-card-content class="p-2">{{area.description}} (A: {{area.innerCount}}, D: {{area.deviceCount}})</mat-card-content>
+    <div id="container-areas-list" *ngIf="areaList && areaList.length > 0">
+      <div class="areas-list">
+        <mat-card
+          *ngFor="let area of areaList"
+          class="area-item d-flex flex-column mat-elevation-z2"
+          (mouseenter)="toggleClassCard($event)"
+          (mouseleave)="toggleClassCard($event)"
+          (click)="onAreaItemClick(area)"
+        >
+          <mat-card-header>
+            <mat-card-title>{{area.name}}</mat-card-title>
+          </mat-card-header>
+          <div
+            *ngIf="area.areaViewType === 'IMAGE' && area.areaConfiguration !== null"
+            class="map-image flex-grow-1"
+            [ngStyle]="{ 'background-image': 'url(/hyperiot/areas/'+area.id+'/image)' }"
+          ></div>
+          <div
+            *ngIf="area.areaViewType == null"
+            class="map-image flex-grow-1 d-flex flex-column justify-content-center align-items-center"
+            i18n="@@HYT_area_list_noimage"
+          >
+            (no image)
+          </div>
+          <div
+            *ngIf="area.areaViewType !== null && area.areaConfiguration === null"
+            class="map-image flex-grow-1 d-flex flex-column justify-content-center align-items-center"
+            i18n="@@HYT_area_list_nomedia"
+          >
+            (No Media Uploaded)
+          </div>
+          <mat-card-content class="p-2">
+            (A: {{ innerAreaCount }},
+            D: {{ deviceCount }})
+          </mat-card-content>
         </mat-card>
-    </div>
-    <div class="areas-no-list" *ngIf="!areaList || !areaList.length">
-        <h2>No areas defined.</h2> <!--@I18N-->
+      </div>
     </div>
 
+    <div class="areas-no-list" *ngIf="!areaList || !areaList.length">
+      <h2 i18n="@@HYT_areas_no_areas_defined">No areas defined.</h2>
+      <div class="container-btn-no-list" *ngIf="!isInFormArea">
+        <hyt-button
+          *ngIf="!isSubAreaList"
+          [color]="'hyt-base-total-white'"
+          id="create-first-area"
+          [routerLink]="[ '/projects/', projectId, {outlets: { projectDetails: ['areas'] } } ]"
+        >
+          <ng-container i18n="@@HYT_areaa_go_to_create_area">Create the first area for this project</ng-container> <span class="hyt-icon icon-hyt_arrowRight"></span>
+        </hyt-button>
+      </div>
+    </div>
+  </div>
+
+  <div class="area-list-loader" *ngIf="pageStatus === 0">
+    <h2 i18n="HYT_page_is_loading">Page is loading...</h2>
+  </div>
+
+  <div class="area-list-error" *ngIf="pageStatus === -1">
+    <h2 i18n="@@HYT_error_occurred_long">An error has occurred, contact the administrator!</h2>
+  </div>
+
 </div>
+
+

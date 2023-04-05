@@ -91,27 +91,32 @@
                 >
                 </hyt-input-text>
 
-                <div [ngClass]="(entity.id) ? 'displayNone' : ''">
+                <div [ngClass]="(entity.id) ? 'displayNone' : ''" *ngIf="!entity.id">
                     <hyt-input-text 
                         [form]="form" 
                         name="hdevice-password"
+                        password="hdevice-passwordConfirm"
                         formControlName="hdevice-password"
                         [isRequired]="!entity.id" [isPassword]="true" i18n-placeholder="@@HYT_password"
                         placeholder="Password"
                         type="password" [injectedErrorMsg]="getError('hdevice-password')"
                         i18n-hintMessage="@@HYT_hint_device_password"
                         hintMessage="Enter the device password."
+                        autocomplete="new-password"
+                        errorPosition="bottom"
                     >
                     </hyt-input-text>
                     <hyt-input-text 
                         [form]="form" 
                         name="hdevice-passwordConfirm"
+                        confirmPassword="hdevice-password"
                         formControlName="hdevice-passwordConfirm"
                         [isRequired]="!entity.id" i18n-placeholder="@@HYT_password_confirm"
                         placeholder="Confirm password"
                         type="password" [injectedErrorMsg]="getError('hdevice-passwordConfirm')"
                         i18n-hintMessage="@@HYT_hint_password_confirm"
                         hintMessage="Confirm device password."
+                        autocomplete="new-password"
                     >
                     </hyt-input-text>
                 </div>
@@ -142,6 +147,7 @@
                                 <hyt-input-text 
                                     [form]="changePasswordForm" 
                                     formControlName="newPassword"
+                                    password="confirmPassword"
                                     name="newPassword"
                                     [isPassword]="true"
                                     type="password"

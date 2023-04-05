@@ -2,13 +2,13 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 
 import { Observable } from 'rxjs';
 
-import { MatRadioChange } from '@angular/material';
 import { OnInit, Output, EventEmitter, Injector, AfterViewInit,ChangeDetectorRef, Component } from '@angular/core';
 import { SummaryList } from '../project-detail/generic-summary-list/generic-summary-list.component';
 import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
 import { EntitiesService } from 'src/app/services/entities/entities.service';
 import { HytModalService } from '@hyperiot/components';
 import { ProjectsService } from 'src/app/services/projects.service';
+import {MatRadioChange} from '@angular/material/radio';
 
 export enum LoadingStatusEnum {
     Ready,
@@ -30,7 +30,7 @@ export abstract class ProjectFormEntity implements OnInit, AfterViewInit {
     formTitle = 'Project Form Entity';
 
     form: FormGroup;
-    //formAlarm :  FormGroup;
+    // formAlarm :  FormGroup;
     private originalValue = '{}';
     protected validationError = [];
 
@@ -65,9 +65,8 @@ export abstract class ProjectFormEntity implements OnInit, AfterViewInit {
         this.entitiesService = injector.get(EntitiesService);
         this.dialog = injector.get(HytModalService);
         this.form = this.formBuilder.group({});
-        console.log(this.form);
         //this.formAlarm = this.formBuilder.group({});
-		this.projectsService = injector.get(ProjectsService);
+		    this.projectsService = injector.get(ProjectsService);
     }
 
     ngOnInit() {
@@ -96,20 +95,16 @@ export abstract class ProjectFormEntity implements OnInit, AfterViewInit {
     }
 
     edit(entity?: any, readyCallback?) {
-
-        console.log(entity);
         if (entity) {
             this.entity = { ...entity };
         }
 
         Object.keys(this.entityFormMap).forEach((key) => {
-            console.log(this.form);
-            console.log(key);
-            console.log(this.form.get(key));
             if (this.form.get(key)) {
-                //TODO: check why form control value inside the form control must be a string
-                //it should accept other values
-                let value = (this.entity[this.entityFormMap[key].field] != null && this.entity[this.entityFormMap[key].field] != undefined)?(""+this.entity[this.entityFormMap[key].field]):null;
+                // TODO: check why form control value inside the form control must be a string
+                // it should accept other values
+                const value = (this.entity[this.entityFormMap[key].field] != null && this.entity[this.entityFormMap[key].field] !== undefined)
+                              ? (''+this.entity[this.entityFormMap[key].field]) : null;
                 this.form.get(key).setValue(value);
             }
         });
@@ -191,20 +186,19 @@ export abstract class ProjectFormEntity implements OnInit, AfterViewInit {
     }
 
     resetForm() {
-        this.originalValue = this.serialize();
-        // this.buildHintMessages();
+      this.originalValue = this.serialize();
     }
 
     private serialize() {
-        const keys = Object.keys(this.form.value);
-        keys.sort((a, b) => {
-            return a > b ? 1 : (a === b ? 0 : -1);
-        });
-        const copy = {};
-        keys.forEach((k) => {
-            copy[k] = this.form.value[k];
-        });
-        return JSON.stringify(copy, this.circularFix);
+      const keys = Object.keys(this.form.value);
+      keys.sort((a, b) => {
+          return a > b ? 1 : (a === b ? 0 : -1);
+      });
+      const copy = {};
+      keys.forEach((k) => {
+          copy[k] = this.form.value[k];
+      });
+      return JSON.stringify(copy, this.circularFix);
     }
 
     private buildHintMessages() {

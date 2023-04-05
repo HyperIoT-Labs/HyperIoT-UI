@@ -36,9 +36,9 @@
         -webkit-filter: blur(1px);
         -moz-filter: blur(1px);
         -ms-filter: blur(1px);
-        -o-filter: blur(1px);    
+        -o-filter: blur(1px);
         filter: blur(1px);
-        
+
       }
 
       .form-group {
@@ -50,7 +50,7 @@
           #fevent-col-event {
 
             p#label-event-aoutput {
-              
+
               margin-bottom: 10px;
               color: #909090;
               font-size: 0.98em;
@@ -129,7 +129,7 @@
 
     }
 
-  }  
+  }
 
 }
 
@@ -140,7 +140,7 @@
   left: 0; top: 0; right: 0; bottom: 0;
 
   .loading-logo {
-      
+
       position: relative;
       text-align: center;
       display: flex;
@@ -151,10 +151,10 @@
 
           height: 63%;
           width: 100%;
-          
+
           background-repeat: no-repeat;
           background-position: top center;
-          background-image: url('~/assets/images/hyperiot_logo_single_char_animated.svg');
+          background-image: url('/assets/images/hyperiot_logo_single_char_animated.svg');
 
           &.big-bg {
 
@@ -181,7 +181,7 @@
           }
 
       }
-      
+
       h4 {
           text-align: center;
       }

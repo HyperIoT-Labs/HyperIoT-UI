@@ -8,11 +8,12 @@ import { Option } from '@hyperiot/components';
 import { SummaryListItem } from '../../project-detail/generic-summary-list/generic-summary-list.component';
 import { TagStatus } from '../packet-enrichment-form/asset-tag/asset-tag.component';
 import {FormControl, Validators} from '@angular/forms';
-import { MatAutocomplete, MatAutocompleteSelectedEvent, MatChipInputEvent, MatAutocompleteTrigger } from '@angular/material';
 import { FormGroup } from '@angular/forms';
 import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
 import { PendingChangesDialogComponent } from 'src/app/components/dialogs/pending-changes-dialog/pending-changes-dialog.component';
 import { ToastrService } from 'ngx-toastr';
+import {MatAutocomplete, MatAutocompleteSelectedEvent, MatAutocompleteTrigger} from '@angular/material/autocomplete';
+import {MatChipInputEvent} from '@angular/material/chips';
 
 @Component({
   selector: 'hyt-project-alarms-form',
@@ -208,6 +209,7 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity  implements  O
    * END TAGS
    */
 
+
   loadEmpty() {
     this.form.reset();
     this.formEvent.reset();
@@ -227,8 +229,16 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity  implements  O
     const proceedWithEdit = () => {
 
       this.showCancel = true;
+      // Map the eventList
+      let eventList = []
+      for (let el of alarm.alarmEventList) {
+       eventList.push({"event": el.event , "severity":el.severity, "id": el.id})
+      }
+      // Add to dictionary
+      this.eventListMap.set(alarm.id, eventList);
 
-      const eventList = []
+
+      eventList = []
       for (const el of alarm.alarmEventList) {
        eventList.push({event: el.event , severity:el.severity, id: el.id})
       }
@@ -254,7 +264,18 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity  implements  O
       });
     }
 
-      const canDeactivate = this.canDeactivate();
+    let canDeactivate = this.canDeactivate();
+    if (typeof canDeactivate === 'boolean' && canDeactivate === true) {
+      proceedWithEdit();
+    } else {
+      (canDeactivate as Observable<any>).subscribe((res) => {
+        if (res) {
+          proceedWithEdit();
+        }
+      });
+    }
+
+      canDeactivate = this.canDeactivate();
       if (typeof canDeactivate === 'boolean' && canDeactivate === true) {
         proceedWithEdit();
       } else {
@@ -333,6 +354,7 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity  implements  O
       this.eventToEdit.type = Rule.TypeEnum.ALARMEVENT;
       // Empty and load tags
       this.selectedTags = []
+      for (let tagId of e.event.tagIds) this.selectedTags.push(this.allTags.find(o=> o.id == tagId));
       if (e.event.tagIds) {
         for (const tagId of e.event.tagIds) this.selectedTags.push(this.allTags.find(o => o.id === +tagId));
       }
@@ -448,6 +470,7 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity  implements  O
             this.toastr.info($localize`:@@HYT_event_still_changes:You still have to save the alarm changes`, $localize`:@@HYT_event_remember:Remember!`, {toastClass: 'alarm-toastr alarm-info'});
         })
       }
+
       // addAnother boolean
       if (this.addAnother == undefined || !this.addAnother) this.addEventMode = false;
       else {
@@ -486,6 +509,14 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity  implements  O
       this.selectedTags = []
       for (const tagId of e.event.tagIds) this.selectedTags.push(this.allTags.find(o=> o.id == tagId));
       this.setEventCounter()
+      for (let tagId of e.event.tagIds) this.selectedTags.push(this.allTags.find(o=> o.id == tagId));
+    }
+
+    changeAlarmInhibited(event) {
+      this.logger.debug("Entity", this.entity)
+      this.changedAlarmData = true;
+      this.entity.inhibited = event;
+
     }
 
     updateSummaryList() {

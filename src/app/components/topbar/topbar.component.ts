@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewEncapsulation, HostListener } from '@angular/core';
 import { ToggleSidebarService } from 'src/app/services/toggleSidebar/toggle-sidebar.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'hyt-topbar',
@@ -8,6 +9,8 @@ import { ToggleSidebarService } from 'src/app/services/toggleSidebar/toggle-side
   encapsulation: ViewEncapsulation.None
 })
 export class TopbarComponent implements OnInit {
+
+  feVersion = environment.version;
 
   public winInnerWidth: any;
   isShow: boolean = false;

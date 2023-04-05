@@ -26,7 +26,7 @@ export class AlgorithmService {
   ) { }
 
   updateAlgorithmList() {
-    this.algorithmService.findAllAlgorithm().subscribe(
+    this.algorithmService.findAllAlgorithm('STATISTICS').subscribe(
       res => {
         this.nextAlgorithms.state = 'update-success';
         this.nextAlgorithms.algorithmList = res;

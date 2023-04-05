@@ -94,7 +94,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
     this.hideDelete = true; // hide 'Delete' button
   }
 
-  ngOnInit() { 
+  ngOnInit() {
     this.activatedRouteSubscription = this.activatedRoute.params.subscribe(routeParams => {
       this.packetId = +(this.activatedRoute.snapshot.params.packetId);
       if (this.packetId) {
@@ -144,9 +144,9 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
           } else {
             this.assetTags = JSON.parse(type) ? JSON.parse(type).tagIds : null;
           }
-        } else if (this.enrichmentType === EnrichmentType.FOURIER_TRANSFORM_ENRICHMENT) { 
+        } else if (this.enrichmentType === EnrichmentType.FOURIER_TRANSFORM_ENRICHMENT) {
           this.ruleConfig = JSON.parse(type);
-          
+
         }
         this.form.get('rule-type').setValue(this.enrichmentType);
         this.form.get('active').setValue(typeJSON.active);

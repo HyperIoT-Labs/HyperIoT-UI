@@ -390,7 +390,7 @@ export class ProjectWizardComponent implements OnInit {
    */
   updateDeletePacketDep() {
     if (!this.hPackets.some((p) => p.id === this.fieldPacketId)) {
-      this.fieldPacketSelect.autoSelect();
+      this.fieldPacketSelect.autoSelect(this.currentDevice.id);
     }
     if (!this.hPackets.some((p) => p.id === this.enrichmentPacketId)) {
       this.enrichmentPacketSelect.autoSelect();

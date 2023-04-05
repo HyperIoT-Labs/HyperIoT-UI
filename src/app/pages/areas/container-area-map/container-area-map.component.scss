@@ -1,0 +1,427 @@
+#container-area-map {
+
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  position: relative;
+
+  #container-treeview-project {
+
+    position: absolute;
+    top: 95px;
+    left: 40px;
+    width: 90%;
+    background-color: #ffffff;
+    height: max-content;
+    z-index: 1;
+    max-width: max-content;
+    border-radius: 5px;
+
+    -webkit-box-shadow: 0 0 14px -3px black;
+    -moz-box-shadow: 0 0 14px -3px black;
+    box-shadow: 0 0 14px -3px black;
+
+    #close-tree-btn {
+
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      width: 25px;
+      height: 25px;
+      background-color: #1e58a5;
+      text-align: center;
+      position: absolute;
+      top: -6px;
+      right: -7px;
+      color: #fff;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all .2s ease-in-out;
+
+      span {
+        font-size: .9em;
+      }
+
+      &:hover {
+
+        -webkit-box-shadow: 0px 0px 5px -1px #000;
+        -moz-box-shadow: 0px 0px 5px -1px #000;
+        box-shadow: 0px 0px 5px -1px #000;
+
+        span {
+
+          color: #000000;
+
+        }
+      }
+
+    }
+
+    &:active {
+      -webkit-box-shadow: 0 0 14px 0px black;
+      -moz-box-shadow: 0 0 14px 0px black;
+      box-shadow: 0 0 14px 0px black;
+    }
+
+    &.displayNone {
+
+      display: none;
+    }
+
+    &.displayBlock {
+
+      display: block;
+    }
+
+    #treeViewHeader {
+
+      height: 25px;
+      background-color: #1e58a5;
+      cursor: move;
+
+      -webkit-border-radius: 5px 5px 0 0;
+      -moz-border-radius: 5px 5px 0 0;
+      border-radius: 5px 5px 0 0;
+
+    }
+
+    #treeViewBody {
+
+      padding: 10px 25px 25px 25px;
+      border-width: 0px 1px 1px 1px;
+      border-color: #003679;
+      border-style: dotted;
+      position: relative;
+
+      .overlay-treeview {
+        background-color: #FFFFFF;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1;
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        padding-top: 10%;
+        color: #2558a5;
+        font-weight: bold;
+      }
+
+      .treeview {
+        min-width: 300px;
+        width: max-content;
+        max-width: 100%;
+        padding-left: 10px;
+        padding-right: 10px;
+
+      }
+
+    }
+
+  }
+
+  #container-map {
+
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    margin: 24px;
+
+    #area-title {
+
+      h2 {
+
+        width: 96%;
+        margin: 0 auto 0px auto;
+        padding: 10px;
+        text-align: center;
+        color: #3674c3;
+        font-size: 1.8em;
+        word-break: break-word;
+
+        span {
+
+          &#specific-area-name {
+
+            font-style: italic;
+            color: #3c8ed3;
+            font-weight: 400;
+            margin-left: 10px;
+
+          }
+
+        }
+
+      }
+
+    }
+
+    #map-header {
+
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+
+      #head-left,
+      #head-center,
+      #head-right {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        flex: 0 0 33.33%;
+      }
+
+      #head-left {
+
+        justify-content: flex-start;
+
+      }
+
+      #head-center {
+
+        justify-content: center;
+
+      }
+
+      #head-right {
+
+        justify-content: flex-end;
+
+      }
+
+      hyt-button {
+
+        button {
+
+          font-size: .9em;
+
+          span {
+            &.mat-button-wrapper {
+
+              span {
+
+                vertical-align: sub;
+                font-size: 1.45em;
+
+              }
+
+            }
+          }
+
+        }
+
+      }
+
+    }
+
+  }
+
+  .area-map-loading {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 30px;
+    h2 {
+      font-size: 1.5em;
+      font-style: italic;
+      color: #0956b6;
+    }
+  }
+
+  .area-map-error {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 30px;
+    h2 {
+      font-size: 1.5em;
+      color: #960505;
+    }
+  }
+
+}
+
+/*********************************
+*                                *
+*          RESPONSIVE            *
+*                                *
+*********************************/
+
+@media (max-width: 991px) {
+  #container-area-map {
+    #container-map {
+      #map-header {
+
+        #head-left {
+
+          order: 2;
+          flex: 0 0 50%;
+
+        }
+
+        #head-center {
+
+          order: 1;
+          flex: 0 0 100%;
+          margin-bottom: 10px;
+
+        }
+
+        #head-right {
+
+          order: 3;
+          flex: 0 0 50%;
+
+        }
+
+      }
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  #container-area-map {
+
+    #container-treeview-project {
+
+      #treeViewBody {
+
+        .treeview {
+
+          font-size: .8em;
+          min-width: 200px;
+          width: 100%;
+          max-width: 450px;
+
+          .mat-tree {
+
+            .mat-tree-node {
+
+              font-size: .9em;
+
+              span {
+                &.node-name {
+                  .btn-tooltip {
+                    span {
+                      font-size: .95em;
+                    }
+                  }
+                }
+              }
+
+            }
+
+          }
+
+        }
+
+      }
+
+    }
+
+
+    #container-map {
+      #map-header {
+        hyt-button {
+
+          button {
+
+            font-size: .75em;
+
+          }
+
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  #container-area-map {
+
+    #container-treeview-project {
+
+      width: 100%;
+      max-width: 100%;
+      top: 0px;
+      left: 0px;
+      right: 0px;
+
+      #treeViewHeader {
+
+        cursor: n-resize;
+
+      }
+
+      #treeViewBody {
+
+        .treeview {
+          width: 100%;
+          max-width: 100%;
+
+          .mat-tree {
+            .mat-tree-node {
+              span {
+                &.node-name {
+                  .btn-tooltip {
+                    span {
+
+                      font-size: 1.1em;
+
+                    }
+                  }
+                }
+              }
+            }
+          }
+
+        }
+      }
+
+    }
+
+    #container-map {
+      #map-header {
+
+        #head-left {
+
+          order: 3;
+          flex: 0 0 100%;
+          justify-content: center;
+          margin-bottom: 10px;
+
+        }
+
+        #head-right {
+
+          order: 2;
+          flex: 0 0 100%;
+          justify-content: center;
+          margin-bottom: 10px;
+
+        }
+
+        hyt-button {
+
+          button {
+
+            font-size: 0.8em;
+            padding: 0px 16px;
+
+          }
+
+        }
+
+      }
+    }
+  }
+}

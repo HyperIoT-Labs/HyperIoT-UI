@@ -54,9 +54,10 @@
               </div> <!-- Field Email -->
 
               <div class="container-form-field">
-                <hyt-input-text [form]="registrationForm" formControlName="huser-password" name="huser-password"
+                <hyt-input-text [form]="registrationForm" formControlName="huser-password" name="huser-password" password="huser-passwordConfirm"
                   [isRequired]="true" [isPassword]="true" i18n-placeholder="@@HYT_password" placeholder="Password"
-                  [injectedErrorMsg]="getError('huser-password')" type="password" errorPosition="bottom">
+                  [injectedErrorMsg]="getError('huser-password')" type="password" errorPosition="bottom"
+                  autocomplete="new-password">
                 </hyt-input-text>
               </div> <!-- Field Password -->
 
@@ -64,7 +65,7 @@
                 <hyt-input-text [form]="registrationForm" formControlName="huser-passwordConfirm"
                   name="huser-passwordConfirm" [isRequired]="true" i18n-placeholder="@@HYT_password_confirm"
                   placeholder="Confirm password" [injectedErrorMsg]="getError('huser-passwordConfirm')"
-                  type="password" confirmPassword="huser-password">
+                  type="password" confirmPassword="huser-password" autocomplete="new-password">
                 </hyt-input-text>
               </div> <!-- Field Repeat Password -->
 

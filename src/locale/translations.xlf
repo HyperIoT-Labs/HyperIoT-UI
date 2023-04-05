@@ -1062,6 +1062,9 @@
       <trans-unit id="HYT_dashboard_end_registration" datatype="html">
         <source>Proceeding with this action you will disable the registration of the data and they will not be stored until the rehabilitation of this property</source>
       </trans-unit>
+      <trans-unit id="HYT_dashboard_event_fired" datatype="html">
+        <source>The event has been fired</source>
+      </trans-unit>
       <trans-unit id="HYT_reload" datatype="html">
         <source>Reload</source>
       </trans-unit>
@@ -1080,6 +1083,8 @@
       <trans-unit id="HYT_go_to_your_projects" datatype="html">
         <source>Go to your Projects</source>
       </trans-unit>
+
+      <!-- AREAS START -->
       <trans-unit id="HYT_area_map_select_device" datatype="html">
         <source>Select device</source>
       </trans-unit>
@@ -1088,6 +1093,9 @@
       </trans-unit>
       <trans-unit id="HYT_area_list_noimage" datatype="html">
         <source>(no image)</source>
+      </trans-unit>
+      <trans-unit id="HYT_area_list_nomedia" datatype="html">
+        <source>(No Media Uploaded)</source>
       </trans-unit>
       <trans-unit id="HYT_area_draggable_title" datatype="html">
         <source>Move <x id="INTERPOLATION"/></source>
@@ -1125,11 +1133,14 @@
       <trans-unit id="HYT_area_inner_add" datatype="html">
         <source>Add sub-area</source>
       </trans-unit>
+      <trans-unit id="HYT_area_section_static_image" datatype="html">
+        <source>Image</source>
+      </trans-unit>
       <trans-unit id="HYT_area_section_map" datatype="html">
         <source>Map</source>
       </trans-unit>
-      <trans-unit id="HYT_area_map_set_image" datatype="html">
-        <source>Set map image</source>
+      <trans-unit id="HYT_area_set_image" datatype="html">
+        <source>Set image</source>
       </trans-unit>
       <trans-unit id="HYT_area_map_device_add" datatype="html">
         <source>Add device</source>
@@ -1139,6 +1150,39 @@
       </trans-unit>
       <trans-unit id="HYT_project_areas" datatype="html">
         <source>Project Areas</source>
+      </trans-unit>
+      <trans-unit id="HYT_project_areas_static_image" datatype="html">
+        <source>STATIC IMAGE</source>
+      </trans-unit>
+      <trans-unit id="HYT_project_areas_dynamic_map" datatype="html">
+        <source>DYNAMIC MAP</source>
+      </trans-unit>
+      <trans-unit id="HYT_project_areas_bim_xkt_format" datatype="html">
+        <source>BIM IN XKT FORMAT</source>
+      </trans-unit>
+      <trans-unit id="HYT_project_areas_bim_ifc_format" datatype="html">
+        <source>BIM IN IFC FORMAT</source>
+      </trans-unit>
+      <trans-unit id="HYT_area_treeview" datatype="html">
+        <source>Area Treeview</source>
+      </trans-unit>
+      <trans-unit id="HYT_return_area_project" datatype="html">
+        <source>Return to project areas</source>
+      </trans-unit>
+      <trans-unit id="HYT_loading_area_media" datatype="html">
+        <source>Loading Area Media</source>
+      </trans-unit>
+      <trans-unit id="HYT_loading_media_error" datatype="html">
+        <source>Loading Media Error</source>
+      </trans-unit>
+      <trans-unit id="HYT_no_area_media" datatype="html">
+        <source>No Media</source>
+      </trans-unit>
+      <trans-unit id="HYT_area_tree_loading" datatype="html">
+        <source>Loading Treeview</source>
+      </trans-unit>
+      <trans-unit id="HYT_area_tree_error" datatype="html">
+        <source>Error Loading</source>
       </trans-unit>
       <trans-unit id="HYT_file_size_exceed" datatype="html">
         <source>File size exceed limit of <x id="PH"/> bytes</source>
@@ -1155,6 +1199,23 @@
       <trans-unit id="HYT_areas" datatype="html">
         <source>Areas</source>
       </trans-unit>
+      <trans-unit id="HYT_areas_no_areas_defined" datatype="html">
+        <source>No areas defined.</source>
+      </trans-unit>
+      <trans-unit id="HYT_areas_select_area_from_list" datatype="html">
+        <source>Select an area from the list below</source>
+      </trans-unit>
+      <trans-unit id="HYT_areas_show_treeview" datatype="html">
+        <source>Show</source>
+      </trans-unit>
+      <trans-unit id="HYT_areas_hide_treeview" datatype="html">
+        <source>Hide</source>
+      </trans-unit>
+      <trans-unit id="HYT_areaa_go_to_create_area" datatype="html">
+        <source>Create the first area for this project</source>
+      </trans-unit>
+      <!-- AREAS END -->
+
       <trans-unit id="HYT_dashboard_list" datatype="html">
         <source>Dashboard list</source>
       </trans-unit>
@@ -1322,13 +1383,13 @@
       <trans-unit id="HYT_tag_select_color" datatype="html">
         <source>Select color</source>
       </trans-unit>
-      <trans-unit id="HYT_algorithm_jar_package" datatype="html">
+      <trans-unit id="HYT_algorithm_file" datatype="html">
         <source>JAR package:</source>
       </trans-unit>
-      <trans-unit id="HYT_algorithm_jar_package_exists" datatype="html">
+      <trans-unit id="HYT_algorithm_file_exists" datatype="html">
         <source>exists</source>
       </trans-unit>
-      <trans-unit id="HYT_algorithm_jar_package_not_exists" datatype="html">
+      <trans-unit id="HYT_algorithm_file_not_exists" datatype="html">
         <source>does not exist</source>
       </trans-unit>
       <trans-unit id="HYT_algorithm_choose_file" datatype="html">
@@ -1372,6 +1433,30 @@
       </trans-unit>
       <trans-unit id="HYT_unavailble_widget_description" datatype="html">
         <source>This widget is unavailable</source>
+      </trans-unit>
+      <trans-unit id="HYT_widget_settings_text_color" datatype="html">
+        <source>Text color:</source>
+      </trans-unit>
+      <trans-unit id="HYT_info" datatype="html">
+        <source>Info</source>
+      </trans-unit>
+      <trans-unit id="HYT_system_information" datatype="html">
+        <source>System information</source>
+      </trans-unit>
+      <trans-unit id="HYT_ui_version" datatype="html">
+        <source>UI version</source>
+      </trans-unit>
+      <trans-unit id="HYT_services_version" datatype="html">
+        <source>Services version</source>
+      </trans-unit>
+      <trans-unit id="HYT_widget_settings_bg_color" datatype="html">
+        <source>Background color:</source>
+      </trans-unit>
+      <trans-unit id="HYT_widget_settings_bg_color_bright" datatype="html">
+        <source>Bright</source>
+      </trans-unit>
+      <trans-unit id="HYT_widget_settings_bg_color_dark" datatype="html">
+        <source>Dark</source>
       </trans-unit>
     </body>
   </file>
