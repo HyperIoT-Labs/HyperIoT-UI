@@ -1,0 +1,272 @@
+.mat-horizontal-stepper-header-container {
+
+    margin-bottom: 25px;
+
+    mat-step-header {
+
+        &.mat-step-header {
+            flex-direction: column;
+
+            .mat-step-label {
+                padding-top: 0px;
+
+                .stepIsDirty {
+                    width: 25px;
+                    height: 25px;
+                    color: #ea8f15;
+                    position: absolute;
+                    top: 50px;
+                    left: 50%;
+                    font-size: 1.6em;
+                    transform: translate(17px, -39px);
+                }
+
+                .stepIsNotDirty {
+                    display: none;
+                }
+            }
+        }
+
+        &.mat-horizontal-stepper-header {
+
+            height: auto;
+            padding-top: 20px;
+
+            .mat-step-icon {
+                margin-right: 0px;
+                width: 60px;
+                height: 60px;
+                border-radius: unset;
+                background-color: transparent;
+                background-image: url('/assets/images/bg-stepper-60x60.png');
+                background-repeat: no-repeat;
+                background-position: 0px 0px;
+
+                .mat-step-icon-content { /* Hide Step Numbers */
+
+                    span {
+                        display: none;
+                    }
+                }
+
+                &.mat-step-icon-selected {
+                    background-position: 0px -60px;
+
+                    .mat-step-icon-content {
+                        span {
+                            display: none;
+                        }
+                    }
+                }
+
+                &.mat-step-icon-state-edit {
+                    background-position: 0px -120px;
+
+                    .mat-step-icon-content {
+                        mat-icon {
+                            display: none;
+                        }
+                    }
+                }
+
+
+            }
+
+            .mat-step-icon,
+            .mat-step-icon.mat-step-icon-selected,
+            .mat-step-icon.mat-step-icon-state-edit {
+                &::after {
+                    width: 60px;
+                    height: 60px;
+                    position: absolute;
+                    top: 0px;
+                    left: 0px;
+                    text-align: center;
+
+                    font-family: "HytFonts" !important;
+                    font-style: normal;
+                    font-weight: normal;
+                    font-variant: normal;
+                    text-transform: none;
+                    line-height: 1;
+                    -webkit-font-smoothing: antialiased;
+                }
+            }
+
+            .mat-step-label {
+                text-align: center;
+            }
+
+        }
+
+        &:nth-of-type(1) { /* Project Icon */
+            .mat-step-icon, 
+            .mat-step-icon.mat-step-icon-selected,
+            .mat-step-icon.mat-step-icon-selected.mat-step-icon-state-number {
+                &:after {
+                    content: "\e939";
+                    font-size: 2.5em;
+                    padding-top: 12px;
+                    padding-left: 1px;
+                    transform: scale(1);
+                    color: #fff;
+                }
+            }
+
+            .mat-step-icon {
+                &.mat-step-icon-state-number {
+                    &::after {
+                        transform: scale(0.65);
+                        color: #b9b9b9;
+                    }
+                }
+            }
+            /* END */
+        }
+
+        &:nth-of-type(2) { /* Device Icon */
+            .mat-step-icon, 
+            .mat-step-icon.mat-step-icon-selected,
+            .mat-step-icon.mat-step-icon-selected.mat-step-icon-state-number {
+                &:after {
+                    content: "\e912";
+                    font-size: 1.95em;
+                    padding-top: 15px;
+                    padding-left: 0px;
+                    transform: scale(1);
+                    color: #fff;
+                }
+            }
+
+            .mat-step-icon {
+                &.mat-step-icon-state-number {
+                    &::after {
+                        transform: scale(0.65);
+                        color: #b9b9b9;
+                    }
+                }
+            }
+        }
+
+        &:nth-of-type(3) { /* Packet Icon */
+            .mat-step-icon, 
+            .mat-step-icon.mat-step-icon-selected,
+            .mat-step-icon.mat-step-icon-selected.mat-step-icon-state-number {
+                &:after {
+                    content: "\e932";
+                    font-size: 1.9em;
+                    padding-top: 17px;
+                    padding-left: 1px;
+                    transform: scale(1);
+                    color: #fff;
+                }
+            }
+
+            .mat-step-icon {
+                &.mat-step-icon-state-number {
+                    &::after {
+                        transform: scale(0.65);
+                        color: #b9b9b9;
+                    }
+                }
+            }
+        }
+
+        &:nth-of-type(4) { /* Fields Icon */
+            .mat-step-icon, 
+            .mat-step-icon.mat-step-icon-selected,
+            .mat-step-icon.mat-step-icon-selected.mat-step-icon-state-number {
+                &:after {
+                    content: "\e91f";
+                    font-size: 2.2em;
+                    padding-top: 13px;
+                    padding-left: 0px;
+                    transform: scale(1);
+                    color: #fff;
+                }
+            }
+
+            .mat-step-icon {
+                &.mat-step-icon-state-number {
+                    &::after {
+                        transform: scale(0.65);
+                        color: #b9b9b9;
+                    }
+                }
+            }
+        }
+
+        &:nth-of-type(5) { /* Enrichments Icon */
+            .mat-step-icon, 
+            .mat-step-icon.mat-step-icon-selected,
+            .mat-step-icon.mat-step-icon-selected.mat-step-icon-state-number {
+                &:after {
+                    content: "\e916";
+                    font-size: 2.2em;
+                    padding-top: 13px;
+                    padding-left: 2px;
+                    transform: scale(1);
+                    color: #fff;
+                }
+            }
+
+            .mat-step-icon {
+                &.mat-step-icon-state-number {
+                    &::after {
+                        transform: scale(0.65);
+                        color: #b9b9b9;
+                    }
+                }
+            }
+        }
+
+        &:nth-of-type(6) { /* Statistics Icon */
+            .mat-step-icon, 
+            .mat-step-icon.mat-step-icon-selected,
+            .mat-step-icon.mat-step-icon-selected.mat-step-icon-state-number {
+                &:after {
+                    content: "\e948";
+                    font-size: 1.8em;
+                    padding-top: 16px;
+                    padding-right: 1px;
+                    transform: scale(1);
+                    color: #fff;
+                }
+            }
+
+            .mat-step-icon {
+                &.mat-step-icon-state-number {
+                    &::after {
+                        transform: scale(0.65);
+                        color: #b9b9b9;
+                    }
+                }
+            }
+        }
+
+        &:nth-of-type(7) { /* Events Icon */
+            .mat-step-icon, 
+            .mat-step-icon.mat-step-icon-selected,
+            .mat-step-icon.mat-step-icon-selected.mat-step-icon-state-number {
+                &:after {
+                    content: "\e918";
+                    font-size: 1.9em;
+                    padding-top: 16px;
+                    padding-left: 2px;
+                    transform: scale(1);
+                    color: #fff;
+                }
+            }
+
+            .mat-step-icon {
+                &.mat-step-icon-state-number {
+                    &::after {
+                        transform: scale(0.65);
+                        color: #b9b9b9;
+                    }
+                }
+            }
+        }
+    }
+
+}

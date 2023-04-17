@@ -1,0 +1,10 @@
+<div class="overlay-panel-container overlay-panel-all" [ngClass]="{'overlay-panel-container-hidden' : !mOpen }">
+  <div class="overlay-panel-back" [ngClass]="{'overlay-panel-back-visible' : mOpen }"></div>
+  <div class="overlay-panel-global overlay-panel-all">
+    <div class="overlay-panel" [ngClass]="{'overlay-panel-resize' : mOpen }">
+      <div class="overlay-content-container">
+        <ng-content></ng-content>
+      </div>
+    </div>
+  </div>
+</div>

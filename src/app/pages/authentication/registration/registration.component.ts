@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { HusersService, HUser, LoggerService, Logger } from '@hyperiot/core';
+import { HusersService, HUser, LoggerService, Logger } from 'core';
 import { AuthenticationHttpErrorHandlerService } from 'src/app/services/errorHandler/authentication-http-error-handler.service';
 import { HYTError } from 'src/app/services/errorHandler/models/models';
 import { SubmissionStatus } from '../models/pageStatus';

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AlgorithmsService, Algorithm } from '@hyperiot/core';
+import { AlgorithmsService, Algorithm } from 'core';
 import { Subject } from 'rxjs';
 
 export interface AlgorithmsState {

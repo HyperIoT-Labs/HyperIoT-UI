@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, ViewEncapsulation, Output, EventEmitter } from '@angular/core';
 
-import { HProject, HprojectsService } from '@hyperiot/core';
+import { HProject, HprojectsService } from 'core';
 import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
-import { HytModalService } from '@hyperiot/components';
+import { HytModalService } from 'components';
 
 @Component({
   selector: 'hyt-project-card',

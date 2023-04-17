@@ -1,0 +1,91 @@
+<div id="time-chart-settings" *ngIf="projectPackets.length > 0">
+  <div class="general-info">
+    <div>
+      <label>Select widget column size:</label>
+      <hyt-select (changeFn)="setColsNumber($event.value)" [label]="'Select widget column size'" [selected]="colsNumber" [options]="[{label: 'small', value: 4},{label: 'medium', value: 5},{label: 'large', value: 6}]"></hyt-select>
+    </div>
+    <div>
+      <label>Select data frequency (s):</label>
+      <hyt-select (changeFn)="setFrequency($event.value)" [label]="'Data frequency (s)'" [selected]="dataFrequency" [options]="[{label: '0.025s', value: 0.025},{label: '0.1s', value: 0.1},{label: '0.2s', value: 0.2},{label: '0.5s', value: 0.5},{label: '1s', value: 1}]"></hyt-select>
+    </div>
+    <div>
+      <label>Select range of data to view (s):</label>
+      <hyt-select (changeFn)="setTimeRange($event.value)" [label]="'Range data time (s)'" [selected]="dataRange" [options]="[{label: '10s', value: 10}, {label: '20s', value: 20}, {label: '30s', value: 30}, {label: '60s', value: 60}]"></hyt-select>
+    </div>
+    <div>
+      <label>Location: </label>{{'location'}}  
+    </div>
+    <div>
+      <label>Visualization type:</label>
+      <hyt-button-toggle [selectedValue]="visualizationType" [range]="visualizationTypes" (valueChanged)="rangeChanged($event)"></hyt-button-toggle>
+    </div>
+  </div>
+  <div class="fields-and-colors-select">
+    <mat-tab-group>
+      <mat-tab label="Standard">
+        <div class="areas" *ngFor="let area of areas; let iArea = index">
+          <div class="waveForm-{{area}}">
+            <label class="area-label">{{channels[area]['label']}} {{iArea+1}}</label>
+            <div *ngFor="let in of [].constructor(channels[area]['repetition']); let i = index">
+              <div class="channel">
+                <label class="area">channel {{i+1}}</label>
+                <div id="type-selection" class="d-flex flex-column">
+                  <hyt-select-template
+                      [(ngModel)]="selectedTypeOption[area][i]" name="type-select-{{area}}-{{i}}"
+                      [label]="'Select type'" i18n-placeholder="@@HYT_widget_settings_select_packet"
+                      [options]="fieldsTypeOptions" id="selectedTypeOption-{{area}}-{{i}}" (ngModelChange)="updateTypeInfo(area,i, $event)"
+                      required
+                  >
+                  </hyt-select-template>
+                </div>
+                <hyperiot-packet-fields-select
+                  [projectPackets]="projectPackets"
+                  [projectId]="widget.projectId"
+                  [name]="area + '-' + i"
+                  [(fieldPacket)]="selectedPacketFields[area][i]"
+                ></hyperiot-packet-fields-select>
+                <input *ngIf="selectedTypeOption[area][i]" matInput type="color" name="color-{{area}}-{{i}}" class="color" [(ngModel)]="selectedColors[area][i]" placeholder="Color">
+              </div>
+            </div>
+          </div>
+          <div class="parameters-{{area}}" *ngIf="area === 'standardArea1' && paramsToSet.length > 0">
+            <label class="area-label">Parameters area {{iArea+1}}</label>
+            <div *ngFor="let param of paramsToSet">
+              <div class="params" *ngIf="param">
+                <label class="area">{{param}}</label>
+                <hyperiot-packet-fields-select
+                  [projectPackets]="projectPackets"
+                  [projectId]="widget.projectId"
+                  [name]="'parametersArea1-' + param"
+                  [(fieldPacket)]="selectedPacketFields['parametersArea1'][param]"
+                ></hyperiot-packet-fields-select>
+              </div>
+            </div>
+          </div>
+        </div>        
+      </mat-tab>
+      <mat-tab label="12 Derivations">
+        <label class="area-label">{{channels['derivations']['label']}}</label>
+        <div class="grid-layout-select">
+          <label>Select a grid layout:</label>
+          <hyt-select (changeFn)="setDerivationsGridLayout($event.value)" [label]="'Grid Layout'" [selected]="derivationsGridLayout" [options]="[{label: '1X12', value: '1:12'},{label: '2X6', value: '2:6'},{label: '3X4', value: '3:4'},{label: '4X3', value: '4:3'}]"></hyt-select>
+        </div>
+        <div class="d-flex flex-row align-items-center">
+          <label class="area-derivation">Pick traces color:</label>
+          <input matInput type="color" name="color-{{'derivations'}}" class="color m-l-3" [(ngModel)]="selectedColors['derivations']" placeholder="Color">
+        </div>
+        <div *ngFor="let label of derivationsLabels; let i = index">
+          <div class="derivation">
+            <label class="area">{{label}}</label>
+            <hyperiot-packet-fields-select
+              [projectPackets]="projectPackets"
+              [projectId]="widget.projectId"
+              [name]="'derivations-' + i"
+              [(fieldPacket)]="selectedPacketFields['derivations'][i]"
+            ></hyperiot-packet-fields-select>
+          </div>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>

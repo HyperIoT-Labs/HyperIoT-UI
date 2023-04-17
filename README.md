@@ -6,6 +6,11 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 Node v16 is required to run this project.
 
+## Libraries Build
+
+HyperIoT-app relies on `core`, `components` and `widets` libraries. Before running the application it is necessary to build the libraries with the command `ng build <library-name>`
+> Note: Libraries should be build in the following order: core, components, widgets
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
@@ -27,7 +32,7 @@ Run `ng generate component component-name` to generate a new component. You can 
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
 ## Further help
 

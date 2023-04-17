@@ -1,0 +1,149 @@
+#axis {
+  //height: 70px;
+  height:auto;
+  min-height: 70px;
+  position: relative;
+  text-align: center;
+
+  #resetSelBtn {
+    position: absolute;
+    bottom: 5px;
+    right: 15px;
+    display: none;
+    cursor: pointer;
+    background-color: rgb(30, 88, 165);
+    padding: 3px 10px;
+    color: rgb(255, 255, 255);
+
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+
+    -webkit-box-shadow: 0px 0px 4px -1px #000;
+    -moz-box-shadow: 0px 0px 4px -1px #000;
+    box-shadow: 0px 0px 4px -1px #000;
+
+    transition: all .2s ease-in-out;
+
+    &:hover {
+
+      background-color: #2469c6;
+
+      -webkit-box-shadow: rgb(0 0 0) 0px 0px 0px 0px;
+      -moz-box-shadow: rgb(0 0 0) 0px 0px 0px 0px;
+      box-shadow: rgb(0 0 0) 0px 0px 0px 0px;
+
+    }
+
+    &:active {
+      background-color: #3984e9;
+    }
+
+  }
+
+  #selection-initial-tip {
+
+    position: absolute;
+    bottom: 0px;
+    right: 50%;
+    transform: translate(50%, 0px);
+    color: #b3b3b3;
+    display: block;
+
+    &::before {
+
+      content: '\21B6';
+      width: 30px;
+      height: 50px;
+      display: block;
+      font-size: 2.2em;
+      transform: rotate(117deg);
+      transform-origin: center;
+      position: absolute;
+      top: -22px;
+      right: -28px;
+      color: #bfbfbf;
+      user-select: none;
+
+    }
+
+  }
+
+  rect {
+
+    &.selection {
+      fill: transparent;
+      stroke: transparent;
+
+      cursor: -webkit-grab;
+      cursor: -moz-grab;
+      cursor: grab;
+
+      &:active {
+        cursor: -webkit-grabbing;
+        cursor: -moz-grabbing;
+        cursor: grabbing;
+      }
+
+      &:focus {
+        outline: none;
+        cursor: -webkit-grabbing;
+        cursor: -moz-grabbing;
+        cursor: grabbing;
+      }
+
+    }
+
+    &.selectionRender {
+      fill: #35d443;
+      stroke: #35d443;
+
+    }
+
+    &.overlay {
+      cursor: col-resize;
+    }
+
+  }
+
+  // rect.selection {
+  //   fill: transparent;
+  //   stroke: transparent;
+  // }
+
+  // rect.selectionRender {
+  //   fill: #35d443;
+  //   stroke: #35d443;
+  // }
+
+  circle {
+    &.handle {
+      fill: #35d443;
+    }
+  }
+
+  #container-selectionHelper {
+    display: none;
+  }
+
+  .selectionHelper {
+    stroke: #cccccc;
+    fill: #cccccc;
+    cursor: pointer;
+    display: none; /* let's hide the button for now */
+
+    &:hover {
+      stroke: red;
+      fill: red;
+    }
+
+  }
+
+  // .selectionHelper:hover {
+  //   stroke: red;
+  //   fill: red;
+  // }
+
+}
+
+

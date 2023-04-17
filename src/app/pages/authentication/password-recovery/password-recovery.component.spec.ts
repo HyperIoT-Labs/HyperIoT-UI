@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PasswordRecoveryComponent } from './password-recovery.component';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
-import { HusersService, LoggerService } from '@hyperiot/core';
+import { HusersService, LoggerService } from 'core';
 import { AuthenticationHttpErrorHandlerService } from 'src/app/services/errorHandler/authentication-http-error-handler.service';
 import { FormBuilder } from '@angular/forms';
 

@@ -1,0 +1,15 @@
+<hyt-select
+    [name]="'packetSelect'"
+    [label]="'Select Packet'"
+    [groups]="groupedPacketOptions"
+    [selected]="selectedPacketOption"
+    [isSearchable]="true"
+    (changeFn)="packetChanged($event)"
+    [isRequired]="true"
+    [errorMsgRequired]="'Select at least one packet'"
+    [hint]="'select at least one packet'"
+    [isMultiple]="true"
+    [chips]="true"
+    class="hyt-select-full-width"
+>
+</hyt-select>

@@ -1,0 +1,376 @@
+<hyperiot-base-widget-template>
+    <header-widget>
+      <hyperiot-common-toolbar
+        widgetName="{{widget.name}}"
+        [toolbarIsVisible]="isToolbarVisible"
+        (action)="onToolbarAction($event)"
+        [config]="{
+          showClose: true,
+          showSettings: true,
+          showPlay: true,
+          showRefresh: false,
+          showTable: false,
+          hideFullScreen: true
+        }">
+      </hyperiot-common-toolbar>
+    </header-widget>
+  
+    <content-widget>
+      <div *ngIf="!isConfigured; else configured" class="configure-notice">
+        <strong i18n="@@HYT_common_not_configured">Click 'Settings' button to configure.</strong>
+      </div>
+      <ng-template #configured>
+        <div *ngIf="widget.config.internalConfig.visualizationType === 'standard'" class="defibrillator-struct standard">
+          <div class="area area-1">
+            <div class="area-left">
+              <div class="area-plot">
+                <plotly-plot
+                    *ngIf="graphs.standard.chart0.chart['layout']"
+                    divId="widget-{{ widget.id }}-chart0"
+                    [data]="graphs.standard.chart0.chart['data']"
+                    [layout]="graphs.standard.chart0.chart['layout']"
+                    [config]="graphs.standard.chart0.chart['config']">
+                </plotly-plot>
+              </div>
+              <div class="area-plot">
+                <plotly-plot
+                    *ngIf="graphs.standard.chart1.chart['layout']"
+                    divId="widget-{{ widget.id }}-chart1"
+                    [data]="graphs.standard.chart1.chart['data']"
+                    [layout]="graphs.standard.chart1.chart['layout']"
+                    [config]="graphs.standard.chart1.chart['config']">
+                </plotly-plot>
+              </div>
+              <div class="area-plot">
+                <plotly-plot
+                    *ngIf="graphs.standard.chart2.chart['layout']"
+                    divId="widget-{{ widget.id }}-chart2"
+                    [data]="graphs.standard.chart2.chart['data']"
+                    [layout]="graphs.standard.chart2.chart['layout']"
+                    [config]="graphs.standard.chart2.chart['config']">
+                </plotly-plot>
+              </div>
+              <div class="area-plot">
+                <plotly-plot
+                    *ngIf="graphs.standard.chart3.chart['layout']"
+                    divId="widget-{{ widget.id }}-chart3"
+                    [data]="graphs.standard.chart3.chart['data']"
+                    [layout]="graphs.standard.chart3.chart['layout']"
+                    [config]="graphs.standard.chart3.chart['config']">
+                </plotly-plot>
+              </div>
+            </div>
+            <div class="area-right">
+              <div class="card ecg">
+                <div class="first">
+                    <div class="label">ECG</div>
+                    <div class="alerts">
+                        <div class="max">120</div>
+                        <div class="min">60</div>
+                    </div>
+                </div>
+                <div class="second unit-value">
+                  <ng-container *ngIf="parameters.ecg.value">
+                    {{ parameters.ecg.value | number : '1.0-0' }}
+                  </ng-container>
+                  <ng-container *ngIf="!parameters.ecg.value">
+                    {{ '-' }}
+                  </ng-container>
+                </div>
+                <div class="third">
+                    <div class="st">
+                        <div class="st-label">ST</div>
+                        <div class="st-value">-</div>
+                    </div>
+                    <div class="pvc">
+                        <div class="pvc-label">PVCs</div>
+                        <div class="pvc-value">-</div>
+                    </div>
+                    <div class="pause">
+                        <div class="pause-label">PAUSE</div>
+                        <div class="pause-value">-</div>
+                    </div>
+                </div>
+                <div class="fourth">
+                    <!-- <div class="heart"></div> -->
+                    <div class="heart full"></div>
+                </div>
+              </div>
+              <div class="card resp">
+                <div class="first">
+                    <div class="label">Resp</div>
+                    <div class="alerts">
+                        <div class="max">30</div>
+                        <div class="min">8</div>
+                    </div>
+                </div>
+                <div class="second unit-value">
+                  <ng-container *ngIf="parameters.resp.value">
+                    {{ parameters.resp.value | number : '1.0-0' }}
+                  </ng-container>
+                  <ng-container *ngIf="!parameters.resp.value">
+                    {{ '-' }}
+                  </ng-container>
+                </div>
+              </div>
+              <div class="card spo2">
+                <div class="first">
+                    <div class="label">SpO2</div>
+                    <div class="alerts">
+                        <div class="max">100</div>
+                        <div class="min">85</div>
+                    </div>
+                </div>
+                <div class="second unit-value">
+                  <ng-container *ngIf="parameters.spo2.value">
+                    {{ parameters.spo2.value | number : '1.0-0' }}
+                  </ng-container>
+                  <ng-container *ngIf="!parameters.spo2.value">
+                    {{ '-' }}
+                  </ng-container>
+                </div>
+                <div class="third">
+                    <div class="perc">
+                        <div class="perc-label">%</div>
+                    </div>
+                </div>
+                <div class="fourth">
+                    <div class="pi">
+                        <div class="pi-label">PI</div>
+                        <div class="pi-value">-</div>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="area area-2">
+
+            <div class="card bottom-card temperature">
+              <div class="first">
+                  <div class="label">Temp</div>
+                  <div class="alerts">
+                      <div class="max">-</div>
+                      <div class="min">-</div>
+                  </div>
+              </div>
+              <div class="second">
+                  <div class="temp-label">T1</div>
+                  <div class="temp-value">
+                    <ng-container *ngIf="parameters.temp.value">
+                      {{ parameters.temp.value | number : '1.0-0' }}
+                    </ng-container>
+                    <ng-container *ngIf="!parameters.temp.value">
+                      {{ '-' }}
+                    </ng-container>
+                  </div>
+              </div>
+              <div class="third">
+                  <div class="temp-2">
+                      <div class="temp-label">T2</div>
+                      <div class="temp-value">
+                          -
+                      </div>
+                  </div>
+                  <div class="temp-diff">
+                      <div class="temp-label">TD</div>
+                      <div class="temp-value">
+                          -
+                      </div>
+                  </div>
+              </div>
+              <div class="fourth">
+                  C°
+              </div>
+            </div>
+            <div class="card bottom-card pr">
+              <div class="first">
+                  <div class="label">Pr</div>
+                  <div class="alerts">
+                      <div class="max">-</div>
+                      <div class="min">-</div>
+                  </div>
+              </div>
+              <div class="second">
+                  <div class="temp-value">
+                    <ng-container *ngIf="parameters.pr.value">
+                      {{ parameters.pr.value | number : '1.0-0' }}
+                    </ng-container>
+                    <ng-container *ngIf="!parameters.pr.value">
+                      {{ '-' }}
+                    </ng-container>
+                  </div>
+              </div>
+              <div class="third">
+                  <div class="label-value">Source NIBP</div>
+              </div>
+            </div>
+          </div>
+          <div class="area area-3">
+            <div class="card nibp">
+              <div class="row-up">
+                  <div class="label">NIBP</div>
+                  <div class="time">00:00</div>
+                  <div class="meas">Continual</div>
+                  <div class="type">Adu</div>
+                  <div class="unit">mmHg</div>
+              </div>
+              <div class="row-down">
+                  <div class="first">
+                      <div class="alarms-label">
+                          SYS
+                      </div>
+                      <div class="alarms-value">
+                          <div class="alarm-max">-</div>
+                          <div class="alarm-min">-</div>
+                      </div>
+                  </div>
+                  <div class="second">
+                      -
+                  </div>
+                  <div class="third">
+                      /-
+                  </div>
+                  <div class="fourth">
+                      (-)
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div  *ngIf="widget.config.internalConfig.visualizationType === 'derivations'" class="defibrillator-struct derivations">
+          <div class="area-left">
+            <div *ngFor="let derivation of graphs.derivations" class="area-plot-derivations" [ngStyle]="{ width: 100 / derivationsGridLayout.cols + '%', height: 100 / derivationsGridLayout.rows + '%' }">
+              <plotly-plot
+                  *ngIf="derivation.chart['layout']"
+                  divId="widget-{{ widget.id }}-{{ derivation.chart.key }}"
+                  [data]="derivation.chart['data']"
+                  [layout]="derivation.chart['layout']"
+                  [config]="derivation.chart['config']">
+              </plotly-plot>
+            </div>
+          </div>
+          <div class="area-right">
+            <div class="card ecg">
+              <div class="first">
+                  <div class="label">ECG</div>
+                  <div class="alerts">
+                      <div class="max">120</div>
+                      <div class="min">60</div>
+                  </div>
+              </div>
+              <div class="second unit-value">
+                <ng-container *ngIf="parameters.ecg.value">
+                  {{ parameters.ecg.value | number : '1.0-0' }}
+                </ng-container>
+                <ng-container *ngIf="!parameters.ecg.value">
+                  {{ '-' }}
+                </ng-container>
+              </div>
+              <div class="third">
+                  <div class="st">
+                      <div class="st-label">ST</div>
+                      <div class="st-value">-</div>
+                  </div>
+                  <div class="pvc">
+                      <div class="pvc-label">PVCs</div>
+                      <div class="pvc-value">-</div>
+                  </div>
+                  <div class="pause">
+                      <div class="pause-label">PAUSE</div>
+                      <div class="pause-value">-</div>
+                  </div>
+              </div>
+              <div class="fourth">
+                  <!-- <div class="heart"></div> -->
+                  <div class="heart full"></div>
+              </div>
+            </div>
+            <div class="card resp">
+              <div class="first">
+                  <div class="label">Resp</div>
+                  <div class="alerts">
+                      <div class="max">30</div>
+                      <div class="min">8</div>
+                  </div>
+              </div>
+              <div class="second unit-value">
+                <ng-container *ngIf="parameters.resp.value">
+                  {{ parameters.resp.value | number : '1.0-0' }}
+                </ng-container>
+                <ng-container *ngIf="!parameters.resp.value">
+                  {{ '-' }}
+                </ng-container>
+              </div>
+            </div>
+            <div class="card spo2">
+              <div class="first">
+                  <div class="label">SpO2</div>
+                  <div class="alerts">
+                      <div class="max">100</div>
+                      <div class="min">85</div>
+                  </div>
+              </div>
+              <div class="second unit-value">
+                <ng-container *ngIf="parameters.spo2.value">
+                  {{ parameters.spo2.value | number : '1.0-0' }}
+                </ng-container>
+                <ng-container *ngIf="!parameters.spo2.value">
+                  {{ '-' }}
+                </ng-container>
+              </div>
+              <div class="third">
+                  <div class="perc">
+                      <div class="perc-label">%</div>
+                  </div>
+              </div>
+              <div class="fourth">
+                  <div class="pi">
+                      <div class="pi-label">PI</div>
+                      <div class="pi-value">-</div>
+                  </div>
+              </div>
+            </div>
+            <div class="card temperature">
+              <div class="first">
+                  <div class="label">Temp</div>
+                  <div class="alerts">
+                      <div class="max">-</div>
+                      <div class="min">-</div>
+                  </div>
+              </div>
+              <div class="second">
+                  <div class="temp-label">T1</div>
+                  <div class="temp-value">
+                    <ng-container *ngIf="parameters.temp.value">
+                      {{ parameters.temp.value | number : '1.0-0' }}
+                    </ng-container>
+                    <ng-container *ngIf="!parameters.temp.value">
+                      {{ '-' }}
+                    </ng-container>
+                  </div>
+              </div>
+              <div class="third">
+                  <div class="temp-2">
+                      <div class="temp-label">T2</div>
+                      <div class="temp-value">
+                          -
+                      </div>
+                  </div>
+                  <div class="temp-diff">
+                      <div class="temp-label">TD</div>
+                      <div class="temp-value">
+                          -
+                      </div>
+                  </div>
+              </div>
+              <div class="fourth">
+                  C°
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </content-widget>
+  
+  </hyperiot-base-widget-template>
+  

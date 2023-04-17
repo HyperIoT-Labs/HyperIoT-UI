@@ -1,8 +1,8 @@
 import { AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { HytModalService, Option } from '@hyperiot/components';
-import { HytStepperComponent } from '@hyperiot/components/lib/hyt-stepper/hyt-stepper.component';
-import { HDevice, HdevicesService, HPacket, HpacketsService, HProject, HProjectAlgorithm, HprojectalgorithmsService, Rule } from '@hyperiot/core';
+import { HytModalService, Option } from 'components';
+import { HytStepperComponent } from 'components';
+import { HDevice, HdevicesService, HPacket, HpacketsService, HProject, HProjectAlgorithm, HprojectalgorithmsService, Rule } from 'core';
 import { Observable, Observer } from 'rxjs';
 import { EntitiesService } from 'src/app/services/entities/entities.service';
 import {SummaryList, SummaryListItem} from '../project-detail/generic-summary-list/generic-summary-list.component';

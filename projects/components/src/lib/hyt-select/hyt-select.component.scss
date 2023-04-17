@@ -1,0 +1,11 @@
+.search-filter {
+    display: flex;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    justify-content: center;
+    align-items: center;
+
+    .delete-icon {
+        cursor: pointer;
+    }
+}

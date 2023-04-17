@@ -1,6 +1,6 @@
 import { Component, OnInit, Input , Output , EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
-import { AlarmEvent } from '@hyperiot/core';
-import { Option } from '@hyperiot/components';
+import { AlarmEvent } from 'core';
+import { Option } from 'components';
 
 @Component({
   selector: 'hyt-alarm-events-table',

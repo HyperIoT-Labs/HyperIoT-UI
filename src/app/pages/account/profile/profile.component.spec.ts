@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
-import { HusersService } from '@hyperiot/core';
+import { HusersService } from 'core';
 
 describe('ProfileComponent', () => {
   let component: ProfileComponent;

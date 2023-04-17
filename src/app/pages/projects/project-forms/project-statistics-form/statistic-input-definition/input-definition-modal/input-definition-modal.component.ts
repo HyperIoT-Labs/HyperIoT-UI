@@ -1,7 +1,7 @@
 import { CdkDragDrop, CdkDragEnd, CdkDragStart, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { HytModal, HytModalService } from '@hyperiot/components';
-import { Algorithm, AlgorithmConfig, AlgorithmIOField, HPacketField, HProjectAlgorithmConfig, HProjectAlgorithmInputField, MappedInput } from '@hyperiot/core';
+import { HytModal, HytModalService } from 'components';
+import { Algorithm, AlgorithmConfig, AlgorithmIOField, HPacketField, HProjectAlgorithmConfig, HProjectAlgorithmInputField, MappedInput } from 'core';
 import { eventNames } from 'process';
 
 

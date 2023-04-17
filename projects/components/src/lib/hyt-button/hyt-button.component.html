@@ -1,0 +1,10 @@
+<button mat-raised-button 
+  class="hyt-base-btn"
+  color={{color}} 
+  type="{{type}}" 
+  [disabled]="isDisabled ? '' : null" 
+  (click)="clickCallback()">
+  
+  <ng-content></ng-content>
+
+</button>

@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { AuthenticationService, LoggerService, Logger } from '@hyperiot/core';
+import { AuthenticationService, LoggerService, Logger } from 'core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { AuthenticationHttpErrorHandlerService } from 'src/app/services/errorHandler/authentication-http-error-handler.service';

@@ -1,5 +1,5 @@
 import { Component, OnInit, HostListener } from '@angular/core';
-import { LoggerService, Logger } from '@hyperiot/core';
+import { LoggerService, Logger } from 'core';
 import { PlatformService } from '../../services/platform/platform.service'
 
 @Component({

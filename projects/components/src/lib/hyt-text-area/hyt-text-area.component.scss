@@ -1,0 +1,25 @@
+.hyt-form {
+  width: 100%;
+
+  mat-form-field {
+
+    &.hyt-full-width  {
+      width: 100%;
+    }
+
+    textarea {
+      padding: 10px;
+
+      &.hyt-input {
+        width: 100%;
+        min-height: 135px;
+        background-color: rgb(246, 246, 246);
+      }
+
+    }
+
+  }
+
+}
+
+

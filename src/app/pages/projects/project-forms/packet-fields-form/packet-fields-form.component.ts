@@ -3,14 +3,14 @@ import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 
 import { Subscription, Observable } from 'rxjs';
 
-import { HpacketsService, HPacket, HPacketField } from '@hyperiot/core';
+import { HpacketsService, HPacket, HPacketField } from 'core';
 import { ProjectFormEntity, LoadingStatusEnum } from '../project-form-entity';
 
-import { Option } from '@hyperiot/components';
-import { Node, HytTreeViewEditableComponent } from '@hyperiot/components/lib/hyt-tree-view-editable/hyt-tree-view-editable.component';
+import { Option } from 'components';
+import { Node, HytTreeViewEditableComponent } from 'components';
 import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
 import { UnitConversionService } from 'src/app/services/unit-conversion.service';
-import { HytSelectComponent } from '@hyperiot/components/lib/hyt-select/hyt-select.component';
+import { HytSelectComponent } from 'components';
 
 @Component({
   selector: 'hyt-packet-fields-form',

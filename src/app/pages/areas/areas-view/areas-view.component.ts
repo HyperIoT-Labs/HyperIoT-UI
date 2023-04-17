@@ -1,7 +1,7 @@
 import {Component, OnDestroy, ViewEncapsulation} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import {AreasService, Area, HprojectsService, HProject, Logger, LoggerService} from '@hyperiot/core';
-import { HytModalService } from '@hyperiot/components';
+import {AreasService, Area, HprojectsService, HProject, Logger, LoggerService} from 'core';
+import { HytModalService } from 'components';
 import { HttpClient } from '@angular/common/http';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';

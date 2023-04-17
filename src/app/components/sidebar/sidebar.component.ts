@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation, HostListener, AfterViewInit, OnDestroy } from '@angular/core';
 import { ToggleSidebarService } from 'src/app/services/toggleSidebar/toggle-sidebar.service';
-import { DynamicDialogService } from '@hyperiot/components';
+import { DynamicDialogService } from 'components';
 import { Subscription } from 'rxjs';
 import { InfoComponent } from '../info/info.component';
 

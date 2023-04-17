@@ -25,9 +25,9 @@ import { AccountButtonComponent } from './components/topbar/account-button/accou
 import { MatIconModule } from '@angular/material/icon';
 
 // hyperiot
-import { Configuration, ConfigurationParameters, HyperiotClientModule } from '@hyperiot/core';
-import { ComponentsModule } from '@hyperiot/components';
-import {AddWidgetDialogComponent, DashboardModule, WidgetSettingsDialogComponent, WidgetsModule} from '@hyperiot/widgets';
+import { Configuration, ConfigurationParameters, HyperiotClientModule } from 'core';
+import { ComponentsModule } from 'components';
+import {AddWidgetDialogComponent, DashboardModule, WidgetSettingsDialogComponent, WidgetsModule} from 'widgets';
 import { RouterModule, DefaultUrlSerializer, UrlSerializer, UrlTree } from '@angular/router';
 
 // local

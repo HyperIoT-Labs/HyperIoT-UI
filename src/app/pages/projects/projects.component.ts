@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewEncapsulation, OnDestroy, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { PageStatus } from './models/pageStatus';
-import { HProject, HprojectsService } from '@hyperiot/core';
+import { HProject, HprojectsService } from 'core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { SelectOption } from '@hyperiot/components/lib/hyt-select-template/hyt-select-template.component';
+import { SelectOption } from 'components';
 import { ProjectsService } from 'src/app/services/projects.service';
-import { NotificationService } from '@hyperiot/components';
+import { NotificationService } from 'components';
 
 @Component({
   selector: 'hyt-projects',

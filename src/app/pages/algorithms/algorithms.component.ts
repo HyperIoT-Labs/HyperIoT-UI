@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { PageStatus } from './models/pageStatus';
-import { Algorithm, AlgorithmsService } from '@hyperiot/core';
+import { Algorithm, AlgorithmsService } from 'core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { SelectOption } from '@hyperiot/components/lib/hyt-select-template/hyt-select-template.component';
+import { SelectOption } from 'components';
 import { AlgorithmService } from 'src/app/services/algorithms/algorithm.service';
 
 @Component({

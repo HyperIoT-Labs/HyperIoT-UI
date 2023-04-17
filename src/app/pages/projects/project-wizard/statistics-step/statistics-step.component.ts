@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { HYTError } from 'src/app/services/errorHandler/models/models';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { SelectOption } from '@hyperiot/components';
+import { SelectOption } from 'components';
 import { PageStatusEnum } from '../model/pageStatusEnum';
-import { RulesService, HPacket } from '@hyperiot/core';
+import { RulesService, HPacket } from 'core';
 
 @Component({
   selector: 'hyt-statistics-step',

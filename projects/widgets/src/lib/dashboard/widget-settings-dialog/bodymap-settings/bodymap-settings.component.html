@@ -1,0 +1,86 @@
+<div id="bodyMap-settings">
+  <div class="bodyMap-setting bodyMap-settings-gender">
+    <hr>
+    <h3>Body map: </h3>
+    <mat-button-toggle-group class="bodyMap-configuration-toggle" [(ngModel)]="selectedBodyMapValue" name="gender-mode" aria-label="Gender mode" (change)="onBodyMapChange($event)">
+      <mat-button-toggle *ngFor="let bm of bodyMaps" [value]="bm.value">{{ bm.label }}</mat-button-toggle>
+    </mat-button-toggle-group>
+
+  </div>
+  <!-- <div class="bodyMap-settings-packet-select">
+    <hr>
+    <h3>Connect packet:</h3>
+    <hyperiot-packet-select
+        [widget]="widget"
+        [areaId]="areaId"
+        [multiPacketSelect]="true"
+        [selectedFields]="selectedFields"
+        (selectedFieldsChange)="onSelectedFieldsChange($event)"
+    ></hyperiot-packet-select>
+  </div> -->
+  <div class="bodyMap-setting bodyMap-settings-muscles-map">
+    <hr>
+    <h3>Muscles map:</h3>
+
+    <div class="muscle-row header">
+      <div class="muscle-row-info">
+        <span class="info-element info-text">Muscles</span>
+        <span class="info-element info-text">Packets</span>
+        <div class="info-element info-color"></div>
+      </div>
+      <div class="muscle-row-actions">
+        <hyt-button (clickFn)="openDialog()">
+            <mat-icon>add</mat-icon>
+            <span i18n="@@HYT_button_add">Add</span>
+        </hyt-button>
+      </div>
+    </div>
+
+    <div class="muscle-list-container">
+      <div *ngFor="let association of musclesMap" class="muscle-row">
+
+        <div class="muscle-row-info">
+
+          <span
+            class="info-element info-text"
+            [matTooltip]="getMusclesInfo(association.muscleIds)"
+            matTooltipPosition="above"
+            matTooltipClass="hyt-header-tooltip"
+          >{{getMusclesInfo(association.muscleIds)}}</span>
+
+          <span
+            class="info-element info-text"
+            [matTooltip]="getPacketsInfo(association.packets)"
+            matTooltipPosition="above"
+            matTooltipClass="hyt-header-tooltip"
+          >{{getPacketsInfo(association.packets)}}</span>
+
+          <div class="info-element info-color">
+            <span class="dot" [ngStyle]="{'background-color':association.color}"></span>
+          </div>
+
+        </div>
+
+        <div class="muscle-row-actions">
+          <hyt-icon-button (clickFn)="editAssociation(association)" icon="edit">
+          </hyt-icon-button>
+          <hyt-icon-button (clickFn)="removeAssociation(association)" icon="delete">
+          </hyt-icon-button>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+  
+</div>
+
+<!--
+<div *ngFor="let field of selectedFields">{{field.name}}</div>
+-->
+<!-- Plotly chart specific options -->
+
+
+    <!-- not yet implemented -->
+<!-- <div class="padding-6 d-flex flex-column justify-content-stretch">
+</div> -->

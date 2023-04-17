@@ -1,0 +1,19 @@
+hyperiot-algorithm-table {
+    position: absolute;
+    background: #f0fbff;
+    height: 100%;
+    width: 100%;
+    border-radius: 4px;
+    position: absolute;
+}
+
+table {
+    width: 100%;
+}
+
+.example-container {
+    overflow: auto;
+    position: absolute;
+    top: 32px; left: 2px; bottom: 2px; right: 2px;
+    display: block;
+}

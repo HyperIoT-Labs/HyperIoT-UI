@@ -19,9 +19,9 @@
 
 import {AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Injector, OnDestroy, OnInit, Output, ViewChild, ViewEncapsulation} from '@angular/core';
 import {ActivatedRoute, Event, NavigationStart, Router} from '@angular/router';
-import {HytModalService, Option} from '@hyperiot/components';
+import {HytModalService, Option} from 'components';
 import {LoadingStatusEnum, ProjectFormEntity} from '../project-form-entity';
-import {Area, AreaDevice, AreasService, HprojectsService, Logger, LoggerService} from '@hyperiot/core';
+import {Area, AreaDevice, AreasService, HprojectsService, Logger, LoggerService} from 'core';
 import {AreaMapComponent} from './area-map/area-map.component';
 import {HttpClient} from '@angular/common/http';
 import {AreaDeviceSelectDialogComponent} from './area-device-select-dialog/area-device-select-dialog.component';

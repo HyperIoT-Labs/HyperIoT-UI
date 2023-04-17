@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewInit, ViewEncapsulation,ChangeDetectorRef } from '@angular/core';
-import { HytModal, HytModalService } from '@hyperiot/components';
+import { HytModal, HytModalService } from 'components';
 import { PageStatus } from 'src/app/pages/projects/models/pageStatus';
-import { AssetstagsService } from '@hyperiot/core';
+import { AssetstagsService } from 'core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { HttpErrorHandlerService } from 'src/app/services/errorHandler/http-error-handler.service';
 

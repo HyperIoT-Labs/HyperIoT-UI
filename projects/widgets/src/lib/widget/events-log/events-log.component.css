@@ -1,0 +1,62 @@
+hyperiot-events-log {
+    position: absolute;
+    background: #f0fbff;
+    height: 100%;
+    width: 100%;
+    border-radius: 4px;
+}
+
+content-widget {
+    font-family: 'Exo';
+}
+
+.event-log {
+    height: 100%;
+    overflow-y: auto;
+    font-size: 9px;
+    padding: 10px;
+    padding-top: 2px;
+}
+
+.grid {
+    background: white;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-areas: "time message extra";
+}
+
+.time {
+    padding: 2px;
+    border-right: solid .5px rgba(0, 0, 0, 0.25);
+    border-bottom: solid .5px rgba(0, 0, 0, 0.25);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+}
+
+.message {
+    padding: 5px;
+    border-right: solid .5px rgba(0, 0, 0, 0.25);
+    border-bottom: solid .5px rgba(0, 0, 0, 0.25);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    word-break: break-all;
+}
+
+.extra {
+    padding: 2px;
+    border-bottom: solid .5px rgba(0, 0, 0, 0.25);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.log-no-messages {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+}

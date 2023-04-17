@@ -1,0 +1,41 @@
+<div *ngIf="ready" class="body-association-form">
+    <div class="body-association-fields">
+        <div class="body-association-muscle">
+            <label class="ba-label">Muscles:</label>
+            <hyt-select
+                name="muscle"
+                [options]="muscleListOptions"
+                [isRequired]="true"
+                [label]="'Select Muscle'"
+                [selected]="bodyMapAssociation.muscleIds"
+                [isSearchable]="true"
+                [hint]="'select at least one muscle'"
+                [isMultiple]="true"
+                [chips]="true"
+                (changeFn)="onChangeSelectMuscle($event)"
+                class="hyt-select-full-width"
+            ></hyt-select>
+        </div>
+        <div class="body-association-packets">
+            <label class="ba-label">Packets:</label>
+            <hyperiot-packets-select
+                [projectId]="projectId"
+                [currentSelectedPackets]="bodyMapAssociation.packets"
+                (selectedPackets)="onChangePackets($event)"
+            ></hyperiot-packets-select>
+        </div>
+        <div class="body-association-color">
+            <label class="ba-label">Color:</label>
+            <hyt-input-text (change)="onChangeColor($event)" name="color" placeholder="color" type="color" [fieldValue]="bodyMapAssociation.color"></hyt-input-text>
+        </div>
+    </div>
+    <div class="body-association-submit-section">
+        <hyt-button [isDisabled]="isButtonDisabled()" (clickFn)="saveAndExit()">
+            <span *ngIf="!isEditMode" i18n="@@HYT_button_save">Save</span>
+            <span *ngIf="isEditMode" i18n="@@HYT_button_edit">Edit</span>
+        </hyt-button>
+        <hyt-button (clickFn)="cancelAndExit()">
+            <span i18n="@@HYT_button_cancel">Cancel</span>
+        </hyt-button>
+    </div>
+</div>

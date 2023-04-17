@@ -13,8 +13,8 @@ import { ActivatedRoute } from "@angular/router";
 
 import { Subscription } from "rxjs";
 
-import { HPacket, HpacketsService, HDevice } from "@hyperiot/core";
-import { Option } from "@hyperiot/components";
+import { HPacket, HpacketsService, HDevice } from "core";
+import { Option } from "components";
 
 import { ProjectFormEntity, LoadingStatusEnum } from "../project-form-entity";
 import { environment } from "src/environments/environment";

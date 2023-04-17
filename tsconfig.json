@@ -3,6 +3,20 @@
   "compilerOptions": {
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
+    "paths": {
+      "components": [
+        "dist/components/components",
+        "dist/components"
+      ],
+      "core": [
+        "dist/core/core",
+        "dist/core"
+      ],
+      "widgets": [
+        "dist/widgets/widgets",
+        "dist/widgets"
+      ]
+    },
     "sourceMap": true,
     "declaration": false,
     "downlevelIteration": true,

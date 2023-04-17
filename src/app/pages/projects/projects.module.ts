@@ -1,7 +1,7 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProjectsComponent } from './projects.component';
-import { ComponentsModule } from '@hyperiot/components';
+import { ComponentsModule } from 'components';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
@@ -64,7 +64,7 @@ import { StatisticInputErrorComponent } from './project-forms/project-statistics
 import { HPacketFieldFilterPipe } from './hPacketFieldFilter.pipe';
 import { EventComponentContainerComponent } from './project-forms/project-events-form/event-component-container/event-component-container.component';
 import { EventMqttCommandComponent } from './project-forms/project-events-form/event-mqtt-command/event-mqtt-command.component';
-import { WidgetsModule } from '@hyperiot/widgets';
+import { WidgetsModule } from 'widgets';
 import { ProjectAlarmsFormComponent } from './project-forms/project-alarms-form/project-alarms-form.component';
 import { AlarmEventsTableComponent } from './project-forms/project-alarms-form/alarm-events-table/alarm-events-table.component';
 import {MatButtonModule} from '@angular/material/button';

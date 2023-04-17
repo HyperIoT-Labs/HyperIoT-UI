@@ -2,9 +2,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ProjectDetailComponent } from './project-detail.component';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
-import { HprojectsService, HdevicesService, HpacketsService } from '@hyperiot/core';
+import { HprojectsService, HdevicesService, HpacketsService } from 'core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { HytModalService } from '@hyperiot/components';
+import { HytModalService } from 'components';
 
 describe('ProjectDetailComponent', () => {
   let component: ProjectDetailComponent;

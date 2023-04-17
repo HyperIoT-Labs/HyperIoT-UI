@@ -1,0 +1,20 @@
+<div id="container-widget-fullscreen">
+
+    <div id="header-fullscreen">
+        {{widgetName}}
+        <div id="close-fullscreen">
+            <span class="hyt-icon icon-hyt_lessX" (click)="closeModal($event)"></span>
+        </div>
+    </div>
+    <div id="body-fullscreen">
+
+        <hyperiot-dynamic-widget
+            [widget]="widget"
+            [initData]="fullScreenInitData"
+            [serviceType]="serviceType"
+            [isToolbarVisible]="false"
+        ></hyperiot-dynamic-widget>
+
+    </div>
+
+</div>

@@ -1,0 +1,21 @@
+<!-- hour -->
+<select class="timeFormControl" (change)="change.emit()" [(ngModel)]="time.hours" [disabled]="disabled" [ngClass]="selectClass">
+  <option *ngFor="let hour of hours" [ngValue]="hour">{{hour}}</option>
+</select>
+
+<!-- minute -->
+<select class="timeFormControl" (change)="change.emit()" [(ngModel)]="time.minutes" [disabled]="disabled" [ngClass]="selectClass">
+  <option *ngFor="let minute of minutes" [ngValue]="minute">{{minute}}</option>
+</select>
+
+<!-- second -->
+<select class="timeFormControl" (change)="change.emit()" [(ngModel)]="time.seconds" [disabled]="disabled" *ngIf="!hideSeconds"
+  [ngClass]="selectClass">
+  <option *ngFor="let second of seconds" [ngValue]="second">{{second}}</option>
+</select>
+
+<!-- am/pm -->
+<select class="timeFormControl" (change)="change.emit()" [(ngModel)]="time.hourTypes" [disabled]="disabled" *ngIf="!use24HourTime"
+  [ngClass]="selectClass">
+  <option *ngFor="let hourType of hourTypes" [ngValue]="hourType">{{hourType}}</option>
+</select>

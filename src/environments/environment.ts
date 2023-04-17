@@ -1,4 +1,4 @@
-import { LOG_LEVEL } from '@hyperiot/core';
+import { LOG_LEVEL } from 'core';
 import packageInfo from 'package.json';
 
 // This file can be replaced during build by using the `fileReplacements` array.

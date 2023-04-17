@@ -1,0 +1,215 @@
+<div id="dashboard-page">
+    <hyperiot-dashboard-debug *ngIf="debug"
+                              [data]="[
+                              currentDashboard,
+                              currentDashboardId,
+                              currentDashboardType,
+                              hProjectList,
+                              hProjectListOptions]"></hyperiot-dashboard-debug>
+    <div *ngIf="enableBreadcrumb" class="header d-flex flex-row justify-content-stretch">
+
+        <div class="breadcrumb flex-grow-1">
+            <span class="hyt-icon icon-hyt_projectSolo"></span> <a [routerLink]="'/'">Home</a>
+            <span *ngIf="showAreas"> &gt; <strong>Areas</strong></span>
+            <span> &gt; <strong>Dashboard</strong></span>
+        </div>
+
+    </div>
+
+    <div id="container-dashboard" [ngSwitch]="pageStatus">
+
+        <div class="row">
+
+            <div id="tools-dashboard-box" class="col-12 {{(pageStatus == 0)?'inLoading':''}}" *ngIf="pageStatus != -1">
+
+                <div class="row no-gutters">
+
+                    <div class="col-4 left-tools">
+
+                        <div *ngIf="enableOnlineOffline" id="signal-btn" (click)="changeSignalState($event)">
+                            <span class="hyt-icon {{(signalIsOn)?'icon-hyt_wifiOffFilled':'icon-hyt_wifiOnFilled'}}"></span>
+                            <p>{{(signalIsOn)?'Offline':'Online'}}</p>
+                        </div>
+
+
+                        <div *ngIf="signalIsOn && enableStreamControl" id="play-btn" (click)="changeStreamState($event)">
+                            <span class="hyt-icon {{(streamIsOn)?'icon-hyt_pause':'icon-hyt_play'}}"></span>
+                            <p>{{(streamIsOn)?'Pause':'Play'}}</p>
+                            <!-- @@i18n -->
+                            <!-- <p i18n="@@HYT_stream_is_on">{streamIsOn, select, true {Play} false {Pause}}</p> -->
+                        </div>
+
+                        <hyt-topology-toolbar *ngIf="enableTopologyToolbar" [dataRecordingIsOn]="dataRecordingIsOn" [upTimeSec]="upTimeSec"
+                            [idProjectSelected]="idProjectSelected" [recordStateInLoading]="recordStateInLoading"
+                            (recordingStateChange)="changeTopologyState($event)">
+                        </hyt-topology-toolbar>
+
+                        <div *ngIf="enableChangeEventNotification" id="event-notification-btn" (click)="changeEventNotificationState($event)">
+                            <span class="hyt-icon {{(eventNotificationIsOn)?'icon-hyt_notification':'icon-hyt_notification'}}"></span>
+                            <p>{{(eventNotificationIsOn)?'On':'Off'}}</p>
+                        </div>
+
+                    </div>
+
+                    <div class="col-4 center-tools">
+
+                        <hyt-select
+                            *ngIf="!showAreas && pageStatus == 1 && enableProjectSelection" [label]="'Select a project'" name="project"
+                            [options]="hProjectListOptions" [selected]="idProjectSelected"
+                            (changeFn)="onSelectChange($event)"
+                        >
+                        </hyt-select>
+                      <div *ngIf="!showAreas && pageStatus == 1 && !enableProjectSelection">
+                        <label>Project name: </label>
+                        <span> {{getCurrentProjectData(idProjectSelected, 'name')}}</span>
+                      </div>
+
+                        <div *ngIf="enableProjectEdit" id="edit-btn" (click)="goToEditProject()">
+                            <span class="hyt-icon icon-hyt_pencil"></span>
+                            <p i18n="@@HYT_edit">Edit</p>
+                        </div>
+
+                    </div>
+
+                    <div *ngIf="enableAddWidget" class="col-4 right-tools">
+
+                        <!-- <hyt-select
+                            *ngIf="!showAreas && pageStatus == 1" [label]="'Select a project'" name="project"
+                            [options]="hProjectListOptions" [selected]="idProjectSelected"
+                            (changeFn)="onSelectChange($event)"
+                        >
+                        </hyt-select> -->
+
+                        <h3 *ngIf="showAreas" style="float:left; margin-top: 18px; color: blue">
+                            {{ areaPath && areaPath[areaPath.length - 1].name }}
+                        </h3>
+                        <!--
+                        <div *ngIf="showAreas" class="current-path">
+                            <span *ngFor="let area of areaPath; let i = index; let c = count">
+                                <span *ngIf="i > 0">&nbsp;&raquo;&nbsp;</span>
+                                <a *ngIf="i < c - 1" [routerLink]="['/areas', idProjectSelected, area.id, 'dashboards']">{{area.name}}</a>
+                                <span *ngIf="i === c - 1"><strong>{{area.name}}</strong></span>
+                            </span>
+                        </div>
+                        -->
+
+                        <div id="add-widget-btn" *ngIf="showAreas" [routerLink]="['/areas', idProjectSelected, areaId]">
+                            <span class="hyt-icon icon-hyt_areaB16"></span>
+                            <p>Areas</p>
+                        </div>
+
+                        <div id="add-widget-btn" *ngIf="pageStatus == PageStatus.Standard && enableAddWidget" (click)="openWidgetModal()">
+                            <span class="hyt-icon icon-hyt_widgetPlus"></span>
+                            <p i18n="@@HYT_add_a_widget">Add a widget</p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div id="loadingStatus" *ngSwitchCase="PageStatus.Loading"
+            class="mt-5 d-flex flex-column row align-items-center justify-content-center">
+            <!-- Loading -->
+
+            <img id="animatedPreloaderImg" src="assets/images/hyperiot_logo_single_char_animated.svg"
+                alt="Hyperiot Animated Logo"> <!-- @I18N@ -->
+            <h2 i18n="@@HYT_page_is_loading">Page is loading...</h2>
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+
+        </div>
+
+        <div id="standardStatus" *ngSwitchCase="PageStatus.Standard" class="row">
+
+            <div *ngIf="!signalIsOn" class="timeline-container">
+
+                <hyperiot-timeline [projectId]="idProjectSelected"
+                    [dashboardPackets]="packetsInDashboard" (dateOutput)="timeLineSelection($event)">
+                </hyperiot-timeline>
+            </div>
+
+            <!-- Standard -->
+            <div *ngIf="dataRecordingStatus < 2 && signalIsOn && !recordStateInLoading" id="dashboard-overlay-blurred"
+                class="row no-gutters justify-content-center">
+
+                <div *ngIf="dataRecordingStatus <= 0" class="col-md-4">
+                    <h2 i18n="@@HYT_data_recording_is_disabled" id="overlay-blurred-title">Data recording is disabled</h2>
+                    <!--@I18N-->
+                    <h3 i18n="@@HYT_data_recording_is_disabled_text" id="overlay-blurred-text">
+                        The online dashboard cannot be used in this state.
+                        You can activate data recording by pressing the "RUN" button
+                        or you can use the dasboard offline taking the "OFFLINE" button.
+                    </h3>
+                    <!--@I18N-->
+                </div>
+
+                <div *ngIf="dataRecordingStatus == 1" class="col-md-4">
+                    <h2 i18n="@@HYT_waiting_for_data" id="overlay-blurred-title">Waiting for data</h2>
+                    <!--@I18N-->
+                    <h3 i18n="@@HYT_waiting_for_data_text" id="overlay-blurred-text">
+                        The data recording is activated but we waiting for the data.
+                        This operation might take a while (from 20 seconds, up to 1 minute),
+                        if the loading state persist click "Reload" or contact the administrator.
+                    </h3>
+                    <!--@I18N-->
+                    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                </div>
+
+            </div>
+
+            <div id="container-box-dashboard"
+                class="col-12 {{(dataRecordingStatus < 2 && signalIsOn) ? 'blurred-animation' : ''}}">
+
+                <div id="loadingOfflineData" *ngIf="offlineWidgetStatus === 0"
+                    class="d-flex flex-column align-items-center">
+                    <!-- Loading -->
+
+                    <img id="animatedPreloaderImg" src="assets/images/hyperiot_logo_single_char_animated.svg"
+                        alt="Hyperiot Animated Logo"> <!-- @I18N@ -->
+                    <h2 i18n="@@HYT_page_is_loading">Page is loading...</h2>
+                    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+
+                </div>
+
+                <hyperiot-dashboard-view [dashboard]="currentDashboard" [dashboardType]="currentDashboardType"
+                    [dashboardWidgets]="currentDashboard?.widgets" (dsTopologyResTimeChange)="topologyResTimeChange($event)"
+                    (dashboardViewEvent)="onDashboardViewEvent($event)">
+                </hyperiot-dashboard-view>
+
+            </div>
+
+        </div>
+
+        <div id="newStatus" *ngSwitchCase="PageStatus.New" class="row align-items-center justify-content-center">
+            <!-- New -->
+            <div class="mt-5 no-dashboards">
+
+                <div id="content-no-dashboards" class="col-md-12">
+                    <i class="fa fa-bar-chart-o"></i>
+                    <h3 id="title-no-dashboards" i18n="@@HYT_no_dashboard_yet">You have not configured any dashboard yet.</h3>
+                    <!-- <h4 id="subtitle-no-dashboards">Start adding widgets.</h4> -->
+                </div>
+
+                <!-- <hyt-dashboard-view [dashboard]="currentDashboard"></hyt-dashboard-view> -->
+
+            </div> <!-- End No Projects Row -->
+
+        </div>
+
+        <div id="errorStatus" *ngSwitchCase="PageStatus.Error"
+            class="mt-5 d-flex flex-column row align-items-center justify-content-center">
+            <!-- Error -->
+            <h2 i18n="@@HYT_error_occurred_long">An error has occurred, contact the administrator!</h2>
+
+        </div>
+
+        <div *ngSwitchDefault>
+            switch-case error
+        </div>
+
+    </div>
+
+</div>

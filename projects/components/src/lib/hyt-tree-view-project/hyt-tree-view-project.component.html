@@ -1,0 +1,58 @@
+<hyt-input-text  placeholder="Search for devices or packets..." (keyup)="onChangeInput($event.target.value)">
+</hyt-input-text>
+
+<mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+  <!-- This is the tree node template for leaf nodes -->
+
+  <mat-tree-node *matTreeNodeDef="let node" [ngClass]="{active: node.active, show: node.visible, hide: !node.visible}" class="d-flex flex-row align-items-center">
+   
+    <span *ngFor="let i of getLevelTabs(node.level)" [ngClass]="{
+      'line-right': (i === node.level - 1 && !node.active),
+      'line-right-active': (i === node.level - 1 && node.active),
+      'line-straight': (i !== node.level - 1 && !isParentLast(node, i)),
+      'line-end': i === node.level - 1 && node.last && !node.active,
+      'line-end-active': i === node.level - 1 && node.last && node.active,
+      'line-empty': isParentLast(node, i)
+    }"></span>
+
+    <span class="node-name flex-grow-1" (click)="onNodeClicked(node)">
+      <span class="hyt-icon {{ node.icon }}" *ngIf="node.icon"></span> <!-- hyt-icon-sub -->
+      <span class="hyt-icon icon-hyt_stop" *ngIf="node.icon == null"></span> <!-- hyt-icon-sub-null -->
+      <span class="subtext-node-name">{{node.name}}</span>
+      <div 
+        class="btn-tooltip"
+        matTooltip="{{node.name}}"
+      >
+        <span class="icon-hyt_info"></span>
+      </div>
+    </span>
+
+    <span class="leaf-end"></span>
+
+  </mat-tree-node>
+
+  <!-- This is the tree node template for expandable nodes -->
+  <mat-tree-node *matTreeNodeDef="let node; when: hasChild" class="d-flex flex-row align-items-center" [ngClass]="{active: node.active, show: node.visible, hide: !node.visible}">
+    
+    <span *ngFor="let i of getLevelTabs(node.level)" [ngClass]="getLevelConnector(node, i)"></span>
+
+    <span class="node-name flex-grow-1" (click)="onNodeClicked(node)">
+      <span class="hyt-icon {{ node.icon }}" *ngIf="node.icon"></span>
+      <span class="hyt-icon icon-hyt_stop" *ngIf="node.icon == null"></span> <!-- hyt-icon-null -->
+      <span class="text-node-name">{{node.name}}</span>
+      <div 
+        class="btn-tooltip"
+        matTooltip="{{node.name}}"
+      >
+        <span class="icon-hyt_info"></span>
+      </div>
+    </span>
+
+    <span class="expand-collapse" matTreeNodeToggle>
+      <span *ngIf="!treeControl.isExpanded(node)" class="hyt-icon icon-hyt_caretDown"></span>
+      <span *ngIf="treeControl.isExpanded(node)" class="hyt-icon icon-hyt_caretUp"></span>
+    </span>
+
+  </mat-tree-node>
+
+</mat-tree>

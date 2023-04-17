@@ -6,7 +6,7 @@ import { OnInit, Output, EventEmitter, Injector, AfterViewInit,ChangeDetectorRef
 import { SummaryList } from '../project-detail/generic-summary-list/generic-summary-list.component';
 import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
 import { EntitiesService } from 'src/app/services/entities/entities.service';
-import { HytModalService } from '@hyperiot/components';
+import { HytModalService } from 'components';
 import { ProjectsService } from 'src/app/services/projects.service';
 import {MatRadioChange} from '@angular/material/radio';
 

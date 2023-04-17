@@ -1,0 +1,29 @@
+<hyperiot-base-widget-template>
+
+    <header-widget>
+        <hyperiot-common-toolbar widgetName="{{widget.name}}" (action)="onToolbarAction($event)"
+            [toolbarIsVisible]="isToolbarVisible" [config]="{
+                  showClose: true,
+                  showSettings: true,
+                  showPlay: false,
+                  showRefresh: false,
+                  showTable: false
+            }">
+        </hyperiot-common-toolbar>
+    </header-widget>
+
+    <content-widget>
+        <div *ngIf="!isConfigured; else configured" class="configure-notice">
+          <strong i18n="@@HYT_common_not_configured">Click 'Settings' button to configure.</strong>
+        </div>
+        <ng-template #configured>
+            <hyt-lazy-pagination-table
+                #tableChild
+                [headers]="tableHeaders"
+                [dataSource]="tableSource"
+            >
+            </hyt-lazy-pagination-table>
+        </ng-template>
+    </content-widget>
+
+</hyperiot-base-widget-template>

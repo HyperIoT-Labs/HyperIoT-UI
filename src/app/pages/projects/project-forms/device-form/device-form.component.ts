@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
-import { HdevicesService, HDevice, HProject } from '@hyperiot/core';
+import { HdevicesService, HDevice, HProject } from 'core';
 
 import { ProjectFormEntity, LoadingStatusEnum } from '../project-form-entity';
 import { HttpErrorHandlerService } from 'src/app/services/errorHandler/http-error-handler.service';

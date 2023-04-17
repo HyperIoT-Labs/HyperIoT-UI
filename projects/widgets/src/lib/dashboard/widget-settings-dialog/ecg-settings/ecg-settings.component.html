@@ -1,0 +1,44 @@
+<div id="time-chart-settings">
+  <div>
+    <label>Select widget column size:</label>
+    <hyt-select (changeFn)="setColsNumber($event.value)" [label]="'Select widget column size'" [selected]="colsNumber" [options]="[{label: 'small', value: 4},{label: 'medium', value: 5},{label: 'large', value: 6}]"></hyt-select>
+  </div>
+  <div>
+    <label>Select data frequency (s):</label>
+    <hyt-select (changeFn)="setFrequency($event.value)" [label]="'Data frequency (s)'" [selected]="dataFrequency" [options]="[{label: '0.2s', value: 0.2}, {label: '0.025s', value: 0.025}, {label: '1s', value: 1}]"></hyt-select>
+  </div>
+  <div>
+    <label>Select range of data to view (s):</label>
+    <hyt-select (changeFn)="setTimeRange($event.value)" [label]="'Range data time (s)'" [selected]="dataRange" [options]="[{label: '30s', value: 30}, {label: '60s', value: 60}, {label: '120s', value: 120}]"></hyt-select>
+  </div>
+    <div class="field-color-select">
+      <hyperiot-packet-select
+        [widget]="widget"
+        [areaId]="areaId"
+        [multiPacketSelect]="true"
+        [selectedFields]="selectedFields"
+        (selectedFieldsChange)="onSelectedFieldsChange($event)"
+      ></hyperiot-packet-select>
+      <!-- TODO Set label to i18n -->
+      <div *ngFor="let field of packetSelect.selectedFields">
+        <div class="ecg-color">
+          <label class="ba-label">Select {{field.name}} color:</label>
+          <hyt-input-template type="color" [(ngModel)]="widget.config.colors[field.name]" name="color-{{field.id}}">
+          </hyt-input-template>
+        </div>
+      </div>
+      <label class="ba-label" i18n="@@HYT_widget_settings_bg_color">Background color:</label>
+      <hyt-select-template label-i18n="@@HYT_widget_settings_bg_color" label="Background color" name="bgColor"
+          [options]="bgColorOptions" [(ngModel)]="widget.config.bgColor" style="display: block;">
+      </hyt-select-template>
+    </div>
+</div>
+
+<!--
+<div *ngFor="let field of selectedFields">{{field.name}}</div>
+-->
+<!-- Plotly chart specific options -->
+
+<div class="padding-6 d-flex flex-column justify-content-stretch">
+    <!-- not yet implemented -->
+</div>

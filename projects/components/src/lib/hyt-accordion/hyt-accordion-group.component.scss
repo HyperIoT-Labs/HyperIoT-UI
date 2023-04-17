@@ -1,0 +1,38 @@
+.accordion-group {
+    .accordion-header {
+        cursor: pointer;
+        background-color: #074290;
+        font-family: 'Exo', serif;
+        color: #fff;
+        padding: 10px 5px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: baseline;
+        
+        .hyt-icon {
+            color: #fff;
+            display: flex;
+            flex-direction: row;
+            justify-content: end;
+        }
+        
+        .header {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        &.disabled {
+            cursor: not-allowed;
+            background-color: #cfd4d5;
+            color: grey;
+        }
+    }
+
+    .content {
+        display: flex;
+        flex-flow: row wrap;
+        padding: 10px 5px;
+    }
+}

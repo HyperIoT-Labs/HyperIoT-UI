@@ -1,0 +1,66 @@
+.hyt-lazy-pagination-table {
+  position: relative;
+  height: 100%;
+}
+
+.hyt-lazy-pagination-table .table-wrapper {
+  height: calc(100% - 50px);
+  overflow-y: scroll;
+}
+
+.hyt-lazy-pagination-table table {
+  width: 100%;
+  table-layout: fixed;
+}
+
+.hyt-lazy-pagination-table table tr {
+  border-bottom: 1px solid lightgrey;
+}
+
+.hyt-lazy-pagination-table table thead th {
+  position: sticky;
+  background-color: white;
+  top: 0;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.hyt-lazy-pagination-table .table-navigation {
+  height: 52px;
+  width: 100%;
+  position: absolute;
+  background-color: white;
+  bottom: 0;
+  left: 0;
+}
+
+.hyt-lazy-pagination-table .table-navigation mat-form-field {
+  width: 42px;
+}
+
+.hyt-lazy-pagination-table .table-navigation .mat-form-field-infix {
+  border-top: none;
+}
+
+.hyt-lazy-pagination-table .table-navigation input {
+  width: 70px;
+  height: 25px;
+}
+
+.cdk-overlay-container .hyt-header-tooltip {
+  margin: 0px;
+  word-break: break-all;
+  white-space: normal;
+  background-color: #266dca;
+}
+
+.hyt-lazy-pagination-table .file-cell {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  font-size: 1.4rem;
+}
+
+.hyt-lazy-pagination-table .file-cell span {
+  cursor: pointer;
+}

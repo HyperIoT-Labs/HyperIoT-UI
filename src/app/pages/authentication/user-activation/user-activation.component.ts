@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HusersService, Logger, LoggerService } from '@hyperiot/core';
+import { HusersService, Logger, LoggerService } from 'core';
 import { ActivatedRoute } from '@angular/router';
 import { SubmissionStatus } from '../models/pageStatus';
 

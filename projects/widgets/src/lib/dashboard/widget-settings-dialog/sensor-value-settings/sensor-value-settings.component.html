@@ -1,0 +1,19 @@
+<hyperiot-packet-select
+    [widget]="widget"
+    [multiPacketSelect]="false"
+    [selectedFields]="selectedFields"
+    [areaId]="areaId"
+    (selectedFieldsChange)="onSelectedFieldsChange($event)"></hyperiot-packet-select>
+<hr>
+<div class="sensor-value-text-color">
+    <label class="ba-label" i18n="@@HYT_widget_settings_text_color">Text color:</label>
+    <hyt-input-template type="color" [(ngModel)]="widget.config.textColor" name="color">
+    </hyt-input-template>
+</div>
+<ng-container *ngIf="widget.type === 'sensor-value'">
+    <hr>
+    <label class="ba-label" i18n="@@HYT_widget_settings_bg_color">Background color:</label>
+    <hyt-select-template label-i18n="@@HYT_widget_settings_bg_color" label="Background color" name="bgColor"
+        [options]="bgColorOptions" [(ngModel)]="widget.config.bgColor" style="display: block;">
+    </hyt-select-template>
+</ng-container>

@@ -1,0 +1,64 @@
+<div class="hyt-lazy-pagination-table">
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th *ngFor="let header of headers" [matTooltip]="header.label || header.value" matTooltipPosition="above"
+                        matTooltipClass="hyt-header-tooltip">
+                        {{ header.label || header.value }}
+                    </th>
+                </tr>
+            </thead>
+            <tbody *ngIf="tableStatus == 1">
+                <tr *ngFor="let data of pageData">
+                    <td *ngFor="let item of headers">
+                      <div *ngIf="item.type === 'FILE'" class="file-cell">
+                        <span class="hyt-icon icon-hyt_search" (click)="openFile(data[item.value])"></span>
+                        <span class="hyt-icon icon-hyt_download" (click)="downloadFile(data[item.value])"></span>
+                      </div>
+                      <ng-container *ngIf="item.type !== 'FILE'">{{ data[item.value] || "-" }}</ng-container>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div *ngIf="tableStatus == 0">
+            Loading
+        </div>
+        <div *ngIf="tableStatus == -1">
+            No data to show
+        </div>
+    </div>
+    <div class="table-navigation">
+        <div style="float: left;">
+            Items per page:
+            <hyt-select (changeFn)="onRowPerPageChanged($event)" [options]="rowPerPageSelection"
+                [selected]="rowPerPage">
+            </hyt-select>
+        </div>
+        <div style="float: right;">
+            <ng-container *ngIf="tableStatus == -1">No Data</ng-container>
+            <ng-container *ngIf="tableStatus != -1">
+                {{actualRowsIndexes[0] + 1}}-{{actualRowsIndexes[1]}} of {{allData.length}}
+            </ng-container>
+            <hyt-button [color]="'hyt-base-icon-only'" [isDisabled]="selectedPage <= 0" (clickFn)="updatePageData(0)">
+                &lt;&lt;
+            </hyt-button>
+            <hyt-button [color]="'hyt-base-icon-only'" [isDisabled]="selectedPage <= 0"
+                (clickFn)="updatePageData(selectedPage - 1)">
+                &lt;
+            </hyt-button>
+            <input type="text" [hytPageInput]="math.ceil(allData.length/rowPerPage) - 1" [pageValue]="selectedPage"
+                (pageEvent)="updatePageData($event)" [attr.disabled]="tableStatus == -1 ? '' : null">
+            <hyt-button [color]="'hyt-base-icon-only'"
+                [isDisabled]=" selectedPage >= (math.ceil(allData.length/rowPerPage) - 1)"
+                (clickFn)="updatePageData(selectedPage + 1)">
+                &gt;
+            </hyt-button>
+            <hyt-button [color]="'hyt-base-icon-only'"
+                [isDisabled]="selectedPage >= (math.ceil(allData.length/rowPerPage) - 1)"
+                (clickFn)="updatePageData(math.ceil(allData.length/rowPerPage) - 1)">
+                &gt;&gt;
+            </hyt-button>
+        </div>
+    </div>
+</div>

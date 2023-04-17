@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { HPacketField } from '@hyperiot/core';
+import { HPacketField } from 'core';
 
 @Pipe({
   name: 'filter'

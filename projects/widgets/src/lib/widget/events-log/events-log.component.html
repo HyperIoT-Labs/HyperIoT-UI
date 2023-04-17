@@ -1,0 +1,37 @@
+<hyperiot-base-widget-template>
+    <header-widget>
+        <hyperiot-common-toolbar widgetName="{{widget.name}}" (action)="onToolbarAction($event)"
+            [toolbarIsVisible]="isToolbarVisible" [config]="{
+                  showClose: true,
+                  showSettings: false,
+                  showPlay: true,
+                  showRefresh: false,
+                  showTable: false
+            }">
+        </hyperiot-common-toolbar>
+    </header-widget>
+
+    <content-widget>
+
+        <div *ngIf="logMessages.length != 0" class="event-log grid">
+            <ng-container *ngFor="let log of logMessages">
+                <div class="time">
+                    {{log.timestamp.toLocaleTimeString()}}
+                </div>
+                <div class="message">
+                    {{log.message}}
+                </div>
+                <div class="extra">
+                    {{log.extra}}
+                </div>
+            </ng-container>
+        </div>
+
+        <div *ngIf="logMessages.length === 0" class="log-no-messages">
+            <!-- We have no messages to show!! -->
+            Waiting for events...
+        </div>
+
+    </content-widget>
+
+</hyperiot-base-widget-template>

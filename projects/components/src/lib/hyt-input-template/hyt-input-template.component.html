@@ -1,0 +1,29 @@
+<div class="hyt-form">
+
+    <mat-form-field 
+      class="hyt-full-width" 
+      [ngClass]="{'errorPositionBottom': errorPosition=='bottom'}"
+    >
+  
+      <input matInput #input 
+        class="hyt-input form-control" 
+        name="{{name}}" 
+        id="{{id}}" 
+        type="{{type}}"
+        placeholder="{{placeholder}}" 
+        value="{{fieldValue}}" 
+        (blur)="onBlur()"
+        [required]="isRequired"
+        [disabled]="isDisabled"
+        [pattern]="pattern"
+        [(ngModel)]="value"
+        [errorStateMatcher]="matcher"
+      >
+  
+      <mat-hint *ngIf="hint">
+        {{ hint }}
+      </mat-hint>
+  
+    </mat-form-field>
+  
+  </div>

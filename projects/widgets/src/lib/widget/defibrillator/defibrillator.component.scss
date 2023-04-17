@@ -1,0 +1,719 @@
+.trace-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+
+    &.dark {
+        background-color: black;
+    }
+
+    &.bright {
+        background-color: white;
+    }
+
+    .sensor-fields {
+        display: flex;
+        flex-direction: column;
+        font-size: 70px;
+        margin-right: 25px;
+
+        &.dark {
+            color: #d1d1d1;
+        }
+
+        &.bright {
+            color: black;
+        }
+    }
+}
+
+.defibrillator-struct.standard {
+    display: flex;
+    flex-wrap: wrap;
+    height: 100%;
+    background-color: black;
+    .area {
+        height: 40px;
+    }
+    .area-1 {
+        width: 100%;
+        height: 80%;
+        display: flex;
+        .area-left {
+            display: flex;
+            flex-direction: column;
+            width: 75%;
+            .area-plot {
+                height: 25%;
+            }
+        }
+        .area-right {
+            display: flex;
+            flex-direction: column;
+            width: 25%;
+        }
+    }
+    .area-2 {
+        width: 75%;
+        height: 20%;
+        display: flex;
+    }
+    .area-3 {
+        width: 25%;
+        height: 20%;
+        display: flex;
+    }
+}
+
+.defibrillator-struct.derivations {
+    display: flex;
+    flex-wrap: wrap;
+    height: 100%;
+    background-color: black;
+    .area-left {
+        width: 75%;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+    }
+    .area-right {
+        width: 25%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .card {
+        &.ecg {
+            height: 40%;
+        }
+        &.resp {
+            height: 20%;
+        }
+        &.spo2 {
+            height: 20%;
+        }
+        &.temperature {
+            flex-direction: row;
+            background-color: black;
+            color: #ffffff;
+
+            .first {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: space-between;
+                width: 20%;
+
+                .label {
+                    font-size: .9em; // Da calibrare in base al font HYT "Exo"
+                }
+
+                .alerts {
+                    font-size: .8em; // Da calibrare in base al font HYT "Exo"
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    justify-content: space-between;
+                }
+            }
+
+            .second {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: center;
+                width: 40%;
+
+                .temp-label {
+                    font-size: .8em;
+                }
+
+                .temp-value {
+                    font-size: 3em;
+                    font-weight: bold;
+                }
+            }
+
+            .third {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: center;
+                width: 30%;
+
+                .temp-2, .temp-diff {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    justify-content: center;
+
+                    .temp-label {
+                        font-size: .8em;
+                    }
+
+                    .temp-value {
+                        font-size: 1.5em;
+                        font-weight: bold;
+                    }
+                }
+            }
+
+            .fourth {
+                display: flex;
+                width: 10%;
+            }
+        }
+    }
+}
+
+.card {
+    display: flex;
+    padding: 2px 4px;
+
+    &.bottom-card {
+        width: 50%;
+        height: 100%;
+
+        &.temperature {
+            flex-direction: row;
+            background-color: black;
+            color: #ffffff;
+
+            .first {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: space-between;
+                width: 20%;
+
+                .label {
+                    font-size: .9em; // Da calibrare in base al font HYT "Exo"
+                }
+
+                .alerts {
+                    font-size: .8em; // Da calibrare in base al font HYT "Exo"
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    justify-content: space-between;
+                }
+            }
+
+            .second {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: center;
+                width: 40%;
+
+                .temp-label {
+                    font-size: .8em;
+                }
+
+                .temp-value {
+                    font-size: 3em;
+                    font-weight: bold;
+                }
+            }
+
+            .third {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: center;
+                width: 30%;
+
+                .temp-2, .temp-diff {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    justify-content: center;
+
+                    .temp-label {
+                        font-size: .8em;
+                    }
+
+                    .temp-value {
+                        font-size: 1.5em;
+                        font-weight: bold;
+                    }
+                }
+            }
+
+            .fourth {
+                display: flex;
+                width: 10%;
+            }
+        }
+
+        &.pr {
+            flex-direction: row;
+            background-color: black;
+            color: #ffffff;
+
+            .first {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: space-between;
+                width: 20%;
+
+                .label {
+                    font-size: .9em; // Da calibrare in base al font HYT "Exo"
+                }
+
+                .alerts {
+                    font-size: .8em; // Da calibrare in base al font HYT "Exo"
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    justify-content: space-between;
+                }
+            }
+
+            .second {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: center;
+                width: 40%;
+
+                .temp-value {
+                    font-size: 4em;
+                    font-weight: bold;
+                }
+            }
+
+            .third {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: center;
+                width: 40%;
+                
+                .label-value {
+                    font-size: .9em;
+                    margin-bottom: 20%;
+                }
+            }
+        }
+    }
+
+    &.ecg {
+        height: 50%;
+        background-color: black;
+        color: #27e527;
+
+        .first {
+            width: 20%;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: space-between;
+
+            .label {
+                font-size: .9em; // Da calibrare in base al font HYT "Exo"
+            }
+
+            .alerts {
+                font-size: .8em; // Da calibrare in base al font HYT "Exo"
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: space-between;
+            }
+        }
+
+        .second {
+            width: 40%;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            font-size: 4em; // Da calibrare in base al font HYT "Exo"
+            font-weight: bold;
+        }
+
+        .third {
+            width: 30%;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: space-evenly;
+            .st {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: center;
+
+                .st-label {
+                    font-size: .85em;
+                    text-transform: uppercase;
+                }
+
+                .st-value {
+                    font-weight: bold;
+                    font-size: 1.2em;
+                }
+            }
+
+            .pvc {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+                width: 100%;
+
+                .pvc-label {
+                    font-size: .7em;
+                }
+
+                .pvc-value {
+                    font-weight: bold;
+                    font-size: 1.2em;
+                }
+            }
+
+            .pause {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+                width: 100%;
+
+                .pause-label {
+                    font-size: .7em;
+                }
+
+                .pause-value {
+                    font-weight: bold;
+                    font-size: 1.2em;
+                }
+            }
+        }
+
+        .fourth {
+            width: 10%;
+            .heart {
+                &::after {
+                    content: '\2661';
+                    color: red;
+                }
+                &.full {
+                    &::after {
+                        content: '\2665';
+                        font-size: 1.4em;
+                        color: red;
+                    }
+                }
+            }
+        }
+    }
+    /****** END ECG ******/
+
+
+    /****** RESP ******/
+    &.resp {
+        height: 25%;
+        background-color: black;
+        color: #f5eb22;
+
+        .first {
+            width: 35%;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: space-between;
+
+            .label {
+                font-size: .9em; // Da calibrare in base al font HYT "Exo"
+            }
+
+            .alerts {
+                font-size: .8em; // Da calibrare in base al font HYT "Exo"
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: space-between;
+            }
+        }
+
+        .second {
+            width: 63%;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            font-size: 4em; // Da calibrare in base al font HYT "Exo"
+            font-weight: bold;
+        }
+    }
+    /****** END RESP ******/
+
+    /****** SPO2 ******/
+    &.spo2 {
+        height: 25%;
+        background-color: black;
+        color: cyan;
+
+        .first {
+            width: 20%;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: space-between;
+
+            .label {
+                font-size: .9em; // Da calibrare in base al font HYT "Exo"
+            }
+
+            .alerts {
+                font-size: .8em; // Da calibrare in base al font HYT "Exo"
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: space-between;
+            }
+        }
+
+        .second {
+            width: 40%;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            font-size: 4em; // Da calibrare in base al font HYT "Exo"
+            font-weight: bold;
+        }
+
+        .third {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+        }
+
+        .fourth {
+            width: 30%;
+            display: flex;
+            flex-direction: column;
+            align-items: center ;
+            justify-content: center;
+
+            .pi {
+                display: flex;
+                width: 100%;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+
+                .pi-label {
+                    font-size: .9em;
+                }
+
+                .pi-value {
+                    font-weight: bold;
+                    font-size: 1.3em;
+                }
+            }
+
+        }
+    }
+    /****** END SPO2 ******/
+
+    /****** NIBP/IBP ******/
+    &.nibp {
+        background-color: black;
+        color: #ffffff;
+        flex-direction: column;
+        flex-wrap: wrap;
+        flex: 1;
+        .row-up {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+
+            .label {
+                font-size: .9em;
+            }
+            .time {
+                font-size: .75em;
+            }
+            .meas {
+                font-size: .75em;
+            }
+            .type {
+                font-size: .75em;
+            }
+            .unit {
+                font-size: .75em;
+            }
+        }
+
+        .row-down {
+            display: flex;
+            flex-direction: row;
+            flex: 1;
+
+            .first {
+                display: flex;
+                flex-direction: column;
+                width: 25%;
+                height: 100%;
+                align-items: flex-start;
+                justify-content: space-between;
+
+                .alarms-label {
+                    font-size: .85em;
+                }
+
+                .alarms-value {
+                    .alarm-max {
+                        font-size: .8em;
+                    }
+                    .alarm-min {
+                        font-size: .8em;
+                    }
+                }
+            }
+
+            .second {
+                display: flex;
+                flex-direction: column;
+                width: 25%;
+                height: 100%;
+                align-items: flex-start;
+                justify-content: center;
+                font-size: 1.85em;
+                flex-wrap: wrap;
+            }
+
+            .third {
+                display: flex;
+                flex-direction: column;
+                width: 25%;
+                height: 100%;
+                align-items: flex-start;
+                justify-content: center;
+                font-size: 1.85em;
+                flex-wrap: wrap;
+            }
+
+            .fourth {
+                display: flex;
+                flex-direction: column;
+                width: 25%;
+                height: 100%;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.6em;
+                flex-wrap: wrap;
+            }
+        }
+    }
+    /****** END NIBP/IBP ******/
+
+    /****** CO2 ******/
+    &.co2 {
+        height: 25%;
+        background-color: black;
+        color: #f5eb22;
+        flex-direction: row;
+        flex-wrap: wrap;
+
+        .first {
+            width: 20%;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: space-between;
+
+            .label {
+                font-size: .9em; // Da calibrare in base al font HYT "Exo"
+            }
+
+            .alerts {
+                font-size: .8em; // Da calibrare in base al font HYT "Exo"
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: space-between;
+            }
+
+        }
+
+        .second {
+            width: 30%;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+
+            .unit-label {
+                font-size: 1.2em;
+            }
+
+            .unit-value {
+                font-size: 3.2em;
+                font-weight: bold;
+            }
+            
+        }
+
+        .third {
+            width: 30%;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+
+            .fi-box {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-around;
+                width: 100%;
+                
+                .fi-label {
+                    font-size: .8em;
+                }
+
+                .fi-value {
+                    font-size: 1.2em;
+                    font-weight: bold;
+                }
+            }
+
+            .awrr-box {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-around;
+                width: 100%;
+
+                .awrr-label {
+                    font-size: .7em;
+                }
+
+                .awrr-value {
+                    font-size: 1.2em;
+                    font-weight: bold;
+                }
+            }
+        }
+
+        .fourth {
+            width: 20%;
+            font-size: .8em;
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            justify-content: flex-end;
+        }
+    }
+    /****** END CO2 ******/
+}
+/* END CARD PROPERTY */

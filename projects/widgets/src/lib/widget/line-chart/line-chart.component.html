@@ -1,0 +1,61 @@
+<hyperiot-base-widget-template>
+
+    <header-widget>
+      <hyperiot-common-toolbar
+        widgetName="{{widget.name}}"
+        (action)="onToolbarAction($event)"
+        [toolbarIsVisible]="isToolbarVisible"
+        [config]="{
+                showClose: true,
+                showSettings: true,
+                showPlay: serviceType === serviceTypeList.ONLINE,
+                showRefresh: false,
+                showTable: false
+          }">
+      </hyperiot-common-toolbar>
+    </header-widget>
+  
+    <content-widget>
+      <div *ngIf="!isConfigured; else configured" class="configure-notice">
+        <strong i18n="@@HYT_common_not_configured">Click 'Settings' button to configure.</strong>
+      </div>
+      <ng-template #configured>
+        <hyperiot-loader
+          *ngIf="!graph ||!graph?.data || graph?.data.length === 0; else loadingFinished">
+        </hyperiot-loader>
+  
+        <ng-template #loadingFinished>
+            <!-- <div class="line-chart-container"> -->
+
+                <plotly-plot
+                  divId="widget-{{widget.id}}{{isToolbarVisible}}"
+                  [data]="graph?.data"
+                  [layout]="graph?.layout"
+                  [useResizeHandler]="true"
+                  [updateOnLayoutChange]="false"
+                  [config]="{
+                    scrollZoom: true,
+                    displayModeBar: 'hover',
+                    displaylogo: false,
+                    modeBarButtonsToRemove: ['hoverClosestCartesian', 'hoverCompareCartesian', 'toggleSpikelines', 'autoScale2d'],
+                    editable: false,
+                    showAxisDragHandles: false
+                  }"
+                  (initialized)="subscribeAndInit()"
+                    >
+                    <!-- resetViews 'zoom2d', 'pan2d'-->
+                </plotly-plot>
+                
+              <div *ngIf="loadingOfflineData" class="loading-overlay">
+                <p>Loading data...</p>
+                <mat-spinner  strokeWidth="4" diameter="44"></mat-spinner>
+              </div>
+            <!-- </div> -->
+        </ng-template>
+  
+      </ng-template>
+
+    </content-widget>
+  
+  </hyperiot-base-widget-template>
+  

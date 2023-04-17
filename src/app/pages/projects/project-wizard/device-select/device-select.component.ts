@@ -1,7 +1,7 @@
 import { Component, OnChanges, Input, EventEmitter, Output, ViewEncapsulation } from '@angular/core';
-import { HDevice } from '@hyperiot/core';
+import { HDevice } from 'core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { SelectOption } from '@hyperiot/components';
+import { SelectOption } from 'components';
 
 @Component({
   selector: 'hyt-device-select',

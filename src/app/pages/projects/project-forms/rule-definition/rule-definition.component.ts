@@ -1,8 +1,8 @@
 import { Component, Input, OnChanges, OnInit, ViewEncapsulation,ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { HytModalService, SelectOption } from '@hyperiot/components';
-import { Option } from '@hyperiot/components/lib/hyt-radio-button/hyt-radio-button.component';
-import { HPacket, HPacketField, HpacketsService } from '@hyperiot/core';
+import { HytModalService, SelectOption } from 'components';
+import { Option } from 'components';
+import { HPacket, HPacketField, HpacketsService } from 'core';
 import { RuleErrorModalComponent } from './rule-error/rule-error-modal.component';
 
 interface RuleForm {

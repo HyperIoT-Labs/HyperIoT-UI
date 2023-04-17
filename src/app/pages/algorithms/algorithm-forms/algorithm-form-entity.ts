@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import {OnInit, Output, EventEmitter, Injector, AfterViewInit, ChangeDetectorRef, Component} from '@angular/core';
 import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
 import { EntitiesService } from 'src/app/services/entities/entities.service';
-import { HytModalService } from '@hyperiot/components';
+import { HytModalService } from 'components';
 import { AlgorithmService } from 'src/app/services/algorithms/algorithm.service';
 import {MatRadioChange} from '@angular/material/radio';
 

@@ -1,0 +1,88 @@
+<!-- LOGIN FORM BLOCK -->
+<div id="container-login">
+
+  <div class="container" id="box-login">
+
+    <div class="row">
+
+      <div id="column-welcome" class="col-md-6">
+        <div id="head-welcome-box">
+          <ng-container i18n="@@HYT_hello">Hello</ng-container>!
+        </div>
+        <div id="body-welcome-box">
+          <ng-container i18n="@@HYT_login_text">We are happy to see you again!</ng-container>
+        </div>
+        <div id="footer-welcome-box">
+          <ng-container i18n="@@HYT_login_no_account">Don't have an account?</ng-container>
+          <br /><a routerLink="/auth/registration" i18n="@@HYT_register_now">Register Now</a>
+          &#160;<ng-container i18n="@@HYT_login_register_message">and Enjoy all our benefits!</ng-container>
+        </div>
+      </div>
+
+      <div id="column-login-form" class="col-md-6">
+
+        <h3 id="login-title" i18n="@@HYT_login_to_account">Login to your Account</h3>
+
+        <div class="row">
+
+          <div id="login-form" class="col-md-12">
+
+            <form class="login-form" [formGroup]="loginForm" (ngSubmit)="login()" autocomplete="on"
+              (keyup)="keyUpFunction($event)">
+
+              <div class="container-form-field">
+
+                <hyt-input-text [form]="loginForm" formControlName="username" name="username" [isRequired]="true"
+                  i18n-placeholder="@@HYT_username_or_email" placeholder="Username or email"   [fieldValue]="initialValue" >
+                </hyt-input-text>
+
+              </div> <!-- Field Username -->
+
+              <div id="container-password-field" class="container-form-field">
+
+                <hyt-input-text [form]="loginForm" formControlName="password" name="password" class="login"
+                  type="password" [isRequired]="true" i18n-placeholder="@@HYT_password" placeholder="Password"
+                  [injectedErrorMsg]="injectedErrorState">
+                </hyt-input-text>
+
+              </div> <!-- Field Password -->
+
+              <div id="forgot-container" class="container-form-field">
+
+                <a routerLink="/auth/password-recovery" i18n="@@HYT_login_forgot_password">Forgot password?</a>
+
+              </div> <!-- Container Forgot Password -->
+
+              <div class="container-form-field">
+
+                <hyt-checkbox [(ngModel)]="checked" [ngModelOptions]="{standalone: true}" name="rememberMe" type="checkbox" id="remember-me" (changeFn)="onClickCheckbox($event)" >
+                  <ng-container i18n="@@HYT_remember_me">Remember me</ng-container>
+                </hyt-checkbox>
+
+              </div> <!-- Container Remember Me -->
+
+              <div class="container-form-field errorMessage">
+                <ng-container *ngIf="error[2]">
+                  {{error[2]}}
+                </ng-container>
+              </div> <!-- Error Box -->
+
+              <div class="container-form-field container-submit-btn">
+                <hyt-button [color]="'hyt-base-default-white'" id="submit-btn" [ngClass]="{'submit-valid-form' : !notValid() }" type="submit"
+                  [isDisabled]="notValid() || loginStatus == 1">
+                  <ng-container i18n="@@HYT_login">Login</ng-container>
+                </hyt-button>
+              </div> <!-- Container Button -->
+
+            </form> <!-- End Form -->
+
+          </div>
+
+        </div> <!-- End Row Registration Form -->
+
+      </div>
+
+    </div> <!-- End Row Login Box -->
+
+  </div>
+</div>

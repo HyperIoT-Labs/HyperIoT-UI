@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, Input, ViewEncapsulation } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { SelectOption } from '@hyperiot/components';
-import { HDevice, HPacket } from '@hyperiot/core';
+import { SelectOption } from 'components';
+import { HDevice, HPacket } from 'core';
 
 @Component({
   selector: 'hyt-pw-packet-select',

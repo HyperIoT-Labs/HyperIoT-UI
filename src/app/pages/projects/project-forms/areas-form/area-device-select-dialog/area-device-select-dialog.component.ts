@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { HytModal, HytModalService } from '@hyperiot/components';
-import { AreasService, HprojectsService, HdevicesService, AreaDevice, HDevice, Area } from '@hyperiot/core';
+import { HytModal, HytModalService } from 'components';
+import { AreasService, HprojectsService, HdevicesService, AreaDevice, HDevice, Area } from 'core';
 import { LoadingStatusEnum } from '../../project-form-entity';
 
 @Component({

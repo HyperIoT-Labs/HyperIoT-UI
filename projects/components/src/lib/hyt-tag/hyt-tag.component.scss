@@ -1,0 +1,33 @@
+mat-chip {
+
+    span {
+
+        &.hyt-icon {
+
+            font-size: 20px;
+            margin-left: 5px;
+            cursor: pointer;
+
+        }
+
+    }
+
+    &.mat-primary {
+
+        span {
+
+            &.hyt-icon {
+    
+                &:hover {
+
+                    color: #00ffe3;
+
+                }
+    
+            }
+    
+        }
+
+    }
+
+}

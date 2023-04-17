@@ -1,0 +1,28 @@
+<div class="loader" *ngIf="pageStatus == 0"></div>
+
+<gridster *ngIf="dashboard.length > 0 && pageStatus == 1" [options]="options">
+
+  <gridster-item [item]="item" *ngFor="let item of dashboard">
+
+    <hyperiot-dynamic-widget [serviceType]="dashboardValue.dashboardType === 'REALTIME' ? serviceType.ONLINE : serviceType.OFFLINE" [widget]="item" (widgetAction)="onWidgetAction($event)"></hyperiot-dynamic-widget>
+
+  </gridster-item>
+
+</gridster>
+
+<div *ngIf="dashboard.length == 0 && pageStatus == 1" id="no-widgets-container"
+  class="row align-items-center justify-content-center">
+
+  <div class="mt-5 no-widgets">
+
+    <div class="col-md-12">
+      <i class="fa fa-bar-chart-o"></i>
+      <h2 >You are in {{ dashboardType }} mode</h2>
+      <!-- @@i18n -->
+      <h3 id="title-no-widgets" i18n="@@HYT_no_widget_in_dashboard">You have no widgets in this dashboard.</h3>
+      <h4 id="subtitle-no-widgets" i18n="@@HYT_start_adding_widget">Start adding widgets.</h4>
+    </div>
+
+  </div>
+
+</div>

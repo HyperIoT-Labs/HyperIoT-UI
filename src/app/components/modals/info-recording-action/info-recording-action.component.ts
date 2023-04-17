@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, Injector } from '@angular/core';
-import { HytModal, HytModalService } from '@hyperiot/components';
+import { HytModal, HytModalService } from 'components';
 
 @Component({
   selector: 'hyt-info-recording-action',

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Option } from '@hyperiot/components';
+import { Option } from 'components';
 import { EventComponent } from '../event-component';
 import { EventComponentType } from '../event-component-type.enum';
 import { SelectableText } from './selectableText';

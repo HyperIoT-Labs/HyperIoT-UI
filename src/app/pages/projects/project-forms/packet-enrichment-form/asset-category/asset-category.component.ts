@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { HytModalService, TreeNodeCategory } from '@hyperiot/components';
-import { AssetCategory, AssetscategoriesService, HPacket, HProject } from '@hyperiot/core';
+import { HytModalService, TreeNodeCategory } from 'components';
+import { AssetCategory, AssetscategoriesService, HPacket, HProject } from 'core';
 import { Observable, Subscription } from 'rxjs';
 import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
 import { LoadStatus } from 'src/app/models/loadStatus';

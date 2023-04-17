@@ -1,0 +1,17 @@
+.container-widget {
+  //font-family: 'Exo', 'serif';
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+
+  .header-widget {
+    width: 100%;
+  }
+
+  .content-widget {
+      flex: 1;
+      min-height: 1px;
+  }
+
+}
