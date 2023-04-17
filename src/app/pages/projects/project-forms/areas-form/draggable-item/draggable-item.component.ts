@@ -1,6 +1,6 @@
 import { Component, HostListener, EventEmitter } from '@angular/core';
 import { CdkDrag } from '@angular/cdk/drag-drop';
-import { AreaDevice } from '@hyperiot/core';
+import { AreaDevice } from 'core';
 
 @Component({
   selector: 'hyt-draggable-item',

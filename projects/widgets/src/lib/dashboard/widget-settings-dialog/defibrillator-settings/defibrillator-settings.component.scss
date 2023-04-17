@@ -1,0 +1,93 @@
+@mixin title {
+    font-size: 19px;
+    width: 100%;
+}
+.general-info {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 10px;
+
+    div {
+        width: 49%;
+        display: flex;
+        flex-direction: row;
+        align-items: baseline;
+        gap: 13px;
+        justify-content: space-between;
+    }
+}
+
+.fields-and-colors-select {
+    margin-top: 40px;
+    
+    input[type='color'] {
+        width: 26px;
+        height: 30px;
+    }
+
+    input[type='color']::-webkit-color-swatch {
+        border: 1px solid black;
+        border-radius: 60px;
+    }
+    
+    .color {
+        position: relative;
+        border-radius: 60px;
+    }
+
+    .areas {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        label {
+            width: 10%;
+        }
+
+        .area-label {
+            @include title;
+        }
+
+        .channel {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 10px;
+        }
+    
+        .params {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 100px;
+        }
+    }
+
+    .area-derivation {
+        width: 19%;
+    }
+
+    .area-label {
+        @include title;
+    }
+
+    .derivation {
+        display: flex;
+        flex-direction: row;
+        align-items: baseline;
+        gap: 20px;
+
+        label {
+            width: 10%;
+        }
+    }
+
+    .grid-layout-select {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+    }
+}

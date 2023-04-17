@@ -1,0 +1,33 @@
+<div role="dialog" class="dialog-container">
+    <div *ngIf="data?.header" class="dialog-header">
+        <span class="dialog-title">
+            {{ data.header?.label || 'Confirm' }}
+        </span>
+        <!-- <div class="dialog-header-icons">
+            <button type="button" class="dialog-header-icon dialog-header-close" tabindex="-1" (click)="reject()">
+                <span class="dialog-header-close-icon icon-hyt_cancel"></span>
+            </button>
+        </div> -->
+    </div>
+    <div class="dialog-content">
+        <span>
+            {{ data.text }}
+        </span>
+    </div>
+    <div class="dialog-footer">
+        <hyt-button [color]="'hyt-base-white'" (clickFn)="reject()">
+          {{ data.rejectLabel || 'Reject'}} <span class="hyt-icon icon-hyt_cancel"></span>
+        </hyt-button>
+        <hyt-button [color]="'hyt-base-white'" (clickFn)="accept()">
+          {{ data.confirmLabel || 'Accept' }} <span class="hyt-icon icon-hyt_arrowRight"></span>
+        </hyt-button>
+        <!-- <button label="Accept" (click)="accept()" class="button-text" type="button">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="Close">Accept</span>
+        </button>
+        <button label="Reject" (click)="reject()" class="button-text" type="button">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="Close">Reject</span>
+        </button> -->
+    </div>
+</div>

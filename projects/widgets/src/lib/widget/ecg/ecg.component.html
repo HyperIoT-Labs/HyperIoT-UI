@@ -1,0 +1,38 @@
+<hyperiot-base-widget-template>
+  <header-widget>
+    <hyperiot-common-toolbar
+      widgetName="{{widget.name}}"
+      [toolbarIsVisible]="isToolbarVisible"
+      (action)="onToolbarAction($event)"
+      [config]="{
+        showClose: true,
+        showSettings: true,
+        showPlay: true,
+        showRefresh: false,
+        showTable: false
+      }">
+    </hyperiot-common-toolbar>
+  </header-widget>
+
+  <content-widget>
+    <div *ngIf="!isConfigured; else configured" class="configure-notice">
+      <strong i18n="@@HYT_common_not_configured">Click 'Settings' button to configure.</strong>
+    </div>
+    <ng-template #configured>
+      <hyperiot-loader
+        *ngIf="!graph; else loadingFinished">
+      </hyperiot-loader>
+      <ng-template #loadingFinished>
+        <div *ngFor="let graph of graphsList">
+          <plotly-plot
+          divId="widget-{{widget.id}}-{{graph?.key}}-{{isToolbarVisible}}"
+          [data]="graph?.data"
+          [layout]="graph?.layout"
+          [config]="graph?.config">
+        </plotly-plot>
+        </div>
+      </ng-template>
+    </ng-template>
+  </content-widget>
+
+</hyperiot-base-widget-template>

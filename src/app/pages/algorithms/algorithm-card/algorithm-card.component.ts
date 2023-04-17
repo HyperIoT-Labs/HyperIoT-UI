@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ViewEncapsulation, Output, EventEmitter } from '@angular/core';
-import { Algorithm, AlgorithmsService } from '@hyperiot/core';
+import { Algorithm, AlgorithmsService } from 'core';
 import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
-import { HytModalService } from '@hyperiot/components';
+import { HytModalService } from 'components';
 
 
 @Component({

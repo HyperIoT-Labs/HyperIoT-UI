@@ -3,10 +3,10 @@ import { ActivatedRoute } from '@angular/router';
 
 import { Subscription, Observable } from 'rxjs';
 
-import { HpacketsService, HProject, RulesService, Rule, AssetstagsService, AssetTag } from '@hyperiot/core';
+import { HpacketsService, HProject, RulesService, Rule, AssetstagsService, AssetTag } from 'core';
 import { ProjectFormEntity, LoadingStatusEnum } from '../project-form-entity';
 import { RuleDefinitionComponent } from '../rule-definition/rule-definition.component';
-import { Option } from '@hyperiot/components';
+import { Option } from 'components';
 import { SummaryListItem } from '../../project-detail/generic-summary-list/generic-summary-list.component';
 import { TagStatus } from '../packet-enrichment-form/asset-tag/asset-tag.component';
 import { FormControl } from '@angular/forms';

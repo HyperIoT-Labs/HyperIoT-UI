@@ -1,0 +1,9 @@
+<hyperiot-dashboard-widgets-layout *ngIf="dashboard"
+  #WidgetsDashboardLayoutComponent
+  (widgetLayoutEvent)="dashboardViewEvent.emit($event)"
+  (topologyResTimeChange)="dsTopologyResTimeChange.emit($event)"
+  [dashboardValue]="dashboard"
+  [widgets]="dashboardWidgets"
+></hyperiot-dashboard-widgets-layout>
+
+<!-- <hyt-add-widget-dialog class="hyt-modal-general" id="hyt-modal-add-widgets" (addWidgets)="onAddingWidgets($event)"></hyt-add-widget-dialog> -->

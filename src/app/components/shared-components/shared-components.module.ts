@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TopologyToolbarComponent } from './topology-toolbar/topology-toolbar.component';
-import { ComponentsModule } from '@hyperiot/components';
+import { ComponentsModule } from 'components';
 
 @NgModule({
   declarations: [

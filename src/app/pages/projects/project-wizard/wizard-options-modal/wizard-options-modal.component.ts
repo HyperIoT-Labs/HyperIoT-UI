@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { HytModal, HytModalService } from '@hyperiot/components';
+import { HytModal, HytModalService } from 'components';
 import { EntitiesService } from 'src/app/services/entities/entities.service';
 
 @Component({

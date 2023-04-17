@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {CookieService} from 'ngx-cookie-service';
-import {Area, AreasService} from '@hyperiot/core';
+import {Area, AreasService} from 'core';
 import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({

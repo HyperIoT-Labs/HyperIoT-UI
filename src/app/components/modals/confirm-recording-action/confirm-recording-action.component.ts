@@ -1,5 +1,5 @@
 import { Component, Input, EventEmitter, Output, ViewEncapsulation, Injector, OnDestroy } from '@angular/core';
-import { HytModal, HytModalService } from '@hyperiot/components';
+import { HytModal, HytModalService } from 'components';
 import { HytTopologyService } from 'src/app/services/topology-services/hyt-topology.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';

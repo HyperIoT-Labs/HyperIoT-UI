@@ -1,0 +1,19 @@
+#hyt-date-picker-input {
+  display: inline-block;
+}
+
+#hyt-date-picker-button,
+#hyt-date-submit-button {
+  margin-left: 10px;
+}
+
+#hyt-date-picker-button button,
+#hyt-date-submit-button button {
+  font-size: 0.7em;
+  min-height: 10px;
+  height: 35px;
+}
+
+.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+  display: none !important;
+}

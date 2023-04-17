@@ -1,0 +1,79 @@
+<div id="hyt-timeline" class="container-fluid">
+
+    <div id="title-timeline">
+
+        <h2>Timeline Picker</h2><!-- @I18N@ -->
+
+    </div>
+
+    <div id="container-top-timeline">
+
+        <div id="container-timeline-arrows-left">
+
+            <div id="timeline-arrow-left">
+
+                <hyt-button
+                    (click)="timeBack()"
+                    [ngClass]="{'hasData': timeSelection[0] ? timeSelection[0] < domainStart : false}"
+                    [color]="'hyt-base-total-white'"
+                >
+                    &lt;&lt; Prev
+                </hyt-button>
+
+            </div>
+
+        </div>
+
+        <div id="picker-timeline">
+
+            <hyt-button-toggle
+                [selectedValue]="domainInterval"
+                [range]="timeRange"
+                (valueChanged)="rangeChanged($event)"
+                id="time-button-toggle"
+            ></hyt-button-toggle>
+
+            <hyt-date-picker
+                id="timeline-picker"
+                [date]="domainStart"
+                [minStep]="mapToDomain[domainInterval]"
+                (selectedDate)="selectedDateChanged($event)"
+                [color]="'hyt-base-total-blue'"
+            ></hyt-date-picker>
+
+        </div>
+
+        <div id="container-timeline-arrows-right">
+
+            <div id="timeline-arrow-right">
+
+                <hyt-button
+                    (click)="timeForward()"
+                    [ngClass]="{'hasData': timeSelection[1] ? timeSelection[1] > domainStop : false}"
+                    [color]="'hyt-base-total-white'"
+                >
+                    Next &gt;&gt;
+                </hyt-button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div id="container-timeline">
+
+        <div id="timeline-axis">
+
+            <hyperiot-time-axis
+                #timeAxis
+                (dataTimeSelectionChanged)="dataTimeSelectionChanged($event)"
+                (domainSet)="changeStep($event)"
+            >
+            </hyperiot-time-axis>
+
+        </div>
+
+    </div>
+
+</div>

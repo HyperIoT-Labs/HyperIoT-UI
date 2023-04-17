@@ -1,0 +1,12 @@
+.btn-tooltip {  
+    cursor: help;
+    font-size: 1.4em;
+}
+
+.cdk-overlay-container .hyt-info-tooltip {
+    margin: 5px;
+    font-size: 0.8em;
+    word-break: break-all;
+    white-space: normal;
+    background-color: #266dca;
+}

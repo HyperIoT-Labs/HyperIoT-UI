@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { PacketFieldsFormComponent } from './packet-fields-form.component';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { HpacketsService } from '@hyperiot/core';
+import { HpacketsService } from 'core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 describe('PacketFieldsFormComponent', () => {

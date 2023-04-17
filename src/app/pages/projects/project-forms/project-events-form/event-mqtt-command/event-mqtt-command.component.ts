@@ -1,7 +1,7 @@
 import { Component, Input, OnInit,ChangeDetectorRef } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Option, SelectOption } from '@hyperiot/components';
-import { HPacket, HPacketField, HpacketsService } from '@hyperiot/core';
+import { Option, SelectOption } from 'components';
+import { HPacket, HPacketField, HpacketsService } from 'core';
 import { environment } from 'src/environments/environment';
 import { EventComponent } from '../event-component';
 import { EventComponentType } from '../event-component-type.enum';

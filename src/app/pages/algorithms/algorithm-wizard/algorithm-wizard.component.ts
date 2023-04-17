@@ -1,8 +1,8 @@
 import { AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation,ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { HytModalService } from '@hyperiot/components';
-import { HytStepperComponent } from '@hyperiot/components/lib/hyt-stepper/hyt-stepper.component';
-import { Algorithm, AlgorithmIOField, AlgorithmsService } from '@hyperiot/core';
+import { HytModalService } from 'components';
+import { HytStepperComponent } from 'components';
+import { Algorithm, AlgorithmIOField, AlgorithmsService } from 'core';
 import { Subject } from 'rxjs';
 import { EntitiesService } from 'src/app/services/entities/entities.service';
 import { AlgorithmFormEntity, LoadingStatusEnum } from '../algorithm-forms/algorithm-form-entity';

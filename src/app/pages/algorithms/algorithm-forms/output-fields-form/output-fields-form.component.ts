@@ -2,11 +2,11 @@ import { Component, ViewChild, ElementRef, Injector, ViewEncapsulation, ChangeDe
 
 import { Observable, Subject, PartialObserver } from 'rxjs';
 
-import { AlgorithmsService, Algorithm, AlgorithmIOField } from '@hyperiot/core';
+import { AlgorithmsService, Algorithm, AlgorithmIOField } from 'core';
 import { AlgorithmFormEntity, LoadingStatusEnum } from '../algorithm-form-entity';
 
-import { Option } from '@hyperiot/components';
-import { Node, HytTreeViewEditableComponent } from '@hyperiot/components/lib/hyt-tree-view-editable/hyt-tree-view-editable.component';
+import { Option } from 'components';
+import { Node, HytTreeViewEditableComponent } from 'components';
 import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
 
 @Component({

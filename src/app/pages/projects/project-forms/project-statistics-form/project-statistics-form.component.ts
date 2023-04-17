@@ -3,12 +3,12 @@ import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 
-import { Option, SelectOption } from '@hyperiot/components';
+import { Option, SelectOption } from 'components';
 
-import { Algorithm, AlgorithmConfig, AlgorithmsService, HProject, HProjectAlgorithm, HProjectAlgorithmConfig, HprojectalgorithmsService } from '@hyperiot/core';
+import { Algorithm, AlgorithmConfig, AlgorithmsService, HProject, HProjectAlgorithm, HProjectAlgorithmConfig, HprojectalgorithmsService } from 'core';
 
 import { ProjectFormEntity, LoadingStatusEnum } from '../project-form-entity';
-import { CronOptions } from '@hyperiot/components';
+import { CronOptions } from 'components';
 import { SummaryListItem } from '../../project-detail/generic-summary-list/generic-summary-list.component';
 import { StatisticInputDefinitionComponent } from './statistic-input-definition/statistic-input-definition.component';
 

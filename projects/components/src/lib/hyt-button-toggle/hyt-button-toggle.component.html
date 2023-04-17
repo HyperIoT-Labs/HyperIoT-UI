@@ -1,0 +1,11 @@
+<mat-button-toggle-group name="fontStyle" aria-label="Font Style" [value]="selectedValue" class="base-theme">
+
+    <mat-button-toggle 
+        *ngFor="let time of range" 
+        [value]="time.value"
+        (change)="valueChanged.emit($event.value)"
+    >
+        {{time.label}}
+    </mat-button-toggle>
+
+</mat-button-toggle-group>

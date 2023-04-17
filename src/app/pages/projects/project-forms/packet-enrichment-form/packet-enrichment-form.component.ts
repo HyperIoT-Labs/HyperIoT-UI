@@ -1,7 +1,7 @@
 import { Component, ElementRef, Injector, OnDestroy, OnInit, ViewChild, ViewEncapsulation, ChangeDetectorRef, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Option, SelectOption } from '@hyperiot/components';
-import { HPacket, HpacketsService, HProject, Rule, RulesService } from '@hyperiot/core';
+import { Option, SelectOption } from 'components';
+import { HPacket, HpacketsService, HProject, Rule, RulesService } from 'core';
 import { Observable, Subscription, of } from 'rxjs';
 import { map, switchMap, filter } from 'rxjs/operators';
 import { EnrichmentsService } from 'src/app/services/enrichments/enrichments.service';

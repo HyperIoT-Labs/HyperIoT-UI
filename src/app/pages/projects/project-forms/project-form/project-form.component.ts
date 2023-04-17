@@ -3,10 +3,10 @@ import { ActivatedRoute } from '@angular/router';
 
 import { Subscription } from 'rxjs';
 
-import { HprojectsService, HProject } from '@hyperiot/core';
+import { HprojectsService, HProject } from 'core';
 
 import { ProjectFormEntity, LoadingStatusEnum } from '../project-form-entity';
-import { HytModalService } from '@hyperiot/components';
+import { HytModalService } from 'components';
 
 @Component({
   selector: 'hyt-project-form',

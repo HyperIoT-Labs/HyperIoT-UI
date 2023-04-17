@@ -1,0 +1,336 @@
+mat-tree {
+
+  margin-bottom: 20px;
+
+  &.example-tree {
+    ul, li {
+
+      margin-top: 0;
+      margin-bottom: 0;
+      list-style-type: none;
+
+    }
+  }
+  
+  mat-nested-tree-node {
+    
+    li {
+
+      .mat-tree-node {
+
+        min-height: 40px;
+        
+        button {
+          &.mat-icon-button {
+            width: 25px;
+            height: 25px;
+            line-height: 25px;
+
+            mat-icon {
+              &.mat-icon {
+                width: 20px;
+                height: 20px;
+                line-height: 20px;
+                font-size: 1.4em;
+              }
+            }
+          }
+        }
+
+        hyt-tri-checkbox {
+
+          margin-right: 15px;
+
+          mat-checkbox {
+
+            label {
+              margin: 0px;
+            }
+
+            .mat-ripple-element {
+
+              &:nth-child(1),
+              &:nth-child(2) {
+                display: none;
+              }
+              
+            }
+
+            &.mat-checkbox-checked {
+
+              .mat-checkbox-background {
+                background-color: #ffffff;
+                border: 2px solid #1a3f73;
+
+                &::before {
+
+                  content: "";
+                  width: 8px;
+                  height: 8px;
+                  background-color: #1a3f73;
+                  position: absolute;
+
+                }
+
+                svg {
+                  display: none;
+                }
+              }
+
+            }
+
+            &.mat-checkbox-indeterminate {
+              .mat-checkbox-background {
+                background-color: #ffffff;
+                border: 2px solid #1a3f73;
+
+                &::before {
+                  content: '';
+                  border-left: 13px solid transparent;
+                  border-right: 0px solid transparent;
+                  border-top: 13px solid #1a3f73;
+                  transform: rotate(90deg);
+                }
+
+                svg {
+                  display: none;
+                }
+              }
+            }
+
+            &.mat-checkbox-anim-indeterminate-unchecked {
+              .mat-checkbox-background {
+                .mat-checkbox-mixedmark {
+                  display: none;
+                }
+              }
+            }
+
+          }
+
+        }
+
+        span {
+          &.btn-add-node {
+            font-size: 1.4em;
+            margin-left: auto;
+            cursor: pointer;
+            vertical-align: sub;
+
+            &:hover.btn-add-node {
+              color: #008aff;
+            }
+
+          }
+
+        }
+
+      }
+
+      ul {
+        padding-left: 20px;
+
+        &.example-tree-invisible {
+          display: none;
+        }
+      }
+
+    }
+
+  }
+
+  mat-tree-node {
+  
+    &.mat-tree-node {
+      min-height: 40px;
+    }
+
+    li {
+
+      button {
+        &.mat-icon-button {
+          width: 25px;
+          height: 25px;
+          line-height: 25px;
+
+          mat-icon {
+            &.mat-icon {
+              width: 20px;
+              height: 20px;
+              line-height: 20px;
+              font-size: 1.4em;
+            }
+          }
+        }
+      }
+
+      hyt-checkbox {
+
+        margin-right: 15px;
+
+        mat-checkbox {
+          
+          label {
+            margin: 0px;
+          }
+
+          .mat-ripple-element {
+
+            &:nth-child(1),
+            &:nth-child(2) {
+              display: none;
+            }
+            
+          }
+
+          &.mat-checkbox-checked {
+
+            &.mat-accent {
+
+              .mat-checkbox-background {
+                background-color: #ffffff;
+                border: 2px solid #1a3f73;
+  
+                &::before {
+  
+                  content: "";
+                  width: 8px;
+                  height: 8px;
+                  background-color: #1a3f73;
+                  position: absolute;
+  
+                }
+  
+                svg {
+                  display: none;
+                }
+              }
+
+            }
+
+          }
+
+          &.mat-checkbox-indeterminate {
+            .mat-checkbox-background {
+              background-color: #ffffff;
+              border: 2px solid #1a3f73;
+
+              &::before {
+                content: '';
+                border-left: 13px solid transparent;
+                border-right: 0px solid transparent;
+                border-top: 13px solid #1a3f73;
+                transform: rotate(90deg);
+              }
+
+              svg {
+                display: none;
+              }
+            }
+          }
+
+          &.mat-checkbox-anim-indeterminate-unchecked {
+            .mat-checkbox-background {
+              .mat-checkbox-mixedmark {
+                display: none;
+              }
+            }
+          }
+
+        }
+
+      }
+
+      span {
+        &.btn-add-node {
+          font-size: 1.4em;
+          margin-left: auto;
+          cursor: pointer;
+
+            &:hover.btn-add-node {
+              color: #008aff;
+            }
+
+        }
+
+      }
+
+    }
+
+    mat-form-field {
+
+      &.tree-form {
+
+        width: 100%;
+
+        form {
+          display: flex;
+
+          input {
+
+            padding-left: 5px;
+            padding-right: 5px;
+
+          }
+
+          button {
+            margin-right: 5px;
+            background-color: transparent;
+            border: none;
+            font-size: 1.2em;
+            height: 16px;
+            color: black;
+
+            &:hover {
+
+              color: #008aff;
+              cursor: pointer;
+
+            }
+
+          }
+        }
+
+      }
+    
+    }
+
+    span {
+      &.btn-delete-node {
+        margin-right: 2px;
+        margin-left: 10px;
+      }
+
+      &:hover.btn-delete-node {
+
+        color: #fd0c17;
+        cursor: pointer;
+
+      }
+
+    }
+
+  }
+
+}
+
+hyt-button {
+  &#add-node-btn {
+    span {
+      &.icon-hyt_plus {
+        font-size: 1.4em;
+        position: relative;
+        top: -1px;
+      }
+    }
+  }
+}
+
+.spaced-node {
+  justify-content: space-between;
+}
+
+.empty-message {
+  font-size: 16px;
+  text-align: center;
+}

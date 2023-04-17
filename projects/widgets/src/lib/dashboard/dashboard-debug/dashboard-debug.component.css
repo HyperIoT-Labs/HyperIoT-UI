@@ -1,0 +1,12 @@
+.hidden {
+  display: none;
+}
+button {
+  background-color: transparent;
+  padding: 0;
+  border: none;
+}
+hr {
+  border: none;
+  border-bottom: 1px solid gray;
+}

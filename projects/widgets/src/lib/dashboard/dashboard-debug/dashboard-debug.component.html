@@ -1,0 +1,25 @@
+<div *ngIf="data.length > 0" class="debug-container">
+  <hr>
+  <h3>Debug console: </h3>
+  <div *ngFor="let d of data; let idx = index">
+    <div [ngSwitch]="getType(d)">
+      <div *ngSwitchCase="'object'">
+        <dt>Object <button (click)="toggleItem(idx)">+</button></dt>
+        <dd [ngClass]="{'hidden': idx !== itemSelected}"><pre>{{d|json}}</pre></dd>
+      </div>
+      <div *ngSwitchCase="'number'">
+        <dt>Number <button (click)="toggleItem(idx)">+</button></dt>
+        <dd [ngClass]="{'hidden': idx !== itemSelected}"><pre>{{d}}</pre></dd>
+      </div>
+      <div *ngSwitchCase="'string'">
+        <dt>String <button (click)="toggleItem(idx)">+</button></dt>
+        <dd [ngClass]="{'hidden': idx !== itemSelected}"><pre>{{d}}</pre></dd>
+      </div>
+      <div *ngSwitchDefault>
+        <dt>Unknown <button (click)="toggleItem(idx)">+</button></dt>
+        <dd [ngClass]="{'hidden': idx !== itemSelected}"><pre>{{d}}</pre></dd>
+      </div>
+    </div>
+  </div>
+  <hr>
+</div>

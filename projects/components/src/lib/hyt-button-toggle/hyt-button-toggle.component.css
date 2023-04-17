@@ -1,0 +1,34 @@
+.base-theme .mat-button-toggle-appearance-standard {
+    background: #0956B6;
+    color: #ffffff;
+    font-family: "Exo";
+}
+
+.base-theme .mat-button-toggle button.mat-button-toggle-button {
+    outline: none;
+}
+
+.base-theme.mat-button-toggle-group-appearance-standard, 
+.base-theme.mat-button-toggle-standalone.mat-button-toggle-appearance-standard {
+    border: none;
+}
+
+.base-theme .mat-button-toggle-appearance-standard.mat-button-toggle-checked {
+    background: #064593;
+}
+
+.base-theme .mat-button-toggle-checked.mat-button-toggle-appearance-standard {
+    color: rgb(190 190 190 / 87%);
+}
+
+.base-theme .mat-button-toggle-appearance-standard .mat-button-toggle-focus-overlay {
+    background-color: #539df6;
+}
+
+.base-theme .mat-button-toggle-appearance-standard:not(.mat-button-toggle-disabled):hover .mat-button-toggle-focus-overlay {
+    opacity: .4;
+}
+
+.base-theme .mat-button-toggle-checked .mat-button-toggle-focus-overlay {
+    border-bottom: none;
+}

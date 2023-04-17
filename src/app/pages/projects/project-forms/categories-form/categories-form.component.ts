@@ -1,7 +1,7 @@
 import { Component, OnInit, Injector, ViewChild, ElementRef, ViewEncapsulation,ChangeDetectorRef } from '@angular/core';
 import { ProjectFormEntity } from '../project-form-entity';
-import { TreeNodeCategory, HytModalService } from '@hyperiot/components';
-import { AssetscategoriesService, AssetCategory } from '@hyperiot/core';
+import { TreeNodeCategory, HytModalService } from 'components';
+import { AssetscategoriesService, AssetCategory } from 'core';
 import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
 import { Router } from '@angular/router';
 import { LoadStatus } from 'src/app/models/loadStatus';

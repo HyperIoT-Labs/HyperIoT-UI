@@ -1,9 +1,9 @@
 import { Component, OnInit, Injector, ViewChild, ViewEncapsulation,ChangeDetectorRef } from '@angular/core';
 import { ProjectFormEntity } from '../project-form-entity';
 import { ElementRef } from '@angular/core';
-import { AssetTag, AssetstagsService } from '@hyperiot/core';
+import { AssetTag, AssetstagsService } from 'core';
 import { FormGroup } from '@angular/forms';
-import { SelectOption, HytModalService } from '@hyperiot/components';
+import { SelectOption, HytModalService } from 'components';
 import { Router } from '@angular/router';
 import { AddTagModalComponent } from './add-tag-modal/add-tag-modal.component';
 

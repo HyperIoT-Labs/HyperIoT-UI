@@ -1,6 +1,6 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
-import { HytModal, HytModalService } from '@hyperiot/components';
+import { HytModal, HytModalService } from 'components';
 
 @Component({
   selector: 'hyt-algorithm-wizard-report-modal',

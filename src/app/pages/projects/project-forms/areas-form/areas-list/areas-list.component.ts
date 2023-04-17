@@ -19,7 +19,7 @@
  */
 
 import {Component, EventEmitter, Input, OnChanges, OnDestroy, Output, SimpleChanges, ViewEncapsulation} from '@angular/core';
-import {Area, AreasService, HprojectsService, Logger, LoggerService} from '@hyperiot/core';
+import {Area, AreasService, HprojectsService, Logger, LoggerService} from 'core';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 import {PageStatus} from '../../../../../models/pageStatus';

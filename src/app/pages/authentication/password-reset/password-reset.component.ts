@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { HusersService, HUserPasswordReset, Logger, LoggerService } from '@hyperiot/core';
+import { HusersService, HUserPasswordReset, Logger, LoggerService } from 'core';
 import { ActivatedRoute } from '@angular/router';
 import { HYTError } from 'src/app/services/errorHandler/models/models';
 import { AuthenticationHttpErrorHandlerService } from 'src/app/services/errorHandler/authentication-http-error-handler.service';

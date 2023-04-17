@@ -1,0 +1,94 @@
+<mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+  <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle [ngClass]="{'notRootItem': node.level != 0}" matTreeNodePadding  [matTreeNodePaddingIndent]="20"> <!-- matTreeNodePadding -->
+    <div class="flex-container">
+      <div class="noIcon">
+        <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.filename">
+          <mat-icon class="mat-icon-rtl-mirror">expand_more
+          </mat-icon>
+        </button>
+      </div>
+      <div class="icon">
+        <span class="hyt-icon icon-hyt_fields"></span>
+      </div>
+      <div class="tree-column name">
+        {{node.name}}
+      </div>
+      <div class="tree-column lom">
+        {{node.lom}}
+      </div>
+
+      <div class="tree-column type">
+        {{node.type}}
+      </div>
+
+      <div class="commands">
+
+        <div class="button">
+          <span class="hyt-icon icon-hyt_pencil" (click)="modifyItem(node)"></span>
+        </div>
+        
+        <div class="button">
+          <span class="hyt-icon icon-hyt_cancel" (click)="removeItem(node)"></span>
+        </div>
+      
+      </div>
+
+    </div>
+  </mat-tree-node>
+  
+
+  <mat-tree-node *matTreeNodeDef="let node; when: hasChild" [ngClass]=" node.level == 0 ? 'rootItem' : 'rootWithChild'"
+  matTreeNodePadding  [matTreeNodePaddingIndent]="20">
+    <div class="flex-container">
+      
+      <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.filename">
+        <mat-icon class="mat-icon-rtl-mirror">
+          {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+        </mat-icon>
+      </button>
+
+      <div class="icon">
+        <span class="hyt-icon" [ngClass]="node.level == 0 ? 'icon-hyt_packets' : 'icon-hyt_fieldsPlus'"></span>
+      </div>
+
+      <div class="tree-column name">
+        {{node.name}}
+      </div>
+      <div class="tree-column lom">
+        {{node.lom}}
+      </div>
+      <div class="tree-column type">
+        {{node.type}}
+      </div>
+
+      <div class="commands">
+
+        <div *ngIf="node.level != 0" class="button">
+          <span class="hyt-icon icon-hyt_pencil" (click)="modifyItem(node)"></span>
+        </div>
+
+        <div class="button">
+          <span class="hyt-icon icon-hyt_plus" (click)="addNewItem(node)"></span>
+        </div>
+
+        <div *ngIf="node.level != 0" class="button">
+          <span class="hyt-icon icon-hyt_cancel" (click)="removeItem(node)"></span>
+        </div>
+
+      </div>
+
+      <!-- <div *ngIf="node.level != 0" class="tree-column button">
+        <button mat-icon-button (click)="modifyItem(node)">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </div>
+      <div class="button">
+        <span class="hyt-icon icon-hyt_plus" (click)="addNewItem(node)"></span>
+      </div>
+      <div *ngIf="node.level != 0" class="button">
+        <span class="hyt-icon icon-hyt_cancel" (click)="removeItem(node)"></span>
+      </div> -->
+
+    </div>
+  </mat-tree-node>
+</mat-tree>

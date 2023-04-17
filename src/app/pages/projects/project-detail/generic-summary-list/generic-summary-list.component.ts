@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, ViewEncapsulation, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import { Logger, LoggerService } from '@hyperiot/core';
+import { Logger, LoggerService } from 'core';
 export class SummaryList {
   title: string;
   list: SummaryListItem[];

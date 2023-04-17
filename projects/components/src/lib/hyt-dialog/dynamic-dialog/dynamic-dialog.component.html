@@ -1,0 +1,26 @@
+<div role="dialog" class="dialog-container">
+    <div *ngIf="data?.header" class="dialog-header">
+        <span class="dialog-title">
+            {{ data.header?.label }}
+        </span>
+        <div class="dialog-header-icons">
+            <button type="button" class="dialog-header-icon dialog-header-close" tabindex="-1" (click)="close()">
+                <span class="dialog-header-close-icon icon-hyt_cancel"></span>
+            </button>
+        </div>
+    </div>
+    <div class="dialog-content">
+        <!-- <div *ngIf="dialogComponent">
+            <ng-container *ngComponentOutlet="dialogComponent"></ng-container>
+        </div> -->
+        <ng-template hytDdComponent></ng-template>
+    </div>
+    <div *ngIf="data?.footer" class="dialog-footer">
+        <button label="Close">
+            <button (click)="close()" class="button-text" type="button">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="Close">Chiudi</span>
+            </button>
+        </button>
+    </div>
+</div>

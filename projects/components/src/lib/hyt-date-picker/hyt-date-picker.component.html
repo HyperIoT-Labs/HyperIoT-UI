@@ -1,0 +1,16 @@
+<hyt-input-template
+    id="hyt-date-picker-input"
+    type="text"
+    [(ngModel)]="dateString"
+    name="dateInput"
+    [pattern]="pattern"
+    [placeholder]="actualMask"
+    [fieldValue]="dateString"
+    #dateInput="ngModel"
+>
+</hyt-input-template>
+<hyt-button id="hyt-date-picker-button" class="left-btn" (clickFn)="openCal()" [color]="color">
+    <span class="hyt-icon icon-hyt_tableBig"></span>
+</hyt-button>
+<hyt-button id="hyt-date-submit-button" class="right-btn" (clickFn)="submit()" [color]="color" [isDisabled]="dateInput.invalid || dateString == ''">Submit</hyt-button>
+<hyt-picker-pop-up [lowView]="minStep" [show]="showPopup" [languageCode]="languageCode" (dateOutput)="setDate($event)" (popUpEvent)="showPopup = $event"></hyt-picker-pop-up>

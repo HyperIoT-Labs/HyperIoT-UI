@@ -1,0 +1,29 @@
+<div id="hyt-modal-info-recording-action" class="dialog container-fluid">
+
+    <div id="header-row" class="row">
+        <div class="col-12 info-header">
+            <h2 i18n="@@HYT_data_recording">Data recording</h2>
+        </div>
+    </div> <!-- END HEADER ROW -->
+    <div id="body-row" class="row">
+        <div class="col-12 dialog-body">
+            <h3 i18n="@@HYT_attention">Attention!</h3>
+            <p i18n="@@HYT_dashboard_end_registration">Proceeding with this action you will disable the registration of the data and they will not be stored until the rehabilitation of this property</p>
+        </div>
+    </div> <!-- END BODY ROW -->
+    <div id="footer-row" class="row">
+        <div class="col-6">
+            <hyt-button [color]="'hyt-base-total-green'" (clickFn)="close('confirm')">
+                <span class="hyt-icon icon-hyt_valid"></span> 
+                <span i18n="@@HYT_next">Next</span>
+            </hyt-button>
+        </div>
+        <div class="col-6">
+            <hyt-button [color]="'hyt-base-total-red'" (clickFn)="close('cancel')">
+                <span class="hyt-icon icon-hyt_cancelC"></span>
+                <span i18n="@@HYT_back">Back</span>
+            </hyt-button>
+        </div>
+    </div> <!-- END FOOTER ROW -->
+
+</div>

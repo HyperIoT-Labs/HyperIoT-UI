@@ -1,0 +1,18 @@
+<div id="container-notify" #containerNotify [ngClass]="{'isVisible': (notifications && notifications.length > 0), 'isNotVisible': (notifications && notifications.length <= 0) }">
+  <ng-container *ngIf="notifications && notifications.length >0">
+    <div id="hyt-notify-container" class="{{notifyPosition}}" *ngFor="let item of notifications">
+        <div class="notify {{ setCssClass(item) }}" aria-live="polite" style="display: block;">
+            <button type="button" class="notify-close-button" role="button" (click)="removeNotification(item)">
+                <span class="hyt-icon icon-hyt_cancelC"></span>
+            </button>
+            <div class="notify-title">
+                {{item.title}}
+            </div>
+            <div class="notify-message">
+                {{item.message}}
+            </div>
+        </div>
+    </div>
+  </ng-container>
+</div>
+

@@ -1,0 +1,14 @@
+.hexagon-container {
+  position: relative;
+  width: 100px;
+  height: 100px;
+}
+
+.hyt-hexagon-icon {
+  position: absolute;
+  font-size: 2.6em;
+  color: white;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}

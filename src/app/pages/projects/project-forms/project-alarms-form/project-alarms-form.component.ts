@@ -1,10 +1,10 @@
 import { Component, OnChanges, OnDestroy, ViewChild, Input, Injector, ViewEncapsulation, ChangeDetectorRef, OnInit, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription, Observable } from 'rxjs';
-import { LoggerService, Logger, HProject, Rule, AssetstagsService, AssetTag, AlarmEvent, Alarm, AlarmeventsService, AlarmsService  } from '@hyperiot/core';
+import { LoggerService, Logger, HProject, Rule, AssetstagsService, AssetTag, AlarmEvent, Alarm, AlarmeventsService, AlarmsService  } from 'core';
 import { ProjectFormEntity, LoadingStatusEnum } from '../project-form-entity';
 import { RuleDefinitionComponent } from '../rule-definition/rule-definition.component';
-import { Option } from '@hyperiot/components';
+import { Option } from 'components';
 import { SummaryListItem } from '../../project-detail/generic-summary-list/generic-summary-list.component';
 import { TagStatus } from '../packet-enrichment-form/asset-tag/asset-tag.component';
 import {FormControl, Validators} from '@angular/forms';

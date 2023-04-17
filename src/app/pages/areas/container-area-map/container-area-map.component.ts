@@ -1,11 +1,11 @@
 import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {CdkDragEnd} from '@angular/cdk/drag-drop';
-import {Area, AreaDevice, AreasService, Logger, LoggerService} from '@hyperiot/core';
+import {Area, AreaDevice, AreasService, Logger, LoggerService} from 'core';
 import {PageStatus} from '../../../models/pageStatus';
 import {AreaMapComponent} from '../../projects/project-forms/areas-form/area-map/area-map.component';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
-import {HytTreeViewProjectComponent} from '@hyperiot/components/lib/hyt-tree-view-project/hyt-tree-view-project.component';
+import {HytTreeViewProjectComponent} from 'components';
 import {takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
 import {installTempPackage} from '@angular/cli/utilities/install-package';

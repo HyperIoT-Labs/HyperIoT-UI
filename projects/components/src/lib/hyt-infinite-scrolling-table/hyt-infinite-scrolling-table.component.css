@@ -1,0 +1,65 @@
+.hyt-lazy-pagination-table {
+  position: relative;
+  height: 100%;
+}
+
+.hyt-lazy-pagination-table .table-wrapper {
+  height: calc(100% - 50px);
+  overflow-y: scroll;
+  width: 100%;
+}
+.hyt-lazy-pagination-table .table-wrapper table {
+  width: 100%;
+  table-layout: fixed;
+}
+
+.hyt-lazy-pagination-table .table-wrapper table tr {
+  border-bottom: 1px solid lightgrey;
+}
+
+.hyt-lazy-pagination-table .table-wrapper table thead th {
+  position: sticky;
+  background-color: white;
+  top: 0;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.hyt-lazy-pagination-table .table-navigation {
+  height: 50px;
+  width: 100%;
+  position: absolute;
+  background-color: white;
+  overflow: auto;
+  bottom: 0;
+  left: 0;
+}
+
+.hyt-lazy-pagination-table tr.single-row-data-elements td {
+  padding: 0px 5px;
+}
+
+/* Rule to change according to use */
+.hyt-lazy-pagination-table tr.single-row-data-elements td:first-child {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cdk-overlay-container .hyt-header-tooltip {
+  margin: 0px;
+  word-break: break-all;
+  white-space: normal;
+  background-color: #266dca;
+}
+
+.hyt-lazy-pagination-table .file-cell {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  font-size: 1.4rem;
+}
+
+.hyt-lazy-pagination-table .file-cell span {
+  cursor: pointer;
+}

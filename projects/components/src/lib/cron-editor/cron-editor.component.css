@@ -1,0 +1,69 @@
+.cron-editor-container {
+    margin-top: 10px;
+}
+
+.cron-editor-container .cron-editor-radio {
+    width: 20px;
+    display: inline-block;
+}
+
+.cron-editor-container .cron-editor-select,
+.cron-editor-container .cron-editor-input,
+.cron-editor-container .cron-editor-checkbox {
+    display: inline-block;
+}
+
+.cron-editor-container .well-time-wrapper {
+    padding-left: 20px;
+}
+
+.cron-editor-container .inline-block {
+    display: inline-block;
+}
+
+.cron-editor-container .minutes,
+.cron-editor-container .hours,
+.cron-editor-container .days,
+.cron-editor-container .seconds {
+    width: 70px;
+}
+
+.cron-editor-container .months {
+    width: 120px;
+}
+
+.cron-editor-container .month-days {
+    width: 130px;
+}
+
+.cron-editor-container .months-small {
+    width: 60px;
+}
+
+.cron-editor-container .day-order-in-month {
+    width: 95px;
+}
+
+.cron-editor-container .week-days {
+    width: 120px;
+}
+
+.cron-editor-container .advanced-cron-editor-input {
+    width: 200px;
+}
+
+.cron-editor-container .hour-types {
+    width: 70px;
+}
+
+.cron-editor-container .advanced-cron-editor-label {
+    font-weight: 200;
+}
+
+.nav-tabs li a {
+    cursor: pointer;
+}
+
+.form-control {
+    height: auto;
+}

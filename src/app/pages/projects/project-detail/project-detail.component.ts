@@ -5,10 +5,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, zip, Observer, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import {HprojectsService, HProject, HdevicesService, HDevice, HpacketsService, HPacket, Rule, Logger, LoggerService} from '@hyperiot/core';
-import { TreeDataNode, HytModalService } from '@hyperiot/components';
+import { HprojectsService, HProject, HdevicesService, HDevice, HpacketsService, HPacket, Rule, Logger, LoggerService } from 'core';
+import { TreeDataNode, HytModalService } from 'components';
 
-import { HytTreeViewProjectComponent } from '@hyperiot/components/lib/hyt-tree-view-project/hyt-tree-view-project.component';
+import { HytTreeViewProjectComponent } from 'components';
 import { ProjectFormEntity } from '../project-forms/project-form-entity';
 import { SaveChangesDialogComponent } from 'src/app/components/dialogs/save-changes-dialog/save-changes-dialog.component';
 import { PacketEnrichmentFormComponent } from '../project-forms/packet-enrichment-form/packet-enrichment-form.component';
@@ -19,8 +19,8 @@ import { ChangeDetectorRef } from '@angular/core';
 import { PacketFieldsFormComponent } from '../project-forms/packet-fields-form/packet-fields-form.component';
 import { ConfirmRecordingActionComponent } from 'src/app/components/modals/confirm-recording-action/confirm-recording-action.component';
 import { ProjectAlarmsFormComponent } from '../project-forms/project-alarms-form/project-alarms-form.component';
-import {SummaryList} from './generic-summary-list/generic-summary-list.component';
-import {DashboardConfigService} from '@hyperiot/widgets';
+import { SummaryList } from './generic-summary-list/generic-summary-list.component';
+import { DashboardConfigService } from 'widgets';
 
 enum TreeStatusEnum {
   Ready,

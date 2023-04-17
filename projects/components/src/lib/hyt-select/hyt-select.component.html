@@ -1,0 +1,70 @@
+<mat-form-field>
+
+  <mat-label>
+    {{ label }}
+  </mat-label>
+
+  <mat-select
+    [formControl]="formControl"
+    [multiple]="isMultiple"
+    (selectionChange)="change($event)"
+    (openedChange)="resetSearchValue()"
+    [placeholder]="placeholder"
+  >
+
+    <mat-select-trigger *ngIf="chips && isMultiple">
+      <mat-chip-list>
+        <mat-chip *ngFor="let val of formControl.value"
+          [removable]="true" (removed)="onChipRemoved(val)">
+          {{ getChipLabel(val) }}
+          <mat-icon matChipRemove>cancel</mat-icon>
+        </mat-chip>
+      </mat-chip-list>
+    </mat-select-trigger>
+
+    <div *ngIf="isSearchable" class="search-filter">
+      <!-- class="icon-hyt_search" placeholder="&#xe95e;" TODO per icona ricerca -->
+      <input [(ngModel)]="searchValue" (keyup)="onSearch($event.target.value)" >
+      <mat-icon class="delete-icon" (click)="resetSearchValue()">close</mat-icon>
+    </div>
+
+    <mat-optgroup
+      *ngFor="let group of groups"
+      [ngStyle]="{'display': isGroupVisibile(group) ? 'block' : 'none'}"
+      [disabled]="group.disabled"
+    >
+      <span *ngIf="group.icon" class="hyt-icon {{ group.icon }}"></span>
+      {{ group.name }}
+
+      <mat-option
+        *ngFor="let option of group.options"
+        [ngStyle]="{'display': isGroupOptionVisibe(group, option) ? 'flex' : 'none'}"
+        [value]="option.value"
+      >
+        <span *ngIf="option.icon" class="hyt-icon {{ option.icon }}"></span>
+        {{ option.label }}
+      </mat-option>
+
+    </mat-optgroup>
+
+    <mat-option
+      *ngFor="let option of selectOptions"
+      [ngStyle]="{'display': option.label.toLowerCase().includes(searchValue) ? 'flex' : 'none'}"
+      [value]="option.value"
+      [disabled]="option.disabled ? true : null"
+    >
+      <span *ngIf="option.icon" class="hyt-icon {{ option.icon }}"></span>
+      {{ option.label }}
+    </mat-option>
+
+  </mat-select>
+
+  <mat-hint>
+    {{ hint }}
+  </mat-hint>
+
+  <mat-error *ngFor="let error of getErrorList()">
+    {{ error }}
+  </mat-error>
+
+</mat-form-field>

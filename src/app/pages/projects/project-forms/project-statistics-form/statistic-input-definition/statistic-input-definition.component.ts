@@ -1,7 +1,7 @@
 import { Component, OnInit, OnChanges, Input,ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { HytModalService, SelectOption } from '@hyperiot/components';
-import { Algorithm, HPacket, HPacketField, HpacketsService, HProject, HProjectAlgorithmConfig, HProjectAlgorithmInputField } from '@hyperiot/core';
+import { HytModalService, SelectOption } from 'components';
+import { Algorithm, HPacket, HPacketField, HpacketsService, HProject, HProjectAlgorithmConfig, HProjectAlgorithmInputField } from 'core';
 import { resolve } from 'dns';
 import { InputDefinitionModalComponent } from './input-definition-modal/input-definition-modal.component';
 import { StatisticInputErrorComponent } from './statistic-input-error/statistic-input-error.component';

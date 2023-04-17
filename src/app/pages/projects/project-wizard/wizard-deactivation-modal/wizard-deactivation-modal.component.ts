@@ -1,6 +1,6 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { EntitiesService } from 'src/app/services/entities/entities.service';
-import { HytModal, HytModalService } from '@hyperiot/components';
+import { HytModal, HytModalService } from 'components';
 
 @Component({
   selector: 'hyt-wizard-deactivation-modal',

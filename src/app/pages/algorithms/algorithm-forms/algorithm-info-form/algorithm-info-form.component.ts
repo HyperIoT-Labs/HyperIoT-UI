@@ -2,7 +2,7 @@ import { Component, ViewChild, ElementRef, Injector, ChangeDetectorRef, ViewEnca
 
 import { Subject, PartialObserver } from 'rxjs';
 
-import { AlgorithmsService, Algorithm } from '@hyperiot/core';
+import { AlgorithmsService, Algorithm } from 'core';
 
 import { AlgorithmFormEntity, LoadingStatusEnum } from '../algorithm-form-entity';
 

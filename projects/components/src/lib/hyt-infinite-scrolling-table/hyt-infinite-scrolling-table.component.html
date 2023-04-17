@@ -1,0 +1,39 @@
+<div class="hyt-lazy-pagination-table">
+  <div #tableContainer class="table-wrapper" (scroll)="onScroll()">
+    <table>
+      <thead>
+        <tr>
+          <th *ngFor="let header of headers" [matTooltip]="header.label || header.value" matTooltipPosition="above"
+            matTooltipClass="hyt-header-tooltip">
+            {{ header.label || header.value }}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="single-row-data-elements" *ngFor="let data of tableData">
+          <td [ngStyle]="{'width': getTdStyleClassByHeader(headers)}" *ngFor="let item of headers">
+            <div *ngIf="item.type === 'FILE'" class="file-cell">
+              <span class="hyt-icon icon-hyt_search" (click)="openFile(data[item.value])"></span>
+              <span class="hyt-icon icon-hyt_download" (click)="downloadFile(data[item.value])"></span>
+            </div>
+            <ng-container *ngIf="item.type !== 'FILE'">{{ data[item.value] || "-" }}</ng-container>
+          </td>
+        </tr>
+        <tr *ngIf="tableStatus !== 2">
+          <td [attr.colspan]="headers.length">
+            <div style="width: 100%; height: 50px; text-align: -webkit-center;">
+              <mat-spinner *ngIf="tableStatus === 0 || tableStatus === 1" strokeWidth="5" diameter="42"></mat-spinner>
+              <p *ngIf="tableStatus === -2">Error loading additional data</p>
+              <p *ngIf="tableStatus === 3">Limite dati visualizzabili raggiunto. Per ottenere altri dati rifinisci la tua query</p>
+              <p *ngIf="tableStatus == -1">No data to show</p>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="table-navigation">
+    Numero dati: {{ totalRows }}
+    <ng-container *ngIf="totalRows > dataLimit"><br>(Saranno mostrati i primi {{dataLimit}})</ng-container>
+  </div>
+</div>

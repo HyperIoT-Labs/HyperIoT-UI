@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ChangeDetectorRef} from '@angular/core';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
-import { HPacket, HProject, HpacketsService, HPacketField } from '@hyperiot/core';
+import { HPacket, HProject, HpacketsService, HPacketField } from 'core';
 
 @Component({
   selector: 'hyt-fourier-transform',

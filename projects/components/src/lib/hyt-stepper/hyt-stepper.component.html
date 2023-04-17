@@ -1,0 +1,28 @@
+   <mat-horizontal-stepper 
+    #stepper [linear]="isLinear"
+    (selectionChange)="change($event)"
+   >
+    
+    <mat-step
+
+      *ngFor="let template of stepArray; let i = index" 
+      [completed]="completed[i]"
+
+    >
+      <ng-template matStepLabel>
+
+        <div [ngClass]="{'stepIsDirty': isDirty[i], 'stepIsNotDirty': !isDirty[i]}">
+          <span class="hyt-icon icon-hyt_warnT"></span>
+        </div>
+
+        {{ labelArray[i] }}
+
+      </ng-template>
+
+      <ng-container 
+        *ngTemplateOutlet="template">
+      </ng-container>
+
+    </mat-step>
+
+  </mat-horizontal-stepper>

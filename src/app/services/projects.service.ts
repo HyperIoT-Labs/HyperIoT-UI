@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HprojectsService, HProject } from '@hyperiot/core';
+import { HprojectsService, HProject } from 'core';
 import { Subject } from 'rxjs';
 import { multicast } from 'rxjs/operators';
 

@@ -1,0 +1,64 @@
+.sensor-value-container {
+    height: 100%;
+    background-color: #ffffff;
+    color: #212529;
+    display: flex;
+    flex-direction: column;
+}
+
+.sensor-value-container.bright {
+    background-color: #ffffff;
+    color: #212529;
+}
+.sensor-value-container.dark {
+    background-color: black;
+    color: #ffffff;
+}
+
+.sensor-value-container .value-container {
+    flex: 1;
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+}
+
+.sensor-value-container .value-container .sensor-value {
+    font-size: 2em;
+    color: #275691;
+}
+
+.sensor-value-container .value-container .timestamp {
+    position: absolute;
+    bottom: 2px;
+    font-size: 11px;
+    opacity: .6;
+}
+
+.sensor-value-container .info-container {
+    height: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 12px;
+    border-top: .5px solid #c7d9e3;
+}
+
+.sensor-value-container.bright .info-container {
+    border-top: .5px solid #c7d9e3;
+}
+.sensor-value-container.dark .info-container {
+    border-top: .5px solid #ffffff;
+}
+
+.activity-led {
+    bottom: 5px; right: 10px;
+    width: 12px; height: 6px;
+    border-color: 2px green;
+    border-radius: 2px;
+    background: green;
+    transition: 50ms all cubic-bezier(0.86, 0, 0.07, 1);
+}
+.activity-led.on {
+    background: lawngreen !important;
+}

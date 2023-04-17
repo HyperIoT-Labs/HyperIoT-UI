@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { ServicesService } from '@hyperiot/core';
+import { ServicesService } from 'core';
 import { map, PartialObserver } from 'rxjs';
 
 @Component({

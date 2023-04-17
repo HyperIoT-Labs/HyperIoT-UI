@@ -31,7 +31,7 @@ import {
 } from '@angular/core';
 import { DraggableItemComponent } from '../draggable-item/draggable-item.component';
 import { MapDirective } from '../map.directive';
-import {AreaDevice, Area, Logger, LoggerService} from '@hyperiot/core';
+import {AreaDevice, Area, Logger, LoggerService} from 'core';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 

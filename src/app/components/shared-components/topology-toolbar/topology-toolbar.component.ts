@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, ViewEncapsulation, Output, EventEmitter } from '@angular/core';
-import { HytModalService } from '@hyperiot/components';
+import { HytModalService } from 'components';
 import { Subject } from 'rxjs';
 import { ConfirmRecordingActionComponent } from './../../modals/confirm-recording-action/confirm-recording-action.component';
 import { InfoRecordingActionComponent } from './../../modals/info-recording-action/info-recording-action.component';

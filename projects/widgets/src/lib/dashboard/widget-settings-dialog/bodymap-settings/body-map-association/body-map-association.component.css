@@ -1,0 +1,33 @@
+.body-association-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 12px;
+    height: 100%;
+
+    /* TODO fornire dimensioni adeguate*/
+    /* width: 400px; */
+    /* border: 1px solid blue; */
+    padding: 30px;
+}
+
+.body-association-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.hyt-select-full-width mat-form-field {
+    width: 100%;
+}
+
+.body-association-submit-section {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.body-association-form .ba-label {
+    font-weight: 800;
+    padding-top: 8px;
+}

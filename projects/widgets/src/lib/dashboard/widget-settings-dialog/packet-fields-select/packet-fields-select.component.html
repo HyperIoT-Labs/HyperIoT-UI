@@ -1,0 +1,20 @@
+<div class="packet-field-select-container">
+    <div id="packet-selection" class="d-flex flex-column">
+        <hyt-select-template
+            [(ngModel)]="selectedPacketId"
+            (ngModelChange)="onPacketChange()" name="packet-select-{{name}}"
+            [label]="'Select packet'" i18n-placeholder="@@HYT_widget_settings_select_packet"
+            [options]="hpacketsOptions" [sortingAlgorithm]="'A-Z'" [isSortable]="true"
+            required disableRipple
+        >
+        </hyt-select-template>
+    </div>
+    <div *ngIf="selectedPacketId != null" id="field-selection" class="d-flex flex-column">
+        <hyt-select-template
+            [(ngModel)]="selectedFieldName" (ngModelChange)="onFieldChange()" [isMultiple]="false" name="field-select-{{name}}"
+            [label]="'Select field/s'" [options]="hpacketsFieldsOptions"
+            [sortingAlgorithm]="'A-Z'" [isSortable]="true"
+            required disableRipple>
+        </hyt-select-template>
+    </div>
+</div>

@@ -1,0 +1,62 @@
+//  :host {
+//     position: absolute;
+//     display: block;
+//     top: 4px; right: 1px;
+// }
+
+.toolbar-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.toolbar-button {
+  button {
+    width: 24px;
+    height: 24px;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    background: transparent;
+    outline: none;
+    opacity: 1;
+
+    span {
+      &.hyt-icon {
+        font-size: 1.2em;
+        vertical-align: middle;
+        color: white;
+
+        &:hover {
+          color: cyan;
+        }
+
+        &.icon-hyt_HamOpen {
+          cursor: grab;
+
+          &:active {
+            cursor: grabbing;
+          }
+        }
+
+      }
+    }
+  }
+}
+
+.toolbar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 5px;
+  z-index: 100;
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 27px;
+  background: darkblue;
+}

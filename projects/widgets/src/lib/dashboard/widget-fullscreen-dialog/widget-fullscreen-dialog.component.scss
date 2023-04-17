@@ -1,0 +1,52 @@
+#container-widget-fullscreen {
+  background-color: white;
+  width: 90vw;
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  overflow-y: auto;
+
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+
+  resize: both;
+
+  #header-fullscreen {
+    background-color: #074290;
+    color: white;
+    font-weight: 600;
+    text-transform: uppercase;
+    height: 45px;
+    font-size: 1.4em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 10px;
+    position: relative;
+
+    #close-fullscreen {
+      position: absolute;
+      top: 7px;
+      right: 15px;
+      cursor: pointer;
+
+      span {
+        &.hyt-icon.icon-hyt_lessX {
+          font-size: 1.35em;
+        }
+      }
+    }
+  }
+
+  #body-fullscreen {
+    margin: 5px;
+    display: flex;
+    flex: 1;
+    margin-bottom: 5px;
+    flex-direction: column;
+    flex-wrap: wrap;
+    position: relative;
+  }
+}

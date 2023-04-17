@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Area, AreasService } from '@hyperiot/core';
-import { HytModalService, HytModal } from '@hyperiot/components';
+import { Area, AreasService } from 'core';
+import { HytModalService, HytModal } from 'components';
 
 @Component({
   selector: 'hyt-area-innerarea-select-dialog',

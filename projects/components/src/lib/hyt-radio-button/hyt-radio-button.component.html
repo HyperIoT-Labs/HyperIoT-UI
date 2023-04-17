@@ -1,0 +1,22 @@
+<mat-radio-group
+  [ngClass]="{ 'hyt-radio-group': verticalAlign == true }"
+  [formControl]="formControl"
+  (change)="onChange($event)"
+  class=""
+  aria-label="label"
+>
+  <mat-radio-button
+    *ngFor="let option of options"
+    class="hyt-radio-button"
+    value="{{ option.value }}"
+    checked="{{ option.checked == true }}"
+    labelPosition="{{ labelPosition }}"
+    disabled="{{ option.disabled == true}}"
+  >
+    {{ option.label }}
+  </mat-radio-button>
+
+  <mat-error *ngFor="let error of getErrorList()">
+    {{ error }}
+  </mat-error>
+</mat-radio-group>
