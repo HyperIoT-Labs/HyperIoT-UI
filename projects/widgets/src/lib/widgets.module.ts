@@ -28,7 +28,6 @@ import { BaseWidgetTemplateComponent } from './base/base-widget-template/base-wi
 import { DefaultWidgetComponent } from './default-widget/default-widget.component';
 import { AlgorithmTableComponent } from './widget/algorithm-table/algorithm-table.component';
 import { BodymapComponent } from "./widget/bodymap/bodymap.component";
-import { SelectFieldComponent } from './widget/bodymap/select-field/select-field.component';
 import { EcgComponent } from "./widget/ecg/ecg.component";
 import { ErrorTableComponent } from './widget/error-table/error-table.component';
 import { EventTableComponent } from './widget/event-table/event-table.component';
@@ -47,7 +46,6 @@ import { DefibrillatorComponent } from './widget/defibrillator/defibrillator.com
     HpacketTableComponent,
     EcgComponent,
     BodymapComponent,
-    SelectFieldComponent,
     DefaultWidgetComponent,
     LineChartComponent,
     SensorValueComponent,
