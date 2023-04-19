@@ -1,11 +1,11 @@
 import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild} from '@angular/core';
 import { TimeStep } from 'components';
 import { HprojectsService } from 'core';
-import * as moment from 'moment';
+import * as moment_ from 'moment';
 import 'moment-precise-range-plugin';
 import { TimeAxisComponent } from './time-axis/time-axis.component';
 
-
+const moment = moment_;
 
 /**
  * TimelineComponent is an HyperIoT component. It is used by DashboardComponent.

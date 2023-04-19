@@ -1,9 +1,10 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { TimeStep } from 'components';
 import * as d3 from 'd3';
-import * as moment from 'moment';
+import * as moment_ from 'moment';
 import {HYTData} from "../models/timeline.model";
 
+const moment = moment_;
 const animation = false;
 
 // ! IMPORTANT
