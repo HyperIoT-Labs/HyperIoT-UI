@@ -10,6 +10,8 @@ export class HytModalRef implements OnInit {
 
     constructor(
         public component: Type<any>,
+        // TODO circular dependency. HytModalRef imports hytModalService but it's also imported by hytModalService.
+        // Close method shouldn't use hytModalService. Modal system will be replaced by Dialog system
         private hytModalService: HytModalService,
         public conf?: HytModalConf
     ) {}
