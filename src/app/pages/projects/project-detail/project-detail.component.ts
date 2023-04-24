@@ -6,7 +6,7 @@ import { Observable, zip, Observer, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { HprojectsService, HProject, HdevicesService, HDevice, HpacketsService, HPacket, Rule, Logger, LoggerService } from 'core';
-import { TreeDataNode, HytModalService } from 'components';
+import { TreeDataNode, HytModalService, HytConfirmRecordingActionComponent } from 'components';
 
 import { HytTreeViewProjectComponent } from 'components';
 import { ProjectFormEntity } from '../project-forms/project-form-entity';
@@ -17,7 +17,6 @@ import { ProjectStatisticsFormComponent } from '../project-forms/project-statist
 import { CdkDragEnd } from '@angular/cdk/drag-drop';
 import { ChangeDetectorRef } from '@angular/core';
 import { PacketFieldsFormComponent } from '../project-forms/packet-fields-form/packet-fields-form.component';
-import { ConfirmRecordingActionComponent } from 'src/app/components/modals/confirm-recording-action/confirm-recording-action.component';
 import { ProjectAlarmsFormComponent } from '../project-forms/project-alarms-form/project-alarms-form.component';
 import { SummaryList } from './generic-summary-list/generic-summary-list.component';
 import { DashboardConfigService } from 'widgets';
@@ -304,7 +303,7 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
 
   openConfirmChangeRecordingModal(recordingState: boolean) {
     const modalRef = this.dialog.open(
-      ConfirmRecordingActionComponent,
+      HytConfirmRecordingActionComponent,
       {
         textBodyModal: $localize`:@@HYT_reload_topology_alert:Changes have been made to data recording configuration. To make them effective you need to restart data recording, do you want to start it now? Anyway, the data you are sending won’t be lost.`,
         dataRecordingIsOn: recordingState,

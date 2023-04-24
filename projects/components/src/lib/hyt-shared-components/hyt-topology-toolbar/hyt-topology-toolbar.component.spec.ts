@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { HytTopologyToolbarComponent } from './hyt-topology-toolbar.component';
 
-describe('TopologyToolbarComponent', () => {
+describe('HytTopologyToolbarComponent', () => {
   let component: HytTopologyToolbarComponent;
   let fixture: ComponentFixture<HytTopologyToolbarComponent>;
 

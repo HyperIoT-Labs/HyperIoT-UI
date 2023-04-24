@@ -5,19 +5,12 @@
     "ng": "node_modules/.bin/ng",
     "ng-high-memory": "node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng",
     "build-memory": "npm run ng-high-memory && ng build",
-    "start": "ng serve --proxy-config proxy.config.json",
-    "startLoc": "ng serve --proxy-config proxy-local.config.json",
-    "startProd": "ng serve --prod --proxy-config proxy.config.json",
-    "startNoAot": "ng serve --aot false --proxy-config proxy.config.json",
-    "startWithCert": "ng serve --proxy-config proxy.config.json --ssl --ssl-key localhost.key --ssl-cert localhost.crt",
+    "start": "ng serve --proxy-config proxy-local.config.json",
     "build": "ng build",
+    "build-libs": "ng build core && ng build components && ng build widgets",
     "test": "ng test",
-    "lint": "ng lint",
-    "e2e": "ng e2e",
     "compodoc": "npx compodoc -p src/tsconfig.app.json",
-    "ngx-extractor": "ngx-extractor",
-    "postinstall": "patch-package",
-    "locl-extract": "npx locl extract -s=dist/**/*.js -f=xlf -o=src/locale/translations.xlf"
+    "postinstall": "patch-package"
   },
   "private": true,
   "dependencies": {

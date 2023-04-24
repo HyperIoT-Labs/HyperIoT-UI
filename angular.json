@@ -52,7 +52,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
@@ -75,7 +74,6 @@
             "it": {
               "localize": ["it"],
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "vendorChunk": false,
               "buildOptimizer": true
