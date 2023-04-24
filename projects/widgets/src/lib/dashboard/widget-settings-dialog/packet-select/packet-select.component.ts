@@ -372,4 +372,20 @@ export class PacketSelectComponent implements OnInit {
     }
   }
 
+  isFileMimeTypeSectionVisible() {
+    if (!this.selectedFields) {
+      return false;
+    }
+    if (this.selectedFields.length === 0) {
+      return false;
+    }
+    if (!this.selectedFields.some(field => field.type === 'FILE')) {
+      return false;
+    }
+    if (!(this.widget.type === 'realtime-table' || this.widget.type === 'offline-table')) {
+      return false;
+    }
+    return true;
+  }
+
 }
