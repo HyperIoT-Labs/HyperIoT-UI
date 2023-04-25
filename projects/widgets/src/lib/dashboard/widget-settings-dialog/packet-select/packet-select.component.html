@@ -47,7 +47,7 @@
             </div>
         </div>
 
-        <div id="box-fileType" *ngIf="selectedFields && selectedFields.length > 0 && (widget.type === 'realtime-table' || widget.type === 'offline-table')">
+        <div id="box-fileType" *ngIf="isFileMimeTypeSectionVisible()">
             <h3 id="title-fileType" i18n="@@HYT_file_types_title">File MIME Types</h3>
             <div class="fileType-container">
                 <ng-container *ngFor="let field of selectedFields">
