@@ -42,4 +42,4 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## License
 
-Apache 2.0 License (click [here](./License.MD) to see license information)
+Apache 2.0 License (click [here](./License.MD) to see license information.)
