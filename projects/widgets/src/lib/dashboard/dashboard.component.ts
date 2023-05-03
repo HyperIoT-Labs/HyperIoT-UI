@@ -171,6 +171,9 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     if (!this.areaId) {
       this.showAreas = this.activatedRoute.snapshot.routeConfig.path.startsWith('areas/');
     }
+    if (!this.idProjectSelected) {
+      this.idProjectSelected = +this.activatedRoute.snapshot.queryParams.projectId;
+    }
 
     this.offlineDataService.countEventSubject.subscribe(res => {
       this.offlineWidgetStatus = res;
@@ -180,9 +183,6 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
       // load area realtime Dashboard
       if (!this.areaId) {
         this.areaId = +this.activatedRoute.snapshot.params.areaId;
-      }
-      if (!this.idProjectSelected) {
-        this.idProjectSelected = +this.activatedRoute.snapshot.params.projectId;
       }
       if (this.areaId) {
         this.areaService.getAreaPath(this.areaId).subscribe((areas: Area[]) => {

@@ -1,4 +1,3 @@
-import { LOG_LEVEL } from 'core';
 import packageInfo from 'package.json';
 
 // This file can be replaced during build by using the `fileReplacements` array.
@@ -7,8 +6,6 @@ import packageInfo from 'package.json';
 
 export const environment = {
   production: false,
-  logLevel: 5,
-  registry: {},
   cookieSecure: false,
   mqttUrl: "tcp://karaf-activemq-mqtt-test.hyperiot.cloud",
   version: packageInfo.version,
