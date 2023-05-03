@@ -6,6 +6,8 @@ import packageInfo from 'package.json';
 
 export const environment = {
   production: false,
+  logLevel: 5,
+  logRegistry: { },
   cookieSecure: false,
   mqttUrl: "tcp://karaf-activemq-mqtt-test.hyperiot.cloud",
   version: packageInfo.version,

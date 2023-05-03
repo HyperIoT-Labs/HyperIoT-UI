@@ -25,7 +25,7 @@ import { AccountButtonComponent } from './components/topbar/account-button/accou
 import { MatIconModule } from '@angular/material/icon';
 
 // hyperiot
-import { Configuration, ConfigurationParameters, HyperiotClientModule } from 'core';
+import { Configuration, ConfigurationParameters, HyperiotClientModule, LoggerService } from 'core';
 import { ComponentsModule } from 'components';
 import {AddWidgetDialogComponent, DashboardModule, WidgetSettingsDialogComponent, WidgetsModule} from 'widgets';
 import { RouterModule, DefaultUrlSerializer, UrlSerializer, UrlTree } from '@angular/router';
@@ -143,6 +143,12 @@ export function apiConfigFactory(): Configuration {
   providers: [
     // ActivatedRouteSnapshot,
     { provide: UrlSerializer, useClass: MyUrlSerializer },
+    {
+      provide: LoggerService,
+      useFactory: () => {
+        return new LoggerService(environment.logLevel, environment.logRegistry);
+      }
+    },
     CanDeactivateGuard,
     CookieService,
     { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: true } }
