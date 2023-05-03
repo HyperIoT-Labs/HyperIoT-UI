@@ -33,7 +33,7 @@ export class Logger {
      * This method writes a warning log.
      */
     public warn(msg: any, ...params: any[]) {
-        this.loggerService.writeLog(LOG_LEVEL.ERROR, this.className, msg, ...params);
+        this.loggerService.writeLog(LOG_LEVEL.WARN, this.className, msg, ...params);
     }
 
     /**
