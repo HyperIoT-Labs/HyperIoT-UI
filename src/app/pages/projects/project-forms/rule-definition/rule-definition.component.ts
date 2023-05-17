@@ -225,7 +225,7 @@ export class RuleDefinitionComponent {
     this.extractField(fieldList);
     return this.fieldFlatList.map((f) => ({
       value: f.field.id,
-      label: f.field.name,
+      label: f.label,
     }));
   }
 

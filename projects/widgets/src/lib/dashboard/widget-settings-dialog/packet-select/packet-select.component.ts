@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, EventEmitter, Output, ViewEncapsulation } from '@angular/core';
 import { ControlContainer, NgForm } from '@angular/forms';
 import {SelectOption, UnitConversionService} from 'components';
-import { LoggerService, Logger } from 'core';
+import { LoggerService, Logger, HPacketFieldsHandlerService } from 'core';
 
 import { HPacket, HPacketField, HpacketsService, AreasService, AreaDevice, HDevice } from 'core';
 import { mimeTypeList } from './MIMETypes';
@@ -93,6 +93,7 @@ export class PacketSelectComponent implements OnInit {
     private areaService: AreasService,
     private unitConversionService: UnitConversionService,
     private loggerService: LoggerService,
+    private hPacketFieldsHandlerService: HPacketFieldsHandlerService,
   ) {
     this.multiPacketSelect = this.multiPacketSelect || false;
     this.logger = new Logger(this.loggerService);
@@ -116,19 +117,19 @@ export class PacketSelectComponent implements OnInit {
   onPacketChange($event) {
     this.selectedPacket = this.projectPackets.find(p => p.id === $event);
     this.fieldsOption = [];
-    this.selectedPacket.fields.map(f => {
-      this.fieldsOption.push({
-        value: f.name,
-        label: f.name
-      })
-    });
+    const fieldsFlatList = this.hPacketFieldsHandlerService.flatPacketFieldsTree(this.selectedPacket);
+    this.fieldsOption = fieldsFlatList.map(x => ({
+      value: x.field.id,
+      label: x.label
+    }));
     this.selectedFields = [];
+    this.selectedFieldsOptions = [];
     this.selectedFieldsChange.emit(this.selectedFields);
   }
 
   onPacketFieldChange($event) {
     this.selectedFields = [];
-    if (this.multiPacketSelect) {
+    // if (this.multiPacketSelect) {
       // multiple select
       const nullIndex = this.selectedFields.indexOf(null);
       if (nullIndex >= 0) {
@@ -136,13 +137,15 @@ export class PacketSelectComponent implements OnInit {
       }
       let selected = $event as any[];
       selected.map(s => {
-        this.selectedFields.push(this.selectedPacket.fields.find(p => p.name === s))
+        // this.selectedFields.push(this.selectedPacket.fields.find(p => p.name === s))
+        this.selectedFields.push(this.hPacketFieldsHandlerService.findFieldFromPacketFieldsTree(this.selectedPacket, s));
       })
-    } else {
+    // } else {
       // single select
-      let selected = $event as any;
-      this.selectedFields = this.selectedPacket.fields.find(p => p.name === selected);
-    }
+      // let selected = $event as any;
+      // this.selectedFields = this.selectedPacket.fields.find(p => p.name === selected);
+      // this.selectedFields.push(this.hPacketFieldsHandlerService.findFieldFromPacketFieldsTree(this.selectedPacket, selected));
+    // }
     // units conversion
     this.syncUnitsConversion();
     // fields mapping for current packet field
@@ -170,16 +173,21 @@ export class PacketSelectComponent implements OnInit {
       this.widget.config.packetId = this.selectedPacket.id;
       this.widget.config.timestampFieldName = this.selectedPacket.timestampField;
       this.widget.config.packetFields = {};
-      if (!this.multiPacketSelect) {
-        this.selectedFields = [ this.selectedFields ];
-      }
-      this.selectedFields.map((pf) => this.widget.config.packetFields[pf.id] = pf.name);
+      // if (!this.multiPacketSelect) {
+      //   this.selectedFields = [ this.selectedFields ];
+      // }
+      // this.selectedFields.map((pf) => this.widget.config.packetFields[pf.id] = pf.name);
+      this.selectedFields.map((pf) => this.widget.config.packetFields[pf.id] = this.hPacketFieldsHandlerService.getStringifiedSequenceFromPacket(this.selectedPacket, pf.id));
       this.widget.config.packetFieldsMapping = this.packetFieldsMapping;
       this.widget.config.packetUnitsConversion = this.packetUnitsConversion;
       this.widget.config.fieldAliases = this.fieldAliases;
       this.widget.config.fieldFileMimeTypes = this.fieldFileMimeTypes;
       this.widget.config.fieldTypes = { };
-      this.selectedPacket.fields.forEach(field => {
+      // this.selectedPacket.fields.forEach(field => {
+      //   this.widget.config.fieldTypes[field.id] = field.type;
+      // });
+      this.selectedFields.forEach(pf => {
+        const field = this.hPacketFieldsHandlerService.findFieldFromPacketFieldsTree(this.selectedPacket, pf.id);
         this.widget.config.fieldTypes[field.id] = field.type;
       });
       this.logger.debug('Saving widget congiguration:', this.widget.config);
@@ -233,25 +241,28 @@ export class PacketSelectComponent implements OnInit {
             .subscribe((packet: HPacket) => {
               this.selectedPacket = packet;
               this.selectedPacketOption = this.selectedPacket.id;
-              this.selectedPacket.fields.map(f => {
-                this.fieldsOption.push({
-                  value: f.name,
-                  label: f.name
-                })
-              });
+              const fieldsFlatList = this.hPacketFieldsHandlerService.flatPacketFieldsTree(this.selectedPacket);
+              this.fieldsOption = fieldsFlatList.map(x => ({
+                value: x.field.id,
+                label: x.label
+              }));
               if (this.widget.config.packetFields) {
                 this.selectedFields = [];
-                packet.fields.map((pf) => {
-                  if (this.widget.config.packetFields[pf.id]) {
-                    if (this.multiPacketSelect) {
-                      this.selectedFieldsOptions.push(pf.name);
-                      this.selectedFields.push(pf);
-                    } else {
-                      this.selectedFieldsOptions = pf.name;
-                      this.selectedFields = pf;
-                    }
-                  }
-                })
+                Object.keys(this.widget.config.packetFields).forEach(x => {
+                  this.selectedFieldsOptions.push(+x);
+                  this.selectedFields.push(this.hPacketFieldsHandlerService.findFieldFromPacketFieldsTree(packet, +x));
+                });
+                // packet.fields.map((pf) => {
+                //   if (this.widget.config.packetFields[pf.id]) {
+                //     if (this.multiPacketSelect) {
+                //       this.selectedFieldsOptions.push(pf.id);
+                //       this.selectedFields.push(pf);
+                //     } else {
+                //       this.selectedFieldsOptions = pf.id;
+                //       this.selectedFields = pf;
+                //     }
+                //   }
+                // })
                 packet.fields.sort((a, b) => a.name < b.name ? -1 : 1);
                 this.syncUnitsConversion();
                 this.syncFieldMapping();
@@ -306,13 +317,13 @@ export class PacketSelectComponent implements OnInit {
       }
       unitConvert.field.name = f.name;
     };
-    if (this.multiPacketSelect) {
+    // if (this.multiPacketSelect) {
       this.selectedFields.map((pf: HPacketField) => {
         addFieldConversion(pf);
       });
-    } else if (this.selectedFields) {
-      addFieldConversion(this.selectedFields);
-    }
+    // } else if (this.selectedFields) {
+    //   addFieldConversion(this.selectedFields);
+    // }
     this.packetUnitsConversion = tempMap;
   }
 

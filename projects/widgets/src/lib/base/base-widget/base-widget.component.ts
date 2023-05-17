@@ -113,7 +113,7 @@ export abstract class BaseWidgetComponent implements OnChanges, OnInit, OnDestro
 
   // TODO is field type unique?
   getFieldIdByName(packetFields, fieldName) {
-    return Object.keys(packetFields).find(key => packetFields[key] === fieldName);
+    return +Object.keys(packetFields).find(key => packetFields[key] === fieldName);
   }
 
   computePacketData(packetData: PacketData[]) {
@@ -137,7 +137,7 @@ export abstract class BaseWidgetComponent implements OnChanges, OnInit, OnDestro
           case 'INTEGER':
           case 'DOUBLE':
           case 'FLOAT': {
-            const unitConversion = this.widget.config.packetUnitsConversion.find(uc => uc.field.name === packetKey);
+            const unitConversion = this.widget.config.packetUnitsConversion.find(uc => uc.field.id === fieldId);
             if (unitConversion && typeof pd[packetKey] === 'number') {
               // applying unit conversion
               if (unitConversion.convertFrom !== unitConversion.convertTo) {
@@ -161,7 +161,7 @@ export abstract class BaseWidgetComponent implements OnChanges, OnInit, OnDestro
             break;
           }
           case 'OBJECT': {
-            pd[packetKey] = JSON.stringify(pd[packetKey]);
+            // pd[packetKey] = JSON.stringify(pd[packetKey]);
             break;
           }
           case 'FILE': {

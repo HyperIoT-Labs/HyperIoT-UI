@@ -10,11 +10,17 @@
         </hyt-select-template>
     </div>
     <div *ngIf="selectedPacketId != null" id="field-selection" class="d-flex flex-column">
-        <hyt-select-template
+        <!-- <hyt-select-template
             [(ngModel)]="selectedFieldName" (ngModelChange)="onFieldChange()" [isMultiple]="false" name="field-select-{{name}}"
             [label]="'Select field/s'" [options]="hpacketsFieldsOptions"
             [sortingAlgorithm]="'A-Z'" [isSortable]="true"
             required disableRipple>
-        </hyt-select-template>
+        </hyt-select-template> -->
+        <hyt-inner-field-select
+            [fields]="selectedPacket.fields"
+            [selectedFieldsIds]="selectedFieldsOptions"
+            [isMultiSelect]="false"
+            (fieldSelectionChanged)="onPacketFieldChange($event)"
+        ></hyt-inner-field-select>
     </div>
 </div>

@@ -1,0 +1,14 @@
+.hyt-tree-invisible {
+    display: none;
+}
+
+.hyt-tree ul,
+.hyt-tree li {
+    margin-top: 0;
+    margin-bottom: 0;
+    list-style-type: none;
+}
+
+mat-option.mat-option {
+    display: none;
+}

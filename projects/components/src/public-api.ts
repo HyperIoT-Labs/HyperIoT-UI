@@ -72,6 +72,7 @@ export { HytDatePickerComponent } from './lib/hyt-date-picker/hyt-date-picker.co
 export { HytLazyPaginationTableComponent, LazyTableHeader } from './lib/hyt-lazy-pagination-table/hyt-lazy-pagination-table.component';
 export { HytInfiniteScrollingTableComponent, TableHeader } from './lib/hyt-infinite-scrolling-table/hyt-infinite-scrolling-table.component';
 export { HytInfoComponent } from './lib/hyt-info/hyt-info.component';
+export { HytInnerFieldSelectComponent } from './lib/hyt-inner-field-select/hyt-inner-field-select.component';
 export { HytButtonToggleComponent } from './lib/hyt-button-toggle/hyt-button-toggle.component';
 export { HytNotificationBoxComponent } from './lib/hyt-notification-box/notification-box.component';
 export { NotificationService } from './lib/hyt-notification-box/services/notification.service';
