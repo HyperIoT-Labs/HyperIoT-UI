@@ -72,7 +72,7 @@ export class HytInnerFieldSelectComponent implements OnChanges, OnInit {
     this.dataSource.data = sortedFields;
     if (this.selectedFieldsIds.length > 0) {
       this.selectedFieldsIds.forEach(fieldId => {
-        this.expandTreePathToField(this.hPacketFieldsHandlerService.findFieldFromFieldsTree(this.fields, fieldId));
+        this.expandTreePathToField(this.hPacketFieldsHandlerService.findFieldFromFieldsTree(sortedFields, fieldId));
       });
     }
     const fieldsFlatList = this.hPacketFieldsHandlerService.flatFieldsTree(this.fields);
