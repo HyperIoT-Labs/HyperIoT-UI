@@ -19,13 +19,20 @@
 
         <div id="field-selection" class="d-flex flex-column">
 
-            <hyt-select-template
+            <!-- <hyt-select-template
                 [(ngModel)]="selectedFieldsOptions" [isMultiple]="multiPacketSelect"
                 (ngModelChange)="onPacketFieldChange($event)" name="field-select"
                 [label]="'Select field/s'" [options]="fieldsOption"
                 [sortingAlgorithm]="'A-Z'" [isSortable]="true"
                 required disableRipple>
-            </hyt-select-template>
+            </hyt-select-template> -->
+
+            <hyt-inner-field-select
+                [fields]="selectedPacket.fields"
+                [selectedFieldsIds]="selectedFieldsOptions"
+                [isMultiSelect]="multiPacketSelect"
+                (fieldSelectionChanged)="onPacketFieldChange($event)"
+            ></hyt-inner-field-select>
 
         </div>
 

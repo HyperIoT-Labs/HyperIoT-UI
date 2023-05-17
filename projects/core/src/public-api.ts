@@ -65,6 +65,7 @@ export * from './lib/hyperiot-service/hyperiot-logger/logger-config';
 export * from './lib/hyperiot-service/hyperiot-logger/logger.service';
 
 export { FileHandlerService } from './lib/hyperiot-service/hyperiot-file-handler/file-handler.service';
+export { HPacketFieldsHandlerService } from './lib/hyperiot-service/hyperiot-h-packet-fields-handler/hpacket-fields-handler.service';
 
 export * from './lib/hyperiot-service/hyperiot-algorithm-offline-data/algorithm-offline-data.service';
 

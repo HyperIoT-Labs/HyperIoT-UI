@@ -149,13 +149,13 @@ export class DefibrillatorComponent extends BaseTableComponent implements OnInit
 
           if (dataPacketFilterList.some(dpf => dpf.packetId === packetField.packetId)) {
             const currentPacketFilter = dataPacketFilterList.find(dpf => dpf.packetId === packetField.packetId);
-            if (!currentPacketFilter.fields.includes(packetField.name)) {
-              currentPacketFilter.fields.push(packetField.name);
+            if (!currentPacketFilter.fields[packetField.id]) {
+              Object.assign(currentPacketFilter.fields, packetField.fieldSequence);
             }
           } else {
             const dataPacketFilter = new DataPacketFilter(
               packetField.packetId,
-              [packetField.name],
+              packetField.fieldSequence,
               true
             );
             dataPacketFilterList.push(dataPacketFilter);
@@ -164,7 +164,7 @@ export class DefibrillatorComponent extends BaseTableComponent implements OnInit
           // TODO define settings with object, not array
           this.graphs.standard['chart' + i] = {
             chart: { },
-            source: packetField.packetId + ':' + packetField.name
+            source: packetField.packetId + ':' + packetField.fieldSequence[packetField.id]
           };
 
           let title = '';
@@ -189,19 +189,19 @@ export class DefibrillatorComponent extends BaseTableComponent implements OnInit
 
           if (dataPacketFilterList.some(dpf => dpf.packetId === packetField.packetId)) {
             const currentPacketFilter = dataPacketFilterList.find(dpf => dpf.packetId === packetField.packetId);
-            if (!currentPacketFilter.fields.includes(packetField.name)) {
-              currentPacketFilter.fields.push(packetField.name);
+            if (!currentPacketFilter.fields[packetField.id]) {
+              Object.assign(currentPacketFilter.fields, packetField.fieldSequence);
             }
           } else {
             const dataPacketFilter = new DataPacketFilter(
               packetField.packetId,
-              [packetField.name],
+              packetField.fieldSequence,
               true
             );
             dataPacketFilterList.push(dataPacketFilter);
           }
 
-          this.graphs.derivations.push({chart: { }, source: pckt.packetId + ':' + pckt.name});
+          this.graphs.derivations.push({chart: { }, source: pckt.packetId + ':' + pckt.fieldSequence[packetField.id]});
           this.setDefaultChartLayout('chart' + i, this.graphs.derivations[i].chart, type, color, this.derivationsTitleMap[i]);
 
         });
@@ -219,65 +219,65 @@ export class DefibrillatorComponent extends BaseTableComponent implements OnInit
         const packet = parametersPacketFields[x];
         if (dataPacketFilterList.some(dpf => dpf.packetId === packet.packetId)) {
           const currentPacketFilter = dataPacketFilterList.find(dpf => dpf.packetId === packet.packetId);
-          if (!currentPacketFilter.fields.includes(packet.name)) {
-            currentPacketFilter.fields.push(packet.name);
+          if (!currentPacketFilter.fields[packet.id]) {
+            Object.assign(currentPacketFilter.fields, packet.fieldSequence);
           }
         } else {
           const dataPacketFilter = new DataPacketFilter(
             packet.packetId,
-            [packet.name],
+            packet.fieldSequence,
             true
           );
           dataPacketFilterList.push(dataPacketFilter);
         }
 
-        this.parameters[x].source = packet.packetId + ':' + packet.name;
+        this.parameters[x].source = packet.packetId + ':' + packet.fieldSequence[packet.id];
       });
 
       // setting standard parameters area 2
-      // this.widget.config.defibrillator.standardArea2.types.forEach((x, i) => {
-      //   const type = this.widget.config.defibrillator.standardArea2.types[i];
-      //   const packetField = this.widget.config.defibrillator.standardArea2.packetField[i];
-      //   const color = this.widget.config.defibrillator.standardArea2.colors[i];
+      this.widget.config.defibrillator.standardArea2.types.forEach((x, i) => {
+        const type = this.widget.config.defibrillator.standardArea2.types[i];
+        const packetField = this.widget.config.defibrillator.standardArea2.packetField[i];
+        const color = this.widget.config.defibrillator.standardArea2.colors[i];
 
-      //   if (dataPacketFilterList.some(dpf => dpf.packetId === packetField.packetId)) {
-      //     const currentPacketFilter = dataPacketFilterList.find(dpf => dpf.packetId === packetField.packetId);
-      //     if (!currentPacketFilter.fields.includes(packetField.name)) {
-      //       currentPacketFilter.fields.push(packetField.name);
-      //     }
-      //   } else {
-      //     const dataPacketFilter = new DataPacketFilter(
-      //       packetField.packetId,
-      //       [packetField.name],
-      //       true
-      //     );
-      //     dataPacketFilterList.push(dataPacketFilter);
-      //   }
+        if (dataPacketFilterList.some(dpf => dpf.packetId === packetField.packetId)) {
+          const currentPacketFilter = dataPacketFilterList.find(dpf => dpf.packetId === packetField.packetId);
+          if (!currentPacketFilter.fields[packetField.id]) {
+            Object.assign(currentPacketFilter.fields, packetField.fieldSequence);
+          }
+        } else {
+          const dataPacketFilter = new DataPacketFilter(
+            packetField.packetId,
+            packetField.fieldSequence,
+            true
+          );
+          dataPacketFilterList.push(dataPacketFilter);
+        }
 
-      //   this.parameters[type].source = packetField.packetId + ':' + packetField.name;
-      // });
+        this.parameters[type].source = packetField.packetId + ':' + packetField.fieldSequence[packetField.id];
+      });
 
-      // // setting standard parameters area 3
-      // this.widget.config.defibrillator.standardArea2.types.forEach((x, i) => {
+      // setting standard parameters area 3
+      // this.widget.config.defibrillator.standardArea3.types.forEach((x, i) => {
       //   const type = this.widget.config.defibrillator.standardArea3.types[i];
       //   const packetField = this.widget.config.defibrillator.standardArea3.packetField[i];
       //   const color = this.widget.config.defibrillator.standardArea3.colors[i];
 
       //   if (dataPacketFilterList.some(dpf => dpf.packetId === packetField.packetId)) {
       //     const currentPacketFilter = dataPacketFilterList.find(dpf => dpf.packetId === packetField.packetId);
-      //     if (!currentPacketFilter.fields.includes(packetField.name)) {
-      //       currentPacketFilter.fields.push(packetField.name);
+      //     if (!currentPacketFilter.fields[packetField.id]) {
+      //       Object.assign(currentPacketFilter.fields, packetField.fieldSequence);
       //     }
       //   } else {
       //     const dataPacketFilter = new DataPacketFilter(
       //       packetField.packetId,
-      //       [packetField.name],
+      //       packetField.fieldSequence,
       //       true
       //     );
       //     dataPacketFilterList.push(dataPacketFilter);
       //   }
 
-      //   // this.parameters[type].source = packetField.packetId + ':' + packetField.name;
+      //   this.parameters[type].source = packetField.packetId + ':' + packetField.fieldSequence[packetField.id];
       // });
 
       this.subscribeAndInit(dataPacketFilterList);
