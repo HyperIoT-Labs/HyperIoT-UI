@@ -2,6 +2,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { Component, Injectable, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef, ViewEncapsulation } from '@angular/core';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
+import { HPacketField } from 'core';
 import { BehaviorSubject } from 'rxjs';
 
 export class Node {
@@ -165,12 +166,34 @@ export class HytTreeViewEditableComponent implements OnInit {
     this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
     database.dataChange.subscribe(data => {
-      this.dataSource.data = data;
+      const sortedData = this.sortNodes(data);
+      this.dataSource.data = sortedData;
     });
   }
 
   ngOnInit() {
     this.database.initialize(this.tree, this.deviceName);
+  }
+
+  
+  sortNodes(nodes: Node[]): Node[] {
+    return nodes
+      .sort((a, b) => {
+        // Sort nodes of type OBJECT above other nodes
+        if (a.type === HPacketField.TypeEnum.OBJECT && !(b.type === HPacketField.TypeEnum.OBJECT)) {
+          return -1;
+        } else if (!(a.type === HPacketField.TypeEnum.OBJECT) && b.type === HPacketField.TypeEnum.OBJECT) {
+          return 1;
+        }
+        // Sort nodes alphabetically by name
+        return a.name.localeCompare(b.name);
+      })
+      .map(node => {
+        if (node.children) {
+          node.children = this.sortNodes(node.children);
+        }
+        return node;
+      });
   }
 
   getLevel = (node: FlatNode) => node.level;
