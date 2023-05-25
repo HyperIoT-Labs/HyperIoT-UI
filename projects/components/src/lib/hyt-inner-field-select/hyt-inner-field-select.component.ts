@@ -50,14 +50,14 @@ export class HytInnerFieldSelectComponent implements OnChanges, OnInit {
   sortFields(fields: HPacketField[]): HPacketField[] {
     return fields
       .sort((a, b) => {
-        // Sort fields with children above fields without children
-        if (a.innerFields.length && !b.innerFields.length) {
+        // Sort fields of type OBJECT above other fields
+        if (a.type === HPacketField.TypeEnum.OBJECT && !(b.type === HPacketField.TypeEnum.OBJECT)) {
           return -1;
-        } else if (!a.innerFields.length && b.innerFields.length) {
+        } else if (!(a.type === HPacketField.TypeEnum.OBJECT) && b.type === HPacketField.TypeEnum.OBJECT) {
           return 1;
         }
         // Sort fields alphabetically by name
-        return a.name.localeCompare(b.name)
+        return a.name.localeCompare(b.name);
       })
       .map(field => {
         if (field.innerFields) {
@@ -68,7 +68,7 @@ export class HytInnerFieldSelectComponent implements OnChanges, OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    const sortedFields = this.sortFields(this.fields)
+    const sortedFields = this.sortFields(this.fields);
     this.dataSource.data = sortedFields;
     if (this.selectedFieldsIds.length > 0) {
       this.selectedFieldsIds.forEach(fieldId => {
@@ -84,7 +84,7 @@ export class HytInnerFieldSelectComponent implements OnChanges, OnInit {
 
   ngOnInit(): void { }
 
-  hasChild = (_: number, field: HPacketField) => !!field.innerFields && field.innerFields.length > 0;
+  isObjectField = (_: number, field: HPacketField) => field.type === HPacketField.TypeEnum.OBJECT;
   isChecked = (field: HPacketField) => this.selectedFieldsIds.some(fId => fId === field.id);
   isDisabled = (field: HPacketField) => {
     if (this.isMultiSelect) {
