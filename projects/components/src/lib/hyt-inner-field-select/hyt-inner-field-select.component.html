@@ -11,7 +11,7 @@
                         (change)="itemSelectToggle(node)" [disabled]="isDisabled(node)">{{node.name}}</mat-checkbox>
                 </li>
             </mat-tree-node>
-            <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
+            <mat-nested-tree-node *matTreeNodeDef="let node; when: isObjectField">
                 <li>
                     <div class="mat-tree-node">
                         <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name">
