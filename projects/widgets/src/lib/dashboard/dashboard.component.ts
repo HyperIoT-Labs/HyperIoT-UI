@@ -171,7 +171,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     if (!this.areaId) {
       this.showAreas = this.activatedRoute.snapshot.routeConfig.path.startsWith('areas/');
     }
-    if (!this.idProjectSelected) {
+    if (!this.showAreas && !this.idProjectSelected) {
       this.idProjectSelected = +this.activatedRoute.snapshot.queryParams.projectId;
     }
 
@@ -180,6 +180,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     });
 
     if (this.showAreas) {
+      this.idProjectSelected = +this.activatedRoute.snapshot.params.projectId;
       // load area realtime Dashboard
       if (!this.areaId) {
         this.areaId = +this.activatedRoute.snapshot.params.areaId;
@@ -224,7 +225,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
   /**
    * Fn called when the user selects a new dashboard from the list
-   * @param event 
+   * @param event
    */
   onSelectChange(event) {
     this.packetsInDashboard = [];
@@ -246,7 +247,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
   /**
    * Fn called when the user switches between online/offline dashboards
-   * @param event 
+   * @param event
    */
   changeSignalState(event) {
     if (this.signalIsOn) {
