@@ -1,9 +1,9 @@
 <div id="time-chart-settings" *ngIf="projectPackets.length > 0">
   <div class="general-info">
-    <div>
+    <!-- <div>
       <label>Select widget column size:</label>
       <hyt-select (changeFn)="setColsNumber($event.value)" [label]="'Select widget column size'" [selected]="colsNumber" [options]="[{label: 'small', value: 4},{label: 'medium', value: 5},{label: 'large', value: 6}]"></hyt-select>
-    </div>
+    </div> -->
     <div>
       <label>Select data frequency (s):</label>
       <hyt-select (changeFn)="setFrequency($event.value)" [label]="'Data frequency (s)'" [selected]="dataFrequency" [options]="[{label: '0.025s', value: 0.025},{label: '0.1s', value: 0.1},{label: '0.2s', value: 0.2},{label: '0.5s', value: 0.5},{label: '1s', value: 1}]"></hyt-select>
@@ -15,10 +15,10 @@
     <div>
       <label>Location: </label>{{'location'}}  
     </div>
-    <div>
+    <!-- <div>
       <label>Visualization type:</label>
       <hyt-button-toggle [selectedValue]="visualizationType" [range]="visualizationTypes" (valueChanged)="rangeChanged($event)"></hyt-button-toggle>
-    </div>
+    </div> -->
   </div>
   <div class="fields-and-colors-select">
     <mat-tab-group>

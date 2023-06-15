@@ -10,7 +10,7 @@
           showPlay: true,
           showRefresh: false,
           showTable: false,
-          hideFullScreen: true
+          hideFullScreen: false
         }">
       </hyperiot-common-toolbar>
     </header-widget>
@@ -20,13 +20,85 @@
         <strong i18n="@@HYT_common_not_configured">Click 'Settings' button to configure.</strong>
       </div>
       <ng-template #configured>
-        <div *ngIf="widget.config.internalConfig.visualizationType === 'standard'" class="defibrillator-struct standard">
+        <div *ngIf="visualizationType === 'summary'" class="defibrillator-struct summary">
+          <div class="area area-chart">
+            <div class="area-plot">
+              <plotly-plot
+                  *ngIf="graphs.summary.chart0.chart['layout']"
+                  divId="widget-{{ widget.id }}-chart0-{{ isToolbarVisible }}"
+                  [data]="graphs.summary.chart0.chart['data']"
+                  [layout]="graphs.summary.chart0.chart['layout']"
+                  [config]="graphs.summary.chart0.chart['config']">
+              </plotly-plot>
+            </div>
+            <div class="area-plot">
+              <plotly-plot
+                  *ngIf="graphs.summary.chart1.chart['layout']"
+                  divId="widget-{{ widget.id }}-chart1-{{ isToolbarVisible }}"
+                  [data]="graphs.summary.chart1.chart['data']"
+                  [layout]="graphs.summary.chart1.chart['layout']"
+                  [config]="graphs.summary.chart1.chart['config']">
+              </plotly-plot>
+            </div>
+          </div>
+          <div class="area area-parameters">
+            <div class="m-card hrbpm-card">
+              <div class="label">HR bpm</div>
+              <div class="value">
+                <ng-container *ngIf="parameters.ecg.value">
+                  {{ parameters.ecg.value | number : '1.0-0' }}
+                </ng-container>
+                <ng-container *ngIf="!parameters.ecg.value">
+                  {{ '-' }}
+                </ng-container>
+              </div>
+            </div>
+            <div class="m-card spo2-card">
+              <div class="label">SPO2 %</div>
+              <div class="value">
+                <ng-container *ngIf="parameters.spo2.value">
+                  {{ parameters.spo2.value | number : '1.0-0' }}
+                </ng-container>
+                <ng-container *ngIf="!parameters.spo2.value">
+                  {{ '-' }}
+                </ng-container>
+              </div>
+            </div>
+            <div class="m-card rr-rpm-card">
+              <div class="label">RR rpm</div>
+              <div class="value">
+                <ng-container *ngIf="parameters.resp.value">
+                  {{ parameters.resp.value | number : '1.0-0' }}
+                </ng-container>
+                <ng-container *ngIf="!parameters.resp.value">
+                  {{ '-' }}
+                </ng-container>
+              </div>
+            </div>
+            <div class="m-card pr-bpm-card">
+              <div class="label">PR bpm</div>
+              <div class="value">
+                <ng-container *ngIf="parameters.pr.value">
+                  {{ parameters.pr.value | number : '1.0-0' }}
+                </ng-container>
+                <ng-container *ngIf="!parameters.pr.value">
+                  {{ '-' }}
+                </ng-container>
+              </div>
+            </div>
+            <div class="m-card nibp-card">
+              <div class="label">NIBP mmHq</div>
+              <div class="value">-</div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="visualizationType === 'standard'" class="defibrillator-struct standard">
           <div class="area area-1">
             <div class="area-left">
               <div class="area-plot">
                 <plotly-plot
                     *ngIf="graphs.standard.chart0.chart['layout']"
-                    divId="widget-{{ widget.id }}-chart0"
+                    divId="widget-{{ widget.id }}-chart0-{{ isToolbarVisible }}"
                     [data]="graphs.standard.chart0.chart['data']"
                     [layout]="graphs.standard.chart0.chart['layout']"
                     [config]="graphs.standard.chart0.chart['config']">
@@ -35,7 +107,7 @@
               <div class="area-plot">
                 <plotly-plot
                     *ngIf="graphs.standard.chart1.chart['layout']"
-                    divId="widget-{{ widget.id }}-chart1"
+                    divId="widget-{{ widget.id }}-chart1-{{ isToolbarVisible }}"
                     [data]="graphs.standard.chart1.chart['data']"
                     [layout]="graphs.standard.chart1.chart['layout']"
                     [config]="graphs.standard.chart1.chart['config']">
@@ -44,7 +116,7 @@
               <div class="area-plot">
                 <plotly-plot
                     *ngIf="graphs.standard.chart2.chart['layout']"
-                    divId="widget-{{ widget.id }}-chart2"
+                    divId="widget-{{ widget.id }}-chart2-{{ isToolbarVisible }}"
                     [data]="graphs.standard.chart2.chart['data']"
                     [layout]="graphs.standard.chart2.chart['layout']"
                     [config]="graphs.standard.chart2.chart['config']">
@@ -53,7 +125,7 @@
               <div class="area-plot">
                 <plotly-plot
                     *ngIf="graphs.standard.chart3.chart['layout']"
-                    divId="widget-{{ widget.id }}-chart3"
+                    divId="widget-{{ widget.id }}-chart3-{{ isToolbarVisible }}"
                     [data]="graphs.standard.chart3.chart['data']"
                     [layout]="graphs.standard.chart3.chart['layout']"
                     [config]="graphs.standard.chart3.chart['config']">
@@ -204,6 +276,9 @@
                   <div class="label-value">Source NIBP</div>
               </div>
             </div>
+            <div class="card">
+              <hyt-button (clickFn)="switchVisualization()">Go To Derivations view</hyt-button>
+            </div>
           </div>
           <div class="area area-3">
             <div class="card nibp">
@@ -237,12 +312,12 @@
             </div>
           </div>
         </div>
-        <div  *ngIf="widget.config.internalConfig.visualizationType === 'derivations'" class="defibrillator-struct derivations">
+        <div *ngIf="visualizationType === 'derivations'" class="defibrillator-struct derivations">
           <div class="area-left">
             <div *ngFor="let derivation of graphs.derivations" class="area-plot-derivations" [ngStyle]="{ width: 100 / derivationsGridLayout.cols + '%', height: 100 / derivationsGridLayout.rows + '%' }">
               <plotly-plot
                   *ngIf="derivation.chart['layout']"
-                  divId="widget-{{ widget.id }}-{{ derivation.chart.key }}"
+                  divId="widget-{{ widget.id }}-{{ derivation.chart.key }}-{{ isToolbarVisible }}"
                   [data]="derivation.chart['data']"
                   [layout]="derivation.chart['layout']"
                   [config]="derivation.chart['config']">
@@ -366,6 +441,9 @@
               <div class="fourth">
                   C°
               </div>
+            </div>
+            <div class="card switch">
+              <hyt-button (clickFn)="switchVisualization()">Go To Standard view</hyt-button>
             </div>
           </div>
         </div>

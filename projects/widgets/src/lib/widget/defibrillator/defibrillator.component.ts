@@ -31,6 +31,8 @@ export class DefibrillatorComponent extends BaseTableComponent implements OnInit
   protected dataChannel: DataChannel;
   graphsList: Array<any> = [];
 
+  visualizationType;
+
   parameters = {
     ecg: {
       value: 0,
@@ -59,6 +61,18 @@ export class DefibrillatorComponent extends BaseTableComponent implements OnInit
   };
 
   graphs = {
+    summary: {
+      chart0: {
+        chart: { },
+        source: '',
+        index: 0
+      },
+      chart1: {
+        chart: { },
+        source: '',
+        index: 1
+      }
+    },
     standard: {
       chart0: {
         chart: { },
@@ -104,6 +118,8 @@ export class DefibrillatorComponent extends BaseTableComponent implements OnInit
     this.logger.debug(this.widget.name);
     super.ngOnInit();
 
+    this.visualizationType = this.isToolbarVisible ? 'summary' : 'standard';
+
     asyncScheduler.schedule(() => {
       this.configure();
     });
@@ -139,7 +155,37 @@ export class DefibrillatorComponent extends BaseTableComponent implements OnInit
     asyncScheduler.schedule(() => {
       const dataPacketFilterList: DataPacketFilter[] = [];
 
-      if (this.widget.config.internalConfig.visualizationType === 'standard') {
+      if (this.visualizationType === 'summary') {
+        // setting summary charts
+        this.widget.config.defibrillator.standardArea1.packetField.slice(0,2).forEach((pckt,i) => {
+          const type = 'ecg';
+          const packetField = pckt;
+          const color = '#32CD32';
+
+          if (dataPacketFilterList.some(dpf => dpf.packetId === packetField.packetId)) {
+            const currentPacketFilter = dataPacketFilterList.find(dpf => dpf.packetId === packetField.packetId);
+            if (!currentPacketFilter.fields[packetField.id]) {
+              Object.assign(currentPacketFilter.fields, packetField.fieldSequence);
+            }
+          } else {
+            const dataPacketFilter = new DataPacketFilter(
+              packetField.packetId,
+              packetField.fieldSequence,
+              true
+            );
+            dataPacketFilterList.push(dataPacketFilter);
+          }
+
+          this.graphs.summary['chart' + i] = {
+            chart: { },
+            source: packetField.packetId + ':' + packetField.fieldSequence[packetField.id]
+          };
+          let title = i === 0 ? 'II' : 'I';
+          this.setDefaultChartLayout('chart' + i, this.graphs.summary['chart' + i].chart, type, color, title);
+
+        });
+
+      } else if (this.visualizationType === 'standard') {
 
         // setting standard chart area 1
         this.widget.config.defibrillator.standardArea1.types.forEach((x, i) => {
@@ -179,7 +225,7 @@ export class DefibrillatorComponent extends BaseTableComponent implements OnInit
 
         });
 
-      } else if (this.widget.config.internalConfig.visualizationType === 'derivations') {
+      } else if (this.visualizationType === 'derivations') {
         // setting derivations chart area
 
         this.widget.config.defibrillator.derivations.packetField.forEach((pckt, i) => {
@@ -318,8 +364,18 @@ export class DefibrillatorComponent extends BaseTableComponent implements OnInit
         return;
       }
 
+      // updating summary charts
+      if (this.visualizationType === 'summary') {
+        const chartsToUpdate = Object.values(this.graphs.summary).filter((x: any) => x.source === packetId + ':' + fieldName) as any;
+
+        chartsToUpdate.forEach(chart => {
+          const defibrillatorElements = packetData.map(pd => ({ timestamp: pd.timestamp, trace: chart.chart.key, value: pd[fieldName] }));
+          this.renderData(chart.chart.key, defibrillatorElements);
+        });
+      }
+
       // updateing standard charts
-      if (this.widget.config.internalConfig.visualizationType === 'standard') {
+      if (this.visualizationType === 'standard') {
         const chartsToUpdate = Object.values(this.graphs.standard).filter((x: any) => x.source === packetId + ':' + fieldName) as any;
 
         chartsToUpdate.forEach(chart => {
@@ -329,7 +385,7 @@ export class DefibrillatorComponent extends BaseTableComponent implements OnInit
       }
 
       // code for derivations
-      if (this.widget.config.internalConfig.visualizationType === 'derivations') {
+      if (this.visualizationType === 'derivations') {
         const derChartsToUpdate = this.graphs.derivations.filter((x: any) => x.source === packetId + ':' + fieldName) as any;
 
         derChartsToUpdate.forEach(chart => {
@@ -452,7 +508,7 @@ export class DefibrillatorComponent extends BaseTableComponent implements OnInit
 
   async renderData(key: string, elements: any[]) {
     const Plotly = await this.plotly.getPlotly();
-    const graph: any = this.plotly.getInstanceByDivId(`widget-${this.widget.id}-${key}`);
+    const graph: any = this.plotly.getInstanceByDivId(`widget-${this.widget.id}-${key}-${this.isToolbarVisible}`);
     if (graph) {
       let data = {}
       const currentDate = new Date(elements[elements.length - 1].timestamp);
@@ -492,14 +548,16 @@ export class DefibrillatorComponent extends BaseTableComponent implements OnInit
     this.dataChannel.controller.play();
 
     let chartsToUpdate = [];
-    if (this.widget.config.internalConfig.visualizationType === 'standard') {
+    if (this.visualizationType === 'summary') {
+      chartsToUpdate = Object.keys(this.graphs.summary);
+    } else if (this.visualizationType === 'standard') {
       chartsToUpdate = Object.keys(this.graphs.standard);
-    } else if (this.widget.config.internalConfig.visualizationType === 'derivations') {
+    } else if (this.visualizationType === 'derivations') {
       chartsToUpdate = this.graphs.derivations;
     }
     chartsToUpdate.forEach(async(x,i) => {
       const Plotly = await this.plotly.getPlotly();
-      const graph: any = this.plotly.getInstanceByDivId(`widget-${this.widget.id}-chart${i}`);
+      const graph: any = this.plotly.getInstanceByDivId(`widget-${this.widget.id}-chart${i}-${this.isToolbarVisible}`);
       graph.layout.dragmode = false;
       Plotly.react(graph.id, graph.data, graph.layout, {
         displaylogo: false,
@@ -514,14 +572,16 @@ export class DefibrillatorComponent extends BaseTableComponent implements OnInit
     this.dataChannel.controller.pause();
 
     let chartsToUpdate = [];
-    if (this.widget.config.internalConfig.visualizationType === 'standard') {
+    if (this.visualizationType === 'summary') {
+      chartsToUpdate = Object.keys(this.graphs.summary);
+    } else if (this.visualizationType === 'standard') {
       chartsToUpdate = Object.keys(this.graphs.standard);
-    } else if (this.widget.config.internalConfig.visualizationType === 'derivations') {
+    } else if (this.visualizationType === 'derivations') {
       chartsToUpdate = this.graphs.derivations;
     }
     chartsToUpdate.forEach(async(x,i) => {
       const Plotly = await this.plotly.getPlotly();
-      const graph: any = this.plotly.getInstanceByDivId(`widget-${this.widget.id}-chart${i}`);
+      const graph: any = this.plotly.getInstanceByDivId(`widget-${this.widget.id}-chart${i}-${this.isToolbarVisible}`);
       graph.layout.dragmode = 'pan';
       Plotly.react(graph.id, graph.data, graph.layout, {
         displaylogo: false,
@@ -545,6 +605,11 @@ export class DefibrillatorComponent extends BaseTableComponent implements OnInit
         break;
     }
     this.widgetAction.emit(widgetAction);
+  }
+
+  switchVisualization() {
+    this.visualizationType = this.visualizationType === 'standard' ? 'derivations' : 'standard';
+    this.configure();
   }
 
 }

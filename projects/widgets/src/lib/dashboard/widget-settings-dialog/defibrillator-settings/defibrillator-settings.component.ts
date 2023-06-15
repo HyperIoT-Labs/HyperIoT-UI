@@ -23,6 +23,7 @@ export class DefibrillatorSettingsComponent implements OnInit, OnDestroy {
     projectPackets: Array<HPacket> = [];
     visualizationType: string = 'standard';
     visualizationTypes: {} = [
+      { label: 'Summary', value: 'summary' },
       { label: 'Standard', value: 'standard' },
       { label: '12 Derivations', value: 'derivations' }
     ];
@@ -216,7 +217,8 @@ export class DefibrillatorSettingsComponent implements OnInit, OnDestroy {
                 this.widget.config.defibrillator[channel].parametersPacketField = this.selectedPacketFields['parametersArea1'];
               }
             })
-            this.widget.cols = this.colsNumber;
+            this.widget.cols = 3;
+            this.widget.rows = 2;
           }
       });
 

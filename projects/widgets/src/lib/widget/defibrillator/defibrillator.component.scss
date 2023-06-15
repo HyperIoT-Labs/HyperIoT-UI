@@ -28,6 +28,48 @@
     }
 }
 
+.defibrillator-struct.summary {
+    display: flex;
+    flex-wrap: wrap;
+    height: 100%;
+    background-color: black;
+    .area-chart {
+        width: 65%;
+        display: flex;
+        flex-direction: column;
+        .area-plot {
+            height: 50%;
+        }
+    }
+    .area-parameters {
+        width: 35%;
+        display: flex;
+        flex-wrap: wrap;
+        .m-card {
+            width: 33%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .m-card.hrbpm-card {
+            color: #27e527;
+        }
+        .m-card.spo2-card {
+            color: cyan;
+        }
+        .m-card.rr-rpm-card {
+            color: #f5eb22;
+        }
+        .m-card.pr-bpm-card {
+            color: cyan;
+        }
+        .m-card.nibp-card {
+            width: 66%;
+            color: white;
+        }
+    }
+}
+
 .defibrillator-struct.standard {
     display: flex;
     flex-wrap: wrap;
@@ -85,15 +127,16 @@
 
     .card {
         &.ecg {
-            height: 40%;
+            height: 36%;
         }
         &.resp {
-            height: 20%;
+            height: 18%;
         }
         &.spo2 {
-            height: 20%;
+            height: 18%;
         }
         &.temperature {
+            height: 18%;
             flex-direction: row;
             background-color: black;
             color: #ffffff;
@@ -164,6 +207,9 @@
                 width: 10%;
             }
         }
+        &.switch {
+            height: 10%;
+        }
     }
 }
 
@@ -172,7 +218,7 @@
     padding: 2px 4px;
 
     &.bottom-card {
-        width: 50%;
+        width: 45%;
         height: 100%;
 
         &.temperature {
