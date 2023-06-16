@@ -5,6 +5,6 @@ export const environment = {
   logLevel: 1,
   logRegistry: { },
   cookieSecure: false,
-  mqttUrl: "tcp://karaf-activemq-mqtt-test.hyperiot.cloud",
+  mqttUrl: "tcp://broker.hyperiot.cloud",
   version: packageInfo.version,
 };
