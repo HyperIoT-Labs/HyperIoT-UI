@@ -19,6 +19,7 @@ export class PacketFieldsSelectComponent implements OnInit {
   @Input() projectId: number;
   @Input() name: string;
   @Input() projectPackets: Array<HPacket> = [];
+  @Input() isRequired: boolean = false;
 
   @Input() fieldPacket: PacketField;
   @Output() fieldPacketChange: EventEmitter<PacketField> = new EventEmitter<PacketField>();
@@ -62,9 +63,10 @@ export class PacketFieldsSelectComponent implements OnInit {
     }
     this.selectedFieldsOptions = [];
     this.selectedPacket = this.projectPackets.find((packet) => packet.id === this.selectedPacketId);
-    if (this.fieldPacket.packetId === this.selectedPacket.id) {
+    if (this.fieldPacket && this.fieldPacket.packetId === this.selectedPacket.id) {
       this.selectedFieldsOptions = [this.fieldPacket.id];
     }
+    // this.fieldPacketChange.emit(null);
     // this.hpacketsFieldsOptions = this.hpacketsFields.map((packetField) => ({
     //   value: packetField.name,
     //   label: packetField.name
@@ -81,6 +83,7 @@ export class PacketFieldsSelectComponent implements OnInit {
 
   onPacketFieldChange(selected) {
     if(selected.length === 0) {
+      this.fieldPacketChange.emit(null);
       return;
     }
     // const selectedPacket = this.projectPackets.find((packet) => packet.id === this.selectedPacketId);

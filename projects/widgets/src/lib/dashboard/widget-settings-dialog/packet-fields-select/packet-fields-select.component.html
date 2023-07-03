@@ -2,10 +2,10 @@
     <div id="packet-selection" class="d-flex flex-column">
         <hyt-select-template
             [(ngModel)]="selectedPacketId"
-            (ngModelChange)="onPacketChange()" name="packet-select-{{name}}"
+            (ngModelChange)="onPacketChange()" [name]="name"
             [label]="'Select packet'" i18n-placeholder="@@HYT_widget_settings_select_packet"
             [options]="hpacketsOptions" [sortingAlgorithm]="'A-Z'" [isSortable]="true"
-            required disableRipple
+            disableRipple [required]="isRequired? 'required' : null"
         >
         </hyt-select-template>
     </div>

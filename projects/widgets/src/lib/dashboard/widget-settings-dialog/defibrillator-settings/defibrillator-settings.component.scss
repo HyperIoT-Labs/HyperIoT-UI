@@ -20,7 +20,6 @@
 }
 
 .fields-and-colors-select {
-    margin-top: 40px;
     
     input[type='color'] {
         width: 26px;
@@ -31,63 +30,29 @@
         border: 1px solid black;
         border-radius: 60px;
     }
-    
-    .color {
-        position: relative;
-        border-radius: 60px;
-    }
 
-    .areas {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-
-        label {
-            width: 10%;
-        }
+    .area {
+        margin-bottom: 24px;
 
         .area-label {
-            @include title;
-        }
-
-        .channel {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: baseline;
-            margin-bottom: 10px;
-        }
-    
-        .params {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            gap: 100px;
+            color: #1e58a5;
         }
     }
 
-    .area-derivation {
-        width: 19%;
-    }
+}
 
-    .area-label {
-        @include title;
-    }
+.channel-settings {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 
-    .derivation {
+    .channel-settings-type {
         display: flex;
-        flex-direction: row;
-        align-items: baseline;
-        gap: 20px;
-
-        label {
-            width: 10%;
-        }
-    }
-
-    .grid-layout-select {
-        display: flex;
-        gap: 12px;
         align-items: center;
+        gap: 24px;
     }
+}
+
+.hidden-input {
+    display: none;
 }
