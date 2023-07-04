@@ -94,9 +94,6 @@ export namespace DefibrillatorSettings {
             ['standard', 'standardArea1', 'channel1', 'type'],
             ['standard', 'standardArea1', 'channel1', 'color'],
             ['standard', 'standardArea1', 'channel1', 'value'],
-            ['standard', 'standardArea1', 'channel1', 'min'],
-            ['standard', 'standardArea1', 'channel1', 'max'],
-            ['standard', 'standardArea1', 'channel1', 'unit'],
         ];
 
         export const parameterTypes: Type[] = [
