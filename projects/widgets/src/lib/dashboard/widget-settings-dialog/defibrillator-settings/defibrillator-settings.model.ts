@@ -19,7 +19,7 @@ export namespace DefibrillatorSettings {
         min: PacketField | null;
         max: PacketField | null;
         value: PacketField | null;
-        unit: string | null;
+        unit: PacketField | null;
     }
 
     export interface DefibrillatorSettings {
