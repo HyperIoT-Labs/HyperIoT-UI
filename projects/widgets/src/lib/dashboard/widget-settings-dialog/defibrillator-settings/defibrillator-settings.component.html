@@ -61,7 +61,7 @@
     <mat-tab-group>
 
       <mat-tab label="Standard">
-        <div class="area" *ngFor="let area of defibrillatorSettings.standard | keyvalue; let iArea = index">
+        <div class="area" *ngFor="let area of defibrillatorSettings.standard | keyvalue:noOrder; let iArea = index">
           <label class="area-label">{{ area.key }}</label>
 
           <mat-accordion>

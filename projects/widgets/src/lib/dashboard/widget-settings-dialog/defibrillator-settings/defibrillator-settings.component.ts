@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { PacketSelectComponent } from '../packet-select/packet-select.component';
 import { HPacket, HpacketsService } from 'core';
 import { DefibrillatorSettings } from './defibrillator-settings.model';
+import { KeyValue } from '@angular/common';
 
 @Component({
     selector: 'hyperiot-defibrillator-settings',
@@ -230,5 +231,9 @@ export class DefibrillatorSettingsComponent implements OnInit, OnDestroy {
   }
   isFieldRequired(name: string) {
     return DefibrillatorSettings.Utils.requiredFields.some(x => x.join('-') === name);
+  }
+
+  noOrder<K, V>(a: KeyValue<K, V>, b: KeyValue<K, V>): number {
+    return 0;
   }
 }
