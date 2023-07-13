@@ -62,13 +62,15 @@ export class DefibrillatorSettingsComponent implements OnInit, OnDestroy {
             channel3: this.createDefaultChannel(),
             channel4: this.createDefaultChannel(),
           },
-          parametersArea1: {},
+          parametersArea1: {
+            channel1: this.createDefaultChannel(DefibrillatorSettings.Type.ECG),
+          },
           standardArea2: {
-            channel1: this.createDefaultChannel(),
-            channel2: this.createDefaultChannel(),
+            tempChannel: this.createDefaultChannel(DefibrillatorSettings.Type.TEMP),
+            prChannel: this.createDefaultChannel(DefibrillatorSettings.Type.PR),
           },
           standardArea3: {
-            channel1: this.createDefaultChannel(),
+            nibpChannel: this.createDefaultChannel(DefibrillatorSettings.Type.NIBP),
           },
         },
         derivations: {
@@ -225,6 +227,7 @@ export class DefibrillatorSettingsComponent implements OnInit, OnDestroy {
     } else {
       channel.color =this.DEFAULT_CHANNEL_COLOR;
     }
+    this.setParametersArea();
   }
   isFieldDisabled(name: string) {
     return DefibrillatorSettings.Utils.disabledFields.some(x => x.join('-') === name);
@@ -235,5 +238,33 @@ export class DefibrillatorSettingsComponent implements OnInit, OnDestroy {
 
   noOrder<K, V>(a: KeyValue<K, V>, b: KeyValue<K, V>): number {
     return 0;
+  }
+
+  setParametersArea() {
+    // removing old types
+    const parameterChannels = this.defibrillatorSettings.standard.parametersArea1;
+    for (let key in parameterChannels) {
+      if (parameterChannels.hasOwnProperty(key) && !Object.values(this.defibrillatorSettings.standard.standardArea1).some(chartChannel => chartChannel.type === parameterChannels[key].type)) {
+        delete parameterChannels[key];
+      }
+    }
+
+    // adding new type
+    Object.values(this.defibrillatorSettings.standard.standardArea1).forEach(chartChannel => {
+      if (!chartChannel.type) {
+        return;
+      }
+      if (!Object.values(this.defibrillatorSettings.standard.parametersArea1).some(paramChannel => paramChannel.type === chartChannel.type)) {
+        if (!this.defibrillatorSettings.standard.parametersArea1.channel1) {
+          this.defibrillatorSettings.standard.parametersArea1.channel1 = this.createDefaultChannel(chartChannel.type);
+        } else if (!this.defibrillatorSettings.standard.parametersArea1.channel2) {
+          this.defibrillatorSettings.standard.parametersArea1.channel2 = this.createDefaultChannel(chartChannel.type);
+        } else if (!this.defibrillatorSettings.standard.parametersArea1.channel3) {
+          this.defibrillatorSettings.standard.parametersArea1.channel3 = this.createDefaultChannel(chartChannel.type);
+        } else if (!this.defibrillatorSettings.standard.parametersArea1.channel4) {
+          this.defibrillatorSettings.standard.parametersArea1.channel4 = this.createDefaultChannel(chartChannel.type);
+        }
+      }
+    });
   }
 }
