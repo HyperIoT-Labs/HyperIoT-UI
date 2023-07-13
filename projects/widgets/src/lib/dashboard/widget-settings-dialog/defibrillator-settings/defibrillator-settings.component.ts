@@ -32,7 +32,7 @@ export class DefibrillatorSettingsComponent implements OnInit, OnDestroy {
 
     DEFAULT_CHANNEL_COLOR = '#FFF';
     fieldTypesDefaultColors: Record<DefibrillatorSettings.Type, string> = {
-      [DefibrillatorSettings.Type.ECG]: '#32CD32',
+      [DefibrillatorSettings.Type.ECG]: '#27E527',
       [DefibrillatorSettings.Type.SPO2]: '#00FFFF',
       [DefibrillatorSettings.Type.RESP]: '#FFFF00',
       [DefibrillatorSettings.Type.NIBP]: '#FF0000',
