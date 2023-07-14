@@ -271,4 +271,19 @@ export class DefibrillatorSettingsComponent implements OnInit, OnDestroy {
       }
     });
   }
+
+  isStandardArea1Sorted() {
+    const chartsArray = Object.values(this.defibrillatorSettings.standard.standardArea1);
+    const types = Array.from(chartsArray.map(chart => chart.type));
+    for (let i = 0; i < types.length; i++) {
+      const chartsByType = chartsArray.filter(chart => chart.type === types[i]);
+      const chartsByTypeIndexes = chartsByType.map(chart => chartsArray.indexOf(chart));
+      for (let j = 1; j < chartsByTypeIndexes.length; j++) {
+        if (chartsByTypeIndexes[j] !== chartsByTypeIndexes[j - 1] + 1) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
 }

@@ -362,45 +362,47 @@ export class DefibrillatorComponent extends BaseTableComponent implements OnInit
       } else if (this.visualizationType === 'standard') {
 
         // setting standard chart area 1
-        Object.values(this.widget.config.defibrillator.standard.standardArea1).forEach((channel, i) => {
-          if (!channel.type || !channel.value) {
-            return;
-          }
-          const type = channel.type;
-          const valuePacketField = channel.value;
-          const color = channel.color;
-
-          if (dataPacketFilterList.some(dpf => dpf.packetId === valuePacketField.packetId)) {
-            const currentPacketFilter = dataPacketFilterList.find(dpf => dpf.packetId === valuePacketField.packetId);
-            if (!currentPacketFilter.fields[valuePacketField.id]) {
-              Object.assign(currentPacketFilter.fields, valuePacketField.fieldSequence);
+        Object.values(this.widget.config.defibrillator.standard.standardArea1)
+          .sort(this.standardArea1Sort.bind(this))
+          .forEach((channel, i) => {
+            if (!channel.type || !channel.value) {
+              return;
             }
-          } else {
-            const dataPacketFilter = new DataPacketFilter(
-              valuePacketField.packetId,
-              valuePacketField.fieldSequence,
-              true
-            );
-            dataPacketFilterList.push(dataPacketFilter);
-          }
+            const type = channel.type;
+            const valuePacketField = channel.value;
+            const color = channel.color;
 
-          this.graphs.standard['chart' + i] = {
-            chart: { },
-            source: valuePacketField.packetId + ':' + valuePacketField.fieldSequence[valuePacketField.id]
-          };
+            if (dataPacketFilterList.some(dpf => dpf.packetId === valuePacketField.packetId)) {
+              const currentPacketFilter = dataPacketFilterList.find(dpf => dpf.packetId === valuePacketField.packetId);
+              if (!currentPacketFilter.fields[valuePacketField.id]) {
+                Object.assign(currentPacketFilter.fields, valuePacketField.fieldSequence);
+              }
+            } else {
+              const dataPacketFilter = new DataPacketFilter(
+                valuePacketField.packetId,
+                valuePacketField.fieldSequence,
+                true
+              );
+              dataPacketFilterList.push(dataPacketFilter);
+            }
 
-          let title = '';
-          // TODO
-          // if (type === 'ecg') {
-          //   title = i === 0 ? 'II' : 'I';
-          // } else if (type === 'spo2') {
-          //   title = 'pleth';
-          // } else {
-          //   title = type;
-          // }
-          this.setDefaultChartLayout('chart' + i, this.graphs.standard['chart' + i].chart, type, color, title);
+            this.graphs.standard['chart' + i] = {
+              chart: { },
+              source: valuePacketField.packetId + ':' + valuePacketField.fieldSequence[valuePacketField.id]
+            };
 
-        });
+            let title = '';
+            // TODO
+            // if (type === 'ecg') {
+            //   title = i === 0 ? 'II' : 'I';
+            // } else if (type === 'spo2') {
+            //   title = 'pleth';
+            // } else {
+            //   title = type;
+            // }
+            this.setDefaultChartLayout('chart' + i, this.graphs.standard['chart' + i].chart, type, color, title);
+
+          });
 
       } else if (this.visualizationType === 'derivations') {
         // setting derivations chart area
@@ -856,6 +858,23 @@ export class DefibrillatorComponent extends BaseTableComponent implements OnInit
 
   chartSort<K, V>(a: KeyValue<K, V>, b: KeyValue<K, V>): number {
     return 0;
+  }
+
+  standardArea1Sort(a: DefibrillatorSettings.Channel, b: DefibrillatorSettings.Channel): number {
+    const paramSort = this.standardParameters.map(sp => sp.type);
+
+    const indexA = paramSort.indexOf(a.type);
+    const indexB = paramSort.indexOf(b.type);
+
+    if (indexA === -1 && indexB === -1) {
+      return 0;
+    } else if (indexA === -1) {
+      return 1;
+    } else if (indexB === -1) {
+      return -1;
+    } else {
+      return indexA - indexB;
+    }
   }
 
 }

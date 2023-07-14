@@ -64,6 +64,10 @@
         <div class="area" *ngFor="let area of defibrillatorSettings.standard | keyvalue:noOrder; let iArea = index">
           <label class="area-label">{{ area.key }}</label>
 
+          <div *ngIf="area.key === 'standardArea1' && !isStandardArea1Sorted()" class="sort-warn">
+            Channels will be sorted in the widget to match area1 parameters
+          </div>
+
           <mat-accordion>
             <mat-expansion-panel *ngFor="let channel of area.value | keyvalue:noOrder; let iChannel = index; ">
               <mat-expansion-panel-header>
