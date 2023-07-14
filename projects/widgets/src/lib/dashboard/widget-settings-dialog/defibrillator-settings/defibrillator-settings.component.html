@@ -65,12 +65,12 @@
           <label class="area-label">{{ area.key }}</label>
 
           <mat-accordion>
-            <mat-expansion-panel *ngFor="let channel of area.value | keyvalue; let iChannel = index; ">
+            <mat-expansion-panel *ngFor="let channel of area.value | keyvalue:noOrder; let iChannel = index; ">
               <mat-expansion-panel-header>
                 <mat-panel-title>
                   {{ channel.key }}
                 </mat-panel-title>
-                <mat-panel-description>
+                <mat-panel-description *ngIf="channel.value.type">
                   <span class="type-label" [ngStyle]="{'color': channel.value.color}">{{ channel.value.type }}</span>
                   <hyt-tag [color]="'#fff'" textColor="channel.value.color"></hyt-tag>
                 </mat-panel-description>
@@ -101,7 +101,7 @@
                 <mat-panel-title>
                   {{ channel.key }}
                 </mat-panel-title>
-                <mat-panel-description>
+                <mat-panel-description *ngIf="channel.value.type">
                   <span class="type-label" [ngStyle]="{'color': channel.value.color}">{{ channel.value.type }}</span>
                 </mat-panel-description>
               </mat-expansion-panel-header>

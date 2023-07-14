@@ -32,7 +32,7 @@
     }
 
     .area {
-        margin-bottom: 24px;
+        margin: 1em 0;
 
         .area-label {
             color: #1e58a5;
@@ -61,4 +61,14 @@
     background: black;
     padding: 0px 5px;
     border-radius: 10px;
+}
+
+.grid-layout-select {
+    margin: 1em 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    label {
+        color: #1e58a5;
+    }
 }
