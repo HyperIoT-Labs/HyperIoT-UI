@@ -31,10 +31,11 @@ export namespace DefibrillatorSettings {
                 channel4: Channel,
             },
             parametersArea1: {
-                channel1?: Channel,
-                channel2?: Channel,
-                channel3?: Channel,
-                channel4?: Channel,
+                ecgChannel?: Channel,
+                respChannel?: Channel,
+                spo2Channel?: Channel,
+                co2Channel?: Channel,
+                ibpChannel?: Channel,
             }
             standardArea2: {
                 tempChannel: Channel,
@@ -77,10 +78,11 @@ export namespace DefibrillatorSettings {
 
         export const disabledFields: any[] = [
             ['standard', 'standardArea1', 'channel1', 'type'],
-            ['standard', 'parametersArea1', 'channel1', 'type'],
-            ['standard', 'parametersArea1', 'channel2', 'type'],
-            ['standard', 'parametersArea1', 'channel3', 'type'],
-            ['standard', 'parametersArea1', 'channel4', 'type'],
+            ['standard', 'parametersArea1', 'ecgChannel', 'type'],
+            ['standard', 'parametersArea1', 'respChannel', 'type'],
+            ['standard', 'parametersArea1', 'spo2Channel', 'type'],
+            ['standard', 'parametersArea1', 'co2Channel', 'type'],
+            ['standard', 'parametersArea1', 'ibpChannel', 'type'],
             ['standard', 'standardArea2', 'tempChannel', 'type'],
             ['standard', 'standardArea2', 'prChannel', 'type'],
             ['standard', 'standardArea3', 'nibpChannel', 'type'],

@@ -63,7 +63,7 @@ export class DefibrillatorSettingsComponent implements OnInit, OnDestroy {
             channel4: this.createDefaultChannel(),
           },
           parametersArea1: {
-            channel1: this.createDefaultChannel(DefibrillatorSettings.Type.ECG),
+            ecgChannel: this.createDefaultChannel(DefibrillatorSettings.Type.ECG),
           },
           standardArea2: {
             tempChannel: this.createDefaultChannel(DefibrillatorSettings.Type.TEMP),
@@ -240,6 +240,16 @@ export class DefibrillatorSettingsComponent implements OnInit, OnDestroy {
     return 0;
   }
 
+  standardTypeChannelMap: {
+    [key in DefibrillatorSettings.Type]?: string;
+  } = {
+    ECG: 'ecgChannel',
+    RESP: 'respChannel',
+    SPO2: 'spo2Channel',
+    CO2: 'co2Channel',
+    IBP: 'ibpChannel',
+  }
+
   setParametersArea() {
     // removing old types
     const parameterChannels = this.defibrillatorSettings.standard.parametersArea1;
@@ -254,15 +264,9 @@ export class DefibrillatorSettingsComponent implements OnInit, OnDestroy {
       if (!chartChannel.type) {
         return;
       }
-      if (!Object.values(this.defibrillatorSettings.standard.parametersArea1).some(paramChannel => paramChannel.type === chartChannel.type)) {
-        if (!this.defibrillatorSettings.standard.parametersArea1.channel1) {
-          this.defibrillatorSettings.standard.parametersArea1.channel1 = this.createDefaultChannel(chartChannel.type);
-        } else if (!this.defibrillatorSettings.standard.parametersArea1.channel2) {
-          this.defibrillatorSettings.standard.parametersArea1.channel2 = this.createDefaultChannel(chartChannel.type);
-        } else if (!this.defibrillatorSettings.standard.parametersArea1.channel3) {
-          this.defibrillatorSettings.standard.parametersArea1.channel3 = this.createDefaultChannel(chartChannel.type);
-        } else if (!this.defibrillatorSettings.standard.parametersArea1.channel4) {
-          this.defibrillatorSettings.standard.parametersArea1.channel4 = this.createDefaultChannel(chartChannel.type);
+      if (!this.defibrillatorSettings.standard.parametersArea1[this.standardTypeChannelMap[chartChannel.type]]) {
+        if (this.standardTypeChannelMap[chartChannel.type]) {
+          this.defibrillatorSettings.standard.parametersArea1[this.standardTypeChannelMap[chartChannel.type]] = this.createDefaultChannel(chartChannel.type);
         }
       }
     });
