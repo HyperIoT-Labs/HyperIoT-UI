@@ -27,7 +27,7 @@
           <div class="area area-chart">
             <div class="area-plot">
               <plotly-plot
-                  *ngIf="graphs.summary.chart0.chart['layout']"
+                  *ngIf="graphs.summary.chart0.chart['layout'] && widget.config.defibrillator.standard.standardArea1.channel1.type === ChannelType.ECG"
                   divId="widget-{{ widget.id }}-chart0-{{ isToolbarVisible }}"
                   [data]="graphs.summary.chart0.chart['data']"
                   [layout]="graphs.summary.chart0.chart['layout']"
@@ -36,7 +36,7 @@
             </div>
             <div class="area-plot">
               <plotly-plot
-                  *ngIf="graphs.summary.chart1.chart['layout']"
+                  *ngIf="graphs.summary.chart1.chart['layout'] && widget.config.defibrillator.standard.standardArea1.channel2.type === ChannelType.ECG"
                   divId="widget-{{ widget.id }}-chart1-{{ isToolbarVisible }}"
                   [data]="graphs.summary.chart1.chart['data']"
                   [layout]="graphs.summary.chart1.chart['layout']"
