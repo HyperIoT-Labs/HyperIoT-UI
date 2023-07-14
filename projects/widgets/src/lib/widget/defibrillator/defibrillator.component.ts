@@ -10,6 +10,8 @@ import {
 import { BaseTableComponent } from '../../base/base-table/base-table.component';
 import { PlotlyService } from 'angular-plotly.js';
 import { WidgetAction } from '../../base/base-widget/model/widget.model';
+import { KeyValue } from '@angular/common';
+import { DefibrillatorSettings } from '../../dashboard/widget-settings-dialog/defibrillator-settings/defibrillator-settings.model';
 
 @Component({
   selector: 'hyperiot-defibrillator',
@@ -17,6 +19,7 @@ import { WidgetAction } from '../../base/base-widget/model/widget.model';
   styleUrls: ['../../../../../../src/assets/widgets/styles/widget-commons.css', './defibrillator.component.scss'],
 })
 export class DefibrillatorComponent extends BaseTableComponent implements OnInit {
+  ChannelType = DefibrillatorSettings.Type;
   allData$: Subject<any[]> = new Subject();
   isPaused = false;
 
@@ -34,31 +37,100 @@ export class DefibrillatorComponent extends BaseTableComponent implements OnInit
   visualizationType;
 
   parameters = {
-    ecg: {
+    ecgChannel: {
       value: 0,
-      source: ''
+      min: 0,
+      max: 0,
+      unit: '',
+      valueSource: '',
+      minSource: '',
+      maxSource: '',
+      unitSource: '',
     },
-    resp: {
+    respChannel: {
       value: 0,
-      source: ''
+      min: 0,
+      max: 0,
+      unit: '',
+      valueSource: '',
+      minSource: '',
+      maxSource: '',
+      unitSource: '',
     },
-    spo2: {
+    spo2Channel: {
       value: 0,
-      source: ''
+      min: 0,
+      max: 0,
+      unit: '',
+      valueSource: '',
+      minSource: '',
+      maxSource: '',
+      unitSource: '',
     },
-    temp: {
+    tempChannel: {
       value: 0,
-      source: ''
+      min: 0,
+      max: 0,
+      unit: '',
+      valueSource: '',
+      minSource: '',
+      maxSource: '',
+      unitSource: '',
     },
-    pr: {
+    prChannel: {
       value: 0,
-      source: ''
+      min: 0,
+      max: 0,
+      unit: '',
+      valueSource: '',
+      minSource: '',
+      maxSource: '',
+      unitSource: '',
     },
-    nibp: {
+    nibpChannel: {
       value: 0,
-      source: ''
+      min: 0,
+      max: 0,
+      unit: '',
+      valueSource: '',
+      minSource: '',
+      maxSource: '',
+      unitSource: '',
+    },
+    co2Channel: {
+      value: 0,
+      min: 0,
+      max: 0,
+      unit: '',
+      valueSource: '',
+      minSource: '',
+      maxSource: '',
+      unitSource: '',
+    },
+    ibpChannel: {
+      value: 0,
+      min: 0,
+      max: 0,
+      unit: '',
+      valueSource: '',
+      minSource: '',
+      maxSource: '',
+      unitSource: '',
     },
   };
+
+  parametersLayout: {
+    [key in DefibrillatorSettings.Type]: { color?: string; configured?: boolean };
+  } = {
+    ECG: { },
+    SPO2: { },
+    RESP: { },
+    PR: { },
+    NIBP: { },
+    IBP: { },
+    CO2: { },
+    TEMP: { },
+  }
 
   graphs = {
     summary: {
@@ -95,8 +167,71 @@ export class DefibrillatorComponent extends BaseTableComponent implements OnInit
         index: 3
       }
     },
-    derivations: []
+    derivations: {
+      chartI: {
+        chart: { },
+        source: '',
+        index: 0
+      },
+      chartII: {
+        chart: { },
+        source: '',
+        index: 1
+      },
+      chartIII: {
+        chart: { },
+        source: '',
+        index: 2
+      },
+      chartAVR: {
+        chart: { },
+        source: '',
+        index: 3
+      },
+      chartAVL: {
+        chart: { },
+        source: '',
+        index: 4
+      },
+      chartAVF: {
+        chart: { },
+        source: '',
+        index: 5
+      },
+      chartV1: {
+        chart: { },
+        source: '',
+        index: 6
+      },
+      chartV2: {
+        chart: { },
+        source: '',
+        index: 7
+      },
+      chartV3: {
+        chart: { },
+        source: '',
+        index: 8
+      },
+      chartV4: {
+        chart: { },
+        source: '',
+        index: 9
+      },
+      chartV5: {
+        chart: { },
+        source: '',
+        index: 10
+      },
+      chartV6: {
+        chart: { },
+        source: '',
+        index: 11
+      }
+    }
   };
+
+  standardParameters: { type: DefibrillatorSettings.Type; rows: number; }[] = [];
 
   protected logger: Logger;
 
@@ -127,8 +262,7 @@ export class DefibrillatorComponent extends BaseTableComponent implements OnInit
 
   configure(): void {
     super.removeSubscriptionsAndDataChannels();
-    // reset derivations graphs
-    this.graphs.derivations = [];
+    this.standardParameters = [];
     if (this.widget.config && this.widget.config?.packetFields) {
       this.packetFields = Object.values(this.widget.config?.packetFields);
     }
@@ -152,25 +286,65 @@ export class DefibrillatorComponent extends BaseTableComponent implements OnInit
 
     this.derivationsGridLayout = this.widget.config.internalConfig.derivationsGridLayout;
 
+    Object.values(this.widget.config.defibrillator.standard.parametersArea1).forEach(channel => {
+      this.parametersLayout[channel.type] = {
+        color: channel.color,
+        configured: !!channel.value,
+      }
+    });
+    Object.values(this.widget.config.defibrillator.standard.standardArea2).forEach(channel => {
+      this.parametersLayout[channel.type] = {
+        color: channel.color,
+        configured: !!channel.value,
+      }
+    });
+    Object.values(this.widget.config.defibrillator.standard.standardArea3).forEach(channel => {
+      this.parametersLayout[channel.type] = {
+        color: channel.color,
+        configured: !!channel.value,
+      }
+    });
+
+    Object.values(this.widget.config.defibrillator.standard.standardArea1).forEach(channel => {
+      if (!channel.type) {
+        return;
+      }
+      const sp = this.standardParameters.find(sp => sp.type === channel.type);
+      if (sp) {
+        sp.rows ++;
+      } else {
+        this.standardParameters.push({
+          type: channel.type,
+          rows: 1,
+        });
+      }
+    });
+
     asyncScheduler.schedule(() => {
       const dataPacketFilterList: DataPacketFilter[] = [];
 
       if (this.visualizationType === 'summary') {
         // setting summary charts
-        this.widget.config.defibrillator.standardArea1.packetField.slice(0,2).forEach((pckt,i) => {
-          const type = 'ecg';
-          const packetField = pckt;
-          const color = '#32CD32';
+        [
+          this.widget.config.defibrillator.standard.standardArea1.channel1,
+          this.widget.config.defibrillator.standard.standardArea1.channel2,
+        ].forEach((channel, i) => {
+          if (!channel.type || !channel.value) {
+            return;
+          }
+          const type = channel.type;
+          const valuePacketField = channel.value;
+          const color = channel.color;
 
-          if (dataPacketFilterList.some(dpf => dpf.packetId === packetField.packetId)) {
-            const currentPacketFilter = dataPacketFilterList.find(dpf => dpf.packetId === packetField.packetId);
-            if (!currentPacketFilter.fields[packetField.id]) {
-              Object.assign(currentPacketFilter.fields, packetField.fieldSequence);
+          if (dataPacketFilterList.some(dpf => dpf.packetId === valuePacketField.packetId)) {
+            const currentPacketFilter = dataPacketFilterList.find(dpf => dpf.packetId === valuePacketField.packetId);
+            if (!currentPacketFilter.fields[valuePacketField.id]) {
+              Object.assign(currentPacketFilter.fields, valuePacketField.fieldSequence);
             }
           } else {
             const dataPacketFilter = new DataPacketFilter(
-              packetField.packetId,
-              packetField.fieldSequence,
+              valuePacketField.packetId,
+              valuePacketField.fieldSequence,
               true
             );
             dataPacketFilterList.push(dataPacketFilter);
@@ -178,7 +352,7 @@ export class DefibrillatorComponent extends BaseTableComponent implements OnInit
 
           this.graphs.summary['chart' + i] = {
             chart: { },
-            source: packetField.packetId + ':' + packetField.fieldSequence[packetField.id]
+            source: valuePacketField.packetId + ':' + valuePacketField.fieldSequence[valuePacketField.id]
           };
           let title = i === 0 ? 'II' : 'I';
           this.setDefaultChartLayout('chart' + i, this.graphs.summary['chart' + i].chart, type, color, title);
@@ -188,39 +362,42 @@ export class DefibrillatorComponent extends BaseTableComponent implements OnInit
       } else if (this.visualizationType === 'standard') {
 
         // setting standard chart area 1
-        this.widget.config.defibrillator.standardArea1.types.forEach((x, i) => {
-          const type = this.widget.config.defibrillator.standardArea1.types[i];
-          const packetField = this.widget.config.defibrillator.standardArea1.packetField[i];
-          const color = this.widget.config.defibrillator.standardArea1.colors[i];
+        Object.values(this.widget.config.defibrillator.standard.standardArea1).forEach((channel, i) => {
+          if (!channel.type || !channel.value) {
+            return;
+          }
+          const type = channel.type;
+          const valuePacketField = channel.value;
+          const color = channel.color;
 
-          if (dataPacketFilterList.some(dpf => dpf.packetId === packetField.packetId)) {
-            const currentPacketFilter = dataPacketFilterList.find(dpf => dpf.packetId === packetField.packetId);
-            if (!currentPacketFilter.fields[packetField.id]) {
-              Object.assign(currentPacketFilter.fields, packetField.fieldSequence);
+          if (dataPacketFilterList.some(dpf => dpf.packetId === valuePacketField.packetId)) {
+            const currentPacketFilter = dataPacketFilterList.find(dpf => dpf.packetId === valuePacketField.packetId);
+            if (!currentPacketFilter.fields[valuePacketField.id]) {
+              Object.assign(currentPacketFilter.fields, valuePacketField.fieldSequence);
             }
           } else {
             const dataPacketFilter = new DataPacketFilter(
-              packetField.packetId,
-              packetField.fieldSequence,
+              valuePacketField.packetId,
+              valuePacketField.fieldSequence,
               true
             );
             dataPacketFilterList.push(dataPacketFilter);
           }
 
-          // TODO define settings with object, not array
           this.graphs.standard['chart' + i] = {
             chart: { },
-            source: packetField.packetId + ':' + packetField.fieldSequence[packetField.id]
+            source: valuePacketField.packetId + ':' + valuePacketField.fieldSequence[valuePacketField.id]
           };
 
           let title = '';
-          if (type === 'ecg') {
-            title = i === 0 ? 'II' : 'I';
-          } else if (type === 'spo2') {
-            title = 'pleth';
-          } else {
-            title = type;
-          }
+          // TODO
+          // if (type === 'ecg') {
+          //   title = i === 0 ? 'II' : 'I';
+          // } else if (type === 'spo2') {
+          //   title = 'pleth';
+          // } else {
+          //   title = type;
+          // }
           this.setDefaultChartLayout('chart' + i, this.graphs.standard['chart' + i].chart, type, color, title);
 
         });
@@ -228,79 +405,129 @@ export class DefibrillatorComponent extends BaseTableComponent implements OnInit
       } else if (this.visualizationType === 'derivations') {
         // setting derivations chart area
 
-        this.widget.config.defibrillator.derivations.packetField.forEach((pckt, i) => {
-          const type = 'ecg';
-          const packetField = this.widget.config.defibrillator.derivations.packetField[i];
-          const color = '#32CD32';
+        Object.keys(this.widget.config.defibrillator.derivations.derivationsArea).forEach((key, i) => {
+          const channel = this.widget.config.defibrillator.derivations.derivationsArea[key];
+          if (!channel.type || !channel.value) {
+            return;
+          }
+          const type = channel.type;
+          const valuePacketField = channel.value;
+          const color = channel.color;
 
-          if (dataPacketFilterList.some(dpf => dpf.packetId === packetField.packetId)) {
-            const currentPacketFilter = dataPacketFilterList.find(dpf => dpf.packetId === packetField.packetId);
-            if (!currentPacketFilter.fields[packetField.id]) {
-              Object.assign(currentPacketFilter.fields, packetField.fieldSequence);
+          if (dataPacketFilterList.some(dpf => dpf.packetId === valuePacketField.packetId)) {
+            const currentPacketFilter = dataPacketFilterList.find(dpf => dpf.packetId === valuePacketField.packetId);
+            if (!currentPacketFilter.fields[valuePacketField.id]) {
+              Object.assign(currentPacketFilter.fields, valuePacketField.fieldSequence);
             }
           } else {
             const dataPacketFilter = new DataPacketFilter(
-              packetField.packetId,
-              packetField.fieldSequence,
+              valuePacketField.packetId,
+              valuePacketField.fieldSequence,
               true
             );
             dataPacketFilterList.push(dataPacketFilter);
           }
 
-          this.graphs.derivations.push({chart: { }, source: pckt.packetId + ':' + pckt.fieldSequence[packetField.id]});
-          this.setDefaultChartLayout('chart' + i, this.graphs.derivations[i].chart, type, color, this.derivationsTitleMap[i]);
+          this.graphs.derivations['chart' + key] = {
+            chart: { },
+            source: valuePacketField.packetId + ':' + valuePacketField.fieldSequence[valuePacketField.id]
+          }
+          this.setDefaultChartLayout('chart' + key, this.graphs.derivations['chart' + key].chart, type, color, this.derivationsTitleMap[i]);
 
         });
 
       }
 
       // setting standard chart area 1 parameters
-      let parametersPacketFields;
-      if (this.widget.config.defibrillator.standardArea1.parametersPacketField) {
-        parametersPacketFields = this.widget.config.defibrillator.standardArea1.parametersPacketField;
-      } else {
-        parametersPacketFields = null;
-      }
-      Object.keys(parametersPacketFields).forEach(x => {
-        const packet = parametersPacketFields[x];
-        if (dataPacketFilterList.some(dpf => dpf.packetId === packet.packetId)) {
-          const currentPacketFilter = dataPacketFilterList.find(dpf => dpf.packetId === packet.packetId);
-          if (!currentPacketFilter.fields[packet.id]) {
-            Object.assign(currentPacketFilter.fields, packet.fieldSequence);
-          }
-        } else {
-          const dataPacketFilter = new DataPacketFilter(
-            packet.packetId,
-            packet.fieldSequence,
-            true
-          );
-          dataPacketFilterList.push(dataPacketFilter);
+      Object.keys(this.widget.config.defibrillator.standard.parametersArea1).forEach(key => {
+        const channel: DefibrillatorSettings.Channel = this.widget.config.defibrillator.standard.parametersArea1[key];
+        if (!channel.type || !channel.value) {
+          return;
         }
 
-        this.parameters[x].source = packet.packetId + ':' + packet.fieldSequence[packet.id];
+        const packetToAdd = [
+          channel.value,
+          channel.max,
+          channel.min,
+          channel.unit,
+        ];
+        packetToAdd.forEach(packet => {
+          if (!packet) {
+            return;
+          }
+          if (dataPacketFilterList.some(dpf => dpf.packetId === packet.packetId)) {
+            const currentPacketFilter = dataPacketFilterList.find(dpf => dpf.packetId === packet.packetId);
+            if (!currentPacketFilter.fields[packet.id]) {
+              Object.assign(currentPacketFilter.fields, packet.fieldSequence);
+            }
+          } else {
+            const dataPacketFilter = new DataPacketFilter(
+              packet.packetId,
+              packet.fieldSequence,
+              true
+            );
+            dataPacketFilterList.push(dataPacketFilter);
+          }
+        });
+
+        if (channel.value) {
+          this.parameters[key].valueSource = channel.value.packetId + ':' + channel.value.fieldSequence[channel.value.id];
+        }
+        if (channel.max) {
+          this.parameters[key].maxSource = channel.max.packetId + ':' + channel.max.fieldSequence[channel.max.id];
+        }
+        if (channel.min) {
+          this.parameters[key].minSource = channel.min.packetId + ':' + channel.min.fieldSequence[channel.min.id];
+        }
+        if (channel.unit) {
+          this.parameters[key].unitSource = channel.unit.packetId + ':' + channel.unit.fieldSequence[channel.unit.id];
+        }
       });
 
       // setting standard parameters area 2
-      this.widget.config.defibrillator.standardArea2.types.forEach((x, i) => {
-        const type = this.widget.config.defibrillator.standardArea2.types[i];
-        const packetField = this.widget.config.defibrillator.standardArea2.packetField[i];
-        const color = this.widget.config.defibrillator.standardArea2.colors[i];
-
-        if (dataPacketFilterList.some(dpf => dpf.packetId === packetField.packetId)) {
-          const currentPacketFilter = dataPacketFilterList.find(dpf => dpf.packetId === packetField.packetId);
-          if (!currentPacketFilter.fields[packetField.id]) {
-            Object.assign(currentPacketFilter.fields, packetField.fieldSequence);
-          }
-        } else {
-          const dataPacketFilter = new DataPacketFilter(
-            packetField.packetId,
-            packetField.fieldSequence,
-            true
-          );
-          dataPacketFilterList.push(dataPacketFilter);
+      Object.keys(this.widget.config.defibrillator.standard.standardArea2).forEach((key, i) => {
+        const channel: DefibrillatorSettings.Channel = this.widget.config.defibrillator.standard.standardArea2[key];
+        if (!channel.type || !channel.value) {
+          return;
         }
 
-        this.parameters[type].source = packetField.packetId + ':' + packetField.fieldSequence[packetField.id];
+        const packetToAdd = [
+          channel.value,
+          channel.max,
+          channel.min,
+          channel.unit,
+        ];
+        packetToAdd.forEach(packet => {
+          if (!packet) {
+            return;
+          }
+          if (dataPacketFilterList.some(dpf => dpf.packetId === packet.packetId)) {
+            const currentPacketFilter = dataPacketFilterList.find(dpf => dpf.packetId === packet.packetId);
+            if (!currentPacketFilter.fields[packet.id]) {
+              Object.assign(currentPacketFilter.fields, packet.fieldSequence);
+            }
+          } else {
+            const dataPacketFilter = new DataPacketFilter(
+              packet.packetId,
+              packet.fieldSequence,
+              true
+            );
+            dataPacketFilterList.push(dataPacketFilter);
+          }
+        });
+
+        if (channel.value) {
+          this.parameters[key].valueSource = channel.value.packetId + ':' + channel.value.fieldSequence[channel.value.id];
+        }
+        if (channel.max) {
+          this.parameters[key].maxSource = channel.max.packetId + ':' + channel.max.fieldSequence[channel.max.id];
+        }
+        if (channel.min) {
+          this.parameters[key].minSource = channel.min.packetId + ':' + channel.min.fieldSequence[channel.min.id];
+        }
+        if (channel.unit) {
+          this.parameters[key].unitSource = channel.unit.packetId + ':' + channel.unit.fieldSequence[channel.unit.id];
+        }
       });
 
       // setting standard parameters area 3
@@ -386,7 +613,7 @@ export class DefibrillatorComponent extends BaseTableComponent implements OnInit
 
       // code for derivations
       if (this.visualizationType === 'derivations') {
-        const derChartsToUpdate = this.graphs.derivations.filter((x: any) => x.source === packetId + ':' + fieldName) as any;
+        const derChartsToUpdate = Object.values(this.graphs.derivations).filter((x: any) => x.source === packetId + ':' + fieldName) as any;
 
         derChartsToUpdate.forEach(chart => {
           const defibrillatorElements = packetData.map(pd => ({ timestamp: pd.timestamp, trace: chart.chart.key, value: pd[fieldName] }));
@@ -395,10 +622,25 @@ export class DefibrillatorComponent extends BaseTableComponent implements OnInit
       }
 
       // updateing parameters
-      const parametersToUpdate = Object.values(this.parameters).filter((x: any) => x.source === packetId + ':' + fieldName) as any;
-      parametersToUpdate.forEach(parameter => {
+      const parametersValueToUpdate = Object.values(this.parameters).filter((x: any) => x.valueSource === packetId + ':' + fieldName) as any;
+      parametersValueToUpdate.forEach(parameter => {
         // passing last value of buffer to parameter
         parameter.value = packetData[packetData.length - 1][fieldName];
+      });
+      const parametersMaxToUpdate = Object.values(this.parameters).filter((x: any) => x.maxSource === packetId + ':' + fieldName) as any;
+      parametersMaxToUpdate.forEach(parameter => {
+        // passing last value of buffer to parameter
+        parameter.max = packetData[packetData.length - 1][fieldName];
+      });
+      const parametersMinToUpdate = Object.values(this.parameters).filter((x: any) => x.minSource === packetId + ':' + fieldName) as any;
+      parametersMinToUpdate.forEach(parameter => {
+        // passing last value of buffer to parameter
+        parameter.min = packetData[packetData.length - 1][fieldName];
+      });
+      const parametersUnitToUpdate = Object.values(this.parameters).filter((x: any) => x.unitSource === packetId + ':' + fieldName) as any;
+      parametersUnitToUpdate.forEach(parameter => {
+        // passing last value of buffer to parameter
+        parameter.unit = packetData[packetData.length - 1][fieldName];
       });
 
     });
@@ -419,7 +661,7 @@ export class DefibrillatorComponent extends BaseTableComponent implements OnInit
       graph.data.line = {
         color,
         width: 2,
-        shape: type === 'ecg' ? 'linear' : 'spline',
+        shape: 'linear', // type === 'ecg' ? 'linear' : 'spline',
         smoothing: 1.3
       };
     }
@@ -553,7 +795,7 @@ export class DefibrillatorComponent extends BaseTableComponent implements OnInit
     } else if (this.visualizationType === 'standard') {
       chartsToUpdate = Object.keys(this.graphs.standard);
     } else if (this.visualizationType === 'derivations') {
-      chartsToUpdate = this.graphs.derivations;
+      chartsToUpdate = Object.keys(this.graphs.derivations);
     }
     chartsToUpdate.forEach(async(x,i) => {
       const Plotly = await this.plotly.getPlotly();
@@ -577,7 +819,7 @@ export class DefibrillatorComponent extends BaseTableComponent implements OnInit
     } else if (this.visualizationType === 'standard') {
       chartsToUpdate = Object.keys(this.graphs.standard);
     } else if (this.visualizationType === 'derivations') {
-      chartsToUpdate = this.graphs.derivations;
+      chartsToUpdate = Object.keys(this.graphs.derivations);
     }
     chartsToUpdate.forEach(async(x,i) => {
       const Plotly = await this.plotly.getPlotly();
@@ -610,6 +852,10 @@ export class DefibrillatorComponent extends BaseTableComponent implements OnInit
   switchVisualization() {
     this.visualizationType = this.visualizationType === 'standard' ? 'derivations' : 'standard';
     this.configure();
+  }
+
+  chartSort<K, V>(a: KeyValue<K, V>, b: KeyValue<K, V>): number {
+    return 0;
   }
 
 }

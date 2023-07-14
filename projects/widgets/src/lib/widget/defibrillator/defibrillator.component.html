@@ -20,6 +20,9 @@
         <strong i18n="@@HYT_common_not_configured">Click 'Settings' button to configure.</strong>
       </div>
       <ng-template #configured>
+
+        <button *ngIf="visualizationType !== 'summary'" class="switch-visualization" (click)="switchVisualization()">Switch visualization</button>
+
         <div *ngIf="visualizationType === 'summary'" class="defibrillator-struct summary">
           <div class="area area-chart">
             <div class="area-plot">
@@ -42,56 +45,57 @@
             </div>
           </div>
           <div class="area area-parameters">
-            <div class="m-card hrbpm-card">
+            <div *ngIf="parametersLayout[ChannelType.ECG].configured" class="m-card hrbpm-card" [ngStyle]="{color: parametersLayout[ChannelType.ECG].color}">
               <div class="label">HR bpm</div>
               <div class="value">
-                <ng-container *ngIf="parameters.ecg.value">
-                  {{ parameters.ecg.value | number : '1.0-0' }}
+                <ng-container *ngIf="parameters.ecgChannel.value">
+                  {{ parameters.ecgChannel.value | number : '1.0-0' }}
                 </ng-container>
-                <ng-container *ngIf="!parameters.ecg.value">
+                <ng-container *ngIf="!parameters.ecgChannel.value">
                   {{ '-' }}
                 </ng-container>
               </div>
             </div>
-            <div class="m-card spo2-card">
+            <div *ngIf="parametersLayout[ChannelType.SPO2].configured" class="m-card spo2-card" [ngStyle]="{color: parametersLayout[ChannelType.SPO2].color}">
               <div class="label">SPO2 %</div>
               <div class="value">
-                <ng-container *ngIf="parameters.spo2.value">
-                  {{ parameters.spo2.value | number : '1.0-0' }}
+                <ng-container *ngIf="parameters.spo2Channel.value">
+                  {{ parameters.spo2Channel.value | number : '1.0-0' }}
                 </ng-container>
-                <ng-container *ngIf="!parameters.spo2.value">
+                <ng-container *ngIf="!parameters.spo2Channel.value">
                   {{ '-' }}
                 </ng-container>
               </div>
             </div>
-            <div class="m-card rr-rpm-card">
+            <div *ngIf="parametersLayout[ChannelType.RESP].configured" class="m-card rr-rpm-card" [ngStyle]="{color: parametersLayout[ChannelType.RESP].color}">
               <div class="label">RR rpm</div>
               <div class="value">
-                <ng-container *ngIf="parameters.resp.value">
-                  {{ parameters.resp.value | number : '1.0-0' }}
+                <ng-container *ngIf="parameters.respChannel.value">
+                  {{ parameters.respChannel.value | number : '1.0-0' }}
                 </ng-container>
-                <ng-container *ngIf="!parameters.resp.value">
+                <ng-container *ngIf="!parameters.respChannel.value">
                   {{ '-' }}
                 </ng-container>
               </div>
             </div>
-            <div class="m-card pr-bpm-card">
+            <div *ngIf="parametersLayout[ChannelType.PR].configured" class="m-card pr-bpm-card" [ngStyle]="{color: parametersLayout[ChannelType.PR].color}">
               <div class="label">PR bpm</div>
               <div class="value">
-                <ng-container *ngIf="parameters.pr.value">
-                  {{ parameters.pr.value | number : '1.0-0' }}
+                <ng-container *ngIf="parameters.prChannel.value">
+                  {{ parameters.prChannel.value | number : '1.0-0' }}
                 </ng-container>
-                <ng-container *ngIf="!parameters.pr.value">
+                <ng-container *ngIf="!parameters.prChannel.value">
                   {{ '-' }}
                 </ng-container>
               </div>
             </div>
-            <div class="m-card nibp-card">
+            <div *ngIf="parametersLayout[ChannelType.NIBP].configured" class="m-card nibp-card" [ngStyle]="{color: parametersLayout[ChannelType.NIBP].color}">
               <div class="label">NIBP mmHq</div>
               <div class="value">-</div>
             </div>
           </div>
         </div>
+
         <div *ngIf="visualizationType === 'standard'" class="defibrillator-struct standard">
           <div class="area area-1">
             <div class="area-left">
@@ -133,322 +137,392 @@
               </div>
             </div>
             <div class="area-right">
-              <div class="card ecg">
-                <div class="first">
-                    <div class="label">ECG</div>
-                    <div class="alerts">
-                        <div class="max">120</div>
-                        <div class="min">60</div>
-                    </div>
+
+              <div *ngFor="let param of standardParameters" [ngStyle]="{ height: 25 * param.rows + '%', color: parametersLayout[param.type].color }">
+                <div *ngIf="param.type === ChannelType.ECG" class="card ecg">
+                  <ng-container *ngTemplateOutlet="ecgParamTemplate"></ng-container>
                 </div>
-                <div class="second unit-value">
-                  <ng-container *ngIf="parameters.ecg.value">
-                    {{ parameters.ecg.value | number : '1.0-0' }}
-                  </ng-container>
-                  <ng-container *ngIf="!parameters.ecg.value">
-                    {{ '-' }}
-                  </ng-container>
+                <div *ngIf="param.type === ChannelType.RESP" class="card resp">
+                  <ng-container *ngTemplateOutlet="respParamTemplate"></ng-container>
                 </div>
-                <div class="third">
-                    <div class="st">
-                        <div class="st-label">ST</div>
-                        <div class="st-value">-</div>
-                    </div>
-                    <div class="pvc">
-                        <div class="pvc-label">PVCs</div>
-                        <div class="pvc-value">-</div>
-                    </div>
-                    <div class="pause">
-                        <div class="pause-label">PAUSE</div>
-                        <div class="pause-value">-</div>
-                    </div>
+                <div *ngIf="param.type === ChannelType.SPO2" class="card spo2">
+                  <ng-container *ngTemplateOutlet="spo2ParamTemplate"></ng-container>
                 </div>
-                <div class="fourth">
-                    <!-- <div class="heart"></div> -->
-                    <div class="heart full"></div>
+                <div *ngIf="param.type === ChannelType.CO2" class="card co2">
+                  <ng-container *ngTemplateOutlet="co2ParamTemplate"></ng-container>
+                </div>
+                <div *ngIf="param.type === ChannelType.IBP" class="card nibp-ibp">
+                  <ng-container *ngTemplateOutlet="ibpParamTemplate"></ng-container>
                 </div>
               </div>
-              <div class="card resp">
-                <div class="first">
-                    <div class="label">Resp</div>
-                    <div class="alerts">
-                        <div class="max">30</div>
-                        <div class="min">8</div>
-                    </div>
-                </div>
-                <div class="second unit-value">
-                  <ng-container *ngIf="parameters.resp.value">
-                    {{ parameters.resp.value | number : '1.0-0' }}
-                  </ng-container>
-                  <ng-container *ngIf="!parameters.resp.value">
-                    {{ '-' }}
-                  </ng-container>
-                </div>
-              </div>
-              <div class="card spo2">
-                <div class="first">
-                    <div class="label">SpO2</div>
-                    <div class="alerts">
-                        <div class="max">100</div>
-                        <div class="min">85</div>
-                    </div>
-                </div>
-                <div class="second unit-value">
-                  <ng-container *ngIf="parameters.spo2.value">
-                    {{ parameters.spo2.value | number : '1.0-0' }}
-                  </ng-container>
-                  <ng-container *ngIf="!parameters.spo2.value">
-                    {{ '-' }}
-                  </ng-container>
-                </div>
-                <div class="third">
-                    <div class="perc">
-                        <div class="perc-label">%</div>
-                    </div>
-                </div>
-                <div class="fourth">
-                    <div class="pi">
-                        <div class="pi-label">PI</div>
-                        <div class="pi-value">-</div>
-                    </div>
-                </div>
-              </div>
+
             </div>
           </div>
           <div class="area area-2">
 
-            <div class="card bottom-card temperature">
-              <div class="first">
-                  <div class="label">Temp</div>
-                  <div class="alerts">
-                      <div class="max">-</div>
-                      <div class="min">-</div>
-                  </div>
-              </div>
-              <div class="second">
-                  <div class="temp-label">T1</div>
-                  <div class="temp-value">
-                    <ng-container *ngIf="parameters.temp.value">
-                      {{ parameters.temp.value | number : '1.0-0' }}
-                    </ng-container>
-                    <ng-container *ngIf="!parameters.temp.value">
-                      {{ '-' }}
-                    </ng-container>
-                  </div>
-              </div>
-              <div class="third">
-                  <div class="temp-2">
-                      <div class="temp-label">T2</div>
-                      <div class="temp-value">
-                          -
-                      </div>
-                  </div>
-                  <div class="temp-diff">
-                      <div class="temp-label">TD</div>
-                      <div class="temp-value">
-                          -
-                      </div>
-                  </div>
-              </div>
-              <div class="fourth">
-                  C°
-              </div>
+            <div class="card bottom-card temperature" [ngStyle]="{ color: parametersLayout[ChannelType.TEMP].color }">
+              <ng-container *ngTemplateOutlet="tempParamTemplate"></ng-container>
             </div>
-            <div class="card bottom-card pr">
-              <div class="first">
-                  <div class="label">Pr</div>
-                  <div class="alerts">
-                      <div class="max">-</div>
-                      <div class="min">-</div>
-                  </div>
-              </div>
-              <div class="second">
-                  <div class="temp-value">
-                    <ng-container *ngIf="parameters.pr.value">
-                      {{ parameters.pr.value | number : '1.0-0' }}
-                    </ng-container>
-                    <ng-container *ngIf="!parameters.pr.value">
-                      {{ '-' }}
-                    </ng-container>
-                  </div>
-              </div>
-              <div class="third">
-                  <div class="label-value">Source NIBP</div>
-              </div>
-            </div>
-            <div class="card">
-              <hyt-button (clickFn)="switchVisualization()">Go To Derivations view</hyt-button>
+            <div class="card bottom-card pr" [ngStyle]="{ color: parametersLayout[ChannelType.PR].color }">
+              <ng-container *ngTemplateOutlet="prParamTemplate"></ng-container>
             </div>
           </div>
           <div class="area area-3">
-            <div class="card nibp">
-              <div class="row-up">
-                  <div class="label">NIBP</div>
-                  <div class="time">00:00</div>
-                  <div class="meas">Continual</div>
-                  <div class="type">Adu</div>
-                  <div class="unit">mmHg</div>
-              </div>
-              <div class="row-down">
-                  <div class="first">
-                      <div class="alarms-label">
-                          SYS
-                      </div>
-                      <div class="alarms-value">
-                          <div class="alarm-max">-</div>
-                          <div class="alarm-min">-</div>
-                      </div>
-                  </div>
-                  <div class="second">
-                      -
-                  </div>
-                  <div class="third">
-                      /-
-                  </div>
-                  <div class="fourth">
-                      (-)
-                  </div>
-              </div>
+            <div class="card nibp-ibp" [ngStyle]="{ color: parametersLayout[ChannelType.NIBP].color }">
+              <ng-container *ngTemplateOutlet="nibpParamTemplate"></ng-container>
             </div>
           </div>
         </div>
+
         <div *ngIf="visualizationType === 'derivations'" class="defibrillator-struct derivations">
           <div class="area-left">
-            <div *ngFor="let derivation of graphs.derivations" class="area-plot-derivations" [ngStyle]="{ width: 100 / derivationsGridLayout.cols + '%', height: 100 / derivationsGridLayout.rows + '%' }">
+            <div *ngFor="let derivation of graphs.derivations | keyvalue : chartSort" class="area-plot-derivations" [ngStyle]="{ width: 100 / derivationsGridLayout.cols + '%', height: 100 / derivationsGridLayout.rows + '%' }">
               <plotly-plot
-                  *ngIf="derivation.chart['layout']"
-                  divId="widget-{{ widget.id }}-{{ derivation.chart.key }}-{{ isToolbarVisible }}"
-                  [data]="derivation.chart['data']"
-                  [layout]="derivation.chart['layout']"
-                  [config]="derivation.chart['config']">
+                  *ngIf="derivation.value.chart['layout']"
+                  divId="widget-{{ widget.id }}-{{ derivation.value.chart.key }}-{{ isToolbarVisible }}"
+                  [data]="derivation.value.chart['data']"
+                  [layout]="derivation.value.chart['layout']"
+                  [config]="derivation.value.chart['config']">
               </plotly-plot>
             </div>
           </div>
           <div class="area-right">
-            <div class="card ecg">
-              <div class="first">
-                  <div class="label">ECG</div>
-                  <div class="alerts">
-                      <div class="max">120</div>
-                      <div class="min">60</div>
-                  </div>
-              </div>
-              <div class="second unit-value">
-                <ng-container *ngIf="parameters.ecg.value">
-                  {{ parameters.ecg.value | number : '1.0-0' }}
-                </ng-container>
-                <ng-container *ngIf="!parameters.ecg.value">
-                  {{ '-' }}
-                </ng-container>
-              </div>
-              <div class="third">
-                  <div class="st">
-                      <div class="st-label">ST</div>
-                      <div class="st-value">-</div>
-                  </div>
-                  <div class="pvc">
-                      <div class="pvc-label">PVCs</div>
-                      <div class="pvc-value">-</div>
-                  </div>
-                  <div class="pause">
-                      <div class="pause-label">PAUSE</div>
-                      <div class="pause-value">-</div>
-                  </div>
-              </div>
-              <div class="fourth">
-                  <!-- <div class="heart"></div> -->
-                  <div class="heart full"></div>
-              </div>
+            <div class="card ecg" [ngStyle]="{color: parametersLayout[ChannelType.ECG].color}">
+              <ng-container *ngTemplateOutlet="ecgParamTemplate"></ng-container>
             </div>
-            <div class="card resp">
-              <div class="first">
-                  <div class="label">Resp</div>
-                  <div class="alerts">
-                      <div class="max">30</div>
-                      <div class="min">8</div>
-                  </div>
-              </div>
-              <div class="second unit-value">
-                <ng-container *ngIf="parameters.resp.value">
-                  {{ parameters.resp.value | number : '1.0-0' }}
-                </ng-container>
-                <ng-container *ngIf="!parameters.resp.value">
-                  {{ '-' }}
-                </ng-container>
-              </div>
+            <div *ngIf="parametersLayout[ChannelType.RESP].configured" class="card resp" [ngStyle]="{color: parametersLayout[ChannelType.RESP].color}">
+              <ng-container *ngTemplateOutlet="respParamTemplate"></ng-container>
             </div>
-            <div class="card spo2">
-              <div class="first">
-                  <div class="label">SpO2</div>
-                  <div class="alerts">
-                      <div class="max">100</div>
-                      <div class="min">85</div>
-                  </div>
-              </div>
-              <div class="second unit-value">
-                <ng-container *ngIf="parameters.spo2.value">
-                  {{ parameters.spo2.value | number : '1.0-0' }}
-                </ng-container>
-                <ng-container *ngIf="!parameters.spo2.value">
-                  {{ '-' }}
-                </ng-container>
-              </div>
-              <div class="third">
-                  <div class="perc">
-                      <div class="perc-label">%</div>
-                  </div>
-              </div>
-              <div class="fourth">
-                  <div class="pi">
-                      <div class="pi-label">PI</div>
-                      <div class="pi-value">-</div>
-                  </div>
-              </div>
+            <div *ngIf="parametersLayout[ChannelType.SPO2].configured" class="card spo2" [ngStyle]="{color: parametersLayout[ChannelType.SPO2].color}">
+              <ng-container *ngTemplateOutlet="spo2ParamTemplate"></ng-container>
             </div>
-            <div class="card temperature">
-              <div class="first">
-                  <div class="label">Temp</div>
-                  <div class="alerts">
-                      <div class="max">-</div>
-                      <div class="min">-</div>
-                  </div>
-              </div>
-              <div class="second">
-                  <div class="temp-label">T1</div>
-                  <div class="temp-value">
-                    <ng-container *ngIf="parameters.temp.value">
-                      {{ parameters.temp.value | number : '1.0-0' }}
-                    </ng-container>
-                    <ng-container *ngIf="!parameters.temp.value">
-                      {{ '-' }}
-                    </ng-container>
-                  </div>
-              </div>
-              <div class="third">
-                  <div class="temp-2">
-                      <div class="temp-label">T2</div>
-                      <div class="temp-value">
-                          -
-                      </div>
-                  </div>
-                  <div class="temp-diff">
-                      <div class="temp-label">TD</div>
-                      <div class="temp-value">
-                          -
-                      </div>
-                  </div>
-              </div>
-              <div class="fourth">
-                  C°
-              </div>
-            </div>
-            <div class="card switch">
-              <hyt-button (clickFn)="switchVisualization()">Go To Standard view</hyt-button>
+            <div *ngIf="parametersLayout[ChannelType.TEMP].configured" class="card temperature" [ngStyle]="{color: parametersLayout[ChannelType.TEMP].color}">
+              <ng-container *ngTemplateOutlet="tempParamTemplate"></ng-container>
             </div>
           </div>
         </div>
+
       </ng-template>
     </content-widget>
+
+    <ng-template #ecgParamTemplate>
+      <div class="first">
+          <div class="label">ECG</div>
+          <div class="alerts">
+              <div class="max">
+                <ng-container *ngIf="parameters.ecgChannel.max">
+                  {{ parameters.ecgChannel.max | number : '1.0-0' }}
+                </ng-container>
+                <ng-container *ngIf="!parameters.ecgChannel.max">
+                  {{ '-' }}
+                </ng-container>
+              </div>
+              <div class="min">
+                <ng-container *ngIf="parameters.ecgChannel.min">
+                  {{ parameters.ecgChannel.min | number : '1.0-0' }}
+                </ng-container>
+                <ng-container *ngIf="!parameters.ecgChannel.min">
+                  {{ '-' }}
+                </ng-container>
+              </div>
+          </div>
+      </div>
+      <div class="second unit-value">
+        <ng-container *ngIf="parameters.ecgChannel.value">
+          {{ parameters.ecgChannel.value | number : '1.0-0' }}
+        </ng-container>
+        <ng-container *ngIf="!parameters.ecgChannel.value">
+          {{ '-' }}
+        </ng-container>
+      </div>
+      <div class="third">
+          <div class="st">
+              <div class="st-label">ST</div>
+              <div class="st-value">-</div>
+          </div>
+          <div class="pvc">
+              <div class="pvc-label">PVCs</div>
+              <div class="pvc-value">-</div>
+          </div>
+          <div class="pause">
+              <div class="pause-label">PAUSE</div>
+              <div class="pause-value">-</div>
+          </div>
+      </div>
+      <div class="fourth">
+        <!-- <svg class="heart full" width="25px" height="25px" viewBox="0 -0.5 25 25" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M12.4997 18.9911L9.5767 15.9911L6.6767 12.9911C5.10777 11.3331 5.10777 8.73809 6.6767 7.08009C7.44494 6.34175 8.48548 5.95591 9.54937 6.01489C10.6133 6.07387 11.6048 6.57236 12.2867 7.39109L12.4997 7.60009L12.7107 7.38209C13.3926 6.56336 14.3841 6.06487 15.448 6.00589C16.5119 5.94691 17.5525 6.33275 18.3207 7.07109C19.8896 8.72909 19.8896 11.3241 18.3207 12.9821L15.4207 15.9821L12.4997 18.9911Z" stroke-width="1.5" stroke="red" stroke-linecap="round" stroke-linejoin="round" />
+        </svg> -->
+      </div>
+    </ng-template>
+
+    <ng-template #respParamTemplate>
+      <div class="first">
+          <div class="label">Resp</div>
+          <div class="alerts">
+              <div class="max">
+                <ng-container *ngIf="parameters.respChannel.max">
+                  {{ parameters.respChannel.max | number : '1.0-0' }}
+                </ng-container>
+                <ng-container *ngIf="!parameters.respChannel.max">
+                  {{ '-' }}
+                </ng-container>
+              </div>
+              <div class="min">
+                <ng-container *ngIf="parameters.respChannel.min">
+                  {{ parameters.respChannel.min | number : '1.0-0' }}
+                </ng-container>
+                <ng-container *ngIf="!parameters.respChannel.min">
+                  {{ '-' }}
+                </ng-container>
+              </div>
+          </div>
+      </div>
+      <div class="second unit-value">
+        <ng-container *ngIf="parameters.respChannel.value">
+          {{ parameters.respChannel.value | number : '1.0-0' }}
+        </ng-container>
+        <ng-container *ngIf="!parameters.respChannel.value">
+          {{ '-' }}
+        </ng-container>
+      </div>
+    </ng-template>
+
+    <ng-template #spo2ParamTemplate>
+      <div class="first">
+          <div class="label">SpO2</div>
+          <div class="alerts">
+              <div class="max">
+                <ng-container *ngIf="parameters.spo2Channel.max">
+                  {{ parameters.spo2Channel.max | number : '1.0-0' }}
+                </ng-container>
+                <ng-container *ngIf="!parameters.spo2Channel.max">
+                  {{ '-' }}
+                </ng-container>
+              </div>
+              <div class="min">
+                <ng-container *ngIf="parameters.spo2Channel.min">
+                  {{ parameters.spo2Channel.min | number : '1.0-0' }}
+                </ng-container>
+                <ng-container *ngIf="!parameters.spo2Channel.min">
+                  {{ '-' }}
+                </ng-container>
+              </div>
+          </div>
+      </div>
+      <div class="second unit-value">
+        <ng-container *ngIf="parameters.spo2Channel.value">
+          {{ parameters.spo2Channel.value | number : '1.0-0' }}
+        </ng-container>
+        <ng-container *ngIf="!parameters.spo2Channel.value">
+          {{ '-' }}
+        </ng-container>
+      </div>
+      <div class="third">
+          <div class="perc">
+              <div class="perc-label">%</div>
+          </div>
+      </div>
+      <div class="fourth">
+          <div class="pi">
+              <div class="pi-label">PI</div>
+              <div class="pi-value">-</div>
+          </div>
+      </div>
+    </ng-template>
+
+    <ng-template #tempParamTemplate>
+      <div class="first">
+          <div class="label">Temp</div>
+          <div class="alerts">
+              <div class="max">
+                <ng-container *ngIf="parameters.tempChannel.max">
+                  {{ parameters.tempChannel.max | number : '1.0-0' }}
+                </ng-container>
+                <ng-container *ngIf="!parameters.tempChannel.max">
+                  {{ '-' }}
+                </ng-container>
+              </div>
+              <div class="min">
+                <ng-container *ngIf="parameters.tempChannel.min">
+                  {{ parameters.tempChannel.min | number : '1.0-0' }}
+                </ng-container>
+                <ng-container *ngIf="!parameters.tempChannel.min">
+                  {{ '-' }}
+                </ng-container>
+              </div>
+          </div>
+      </div>
+      <div class="second">
+          <div class="temp-label">T1</div>
+          <div class="temp-value">
+            <ng-container *ngIf="parameters.tempChannel.value">
+              {{ parameters.tempChannel.value | number : '1.0-0' }}
+            </ng-container>
+            <ng-container *ngIf="!parameters.tempChannel.value">
+              {{ '-' }}
+            </ng-container>
+          </div>
+      </div>
+      <div class="third">
+          <div class="temp-2">
+              <div class="temp-label">T2</div>
+              <div class="temp-value">
+                  -
+              </div>
+          </div>
+          <div class="temp-diff">
+              <div class="temp-label">TD</div>
+              <div class="temp-value">
+                  -
+              </div>
+          </div>
+      </div>
+      <div class="fourth">
+        {{ parameters.tempChannel.unit || '-' }}
+      </div>
+    </ng-template>
+
+    <ng-template #prParamTemplate>
+      <div class="first">
+          <div class="label">Pr</div>
+          <div class="alerts">
+              <div class="max">
+                <ng-container *ngIf="parameters.prChannel.max">
+                  {{ parameters.prChannel.max | number : '1.0-0' }}
+                </ng-container>
+                <ng-container *ngIf="!parameters.prChannel.max">
+                  {{ '-' }}
+                </ng-container>
+              </div>
+              <div class="min">
+                <ng-container *ngIf="parameters.prChannel.min">
+                  {{ parameters.prChannel.min | number : '1.0-0' }}
+                </ng-container>
+                <ng-container *ngIf="!parameters.prChannel.min">
+                  {{ '-' }}
+                </ng-container>
+              </div>
+          </div>
+      </div>
+      <div class="second">
+          <div class="temp-value">
+            <ng-container *ngIf="parameters.prChannel.value">
+              {{ parameters.prChannel.value | number : '1.0-0' }}
+            </ng-container>
+            <ng-container *ngIf="!parameters.prChannel.value">
+              {{ '-' }}
+            </ng-container>
+          </div>
+      </div>
+      <div class="third">
+          <div class="label-value">Source NIBP</div>
+      </div>
+    </ng-template>
+
+    <ng-template #nibpParamTemplate>
+      <div class="row-up">
+          <div class="label">NIBP</div>
+          <div class="time">00:00</div>
+          <div class="meas">Continual</div>
+          <div class="type">Adu</div>
+          <div class="unit">mmHg</div>
+      </div>
+      <div class="row-down">
+          <div class="first">
+              <div class="alarms-label">
+                  SYS
+              </div>
+              <div class="alarms-value">
+                  <div class="alarm-max">-</div>
+                  <div class="alarm-min">-</div>
+              </div>
+          </div>
+          <div class="second">
+              -
+          </div>
+          <div class="third">
+              /-
+          </div>
+          <div class="fourth">
+              (-)
+          </div>
+      </div>
+    </ng-template>
+
+    <ng-template #co2ParamTemplate>
+      <div class="first">
+          <div class="label">CO2</div>
+          <div class="alerts">
+            <div class="max">
+              <ng-container *ngIf="parameters.co2Channel.max">
+                {{ parameters.co2Channel.max | number : '1.0-0' }}
+              </ng-container>
+              <ng-container *ngIf="!parameters.co2Channel.max">
+                {{ '-' }}
+              </ng-container>
+            </div>
+            <div class="min">
+              <ng-container *ngIf="parameters.co2Channel.min">
+                {{ parameters.co2Channel.min | number : '1.0-0' }}
+              </ng-container>
+              <ng-container *ngIf="!parameters.co2Channel.min">
+                {{ '-' }}
+              </ng-container>
+            </div>
+          </div>
+      </div>
+      <div class="second">
+          <div class="unit-label">et</div>
+          <div class="unit-value">
+            <ng-container *ngIf="parameters.co2Channel.value">
+              {{ parameters.co2Channel.value | number : '1.0-0' }}
+            </ng-container>
+            <ng-container *ngIf="!parameters.co2Channel.value">
+              {{ '-' }}
+            </ng-container>
+          </div>
+      </div>
+      <div class="third">
+          <div class="fi-box">
+              <div class="fi-label">Fi</div>
+              <div class="fi-value">-</div>
+          </div>
+          <div class="awrr-box">
+              <div class="awrr-label">AwRR</div>
+              <div class="awrr-value">-</div>
+          </div>
+      </div>
+      <div class="fourth">
+        {{ parameters.co2Channel.unit || '-' }}
+      </div>
+    </ng-template>
   
+    <ng-template #ibpParamTemplate>
+      <div class="row-up">
+          <div class="label">IBP1</div>
+          <div class="unit">mmHg</div>
+      </div>
+      <div class="row-down">
+          <div class="first">
+              <div class="alarms-label">
+                  SYS
+              </div>
+              <div class="alarms-value">
+                  <div class="alarm-max">-</div>
+                  <div class="alarm-min">-</div>
+              </div>
+          </div>
+          <div class="second">
+              -
+          </div>
+          <div class="third">
+              /-
+          </div>
+          <div class="fourth">
+              (-)
+          </div>
+      </div>
+    </ng-template>
   </hyperiot-base-widget-template>
   
