@@ -1,5 +1,6 @@
 import { GridsterItem } from 'angular-gridster2';
 import { BodyMap, BodyMapAssociation } from '../../../dashboard/widget-settings-dialog/bodymap-settings/bodymap.model';
+import { DefibrillatorSettings } from '../../../dashboard/widget-settings-dialog/defibrillator-settings/defibrillator-settings.model';
 
 export interface WidgetConfig extends GridsterItem {
     projectId?: number;
@@ -39,7 +40,7 @@ export interface ConfigModel {
     colors?: any; // the key is the field and the value is the selected color
     textColor?: string; // TODO separare da generic ConfigModel
     bgColor?: 'dark' | 'bright';
-    defibrillator?: any;
+    defibrillator?: DefibrillatorSettings.DefibrillatorSettings;
 }
 
 export interface SeriesConfigModel {

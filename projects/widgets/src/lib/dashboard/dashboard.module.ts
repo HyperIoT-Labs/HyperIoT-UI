@@ -40,6 +40,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { DefibrillatorSettingsComponent } from './widget-settings-dialog/defibrillator-settings/defibrillator-settings.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { PacketFieldsSelectComponent } from './widget-settings-dialog/packet-fields-select/packet-fields-select.component';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
   declarations: [
@@ -76,6 +77,7 @@ import { PacketFieldsSelectComponent } from './widget-settings-dialog/packet-fie
     ComponentsModule,
     GridsterModule,
     MatAutocompleteModule,
+    MatExpansionModule,
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,

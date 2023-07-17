@@ -15,7 +15,7 @@ export class WidgetSettingsDialogComponent extends HytModal implements OnInit {
   widgetName;
   widgetId: string;
   areaId: string;
-  @ViewChild(NgForm, { static: true }) settingsForm: NgForm;
+  @ViewChild('settingsForm', { static: false }) settingsForm: NgForm;
 
   dialogDataState = 0;
 

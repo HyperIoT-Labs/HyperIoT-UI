@@ -28,6 +28,35 @@
     }
 }
 
+.defibrillator-struct.summary {
+    display: flex;
+    flex-wrap: wrap;
+    height: 100%;
+    background-color: black;
+    .area-chart {
+        width: 65%;
+        display: flex;
+        flex-direction: column;
+        .area-plot {
+            height: 50%;
+        }
+    }
+    .area-parameters {
+        width: 35%;
+        display: flex;
+        flex-wrap: wrap;
+        .m-card {
+            width: 33%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .m-card.nibp-card {
+            width: 66%;
+        }
+    }
+}
+
 .defibrillator-struct.standard {
     display: flex;
     flex-wrap: wrap;
@@ -94,75 +123,7 @@
             height: 20%;
         }
         &.temperature {
-            flex-direction: row;
-            background-color: black;
-            color: #ffffff;
-
-            .first {
-                display: flex;
-                flex-direction: column;
-                align-items: flex-start;
-                justify-content: space-between;
-                width: 20%;
-
-                .label {
-                    font-size: .9em; // Da calibrare in base al font HYT "Exo"
-                }
-
-                .alerts {
-                    font-size: .8em; // Da calibrare in base al font HYT "Exo"
-                    display: flex;
-                    flex-direction: column;
-                    align-items: flex-start;
-                    justify-content: space-between;
-                }
-            }
-
-            .second {
-                display: flex;
-                flex-direction: column;
-                align-items: flex-start;
-                justify-content: center;
-                width: 40%;
-
-                .temp-label {
-                    font-size: .8em;
-                }
-
-                .temp-value {
-                    font-size: 3em;
-                    font-weight: bold;
-                }
-            }
-
-            .third {
-                display: flex;
-                flex-direction: column;
-                align-items: flex-start;
-                justify-content: center;
-                width: 30%;
-
-                .temp-2, .temp-diff {
-                    display: flex;
-                    flex-direction: column;
-                    align-items: flex-start;
-                    justify-content: center;
-
-                    .temp-label {
-                        font-size: .8em;
-                    }
-
-                    .temp-value {
-                        font-size: 1.5em;
-                        font-weight: bold;
-                    }
-                }
-            }
-
-            .fourth {
-                display: flex;
-                width: 10%;
-            }
+            height: 20%;
         }
     }
 }
@@ -170,140 +131,16 @@
 .card {
     display: flex;
     padding: 2px 4px;
+    height: 100%;
 
     &.bottom-card {
         width: 50%;
         height: 100%;
-
-        &.temperature {
-            flex-direction: row;
-            background-color: black;
-            color: #ffffff;
-
-            .first {
-                display: flex;
-                flex-direction: column;
-                align-items: flex-start;
-                justify-content: space-between;
-                width: 20%;
-
-                .label {
-                    font-size: .9em; // Da calibrare in base al font HYT "Exo"
-                }
-
-                .alerts {
-                    font-size: .8em; // Da calibrare in base al font HYT "Exo"
-                    display: flex;
-                    flex-direction: column;
-                    align-items: flex-start;
-                    justify-content: space-between;
-                }
-            }
-
-            .second {
-                display: flex;
-                flex-direction: column;
-                align-items: flex-start;
-                justify-content: center;
-                width: 40%;
-
-                .temp-label {
-                    font-size: .8em;
-                }
-
-                .temp-value {
-                    font-size: 3em;
-                    font-weight: bold;
-                }
-            }
-
-            .third {
-                display: flex;
-                flex-direction: column;
-                align-items: flex-start;
-                justify-content: center;
-                width: 30%;
-
-                .temp-2, .temp-diff {
-                    display: flex;
-                    flex-direction: column;
-                    align-items: flex-start;
-                    justify-content: center;
-
-                    .temp-label {
-                        font-size: .8em;
-                    }
-
-                    .temp-value {
-                        font-size: 1.5em;
-                        font-weight: bold;
-                    }
-                }
-            }
-
-            .fourth {
-                display: flex;
-                width: 10%;
-            }
-        }
-
-        &.pr {
-            flex-direction: row;
-            background-color: black;
-            color: #ffffff;
-
-            .first {
-                display: flex;
-                flex-direction: column;
-                align-items: flex-start;
-                justify-content: space-between;
-                width: 20%;
-
-                .label {
-                    font-size: .9em; // Da calibrare in base al font HYT "Exo"
-                }
-
-                .alerts {
-                    font-size: .8em; // Da calibrare in base al font HYT "Exo"
-                    display: flex;
-                    flex-direction: column;
-                    align-items: flex-start;
-                    justify-content: space-between;
-                }
-            }
-
-            .second {
-                display: flex;
-                flex-direction: column;
-                align-items: flex-start;
-                justify-content: center;
-                width: 40%;
-
-                .temp-value {
-                    font-size: 4em;
-                    font-weight: bold;
-                }
-            }
-
-            .third {
-                display: flex;
-                flex-direction: column;
-                align-items: flex-start;
-                justify-content: center;
-                width: 40%;
-                
-                .label-value {
-                    font-size: .9em;
-                    margin-bottom: 20%;
-                }
-            }
-        }
     }
 
+    /****** ECG ******/
     &.ecg {
-        height: 50%;
         background-color: black;
-        color: #27e527;
 
         .first {
             width: 20%;
@@ -395,29 +232,16 @@
 
         .fourth {
             width: 10%;
-            .heart {
-                &::after {
-                    content: '\2661';
-                    color: red;
-                }
-                &.full {
-                    &::after {
-                        content: '\2665';
-                        font-size: 1.4em;
-                        color: red;
-                    }
-                }
+            .heart.full {
+                fill: red;
             }
         }
     }
     /****** END ECG ******/
 
-
     /****** RESP ******/
     &.resp {
-        height: 25%;
         background-color: black;
-        color: #f5eb22;
 
         .first {
             width: 35%;
@@ -453,9 +277,7 @@
 
     /****** SPO2 ******/
     &.spo2 {
-        height: 25%;
         background-color: black;
-        color: cyan;
 
         .first {
             width: 20%;
@@ -523,9 +345,8 @@
     /****** END SPO2 ******/
 
     /****** NIBP/IBP ******/
-    &.nibp {
+    &.nibp-ibp {
         background-color: black;
-        color: #ffffff;
         flex-direction: column;
         flex-wrap: wrap;
         flex: 1;
@@ -618,9 +439,7 @@
 
     /****** CO2 ******/
     &.co2 {
-        height: 25%;
         background-color: black;
-        color: #f5eb22;
         flex-direction: row;
         flex-wrap: wrap;
 
@@ -715,5 +534,146 @@
         }
     }
     /****** END CO2 ******/
+
+    /****** TEMP ******/
+    &.temperature {
+        flex-direction: row;
+        background-color: black;
+
+        .first {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: space-between;
+            width: 20%;
+
+            .label {
+                font-size: .9em; // Da calibrare in base al font HYT "Exo"
+            }
+
+            .alerts {
+                font-size: .8em; // Da calibrare in base al font HYT "Exo"
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: space-between;
+            }
+        }
+
+        .second {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            width: 40%;
+
+            .temp-label {
+                font-size: .8em;
+            }
+
+            .temp-value {
+                font-size: 3em;
+                font-weight: bold;
+            }
+        }
+
+        .third {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            width: 30%;
+
+            .temp-2, .temp-diff {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: center;
+
+                .temp-label {
+                    font-size: .8em;
+                }
+
+                .temp-value {
+                    font-size: 1.5em;
+                    font-weight: bold;
+                }
+            }
+        }
+
+        .fourth {
+            display: flex;
+            width: 10%;
+        }
+    }
+    /****** END TEMP ******/
+
+    /****** PR ******/
+    &.pr {
+        flex-direction: row;
+        background-color: black;
+
+        .first {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: space-between;
+            width: 20%;
+
+            .label {
+                font-size: .9em; // Da calibrare in base al font HYT "Exo"
+            }
+
+            .alerts {
+                font-size: .8em; // Da calibrare in base al font HYT "Exo"
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: space-between;
+            }
+        }
+
+        .second {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            width: 40%;
+
+            .temp-value {
+                font-size: 4em;
+                font-weight: bold;
+            }
+        }
+
+        .third {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            width: 40%;
+            
+            .label-value {
+                font-size: .9em;
+                margin-bottom: 20%;
+            }
+        }
+    }
+    /****** END PR ******/
 }
 /* END CARD PROPERTY */
+
+.switch-visualization {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    width: 180px;
+    opacity: 0.3;
+}
+
+.switch-visualization:hover {
+    opacity: 1;
+}
