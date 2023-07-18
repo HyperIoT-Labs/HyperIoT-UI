@@ -23,7 +23,6 @@ import { MatProgressBarModule } from "@angular/material/progress-bar";
 import { MatButtonToggleModule } from "@angular/material/button-toggle";
 import { MatIconModule } from "@angular/material/icon";
 import { DashboardDebugComponent } from './dashboard-debug/dashboard-debug.component';
-import { DeviceSelectComponent } from "./widget-settings-dialog/device-select/device-select.component";
 import { BodymapSettingsComponent } from "./widget-settings-dialog/bodymap-settings/bodymap-settings.component";
 import { EcgSettingsComponent } from "./widget-settings-dialog/ecg-settings/ecg-settings.component";
 import { WidgetFullscreenDialogComponent } from './widget-fullscreen-dialog/widget-fullscreen-dialog.component';
@@ -51,7 +50,6 @@ import { MatExpansionModule } from '@angular/material/expansion';
     DashboardsListComponent,
     EventsLogSettingsComponent,
     PacketSelectComponent,
-    DeviceSelectComponent,
     SensorValueSettingsComponent,
     TimeChartSettingsComponent,
     TimeAxisComponent,
