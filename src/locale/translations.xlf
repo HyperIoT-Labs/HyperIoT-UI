@@ -1458,6 +1458,12 @@
       <trans-unit id="HYT_widget_settings_bg_color_dark" datatype="html">
         <source>Dark</source>
       </trans-unit>
+      <trans-unit id="HYT_pattern_error_default_message" datatype="html">
+        <source>Invalid input</source>
+      </trans-unit>
+      <trans-unit id="HYT_alphanumeric_underscore_only" datatype="html">
+        <source>Only alphanumeric and underscore (_) characters allowed</source>
+      </trans-unit>
     </body>
   </file>
 </xliff>

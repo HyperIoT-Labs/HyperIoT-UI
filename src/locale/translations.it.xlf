@@ -1944,6 +1944,14 @@
         <source>Dark</source>
         <target>Scuro</target>
       </trans-unit>
+      <trans-unit id="HYT_pattern_error_default_message" datatype="html">
+        <source>Invalid input</source>
+        <target>Input non valido</target>
+      </trans-unit>
+      <trans-unit id="HYT_alphanumeric_underscore_only" datatype="html">
+        <source>Only alphanumeric and underscore (_) characters allowed</source>
+        <target>Solo caratteri alfanumerici o trattino basso (_) ammessi</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

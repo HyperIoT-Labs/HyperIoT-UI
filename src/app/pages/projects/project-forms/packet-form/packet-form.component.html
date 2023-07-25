@@ -13,6 +13,9 @@
                 <hyt-input-text 
                     name="hpacket-name" i18n-placeholder="@@HYT_name" placeholder="Name" [form]="form"
                     [injectedErrorMsg]="getError('hpacket-name')"
+                    pattern="^[a-zA-Z0-9_]*$"
+                    i18n-patternErrorMessage="@@HYT_alphanumeric_underscore_only"
+                    patternErrorMessage="Only alphanumeric and underscore (_) characters allowed"
                     i18n-hintMessage="@@HYT_hint_packet_name"
                     hintMessage="Enter the packet name."
                     errorPosition="bottom" minlength="3" isRequired="true"

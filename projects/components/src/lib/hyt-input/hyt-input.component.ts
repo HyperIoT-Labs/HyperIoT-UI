@@ -127,6 +127,12 @@ export class HytInputComponent implements OnInit, ControlValueAccessor {
   /** Applies password validation */
   @Input() isPassword = false;
 
+  /** Applies regex validation */
+  @Input() pattern = '';
+
+  /** Applies regex validation */
+  @Input() patternErrorMessage = '';
+
   /** Applies password type but not password validation */
   @Input() isInputPassword = false;
 
@@ -167,7 +173,8 @@ export class HytInputComponent implements OnInit, ControlValueAccessor {
     validateSpecialChar: $localize`:@@HYT_special_char:At least one special character`,
     validateConfirmPassword: 'Password Mismatch',
     validatePassword: 'Password must be valid',
-    validateInjectedError: ''
+    validateInjectedError: '',
+    pattern: $localize`:@@HYT_pattern_error_default_message:Invalid input`,
   };
 
   /**
@@ -258,6 +265,12 @@ export class HytInputComponent implements OnInit, ControlValueAccessor {
     }
     if (this.isEmail) {
       validators.push(Validators.email);
+    }
+    if (this.pattern) {
+      validators.push(Validators.pattern(new RegExp(this.pattern)));
+      if (this.patternErrorMessage) {
+        this.errorMap.pattern = this.patternErrorMessage;
+      }
     }
     if (this.isPassword) {
       validators.push(Validators.minLength(8));
