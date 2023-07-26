@@ -202,16 +202,20 @@ export class RealtimeDataService extends BaseDataService implements IDataService
     let field = {};
     const fieldName = packetFilter.fields[fieldId];
     if (hpacket.fields.hasOwnProperty(fieldName)) {
-      const tmpValue = hpacket.fields[fieldName].value;
+      const hPacketField = hpacket.fields[fieldName];
       // based on the type, the input packet field value
       // will be stored in the corresponding type property
       // eg. if packet field is "DOUBLE" then the effective value
       // will be stored into 'value.double' property
-      if (!tmpValue) {
+      if (!hPacketField.value) {
         field[fieldName] = null;
       } else {
-        const valueKey = Object.keys(tmpValue)[0];
-        const value = hpacket.fields[fieldName].value[valueKey];
+        const valueKey = Object.keys(hPacketField.value)[0];
+        let value = hPacketField.value[valueKey];
+        if (hPacketField.multiplicity === 'ARRAY') {
+          value = value.map(element => Object.values(element)[0]);
+        }
+        // TODO add matrix support
         field[fieldName] = value;
       }
     }
