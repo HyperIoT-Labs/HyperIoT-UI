@@ -824,6 +824,9 @@ export class DefibrillatorComponent extends BaseTableComponent implements OnInit
     chartsToUpdate.forEach(async(x,i) => {
       const Plotly = await this.plotly.getPlotly();
       const graph: any = this.plotly.getInstanceByDivId(`widget-${this.widget.id}-chart${i}-${this.isToolbarVisible}`);
+      if (!graph) {
+        return;
+      }
       graph.layout.dragmode = false;
       Plotly.react(graph.id, graph.data, graph.layout, {
         displaylogo: false,
@@ -848,6 +851,9 @@ export class DefibrillatorComponent extends BaseTableComponent implements OnInit
     chartsToUpdate.forEach(async(x,i) => {
       const Plotly = await this.plotly.getPlotly();
       const graph: any = this.plotly.getInstanceByDivId(`widget-${this.widget.id}-chart${i}-${this.isToolbarVisible}`);
+      if (!graph) {
+        return;
+      }
       graph.layout.dragmode = 'pan';
       Plotly.react(graph.id, graph.data, graph.layout, {
         displaylogo: false,
