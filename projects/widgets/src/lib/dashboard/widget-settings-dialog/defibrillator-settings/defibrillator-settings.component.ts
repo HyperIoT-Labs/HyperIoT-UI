@@ -89,6 +89,7 @@ export class DefibrillatorSettingsComponent implements OnInit, OnDestroy {
             V6: this.createDefaultChannel(DefibrillatorSettings.Type.ECG),
           }
         },
+        ecgFrequency: null,
       };
     }
 

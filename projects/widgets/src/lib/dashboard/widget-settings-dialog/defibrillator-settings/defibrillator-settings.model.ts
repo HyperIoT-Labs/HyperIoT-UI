@@ -61,6 +61,7 @@ export namespace DefibrillatorSettings {
                 V6: Channel;
             };
         };
+        ecgFrequency: PacketField | null;
     }
 
     export namespace Utils {

@@ -17,6 +17,10 @@
         gap: 13px;
         justify-content: space-between;
     }
+    .full {
+        max-width: 98%;
+        width: unset;
+    }
 }
 
 .fields-and-colors-select {

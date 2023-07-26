@@ -40,14 +40,20 @@
       <hyt-select (changeFn)="setColsNumber($event.value)" [label]="'Select widget column size'" [selected]="colsNumber" [options]="[{label: 'small', value: 4},{label: 'medium', value: 5},{label: 'large', value: 6}]"></hyt-select>
     </div> -->
     <div>
-      <label>Select data frequency (s):</label>
-      <hyt-select (changeFn)="setFrequency($event.value)" [label]="'Data frequency (s)'" [selected]="dataFrequency"
+      <label>Select widget update frequency (s):</label>
+      <hyt-select (changeFn)="setFrequency($event.value)" [label]="'Update frequency (s)'" [selected]="dataFrequency"
         [options]="[{label: '0.025s', value: 0.025},{label: '0.1s', value: 0.1},{label: '0.2s', value: 0.2},{label: '0.5s', value: 0.5},{label: '1s', value: 1}]"></hyt-select>
     </div>
     <div>
       <label>Select range of data to view (s):</label>
       <hyt-select (changeFn)="setTimeRange($event.value)" [label]="'Range data time (s)'" [selected]="dataRange"
         [options]="[{label: '10s', value: 10}, {label: '20s', value: 20}, {label: '30s', value: 30}, {label: '60s', value: 60}]"></hyt-select>
+    </div>
+    <div class="full">
+      <label>Select ecg frequency field:</label>
+      <hyperiot-packet-fields-select [projectPackets]="projectPackets" [projectId]="widget.projectId"
+          [name]="'ecgFrequency'" [(fieldPacket)]="defibrillatorSettings.ecgFrequency"></hyperiot-packet-fields-select>
+          <input matInput class="hidden-input" [name]="'ecgFrequency-hidden'" [(ngModel)]="defibrillatorSettings.ecgFrequency" [required]="true">
     </div>
     <!-- <div>
       <label>Location: </label>{{'location'}}

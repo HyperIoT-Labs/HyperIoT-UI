@@ -231,6 +231,8 @@ export class DefibrillatorComponent extends BaseTableComponent implements OnInit
     }
   };
 
+  ecgSource: string;
+
   standardParameters: { type: DefibrillatorSettings.Type; rows: number; }[] = [];
 
   protected logger: Logger;
@@ -555,6 +557,24 @@ export class DefibrillatorComponent extends BaseTableComponent implements OnInit
       //   this.parameters[type].source = packetField.packetId + ':' + packetField.fieldSequence[packetField.id];
       // });
 
+      // setting ecg frequency
+      if (this.widget.config.defibrillator.ecgFrequency) {
+        if (dataPacketFilterList.some(dpf => dpf.packetId === this.widget.config.defibrillator.ecgFrequency.packetId)) {
+          const currentPacketFilter = dataPacketFilterList.find(dpf => dpf.packetId === this.widget.config.defibrillator.ecgFrequency.packetId);
+          if (!currentPacketFilter.fields[this.widget.config.defibrillator.ecgFrequency.id]) {
+            Object.assign(currentPacketFilter.fields, this.widget.config.defibrillator.ecgFrequency.fieldSequence);
+          }
+        } else {
+          const dataPacketFilter = new DataPacketFilter(
+            this.widget.config.defibrillator.ecgFrequency.packetId,
+            this.widget.config.defibrillator.ecgFrequency.fieldSequence,
+            true
+          );
+          dataPacketFilterList.push(dataPacketFilter);
+        }
+        this.ecgSource = this.widget.config.defibrillator.ecgFrequency.fieldSequence[this.widget.config.defibrillator.ecgFrequency.id];
+      }
+
       this.subscribeAndInit(dataPacketFilterList);
 
     });
@@ -593,35 +613,37 @@ export class DefibrillatorComponent extends BaseTableComponent implements OnInit
         return;
       }
 
-      // updating summary charts
+      // updating charts
+      let chartsToUpdate = [];
       if (this.visualizationType === 'summary') {
-        const chartsToUpdate = Object.values(this.graphs.summary).filter((x: any) => x.source === packetId + ':' + fieldName) as any;
-
-        chartsToUpdate.forEach(chart => {
-          const defibrillatorElements = packetData.map(pd => ({ timestamp: pd.timestamp, trace: chart.chart.key, value: pd[fieldName] }));
-          this.renderData(chart.chart.key, defibrillatorElements);
-        });
+        chartsToUpdate = Object.values(this.graphs.summary).filter((x: any) => x.source === packetId + ':' + fieldName) as any;
       }
-
-      // updateing standard charts
       if (this.visualizationType === 'standard') {
-        const chartsToUpdate = Object.values(this.graphs.standard).filter((x: any) => x.source === packetId + ':' + fieldName) as any;
-
-        chartsToUpdate.forEach(chart => {
-          const defibrillatorElements = packetData.map(pd => ({ timestamp: pd.timestamp, trace: chart.chart.key, value: pd[fieldName] }));
-          this.renderData(chart.chart.key, defibrillatorElements);
-        });
+        chartsToUpdate = Object.values(this.graphs.standard).filter((x: any) => x.source === packetId + ':' + fieldName) as any;
       }
-
-      // code for derivations
       if (this.visualizationType === 'derivations') {
-        const derChartsToUpdate = Object.values(this.graphs.derivations).filter((x: any) => x.source === packetId + ':' + fieldName) as any;
-
-        derChartsToUpdate.forEach(chart => {
-          const defibrillatorElements = packetData.map(pd => ({ timestamp: pd.timestamp, trace: chart.chart.key, value: pd[fieldName] }));
-          this.renderData(chart.chart.key, defibrillatorElements);
-        });
+        chartsToUpdate = Object.values(this.graphs.derivations).filter((x: any) => x.source === packetId + ':' + fieldName) as any;
       }
+
+      chartsToUpdate.forEach(chart => {
+        const defibrillatorElements = [];
+        packetData.forEach(pd => {
+          if (Array.isArray(pd[fieldName])) {
+            const ecgFrequency = pd[this.ecgSource] || 1000; // If frequency is absent, then set a default of 1000 data points per second
+            const ecgPeriod = (1 / ecgFrequency) * 1000;
+            pd[fieldName].forEach((value, i) => {
+              defibrillatorElements.push({
+                timestamp: new Date(pd.timestamp.getTime() + ecgPeriod * i),
+                trace: chart.chart.key,
+                value: value,
+              })
+            });
+          } else {
+            defibrillatorElements.push({ timestamp: pd.timestamp, trace: chart.chart.key, value: pd[fieldName] });
+          }
+        });
+        this.renderData(chart.chart.key, defibrillatorElements);
+      });
 
       // updateing parameters
       const parametersValueToUpdate = Object.values(this.parameters).filter((x: any) => x.valueSource === packetId + ':' + fieldName) as any;
