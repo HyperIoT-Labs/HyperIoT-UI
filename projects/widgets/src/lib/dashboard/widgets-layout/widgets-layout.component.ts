@@ -559,7 +559,7 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
 
   private getTimestampFieldValue(packet: HPacket){
     const timestampFieldName = packet.timestampField;
-    return (packet.fields.map[timestampFieldName]) ? packet.fields.map[timestampFieldName].value.long : packet.fields.map['timestamp-default'].value.long;
+    return (packet.fields[timestampFieldName]) ? packet.fields[timestampFieldName].value.long : packet.fields['timestamp-default'].value.long;
   }
 
 }
