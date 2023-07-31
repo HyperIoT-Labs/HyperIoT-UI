@@ -75,6 +75,10 @@
 
                 <strong i18n="@@HYT_multiplicity">Multiplicity</strong>
 
+                <div *ngIf="form.value['hpacketfield-type'] === 'OBJECT'" class="objmultiplicity-info" i18n="@@HYT_hpacketfield_object_multiplicity_warn">
+                    Fields of type Object cannot be of multiplicity array or matrix.
+                </div>
+
                 <hyt-radio-button 
                     [form]="form" name="hpacketfield-multiplicity"
                     [isRequired]="true"
