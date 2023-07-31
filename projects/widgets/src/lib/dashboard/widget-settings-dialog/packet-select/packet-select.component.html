@@ -114,44 +114,6 @@
                 </div>
             </div>
         </div>
-        <div *ngIf="showFieldsMapping && packetFieldsMapping.length > 0 && multiPacketSelect">
-            <h3>Fields Mapping</h3>
-            <div *ngFor="let fieldConfig of packetFieldsMapping">
-                <label class="label">{{ fieldConfig.field.name }}</label>
-                <div class="d-flex flex-row align-items-center flex-wrap field-mapping ">
-                    <div *ngFor="let fieldMap of fieldConfig.map; let i = index"
-                        class="map-container m-2 p-2 d-flex flex-row align-items-center">
-
-                        <strong>[&nbsp;</strong>
-                        <hyt-input-template class="w-80"
-                            placeholder="Coordinates"
-                            pattern="[0-9]+(,[0-9]+)*"
-                            required
-                            [name]="'coords'+i"
-                            [(ngModel)]="fieldMap.coords"
-                            #name="ngModel"></hyt-input-template>
-                        <strong>&nbsp;]</strong>
-
-                        <hyt-input-template
-                            class="w-80 ml-2"
-                            placeholder="Name"
-                            required
-                            [name]="'name'+i"
-                            [(ngModel)]="fieldMap.name"
-                            #name="ngModel"></hyt-input-template>
-
-                        <mat-icon class="map-remove"
-                                (click)="onDeleteFieldMapping(fieldConfig, i)"
-                                matRipple>remove_circle</mat-icon>
-
-                    </div>
-                </div>
-                <hyt-button (clickFn)="onAddFieldMapping(fieldConfig)">
-                    <mat-icon>add</mat-icon>
-                    <span i18n="@@HYT_button_add">Add</span>
-                </hyt-button>
-            </div>
-        </div>
 
     </ng-container>
 

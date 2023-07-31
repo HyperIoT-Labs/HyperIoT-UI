@@ -30,7 +30,6 @@ export interface ConfigModel {
     seriesConfig?: SeriesConfigModel[];
     timestampFieldName?: string;
     packetUnitsConversion?: any;
-    packetFieldsMapping?: any[];
     maxLogLines?: number;
     refreshIntervalMillis?: number;
     musclesMap?: BodyMapAssociation[]; // TODO separare da generic ConfigModel

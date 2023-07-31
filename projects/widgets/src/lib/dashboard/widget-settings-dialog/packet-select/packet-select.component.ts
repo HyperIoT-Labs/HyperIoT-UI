@@ -6,15 +6,6 @@ import { LoggerService, Logger, HPacketFieldsHandlerService } from 'core';
 import { HPacket, HPacketField, HpacketsService, AreasService, AreaDevice, HDevice } from 'core';
 import { mimeTypeList } from './MIMETypes';
 
-export class FieldMatrixConfiguration {
-  field: {id: number, name: string};
-  map: FieldMatrixMapItem[];
-}
-export class FieldMatrixMapItem {
-  coords: string;
-  name: string;
-  index: number;
-}
 export class FieldUnitConversion {
   field: {id: number, name: string};
   convertFrom: string;
@@ -59,10 +50,7 @@ export class PacketSelectComponent implements OnInit {
   multiPacketSelect = false;
   @Input()
   areaId: number;
-  @Input()
-  showFieldsMapping = true;
 
-  packetFieldsMapping: FieldMatrixConfiguration[];
   packetUnitsConversion: FieldUnitConversion[];
   fieldAliases: FieldAlias;
   fieldTypes: FieldTypes;
@@ -148,23 +136,11 @@ export class PacketSelectComponent implements OnInit {
     // }
     // units conversion
     this.syncUnitsConversion();
-    // fields mapping for current packet field
-    this.syncFieldMapping();
     this.selectedFieldsChange.emit(this.selectedFields);
   }
 
   onPacketUnitConversionChange(unit, i) {
     this.packetUnitsConversion[i].convertTo = unit;
-  }
-
-  onAddFieldMapping(fieldMatrix: FieldMatrixConfiguration) {
-    fieldMatrix.map.push(new FieldMatrixMapItem());
-  }
-  onDeleteFieldMapping(fieldMatrix: FieldMatrixConfiguration, mapIndex: number) {
-    fieldMatrix.map.splice(mapIndex, 1);
-  }
-  onFieldMappingChange(fieldMap: FieldMatrixMapItem, value: string) {
-    fieldMap.name = value;
   }
 
   apply() {
@@ -178,7 +154,6 @@ export class PacketSelectComponent implements OnInit {
       // }
       // this.selectedFields.map((pf) => this.widget.config.packetFields[pf.id] = pf.name);
       this.selectedFields.map((pf) => this.widget.config.packetFields[pf.id] = this.hPacketFieldsHandlerService.getStringifiedSequenceFromPacket(this.selectedPacket, pf.id));
-      this.widget.config.packetFieldsMapping = this.packetFieldsMapping;
       this.widget.config.packetUnitsConversion = this.packetUnitsConversion;
       this.widget.config.fieldAliases = this.fieldAliases;
       this.widget.config.fieldFileMimeTypes = this.fieldFileMimeTypes;
@@ -203,8 +178,6 @@ export class PacketSelectComponent implements OnInit {
   }
 
   loadPackets(devices?: HDevice[]) {
-    this.packetFieldsMapping = this.widget.config.packetFieldsMapping ?
-        JSON.parse(JSON.stringify(this.widget.config.packetFieldsMapping)) : [];
     this.packetUnitsConversion = this.widget.config.packetUnitsConversion ?
         JSON.parse(JSON.stringify(this.widget.config.packetUnitsConversion)) : [];
     this.fieldAliases = this.widget.config.fieldAliases ?
@@ -265,7 +238,6 @@ export class PacketSelectComponent implements OnInit {
                 // })
                 packet.fields.sort((a, b) => a.name < b.name ? -1 : 1);
                 this.syncUnitsConversion();
-                this.syncFieldMapping();
               }
             });
         }
@@ -348,31 +320,6 @@ export class PacketSelectComponent implements OnInit {
       );
     }
     return unitOptions;
-  }
-
-  private syncFieldMapping() {
-    if (!this.packetFieldsMapping) {
-      this.packetFieldsMapping = [];
-    }
-    if (!this.multiPacketSelect) {
-      return;
-    }
-    const tempMap = [] as FieldMatrixConfiguration[];
-    this.selectedFields.map((pf: HPacketField) => {
-      if (pf.multiplicity === HPacketField.MultiplicityEnum.ARRAY || pf.multiplicity === HPacketField.MultiplicityEnum.MATRIX) {
-        const fieldMapping = this.packetFieldsMapping.find((f) => f.field.id === pf.id);
-        if (!fieldMapping) {
-          const af = new FieldMatrixConfiguration();
-          af.field = {id: pf.id, name: pf.name};
-          af.map = [] as FieldMatrixMapItem[];
-          tempMap.push(af);
-        } else {
-          fieldMapping.field.name = pf.name;
-          tempMap.push(fieldMapping);
-        }
-      }
-    });
-    this.packetFieldsMapping = tempMap;
   }
 
   filterMimeTypeList(fieldId) {
