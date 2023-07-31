@@ -106,6 +106,13 @@ export class PacketFieldsFormComponent extends ProjectFormEntity implements OnDe
     this.activatedRouteSubscription.unsubscribe();
   }
 
+  ngAfterViewInit(): void {
+    super.ngAfterViewInit();
+    this.form.controls['hpacketfield-type'].valueChanges.subscribe(
+      res => this.onTypeChange(res)
+    );
+  }
+
   onMeasurementTypeChange(measurementType) {
     const measurementUnit = UnitConversionService.measurements.find((m) => m.type === measurementType);
     this.unitOptions = [{ label: $localize`:@@HYT_not_specified:(not specified)`, value: '' }];
@@ -163,6 +170,15 @@ export class PacketFieldsFormComponent extends ProjectFormEntity implements OnDe
           proceedWithEdit();
         }
       });
+    }
+  }
+
+  onTypeChange(type) {
+    if (type === HPacketField.TypeEnum.OBJECT) {
+      this.form.patchValue({ 'hpacketfield-multiplicity': HPacketField.MultiplicityEnum.SINGLE });
+      this.fieldMultiplicityOptions.forEach(fm => fm.disabled = fm.value !== HPacketField.MultiplicityEnum.SINGLE);
+    } else {
+      this.fieldMultiplicityOptions.forEach(fm => fm.disabled = false);
     }
   }
 

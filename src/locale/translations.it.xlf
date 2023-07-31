@@ -1952,6 +1952,10 @@
         <source>Only alphanumeric and underscore (_) characters allowed</source>
         <target>Solo caratteri alfanumerici o trattino basso (_) ammessi</target>
       </trans-unit>
+      <trans-unit id="HYT_hpacketfield_object_multiplicity_warn" datatype="html">
+        <source>Fields of type Object cannot be of multiplicity array or matrix</source>
+        <target>I campi di tipo Object non possono avere molteplicità array o matrice</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

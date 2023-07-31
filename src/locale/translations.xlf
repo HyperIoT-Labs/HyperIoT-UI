@@ -1464,6 +1464,9 @@
       <trans-unit id="HYT_alphanumeric_underscore_only" datatype="html">
         <source>Only alphanumeric and underscore (_) characters allowed</source>
       </trans-unit>
+      <trans-unit id="HYT_hpacketfield_object_multiplicity_warn" datatype="html">
+        <source>Fields of type Object cannot be of multiplicity array or matrix</source>
+      </trans-unit>
     </body>
   </file>
 </xliff>
