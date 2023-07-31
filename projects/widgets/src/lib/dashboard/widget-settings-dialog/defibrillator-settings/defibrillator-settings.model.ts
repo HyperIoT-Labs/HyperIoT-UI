@@ -25,42 +25,43 @@ export namespace DefibrillatorSettings {
     export interface DefibrillatorSettings {
         standard: {
             standardArea1: {
-                channel1: Channel,
-                channel2: Channel,
-                channel3: Channel,
-                channel4: Channel,
-            },
+                channel1: Channel;
+                channel2: Channel;
+                channel3: Channel;
+                channel4: Channel;
+            };
             parametersArea1: {
-                ecgChannel?: Channel,
-                respChannel?: Channel,
-                spo2Channel?: Channel,
-                co2Channel?: Channel,
-                ibpChannel?: Channel,
-            }
+                ecgChannel?: Channel;
+                respChannel?: Channel;
+                spo2Channel?: Channel;
+                co2Channel?: Channel;
+                ibpChannel?: Channel;
+            };
             standardArea2: {
-                tempChannel: Channel,
-                prChannel: Channel,
-            }
+                tempChannel: Channel;
+                prChannel: Channel;
+            };
             standardArea3: {
-                nibpChannel: Channel,
-            }
-        }
+                nibpChannel: Channel;
+            };
+        };
         derivations: {
             derivationsArea: {
-                I: Channel,
-                II: Channel,
-                III: Channel,
-                AVR: Channel,
-                AVL: Channel,
-                AVF: Channel,
-                V1: Channel,
-                V2: Channel,
-                V3: Channel,
-                V4: Channel,
-                V5: Channel,
-                V6: Channel,
-            }
-        }
+                I: Channel;
+                II: Channel;
+                III: Channel;
+                AVR: Channel;
+                AVL: Channel;
+                AVF: Channel;
+                V1: Channel;
+                V2: Channel;
+                V3: Channel;
+                V4: Channel;
+                V5: Channel;
+                V6: Channel;
+            };
+        };
+        ecgFrequency: PacketField | null;
     }
 
     export namespace Utils {

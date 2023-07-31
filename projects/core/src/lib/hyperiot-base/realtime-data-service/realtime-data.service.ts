@@ -7,6 +7,14 @@ import { IDataService } from '../data.interface';
 import { RealtimeDataChannelController } from './realtimeDataChannelController';
 import { PacketData, PacketDataChunk } from '../models/packet-data';
 import { HPacket } from '../../hyperiot-client/models/hPacket';
+import { HPacketField } from '../../hyperiot-client/models/hPacketField';
+
+// HPacketData created on top op HPacket
+// Unable to use HPacket directly because the 'fields' field is an array, but when decoded from Avro, 'fields' will be an object.
+// TODO Hpacket should be used
+interface HPacketData extends Omit<HPacket, 'fields'> {
+  fields: { [key: string]: HPacketField; }
+}
 
 @Injectable({
   providedIn: 'root'
@@ -125,7 +133,7 @@ export class RealtimeDataService extends BaseDataService implements IDataService
     // avsc.js must be manually included in the hosting page
     const avro = window['avsc'];
     if (!avro) {
-      const errorMessage = '@hyperiot/core/data-stream-service - ERROR: https://github.com/aszmyd/avsc-js (dist) must be included in the hosting page.';
+      const errorMessage = '@hyperiot/core/data-stream-service - ERROR: https://github.com/mtth/avsc must be included in the hosting page.';
       console.error(errorMessage);
       throw Error(errorMessage);
     }
@@ -135,14 +143,14 @@ export class RealtimeDataService extends BaseDataService implements IDataService
     const decodedWsPayload = atob(wsData.payload);
     // TODO: add specific type 'SCHEMA' instead of using 'INFO'
     if (wsData.type === 'INFO') {
-      this.packetSchema = avro.parse(JSON.parse(decodedWsPayload));
+      this.packetSchema = avro.Type.forSchema(JSON.parse(decodedWsPayload));
       return;
     } else if (!this.packetSchema) {
       // cannot continue without schema definition
       return;
     }
     // decode AVRO data to HPacket instance
-    const hpacket = this.packetSchema.decode(new Buffer(decodedWsPayload, 'binary')) as HPacket;
+    const hpacket = this.packetSchema.fromBuffer(new Buffer(decodedWsPayload, 'binary')) as HPacketData;
     // route received HPacket to eventStream subscribers
     this.eventStream.next({ data: hpacket });
     if (wsData.type === 'APPLICATION') {
@@ -190,31 +198,35 @@ export class RealtimeDataService extends BaseDataService implements IDataService
     }
   }
 
-  private getField(packetFilter: DataPacketFilter, hpacket: HPacket, fieldId: any): Object {
+  private getField(packetFilter: DataPacketFilter, hpacket: HPacketData, fieldId: any): Object {
     let field = {};
     const fieldName = packetFilter.fields[fieldId];
-    if (hpacket.fields.map.hasOwnProperty(fieldName)) {
-      const tmpValue = hpacket.fields.map[fieldName].value;
+    if (hpacket.fields.hasOwnProperty(fieldName)) {
+      const hPacketField = hpacket.fields[fieldName];
       // based on the type, the input packet field value
       // will be stored in the corresponding type property
       // eg. if packet field is "DOUBLE" then the effective value
       // will be stored into 'value.double' property
-      if (!tmpValue) {
+      if (!hPacketField.value) {
         field[fieldName] = null;
       } else {
-        const valueKey = Object.keys(tmpValue)[0];
-        const value = hpacket.fields.map[fieldName].value[valueKey];
+        const valueKey = Object.keys(hPacketField.value)[0];
+        let value = hPacketField.value[valueKey];
+        if (hPacketField.multiplicity === 'ARRAY') {
+          value = value.map(element => Object.values(element)[0]);
+        }
+        // TODO add matrix support
         field[fieldName] = value;
       }
     }
     return field;
   }
 
-  private getTimestamp(hpacket: HPacket): Date {
+  private getTimestamp(hpacket: HPacketData): Date {
     // get timestamp from packet if present
     let timestampFieldName = hpacket.timestampField;
-    if (hpacket.fields.map[timestampFieldName])
-      return new Date(hpacket.fields.map[timestampFieldName].value.long);
+    if (hpacket.fields[timestampFieldName])
+      return new Date(hpacket.fields[timestampFieldName].value.long);
     return new Date();
   }
 
