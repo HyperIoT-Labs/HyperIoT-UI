@@ -77,3 +77,9 @@ export interface WidgetAction{
     action: string;
     value?: any;
   }
+
+export enum AutoUpdateConfigStatus {
+    UNNECESSARY = 'UNNECESSARY',
+    SUCCESS = 'SUCCESS',
+    ERROR = 'ERROR',
+}

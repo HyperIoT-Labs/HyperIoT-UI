@@ -1956,6 +1956,14 @@
         <source>Fields of type Object cannot be of multiplicity array or matrix</source>
         <target>I campi di tipo Object non possono avere molteplicità array o matrice</target>
       </trans-unit>
+      <trans-unit id="HYT_auto_update_config_warn" datatype="html">
+        <source>Attention! An automatic update has been applied to the widget configuration to make it compatible with the latest updates. It is necessary to save the configuration to make the change effective.</source>
+        <target>Attenzione! È stato applicato un aggiornamento automatico alla configurazione del widget per renderla compatibile con gli ultimi aggiornamenti. È necessario salvare la configurazione per rendere effettiva la modifica.</target>
+      </trans-unit>
+      <trans-unit id="HYT_auto_update_config_error" datatype="html">
+        <source>Error! Unable to update the widget configuration automatically. The widget may not work correctly after the latest updates. It is recommended to delete the widget and set up a new one.</source>
+        <target>Errore! Impossibile aggiornare automaticamente la configurazione del widget. Il widget potrebbe non funzionare correttamente dopo gli ultimi aggiornamenti. È raccomandato eliminare il widget e riconfigurarne uno nuovo.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

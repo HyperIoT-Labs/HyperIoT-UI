@@ -2,6 +2,7 @@ import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {HytModal, HytModalService} from 'components';
 import {Subject} from 'rxjs';
+import { AutoUpdateConfigStatus } from '../../base/base-widget/model/widget.model';
 
 @Component({
   selector: 'hyperiot-widget-settings-dialog',
@@ -21,6 +22,8 @@ export class WidgetSettingsDialogComponent extends HytModal implements OnInit {
 
   modalIsOpen = false;
 
+  autoUpdateConfigStatus: AutoUpdateConfigStatus = AutoUpdateConfigStatus.UNNECESSARY;
+
   constructor(
     hytModalService: HytModalService,
   ) {
@@ -33,6 +36,8 @@ export class WidgetSettingsDialogComponent extends HytModal implements OnInit {
     this.widgetId = this.data.currentWidgetIdSetting;
     this.dialogDataState = 1;
     this.areaId = this.data.areaId;
+
+    this.autoUpdateConfig();
   }
 
   // open modal
@@ -67,6 +72,10 @@ export class WidgetSettingsDialogComponent extends HytModal implements OnInit {
     this.widget.instance.configure();
     // close dialog
     this.close('save');
+  }
+
+  private autoUpdateConfig() {
+    this.autoUpdateConfigStatus = AutoUpdateConfigStatus.UNNECESSARY;
   }
 
 }
