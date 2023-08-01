@@ -40,6 +40,7 @@ import { DefibrillatorSettingsComponent } from './widget-settings-dialog/defibri
 import { MatTabsModule } from '@angular/material/tabs';
 import { PacketFieldsSelectComponent } from './widget-settings-dialog/packet-fields-select/packet-fields-select.component';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatDividerModule } from '@angular/material/divider';
 
 @NgModule({
   declarations: [
@@ -75,6 +76,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
     ComponentsModule,
     GridsterModule,
     MatAutocompleteModule,
+    MatDividerModule,
     MatExpansionModule,
     MatFormFieldModule,
     MatInputModule,

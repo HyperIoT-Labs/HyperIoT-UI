@@ -1,6 +1,7 @@
 import { GridsterItem } from 'angular-gridster2';
 import { BodyMap, BodyMapAssociation } from '../../../dashboard/widget-settings-dialog/bodymap-settings/bodymap.model';
 import { DefibrillatorSettings } from '../../../dashboard/widget-settings-dialog/defibrillator-settings/defibrillator-settings.model';
+import { HPacketField } from 'core';
 
 export interface WidgetConfig extends GridsterItem {
     projectId?: number;
@@ -20,10 +21,11 @@ export interface ConfigModel {
     internalConfig?: InternalConfigModel;
     svgImage?: string;
     packetId?: number; // TODO più pacchetti???
-    packetFields?: string[];  // TODO FIX usare tipo corretto
-    fieldAliases?: string[];  // TODO FIX usare tipo corretto
-    fieldTypes?: any;
-    fieldFileMimeTypes?: any;
+    packetFields?: string[];  // TODO FIX use proper type (correct type should be { [fieldId: number]: string; })
+    fieldAliases?: FieldAliases;
+    fieldTypes?: FieldTypes;
+    fieldFileMimeTypes?: FieldFileMimeTypes;
+    fieldUnitConversions?: FieldUnitConversion;
     timeAxisRange?: number;
     maxDataPoints?: number;
     timeWindow?: number;
@@ -40,6 +42,28 @@ export interface ConfigModel {
     textColor?: string; // TODO separare da generic ConfigModel
     bgColor?: 'dark' | 'bright';
     defibrillator?: DefibrillatorSettings.DefibrillatorSettings;
+}
+
+export interface FieldUnitConversion {
+    [fieldId: number]: {
+        convertFrom: string;
+        convertTo: string;
+        decimals: number;
+        options: any[];
+        conversionCustomLabel: string;
+    };
+}
+
+export class FieldAliases {
+    [fieldId: number]: string;
+}
+  
+export class FieldFileMimeTypes {
+    [fieldId: number]: string;
+}
+
+export class FieldTypes {
+    [fieldId: number]: HPacketField.TypeEnum;
 }
 
 export interface SeriesConfigModel {

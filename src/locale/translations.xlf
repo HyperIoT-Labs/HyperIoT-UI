@@ -1422,11 +1422,8 @@
       <trans-unit id="HYT_alarmEvent_message" datatype="html">
         <source>At least one new event must be added to save the new alarm!</source>
       </trans-unit>
-      <trans-unit id="HYT_aliases_title" datatype="html">
-        <source>Field Aliases</source>
-      </trans-unit>
       <trans-unit id="HYT_aliases_description" datatype="html">
-        <source>Enter an alternate name to be displayed as column header, in case the alias is empty the field name will be displayed</source>
+        <source>Enter an alternate name to be displayed in the widget. In case the alias is empty the field name will be displayed</source>
       </trans-unit>
       <trans-unit id="HYT_toolbar_full_screen" datatype="html">
         <source>Full Screen</source>
@@ -1472,6 +1469,18 @@
       </trans-unit>
       <trans-unit id="HYT_auto_update_config_error" datatype="html">
         <source>Error! Unable to update the widget configuration automatically. The widget may not work correctly after the latest updates. It is recommended to delete the widget and set up a new one.</source>
+      </trans-unit>
+      <trans-unit id="HYT_fields_customization" datatype="html">
+        <source>Fields Customization</source>
+      </trans-unit>
+      <trans-unit id="HYT_alias_title" datatype="html">
+        <source>Field Alias</source>
+      </trans-unit>
+      <trans-unit id="HYT_file_mime_type_title" datatype="html">
+        <source>File MIME Type</source>
+      </trans-unit>
+      <trans-unit id="HYT_unit_conversion_title" datatype="html">
+        <source>Unit Conversion</source>
       </trans-unit>
     </body>
   </file>

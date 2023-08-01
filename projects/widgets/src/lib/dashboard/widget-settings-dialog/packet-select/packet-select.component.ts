@@ -2,29 +2,9 @@ import { Component, OnInit, Input, EventEmitter, Output, ViewEncapsulation } fro
 import { ControlContainer, NgForm } from '@angular/forms';
 import {SelectOption, UnitConversionService} from 'components';
 import { LoggerService, Logger, HPacketFieldsHandlerService } from 'core';
-
 import { HPacket, HPacketField, HpacketsService, AreasService, AreaDevice, HDevice } from 'core';
 import { mimeTypeList } from './MIMETypes';
-
-export class FieldUnitConversion {
-  field: {id: number, name: string};
-  convertFrom: string;
-  convertTo: string;
-  decimals: number;
-  options: any[];
-}
-
-export class FieldAlias {
-  [fieldId: string]: any;
-}
-
-export class FieldFileMimeTypes {
-  [fieldId: string]: string;
-}
-
-export class FieldTypes {
-  [fieldId: string]: HPacketField.TypeEnum;
-}
+import { FieldAliases, FieldFileMimeTypes, FieldTypes, FieldUnitConversion } from '../../../base/base-widget/model/widget.model';
 
 @Component({
   selector: 'hyperiot-packet-select',
@@ -51,10 +31,10 @@ export class PacketSelectComponent implements OnInit {
   @Input()
   areaId: number;
 
-  packetUnitsConversion: FieldUnitConversion[];
-  fieldAliases: FieldAlias;
+  fieldAliases: FieldAliases;
   fieldTypes: FieldTypes;
   fieldFileMimeTypes: FieldFileMimeTypes;
+  fieldUnitConversions: FieldUnitConversion;
   conversionDecimalsOptions = [
     {label: '0', value: 0},
     {label: '1', value: 1},
@@ -64,7 +44,7 @@ export class PacketSelectComponent implements OnInit {
     {label: '5', value: 5},
   ];
 
-  aliasesDescription = $localize`:@@HYT_aliases_description:Enter an alternate name to be displayed as column header, in case the alias is empty the field name will be displayed`;
+  aliasesDescription = $localize`:@@HYT_aliases_description:Enter an alternate name to be displayed in the widget. In case the alias is empty the field name will be displayed`;
 
   allMIMETypesOptions: string[] = mimeTypeList;
   filteredMIMETypesOptions: string[];
@@ -139,10 +119,6 @@ export class PacketSelectComponent implements OnInit {
     this.selectedFieldsChange.emit(this.selectedFields);
   }
 
-  onPacketUnitConversionChange(unit, i) {
-    this.packetUnitsConversion[i].convertTo = unit;
-  }
-
   apply() {
     if (this.selectedPacketOption) {
       this.selectedPacket = this.projectPackets.find(p => p.id === +this.selectedPacketOption);
@@ -154,10 +130,10 @@ export class PacketSelectComponent implements OnInit {
       // }
       // this.selectedFields.map((pf) => this.widget.config.packetFields[pf.id] = pf.name);
       this.selectedFields.map((pf) => this.widget.config.packetFields[pf.id] = this.hPacketFieldsHandlerService.getStringifiedSequenceFromPacket(this.selectedPacket, pf.id));
-      this.widget.config.packetUnitsConversion = this.packetUnitsConversion;
       this.widget.config.fieldAliases = this.fieldAliases;
       this.widget.config.fieldFileMimeTypes = this.fieldFileMimeTypes;
       this.widget.config.fieldTypes = { };
+      this.widget.config.fieldUnitConversions = this.fieldUnitConversions;
       // this.selectedPacket.fields.forEach(field => {
       //   this.widget.config.fieldTypes[field.id] = field.type;
       // });
@@ -178,12 +154,12 @@ export class PacketSelectComponent implements OnInit {
   }
 
   loadPackets(devices?: HDevice[]) {
-    this.packetUnitsConversion = this.widget.config.packetUnitsConversion ?
-        JSON.parse(JSON.stringify(this.widget.config.packetUnitsConversion)) : [];
     this.fieldAliases = this.widget.config.fieldAliases ?
         JSON.parse(JSON.stringify(this.widget.config.fieldAliases)) : { };
     this.fieldFileMimeTypes = this.widget.config.fieldFileMimeTypes ?
         JSON.parse(JSON.stringify(this.widget.config.fieldFileMimeTypes)) : { };
+    this.fieldUnitConversions = this.widget.config.fieldUnitConversions ?
+        JSON.parse(JSON.stringify(this.widget.config.fieldUnitConversions)) : { };
     // fetch all packets
     this.packetService
       .findAllHPacketByProjectIdAndType(this.widget.projectId,"INPUT,IO")
@@ -244,59 +220,31 @@ export class PacketSelectComponent implements OnInit {
       });
   }
 
-  hasFieldsUnit() {
-    return true;
-    /*
-      Condition commented out as not working correctly when only one field is selected.
-    */
-    // if (this.multiPacketSelect) {
-    //   if (this.selectedFields.length === 0) {
-    //     return 0;
-    //   }
-    //   const unitCount = this.selectedFields.reduce((a, b) => (a + b.unit ? 1 : 0));
-    //   if (unitCount > 0)
-    //     console.log('unitCount > 0 ');
-    //   else
-    //     console.log('unitCount < 0 ');
-    //   return unitCount > 0;
-    // }
-    // return this.selectedFields.unit;
-  }
-
   private syncUnitsConversion() {
-    if (!this.packetUnitsConversion) {
-      this.packetUnitsConversion = [];
-    }
-    const tempMap = [] as FieldUnitConversion[];
     const addFieldConversion = (f: HPacketField) => {
       let unit = null
-      let unitConvert = this.packetUnitsConversion.find((uc) => uc.field.id === f.id);
+      let unitConvert = this.fieldUnitConversions[f.id];
       unit = (f.unit == "")?null:f.unit;
       if (!unitConvert) {
         unitConvert = {
-          field: {id: f.id, name: f.name},
           convertFrom: unit,
           convertTo: unit,
           decimals: 1,
-          options: this.getUnitOptions(unit)
+          options: this.getUnitOptions(unit),
+          conversionCustomLabel: '',
         };
-        if (!tempMap.includes(unitConvert))
-          tempMap.push(unitConvert);
       } else {
         unitConvert.convertFrom = unit;
-        if (!tempMap.includes(unitConvert))
-          tempMap.push(unitConvert);
       }
-      unitConvert.field.name = f.name;
+      this.fieldUnitConversions[f.id] = unitConvert;
     };
     // if (this.multiPacketSelect) {
-      this.selectedFields.map((pf: HPacketField) => {
+      this.selectedFields.filter(field => field.type === 'INTEGER' || field.type === 'FLOAT' || field.type === 'DOUBLE').map((pf: HPacketField) => {
         addFieldConversion(pf);
       });
     // } else if (this.selectedFields) {
     //   addFieldConversion(this.selectedFields);
     // }
-    this.packetUnitsConversion = tempMap;
   }
 
   getUnit(unit: string) {
@@ -330,25 +278,8 @@ export class PacketSelectComponent implements OnInit {
     }
   }
 
-  isFileMimeTypeSectionVisible() {
-    try {
-      if (this.widget.type !== 'realtime-table' && this.widget.type !== 'offline-table') {
-        return false;
-      }
-      if (!this.selectedFields) {
-        return false;
-      }
-      if (this.selectedFields.length === 0) {
-        return false;
-      }
-      if (!this.selectedFields.some(field => field.type === 'FILE')) {
-        return false;
-      }
-      return true;
-    }
-    catch (error) {
-      return false;
-    }
+  getFullFieldName(hPacketFieldId) {
+    return this.hPacketFieldsHandlerService.getStringifiedSequenceFromPacket(this.selectedPacket, hPacketFieldId);
   }
 
 }

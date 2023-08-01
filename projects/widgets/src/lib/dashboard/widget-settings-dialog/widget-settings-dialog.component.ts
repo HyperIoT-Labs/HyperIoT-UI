@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {HytModal, HytModalService} from 'components';
 import {Subject} from 'rxjs';
-import { AutoUpdateConfigStatus } from '../../base/base-widget/model/widget.model';
+import { AutoUpdateConfigStatus, ConfigModel } from '../../base/base-widget/model/widget.model';
 
 @Component({
   selector: 'hyperiot-widget-settings-dialog',
@@ -75,7 +75,27 @@ export class WidgetSettingsDialogComponent extends HytModal implements OnInit {
   }
 
   private autoUpdateConfig() {
-    this.autoUpdateConfigStatus = AutoUpdateConfigStatus.UNNECESSARY;
+    try {
+      const widgetConfig = this.widget.config as ConfigModel;
+      if (widgetConfig && widgetConfig.packetUnitsConversion && widgetConfig.packetUnitsConversion.length > 0) {
+        widgetConfig.fieldUnitConversions =  { };
+        widgetConfig.packetUnitsConversion.forEach(element => {
+          widgetConfig.fieldUnitConversions[element.field.id] = {
+            convertFrom: element.convertFrom,
+            convertTo: element.convertTo,
+            decimals: element.decimals,
+            options: element.options,
+            conversionCustomLabel: element.conversionCustomLabel,
+          }
+        });
+        delete widgetConfig.packetUnitsConversion;
+        this.autoUpdateConfigStatus = AutoUpdateConfigStatus.SUCCESS;
+      } else {
+        this.autoUpdateConfigStatus = AutoUpdateConfigStatus.UNNECESSARY;
+      }
+    } catch(error) {
+      this.autoUpdateConfigStatus = AutoUpdateConfigStatus.ERROR;
+    }
   }
 
 }
