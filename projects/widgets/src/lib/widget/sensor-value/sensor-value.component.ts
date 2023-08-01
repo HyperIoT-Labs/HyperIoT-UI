@@ -12,6 +12,7 @@ export class SensorValueComponent extends BaseWidgetComponent {
 
   timestamp = new Date();
   sensorField: string;
+  labelSensorField: string;
   isActivityLedOn = false;
   dataChannel: DataChannel;
   ledTimeout: any;
@@ -45,8 +46,9 @@ export class SensorValueComponent extends BaseWidgetComponent {
     }
     this.isConfigured = true;
 
-    // TODO dovrebbe supportare alias
-    this.sensorField = (Object.values(this.widget.config.packetFields) as string[])[0]; // todo fix con tipo corretto
+    const hPacketFieldId = Object.keys(this.widget.config.packetFields)[0];
+    this.sensorField = this.widget.config.packetFields[hPacketFieldId];
+    this.labelSensorField = this.widget.config.fieldAliases[hPacketFieldId] || this.widget.config.packetFields[hPacketFieldId];
 
     const dataPacketFilter = new DataPacketFilter(
       this.widget.config.packetId,
