@@ -44,6 +44,13 @@
     border-top: .5px solid #c7d9e3;
 }
 
+.sensor-value-container .info-container .sensor-field {
+    max-width: 140px; /* TODO max-width should be relative to container */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .sensor-value-container.bright .info-container {
     border-top: .5px solid #c7d9e3;
 }

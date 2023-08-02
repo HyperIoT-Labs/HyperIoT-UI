@@ -1896,12 +1896,8 @@
         <source>At least one new event must be added to save the new alarm!</source>
         <target>Almeno un nuovo evento deve essere aggiunto per salvare un nuovo allarme!</target>
       </trans-unit>
-      <trans-unit id="HYT_aliases_title" datatype="html">
-        <source>Field Aliases</source>
-        <target>Alias dei campi</target>
-      </trans-unit>
       <trans-unit id="HYT_aliases_description" datatype="html">
-        <source>Enter an alternate name to be displayed as column header, in case the alias is empty the field name will be displayed</source>
+        <source>Enter an alternate name to be displayed in the widget. In case the alias is empty the field name will be displayed</source>
         <target>Inserisci un nome alternativo da visualizzare come intestazione delle colonne, in caso l'alias sia vuoto verrà visualizzato il nome del field</target>
       </trans-unit>
       <trans-unit id="HYT_toolbar_full_screen" datatype="html">
@@ -1955,6 +1951,30 @@
       <trans-unit id="HYT_hpacketfield_object_multiplicity_warn" datatype="html">
         <source>Fields of type Object cannot be of multiplicity array or matrix</source>
         <target>I campi di tipo Object non possono avere molteplicità array o matrice</target>
+      </trans-unit>
+      <trans-unit id="HYT_auto_update_config_warn" datatype="html">
+        <source>Attention! An automatic update has been applied to the widget configuration to make it compatible with the latest updates. It is necessary to save the configuration to make the change effective.</source>
+        <target>Attenzione! È stato applicato un aggiornamento automatico alla configurazione del widget per renderla compatibile con gli ultimi aggiornamenti. È necessario salvare la configurazione per rendere effettiva la modifica.</target>
+      </trans-unit>
+      <trans-unit id="HYT_auto_update_config_error" datatype="html">
+        <source>Error! Unable to update the widget configuration automatically. The widget may not work correctly after the latest updates. It is recommended to delete the widget and set up a new one.</source>
+        <target>Errore! Impossibile aggiornare automaticamente la configurazione del widget. Il widget potrebbe non funzionare correttamente dopo gli ultimi aggiornamenti. È raccomandato eliminare il widget e riconfigurarne uno nuovo.</target>
+      </trans-unit>
+      <trans-unit id="HYT_fields_customization" datatype="html">
+        <source>Fields Customization</source>
+        <target>Personalizzazione campi</target>
+      </trans-unit>
+      <trans-unit id="HYT_alias_title" datatype="html">
+        <source>Field Alias</source>
+        <target>Alias del campo</target>
+      </trans-unit>
+      <trans-unit id="HYT_file_mime_type_title" datatype="html">
+        <source>File MIME Type</source>
+        <target>File MIME Type</target>
+      </trans-unit>
+      <trans-unit id="HYT_unit_conversion_title" datatype="html">
+        <source>Unit Conversion</source>
+        <target>Conversione</target>
       </trans-unit>
     </body>
   </file>

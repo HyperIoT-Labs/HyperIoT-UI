@@ -38,6 +38,8 @@ export class GaugeChartComponent extends BaseGenericComponent implements OnInit 
    */
   field: string;
 
+  labelField: string;
+
   protected logger: Logger;
   
   constructor(
@@ -75,7 +77,9 @@ export class GaugeChartComponent extends BaseGenericComponent implements OnInit 
     this.graph.layout = {};
     this.graph.data = [];
     this.graph.config = {};
-    this.field = this.widget.config.packetFields[Object.keys(this.widget.config.packetFields)[0]];
+    const hPacketFieldId = Object.keys(this.widget.config.packetFields)[0];
+    this.field = this.widget.config.packetFields[hPacketFieldId];
+    this.labelField = this.widget.config.fieldAliases[hPacketFieldId] || this.widget.config.packetFields[hPacketFieldId];
 
     const dataPacketFilter = new DataPacketFilter(
       this.widget.config.packetId,
@@ -138,7 +142,7 @@ export class GaugeChartComponent extends BaseGenericComponent implements OnInit 
         domain: { x: [0, 1], y: [0, 1] },
         value: this.value,
         number: { font: { size: 40 }, valueformat: "." },
-        title: { text: this.field.charAt(0).toUpperCase() + this.field.slice(1), font: { size: 20 }},
+        title: { text: this.labelField.charAt(0).toUpperCase() + this.labelField.slice(1), font: { size: 20 }},
         type: "indicator",
         mode: "gauge+number",
         gauge: { 

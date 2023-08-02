@@ -117,7 +117,7 @@ export abstract class BaseWidgetComponent implements OnChanges, OnInit, OnDestro
   }
 
   computePacketData(packetData: PacketData[]) {
-    if (!this.widget.config.packetUnitsConversion) {
+    if (!this.widget.config.fieldUnitConversions) {
       return;
     }
 
@@ -137,7 +137,7 @@ export abstract class BaseWidgetComponent implements OnChanges, OnInit, OnDestro
           case 'INTEGER':
           case 'DOUBLE':
           case 'FLOAT': {
-            const unitConversion = this.widget.config.packetUnitsConversion.find(uc => uc.field.id === fieldId);
+            const unitConversion = this.widget.config.fieldUnitConversions[fieldId];
             if (unitConversion && typeof pd[packetKey] === 'number') {
               // applying unit conversion
               if (unitConversion.convertFrom !== unitConversion.convertTo) {

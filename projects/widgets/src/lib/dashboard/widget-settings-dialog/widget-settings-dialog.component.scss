@@ -120,6 +120,19 @@
   }
 }
 
+.auto-update-config-warn {
+  background-color: #ffd6005c;
+  padding: 1em;
+  margin: 0.5em;
+  border-radius: 0.4em;
+}
+
+.auto-update-config-error {
+  background-color: #ff00005c;
+  padding: 1em;
+  margin: 0.5em;
+  border-radius: 0.4em;
+}
 // .dialog footer {
 //     background-color: var(--header-color);
 //     border-top: 1px solid rgba(0,0,0,0.1);
