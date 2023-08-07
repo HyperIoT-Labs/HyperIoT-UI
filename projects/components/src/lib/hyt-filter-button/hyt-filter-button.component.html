@@ -1,0 +1,17 @@
+<div class="hyt-filter-button-container">
+    <label *ngFor="let option of options" class="hyt-filter-button hyt-filter-button-{{option.shape}}">
+        <input
+          type="radio"
+          [value]="option.value"
+          [name]="name"
+          [checked]="option.value === value" 
+          [attr.disabled]="disabled"
+          [attr.matTooltip]="option.tooltip"
+          (change)="onRadioChange(option)"
+        />
+        <span [attr.i18n]="option.keyLabel" *ngIf="!option.icon; else iconFilter">{{ option.label }}</span>
+        <ng-template #iconFilter>
+            <span class="hyt-icon icon-{{option.icon}}"></span>
+        </ng-template>
+    </label>
+</div>

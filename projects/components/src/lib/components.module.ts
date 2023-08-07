@@ -52,6 +52,7 @@ import { DDComponentDirective } from './hyt-dialog/dynamic-dialog/DDComponent.di
 import { CronEditorComponent } from './cron-editor/cron-editor.component';
 import { TimePickerComponent } from './cron-editor/time-picker/time-picker.component';
 import { HytInnerFieldSelectComponent } from './hyt-inner-field-select/hyt-inner-field-select.component';
+import { HytFilterButtonComponent } from './hyt-filter-button/hyt-filter-button.component';
 
 export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
 
@@ -103,6 +104,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     DynamicDialogComponent,
     CronEditorComponent,
     TimePickerComponent,
+    HytFilterButtonComponent
   ],
   imports: [
     CommonModule,
@@ -152,6 +154,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     HytLoginComponent,
     HytInfoComponent,
     HytIconButtonComponent,
+    HytFilterButtonComponent
   ],
   providers: [
     NotificationService,

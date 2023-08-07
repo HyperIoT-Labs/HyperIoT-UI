@@ -1,0 +1,19 @@
+$primary: #0956B6;
+.hyt-filter-button-container{
+    display: flex;
+    justify-content: center;
+    
+    .hyt-filter-button{
+        margin: .3rem .6rem;
+        background: gainsboro;
+        color: $primary;
+
+        &.hyt-filter-button-round{
+            border-radius: .3rem;
+        }
+
+        &.hyt-filter-button-circle{
+            border-radius: 50%;
+        }
+    }
+}
