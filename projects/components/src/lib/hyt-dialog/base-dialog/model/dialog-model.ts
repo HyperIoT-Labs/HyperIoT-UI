@@ -57,6 +57,7 @@ export interface DynamicDialogConfig extends BaseDialogConfig {
 export interface ConfirmDialogConfig extends BaseDialogConfig {
     header?: DialogHeaderModel;
     text?: string;
+    dismissable?: string;
     confirmLabel?: string;
     rejectLabel?: string;
 }
