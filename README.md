@@ -55,6 +55,8 @@ The project is designed to support multiple locales. Current available locales a
 Use the `--configuration` option to start the application with a specified locale. (e.g. `ng serve --configuration it`).
 Refer to the [Angular internationalization documentation](https://angular.io/guide/i18n-overview) to add new locales or for additional info.
 
+> Note: The build using localization might fail due to a [known issue](https://github.com/angular/angular/issues/44004). To resolve the error, remove the `node_modules\.cache` folder before launching the build.
+
 ### Code scaffolding
 
 Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.

@@ -1586,10 +1586,6 @@
         <source>File type must be <x id="PH" /></source>
         <target>Il file deve essere di tipo <x id="PH" /></target>
       </trans-unit>
-      <trans-unit id="HYT_download_pwa" datatype="html">
-        <source>Download PWA <x id="START_TAG_BUTTON" />OK<x id="CLOSE_TAG_BUTTON" /><x id="START_TAG_BUTTON_1" />NO<x id="CLOSE_TAG_BUTTON" /></source>
-        <target>Scarica PWA <x id="START_TAG_BUTTON" />OK<x id="CLOSE_TAG_BUTTON" /><x id="START_TAG_BUTTON_1" />NO<x id="CLOSE_TAG_BUTTON" /></target>
-      </trans-unit>
       <trans-unit id="HYT_dashboard" datatype="html">
         <source>Dashboard</source>
         <target>Dashboard</target>

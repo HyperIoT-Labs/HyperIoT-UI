@@ -1190,9 +1190,6 @@
       <trans-unit id="HYT_file_type_must_be" datatype="html">
         <source>File type must be <x id="PH"/></source>
       </trans-unit>
-      <trans-unit id="HYT_download_pwa" datatype="html">
-        <source>Download PWA <x id="START_TAG_BUTTON"/>OK<x id="CLOSE_TAG_BUTTON"/><x id="START_TAG_BUTTON_1"/>NO<x id="CLOSE_TAG_BUTTON"/></source>
-      </trans-unit>
       <trans-unit id="HYT_dashboard" datatype="html">
         <source>Dashboard</source>
       </trans-unit>
