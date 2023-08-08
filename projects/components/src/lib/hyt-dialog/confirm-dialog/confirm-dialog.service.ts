@@ -6,7 +6,10 @@ import { IDialogService } from '../base-dialog/IDialogService';
 import { ConfirmDialogConfig } from '../base-dialog/model/dialog-model';
 import { ConfirmDialogComponent } from './confirm-dialog.component';
 
-export type ConfirmDialogResult = 'accept' | 'reject';
+export type ConfirmDialogResult = {
+    result: 'accept' | 'reject';
+    dismissed: boolean;
+}
 
 @Injectable({
     providedIn: 'root',

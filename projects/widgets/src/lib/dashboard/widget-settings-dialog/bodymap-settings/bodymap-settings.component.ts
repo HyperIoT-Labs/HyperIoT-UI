@@ -109,7 +109,7 @@ export class BodymapSettingsComponent implements OnInit, OnDestroy {
         });
         dialogRef.afterClosed().subscribe(
           res => {
-            if (res === 'accept') {
+            if (res && res.result === 'accept') {
               this.musclesMap = [];
               this.bodyMap = this.bodyMaps.find(x => x.value === selectedBodyMap);
             } else {

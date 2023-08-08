@@ -13,6 +13,7 @@
         <span>
             {{ data.text }}
         </span>
+        <mat-checkbox *ngIf="data.dismissable" [(ngModel)]="dismissed">{{ data.dismissable }}</mat-checkbox>
     </div>
     <div class="dialog-footer">
         <hyt-button [color]="'hyt-base-white'" (clickFn)="reject()">

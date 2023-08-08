@@ -18,6 +18,8 @@ export class ConfirmDialogComponent
     extends BaseDialogComponent
     implements OnInit
 {
+    dismissed = false;
+
     constructor(
         protected loggerService: LoggerService,
         @Inject(DIALOG_OVERLAY_COMPONENT_REF_TOKEN)
@@ -33,9 +35,9 @@ export class ConfirmDialogComponent
     }
 
     accept() {
-        this.dialogRef.close('accept');
+        this.dialogRef.close({ result: 'accept', dismissed: this.dismissed });
     }
     reject() {
-        this.dialogRef.close('reject');
+        this.dialogRef.close({ result: 'reject', dismissed: this.dismissed });
     }
 }
