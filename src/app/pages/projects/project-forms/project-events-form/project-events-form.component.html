@@ -8,7 +8,7 @@
 
     <div id="btn-edit-mode" class="col-12">
 
-      <hyt-button 
+      <hyt-button
         [color]="'hyt-base-default-white'"
         (clickFn)="loadEmpty()"
       >
@@ -85,12 +85,12 @@
       <div id="fevent-col-event" class="col-6">
 
         <p id="label-event-aoutput" i18n="@@HYT_output_data">Event output</p>
-        
+
         <div id="container-radio-events">
 
-          <hyt-radio-button 
-            [form]="form" 
-            [options]="outputOptions" 
+          <hyt-radio-button
+            [form]="form"
+            [options]="outputOptions"
             name="eventOutput"
             (changeFn)="changeEventView($event)">
           </hyt-radio-button>
@@ -100,7 +100,7 @@
       </div> <!-- Field Oputput -->
 
     </div> <!-- END SECOND ROW -->
-    
+
 
     <div class="form-group row">
 
@@ -113,32 +113,32 @@
     <hyt-event-component-container [currentProjectId]="currentProject ? currentProject.id : null" #eventComponentContainer></hyt-event-component-container>
 
     <div *ngIf="loadingStatus !== LoadingStatus.Ready" class="overlay d-flex flex-column align-items-center justify-content-center">
-        
-      <div 
-        *ngIf="loadingStatus === LoadingStatus.Loading" 
+
+      <div
+        *ngIf="loadingStatus === LoadingStatus.Loading"
       >
 
           <h4 i18n="@@HYT_loading_data">Loading data...</h4>
 
-      </div> 
-      
+      </div>
+
       <div *ngIf="loadingStatus === LoadingStatus.Error" class="error-overlay d-flex flex-column justify-content-center">
           <h4 i18n="@@HYT_error_occurred">An unexpected error has occurred</h4>
 
-          <hyt-button 
-              [color]="'hyt-base-default-white'" 
+          <hyt-button
+              [color]="'hyt-base-default-white'"
               (click)="loadingStatus = LoadingStatus.Ready"
           >
-              <span i18n="@@HYT_close">Close</span> <span class="icon-hyt_cancelC"></span> 
+              <span i18n="@@HYT_close">Close</span> <span class="icon-hyt_cancelC"></span>
           </hyt-button>
-      </div> 
+      </div>
 
       <h4 *ngIf="loadingStatus === LoadingStatus.Saving" i18n="@@HYT_saving_data">Saving data...</h4>
 
-      <mat-progress-bar 
+      <mat-progress-bar
           *ngIf="loadingStatus === LoadingStatus.Loading || loadingStatus === LoadingStatus.Saving"
           mode="indeterminate"
-      ></mat-progress-bar> 
+      ></mat-progress-bar>
 
     </div>
 
