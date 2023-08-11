@@ -1,5 +1,5 @@
 #container-option-modal {
-  
+
   .dialog {
     overflow: hidden;
     background-color: #2258a5;
@@ -18,13 +18,19 @@
       h3 {
         margin: 0px;
         text-transform: uppercase;
-      } 
+      }
 
       span {
 
         &.icon-hyt_cancelC {
 
-          color: #ffffff;
+          position: absolute;
+          top: 50%;
+          right: 10px;
+          font-size: 1.3em;
+          transform: translateY(-50%);
+          cursor: pointer;
+          color: #fff;
 
           &:hover {
 
@@ -44,7 +50,7 @@
     }
 
   }
-  
+
 }
 
 
