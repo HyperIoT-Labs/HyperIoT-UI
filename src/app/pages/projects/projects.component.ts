@@ -13,7 +13,7 @@ import { NotificationService } from 'components';
   styleUrls: ["./projects.component.scss"],
   encapsulation: ViewEncapsulation.None,
 })
-export class ProjectsComponent implements OnInit, OnDestroy {
+export class ProjectsComponent implements OnInit {
   PageStatus = PageStatus;
   pageStatus: PageStatus = PageStatus.Loading;
 
@@ -22,7 +22,6 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   hProjectsFiltered: HProject[] = [...this.hProjects];
   
   filteringForm: FormGroup;
-  testForm: FormGroup;
 
   /**
    * this variariable is used to set scrollToTop div on show or hide
@@ -34,14 +33,6 @@ export class ProjectsComponent implements OnInit, OnDestroy {
    * this variariable is used to measure the value of vertical scroll
    */
   scrollTop: number;
-
-  sortOptions: SelectOption[] = [
-    { value: "none", label: $localize`:@@HYT_none:None` },
-    { value: "alfabetic-increasing", label: $localize`:@@HYT_a_z:A-Z` },
-    { value: "alfabetic-decreasing", label: $localize`:@@HYT_z_a:Z-A` },
-    { value: "date-increasing", label: $localize`:@@HYT_oldest:Oldest` },
-    { value: "date-decreasing", label: $localize`:@@HYT_newest:Newest` },
-  ];
 
   deletingInLoading = false;
   displayMessageArea = false;
@@ -71,17 +62,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   }
   
   ngOnInit() {
-    this.testForm = this.fb.group({
-      textFilter: [""],
-      projectType: [""],
-      sortBy: [""],
-    })
-    this.testForm.valueChanges.subscribe((res)=>{
-      console.log(res);
-    })
-    
-    this.filteringForm = this.fb.group({});
-
+    this.initForm()
     if (this.projectsService.nextProjects.state === "delete-loading") {
       this.projectsInLoading(this.projectsService.nextProjects.projectToDelete);
     }
@@ -132,9 +113,13 @@ export class ProjectsComponent implements OnInit, OnDestroy {
     this.projectsService.updateProjectList();
   }
 
-  ngOnDestroy() {}
-
-  filter() {}
+  initForm(){
+    this.filteringForm = this.fb.group({
+      projectType: [''],
+      sort: ['date-decreasing']
+    });
+    this.filteringForm.controls['sort'].valueChanges.subscribe((val)=> this.sortBy(val))
+  }
 
   search(value: string) {
     if (value) {
@@ -161,14 +146,6 @@ export class ProjectsComponent implements OnInit, OnDestroy {
 
   onChangeInputSearch(event) {
     this.search(this.filteringForm.value.textFilter);
-  }
-
-  onChangeInputSearch2(event) {
-    console.log(this.testForm.value.textFilter);
-  }
-
-  onChangeSelectSort(event) {
-    this.sortBy(event.value);
   }
 
   sortBy(type: string) {
@@ -265,7 +242,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   }
 
   refreshComponent() {
-    this.filteringForm = this.fb.group({});
+    this.initForm()
 
     this.hProjectService.cardsView().subscribe(
       (res) => {
@@ -350,32 +327,31 @@ export class ProjectsComponent implements OnInit, OnDestroy {
     ];
   }
 
-
   get filterSortType(): HytFilterButtonFilter[] {
     return [
       {
-        value: "alphabetic-asc",
-        keyLabel: "A-Z",
-        label: "A-Z",
-        tooltip: "A-Z",
-      },
-      {
-        value: "alphabetic-desc",
-        keyLabel: "Z-A",
-        label: "Z-A",
-        tooltip: "Z-A",
-      },
-      {
-        value: "newest",
+        value: "date-decreasing",
         keyLabel: "NEW",
         label: "NEW",
         tooltip: "NEW",
       },
       {
-        value: "oldest",
+        value: "date-increasing",
         keyLabel: "OLD",
         label: "OLD",
         tooltip: "OLD",
+      },
+      {
+        value: "alfabetic-increasing",
+        keyLabel: "A-Z",
+        label: "A-Z",
+        tooltip: "A-Z",
+      },
+      {
+        value: "alfabetic-decreasing",
+        keyLabel: "Z-A",
+        label: "Z-A",
+        tooltip: "Z-A",
       },
     ];
   }
