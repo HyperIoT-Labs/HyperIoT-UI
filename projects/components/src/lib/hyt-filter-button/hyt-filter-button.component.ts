@@ -8,10 +8,10 @@ export enum HytFilterButtonShape{
 }
 
 export interface HytFilterButtonFilter{ 
-  keyLabel: string,
-  label: string, 
-  icon: string, 
   value: string,
+  label?: string, 
+  keyLabel?: string,
+  icon?: string, 
   tooltip?: string
 }
 @Component({
@@ -28,9 +28,9 @@ export interface HytFilterButtonFilter{
 })
 export class HytFilterButtonComponent implements ControlValueAccessor {
   @Input() options: HytFilterButtonFilter[];
-  @Input() title: string;
-  @Input() shape: HytFilterButtonShape;
-  @Input() name: string;
+  @Input() label: string;
+  @Input() shape: HytFilterButtonShape = HytFilterButtonShape.CIRCLE;
+  @Input() formControlName: string;
   private _value;
 
   get value(): any { 
@@ -51,6 +51,8 @@ export class HytFilterButtonComponent implements ControlValueAccessor {
 
   // Write value upon external change.
   writeValue(value: any): void {
+    console.log("writeValue");
+    
     this.value = value;
   }
 

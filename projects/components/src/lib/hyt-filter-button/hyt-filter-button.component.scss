@@ -1,12 +1,17 @@
 $primary: #0956B6;
+$primaryDarker: #094894;
 .hyt-filter-button-container{
-    display: flex;
-    justify-content: center;
-    
     .hyt-filter-button{
         margin: .3rem .6rem;
-        background: gainsboro;
+        background: #ededed;
+        height: 50px;
+        width: 50px;
         color: $primary;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: 600;
+        transition: .2s ease-in-out;
 
         &.hyt-filter-button-round{
             border-radius: .3rem;
@@ -14,6 +19,47 @@ $primary: #0956B6;
 
         &.hyt-filter-button-circle{
             border-radius: 50%;
+        }
+
+        
+        .hyt-icon{
+            font-size: 32px;
+        }
+        
+        span{
+            font-size: 13px;
+            user-select: none;
+        }
+        
+        input{
+            display: none;
+            &:active{
+                ~ .hyt-icon, ~ span{
+                    color: #fff;
+                }
+            }
+        }   
+
+        &:has(> input:checked){
+            background: $primary;
+            color: #fff
+        }
+
+        &:has(> input:active){
+            background: $primaryDarker;
+        }
+
+        @media screen and (min-width: 768px) and (max-width: 900px) {
+            width: 45px;
+            height: 45px;
+            
+            .hyt-icon{
+                font-size: 28px;
+            }
+
+            span{
+                font-size: 12px;
+            }
         }
     }
 }

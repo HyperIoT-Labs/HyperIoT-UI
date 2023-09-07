@@ -46,7 +46,35 @@
             <h2 id="title-projects" i18n="@@HYT_project_list">Project list</h2>
           </div>
 
-          <div id="projects-topfilters-box" class="col-12">
+          <div id="projects-title-box" class="col-12 p-0">
+            <form [formGroup]="testForm" class="row shift-md-top">
+              <div id="container-search" class="col-12 col-md-4 adapt-p-filter-btn px-4 px-md-5">
+                <hyt-input-text 
+                  id="hyt-search-bottom" 
+                  [form]="testForm" 
+                  formControlName="textFilter"
+                  name="textFilter" 
+                  i18n-placeholder="@@HYT_search" 
+                  placeholder="Search" 
+                  (keyup)="onChangeInputSearch2($event)"
+                ></hyt-input-text>
+              </div>
+              <hyt-filter-button
+                [options]="filterProjectType"
+                label="Project Type:"
+                formControlName="projectType"
+                class="col-12 col-md-4"
+              ></hyt-filter-button>
+              <hyt-filter-button
+                [options]="filterSortType"
+                label="Sort by:"
+                formControlName="sortBy"
+                class="col-12 col-md-4"
+              ></hyt-filter-button>
+            </form>
+          </div>
+
+          <div id="projects-topfilters-box" class="col-12" style="display: none;">
             <form #f="ngForm" [formGroup]="filteringForm" (ngSubmit)="filter()">
 
               <div class="row">

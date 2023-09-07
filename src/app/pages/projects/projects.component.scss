@@ -184,6 +184,22 @@
   
           }
 
+          .adapt-p-filter-btn{
+            padding-top: 0;
+            
+            @media screen and (min-width: 768px) {
+              padding-top: 2.5rem;
+            }
+          }
+
+          .shift-md-top{
+            margin-top: 0;
+            
+            @media screen and (min-width: 768px) {
+              margin-top: -2rem;
+            }
+          }
+
         }
 
         #projects-topfilters-box {
