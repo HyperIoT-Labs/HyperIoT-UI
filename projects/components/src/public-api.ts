@@ -83,6 +83,7 @@ export { HytAccordionItem } from './lib/hyt-accordion/hyt-directives/hyt-accordi
 export { HytAccordionContent } from './lib/hyt-accordion/hyt-directives/hyt-accordion-content.directive';
 export { HytAccordionHeader } from './lib/hyt-accordion/hyt-directives/hyt-accordion-header.directive';
 export { HytFilterButtonComponent } from './lib/hyt-filter-button/hyt-filter-button.component'
+export { HytBadgeComponent } from './lib/hyt-badge/hyt-badge.component'
 
 export * from './lib/hyt-shared-components/hyt-topology-services/hyt-topology.service';
 export * from './lib/hyt-shared-components/hyt-topology-toolbar/hyt-topology-toolbar.component';

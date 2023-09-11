@@ -2,7 +2,7 @@ import { Component, Input, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 /**
- * @Description Enum for declare how do you want your border for the single filter, square, round(border-radius: .3rem), circle(default)
+ * @Description Enum for declare the shape for the single filter, square, round(border-radius: .3rem), circle(default)
  */
 export enum HytFilterButtonShape{
   SQUARE="square",
@@ -62,7 +62,7 @@ export class HytFilterButtonComponent implements ControlValueAccessor {
    */
   @Input() label: string;
   /**
-   * @property {HytFilterButtonShape} shape - This enum declare how do you want your border for the single filter, square, round(border-radius: .3rem), circle(default)
+   * @property {HytFilterButtonShape} shape - Enum for declare the shape for the single filter, square, round(border-radius: .3rem), circle(default)
    */
   @Input() shape: HytFilterButtonShape = HytFilterButtonShape.CIRCLE;
   /**
