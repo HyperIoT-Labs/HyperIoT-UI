@@ -1482,6 +1482,9 @@
       <trans-unit id="HYT_unit_conversion_title" datatype="html">
         <source>Unit Conversion</source>
       </trans-unit>
+      <trans-unit id="HYT_test_count" datatype="html">
+        <source>Count <x id="INTERPOLATION" equiv-text="{{count}}"/></source>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -1976,6 +1976,10 @@
         <source>Unit Conversion</source>
         <target>Conversione</target>
       </trans-unit>
+      <trans-unit id="HYT_test_count" datatype="html">
+        <source>Count <x id="INTERPOLATION" equiv-text="{{count}}"/></source>
+        <target>Conta {{count}}</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

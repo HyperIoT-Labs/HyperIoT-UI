@@ -23,7 +23,7 @@ export interface HytFilterButtonFilter{
    */
   label?: string, 
  /**
-  * @param {boolean} keyLabel - Id tag in the translation file
+  * @param {string} keyLabel - Id tag in the translation file
   */
   keyLabel?: string,
   /**
