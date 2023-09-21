@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
-import { Option } from 'components';
-import { Subject } from 'rxjs';
+import { Component, EventEmitter, Inject, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { DIALOG_DATA, DialogRef, Option } from 'components';
 import { BodyMapAssociation } from '../bodymap.model';
 
 @Component({
@@ -21,15 +20,12 @@ export class BodyMapAssociationComponent implements OnInit {
   muscleListOptions: Option[] = [];
   packetList: string[] = [];
 
-  onSubmit: Subject<BodyMapAssociation> = new Subject<BodyMapAssociation>();
-
-  // dati che arrivano dal modale
-  data: any;
-
   isEditMode = true;
 
   constructor(
     private httpService: HttpClient,
+    private dialogRef: DialogRef<BodyMapAssociation>,
+    @Inject(DIALOG_DATA) public data: any,
   ) { }
 
   ngOnInit(): void {
@@ -82,12 +78,12 @@ export class BodyMapAssociationComponent implements OnInit {
 
   saveAndExit() {
     this.save.emit(this.bodyMapAssociation);
-    this.onSubmit.next(this.bodyMapAssociation);
+    this.dialogRef.close(this.bodyMapAssociation);
   }
 
   cancelAndExit() {
     this.save.emit(null);
-    this.onSubmit.next(null);
+    this.dialogRef.close();
   }
 
 }
