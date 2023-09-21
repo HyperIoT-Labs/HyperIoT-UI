@@ -42,6 +42,12 @@
     overflow-y: auto;
 }
 
+.hyt-dialog {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
 .hyt-dialog-header {
     display: flex;
     align-items: center;
