@@ -1482,8 +1482,13 @@
       <trans-unit id="HYT_unit_conversion_title" datatype="html">
         <source>Unit Conversion</source>
       </trans-unit>
-      <trans-unit id="HYT_test_count" datatype="html">
-        <source>Count <x id="INTERPOLATION" equiv-text="{{count}}"/></source>
+      <trans-unit id="HYT_source_count" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{ count }} Sources"/></source>
+        <target><x id="INTERPOLATION" equiv-text="{{ count }} Sources"/></target>
+      </trans-unit>
+      <trans-unit id="HYT_source_count" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{ count }} Source"/></source>
+        <target><x id="INTERPOLATION" equiv-text="{{ count }} Source"/></target>
       </trans-unit>
     </body>
   </file>

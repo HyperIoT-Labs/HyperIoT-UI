@@ -8,7 +8,6 @@ import { ActivatedRoute } from '@angular/router';
   encapsulation: ViewEncapsulation.None
 })
 export class AppComponent {
-  count = 2
   constructor(
     private activatedRoute: ActivatedRoute
   ) { }
