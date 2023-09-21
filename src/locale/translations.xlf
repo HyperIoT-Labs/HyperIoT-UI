@@ -1485,6 +1485,9 @@
       <trans-unit id="HYT_widget_delete_confirm_dismiss" datatype="html">
         <source>Do not ask for confirmation for this dashboard anymore</source>
       </trans-unit>
+      <trans-unit id="HYT_ok" datatype="html">
+        <source>OK</source>
+      </trans-unit>
     </body>
   </file>
 </xliff>

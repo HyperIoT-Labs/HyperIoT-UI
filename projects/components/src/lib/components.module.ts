@@ -46,6 +46,7 @@ import { RouterModule } from '@angular/router';
 import { HytInfoComponent } from './hyt-info/hyt-info.component';
 import { HytIconButtonComponent } from './hyt-icon-button/hyt-icon-button.component';
 import { ConfirmDialogComponent } from './hyt-dialog/confirm-dialog/confirm-dialog.component';
+import { InfoDialogComponent } from './hyt-dialog/info-dialog/info-dialog.component';
 import { CronEditorComponent } from './cron-editor/cron-editor.component';
 import { TimePickerComponent } from './cron-editor/time-picker/time-picker.component';
 import { HytInnerFieldSelectComponent } from './hyt-inner-field-select/hyt-inner-field-select.component';
@@ -97,6 +98,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     HytInnerFieldSelectComponent,
     HytIconButtonComponent,
     ConfirmDialogComponent,
+    InfoDialogComponent,
     CronEditorComponent,
     TimePickerComponent,
     DialogContainerComponent,
