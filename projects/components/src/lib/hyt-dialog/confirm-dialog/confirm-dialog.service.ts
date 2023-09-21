@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { DialogService } from '../dialog.service';
 import { ConfirmDialogConfig, ConfirmDialogResult } from './confirm-dialog.model';
 import { ConfirmDialogComponent } from './confirm-dialog.component';
-import { DialogConfig, DialogLayout } from '../dialog.models';
+import { DialogLayout } from '../dialog.models';
 
 @Injectable({
   providedIn: 'root',
