@@ -45,13 +45,12 @@ import { HytLoginComponent } from './hyt-login/login.component';
 import { RouterModule } from '@angular/router';
 import { HytInfoComponent } from './hyt-info/hyt-info.component';
 import { HytIconButtonComponent } from './hyt-icon-button/hyt-icon-button.component';
-import { DialogComponent } from './hyt-dialog/dialog/dialog.component';
 import { ConfirmDialogComponent } from './hyt-dialog/confirm-dialog/confirm-dialog.component';
-import { DynamicDialogComponent } from './hyt-dialog/dynamic-dialog/dynamic-dialog.component';
-import { DDComponentDirective } from './hyt-dialog/dynamic-dialog/DDComponent.directive';
 import { CronEditorComponent } from './cron-editor/cron-editor.component';
 import { TimePickerComponent } from './cron-editor/time-picker/time-picker.component';
 import { HytInnerFieldSelectComponent } from './hyt-inner-field-select/hyt-inner-field-select.component';
+import { DialogContainerComponent } from './hyt-dialog/dialog-container/dialog-container.component';
+import { HytDialogContent, HytDialogFooter, HytDialogTitle } from './hyt-dialog/dialog-directives';
 
 export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
 
@@ -97,12 +96,13 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     HytInfoComponent,
     HytInnerFieldSelectComponent,
     HytIconButtonComponent,
-    DDComponentDirective,
-    DialogComponent,
     ConfirmDialogComponent,
-    DynamicDialogComponent,
     CronEditorComponent,
     TimePickerComponent,
+    DialogContainerComponent,
+    HytDialogFooter,
+    HytDialogContent,
+    HytDialogTitle,
   ],
   imports: [
     CommonModule,
@@ -152,6 +152,9 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     HytLoginComponent,
     HytInfoComponent,
     HytIconButtonComponent,
+    HytDialogFooter,
+    HytDialogContent,
+    HytDialogTitle,
   ],
   providers: [
     NotificationService,

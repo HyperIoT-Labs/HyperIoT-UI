@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation, HostListener, AfterViewInit, OnDestroy } from '@angular/core';
 import { ToggleSidebarService } from 'src/app/services/toggleSidebar/toggle-sidebar.service';
-import { DynamicDialogService } from 'components';
+import { DialogService } from 'components';
 import { Subscription } from 'rxjs';
 import { InfoComponent } from '../info/info.component';
 
@@ -30,7 +30,7 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(
     private toggleSidebarService: ToggleSidebarService,
-    private dynamicDialogService: DynamicDialogService,
+    private dialogService: DialogService,
   ) {
     this.algorithmResourceName = 'it.acsoftware.hyperiot.algorithm.model.Algorithm';
     this.controlPanelAction = 'control_panel';
@@ -109,7 +109,7 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   showVersionPopUp() {
-    this.dynamicDialogService.openDialog(InfoComponent, null, { header: { label: $localize`:@@HYT_system_information:System information` }, extra: { backgroundClosable: true } });
+    this.dialogService.open(InfoComponent, { backgroundClosable: true });
   }
 
 }
