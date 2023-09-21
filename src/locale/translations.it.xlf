@@ -1980,6 +1980,10 @@
         <source>Do not ask for confirmation for this dashboard anymore</source>
         <target>Non richiedere più conferma per questa dashboard</target>
       </trans-unit>
+      <trans-unit id="HYT_ok" datatype="html">
+        <source>OK</source>
+        <target>OK</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

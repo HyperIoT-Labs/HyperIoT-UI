@@ -1,6 +1,14 @@
 import { Directive, Input } from "@angular/core";
 
 @Directive({
+    selector: '[hyt-dialog], [hytDialog]',
+    host: {
+      'class': 'hyt-dialog',
+    },
+})
+export class HytDialogDirective { }
+
+@Directive({
     selector: '[hyt-dialog-header], [hytDialogHeader]',
     host: {
       'class': 'hyt-dialog-header',

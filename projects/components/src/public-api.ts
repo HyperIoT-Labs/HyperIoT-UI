@@ -98,5 +98,8 @@ export * from './lib/hyt-dialog/dialog-directives';
 export { ConfirmDialogService } from './lib/hyt-dialog/confirm-dialog/confirm-dialog.service';
 export { ConfirmDialogConfig, ConfirmDialogResult } from './lib/hyt-dialog/confirm-dialog/confirm-dialog.model';
 
+export { InfoDialogService } from './lib/hyt-dialog/info-dialog/info-dialog.service';
+export { InfoDialogConfig, InfoDialogResult } from './lib/hyt-dialog/info-dialog/info-dialog.model';
+
 export { CronEditorComponent } from './lib/cron-editor/cron-editor.component';
 export { CronOptions } from './lib/cron-editor/CronOptions';
