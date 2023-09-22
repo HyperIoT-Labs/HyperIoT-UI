@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { PageStatus } from './models/pageStatus';
 import { HProject, HprojectsService } from 'core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { HytFilterButtonFilter, SelectOption } from 'components';
+import { CardDetailOnHover, HytFilterButtonFilter, SelectOption } from 'components';
 import { ProjectsService } from 'src/app/services/projects.service';
 import { NotificationService } from 'components';
 
@@ -353,6 +353,19 @@ export class ProjectsComponent implements OnInit {
         label: "Z-A",
         tooltip: "Z-A",
       },
+    ];
+  }
+
+  get details() : CardDetailOnHover[]{
+    return [
+      {
+        icon: "devices_other",
+        label: "<strong>5</strong> Sources"
+      },
+      {
+        icon: "share",
+        label: "Shared with <strong>5</strong>"
+      }
     ];
   }
 }

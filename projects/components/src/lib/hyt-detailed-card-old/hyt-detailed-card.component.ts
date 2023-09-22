@@ -39,17 +39,9 @@ export class HytDetailedCardComponent {
    */
   @Input() detailedIcon : string = '';
   /**
-   * @property {CardDetailOnHover[]} details - **MAX 5** List of details of the element that will render a little icon and small description(max one line) on hover
+   * @property {CardDetailOnHover[]} details - List of details of the element that will render a little icon and small description(max one line) on hover
    */
   @Input() details : CardDetailOnHover[] = [];
-  /**
-   * @property {string} imageFrontCard - Image that will be setted as background of the card on the front
-   */
-  @Input() imageFrontCard : string = '';
-  /**
-   * @property {string} imageHoverCard - Image that will be setted as background of the card that will be shown on hover
-   */
-  @Input() imageHoverCard : string = '';
   /**
    * @property {string} routerLink - The route that will be navigated on click of the primaryBtn
    */
@@ -58,6 +50,10 @@ export class HytDetailedCardComponent {
    * @property {string} secondaryButtonIcon - Render a second button on hover with an icon that can be use for extra actions
    */
   @Input() secondaryButtonIcon : string = '';
+  
+  //? DA VALUTARE
+  // @Input() clickPrimary : ()=>{};
+
   /**
    * @property {any} paramEmittedOnClick - The value that will be emitted on every button click
    */
@@ -85,13 +81,5 @@ export class HytDetailedCardComponent {
    */
   onSecondaryClick() {
     this.secondaryBtnClick.emit(this.paramEmittedOnClick);
-  }
-
-  /**
-   * Return the formatted url that can be setted in attr for get in scss with attr()
-   * @public
-   */
-  getImageUrl(image) : string{
-    return `url(${image})`
   }
 }

@@ -1,0 +1,137 @@
+$primary: #0956B6;
+$primaryDarker: #094894;
+.hyt-project-card{
+    position: relative;
+    width: 100%;
+    height: 300px;
+    margin: 1rem 0;
+    
+    mat-card{
+        background-color: #0d416d;
+        background-image : url('../../../../assets/images/projects/Card_Idle.png');
+        background-repeat: no-repeat;
+        background-position: bottom center;
+        background-size: cover;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        border-radius: 6px;
+        color: #fff;
+        font-family: 'Exo', sans-serif;
+
+        .title-front-card{
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            font-size: 1.4em;
+            line-height: 26px;
+            padding: 6px;
+            background: linear-gradient(to right, $primary, 66% $primaryDarker);
+            overflow: hidden;
+            display: -webkit-box;
+            line-clamp: 2;
+            word-wrap: break-word;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+
+        .box-card-hover{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: space-between;
+            flex-direction: column;
+            padding: 6px;
+            background-image: url("../../../../assets/images/projects/Card_Round-Hover.png");
+            background-repeat: no-repeat;
+            background-position: bottom center;
+            background-size: cover;
+            transition: all .2s ease-in-out;
+            transform: translateY(100%) scale(0) ;
+            opacity: 0;
+
+            .content-card{
+                display: grid;
+
+                .card-title{
+                    display: block;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    font-size: 1.2em;
+                    line-height: 35px;
+                    color: #0956B6;
+                }
+                .card-description{
+                    color: #414141;
+                    overflow: hidden;
+                    display: -webkit-box;
+                    font-size: 13px;
+                    line-height: 14px;
+                    font-style: italic;
+                    cursor: help;
+                    line-clamp: 2;
+                    word-wrap: break-word;
+                    -webkit-line-clamp: 2;
+                    -webkit-box-orient: vertical;
+                }
+            }
+            
+            .card-elements{
+                color: #0956B6;
+                margin-bottom: 8px;
+
+                .single-element{
+                    display: flex;
+                    align-items: center;
+                    
+                    mat-icon{
+                        font-size: 22px;
+                        margin-right: 5px;
+                    }
+                    span{
+                        font-size: 15px;
+                        line-height: 16px;
+                    }
+                }
+            }
+
+            .btn-card {
+                height: 40px;
+                font-size: 16px;
+                line-height: 16px;
+            }
+        }
+
+        // ! TODO rimuovi commento, debug instant on hover
+        &:hover {
+            .box-card-hover {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+        }
+    }
+
+    @media screen and (max-width: 1600px) {
+        height: 250px;
+    }
+}
+
+::ng-deep{
+    hyt-detailed-card{
+        width: 100%;
+    }
+}
+
+:host ::ng-deep{
+    .detailed-card-btn{
+        button{
+            height: 100%;
+            min-height: 100%;
+        }
+    }
+}

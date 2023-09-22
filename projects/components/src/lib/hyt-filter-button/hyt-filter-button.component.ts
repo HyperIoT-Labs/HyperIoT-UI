@@ -125,14 +125,6 @@ export class HytFilterButtonComponent implements ControlValueAccessor {
   }
 
   /**
-   * 
-   * @param tt 
-   */
-  test(tt: string){
-
-  }
-
-  /**
    * Update the value and call the onChange callback when the radio button changes.
    * @public
    * @param {HytFilterButtonFilter} data - The filter data that has been selected

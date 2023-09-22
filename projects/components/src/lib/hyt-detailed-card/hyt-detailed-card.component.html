@@ -1,3 +1,40 @@
-<mat-card class="mat-elevation-z4">
-  <ng-content></ng-content>
-</mat-card>
+
+<div class="hyt-project-card">
+  <mat-card 
+    class="mat-elevation-z5" 
+    [ngStyle]="{'background-image': imageFrontCard ? getImageUrl(imageFrontCard) : null}"
+  >
+    <div class="title-front-card">{{ title }}</div>
+  
+    <div class="box-card-hover">
+        <div class="content-card">
+          <span class="card-title">{{ title }}</span>
+          <span class="card-description" [title]="description">{{ description }}</span>
+        </div> 
+        <!-- End Card Hover Content -->
+        
+        <!-- Card Elements -->
+        <div class="d-grid">
+          <div class="card-elements" *ngIf="details.length">
+            <div class="single-element" *ngFor="let detail of details">
+                <mat-icon>{{detail.icon}}</mat-icon>
+                <span [innerHTML]="detail.label"></span>
+            </div>
+          </div> 
+          <!-- End Card Elements -->
+          <!-- Card footer -->
+          <div class="btn-card">
+            <hyt-button
+              class="detailed-card-btn" 
+              type="outlined"
+              [routerLink]="routerLink || null"
+              (clickFn)="routerLink ? null : btnClick"
+              >
+                {{ btnLabel }}
+              </hyt-button>
+          </div> 
+          <!-- End Card Footer -->
+        </div>
+    </div>
+  </mat-card>
+</div>

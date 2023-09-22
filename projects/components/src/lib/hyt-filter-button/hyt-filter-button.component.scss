@@ -12,6 +12,12 @@ $primaryDarker: #094894;
         align-items: center;
         font-weight: 600;
         transition: .2s ease-in-out;
+        cursor: pointer;
+        transition: .2 ease-in-out;
+
+        &:hover{
+            box-shadow: 0 0 7px -2px $primary;
+        }
 
         &.hyt-filter-button-round{
             border-radius: .3rem;

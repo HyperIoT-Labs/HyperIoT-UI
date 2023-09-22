@@ -54,6 +54,7 @@ import { TimePickerComponent } from './cron-editor/time-picker/time-picker.compo
 import { HytInnerFieldSelectComponent } from './hyt-inner-field-select/hyt-inner-field-select.component';
 import { HytFilterButtonComponent } from './hyt-filter-button/hyt-filter-button.component';
 import { HytBadgeComponent } from './hyt-badge/hyt-badge.component';
+import { HytDetailedCardComponent } from './hyt-detailed-card/hyt-detailed-card.component';
 export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
 
 @NgModule({
@@ -105,6 +106,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     CronEditorComponent,
     TimePickerComponent,
     HytFilterButtonComponent,
+    HytDetailedCardComponent,
     HytBadgeComponent
   ],
   imports: [
@@ -156,6 +158,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     HytInfoComponent,
     HytIconButtonComponent,
     HytFilterButtonComponent,
+    HytDetailedCardComponent,
     HytBadgeComponent
   ],
   providers: [

@@ -42,6 +42,8 @@ export { HytModalService } from './lib/hyt-modal/hyt-modal.service';
 export { HytModalRef } from './lib/hyt-modal/hyt-modal-ref';
 export { TimeStep } from './lib/hyt-date-picker/hyt-date-picker.component';
 export { HytFilterButtonShape, HytFilterButtonFilter } from './lib/hyt-filter-button/hyt-filter-button.component'
+export { CardDetailOnHover } from './lib/hyt-detailed-card/hyt-detailed-card.component'
+
 
 export { HytInputComponent } from './lib/hyt-input/hyt-input.component';
 export { HytButtonComponent } from './lib/hyt-button/hyt-button.component';
@@ -83,6 +85,7 @@ export { HytAccordionItem } from './lib/hyt-accordion/hyt-directives/hyt-accordi
 export { HytAccordionContent } from './lib/hyt-accordion/hyt-directives/hyt-accordion-content.directive';
 export { HytAccordionHeader } from './lib/hyt-accordion/hyt-directives/hyt-accordion-header.directive';
 export { HytFilterButtonComponent } from './lib/hyt-filter-button/hyt-filter-button.component'
+export { HytDetailedCardComponent } from './lib/hyt-detailed-card/hyt-detailed-card.component'
 export { HytBadgeComponent } from './lib/hyt-badge/hyt-badge.component'
 
 export * from './lib/hyt-shared-components/hyt-topology-services/hyt-topology.service';
