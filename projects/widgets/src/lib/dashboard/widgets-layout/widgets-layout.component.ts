@@ -272,7 +272,16 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
       draggable: {
         enabled: this.dragEnabled,
         dropOverItems: true,
-        dragHandleClass: 'drag-handle',
+        dragHandleClass: 'toolbar-title',
+        start: (item, itemComponent) => {
+          // adding class to set specific cursor and to prevent tooltip to show during drag
+          const dragElement = itemComponent.el?.getElementsByClassName('toolbar-title')[0] as HTMLElement;
+          dragElement?.classList?.add('dragging');
+        },
+        stop:(item, itemComponent) => {
+          const dragElement = itemComponent.el?.getElementsByClassName('toolbar-title')[0] as HTMLElement;
+          dragElement?.classList?.remove('dragging');
+        },
         ignoreContent: true
       },
       swap: false,
