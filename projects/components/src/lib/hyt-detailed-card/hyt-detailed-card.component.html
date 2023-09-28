@@ -1,40 +1,67 @@
-
 <div class="hyt-project-card">
-  <mat-card 
-    class="mat-elevation-z5" 
+  <mat-card
+    class="mat-elevation-z5"
     [ngStyle]="{'background-image': imageFrontCard ? getImageUrl(imageFrontCard) : null}"
   >
-    <div class="title-front-card">{{ title }}</div>
-  
-    <div class="box-card-hover">
-        <div class="content-card">
-          <span class="card-title">{{ title }}</span>
-          <span class="card-description" [title]="description">{{ description }}</span>
-        </div> 
-        <!-- End Card Hover Content -->
-        
-        <!-- Card Elements -->
-        <div class="d-grid">
-          <div class="card-elements" *ngIf="details.length">
-            <div class="single-element" *ngFor="let detail of details">
-                <mat-icon>{{detail.icon}}</mat-icon>
-                <span [innerHTML]="detail.label"></span>
-            </div>
-          </div> 
-          <!-- End Card Elements -->
-          <!-- Card footer -->
-          <div class="btn-card">
-            <hyt-button
-              class="detailed-card-btn" 
-              type="outlined"
-              [routerLink]="routerLink || null"
-              (clickFn)="routerLink ? null : onClick()"
-              >
-                {{ btnLabel }}
-              </hyt-button>
-          </div> 
-          <!-- End Card Footer -->
+    <div
+      class="title-front-card title-front-card-{{imageFrontCard && 'custom-bg'}}"
+    >
+      {{ title }}
+    </div>
+    <div class="detailed-front-icon" *ngIf="detailedIcon.length">
+      <hyt-badge [icon]="detailedIcon" size="sm"></hyt-badge>
+    </div>
+    <div
+      class="box-card-hover"
+      [ngStyle]="{'background-image': imageHoverCard ? getImageUrl(imageHoverCard) : null}"
+    >
+      <div class="content-card">
+        <span class="card-title">{{ title }}</span>
+        <span
+          class="card-description"
+          [title]="description"
+          >{{ description }}</span
+        >
+      </div>
+      <!-- End Card Hover Content -->
+
+      <!-- Card Elements -->
+      <div class="d-grid">
+        <div class="card-elements" *ngIf="details.length">
+          <div class="single-element" *ngFor="let detail of details">
+            <span class="hyt-icon icon-hyt_{{detail.icon}}"></span>
+            <span [innerHTML]="detail.label"></span>
+          </div>
         </div>
+        <!-- End Card Elements -->
+        <!-- Card footer -->
+        <div
+          class="btn-card btn-card-{{secondaryButtonIcon.length && 'secondary'}}"
+        >
+          <hyt-button
+            class="detailed-card-btn detailed-primary-btn"
+            type="outlined"
+            [routerLink]="valRouterLink || null"
+            (clickFn)="valRouterLink ? null : onClick()"
+          >
+            {{btnLabel}}
+          </hyt-button>
+          <hyt-button
+            class="detailed-card-btn detailed-secondary-btn"
+            type="outlined"
+            [routerLink]="valRouterLink || null"
+            (clickFn)="valRouterLink ? null : onSecondaryClick()"
+            *ngIf="secondaryButtonIcon.length"
+          >
+            <span class="hyt-icon icon-hyt_{{secondaryButtonIcon}}"></span>
+          </hyt-button>
+        </div>
+        <!-- End Card Footer -->
+      </div>
     </div>
   </mat-card>
+
+  <div class="delete-project-btn" (click)="emitDelete()">
+    <span class="hyt-icon icon-hyt_cancel"></span>
+  </div>
 </div>

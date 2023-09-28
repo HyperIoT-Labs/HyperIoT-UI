@@ -13,9 +13,8 @@ $primaryDarker: #094894;
         font-weight: 600;
         transition: .2s ease-in-out;
         cursor: pointer;
-        transition: .2 ease-in-out;
 
-        &:hover{
+        &:hover:not(:has(> input:checked)){
             box-shadow: 0 0 7px -2px $primary;
         }
 
@@ -46,13 +45,15 @@ $primaryDarker: #094894;
             }
         }   
 
-        &:has(> input:checked){
-            background: $primary;
-            color: #fff
-        }
-
         &:has(> input:active){
             background: $primaryDarker;
+            box-shadow: 0 0 7px -5px $primary;
+        }
+        
+        &:has(> input:checked){
+            background: $primary;
+            color: #fff;
+            cursor: auto;
         }
 
         @media screen and (min-width: 768px) and (max-width: 900px) {

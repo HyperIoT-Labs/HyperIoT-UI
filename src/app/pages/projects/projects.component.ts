@@ -3,9 +3,10 @@ import { Router } from '@angular/router';
 import { PageStatus } from './models/pageStatus';
 import { HProject, HprojectsService } from 'core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { CardDetailOnHover, HytFilterButtonFilter, SelectOption } from 'components';
+import { CardDetailOnHover, HytFilterButtonFilter, HytModalService, SelectOption } from 'components';
 import { ProjectsService } from 'src/app/services/projects.service';
 import { NotificationService } from 'components';
+import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
 
 @Component({
   selector: "hyt-projects",
@@ -44,7 +45,8 @@ export class ProjectsComponent implements OnInit {
     private hProjectService: HprojectsService,
     private fb: FormBuilder,
     private projectsService: ProjectsService,
-    private notificationservice: NotificationService
+    private notificationservice: NotificationService,
+    private dialog: HytModalService,
   ) {}
 
   /**
@@ -219,10 +221,6 @@ export class ProjectsComponent implements OnInit {
     this.router.navigate(["/project-wizard"]);
   }
 
-  refreshViewOnDelete(event) {
-    this.projectsService.deleteProject(event.id);
-  }
-
   projectsInLoading(projectId: number) {
     this.deletingInLoading = true;
     this.typeMessageArea = $localize`:@@HYT_loading:Loading`;
@@ -301,6 +299,32 @@ export class ProjectsComponent implements OnInit {
     }
   }
 
+  /**
+   * Dialog open for confirm the user wants to delete a project
+   * @public
+   */
+  openDeleteDialog(p : HProject) {
+    const dialogRef = this.dialog.open(DeleteConfirmDialogComponent, {
+        data: { title: 'Are you sure you want to delete the project?', message: 'This operation cannot be undone.' }
+      }
+    );
+
+    dialogRef.onClosed.subscribe(
+      (result) => {
+        if ( result === 'delete') {
+          this.projectsService.deleteProject(p.id)
+        }
+      },
+      (err) => {
+        console.log('Errore nell\' AFTER CLOSED del DIALOG di MATERIAL \n', err);
+      }
+    );
+  }
+
+  /**
+   * Get the list of filter for project type(shared)
+   * @public
+   */
   get filterProjectType(): HytFilterButtonFilter[] {
     return [
       {
@@ -310,23 +334,27 @@ export class ProjectsComponent implements OnInit {
         tooltip: "ALL",
       },
       {
-        icon: "user",
+        icon: "warnT_Negative",
         value: "personal",
         tooltip: "Personal",
       },
       {
-        icon: "userCircle",
+        icon: "warnT_Negative",
         value: "owners",
         tooltip: "Owners",
       },
       {
-        icon: "userEx",
+        icon: "warnT_Negative",
         value: "shared",
         tooltip: "Shared",
       },
     ];
   }
 
+  /**
+   * Get the list of filter for the sort type(new, old, alphabetical)
+   * @public
+   */
   get filterSortType(): HytFilterButtonFilter[] {
     return [
       {
@@ -356,16 +384,20 @@ export class ProjectsComponent implements OnInit {
     ];
   }
 
-  get details() : CardDetailOnHover[]{
+  /**
+   * Generate the list of details that will be printed on project hover
+   * @public
+   */
+  generateDetails(p: HProject) : CardDetailOnHover[]{
     return [
       {
-        icon: "devices_other",
-        label: "<strong>5</strong> Sources"
+        icon: "warnT_Negative",
+        label: `<strong>${p.deviceCount}</strong> Sources`
       },
       {
-        icon: "share",
-        label: "Shared with <strong>5</strong>"
-      }
+        icon: "warnT_Negative",
+        label: `Shared with <strong>Not impl.</strong>`
+      },
     ];
   }
 }

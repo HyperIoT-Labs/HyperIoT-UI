@@ -52,9 +52,9 @@ export class HytDetailedCardComponent {
    */
   @Input() imageHoverCard: string = "";
   /**
-   * @property {string} routerLink - The route that will be navigated on click of the primaryBtn
+   * @property {string} valRouterLink - The route that will be navigated on click of the primaryBtn
    */
-  @Input() routerLink: string = "";
+  @Input() valRouterLink: string = "";
   /**
    * @property {string} secondaryButtonIcon - Render a second button on hover with an icon that can be use for extra actions
    */
@@ -64,13 +64,17 @@ export class HytDetailedCardComponent {
    */
   @Input() paramEmittedOnClick: any = "";
   /**
-   * @property {string} btnClick - Emit when the primary button is clicked if routerLink is not passed
+   * @property {new EventEmitter<any>} btnClick - Emit when the primary button is clicked if valRouterLink is not passed
    */
   @Output() btnClick = new EventEmitter<any>();
   /**
-   * @property {string} secondaryBtnClick - If secondaryButton is rendered, emit when clicked
+   * @property {new EventEmitter<any>} secondaryBtnClick - If secondaryButton is rendered, emit when clicked
    */
   @Output() secondaryBtnClick = new EventEmitter<any>();
+  /**
+   * @property {new EventEmitter<any>} deleteClick - If secondaryButton is rendered, emit when clicked
+   */
+  @Output() deleteClick = new EventEmitter<any>();
 
   constructor(loggerService: LoggerService) {
     this.logger = new Logger(loggerService);
@@ -82,7 +86,10 @@ export class HytDetailedCardComponent {
    * @public
    */
   onClick() {
-    this.logger.debug("Primary button clicked");
+    this.logger.debug(
+      "Primary button clicked, value emitted",
+      this.paramEmittedOnClick
+    );
     this.btnClick.emit(this.paramEmittedOnClick);
   }
 
@@ -91,8 +98,23 @@ export class HytDetailedCardComponent {
    * @public
    */
   onSecondaryClick() {
-    this.logger.debug("Secondary button clicked");
+    this.logger.debug(
+      "Secondary button clicked, value emitted",
+      this.paramEmittedOnClick
+    );
     this.secondaryBtnClick.emit(this.paramEmittedOnClick);
+  }
+
+  /**
+   * Emit the event that the delete button has been clicked
+   * @public
+   */
+  emitDelete(){
+    this.logger.debug(
+      "Delete button clicked, value emitted",
+      this.paramEmittedOnClick
+    );
+    this.deleteClick.emit(this.paramEmittedOnClick);
   }
 
   /**

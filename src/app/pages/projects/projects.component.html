@@ -46,32 +46,6 @@
             <h2 id="title-projects" i18n="@@HYT_project_list">Project list</h2>
           </div>
 
-          <div class="row col-12 p-0 mb-5 d-flex justify-content-center">
-            <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2 single-card-container d-flex flex-row justify-content-center">
-              <hyt-detailed-card
-                title="ciao"
-                description="tes test treeqww"
-                btnLabel="view projects"
-                ></hyt-detailed-card>
-            </div>
-            <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2 single-card-container d-flex flex-row justify-content-center">
-              <hyt-detailed-card
-                title="image"
-                description="tes test treeqww"
-                btnLabel="view projects"
-                imageFrontCard="https://picsum.photos/id/152/1200/1200"
-              ></hyt-detailed-card>
-            </div>
-            <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2 single-card-container d-flex flex-row justify-content-center">
-              <hyt-detailed-card
-                title="long title very long title very"
-                description="long title very long title veryvlong title very long title verylong title very long title verylong title very long title verylong title very long title very"
-                btnLabel="view projects"
-                [details]="details"
-              ></hyt-detailed-card>
-            </div>
-          </div>
-
           <div id="projects-title-box" class="col-12 p-0">
 
             <div id="projects-topfilters-box" class="col-12 p-0">
@@ -81,7 +55,7 @@
                 class="row shift-md-top"
               >
 
-                <div id="container-search" class="col-12 col-md-4 adapt-p-filter-btn px-4 px-md-5">
+                <div id="container-search" class="col-12 col-md-4 adapt-p-filter-btn">
                   <hyt-input-text 
                     id="hyt-search-bottom" 
                     [form]="filteringForm" 
@@ -121,11 +95,17 @@
             <span i18n="@@HYT_no_project_found">No project that matches the search found...</span>
           </div>
 
-          <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2 single-card-container d-flex flex-row justify-content-center"
-            *ngFor="let p of hProjectsFiltered">
-
-            <hyt-project-card (refreshView)='refreshViewOnDelete($event)' [project]="p"></hyt-project-card>
-
+          <div class="hyt-card-container">
+            <hyt-detailed-card 
+              *ngFor="let p of hProjectsFiltered"
+              [title]="p.name"
+              [description]="p.description"
+              btnLabel="view projects"
+              [valRouterLink]="p.id"
+              [details]="generateDetails(p)"
+              [paramEmittedOnClick]="p"
+              (deleteClick)="openDeleteDialog($event)"
+              ></hyt-detailed-card>
           </div>
 
         </div> <!-- End Row Cards -->

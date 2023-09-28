@@ -171,8 +171,7 @@
     #standardStatus {
 
       #row-container-title {
-        margin-top: 40px;
-        margin-bottom: 40px;
+        margin: 1rem 0;
 
         #projects-title-box {
 
@@ -184,69 +183,15 @@
   
           }
 
-          .adapt-p-filter-btn{
-            padding-top: 0;
-            
-            @media screen and (min-width: 768px) {
-              padding-top: 2.5rem;
-            }
-          }
-
-          .shift-md-top{
-            margin-top: 0;
-            
-            @media screen and (min-width: 768px) {
-              margin-top: -2rem;
-            }
-          }
-
         }
+      }
 
-        #projects-topfilters-box {
-
-          hyt-input-text {
-
-            &#hyt-search-bottom {
-              
-              mat-form-field {
-                width: 350px;
-                font-family: 'Exo';
-              }
-            }
-
-          }
-
-          .sort-right {
-            text-align: right;
-
-            span {
-
-              &#sort-text{
-                padding-right: 15px;
-              }
-              
-            }
-
-            hyt-select {
-
-              mat-form-field {
-
-                font-family: 'Exo';
-
-                mat-select {
-
-                  font-family: 'Exo';
-
-                }
-
-              }
-
-            }
-
-          }
-
+      .adapt-p-filter-btn{
+        padding-top: 0;
+        
+        @media screen and (min-width: 768px) {
+          padding-top: 2.5rem;
         }
-
       }
 
       #row-messages-area {
@@ -490,7 +435,6 @@ mat-option {
 
                 max-width: 100%;
                 flex: 0 0 100%;
-                order: 2;
                 text-align: center;
 
                 input {
@@ -502,15 +446,6 @@ mat-option {
                   }
 
                 }
-
-              }
-
-              #container-sort {
-
-                max-width: 100%;
-                flex: 0 0 100%;
-                order: 1;
-                margin-bottom: 10px;
 
               }
 
@@ -661,13 +596,6 @@ mat-option {
                   }
 
                 }
-
-              }
-
-              #container-sort {
-
-                text-align: center;
-                font-size: .8em;
 
               }
 
