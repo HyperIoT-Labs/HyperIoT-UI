@@ -257,7 +257,7 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
       gridType: GridType.Fixed,
       setGridSize: true,
       compactType: CompactType.CompactUp,
-      displayGrid: DisplayGrid.OnDragAndResize,
+      displayGrid: DisplayGrid.None,
       disableWindowResize: true,
       disableAutoPositionOnConflict: false,
       scrollToNewItems: true,
@@ -267,6 +267,7 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
       keepFixedHeightInMobile: true,
       keepFixedWidthInMobile: false,
       minCols: 1, maxCols: 10, maxCellsize: 280,
+      minItemRows: 2,
       minRows: 1,
       margin: 6,
       draggable: {
@@ -289,7 +290,7 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
       disableScrollVertical: true,
       pushItems: true,
       resizable: {
-        enabled: false
+        enabled: true,
       }
     };
 

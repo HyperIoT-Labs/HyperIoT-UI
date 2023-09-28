@@ -45,7 +45,7 @@
 }
 
 .sensor-value-container .info-container .sensor-field {
-    max-width: 140px; /* TODO max-width should be relative to container */
+    flex: 1;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
