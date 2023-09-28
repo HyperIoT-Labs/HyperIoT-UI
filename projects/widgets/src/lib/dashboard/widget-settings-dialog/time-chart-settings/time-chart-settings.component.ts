@@ -23,7 +23,7 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
         //no limits in data points
         maxDataPoints: 0,
         timeWindow: 60,
-        refreshIntervalMillis: 3000,
+        refreshIntervalMillis: 100,
         layout: {
             showlegend: true,
             legend: {
