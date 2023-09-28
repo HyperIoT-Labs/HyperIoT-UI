@@ -1,39 +1,40 @@
-import { Component, Input, forwardRef } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Component, Input, forwardRef } from "@angular/core";
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
+import { Logger, LoggerService } from "core";
 
 /**
  * @Description Enum for declare the shape for the single filter, square, round(border-radius: .3rem), circle(default)
  */
-export enum HytFilterButtonShape{
-  SQUARE="square",
-  ROUND="round",
-  CIRCLE="circle"
+export enum HytFilterButtonShape {
+  SQUARE = "square",
+  ROUND = "round",
+  CIRCLE = "circle",
 }
 
 /**
  * @description Interface for the single filter for render it
  */
-export interface HytFilterButtonFilter{ 
+export interface HytFilterButtonFilter {
   /**
    * @param {string} value - The value of the filter that will be emitted to the form when selected
    */
-  value: string,
+  value: string;
   /**
    * @param {string} label - Source tag in the translation file of the project
    */
-  label?: string, 
- /**
-  * @param {string} keyLabel - Id tag in the translation file
-  */
-  keyLabel?: string,
+  label?: string;
+  /**
+   * @param {string} keyLabel - Id tag in the translation file
+   */
+  keyLabel?: string;
   /**
    * @param {boolean} icon - If icon has a value, an icon will be render and label will be ignored
    */
-  icon?: string, 
+  icon?: string;
   /**
    * @param {string} tooltip - On hover, insert a little description for the filter that will popup
    */
-  tooltip?: string
+  tooltip?: string;
 }
 
 /**
@@ -41,9 +42,9 @@ export interface HytFilterButtonFilter{
  * Component for render filter with faster usability for the user than a dropdown, my reccomandation is to use it when you have max 6 different options
  */
 @Component({
-  selector: 'hyt-filter-button',
-  templateUrl: './hyt-filter-button.component.html',
-  styleUrls: ['./hyt-filter-button.component.scss'],
+  selector: "hyt-filter-button",
+  templateUrl: "./hyt-filter-button.component.html",
+  styleUrls: ["./hyt-filter-button.component.scss"],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -53,6 +54,7 @@ export interface HytFilterButtonFilter{
   ],
 })
 export class HytFilterButtonComponent implements ControlValueAccessor {
+  private logger: Logger;
   /**
    * @property {HytFilterButtonFilter[]} options - Filter list object
    */
@@ -74,7 +76,7 @@ export class HytFilterButtonComponent implements ControlValueAccessor {
    * @property {any} value - Default value selected, if null the first option will be selected
    */
   private _value;
-  get value(): any { 
+  get value(): any {
     return this._value;
   }
   /**
@@ -84,12 +86,12 @@ export class HytFilterButtonComponent implements ControlValueAccessor {
   set value(val: string) {
     this._value = val || this.options[0]?.value;
   }
-  
+
   /**
    * @property {boolean} disabled - When setted to true, block the interaction with all the filter of the FilterButtonComponent
    */
   disabled: boolean = false;
-  
+
   /**
    * Function to call when the value changes.
    */
@@ -99,6 +101,11 @@ export class HytFilterButtonComponent implements ControlValueAccessor {
    * Function to call when the component is touched.
    */
   onTouched: any = () => {};
+
+  constructor(loggerService: LoggerService) {
+    this.logger = new Logger(loggerService);
+    this.logger.registerClass("HytFilterButtonComponent");
+  }
 
   /**
    * Write value upon external change.
@@ -130,6 +137,7 @@ export class HytFilterButtonComponent implements ControlValueAccessor {
    * @param {HytFilterButtonFilter} data - The filter data that has been selected
    */
   onRadioChange(data: HytFilterButtonFilter): void {
+    this.logger.debug("Radio button changed", data);
     this.value = data.value;
     this.onChange(data.value);
     this.onTouched();
@@ -141,6 +149,7 @@ export class HytFilterButtonComponent implements ControlValueAccessor {
    * @param {boolean} isDisabled - Flag that will be setted in disabled attribute
    */
   setDisabledState(isDisabled: boolean): void {
+    this.logger.debug("Set disabled state", isDisabled);
     this.disabled = isDisabled;
   }
 }

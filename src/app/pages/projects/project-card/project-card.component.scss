@@ -5,23 +5,26 @@ hyt-project-card {
 
     mat-card.mat-card {
         background-color: #0d416d;
-        background-image: url('../../../../assets/images/projects/Card_Idle.png');
+        background-image: url("../../../../assets/images/projects/Card_Idle.png");
         background-repeat: no-repeat;
         background-position: bottom center;
         background-size: cover;
         position: absolute;
-        left: 0; top: 0; right: 0; bottom: 0;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
         border-radius: 6px;
         color: #ffffff;
-        font-family: 'Exo';
+        font-family: "Exo";
         overflow: hidden;
-        box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 5px 8px 0 rgba(0,0,0,.14), 0 1px 14px 0 rgba(0,0,0,.12);
+        box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2), 0 5px 8px 0 rgba(0, 0, 0, 0.14), 0 1px 14px 0 rgba(0, 0, 0, 0.12);
         transition: all 0.15s ease-in-out;
 
         &:hover {
             .box-card-front {
                 top: 0px;
-                background-image: url('../../../../assets/images/projects/Card_Round-Hover.png');
+                background-image: url("../../../../assets/images/projects/Card_Round-Hover.png");
                 background-repeat: no-repeat;
                 background-position: bottom center;
                 background-size: cover;
@@ -41,15 +44,19 @@ hyt-project-card {
             line-height: 34px;
             overflow: hidden;
 
-            background: rgba(30,88,165,1);
-            background: -moz-linear-gradient(left, rgba(30,88,165,1) 66%, rgba(255,255,255,0) 100%);
-            background: -webkit-gradient(left top, right top, color-stop(66%, rgba(30,88,165,1)), color-stop(100%, rgba(255,255,255,0)));
-            background: -webkit-linear-gradient(left, rgba(30,88,165,1) 66%, rgba(255,255,255,0) 100%);
-            background: -o-linear-gradient(left, rgba(30,88,165,1) 66%, rgba(255,255,255,0) 100%);
-            background: -ms-linear-gradient(left, rgba(30,88,165,1) 66%, rgba(255,255,255,0) 100%);
-            background: linear-gradient(to right, rgba(30,88,165,1) 66%, rgba(255,255,255,0) 100%);
+            background: rgba(30, 88, 165, 1);
+            background: -moz-linear-gradient(left, rgba(30, 88, 165, 1) 66%, rgba(255, 255, 255, 0) 100%);
+            background: -webkit-gradient(
+                left top,
+                right top,
+                color-stop(66%, rgba(30, 88, 165, 1)),
+                color-stop(100%, rgba(255, 255, 255, 0))
+            );
+            background: -webkit-linear-gradient(left, rgba(30, 88, 165, 1) 66%, rgba(255, 255, 255, 0) 100%);
+            background: -o-linear-gradient(left, rgba(30, 88, 165, 1) 66%, rgba(255, 255, 255, 0) 100%);
+            background: -ms-linear-gradient(left, rgba(30, 88, 165, 1) 66%, rgba(255, 255, 255, 0) 100%);
+            background: linear-gradient(to right, rgba(30, 88, 165, 1) 66%, rgba(255, 255, 255, 0) 100%);
             filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e58a5', endColorstr='#ffffff', GradientType=1 );
-
         }
 
         .box-card-front {
@@ -63,42 +70,37 @@ hyt-project-card {
             transition: all 0.15s ease-in-out;
 
             .header-card-front {
-                
                 height: 108px;
                 font-size: 1.9em;
                 line-height: 35px;
                 word-break: break-word;
                 overflow: hidden;
-                color: #0956B6;
+                color: #0956b6;
                 // background: #ff000030;
-
             }
 
             .content-card-front {
-                
                 height: 205px;
                 // background-color: #00800030;
 
                 .card-description {
-                    
                     height: 90px;
                     overflow: hidden;
                     word-break: break-word;
                     padding-top: 4px;
-                    font-size: .9em;
+                    font-size: 0.9em;
                     position: absolute;
                     width: 100%;
                     left: 0px;
                     top: 115px;
                     padding-left: 5px;
-                    padding-right: 5px;  
+                    padding-right: 5px;
                     color: #414141;
-                    font-style: italic; 
-                    // background: #ffff0050;  
+                    font-style: italic;
+                    // background: #ffff0050;
                 }
 
                 .card-elements {
-                    
                     position: absolute;
                     width: 100%;
                     left: 0;
@@ -109,14 +111,13 @@ hyt-project-card {
 
                     .single-element {
                         display: flex;
-                        color: #0956B6;
+                        color: #0956b6;
 
                         &:not(:last-child) {
                             margin-bottom: 5px;
                         }
                     }
                 }
-
             }
 
             .footer-card-front {
@@ -135,45 +136,35 @@ hyt-project-card {
 
                     &:hover {
                         button.mat-raised-button {
-                            background-color: #0956B6;
+                            background-color: #0956b6;
                             color: #ffffff;
                         }
                     }
 
                     button.mat-raised-button {
-                        font-family: 'Exo';
+                        font-family: "Exo";
                         box-shadow: none;
                         text-transform: uppercase;
                         background-color: #ffffff;
-                        color: #0956B6;
+                        color: #0956b6;
                         font-size: 1em;
                         width: 80%;
                         height: 100%;
                         min-height: 100%;
-                        border: 1px solid #0956B6;
+                        border: 1px solid #0956b6;
                         border-radius: 0px;
                         font-weight: bold;
 
                         span {
-
                             &.mat-button-wrapper {
-
                                 vertical-align: sub;
-
                             }
-
                         }
-
                     }
                 }
-
             }
-
         }
-
     }
-
-
 
     &.active {
         background-color: #ffffff;
@@ -181,7 +172,6 @@ hyt-project-card {
     }
 
     #card-front {
-
         .multiline-ellipsis {
             font-size: 80%;
             max-width: 100%;
@@ -195,7 +185,6 @@ hyt-project-card {
             text-overflow: ellipsis;
         }
     }
-
 }
 
 .delete-project-btn {
@@ -231,13 +220,11 @@ hyt-project-card {
 **********************************/
 
 @media (max-width: 1700px) {
-
     hyt-project-card {
         min-width: 230px;
         height: 294px;
 
         mat-card.mat-card {
-
             .title-card-back {
                 font-size: 1.4em;
                 line-height: 26px;
@@ -245,7 +232,6 @@ hyt-project-card {
             }
 
             .box-card-front {
-
                 .header-card-front {
                     font-size: 1.2em;
                     line-height: 22px;
@@ -254,19 +240,19 @@ hyt-project-card {
 
                 .content-card-front {
                     height: 226px;
-    
+
                     .card-description {
-                        font-size: .89em;
+                        font-size: 0.89em;
                         bottom: unset;
                         height: 90px;
                         top: 100px;
                     }
-    
+
                     .card-elements {
                         bottom: 54px;
 
                         .single-element {
-                            font-size: .9em;
+                            font-size: 0.9em;
 
                             &:not(:last-child) {
                                 margin-bottom: 2px;
@@ -282,7 +268,6 @@ hyt-project-card {
                             }
                         }
                     }
-    
                 }
 
                 .footer-card-front {
@@ -298,23 +283,17 @@ hyt-project-card {
                         }
                     }
                 }
-
             }
-
         }
-
     }
 }
 
 @media (max-width: 1560px) {
-
     hyt-project-card {
         min-width: 200px;
         height: 256px;
-        
 
         mat-card.mat-card {
-
             .title-card-back {
                 font-size: 1.2em;
                 line-height: 22px;
@@ -322,7 +301,6 @@ hyt-project-card {
             }
 
             .box-card-front {
-
                 .header-card-front {
                     font-size: 1.1em;
                     line-height: 20px;
@@ -342,10 +320,10 @@ hyt-project-card {
 
                     .card-elements {
                         bottom: 50px;
-                        
+
                         .single-element {
-                            font-size: .85em;
-                            
+                            font-size: 0.85em;
+
                             &:not(:last-child) {
                                 margin-bottom: 1px;
                             }
@@ -358,39 +336,30 @@ hyt-project-card {
                                     font-size: 20px;
                                 }
                             }
-
                         }
-
                     }
-
                 }
 
                 .footer-card-front {
-
                     bottom: 5px;
 
                     hyt-button {
-
                         button.mat-raised-button {
-                            font-size: .9em;
+                            font-size: 0.9em;
                         }
                     }
                 }
-
             }
         }
     }
 }
 
 @media (max-width: 1400px) {
-
     hyt-project-card {
         min-width: 180px;
         height: 230px;
-        
 
         mat-card.mat-card {
-
             .title-card-back {
                 font-size: 1.1em;
                 line-height: 22px;
@@ -398,7 +367,6 @@ hyt-project-card {
             }
 
             .box-card-front {
-
                 .header-card-front {
                     font-size: 1em;
                     line-height: 18px;
@@ -408,7 +376,6 @@ hyt-project-card {
                 }
 
                 .content-card-front {
-
                     .card-description {
                         font-size: 0.7em;
                         height: 64px;
@@ -421,12 +388,12 @@ hyt-project-card {
                         bottom: 40px;
 
                         .single-element {
-                            font-size: .8em;
+                            font-size: 0.8em;
 
-                           &:not(:last-child) {
-                               margin-bottom: 2px;
-                           }
-                            
+                            &:not(:last-child) {
+                                margin-bottom: 2px;
+                            }
+
                             mat-icon {
                                 width: 18px;
                                 height: 18px;
@@ -451,22 +418,17 @@ hyt-project-card {
                         }
                     }
                 }
-
             }
-
         }
     }
 }
 
 @media (max-width: 1240px) {
-
     hyt-project-card {
         min-width: 170px;
         height: 218px;
-        
 
         mat-card.mat-card {
-
             .title-card-back {
                 font-size: 1em;
                 line-height: 18px;
@@ -474,7 +436,6 @@ hyt-project-card {
             }
 
             .box-card-front {
-
                 .header-card-front {
                     font-size: 1em;
                     line-height: 17px;
@@ -483,7 +444,6 @@ hyt-project-card {
                 }
 
                 .content-card-front {
-
                     .card-description {
                         font-size: 0.7em;
                         line-height: 14px;
@@ -492,59 +452,41 @@ hyt-project-card {
                     }
 
                     .card-elements {
-
                         bottom: 38px;
 
                         .single-element {
-
                             &:not(:last-child) {
                                 margin-bottom: 0px;
                             }
-
                         }
-
                     }
-
                 }
 
                 .footer-card-front {
-
                     hyt-button {
-
                         button {
-
                             &.mat-raised-button {
-
                                 span {
-
                                     &.mat-button-wrapper {
                                         vertical-align: unset;
                                     }
-
                                 }
-
                             }
-
                         }
-
                     }
-
                 }
-
             }
-
         }
     }
 }
 
-@media (max-width: 1200px) { /* BOOTSTRAP BREACKPOINT */
+@media (max-width: 1200px) {
+    /* BOOTSTRAP BREACKPOINT */
     hyt-project-card {
         min-width: 215px;
         height: 275px;
-        
 
         mat-card.mat-card {
-
             .title-card-back {
                 font-size: 1.4em;
                 line-height: 25px;
@@ -552,7 +494,6 @@ hyt-project-card {
             }
 
             .box-card-front {
-                
                 .header-card-front {
                     font-size: 1.1em;
                     line-height: 22px;
@@ -560,7 +501,6 @@ hyt-project-card {
                 }
 
                 .content-card-front {
-
                     .card-description {
                         bottom: unset;
                         height: 80px;
@@ -573,7 +513,7 @@ hyt-project-card {
                         bottom: 45px;
 
                         .single-element {
-                            font-size: .9em;
+                            font-size: 0.9em;
 
                             &:not(:last-child) {
                                 margin-bottom: 2px;
@@ -602,26 +542,23 @@ hyt-project-card {
                             line-height: 32px;
                         }
                     }
-
                 }
-
             }
         }
     }
 }
 
-@media (max-width: 991px) { /* BOOTSTRAP BREACKPOINT */
-
+@media (max-width: 991px) {
+    /* BOOTSTRAP BREACKPOINT */
 }
 
-@media (max-width: 767px) { /* BOOTSTRAP BREACKPOINT */
+@media (max-width: 767px) {
+    /* BOOTSTRAP BREACKPOINT */
     hyt-project-card {
         min-width: 225px;
         height: 288px;
-        
 
         mat-card.mat-card {
-
             .title-card-back {
                 font-size: 1.3em;
                 line-height: 24px;
@@ -629,7 +566,6 @@ hyt-project-card {
             }
 
             .box-card-front {
-
                 .header-card-front {
                     font-size: 1.3em;
                     line-height: 23px;
@@ -637,13 +573,12 @@ hyt-project-card {
                 }
 
                 .content-card-front {
-                    
                     .card-description {
                         bottom: unset;
                         height: 94px;
                         top: 102px;
                         line-height: 18px;
-                        font-size: .8em;
+                        font-size: 0.8em;
                     }
 
                     .card-elements {
@@ -655,22 +590,19 @@ hyt-project-card {
                             }
                         }
                     }
-
                 }
-                
             }
         }
     }
 }
 
-@media (max-width: 575px) { /* BOOTSTRAP BREACKPOINT */
+@media (max-width: 575px) {
+    /* BOOTSTRAP BREACKPOINT */
     hyt-project-card {
         min-width: 250px;
         height: 320px;
-        
 
         mat-card.mat-card {
-
             .title-card-back {
                 font-size: 1.6em;
                 line-height: 32px;
@@ -678,7 +610,6 @@ hyt-project-card {
             }
 
             .box-card-front {
-
                 .header-card-front {
                     font-size: 1.6em;
                     line-height: 27px;
@@ -686,7 +617,6 @@ hyt-project-card {
                 }
 
                 .content-card-front {
-
                     .card-description {
                         font-size: 1em;
                         height: 100px;
@@ -715,22 +645,18 @@ hyt-project-card {
                             line-height: 37px;
                         }
                     }
-
                 }
-
             }
         }
     }
 }
 
-@media (max-width: 374px) { 
+@media (max-width: 374px) {
     hyt-project-card {
         min-width: 200px;
         height: 256px;
-        
 
         mat-card.mat-card {
-
             .title-card-back {
                 font-size: 1.1em;
                 line-height: 20px;
@@ -738,7 +664,6 @@ hyt-project-card {
             }
 
             .box-card-front {
-
                 .header-card-front {
                     font-size: 1.1em;
                     line-height: 20px;
@@ -746,7 +671,6 @@ hyt-project-card {
                 }
 
                 .content-card-front {
-                    
                     .card-description {
                         bottom: unset;
                         height: 70px;
@@ -759,7 +683,7 @@ hyt-project-card {
                         bottom: 42px;
 
                         .single-element {
-                            font-size: .85em;
+                            font-size: 0.85em;
 
                             &:not(:last-child) {
                                 margin-bottom: 0px;
@@ -775,28 +699,22 @@ hyt-project-card {
                         height: 28px;
 
                         button.mat-raised-button {
-                            font-size: .88em;
+                            font-size: 0.88em;
                             line-height: 30px;
                         }
                     }
-
                 }
-
             }
         }
     }
 }
 
-@media (max-width: 320px) { 
-    
+@media (max-width: 320px) {
     hyt-project-card {
-
         min-width: 180px;
         height: 230px;
-        
 
         mat-card.mat-card {
-
             .title-card-back {
                 font-size: 1em;
                 line-height: 18px;
@@ -804,7 +722,6 @@ hyt-project-card {
             }
 
             .box-card-front {
-
                 .header-card-front {
                     font-size: 1em;
                     line-height: 18px;
@@ -812,7 +729,6 @@ hyt-project-card {
                 }
 
                 .content-card-front {
-                    
                     .card-description {
                         bottom: unset;
                         font-size: 0.7em;
@@ -825,12 +741,12 @@ hyt-project-card {
                         bottom: 36px;
 
                         .single-element {
-                            font-size: .8em;
+                            font-size: 0.8em;
 
                             mat-icon {
                                 width: 18px;
                                 height: 18px;
-                                
+
                                 &.material-icons {
                                     font-size: 18px;
                                 }
@@ -850,9 +766,7 @@ hyt-project-card {
                             line-height: 25px;
                         }
                     }
-
                 }
-
             }
         }
     }

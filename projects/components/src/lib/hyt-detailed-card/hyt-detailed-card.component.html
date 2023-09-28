@@ -28,7 +28,7 @@
               class="detailed-card-btn" 
               type="outlined"
               [routerLink]="routerLink || null"
-              (clickFn)="routerLink ? null : btnClick"
+              (clickFn)="routerLink ? null : onClick()"
               >
                 {{ btnLabel }}
               </hyt-button>

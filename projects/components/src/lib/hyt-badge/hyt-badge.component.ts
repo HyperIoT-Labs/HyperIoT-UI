@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from "@angular/core";
+import { Logger, LoggerService } from "core";
 
 /**
  * @Description Enum for declare the shape, pills(suggested for text with a lot of padding horizontal), square, round(border-radius: .3rem), circle(default)
@@ -30,6 +31,7 @@ export enum HytBadgeSize {
   styleUrls: ["./hyt-badge.component.scss"],
 })
 export class HytBadgeComponent {
+  private logger: Logger;
   /**
    * @param {string} label - Source tag in the translation file of the project
    */
@@ -50,4 +52,9 @@ export class HytBadgeComponent {
    * @property {HytBadgeSize} size - Enum for declare the size, xs & sm(suggested for icon), md(default), lg
    */
   @Input() size: HytBadgeSize = HytBadgeSize.MEDIUM;
+
+  constructor(loggerService: LoggerService) {
+    this.logger = new Logger(loggerService);
+    this.logger.registerClass("HytBadgeComponent");
+  }
 }
