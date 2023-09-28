@@ -31,7 +31,8 @@
                   divId="widget-{{ widget.id }}-chart0-{{ isToolbarVisible }}"
                   [data]="graphs.summary.chart0.chart['data']"
                   [layout]="graphs.summary.chart0.chart['layout']"
-                  [config]="graphs.summary.chart0.chart['config']">
+                  [config]="graphs.summary.chart0.chart['config']"
+                  (initialized)="onSummaryChartInitialized(0)">
               </plotly-plot>
             </div>
             <div class="area-plot">
@@ -40,7 +41,8 @@
                   divId="widget-{{ widget.id }}-chart1-{{ isToolbarVisible }}"
                   [data]="graphs.summary.chart1.chart['data']"
                   [layout]="graphs.summary.chart1.chart['layout']"
-                  [config]="graphs.summary.chart1.chart['config']">
+                  [config]="graphs.summary.chart1.chart['config']"
+                  (initialized)="onSummaryChartInitialized(1)">
               </plotly-plot>
             </div>
           </div>
