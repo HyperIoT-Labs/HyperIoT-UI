@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { AlgorithmsService, Algorithm } from 'core';
 import { Subject } from 'rxjs';
+import {algorithmType} from "./algorithmType.mode";
+import {AlgorithmsService, Algorithm} from "core";
 
 export interface AlgorithmsState {
   state: string;
@@ -25,8 +26,8 @@ export class AlgorithmService {
     private algorithmService: AlgorithmsService
   ) { }
 
-  updateAlgorithmList() {
-    this.algorithmService.findAllAlgorithm('STATISTICS').subscribe(
+  updateAlgorithmList(type: algorithmType) {
+    this.algorithmService.findAllAlgorithm(type).subscribe(
       res => {
         this.nextAlgorithms.state = 'update-success';
         this.nextAlgorithms.algorithmList = res;

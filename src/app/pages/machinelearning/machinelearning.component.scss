@@ -1,0 +1,478 @@
+#ml-algorithms-page {
+
+    font-family: 'Exo';
+    font-size: 1em;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 15px;
+
+    .header {
+      border-bottom: 1px solid #1e58a5;
+      min-height: 50px;
+
+      .breadcrumb {
+        font-weight: 400;
+        font-size: 1.2em;
+        line-height: 48px;
+        vertical-align: middle;
+
+        span {
+
+          &.icon-hyt_projectSolo {
+            font-size: 1.8em;
+            vertical-align: middle;
+            margin-right: 3px;
+            color: #bec3c7;
+          }
+
+        }
+
+        a {
+          color: #000000;
+        }
+
+      }
+
+    }
+
+    #container-ml-algorithms {
+
+      #loadingStatus {
+
+        img {
+
+          &#animatedPreloaderImg {
+
+            width: 100%;
+            max-width: 250px;
+            margin-bottom: 40px;
+
+          }
+
+        }
+
+        mat-progress-bar {
+
+          width: 100%;
+          max-width: 300px;
+
+        }
+
+      }
+
+      .no-ml-algorithms {
+
+        #content-no-ml-algorithms, #btn-no-ml-algorithms {
+          text-align: center;
+        }
+
+        #content-no-ml-algorithms {
+
+            h3 {
+
+              &#title-no-algorithm {
+                font-size: 2.2em;
+                text-transform: uppercase;
+                color: #0d416d;
+                margin-bottom: 0px;
+              }
+
+            }
+
+            h4 {
+
+              &#subtitle-no-algorithm {
+                font-size: 1.1em;
+                color: #2d82cb;
+                margin-bottom: 60px;
+                font-style: italic;
+              }
+
+            }
+
+        }
+
+        #btn-no-ml-algorithms {
+
+          hyt-button {
+
+            &#add-ml-algorithm-btn {
+              margin-top: 2px;
+
+              button.mat-raised-button {
+                background-color: #0d416d;
+                color: #fff;
+                font-family: "Exo";
+                font-size: 1.2em;
+                font-weight: 400;
+                text-transform: uppercase;
+                line-height: 45px;
+
+                &:hover {
+                  background-color: #105f99;
+                  box-shadow: none;
+                }
+
+              }
+
+            }
+
+          }
+
+        }
+
+      }
+
+      #errorStatus {
+        text-align: center;
+
+      }
+
+      #standardStatus {
+
+        #row-container-title {
+          margin-top: 40px;
+          margin-bottom: 40px;
+
+          #ml-algorithms-title-box {
+
+            h2 {
+              &#title-ml-algorithms {
+                font-size: 2.2em;
+                color: #0d416d;
+              }
+
+            }
+
+          }
+
+          #ml-algorithms-topfilters-box {
+
+            hyt-input-text {
+
+              &#hyt-search-bottom {
+
+                mat-form-field {
+                  width: 350px;
+                  font-family: 'Exo';
+                }
+              }
+
+            }
+
+            .sort-right {
+              text-align: right;
+
+              span {
+
+                &#sort-text{
+                  padding-right: 15px;
+                }
+
+              }
+
+              hyt-select {
+
+                mat-form-field {
+
+                  font-family: 'Exo';
+
+                  mat-select {
+
+                    font-family: 'Exo';
+
+                  }
+
+                }
+
+              }
+
+            }
+
+          }
+
+        }
+
+        #row-messages-area {
+          margin-bottom: 30px;
+          animation: showAnimatedDiv .2s ease-in-out;
+
+          .alert-box {
+            padding-top: 10px;
+            padding-bottom: 10px;
+            max-width: 95%;
+            margin-left: auto;
+            margin-right: auto;
+            border: .5px solid;
+            font-size: 1em;
+
+            p {
+              // background: green;
+              width: 98%;
+              float: left;
+              margin-bottom: 0px;
+            }
+
+            &.alert-loading {
+              border-color: lightblue;
+              color: #6386c3;
+              font-style: italic;
+
+              p {
+                padding-bottom: 4px;
+              }
+            }
+
+            &.alert-error {
+              border-color: red;
+              color: #b30e0e;
+
+              span {
+
+                &.cls-msg-area {
+
+                  &.btn-error {
+
+                    &::before {
+                      content: 'X';
+                      float: right;
+                      border-radius: 50%;
+                      width: 22px;
+                      height: 22px;
+                      text-align: center;
+                      padding-top: 2px;
+                      font-size: .8em;
+                      cursor: pointer;
+                      background-color: #d63636;
+                      color: #fff;
+                    }
+
+                    &:hover {
+                      &::before {
+                        background-color: #8e2121;
+                      }
+                    }
+                  }
+
+                }
+
+              }
+
+            }
+
+            &.alert-success {
+              border-color: #2ca500;
+              color: #237904;
+              font-style: italic;
+
+              span {
+                &.cls-msg-area {
+                  &.btn-success {
+
+                    &::before {
+                      content: 'X';
+                      float: right;
+                      border-radius: 50%;
+                      width: 22px;
+                      height: 22px;
+                      text-align: center;
+                      padding-top: 2px;
+                      font-size: .8em;
+                      cursor: pointer;
+                      background-color: #2ca500;
+                      color: #fff;
+                    }
+
+                    &:hover {
+                      &::before {
+                        background-color: #237904;
+                      }
+                    }
+
+                  }
+                }
+              }
+            }
+
+          }
+
+        }
+
+        #row-cotainer-cards {
+
+          &.cards-blurred {
+            pointer-events: none;
+            filter: blur(5px);
+            animation: blurredAnimation .5s ease-in-out;
+          }
+
+          .single-card-container {
+            margin-bottom: 40px;
+          }
+
+        }
+
+      }
+
+    }
+
+  }
+
+  mat-option {
+
+    &.mat-option {
+
+      font-family: 'Exo';
+
+    }
+
+  }
+
+  /**********************************
+  *
+  *        RESPONSIVE
+  *
+  **********************************/
+
+  @media (max-width: 767px) { /* BOOTSTRAP BREACKPOINT */
+
+    #ml-algorithms-page {
+
+      #container-ml-algorithms {
+
+        #loadingStatus {
+
+          img {
+
+            &#animatedPreloaderImg {
+
+              max-width: 180px;
+
+            }
+
+          }
+
+          h2 {
+            font-size: 1.3em;
+          }
+
+          mat-progress-bar {
+
+            max-width: 250px;
+
+          }
+
+        }
+
+      }
+
+    }
+
+  }
+
+  @media (max-width: 575px) { /* BOOTSTRAP BREACKPOINT */
+
+    #ml-algorithms-page {
+
+      #container-ml-algorithms {
+
+        #loadingStatus {
+
+          img {
+
+            &#animatedPreloaderImg {
+
+              max-width: 150px;
+
+            }
+
+          }
+
+          h2 {
+            font-size: 1.2em;
+          }
+
+          mat-progress-bar {
+
+            max-width: 200px;
+
+          }
+
+        }
+
+      }
+
+    }
+
+
+  }
+
+  @media (max-width: 374px) {
+
+    #ml-algorithms-page {
+
+      #container-ml-algorithms {
+
+        #loadingStatus {
+
+          img {
+
+            &#animatedPreloaderImg {
+
+              max-width: 120px;
+
+            }
+
+          }
+
+          h2 {
+            font-size: 1.1em;
+          }
+
+          mat-progress-bar {
+
+            max-width: 180px;
+
+          }
+
+        }
+
+      }
+
+    }
+
+  }
+
+  /**********************************
+  *
+  *        ANIMATION
+  *
+  **********************************/
+
+  @keyframes showAnimatedDiv {
+
+    0% {
+      opacity: 0;
+    }
+
+    50% {
+      opacity: .5;
+    }
+
+    100% {
+      opacity: 1;
+    }
+
+  }
+
+  @keyframes blurredAnimation {
+
+    0% {
+        filter: blur(0px);
+    }
+
+    100% {
+        filter: blur(3px);
+    }
+
+  }

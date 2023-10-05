@@ -1,17 +1,19 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { PageStatus } from './models/pageStatus';
 import { Algorithm, AlgorithmsService } from 'core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { SelectOption } from 'components';
+
+//TO DO: si deve creare il servizio
 import { AlgorithmService } from 'src/app/services/algorithms/algorithm.service';
+import {SelectOption} from "components";
 
 @Component({
-  selector: 'hyt-algorithms',
-  templateUrl: './algorithms.component.html',
-  styleUrls: ['./algorithms.component.scss']
+  selector: 'hyt-machinelearning',
+  templateUrl: './machinelearning.component.html',
+  styleUrls: ['./machinelearning.component.scss']
 })
-export class AlgorithmsComponent implements OnInit {
+export class MachineLearningComponent implements OnInit {
 
   PageStatus = PageStatus;
   pageStatus: PageStatus = PageStatus.Loading;
@@ -87,7 +89,7 @@ export class AlgorithmsComponent implements OnInit {
       }
     });
 
-    this.algorithmService.updateAlgorithmList("STATISTICS");
+    this.algorithmService.updateAlgorithmList("MACHINE_LEARNING");
 
   }
 
@@ -175,7 +177,7 @@ export class AlgorithmsComponent implements OnInit {
   }
 
   addAlgorithm() {
-    this.router.navigate(['/algorithm-wizard']);
+    this.router.navigate(['/machinelearning-wizard']);
   }
 
   refreshViewOnDelete(event) {
@@ -191,7 +193,9 @@ export class AlgorithmsComponent implements OnInit {
   }
 
   updateAlgorithms(algorithmList: Algorithm[]) {
+
     this.algorithms = algorithmList;
+
     this.pageStatus = (this.algorithms.length !== 0)
       ? PageStatus.Standard
       : PageStatus.New;
@@ -202,7 +206,7 @@ export class AlgorithmsComponent implements OnInit {
   refreshComponent() {
     this.filteringForm = this.fb.group({});
 
-    this.algorithmsService.findAllAlgorithm('STATISTICS').subscribe(
+    this.algorithmsService.findAllAlgorithm("MACHINE_LEARNING").subscribe(
       res => {
         this.algorithms = res;
         this.pageStatus = (this.algorithms.length !== 0)

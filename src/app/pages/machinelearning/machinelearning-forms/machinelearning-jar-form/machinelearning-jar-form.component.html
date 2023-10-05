@@ -1,0 +1,144 @@
+<div id="container-algorithm-jar" class="container">
+
+    <div id="jar-section-head">
+
+        <div id="jar-section-subtitle">
+
+            <p>
+                
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- FIRST FORM -->
+
+    <form [formGroup]="form" #formReference [ngClass]="{'blurred': loadingStatus !== LoadingStatus.Ready}">
+        
+        <div id="container-upload-jar">
+
+            <div id="upload-jar-package">
+
+                <span id="upload-jar-title" i18n="@@HYT_algorithm_jar_package">JAR package:</span>
+                <span 
+                    i18n="@@HYT_algorithm_jar_package_exists" 
+                    class="upload-jar-content exists" 
+                    *ngIf="algorithm else jarContent"
+                >
+                    exists
+                </span>
+                <ng-template #jarContent>
+                    
+                    <span class="upload-jar-content not-exists" i18n="@@HYT_algorithm_jar_package_not_exists">does not exist</span>
+
+                </ng-template>
+
+                
+            </div>
+
+            <div id="upload-jar-container">
+
+                <!-- <label for="jarName">Choose File</label>
+
+                <input 
+                    name="jarName"
+                    id="jarName"
+                    type="file" 
+                    formControlName="jarName"
+                    accept=".jar"
+                    (change)="handleFileInput($event.target.files)"
+                > -->
+
+                <hyt-button 
+                    [color]="'hyt-base'" 
+                    (clickFn)="clickChooseLabel()"
+                    [isDisabled]="btnChooseIsDisabled"
+                >
+                    <ng-container i18n="@@HYT_algorithm_choose_file">Choose File</ng-container>
+                </hyt-button>
+
+                <input 
+                    name="jarName"
+                    id="jarName"
+                    type="file" 
+                    formControlName="jarName"
+                    accept=".jar"
+                    (change)="handleFileInput($event.target.files)"
+                >
+
+                <span id="container-title-selected">{{nameOfJarFile}}</span> <!-- {{this.form.controls.jarName.value}} -->
+
+                <div 
+                    *ngIf="jarToUpload" 
+                    id="reset-title-selected"
+                    (click)="resetTitleSelected()"
+                >X</div>
+
+            </div>
+
+        </div> <!-- First Row -->
+
+
+        <div id="container-form-group" class="form-group">
+
+            <div id="fproj-col-descr"> 
+
+                <hyt-input-text 
+                    name="algorithm-mainclassname"
+                    formControlName="algorithm-mainclassname"
+                    i18n-placeholder="@@HYT_algorithm_main_classname" 
+                    placeholder="Main classname" 
+                    pattern="^[a-z][a-z0-9_]*(\.[a-z0-9_]+)+\.[A-Z][A-Za-z0-9_]*$"
+                    [form]="form"
+                    [injectedErrorMsg]="getError('algorithm-mainclassname')"
+                    i18n-hintMessage="@@HYT_hint_algorithm_main_className"
+                    hintMessage="Enter the main classname"
+                    errorPosition="bottom" minlength="3" isRequired="true"
+                >
+                </hyt-input-text>
+
+            </div>
+
+        </div> <!-- Second Row -->
+
+    </form>
+
+    <!-- 
+        TODO: This HTML block is repeated
+        across all 'entity' components,
+        consider making a component out of it 
+    -->
+
+    <div #overlayHeight *ngIf="loadingStatus !== LoadingStatus.Ready" class="overlay d-flex flex-column align-items-center justify-content-center">
+        
+        <div 
+            *ngIf="loadingStatus === LoadingStatus.Loading"
+            [ngClass]="getCustomClass()"
+        >
+
+            <h4 i18n="@@HYT_loading_data">Loading data...</h4>
+
+        </div> 
+        
+        <div *ngIf="loadingStatus === LoadingStatus.Error" class="error-overlay d-flex flex-column justify-content-center">
+            <h4 i18n="@@HYT_error_occurred">An unexpected error has occurred</h4>
+
+            <hyt-button 
+                [color]="'hyt-base-default-white'" 
+                (click)="loadingStatus = LoadingStatus.Ready"
+            >
+                <span i18n="@@HYT_close">Close</span> <span class="icon-hyt_cancelC"></span> 
+            </hyt-button>
+        </div>
+
+        <h4 *ngIf="loadingStatus === LoadingStatus.Saving" i18n="@@HYT_saving_data">Saving data...</h4>
+
+        <mat-progress-bar 
+            *ngIf="loadingStatus === LoadingStatus.Loading || loadingStatus === LoadingStatus.Saving"
+            mode="indeterminate"
+        ></mat-progress-bar> 
+
+    </div>
+
+</div>

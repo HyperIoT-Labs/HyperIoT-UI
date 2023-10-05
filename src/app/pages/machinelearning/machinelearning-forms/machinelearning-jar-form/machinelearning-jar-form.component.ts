@@ -1,18 +1,19 @@
-import { Component, ViewChild, ElementRef, Injector, ChangeDetectorRef, ViewEncapsulation, Input, AfterViewInit, OnInit } from '@angular/core';
+import { Component, ViewChild, ElementRef, Injector, ChangeDetectorRef, ViewEncapsulation, Input, OnInit } from '@angular/core';
 
 import { Subject, PartialObserver } from 'rxjs';
 
 import { AlgorithmsService, Algorithm } from 'core';
 
-import { AlgorithmFormEntity, LoadingStatusEnum } from '../algorithm-form-entity';
+import { MachineLearningFormEntity, LoadingStatusEnum } from '../machinelearning-form-entity';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
-  selector: 'hyt-algorithm-info-form',
-  templateUrl: './algorithm-info-form.component.html',
-  styleUrls: ['./algorithm-info-form.component.scss'],
+  selector: 'hyt-machinelearning-jar-form',
+  templateUrl: './machinelearning-jar-form.component.html',
+  styleUrls: ['./machinelearning-jar-form.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class AlgorithmInfoFormComponent extends AlgorithmFormEntity implements AfterViewInit,OnInit {
+export class MachineLearningJarFormComponent extends MachineLearningFormEntity implements OnInit {
 
   algorithm: Algorithm;
 
@@ -25,28 +26,52 @@ export class AlgorithmInfoFormComponent extends AlgorithmFormEntity implements A
 
   divHeight: number;
   entity = {} as Algorithm;
+
   entityFormMap = {
-    'algorithm-name': {
-      field: 'name'
+    'algorithm-jarName': {
+      field: 'jarName',
+      default: null
     },
-    'algorithm-description': {
-      field: 'description'
+    'algorithm-mainclassname': {
+      field: 'mainClassname',
+      default: null
     }
   };
+
+  jarToUpload: File = null;
+
   showPreloader: boolean;
+
+  nameOfJarFile: string = '';
+
+  /**
+   * Variable used to prevent multiple click on choose file button
+   */
+  btnChooseIsDisabled: boolean = false;
 
   @Input() currentAlgorithmSubject: Subject<Algorithm>;
 
   private overlayHeight: ElementRef;
+
   @ViewChild('overlayHeight') set content(content: ElementRef) {
+
     if (!content) {
+
       this.showPreloader = false;
       return;
+
     } else {
+
       this.showPreloader = true;
       this.overlayHeight = content;
+
     }
+
   }
+
+  form = new FormGroup({
+    jarName: new FormControl('')
+  });
 
   constructor(
     private algorithmsService: AlgorithmsService,
@@ -54,7 +79,7 @@ export class AlgorithmInfoFormComponent extends AlgorithmFormEntity implements A
     private cdr: ChangeDetectorRef
   ) {
     super(injector,cdr);
-    this.formTemplateId = 'algorithm-info-form';
+    this.formTemplateId = 'container-algorithm-jar';
     this.longDefinition = this.entitiesService.algorithm.longDefinition;
     this.formTitle = this.entitiesService.algorithm.formTitle;
     this.icon = this.entitiesService.algorithm.icon;
@@ -63,9 +88,17 @@ export class AlgorithmInfoFormComponent extends AlgorithmFormEntity implements A
 
   ngOnInit() {
     this.currentAlgorithmSubject.subscribe(this.algorithmObserver);
-  }
-
-  ngAfterViewInit() {
+    this.form.controls.jarName.valueChanges.subscribe(
+      (change: string) => {
+        if(change){
+          if(change.indexOf("\\") > 0)
+            change = change.substr(change.lastIndexOf("\\")+1);
+          else if (change.indexOf("/") > 0)
+            change = change.substr(change.lastIndexOf("/")+1);
+          this.nameOfJarFile = change;
+        }
+      }
+    );
     this.loadEmpty();
     this.cdr.detectChanges();
   }
@@ -92,6 +125,16 @@ export class AlgorithmInfoFormComponent extends AlgorithmFormEntity implements A
     }
   }
 
+  handleFileInput(files: FileList) {
+    if(files.length > 0) {
+      this.jarToUpload = files.item(0);
+      this.form.value['jarName'] = files[0].name;
+    }else{
+      this.form.value['jarName'] = '';
+    }
+    this.cdr.detectChanges();
+  }
+
   load() {
     this.loadingStatus = LoadingStatusEnum.Loading;
     this.cdr.detectChanges();
@@ -110,16 +153,11 @@ export class AlgorithmInfoFormComponent extends AlgorithmFormEntity implements A
     this.edit();
   }
 
-  private saveAlgorithm(successCallback?, errorCallback?) {
+  private updateJar(successCallback?, errorCallback?) {
     this.loadingStatus = LoadingStatusEnum.Saving;
     this.resetErrors();
-
     let p = this.entity;
-    const baseConfigObject = JSON.parse(p.baseConfig);
-    p.name = this.form.get('algorithm-name').value;
-    p.description = this.form.get('algorithm-description').value;
-    p.baseConfig = JSON.stringify(baseConfigObject);
-    const wasNew = this.isNew();
+    p.mainClassname = this.form.get('algorithm-mainclassname').value;
     const responseHandler = (res) => {
       this.entity = p = res;
       this.resetForm();
@@ -128,35 +166,18 @@ export class AlgorithmInfoFormComponent extends AlgorithmFormEntity implements A
         algorithm: res
       });
       this.loadingStatus = LoadingStatusEnum.Ready;
-      successCallback && successCallback(res, wasNew);
+      successCallback && successCallback(res);
     };
-    if (p.id) {
-      this.algorithmsService.updateAlgorithm(p).subscribe(responseHandler, (err) => {
-        this.setErrors(err);
-        errorCallback && errorCallback(err);
-      });
-    } else {
-      p.entityVersion = 1;
-      this.algorithmsService.saveAlgorithm(p).subscribe(responseHandler, (err) => {
-        this.setErrors(err);
-        errorCallback && errorCallback(err);
-      });
-    }
+    p.entityVersion = 1;
+    //this.algorithmsService.updateJar(p.id, p.mainClassname, this.jarToUpload).subscribe(responseHandler, (err) => {
+    //  this.setErrors(err);
+    //  errorCallback && errorCallback(err);
+    //});
   }
 
   setErrors(err) {
     if (err.error && err.error.type) {
       switch (err.error.type) {
-        case 'it.acsoftware.hyperiot.base.exception.HyperIoTDuplicateEntityException': {
-          this.validationError = [{ message: $localize`:@@HYT_unavailable_algorithm_name:Unavailable algorithm name`, field: 'algorithm-name', invalidValue: '' }];
-          this.form.get('algorithm-name').setErrors({
-            validateInjectedError: {
-              valid: false
-            }
-          });
-          this.loadingStatus = LoadingStatusEnum.Ready;
-          break;
-        }
         case 'it.acsoftware.hyperiot.base.exception.HyperIoTValidationException': {
           super.setErrors(err);
           break;
@@ -172,7 +193,34 @@ export class AlgorithmInfoFormComponent extends AlgorithmFormEntity implements A
 
   // AlgorithmDetailEntity interface
   save(successCallback, errorCallback) {
-    this.saveAlgorithm(successCallback, errorCallback);
+    this.updateJar(successCallback, errorCallback);
+  }
+
+  /**
+   * Function used to simulate click on choose file
+   */
+  clickChooseLabel(){
+    this.btnChooseIsDisabled = true;
+    const inputChooseFile = document.getElementById('jarName');
+    inputChooseFile.click();
+    setTimeout(() => this.btnChooseIsDisabled = false, 600);
+
+  }
+
+  isJarName(): string {
+    if(this.jarToUpload && this.jarToUpload != null){
+      return this.jarToUpload.name;
+    }else{
+      return "";
+    }
+  }
+
+  resetTitleSelected() {
+    this.jarToUpload = null;
+    this.form.controls.jarName.setValue('');
+    this.form.controls.jarName.updateValueAndValidity();
+    this.nameOfJarFile = "";
+    this.cdr.detectChanges();
   }
 
 }

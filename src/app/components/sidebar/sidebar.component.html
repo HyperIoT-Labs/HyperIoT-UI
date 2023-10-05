@@ -1,13 +1,13 @@
 <div id="hyt-sidebar">
     <div class="area"></div>
-    <nav 
-        class="main-menu" 
+    <nav
+        class="main-menu"
         [ngClass]="{
             'nav-mob-hidden': winInnerWidth <= mobileBreakPoints.md && navIsOpen == false,
             'nav-mob-show': winInnerWidth <= mobileBreakPoints.md && navIsOpen == true
         }"
     >
-        
+
         <ul
             [ngClass]="{
                 'ul-mob-hidden': winInnerWidth <= mobileBreakPoints.md && navIsOpen == false,
@@ -15,42 +15,49 @@
             }"
         >
 
-            <li #home class="has-subnav" routerLinkActive="selected" [routerLinkActiveOptions]="{exact: true}"> 
+            <li #home class="has-subnav" routerLinkActive="selected" [routerLinkActiveOptions]="{exact: true}">
                 <a routerLink="/">
                     <span class="hyt-icon icon-hyt_home"></span>
                     <span class="nav-text" i18n="@@HYT_home">Home</span>
                 </a>
             </li>
 
-            <li #projects class="has-subnav" routerLinkActive="selected"> 
+            <li #projects class="has-subnav" routerLinkActive="selected">
                 <a routerLink="/projects">
                     <span class="hyt-icon icon-hyt_projects"></span>
                     <span class="nav-text" i18n="@@HYT_projects">Projects</span>
                 </a>
             </li>
 
-            <li #dashboards class="has-subnav" routerLinkActive="selected"> 
+            <li #dashboards class="has-subnav" routerLinkActive="selected">
                 <a routerLink="/dashboards">
                     <span class="hyt-icon icon-hyt_dash"></span>
                     <span class="nav-text" i18n="@@HYT_dashboard">Dashboard</span>
                 </a>
             </li>
 
-            <li #areas class="has-subnav" routerLinkActive="selected"> 
+            <li #areas class="has-subnav" routerLinkActive="selected">
                 <a routerLink="/areas">
                     <span class="hyt-icon icon-hyt_map"></span>
                     <span class="nav-text" i18n="@@HYT_areas">Areas</span>
                 </a>
             </li>
 
-            <li *ngIf="hasControlPanelAuthorization()" #algorithms class="has-subnav" routerLinkActive="selected"> 
+            <li *ngIf="hasControlPanelAuthorization()" #algorithms class="has-subnav" routerLinkActive="selected">
                 <a routerLink="/algorithms">
                     <span class="hyt-icon icon-hyt_statistics"></span>
                     <span class="nav-text" i18n="@@HYT_algorithms">Algorithms</span>
                 </a>
             </li>
 
-            <li #info class="has-subnav"> 
+            <li *ngIf="hasControlPanelAuthorization()" #algorithms class="has-subnav" routerLinkActive="selected">
+              <a routerLink="/machinelearning">
+                <span class="hyt-icon icon-hyt_statistics"></span>
+                <span class="nav-text" i18n="@@HYT_algorithms">ML</span>
+              </a>
+            </li>
+
+            <li #info class="has-subnav">
                 <a (click)="showVersionPopUp()">
                     <span class="hyt-icon icon-hyt_info"></span>
                     <span class="nav-text" i18n="@@HYT_info">Info</span>
@@ -60,5 +67,5 @@
         </ul>
 
     </nav>
-    
+
 </div>

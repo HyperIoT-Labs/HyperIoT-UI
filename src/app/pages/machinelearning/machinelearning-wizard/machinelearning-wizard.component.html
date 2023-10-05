@@ -1,0 +1,93 @@
+<div id="container-algorithm-wizard">
+
+  <div class="header d-flex flex-row justify-content-stretch">
+    <div class="breadcrumb flex-grow-1">
+      <span class="hyt-icon icon-hyt_algorithmSolo"></span> <a [routerLink]="['/']" i18n="@@HYT_home">Home</a> >
+      <strong i18n="@@HYT_algorithms_wizard">Machine Learning Algorithms Wizard</strong>
+    </div>
+  </div>
+
+  <div id="container-wizard" class="row">
+
+    <div id="container-steps" class="col-md-12"> <!-- ex col-md-10 -->
+
+      <ng-template #algorithmInfoTemplate>
+        <hyt-machinelearning-info-form [currentAlgorithmSubject]="currentAlgorithmSubject" #algorithmInfoForm (entityEvent)="onEntityEvent($event)"></hyt-machinelearning-info-form>
+      </ng-template>
+
+      <div class="row">
+        <div class="col-md-12">
+          <hyt-stepper #stepper (selectionChange)="stepChanged($event)" [isLinear]="true" style="width: 100%"
+            [stepArray]="[
+              algorithmInfoTemplate,
+            ]" [labelArray]="[
+              entitiesService.algorithm.displayListName,
+            ]" [completedArray]="[
+              currentAlgorithm != null
+            ]" [isDirty]="[
+              getDirty(0),
+            ]">
+          </hyt-stepper>
+        </div>
+      </div>
+
+      <div id="container-save-update" class="container">
+
+        <div id="row-save-update" class="row">
+
+          <div class="col-12">
+
+            <hyt-button [color]="'hyt-base-default-white'" class="toRight" *ngIf="currentForm" (clickFn)="onSaveClick($event)"
+            [isDisabled]="!currentForm.isValid() || !currentForm.isDirty() || currentForm.loadingStatus != 0">
+              <ng-container *ngIf="currentForm && currentForm.isNew()" i18n="@@HYT_save">Save</ng-container>
+              <ng-container *ngIf="currentForm && !currentForm.isNew()" i18n="@@HYT_update">Update</ng-container>
+            </hyt-button>
+
+            <hyt-button [color]="'hyt-base-default-white'" class="toRight" *ngIf="currentForm && showCancel()" (clickFn)="onCancelClick($event)">
+              <ng-container i18n="@@HYT_cancel">Cancel</ng-container>
+            </hyt-button>
+
+            <div class="clear"></div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div id="hint-column" class="col-md-2" style="display: none;">
+
+      <!-- NEW ACCORDION -->
+      <div *ngIf="currentForm" id="section-title" (click)="togglePanel()"
+        [ngClass]="{'clicked': panelIsVisible, 'unclicked': !panelIsVisible}" class="row">
+
+        <div id="icon-title" class="col-4">
+          <hyt-hexagon [iconPath]="currentForm.icon" [dimension]="0.7"></hyt-hexagon>
+        </div>
+
+        <div id="text-title" class="col-8">
+          {{currentForm.formTitle}}
+        </div>
+
+      </div>
+
+      <div *ngIf="currentForm" id="section-title-panel" [ngClass]="{'panel-open': panelIsVisible}" class="row">
+        <div class="col-12">
+          {{currentForm.longDefinition}}
+        </div>
+      </div>
+
+      <hr id="title-underline">
+      <!-- END NEW ACCORDION -->
+
+      <div *ngIf="hintVisible" class="info-message m-2 mt-4 d-flex flex-row">
+        <span class="text p-2 flex-grow-1">{{hintMessage}}</span>
+        <mat-icon class="">info</mat-icon>
+        <!--mt-2 mr-2-->
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

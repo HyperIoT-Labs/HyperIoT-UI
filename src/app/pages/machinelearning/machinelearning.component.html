@@ -1,0 +1,137 @@
+<div id="ml-algorithms-page">
+
+    <div class="header d-flex flex-row justify-content-stretch">
+
+      <div class="breadcrumb flex-grow-1">
+        <span class="hyt-icon icon-hyt_projectSolo"></span> <a [routerLink]="['/']" i18n="@@HYT_home">Home</a> > <strong i18n="@@HYT_ml_algorithms">Machine Learning Algorithms</strong>
+      </div>
+
+      <!-- button on the right side -->
+      <div class="align-self-right">
+
+        <hyt-button *ngIf="pageStatus === 1" [isDisabled]="deletingInLoading" id="add-ml-algorithm-btn-top" (clickFn)="addAlgorithm()"
+          [color]="'hyt-base-total-white'">
+          <span class="hyt-icon icon-hyt_plusC"></span>
+          <ng-container i18n="@@HYT_add_new_ml_algorithm">Add new Machine Learning algorithm</ng-container>
+        </hyt-button>
+
+      </div>
+
+    </div>
+
+    <div id="container-ml-algorithms" [ngSwitch]="pageStatus" class="container-fluid">
+
+      <div id="loadingStatus" *ngSwitchCase="PageStatus.Loading" class="mt-5 d-flex flex-column align-items-center justify-content-center">
+
+        <img id="animatedPreloaderImg" src="assets/images/hyperiot_logo_single_char_animated.svg" alt="Hyperiot Animated Logo">
+        <h2 i18n="@@HYT_page_is_loading">Page is loading...</h2>
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+
+        <!-- Page is loading... -->
+
+      </div> <!-- PageStatus.Loading -->
+
+      <div id="standardStatus" *ngSwitchCase="PageStatus.Standard" class="row">
+        <!-- Standard -->
+
+        <div id="container-box-algorithm" class="col-12">
+
+          <div id="row-container-title" class="row">
+
+            <div id="ml-algorithms-title-box" class="col-12">
+              <h2 id="title-ml-algorithms" i18n="@@HYT_algorithm_list">Machine Learning Algorithm list</h2>
+            </div>
+
+            <div id="ml-algorithms-topfilters-box" class="col-12">
+              <form #f="ngForm" [formGroup]="filteringForm" (ngSubmit)="filter()">
+                <div class="row">
+                  <div class="col-6">
+                    <hyt-input-text id="hyt-search-bottom" [form]="filteringForm" formControlName="textFilter"
+                      name="textFilter" i18n-placeholder="@@HYT_search" placeholder="Search" (keyup)="onChangeInputSearch($event)"></hyt-input-text>
+                  </div>
+                  <div class="col-6 sort-right">
+                    <span id="sort-text">Sort by: </span>
+                    <hyt-select [form]="filteringForm" i18n-label="@@HYT_select_sort_type" label="Select a sort type" formControlName="sort" name="sort"
+                      (changeFn)="onChangeSelectSort($event)" [options]="sortOptions"></hyt-select>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+            <div class="col-12">
+              <span i18n="@@HYT_showint_machine_learning_algorithms_of">Showing {{algorithmsFiltered.length}} machine learning algorithms of {{algorithms.length}}</span>
+            </div>
+
+          </div> <!-- End Row Title -->
+
+          <div *ngIf="displayMessageArea" id="row-messages-area" class="row">
+
+            <div class="col-12 alert-box"
+              [ngClass]="{'alert-loading' : typeMessageArea == 'loading', 'alert-error' : typeMessageArea == 'error', 'alert-success' : typeMessageArea == 'success'}">
+              <!-- alert-error | alert-success -->
+              <p>{{ messageAreaText }}</p>
+              <mat-progress-bar *ngIf="typeMessageArea == 'loading'" mode="indeterminate"></mat-progress-bar>
+
+              <span *ngIf="typeMessageArea != 'loading'" class="cls-msg-area"
+                [ngClass]="{'btn-error' : typeMessageArea == 'error', 'btn-success' : typeMessageArea == 'success'}"
+                (click)="hideMessageArea()">
+              </span>
+
+            </div>
+
+          </div> <!-- END DISPLAY MESSAGE AREA -->
+
+          <div id="row-cotainer-cards" [ngClass]="{'cards-blurred' : deletingInLoading}" class="row">
+
+            <div *ngIf="algorithmsFiltered.length == 0" class="col-12">
+              <span i18n="@@HYT_no_ml_algorithm_found">No ML algorithm that matches the search found...</span>
+            </div>
+
+            <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2 single-card-container d-flex flex-row justify-content-center"
+              *ngFor="let p of algorithmsFiltered">
+
+              <hyt-machinelearning-card (refreshView)='refreshViewOnDelete($event)' [algorithm]="p"></hyt-machinelearning-card>
+
+            </div>
+
+          </div> <!-- End Row Cards -->
+
+        </div>
+
+      </div> <!-- PageStatus.Standard -->
+
+      <div id="newStatus" *ngSwitchCase="PageStatus.New">
+        <!-- New -->
+
+        <div class="mt-5 no-ml-algorithms">
+
+          <div id="content-no-ml-algorithms" class="col-md-12">
+            <h3 id="title-no-algorithm" i18n="@@HYT_no_ml_algorithm">There are no Machine Learning ml-algorithms!</h3>
+            <h4 id="subtitle-no-algorithm" i18n="@@HYT_add_ml_algorithm_button_hint">To add an algorithm click the button below.</h4>
+          </div>
+
+          <div id="btn-no-ml-algorithms" class="col-md-12">
+
+            <hyt-button id="add-algorithm-btn" (click)="addAlgorithm()" type="button">
+              <ng-container i18n="@@HYT_create_first_ml_algorithm">Create your first Machine Learning algorithm</ng-container>
+            </hyt-button>
+
+          </div>
+
+        </div> <!-- End No ml-algorithms Row -->
+
+      </div> <!-- PageStatus.New -->
+
+      <div id="errorStatus" *ngSwitchCase="PageStatus.Error" class="mt-5 d-flex flex-column align-items-center justify-content-center">
+
+        <h2 i18n="@@HYT_error_occurred_long">An error has occurred, contact the administrator!</h2>
+
+      </div> <!-- PageStatus.Error -->
+
+      <div id="defaultStatus" *ngSwitchDefault class="mt-5 d-flex flex-column align-items-center justify-content-center">
+        <h2 i18n="@@HYT_error">Error!</h2>
+      </div>
+
+    </div>
+
+  </div>
