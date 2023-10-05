@@ -103,6 +103,7 @@ export class AlgorithmTableComponent extends BaseTableComponent implements After
   }
 
   getAlgorithmData() {
+    this.tableChild.resetTable();
     if (this.dataRequest) {
       this.dataRequest.unsubscribe();
     }
