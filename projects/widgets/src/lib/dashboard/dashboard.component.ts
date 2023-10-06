@@ -172,7 +172,12 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
       this.showAreas = this.activatedRoute.snapshot.routeConfig.path.startsWith('areas/');
     }
     if (!this.showAreas && !this.idProjectSelected) {
-      this.idProjectSelected = +this.activatedRoute.snapshot.queryParams.projectId;
+      if (this.activatedRoute.snapshot.queryParams.projectId) {
+        this.idProjectSelected = +this.activatedRoute.snapshot.queryParams.projectId;
+        localStorage.setItem('last-dashboard-project', String(this.idProjectSelected));
+      } else if (localStorage.getItem('last-dashboard-project')) {
+        this.idProjectSelected = +localStorage.getItem('last-dashboard-project');
+      }
     }
 
     this.offlineDataService.countEventSubject.subscribe(res => {
@@ -231,6 +236,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     this.packetsInDashboard = [];
     this.pageStatus = PageStatus.Loading;
     this.idProjectSelected = event.value;
+    localStorage.setItem('last-dashboard-project', String(this.idProjectSelected));
     clearInterval(this.updateRecordingInterval);
     this.recordStateInLoading = true;
     this.signalIsOn = true;
@@ -371,6 +377,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
             if (this.hProjectListOptions.length > 0) {
               if (!this.idProjectSelected) {
                 this.idProjectSelected = this.hProjectListOptions[0].id;
+                localStorage.setItem('last-dashboard-project', String(this.idProjectSelected));
               }
               this.showDashboard();
             } else {
