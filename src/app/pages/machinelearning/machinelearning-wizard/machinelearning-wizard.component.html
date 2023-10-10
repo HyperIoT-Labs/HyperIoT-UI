@@ -11,21 +11,27 @@
 
     <div id="container-steps" class="col-md-12"> <!-- ex col-md-10 -->
 
-      <ng-template #algorithmInfoTemplate>
+      <ng-template #mlAlgorithmInfoTemplate>
         <hyt-machinelearning-info-form [currentAlgorithmSubject]="currentAlgorithmSubject" #algorithmInfoForm (entityEvent)="onEntityEvent($event)"></hyt-machinelearning-info-form>
+      </ng-template>
+      <ng-template #mlAlgorithmPyTemplate>
+        <hyt-machinelearning-jar-form [currentAlgorithmSubject]="currentAlgorithmSubject" #algorithmInfoForm (entityEvent)="onEntityEvent($event)"></hyt-machinelearning-jar-form>
       </ng-template>
 
       <div class="row">
         <div class="col-md-12">
           <hyt-stepper #stepper (selectionChange)="stepChanged($event)" [isLinear]="true" style="width: 100%"
             [stepArray]="[
-              algorithmInfoTemplate,
+              mlAlgorithmInfoTemplate,
+              mlAlgorithmPyTemplate,
             ]" [labelArray]="[
               entitiesService.algorithm.displayListName,
-            ]" [completedArray]="[
+              'Script'
+            ]" [completedArray]='[
               currentAlgorithm != null
-            ]" [isDirty]="[
+            ]' [isDirty]="[
               getDirty(0),
+              getDirty(1),
             ]">
           </hyt-stepper>
         </div>
@@ -43,12 +49,36 @@
               <ng-container *ngIf="currentForm && !currentForm.isNew()" i18n="@@HYT_update">Update</ng-container>
             </hyt-button>
 
-            <hyt-button [color]="'hyt-base-default-white'" class="toRight" *ngIf="currentForm && showCancel()" (clickFn)="onCancelClick($event)">
+            <hyt-button [color]="'hyt-base-default-white'" class="toRight" *ngIf="currentForm && showCancel() && currentForm.isValid() && currentForm.isDirty() && currentForm.loadingStatus == 0" (clickFn)="onCancelClick($event)">
               <ng-container i18n="@@HYT_cancel">Cancel</ng-container>
             </hyt-button>
 
             <div class="clear"></div>
           </div>
+        </div>
+
+      </div>
+
+      <div id="container-prev-next" class="container-fluid">
+
+        <div id="row-next-back" class="row">
+
+          <div *ngIf="currentStepIndex != 0" class="col-6">
+            <hyt-button [color]="'hyt-stepper-prev'" (clickFn)="stepper.previous()">
+              <span class="hyt-icon icon-hyt_arrowLeft"></span> <ng-container i18n="@@HYT_back">Back</ng-container>
+            </hyt-button>
+          </div>
+
+          <div [ngClass]="{'offset-6': currentStepIndex == 0}" class="col-6">
+
+            <hyt-button class="toRight" [color]="'hyt-stepper-next'" [isDisabled]="isNextDisabled()"
+                        (clickFn)="currentStepIndex == 3 ? openFinishModal() : stepper.next()"
+            >
+              <ng-container i18n="@@HYT_next">Next</ng-container> <span class="hyt-icon icon-hyt_arrowRight"></span>
+            </hyt-button>
+
+          </div>
+
         </div>
 
       </div>

@@ -1,4 +1,14 @@
-import { Component, ViewChild, ElementRef, Injector, ChangeDetectorRef, Input, AfterViewInit, OnInit } from '@angular/core';
+import {
+  Component,
+  ViewChild,
+  ElementRef,
+  Injector,
+  ChangeDetectorRef,
+  Input,
+  AfterViewInit,
+  OnInit,
+  AfterContentInit, AfterViewChecked
+} from '@angular/core';
 
 import { Subject, PartialObserver } from 'rxjs';
 
@@ -8,14 +18,14 @@ import { LoadingStatusEnum } from 'src/app/pages/algorithms/algorithm-forms/algo
 
 import { Option, SelectOption } from 'components';
 import {MachineLearningFormEntity} from "../machinelearning-form-entity";
-import {MlAlgorithmsModel} from "../../models/ml.model";
+import {MLAlgorithmConfig, MlAlgorithmsModel} from "../../models/ml.model";
 
 @Component({
   selector: 'hyt-machinelearning-info-form',
   templateUrl: './machinelearning-info-form.component.html',
   styleUrls: ['./machinelearning-info-form.component.scss'],
 })
-export class MachineLearningInfoFormComponent extends MachineLearningFormEntity implements AfterViewInit,OnInit {
+export class MachineLearningInfoFormComponent extends MachineLearningFormEntity implements AfterViewInit,OnInit, AfterViewChecked {
 
   algorithm: Algorithm;
 
@@ -43,6 +53,59 @@ export class MachineLearningInfoFormComponent extends MachineLearningFormEntity 
     {
       value: "dl",
       label: "Deep Learning"
+    }
+  ];
+
+  paramMLOptions: MLAlgorithmConfig[] = [];
+
+  readonly paramMLOptionsDefault: MLAlgorithmConfig[] = [
+    {
+      type: "slider",
+      min : 0,
+      max : 2,
+      default: 1,
+      steps: 0.5,
+      label: "Learning Rate"
+    },
+    {
+      type: "slider",
+      min : 0,
+      max : 10,
+      default: 5,
+      steps: 1,
+      label: "Early Stop"
+    },
+    {
+      type: "radio",
+      choices: [
+        { value: "gradient",
+          label: "GRADIENT",
+          checked: true,
+        },
+        { value: "nan_gradient",
+          label: "NaN GRADIENT"
+        },
+        { value: "stochastic",
+          label: "Stochastic"
+        }
+      ],
+      label: "Solver",
+    },
+    {
+      type: "radio",
+      choices: [
+        { value: "mse",
+          label: "MEAN SQUARED ERROR",
+          checked: true,
+        },
+        { value: "bce",
+          label: "BINARY CROSSENTROPY"
+        },
+        { value: "cce",
+          label: "CATEGORICAL CROSSENTROPY"
+        }
+      ],
+      label: "Loss",
     }
   ];
 
@@ -79,6 +142,10 @@ export class MachineLearningInfoFormComponent extends MachineLearningFormEntity 
     this.showMLconfig = true;
   }
 
+  cancel(): void {
+    this.load();
+  }
+
   // NB: Qui poi occorrerà fare una chiamata per inizializzare
   algorithmMLOptions: SelectOption[] = [
     { value: 'KNN', label: 'K-NN' },
@@ -103,118 +170,7 @@ export class MachineLearningInfoFormComponent extends MachineLearningFormEntity 
     },
   ];
 
-  selectedConfigML = "default";
-
-  configMLChanged(value) {
-    // ***** MOCK *****
-    this.selectedConfigML = value;
-    if (value == "default"){
-        this.paramgMLOptions = [
-        {
-          type: "slider",
-          min : 0,
-          max : 2,
-          default: 1,
-          steps: 0.5,
-          label: "Learning Rate"
-        },
-        {
-          type: "slider",
-          min : 0,
-          max : 10,
-          default: 5,
-          steps: 1,
-          label: "Early Stop"
-        },
-        {
-          type: "radio",
-          choices: [
-          { value: "gradient",
-            label: "GRADIENT",
-            checked: true,
-          },
-          { value: "nan_gradient",
-            label: "NaN GRADIENT"
-          },
-          { value: "stochastic",
-          label: "Stochastic"
-          }
-          ],
-          label: "Solver",
-        },
-        {
-          type: "radio",
-          choices: [
-          { value: "mse",
-            label: "MEAN SQUARED ERROR",
-            checked: true,
-          },
-          { value: "bce",
-            label: "BINARY CROSSENTROPY"
-          },
-          { value: "cce",
-          label: "CATEGORICAL CROSSENTROPY"
-          }
-          ],
-          label: "Loss",
-        }
-      ];
-    }
-    // ***** FINE MOCK *****
-  }
-
-  //CONFIG OPTIONS MOCKATE
-  paramgMLOptions = [
-    {
-      type: "slider",
-      min : 0,
-      max : 1,
-      default: 0.5,
-      steps: 0.1,
-      label: "Learning Rate"
-    },
-    {
-      type: "slider",
-      min : 0,
-      max : 10,
-      default: 5,
-      steps: 1,
-      label: "Early Stop"
-    },
-    {
-      type: "radio",
-      choices: [
-      { value: "gradient",
-        label: "GRADIENT",
-        checked: true,
-      },
-      { value: "nan_gradient",
-        label: "NaN GRADIENT"
-      },
-      { value: "stochastic",
-      label: "Stochastic"
-      }
-      ],
-      label: "Solver",
-    },
-    {
-      type: "radio",
-      choices: [
-      { value: "mse",
-        label: "MEAN SQUARED ERROR",
-        checked: true,
-      },
-      { value: "bce",
-        label: "BINARY CROSSENTROPY"
-      },
-      { value: "cce",
-      label: "CATEGORICAL CROSSENTROPY"
-      }
-      ],
-      label: "Loss",
-    }
-  ];
-  //Fine Config MOCKATE!
+  selectedConfigMLName = "default";
 
   algorithmObserver: PartialObserver<Algorithm> = {
     next: res => {
@@ -259,6 +215,7 @@ export class MachineLearningInfoFormComponent extends MachineLearningFormEntity 
     this.formTitle = this.entitiesService.algorithm.formTitle;
     this.icon = this.entitiesService.algorithm.icon;
     this.loadingStatus = LoadingStatusEnum.Loading;
+    this.setParamMLOptionsDefault();
   }
 
   ngOnInit() {
@@ -268,6 +225,68 @@ export class MachineLearningInfoFormComponent extends MachineLearningFormEntity 
   ngAfterViewInit() {
     this.loadEmpty();
     this.cdr.detectChanges();
+  }
+
+  ngAfterViewChecked(): void {
+    this.initSliderController();
+  }
+
+  configMLChanged(value) {
+    switch (value) {
+      case "aggressive":
+        this.paramMLOptions.filter(el => el.type === 'slider')[0].default = 1.5;
+        this.paramMLOptions.filter(el => el.type === 'slider')[1].default = 2;
+        this.paramMLOptions.filter(el => el.type === 'radio')[0].choices
+          .map(ch => {
+            if (ch.value === "nan_gradient") {
+              ch.checked = true;
+            } else {
+              ch.checked = false;
+            }
+            return ch;
+          });
+        this.paramMLOptions.filter(el => el.type === 'radio')[1].choices
+          .map(ch => {
+            if (ch.value === "mse") {
+              ch.checked = true;
+            } else {
+              ch.checked = false;
+            }
+            return ch;
+          });
+        break;
+      case "passive":
+        this.paramMLOptions.filter(el => el.type === 'slider')[0].default = 0.5;
+        this.paramMLOptions.filter(el => el.type === 'slider')[1].default = 6;
+        this.paramMLOptions.filter(el => el.type === 'radio')[0].choices
+          .map(ch => {
+            if (ch.value === "gradient") {
+              ch.checked = true;
+            } else {
+              ch.checked = false;
+            }
+            return ch;
+          });
+        this.paramMLOptions.filter(el => el.type === 'radio')[1].choices
+          .map(ch => {
+            if (ch.value === "mse") {
+              ch.checked = true;
+            } else {
+              ch.checked = false;
+            }
+            return ch;
+          });
+        break;
+      default:
+        this.setParamMLOptionsDefault();
+
+    }
+    this.selectedConfigMLName = value;
+    this.initSliderController();
+  }
+
+  setParamMLOptionsDefault(): void {
+    this.paramMLOptions = JSON.parse(JSON.stringify(this.paramMLOptionsDefault));
   }
 
   getCustomClass() {
@@ -292,6 +311,17 @@ export class MachineLearningInfoFormComponent extends MachineLearningFormEntity 
     }
   }
 
+  initSliderController() {
+    let idSlider = 0;
+    this.paramMLOptions.filter(el => {
+      if (el.type === "slider") {
+        this.setSliderTooltip(+el.default, +el.max, idSlider);
+        idSlider++;
+      }
+    })
+    this.cdr.detectChanges();
+  }
+
   load() {
     this.loadingStatus = LoadingStatusEnum.Loading;
     this.cdr.detectChanges();
@@ -305,6 +335,17 @@ export class MachineLearningInfoFormComponent extends MachineLearningFormEntity 
     if (this.entity.algorithmFileName && this.entity.algorithmFileName.includes(".py")){
       this.nameOfPyFile = this.entity.algorithmFileName;
       this.selectedMLSource = 'upload';
+
+      const mlCustomConfig: MlAlgorithmsModel = <MlAlgorithmsModel>JSON.parse(<string>JSON.parse(this.entity.baseConfig)?.customConfig);
+      this.paramMLOptions = mlCustomConfig?.algorithmConfig;
+
+      this.configMLOptions.map(cfg => {
+        if (cfg.value === mlCustomConfig.algorithmConfigName) {
+          cfg.checked = true;
+        } else {
+          cfg.checked = false;
+        }
+      })
 
       // Ci può essere un modo più furbo di farlo
       this.sourceMLOptions = [
@@ -320,6 +361,7 @@ export class MachineLearningInfoFormComponent extends MachineLearningFormEntity 
       ];
 
       this.showMLconfig = true;
+      this.initSliderController();
     }
 
     // TO DO: carico configurazione file python (caso: algoritmo scelto dalla select)
@@ -357,7 +399,8 @@ export class MachineLearningInfoFormComponent extends MachineLearningFormEntity 
 
     let p = this.entity;
     const baseConfig = JSON.stringify(p.baseConfig);
-    const baseConfigObject = JSON.parse(baseConfig)[0];
+    let baseConfigObject = undefined;
+    Array.isArray(p.baseConfig) ? baseConfigObject = JSON.parse(baseConfig)[0] : baseConfigObject = JSON.parse(baseConfig);
     p.name = this.form.get('algorithm-name').value;
     p.description = this.form.get('algorithm-description').value;
     p.baseConfig = JSON.stringify(baseConfigObject);
@@ -422,7 +465,7 @@ export class MachineLearningInfoFormComponent extends MachineLearningFormEntity 
    */
     clickChooseLabel(){
       //this.btnChooseIsDisabled = true;
-      const inputChooseFile = document.getElementById('pyName');
+      const inputChooseFile = document.getElementById('mlAlgorithmFileName');
       inputChooseFile.click();
       //setTimeout(() => this.btnChooseIsDisabled = false, 600);
 
@@ -437,8 +480,8 @@ export class MachineLearningInfoFormComponent extends MachineLearningFormEntity 
 
     resetTitleSelected() {
       this.pyToUpload = null;
-      //this.form.controls.pyName.setValue('');
-      //this.form.controls.pyName.updateValueAndValidity();
+      //this.form.controls.mlAlgorithmFileName.setValue('');
+      //this.form.controls.mlAlgorithmFileName.updateValueAndValidity();
       this.nameOfPyFile = "";
       this.cdr.detectChanges();
     }
@@ -448,7 +491,7 @@ export class MachineLearningInfoFormComponent extends MachineLearningFormEntity 
       if(files.length > 0) {
         // Setto file uploaded
         this.pyToUpload = files.item(0);
-        this.form.value['pyName'] = files[0].name;
+        this.form.value['mlAlgorithmFileName'] = files[0].name;
         this.nameOfPyFile = files[0].name;
 
         // Check sintassi file uplodato
@@ -467,7 +510,7 @@ export class MachineLearningInfoFormComponent extends MachineLearningFormEntity 
         }
 
       }else{
-        this.form.value['pyName'] = '';
+        this.form.value['mlAlgorithmFileName'] = '';
       }
       this.cdr.detectChanges();
 
@@ -488,4 +531,30 @@ export class MachineLearningInfoFormComponent extends MachineLearningFormEntity 
 
       return flag_1 && flag_2 && flag_3;
     }
+
+  setSliderAlgValue(value: string, i: number) {
+    this.paramMLOptions[i].default = +value;
+  }
+
+  setRadioAlgValue(value: string, i: number) {
+    this.paramMLOptions[i].choices.map(ch => ch.checked = false);
+    this.paramMLOptions[i].choices.map(ch => {
+      if (ch.value === value) {
+        ch.checked = true;
+      }
+      return ch;
+    })
+  }
+
+  protected readonly HTMLInputElement = HTMLInputElement;
+
+  setSliderTooltip(value: string|number, max: number, idx: number) {
+    const element = document.getElementById('slider-value-' + idx);
+    const sourceElement = document.getElementById('slider-' + idx);
+    if(element && sourceElement) {
+      element.style.visibility = 'visible';
+      element.style.left = ((sourceElement.getBoundingClientRect().width / max) * +value) + 'px';
+      this.paramMLOptions[idx].default = +value;
+    }
+  }
 }

@@ -32,6 +32,7 @@ export class MachineLearningWizardComponent implements OnInit {
   currentForm: AlgorithmFormEntity;
   currentInput: AlgorithmIOField[] = [];
   currentOutput: AlgorithmIOField[] = [];
+  currentCustomConfig: any[] = [];
   currentStepIndex = 0;
 
   finishData: { iconPath: string, type: string, entities: string[] }[] = [];
@@ -74,6 +75,7 @@ export class MachineLearningWizardComponent implements OnInit {
           this.currentAlgorithm = a;
           this.currentInput = JSON.parse(this.currentAlgorithm.baseConfig).input;
           this.currentOutput = JSON.parse(this.currentAlgorithm.baseConfig).output;
+          this.currentCustomConfig = JSON.parse(this.currentAlgorithm.baseConfig).customConfig;
           this.currentAlgorithmSubject.next(this.currentAlgorithm);
         });
 
@@ -164,18 +166,14 @@ export class MachineLearningWizardComponent implements OnInit {
     }
 
     // Salvo configurazioni ML -> occorre capire come passare le config (Error 500: cannot deserialize value of type 'it.acsoftware.hyperiot.algorithm.model.Algorithm')
-    const formML: MlAlgorithmsModel[] = JSON.parse(JSON.stringify(this.currentForm["paramgMLOptions"]));
-    this.currentForm.entity.baseConfig = {
-      input:[],
-      output:[],
-      customConfig: formML
-    };
-    console.log('onSaveClick ML: ', formML);
-
-    //    Formato vecchio corretto
-    //    "{\"input\":["ciao"],\"output\":["ciao output"]}"
-    //    Formato attuale errato
-    //    "[{\"type\":\"slider\",\"min\":0,\"max\":1,\"default\":0.5,\"steps\":0.1,\"label\":\"Learning Rate\"},{\"type\":\"slider\",\"min\":0,\"max\":10,\"default\":5,\"steps\":1,\"label\":\"Early Stop\"},{\"type\":\"radio\",\"choices\":[{\"value\":\"gradient\",\"label\":\"GRADIENT\",\"checked\":true},{\"value\":\"nan_gradient\",\"label\":\"NaN GRADIENT\"},{\"value\":\"stochastic\",\"label\":\"Stochastic\"}],\"label\":\"Solver\"},{\"type\":\"radio\",\"choices\":[{\"value\":\"mse\",\"label\":\"MEAN SQUARED ERROR\",\"checked\":true},{\"value\":\"bce\",\"label\":\"BINARY CROSSENTROPY\"},{\"value\":\"cce\",\"label\":\"CATEGORICAL CROSSENTROPY\"}],\"label\":\"Loss\"}]"
+    const formML: MlAlgorithmsModel = {algorithmConfigName: this.currentForm.selectedConfigMLName , algorithmConfig: this.currentForm["paramMLOptions"]};
+    const baseConfig = [{
+      input: [],
+      output: [],
+      customConfig: JSON.stringify(formML)
+    }];
+    console.log('onSaveClick - BaseConfig', baseConfig);
+    this.currentForm.entity.baseConfig = baseConfig;
 
     this.currentForm.save((ent, isNew) => {
       if (this.currentForm instanceof MachineLearningInfoFormComponent) {
@@ -198,7 +196,9 @@ export class MachineLearningWizardComponent implements OnInit {
   }
 
   showCancel(): boolean {
-    return this.currentForm instanceof InputFieldsFormComponent || this.currentForm instanceof OutputFieldsFormComponent;
+    return this.currentForm instanceof InputFieldsFormComponent ||
+      this.currentForm instanceof OutputFieldsFormComponent ||
+      this.currentForm instanceof MachineLearningInfoFormComponent;
   }
 
   showHintMessage(message: string): void {

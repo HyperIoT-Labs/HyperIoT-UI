@@ -1,4 +1,4 @@
-import { FormGroup, FormBuilder } from '@angular/forms';
+import {FormGroup, FormBuilder, FormControl} from '@angular/forms';
 
 import { Observable } from 'rxjs';
 
@@ -48,7 +48,7 @@ export abstract class MachineLearningFormEntity implements OnInit, AfterViewInit
     protected formBuilder: FormBuilder;
     protected dialog: HytModalService;
     protected entitiesService: EntitiesService;
-	protected algorithmService: AlgorithmService;
+	  protected algorithmService: AlgorithmService;
 
     constructor(
         injector: Injector,
@@ -57,8 +57,13 @@ export abstract class MachineLearningFormEntity implements OnInit, AfterViewInit
         this.formBuilder = injector.get(FormBuilder);
         this.entitiesService = injector.get(EntitiesService);
         this.dialog = injector.get(HytModalService);
-        this.form = this.formBuilder.group({});
-		this.algorithmService = injector.get(AlgorithmService);
+        this.form = this.formBuilder.group(
+          {
+            mlAlgorithmFileName: new FormControl(''),
+            mlAlgorithmConfiguration: new FormControl('')
+          }
+        );
+		    this.algorithmService = injector.get(AlgorithmService);
     }
 
     ngOnInit() {

@@ -1,170 +1,181 @@
 <div id="container-ml-form" class="container">
 
-    <form [formGroup]="form" [ngClass]="{'blurred': loadingStatus !== LoadingStatus.Ready}">
+  <form [formGroup]="form" [ngClass]="{'blurred': loadingStatus !== LoadingStatus.Ready}">
 
-        <div class="form-group row">
-            <div id="fpack-col-name" class="col-12">
-                <hyt-input-text 
-                    name="algorithm-name" i18n-placeholder="@@HYT_name" placeholder="Name" [form]="form"
-                    [injectedErrorMsg]="getError('algorithm-name')"
-                    i18n-hintMessage="@@HYT_hint_algorithm_name"
-                    hintMessage="Enter the algorithm name."
-                    errorPosition="bottom" minlength="3" isRequired="true">
-                </hyt-input-text>
-            </div>
-        </div> <!--END First Row -->
+    <div class="form-group row">
+      <div id="fpack-col-name" class="col-12">
+        <hyt-input-text
+          name="algorithm-name" i18n-placeholder="@@HYT_name" placeholder="Name" [form]="form"
+          [injectedErrorMsg]="getError('algorithm-name')"
+          i18n-hintMessage="@@HYT_hint_algorithm_name"
+          hintMessage="Enter the algorithm name."
+          errorPosition="bottom" minlength="3" isRequired="true">
+        </hyt-input-text>
+      </div>
+    </div> <!--END First Row -->
 
-        <div class="form-group row">
-            <div id="fproj-col-descr" class="col-12">    
-                <hyt-text-area [form]="form"
-                    name="algorithm-description"
-                    [injectedErrorMsg]="getError('algorithm-description')"
-                    i18n-hintMessage="@@HYT_hint_algorithm_description"
-                    hintMessage="Enter the algorithm description."
-                    i18n-placeholder="@@HYT_description"
-                    placeholder="Description">
-                </hyt-text-area>
-            </div>
-        </div> <!--END Second Row -->
+    <div class="form-group row">
+      <div id="fproj-col-descr" class="col-12">
+        <hyt-text-area [form]="form"
+                       name="algorithm-description"
+                       [injectedErrorMsg]="getError('algorithm-description')"
+                       i18n-hintMessage="@@HYT_hint_algorithm_description"
+                       hintMessage="Enter the algorithm description."
+                       i18n-placeholder="@@HYT_description"
+                       placeholder="Description">
+        </hyt-text-area>
+      </div>
+    </div> <!--END Second Row -->
 
-        <div class="form-group row">
-            <div id="fml-col-type" class="col-12">
-              <label class="f-label">Select an option:</label>
-              <div id="container-radio-btn-source" class="radio-options pl-2 pr-2">
-                  <hyt-radio-button [options]="sourceMLOptions" (changeFn)="sourceMLChanged($event)"></hyt-radio-button>
-              </div>
-            </div>
-        </div> <!-- Third Row -->
-
-        <!-- Upload File      -->
-        <div class="form-group row" *ngIf="selectedMLSource == 'upload'" style="margin-top: 30px;
-                                                                                margin-left: 1px;">
-            <form [formGroup]="form" #formReference [ngClass]="{'blurred': loadingStatus !== LoadingStatus.Ready}">
- 
-                    <div id="upload-jar-container">       
-                        <hyt-button 
-                            [color]="'hyt-base'" 
-                            (clickFn)="clickChooseLabel()"
-                            [isDisabled]="false">
-                            <ng-container i18n="@@HYT_algorithm_choose_file">Choose .py file</ng-container>
-                        </hyt-button>
-        
-                        <input 
-                            name="pyName"
-                            id="pyName"
-                            type="file" 
-                            formControlName="pyName"
-                            accept=".py"
-                            (change)="handleFileInput($event.target.files)"
-                            style="margin-left: 5px;"
-                            hidden="true">
-        
-                        <span id="container-title-selected" style="margin:0px 10px">{{nameOfPyFile}}</span>
-                        <span id="container-title-selected" style="margin:0px 10px; color: red" *ngIf="errMsg != ''">{{errMsg}}</span>
-
-                        <div class="reset-button" 
-                            *ngIf="pyToUpload" 
-                            id="reset-title-selected"
-                            (click)="resetTitleSelected()"
-                        >X</div>
-        
-                    </div>
-        
-            </form>
+    <div class="form-group row">
+      <div id="fml-col-type-script" class="col-12">
+        <label class="f-label">Select an option:</label>
+        <div id="container-radio-btn-source" class="radio-options pl-2 pr-2">
+          <hyt-radio-button [options]="sourceMLOptions" (changeFn)="sourceMLChanged($event)"></hyt-radio-button>
         </div>
-        <!-- END Upload File -->
+      </div>
+    </div> <!-- Third Row -->
 
-        <!-- Select Script -->
-        <div class="form-group row" *ngIf="selectedMLSource == 'choose'">
-            <div id="fml-col-select" class="col-6">
-                <hyt-select [form]="form" i18n-label="@@HYT_select_sort_type" label="Select an algorithm" formControlName="sort" name="sort"
+    <!-- Upload File      -->
+    <div class="form-group row" *ngIf="selectedMLSource == 'upload'" style="margin-top: 30px;
+                                                                                margin-left: 1px;">
+      <form [formGroup]="form" #formReference [ngClass]="{'blurred': loadingStatus !== LoadingStatus.Ready}">
+
+        <div id="upload-jar-container">
+          <hyt-button
+            [color]="'hyt-base'"
+            (clickFn)="clickChooseLabel()"
+            [isDisabled]="false">
+            <ng-container i18n="@@HYT_algorithm_choose_file">Choose .py file</ng-container>
+          </hyt-button>
+
+          <input
+            #mlAlgorithmFileName
+            name="mlAlgorithmFileName"
+            id="mlAlgorithmFileName"
+            type="file"
+            formControlName="mlAlgorithmFileName"
+            accept=".py"
+            (change)="handleFileInput(mlAlgorithmFileName.files)"
+            style="margin-left: 5px;"
+            hidden="true">
+
+          <span id="container-title-selected" style="margin:0px 10px">{{nameOfPyFile}}</span>
+          <span id="container-title-selected-error" style="margin:0px 10px; color: red"
+                *ngIf="errMsg != ''">{{errMsg}}</span>
+
+          <div class="reset-button"
+               *ngIf="pyToUpload"
+               id="reset-title-selected"
+               (click)="resetTitleSelected()"
+          >X
+          </div>
+
+        </div>
+
+      </form>
+    </div>
+    <!-- END Upload File -->
+
+    <!-- Select Script -->
+    <div class="form-group row" *ngIf="selectedMLSource == 'choose'">
+      <div id="fml-col-select" class="col-6">
+        <hyt-select [form]="form" i18n-label="@@HYT_select_sort_type" label="Select an algorithm" formControlName="sort"
+                    name="sort"
                     (changeFn)="changeOldScript($event)" [options]="algorithmMLOptions">
-                </hyt-select>
+        </hyt-select>
+      </div>
+
+      <div class="fml-col-select" class="col-6">
+        <label class="f-label">Filter for:</label>
+        <div class="container-radio-btn-source radio-options pl-2 pr-2" style="border:none !important">
+          <hyt-radio-button [options]="scriptTypes" (changeFn)="scriptTypeChanged($event)"></hyt-radio-button>
+        </div>
+      </div>
+
+    </div> <!-- Fourth Row -->
+
+    <div class="form-group row" *ngIf="showMLconfig">
+      <div id="fml-col-type" class="col-12">
+        <label class="f-label">Algorithm Configuration </label>
+        <div class="container-radio-btn-source radio-options pl-2 pr-2">
+          <hyt-radio-button formControlName="mlAlgorithmConfiguration" [options]="configMLOptions" (changeFn)="configMLChanged($event)"></hyt-radio-button>
+        </div>
+      </div>
+    </div> <!-- Fifth Row -->
+
+    <div class="form-group row" *ngIf="showMLconfig">
+      <div class="col-12 pt-30">
+        <label class="f-label-h1">Select Algorithm Parameters</label>
+        <!-- TODO: parametric box -->
+        <div *ngFor="let param of paramMLOptions; let i = index">
+
+          <!-- SLIDER -->
+          <div *ngIf="param.type == 'slider'">
+            <label class="f-label">{{ param.label }} </label>
+            <div class="slider-container">
+              <label class="param-min">{{param.min}}</label>
+              <label [id]="'slider-value-' + i" class="param-default">{{param.default}}</label>
+              <label class="param-max">{{param.max}}</label>
             </div>
+            <input #sliderElement (change)="setSliderAlgValue(sliderElement.value, i)" [id]="'slider-' + i"
+                   [name]="'slider-' + i" (input)="setSliderTooltip(sliderElement.value, param.max, i)"
+                   class="slider" type="range" min="{{param.min}}" max="{{param.max}}"
+                   step="{{param.steps}}" [disabled]="selectedConfigMLName != 'custom'" style="width:100% !important" value="{{param.default}}">
+          </div>
 
-            <div class="fml-col-select" class="col-6">
-                <label class="f-label">Filter for:</label>
-                <div id="container-radio-btn-source" class="radio-options pl-2 pr-2" style="border:none !important">
-                    <hyt-radio-button [options]="scriptTypes" (changeFn)="scriptTypeChanged($event)"></hyt-radio-button>
-                </div>
+          <!-- RADIO -->
+          <div *ngIf="param.type == 'radio'" class="fml-col-type">
+            <label class="f-label">{{ param.label }} </label>
+            <div class="container-radio-btn-source radio-options pl-2 pr-2">
+              <hyt-radio-button (changeFn)="setRadioAlgValue($event, i)" [id]="'radio-' + i" [name]="'radio-' + i"
+                                [options]="param.choices"
+                                [ngClass]="selectedConfigMLName != 'custom' ? 'disabled' : ''"></hyt-radio-button>
             </div>
+          </div>
 
-        </div> <!-- Fourth Row -->
+        </div>
+      </div>
+    </div> <!-- Last Row -->
 
-        <div class="form-group row" *ngIf="showMLconfig">
-            <div id="fml-col-type" class="col-12">
-              <label class="f-label">Algorithm Configuration </label>
-              <div id="container-radio-btn-source" class="radio-options pl-2 pr-2">
-                  <hyt-radio-button [options]="configMLOptions" (changeFn)="configMLChanged($event)"></hyt-radio-button>
-              </div>
-            </div>
-        </div> <!-- Fifth Row -->
+  </form>
 
-        <div class="form-group row" *ngIf="showMLconfig">
-            <div class="col-12 pt-30">
-                <label class="f-label-h1">Select Algorithm Parameters</label>
-              <!-- TO DO: box con i parametri -->
-              <div *ngFor="let param of paramgMLOptions; let i = index">
+  <!--
+      TODO: This HTML block is repeated
+      across all 'entity' components,
+      consider making a component out of it
+  -->
 
-                    <!-- SLIDER -->
-                    <div *ngIf="param.type == 'slider'">
-                        <label class="f-label">{{ param.label }} </label>
-                        <div class="slidercontainer">
-                            <label class="param-min">{{param.min}}</label>
-                            <input class="slider" type="range" min="{{param.min}}" max="{{param.max}}" value="{{param.default}}" step="{{param.steps}}" id="myRange" [disabled]="selectedConfigML != 'custom'" style="width:95% !important">
-                            <label class="param-max">{{param.max}}</label>
-                        </div>
-                    </div>
+  <div #overlayHeight *ngIf="loadingStatus !== LoadingStatus.Ready"
+       class="overlay d-flex flex-column align-items-center justify-content-center">
 
-                    <!-- RADIO -->
-                    <div *ngIf="param.type == 'radio'" class="fml-col-type">
-                        <label class="f-label">{{ param.label }} </label>
-                        <div id="container-radio-btn-source" class="radio-options pl-2 pr-2">
-                            <hyt-radio-button [options]="param.choices" [ngClass]="selectedConfigML != 'custom' ? 'disabled' : ''"></hyt-radio-button>
-                        </div>        
-                    </div>
-        
-                </div>
-            </div>
-        </div> <!-- Last Row -->
+    <div
+      *ngIf="loadingStatus === LoadingStatus.Loading"
+      [ngClass]="getCustomClass()"
+    >
 
-    </form>
-
-    <!-- 
-        TODO: This HTML block is repeated
-        across all 'entity' components,
-        consider making a component out of it 
-    -->
-
-    <div #overlayHeight *ngIf="loadingStatus !== LoadingStatus.Ready" class="overlay d-flex flex-column align-items-center justify-content-center">
-        
-        <div 
-            *ngIf="loadingStatus === LoadingStatus.Loading" 
-            [ngClass]="getCustomClass()"
-        >
-
-            <h4 i18n="@@HYT_loading_data">Loading data...</h4>
-
-        </div> 
-        
-        <div *ngIf="loadingStatus === LoadingStatus.Error" class="error-overlay d-flex flex-column justify-content-center">
-            <h4 i18n="@@HYT_error_occurred">An unexpected error has occurred</h4>
-
-            <hyt-button 
-                [color]="'hyt-base-default-white'" 
-                (click)="loadingStatus = LoadingStatus.Ready"
-            >
-                <span i18n="@@HYT_close">Close</span> <span class="icon-hyt_cancelC"></span> 
-            </hyt-button>
-        </div> 
-
-        <h4 *ngIf="loadingStatus === LoadingStatus.Saving" i18n="@@HYT_saving_data">Saving data...</h4>
-
-        <mat-progress-bar 
-            *ngIf="loadingStatus === LoadingStatus.Loading || loadingStatus === LoadingStatus.Saving"
-            mode="indeterminate"
-        ></mat-progress-bar> 
+      <h4 i18n="@@HYT_loading_data">Loading data...</h4>
 
     </div>
+
+    <div *ngIf="loadingStatus === LoadingStatus.Error" class="error-overlay d-flex flex-column justify-content-center">
+      <h4 i18n="@@HYT_error_occurred">An unexpected error has occurred</h4>
+
+      <hyt-button
+        [color]="'hyt-base-default-white'"
+        (click)="loadingStatus = LoadingStatus.Ready"
+      >
+        <span i18n="@@HYT_close">Close</span> <span class="icon-hyt_cancelC"></span>
+      </hyt-button>
+    </div>
+
+    <h4 *ngIf="loadingStatus === LoadingStatus.Saving" i18n="@@HYT_saving_data">Saving data...</h4>
+
+    <mat-progress-bar
+      *ngIf="loadingStatus === LoadingStatus.Loading || loadingStatus === LoadingStatus.Saving"
+      mode="indeterminate"
+    ></mat-progress-bar>
+
+  </div>
 
 </div>

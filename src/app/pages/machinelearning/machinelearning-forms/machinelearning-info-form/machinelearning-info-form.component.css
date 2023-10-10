@@ -1,0 +1,176 @@
+#container-ml-form.container {
+  position: relative;
+  padding-top: 20px;
+}
+#container-ml-form.container p.subtitle-section {
+  font-size: 0.9em;
+  font-style: italic;
+  line-height: 25px;
+  margin-bottom: 30px;
+}
+#container-ml-form form.blurred {
+  -webkit-filter: blur(1px);
+  -moz-filter: blur(1px);
+  -ms-filter: blur(1px);
+  -o-filter: blur(1px);
+  filter: blur(1px);
+}
+#container-ml-form form .form-group.row #fml-col-type,
+#container-ml-form form .form-group.row #fml-col-select,
+#container-ml-form form .form-group.row #fml-col-format,
+#container-ml-form form .form-group.row #fml-col-serial,
+#container-ml-form form .form-group.row #fml-col-tfield,
+#container-ml-form form .form-group.row #fml-col-tformat,
+#container-ml-form form .form-group.row #fml-col-ttype,
+#container-ml-form form .form-group.row #fml-col-mqtt-url,
+#container-ml-form form .form-group.row #fml-col-mqtt-topic {
+  padding-top: 15px;
+}
+#container-ml-form form .form-group.row.row .pt-30 {
+  padding-top: 30px;
+}
+#container-ml-form form .form-group.row hyt-input-text mat-form-field {
+  font-family: "Exo";
+}
+#container-ml-form form .form-group.row hyt-select mat-form-field {
+  width: 100%;
+}
+#container-ml-form form .form-group.row hyt-select mat-form-field mat-select {
+  font-family: "Exo";
+}
+#container-ml-form form .form-group.row hyt-radio-button mat-radio-group mat-radio-button.mat-radio-button {
+  font-family: "Exo";
+}
+#container-ml-form form .form-group.row hyt-radio-button mat-radio-group mat-radio-button.mat-radio-button .mat-radio-label-content {
+  line-height: 27px;
+}
+#container-ml-form form .form-group label.f-label {
+  font-size: 12px;
+  color: grey;
+  font-weight: 400;
+}
+#container-ml-form form .form-group .radio-options {
+  border: lightgray solid 1px;
+  border-radius: 4px;
+  padding-top: 9px;
+}
+#container-ml-form .overlay {
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.5);
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+}
+#container-ml-form .overlay .loading-logo {
+  position: relative;
+  text-align: center;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+#container-ml-form .overlay .loading-logo.display-logo {
+  height: 63%;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-image: url("/assets/images/hyperiot_logo_single_char_animated.svg");
+}
+#container-ml-form .overlay .loading-logo.display-logo.big-bg {
+  background-size: 220px;
+}
+#container-ml-form .overlay .loading-logo.display-logo.medium-bg {
+  background-size: 170px;
+}
+#container-ml-form .overlay .loading-logo.display-logo.small-bg {
+  background-size: 125px;
+}
+#container-ml-form .overlay .loading-logo.display-logo.x-small-bg {
+  background-size: 90px;
+}
+#container-ml-form .overlay .loading-logo h4 {
+  text-align: center;
+}
+#container-ml-form .overlay mat-progress-bar {
+  max-width: 200px;
+  margin: 8px;
+}
+#container-ml-form .overlay .error-overlay hyt-button {
+  margin: 20px auto 0px auto;
+}
+#container-ml-form .overlay .error-overlay hyt-button span.icon-hyt_cancelC {
+  font-size: 1.3em;
+  vertical-align: sub;
+  margin-left: 5px;
+}
+
+mat-option.mat-option {
+  font-family: "Exo";
+}
+
+.slider {
+  float: left;
+  margin-right: 10px;
+}
+
+.param-min {
+  float: left;
+  margin-right: 10px;
+}
+
+.param-min, .param-max {
+  font-size: 15px;
+  color: grey;
+  font-weight: 400;
+}
+
+.f-label-h1 {
+  font-size: 16px;
+  color: grey;
+  font-weight: 400;
+}
+
+.reset-button {
+  width: 25px;
+  height: 25px;
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  float: right;
+  margin-top: 10px;
+  position: relative;
+  cursor: pointer;
+}
+
+.slider-container {
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+}
+.slider-container label {
+  text-align: center;
+  min-width: 20px;
+}
+.slider-container .param-default {
+  position: absolute;
+  background-image: linear-gradient(#265ab0, #5e87ed, #bff0fb);
+  color: white;
+  padding: 3px;
+  border-radius: 10% 10% 80% 80%;
+  border: 1px solid #2642b0;
+  min-width: 30px;
+  min-height: 30px;
+  font-size: 0.9em;
+  margin-bottom: 0.5em;
+  box-shadow: 1px 1px 5px #0b5594;
+  margin-top: -5px;
+}
+
+input.slider {
+  accent-color: #5E87ED;
+}
+
+/*# sourceMappingURL=machinelearning-info-form.component.css.map */

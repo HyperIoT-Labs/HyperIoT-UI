@@ -29,6 +29,7 @@ export abstract class AlgorithmFormEntity implements OnInit, AfterViewInit {
     formTitle = 'Algorithm Form Entity';
     private originalValue = '{}';
     protected validationError = [];
+    selectedConfigMLName: string = 'default';
 
     // the following 5 fields should implemented by a specific interface
     isProjectEntity = true;
