@@ -254,7 +254,7 @@ export class HytSelectComponent
   }
 
 
-  onSearch(searchValue) {
+  onSearch() {
     // search filter is using change detection (may affect performance).
     // Implement this function to update filtered options when the user update searchValue instead.
   }
