@@ -1,4 +1,13 @@
-import { Component, Input, OnChanges, OnInit, ViewEncapsulation,ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  ViewEncapsulation,
+  ChangeDetectorRef,
+  Output,
+  EventEmitter
+} from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { HytModalService, SelectOption } from 'components';
 import { Option } from 'components';
@@ -37,6 +46,8 @@ export class RuleDefinitionComponent {
   @Input() ruleType: 'event' | 'enrichment' = 'event';
 
   @Input() currentPacket: HPacket;
+
+  @Output() setDirty: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   allPackets: HPacket[] = null;
 
@@ -319,6 +330,16 @@ export class RuleDefinitionComponent {
   }
 
   isDirty(): boolean {
+    const dirty = JSON.parse(this.getJsonForms());
+    Object.entries(dirty).forEach(([key, value]) => {
+      if (dirty[key] !== "") {
+        this.updating = true;
+        this.setDirty.emit(true);
+      } else {
+        this.updating = false;
+        this.setDirty.emit(true);
+      }
+    });
     return this.getJsonForms() === '{}' || this.updating
       ? false
       : this.getJsonForms() !== this.originalFormsValues;

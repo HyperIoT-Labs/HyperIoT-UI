@@ -23,7 +23,7 @@ import { DashboardConfigService } from '../dashboard-config.service';
 import { WidgetSettingsDialogComponent } from '../widget-settings-dialog/widget-settings-dialog.component';
 import { Subject, Observable, Subscription } from 'rxjs';
 import { takeUntil, map } from 'rxjs/operators';
-import {HytModalService, HytTopologyService} from 'components';
+import { ConfirmDialogService, HytModalService, HytTopologyService } from 'components';
 import {ServiceType} from '../../service/model/service-type';
 import { WidgetFullscreenDialogComponent } from '../widget-fullscreen-dialog/widget-fullscreen-dialog.component';
 import { WidgetAction, WidgetConfig } from '../../base/base-widget/model/widget.model';
@@ -143,7 +143,8 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private hytModalService: HytModalService,
     private hytTopologyService: HytTopologyService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private confirmDialogService: ConfirmDialogService,
   ) {
     this.eventNotificationIsOn = true;
     this.configService.eventNotificationState.subscribe(res => {
@@ -182,7 +183,7 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
             this.topologyResTimeChange.emit({timeMs: remoteTimestamp});
             if (this.eventNotificationIsOn && packet.id === 0 && (packet.name.endsWith(this.eventPacketSuffix) || packet.name.endsWith(this.alarmPacketSuffix))) {
               // show toast if packet is a event
-              const event = JSON.parse(packet.fields.map.event.value.string).data;
+              const event = JSON.parse(packet.fields.event.value.string).data;
               const tag = event.tags[0]; // retrieve only first tag
               let toastBackgroundColor = this.DEFAULT_TOAST_BACKGROUND_COLOUR;
               let toastImage = 'info';
@@ -256,7 +257,7 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
       gridType: GridType.Fixed,
       setGridSize: true,
       compactType: CompactType.CompactUp,
-      displayGrid: DisplayGrid.OnDragAndResize,
+      displayGrid: DisplayGrid.None,
       disableWindowResize: true,
       disableAutoPositionOnConflict: false,
       scrollToNewItems: true,
@@ -266,12 +267,22 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
       keepFixedHeightInMobile: true,
       keepFixedWidthInMobile: false,
       minCols: 1, maxCols: 10, maxCellsize: 280,
+      minItemRows: 2,
       minRows: 1,
       margin: 6,
       draggable: {
         enabled: this.dragEnabled,
         dropOverItems: true,
-        dragHandleClass: 'drag-handle',
+        dragHandleClass: 'toolbar-title',
+        start: (item, itemComponent) => {
+          // adding class to set specific cursor and to prevent tooltip to show during drag
+          const dragElement = itemComponent.el?.getElementsByClassName('toolbar-title')[0] as HTMLElement;
+          dragElement?.classList?.add('dragging');
+        },
+        stop:(item, itemComponent) => {
+          const dragElement = itemComponent.el?.getElementsByClassName('toolbar-title')[0] as HTMLElement;
+          dragElement?.classList?.remove('dragging');
+        },
         ignoreContent: true
       },
       swap: false,
@@ -279,7 +290,7 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
       disableScrollVertical: true,
       pushItems: true,
       resizable: {
-        enabled: false
+        enabled: true,
       }
     };
 
@@ -373,12 +384,32 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
     switch (data.action) {
       case 'toolbar:close':
         if (!this.removingWidget) {
-          this.removingWidget = true;
-          // TODO: should request action confim
-          this.removeItem(data.widget, () => {
-            this.widgetLayoutEvent.emit();
-            this.removingWidget = false;
-          });
+          const removeWidget = () => {
+            this.removingWidget = true;
+            this.removeItem(data.widget, () => {
+              this.widgetLayoutEvent.emit();
+              this.removingWidget = false;
+            });
+          }
+
+          if (JSON.parse(localStorage.getItem('confirm-delete-widget-dismissed-' + this.dashboardValue.id))) {
+            removeWidget();
+          } else {
+            const confirmDialog = this.confirmDialogService.open({
+              text: $localize`:@@HYT_widget_delete_confirm:Attention, the widget and its configuration will be permanently deleted. Proceed?`,
+              dismissable: $localize`:@@HYT_widget_delete_confirm_dismiss:Do not ask for confirmation for this dashboard anymore`,
+            });
+            confirmDialog.afterClosed().subscribe(res => {
+              if (res) {
+                if (res.dismissed) {
+                  localStorage.setItem('confirm-delete-widget-dismissed-' + this.dashboardValue.id, JSON.stringify(true));
+                }
+                if (res.result === 'accept') {
+                  removeWidget();
+                }
+              }
+            });
+          }
         }
         break;
       case 'toolbar:settings':

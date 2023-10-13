@@ -421,7 +421,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
       this.pageStatus = PageStatus.Standard;
     };
     const errorHandler = error => {
-      this.pageStatus = PageStatus.New;
+      this.pageStatus = PageStatus.Error;
     };
     if (this.showAreas) {
       this.dashboardConfigService.getOfflineDashboardFromArea(this.areaId)
@@ -436,7 +436,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   private getRealTimeDashboard(id: number) {
     const errorHandler = error => {
       this.logger.error(error);
-      this.pageStatus = PageStatus.New;
+      this.pageStatus = PageStatus.Error;
     };
     const responseHandler = (dashboardRes: Dashboard[]) => {
       try {

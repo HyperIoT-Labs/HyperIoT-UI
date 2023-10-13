@@ -48,8 +48,8 @@ export class AlgorithmTableComponent extends BaseTableComponent implements After
       !(
         this.widget.config != null &&
         this.widget.config.hProjectAlgorithmId != null &&
-        this.widget.config.outputFields != null &&
-        this.widget.config.outputFields.length > 0
+        this.widget.config.packetFields != null &&
+        Object.keys(this.widget.config.packetFields).length > 0
       )
     ) {
       this.isConfigured = false;
@@ -59,10 +59,17 @@ export class AlgorithmTableComponent extends BaseTableComponent implements After
     this.isConfigured = true;
 
     // Set header
-    const outputFields: string[] = this.widget.config.outputFields;
-    if (outputFields.length > 0) {
-      this.tableHeaders = outputFields.map(outputField => ({ value: outputField }));
-    }
+    const fieldIds = Object.keys(this.widget.config?.packetFields) || [];
+    this.tableHeaders = fieldIds.map(hPacketFieldId => ({
+      value: this.widget.config.packetFields[hPacketFieldId],
+      label: this.widget.config.fieldAliases[hPacketFieldId] || this.widget.config.packetFields[hPacketFieldId],
+      type: this.widget.config.fieldTypes[hPacketFieldId],
+    }));
+    this.tableHeaders.push({
+      value: 'timestamp',
+      label: this.widget.config.timestampFieldName,
+      type: 'DATE'
+    });
 
     // set data source
     this.setDatasource();
@@ -103,6 +110,7 @@ export class AlgorithmTableComponent extends BaseTableComponent implements After
   }
 
   getAlgorithmData() {
+    this.tableChild.resetTable();
     if (this.dataRequest) {
       this.dataRequest.unsubscribe();
     }
@@ -112,9 +120,9 @@ export class AlgorithmTableComponent extends BaseTableComponent implements After
           const pageData = [];
           const rowKey = Object.keys(res.rows)[0];  // take only first value
           const value = res.rows[rowKey].value;
+          this.computePacketData([value]);
           const millis = +value.timestamp * 1000;
           value.timestamp = moment(millis).format('L') + ' ' + moment(millis).format('LTS');
-          this.tableHeaders = Object.keys(value).map(k => ({ value: k }));
           pageData.push(value);
           this.tableSource.next(pageData);
         } else {

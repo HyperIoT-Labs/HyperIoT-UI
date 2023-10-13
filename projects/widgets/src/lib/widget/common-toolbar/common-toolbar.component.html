@@ -1,11 +1,13 @@
 <div class="toolbar-header" *ngIf="toolbarIsVisible">
-  <div
-    class="toolbar-title"
-    [matTooltip]="widgetName"
-    matTooltipPosition="above"
-    matTooltipClass="hyt-header-tooltip"
-  >
-    {{widgetName}}
+  <div class="toolbar-title">
+    <!-- tooltip.hide on mouse down to hide the tooltip when user drags the widget -->
+    <span 
+      #tooltip="matTooltip"
+      [matTooltip]="widgetName"
+      matTooltipPosition="above"
+      matTooltipClass="hyt-header-tooltip"
+      (mousedown)="tooltip.hide()"
+    >{{widgetName}}</span>
   </div>
   <div class="toolbar-button">
     <button *ngIf="config.showPlay" (click)="onPlayPause()"
@@ -21,27 +23,23 @@
       <span *ngIf="!showTable" class="hyt-icon icon-hyt_tableBig"></span>
       <span *ngIf="showTable" class="hyt-icon icon-hyt_statistics"></span>
     </button>
-    <button *ngIf="config.showSettings" i18n-title="@@HYT_toolbar_settings" title="Settings"
-      (click)="onSettings()">
-      <!-- <img src="assets/widgets/images/outline-settings-24px.svg"> -->
-      <span class="hyt-icon icon-hyt_setting"></span>
-    </button>
     <button *ngIf="config.showRefresh" i18n-title="@@HYT_toolbar_refresh" title="Refresh"
       (click)="onRefresh()">
       <!-- <img src="assets/widgets/images/outline-refresh-24px.svg"> -->
       <span class="hyt-icon icon-hyt_statistics"></span>
     </button>
+    <button *ngIf="!config.hideFullScreen" class="toolbar-button drag-handle" i18n-title="@@HYT_toolbar_full_screen" title="Full Screen" (click)="onFullScreen()">
+      <span class="hyt-icon icon-hyt_plusX"></span>
+    </button>
+    <button *ngIf="config.showSettings" i18n-title="@@HYT_toolbar_settings" title="Settings"
+      (click)="onSettings()">
+      <!-- <img src="assets/widgets/images/outline-settings-24px.svg"> -->
+      <span class="hyt-icon icon-hyt_setting"></span>
+    </button>
     <button *ngIf="config.showClose" i18n-title="@@HYT_toolbar_close" title="Close"
       (click)="onClose()">
       <!-- <img src="assets/widgets/images/outline-close-24px.svg"> -->
       <span class="hyt-icon icon-hyt_cancel"></span>
-    </button>
-    <button *ngIf="!config.hideFullScreen" class="toolbar-button drag-handle" i18n-title="@@HYT_toolbar_full_screen" title="Full Screen" (click)="onFullScreen()">
-      <span class="hyt-icon icon-hyt_plusX"></span>
-    </button>
-    <button class="toolbar-button drag-handle" i18n-title="@@HYT_toolbar_move" title="Move" (click)="onDrag()">
-      <!-- <img src="assets/widgets/images/baseline-drag_handle-24px.svg"> -->
-      <span class="hyt-icon icon-hyt_HamOpen"></span>
     </button>
   </div>
 </div>

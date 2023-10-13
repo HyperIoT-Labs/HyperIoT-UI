@@ -1586,10 +1586,6 @@
         <source>File type must be <x id="PH" /></source>
         <target>Il file deve essere di tipo <x id="PH" /></target>
       </trans-unit>
-      <trans-unit id="HYT_download_pwa" datatype="html">
-        <source>Download PWA <x id="START_TAG_BUTTON" />OK<x id="CLOSE_TAG_BUTTON" /><x id="START_TAG_BUTTON_1" />NO<x id="CLOSE_TAG_BUTTON" /></source>
-        <target>Scarica PWA <x id="START_TAG_BUTTON" />OK<x id="CLOSE_TAG_BUTTON" /><x id="START_TAG_BUTTON_1" />NO<x id="CLOSE_TAG_BUTTON" /></target>
-      </trans-unit>
       <trans-unit id="HYT_dashboard" datatype="html">
         <source>Dashboard</source>
         <target>Dashboard</target>
@@ -1983,6 +1979,18 @@
       <trans-unit id="HYT_source_count" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{ count }} Source"/></source>
         <target><x id="INTERPOLATION" equiv-text="{{ count }} Source"/></target>
+      </trans-unit>
+      <trans-unit id="HYT_widget_delete_confirm" datatype="html">
+        <source>Attention, the widget and its configuration will be permanently deleted. Proceed?</source>
+        <target>Attenzione, il widget e la sua configurazione saranno eliminati definitivamente. Continuare?</target>
+      </trans-unit>
+      <trans-unit id="HYT_widget_delete_confirm_dismiss" datatype="html">
+        <source>Do not ask for confirmation for this dashboard anymore</source>
+        <target>Non richiedere più conferma per questa dashboard</target>
+      </trans-unit>
+      <trans-unit id="HYT_ok" datatype="html">
+        <source>OK</source>
+        <target>OK</target>
       </trans-unit>
     </body>
   </file>

@@ -95,8 +95,17 @@ export * from './lib/hyt-models/hyt-loadStatus';
 export * from './lib/hyt-models/hyt-loadStatus';
 export * from './lib/hyt-service/unit-conversion.service';
 
-export { ConfirmDialogService, ConfirmDialogResult } from './lib/hyt-dialog/confirm-dialog/confirm-dialog.service';
-export { DynamicDialogService, DynamicDialogResult } from './lib/hyt-dialog/dynamic-dialog/dynamic-dialog.service';
+export { DialogService } from './lib/hyt-dialog/dialog.service';
+export { DialogConfig, DialogLayout } from './lib/hyt-dialog/dialog.models';
+export { DIALOG_DATA } from './lib/hyt-dialog/dialog-tokens';
+export { DialogRef } from './lib/hyt-dialog/dialog-ref';
+export * from './lib/hyt-dialog/dialog-directives';
+
+export { ConfirmDialogService } from './lib/hyt-dialog/confirm-dialog/confirm-dialog.service';
+export { ConfirmDialogConfig, ConfirmDialogResult } from './lib/hyt-dialog/confirm-dialog/confirm-dialog.model';
+
+export { InfoDialogService } from './lib/hyt-dialog/info-dialog/info-dialog.service';
+export { InfoDialogConfig, InfoDialogResult } from './lib/hyt-dialog/info-dialog/info-dialog.model';
 
 export { CronEditorComponent } from './lib/cron-editor/cron-editor.component';
 export { CronOptions } from './lib/cron-editor/CronOptions';

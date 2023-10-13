@@ -1,0 +1,16 @@
+<div hyt-dialog>
+    <div *ngIf="data?.header" hyt-dialog-header>
+        <span>{{ data.header }}</span>
+    </div>
+    <div hyt-dialog-content>
+        <span>
+            {{ data.text }}
+        </span>
+    </div>
+    <div hyt-dialog-footer>
+        <hyt-button [color]="'hyt-base-white'" (clickFn)="close()">
+            <ng-container *ngIf="data.closeButtonLabel">{{ data.closeButtonLabel }}</ng-container>
+            <ng-container *ngIf="!data.closeButtonLabel" i18n="@@HYT_ok">OK</ng-container>
+        </hyt-button>
+    </div>
+</div>
