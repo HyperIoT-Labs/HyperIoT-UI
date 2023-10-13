@@ -3,8 +3,9 @@ import { Router } from '@angular/router';
 import { PageStatus } from './models/pageStatus';
 import { Algorithm, AlgorithmsService } from 'core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { SelectOption } from 'components';
+import { HytModalService, SelectOption } from 'components';
 import { AlgorithmService } from 'src/app/services/algorithms/algorithm.service';
+import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
 
 @Component({
   selector: 'hyt-algorithms',
@@ -39,6 +40,7 @@ export class AlgorithmsComponent implements OnInit {
     private router: Router,
     private algorithmsService: AlgorithmsService,
     private fb: FormBuilder,
+    private dialog: HytModalService,
     private algorithmService: AlgorithmService
   ) { }
 
@@ -178,8 +180,23 @@ export class AlgorithmsComponent implements OnInit {
     this.router.navigate(['/algorithm-wizard']);
   }
 
-  refreshViewOnDelete(event) {
-    this.algorithmService.deleteAlgorithm(event.id);
+  openDeleteDialog(alg : Algorithm) {
+
+    const dialogRef = this.dialog.open(DeleteConfirmDialogComponent, {
+        data: { title: 'Are you sure you want to delete the algorithm?', message: 'This operation cannot be undone.' }
+      }
+    );
+
+    dialogRef.onClosed.subscribe(
+      (result) => {
+        if ( result === 'delete') {
+          this.algorithmService.deleteAlgorithm(alg.id);
+        }
+      },
+      (err) => {
+        console.log('Errore nell\' AFTER CLOSED del DIALOG di MATERIAL \n', err);
+      }
+    );
   }
 
   algorithmsInLoading(algorithmId: number) {

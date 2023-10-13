@@ -394,10 +394,10 @@ export class ProjectsComponent implements OnInit {
         icon: "warnT_Negative",
         label: `<strong>${p.deviceCount}</strong> Sources`
       },
-      {
-        icon: "warnT_Negative",
-        label: `Shared with <strong>Not impl.</strong>`
-      },
+      // {
+      //   icon: "warnT_Negative",
+      //   label: `Shared with <strong>Not impl.</strong>`
+      // },
     ];
   }
 }

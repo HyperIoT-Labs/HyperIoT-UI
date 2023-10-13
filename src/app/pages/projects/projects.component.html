@@ -66,12 +66,13 @@
                     (keyup)="onChangeInputSearch($event)"
                   ></hyt-input-text>
                 </div>
-                <hyt-filter-button
+                <div class="col-md-4"></div>
+                <!-- <hyt-filter-button
                   [options]="filterProjectType"
                   label="Project Type:"
                   formControlName="projectType"
                   class="col-12 col-md-4"
-                ></hyt-filter-button>
+                ></hyt-filter-button> -->
                 <hyt-filter-button
                   [options]="filterSortType"
                   label="Sort by:"
@@ -83,7 +84,7 @@
             </div>
           </div>
 
-          <div id="projects-counter" class="col-12">
+          <div id="projects-counter" class="col-12 mt-3 mt-md-0">
             <span>Showing {{hProjectsFiltered.length}} projects of {{hProjects.length}}</span>
           </div>
 
@@ -95,17 +96,19 @@
             <span i18n="@@HYT_no_project_found">No project that matches the search found...</span>
           </div>
 
-          <div class="hyt-card-container">
-            <hyt-detailed-card 
-              *ngFor="let p of hProjectsFiltered"
-              [title]="p.name"
-              [description]="p.description"
-              btnLabel="view projects"
-              [valRouterLink]="p.id"
-              [details]="generateDetails(p)"
-              [paramEmittedOnClick]="p"
-              (deleteClick)="openDeleteDialog($event)"
-              ></hyt-detailed-card>
+          <div class="hyt-card-wrapper">
+            <div class="hyt-card-container">
+              <hyt-detailed-card 
+                *ngFor="let p of hProjectsFiltered"
+                [title]="p.name"
+                [description]="p.description"
+                btnLabel="view projects"
+                [valRouterLink]="p.id"
+                [details]="generateDetails(p)"
+                [paramEmittedOnClick]="p"
+                (deleteClick)="openDeleteDialog($event)"
+                ></hyt-detailed-card>
+            </div>
           </div>
 
         </div> <!-- End Row Cards -->
