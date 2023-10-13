@@ -52,14 +52,31 @@
 
     }
 
-    .mat-form-field-wrapper {
-      mat-icon {
-        cursor: pointer;
-      }
+    .mat-form-field-label{
+      top: 30px;
     }
 
     textarea {
       padding: 10px;
+      ~ .mat-form-field-label-wrapper .mat-form-field-label{
+        top: 30px;
+        left: 0;
+        &.mat-empty{
+          top: 45px;
+          left: 15px;
+        }
+      }
+    }
+
+    &.mat-focused textarea ~ .mat-form-field-label-wrapper .mat-form-field-label{
+      top: 30px !important;
+      left: 0 !important;
+    }
+
+    .mat-form-field-wrapper {
+      mat-icon {
+        cursor: pointer;
+      }
     }
 
   }

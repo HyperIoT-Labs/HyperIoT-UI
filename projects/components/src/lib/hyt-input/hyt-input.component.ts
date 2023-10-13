@@ -7,8 +7,8 @@ import {
   forwardRef,
   ViewEncapsulation,
   Output,
-  EventEmitter
-} from '@angular/core';
+  EventEmitter,
+} from "@angular/core";
 import {
   ControlValueAccessor,
   NG_VALUE_ACCESSOR,
@@ -16,12 +16,12 @@ import {
   NgForm,
   FormControl,
   Validators,
-  FormGroup
-} from '@angular/forms';
-import { ErrorStateMatcher } from '@angular/material/core';
+  FormGroup,
+} from "@angular/forms";
+import { ErrorStateMatcher } from "@angular/material/core";
 
-import { Logger, LoggerService } from 'core';
-import '@angular/localize/init';
+import { Logger, LoggerService } from "core";
+import "@angular/localize/init";
 
 /**
  * Custom provider for NG_VALUE_ACCESSOR
@@ -30,16 +30,23 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR_INPUT: any = {
   provide: NG_VALUE_ACCESSOR,
   // tslint:disable-next-line: no-use-before-declare
   useExisting: forwardRef(() => HytInputComponent),
-  multi: true
+  multi: true,
 };
 
 /**
  * Error when invalid control is dirty, touched, or submitted
  */
 export class CustomErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+  isErrorState(
+    control: FormControl | null,
+    form: FormGroupDirective | NgForm | null
+  ): boolean {
     const isSubmitted = form && form.submitted;
-    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+    return !!(
+      control &&
+      control.invalid &&
+      (control.dirty || control.touched || isSubmitted)
+    );
   }
 }
 
@@ -54,14 +61,13 @@ export class CustomErrorStateMatcher implements ErrorStateMatcher {
  * isInputPassword: password without validators
  */
 @Component({
-  selector: 'hyt-input-text',
-  templateUrl: './hyt-input.component.html',
-  styleUrls: ['./hyt-input.component.scss'],
+  selector: "hyt-input-text",
+  templateUrl: "./hyt-input.component.html",
+  styleUrls: ["./hyt-input.component.scss"],
   providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR_INPUT],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class HytInputComponent implements OnInit, ControlValueAccessor {
-
   private logger: Logger;
 
   /** FormGroup */
@@ -71,35 +77,35 @@ export class HytInputComponent implements OnInit, ControlValueAccessor {
   @Input() formControl: FormControl;
 
   /** Foloating label of the input */
-  @Input() placeholder: any = '';
+  @Input() placeholder: any = "";
 
   /** Initial field value */
   @Input() fieldValue: string;
 
   /** Element id */
-  @Input() id = '';
+  @Input() id = "";
 
   /** Element name, connected to the formcontrol */
-  @Input() name = '';
+  @Input() name = "";
 
   /** Type of the input: text or passowrd */
-  @Input() type = '';
+  @Input() type = "";
 
   /** Optional additional hint */
-  @Input() hint = '';
+  @Input() hint = "";
 
   /** If 'bottom' is specified errors appears at the bottom */
-  @Input() errorPosition = '';
+  @Input() errorPosition = "";
 
   @Input() externalHint = null;
 
   /** Autocomplete attribute value */
-  @Input() autocomplete = '';
+  @Input() autocomplete = "";
 
   @Output() outHint: EventEmitter<string> = new EventEmitter<string>();
 
   /** ViewChild */
-  @ViewChild('input') private inputElement: ElementRef;
+  @ViewChild("input") private inputElement: ElementRef;
 
   /** This error appears in case of injected error */
   @Input()
@@ -128,10 +134,10 @@ export class HytInputComponent implements OnInit, ControlValueAccessor {
   @Input() isPassword = false;
 
   /** Applies regex validation */
-  @Input() pattern = '';
+  @Input() pattern = "";
 
   /** Applies regex validation */
-  @Input() patternErrorMessage = '';
+  @Input() patternErrorMessage = "";
 
   /** Applies password type but not password validation */
   @Input() isInputPassword = false;
@@ -140,27 +146,26 @@ export class HytInputComponent implements OnInit, ControlValueAccessor {
    * Applies password type and add confirm validation.
    * Validation will compare the actual value with the formControl specified by this field
    */
-  @Input() confirmPassword = '';
+  @Input() confirmPassword = "";
 
   /*
-   * Adds password validation to match confirm password 
+   * Adds password validation to match confirm password
    */
-  @Input() password = '';
-
+  @Input() password = "";
 
   /* Variable used to determine focus in and out of the input */
   public inputFocused: boolean = false;
 
   /** The internal data */
-  private innerValue: any = '';
+  private innerValue: any = "";
 
-  private injectedError = '';
+  private injectedError = "";
 
   /** Custom error matcher */
   matcher = new CustomErrorStateMatcher();
 
   /** The password visibility icon */
-  visibilityIcon = 'visibility';
+  visibilityIcon = "visibility";
 
   /** Map error type with default error string */
   errorMap = {
@@ -171,9 +176,9 @@ export class HytInputComponent implements OnInit, ControlValueAccessor {
     validateNumber: $localize`:@@HYT_min_one_number:At least one number`,
     validateUperCase: $localize`:@@HYT_upper_case:At least one uppercase character`,
     validateSpecialChar: $localize`:@@HYT_special_char:At least one special character`,
-    validateConfirmPassword: 'Password Mismatch',
-    validatePassword: 'Password must be valid',
-    validateInjectedError: '',
+    validateConfirmPassword: "Password Mismatch",
+    validatePassword: "Password must be valid",
+    validateInjectedError: "",
     pattern: $localize`:@@HYT_pattern_error_default_message:Invalid input`,
   };
 
@@ -181,28 +186,26 @@ export class HytInputComponent implements OnInit, ControlValueAccessor {
    * Default errors are displayed at the top of the field
    */
   private defaultErrors: string[] = [
-    'required',
-    'validateRequired',
-    'email',
-    'validateConfirmPassword',
-    'validatePassword',
-    'validateInjectedError'
+    "required",
+    "validateRequired",
+    "email",
+    "validateConfirmPassword",
+    "validatePassword",
+    "validateInjectedError",
   ];
 
   /** Callback function for change event */
-  private onChangeFn = (_: any) => { };
+  private onChangeFn = (_: any) => {};
 
   /** Callback function for blur event */
-  private onTouchedFn = () => { };
+  private onTouchedFn = () => {};
 
   /**
    * Constructor
    */
-  constructor(
-    private loggerService: LoggerService
-  ) {
+  constructor(private loggerService: LoggerService) {
     this.logger = new Logger(this.loggerService);
-    this.logger.registerClass('HytInputComponent');
+    this.logger.registerClass("HytInputComponent");
   }
 
   /**
@@ -215,53 +218,66 @@ export class HytInputComponent implements OnInit, ControlValueAccessor {
     let confirmPasswordSelector;
 
     function validateUperCase(c: FormControl) {
-      const PASS_REGEX: RegExp = new RegExp('^(?=.*[a-z])(?=.*[A-Z]).*$');
-      return PASS_REGEX.test(c.value) || !c.value || c.value.length === 0 ? null : {
-        validateUperCase: {
-          valid: false
-        }
-      };
+      const PASS_REGEX: RegExp = new RegExp("^(?=.*[a-z])(?=.*[A-Z]).*$");
+      return PASS_REGEX.test(c.value) || !c.value || c.value.length === 0
+        ? null
+        : {
+            validateUperCase: {
+              valid: false,
+            },
+          };
     }
     function validateNumber(c: FormControl) {
-      const PASS_REGEX: RegExp = new RegExp('^(?=.*[a-z])(?=.*[0-9]).*$');
-      return PASS_REGEX.test(c.value) || !c.value || c.value.length === 0 ? null : {
-        validateNumber: {
-          valid: false
-        }
-      };
+      const PASS_REGEX: RegExp = new RegExp("^(?=.*[a-z])(?=.*[0-9]).*$");
+      return PASS_REGEX.test(c.value) || !c.value || c.value.length === 0
+        ? null
+        : {
+            validateNumber: {
+              valid: false,
+            },
+          };
     }
     function validateSpecialChar(c: FormControl) {
-      const PASS_REGEX: RegExp = new RegExp('[^A-Za-z0-9]');
-      return PASS_REGEX.test(c.value) || !c.value || c.value.length === 0 ? null : {
-        validateSpecialChar: {
-          valid: false
-        }
-      };
+      const PASS_REGEX: RegExp = new RegExp("[^A-Za-z0-9]");
+      return PASS_REGEX.test(c.value) || !c.value || c.value.length === 0
+        ? null
+        : {
+            validateSpecialChar: {
+              valid: false,
+            },
+          };
     }
-    
+
     function validatePassword(c: FormControl) {
-      if(c.dirty) {
+      if (c.dirty) {
         const field = self.password ? self.password : self.confirmPassword;
         const passwordForm = self.form.get(field);
-        let password = '';
+        let password = "";
         let passwordValid = true;
-        const validateConfirmPassword = { validateConfirmPassword: { valid: false } };
+        const validateConfirmPassword = {
+          validateConfirmPassword: { valid: false },
+        };
         if (passwordForm) {
           password = passwordForm.value;
           passwordValid = passwordForm.valid;
         }
-        return (passwordValid || c.value.length === 0) ?
-        (c.value !== password) ? 
-          confirmPasswordSelector ? self.form.get(confirmPasswordSelector).setErrors( validateConfirmPassword ) 
-          : validateConfirmPassword
-        : null : c.value === password ? 
-          self.form.get(field).updateValueAndValidity() : null;
+        return passwordValid || c.value.length === 0
+          ? c.value !== password
+            ? confirmPasswordSelector
+              ? self.form
+                  .get(confirmPasswordSelector)
+                  .setErrors(validateConfirmPassword)
+              : validateConfirmPassword
+            : null
+          : c.value === password
+          ? self.form.get(field).updateValueAndValidity()
+          : null;
       }
     }
 
     if (this.isRequired) {
       validators.push(Validators.required);
-      this.placeholder += ' *';
+      this.placeholder += " *";
     }
     if (this.isEmail) {
       validators.push(Validators.email);
@@ -279,8 +295,8 @@ export class HytInputComponent implements OnInit, ControlValueAccessor {
       validators.push(validateSpecialChar);
     }
 
-    if (this.password !== '' || this.confirmPassword !== '') {
-      if (this.password !== '') confirmPasswordSelector = this.password;
+    if (this.password !== "" || this.confirmPassword !== "") {
+      if (this.password !== "") confirmPasswordSelector = this.password;
       validators.push(validatePassword);
     }
 
@@ -288,11 +304,14 @@ export class HytInputComponent implements OnInit, ControlValueAccessor {
       this.errorMap.validateInjectedError = this.injectedErrorMsg;
     }
 
-    this.formControl = new FormControl({value:'', disabled:this.isDisabled }, Validators.compose(validators));
+    this.formControl = new FormControl(
+      { value: "", disabled: this.isDisabled },
+      Validators.compose(validators)
+    );
     if (this.fieldValue) {
       this.formControl.setValue(this.fieldValue);
     }
-    
+
     if (this.form) {
       this.form.addControl(this.name, this.formControl);
     }
@@ -311,13 +330,15 @@ export class HytInputComponent implements OnInit, ControlValueAccessor {
     }
   }
 
-
   /** returns the errors to be displayed in the mat-error tag */
   getMultiErrorList(): string[] {
     const errorList: string[] = [];
 
     for (const key in this.formControl.errors) {
-      if (this.formControl.errors.hasOwnProperty(key) && !this.defaultErrors.includes(key)) {
+      if (
+        this.formControl.errors.hasOwnProperty(key) &&
+        !this.defaultErrors.includes(key)
+      ) {
         if (this.errorMap.hasOwnProperty(key)) {
           errorList.push(this.errorMap[key]);
         }
@@ -331,7 +352,10 @@ export class HytInputComponent implements OnInit, ControlValueAccessor {
 
     for (const key in this.formControl.errors) {
       if (this.formControl.errors.hasOwnProperty(key)) {
-        if (this.errorMap.hasOwnProperty(key) && this.defaultErrors.includes(key)) {
+        if (
+          this.errorMap.hasOwnProperty(key) &&
+          this.defaultErrors.includes(key)
+        ) {
           errorList.push(this.errorMap[key]);
         }
       }
@@ -341,12 +365,12 @@ export class HytInputComponent implements OnInit, ControlValueAccessor {
 
   /** Toggle the state of the input between text and password */
   tooglePassword() {
-    if (this.type === 'password') {
-      this.type = 'text';
-      this.visibilityIcon = 'visibility_off';
+    if (this.type === "password") {
+      this.type = "text";
+      this.visibilityIcon = "visibility_off";
     } else {
-      this.type = 'password';
-      this.visibilityIcon = 'visibility';
+      this.type = "password";
+      this.visibilityIcon = "visibility";
     }
   }
 
@@ -376,7 +400,7 @@ export class HytInputComponent implements OnInit, ControlValueAccessor {
 
   /** onChange callback */
   onChange(event: any) {
-    this.logger.debug(JSON.stringify(event));
+    this.logger.debug("onChange method event: ", JSON.stringify(event));
     this.onChangeFn(event);
   }
 
@@ -396,5 +420,4 @@ export class HytInputComponent implements OnInit, ControlValueAccessor {
     this.outHint.emit(this.externalHint);
     this.inputFocused = true;
   }
-
 }

@@ -5,7 +5,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { AlgorithmsComponent } from './algorithms.component';
-import { AlgorithmCardComponent } from './algorithm-card/algorithm-card.component';
 import { AlgorithmInfoFormComponent } from './algorithm-forms/algorithm-info-form/algorithm-info-form.component';
 import { AlgorithmWizardComponent } from './algorithm-wizard/algorithm-wizard.component';
 
@@ -30,7 +29,6 @@ import {MatRippleModule} from '@angular/material/core';
 @NgModule({
   declarations: [
     AlgorithmsComponent,
-    AlgorithmCardComponent,
     AlgorithmInfoFormComponent,
     AlgorithmWizardComponent,
     OutputFieldsFormComponent,

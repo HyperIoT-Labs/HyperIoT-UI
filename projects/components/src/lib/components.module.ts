@@ -52,7 +52,9 @@ import { TimePickerComponent } from './cron-editor/time-picker/time-picker.compo
 import { HytInnerFieldSelectComponent } from './hyt-inner-field-select/hyt-inner-field-select.component';
 import { DialogContainerComponent } from './hyt-dialog/dialog-container/dialog-container.component';
 import { HytDialogDirective, HytDialogContent, HytDialogFooter, HytDialogTitle } from './hyt-dialog/dialog-directives';
-
+import { HytFilterButtonComponent } from './hyt-filter-button/hyt-filter-button.component';
+import { HytBadgeComponent } from './hyt-badge/hyt-badge.component';
+import { HytDetailedCardComponent } from './hyt-detailed-card/hyt-detailed-card.component';
 export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
 
 @NgModule({
@@ -106,6 +108,9 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     HytDialogFooter,
     HytDialogContent,
     HytDialogTitle,
+    HytFilterButtonComponent,
+    HytDetailedCardComponent,
+    HytBadgeComponent
   ],
   imports: [
     CommonModule,
@@ -159,6 +164,9 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     HytDialogFooter,
     HytDialogContent,
     HytDialogTitle,
+    HytFilterButtonComponent,
+    HytDetailedCardComponent,
+    HytBadgeComponent
   ],
   providers: [
     NotificationService,
