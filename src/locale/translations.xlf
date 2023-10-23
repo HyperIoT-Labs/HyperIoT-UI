@@ -1094,6 +1094,9 @@
       <trans-unit id="HYT_area_list_noimage" datatype="html">
         <source>(no image)</source>
       </trans-unit>
+      <trans-unit id="HYT_area_list_bim" datatype="html">
+        <source>BIM Model Loaded</source>
+      </trans-unit>
       <trans-unit id="HYT_area_list_nomedia" datatype="html">
         <source>(No Media Uploaded)</source>
       </trans-unit>
@@ -1141,6 +1144,9 @@
       </trans-unit>
       <trans-unit id="HYT_area_set_image" datatype="html">
         <source>Set image</source>
+      </trans-unit>
+      <trans-unit id="HYT_area_set_bim_model" datatype="html">
+        <source>Set model</source>
       </trans-unit>
       <trans-unit id="HYT_area_map_device_add" datatype="html">
         <source>Add device</source>

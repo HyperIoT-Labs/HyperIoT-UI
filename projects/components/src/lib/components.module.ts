@@ -52,6 +52,7 @@ import { TimePickerComponent } from './cron-editor/time-picker/time-picker.compo
 import { HytInnerFieldSelectComponent } from './hyt-inner-field-select/hyt-inner-field-select.component';
 import { DialogContainerComponent } from './hyt-dialog/dialog-container/dialog-container.component';
 import { HytDialogDirective, HytDialogContent, HytDialogFooter, HytDialogTitle } from './hyt-dialog/dialog-directives';
+import { HytBimComponent } from './hyt-bim/bim.component';
 
 export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
 
@@ -106,6 +107,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     HytDialogFooter,
     HytDialogContent,
     HytDialogTitle,
+    HytBimComponent,
   ],
   imports: [
     CommonModule,
@@ -159,6 +161,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     HytDialogFooter,
     HytDialogContent,
     HytDialogTitle,
+    HytBimComponent,
   ],
   providers: [
     NotificationService,

@@ -1458,6 +1458,10 @@
         <source>(no image)</source>
         <target>(immagine assente)</target>
       </trans-unit>
+      <trans-unit id="HYT_area_list_bim" datatype="html">
+        <source>BIM Model Loaded</source>
+        <target>Modello BIM caricato</target>
+      </trans-unit>
       <trans-unit id="HYT_area_list_nomedia" datatype="html">
         <source>(No Media Uploaded)</source>
         <target>(Nessun Media caricato)</target>
@@ -1521,6 +1525,10 @@
       <trans-unit id="HYT_area_set_image" datatype="html">
         <source>Set image</source>
         <target>Imposta immagine</target>
+      </trans-unit>
+      <trans-unit id="HYT_area_set_bim_model" datatype="html">
+        <source>Set model</source>
+        <target>Imposta modello</target>
       </trans-unit>
       <trans-unit id="HYT_area_map_device_add" datatype="html">
         <source>Add device</source>
