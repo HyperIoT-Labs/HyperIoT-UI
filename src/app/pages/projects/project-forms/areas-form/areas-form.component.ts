@@ -531,10 +531,6 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
   }
 
   onInfoTypeChange(event: MatSelectChange){
-    console.log('%cINFO TYPE FORM', 'color: yellowgreen', event);
-    console.log('%cINFO TYPE FORM VALUE', 'color: yellowgreen', event.value);
-    console.log('%cINFO TYPE ENTITY', 'color: yellowgreen', this.entity.areaViewType);
-    console.log('%cINFO ENTITY', 'color: yellowgreen', this.entity);
     if(event.value && this.entity.areaViewType !== undefined && event.value !== this.entity.areaViewType){
       console.log('%cINFO TYPE VERIFY KO', 'color: red', event.value + ' - ' +this.entity.areaViewType);
       this.handleSearchAndDeleteElementOnMap(this.entity.areaViewType, event.value);

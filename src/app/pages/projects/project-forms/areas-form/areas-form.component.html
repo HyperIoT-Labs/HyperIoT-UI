@@ -80,41 +80,10 @@
                         </div>
                       </div>
                     </div>
-                    <!--<hyt-input-text [form]="form"
-                        name="area-name"
-                        i18n-placeholder="@@HYT_name"
-                        placeholder="Name"
-                        errorPosition="bottom"
-                        minlength="3"
-                        [injectedErrorMsg]="getError('area-name')"
-                        i18n-hintMessage="@@HYT_hint_area_name"
-                        hintMessage="Enter area name"
-                        [isRequired]="true"
-                    ></hyt-input-text>
-
-                    <hyt-text-area [form]="form"
-                        name="area-description"
-                        [injectedErrorMsg]="getError('area-description')"
-                        i18n-hintMessage="@@HYT_hint_area_description"
-                        hintMessage="Enter area description"
-                        i18n-placeholder="@@HYT_description"
-                        placeholder="Description"
-                    ></hyt-text-area>
-                  <hyt-select
-                    [form]="form"
-                    name="area-type"
-                    [options]="fieldAreaTypeOptions"
-                    [isRequired]="true"
-                    i18n-label="@@HYT_type"
-                    label="Type"
-                    i18n-hintMessage="@@HYT_hint_field_type"
-                    hintMessage="Select field type."
-                  >
-                  </hyt-select>-->
                 </form>
             </mat-tab>
 
-            <mat-tab *ngIf="areaId > 0" label="Sub-areas ({{ areaList.length }})" i18n-label="@@HYT_area_section_inner" aria-label="SUB-AREA">
+            <mat-tab *ngIf="areaId > 0 && entity.areaViewType !== 'BIM_XKT'" label="Sub-areas ({{ areaList.length }})" i18n-label="@@HYT_area_section_inner" aria-label="SUB-AREA">
                 <div class="actions">
                     <hyt-button [color]="'hyt-base-default-white'" mat-mini-fab (clickFn)="onAddInnerAreaClick($event)">
                         <span i18n="@@HYT_area_inner_add">Add sub-area</span>
