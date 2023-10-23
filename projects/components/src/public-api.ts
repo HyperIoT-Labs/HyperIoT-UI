@@ -30,6 +30,7 @@ export * from './lib/hyt-modal/hyt-modal-container.component';
 export * from './lib/hyt-modal/hyt-modal-content.directive';
 export * from './lib/hyt-infinite-scrolling-table/hyt-infinite-scrolling-table.component';
 export * from './lib/hyt-notification-box/notification-box.component'
+export * from './lib/hyt-bim/bim.component';
 
 export { SelectOption, SelectOptionGroup } from './lib/hyt-select/hyt-select.component';
 export { TreeNode } from './lib/hyt-tree-view/hyt-tree-view.component';

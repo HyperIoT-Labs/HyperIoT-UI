@@ -20,6 +20,7 @@ import { PacketFieldsFormComponent } from '../project-forms/packet-fields-form/p
 import { ProjectAlarmsFormComponent } from '../project-forms/project-alarms-form/project-alarms-form.component';
 import { SummaryList } from './generic-summary-list/generic-summary-list.component';
 import { DashboardConfigService } from 'widgets';
+import {AreasFormComponent} from "../project-forms/areas-form/areas-form.component";
 
 enum TreeStatusEnum {
   Ready,
@@ -244,6 +245,9 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
   onSaveClick() {
     this.logger.debug('onSaveClick Clicked');
     this.validationErrors = [];
+    /*console.log('SAVE', this.currentEntity);
+    console.log('SAVE', this.currentEntity instanceof AreasFormComponent);
+    return false;*/
     this.currentEntity.save((res) => {
       this.logger.debug('onSaveClick save response', res);
       if (this.currentEntity instanceof PacketEnrichmentFormComponent || this.currentEntity instanceof ProjectEventsFormComponent
@@ -637,9 +641,11 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
     if(
 
       (childComponent.formTemplateId.includes('areas-form') && this.areaSection === 'Tab-Sub-Area') ||
-      (childComponent.formTemplateId.includes('areas-form') && this.areaSection === 'Tab-Map') ||
-
+      (childComponent.formTemplateId.includes('areas-form') && this.areaSection === 'Tab-Map-IMAGE') ||
+      (childComponent.formTemplateId.includes('areas-form') && this.areaSection === 'Tab-Map-BIM_XKT') ||
+      (childComponent.formTemplateId.includes('areas-form') && this.areaSection === 'Tab-Map-BIM_IFC') ||
       (childComponent.formTemplateId.includes('areas-form') && this.areaSection === 'Tab-Info') &&
+
       childComponent.editMode === false ||
 
       childComponent.formTemplateId.includes('tag-form') ||

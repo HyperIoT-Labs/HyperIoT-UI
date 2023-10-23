@@ -61,6 +61,7 @@
                             label="Type"
                             i18n-hintMessage="@@HYT_hint_field_type"
                             hintMessage="Select field type."
+                            (changeFn)="onInfoTypeChange($event)"
                           >
                           </hyt-select>
                         </div>
@@ -129,7 +130,13 @@
                 </hyt-areas-list>
             </mat-tab>
 
-            <mat-tab *ngIf="areaId > 0" label="Image" i18n-label="@@HYT_area_section_static_image" aria-label="IMAGE">
+            <mat-tab
+              *ngIf="areaId > 0 && entity.areaViewType === 'IMAGE'"
+              label="Image"
+              i18n-label="@@HYT_area_section_static_image"
+              aria-label="IMAGE"
+
+            >
                 <div class="mt-4 mb-2 d-flex flex-row justify-content-center">
 
                     <hyt-button [color]="'hyt-base-default-white'">
@@ -150,6 +157,40 @@
 
                 </div>
                 <hyt-area-map #map [editMode]="true"></hyt-area-map>
+            </mat-tab>
+
+            <mat-tab *ngIf="areaId > 0 && (entity.areaViewType === 'BIM_XKT' || entity.areaViewType === 'BIM_IFC')" label="BIM" aria-label="BIM_XKT">
+              <!--<hyt-button [color]="'hyt-base-default-white'" (clickFn)="openModalChangeType()" i18n="@@HYT_area_map_device_add">Add device</hyt-button>-->
+
+              <div id="bimTabProject" class="mt-4 mb-2 d-flex flex-row justify-content-center">
+                <hyt-button [color]="'hyt-base-default-white'">
+                  <label class="m-0 p-0" for="map-bim-input" i18n="@@HYT_area_set_bim_model">Set Model</label>
+                </hyt-button>
+                <input
+                  class="hidden"
+                  id="map-bim-input"
+                  name="area-bim"
+                  (change)="onFileChangeBim($event)"
+                  type="file"
+                  placeholder="Upload file"
+                  accept="{{ allowedBimTypes }}"
+                >
+              </div>
+              <div id="container-bim-viewer">
+                <ng-container *ngIf="isBimLoading; else bimLoaded">
+                  <div id="bimLoading">
+                    <ng-container *ngIf="!isEmptyBim; else emptyBim">
+                      BIM Model Loading...
+                    </ng-container>
+                    <ng-template #emptyBim>
+                      No Model
+                    </ng-template>
+                  </div>
+                </ng-container>
+                <ng-template #bimLoaded>
+                  <hyt-bim [pathBim]="pathBim"></hyt-bim>
+                </ng-template>
+              </div>
             </mat-tab>
 
         </mat-tab-group>

@@ -55,6 +55,8 @@ import { HytDialogDirective, HytDialogContent, HytDialogFooter, HytDialogTitle }
 import { HytFilterButtonComponent } from './hyt-filter-button/hyt-filter-button.component';
 import { HytBadgeComponent } from './hyt-badge/hyt-badge.component';
 import { HytDetailedCardComponent } from './hyt-detailed-card/hyt-detailed-card.component';
+import { HytBimComponent } from './hyt-bim/bim.component';
+
 export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
 
 @NgModule({
@@ -110,7 +112,8 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     HytDialogTitle,
     HytFilterButtonComponent,
     HytDetailedCardComponent,
-    HytBadgeComponent
+    HytBadgeComponent,
+    HytBimComponent,
   ],
   imports: [
     CommonModule,
@@ -166,7 +169,8 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     HytDialogTitle,
     HytFilterButtonComponent,
     HytDetailedCardComponent,
-    HytBadgeComponent
+    HytBadgeComponent,
+    HytBimComponent,
   ],
   providers: [
     NotificationService,
