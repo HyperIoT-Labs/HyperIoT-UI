@@ -1458,6 +1458,10 @@
         <source>(no image)</source>
         <target>(immagine assente)</target>
       </trans-unit>
+      <trans-unit id="HYT_area_list_bim" datatype="html">
+        <source>BIM Model Loaded</source>
+        <target>Modello BIM caricato</target>
+      </trans-unit>
       <trans-unit id="HYT_area_list_nomedia" datatype="html">
         <source>(No Media Uploaded)</source>
         <target>(Nessun Media caricato)</target>
@@ -1521,6 +1525,10 @@
       <trans-unit id="HYT_area_set_image" datatype="html">
         <source>Set image</source>
         <target>Imposta immagine</target>
+      </trans-unit>
+      <trans-unit id="HYT_area_set_bim_model" datatype="html">
+        <source>Set model</source>
+        <target>Imposta modello</target>
       </trans-unit>
       <trans-unit id="HYT_area_map_device_add" datatype="html">
         <source>Add device</source>
@@ -1971,6 +1979,14 @@
       <trans-unit id="HYT_unit_conversion_title" datatype="html">
         <source>Unit Conversion</source>
         <target>Conversione</target>
+      </trans-unit>
+      <trans-unit id="HYT_source_count" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{ count }} Sources"/></source>
+        <target><x id="INTERPOLATION" equiv-text="{{ count }} Sources"/></target>
+      </trans-unit>
+      <trans-unit id="HYT_source_count" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{ count }} Source"/></source>
+        <target><x id="INTERPOLATION" equiv-text="{{ count }} Source"/></target>
       </trans-unit>
       <trans-unit id="HYT_widget_delete_confirm" datatype="html">
         <source>Attention, the widget and its configuration will be permanently deleted. Proceed?</source>

@@ -192,6 +192,11 @@ html {
   100% {transform: scale(1)}
 }
 
+/* UTILS */
+.text-center{
+  text-align: center;
+}
+
 /* RESPONSIVE */
 
 @media (max-width: 991px) {
@@ -224,3 +229,4 @@ html {
  
 
 } /* END 991px */
+

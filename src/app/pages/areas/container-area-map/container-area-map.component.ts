@@ -98,6 +98,10 @@ export class ContainerAreaMapComponent implements OnInit, OnDestroy {
    * Container of treeview overlay text
    */
   overlayTreeViewMsg = '';
+  areaViewType: string;
+  pathBim: string = '';
+  isBimLoading: boolean = true;
+  isEmptyBim: boolean = false;
   /*
    * logger service
    */
@@ -234,6 +238,7 @@ export class ContainerAreaMapComponent implements OnInit, OnDestroy {
   private loadArea(area: Area) {
     this.areaId = area.id;
     this.areaName = area.name;
+    this.areaViewType = area.areaViewType;
     // populate area treeview
     this.configureAreaTree(this.areaId, false);
     // load area map items
@@ -248,11 +253,17 @@ export class ContainerAreaMapComponent implements OnInit, OnDestroy {
           .subscribe(
           {
             next: (areaDevices: AreaDevice[]) => {
-              this.logger.debug('Found the devices present in this area', areaDevices);
-              this.areaDevices = areaDevices;
-              this.mapComponent.setAreaItems(areaDevices.concat(this.areaList.filter(a => a.mapInfo != null)));
-              this.mapComponent.refresh();
-              this.loadAreaImage(areaTree);
+              if(area.areaViewType === 'IMAGE'){
+                this.logger.debug('Found the devices present in this area', areaDevices);
+                this.areaDevices = areaDevices;
+                this.mapComponent.setAreaItems(areaDevices.concat(this.areaList.filter(a => a.mapInfo != null)));
+                this.mapComponent.refresh();
+                this.loadAreaImage(areaTree);
+              }
+              if(area.areaViewType === 'BIM_XKT'){
+                this.loadAreaBim(areaTree);
+              }
+
             },
             error: (error) => {
               this.logger.error('Error while searching for devices for this area', error);
@@ -273,6 +284,7 @@ export class ContainerAreaMapComponent implements OnInit, OnDestroy {
     // load area map image
     this.mapComponent.unsetMapImage();
     this.mapComponent.setOverlayLevel(true, this.overlayLoadingString);
+
     if (area.areaViewType === 'IMAGE' && area.areaConfiguration) {
       // TODO: no way to make this work with Area API
       /*this.areaService.getAreaImage(this.areaId).subscribe((res) => {
@@ -312,6 +324,36 @@ export class ContainerAreaMapComponent implements OnInit, OnDestroy {
     } else {
       this.logger.warn('No Image set...', area.areaConfiguration);
       this.mapComponent.setOverlayLevel(true, this.overlayEmptyString);
+    }
+
+
+  }
+
+  private loadAreaBim(area: Area){
+    this.logger.debug('loadAreaBim function start');
+    this.isBimLoading = true;
+    this.isEmptyBim = false;
+
+    if (area.areaViewType === 'BIM_XKT' && area.areaConfiguration) {
+      this.isEmptyBim = false;
+      this.httpClient.get(`/hyperiot/areas/${this.areaId}/image`, {
+        responseType: 'blob'
+      })
+        .pipe(takeUntil(this.ngUnsubscribe))
+        .subscribe({
+          next: (res: Blob) => {
+            this.logger.debug('Get Area Bim File', res);
+            this.pathBim = `/hyperiot/areas/${this.areaId}/image`;
+            this.isBimLoading = false;
+          },
+          error: (error) => {
+            this.logger.error('Get Area Bim File ERROR', error);
+            this.isBimLoading = false;
+          }
+        })
+    } else {
+      this.isEmptyBim = true;
+      this.logger.warn('No configuration data for this area');
     }
   }
 

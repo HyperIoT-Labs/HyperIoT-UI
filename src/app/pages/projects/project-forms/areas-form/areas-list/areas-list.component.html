@@ -23,6 +23,13 @@
             [ngStyle]="{ 'background-image': 'url(/hyperiot/areas/'+area.id+'/image)' }"
           ></div>
           <div
+            *ngIf="area.areaViewType === 'BIM_XKT' && area.areaConfiguration !== null"
+            class="map-image flex-grow-1 d-flex flex-column justify-content-center align-items-center"
+            i18n="@@HYT_area_list_bim"
+          >
+            BIM Model loaded
+          </div>
+          <div
             *ngIf="area.areaViewType == null"
             class="map-image flex-grow-1 d-flex flex-column justify-content-center align-items-center"
             i18n="@@HYT_area_list_noimage"

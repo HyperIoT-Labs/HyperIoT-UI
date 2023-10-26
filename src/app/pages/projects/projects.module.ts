@@ -6,9 +6,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { ColorPickerModule } from 'ngx-color-picker';
-
-import { ProjectCardComponent } from './project-card/project-card.component';
-
 import { ProjectDetailComponent } from './project-detail/project-detail.component';
 import { GenericSummaryListComponent } from './project-detail/generic-summary-list/generic-summary-list.component';
 
@@ -80,7 +77,6 @@ import {MatListModule} from '@angular/material/list';
   declarations: [
     ProjectsComponent,
     ProjectWizardComponent,
-    ProjectCardComponent,
     RuleDefinitionComponent,
     ProjectDetailComponent,
     ProjectFormComponent,

@@ -17,7 +17,7 @@ export class HytButtonComponent implements OnInit {
   @Input() isDisabled: boolean;
 
   /** Button type */
-  @Input() type: string;
+  @Input() type: string; //outlined
 
   /** Function called when click event is triggered */
   @Output() clickFn: EventEmitter<any> = new EventEmitter();
