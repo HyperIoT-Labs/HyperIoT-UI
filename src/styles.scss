@@ -56,47 +56,17 @@
 
 .hyt-card-wrapper {
     width: 100%;
-    margin: 0 auto 1rem;
+    margin: 1rem 2rem;
 
     .hyt-card-container {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: flex-start;
         width: 100%;
-
-        >* {
-            flex: 1;
-            margin-right: auto;
-        }
-
-        
+        display: grid;
+        grid-template-columns: repeat(auto-fill,225px);
+        justify-content: space-evenly;
+        gap: 32px;
     }
 
-    .hyt-card-container:after {
-        content: '';
-        flex: auto;
-    }
 }
-
-@media screen and (min-width: 1154px) {
-    .hyt-card-wrapper{
-        width: 90%;
-        max-width: 90%;
-    }
-}
-@media screen and (max-width: 550px) {
-    .hyt-card-wrapper{
-        .hyt-card-container {
-            justify-content: center;
-    
-            >* {
-                flex: none;
-                margin-left: auto;
-            }
-        }
-    } 
-}
-  
   
 /* DEFAULT DIALOG STYLE. It can be overridden at the component level if necessary. */
 .hyt-dialog-container {

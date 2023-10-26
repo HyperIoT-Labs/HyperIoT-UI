@@ -23,8 +23,10 @@
     </mat-select-trigger>
 
     <div *ngIf="isSearchable" class="search-filter">
-      <!-- class="icon-hyt_search" placeholder="&#xe95e;" TODO per icona ricerca -->
-      <input [(ngModel)]="searchValue" (keyup)="onSearch($event.target.value)" >
+      <!-- class="icon-hyt_search" placeholder="&#xe95e;" TODO search icon -->
+      <mat-form-field>
+        <input matInput [(ngModel)]="searchValue" i18n-placeholder="@@HYT_search" placeholder="Search" (ngModelChange)="onSearch()" >
+      </mat-form-field>
       <mat-icon class="delete-icon" (click)="resetSearchValue()">close</mat-icon>
     </div>
 
