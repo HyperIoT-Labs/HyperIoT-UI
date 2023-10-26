@@ -31,7 +31,7 @@
         </div>
 
       <!-- START TAB -->
-        <mat-tab-group [(selectedIndex)]="currentSection" (selectedTabChange)="onTabChange($event)">
+        <mat-tab-group #tabGroup  [(selectedIndex)]="currentSection" (selectedTabChange)="onTabChange($event)">
 
             <mat-tab label="Info" i18n-label="@@HYT_area_section_info" aria-label="INFO">
                 <form [formGroup]="form" enctype="multipart/form-data" class="mt-4 d-flex flex-column justify-content-center">
