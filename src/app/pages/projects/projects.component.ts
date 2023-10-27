@@ -322,11 +322,11 @@ export class ProjectsComponent implements OnInit {
   }
 
   /**
-   * Get the list of filter for project type(shared)
+   * List of filter for project type(shared)
    * @public
    */
-  get filterProjectType(): HytFilterButtonFilter[] {
-    return [
+  filterProjectType: HytFilterButtonFilter[] =
+    [
       {
         value: "all",
         keyLabel: "",
@@ -349,14 +349,13 @@ export class ProjectsComponent implements OnInit {
         tooltip: "Shared",
       },
     ];
-  }
 
   /**
-   * Get the list of filter for the sort type(new, old, alphabetical)
+   * List of filter for the sort type(new, old, alphabetical)
    * @public
    */
-  get filterSortType(): HytFilterButtonFilter[] {
-    return [
+  filterSortType: HytFilterButtonFilter[] =
+    [
       {
         value: "date-decreasing",
         keyLabel: "NEW",
@@ -382,7 +381,6 @@ export class ProjectsComponent implements OnInit {
         tooltip: "Z-A",
       },
     ];
-  }
 
   /**
    * Generate the list of details that will be printed on project hover
