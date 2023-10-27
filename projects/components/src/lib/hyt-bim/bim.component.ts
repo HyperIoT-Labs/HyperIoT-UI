@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, HostListener, Input, OnInit, ViewEncapsulation} from '@angular/core';
+import {AfterViewInit, Component, HostListener, Input, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import {
   NavCubePlugin,
   OBJLoaderPlugin,
@@ -16,16 +16,17 @@ import {map} from "rxjs/operators";
   styleUrls: ['./bim.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class HytBimComponent implements OnInit, AfterViewInit {
+export class HytBimComponent implements OnInit, OnDestroy {
 
   @Input('pathBim') pathBim: string = '';
 
   isModelLoaded: boolean = false;
 
   treeViewContainer?: HTMLElement;
+  treeView: TreeViewPlugin;
 
   viewer: Viewer;
-  //navCube: any;
+  navCube: NavCubePlugin;
   model: VBOSceneModel;
   xktLoader: XKTLoaderPlugin;
 
@@ -39,20 +40,15 @@ export class HytBimComponent implements OnInit, AfterViewInit {
       // Create a VIEWER
       //------------------------------------------------------------------------------------------------------------------
 
-      /*const viewer = new Viewer({
-        canvasId: "bimCanvas",
-        transparent: true
-      });*/
-
       this.viewer = new Viewer({
         canvasId: "bimCanvas",
         transparent: true
       });
 
-      /*const boundary = viewer.scene.viewport.boundary;
+      const boundary = this.viewer.scene.viewport.boundary;
       const bounMaxX = boundary[2];
       console.log('VIEWPORT TOTAL', boundary);
-      console.log('VIEWPORT X', bounMaxX);*/
+      console.log('VIEWPORT X', bounMaxX);
 
       //------------------------------------------------------------------------------------------------------------------
       // Camera Settings
@@ -66,38 +62,20 @@ export class HytBimComponent implements OnInit, AfterViewInit {
       // Create a NavCube
       //------------------------------------------------------------------------------------------------------------------
 
-      /*new NavCubePlugin(this.viewer, {
-       canvasId: "navCubeCanvas",
-
-        visible: true,         // Initially visible (default)
-
-        cameraFly: 'true',       // Fly camera to each selected axis/diagonal
-        cameraFitFOV: '45',      // How much field-of-view the scene takes once camera has fitted it to view
-        cameraFlyDuration: '0.5',// How long (in seconds) camera takes to fly to each new axis/diagonal
-
-        fitVisible: false,     // Fit whole scene, including invisible objects (default)
-
-        synchProjection: false // Keep NavCube in perspective projection, even when camera switches to ortho (default)
-      });*/
-
-      //this.navCube = this.initCubeNav(this.viewer, "navCubeCanvas");
+      this.navCube = this.initCubeNav(this.viewer, "navCubeCanvas");
 
       //------------------------------------------------------------------------------------------------------------------
       // Create an IFC structure tree view
       //------------------------------------------------------------------------------------------------------------------
       this.treeViewContainer = document.getElementById("treeViewContainer")!;
-      const treeView = new TreeViewPlugin(this.viewer, {
+      this.treeView = new TreeViewPlugin(this.viewer, {
         containerElement: this.treeViewContainer,
         autoExpandDepth: 1, // Initially expand tree three storeys deep
         hierarchy: "containment"
-        //hierarchy: "types",
       });
 
       // load plugin for XKT model
       this.xktLoader = new XKTLoaderPlugin(this.viewer);
-
-      // load plugin for OBJ model
-      //const objLoader = new OBJLoaderPlugin(this.viewer, {id: 'testLoader'});
 
       // Placeholder XKT
 
@@ -119,8 +97,13 @@ export class HytBimComponent implements OnInit, AfterViewInit {
 
   }
 
-  ngAfterViewInit() {
-
+  ngOnDestroy() {
+    const model = this.viewer.scene.models['Loader'];
+    model.destroy();
+    this.treeView.destroy();
+    this.navCube.destroy();
+    this.viewer.destroy();
+    console.log('%c[BIM COMPONENT] ON DESTROY')
   }
 
   initCubeNav(viewer: Viewer, canvasId: string): NavCubePlugin {
@@ -141,10 +124,8 @@ export class HytBimComponent implements OnInit, AfterViewInit {
 
   initLoaderModel(xktLoader: XKTLoaderPlugin, pathBim: string){
     return xktLoader.load({
-      id: "ProGet",
+      id: "Loader",
       edges: true,
-      //src: '/assets/xkt-placeholder/HousePlan.xkt',
-      //src: '/assets/xkt-placeholder/storey.xkt',
       src: pathBim,
       excludeUnclassifiedObjects: false,
     });
