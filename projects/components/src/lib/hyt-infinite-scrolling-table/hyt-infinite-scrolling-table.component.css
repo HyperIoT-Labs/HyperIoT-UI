@@ -41,7 +41,7 @@
 }
 
 /* Rule to change according to use */
-.hyt-lazy-pagination-table tr.single-row-data-elements td:first-child {
+.hyt-lazy-pagination-table tr.single-row-data-elements td {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
