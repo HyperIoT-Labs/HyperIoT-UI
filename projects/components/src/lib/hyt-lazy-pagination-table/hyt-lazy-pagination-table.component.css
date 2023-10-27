@@ -35,6 +35,17 @@
   left: 0;
 }
 
+.hyt-lazy-pagination-table tr.single-row-data-elements td {
+  padding: 0px 5px;
+}
+
+/* Rule to change according to use */
+.hyt-lazy-pagination-table tr.single-row-data-elements td {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .hyt-lazy-pagination-table .table-navigation mat-form-field {
   width: 42px;
 }
