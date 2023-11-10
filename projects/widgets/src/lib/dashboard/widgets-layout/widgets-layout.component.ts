@@ -200,11 +200,13 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
                 }
               }
               const textColor = '#ffffff';  // TODO retrieve from tag when this property will have been added
-              this.toastr.show(this.toastMessage, event.ruleName, {}, toastImage)
-                .onShown.subscribe(((res) => {}), (err) => {}, () => {
-                    document.querySelector('.overlay-container #toast-container .ngx-toastr')
-                      .setAttribute('style', 'background-color: ' + toastBackgroundColor + '; color:' + textColor + ';');
-                  });
+              const toastId = this.toastr['index']; // temp fix toastId to give style to the correct toast
+              this.toastr.show(this.toastMessage, event.ruleName, { toastClass: 'ngx-toastr toast-' + toastId }, toastImage).onShown.subscribe({
+                complete: () => {
+                  document.querySelector('.overlay-container #toast-container .ngx-toastr.toast-' + toastId)
+                    .setAttribute('style', 'background-color: ' + toastBackgroundColor + '; color:' + textColor + ';');
+                },
+              });
             }
           });
           // get dashboard config
