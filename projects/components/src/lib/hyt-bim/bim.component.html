@@ -1,11 +1,10 @@
-<div id="container-bim">
+<div id="container-bim" #bimContainer>
     <div id="treeViewContainer"></div>
     <canvas id="bimCanvas"></canvas>
     <canvas id="navCubeCanvas"></canvas>
-  <ng-container *ngIf="isModelLoaded; else noModelLoaded"></ng-container>
-  <ng-template #noModelLoaded>
+  <ng-container *ngIf="!isModelLoaded;">
     <div id="noModelLoaded">
       No model Loaded
     </div>
-  </ng-template>
+  </ng-container>
 </div>

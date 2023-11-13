@@ -84,7 +84,13 @@
             </div>
           </ng-container>
           <ng-template #bimLoaded>
-            <hyt-bim [pathBim]="pathBim" #map></hyt-bim>
+            <hyt-bim
+              [pathBim]="pathBim"
+              [currentAreaConfiguration]="areaConfiguration"
+              [projectId]="projectId"
+              [areaId]="areaId"
+              #map
+            ></hyt-bim>
           </ng-template>
         </div>
 

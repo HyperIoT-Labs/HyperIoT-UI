@@ -1,5 +1,8 @@
 html {
-  height: 100%;
+  /**
+  * commented to prevent the BIM navigation cube misalignment problem
+  **/
+ /* height: 100%;*/
 
   ::-webkit-scrollbar {
     width: .4em;
@@ -40,10 +43,14 @@ html {
       bottom: 0px;
       height: 100%;
       overflow-x: hidden;
-      overflow-y: auto;
+      /**
+      * Hidden vertical scrolling of the component to favor that of the whole page obtained by commenting on line 5.
+      * Previously set to "overflow-y: auto;"
+      **/
+      overflow-y: hidden;
 
       #hyt-container-topbar {
-        
+
         position: fixed;
         z-index: 999;
         top: 0;
@@ -206,27 +213,27 @@ html {
     body {
 
       #hyt-container {
-  
+
         #hyt-container-nav {
-  
+
           #hyt-container-router {
-  
+
             &.container-fluid {
 
               padding-left: 0px;
-            
+
             }
-        
+
           }
-  
+
         }
-  
-      } 
-  
+
+      }
+
     }
 
   }
- 
+
 
 } /* END 991px */
 
