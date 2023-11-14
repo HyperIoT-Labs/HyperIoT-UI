@@ -220,7 +220,8 @@
     }
 
     #map-body {
-      #container-bim-viewer{
+      #container-bim-viewer {
+        overflow: hidden;
         #bimLoading {
           display: flex;
           font-family: 'Exo';

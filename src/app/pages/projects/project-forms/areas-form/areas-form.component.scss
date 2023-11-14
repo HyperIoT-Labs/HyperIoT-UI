@@ -4,6 +4,7 @@
     padding-top: 0;
 
     #container-bim-viewer {
+      overflow: hidden;
       #bimLoading {
         display: flex;
         font-family: 'Exo';
