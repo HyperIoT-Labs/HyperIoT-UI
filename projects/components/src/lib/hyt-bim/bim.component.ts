@@ -18,6 +18,7 @@ import {
   XKTLoaderPlugin,
 } from "@xeokit/xeokit-sdk";
 import {Area, Logger, LoggerService} from "core";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'hyt-bim',
@@ -69,6 +70,7 @@ export class HytBimComponent implements OnInit, AfterViewInit, OnDestroy {
   xktLoader: XKTLoaderPlugin;
   objLoader: OBJLoaderPlugin;
   annotations: AnnotationsPlugin;
+  checklistener: boolean = false;
   buildingsDummyData = [
     {
       file: 'SanLazzaro_v3.new.xkt',
@@ -140,7 +142,10 @@ export class HytBimComponent implements OnInit, AfterViewInit, OnDestroy {
    */
   private logger: Logger;
 
-  constructor(private loggerService: LoggerService) {
+  constructor(
+    private loggerService: LoggerService,
+    private router: Router
+  ) {
     // Init Logger
     this.logger = new Logger(this.loggerService);
     this.logger.registerClass('BimComponent');
@@ -216,7 +221,7 @@ export class HytBimComponent implements OnInit, AfterViewInit, OnDestroy {
     // Create an AnnotationsPlugin, with which we'll create annotations
     //------------------------------------------------------------------------------------------------------------------
     this.annotations = this.initAnnotations(this.bimContainer.nativeElement);
-    console.log('ANNOTATIONS INIT')
+    console.log('ANNOTATIONS INIT');
   }
 
   ngOnDestroy() {
@@ -320,7 +325,7 @@ export class HytBimComponent implements OnInit, AfterViewInit, OnDestroy {
                 </div>\
                 <div class='container-annotation-data annotation-column'>\
                     <div class='annotation-data'>\
-                      <a href='/areas/{{projectId}}/{{areaId}}/dashboards'>Go to dashboard <span>&#x3e;</span></a>\
+                      <a class='goToDash'>Go to dashboard <span>&#x3e;</span></a>\
                     </div>\
                 </div>\
             </div>\
@@ -383,10 +388,10 @@ export class HytBimComponent implements OnInit, AfterViewInit, OnDestroy {
           areaId: this.areaId
         }
       });
+
     }
     // Set listener on mouse click
     this.viewer.scene.input.on("mouseclicked", (coords: any) => {
-      console.log('mouseclicked MYPICK', coords);
       const pickResult = this.viewer.scene.pick({
         canvasPos: coords,
         pickSurface: true  // <<------ This causes picking to find the intersection point on the entity
@@ -401,6 +406,15 @@ export class HytBimComponent implements OnInit, AfterViewInit, OnDestroy {
           console.log('pickResult INFO NAME ', entityName, 'INFO NUMBER', entityNumber);
           const annotationName = 'annotation_sensor_' + entityNumber;
           const annotation = this.annotations.annotations[annotationName];
+          if(!this.checklistener){
+            this.checklistener = true;
+            const goToDashBoxes = document.querySelectorAll('.goToDash');
+            for (let i = 0; i < goToDashBoxes.length ; i++) {
+              goToDashBoxes[i].addEventListener('click', () => {
+                this.goToAreaDashboard();
+              })
+            }
+          }
           annotation.setLabelShown(!annotation.getLabelShown());
         } else {
           console.log('NO pickResult ANNOTATIONS', this.annotations);
@@ -410,6 +424,10 @@ export class HytBimComponent implements OnInit, AfterViewInit, OnDestroy {
         console.log('NO pickResult MYPICK', pickResult);
       }
     });
+  }
+
+  goToAreaDashboard() {
+    this.router.navigate(['areas', this.projectId, this.areaId, 'dashboards']);
   }
 
 }
