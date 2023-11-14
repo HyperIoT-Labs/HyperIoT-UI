@@ -263,6 +263,8 @@ export class ContainerAreaMapComponent implements OnInit, OnDestroy {
                 this.loadAreaImage(areaTree);
               }
               if(area.areaViewType === 'BIM_XKT'){
+                this.logger.debug('Found the devices present in this area', areaDevices);
+                this.areaDevices = areaDevices;
                 this.loadAreaBim(areaTree);
               }
 
