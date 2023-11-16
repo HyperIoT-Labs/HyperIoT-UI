@@ -1,5 +1,6 @@
 $primary: #0956b6;
 $primaryDarker: #094894;
+
 .hyt-project-card {
     position: relative;
     width: 225px;
@@ -7,7 +8,7 @@ $primaryDarker: #094894;
 
     mat-card {
         background-color: #0d416d;
-    background-image: url("/assets/images/projects/Card_Idle.png");
+        background-image: url("/assets/images/projects/Card_Idle.png");
         background-repeat: no-repeat;
         background-position: bottom center;
         background-size: cover;
@@ -62,8 +63,7 @@ $primaryDarker: #094894;
             background-position: bottom center;
             background-size: cover;
             transition: all .15s ease-in;
-            transform: translateY(100%) scale(0);
-            opacity: 0;
+            transform: translateY(100%);
 
             .content-card {
                 display: grid;
@@ -77,6 +77,7 @@ $primaryDarker: #094894;
                     line-height: 35px;
                     color: #0956b6;
                 }
+
                 .card-description {
                     color: #414141;
                     overflow: hidden;
@@ -104,6 +105,7 @@ $primaryDarker: #094894;
                         font-size: 26px;
                         margin-right: 5px;
                     }
+
                     span {
                         font-size: 16px;
                         line-height: 26px;
@@ -120,6 +122,7 @@ $primaryDarker: #094894;
                 bottom: 6px;
                 left: 0;
                 width: 100%;
+
                 .detailed-primary-btn {
                     width: 90%;
                     margin: 0 5%;
@@ -134,6 +137,7 @@ $primaryDarker: #094894;
                         font-size: 15px;
                         line-height: 13px;
                     }
+
                     .detailed-secondary-btn {
                         width: 20%;
                         margin: 3px 8% 3px 2%;
@@ -144,11 +148,9 @@ $primaryDarker: #094894;
             }
         }
 
-        // ! TODO rimuovi commento, debug instant on hover
         &:hover {
             .box-card-hover {
-                transform: translateY(0) scale(1);
-                opacity: 1;
+                transform: translateY(0);
             }
         }
     }
@@ -167,10 +169,11 @@ $primaryDarker: #094894;
         cursor: pointer;
         display: none;
     }
-    
+
     &:hover {
         .delete-project-btn {
             display: block;
+
             &:hover {
                 background-color: #d40b0b;
             }
@@ -184,6 +187,7 @@ $primaryDarker: #094894;
             height: 100%;
             min-height: 100%;
         }
+
         &.detailed-secondary-btn button {
             border-radius: 1rem;
             max-width: 40px;
