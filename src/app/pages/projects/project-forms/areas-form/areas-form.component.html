@@ -157,7 +157,12 @@
                   </div>
                 </ng-container>
                 <ng-template #bimLoaded>
-                  <hyt-bim [pathBim]="pathBim"></hyt-bim>
+                  <hyt-bim
+                    [pathBim]="pathBim"
+                    [currentAreaConfiguration]="entity.areaConfiguration"
+                    [projectId]="projectId"
+                    [areaId]="areaId"
+                  ></hyt-bim>
                 </ng-template>
               </div>
             </mat-tab>

@@ -102,6 +102,7 @@ export class ContainerAreaMapComponent implements OnInit, OnDestroy {
   pathBim: string = '';
   isBimLoading: boolean = true;
   isEmptyBim: boolean = false;
+  areaConfiguration: string;
   /*
    * logger service
    */
@@ -239,6 +240,7 @@ export class ContainerAreaMapComponent implements OnInit, OnDestroy {
     this.areaId = area.id;
     this.areaName = area.name;
     this.areaViewType = area.areaViewType;
+    this.areaConfiguration = area.areaConfiguration;
     // populate area treeview
     this.configureAreaTree(this.areaId, false);
     // load area map items
@@ -261,6 +263,8 @@ export class ContainerAreaMapComponent implements OnInit, OnDestroy {
                 this.loadAreaImage(areaTree);
               }
               if(area.areaViewType === 'BIM_XKT'){
+                this.logger.debug('Found the devices present in this area', areaDevices);
+                this.areaDevices = areaDevices;
                 this.loadAreaBim(areaTree);
               }
 
