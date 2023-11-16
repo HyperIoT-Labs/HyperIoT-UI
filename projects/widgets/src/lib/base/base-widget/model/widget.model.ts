@@ -2,6 +2,7 @@ import { GridsterItem } from 'angular-gridster2';
 import { BodyMap, BodyMapAssociation } from '../../../dashboard/widget-settings-dialog/bodymap-settings/bodymap.model';
 import { DefibrillatorSettings } from '../../../dashboard/widget-settings-dialog/defibrillator-settings/defibrillator-settings.model';
 import { HPacketField } from 'core';
+import { DataSimulatorSettings } from '../../../dashboard/widget-settings-dialog/data-simulator-settings/data-simulator.models';
 
 export interface WidgetConfig extends GridsterItem {
     projectId?: number;
@@ -11,6 +12,7 @@ export interface WidgetConfig extends GridsterItem {
     dataTableUrl?: string;
     packetId?: number;
     config?: ConfigModel;
+    resizeCallback?: (gridsterItem, gridsterItemComponent) => void;
 }
 
 export interface InternalConfigModel {
@@ -42,6 +44,7 @@ export interface ConfigModel {
     textColor?: string; // TODO separare da generic ConfigModel
     bgColor?: 'dark' | 'bright';
     defibrillator?: DefibrillatorSettings.DefibrillatorSettings;
+    dataSimulatorSettings?: DataSimulatorSettings.DataSimulatorSettings;
 }
 
 export interface FieldUnitConversion {
