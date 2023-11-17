@@ -1,0 +1,97 @@
+<div id="data-simulator-settings" class="padding-6 d-flex flex-row justify-content-stretch">
+
+    <div *ngIf="widget.config" id="packet-selection" class="d-flex flex-column">
+
+        <hyt-select
+            [name]="'packetSelect'"
+            [label]="'Select Packet'"
+            [groups]="groupedPacketOptions"
+            [selected]="selectedPacketOption"
+            [isSearchable]="true"
+            (changeFn)="onPacketChange($event)"
+            [isRequired]="true"
+            [errorMsgRequired]="'Select one packet'"
+            [hint]="'select one packet'"
+            class="hyt-select-full-width"
+        >
+        </hyt-select>
+
+        <!-- TODO temp fix for hyt-select required issue -->
+        <input name="hidden-packet-id" [(ngModel)]="selectedPacket" style="display: none;" required>
+
+    </div>
+
+    <div *ngIf="selectedPacket != null" id="field-selection" class="d-flex flex-column">
+
+        <hyt-inner-field-select
+            [fields]="selectedPacket.fields"
+            [selectedFieldsIds]="selectedFieldsOptions"
+            [isMultiSelect]="true"
+            (fieldSelectionChanged)="onPacketFieldChange($event)"
+        ></hyt-inner-field-select>
+
+    </div>
+
+    <div id="box-fields-customization" *ngIf="selectedFields && selectedFields.length > 0">
+
+        <div class="source-info">
+            <mat-form-field>
+                <mat-label i18n="@@HYT_source_password">Source password</mat-label>
+                <input matInput type="password" name="source-password" [(ngModel)]="sourcePassword" required>
+            </mat-form-field>
+        
+            <mat-form-field>
+                <mat-label i18n="@@HYT_period_ms">Period (ms)</mat-label>
+                <input matInput type="number" name="period" [(ngModel)]="period" required>
+            </mat-form-field>
+        </div>
+
+        <div class="box-fields-customization-title">
+            <h3 id="title-customization" i18n="@@HYT_data_generation_rule">Data Generation Rule</h3>
+        </div>
+        
+        <mat-accordion>
+            <mat-expansion-panel *ngFor="let field of selectedFields">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <span class="customization-field-title">{{ getFullFieldName(field.id) }}</span>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                
+                <mat-divider></mat-divider>
+
+                <div class="field-customization-container">
+                    <div class="field-customization-container-section">
+                        <div class="section-title">
+                            <span i18n="@@HYT_generation_rule">Generation Rule</span>
+                        </div>
+                        <hyperiot-field-value-generator-settings
+                            [field]="field"
+                            [rule]="fieldRules[field.id]"
+                            [settingsForm]="settingsForm"
+                        >
+                        </hyperiot-field-value-generator-settings>
+                    </div>
+
+                    <mat-divider></mat-divider>
+
+                    <div class="field-customization-container-section">
+                        <div class="section-title">
+                            <span i18n="@@HYT_outlier">Outlier</span>
+                            <hyt-info i18n-text="@@HYT_outliers_description" text="Outlier value is a specific value emitted when the user press the 'oultier' button"></hyt-info>
+                        </div>
+                        <div class="field-outliner-settings">
+                            <mat-form-field>
+                                <mat-label i18n="@@HYT_value">Value</mat-label>
+                                <input matInput [name]="'outlier-' + field.id" [(ngModel)]="fieldOutliers[field.id]">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+
+            </mat-expansion-panel>
+        </mat-accordion>
+
+    </div>
+
+</div>

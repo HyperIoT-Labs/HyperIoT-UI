@@ -120,6 +120,14 @@
     [serviceType]="serviceType"
   ></hyperiot-histogram-chart>
 
+  <hyperiot-data-simulator
+    *ngSwitchCase="'data-simulator'"
+    [widget]="widget"
+    [isToolbarVisible]="isToolbarVisible"
+    (widgetAction)="onWidgetAction($event)"
+    [serviceType]="serviceType"
+  ></hyperiot-data-simulator>
+
   <hyperiot-default-widget
     *ngSwitchDefault
     [widget]="widget"

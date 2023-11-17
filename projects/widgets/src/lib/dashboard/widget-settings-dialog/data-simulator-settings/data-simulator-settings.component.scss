@@ -1,0 +1,75 @@
+#data-simulator-settings {
+  flex-wrap: wrap;
+
+  #packet-selection,
+  #field-selection {
+    width: 50%;
+
+    hyt-select,
+    hyt-inner-field-select {
+      mat-form-field {
+        width: 100%;
+      }
+    }
+  }
+
+  #packet-selection {
+    padding-right: 10px;
+  }
+
+  #field-selection {
+    padding-left: 10px;
+  }
+
+  #box-fields-customization {
+
+    margin-top: 10px;
+    width: 100%;
+
+    .source-info {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+
+      mat-form-field {
+        flex: 1;
+      }
+    }
+
+    .box-fields-customization-title {
+      display: flex;
+      color: #0856b6;
+      align-items: center;
+      gap: 4px;
+      text-transform: uppercase;
+    }
+
+    .customization-field-title {
+      color: #0856b6;
+      text-transform: uppercase;
+    }
+
+    .field-outliner-settings {
+      padding: 20px;
+    }
+
+    .field-customization-container {
+      margin: 12px;
+      .field-customization-container-section {
+        display: flex;
+        flex-direction: column;
+        margin-top: 12px;
+        .section-title {
+          color: #0856b6;
+          display: flex;
+        }
+      }
+    }
+
+  }
+
+}
+
+.hyt-select-full-width mat-form-field {
+  width: 100%;
+}

@@ -17,6 +17,7 @@ import { PlotlyModule } from 'angular-plotly.js';
 import { HpacketTableComponent } from './widget/hpacket-table/hpacket-table.component';
 import { LoaderComponent } from './widget/loader/loader.component';
 
+import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from "@angular/material/button-toggle";
 import { MatIconModule } from "@angular/material/icon";
 import { MatProgressBarModule } from '@angular/material/progress-bar';
@@ -37,6 +38,7 @@ import { HistogramChartComponent } from './widget/histogram-chart/histogram-char
 import { LineChartComponent } from './widget/line-chart/line-chart.component';
 import { SensorValueComponent } from './widget/sensor-value/sensor-value.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { DataSimulatorComponent } from './widget/data-simulator/data-simulator.component';
 import { DefibrillatorComponent } from './widget/defibrillator/defibrillator.component';
 
 @NgModule({
@@ -56,9 +58,11 @@ import { DefibrillatorComponent } from './widget/defibrillator/defibrillator.com
     GaugeChartComponent,
     HistogramChartComponent,
     BaseWidgetTemplateComponent,
+    DataSimulatorComponent,
     DefibrillatorComponent,
   ],
   imports: [
+    MatButtonModule,
     BrowserModule,
     HttpClientModule,
     FormsModule,
@@ -93,6 +97,7 @@ import { DefibrillatorComponent } from './widget/defibrillator/defibrillator.com
     LoaderComponent,
     AlgorithmTableComponent,
     BodymapComponent,
+    DataSimulatorComponent,
     DefibrillatorComponent,
     EcgComponent,
     EventsLogComponent,

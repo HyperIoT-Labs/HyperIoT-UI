@@ -41,6 +41,8 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { PacketFieldsSelectComponent } from './widget-settings-dialog/packet-fields-select/packet-fields-select.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatDividerModule } from '@angular/material/divider';
+import { DataSimulatorSettingsComponent } from './widget-settings-dialog/data-simulator-settings/data-simulator-settings.component';
+import { FieldValueGeneratorSettingsComponent } from './widget-settings-dialog/data-simulator-settings/field-value-generator-settings/field-value-generator-settings.component';
 
 @NgModule({
   declarations: [
@@ -67,6 +69,8 @@ import { MatDividerModule } from '@angular/material/divider';
     PacketsSelectComponent,
     DefibrillatorSettingsComponent,
     PacketFieldsSelectComponent,
+    DataSimulatorSettingsComponent,
+    FieldValueGeneratorSettingsComponent,
   ],
   imports: [
     CommonModule,

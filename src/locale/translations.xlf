@@ -1500,6 +1500,72 @@
       <trans-unit id="HYT_ok" datatype="html">
         <source>OK</source>
       </trans-unit>
+      <trans-unit id="HYT_connection_failed" datatype="html">
+        <source>Conection to Hyperiot services failed.</source>
+      </trans-unit>
+      <trans-unit id="HYT_reconnect" datatype="html">
+        <source>Reconnect</source>
+      </trans-unit>
+      <trans-unit id="HYT_not_authorized_password" datatype="html">
+        <source>Not authorized to connect. Please, check the device password in the widget configuration.</source>
+      </trans-unit>
+      <trans-unit id="HYT_connection_closed_host" datatype="html">
+        <source>Connection closed by host.</source>
+      </trans-unit>
+      <trans-unit id="HYT_outlier" datatype="html">
+        <source>Outlier</source>
+      </trans-unit>
+      <trans-unit id="HYT_source_password" datatype="html">
+        <source>Source password</source>
+      </trans-unit>
+      <trans-unit id="HYT_period_ms" datatype="html">
+        <source>Period (ms)</source>
+      </trans-unit>
+      <trans-unit id="HYT_data_generation_rule" datatype="html">
+        <source>Data Generation Rule</source>
+      </trans-unit>
+      <trans-unit id="HYT_generation_rule" datatype="html">
+        <source>Generation Rule</source>
+      </trans-unit>
+      <trans-unit id="HYT_generation_type" datatype="html">
+        <source>Generation Type</source>
+      </trans-unit>
+      <trans-unit id="HYT_fixed_value_description" datatype="html">
+        <source>Emit a fixed value</source>
+      </trans-unit>
+      <trans-unit id="HYT_range_value_description" datatype="html">
+        <source>Emit a random value between 2 numbers</source>
+      </trans-unit>
+      <trans-unit id="HYT_dataset_value_description" datatype="html">
+        <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;ng-contain"/>Emit values of a dataset<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;mat-form-field&gt;"/><x id="START_UNORDERED_LIST" ctype="x-ul" equiv-text="abel i18n=&quot;@@HYT"/><x id="START_LIST_ITEM" ctype="x-li" equiv-text="{{ typeOption.label }}"/>Dataset example: <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="at-select&gt;
+        &lt;/mat-form-fie"/>[ 0, 2, 4, 8 ]<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="gs&quot;&gt;
+
+            &lt;ng-container *ng"/><x id="CLOSE_LIST_ITEM" ctype="x-li" equiv-text="ed&apos;&quot;&gt;
+                &lt;div class=&quot;r"/><x id="START_LIST_ITEM" ctype="x-li" equiv-text="{{ typeOption.label }}"/>Dataset example: <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="at-select&gt;
+        &lt;/mat-form-fie"/>[ [ 0, 4 ], [ 3, -1] ]<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="gs&quot;&gt;
+
+            &lt;ng-container *ng"/><x id="CLOSE_LIST_ITEM" ctype="x-li" equiv-text="ed&apos;&quot;&gt;
+                &lt;div class=&quot;r"/><x id="CLOSE_UNORDERED_LIST" ctype="x-ul" equiv-text="T_fixed_value_des"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">projects/widgets/src/lib/dashboard/widget-settings-dialog/data-simulator-settings/field-value-generator-settings/field-value-generator-settings.component.html</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="HYT_dataset" datatype="html">
+        <source>Dataset</source>
+      </trans-unit>
+      <trans-unit id="HYT_data_simultaor_type_not_supported" datatype="html">
+        <source> Type <x id="INTERPOLATION" equiv-text="iner *ngIf=&quot;rul"/> <x id="INTERPOLATION_1" equiv-text="&quot;&gt;
+
+        &lt;ma"/> currently not supported </source>
+      </trans-unit>
+      <trans-unit id="HYT_outliers_description" datatype="html">
+        <source>Outlier value is a specific value emitted when the user press the 'oultier' button</source>
+      </trans-unit>
+      <trans-unit id="HYT_packet_sent" datatype="html">
+        <source> Packet sent: <x id="INTERPOLATION" equiv-text="dget&gt;
+    &lt;hype"/> </source>
+      </trans-unit>
     </body>
   </file>
 </xliff>

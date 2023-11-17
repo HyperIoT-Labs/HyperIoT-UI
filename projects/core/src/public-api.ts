@@ -69,6 +69,8 @@ export { HPacketFieldsHandlerService } from './lib/hyperiot-service/hyperiot-h-p
 
 export * from './lib/hyperiot-service/hyperiot-algorithm-offline-data/algorithm-offline-data.service';
 
+export { WsDataSenderService } from './lib/hyperiot-service/hyperiot-ws-data-sender/ws-data-sender.service';
+
 export { HyperiotBaseModule } from './lib/hyperiot-base/hyperiot-base.module';
 export { DataChannel } from './lib/hyperiot-base/models/data-channel';
 export { DataPacketFilter } from './lib/hyperiot-base/models/data-packet-filter';
