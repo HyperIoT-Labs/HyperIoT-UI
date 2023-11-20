@@ -33,6 +33,7 @@ export class DataSimulatorSettingsComponent implements OnInit {
 
   selectedFields: HPacketField[] = [];
   selectedFieldsOptions: number[] = [];
+  selectedFieldsValidation = true;
 
   sourcePassword: string;
 
@@ -88,8 +89,7 @@ export class DataSimulatorSettingsComponent implements OnInit {
     }));
     this.selectedFields = [];
     this.selectedFieldsOptions = [];
-    this.sourcePassword = null;
-    this.period = null;
+    this.selectedFieldsValidation = null;
   }
 
   onPacketFieldChange($event) {
@@ -124,6 +124,8 @@ export class DataSimulatorSettingsComponent implements OnInit {
         this.fieldOutliers[field.id] = null;
       }
     });
+
+    this.selectedFieldsValidation = this.selectedFields.length > 0 ? true : null;
   }
 
   loadPackets(devices?: HDevice[]) {
@@ -160,7 +162,7 @@ export class DataSimulatorSettingsComponent implements OnInit {
           icon: 'icon-hyt_device',
         }));
 
-        // load curent packet data and set selected fields
+        // load current packet data and set selected fields
         if (this.widget.config?.dataSimulatorSettings?.packetInfo?.packetId) {
           this.packetService.findHPacket(this.widget.config.dataSimulatorSettings.packetInfo.packetId).subscribe(
             (packet: HPacket) => {

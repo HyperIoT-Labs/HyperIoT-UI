@@ -51,7 +51,7 @@ export class FieldValueGeneratorSettingsComponent implements OnInit {
     },
     {
       value: 'expression',
-      label: 'EXpression',
+      label: 'Expression',
       fields: [
         { type: HPacketField.TypeEnum.INTEGER, multiplicity: HPacketField.MultiplicityEnum.SINGLE },
         { type: HPacketField.TypeEnum.FLOAT, multiplicity: HPacketField.MultiplicityEnum.SINGLE },

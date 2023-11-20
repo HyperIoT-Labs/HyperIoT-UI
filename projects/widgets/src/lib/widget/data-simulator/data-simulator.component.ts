@@ -26,7 +26,6 @@ export class DataSimulatorComponent extends BaseWidgetComponent {
   isActive = false;
 
   packetInfo: string;
-  isInfoVisible = true;
   isOutlierColumnVisible = false;
 
   fieldList: { [fieldId: number]: string; };
@@ -55,16 +54,6 @@ export class DataSimulatorComponent extends BaseWidgetComponent {
     this.fieldList = this.widget.config.packetFields;
     this.fieldRules = this.widget.config.dataSimulatorSettings.fieldRules;
     this.fieldOutliers = this.widget.config.dataSimulatorSettings.fieldOutliers;
-
-    // setting and update isInfoVisible
-    this.widget.resizeCallback = (gridsterItem, gridsterItemComponent) => {
-      if (gridsterItemComponent.$item.rows === 2) {
-        this.isInfoVisible = false;
-      } else {
-        this.isInfoVisible = true;
-      }
-    };
-    this.isInfoVisible = this.widget.rows > 2;
 
     // setting isOutlierColumnVisible
     this.isOutlierColumnVisible = Object.keys(this.fieldOutliers).length > 0;

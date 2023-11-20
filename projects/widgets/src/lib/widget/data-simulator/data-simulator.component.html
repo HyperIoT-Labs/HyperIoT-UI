@@ -28,15 +28,13 @@
       <ng-template #loadingFinished>
         <div class="data-simulator-container">
 
-          <ng-container *ngIf="isInfoVisible">
-            <div class="data-simulator-info device ellipsis">
-              {{ packetInfo }}
-            </div>
-  
-            <div class="data-simulator-info sent ellipsis" i18n="@@HYT_packet_sent">
-              Packet sent: {{ counter }}
-            </div>
-          </ng-container>
+          <div class="data-simulator-info device ellipsis">
+            {{ packetInfo }}
+          </div>
+
+          <div class="data-simulator-info sent ellipsis" i18n="@@HYT_packet_sent">
+            Packet sent: {{ counter }}
+          </div>
 
           <div class="data-simulator-starter">
             <mat-spinner *ngIf="status === 0" strokeWidth="5" diameter="42"></mat-spinner>
@@ -65,7 +63,7 @@
                   <ng-container *ngIf="generationError[field.key]">
                     <span style="color: red;" i18n="@@HYT_error">Error</span>
                   </ng-container>
-                  {{ lastPacket[field.value] || '' }}
+                  {{ lastPacket[field.value] }}
                 </td>
                 <td class="outlier-button" *ngIf="isOutlierColumnVisible">
                   <button
