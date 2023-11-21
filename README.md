@@ -16,7 +16,7 @@ use `npm install` to install project dependencies
 
 ### Libraries Build
 
-HyperIoT-app relies on `core`, `components` and `widets` libraries. Before running the application it is necessary to build the libraries with the command `ng build <library-name>`
+HyperIoT-app relies on `core`, `components` and `widgets` libraries. Before running the application it is necessary to build the libraries with the command `ng build <library-name>`
 > Note: Libraries should be build in the following order: core, components, widgets
 
 > Note: `npm run build-libs` can be used to build the libraries sequentially
