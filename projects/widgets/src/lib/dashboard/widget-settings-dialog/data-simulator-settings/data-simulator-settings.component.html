@@ -1,6 +1,6 @@
 <div id="data-simulator-settings" class="padding-6 d-flex flex-row justify-content-stretch">
 
-    <div *ngIf="widget.config" id="packet-selection" class="d-flex flex-column">
+    <div *ngIf="widget.config && !(widget.config?.dataSimulatorSettings?.packetInfo?.packetId && !selectedPacket)" id="packet-selection" class="d-flex flex-column">
 
         <hyt-select
             [name]="'packetSelect'"
@@ -29,6 +29,8 @@
             [isMultiSelect]="true"
             (fieldSelectionChanged)="onPacketFieldChange($event)"
         ></hyt-inner-field-select>
+
+        <input name="hidden-fields" [(ngModel)]="selectedFieldsValidation" style="display: none;" required>
 
     </div>
 

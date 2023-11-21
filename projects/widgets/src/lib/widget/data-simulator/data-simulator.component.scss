@@ -25,8 +25,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 45%;
-    max-height: 160px;
+    padding: 18px 0px;
 }
 
 .data-simulator-starter-icon {
@@ -45,7 +44,7 @@
 .data-simulator-fields {
     display: flex;
     justify-content: center;
-    margin: 0px 20px 20px;
+    margin: 0px 8px 8px;
     border-radius: 10px;
     border: 1px solid #e1e1e1;
     overflow: auto;
