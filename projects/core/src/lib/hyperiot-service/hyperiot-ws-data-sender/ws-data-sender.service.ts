@@ -29,7 +29,7 @@ export class WsDataSenderService {
     }
   }
 
-  send(data: PacketData) {
+  send(data: any) { // TODO should be PacketData
 
     if (!this.wsSubject) {
       throw 'Unavailable web socket connection';
