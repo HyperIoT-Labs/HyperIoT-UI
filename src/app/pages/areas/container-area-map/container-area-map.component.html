@@ -39,7 +39,11 @@
 
         <div id="head-left">
 
-          <hyt-button *ngIf="areaViewType !== 'BIM_XKT'" [color]="'hyt-base-total-white'" (clickFn)="toggleTreeViewProject()">
+          <hyt-button
+            [color]="'hyt-base-total-white'"
+            (clickFn)="toggleTreeViewProject()"
+          >
+            <!--*ngIf="areaViewType !== 'BIM_XKT'" -->
 
           <span
             [ngClass]="{'icon-hyt_eyeClose': treeViewIsOpen, 'icon-hyt_eyeOpen': !treeViewIsOpen}"

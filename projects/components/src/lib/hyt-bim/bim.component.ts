@@ -152,9 +152,9 @@ export class HytBimComponent implements OnInit, AfterViewInit, OnDestroy {
           values: {
             glyph: "A1",
             title: "Temperature",
-            description: "Descrizione del sensore",
+            description: "Outdoor temperature acquisition",
             markerBGColor: "transparent",
-            sensorImgUrl: '/assets/images/sensors/potenziometro.png',
+            sensorImgUrl: '/assets/images/sensors/temperature.jpeg',
             projectId: 0,
             areaId: 0
           }
