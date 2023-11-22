@@ -43,7 +43,6 @@
             [color]="'hyt-base-total-white'"
             (clickFn)="toggleTreeViewProject()"
           >
-            <!--*ngIf="areaViewType !== 'BIM_XKT'" -->
 
           <span
             [ngClass]="{'icon-hyt_eyeClose': treeViewIsOpen, 'icon-hyt_eyeOpen': !treeViewIsOpen}"
@@ -74,7 +73,11 @@
       </div>
 
       <div id="map-body">
-        <hyt-area-map *ngIf="areaViewType === 'IMAGE'" #map (itemOpen)="onItemMapClicked($event)"></hyt-area-map>
+        <hyt-area-map
+          *ngIf="areaViewType === 'IMAGE'"
+          #map
+          (itemOpen)="onItemMapClicked($event)"
+        ></hyt-area-map>
 
         <div *ngIf="areaViewType === 'BIM_XKT'" id="container-bim-viewer">
           <ng-container *ngIf="isBimLoading; else bimLoaded">
