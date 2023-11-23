@@ -21,7 +21,7 @@ export class ProjectsComponent implements OnInit {
   hProjects: HProject[] = [];
 
   hProjectsFiltered: HProject[] = [...this.hProjects];
-  
+
   filteringForm: FormGroup;
 
   /**
@@ -62,7 +62,7 @@ export class ProjectsComponent implements OnInit {
       this.scrolled = false;
     }
   }
-  
+
   ngOnInit() {
     this.initForm()
     if (this.projectsService.nextProjects.state === "delete-loading") {
@@ -267,7 +267,7 @@ export class ProjectsComponent implements OnInit {
     let scrollToTop = window.setInterval(() => {
       let pos = window.pageYOffset;
       if (pos > 0) {
-        window.scroll(0, pos - 20); // how far to scroll on each step
+        window.scroll(0, pos - 80); // how far to scroll on each step
       } else {
         window.clearInterval(scrollToTop);
       }

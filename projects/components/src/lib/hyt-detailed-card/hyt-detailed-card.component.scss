@@ -7,7 +7,7 @@ $primaryDarker: #094894;
 
     mat-card {
         background-color: #0d416d;
-    background-image: url("/assets/images/projects/Card_Idle.png");
+        background-image: url("/assets/images/projects/Card_Idle.png");
         background-repeat: no-repeat;
         background-position: bottom center;
         background-size: cover;
@@ -24,7 +24,7 @@ $primaryDarker: #094894;
             left: 0;
             width: 100%;
             font-size: 1.5em;
-            line-height: 1.5em;
+            line-height: 1.2em;
             padding: 8px;
             background: rgb(9, 72, 148);
             background: linear-gradient(0deg, $primaryDarker 0%, #2558a5c7 100%);
@@ -61,7 +61,7 @@ $primaryDarker: #094894;
             background-repeat: no-repeat;
             background-position: bottom center;
             background-size: cover;
-            transition: all .15s ease-in;
+            transition: all .25s ease-in-out;
             transform: translateY(100%) scale(0);
             opacity: 0;
 
@@ -167,7 +167,7 @@ $primaryDarker: #094894;
         cursor: pointer;
         display: none;
     }
-    
+
     &:hover {
         .delete-project-btn {
             display: block;
