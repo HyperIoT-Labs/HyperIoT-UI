@@ -89,6 +89,12 @@
 
         }
 
+        input {
+          &:nth-child(1) {
+            margin-left: 20px;
+          }
+        }
+
         span {
 
           display: inline-block;
