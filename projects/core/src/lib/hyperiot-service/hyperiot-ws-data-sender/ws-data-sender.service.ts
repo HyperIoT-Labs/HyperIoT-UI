@@ -7,6 +7,8 @@ export class WsDataSenderService {
   private wsUrl = this.baseWs + '//' + location.hostname + (location.port ? ':' + location.port : '') + '/hyperiot/ws/mqtt';
   private wsSubject: WebSocketSubject<any>;
 
+  private _keepAliveTimer;
+
   connect(deviceName: string, password: string, topic: string): WebSocketSubject<any> {
 
     this.disconnect();
@@ -19,6 +21,8 @@ export class WsDataSenderService {
       deserializer: e => e.data,
     });
 
+    this.keepAlive();
+
     return this.wsSubject;
 
   }
@@ -27,6 +31,7 @@ export class WsDataSenderService {
     if (this.wsSubject) {
       this.wsSubject.complete();
     }
+    clearTimeout(this._keepAliveTimer);
   }
 
   send(data: any) { // TODO should be PacketData
@@ -37,6 +42,12 @@ export class WsDataSenderService {
 
     this.wsSubject.next(data);
 
+  }
+
+  keepAlive() {
+    this._keepAliveTimer = setInterval(() => {
+      this.wsSubject.next('PING');
+    }, 40000);
   }
 
 }

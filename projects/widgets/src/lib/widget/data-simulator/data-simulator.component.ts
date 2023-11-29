@@ -84,11 +84,8 @@ export class DataSimulatorComponent extends BaseWidgetComponent {
           this.status = SimulatorStatus.ERROR;
         }
       },
-      error: error => {
-        console.log(error)
-        this.status = SimulatorStatus.ERROR},
-      complete: () => {
-        console.log('CLOSED');this.status = SimulatorStatus.CONNECTION_CLOSED},
+      error: error => this.status = SimulatorStatus.ERROR,
+      complete: () => this.status = SimulatorStatus.CONNECTION_CLOSED,
     });
   }
 
@@ -205,6 +202,7 @@ export class DataSimulatorComponent extends BaseWidgetComponent {
 
   ngOnDestroy(): void {
     super.ngOnDestroy();
+    this.wsSenderService.disconnect();
     clearInterval(this.interval);
   }
 
