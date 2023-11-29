@@ -202,6 +202,7 @@ export class DataSimulatorComponent extends BaseWidgetComponent {
 
   ngOnDestroy(): void {
     super.ngOnDestroy();
+    this.wsSenderService.disconnect();
     clearInterval(this.interval);
   }
 
