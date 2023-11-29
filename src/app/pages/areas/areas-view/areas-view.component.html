@@ -37,7 +37,11 @@
 
             <div class="col-4 right-tools">
 
-                <div id="dashboard-btn" *ngIf="areaId" class="button" [routerLink]="['/areas', projectId, areaId, 'dashboards']">
+                <div id="dashboard-btn"
+                     *ngIf="areaId"
+                     class="button"
+                     [routerLink]="['/areas', projectId, areaId, 'dashboards']"
+                >
                     <span class="hyt-icon hyt-icon icon-hyt_dash"></span>
                     <p>Dashboard</p>
                 </div>

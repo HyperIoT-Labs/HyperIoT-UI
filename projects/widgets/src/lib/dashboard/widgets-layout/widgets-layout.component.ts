@@ -497,6 +497,9 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
     if (typeof item.resize === 'function') {
       item.resize();
     }
+    if (item.resizeCallback) {
+      item.resizeCallback(item, itemComponent);
+    }
   }
 
   changedOptions() {

@@ -130,10 +130,36 @@ export class HytBimComponent implements OnInit, AfterViewInit, OnDestroy {
 
     },
     {
-      file: '',
+      file: 'PALO-2bo0072ter-R10.ifc.xkt',
       id: '',
-      objects: [],
-      annotations: []
+      objects: [
+        {
+          id: "genericSensorObject_1",
+          src: "/assets/sensors-obj/Sensori_HYOT.obj",
+          position: [-3.7235319437408374, 26.066913122778967, 0.6789571027975883],
+          scale: [1, 1, 1],
+          rotation: [0, -45, 0],
+        },
+      ],
+      annotations: [
+        {
+          id: "annotation_sensor_1",
+          worldPos: [-3.8235319437408374, 26.066913122778967, 0.6789571027975883],
+          occludable: true,
+          markerShown: true,
+          labelShown: false,
+
+          values: {
+            glyph: "A1",
+            title: "Temperature",
+            description: "Outdoor temperature acquisition",
+            markerBGColor: "transparent",
+            sensorImgUrl: '/assets/images/sensors/temperature.jpeg',
+            projectId: 0,
+            areaId: 0
+          }
+        },
+      ]
     }
   ]
 

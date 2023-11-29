@@ -1,0 +1,96 @@
+.data-simulator-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.data-simulator-info {
+    position: absolute;
+    padding: 0.2em;
+    width: 50%;
+    &.device {
+        top: 0;
+        left: 0;
+        text-align: left;
+    }
+    &.sent {
+        top: 0;
+        right: 0;
+        text-align: right;
+    }
+}
+
+.data-simulator-starter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 18px 0px;
+}
+
+.data-simulator-starter-icon {
+    font-size: 3rem;
+    border: 2px solid black;
+    border-radius: 50%;
+}
+
+.data-simulator-starter-button {
+    font-size: 48px;
+    width: 80px;
+    height: 80px;
+    background-color: #1e58a5;
+}
+
+.data-simulator-fields {
+    display: flex;
+    justify-content: center;
+    margin: 0px 8px 8px;
+    border-radius: 10px;
+    border: 1px solid #e1e1e1;
+    overflow: auto;
+
+    table {
+        width: 100%;
+        table-layout: fixed;
+    
+        tr {
+            height: 45px;
+            border-bottom: 1px solid #1e58a5;
+            border-radius: 10px;
+    
+            td {
+                padding: 4px 12px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            td.outlier-button {
+                width: 100px;
+                text-align: center;
+            }
+        }
+        tr:last-child {
+            border-bottom: none;
+        }
+          
+    }
+}
+
+.data-simulator-error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    span {
+        color: red;
+        padding: 0px 10px;
+    }
+}
+
+.data-simulator-warn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    span {
+        padding: 0px 10px;
+    }
+}

@@ -111,7 +111,7 @@ export class HytTreeViewProjectComponent implements OnInit {
     this.prepareData(data);
     this.treeData = data;
     this.dataSource.data = this.treeData;
-    
+
   }
 
   setActiveNode(node: TreeViewNode) {
@@ -241,7 +241,7 @@ export class HytTreeViewProjectComponent implements OnInit {
     this.treeData.forEach(node => {
       this.treeDataSearch(node, value);
     });
-    
+
     this.setData(this.treeData);
     this.treeControl.expandAll();
   }
