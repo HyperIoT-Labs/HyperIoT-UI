@@ -1,12 +1,23 @@
-import { Component, OnInit, ViewEncapsulation, OnDestroy, HostListener } from '@angular/core';
-import { Router } from '@angular/router';
-import { PageStatus } from './models/pageStatus';
-import { HProject, HprojectsService } from 'core';
-import { FormGroup, FormBuilder } from '@angular/forms';
-import { CardDetailOnHover, HytFilterButtonFilter, HytModalService, SelectOption } from 'components';
-import { ProjectsService } from 'src/app/services/projects.service';
-import { NotificationService } from 'components';
-import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
+import {
+  Component,
+  OnInit,
+  ViewEncapsulation,
+  OnDestroy,
+  HostListener,
+} from "@angular/core";
+import { Router } from "@angular/router";
+import { PageStatus } from "./models/pageStatus";
+import { HProject, HprojectsService } from "core";
+import { FormGroup, FormBuilder } from "@angular/forms";
+import {
+  CardDetailOnHover,
+  HytFilterButtonFilter,
+  HytModalService,
+  SelectOption,
+} from "components";
+import { ProjectsService } from "src/app/services/projects.service";
+import { NotificationService } from "components";
+import { DeleteConfirmDialogComponent } from "src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component";
 
 @Component({
   selector: "hyt-projects",
@@ -46,7 +57,7 @@ export class ProjectsComponent implements OnInit {
     private fb: FormBuilder,
     private projectsService: ProjectsService,
     private notificationservice: NotificationService,
-    private dialog: HytModalService,
+    private dialog: HytModalService
   ) {}
 
   /**
@@ -64,7 +75,7 @@ export class ProjectsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.initForm()
+    this.initForm();
     if (this.projectsService.nextProjects.state === "delete-loading") {
       this.projectsInLoading(this.projectsService.nextProjects.projectToDelete);
     }
@@ -115,12 +126,14 @@ export class ProjectsComponent implements OnInit {
     this.projectsService.updateProjectList();
   }
 
-  initForm(){
+  initForm() {
     this.filteringForm = this.fb.group({
-      projectType: [''],
-      sort: ['date-decreasing']
+      projectType: [""],
+      sort: ["date-decreasing"],
     });
-    this.filteringForm.controls['sort'].valueChanges.subscribe((val)=> this.sortBy(val))
+    this.filteringForm.controls["sort"].valueChanges.subscribe((val) =>
+      this.sortBy(val)
+    );
   }
 
   search(value: string) {
@@ -240,7 +253,7 @@ export class ProjectsComponent implements OnInit {
   }
 
   refreshComponent() {
-    this.initForm()
+    this.initForm();
 
     this.hProjectService.cardsView().subscribe(
       (res) => {
@@ -303,20 +316,22 @@ export class ProjectsComponent implements OnInit {
    * Dialog open for confirm the user wants to delete a project
    * @public
    */
-  openDeleteDialog(p : HProject) {
+  openDeleteDialog(p: HProject) {
     const dialogRef = this.dialog.open(DeleteConfirmDialogComponent, {
-        data: { title: 'Are you sure you want to delete the project?', message: 'This operation cannot be undone.' }
-      }
-    );
+      data: {
+        title: "Are you sure you want to delete the project?",
+        message: "This operation cannot be undone.",
+      },
+    });
 
     dialogRef.onClosed.subscribe(
       (result) => {
-        if ( result === 'delete') {
-          this.projectsService.deleteProject(p.id)
+        if (result === "delete") {
+          this.projectsService.deleteProject(p.id);
         }
       },
       (err) => {
-        console.log('Errore nell\' AFTER CLOSED del DIALOG di MATERIAL \n', err);
+        console.log("Errore nell' AFTER CLOSED del DIALOG di MATERIAL \n", err);
       }
     );
   }
@@ -325,72 +340,70 @@ export class ProjectsComponent implements OnInit {
    * List of filter for project type(shared)
    * @public
    */
-  filterProjectType: HytFilterButtonFilter[] =
-    [
-      {
-        value: "all",
-        keyLabel: "",
-        label: "ALL",
-        tooltip: "ALL",
-      },
-      {
-        icon: "warnT_Negative",
-        value: "personal",
-        tooltip: "Personal",
-      },
-      {
-        icon: "warnT_Negative",
-        value: "owners",
-        tooltip: "Owners",
-      },
-      {
-        icon: "warnT_Negative",
-        value: "shared",
-        tooltip: "Shared",
-      },
-    ];
+  filterProjectType: HytFilterButtonFilter[] = [
+    {
+      value: "all",
+      keyLabel: "",
+      label: "ALL",
+      tooltip: "ALL",
+    },
+    {
+      icon: "warnT_Negative",
+      value: "personal",
+      tooltip: "Personal",
+    },
+    {
+      icon: "warnT_Negative",
+      value: "owners",
+      tooltip: "Owners",
+    },
+    {
+      icon: "warnT_Negative",
+      value: "shared",
+      tooltip: "Shared",
+    },
+  ];
 
   /**
    * List of filter for the sort type(new, old, alphabetical)
    * @public
    */
-  filterSortType: HytFilterButtonFilter[] =
-    [
-      {
-        value: "date-decreasing",
-        keyLabel: "NEW",
-        label: "NEW",
-        tooltip: "NEW",
-      },
-      {
-        value: "date-increasing",
-        keyLabel: "OLD",
-        label: "OLD",
-        tooltip: "OLD",
-      },
-      {
-        value: "alfabetic-increasing",
-        keyLabel: "A-Z",
-        label: "A-Z",
-        tooltip: "A-Z",
-      },
-      {
-        value: "alfabetic-decreasing",
-        keyLabel: "Z-A",
-        label: "Z-A",
-        tooltip: "Z-A",
-      },
-    ];
+  filterSortType: HytFilterButtonFilter[] = [
+    {
+      value: "date-decreasing",
+      keyLabel: "NEW",
+      label: "NEW",
+      tooltip: "NEW",
+    },
+    {
+      value: "date-increasing",
+      keyLabel: "OLD",
+      label: "OLD",
+      tooltip: "OLD",
+    },
+    {
+      value: "alfabetic-increasing",
+      keyLabel: "A-Z",
+      label: "A-Z",
+      tooltip: "A-Z",
+    },
+    {
+      value: "alfabetic-decreasing",
+      keyLabel: "Z-A",
+      label: "Z-A",
+      tooltip: "Z-A",
+    },
+  ];
 
   /**
    * Generate the list of details that will be printed on project hover
    * @public
    */
-  generateDetails(p: HProject) : CardDetailOnHover[]{
+  generateDetails(p: HProject): CardDetailOnHover[] {
     return [
       {
-        icon: "warnT_Negative",
-        label: `<strong>${p.deviceCount}</strong> Sources`
+        icon: "source02",
+        label: `<strong>${p.deviceCount}</strong> Sources`,
       },
       // {
       //   icon: "warnT_Negative",
