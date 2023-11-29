@@ -38,9 +38,8 @@
 
           <div class="data-simulator-starter">
             <mat-spinner *ngIf="status === 0" strokeWidth="5" diameter="42"></mat-spinner>
-            <button *ngIf="status === 1" mat-fab extended class="data-simulator-starter-button">
-              <span class="hyt-icon" [ngClass]="isActive ? 'icon-hyt_pause' : 'icon-hyt_play'"
-                (click)="toggleActive()"></span>
+            <button *ngIf="status === 1" mat-fab extended class="data-simulator-starter-button" (click)="toggleActive()">
+              <span class="hyt-icon" [ngClass]="isActive ? 'icon-hyt_pause' : 'icon-hyt_play'"></span>
             </button>
             <div *ngIf="status === -2" class="data-simulator-error">
               <span i18n="@@HYT_connection_failed">Conection to Hyperiot services failed.</span>
