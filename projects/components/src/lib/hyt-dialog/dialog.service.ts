@@ -91,7 +91,8 @@ export class DialogService {
     }
 
     // Block scroll strategy
-    const scrollStrategy = this.overlay.scrollStrategies.noop();
+    // TODO temporary using block strategy instead of noop due to style changes related to the bim scroll issue.
+    const scrollStrategy = this.overlay.scrollStrategies.block();
 
     // Create the overlay with customizable options
     const overlayRef = this.overlay.create({
