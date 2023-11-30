@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { HytModalService, Option } from 'components';
+import { DialogService, Option } from 'components';
 import { HytStepperComponent } from 'components';
 import { HDevice, HdevicesService, HPacket, HpacketsService, HProject, HProjectAlgorithm, HprojectalgorithmsService, Rule } from 'core';
 import { Observable, Observer } from 'rxjs';
@@ -94,7 +94,7 @@ export class ProjectWizardComponent implements OnInit {
     private hDevicesService: HdevicesService,
     private hPacketsService: HpacketsService,
     public entitiesService: EntitiesService,
-    private hytModalService: HytModalService,
+    private dialogService: DialogService,
     private router: Router,
     private route: ActivatedRoute,
     private cd: ChangeDetectorRef
@@ -430,30 +430,27 @@ export class ProjectWizardComponent implements OnInit {
 
   openDeactivationModal(): Observable<boolean> {
     return new Observable((observer: Observer<boolean>) => {
-      const modalRef = this.hytModalService.open(
-        WizardDeactivationModalComponent
-      );
-      modalRef.onClosed.subscribe((res) => {
+      const modalRef = this.dialogService.open(WizardDeactivationModalComponent, { width: '430px' });
+      modalRef.afterClosed().subscribe((res) => {
         observer.next(res);
       });
     });
   }
 
   openOptionModal() {
-    const modalRef = this.hytModalService.open(WizardOptionsModalComponent);
+    const modalRef = this.dialogService.open(WizardOptionsModalComponent, { width: '960px', backgroundClosable: true });
     this.optionModalViewed = true;
 
-    modalRef.onClosed.subscribe(
+    modalRef.afterClosed().subscribe(
       (res) => {
         this.optionsModalClosed(res);
-      },
-      (err) => {}
+      }
     );
   }
 
   optionsModalClosed(event: { action: string; data: any }) {
 
-    switch (event.action) {
+    switch (event?.action) {
       case "goToStep": {
         this.stepper.changeStep(event.data);
         break;
@@ -463,6 +460,7 @@ export class ProjectWizardComponent implements OnInit {
         break;
       }
     }
+
   }
 
   openFinishModal() {
@@ -496,14 +494,15 @@ export class ProjectWizardComponent implements OnInit {
 
     this.cd.detectChanges();
 
-    // Move delay within the "modal" library
-    setTimeout(()=> {
-      const modalRef = this.hytModalService.open(
-        WizardReportModalComponent,
-        this.finishData
-      );
+    this.dialogService.open(
+      WizardReportModalComponent,
+      {
+        data: this.finishData,
+        backgroundClosable: true,
+        minWidth: '500px',
+      },
+    );
 
-    }, 100);
   }
 
   getDevices(): void {
