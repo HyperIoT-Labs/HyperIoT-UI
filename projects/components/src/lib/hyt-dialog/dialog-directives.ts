@@ -12,9 +12,13 @@ export class HytDialogDirective { }
     selector: '[hyt-dialog-header], [hytDialogHeader]',
     host: {
       'class': 'hyt-dialog-header',
+      '[class.hyt-dialog-header-align-start]': 'align === "start"',
+      '[class.hyt-dialog-header-align-end]': 'align === "end"',
     },
 })
-export class HytDialogTitle { }
+export class HytDialogTitle {
+  @Input() align?: 'start' | 'center' | 'end' = 'center';
+}
 
 @Directive({
     selector: `[hyt-dialog-content], hyt-dialog-content, [hytDialogContent]`,

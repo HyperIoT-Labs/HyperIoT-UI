@@ -22,6 +22,7 @@ export interface DialogLayout {
     }
     attachTarget?: any;
     hideBackdrop?: boolean;
+    keepOpenOnNavigation?: boolean;
 }
 
 export interface DialogConfig<T = any> extends DialogLayout {
