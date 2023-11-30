@@ -107,6 +107,7 @@ export class DialogService {
         minHeight: overlayConfig?.minHeight,
         maxWidth: overlayConfig?.maxWidth,
         maxHeight: overlayConfig?.maxHeight,
+        disposeOnNavigation: !overlayConfig?.keepOpenOnNavigation,
     });
 
     // handle open animations
