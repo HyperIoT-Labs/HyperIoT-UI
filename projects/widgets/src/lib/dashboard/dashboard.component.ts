@@ -9,7 +9,7 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { HytModalRef, HytModalService } from 'components';
+import { DialogService } from 'components';
 import { AlgorithmOfflineDataService, Area, AreasService, Dashboard, HProject, Logger, LoggerService, OfflineDataService } from 'core';
 import { debounceTime, Subject, Subscription, takeUntil } from 'rxjs';
 import { AddWidgetDialogComponent } from './add-widget-dialog/add-widget-dialog.component';
@@ -86,8 +86,6 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
   upTimeSec;
 
-  widgetModalRef: HytModalRef;
-
   packetsInDashboard: number[] = [];
 
   @Input() areaId: number | undefined = undefined;
@@ -156,7 +154,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     private offlineDataService: OfflineDataService,
     private algorithmOfflineDataService: AlgorithmOfflineDataService,
     private areaService: AreasService,
-    private hytModalService: HytModalService,
+    private dialogService: DialogService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private cd: ChangeDetectorRef,
@@ -336,8 +334,16 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   openWidgetModal() {
-    this.widgetModalRef = this.hytModalService.open(AddWidgetDialogComponent, { signalIsOn: this.signalIsOn });
-    this.widgetModalRef.onClosed.subscribe(res => {
+    const widgetModalRef = this.dialogService.open(
+      AddWidgetDialogComponent,
+      {
+        data: { signalIsOn: this.signalIsOn },
+        backgroundClosable: true,
+        height: '600px',
+        width: '1024px',
+      }
+    );
+    widgetModalRef.afterClosed().subscribe(res => {
       this.dashboardView?.onWidgetsAdd(res);
     });
   }
