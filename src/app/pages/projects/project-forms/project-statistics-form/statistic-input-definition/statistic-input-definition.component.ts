@@ -1,10 +1,11 @@
 import { Component, OnInit, OnChanges, Input,ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { HytModalService, SelectOption } from 'components';
+import { DialogService, SelectOption } from 'components';
 import { Algorithm, HPacket, HPacketField, HpacketsService, HProject, HProjectAlgorithmConfig, HProjectAlgorithmInputField } from 'core';
 import { resolve } from 'dns';
 import { InputDefinitionModalComponent } from './input-definition-modal/input-definition-modal.component';
 import { StatisticInputErrorComponent } from './statistic-input-error/statistic-input-error.component';
+import { ScrollStrategyOptions } from '@angular/cdk/overlay';
 
 interface StatisticInputForm {
   form: FormGroup;
@@ -47,7 +48,8 @@ export class StatisticInputDefinitionComponent implements OnInit {
   constructor(
     private hPacketsService: HpacketsService,
     public fb: FormBuilder,
-    private hytModalService: HytModalService,
+    private dialogService: DialogService,
+    private scrollStrategyOptions: ScrollStrategyOptions,
     private cd: ChangeDetectorRef
   ) {}
 
@@ -163,12 +165,13 @@ export class StatisticInputDefinitionComponent implements OnInit {
       algorithm: this.algorithm,
       mappedInputList,
     };
-    const modalRef = this.hytModalService.open(
-      InputDefinitionModalComponent,
-      data
-    );
-    modalRef.onClosed.subscribe(
+    const scrollStrategy = this.scrollStrategyOptions.noop(); // TODO passing noop scrollstrategy because of drag-drop scroll issue. Should be fixed in agular 16
+    const modalRef = this.dialogService.open(InputDefinitionModalComponent, { data, width: '800px', scrollStrategy });
+    modalRef.afterClosed().subscribe(
       (res) => {
+        if (!res) {
+          return;
+        }
         const mappedInputListResponse = res.data.mappedInputList;
         this.config.input[i] = {
           packetId: currentPacketId,
@@ -238,9 +241,7 @@ export class StatisticInputDefinitionComponent implements OnInit {
               (p) => p.id === input[k].packetId
             );
             if (!currentPacket) {
-              const modalRef = this.hytModalService.open(
-                StatisticInputErrorComponent
-              );
+              this.dialogService.open(StatisticInputErrorComponent, { backgroundClosable: true });
               this.resetRuleDefinition();
               return;
             }
@@ -250,7 +251,7 @@ export class StatisticInputDefinitionComponent implements OnInit {
             // check if all fields still exist
             input[k].mappedInputList.forEach((mappedInput) => {
               if (!fields.find((f) => f.id === mappedInput.packetFieldId)) {
-                this.hytModalService.open(StatisticInputErrorComponent);
+                this.dialogService.open(StatisticInputErrorComponent, { backgroundClosable: true });
                 this.resetRuleDefinition();
                 return;
               }

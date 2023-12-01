@@ -1,51 +1,33 @@
 #container-option-modal {
-  
-    .dialog {
-      overflow: hidden;
-      background-color: #2258a5;
-      box-shadow: 0 0 5px 2px rgba(0, 0, 0, .35);
-      border-radius: 8px;
-      border: none;
-  
-      .dialog-header {
-        background-color: #e60000;
-        padding: 8px 10px;
-        color: #fff;
-        text-align: center;
+
+  .dialog-header {
+    background-color: #e60000;
+    position: relative;
+    text-transform: uppercase;
+
+    span {
+
+      &.icon-hyt_cancelC {
+
+        position: absolute;
+        right: 10px;
         font-size: 1.3em;
-        position: relative;
-  
-        h3 {
-          margin: 0px;
-          text-transform: uppercase;
-        } 
-  
-        span {
-  
-          &.icon-hyt_cancelC {
-  
-            color: #ffffff;
-  
-            &:hover {
-  
-              color: #500000;
-  
-            }
-  
-          }
-  
+        cursor: pointer;
+
+        &:hover {
+
+          color: #500000;
+
         }
-  
+
       }
-  
-      .dialog-body {
-        background-color: #fff;
-        padding: 30px;
-      }
-  
+
     }
-    
+
   }
-  
-  
-  
+
+  .dialog-body {
+    padding: 30px;
+  }
+
+}
