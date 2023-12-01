@@ -9,7 +9,7 @@ import {
   EventEmitter
 } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { HytModalService, SelectOption } from 'components';
+import { DialogService, SelectOption } from 'components';
 import { Option } from 'components';
 import { HPacket, HPacketField, HpacketsService } from 'core';
 import { RuleErrorModalComponent } from './rule-error/rule-error-modal.component';
@@ -137,12 +137,12 @@ export class RuleDefinitionComponent {
   /**
    * class constructor
    * @param fb FormBuilder service instance
-   * @param hytModalService service to use modal
+   * @param dialogService service to use dialogs
    * @param hPacketsService service for hPackets
    */
   constructor(
     public fb: FormBuilder,
-    private hytModalService: HytModalService,
+    private dialogService: DialogService,
     private hPacketsService: HpacketsService,
     private cd: ChangeDetectorRef
   ) {}
@@ -401,10 +401,7 @@ export class RuleDefinitionComponent {
               (pa) => pa.id === +ruleDef[k].packet
             );
             if (!actualPacket) {
-              const modalRef = this.hytModalService.open(
-                RuleErrorModalComponent
-              );
-              // this.modalService.open('hyt-rule-error-modal');
+              this.dialogService.open(RuleErrorModalComponent, { backgroundClosable: true });
               this.resetRuleDefinition();
               return;
             }
@@ -415,7 +412,7 @@ export class RuleDefinitionComponent {
               (x) => x.value === parseInt(ruleDef[k].field)
             );
             if (!actualFieldOption) {
-              this.hytModalService.open(RuleErrorModalComponent);
+              this.dialogService.open(RuleErrorModalComponent, { backgroundClosable: true });
               this.resetRuleDefinition();
               return;
             }
