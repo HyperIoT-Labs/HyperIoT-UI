@@ -56,6 +56,7 @@ import { HytFilterButtonComponent } from './hyt-filter-button/hyt-filter-button.
 import { HytBadgeComponent } from './hyt-badge/hyt-badge.component';
 import { HytDetailedCardComponent } from './hyt-detailed-card/hyt-detailed-card.component';
 import { HytBimComponent } from './hyt-bim/bim.component';
+import { HytChatbotComponent } from './hyt-chatbot/hyt-chatbot.component';
 
 export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
 
@@ -114,6 +115,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     HytDetailedCardComponent,
     HytBadgeComponent,
     HytBimComponent,
+    HytChatbotComponent
   ],
   imports: [
     CommonModule,
@@ -171,6 +173,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     HytDetailedCardComponent,
     HytBadgeComponent,
     HytBimComponent,
+    HytChatbotComponent
   ],
   providers: [
     NotificationService,

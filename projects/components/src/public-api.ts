@@ -88,6 +88,7 @@ export { HytAccordionHeader } from './lib/hyt-accordion/hyt-directives/hyt-accor
 export { HytFilterButtonComponent } from './lib/hyt-filter-button/hyt-filter-button.component'
 export { HytDetailedCardComponent } from './lib/hyt-detailed-card/hyt-detailed-card.component'
 export { HytBadgeComponent } from './lib/hyt-badge/hyt-badge.component'
+export { HytChatbotComponent } from './lib/hyt-chatbot/hyt-chatbot.component'
 
 export * from './lib/hyt-shared-components/hyt-topology-services/hyt-topology.service';
 export * from './lib/hyt-shared-components/hyt-topology-toolbar/hyt-topology-toolbar.component';

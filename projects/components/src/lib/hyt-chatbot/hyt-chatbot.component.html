@@ -1,0 +1,63 @@
+<div class="chatbot-container">
+
+    <!-- TESTA -->
+    <header>
+        <div class="container-header">
+          <div class="header-start">
+            <div class="img-profile">
+              <img src="assets/icons/hyt-chatbot-img.png" alt="Loriana Icon" width="35" height="auto">
+            </div>
+
+            <div class="title-bot">
+              <div class="title">Loriana</div>
+              <div class="subtitle">Assistente virtuale</div>
+            </div>
+          </div>
+
+          <div class="header-end">
+            <div class="toolbar-button">
+              <button class="close-button" title="Close" (click)="onClose()">
+                <span class="hyt-icon icon-hyt_cancel"></span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </header>
+
+      <!-- CORPO -->
+      <div class="container-messages" #content>
+        
+      </div>
+
+      <!-- FINE -->
+      <footer *ngIf="pageStatus === 0">
+        <div class="container-footer">
+          <form>
+
+            <div class="container-input-message">
+              <input
+                [disabled]="isTypingMessageId.length > 0"
+                #inputMsg
+                (keyup)="startTypingIndicator($event)"
+                type="text"
+                id="input-msg"
+                placeholder="Scrivi qui"
+                (focus)="inputOnFocus($event)"
+                autocomplete="off"
+              >
+            </div>
+            <div class="container-send-btn">
+              <button
+                (click)="sendMessage()"
+                [disabled]="isTypingMessageId.length > 0 || inputMsg.value === '' || inputMsgEl?.nativeElement.value === ''"
+              >
+                <img src="/assets/icons/hyt-chatbot-send.png" alt="Send Message">
+              </button>
+            </div>
+
+          </form>
+        </div>
+      </footer>
+
+</div>

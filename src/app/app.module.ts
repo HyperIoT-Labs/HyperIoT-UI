@@ -23,6 +23,7 @@ import { AccountButtonComponent } from './components/topbar/account-button/accou
 
 // angular-material
 import { MatIconModule } from '@angular/material/icon';
+import { MatBadgeModule } from '@angular/material/badge';
 
 // hyperiot
 import { Configuration, ConfigurationParameters, HyperiotClientModule, LoggerService } from 'core';
@@ -126,6 +127,7 @@ export function apiConfigFactory(): Configuration {
     MatTabsModule,
     MatCardModule,
     MatProgressSpinnerModule,
+    MatBadgeModule,
     CustomMaterialModule,
     DashboardModule,
     ReactiveFormsModule,

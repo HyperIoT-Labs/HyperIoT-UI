@@ -1,0 +1,137 @@
+.chatbot-container {
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+    border: 1px solid black;
+    width: 350px; 
+    height: 575px;
+    z-index: 9999;
+}
+ 
+/* header */
+.chatbot-container header {
+    height: 50px;
+    background-color: #0d416d;
+}
+.chatbot-container header .container-header .header-start{
+    width: 70%;
+    display: inline-flex;
+    float: left;
+}
+
+/* immagine bot header*/
+.chatbot-container header .container-header .header-start .img-profile{
+    margin-top: 5px;
+    margin-left: 5px;
+}
+.chatbot-container header .container-header .header-start .img-profile img{
+    border-radius: 50%;
+}
+
+/* titolo bot */    
+.chatbot-container header .container-header .header-start .title-bot{
+    margin-top: 4px;
+    margin-left: 5px;
+}
+.chatbot-container header .container-header .header-start .title-bot .title{
+    color: white;
+    font-size: 15px;
+}
+.chatbot-container header .container-header .header-start .title-bot .subtitle{
+    color: white;
+    font-size: 10px;
+}
+
+/* close button */
+.chatbot-container header .container-header .header-end{
+    width: 30%;
+    float: right;
+}
+.chatbot-container header .container-header .header-end .toolbar-button{
+    float: right;
+}
+.chatbot-container header .container-header .header-end .toolbar-button .close-button{
+    border: none;
+    background: #0d416d;
+    color: white;
+}
+
+/* Footer con input text e invio */
+.chatbot-container footer {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+}
+
+.chatbot-container footer .container-footer form .container-input-message {
+    display: flex;
+    width: 92%;
+    height: 35px;
+    display: flex;
+}
+
+.chatbot-container footer .container-footer{
+    display: flex;
+}
+
+.chatbot-container footer .container-footer form{
+    display: flex;
+}
+
+.chatbot-container footer .container-footer form .container-input-message input {
+    width: 99%;
+    border: none;
+    font-size: 15px;
+    color: #505050;
+    background-color: #ebebeb;
+    border-radius: 5px;
+    padding: 10px;
+}
+.chatbot-container footer .container-footer form .container-input-message input:disabled {
+    cursor: not-allowed;
+}
+.chatbot-container footer .container-footer form .container-input-message input:focus-visible {
+    outline: #bebebe;
+}
+.chatbot-container footer .container-footer form .container-input-message input::-webkit-input-placeholder {
+   /* Edge */
+    color: #bebebe;
+}
+.chatbot-container footer .container-footer form .container-input-message input:-ms-input-placeholder {
+   /* Internet Explorer 10-11 */
+    color: #bebebe;
+}
+.chatbot-container footer .container-footer form .container-input-message input::placeholder {
+    color: #bebebe;
+}
+.chatbot-container footer .container-footer form .container-send-btn {
+    display: flex;
+    width: 5%;
+    height: 35px;
+    align-items: center;
+    justify-content: flex-start
+}
+.chatbot-container footer .container-footer form .container-send-btn button {
+    background-color: #fff;
+    width: 33px;
+    height: 33px;
+    border-radius: 50%;
+    text-align: center;
+    border: 3px solid #2d82cb;
+    box-shadow: 0px 0px 3px 0px #0d416d;
+    opacity: 1;
+}
+.chatbot-container footer .container-footer form .container-send-btn button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+.chatbot-container footer .container-footer form .container-send-btn button:hover {
+    box-shadow: 0px 0px 0px 0px #0d416d;
+}
+.chatbot-container footer .container-footer form .container-send-btn button img {
+    width: 17px;
+    margin: 0 auto;
+}
+
+
+
