@@ -27,7 +27,8 @@ import {
   import { HostParameters } from "./models/host-parameters";
   import { SessionService } from "./services/session.service";
   import { ParameterizedService } from "./services/parameterized.service";
-  
+  import { CatClient } from 'ccat-api'
+
   export interface UserContacts {
     name: string;
     telephone: number;
@@ -127,6 +128,12 @@ import {
       complete: () => console.log("[messagesObserver] message complete"), // Called when connection is closed (for whatever reason).
     };
   
+    /* Declare cat client API */
+    cat = new CatClient({
+      baseUrl: 'localhost',
+      user: 'user'
+    });
+
     constructor(
       public websocketService: WebSocketService,
       public localStorageService: LocalStorageService,
@@ -146,50 +153,28 @@ import {
     /*** WIDGET LIFECYCLES ***/
   
     ngOnInit(): void {
-      // Subscribed to the data from the attributes passed by HCL
-      this.activatedRoute.data.subscribe((data: HostParameters) => {
-        console.log("[REMOTE - constructor] ROUTE DATA", data);
-        if (
-          Object.keys(data).length > 0 &&
-          data.hasOwnProperty("embedded") &&
-          data.embedded?.toLowerCase() === "true"
-        ) {
-          this.applicationBaseUrl = data.remoteAppUrl!;
-          this.webEmbedded = true;
-          if (data.elementContent) this.elementContent = data.elementContent;
-        } else {
-          const originUrl = this.document.location.origin;
-          const baseHref = this.locationStrategy.getBaseHref()
-            ? this.locationStrategy.getBaseHref()
-            : "/";
-          this.applicationBaseUrl = originUrl + baseHref;
-          this.webEmbedded = false;
-        }
-  
-        // Set global variables to make image paths absolute
-        document.documentElement.style.setProperty(
-          "--chatBotChiaraIconBGImage",
-          'url("' +
-            this.applicationBaseUrl +
-            'assets/images/icons/chiara-icon.png")'
-        );
-      });
-  
-      this.activatedRoute.queryParams.subscribe({
-        next: (res) => {
-          console.log("QUERY PARAMS", res);
-        },
-      });
-  
-      this.parameterizedService
-        .parameterizedRequest(this.elementContent)
-        .subscribe({
-          next: (res) => {
-            console.log("PARAMETERIZED REQUEST", res);
-          },
-          error: (err) => {
-            console.log("PARAMETERIZED REQUEST ERROR", err);
-          },
+      this.cat.init();
+      this.cat.onConnected(() => {
+            console.log('Socket connected');
+            /* First message */
+            this.cat.send('Hello from a user!');
+            this.pageStatus = PageStatus.READY;
+
+        }).onMessage(msg => {
+            console.log(msg);
+            const randomUUID: string = uuidv4();
+
+            this.textMessageHandling({
+              action: "text",
+              text: msg.content,
+              author: "csr",
+              messageId: randomUUID,
+              timestamp: new Date().getTime(),
+              });
+        }).onError(err => {
+            console.log(err)
+        }).onDisconnected(() => {
+            console.log('Socket disconnected')
         });
     }
   
@@ -206,14 +191,8 @@ import {
         });
     }
   
-    ngOnDestroy() {
-      this.websocketService.closeWSConnection(this.messages);
-      if (this.ngUnsubscribe) {
-        this.ngUnsubscribe.next();
-      }
-    }
-  
-    /*** END WIDGET LIFECYCLES ***/
+    ngOnDestroy(){}
+
   
     /**
      * Manages the floating pill that displays message dates as the chat content is scrolled.
@@ -544,7 +523,7 @@ import {
     returnAuthor(idAuthor: string): string {
       switch (idAuthor) {
         case "csr":
-          return "Chiara";
+          return "Loriana";
         case "cx":
           return "Tu";
         default:

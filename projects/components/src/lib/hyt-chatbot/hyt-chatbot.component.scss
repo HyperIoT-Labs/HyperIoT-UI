@@ -170,12 +170,12 @@ $chatBotChiaraIconBGImage: #{var(--chatBotChiaraIconBGImage)};
 
       span {
         &.day-date {
-          background-color: #c6ffb3;
+          background-color: #89a7ff;
           width: fit-content;
           padding: 2px 8px;
           font-size: 0.8em;
           border-radius: 8px;
-          color: #3c3c3c;
+          color: white;
           margin: 0 auto 10px;
           transition: .2s ease-out;
 
@@ -229,7 +229,7 @@ $chatBotChiaraIconBGImage: #{var(--chatBotChiaraIconBGImage)};
               bottom: -12px;
               left: -40px;
               //background-image: url('../../assets/images/icons/chiara-icon.png');
-              background-image: $chatBotChiaraIconBGImage;
+              background-image: url('/assets/icons/hyt-chatbot-img.png');
               background-size: contain;
               background-position: center center;
               background-repeat: no-repeat;
@@ -618,6 +618,7 @@ $chatBotChiaraIconBGImage: #{var(--chatBotChiaraIconBGImage)};
         }
 
         .container-send-btn {
+          padding-left: 20px;
           display: flex;
           width: 10%;
           height: 35px;
@@ -630,8 +631,8 @@ $chatBotChiaraIconBGImage: #{var(--chatBotChiaraIconBGImage)};
             height: 40px;
             border-radius: 50%;
             text-align: center;
-            border: 3px solid #2db27a;
-            box-shadow: 0px 0px 3px 0px #177a17;
+            border: 3px solid #1e58a5;
+            box-shadow: 0px 0px 3px 0px darkblue;
             opacity: 1;
 
             &:disabled {
