@@ -21,7 +21,7 @@ $chatBotChiaraIconBGImage: #{var(--chatBotChiaraIconBGImage)};
   }
 
   ::-webkit-scrollbar-thumb {
-    background-color: rgba(55, 168, 116, 0.6);
+    background-color: darkcyan;
   }
 
   ::-webkit-scrollbar-track {
@@ -146,12 +146,12 @@ $chatBotChiaraIconBGImage: #{var(--chatBotChiaraIconBGImage)};
     scroll-behavior: smooth;
 
     .current-view-date {
-      background-color: #c6ffb3;
+      background-color: #89a7ff;
       width: fit-content;
       padding: 2px 8px;
       font-size: .8em;
       border-radius: 8px;
-      color: #3c3c3c;
+      color: white;
       position: sticky;
       top: 15px;
       z-index: 1;
@@ -239,7 +239,7 @@ $chatBotChiaraIconBGImage: #{var(--chatBotChiaraIconBGImage)};
           }
 
           &.is-user {
-            background-color: #45cc92;
+            background-color: #81a0fc;
             align-self: flex-end;
 
             &:before {
@@ -247,7 +247,7 @@ $chatBotChiaraIconBGImage: #{var(--chatBotChiaraIconBGImage)};
               bottom: 0px;
               border-width: 10px 0px 0px 10px;
               border-color: transparent;
-              border-left-color: #45cc92;
+              border-left-color: #81a0fc;
             }
 
             &.read {
@@ -257,7 +257,7 @@ $chatBotChiaraIconBGImage: #{var(--chatBotChiaraIconBGImage)};
                 right: -4px;
                 bottom: -16px;
                 font-size: .7em;
-                color: #117349;
+                color: #112a73;
                 font-style: italic;
                 font-weight: bold;
               }
@@ -275,7 +275,7 @@ $chatBotChiaraIconBGImage: #{var(--chatBotChiaraIconBGImage)};
             font-size: .9em;
             font-style: italic;
             font-weight: bold;
-            color: #1e9361;
+            color: #112a73;
 
             &:before {
               content: none;
@@ -310,10 +310,10 @@ $chatBotChiaraIconBGImage: #{var(--chatBotChiaraIconBGImage)};
 
             .message-row {
               a {
-                color: #0a4127;
+                color: darkblue;
 
                 &:hover {
-                  color: #20a667;
+                  color: darkcyan;
                 }
               }
 
@@ -334,11 +334,11 @@ $chatBotChiaraIconBGImage: #{var(--chatBotChiaraIconBGImage)};
                   background-color: #d0f3e4;
                   margin-top: 10px;
                   border-radius: 5px;
-                  border: 1px solid #45cc92;
+                  border: 1px solid darkcyan;
                   cursor: pointer;
 
                   &:hover {
-                    background-color: #45cc92;
+                    background-color: darkcyan;
                     color: #fff;
                     box-shadow: 0px 0px 5px -1px #040404;
                   }
@@ -365,11 +365,11 @@ $chatBotChiaraIconBGImage: #{var(--chatBotChiaraIconBGImage)};
                   background-color: #d0f3e4;
                   margin-top: 10px;
                   border-radius: 5px;
-                  border: 1px solid #45cc92;
+                  border: 1px solid darkcyan;
                   cursor: pointer;
 
                   &:hover {
-                    background-color: #45cc92;
+                    background-color: darkcyan;
                     color: #fff;
                     box-shadow: 0px 0px 5px -1px #040404;
                   }
@@ -480,7 +480,7 @@ $chatBotChiaraIconBGImage: #{var(--chatBotChiaraIconBGImage)};
         button {
           &.retry-connect-btn {
             margin-top: 20px;
-            background-color: #3fbf87;
+            background-color: darkcyan;
             color: #fff;
             padding: 8px 10px;
             border-radius: 5px;
@@ -489,7 +489,7 @@ $chatBotChiaraIconBGImage: #{var(--chatBotChiaraIconBGImage)};
 
           &:hover {
             &.retry-connect-btn {
-              background-color: #299566;
+              background-color: darkcyan;
             }
           }
         }
@@ -506,7 +506,7 @@ $chatBotChiaraIconBGImage: #{var(--chatBotChiaraIconBGImage)};
         align-items: center;
 
         strong {
-          background: linear-gradient(to bottom right, #46d196, #259967);
+          background: linear-gradient(to bottom right, darkcyan, darkblue);
           color: #fff;
           margin-left: 3px;
           padding: 2px 15px;
@@ -565,6 +565,7 @@ $chatBotChiaraIconBGImage: #{var(--chatBotChiaraIconBGImage)};
     }
 
     .container-footer {
+      background: white;
       width: 100%;
       display: flex;
       align-items: center;
@@ -641,7 +642,7 @@ $chatBotChiaraIconBGImage: #{var(--chatBotChiaraIconBGImage)};
             }
 
             &:hover {
-              box-shadow: 0px 0px 0px 0px #177a17;
+              box-shadow: 0px 0px 0px 0px darkblue;
             }
 
             img {

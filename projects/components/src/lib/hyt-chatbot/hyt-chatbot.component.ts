@@ -293,13 +293,18 @@ import {
       const randomUUID: string = uuidv4();
       this.inputMsg = this.inputMsgEl?.nativeElement.value;
       console.log("[sendMessage] message", this.inputMsg);
-      this.messages.next({
-        action: "text",
-        text: this.inputMsg,
-        author: "cx",
-        messageId: randomUUID,
-        timestamp: new Date().getTime(),
-      });
+      
+      // mando messaggio al gatto
+      this.cat.send(this.inputMsg);
+
+      this.textMessageHandling({
+          action: "text",
+          text: this.inputMsg,
+          author: "cx",
+          messageId: randomUUID,
+          timestamp: new Date().getTime(),
+        });
+
       if (this.inputMsgEl) this.inputMsgEl.nativeElement.value = "";
       // Disable send button
       this.inputMsgEl?.nativeElement.focus();
