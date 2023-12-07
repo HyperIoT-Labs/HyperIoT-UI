@@ -1,37 +1,37 @@
-<div id="container-cancel-modal">
+<div id="container-cancel-modal" hyt-dialog>
 
-    <div class="dialog-header">
-        <span>{{data.data.title}}</span>
+    <div class="dialog-header" hyt-dialog-header>
+        <span>{{data.title}}</span>
         <span class="hyt-icon icon-hyt_cancelC" (click)="close('cancel')"></span>
     </div>
 
-    <div class="dialog-body">
+    <div class="dialog-body" hyt-dialog-content>
 
-        {{data.data.message}}
+        {{data.message}}
 
-        <div id="container-btn">
+    </div>
 
-            <div id="btn-left">
+    <div class="dialog-footer" hyt-dialog-footer>
 
-                <hyt-button 
-                    [color]="'hyt-base-total-green'"
-                    (click)="close('cancel')"> 
-                    <span class="hyt-icon icon-hyt_arrowLeft"></span>
-                    <ng-container i18n="@@HYT_cancel">Cancel</ng-container>
-                </hyt-button>
-                
-            </div>
+        <div id="btn-left">
 
-            <div id="btn-right">
+            <hyt-button 
+                [color]="'hyt-base-total-green'"
+                (click)="close('cancel')"> 
+                <span class="hyt-icon icon-hyt_arrowLeft"></span>
+                <ng-container i18n="@@HYT_cancel">Cancel</ng-container>
+            </hyt-button>
+            
+        </div>
 
-                <hyt-button 
-                    [color]="'hyt-base-total-red'"
-                    (click)="close('delete')"> 
-                    <span class="hyt-icon icon-hyt_trash"></span>
-                    <ng-container i18n="@@HYT_delete">Delete</ng-container>
-                </hyt-button>
-            </div>
+        <div id="btn-right">
 
+            <hyt-button 
+                [color]="'hyt-base-total-red'"
+                (click)="close('delete')"> 
+                <span class="hyt-icon icon-hyt_trash"></span>
+                <ng-container i18n="@@HYT_delete">Delete</ng-container>
+            </hyt-button>
         </div>
 
     </div>

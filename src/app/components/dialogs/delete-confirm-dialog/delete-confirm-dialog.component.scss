@@ -5,13 +5,7 @@
     .dialog-header {
 
         background-color: #e60000;
-        padding: 8px 10px;
-        color: #fff;
-        text-align: center;
-        font-size: 1.3em;
         position: relative;
-        border-top-left-radius: 8px;
-        border-top-right-radius: 8px;
       
         span {
       
@@ -36,52 +30,37 @@
 
     .dialog-body {
 
-        background-color: #fff;
         padding: 30px;
-        border-bottom-left-radius: 8px;
-        border-bottom-right-radius: 8px;
         text-align: center;
         font-size: 1.2em;
 
-        #container-btn {
+    }
 
-            display: flex;
-            justify-content: space-between;
-            
-        margin-top: 30px;
+    .dialog-footer {
 
-            #btn-right,
-            #btn-left {
+        #btn-left {
 
-                width: 49%;
+            span {
 
-            }
+                &.icon-hyt_arrowLeft {
 
-            #btn-left {
-
-                span {
-
-                    &.icon-hyt_arrowLeft {
-
-                        font-size: 1.4em;
-                        vertical-align: text-top;
-
-                    }
+                    font-size: 1.4em;
+                    vertical-align: text-top;
 
                 }
 
             }
 
-            #btn-right {
+        }
 
-                span {
+        #btn-right {
 
-                    &.icon-hyt_trash {
+            span {
 
-                        font-size: 1.2em;
-                        vertical-align: text-top;
+                &.icon-hyt_trash {
 
-                    }
+                    font-size: 1.2em;
+                    vertical-align: text-top;
 
                 }
 

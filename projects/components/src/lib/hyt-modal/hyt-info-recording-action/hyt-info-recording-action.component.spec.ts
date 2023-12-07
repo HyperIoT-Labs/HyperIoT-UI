@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { HytInfoRecordingActionComponent } from './hyt-info-recording-action.component';
 
-describe('InfoRecordingActionComponent', () => {
+describe('HytInfoRecordingActionComponent', () => {
   let component: HytInfoRecordingActionComponent;
   let fixture: ComponentFixture<HytInfoRecordingActionComponent>;
 

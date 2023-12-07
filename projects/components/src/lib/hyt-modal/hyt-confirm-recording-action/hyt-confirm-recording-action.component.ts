@@ -1,9 +1,9 @@
-import { Component, Input, EventEmitter, Output, ViewEncapsulation, Injector, OnDestroy } from '@angular/core';
+import { Component, Input, EventEmitter, Output, ViewEncapsulation, Injector, OnDestroy, Inject } from '@angular/core';
 import { HytTopologyService } from '../../hyt-shared-components/hyt-topology-services/hyt-topology.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import {HytModal} from "../hyt-modal";
-import {HytModalService} from "../hyt-modal.service";
+import { DialogRef } from '../../hyt-dialog/dialog-ref';
+import { DIALOG_DATA } from '../../hyt-dialog/dialog-tokens';
 
 enum TopologyActionState {
   Confirm = 0,
@@ -27,7 +27,7 @@ enum TopologyRequestState {
   styleUrls: ['./hyt-confirm-recording-action.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class HytConfirmRecordingActionComponent extends HytModal implements OnDestroy {
+export class HytConfirmRecordingActionComponent implements OnDestroy {
 
   topologyActionState: TopologyActionState = TopologyActionState.Confirm;
 
@@ -42,10 +42,9 @@ export class HytConfirmRecordingActionComponent extends HytModal implements OnDe
 
   constructor(
     private hytTopologyService: HytTopologyService,
-    hytModalService: HytModalService
-  ) {
-    super(hytModalService);
-  }
+    private dialogRef: DialogRef<{ dataRecordingIsOn: boolean; upTimeSec: number; }>,
+    @Inject(DIALOG_DATA) public data: any,
+  ) { }
 
   confirm() {
     if (this.data.actionType === 'start-stop' && this.data.dataRecordingIsOn) {
@@ -80,7 +79,7 @@ export class HytConfirmRecordingActionComponent extends HytModal implements OnDe
       res => {
         this.topologyRequestState = TopologyRequestState.Completed;
         setTimeout(() => {
-          this.close({
+          this.dialogRef.close({
             dataRecordingIsOn: true,
             upTimeSec: 0
           });
@@ -102,7 +101,7 @@ export class HytConfirmRecordingActionComponent extends HytModal implements OnDe
     .subscribe(
       res => {
         this.topologyRequestState = TopologyRequestState.Completed;
-        this.close({
+        this.dialogRef.close({
           dataRecordingIsOn: false,
           upTimeSec: 0
         });
@@ -116,9 +115,9 @@ export class HytConfirmRecordingActionComponent extends HytModal implements OnDe
 
   cancel() {
     if (this.data.actionType === 'reload') {
-      this.close();
+      this.dialogRef.close();
     } else {
-      this.close();
+      this.dialogRef.close();
     }
   }
 
@@ -126,6 +125,10 @@ export class HytConfirmRecordingActionComponent extends HytModal implements OnDe
     if (this.ngUnsubscribe) {
       this.ngUnsubscribe.next();
     }
+  }
+
+  close() {
+    this.dialogRef.close();
   }
 
 }

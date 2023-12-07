@@ -1,5 +1,5 @@
-import { Component, OnInit, AfterViewInit, ViewEncapsulation,ChangeDetectorRef } from '@angular/core';
-import { HytModal, HytModalService } from 'components';
+import { Component, OnInit, AfterViewInit, ViewEncapsulation,ChangeDetectorRef, Inject } from '@angular/core';
+import { DIALOG_DATA, DialogRef } from 'components';
 import { PageStatus } from 'src/app/pages/projects/models/pageStatus';
 import { AssetstagsService } from 'core';
 import { FormGroup, FormBuilder } from '@angular/forms';
@@ -11,7 +11,7 @@ import { HttpErrorHandlerService } from 'src/app/services/errorHandler/http-erro
   styleUrls: ['./add-tag-modal.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class AddTagModalComponent extends HytModal implements OnInit,AfterViewInit {
+export class AddTagModalComponent implements OnInit,AfterViewInit {
 
   pageStatus: PageStatus = PageStatus.Standard;
 
@@ -25,7 +25,7 @@ export class AddTagModalComponent extends HytModal implements OnInit,AfterViewIn
   resObserver = {
     next: (res) => {
       this.pageStatus = PageStatus.New;
-      this.close(res);
+      this.dialogRef.close(res);
     },
     error: (err) => {
       this.setErrors(err);
@@ -37,13 +37,13 @@ export class AddTagModalComponent extends HytModal implements OnInit,AfterViewIn
   public color: string = this.DEFAULT_COLOR;
 
   constructor(
-    service: HytModalService,
     private assetTagService: AssetstagsService,
     private formBuilder: FormBuilder,
     private errorHandler: HttpErrorHandlerService,
-    private cd : ChangeDetectorRef
+    private cd : ChangeDetectorRef,
+    private dialogRef: DialogRef<any>,
+    @Inject(DIALOG_DATA) public data: any,
   ) {
-    super(service);
     this.descriptionValue = '';
   }
 
@@ -57,12 +57,12 @@ export class AddTagModalComponent extends HytModal implements OnInit,AfterViewIn
   }
 
   ngAfterViewInit(){
-    this.cd.detectChanges();
     (
       document.querySelector(
         "#add-tag-modal .hyt-input.mat-input-element"
       ) as HTMLElement
     ).focus();
+    this.cd.detectChanges();
   }
 
   resetColor(): void {
@@ -120,6 +120,10 @@ export class AddTagModalComponent extends HytModal implements OnInit,AfterViewIn
 
   notValid(): boolean {
     return this.tagForm.get('name').invalid;
+  }
+
+  close() {
+    this.dialogRef.close();
   }
 
 }

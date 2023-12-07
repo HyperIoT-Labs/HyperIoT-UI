@@ -1,19 +1,20 @@
-<div id="container-save-changes-modal">
+<div id="container-save-changes-modal" hyt-dialog>
 
-    <div class="dialog-header">
-        <span>{{data.data.title}}</span>
+    <div class="dialog-header" hyt-dialog-header>
+        <span>{{data.title}}</span>
         <span class="hyt-icon icon-hyt_cancelC" (click)="close('cancel')"></span>
     </div>
 
-    <div class="dialog-body">
-        {{data.data.message}}
-        <div class="container-btn">
-            <hyt-button [color]="'hyt-base-total-white'" (click)="close('cancel')" i18n="@@HYT_cancel">Cancel
-            </hyt-button>
-            <hyt-button [color]="'hyt-base-total-green'" (click)="close('save')" i18n="@@HYT_save">Save</hyt-button>
-            <hyt-button [color]="'hyt-base-total-red'" (click)="close('discard')" i18n="@@HYT_discard">Discard
-            </hyt-button>
-        </div>
+    <div class="dialog-body" hyt-dialog-content>
+        {{data.message}}
+    </div>
+
+    <div class="dialog-footer" hyt-dialog-footer>
+        <hyt-button [color]="'hyt-base-total-white'" (click)="close('cancel')" i18n="@@HYT_cancel">Cancel
+        </hyt-button>
+        <hyt-button [color]="'hyt-base-total-green'" (click)="close('save')" i18n="@@HYT_save">Save</hyt-button>
+        <hyt-button [color]="'hyt-base-total-red'" (click)="close('discard')" i18n="@@HYT_discard">Discard
+        </hyt-button>
     </div>
 
 </div>

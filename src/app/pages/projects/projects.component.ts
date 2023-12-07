@@ -11,8 +11,8 @@ import { HProject, HprojectsService } from "core";
 import { FormGroup, FormBuilder } from "@angular/forms";
 import {
   CardDetailOnHover,
+  DialogService,
   HytFilterButtonFilter,
-  HytModalService,
   SelectOption,
 } from "components";
 import { ProjectsService } from "src/app/services/projects.service";
@@ -57,7 +57,7 @@ export class ProjectsComponent implements OnInit {
     private fb: FormBuilder,
     private projectsService: ProjectsService,
     private notificationservice: NotificationService,
-    private dialog: HytModalService
+    private dialog: DialogService,
   ) {}
 
   /**
@@ -324,7 +324,7 @@ export class ProjectsComponent implements OnInit {
       },
     });
 
-    dialogRef.onClosed.subscribe(
+    dialogRef.afterClosed().subscribe(
       (result) => {
         if (result === "delete") {
           this.projectsService.deleteProject(p.id);

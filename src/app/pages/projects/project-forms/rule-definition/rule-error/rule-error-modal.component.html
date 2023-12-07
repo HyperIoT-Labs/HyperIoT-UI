@@ -1,27 +1,21 @@
-<div id="container-option-modal">
+<div id="container-option-modal" hyt-dialog>
 
-    <div class="dialog">
+    <div class="dialog-header" hyt-dialog-header>
+        <span i18n="@@HYT_error">Error</span>
+        <span class="hyt-icon icon-hyt_cancelC" (click)="close()"></span>
+    </div>
 
-        <div class="dialog-header">
-            <span i18n="@@HYT_error">Error</span>
-            <span class="hyt-icon icon-hyt_cancelC" (click)="close()"></span>
-        </div>
-
-        <div class="dialog-body">
-            <ng-container i18n="@@HYT_error_loading_rule">An error occurred while loading the rule. This may have
-                happened for one or more of the following reasons:</ng-container>
-            <ul>
-                <li i18n="@@HYT_field_name_modified">The name of one rule's field has been modified</li>
-                <li i18n="@@HYT_field_deleted">A rule's field has been deleted</li>
-                <li i18n="@@HYT_packet_deleted">A rule's packet has been deleted (only events)</li>
-                <li i18n="@@HYT_obsolete_syntax_rule">Rule's syntax was updated making the rule now obsolete</li>
-            </ul>
-            <ng-container i18n="@@HYT_error_loading_rule_2">Please, redefine a new rule and delete the old one.
-            </ng-container>
-        </div>
-
+    <div class="dialog-body" hyt-dialog-content>
+        <ng-container i18n="@@HYT_error_loading_rule">An error occurred while loading the rule. This may have
+            happened for one or more of the following reasons:</ng-container>
+        <ul>
+            <li i18n="@@HYT_field_name_modified">The name of one rule's field has been modified</li>
+            <li i18n="@@HYT_field_deleted">A rule's field has been deleted</li>
+            <li i18n="@@HYT_packet_deleted">A rule's packet has been deleted (only events)</li>
+            <li i18n="@@HYT_obsolete_syntax_rule">Rule's syntax was updated making the rule now obsolete</li>
+        </ul>
+        <ng-container i18n="@@HYT_error_loading_rule_2">Please, redefine a new rule and delete the old one.
+        </ng-container>
     </div>
 
 </div>
-
-<!-- <div class="hyt-modal-background"></div> -->

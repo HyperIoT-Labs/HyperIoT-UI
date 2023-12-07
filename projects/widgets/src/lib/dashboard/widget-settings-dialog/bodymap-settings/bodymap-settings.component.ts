@@ -135,7 +135,7 @@ export class BodymapSettingsComponent implements OnInit, OnDestroy {
     }
 
   openDialog(association?: BodyMapAssociation) {
-    const elementTarget = document.getElementById('container-settings-content');
+    const elementTarget = document.getElementById('widget-settings-dialog');
 
     const animationKkeyframes: Keyframe[] = [
       { height: 0 },
