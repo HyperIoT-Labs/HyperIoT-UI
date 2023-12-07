@@ -25,8 +25,6 @@ export * from './lib/hyt-tree-view-editable/hyt-tree-view-editable.component';
 export * from './lib/hyt-tag/hyt-tag.component';
 export * from './lib/hyt-tag-list/hyt-tag-list.component';
 export * from './lib/hyt-tri-checkbox/hyt-tri-checkbox.component';
-export * from './lib/hyt-modal/hyt-modal-container.component';
-export * from './lib/hyt-modal/hyt-modal-content.directive';
 export * from './lib/hyt-infinite-scrolling-table/hyt-infinite-scrolling-table.component';
 export * from './lib/hyt-notification-box/notification-box.component'
 export * from './lib/hyt-bim/bim.component';
@@ -37,9 +35,6 @@ export { Node } from './lib/hyt-tree-view-editable/hyt-tree-view-editable.compon
 export { TreeDataNode } from './lib/hyt-tree-view-project/hyt-tree-view-project.component';
 export { Option } from './lib/hyt-radio-button/hyt-radio-button.component';
 export { TreeNodeCategory } from './lib/hyt-tree-view-category/hyt-tree-view-category.component';
-export { HytModal } from './lib/hyt-modal/hyt-modal';
-export { HytModalService } from './lib/hyt-modal/hyt-modal.service';
-export { HytModalRef } from './lib/hyt-modal/hyt-modal-ref';
 export { TimeStep } from './lib/hyt-date-picker/hyt-date-picker.component';
 export { HytFilterButtonShape, HytFilterButtonFilter } from './lib/hyt-filter-button/hyt-filter-button.component'
 export { CardDetailOnHover } from './lib/hyt-detailed-card/hyt-detailed-card.component'
@@ -67,8 +62,6 @@ export { HytConfirmRecordingActionComponent } from './lib/hyt-modal/hyt-confirm-
 export { HytAutocompleteComponent } from './lib/hyt-autocomplete/hyt-autocomplete.component';
 export { HytTriCheckboxComponent } from './lib/hyt-tri-checkbox/hyt-tri-checkbox.component';
 export { HytHexagonComponent } from './lib/hyt-hexagon/hyt-hexagon.component';
-export { HytModalContainerComponent } from './lib/hyt-modal/hyt-modal-container.component';
-export { HytModalContentDirective } from './lib/hyt-modal/hyt-modal-content.directive';
 export { HytDatePickerComponent } from './lib/hyt-date-picker/hyt-date-picker.component';
 export { HytLazyPaginationTableComponent, LazyTableHeader } from './lib/hyt-lazy-pagination-table/hyt-lazy-pagination-table.component';
 export { HytInfiniteScrollingTableComponent, TableHeader } from './lib/hyt-infinite-scrolling-table/hyt-infinite-scrolling-table.component';

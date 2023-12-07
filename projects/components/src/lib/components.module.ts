@@ -21,8 +21,6 @@ import { HytTreeViewCategoryComponent } from './hyt-tree-view-category/hyt-tree-
 import { HytAutocompleteComponent } from './hyt-autocomplete/hyt-autocomplete.component';
 import { HytTriCheckboxComponent } from './hyt-tri-checkbox/hyt-tri-checkbox.component';
 import { HytHexagonComponent } from './hyt-hexagon/hyt-hexagon.component';
-import { HytModalContainerComponent } from './hyt-modal/hyt-modal-container.component';
-import { HytModalContentDirective } from './hyt-modal/hyt-modal-content.directive';
 import { HytDatePickerComponent } from './hyt-date-picker/hyt-date-picker.component';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
 import { PickerPopUpComponent } from './hyt-date-picker/picker-pop-up/picker-pop-up.component';
@@ -38,7 +36,6 @@ import { NotificationService } from './hyt-notification-box/services/notificatio
 import { HytConfirmRecordingActionComponent } from './hyt-modal/hyt-confirm-recording-action/hyt-confirm-recording-action.component';
 import { HytInfoRecordingActionComponent } from './hyt-modal/hyt-info-recording-action/hyt-info-recording-action.component';
 import { HytTopologyToolbarComponent } from './hyt-shared-components/hyt-topology-toolbar/hyt-topology-toolbar.component';
-import { HytModalService } from './hyt-modal/hyt-modal.service';
 import { HytLoginComponent } from './hyt-login/login.component';
 import { RouterModule } from '@angular/router';
 import { HytInfoComponent } from './hyt-info/hyt-info.component';
@@ -78,8 +75,6 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     HytAutocompleteComponent,
     HytTriCheckboxComponent,
     HytHexagonComponent,
-    HytModalContainerComponent,
-    HytModalContentDirective,
     HytDatePickerComponent,
     PickerPopUpComponent,
     HytLazyPaginationTableComponent,
@@ -140,8 +135,6 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     HytAutocompleteComponent,
     HytTriCheckboxComponent,
     HytHexagonComponent,
-    HytModalContainerComponent,
-    HytModalContentDirective,
     HytDatePickerComponent,
     HytLazyPaginationTableComponent,
     HytButtonToggleComponent,
@@ -168,10 +161,8 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
   ],
   providers: [
     NotificationService,
-    HytModalService,
   ],
   entryComponents: [
-    HytModalContainerComponent,
     HytConfirmRecordingActionComponent,
     HytInfoRecordingActionComponent,
   ]
