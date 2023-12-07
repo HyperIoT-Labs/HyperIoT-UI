@@ -133,7 +133,7 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
    * @param dataStreamService Injected DataStreamService
    * @param configService
    * @param activatedRoute
-   * @param hytModalService
+   * @param dialogService
    * @param hytTopologyService
    * @param toastr
    */
