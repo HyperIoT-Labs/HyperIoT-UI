@@ -40,7 +40,6 @@ import { HomeComponent } from './pages/home/home.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { NotificationbarComponent } from './components/notificationbar/notificationbar.component';
-import { InfoRecordingActionComponent } from './components/modals/info-recording-action/info-recording-action.component';
 import { WizardDeactivationModalComponent } from './pages/projects/project-wizard/wizard-deactivation-modal/wizard-deactivation-modal.component';
 import { WizardOptionsModalComponent } from './pages/projects/project-wizard/wizard-options-modal/wizard-options-modal.component';
 import { WizardReportModalComponent } from './pages/projects/project-wizard/wizard-report-modal/wizard-report-modal.component';
@@ -94,7 +93,6 @@ export function apiConfigFactory(): Configuration {
     DeleteConfirmDialogComponent,
     HomeComponent,
     NotificationbarComponent,
-    InfoRecordingActionComponent,
     AreasViewComponent,
     PromptComponent,
     DashComponent,
@@ -106,7 +104,6 @@ export function apiConfigFactory(): Configuration {
     SaveChangesDialogComponent,
     PendingChangesDialogComponent,
     DeleteConfirmDialogComponent,
-    InfoRecordingActionComponent,
     WizardDeactivationModalComponent,
     WizardOptionsModalComponent,
     WizardReportModalComponent,
