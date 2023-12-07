@@ -24,7 +24,6 @@ export * from './lib/hyt-tree-view-project/hyt-tree-view-project.component';
 export * from './lib/hyt-tree-view-editable/hyt-tree-view-editable.component';
 export * from './lib/hyt-tag/hyt-tag.component';
 export * from './lib/hyt-tag-list/hyt-tag-list.component';
-export * from './lib/hyt-modal-e/hyt-modal-e.component';
 export * from './lib/hyt-tri-checkbox/hyt-tri-checkbox.component';
 export * from './lib/hyt-modal/hyt-modal-container.component';
 export * from './lib/hyt-modal/hyt-modal-content.directive';
@@ -63,7 +62,6 @@ export { HytTreeViewProjectComponent } from './lib/hyt-tree-view-project/hyt-tre
 export { HytTreeViewEditableComponent } from './lib/hyt-tree-view-editable/hyt-tree-view-editable.component';
 export { HytTagComponent } from './lib/hyt-tag/hyt-tag.component';
 export { HytTagListComponent } from './lib/hyt-tag-list/hyt-tag-list.component';
-export { HytModalEComponent } from './lib/hyt-modal-e/hyt-modal-e.component';
 export { HytInfoRecordingActionComponent } from './lib/hyt-modal/hyt-info-recording-action/hyt-info-recording-action.component';
 export { HytConfirmRecordingActionComponent } from './lib/hyt-modal/hyt-confirm-recording-action/hyt-confirm-recording-action.component';
 export { HytAutocompleteComponent } from './lib/hyt-autocomplete/hyt-autocomplete.component';
