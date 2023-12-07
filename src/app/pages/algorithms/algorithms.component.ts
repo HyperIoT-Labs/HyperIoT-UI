@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { PageStatus } from './models/pageStatus';
 import { Algorithm, AlgorithmsService } from 'core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { HytModalService, SelectOption } from 'components';
+import { DialogService, SelectOption } from 'components';
 import { AlgorithmService } from 'src/app/services/algorithms/algorithm.service';
 import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
 
@@ -40,7 +40,7 @@ export class AlgorithmsComponent implements OnInit {
     private router: Router,
     private algorithmsService: AlgorithmsService,
     private fb: FormBuilder,
-    private dialog: HytModalService,
+    private dialog: DialogService,
     private algorithmService: AlgorithmService
   ) { }
 
@@ -187,7 +187,7 @@ export class AlgorithmsComponent implements OnInit {
       }
     );
 
-    dialogRef.onClosed.subscribe(
+    dialogRef.afterClosed().subscribe(
       (result) => {
         if ( result === 'delete') {
           this.algorithmService.deleteAlgorithm(alg.id);
