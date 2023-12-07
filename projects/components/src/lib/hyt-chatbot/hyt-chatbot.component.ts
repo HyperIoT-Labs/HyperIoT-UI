@@ -97,6 +97,9 @@ import {
   
     /** Number of retry attempts to regenerate the session before going into error. */
     retryAttempts = 0;
+
+    /** Save previous message type in order to show or not typing token*/
+    previous_message_type = "";
   
     /** Subject for managing open subscriptions. */
     protected ngUnsubscribe: Subject<void> = new Subject<void>();
@@ -107,70 +110,70 @@ import {
     /** Top position of the fixed pills. */
     readonly FIXED_TOP_PILLS = 15;
   
-    /** Observer for handling incoming WebSocket messages. */
-    messagesObserver = {
-      next: (msg: WebsocketChat) => {
-        console.log("[messagesObserver] message received : ", msg);
-        if (
-          msg.author === "csr" &&
-          this.isTypingMessageId.length > 0 &&
-          msg.action !== "typing_indicator"
-        ) {
-          this.resetTypingIndicator(this.isTypingMessageId);
-        }
-        this.incomingMessageHandling(msg);
-        this.pageStatus = PageStatus.READY;
-      }, // Called whenever there is a message from the server.
-      error: (err: any) => {
-        console.error("[messagesObserver] error message", err);
-        this.retryConnection();
-      }, // Called if at any point WebSocket API signals some kind of error.
-      complete: () => console.log("[messagesObserver] message complete"), // Called when connection is closed (for whatever reason).
-    };
-  
+    /** Cat variables to establish connection */
+    readonly baseUrlCat = 'localhost';
+    readonly userCat = 'user'
+
     /* Declare cat client API */
     cat = new CatClient({
-      baseUrl: 'localhost',
-      user: 'user'
+      baseUrl: this.baseUrlCat,
+      user: this.userCat
     });
 
     constructor(
       public websocketService: WebSocketService,
       public localStorageService: LocalStorageService,
       private renderer2: Renderer2,
-      private locationStrategy: LocationStrategy,
-      //private SessionService: SessionService,
       @Inject(DOCUMENT) private document: Document,
-      private activatedRoute: ActivatedRoute,
-      private parameterizedService: ParameterizedService,
       private changeDetector: ChangeDetectorRef
     ) {
-      // Inizializzazione moment & cookie se settati
       moment.locale("it");
-      //this.SessionService.initCookieValues();
     }
   
-    /*** WIDGET LIFECYCLES ***/
-  
+    /** OPEN CHATBOT */
     ngOnInit(): void {
+
       this.cat.init();
       this.cat.onConnected(() => {
             console.log('Socket connected');
-            /* First message */
-            this.cat.send('Hello from a user!');
+            /* First message in ITALIANO */
+            this.cat.send('Ciao, chi sei?');
             this.pageStatus = PageStatus.READY;
 
         }).onMessage(msg => {
             console.log(msg);
             const randomUUID: string = uuidv4();
 
-            this.textMessageHandling({
-              action: "text",
-              text: msg.content,
-              author: "csr",
-              messageId: randomUUID,
-              timestamp: new Date().getTime(),
-              });
+            // Variable that enable show/hidden message/token:
+            let show : boolean;
+            let action : string;
+            
+            // SHOW just 1 for time
+            if (msg.type == 'chat_token' && this.previous_message_type != 'chat_token') {
+              this.previous_message_type = 'chat_token'
+              action = 'typing_indicator';
+              show = true;
+            }
+
+            // Always show
+            else if (msg.type == 'chat'){
+              this.received.splice(this.received.length-1, 1);
+              this.previous_message_type = 'chat'
+              action = 'text';
+              show = true;
+            }
+
+            // Choose to show message
+            if (show == true) {
+              this.textMessageHandling({
+                action: action,
+                text: msg.content,
+                author: "csr",
+                messageId: randomUUID,
+                timestamp: new Date().getTime(),
+                });
+            }
+
         }).onError(err => {
             console.log(err)
         }).onDisconnected(() => {
