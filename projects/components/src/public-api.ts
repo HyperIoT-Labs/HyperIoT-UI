@@ -65,7 +65,6 @@ export { HytTagComponent } from './lib/hyt-tag/hyt-tag.component';
 export { HytTagListComponent } from './lib/hyt-tag-list/hyt-tag-list.component';
 export { HytModalEComponent } from './lib/hyt-modal-e/hyt-modal-e.component';
 export { HytInfoRecordingActionComponent } from './lib/hyt-modal/hyt-info-recording-action/hyt-info-recording-action.component';
-export { HytGenericMessageDialogComponent } from './lib/hyt-modal/hyt-generic-message-dialog/hyt-generic-message-dialog.component';
 export { HytConfirmRecordingActionComponent } from './lib/hyt-modal/hyt-confirm-recording-action/hyt-confirm-recording-action.component';
 export { HytAutocompleteComponent } from './lib/hyt-autocomplete/hyt-autocomplete.component';
 export { HytTriCheckboxComponent } from './lib/hyt-tri-checkbox/hyt-tri-checkbox.component';

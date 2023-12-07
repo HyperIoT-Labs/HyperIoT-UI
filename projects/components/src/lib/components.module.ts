@@ -37,7 +37,6 @@ import { HytAccordionItem } from './hyt-accordion/hyt-directives/hyt-accordion-i
 import { HytAccordionContent } from './hyt-accordion/hyt-directives/hyt-accordion-content.directive';
 import { NotificationService } from './hyt-notification-box/services/notification.service';
 import { HytConfirmRecordingActionComponent } from './hyt-modal/hyt-confirm-recording-action/hyt-confirm-recording-action.component';
-import { HytGenericMessageDialogComponent } from './hyt-modal/hyt-generic-message-dialog/hyt-generic-message-dialog.component';
 import { HytInfoRecordingActionComponent } from './hyt-modal/hyt-info-recording-action/hyt-info-recording-action.component';
 import { HytTopologyToolbarComponent } from './hyt-shared-components/hyt-topology-toolbar/hyt-topology-toolbar.component';
 import { HytModalService } from './hyt-modal/hyt-modal.service';
@@ -94,7 +93,6 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     HytAccordionItem,
     HytAccordionContent,
     HytConfirmRecordingActionComponent,
-    HytGenericMessageDialogComponent,
     HytInfoRecordingActionComponent,
     HytTopologyToolbarComponent,
     HytLoginComponent,
@@ -156,7 +154,6 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     HytAccordionItem,
     HytAccordionContent,
     HytConfirmRecordingActionComponent,
-    HytGenericMessageDialogComponent,
     HytInfoRecordingActionComponent,
     HytInnerFieldSelectComponent,
     HytTopologyToolbarComponent,
@@ -179,7 +176,6 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
   entryComponents: [
     HytModalContainerComponent,
     HytConfirmRecordingActionComponent,
-    HytGenericMessageDialogComponent,
     HytInfoRecordingActionComponent,
   ]
 })
