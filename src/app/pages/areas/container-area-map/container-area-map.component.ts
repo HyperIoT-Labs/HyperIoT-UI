@@ -363,6 +363,8 @@ export class ContainerAreaMapComponent implements OnInit, OnDestroy {
         })
     } else {
       this.isEmptyBim = true;
+      console.log('%cBIM WARNING isEmptyBim', 'color:yellowgreen', this.isEmptyBim);
+      console.log('%cBIM WARNING isBimLoading', 'color:yellowgreen', this.isBimLoading);
       this.logger.warn('No configuration data for this area');
     }
   }

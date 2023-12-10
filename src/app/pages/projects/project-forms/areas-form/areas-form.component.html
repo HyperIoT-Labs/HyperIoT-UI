@@ -129,7 +129,6 @@
             </mat-tab>
 
             <mat-tab *ngIf="areaId > 0 && (entity.areaViewType === 'BIM_XKT' || entity.areaViewType === 'BIM_IFC')" label="BIM" aria-label="BIM_XKT">
-              <!--<hyt-button [color]="'hyt-base-default-white'" (clickFn)="openModalChangeType()" i18n="@@HYT_area_map_device_add">Add device</hyt-button>-->
 
               <div id="bimTabProject" class="mt-4 mb-2 d-flex flex-row justify-content-center">
                 <hyt-button [color]="'hyt-base-default-white'">
@@ -149,10 +148,10 @@
                 <ng-container *ngIf="isBimLoading; else bimLoaded">
                   <div id="bimLoading">
                     <ng-container *ngIf="!isEmptyBim; else emptyBim">
-                      BIM Model Loading...
+                      <span i18n="@@HYT_area_loading_bim_model">BIM Model Loading...</span>
                     </ng-container>
                     <ng-template #emptyBim>
-                      No Model
+                      <span i18n="@@HYT_area_empty_bim_model">No Model</span>
                     </ng-template>
                   </div>
                 </ng-container>

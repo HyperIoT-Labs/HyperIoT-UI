@@ -246,8 +246,10 @@ export class HytBimComponent implements OnInit, AfterViewInit, OnDestroy {
     //------------------------------------------------------------------------------------------------------------------
     // Create an AnnotationsPlugin, with which we'll create annotations
     //------------------------------------------------------------------------------------------------------------------
-    this.annotations = this.initAnnotations(this.bimContainer.nativeElement);
-    console.log('ANNOTATIONS INIT');
+    if(this.viewer){
+      this.annotations = this.initAnnotations(this.bimContainer.nativeElement);
+      console.log('ANNOTATIONS INIT');
+    }
   }
 
   ngOnDestroy() {
@@ -320,9 +322,9 @@ export class HytBimComponent implements OnInit, AfterViewInit, OnDestroy {
    * Destroys every element of BIM
    */
   destroyAll(){
-    const model = this.viewer.scene.models['Loader'];
-    if(model){
-      console.log('DESTROY ALL')
+    if(this.viewer){
+      console.log('DESTROY ALL');
+      const model = this.viewer.scene.models['Loader'];
       model.destroy();
       this.treeView.destroy();
       this.navCube.destroy();

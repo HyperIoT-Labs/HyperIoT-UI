@@ -1217,6 +1217,24 @@
       <trans-unit id="HYT_areaa_go_to_create_area" datatype="html">
         <source>Create the first area for this project</source>
       </trans-unit>
+      <trans-unit id="HYT_area_confirm_title_change_type" datatype="html">
+        <source>Changing the area type</source>
+      </trans-unit>
+      <trans-unit id="HYT_area_confirm_body_change_type" datatype="html">
+        <source>Changing this setting will erase all previous settings</source>
+      </trans-unit>
+      <trans-unit id="HYT_area_confirm_btn_confirm" datatype="html">
+        <source>Confirm</source>
+      </trans-unit>
+      <trans-unit id="HYT_area_confirm_btn_reject" datatype="html">
+        <source>Reject</source>
+      </trans-unit>
+      <trans-unit id="HYT_area_loading_bim_model" datatype="html">
+        <source>BIM Model Loading...</source>
+      </trans-unit>
+      <trans-unit id="HYT_area_empty_bim_model" datatype="html">
+        <source>No Model</source>
+      </trans-unit>
       <!-- AREAS END -->
 
       <trans-unit id="HYT_dashboard_list" datatype="html">

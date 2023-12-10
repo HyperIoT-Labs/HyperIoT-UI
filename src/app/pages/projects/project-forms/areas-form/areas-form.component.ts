@@ -36,7 +36,7 @@ import {
   interval,
   mergeMap,
   Observable,
-  of,
+  of, pairwise,
   Subject,
   switchMap
 } from 'rxjs';
@@ -123,6 +123,10 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
   pathBim: string = '';
   isBimLoading: boolean = true;
   isEmptyBim: boolean = false;
+  /**
+   * Will contain the old value in case a change is made on the area type
+   */
+  typeSelectPrevValue = '';
   /*
    * logger service
    */
@@ -205,6 +209,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
         this.load();
       }
     );
+
     this.router.events
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe( (event: Event) => {
@@ -219,6 +224,16 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
 
   ngAfterViewInit() {
     this.clickedTab.emit('Tab-Info');
+
+    /**
+     * We subscribe to the change of the specific variable to keep the old value in memory
+     */
+    this.form.get('area-type').valueChanges
+    .pipe(pairwise())
+    .subscribe(([previousValue, nextValue]: [string, string]) => {
+      this.logger.debug('Change of area type - [old value, new value]', [previousValue, nextValue] );
+      this.typeSelectPrevValue = previousValue;
+    });
   }
 
   ngOnDestroy() {
@@ -530,9 +545,9 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
 
   onInfoTypeChange(event: MatSelectChange){
     if(event.value && this.entity.areaViewType !== undefined && event.value !== this.entity.areaViewType){
-      this.handleSearchAndDeleteElementOnMap(this.entity.areaViewType, event.value);
+      this.openModalChangeType(event.value);
     } else {
-      console.log('%cINFO TYPE VERIFY OK', 'color: orange', event.value + ' - ' +this.entity.areaViewType);
+      this.logger.info('onInfoTypeChange function, no type changed: '+event.value + ' - ' +this.entity.areaViewType);
     }
 
   }
@@ -549,12 +564,10 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
   }
 
   setImageTypeObj(newViewType: string){
-    const getImage = this.httpClient.get(`/hyperiot/areas/${this.areaId}/image`, {
-        responseType: 'blob'
-    })
+    const getImage = this.httpClient.delete(`/hyperiot/areas/${this.areaId}/image`)
     .pipe(
         take(1),
-        catchError(_ => of(['no image found']))
+        catchError(_ => of(['no XKT found to delete']))
     )
     const updateArea = this.areaService.findArea(this.areaId).pipe(
       take(1),
@@ -576,19 +589,24 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
 
     combineLatest([getImage, updateArea]).subscribe({
       next: ([imageObj, areaObj]) => {
+        this.logger.debug('Return of the Delete Image operation', imageObj);
+        this.logger.debug('Return of the Update Area operation', areaObj);
         if(Array.isArray(areaObj) && areaObj.includes('error area not updated')){
-          console.log('%cINFO TYPE setImageTypeObj ERROR', 'color: red', areaObj);
+          this.logger.error('INFO TYPE setImageTypeObj ERROR', areaObj);
         } else {
+          // Update local values of the current Area
+          Object.assign(this.entity, areaObj);
+          // Save updated Area
           this.saveArea((res) => {
+            this.logger.debug('Saved Area after have changed the type', res);
             this.load()
           }, (error) => {
-            console.error('Updated AREa ERROR', error);
+            this.logger.error('Updated AREA ERROR', error);
           })
         }
 
       },
       error: (error) => {
-        console.log('%cINFO TYPE searchAndDeleteElementOnImageMap ERROR', 'color: red', error);
         this.loggerService.error('searchAndDeleteElementOnImageMap function error', error)
       }
     })
@@ -627,11 +645,9 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
 
     const getImage = deleteMapElements.pipe(
       switchMap((deletedEl) => {
-        return this.httpClient.get(`/hyperiot/areas/${this.areaId}/image`, {
-          responseType: 'blob'
-        }).pipe(
+        return this.httpClient.delete(`/hyperiot/areas/${this.areaId}/image`).pipe(
           take(1),
-          catchError(_ => of(['no image found']))
+          catchError(_ => of(['no image found to delete']))
         )
       }),
     )
@@ -639,9 +655,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
       take(1),
       catchError(_ => of(['error area not found'])),
       switchMap((area) => {
-        console.log('INFO TYPE ABBIAMO AREA', area)
         // Set new Area Object
-        //area.mapInfo = null;
         area.areaConfiguration = null;
         area.areaViewType = newViewType as AreaViewTypeEnum;
         area['project'] = { id: this.projectId };
@@ -657,13 +671,19 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
 
     combineLatest([getImage, updateArea]).subscribe({
       next: ([imageObj, areaObj]) => {
+        this.logger.debug('Return of the Delete Image operation', imageObj);
+        this.logger.debug('Return of the Update Area operation', areaObj);
         if(Array.isArray(areaObj) && areaObj.includes('error area not updated')){
-          console.log('%cINFO TYPE searchAndDeleteElementOnImageMap ERROR', 'color: red', areaObj);
+          this.logger.error('INFO TYPE searchAndDeleteElementOnImageMap ERROR', areaObj);
         } else {
+          // Update local values of the current Area
+          Object.assign(this.entity, areaObj);
+          // Save updated Area
           this.saveArea((res) => {
-            this.load()
+            this.logger.debug('Saved Area after have changed the type', res);
+            this.load();
           }, (error) => {
-            console.error('Updated AREa ERROR', error);
+            this.logger.error('Updated AREA ERROR', error);
           })
         }
 
@@ -1037,7 +1057,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
           }
           reader.readAsDataURL(res);
       }, (err) => {
-          this.logger.error('Error loading area media', err);
+          this.logger.error('Error loading area media present in configuration', err);
           this.mapComponent.setOverlayLevel(true, this.ovelayErrorString);
       });
     } else {
@@ -1070,6 +1090,8 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
       })
     } else {
       this.isEmptyBim = true;
+      console.log('%cBIM WARNING isEmptyBim', 'color:yellowgreen', this.isEmptyBim);
+      console.log('%cBIM WARNING isBimLoading', 'color:yellowgreen', this.isBimLoading);
       this.logger.warn('No configuration data for this area');
     }
   }
@@ -1119,8 +1141,6 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
           this.countAreaItems(a);
         });
         this.apiSuccess(areaTree);
-        console.log('%cLOAD AREA DATA', 'color: orange', this.tabGroup._tabs['_results'])
-          console.log('%cLOAD AREA DATA II', 'color: orange', this.getTabAriaLabel(this.tabGroup))
         const currentTabAriaLabel = this.getTabAriaLabel(this.tabGroup);
         this.loadMediaDataBySelectedTab(currentTabAriaLabel);
     },
@@ -1166,13 +1186,10 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
     area.description = this.form.get('area-description').value;
     area.areaViewType = this.form.get('area-type').value;
     // TEST CONFIGURATION
-    console.log('AREA SAVE I', area)
     area = this.patchArea(area);
-    console.log('AREA SAVE II', area)
     const parentAreaId = this.getParentAreaId();
     area.parentArea = parentAreaId ? { id: parentAreaId, entityVersion: null } : null;
     if (area.id) {
-      console.log('AREA SAVE III EXIST', area)
       // Update existing
       this.areaService.updateArea(area)
         .pipe(takeUntil(this.ngUnsubscribe))
@@ -1196,7 +1213,6 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
       });
     } else {
       // Add new
-      console.log('AREA SAVE III NOT EXIST', area)
       this.areaService.saveArea(area)
         .pipe(takeUntil(this.ngUnsubscribe))
         .subscribe((res) => {
@@ -1288,15 +1304,28 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
     }
   }
 
-  openModalChangeType(){
+  openModalChangeType(eventValue: string){
     const dialogRef = this.confirmDialogService.open({
-      text: 'TESTO',
-      confirmLabel: 'Confirm',
-      rejectLabel: 'Reject'
+      text: $localize`:@@HYT_area_confirm_body_change_type:Changing this setting will erase all previous settings`,
+      confirmLabel: $localize`:@@HYT_area_confirm_btn_confirm:Confirm`,
+      rejectLabel: $localize`:@@HYT_area_confirm_btn_reject:Reject`,
+      header: $localize`:@@HYT_area_confirm_title_change_type:Changing the area type`,
     })
 
     dialogRef.afterClosed().subscribe((res) => {
-      console.log('DIALOG RES', res)
+      if(res.result === 'reject'){
+        this.form.get('area-type').setValue(this.typeSelectPrevValue);
+        // Reset previous value
+        this.typeSelectPrevValue = '';
+        this.logger.info('No change in the area type field');
+      }
+      if(res.result === 'accept'){
+        // Reset previous value
+        this.typeSelectPrevValue = '';
+        this.logger.info('We changed the area type and reset the previous data');
+        // We manage the deletion of data previously saved on the area
+        this.handleSearchAndDeleteElementOnMap(this.entity.areaViewType, eventValue);
+      }
     })
   }
 
