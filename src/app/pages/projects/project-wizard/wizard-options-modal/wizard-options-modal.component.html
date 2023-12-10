@@ -1,11 +1,11 @@
-<div id="container-option-modal" class="dialog">
+<div id="container-option-modal" hyt-dialog>
 
-    <div class="dialog-header">
+    <div class="dialog-header" hyt-dialog-header>
         <span i18n="@@HYT_choose_how_proceed">Choose how to proceed</span>
-        <span class="hyt-icon icon-hyt_cancelC" (click)="close()"></span>
+        <span class="hyt-icon icon-hyt_cancelC" (click)="output()"></span>
     </div>
 
-    <div class="dialog-body">
+    <div class="dialog-body" hyt-dialog-content>
 
         <div class="row row-block">
 
@@ -41,7 +41,7 @@
 
     </div>
 
-    <div class="dialog-footer">
+    <div class="dialog-footer" hyt-dialog-footer align="center">
 
         <hyt-button (clickFn)="output('goToFinish', null);">
             <ng-container i18n="@@HYT_finish">Finish</ng-container>

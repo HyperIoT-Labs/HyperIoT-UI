@@ -1,6 +1,6 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { EntitiesService } from 'src/app/services/entities/entities.service';
-import { HytModal, HytModalService } from 'components';
+import { DialogRef } from 'components';
 
 @Component({
   selector: 'hyt-wizard-deactivation-modal',
@@ -8,17 +8,15 @@ import { HytModal, HytModalService } from 'components';
   styleUrls: ['./wizard-deactivation-modal.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class WizardDeactivationModalComponent extends HytModal {
+export class WizardDeactivationModalComponent {
 
   constructor(
     public entitiesService: EntitiesService,
-    hytModalService: HytModalService
-  ) {
-    super(hytModalService);
-  }
+    private dialogRef: DialogRef<boolean>,
+  ) { }
 
   output(action: boolean) {
-    this.close(action);
+    this.dialogRef.close(action);
   }
 
 }

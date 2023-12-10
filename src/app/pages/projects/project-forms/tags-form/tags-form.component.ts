@@ -3,7 +3,7 @@ import { ProjectFormEntity } from '../project-form-entity';
 import { ElementRef } from '@angular/core';
 import { AssetTag, AssetstagsService } from 'core';
 import { FormGroup } from '@angular/forms';
-import { SelectOption, HytModalService } from 'components';
+import { SelectOption } from 'components';
 import { Router } from '@angular/router';
 import { AddTagModalComponent } from './add-tag-modal/add-tag-modal.component';
 
@@ -52,7 +52,6 @@ export class TagsFormComponent extends ProjectFormEntity implements OnInit {
     injector: Injector,
     private router: Router,
     private assetsTagService: AssetstagsService,
-    private modalService: HytModalService,
     private cdr:ChangeDetectorRef
   ) {
     super(injector,cdr);
@@ -91,15 +90,32 @@ export class TagsFormComponent extends ProjectFormEntity implements OnInit {
   }
 
   addTagModal() {
-    const dialogRef = this.modalService.open(AddTagModalComponent, { mode: 'add', projectId: this.projectId });
-    dialogRef.onClosed.subscribe((res: AssetTag) => {
+    const dialogRef = this.dialog.open(AddTagModalComponent, {
+      data: {
+        mode: 'add',
+        projectId: this.projectId,
+      }
+    });
+    dialogRef.afterClosed().subscribe((res: AssetTag) => {
+      if (!res) {
+        return;
+      }
       this.tagCreated(res);
     });
   }
 
   editTagModal(tag: AssetTag) {
-    const dialogRef = this.modalService.open(AddTagModalComponent, { mode: 'edit', projectId: this.projectId, tag });
-    dialogRef.onClosed.subscribe((res: AssetTag) => {
+    const dialogRef = this.dialog.open(AddTagModalComponent, {
+      data: {
+        mode: 'edit',
+        projectId: this.projectId,
+        tag,
+      }
+    });
+    dialogRef.afterClosed().subscribe((res: AssetTag) => {
+      if (!res) {
+        return;
+      }
       this.tagCreated(res);
     });
   }

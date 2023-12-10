@@ -19,7 +19,7 @@
 
 import {AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Injector, OnDestroy, OnInit, Output, ViewChild, ViewEncapsulation} from '@angular/core';
 import {ActivatedRoute, Event, NavigationStart, Router} from '@angular/router';
-import {ConfirmDialogService, HytModalService, Option} from 'components';
+import {ConfirmDialogService, DialogService, Option} from 'components';
 import {LoadingStatusEnum, ProjectFormEntity} from '../project-form-entity';
 import {Area, AreaDevice, AreasService, HprojectsService, Logger, LoggerService} from 'core';
 import {AreaMapComponent} from './area-map/area-map.component';
@@ -163,7 +163,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
     private router: Router,
     private areaService: AreasService,
     private projectService: HprojectsService,
-    private modalService: HytModalService,
+    private dialogService: DialogService,
     private httpClient: HttpClient,
     private cdr: ChangeDetectorRef,
     private loggerService: LoggerService,
@@ -450,8 +450,11 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
               error: (err) => {
                 this.logger.error('Upload image Error', err);
                 if (err.error && err.error.errorMessages) {
-                  this.modalService.open(GenericMessageDialogComponent, {
-                    message: err.error.errorMessages[0]
+                  this.dialogService.open(GenericMessageDialogComponent, {
+                    backgroundClosable: true,
+                    data: {
+                      message: err.error.errorMessages[0],
+                    },
                   });
                   this.loadingStatus = LoadingStatusEnum.Ready;
                 } else {
@@ -460,8 +463,11 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
               }
             });
           } else {
-            this.modalService.open(GenericMessageDialogComponent, {
-              message: $localize`:@@HYT_file_size_exceed:File size exceed limit of ${this.maxFileSize} bytes`
+            this.dialogService.open(GenericMessageDialogComponent, {
+              backgroundClosable: true,
+              data: {
+                message: $localize`:@@HYT_file_size_exceed:File size exceed limit of ${this.maxFileSize} bytes`,
+              },
             });
             this.loadingStatus = LoadingStatusEnum.Ready;
           }
@@ -469,8 +475,11 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
         reader.readAsDataURL(file);
       } else {
         // wrong file type
-        this.modalService.open(GenericMessageDialogComponent, {
-          message: $localize`:@@HYT_file_type_must_be:File type must be ${this.allowedImageTypes.join(', ')}`
+        this.dialogService.open(GenericMessageDialogComponent, {
+          backgroundClosable: true,
+          data: {
+            message: $localize`:@@HYT_file_type_must_be:File type must be ${this.allowedImageTypes.join(', ')}`,
+          },
         });
       }
     }
@@ -526,8 +535,11 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
             error: (err) => {
               this.logger.error('Upload bim_xkt Error', err);
               if (err.error && err.error.errorMessages) {
-                this.modalService.open(GenericMessageDialogComponent, {
-                  message: err.error.errorMessages[0]
+                this.dialogService.open(GenericMessageDialogComponent, {
+                  backgroundClosable: true,
+                  data: {
+                    message: err.error.errorMessages[0],
+                  },
                 });
                 this.loadingStatus = LoadingStatusEnum.Ready;
               } else {
@@ -708,10 +720,13 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
    * @param e
    */
   onMapDeviceAddClick(e) {
-    const modalRef = this.modalService.open(AreaDeviceSelectDialogComponent, {
-      areaId: this.areaId, projectId: this.projectId
+    const modalRef = this.dialogService.open(AreaDeviceSelectDialogComponent, {
+      data: {
+        areaId: this.areaId,
+        projectId: this.projectId,
+      },
     });
-    modalRef.onClosed
+    modalRef.afterClosed()
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(ad => {
       this.logger.debug('onMapDeviceAddClick onclose modal', ad);
@@ -791,10 +806,14 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
    * @param e
    */
   onMapAreaAddClick(e) {
-    const modalRef = this.modalService.open(AreaInnerareaSelectDialogComponent, {
-      areaId: this.areaId, projectId: this.projectId, areas: this.areaList
+    const modalRef = this.dialogService.open(AreaInnerareaSelectDialogComponent, {
+      data: {
+        areaId: this.areaId,
+        projectId: this.projectId,
+        areas: this.areaList,
+      },
     });
-    modalRef.onClosed
+    modalRef.afterClosed()
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(a => {
       this.logger.debug('onMapAreaAddClick modal on close', a);

@@ -1,5 +1,5 @@
-import { Component, OnInit, AfterViewInit, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
-import { HytModal, HytModalService } from 'components';
+import { Component, OnInit, AfterViewInit, ViewEncapsulation, ChangeDetectorRef, Inject } from '@angular/core';
+import { DIALOG_DATA, DialogRef } from 'components';
 import { PageStatus } from 'src/app/pages/projects/models/pageStatus';
 import { AssetscategoriesService } from 'core';
 import { FormGroup, FormBuilder } from '@angular/forms';
@@ -13,7 +13,7 @@ import { take} from 'rxjs/operators';
   styleUrls: ['./add-cetegory-modal.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class AddCetegoryModalComponent extends HytModal implements OnInit, AfterViewInit {
+export class AddCetegoryModalComponent implements OnInit, AfterViewInit {
 
   pageStatus: PageStatus = PageStatus.Standard;
 
@@ -26,7 +26,7 @@ export class AddCetegoryModalComponent extends HytModal implements OnInit, After
   resObserver = {
     next: (res) => {
       this.pageStatus = PageStatus.New;
-      this.close(res);
+      this.dialogRef.close(res);
     },
     error: (err) => {
       this.setErrors(err);
@@ -35,14 +35,13 @@ export class AddCetegoryModalComponent extends HytModal implements OnInit, After
   };
 
   constructor(
-    service: HytModalService,
     private assetCategoryService: AssetscategoriesService,
     private formBuilder: FormBuilder,
     private errorHandler: HttpErrorHandlerService,
-    private cd: ChangeDetectorRef
-  ) {
-    super(service);
-  }
+    private cd: ChangeDetectorRef,
+    private dialogRef: DialogRef<any>,
+    @Inject(DIALOG_DATA) public data: any,
+  ) { }
 
   ngOnInit() {
     if (this.data.mode === 'edit') {
@@ -111,6 +110,10 @@ export class AddCetegoryModalComponent extends HytModal implements OnInit, After
 
   notValid(): boolean {
     return this.categoryForm.get('name').invalid;
+  }
+
+  close() {
+    this.dialogRef.close();
   }
 
 }

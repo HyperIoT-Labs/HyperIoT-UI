@@ -6,7 +6,7 @@ import { OnInit, Output, EventEmitter, Injector, AfterViewInit,ChangeDetectorRef
 import { SummaryList } from '../project-detail/generic-summary-list/generic-summary-list.component';
 import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
 import { EntitiesService } from 'src/app/services/entities/entities.service';
-import { HytModalService } from 'components';
+import { DialogService } from 'components';
 import { ProjectsService } from 'src/app/services/projects.service';
 import {MatRadioChange} from '@angular/material/radio';
 
@@ -53,7 +53,7 @@ export abstract class ProjectFormEntity implements OnInit, AfterViewInit {
     @Output() clickedTab: EventEmitter<any> = new EventEmitter();
 
     protected formBuilder: FormBuilder;
-    protected dialog: HytModalService;
+    protected dialog: DialogService;
     protected entitiesService: EntitiesService;
 	protected projectsService: ProjectsService;
 
@@ -63,7 +63,7 @@ export abstract class ProjectFormEntity implements OnInit, AfterViewInit {
     ) {
         this.formBuilder = injector.get(FormBuilder);
         this.entitiesService = injector.get(EntitiesService);
-        this.dialog = injector.get(HytModalService);
+        this.dialog = injector.get(DialogService);
         this.form = this.formBuilder.group({});
         //this.formAlarm = this.formBuilder.group({});
 		    this.projectsService = injector.get(ProjectsService);
@@ -259,7 +259,7 @@ export abstract class ProjectFormEntity implements OnInit, AfterViewInit {
         const dialogRef = this.dialog.open(DeleteConfirmDialogComponent, {
             data: textDialog
         });
-        dialogRef.onClosed.subscribe((result) => {
+        dialogRef.afterClosed().subscribe((result) => {
             if (result === 'delete') {
                 this.delete(successCallback, errorCallback);
             }

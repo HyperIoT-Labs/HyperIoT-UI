@@ -1,68 +1,68 @@
-<div id="wiz-report-modal" class="dialog">
-    <!-- INIZIO MODIFICE -->
+<div id="wiz-report-modal" hyt-dialog>
 
-    <div class="header-box">
+    <div class="header-box" hyt-dialog-header>
 
-        <div class="row row-box">
-            <div class="col-12">
-                    <ng-container i18n="@@HYT_congratulations">Congratulations</ng-container>
+        <ng-container i18n="@@HYT_congratulations">Congratulations</ng-container>
+
+    </div>
+
+    <div hyt-dialog-content>
+
+        <div class="sub-header">
+    
+            <div class="row row-box">
+                <div class="col-12">
+                    <p i18n="@@HYT_pw_finsh">You have finished to configure your project</p>
+                </div>
             </div>
-        </div>
-        
-    </div> <!-- END HEADER BOX -->
-    <div class="sub-header">
-
-        <div class="row row-box">
-            <div class="col-12">
-                <p i18n="@@HYT_pw_finsh">You have finished to configure your project</p>
-            </div>
-        </div>
-
-    </div> <!-- END SUB HEADER -->
-
-    <div class="container-resume">
-
-        <div class="row row-box">
-
-            <div class="col-6">
-
-                <table id="tableSummary">
-                    <tr *ngFor="let data of data">
-                        <td class="exagon-block">
-                            <hyt-hexagon [iconPath]="data.iconPath" [dimension]="0.8"></hyt-hexagon>
-                        </td>
-                        <td class="data-type">
-                            <span class="label-type">{{data.type}}</span>
-                            <hr>
-                            <ul>
-                                <li class="entity" *ngFor="let ent of data.entities">{{ent}}</li>
-                            </ul>
-                        </td>
-                    </tr>
-                </table> <!-- END TABLE -->
-
-            </div>
-            <div class="col-3 col-icon">
-                    
-                <hyt-hexagon iconPath="icon-hyt_projects" (clicked)="goToProjectWizard()">
-                </hyt-hexagon>
-
-                <p class="title-icon" i18n="@@HYT_go_to_project_list">Go to project list</p>
-                <br>
-                <p class="body-icon" i18n="@@HYT_wizard_report_modal_go_to_project_list_long">You will find the list of all your projects in card format.</p>
-
-            </div>
-            <div class="col-3 col-icon">
-
-                <hyt-hexagon iconPath="icon-hyt_layout" (clicked)="goToDashboard()"></hyt-hexagon>
-                <p class="title-icon" i18n="@@HYT_go_to_dashboard">Go to dashboard</p>
-                <br>
-                <p class="body-icon" i18n="@@HYT_go_to_dashboard_long">You will be able to configure widgets to monitor the data within your projects.</p>
-
-            </div>
-
+    
         </div>
 
-    </div> <!-- END CONTAINER RESUME -->
+        <div class="container-resume">
+
+            <div class="row row-box">
+    
+                <div class="col-6">
+    
+                    <table id="tableSummary">
+                        <tr *ngFor="let data of data">
+                            <td class="exagon-block">
+                                <hyt-hexagon [iconPath]="data.iconPath" [dimension]="0.8"></hyt-hexagon>
+                            </td>
+                            <td class="data-type">
+                                <span class="label-type">{{data.type}}</span>
+                                <hr>
+                                <ul>
+                                    <li class="entity" *ngFor="let ent of data.entities">{{ent}}</li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </table>
+    
+                </div>
+                <div class="col-3 col-icon">
+                        
+                    <hyt-hexagon iconPath="icon-hyt_projects" (clicked)="goToProjectWizard()">
+                    </hyt-hexagon>
+    
+                    <p class="title-icon" i18n="@@HYT_go_to_project_list">Go to project list</p>
+                    <br>
+                    <p class="body-icon" i18n="@@HYT_wizard_report_modal_go_to_project_list_long">You will find the list of all your projects in card format.</p>
+    
+                </div>
+                <div class="col-3 col-icon">
+    
+                    <hyt-hexagon iconPath="icon-hyt_layout" (clicked)="goToDashboard()"></hyt-hexagon>
+                    <p class="title-icon" i18n="@@HYT_go_to_dashboard">Go to dashboard</p>
+                    <br>
+                    <p class="body-icon" i18n="@@HYT_go_to_dashboard_long">You will be able to configure widgets to monitor the data within your projects.</p>
+    
+                </div>
+    
+            </div>
+    
+        </div>
+
+    </div>
 
 </div>

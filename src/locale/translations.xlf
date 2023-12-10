@@ -960,9 +960,6 @@
       <trans-unit id="HYT_project_categories" datatype="html">
         <source>Project Categories</source>
       </trans-unit>
-      <trans-unit id="HYT_widget_add_widget" datatype="html">
-        <source>Add widget</source>
-      </trans-unit>
       <trans-unit id="HYT_add" datatype="html">
         <source>Add</source>
       </trans-unit>

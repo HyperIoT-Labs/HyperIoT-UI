@@ -1,45 +1,12 @@
 #hyt-modal-info-recording-action {
 
-    &.dialog {
-        min-width: 320px;
-        max-height: 100vh;
-        font-family: 'Exo';
-        width: 600px;
-
-        #header-row {
-            border-top-left-radius: 8px;
-            border-top-right-radius: 8px;
-            background-color: #0956B6;
-            color: white;
-            .info-header{
-                padding: 12px;
-                h2 {
-                    text-align: center;
-                    margin: 0px;
-                }
-            }
-        }
-
-        #body-row {
-            text-align: center;
-            .dialog-body {
-                padding: 20px 20px 15px 20px;
-                background-color: white;
-            }
-        }
-
-        #footer-row {
-            padding: 10px;
-            text-align: center;
-            background-color: white;
-            border-bottom-left-radius: 8px;
-            border-bottom-right-radius: 8px;
-        }
+    #header-row {
+        background-color: #0956B6;
     }
 
-    :host {
-        justify-content: center;
-        --header-color: rgba(50, 50, 50, 0.1);
+    #body-row {
+        text-align: center;
+        padding: 1em;
     }
     
 }

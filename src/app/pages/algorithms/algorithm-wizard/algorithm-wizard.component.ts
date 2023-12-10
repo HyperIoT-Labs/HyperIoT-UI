@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation,ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { HytModalService } from 'components';
+import { DialogService } from 'components';
 import { HytStepperComponent } from 'components';
 import { Algorithm, AlgorithmIOField, AlgorithmsService } from 'core';
 import { Subject } from 'rxjs';
@@ -53,7 +53,7 @@ export class AlgorithmWizardComponent implements OnInit {
   constructor(
       private algorithmsService: AlgorithmsService,
       public entitiesService: EntitiesService,
-      private hytModalService: HytModalService,
+      private dialogService: DialogService,
       private route: ActivatedRoute,
       private cd: ChangeDetectorRef) {
     this.route.params.subscribe(routeParams => {
@@ -158,7 +158,7 @@ export class AlgorithmWizardComponent implements OnInit {
 
   openFinishModal() {
     this.cd.detectChanges();
-    const modalRef = this.hytModalService.open(AlgorithmWizardReportModalComponent, this.finishData);
+    this.dialogService.open(AlgorithmWizardReportModalComponent, { backgroundClosable: true });
   }
 
   showCancel(): boolean {

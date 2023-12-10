@@ -1,20 +1,23 @@
-import { Component, OnInit } from '@angular/core';
-import { HytModal, HytModalService } from 'components';
+import { Component, Inject, OnInit } from '@angular/core';
+import { DIALOG_DATA, DialogRef } from 'components';
 
 @Component({
   selector: 'hyt-generic-message-dialog',
   templateUrl: './generic-message-dialog.component.html',
   styleUrls: ['./generic-message-dialog.component.scss']
 })
-export class GenericMessageDialogComponent extends HytModal implements OnInit {
+export class GenericMessageDialogComponent implements OnInit {
 
   constructor(
-    hytModalService: HytModalService
-  ) {
-    super(hytModalService);
-  }
+    private dialogRef: DialogRef<void>,
+    @Inject(DIALOG_DATA) public data: { message: string; },
+  ) { }
 
   ngOnInit() {
+  }
+
+  close() {
+    this.dialogRef.close();
   }
 
 }

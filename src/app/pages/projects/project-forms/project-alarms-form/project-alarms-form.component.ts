@@ -615,7 +615,7 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity  implements  O
           title: $localize`:@@HYT_alarm_delete_last_event_title:Confirmation of cancellation last event`
         }
       });
-      dialogRef.onClosed.subscribe((result) => {
+      dialogRef.afterClosed().subscribe((result) => {
         if (result === 'delete') {
           this.deleteEvent(i)
           this.updateSummaryList();
@@ -682,7 +682,7 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity  implements  O
       const dialogRef = this.dialog.open(DeleteConfirmDialogComponent, {
           data: { title: $localize`:@@HYT_delete_item_question:Do you really want to delete this item?`, message: $localize`:@@HYT_operation_can_not_be_undone:This operation can not be undone`}
       });
-      dialogRef.onClosed.subscribe((result) => {
+      dialogRef.afterClosed().subscribe((result) => {
           if (result === 'delete') {
               this.removeEvent(indexToremove);
           }
@@ -697,7 +697,7 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity  implements  O
     const dialogRef = this.dialog.open(PendingChangesDialogComponent, {
         data: { title: $localize`:@@HYT_alarm_save_changes:Do you want to save the alarm and lost the pending changes?`, message: $localize`:@@HYT_event_will_be_lost:The current event will be lost`}
     });
-    dialogRef.onClosed.subscribe((result) => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result == 'save') this.saveAlarm(); // DISCARD
       else this.loadingStatus = LoadingStatusEnum.Ready; // NOT DISCARD
     });
