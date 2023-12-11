@@ -24,7 +24,6 @@ export class AppComponent {
   }
 
   openChatbot() {
-    console.info("openChatbot");
     if (this.collapsed) return this.collapsed = false;
     else if (!this.collapsed) return this.collapsed = true;
   }
