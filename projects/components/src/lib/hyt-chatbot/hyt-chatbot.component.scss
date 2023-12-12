@@ -455,8 +455,8 @@ $chatBotChiaraIconBGImage: #{var(--chatBotChiaraIconBGImage)};
         box-shadow: 0px 0px 4px -1px #000000;
 
         img {
-          width: 35px;
-          position: absolute;
+          width: 70px;
+          //position: absolute;
           bottom: -9px;
           right: 0px;
         }
@@ -480,7 +480,7 @@ $chatBotChiaraIconBGImage: #{var(--chatBotChiaraIconBGImage)};
         button {
           &.retry-connect-btn {
             margin-top: 20px;
-            background-color: darkcyan;
+            background-color: #1e58a5;
             color: #fff;
             padding: 8px 10px;
             border-radius: 5px;
@@ -489,7 +489,7 @@ $chatBotChiaraIconBGImage: #{var(--chatBotChiaraIconBGImage)};
 
           &:hover {
             &.retry-connect-btn {
-              background-color: darkcyan;
+              background-color: #1e58a5;
             }
           }
         }

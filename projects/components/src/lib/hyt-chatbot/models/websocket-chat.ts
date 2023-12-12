@@ -1,4 +1,3 @@
-import  {PageTags } from "./page-tags";
 
 export interface WebsocketChat {
   action: string,
@@ -15,7 +14,6 @@ export interface WebsocketChat {
   items?: MenuItems[],
   postback?: string,
   postbackMessageId?: string,
-  pageTags?: PageTags,
   read?: boolean,
   messageStatus?: string,
   disabled?: boolean,

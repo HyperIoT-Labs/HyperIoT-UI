@@ -1,7 +1,5 @@
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, QueryList, Renderer2, ViewChild, ViewChildren, ViewEncapsulation} from "@angular/core";
 import { Logger, LoggerService } from "core";
-import { WebSocketService } from "./services/web-socket.service";
-import { LocalStorageService } from "./services/local-storage.service";
 import { WebsocketChat } from "./models/websocket-chat";
 import { Subject, takeUntil } from "rxjs";
 import { PageStatus } from "./models/page-status";
@@ -85,11 +83,9 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
   });
 
   constructor(
-    public websocketService: WebSocketService,
-    public localStorageService: LocalStorageService,
     private renderer2: Renderer2,
     private changeDetector: ChangeDetectorRef,
-    private loggerService: LoggerService
+    loggerService: LoggerService
   ) {
     this.logger = new Logger(loggerService);
     this.logger.registerClass("HytChatbotComponent");
@@ -438,7 +434,7 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
    * @returns void
    */
   retryConnection(forceRetry = false): void {
-    console.log("[retryConnection]Start retry");
+    this.logger.info("Retry connection to cheshire cat");
     if (this.retryAttempts >= 3 && !forceRetry) {
       this.pageStatus = PageStatus.ERROR;
       return;
@@ -447,9 +443,6 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
     this.pageStatus = PageStatus.RETRYING;
     this.retryAttempts++;
     this.changeDetector.detectChanges();
-    //this.localStorageService.removeData(this.localStorageKeySession);
-    //this.SessionService.initCookieValues();
-    //this.SessionService.createSession(this.sessionIdObserver);
   }
 
   /**
