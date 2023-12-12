@@ -4,6 +4,7 @@ import { WebsocketChat } from "./models/websocket-chat";
 import { Subject, takeUntil } from "rxjs";
 import { PageStatus } from "./models/page-status";
 import * as moment from "moment";
+import { CookieService } from 'ngx-cookie-service';
 import { CatClient } from 'ccat-api'
 
 @Component({
@@ -72,19 +73,19 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
   /** Top position of the fixed pills. */
   readonly FIXED_TOP_PILLS = 15;
 
-  /** Cat variables to establish connection */
+  /** Cat variable to establish connection */
   readonly baseUrlCat = 'localhost';
-  readonly userCat = 'user'
 
   /* Declare cat client API */
   cat = new CatClient({
     baseUrl: this.baseUrlCat,
-    user: this.userCat
+    user: this.cookieService.get('HIT-AUTH')
   });
 
   constructor(
     private renderer2: Renderer2,
     private changeDetector: ChangeDetectorRef,
+    private cookieService: CookieService,
     loggerService: LoggerService
   ) {
     this.logger = new Logger(loggerService);
