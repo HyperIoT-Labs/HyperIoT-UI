@@ -105,7 +105,7 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
       }).onError(err => {
         this.handleError(err);
       }).onDisconnected(() => {
-        this.logger.warn('Disconnected from Cheshire-cat-ai');
+        this.handleDisconnection();
       });
   }
 
@@ -202,13 +202,21 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   /**
-  * Handle error and tries to re-connect to ccat
+  * Handle error ccat
   * @param error received by the WS message from ccat
   */
   handleError(err){
     this.pageStatus = PageStatus.ERROR;
     this.logger.error(err);
     /* TO DO RECONNECT (?)*/
+  }
+
+  /**
+  * Handle disconnection from the ccat
+  */
+  handleDisconnection(){
+    this.pageStatus = PageStatus.ERROR;
+    this.logger.warn('Disconnected from Cheshire-cat-ai');
   }
 
   /**
