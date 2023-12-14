@@ -160,6 +160,254 @@ export class HytBimComponent implements OnInit, AfterViewInit, OnDestroy {
           }
         },
       ]
+    },
+    {
+      file: 'Ponte_Tekla_Structures.ifc.xkt',
+      id: '',
+      objects: [
+        {
+          id: "genericSensorObject_1",
+          src: "/assets/sensors-obj/Sensori_HYOT.obj",
+          position: [8.9346357674826, 1.1249794488726916, -12.697565937167525],
+          scale: [1, 1, 1],
+          rotation: [90, 180, 180],
+        },
+        {
+          id: "genericSensorObject_2",
+          src: "/assets/sensors-obj/Sensori_HYOT.obj",
+          position: [30.59910147996385, 1.12501828970645, -12.510614517181242],
+          scale: [1, 1, 1],
+          rotation: [90, 180, 180],
+        },
+        {
+          id: "genericSensorObject_3",
+          src: "/assets/sensors-obj/Sensori_HYOT.obj",
+          position: [40.59236858272003, 1.124954481880641, -12.487635444804507],
+          scale: [1, 1, 1],
+          rotation: [90, 180, 180],
+        },
+        {
+          id: "genericSensorObject_4",
+          src: "/assets/sensors-obj/Sensori_HYOT.obj",
+          position: [54.624901741556556, 1.1240889422458231, -12.296994564624264],
+          scale: [1, 1, 1],
+          rotation: [90, 180, 180],
+        },
+        {
+          id: "genericSensorObject_5",
+          src: "/assets/sensors-obj/Sensori_HYOT.obj",
+          position: [69.95060511776063, 1.1251176646983545, -12.27917176443749],
+          scale: [1, 1, 1],
+          rotation: [90, 180, 180],
+        },
+        {
+          id: "genericSensorObject_6",
+          src: "/assets/sensors-obj/Sensori_HYOT.obj",
+          position: [7.2386025877012585, 1.1232908266559445, -1.0358537242972767],
+          scale: [1, 1, 1],
+          rotation: [90, 180, 180],
+        },
+        {
+          id: "genericSensorObject_7",
+          src: "/assets/sensors-obj/Sensori_HYOT.obj",
+          position: [28.599440357093556, 1.1243140339374005, -0.6712015102061306],
+          scale: [1, 1, 1],
+          rotation: [90, 180, 180],
+        },
+        {
+          id: "genericSensorObject_8",
+          src: "/assets/sensors-obj/Sensori_HYOT.obj",
+          position: [38.600610346568395, 1.1244581780283465, -1.008260207728168],
+          scale: [1, 1, 1],
+          rotation: [90, 180, 180],
+        },
+        {
+          id: "genericSensorObject_9",
+          src: "/assets/sensors-obj/Sensori_HYOT.obj",
+          position: [52.587006951360344, 1.1239221141773221, -0.8555207776151823],
+          scale: [1, 1, 1],
+          rotation: [90, 180, 180],
+        },
+        {
+          id: "genericSensorObject_10",
+          src: "/assets/sensors-obj/Sensori_HYOT.obj",
+          position: [68.28925678443431, 1.1250505901965475, -0.667016672526767],
+          scale: [1, 1, 1],
+          rotation: [90, 180, 180],
+        },
+      ],
+      annotations: [
+        {
+          id: "annotation_sensor_1",
+          worldPos: [8.9346357674826, 1.2249794488726916, -12.697565937167525],
+          occludable: true,
+          markerShown: true,
+          labelShown: false,
+
+          values: {
+            glyph: "A1",
+            title: "Sensor 313",
+            description: "Setup_3",
+            markerBGColor: "transparent",
+            sensorImgUrl: '/assets/images/sensors/acc_ponte.jpg',
+            projectId: 0,
+            areaId: 0
+          }
+        },
+        {
+          id: "annotation_sensor_2",
+          worldPos: [30.59910147996385, 1.22501828970645, -12.510614517181242],
+          occludable: true,
+          markerShown: true,
+          labelShown: false,
+
+          values: {
+            glyph: "A1",
+            title: "Sensor 317",
+            description: "Setup_4",
+            markerBGColor: "transparent",
+            sensorImgUrl: '/assets/images/sensors/acc_ponte.jpg',
+            projectId: 0,
+            areaId: 0
+          }
+        },
+        {
+          id: "annotation_sensor_3",
+          worldPos: [40.59236858272003, 1.224954481880641, -12.487635444804507],
+          occludable: true,
+          markerShown: true,
+          labelShown: false,
+
+          values: {
+            glyph: "A1",
+            title: "Sensor 321",
+            description: "Setup_5",
+            markerBGColor: "transparent",
+            sensorImgUrl: '/assets/images/sensors/acc_ponte.jpg',
+            projectId: 0,
+            areaId: 0
+          }
+        },
+        {
+          id: "annotation_sensor_4",
+          worldPos: [54.624901741556556, 1.2240889422458231, -12.296994564624264],
+          occludable: true,
+          markerShown: true,
+          labelShown: false,
+
+          values: {
+            glyph: "A1",
+            title: "Sensor 325",
+            description: "Setup_6",
+            markerBGColor: "transparent",
+            sensorImgUrl: '/assets/images/sensors/acc_ponte.jpg',
+            projectId: 0,
+            areaId: 0
+          }
+        },
+        {
+          id: "annotation_sensor_5",
+          worldPos: [69.95060511776063, 1.2251176646983545, -12.27917176443749],
+          occludable: true,
+          markerShown: true,
+          labelShown: false,
+
+          values: {
+            glyph: "A1",
+            title: "Sensor 329",
+            description: "Setup_7",
+            markerBGColor: "transparent",
+            sensorImgUrl: '/assets/images/sensors/acc_ponte.jpg',
+            projectId: 0,
+            areaId: 0
+          }
+        },
+        {
+          id: "annotation_sensor_6",
+          worldPos: [7.2386025877012585, 1.2232908266559445, -1.0358537242972767],
+          occludable: true,
+          markerShown: true,
+          labelShown: false,
+
+          values: {
+            glyph: "A1",
+            title: "Sensor 113",
+            description: "Setup_3",
+            markerBGColor: "transparent",
+            sensorImgUrl: '/assets/images/sensors/acc_ponte.jpg',
+            projectId: 0,
+            areaId: 0
+          }
+        },
+        {
+          id: "annotation_sensor_7",
+          worldPos: [28.599440357093556, 1.2243140339374005, -0.6712015102061306],
+          occludable: true,
+          markerShown: true,
+          labelShown: false,
+
+          values: {
+            glyph: "A1",
+            title: "Sensor 117",
+            description: "Setup_4",
+            markerBGColor: "transparent",
+            sensorImgUrl: '/assets/images/sensors/acc_ponte.jpg',
+            projectId: 0,
+            areaId: 0
+          }
+        },
+        {
+          id: "annotation_sensor_8",
+          worldPos: [38.600610346568395, 1.2244581780283465, -1.008260207728168],
+          occludable: true,
+          markerShown: true,
+          labelShown: false,
+
+          values: {
+            glyph: "A1",
+            title: "Sensor 121",
+            description: "Setup_5",
+            markerBGColor: "transparent",
+            sensorImgUrl: '/assets/images/sensors/acc_ponte.jpg',
+            projectId: 0,
+            areaId: 0
+          }
+        },
+        {
+          id: "annotation_sensor_9",
+          worldPos: [52.587006951360344, 1.2239221141773221, -0.8555207776151823],
+          occludable: true,
+          markerShown: true,
+          labelShown: false,
+
+          values: {
+            glyph: "A1",
+            title: "Sensor 125",
+            description: "Setup_6",
+            markerBGColor: "transparent",
+            sensorImgUrl: '/assets/images/sensors/acc_ponte.jpg',
+            projectId: 0,
+            areaId: 0
+          }
+        },
+        {
+          id: "annotation_sensor_10",
+          worldPos: [68.28925678443431, 1.2250505901965475, -0.667016672526767],
+          occludable: true,
+          markerShown: true,
+          labelShown: false,
+
+          values: {
+            glyph: "A1",
+            title: "Sensor 129",
+            description: "Setup_7",
+            markerBGColor: "transparent",
+            sensorImgUrl: '/assets/images/sensors/acc_ponte.jpg',
+            projectId: 0,
+            areaId: 0
+          }
+        },
+      ]
     }
   ]
 
