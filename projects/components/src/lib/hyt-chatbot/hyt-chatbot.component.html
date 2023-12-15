@@ -1,4 +1,4 @@
-<div id="container-chatbot-component" [ngClass]="{'web-embedded' : webEmbedded}">
+<div id="container-chatbot-component">
   <header>
     <div class="container-header">
       <div class="header-start">
@@ -95,7 +95,7 @@
 
         <div class="container-chiara-error-message">
           <span> Si è verificato un errore durante il tentativo di connessione con Hyperis, ritenta cliccando il bottone in basso.</span>
-          <button (click)="retryConnection(true)" class="retry-connect-btn">Ritenta connessione</button>
+          <button (click)="retryConnection()" class="retry-connect-btn">Ritenta connessione</button>
         </div>
 
       </div>
@@ -130,7 +130,7 @@
 
         <div class="container-input-message">
           <input
-            [disabled]="" 
+            [disabled]="canIWrite === false" 
             #inputMsg
             (keyup)="startTypingIndicator($event)"
             type="text"
@@ -143,7 +143,7 @@
         <div class="container-send-btn">
           <button
             (click)="sendMessage()"
-            [disabled]="inputMsg.value === '' || inputMsgEl?.nativeElement.value === ''"
+            [disabled]="inputMsg.value === '' || canIWrite === false"
           >
             <img src="/assets/icons/hyt-chatbot-send.png" alt="Send Icon">
           </button>

@@ -55,14 +55,14 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
   /** Timer for typing indicator. */
   typingTimer: any;
 
-  /** Flag to determine if the component is embedded in a web page. */
-  webEmbedded = false;
-
   /** Number of retry attempts to regenerate the session before going into error. */
-  retryAttempts = 0;
+  retryAttempts = 1;
 
   /** Save previous message type in order to show or not typing token*/
   previous_message_type = "";
+
+  /** MUST NOT WRITE */
+  canIWrite = false;
 
   /** Subject for managing open subscriptions. */
   protected ngUnsubscribe: Subject<void> = new Subject<void>();
@@ -76,10 +76,13 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
   /** Cat variable to establish connection */
   readonly baseUrlCat = 'localhost';
 
-  /* Declare cat client API */
+  /* Always declare the cat client on the first chatbot window opened */
   cat = new CatClient({
     baseUrl: this.baseUrlCat,
-    user: this.cookieService.get('HIT-AUTH')
+    user: this.cookieService.get('HIT-AUTH'),
+    ws : { 
+      retries: 1,
+    }
   });
 
   constructor(
@@ -96,16 +99,7 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
   * At chatbot window opening 
   */
   ngOnInit(): void {
-    this.cat.init();
-    this.cat.onConnected(() => {
-        this.firstMessage(); /* "Ciao, chi sei?" */
-      }).onMessage(msg => {
-        this.handleWSMessage(msg);
-      }).onError(err => {
-        this.handleError(err);
-      }).onDisconnected(() => {
-        this.handleDisconnection();
-      });
+    this.initCat();
   }
 
   ngAfterViewInit() {
@@ -116,7 +110,7 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
     this.messageList?.changes
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((res) => {
-        console.log("[ngAfterViewInit] CHANGE LIST", res);
+        //console.log("[ngAfterViewInit] CHANGE LIST", res);
         this.autoScrollDown();
       });
   }
@@ -133,11 +127,56 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
     this.pageStatus = PageStatus.READY;
   }
 
+  /**
+   * Init the cat and open connection (1st time)
+  */
+  initCat(){
+    this.cat.init();
+    this.cat.onConnected(() => {
+        this.firstMessage(); /* "Ciao, chi sei?" */
+      }).onMessage(msg => {
+        this.handleWSMessage(msg);
+      }).onError(err => {
+        this.handleError(err);
+      }).onDisconnected(() => {
+        this.handleDisconnection();
+      });
+  }
+
+  /**
+  * Init a new cat in order to retry connection if lost.
+  */
+  newCat(){
+    this.cat.close();
+    /* Declare a new cat*/
+    this.cat = new CatClient({
+      baseUrl: this.baseUrlCat,
+      user: this.cookieService.get('HIT-AUTH'),
+      ws : { 
+        retries: 1,
+        delay: 2000,
+      }
+    });
+
+    this.cat.init();
+    this.cat.onConnected(() => {
+        this.retryAttempts = 1;
+        this.firstMessage(); /* "Ciao, chi sei?" */
+      }).onMessage(msg => {
+        this.handleWSMessage(msg);
+      }).onError(err => { 
+        this.retryAttempts++;
+        this.handleError(err);
+      }).onDisconnected(() => {
+        this.handleDisconnection();
+      });
+  }
+
   /** 
   * Check if the WS message has to be showed or not into the chat
   * @param msg The WebSocket message indicating the message type.
   */
-  handleWSMessage(msg){
+  handleWSMessage(msg: WebsocketChat){
     // Variable that enable show/hidden message/token:
     let show : boolean;
     let action : string;
@@ -147,6 +186,7 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
       this.previous_message_type = 'chat_token'
       action = 'typing_indicator';
       show = true;
+      if (this.received.length > 1) { this.received[this.received.length-1].messageStatus = "delivery_success"; }
     }
 
     // Always show
@@ -160,21 +200,14 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
 
     // Choose to show message, adding to relative
     if (show == true) {
-      this.textMessageHandling({
+      this.received.push({
         action: action,
         text: msg.content,
         author: "csr",
         timestamp: new Date().getTime(),
         });
+        this.canIWrite = true;
     }
-  }
-
-  /**
-   * Handles text messages received from the chatbot.
-   * @param message The WebSocket message containing text from the chatbot.
-   */
-  textMessageHandling(message: WebsocketChat) {
-    this.received.push(message);
   }
 
   /**
@@ -187,17 +220,18 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
     // Send message to ccat
     this.cat.send(this.inputMsg);
 
-    this.textMessageHandling({
+    this.received.push({
         action: "text",
         text: this.inputMsg,
         author: "cx",
-        timestamp: new Date().getTime(),
+        timestamp: new Date().getTime()
       });
 
     if (this.inputMsgEl) this.inputMsgEl.nativeElement.value = "";
 
-    // Disable send button
+    // Disable send button and input text
     this.inputMsgEl?.nativeElement.focus();
+    this.canIWrite = false;
   }
 
   /**
@@ -206,9 +240,7 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
   */
   handleError(err){
     this.pageStatus = PageStatus.ERROR;
-    console.log(err);
     this.logger.error(err);
-    /* TO DO RECONNECT (?)*/
   }
 
   /**
@@ -280,9 +312,9 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
     );
     if (textMessageFound) {
       textMessageFound.messageStatus = "delivery_success";
-      console.log("[messageDeliveryHandling]", textMessageFound);
+      //console.log("[messageDeliveryHandling]", textMessageFound);
     } else {
-      console.error("[messageDeliveryHandling] MESSAGE NOT FOUND");
+      //console.error("[messageDeliveryHandling] MESSAGE NOT FOUND");
     }
   }
 
@@ -387,7 +419,7 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
       const daysOfWeekName = daysOfWeek[numberOfDay].substring(0, 3);
       return daysOfWeekName + " " + dataMomentFormat;
     } else {
-      console.warn("[returnMessageDate] not handled data", diffDate);
+      //console.warn("[returnMessageDate] not handled data", diffDate);
       return dataMomentFormat;
     }
   }
@@ -406,7 +438,7 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
         arrayMsg[index - 1].timestamp!
       );
     } else {
-      console.error("[displayMessageDateBox] negative message index", index);
+      //console.error("[displayMessageDateBox] negative message index", index);
       return false;
     }
   }
@@ -442,33 +474,18 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
    * @param forceRetry (optional) A boolean flag indicating whether to force a retry even if maximum retry attempts have been reached.
    * @returns void
    */
-  retryConnection(forceRetry = false): void {
+  retryConnection(): void {
     this.logger.info("Retry connection to cheshire cat");
-
-    if (this.retryAttempts >= 3 && !forceRetry) {
-      this.pageStatus = PageStatus.ERROR;
-      return;
-    }
-
-    // Increase counter
     this.pageStatus = PageStatus.RETRYING;
-    this.retryAttempts++;
-
-    // Retry connection ON/OFF
-      /* Declare cat client API */
-    this.cat = new CatClient({
-      baseUrl: this.baseUrlCat,
-      user: this.cookieService.get('HIT-AUTH')
-    });
-    this.cat.init();
-    this.cat.send("Reconnect...");
+    // Retry connection to a new cat istance
+    this.newCat();
   }
 
   /**
   * Close chat window 
   */
   onClose() {    
-    console.info("closeChatbot");
+    //console.info("closeChatbot");
     this.collapsedOutput.emit(true);
   }
 }

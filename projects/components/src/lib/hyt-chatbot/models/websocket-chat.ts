@@ -1,6 +1,6 @@
 
 export interface WebsocketChat {
-  action: string,
+  action?: string,
   content?: string,
   type?: string,
   author?: string,
