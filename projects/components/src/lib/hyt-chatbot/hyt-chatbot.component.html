@@ -3,11 +3,11 @@
     <div class="container-header">
       <div class="header-start">
         <div class="img-profile">
-          <img src="/assets/icons/hyt-chatbot-img.png" alt="Loriana Icon">
+          <img src="/assets/icons/hyt-chatbot-img.png" alt="Hyperis Icon">
         </div>
 
         <div class="title-bot">
-          <div class="title">Loriana</div>
+          <div class="title">Hyperis</div>
           <div class="subtitle">Assistente virtuale</div>
         </div>
       </div>
@@ -56,7 +56,7 @@
 
               <ng-container *ngSwitchCase="'typing_indicator'">
                 <div *ngIf="message.author === 'csr'" class="typing-box">
-                  <div class="typing-text">Loriana sta scrivendo...</div>
+                  <div class="typing-text">Hyperis sta scrivendo...</div>
                   <span></span>
                   <span></span>
                   <span></span>
@@ -75,7 +75,7 @@
         <div class="container-chiara-img"></div>
 
         <div class="container-chiara-message">
-          Loriana è in attesa
+          Hyperis è in attesa
           <div class="chiara-loader">
             <span></span>
             <span></span>
@@ -90,11 +90,11 @@
       <div class="error-status-container">
 
         <div class="container-chiara-error-img">
-          <img src="/assets/icons/hyt-chatbot-error.png" alt="Loriana Error Icon">
+          <img src="/assets/icons/hyt-chatbot-error.png" alt="Hyperis Error Icon">
         </div>
 
         <div class="container-chiara-error-message">
-          <span> Si è verificato un errore durante il tentativo di connessione con Loriana, ritenta cliccando il bottone in basso.</span>
+          <span> Si è verificato un errore durante il tentativo di connessione con Hyperis, ritenta cliccando il bottone in basso.</span>
           <button (click)="retryConnection(true)" class="retry-connect-btn">Ritenta connessione</button>
         </div>
 

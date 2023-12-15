@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, QueryList, Renderer2, ViewChild, ViewChildren, ViewEncapsulation} from "@angular/core";
+import { AfterViewInit, Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, QueryList, Renderer2, ViewChild, ViewChildren, ViewEncapsulation} from "@angular/core";
 import { Logger, LoggerService } from "core";
 import { WebsocketChat } from "./models/websocket-chat";
 import { Subject, takeUntil } from "rxjs";
@@ -84,7 +84,6 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
 
   constructor(
     private renderer2: Renderer2,
-    private changeDetector: ChangeDetectorRef,
     private cookieService: CookieService,
     loggerService: LoggerService
   ) {
@@ -207,6 +206,7 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
   */
   handleError(err){
     this.pageStatus = PageStatus.ERROR;
+    console.log(err);
     this.logger.error(err);
     /* TO DO RECONNECT (?)*/
   }
@@ -293,7 +293,7 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
   returnAuthor(idAuthor: string): string {
     switch (idAuthor) {
       case "csr":
-        return "Loriana";
+        return "Hyperis";
       case "cx":
         return "Tu";
       default:
@@ -444,14 +444,24 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
    */
   retryConnection(forceRetry = false): void {
     this.logger.info("Retry connection to cheshire cat");
+
     if (this.retryAttempts >= 3 && !forceRetry) {
       this.pageStatus = PageStatus.ERROR;
       return;
     }
 
+    // Increase counter
     this.pageStatus = PageStatus.RETRYING;
     this.retryAttempts++;
-    this.changeDetector.detectChanges();
+
+    // Retry connection ON/OFF
+      /* Declare cat client API */
+    this.cat = new CatClient({
+      baseUrl: this.baseUrlCat,
+      user: this.cookieService.get('HIT-AUTH')
+    });
+    this.cat.init();
+    this.cat.send("Reconnect...");
   }
 
   /**
