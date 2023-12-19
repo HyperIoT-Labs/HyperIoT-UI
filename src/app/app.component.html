@@ -20,15 +20,6 @@
   <hyt-notificationbar></hyt-notificationbar>
   <hyt-prompt></hyt-prompt>
 
-  <!-- Chatbot icon collapsed -->
-  <div *ngIf="showToolBars() && this.collapsed == true" class="hyt-chatbot-collapsed-container">
-    <button class="hyt-chatbot-collapsed"
-        mat-fab color="primary" matBadge="1" matBadgePosition="before" matBadgeColor="accent" (click)="this.openChatbot()">
-        <img class="hyt-chatbot-collapsed-icon" src="assets/icons/hyt-chatbot-collapsed-logo.png">
-    </button>
-  </div>
-
-  <!-- Chatbot not collapsed -->
-  <hyt-chatbot *ngIf="showToolBars() && this.collapsed == false" (collapsedOutput)="onCollapse($event)"></hyt-chatbot>
+  <hyt-chatbot *ngIf="showToolBars()"></hyt-chatbot>
 
 </div>

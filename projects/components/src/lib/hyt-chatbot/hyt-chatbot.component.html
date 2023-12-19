@@ -1,19 +1,28 @@
-<div id="container-chatbot-component">
+<!-- CHATBOT Collapsed Icon-->
+<div *ngIf="this.collapsed == true" class="hyt-chatbot-collapsed-container">
+  <button class="hyt-chatbot-collapsed"
+      mat-fab color="primary" [matBadge]="badgeContent" [matBadgeHidden]="badgeHidden" matBadgePosition="before" matBadgeColor="accent" (click)="this.openCloseChatbot()">
+      <img class="hyt-chatbot-collapsed-icon" src="assets/icons/hyt-chatbot-collapsed-logo.png">
+  </button>
+</div>
+
+<!-- CHATBOT Window -->
+<div id="container-chatbot-component" *ngIf="this.collapsed == false">
   <header>
     <div class="container-header">
       <div class="header-start">
         <div class="img-profile">
-          <img src="/assets/icons/hyt-chatbot-img.png" alt="Hyperis Icon">
+          <img src="/assets/icons/hyt-chatbot-img.png" alt="Alice Icon">
         </div>
 
         <div class="title-bot">
-          <div class="title">Hyperis</div>
+          <div class="title">Alice</div>
           <div class="subtitle">Assistente virtuale</div>
         </div>
       </div>
 
       <div class="header-end">
-        <div class="dots" (click)="onClose()"></div>
+        <div class="dots" (click)="this.openCloseChatbot()"></div>
       </div>
     </div>
   </header>
@@ -56,7 +65,7 @@
 
               <ng-container *ngSwitchCase="'typing_indicator'">
                 <div *ngIf="message.author === 'csr'" class="typing-box">
-                  <div class="typing-text">Hyperis sta scrivendo...</div>
+                  <div class="typing-text">Alice sta scrivendo...</div>
                   <span></span>
                   <span></span>
                   <span></span>
@@ -72,11 +81,11 @@
     <ng-container *ngIf="pageStatus === 1">
       <div class="pending-status-container">
 
-        <div class="container-chiara-img"></div>
+        <div class="container-alice-img"></div>
 
-        <div class="container-chiara-message">
-          Hyperis è in attesa
-          <div class="chiara-loader">
+        <div class="container-alice-message">
+          Alice è in attesa
+          <div class="alice-loader">
             <span></span>
             <span></span>
             <span></span>
@@ -89,12 +98,12 @@
     <ng-container *ngIf="pageStatus === -1">
       <div class="error-status-container">
 
-        <div class="container-chiara-error-img">
-          <img src="/assets/icons/hyt-chatbot-error.png" alt="Hyperis Error Icon">
+        <div class="container-alice-error-img">
+          <img src="/assets/icons/hyt-chatbot-error.png" alt="Alice Error Icon">
         </div>
 
-        <div class="container-chiara-error-message">
-          <span> Si è verificato un errore durante il tentativo di connessione con Hyperis, ritenta cliccando il bottone in basso.</span>
+        <div class="container-alice-error-message">
+          <span> Si è verificato un errore durante il tentativo di connessione con Alice, ritenta cliccando il bottone in basso.</span>
           <button (click)="retryConnection()" class="retry-connect-btn">Ritenta connessione</button>
         </div>
 
@@ -104,14 +113,14 @@
     <ng-container *ngIf="pageStatus === -2">
       <div class="pending-status-container">
 
-        <div class="container-chiara-img"></div>
+        <div class="container-alice-img"></div>
 
         <div class="retrying-connection">
-          <div class="container-chiara-reconnection">
+          <div class="container-alice-reconnection">
             <span>
               Tentativo di riconnessione numero <strong>{{retryAttempts}}</strong>
             </span>
-            <div class="chiara-loader">
+            <div class="alice-loader">
               <span></span>
               <span></span>
               <span></span>

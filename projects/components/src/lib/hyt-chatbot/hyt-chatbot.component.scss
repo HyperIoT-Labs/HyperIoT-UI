@@ -1,5 +1,6 @@
-$chatBotChiaraIconBGImage: #{var(--chatBotChiaraIconBGImage)};
+$chatBotAliceIconBGImage: #{var(--chatBotAliceIconBGImage)};
 
+/* Chatbot Window open */
 #container-chatbot-component {
   position: fixed;
   bottom: 15px;
@@ -228,7 +229,7 @@ $chatBotChiaraIconBGImage: #{var(--chatBotChiaraIconBGImage)};
               border-radius: 50%;
               bottom: -12px;
               left: -40px;
-              //background-image: url('../../assets/images/icons/chiara-icon.png');
+              //background-image: url('../../assets/images/icons/alice-icon.png');
               background-image: url('/assets/icons/hyt-chatbot-img.png');
               background-size: contain;
               background-position: center center;
@@ -390,7 +391,7 @@ $chatBotChiaraIconBGImage: #{var(--chatBotChiaraIconBGImage)};
       height: 100%;
       flex-direction: column;
 
-      .container-chiara-img {
+      .container-alice-img {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -399,7 +400,7 @@ $chatBotChiaraIconBGImage: #{var(--chatBotChiaraIconBGImage)};
         background-color: antiquewhite;
         border-radius: 50%;
         background-image: url("/assets/icons/hyt-chatbot-img.png");
-        /*background-image: $chatBotChiaraIconBGImage;*/
+        /*background-image: $chatBotAliceIconBGImage;*/
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
@@ -415,7 +416,7 @@ $chatBotChiaraIconBGImage: #{var(--chatBotChiaraIconBGImage)};
 
       }
 
-      .container-chiara-message {
+      .container-alice-message {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -433,7 +434,7 @@ $chatBotChiaraIconBGImage: #{var(--chatBotChiaraIconBGImage)};
       height: 100%;
       flex-direction: column;
 
-      .container-chiara-error-img {
+      .container-alice-error-img {
         position: relative;
         display: flex;
         align-items: center;
@@ -442,8 +443,8 @@ $chatBotChiaraIconBGImage: #{var(--chatBotChiaraIconBGImage)};
         height: 100px;
         background-color: #ffbaba;
         border-radius: 50%;
-        //background-image: url("../../assets/images/icons/chiara-icon.png");
-        background-image: $chatBotChiaraIconBGImage;
+        //background-image: url("../../assets/images/icons/alice-icon.png");
+        background-image: $chatBotAliceIconBGImage;
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
@@ -463,7 +464,7 @@ $chatBotChiaraIconBGImage: #{var(--chatBotChiaraIconBGImage)};
 
       }
 
-      .container-chiara-error-message {
+      .container-alice-error-message {
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -499,7 +500,7 @@ $chatBotChiaraIconBGImage: #{var(--chatBotChiaraIconBGImage)};
     }
 
     .retrying-connection {
-      .container-chiara-reconnection {
+      .container-alice-reconnection {
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -518,7 +519,7 @@ $chatBotChiaraIconBGImage: #{var(--chatBotChiaraIconBGImage)};
     }
   }
 
-  .chiara-loader {
+  .alice-loader {
     span {
       height: 14px;
       width: 14px;
@@ -656,6 +657,40 @@ $chatBotChiaraIconBGImage: #{var(--chatBotChiaraIconBGImage)};
 
     }
 
+  }
+
+}
+
+/* Chatbot icon collapsed */
+.hyt-chatbot-collapsed-container {
+  position: fixed;
+  bottom: 15px;
+  right: 15px;
+  z-index: 9999;
+  width: 64px;
+  height: 64px;
+
+  .hyt-chatbot-collapsed {
+    height: 100%;
+    width: 100%;
+    background-color: #0d416d !important;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    .hyt-chatbot-collapsed-icon {
+      width: 40px;
+      height: auto
+    }
+  }
+
+  .mat-badge-medium.mat-badge-overlap.mat-badge-before .mat-badge-content {
+    left: -5px;
+  }
+  .mat-badge-medium.mat-badge-above .mat-badge-content {
+    top: 0px;
   }
 
 }

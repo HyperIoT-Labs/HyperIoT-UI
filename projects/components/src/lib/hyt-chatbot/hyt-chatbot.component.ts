@@ -19,9 +19,6 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
   /** HYOT logger */
   private logger: Logger;
 
-  /** To open/close chatbot */
-  @Output() collapsedOutput = new EventEmitter<boolean>();
-
   /** Reference to the "content" container for messages. */
   @ViewChild("content") content?: ElementRef;
 
@@ -64,6 +61,16 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
   /** MUST NOT WRITE */
   canIWrite = false;
 
+  /** Variable to collapse/show chatbot window */
+  collapsed = true;
+
+  /** Variable to indicates if connect to ccat or not (=new session or not) */
+  firstOpen = true;
+
+  /** Variables to indicates if there is a message not read from the user when window is collapsed */
+  badgeContent : number;
+  badgeHidden : boolean;
+
   /** Subject for managing open subscriptions. */
   protected ngUnsubscribe: Subject<void> = new Subject<void>();
 
@@ -90,6 +97,8 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
     private cookieService: CookieService,
     loggerService: LoggerService
   ) {
+    this.badgeContent = 0;
+    this.badgeHidden = true;
     this.logger = new Logger(loggerService);
     this.logger.registerClass("HytChatbotComponent");
     moment.locale("it");
@@ -103,14 +112,13 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.renderer2.listen(this.content?.nativeElement, "scroll", (e) =>
-      this.floatDatePills(this.getContentYPosition(e))
-    );
+    //this.renderer2.listen(this.content?.nativeElement, "scroll", (e) =>
+    //  this.floatDatePills(this.getContentYPosition(e))
+    //);
 
     this.messageList?.changes
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((res) => {
-        //console.log("[ngAfterViewInit] CHANGE LIST", res);
         this.autoScrollDown();
       });
   }
@@ -133,7 +141,6 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
   initCat(){
     this.cat.init();
     this.cat.onConnected(() => {
-        this.firstMessage(); /* "Ciao, chi sei?" */
       }).onMessage(msg => {
         this.handleWSMessage(msg);
       }).onError(err => {
@@ -206,7 +213,14 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
         author: "csr",
         timestamp: new Date().getTime(),
         });
+
         this.canIWrite = true;
+
+        if (msg.type == 'chat'){
+          // add MatBadgeValue and show
+          this.badgeContent = 1;
+          this.badgeHidden = false;
+        }
     }
   }
 
@@ -482,10 +496,23 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   /**
-  * Close chat window 
+  * Open/Close chatbot window
   */
-  onClose() {    
-    //console.info("closeChatbot");
-    this.collapsedOutput.emit(true);
+  openCloseChatbot() {
+    if (this.firstOpen) {
+      this.firstMessage(); /* "Ciao, chi sei?" solo alla prima apertura*/
+      this.firstOpen = false;
+      return this.collapsed = false;
+    }
+    else if (this.collapsed){
+      this.badgeContent = 0;
+      this.badgeHidden = true;
+      return this.collapsed = false;
+    }
+    else if (!this.collapsed) {
+      this.badgeContent = 0;
+      this.badgeHidden = true;
+      return this.collapsed = true;
+    }
   }
 }
