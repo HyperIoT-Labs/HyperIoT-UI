@@ -500,6 +500,7 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
   */
   openCloseChatbot() {
     if (this.firstOpen) {
+      this.pageStatus = PageStatus.LOADING;
       this.firstMessage(); /* "Ciao, chi sei?" solo alla prima apertura*/
       this.firstOpen = false;
       return this.collapsed = false;
