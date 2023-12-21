@@ -123,7 +123,9 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
       });
   }
 
-  ngOnDestroy(){}
+  ngOnDestroy(){
+    this.cat.close();
+  }
 
   /** 
   * First Message sent by user (but hidden to him) in order to let introduce chatbot itself 
