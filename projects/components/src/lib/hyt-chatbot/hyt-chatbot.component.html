@@ -1,0 +1,165 @@
+<!-- CHATBOT Collapsed Icon-->
+<div *ngIf="this.collapsed == true" class="hyt-chatbot-collapsed-container">
+  <button class="hyt-chatbot-collapsed"
+      mat-fab color="primary" [matBadge]="badgeContent" [matBadgeHidden]="badgeHidden" matBadgePosition="before" matBadgeColor="accent" (click)="this.openCloseChatbot()">
+      <img class="hyt-chatbot-collapsed-icon" src="assets/icons/hyt-chatbot-collapsed-logo.png">
+  </button>
+</div>
+
+<!-- CHATBOT Window -->
+<div id="container-chatbot-component" *ngIf="this.collapsed == false">
+  <header>
+    <div class="container-header">
+      <div class="header-start">
+        <div class="img-profile">
+          <img src="/assets/icons/hyt-chatbot-img.png" alt="Alice Icon">
+        </div>
+
+        <div class="title-bot">
+          <div class="title">Alice</div>
+          <div class="subtitle">Assistente virtuale</div>
+        </div>
+      </div>
+
+      <div class="header-end">
+        <div class="dots" (click)="this.openCloseChatbot()"></div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container-messages" #content>
+
+    <ng-container *ngIf="pageStatus === 0">
+      <div 
+        class="current-view-date" 
+        [ngStyle]="{'top.px': FIXED_TOP_PILLS}"
+        #floatingPill
+      ></div>
+      <ul 
+        class="chat-padding" 
+        [ngStyle]="{'margin': MARGIN_TOP_UL + 'px 25px'}"
+      >
+        <ng-container *ngFor="let message of received; let i = index">
+          <span #dayDate  *ngIf="displayMessageDateBox(received, i)" class="day-date">{{returnMessageDate(message.timestamp!) | uppercase}}</span>
+          <li
+            #messagelist
+            class="common-message"
+            [ngClass]="{
+              'is-user': message.author! === 'cx',
+              'is-bot': message.author! === 'csr' && message.action! !== 'typing_indicator',
+              'read': message.author! === 'cx' && message.messageStatus === 'delivery_success',
+              'bot-typing': message.author! === 'csr' && message.action! === 'typing_indicator'
+            }"
+            [attr.data-message-id]="message.messageId!"
+          >
+            <div class="container-single-message" [ngSwitch]="message.action!">
+              <ng-container *ngSwitchCase="'text'">
+                <div class="info-row">
+                  <div class="name-cell">{{returnAuthor(message.author!)}}</div>
+                  <div class="time-cell">{{returnTimeMessage(message.timestamp!)}}</div>
+                </div>
+                <div class="message-row"
+                     [innerHTML]="message.text!"
+                ></div>
+              </ng-container>
+
+              <ng-container *ngSwitchCase="'typing_indicator'">
+                <div *ngIf="message.author === 'csr'" class="typing-box">
+                  <div class="typing-text">Alice sta scrivendo...</div>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+              </ng-container>
+            </div>
+          </li>
+
+        </ng-container>
+      </ul>
+    </ng-container>
+
+    <ng-container *ngIf="pageStatus === 1">
+      <div class="pending-status-container">
+
+        <div class="container-alice-img"></div>
+
+        <div class="container-alice-message">
+          Alice è in attesa
+          <div class="alice-loader">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="pageStatus === -1">
+      <div class="error-status-container">
+
+        <div class="container-alice-error-img">
+          <img src="/assets/icons/hyt-chatbot-error.png" alt="Alice Error Icon">
+        </div>
+
+        <div class="container-alice-error-message">
+          <span> Si è verificato un errore durante il tentativo di connessione con Alice, ritenta cliccando il bottone in basso.</span>
+          <button (click)="retryConnection()" class="retry-connect-btn">Ritenta connessione</button>
+        </div>
+
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="pageStatus === -2">
+      <div class="pending-status-container">
+
+        <div class="container-alice-img"></div>
+
+        <div class="retrying-connection">
+          <div class="container-alice-reconnection">
+            <span>
+              Tentativo di riconnessione numero <strong>{{retryAttempts}}</strong>
+            </span>
+            <div class="alice-loader">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </ng-container>
+
+  </div>
+
+  <footer *ngIf="pageStatus === 0">
+    <div class="container-footer">
+      <form>
+
+        <div class="container-input-message">
+          <input
+            [disabled]="canIWrite === false" 
+            #inputMsg
+            (keyup)="startTypingIndicator($event)"
+            type="text"
+            id="input-msg"
+            placeholder="Scrivi qui"
+            (focus)="inputOnFocus($event)"
+            autocomplete="off"
+          >
+        </div>
+        <div class="container-send-btn">
+          <button
+            (click)="sendMessage()"
+            [disabled]="inputMsg.value === '' || canIWrite === false"
+          >
+            <img src="/assets/icons/hyt-chatbot-send.png" alt="Send Icon">
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </footer>
+
+</div>
