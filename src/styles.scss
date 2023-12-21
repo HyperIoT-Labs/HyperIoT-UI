@@ -90,7 +90,7 @@
 .hyt-dialog-header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     flex-shrink: 0;
     border-bottom: 1px solid #e9ecef;
     color: white;
@@ -99,13 +99,14 @@
     font-weight: 600;
     font-size: 1.4rem;
 }
+.hyt-dialog-header-align-start {
+    justify-content: flex-start;
+}
+.hyt-dialog-header-align-end {
+    justify-content: flex-end;
+}
 
 .hyt-dialog-content {
-    overflow-y: clip;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 24px;
     overflow-y: auto;
     flex-grow: 1;
     padding: 1em;
@@ -122,15 +123,10 @@
     padding: 0.6rem;
 }
 .hyt-dialog-footer-align-start {
-    justify-content: start;
+    justify-content: flex-start;
 }
 .hyt-dialog-footer-align-center {
     justify-content: center;
-}
-
-.hyt-dialog-footer button {
-    margin: 0 0.5rem 0 0;
-    width: auto;
 }
 
 .ellipsis {

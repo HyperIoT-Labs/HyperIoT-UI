@@ -1,7 +1,7 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, Inject, OnInit, ViewEncapsulation} from '@angular/core';
 import { WidgetsService } from 'core';
 import { KeyValue } from '@angular/common';
-import { HytModal, HytModalService } from 'components';
+import { DIALOG_DATA, DialogRef } from 'components';
 import { WidgetSelection } from '../model/dashboard.model';
 
 @Component({
@@ -10,7 +10,7 @@ import { WidgetSelection } from '../model/dashboard.model';
   styleUrls: ['./add-widget-dialog.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class AddWidgetDialogComponent extends HytModal implements OnInit {
+export class AddWidgetDialogComponent implements OnInit {
 
   ratingTotalStars = 5;
   filteredWidgets: WidgetSelection[] = [];
@@ -28,11 +28,10 @@ export class AddWidgetDialogComponent extends HytModal implements OnInit {
   linux = false;
 
   constructor(
-    hytModalService: HytModalService,
+    private dialogRef: DialogRef<any>,
+    @Inject(DIALOG_DATA) public data: { signalIsOn: boolean },
     private widgetsService: WidgetsService
-  ) {
-    super(hytModalService);
-  }
+  ) { }
 
   widgetsByCategory: any;
 
@@ -104,7 +103,7 @@ export class AddWidgetDialogComponent extends HytModal implements OnInit {
       // }
       // widgetOutput.push();
     // });
-    this.close(this.selectedWidgets);
+    this.dialogRef.close(this.selectedWidgets);
   }
 
   // addWidget(widget) {
@@ -153,6 +152,10 @@ export class AddWidgetDialogComponent extends HytModal implements OnInit {
     const a = akv.value.index;
     const b = bkv.value.index;
     return a > b ? 1 : (b > a ? -1 : 0);
+  }
+
+  close() {
+    this.dialogRef.close();
   }
 
   convertBase64 = payload => atob(payload);

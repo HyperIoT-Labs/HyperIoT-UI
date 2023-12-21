@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { HytModal, HytModalService } from 'components';
+import { DialogRef } from 'components';
 
 @Component({
   selector: 'hyt-statistic-input-error',
@@ -7,12 +7,14 @@ import { HytModal, HytModalService } from 'components';
   styleUrls: ['./statistic-input-error.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class StatisticInputErrorComponent extends HytModal {
+export class StatisticInputErrorComponent {
 
   constructor(
-    hytModalService: HytModalService
-  ) {
-    super(hytModalService);
+    private dialogRef: DialogRef<void>,
+  ) { }
+
+  close() {
+    this.dialogRef.close();
   }
 
 }

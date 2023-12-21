@@ -84,11 +84,8 @@ export class DataSimulatorComponent extends BaseWidgetComponent {
           this.status = SimulatorStatus.ERROR;
         }
       },
-      error: error => {
-        console.log(error)
-        this.status = SimulatorStatus.ERROR},
-      complete: () => {
-        console.log('CLOSED');this.status = SimulatorStatus.CONNECTION_CLOSED},
+      error: error => this.status = SimulatorStatus.ERROR,
+      complete: () => this.status = SimulatorStatus.CONNECTION_CLOSED,
     });
   }
 
@@ -105,7 +102,7 @@ export class DataSimulatorComponent extends BaseWidgetComponent {
         return;
       }
 
-      const timestamp = new Date();
+      const timestamp = (new Date()).getTime();
       const packet = { timestamp };
       this.generationError = { };
 
@@ -135,7 +132,7 @@ export class DataSimulatorComponent extends BaseWidgetComponent {
               for (let operator of DataSimulatorSettings.Utils.expressionOperators) {
                 convertedExpression = convertedExpression.replace(operator.regex, operator.function);
               }
-              convertedExpression = convertedExpression.replace(/#x/ig, String(timestamp.getTime()));
+              convertedExpression = convertedExpression.replace(/#x/ig, String(timestamp));
               convertedExpression = convertedExpression.replace(/#i/ig, String(this.counter));
               convertedExpression = convertedExpression.replace(/#r/ig, String(this.lastPacket[this.fieldList[fieldId]] || 0));
               fieldValue = eval(convertedExpression);
@@ -184,7 +181,7 @@ export class DataSimulatorComponent extends BaseWidgetComponent {
       return;
     }
     const packet = {
-      timestamp: new Date(),
+      timestamp: (new Date()).getTime(),
       [field.value]: this.fieldOutliers[field.key],
     }
     this.wsSenderService.send(packet);
@@ -205,6 +202,7 @@ export class DataSimulatorComponent extends BaseWidgetComponent {
 
   ngOnDestroy(): void {
     super.ngOnDestroy();
+    this.wsSenderService.disconnect();
     clearInterval(this.interval);
   }
 

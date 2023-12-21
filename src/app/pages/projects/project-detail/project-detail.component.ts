@@ -6,7 +6,7 @@ import { Observable, zip, Observer, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { HprojectsService, HProject, HdevicesService, HDevice, HpacketsService, HPacket, Rule, Logger, LoggerService } from 'core';
-import { TreeDataNode, HytModalService, HytConfirmRecordingActionComponent } from 'components';
+import { TreeDataNode, HytConfirmRecordingActionComponent, DialogService } from 'components';
 
 import { HytTreeViewProjectComponent } from 'components';
 import { ProjectFormEntity } from '../project-forms/project-form-entity';
@@ -143,7 +143,7 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
     private dashboardConfigService: DashboardConfigService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private dialog: HytModalService,
+    private dialog: DialogService,
     private cdRef:ChangeDetectorRef,
     private enrichmentsService: EnrichmentsService,
     private loggerService: LoggerService
@@ -309,14 +309,16 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
     const modalRef = this.dialog.open(
       HytConfirmRecordingActionComponent,
       {
-        textBodyModal: $localize`:@@HYT_reload_topology_alert:Changes have been made to data recording configuration. To make them effective you need to restart data recording, do you want to start it now? Anyway, the data you are sending won’t be lost.`,
-        dataRecordingIsOn: recordingState,
-        actionType: 'restart',
-        projectId: this.projectId,
-      },
-      false
+        data: {
+          textBodyModal: $localize`:@@HYT_reload_topology_alert:Changes have been made to data recording configuration. To make them effective you need to restart data recording, do you want to start it now? Anyway, the data you are sending won’t be lost.`,
+          dataRecordingIsOn: recordingState,
+          actionType: 'restart',
+          projectId: this.projectId,
+        },
+        width: '800px',
+      }
     );
-    modalRef.onClosed
+    modalRef.afterClosed()
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
       (result) => {
@@ -571,7 +573,7 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
       const dialogRef = this.dialog.open(SaveChangesDialogComponent, {
         data: { title: 'Discard changes?', message: 'There are pending changes to be saved.' }
       });
-      dialogRef.onClosed
+      dialogRef.afterClosed()
         .pipe(takeUntil(this.ngUnsubscribe))
         .subscribe((result) => {
         this.logger.debug('openSaveDialog on closed', result);

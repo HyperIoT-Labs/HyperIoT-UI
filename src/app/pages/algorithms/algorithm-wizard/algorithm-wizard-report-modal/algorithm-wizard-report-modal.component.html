@@ -1,14 +1,14 @@
-<div id="wiz-report-modal" class="dialog">
+<div id="wiz-report-modal" hyt-dialog>
 
-    <div class="header-box">
+    <div class="header-box" hyt-dialog-header>
         <ng-container i18n="@@HYT_congratulations">Congratulations</ng-container>
-    </div> <!-- END HEADER BOX -->
+    </div>
 
-    <div class="container-resume">
+    <div class="container-resume" hyt-dialog-content>
 
         <div class="sub-header">
             <p i18n="@@HYT_pw_finsh">You have finished to configure your algorithm</p>
-        </div> <!-- END SUB HEADER -->
+        </div>
 
         <div id="exagon-box">
             <hyt-hexagon id="ex-box" iconPath="icon-hyt_statistics" (clicked)="goToAlgorithmsWizard()">
@@ -21,6 +21,8 @@
             > 
                 <ng-container i18n="@@HYT_go_to_algorithms_list_long">Go to algorithms list definition.</ng-container>
             </hyt-button>
-    </div> <!-- END CONTAINER RESUME -->
+        </div>
+
+    </div>
 
 </div>

@@ -90,8 +90,8 @@ export class DialogService {
         }
     }
 
-    // Block scroll strategy
-    const scrollStrategy = this.overlay.scrollStrategies.noop();
+    // Scroll strategy
+    const scrollStrategy = overlayConfig?.scrollStrategy || this.overlay.scrollStrategies.block();
 
     // Create the overlay with customizable options
     const overlayRef = this.overlay.create({
@@ -106,6 +106,7 @@ export class DialogService {
         minHeight: overlayConfig?.minHeight,
         maxWidth: overlayConfig?.maxWidth,
         maxHeight: overlayConfig?.maxHeight,
+        disposeOnNavigation: !overlayConfig?.keepOpenOnNavigation,
     });
 
     // handle open animations

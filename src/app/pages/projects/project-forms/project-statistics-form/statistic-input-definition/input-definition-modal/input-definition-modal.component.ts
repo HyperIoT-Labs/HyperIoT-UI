@@ -1,6 +1,6 @@
 import { CdkDragDrop, CdkDragEnd, CdkDragStart, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { HytModal, HytModalService } from 'components';
+import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { DIALOG_DATA, DialogRef } from 'components';
 import { Algorithm, AlgorithmConfig, AlgorithmIOField, HPacketField, HProjectAlgorithmConfig, HProjectAlgorithmInputField, MappedInput } from 'core';
 import { eventNames } from 'process';
 
@@ -16,7 +16,7 @@ interface ChosenInput {
   styleUrls: ['./input-definition-modal.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class InputDefinitionModalComponent extends HytModal implements OnInit {
+export class InputDefinitionModalComponent implements OnInit {
   
   /**
    * The selected algorithm
@@ -52,8 +52,10 @@ export class InputDefinitionModalComponent extends HytModal implements OnInit {
   panelOpenState: boolean;
   searchText: string;
 
-  constructor(hytModalService: HytModalService) {
-    super(hytModalService);
+  constructor(
+    private dialogRef: DialogRef<any>,
+    @Inject(DIALOG_DATA) public data: any,
+  ) {
     this.chosenInputList = [];
     this.panelOpenState = false;
     this.searchText = '';
@@ -174,7 +176,7 @@ export class InputDefinitionModalComponent extends HytModal implements OnInit {
       mappedInputList.push({packetFieldId: x.hPacketField[0].id, algorithmInput: x.input});
     });
     data.mappedInputList = mappedInputList;
-    this.close({ action, data });
+    this.dialogRef.close({ action, data });
   }
   
   /**
@@ -195,5 +197,8 @@ export class InputDefinitionModalComponent extends HytModal implements OnInit {
     
   }
   
+  close() {
+    this.dialogRef.close();
+  }
 
 }

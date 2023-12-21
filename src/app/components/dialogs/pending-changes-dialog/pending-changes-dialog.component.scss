@@ -5,13 +5,8 @@
   .dialog-header {
 
     background-color: #e60000;
-    padding: 8px 10px;
-    color: #fff;
     text-align: center;
-    font-size: 1.3em;
     position: relative;
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
 
     span {
 
@@ -36,18 +31,9 @@
 
   .dialog-body {
 
-    background-color: #fff;
     padding: 30px;
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
     text-align: center;
     font-size: 1.2em;
-
-    .container-btn {
-      display: flex;
-      justify-content: space-between;
-      margin: 30px 30px 0px 30px;
-    }
 
   }
 

@@ -23,7 +23,7 @@ import { DashboardConfigService } from '../dashboard-config.service';
 import { WidgetSettingsDialogComponent } from '../widget-settings-dialog/widget-settings-dialog.component';
 import { Subject, Observable, Subscription } from 'rxjs';
 import { takeUntil, map } from 'rxjs/operators';
-import { ConfirmDialogService, HytModalService, HytTopologyService } from 'components';
+import { ConfirmDialogService, DialogService, HytTopologyService } from 'components';
 import {ServiceType} from '../../service/model/service-type';
 import { WidgetFullscreenDialogComponent } from '../widget-fullscreen-dialog/widget-fullscreen-dialog.component';
 import { WidgetAction, WidgetConfig } from '../../base/base-widget/model/widget.model';
@@ -133,7 +133,7 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
    * @param dataStreamService Injected DataStreamService
    * @param configService
    * @param activatedRoute
-   * @param hytModalService
+   * @param dialogService
    * @param hytTopologyService
    * @param toastr
    */
@@ -141,7 +141,7 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
     private realtimeDataService: RealtimeDataService,
     private configService: DashboardConfigService,
     private activatedRoute: ActivatedRoute,
-    private hytModalService: HytModalService,
+    private dialogService: DialogService,
     private hytTopologyService: HytTopologyService,
     private toastr: ToastrService,
     private confirmDialogService: ConfirmDialogService,
@@ -440,23 +440,29 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
 
   openModal(widget: GridsterItem) {
     const areaId = this.activatedRoute.snapshot.params.areaId;
-    const modalRef = this.hytModalService.open(WidgetSettingsDialogComponent, {
-      currentWidgetIdSetting: this.currentWidgetIdSetting,
-      widget,
-      areaId
+    const modalRef = this.dialogService.open(WidgetSettingsDialogComponent, {
+      width: '800px',
+      data: {
+        currentWidgetIdSetting: this.currentWidgetIdSetting,
+        widget,
+        areaId,
+      }
     });
-    modalRef.onClosed.subscribe(
+    modalRef.afterClosed().subscribe(
       event => { this.onWidgetSettingClose(event) }
     );
   }
 
   openFullScreenModal(widget: any, initData: PacketData[] = []) {
-    const modalRef = this.hytModalService.open(WidgetFullscreenDialogComponent, {
-      serviceType: this.dashboardValue.dashboardType === 'REALTIME' ? ServiceType.ONLINE : ServiceType.OFFLINE,
-      widget: { ...widget },
-      initData
+    const modalRef = this.dialogService.open(WidgetFullscreenDialogComponent, {
+      backgroundClosable: true,
+      data: {
+        serviceType: this.dashboardValue.dashboardType === 'REALTIME' ? ServiceType.ONLINE : ServiceType.OFFLINE,
+        widget: { ...widget },
+        initData,
+      }
     });
-    modalRef.onClosed.subscribe(event => {
+    modalRef.afterClosed().subscribe(event => {
       this.onWidgetFullscreenClose(event);
     });
   }

@@ -1,6 +1,6 @@
-import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {Component, Inject, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {NgForm} from '@angular/forms';
-import {HytModal, HytModalService} from 'components';
+import { DIALOG_DATA, DialogRef } from 'components';
 import {Subject} from 'rxjs';
 import { AutoUpdateConfigStatus, ConfigModel } from '../../base/base-widget/model/widget.model';
 
@@ -9,7 +9,7 @@ import { AutoUpdateConfigStatus, ConfigModel } from '../../base/base-widget/mode
   templateUrl: './widget-settings-dialog.component.html',
   styleUrls: ['./widget-settings-dialog.component.scss']
 })
-export class WidgetSettingsDialogComponent extends HytModal implements OnInit {
+export class WidgetSettingsDialogComponent implements OnInit {
 
   modalApply: Subject<any> = new Subject();
   widget;
@@ -20,15 +20,12 @@ export class WidgetSettingsDialogComponent extends HytModal implements OnInit {
 
   dialogDataState = 0;
 
-  modalIsOpen = false;
-
   autoUpdateConfigStatus: AutoUpdateConfigStatus = AutoUpdateConfigStatus.UNNECESSARY;
 
   constructor(
-    hytModalService: HytModalService,
-  ) {
-    super(hytModalService);
-  }
+    private dialogRef: DialogRef<any>,
+    @Inject(DIALOG_DATA) public data: any,
+  ) { }
 
   ngOnInit() {
     this.widget = this.data.widget;
@@ -40,18 +37,9 @@ export class WidgetSettingsDialogComponent extends HytModal implements OnInit {
     this.autoUpdateConfig();
   }
 
-  // open modal
-  open(): void {
-    this.dialogDataState = 0;
-    // super.open();
-    this.modalIsOpen = true;
-    this.dialogDataState = 1;
-  }
-
   // close modal
   closeModal(event?): void {
-    this.modalIsOpen = false;
-    this.close(event);
+    this.dialogRef.close(event);
   }
 
   getWidgetId() {
@@ -71,7 +59,7 @@ export class WidgetSettingsDialogComponent extends HytModal implements OnInit {
     // reconfigure widget instance with new values
     this.widget.instance.configure();
     // close dialog
-    this.close('save');
+    this.dialogRef.close('save');
   }
 
   private autoUpdateConfig() {

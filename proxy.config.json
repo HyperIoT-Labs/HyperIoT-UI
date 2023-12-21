@@ -1,0 +1,128 @@
+{
+  "/hyperiot/authentication/*": {
+    "target": "https://microservices-test.hyperiot.cloud",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/hyperiot/husers/*": {
+    "target": "https://microservices-test.hyperiot.cloud",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/hyperiot/roles/*": {
+    "target": "https://microservices-test.hyperiot.cloud",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/hyperiot/permissions/*": {
+    "target": "https://microservices-test.hyperiot.cloud",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/hyperiot/hprojects/*": {
+    "target": "https://microservices-test.hyperiot.cloud",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/hyperiot/hdevices/*": {
+    "target": "https://microservices-test.hyperiot.cloud",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/hyperiot/hpackets/*": {
+    "target": "https://microservices-test.hyperiot.cloud",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/hyperiot/rules/*": {
+    "target": "https://microservices-test.hyperiot.cloud",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/hyperiot/alarms/*": {
+    "target": "https://microservices-test.hyperiot.cloud",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/hyperiot/alarmevents/*": {
+    "target": "https://microservices-test.hyperiot.cloud",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/hyperiot/dashboards/*": {
+    "target": "https://microservices-test.hyperiot.cloud",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/hyperiot/dashboardwidgets/*": {
+    "target": "https://microservices-test.hyperiot.cloud",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/hyperiot/assets/*": {
+    "target": "https://microservices-test.hyperiot.cloud",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/hyperiot/widgets/*": {
+    "target": "https://microservices-test.hyperiot.cloud",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/hyperiot/ws/*": {
+    "target": "https://microservices-test.hyperiot.cloud",
+    "secure": false,
+    "logLevel": "debug",
+    "ws": true
+  },
+  "/hyperiot/storm/*": {
+    "target": "https://microservices-test.hyperiot.cloud",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/hyperiot/areas/*": {
+    "target": "https://microservices-test.hyperiot.cloud",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/hyperiot/hbaseconnectors/*": {
+    "target": "https://microservices-test.hyperiot.cloud",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/hyperiot/algorithms/*": {
+    "target": "https://microservices-test.hyperiot.cloud",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/hyperiot/hprojectalgorithms/*": {
+    "target": "https://microservices-test.hyperiot.cloud",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/hyperiot/services/*": {
+    "target": "https://microservices-test.hyperiot.cloud",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  }
+}

@@ -6,7 +6,7 @@ import {
 import {
   HytConfirmRecordingActionComponent
 } from '../../hyt-modal/hyt-confirm-recording-action/hyt-confirm-recording-action.component';
-import {HytModalService} from '../../hyt-modal/hyt-modal.service';
+import { DialogService } from '../../hyt-dialog/dialog.service';
 
 @Component({
   selector: 'hyt-topology-toolbar',
@@ -28,7 +28,7 @@ export class HytTopologyToolbarComponent implements OnInit {
   protected ngUnsubscribe: Subject<void> = new Subject<void>();
 
   constructor(
-    private hytModalService: HytModalService
+    private dialogService: DialogService,
   ) { }
 
   ngOnInit() { }
@@ -37,8 +37,8 @@ export class HytTopologyToolbarComponent implements OnInit {
     if (!this.recordReloading && !this.recordStateInLoading) {
       this.recordStateInLoading = true;
       if (this.dataRecordingIsOn) {
-        const modalRef = this.hytModalService.open(HytInfoRecordingActionComponent);
-        modalRef.onClosed.subscribe(
+        const modalRef = this.dialogService.open(HytInfoRecordingActionComponent, { width: '600px', backgroundClosable: true });
+        modalRef.afterClosed().subscribe(
           result => {
             if (result === 'confirm') {
               setTimeout(() => {
@@ -59,17 +59,19 @@ export class HytTopologyToolbarComponent implements OnInit {
   }
 
   openConfirmChangeRecordingModal(rocordingState: boolean) {
-    const modalRef = this.hytModalService.open(
+    const modalRef = this.dialogService.open(
       HytConfirmRecordingActionComponent,
       {
-        textBodyModal: 'You are about to put the data saving in Play / Pause',
-        dataRecordingIsOn: rocordingState,
-        actionType: 'start-stop',
-        projectId: this.idProjectSelected
-      },
-      false
+        data: {
+          textBodyModal: 'You are about to put the data saving in Play / Pause',
+          dataRecordingIsOn: rocordingState,
+          actionType: 'start-stop',
+          projectId: this.idProjectSelected,
+        },
+        width: '800px',
+      }
     );
-    modalRef.onClosed.subscribe(
+    modalRef.afterClosed().subscribe(
       result => {
         this.recordStateInLoading = false;
         this.updateTopologyData(result);
@@ -88,17 +90,21 @@ export class HytTopologyToolbarComponent implements OnInit {
     if (!this.recordReloading && !this.recordStateInLoading) {
       this.recordReloading = true;
       this.recordStateInLoading = true;
-      const modalRef = this.hytModalService.open(
+      const modalRef = this.dialogService.open(
         HytInfoRecordingActionComponent,
         {
+          width: '600px',
+          backgroundClosable: true,
+        }
+        /* {
           textBodyModal: 'You are about to reboot data saving',
           dataRecordingIsOn: this.dataRecordingIsOn,
           actionType: 'reload',
           projectId: this.idProjectSelected
         },
-        false
+        false */
       );
-      modalRef.onClosed.subscribe(
+      modalRef.afterClosed().subscribe(
         result => {
           this.recordReloading = false;
           this.recordStateInLoading = false;

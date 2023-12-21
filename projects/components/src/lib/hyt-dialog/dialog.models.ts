@@ -1,3 +1,5 @@
+import { ScrollStrategy } from "@angular/cdk/overlay";
+
 export interface DialogLayout {
     backgroundClosable?: boolean;
     width?: string;
@@ -22,6 +24,8 @@ export interface DialogLayout {
     }
     attachTarget?: any;
     hideBackdrop?: boolean;
+    keepOpenOnNavigation?: boolean;
+    scrollStrategy?: ScrollStrategy;
 }
 
 export interface DialogConfig<T = any> extends DialogLayout {

@@ -1280,10 +1280,6 @@
         <source>Project Categories</source>
         <target>Categorie progetto</target>
       </trans-unit>
-      <trans-unit id="HYT_widget_add_widget" datatype="html">
-        <source>Add widget</source>
-        <target>Aggiungi un widget</target>
-      </trans-unit>
       <trans-unit id="HYT_add" datatype="html">
         <source>Add</source>
         <target>Aggiungi</target>
@@ -1621,6 +1617,30 @@
       <trans-unit id="HYT_areaa_go_to_create_area" datatype="html">
         <source>Create the first area for this project</source>
         <target>Crea la prima area per questo progetto</target>
+      </trans-unit>
+      <trans-unit id="HYT_area_confirm_title_change_type" datatype="html">
+        <source>Changing the area type</source>
+        <target>Cambio tipologia di area</target>
+      </trans-unit>
+      <trans-unit id="HYT_area_confirm_body_change_type" datatype="html">
+        <source>Changing this setting will erase all previous settings</source>
+        <target>Modificando questa impostazione tutti i precedenti settaggi verranno cancellati</target>
+      </trans-unit>
+      <trans-unit id="HYT_area_confirm_btn_confirm" datatype="html">
+        <source>Confirm</source>
+        <target>Conferma</target>
+      </trans-unit>
+      <trans-unit id="HYT_area_confirm_btn_reject" datatype="html">
+        <source>Reject</source>
+        <target>Rifiuta</target>
+      </trans-unit>
+      <trans-unit id="HYT_area_loading_bim_model" datatype="html">
+        <source>BIM Model Loading...</source>
+        <target>Caricamento modello BIM...</target>
+      </trans-unit>
+      <trans-unit id="HYT_area_empty_bim_model" datatype="html">
+        <source>No Model</source>
+        <target>Nessun modello presente</target>
       </trans-unit>
       <!-- AREAS END -->
 

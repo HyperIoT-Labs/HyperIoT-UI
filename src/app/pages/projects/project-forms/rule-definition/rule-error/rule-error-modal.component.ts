@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { HytModal, HytModalService } from 'components';
+import { DialogRef } from 'components';
 
 @Component({
   selector: 'hyt-rule-error-modal',
@@ -7,12 +7,14 @@ import { HytModal, HytModalService } from 'components';
   styleUrls: ['./rule-error-modal.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class RuleErrorModalComponent extends HytModal {
+export class RuleErrorModalComponent {
 
   constructor(
-    hytModalService: HytModalService
-  ) {
-    super(hytModalService);
+    private dialogRef: DialogRef<void>,
+  ) { }
+
+  close() {
+    this.dialogRef.close();
   }
 
 }

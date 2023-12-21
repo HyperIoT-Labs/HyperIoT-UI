@@ -228,7 +228,13 @@ export class ContainerAreaMapComponent implements OnInit, OnDestroy {
    */
   onTreeNodeClick(node) {
     this.logger.debug('onTreeNodeClick start', node);
-    this.loadArea(node.data.item);
+    if(node.data.item.id !== this.areaId){
+      this.router.navigate(['areas', this.projectId, node.data.item.id])
+        .then(() => {
+          //TODO: Change method to navigate
+          this.loadArea(node.data.item);
+        })
+    }
   }
 
   /**
@@ -357,6 +363,8 @@ export class ContainerAreaMapComponent implements OnInit, OnDestroy {
         })
     } else {
       this.isEmptyBim = true;
+      console.log('%cBIM WARNING isEmptyBim', 'color:yellowgreen', this.isEmptyBim);
+      console.log('%cBIM WARNING isBimLoading', 'color:yellowgreen', this.isBimLoading);
       this.logger.warn('No configuration data for this area');
     }
   }
@@ -379,7 +387,11 @@ export class ContainerAreaMapComponent implements OnInit, OnDestroy {
   public onItemMapClicked(itemMap){
     this.logger.debug('onItemMapClicked start', itemMap);
     if(itemMap.innerArea){
-      this.loadArea(itemMap);
+      this.router.navigate(['areas', this.projectId, itemMap.id])
+        .then(() => {
+          //TODO: Change method to navigate
+          this.loadArea(itemMap);
+        })
     }
   }
 

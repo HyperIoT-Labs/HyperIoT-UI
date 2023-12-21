@@ -6,7 +6,6 @@ import { Subscription } from 'rxjs';
 import { HprojectsService, HProject } from 'core';
 
 import { ProjectFormEntity, LoadingStatusEnum } from '../project-form-entity';
-import { HytModalService } from 'components';
 
 @Component({
   selector: 'hyt-project-form',

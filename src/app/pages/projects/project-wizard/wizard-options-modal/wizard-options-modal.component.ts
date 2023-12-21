@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { HytModal, HytModalService } from 'components';
+import { DialogRef } from 'components';
 import { EntitiesService } from 'src/app/services/entities/entities.service';
 
 @Component({
@@ -8,17 +8,15 @@ import { EntitiesService } from 'src/app/services/entities/entities.service';
   styleUrls: ['./wizard-options-modal.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class WizardOptionsModalComponent extends HytModal {
+export class WizardOptionsModalComponent {
 
   constructor(
     public entitiesService: EntitiesService,
-    hytModalService: HytModalService
-  ) {
-    super(hytModalService);
-  }
+    private dialogRef: DialogRef<any>,
+  ) { }
 
-  output(action: string, data: number) {
-    this.close({ action, data });
+  output(action?: string, data?: number) {
+    this.dialogRef.close({ action, data });
   }
 
 }
