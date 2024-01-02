@@ -50,29 +50,9 @@
             border-radius: .8em;
             box-shadow: 0 2px 6px 0px rgba(0, 0, 0, 0.2);
 
-            &.inLoading {
-
-                #signal-btn,
-                #play-btn,
-                #event-notification-btn,
-                #edit-btn,
-                #add-widget-btn {
-
-                    color: #cccccc;
-                    cursor: default;
-
-                }
-
-
-            }
-
             &:not(.inLoading) {
 
-                #signal-btn,
-                #play-btn,
-                #event-notification-btn,
-                #edit-btn,
-                #add-widget-btn {
+                .mat-button {
                     &:hover {
                         color: #008aff;
                     }
@@ -94,27 +74,21 @@
                 #signal-btn,
                 #play-btn,
                 #event-notification-btn {
-                    float: left;
+                    display: flex;
+                    flex-direction: column;
                     margin: 0.3em 0.3em 0.3em 0.3em;
-                    text-align: center;
-                    cursor: pointer;
                     text-transform: uppercase;
                     width: 4em;
                     height: 3.2em;
 
-                    span {
+                    .hyt-icon {
                         font-size: 2.3em;
-                        display: block;
                     }
 
-                    p {
-                        margin-bottom: 0;
-                        margin-top: -5px;
+                    .button-label {
                         font-size: .8em;
-                        -moz-user-select: none;
-                        -webkit-user-select: none;
-                        -ms-user-select: none;
-                        user-select: none;
+                        margin-top: -5px;
+                        line-height: 20px;
                     }
 
                 }
@@ -128,27 +102,21 @@
                 padding-top: 10px;
 
                 #edit-btn {
-                    float: left;
+                    display: flex;
+                    flex-direction: column;
                     margin: 0.3em 0.3em 0.3em 0.3em;
-                    text-align: center;
-                    cursor: pointer;
                     text-transform: uppercase;
                     width: 4em;
                     height: 3.2em;
 
-                    span {
+                    .hyt-icon {
                         font-size: 2.3em;
-                        display: block;
                     }
 
-                    p {
-                        margin-bottom: 0;
-                        margin-top: -5px;
+                    .button-label {
                         font-size: .8em;
-                        -moz-user-select: none;
-                        -webkit-user-select: none;
-                        -ms-user-select: none;
-                        user-select: none;
+                        margin-top: -5px;
+                        line-height: 20px;
                     }
 
                 }
@@ -156,6 +124,7 @@
                 hyt-select {
                     max-width: 350px;
                     width: 100%;
+                    margin-bottom: -5px;
 
                     mat-form-field {
                         width: 100%;
@@ -193,26 +162,20 @@
                 }
 
                 #add-widget-btn,
-                #save-dashboard-btn {
-                    float: right;
-                    text-align: center;
+                #area-widget-btn {
+                    display: flex;
+                    flex-direction: column;
                     margin: .3em 1.2em .3em 1.2em;
-                    cursor: pointer;
                     text-transform: uppercase;
 
-                    span {
+                    .hyt-icon {
                         font-size: 2.2em;
-                        display: block;
                     }
 
-                    p {
-                        margin-bottom: 0;
-                        margin-top: -2px;
+                    .button-label {
                         font-size: .8em;
-                        -moz-user-select: none;
-                        -webkit-user-select: none;
-                        -ms-user-select: none;
-                        user-select: none;
+                        margin-top: -5px;
+                        line-height: 20px;
                     }
 
                 }
@@ -374,6 +337,13 @@
 
     }
 
+    .mat-button {
+        padding: 0;
+        font-family: 'Exo', serif;
+        font-size: 16px;
+        min-width: unset;
+    }    
+
 }
 
 mat-option {
@@ -402,19 +372,17 @@ mat-option {
 
                     #signal-btn, #play-btn, #event-notification-btn {
                         margin: 0.3em;
-                        text-align: center;
-                        cursor: pointer;
                         text-transform: uppercase;
                         width: 3em;
                         height: 2.7em;
 
-                        span {
+                        .hyt-icon {
 
                             font-size: 2em;
 
                         }
 
-                        p {
+                        .button-label {
 
                             font-size: .7em;
 
@@ -427,37 +395,35 @@ mat-option {
                             &:not(.inLoading) {
 
                                 #reload-btn {
-                                    float: none;
                                     margin: .3em;
                                     width: 3em;
                                     height: 2.7em;
 
-                                    span {
-                                        &.icon-hyt_off {
+                                    .hyt-icon {
+                                        &.icon-hyt_reload {
                                             font-size: 1.7em;
                                             margin-bottom: 5px;
                                         }
                                     }
 
-                                    p {
+                                    .button-label  {
                                         font-size: .7em;
                                     }
                                 }
 
                                 #play-pause-btn {
-                                    float: none;
                                     margin: .3em;
                                     width: 3em;
                                     height: 2.7em;
 
-                                    span {
+                                    .hyt-icon {
                                         &.icon-hyt_off {
                                             font-size: 1.7em;
                                             margin-bottom: 5px;
                                         }
                                     }
 
-                                    p {
+                                    .button-label {
                                         font-size: .7em;
                                     }
                                 }
@@ -472,19 +438,17 @@ mat-option {
 
                     #edit-btn {
                         margin: 0.3em;
-                        text-align: center;
-                        cursor: pointer;
                         text-transform: uppercase;
                         width: 3em;
                         height: 2.7em;
 
-                        span {
+                        .hyt-icon {
 
                             font-size: 2em;
 
                         }
 
-                        p {
+                        .button-label {
 
                             font-size: .7em;
 
@@ -496,16 +460,16 @@ mat-option {
 
                 .right-tools {
 
-                    #add-widget-btn, #save-dashboard-btn {
-                        float: none;
+                    #add-widget-btn,
+                    #area-widget-btn {
                         margin: .3em 1.2em;
 
-                        span {
+                        .hyt-icon {
                             font-size: 2em;
                         }
 
-                        p {
-                            font-size: .75em;
+                        .button-label {
+                            font-size: .7em;
                         }
                     }
                 }
