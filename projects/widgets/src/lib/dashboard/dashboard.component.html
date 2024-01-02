@@ -107,7 +107,7 @@
                             </div>
                         </button>
 
-                        <button mat-button *ngIf="pageStatus == PageStatus.Standard && enableAddWidget" (click)="openWidgetModal()">
+                        <button mat-button *ngIf="enableAddWidget" (click)="openWidgetModal()" [disabled]="pageStatus !== PageStatus.Standard">
                             <div id="add-widget-btn">
                                 <span class="hyt-icon icon-hyt_widgetPlus"></span>
                                 <span class="button-label" i18n="@@HYT_add_a_widget">Add a widget</span>
