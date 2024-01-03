@@ -48,9 +48,6 @@ export class HytTopologyToolbarComponent implements OnInit {
               this.recordStateInLoading = false;
             }
           },
-          error => {
-            console.error(error);
-          }
         );
       } else {
         this.openConfirmChangeRecordingModal(false);
@@ -76,13 +73,6 @@ export class HytTopologyToolbarComponent implements OnInit {
         this.recordStateInLoading = false;
         this.updateTopologyData(result);
       },
-      error => {
-        this.recordStateInLoading = false;
-        console.error(error);
-      },
-      () => {
-        this.recordStateInLoading = false;
-      }
     );
   }
 
@@ -91,18 +81,17 @@ export class HytTopologyToolbarComponent implements OnInit {
       this.recordReloading = true;
       this.recordStateInLoading = true;
       const modalRef = this.dialogService.open(
-        HytInfoRecordingActionComponent,
+        HytConfirmRecordingActionComponent,
         {
-          width: '600px',
-          backgroundClosable: true,
-        }
-        /* {
-          textBodyModal: 'You are about to reboot data saving',
-          dataRecordingIsOn: this.dataRecordingIsOn,
-          actionType: 'reload',
-          projectId: this.idProjectSelected
+          data: 
+          {
+            textBodyModal: 'You are about to reboot data saving',
+            dataRecordingIsOn: this.dataRecordingIsOn,
+            actionType: 'reload',
+            projectId: this.idProjectSelected,
+          },
+          width: '800px',
         },
-        false */
       );
       modalRef.afterClosed().subscribe(
         result => {
@@ -110,20 +99,14 @@ export class HytTopologyToolbarComponent implements OnInit {
           this.recordStateInLoading = false;
           this.updateTopologyData(result);
         },
-        error => {
-          this.recordReloading = false;
-          this.recordStateInLoading = false;
-          console.error(error);
-        },
-        () => {
-          this.recordReloading = false;
-          this.recordStateInLoading = false;
-        }
       );
     }
   }
 
   updateTopologyData(data) {
+    if (!data) {
+      return;
+    }
     if (data.dataRecordingIsOn !== undefined) {
       this.dataRecordingIsOn = data.dataRecordingIsOn;
     }
