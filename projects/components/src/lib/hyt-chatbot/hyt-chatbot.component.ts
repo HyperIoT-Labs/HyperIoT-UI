@@ -112,10 +112,6 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    //this.renderer2.listen(this.content?.nativeElement, "scroll", (e) =>
-    //  this.floatDatePills(this.getContentYPosition(e))
-    //);
-
     this.messageList?.changes
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((res) => {
@@ -501,7 +497,8 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
   * Open/Close chatbot window
   */
   openCloseChatbot() {
-    if (this.firstOpen) {
+    // Only first opening
+    if (this.firstOpen && this.pageStatus != PageStatus.ERROR) {
       this.pageStatus = PageStatus.LOADING;
       this.firstMessage(); /* "Ciao, chi sei?" solo alla prima apertura*/
       this.firstOpen = false;
