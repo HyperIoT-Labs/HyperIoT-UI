@@ -456,8 +456,6 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         this.currentDashboard = dashboardRes[0];
         this.currentDashboardId = this.currentDashboard.id;
         this.pageStatus = PageStatus.Standard;
-        // AGGIUNTO IO, MA NON SO SE é GIUSTO
-        this.dataRecordingStatus = TopologyStatus.On;
       } catch (error) {
         errorHandler(error);
       }
