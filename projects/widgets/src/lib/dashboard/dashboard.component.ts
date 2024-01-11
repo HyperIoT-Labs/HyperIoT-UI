@@ -72,7 +72,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
   dataRecordingStatus = TopologyStatus.Off;
 
-  @Input() idProjectSelected: number | undefined = undefined;
+  idProjectSelected: number | undefined = undefined;
 
   currentDashboardId: number;
 
@@ -88,9 +88,9 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
   packetsInDashboard: number[] = [];
 
-  @Input() areaId: number | undefined = undefined;
+  areaId: number | undefined = undefined;
   areaPath: Area[];
-  @Input() showAreas = false;
+  showAreas = false;
   areaListOptions = [] as any[];
   selectedAreaId: number;
 
@@ -166,13 +166,12 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
-    if (!this.areaId) {
-      this.showAreas = this.activatedRoute.snapshot.routeConfig.path.startsWith('areas/');
-    }
-    if (!this.showAreas && !this.idProjectSelected) {
+
+    this.showAreas = this.activatedRoute.snapshot.routeConfig.path.startsWith('areas/');
+
+    if (!this.showAreas) {
       if (this.activatedRoute.snapshot.queryParams.projectId) {
         this.idProjectSelected = +this.activatedRoute.snapshot.queryParams.projectId;
-        localStorage.setItem('last-dashboard-project', String(this.idProjectSelected));
       } else if (localStorage.getItem('last-dashboard-project')) {
         this.idProjectSelected = +localStorage.getItem('last-dashboard-project');
       }
@@ -234,7 +233,6 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     this.packetsInDashboard = [];
     this.pageStatus = PageStatus.Loading;
     this.idProjectSelected = event.value;
-    localStorage.setItem('last-dashboard-project', String(this.idProjectSelected));
     clearInterval(this.updateRecordingInterval);
     this.recordStateInLoading = true;
     this.signalIsOn = true;
@@ -245,7 +243,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.showAreas) {
       // TODO: select change still not implemented for Areas Dashboard
     } else {
-      this.getRealTimeDashboard(event.value);
+      this.getRealTimeDashboard();
     }
   }
 
@@ -262,9 +260,9 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
       this.signalIsOn = !this.signalIsOn;
       this.pageStatus = PageStatus.Loading;
       if (this.showAreas) {
-        this.getRealTimeDashboard(this.areaId);
+        this.getRealTimeDashboard();
       } else {
-        this.getRealTimeDashboard(this.idProjectSelected);
+        this.getRealTimeDashboard();
       }
     }
   }
@@ -383,7 +381,6 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
             if (this.hProjectListOptions.length > 0) {
               if (!this.idProjectSelected) {
                 this.idProjectSelected = this.hProjectListOptions[0].id;
-                localStorage.setItem('last-dashboard-project', String(this.idProjectSelected));
               }
               this.showDashboard();
             } else {
@@ -414,9 +411,9 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         this.updateToplogyStatus();
       }, 60000);
       if (this.showAreas) {
-        this.getRealTimeDashboard(this.areaId);
+        this.getRealTimeDashboard();
       } else {
-        this.getRealTimeDashboard(this.idProjectSelected);
+        this.getRealTimeDashboard();
       }
     }
   }
@@ -446,7 +443,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         .subscribe(responseHandler, errorHandler);
     }
   }
-  private getRealTimeDashboard(id: number) {
+  private getRealTimeDashboard() {
     const errorHandler = error => {
       this.logger.error(error);
       this.pageStatus = PageStatus.Error;
@@ -455,18 +452,21 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
       try {
         this.currentDashboard = dashboardRes[0];
         this.currentDashboardId = this.currentDashboard.id;
+        if (!this.showAreas) {
+          localStorage.setItem('last-dashboard-project', String(this.idProjectSelected));
+        }
         this.pageStatus = PageStatus.Standard;
       } catch (error) {
         errorHandler(error);
       }
     };
     if (this.showAreas) {
-      this.dashboardConfigService.getRealtimeDashboardFromArea(id)
+      this.dashboardConfigService.getRealtimeDashboardFromArea(this.areaId)
         .pipe(takeUntil(this.ngUnsubscribe))
         .subscribe(responseHandler, errorHandler);
     } else {
       // load project realtime Dashboard
-      this.dashboardConfigService.getRealtimeDashboardFromProject(id)
+      this.dashboardConfigService.getRealtimeDashboardFromProject(this.idProjectSelected)
         .pipe(takeUntil(this.ngUnsubscribe))
         .subscribe(responseHandler, errorHandler);
     }
