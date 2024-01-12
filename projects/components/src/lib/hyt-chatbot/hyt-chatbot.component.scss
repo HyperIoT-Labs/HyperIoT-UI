@@ -48,7 +48,7 @@ $chatBotAliceIconBGImage: #{var(--chatBotAliceIconBGImage)};
       justify-content: space-between;
       min-height: 80px;
       flex-wrap: wrap;
-      padding: 0px 25px;
+      padding: 0px 10px;
       max-width: 1280px;
       margin: 0 auto;
 
@@ -97,6 +97,7 @@ $chatBotAliceIconBGImage: #{var(--chatBotAliceIconBGImage)};
         justify-content: center;
         cursor: pointer;
         border-radius: 50%;
+        border: 1px solid white;
         padding: 4px 10px;
 
         &:hover {
@@ -185,14 +186,14 @@ $chatBotAliceIconBGImage: #{var(--chatBotAliceIconBGImage)};
           }
 
           &.is-bot {
-            background-color: #eaeaea;
+            background-color: lightsteelblue;
 
             &:before {
               left: -5px;
               bottom: -1px;
               border-width: 10px 10px 0px 0px;
               border-color: transparent;
-              border-right-color: #eaeaea;
+              border-right-color: lightsteelblue;
             }
 
             &:after {
@@ -465,6 +466,7 @@ $chatBotAliceIconBGImage: #{var(--chatBotAliceIconBGImage)};
             padding: 8px 10px;
             border-radius: 5px;
             font-size: .9em;
+            border: transparent;
           }
 
           &:hover {

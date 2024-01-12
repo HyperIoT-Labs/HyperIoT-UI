@@ -78,7 +78,7 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
   protected ngUnsubscribe: Subject<void> = new Subject<void>();
 
   /** Margin between the message list and the chat container. */
-  readonly MARGIN_TOP_UL = 15;
+  readonly MARGIN_TOP_UL = 0;
 
   /** Top position of the fixed pills. */
   readonly FIXED_TOP_PILLS = 15;
