@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, QueryList, Renderer2, ViewChild, ViewChildren, ViewEncapsulation} from "@angular/core";
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, Input, QueryList, ViewChild, ViewChildren, ViewEncapsulation} from "@angular/core";
 import { Logger, LoggerService } from "core";
 import { WebsocketChat } from "./models/websocket-chat";
 import { Subject, takeUntil } from "rxjs";
@@ -33,6 +33,9 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
 
   /** Reference to the input element where the user types messages. */
   @ViewChild("inputMsg") inputMsgEl?: ElementRef;
+
+  /** Url for ccat defined inside src/environments/ */
+  @Input() public ccatUrl: string;
 
   /** The current input message text. */
   inputMsg: string = "";
@@ -80,17 +83,8 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
   /** Top position of the fixed pills. */
   readonly FIXED_TOP_PILLS = 15;
 
-  /** Cat variable to establish connection */
-  readonly baseUrlCat = 'localhost';
-
-  /* Always declare the cat client on the first chatbot window opened */
-  cat = new CatClient({
-    baseUrl: this.baseUrlCat,
-    user: this.cookieService.get('HIT-AUTH'),
-    ws : { 
-      retries: 1,
-    }
-  });
+  /** Cat variable */
+  public cat: CatClient;
 
   constructor(
     private cookieService: CookieService,
@@ -107,6 +101,14 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
   * At chatbot window opening 
   */
   ngOnInit(): void {
+    /* Always declare the cat client on the first chatbot window opened */
+    this.cat = new CatClient({
+      baseUrl: this.ccatUrl,
+      user: this.cookieService.get('HIT-AUTH'),
+      ws : { 
+        retries: 1,
+      }
+    });
     this.initCat();
   }
 
@@ -154,7 +156,7 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
     this.cat.close();
     /* Declare a new cat*/
     this.cat = new CatClient({
-      baseUrl: this.baseUrlCat,
+      baseUrl: this.ccatUrl,
       user: this.cookieService.get('HIT-AUTH'),
       ws : { 
         retries: 1,
