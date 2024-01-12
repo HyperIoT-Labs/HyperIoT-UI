@@ -1,7 +1,7 @@
 <!-- CHATBOT Collapsed Icon-->
 <div *ngIf="this.collapsed == true" class="hyt-chatbot-collapsed-container">
   <button class="hyt-chatbot-collapsed"
-      mat-fab color="primary" [matBadge]="badgeContent" [matBadgeHidden]="badgeHidden" matBadgePosition="before" matBadgeColor="accent" (click)="this.openCloseChatbot()">
+      mat-fab color="primary" matBadgeSize="small" [matBadge]="badgeContent" [matBadgeHidden]="badgeHidden" matBadgePosition="before" matBadgeColor="accent" (click)="this.openCloseChatbot()">
       <img class="hyt-chatbot-collapsed-icon" src="assets/icons/hyt-chatbot-collapsed-logo.png">
   </button>
 </div>
@@ -21,9 +21,8 @@
         </div>
       </div>
 
-      <div class="header-end">
-        <div class="dots" (click)="this.openCloseChatbot()"></div>
-      </div>
+      <div class="header-end" (click)="this.openCloseChatbot()"><span class="exit">X</span></div>
+
     </div>
   </header>
 
@@ -54,7 +53,7 @@
           >
             <div class="container-single-message" [ngSwitch]="message.action!">
               <ng-container *ngSwitchCase="'text'">
-                <div class="info-row">
+                <div class="info-row" [ngClass]="{'white': message.author === 'cx'}">
                   <div class="name-cell">{{returnAuthor(message.author!)}}</div>
                   <div class="time-cell">{{returnTimeMessage(message.timestamp!)}}</div>
                 </div>

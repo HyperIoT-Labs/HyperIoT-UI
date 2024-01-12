@@ -93,7 +93,6 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
   });
 
   constructor(
-    private renderer2: Renderer2,
     private cookieService: CookieService,
     loggerService: LoggerService
   ) {
@@ -324,9 +323,9 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
     );
     if (textMessageFound) {
       textMessageFound.messageStatus = "delivery_success";
-      //console.log("[messageDeliveryHandling]", textMessageFound);
+      this.logger.info("[messageDeliveryHandling]", textMessageFound);
     } else {
-      //console.error("[messageDeliveryHandling] MESSAGE NOT FOUND");
+      this.logger.error("[messageDeliveryHandling] MESSAGE NOT FOUND")
     }
   }
 
@@ -337,7 +336,7 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
   returnAuthor(idAuthor: string): string {
     switch (idAuthor) {
       case "csr":
-        return "Hyperis";
+        return "Alice";
       case "cx":
         return "Tu";
       default:
@@ -366,7 +365,7 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
       this.content!.nativeElement.scrollTop =
         this.content?.nativeElement.scrollHeight;
     } catch (error) {
-      console.log("[autoScrollDown] Error", error);
+      this.logger.error("[autoScrollDown] Error", error);
     }
   }
 
@@ -387,7 +386,7 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
    */
   inputOnFocus(event: any) {
     this.firstTouch = true;
-    console.log("[inputOnFocus] FOCUS", event);
+    this.logger.info("[inputOnFocus] FOCUS", event);
   }
 
   /**
@@ -431,7 +430,7 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
       const daysOfWeekName = daysOfWeek[numberOfDay].substring(0, 3);
       return daysOfWeekName + " " + dataMomentFormat;
     } else {
-      //console.warn("[returnMessageDate] not handled data", diffDate);
+      this.logger.warn("[returnMessageDate] not handled data", diffDate);
       return dataMomentFormat;
     }
   }
@@ -450,7 +449,7 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
         arrayMsg[index - 1].timestamp!
       );
     } else {
-      //console.error("[displayMessageDateBox] negative message index", index);
+      this.logger.error("[displayMessageDateBox] negative message index", index);
       return false;
     }
   }
@@ -515,4 +514,5 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
       return this.collapsed = true;
     }
   }
+  
 }
