@@ -340,7 +340,7 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
       case "csr":
         return "Alice";
       case "cx":
-        return "Tu";
+        return $localize`:@@HYT_ai_user_label:You`;
       default:
         return idAuthor;
     }
@@ -410,9 +410,9 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
     );
 
     if (diffDate === 0) {
-      return "Oggi";
+      return $localize`:@@HYT_ai_today:Today`;
     } else if (diffDate === 1) {
-      return "Ieri";
+      return $localize`:@@HYT_ai_yesterday:Yesterday`;
     } else if (diffDate > 1 && diffDate < 7) {
       const daysOfWeek = moment.weekdays();
       const numberOfDay = moment(dataMomentFormat, "DD-MMM-YYYY").day();

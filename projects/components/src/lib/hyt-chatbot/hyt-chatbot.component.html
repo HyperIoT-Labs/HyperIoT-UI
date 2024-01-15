@@ -16,8 +16,8 @@
         </div>
 
         <div class="title-bot">
-          <div class="title">Alice</div>
-          <div class="subtitle">Assistente virtuale</div>
+          <div class="title" i18n="@@HYT_ai_title">Alice</div>
+          <div class="subtitle" i18n="@@HYT_ai_subtitle">Virtual assistant</div>
         </div>
       </div>
 
@@ -64,7 +64,7 @@
 
               <ng-container *ngSwitchCase="'typing_indicator'">
                 <div *ngIf="message.author === 'csr'" class="typing-box">
-                  <div class="typing-text">Alice sta scrivendo...</div>
+                  <div class="typing-text" i18n="@@HYT_ai_is_writing">Alice is writing...</div>
                   <span></span>
                   <span></span>
                   <span></span>
@@ -82,8 +82,8 @@
 
         <div class="container-alice-img"></div>
 
-        <div class="container-alice-message">
-          Alice è in attesa
+        <div class="container-alice-message" i18n="@@HYT_ai_is_loading">
+          Alice is loading
           <div class="alice-loader">
             <span></span>
             <span></span>
@@ -102,8 +102,8 @@
         </div>
 
         <div class="container-alice-error-message">
-          <span> Si è verificato un errore durante il tentativo di connessione con Alice, ritenta cliccando il bottone in basso.</span>
-          <button (click)="retryConnection()" class="retry-connect-btn">Ritenta connessione</button>
+          <span i18n="@@HYT_ai_error_message">An error occurred while trying to connect to Alice, please try again by clicking the button below.</span>
+          <button (click)="retryConnection()" class="retry-connect-btn" i18n="@@HYT_ai_error_button">Retry connection</button>
         </div>
 
       </div>
@@ -116,8 +116,8 @@
 
         <div class="retrying-connection">
           <div class="container-alice-reconnection">
-            <span>
-              Tentativo di riconnessione numero <strong>{{retryAttempts}}</strong>
+            <span i18n="@@HYT_ai_reconnection_message">
+              Attempt to reconnect number <strong>{{retryAttempts}}</strong>
             </span>
             <div class="alice-loader">
               <span></span>
@@ -143,7 +143,8 @@
             (keyup)="startTypingIndicator($event)"
             type="text"
             id="input-msg"
-            placeholder="Scrivi qui"
+            placeholder="Write here"
+            i18n-placeholder="@@HYT_ai_placeholder"
             (focus)="inputOnFocus($event)"
             autocomplete="off"
           >

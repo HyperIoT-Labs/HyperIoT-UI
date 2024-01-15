@@ -99,6 +99,7 @@ $chatBotAliceIconBGImage: #{var(--chatBotAliceIconBGImage)};
         border-radius: 50%;
         border: 1px solid white;
         padding: 4px 10px;
+        font-size: 0.9em;
 
         &:hover {
           background-color: #2d82cb;
@@ -231,7 +232,7 @@ $chatBotAliceIconBGImage: #{var(--chatBotAliceIconBGImage)};
 
             &.read {
               &:after {
-                content: "Consegnato";
+                content: "";
                 position: absolute;
                 right: -4px;
                 bottom: -16px;
