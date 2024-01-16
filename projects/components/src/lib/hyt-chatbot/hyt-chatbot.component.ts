@@ -83,6 +83,9 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
   /** Top position of the fixed pills. */
   readonly FIXED_TOP_PILLS = 15;
 
+  /** Variable to show/not show disconnection advise when chatbot is collapsed */
+  public disconnected: boolean = false;
+
   /** Cat variable */
   public cat: CatClient;
 
@@ -146,6 +149,7 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
   initCat(){
     this.cat.init();
     this.cat.onConnected(() => {
+      this.disconnected = false;
       }).onMessage(msg => {
         this.handleWSMessage(msg);
       }).onError(err => {
@@ -173,6 +177,7 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
     this.cat.init();
     this.cat.onConnected(() => {
         this.retryAttempts = 1;
+        this.disconnected = false;
         this.sendFirstMessage();
       }).onMessage(msg => {
         this.handleWSMessage(msg);
@@ -268,6 +273,7 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
   */
   handleDisconnection(){
     this.pageStatus = PageStatus.ERROR;
+    this.disconnected = true;
     this.logger.warn('handleDisconnection() -> disconnected from Cheshire-cat-ai');
   }
 

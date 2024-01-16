@@ -674,6 +674,15 @@ $chatBotAliceIconBGImage: #{var(--chatBotAliceIconBGImage)};
     }
   }
 
+  .hyt-chatbot-collapsed-disconnected { 
+    position: absolute;
+    top: -5px;
+    width: 20px;
+    color: white;
+    border-radius: 50%;
+    left: 30px;
+  }
+
   .mat-badge-small.mat-badge-overlap.mat-badge-before .mat-badge-content {
     left: -5px;
   }

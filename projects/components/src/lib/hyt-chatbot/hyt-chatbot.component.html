@@ -4,6 +4,7 @@
       mat-fab color="primary" matBadgeSize="small" [matBadge]="badgeContent" [matBadgeHidden]="badgeHidden" matBadgePosition="after" matBadgeColor="accent" (click)="this.openCloseChatbot()">
       <img class="hyt-chatbot-collapsed-icon" src="assets/icons/hyt-chatbot-collapsed-logo.png" alt="Alice Icon collapsed">
   </button>
+  <img class ="hyt-chatbot-collapsed-disconnected" *ngIf="this.disconnected == true" src="assets/icons/hyot-chatbot-disconnected.png" width="50" height="auto" alt="Disconnected icon">
 </div>
 
 <!-- CHATBOT Window -->
