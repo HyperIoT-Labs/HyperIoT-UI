@@ -135,29 +135,33 @@
   <footer *ngIf="pageStatus === 0">
     <div class="container-footer">
       <form>
-
-        <div class="container-input-message">
-          <input
-            [disabled]="canIWrite === false" 
+        <div class="container-input-message container-input-messsage-{{!isEditable && 'disabled'}}">
+          <div
             #inputMsg
-            (keyup)="startTypingIndicator($event)"
-            type="text"
             id="input-msg"
-            placeholder="Write here"
-            i18n-placeholder="@@HYT_ai_placeholder"
-            (focus)="inputOnFocus($event)"
-            autocomplete="off"
+            (keyup)="inputKeyUp($event)"
+            (keypress)="submitOnEnterNotShifted($event)"
+            (focus)="inputFocus = true"
+            (focusout)="inputFocus = false"
+            [attr.contenteditable]="isEditable"
+            role="textbox"
+            class="content-editable"
+            spellcheck="true"
+            title="Scrivi un messaggio"
+            tabindex="10"
           >
+          </div>
+          <span class="edit-placeholder" *ngIf="inputText.length == 0 && !inputFocus" i18n="@@HYT_ai_placeholder">Write here</span>
+          
+          <div class="container-send-btn">
+            <button
+              (click)="sendMessage()"
+              [disabled]="!canSendMessage"
+            >
+              <img src="/assets/icons/hyt-chatbot-send.png" alt="Send Icon">
+            </button>
+          </div>
         </div>
-        <div class="container-send-btn">
-          <button
-            (click)="sendMessage()"
-            [disabled]="inputMsg.value === '' || canIWrite === false"
-          >
-            <img src="/assets/icons/hyt-chatbot-send.png" alt="Send Icon">
-          </button>
-        </div>
-
       </form>
     </div>
   </footer>

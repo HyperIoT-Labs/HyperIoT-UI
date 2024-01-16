@@ -549,102 +549,115 @@ $chatBotAliceIconBGImage: #{var(--chatBotAliceIconBGImage)};
     }
 
     .container-footer {
-      background: white;
       width: 100%;
       display: flex;
       align-items: center;
       justify-content: flex-start;
-      height: 60px;
       flex-wrap: wrap;
-      padding: 0px 25px;
+      padding: 8px 25px 15px;
       max-width: 1280px;
       margin: 0 auto;
 
       form {
+        margin-top: 8px;
         display: flex;
+        align-items: center;
         flex: 1;
 
         .container-input-message {
           display: flex;
-          width: 90%;
-          height: 35px;
-
-          input {
-            width: 99%;
-            border: none;
-            font-size: 0.9em;
-            color: #505050;
-            background-color: #ebebeb;
-            border-radius: 5px;
-            padding: 10px;
-
-            &:disabled {
-              cursor: not-allowed;
-            }
-
-            &:focus-visible {
-              outline: #bebebe;
-            }
-
-            &::-webkit-input-placeholder {
-              /* Edge */
-              color: #bebebe;
-            }
-
-            &:-ms-input-placeholder {
-              /* Internet Explorer 10-11 */
-              color: #bebebe;
-            }
-
-            &::placeholder {
-              color: #bebebe;
-            }
-          }
-        }
-
-        .container-send-btn {
-          padding-left: 10px;
-          display: flex;
-          width: auto;
-          height: 35px;
           align-items: center;
-          justify-content: center;
+          width: 100%;
+          background: #eaeaea;
+          border-radius: 4px;
+          box-shadow: 0 2px 2px 0 rgb(0 0 0 / 25%);
+          padding: 8px 5px 8px 15px;
+          position: relative;
 
-          button {
-            background-color: #ffffff;
-            width: 35px;
+          .content-editable {
+            max-height: 2.4em;
+            min-height: 1.3em;
+            padding: 0 5px 0 0;
+            user-select: text;
+            white-space: pre-wrap;
+            word-break: break-word;
+            overflow-y: auto;
+            caret-color: #000;
+            display: flex;
+            align-items: center;
+            outline: none !important;
+            width: 100%;
+            z-index: 2;
+            line-height: 1.15em;
+
+            &::-webkit-scrollbar {
+              width: 3px !important;
+              height: 3px !important;
+              background-color: #f5f5f5;
+            }
+
+            &[contenteditable="false"] {
+              pointer-events: none;
+              user-select: none;
+            }
+          }
+
+          .edit-placeholder {
+            position: absolute;
+            left: 10px;
+            z-index: 1;
+            opacity: .7;
+            color: #181818;
+          }
+          .container-send-btn {
+            padding-left: 10px;
+            display: flex;
+            width: auto;
             height: 35px;
-            border-radius: 50%;
-            text-align: center;
-            border: 3px solid #1e58a5;
-            box-shadow: 0px 0px 3px 0px darkblue;
-            opacity: 1;
-
-            &:disabled {
-              opacity: .4;
-              cursor: not-allowed;
+            align-items: center;
+            justify-content: center;
+  
+            button {
+              background-color: #ffffff;
+              width: 35px;
+              height: 35px;
+              border-radius: 50%;
+              text-align: center;
+              border: 3px solid #1e58a5;
+              box-shadow: 0px 0px 3px 0px darkblue;
+              opacity: 1;
+  
+              &:disabled {
+                opacity: .4;
+                cursor: not-allowed;
+              }
+  
+              &:hover {
+                box-shadow: 0px 0px 0px 0px darkblue;
+              }
+  
+              img {
+                width: 17px;
+                margin: 0 auto;
+              }
             }
+          }
 
-            &:hover {
-              box-shadow: 0px 0px 0px 0px darkblue;
-            }
+          &.container-input-messsage-disabled {
+            background: #e3e3e3;
+            color: #6b6b6b;
+            opacity: .7;
+            cursor: not-allowed;
 
-            img {
-              width: 17px;
-              margin: 0 auto;
+            .edit-placeholder {
+              opacity: 1;
             }
           }
         }
-
       }
-
     }
-
   }
-
 }
-
-
 
 /* Chatbot icon collapsed */
 .hyt-chatbot-collapsed-container {

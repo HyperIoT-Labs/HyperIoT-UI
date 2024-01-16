@@ -37,9 +37,6 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
   /** Url for ccat defined inside src/environments/ */
   @Input() public ccatUrl: string;
 
-  /** The current input message text. */
-  inputMsg: string = "";
-
   /** An array to store received WebSocket messages. */
   received: WebsocketChat[] = [];
 
@@ -76,6 +73,12 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
 
   /** Subject for managing open subscriptions. */
   protected ngUnsubscribe: Subject<void> = new Subject<void>();
+
+  /** When true, the input is focus and hide the placeholder */
+  inputFocus: boolean = false;
+
+  /** The current input message text. */
+  _inputText: string = "";
 
   /** Margin between the message list and the chat container. */
   readonly MARGIN_TOP_UL = 0;
@@ -227,20 +230,22 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
   * Sends a user message to the WebSocket and resets the input field.
   */
   sendMessage() {
-    this.inputMsg = this.inputMsgEl?.nativeElement.value;
-    this.logger.info(this.inputMsg);
+    this.logger.info(this.inputText);
     
     // Send message to ccat
-    this.cat.send(this.inputMsg);
+    this.cat.send(this.inputText);
 
     this.received.push({
         action: "text",
-        text: this.inputMsg,
+        text: this.inputText,
         author: "cx",
         timestamp: new Date().getTime()
       });
 
-    if (this.inputMsgEl) this.inputMsgEl.nativeElement.value = "";
+    if (this.inputMsgEl) {
+      this.inputMsgEl.nativeElement.innerText = "";
+      this.inputText = "";
+    }
 
     // Disable send button and input text
     this.inputMsgEl?.nativeElement.focus();
@@ -377,7 +382,7 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
    * @param event Event emitted from input keyup
    */
   startTypingIndicator(event: any) {
-    if (event.target.value.length > 0 && this.firstTouch) {
+    if (event.target.innerText.length > 0 && this.firstTouch) {
       this.firstTouch = false;
     }
   }
@@ -493,6 +498,49 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
     // Retry connection to a new cat istance
     this.newCat();
   }
+
+  /**
+   * Return true if the input for writing message is enabled
+   */
+  get isEditable(): boolean {
+    return this.canIWrite && this.received.length > 0;
+  }
+
+  get inputText(): string {
+    return this._inputText;
+  }
+
+  set inputText(t: string) {
+    this._inputText = t;
+  }
+
+  inputKeyUp(e: KeyboardEvent) {
+    this.inputText = (e.target as HTMLElement)?.innerText || "";
+    this.startTypingIndicator(e);
+  }
+
+  /**
+   * Return if the user can send message, check if bot
+   * is not writing at the moment and the user has written something
+   */
+  get canSendMessage(): boolean {
+    if (!this.inputMsgEl) return false;
+    return !(
+      this.received.length == 0 ||
+      this.inputMsgEl?.nativeElement.innerText === "")
+  }
+
+   /**
+   * Function called on fake textarea keypress and check if
+   * the user press enter for send the message
+   * @param e
+   */
+    submitOnEnterNotShifted(e: any) {
+      if (e.which === 13 && !e.shiftKey) {
+        e.preventDefault();
+        if (this.canSendMessage) this.sendMessage();
+      }
+    }
 
   /**
   * Open/Close chatbot window
