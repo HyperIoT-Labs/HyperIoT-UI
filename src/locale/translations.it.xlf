@@ -2112,6 +2112,14 @@
         <source>Write here</source>
         <target>Scrivi qui</target>
       </trans-unit>
+      <trans-unit id="HYT_ai_placeholder_title" datatype="html">
+        <source>Write a message</source>
+        <target>Scrivi un messaggio</target>
+      </trans-unit>
+      <trans-unit id="HYT_ai_first_message" datatype="html">
+        <source>Hello, who are you?</source>
+        <target>Ciao, chi sei?</target>
+      </trans-unit>
       <trans-unit id="HYT_dataset_value_description" datatype="html">
         <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;ng-contain"/>Emit values of a dataset<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;mat-form-field&gt;"/><x id="START_UNORDERED_LIST" ctype="x-ul" equiv-text="abel i18n=&quot;@@HYT"/><x id="START_LIST_ITEM" ctype="x-li" equiv-text="{{ typeOption.label }}"/>Dataset example: <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="at-select&gt;
         &lt;/mat-form-fie"/>[ 0, 2, 4, 8 ]<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="gs&quot;&gt;

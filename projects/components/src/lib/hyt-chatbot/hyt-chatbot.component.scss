@@ -229,20 +229,6 @@ $chatBotAliceIconBGImage: #{var(--chatBotAliceIconBGImage)};
               border-color: transparent;
               border-left-color: #81a0fc;
             }
-
-            &.read {
-              &:after {
-                content: "";
-                position: absolute;
-                right: -4px;
-                bottom: -16px;
-                font-size: .7em;
-                color: #112a73;
-                font-style: italic;
-                font-weight: bold;
-              }
-            }
-
           }
 
           &.bot-typing {
@@ -286,6 +272,10 @@ $chatBotAliceIconBGImage: #{var(--chatBotAliceIconBGImage)};
               font-size: .8em;
               font-style: italic;
               color: #434343;
+            }
+
+            .white {
+              color: white !important;
             }
 
             .message-row {
@@ -691,10 +681,6 @@ $chatBotAliceIconBGImage: #{var(--chatBotAliceIconBGImage)};
     top: 0px;
   }
 
-}
-
-.white {
-  color: white !important;
 }
 
 @media (max-width: 460px) {

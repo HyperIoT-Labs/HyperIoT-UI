@@ -2,7 +2,7 @@
 <div *ngIf="this.collapsed == true" class="hyt-chatbot-collapsed-container">
   <button class="hyt-chatbot-collapsed"
       mat-fab color="primary" matBadgeSize="small" [matBadge]="badgeContent" [matBadgeHidden]="badgeHidden" matBadgePosition="after" matBadgeColor="accent" (click)="this.openCloseChatbot()">
-      <img class="hyt-chatbot-collapsed-icon" src="assets/icons/hyt-chatbot-collapsed-logo.png">
+      <img class="hyt-chatbot-collapsed-icon" src="assets/icons/hyt-chatbot-collapsed-logo.png" alt="Alice Icon collapsed">
   </button>
 </div>
 
@@ -44,16 +44,15 @@
             #messagelist
             class="common-message"
             [ngClass]="{
-              'is-user': message.author! === 'cx',
-              'is-bot': message.author! === 'csr' && message.action! !== 'typing_indicator',
-              'read': message.author! === 'cx' && message.messageStatus === 'delivery_success',
-              'bot-typing': message.author! === 'csr' && message.action! === 'typing_indicator'
+              'is-user': message.author! === 'user',
+              'is-bot': message.author! === 'bot' && message.action! !== 'typing_indicator',
+              'bot-typing': message.author! === 'bot' && message.action! === 'typing_indicator'
             }"
             [attr.data-message-id]="message.messageId!"
           >
             <div class="container-single-message" [ngSwitch]="message.action!">
               <ng-container *ngSwitchCase="'text'">
-                <div class="info-row" [ngClass]="{'white': message.author === 'cx'}">
+                <div class="info-row" [ngClass]="{'white': message.author === 'user'}">
                   <div class="name-cell">{{returnAuthor(message.author!)}}</div>
                   <div class="time-cell">{{returnTimeMessage(message.timestamp!)}}</div>
                 </div>
@@ -63,7 +62,7 @@
               </ng-container>
 
               <ng-container *ngSwitchCase="'typing_indicator'">
-                <div *ngIf="message.author === 'csr'" class="typing-box">
+                <div *ngIf="message.author === 'bot'" class="typing-box">
                   <div class="typing-text" i18n="@@HYT_ai_is_writing">Alice is writing...</div>
                   <span></span>
                   <span></span>
@@ -147,7 +146,8 @@
             role="textbox"
             class="content-editable"
             spellcheck="true"
-            title="Scrivi un messaggio"
+            title="Write a message"
+            i18n-title="@@HYT_ai_placeholder_title"
             tabindex="10"
           >
           </div>
