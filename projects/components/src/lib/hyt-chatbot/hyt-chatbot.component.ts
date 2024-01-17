@@ -87,6 +87,9 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
   /** Variable to show/not show disconnection advise when chatbot is collapsed */
   public disconnected: boolean = false;
 
+  /** Variable to change the scroll animation */
+  public scrollBehaviour: string = "instant";
+
   /** Cat variable */
   public cat: CatClient;
 
@@ -364,8 +367,12 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
   autoScrollDown(): void {
     if (!this.collapsed){
       try {
-        this.content!.nativeElement!.scrollTop =
-          this.content?.nativeElement.scrollHeight;
+        this.content!.nativeElement!.scrollTo({
+          top: this.content?.nativeElement.scrollHeight,
+          behavior: this.scrollBehaviour,
+        });
+        // Change animation 
+        if (this.scrollBehaviour == "instant") this.scrollBehaviour = "smooth";
       } catch (error) {
         this.logger.error("autoScrollDown() Error", error);
       }
@@ -475,15 +482,6 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   /**
-   * Returns the offset to the top of the chat container
-   * on the scroll event to manage the floatPills.
-   * @param e Event emitted by the scroll listener
-   */
-  getContentYPosition(e: Event): number {
-    return (e.target as Element).scrollTop;
-  }
-
-  /**
    * Reset the sessionId & retrieve again value from cookie.
    * @param forceRetry (optional) A boolean flag indicating whether to force a retry even if maximum retry attempts have been reached.
    * @returns void
@@ -562,9 +560,9 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
     else if (!this.collapsed) {
       this.badgeContent = 0;
       this.badgeHidden = true;
+      this.scrollBehaviour = "instant";
       this.logger.debug("openCloseChatbot() - collapse chatbot");
       return this.collapsed = true;
     }
   }  
-  
 }
