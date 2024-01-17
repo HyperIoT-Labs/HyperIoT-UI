@@ -4,48 +4,35 @@
     height: auto;
     .recording {
 
-        &.inLoading {
-
-            span,
-            p {
-                color: #cccccc !important;
+        &:not(.inLoading) {
+            .mat-button {
+                &:hover {
+                    color: #008aff;
+                }
             }
-
-            #reload-btn ,
-            #play-pause-btn {
-                cursor: default;
-            }
-
         }
 
         #reload-btn,
         #play-pause-btn {
-            float: left;
+            display: flex;
+            flex-direction: column;
             margin: 0.3em 0.3em 0.3em 0.3em;
-            text-align: center;
-            cursor: pointer;
             text-transform: uppercase;
             width: 4em;
             height: 3.2em;
 
-            &:hover {
-                color: #008aff;
-            }
-
-            span {
+            .hyt-icon {
                 font-size: 2.3em;
                 display: block;
 
                 &.icon-hyt_reload {
                     font-size: 1.7em;
-                    margin-bottom: 5px;
-                    margin-top: 5px;
+                    margin: auto;
                 }
 
                 &.icon-hyt_off {
                     font-size: 2em;
-                    margin-bottom: 2px;
-                    margin-top: 2px;
+                    height: 37px;
                 }
 
                 &.notReloading {
@@ -56,14 +43,10 @@
 
             }
 
-            p {
-                margin-bottom: 0;
-                margin-top: -5px;
+            .button-label {
                 font-size: .8em;
-                -moz-user-select: none;
-                -webkit-user-select: none;
-                -ms-user-select: none;
-                user-select: none;
+                margin-top: -5px;
+                line-height: 20px;
             }
 
         }

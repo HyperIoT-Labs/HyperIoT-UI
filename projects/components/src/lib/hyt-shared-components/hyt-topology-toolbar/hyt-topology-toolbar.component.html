@@ -2,17 +2,21 @@
 
     <div class="recording {{(recordStateInLoading)?'inLoading':''}} {{(dataRecordingIsOn)?'on':'off'}}">
 
-        <div id="play-pause-btn" (click)="openRecordingActionModal()" class="{{(dataRecordingIsOn)?'animation-rec-on':'animation-rec-off'}}">
-            <span class="hyt-icon icon-hyt_off"></span>
-            <!-- <p i18n="@@HYT_recording_is_on">{dataRecordingIsOn, select, true {Stop} false {Run}}</p> -->
-            <p>{{(dataRecordingIsOn)?'Stop':'Run'}}</p>
-            <!-- @@i18n -->
-        </div>
+        <button mat-button (click)="openRecordingActionModal()" [disabled]="recordStateInLoading">
+            <div id="play-pause-btn" class="{{(dataRecordingIsOn)?'animation-rec-on':'animation-rec-off'}}">
+                <span class="hyt-icon icon-hyt_off"></span>
+                <!-- <p i18n="@@HYT_recording_is_on">{dataRecordingIsOn, select, true {Stop} false {Run}}</p> -->
+                <span class="button-label">{{(dataRecordingIsOn)?'Stop':'Run'}}</span>
+                <!-- @@i18n -->
+            </div>
+        </button>
 
-        <div id="reload-btn" *ngIf="dataRecordingIsOn" (click)="openReloadRecordingModal()">
-            <span class="hyt-icon icon-hyt_reload {{(!recordReloading)?'notReloading':''}}"></span>
-            <p i18n="@@HYT_reload">Reload</p>
-        </div>
+        <button mat-button *ngIf="dataRecordingIsOn" (click)="openReloadRecordingModal()" [disabled]="recordStateInLoading">
+            <div id="reload-btn">
+                <span class="hyt-icon icon-hyt_reload {{(!recordReloading)?'notReloading':''}}"></span>
+                <span class="button-label" i18n="@@HYT_reload">Reload</span>
+            </div>
+        </button>
 
     </div>
 
