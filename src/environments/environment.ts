@@ -10,6 +10,7 @@ export const environment = {
   logRegistry: { },
   cookieSecure: false,
   mqttUrl: "tcp://broker-test.hyperiot.cloud",
+  ccatUrl: "localhost",
   version: packageInfo.version,
 };
 

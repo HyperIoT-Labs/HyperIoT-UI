@@ -1,6 +1,7 @@
 import {Component, HostListener, ViewEncapsulation} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {Logger, LoggerService} from "core";
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'hyt-root',
@@ -9,6 +10,8 @@ import {Logger, LoggerService} from "core";
   encapsulation: ViewEncapsulation.None
 })
 export class AppComponent {
+
+  public environment = environment;
 
   /*
    * logger service

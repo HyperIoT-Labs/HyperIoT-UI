@@ -1551,6 +1551,45 @@
       <trans-unit id="HYT_range_value_description" datatype="html">
         <source>Emit a random value between 2 numbers</source>
       </trans-unit>
+      <trans-unit id="HYT_ai_title" datatype="html">
+        <source>Alice</source>
+      </trans-unit>
+      <trans-unit id="HYT_ai_subtitle" datatype="html">
+        <source>Virtual assistant</source>
+      </trans-unit>
+      <trans-unit id="HYT_ai_is_writing" datatype="html">
+        <source>Alice is writing...</source>
+      </trans-unit>
+      <trans-unit id="HYT_ai_is_loading" datatype="html">
+        <source>Alice is loading</source>
+      </trans-unit>
+      <trans-unit id="HYT_ai_error_message" datatype="html">
+        <source>An error occurred while trying to connect to Alice, please try again by clicking the button below.</source>
+      </trans-unit>
+      <trans-unit id="HYT_ai_error_button" datatype="html">
+        <source>Retry connection</source>
+      </trans-unit>      
+      <trans-unit id="HYT_ai_reconnection_message" datatype="html">
+        <source>Attempt to reconnect number</source>
+      </trans-unit> 
+      <trans-unit id="HYT_ai_user_label" datatype="html">
+        <source>You</source>
+      </trans-unit>
+      <trans-unit id="HYT_ai_today" datatype="html">
+        <source>Today</source>
+      </trans-unit> 
+      <trans-unit id="HYT_ai_yesterday" datatype="html">
+        <source>Yesterday</source>
+      </trans-unit>
+      <trans-unit id="HYT_ai_placeholder" datatype="html">
+        <source>Write here</source>
+      </trans-unit>
+      <trans-unit id="HYT_ai_placeholder_title" datatype="html">
+        <source>Write a message</source>
+      </trans-unit>
+      <trans-unit id="HYT_ai_first_message" datatype="html">
+        <source>Hello, who are you?</source>
+      </trans-unit>
       <trans-unit id="HYT_dataset_value_description" datatype="html">
         <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;ng-contain"/>Emit values of a dataset<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;mat-form-field&gt;"/><x id="START_UNORDERED_LIST" ctype="x-ul" equiv-text="abel i18n=&quot;@@HYT"/><x id="START_LIST_ITEM" ctype="x-li" equiv-text="{{ typeOption.label }}"/>Dataset example: <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="at-select&gt;
         &lt;/mat-form-fie"/>[ 0, 2, 4, 8 ]<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="gs&quot;&gt;

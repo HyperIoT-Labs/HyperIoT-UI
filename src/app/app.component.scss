@@ -92,39 +92,6 @@ html {
       }
     }
 
-  .hyt-chatbot-collapsed-container {
-    position: fixed;
-    bottom: 15px;
-    right: 15px;
-    z-index: 9999;
-    width: 64px;
-    height: 64px;
-  
-    .hyt-chatbot-collapsed {
-      height: 100%;
-      width: 100%;
-      background-color: #0d416d !important;
-      color: #ffffff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-
-      .hyt-chatbot-collapsed-icon {
-        width: 40px;
-        height: auto
-      }
-    }
-
-    .mat-badge-medium.mat-badge-overlap.mat-badge-before .mat-badge-content {
-      left: -5px;
-    }
-    .mat-badge-medium.mat-badge-above .mat-badge-content {
-      top: 0px;
-    }
-
-  }
-
     /* MODAL STYLES
     -------------------------------*/
     .hyt-modal-general {
