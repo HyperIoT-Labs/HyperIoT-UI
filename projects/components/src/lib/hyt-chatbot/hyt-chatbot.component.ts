@@ -3,9 +3,10 @@ import { Logger, LoggerService } from "core";
 import { WebsocketChat } from "./models/websocket-chat";
 import { Subject, takeUntil } from "rxjs";
 import { PageStatus } from "./models/page-status";
-import * as moment from "moment";
 import { CookieService } from 'ngx-cookie-service';
 import { CatClient } from 'ccat-api'
+import * as moment_ from 'moment';
+const moment = moment_;
 
 @Component({
   selector: "hyt-chatbot",
@@ -544,22 +545,17 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
     // Only first opening
     if (this.firstOpen && this.pageStatus != PageStatus.ERROR) {
       this.pageStatus = PageStatus.LOADING;
-      this.sendFirstMessage();
       this.firstOpen = false;
-
-      //if disconnected before, establish connesction on click on icon collapsed
-      if (this.disconnected == true) this.retryConnection();
-
+      if (this.disconnected == false) this.sendFirstMessage();
+      else this.retryConnection(); //if disconnected before, establish connection on click on icon collapsed
       this.logger.debug("openCloseChatbot() - first open");
       return this.collapsed = false;
     }
     else if (this.collapsed){
       this.badgeContent = 0;
       this.badgeHidden = true;
-
-      //if disconnected before, establish connesction on click on icon collapsed
+      //if disconnected before, establish connection on click on icon collapsed
       if (this.disconnected == true) this.retryConnection();
-
       this.logger.debug("openCloseChatbot() - open chatbot");
       return this.collapsed = false;
     }
@@ -569,6 +565,6 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
       this.logger.debug("openCloseChatbot() - collapse chatbot");
       return this.collapsed = true;
     }
-  }
+  }  
   
 }
