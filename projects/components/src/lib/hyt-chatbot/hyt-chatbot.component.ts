@@ -274,6 +274,7 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
   handleDisconnection(){
     this.pageStatus = PageStatus.ERROR;
     this.disconnected = true;
+    this.badgeHidden = true;
     this.logger.warn('handleDisconnection() -> disconnected from Cheshire-cat-ai');
   }
 
@@ -545,12 +546,20 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
       this.pageStatus = PageStatus.LOADING;
       this.sendFirstMessage();
       this.firstOpen = false;
+
+      //if disconnected before, establish connesction on click on icon collapsed
+      if (this.disconnected == true) this.retryConnection();
+
       this.logger.debug("openCloseChatbot() - first open");
       return this.collapsed = false;
     }
     else if (this.collapsed){
       this.badgeContent = 0;
       this.badgeHidden = true;
+
+      //if disconnected before, establish connesction on click on icon collapsed
+      if (this.disconnected == true) this.retryConnection();
+
       this.logger.debug("openCloseChatbot() - open chatbot");
       return this.collapsed = false;
     }
