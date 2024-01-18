@@ -120,22 +120,10 @@
     <div id="newStatus" *ngSwitchCase="PageStatus.New">
       <!-- New -->
 
-      <div class="mt-5 no-projects">
-
-        <div id="content-no-projects" class="col-md-12">
-          <h3 id="title-no-project" i18n="@@HYT_no_project">There are no projects!</h3>
-          <h4 id="subtitle-no-project" i18n="@@HYT_add_project_button_hint">To add a project click the button below.</h4>
-        </div>
-
-        <div id="btn-no-projects" class="col-md-12">
-
-          <hyt-button id="add-project-btn" (click)="addProject()" type="button">
-            <ng-container i18n="@@HYT_create_first_project">Create your first project</ng-container>
-          </hyt-button>
-
-        </div>
-
-      </div> <!-- End No Projects Row -->
+      <hyt-empty-project-list-view
+        title="There are no projects!"
+        message="To add a project click the button below."
+      ></hyt-empty-project-list-view>
 
     </div> <!-- PageStatus.New -->
 
