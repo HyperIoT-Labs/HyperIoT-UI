@@ -1,9 +1,10 @@
 <!-- CHATBOT Collapsed Icon-->
 <div *ngIf="this.collapsed == true" class="hyt-chatbot-collapsed-container">
   <button class="hyt-chatbot-collapsed"
-      mat-fab color="primary" [matBadge]="badgeContent" [matBadgeHidden]="badgeHidden" matBadgePosition="before" matBadgeColor="accent" (click)="this.openCloseChatbot()">
-      <img class="hyt-chatbot-collapsed-icon" src="assets/icons/hyt-chatbot-collapsed-logo.png">
+      mat-fab color="primary" matBadgeSize="small" [matBadge]="badgeContent" [matBadgeHidden]="badgeHidden" matBadgePosition="after" matBadgeColor="accent" (click)="this.openCloseChatbot()">
+      <img class="hyt-chatbot-collapsed-icon" src="assets/icons/hyt-chatbot-collapsed-logo.png" alt="Alice Icon collapsed">
   </button>
+  <img class ="hyt-chatbot-collapsed-disconnected" *ngIf="this.disconnected == true" src="assets/icons/hyot-chatbot-disconnected.png" width="50" height="auto" alt="Disconnected icon">
 </div>
 
 <!-- CHATBOT Window -->
@@ -16,14 +17,13 @@
         </div>
 
         <div class="title-bot">
-          <div class="title">Alice</div>
-          <div class="subtitle">Assistente virtuale</div>
+          <div class="title" i18n="@@HYT_ai_title">Alice</div>
+          <div class="subtitle" i18n="@@HYT_ai_subtitle">Virtual assistant</div>
         </div>
       </div>
 
-      <div class="header-end">
-        <div class="dots" (click)="this.openCloseChatbot()"></div>
-      </div>
+      <div class="header-end" (click)="this.openCloseChatbot()"><span class="exit">X</span></div>
+
     </div>
   </header>
 
@@ -45,16 +45,15 @@
             #messagelist
             class="common-message"
             [ngClass]="{
-              'is-user': message.author! === 'cx',
-              'is-bot': message.author! === 'csr' && message.action! !== 'typing_indicator',
-              'read': message.author! === 'cx' && message.messageStatus === 'delivery_success',
-              'bot-typing': message.author! === 'csr' && message.action! === 'typing_indicator'
+              'is-user': message.author! === 'user',
+              'is-bot': message.author! === 'bot' && message.action! !== 'typing_indicator',
+              'bot-typing': message.author! === 'bot' && message.action! === 'typing_indicator'
             }"
             [attr.data-message-id]="message.messageId!"
           >
             <div class="container-single-message" [ngSwitch]="message.action!">
               <ng-container *ngSwitchCase="'text'">
-                <div class="info-row">
+                <div class="info-row" [ngClass]="{'white': message.author === 'user'}">
                   <div class="name-cell">{{returnAuthor(message.author!)}}</div>
                   <div class="time-cell">{{returnTimeMessage(message.timestamp!)}}</div>
                 </div>
@@ -64,8 +63,8 @@
               </ng-container>
 
               <ng-container *ngSwitchCase="'typing_indicator'">
-                <div *ngIf="message.author === 'csr'" class="typing-box">
-                  <div class="typing-text">Alice sta scrivendo...</div>
+                <div *ngIf="message.author === 'bot'" class="typing-box">
+                  <div class="typing-text" i18n="@@HYT_ai_is_writing">Alice is writing...</div>
                   <span></span>
                   <span></span>
                   <span></span>
@@ -83,8 +82,8 @@
 
         <div class="container-alice-img"></div>
 
-        <div class="container-alice-message">
-          Alice è in attesa
+        <div class="container-alice-message" i18n="@@HYT_ai_is_loading">
+          Alice is loading
           <div class="alice-loader">
             <span></span>
             <span></span>
@@ -103,8 +102,8 @@
         </div>
 
         <div class="container-alice-error-message">
-          <span> Si è verificato un errore durante il tentativo di connessione con Alice, ritenta cliccando il bottone in basso.</span>
-          <button (click)="retryConnection()" class="retry-connect-btn">Ritenta connessione</button>
+          <span i18n="@@HYT_ai_error_message">An error occurred while trying to connect to Alice, please try again by clicking the button below.</span>
+          <button (click)="retryConnection()" class="retry-connect-btn" i18n="@@HYT_ai_error_button">Retry connection</button>
         </div>
 
       </div>
@@ -117,8 +116,8 @@
 
         <div class="retrying-connection">
           <div class="container-alice-reconnection">
-            <span>
-              Tentativo di riconnessione numero <strong>{{retryAttempts}}</strong>
+            <span i18n="@@HYT_ai_reconnection_message">
+              Attempt to reconnect number <strong>{{retryAttempts}}</strong>
             </span>
             <div class="alice-loader">
               <span></span>
@@ -136,28 +135,34 @@
   <footer *ngIf="pageStatus === 0">
     <div class="container-footer">
       <form>
-
-        <div class="container-input-message">
-          <input
-            [disabled]="canIWrite === false" 
+        <div class="container-input-message container-input-messsage-{{!isEditable && 'disabled'}}">
+          <div
             #inputMsg
-            (keyup)="startTypingIndicator($event)"
-            type="text"
             id="input-msg"
-            placeholder="Scrivi qui"
-            (focus)="inputOnFocus($event)"
-            autocomplete="off"
+            (keyup)="inputKeyUp($event)"
+            (keypress)="submitOnEnterNotShifted($event)"
+            (focus)="inputFocus = true"
+            (focusout)="inputFocus = false"
+            [attr.contenteditable]="isEditable"
+            role="textbox"
+            class="content-editable"
+            spellcheck="true"
+            title="Write a message"
+            i18n-title="@@HYT_ai_placeholder_title"
+            tabindex="10"
           >
+          </div>
+          <span class="edit-placeholder" *ngIf="inputText.length == 0 && !inputFocus" i18n="@@HYT_ai_placeholder">Write here</span>
+          
+          <div class="container-send-btn">
+            <button
+              (click)="sendMessage()"
+              [disabled]="!canSendMessage"
+            >
+              <img src="/assets/icons/hyt-chatbot-send.png" alt="Send Icon">
+            </button>
+          </div>
         </div>
-        <div class="container-send-btn">
-          <button
-            (click)="sendMessage()"
-            [disabled]="inputMsg.value === '' || canIWrite === false"
-          >
-            <img src="/assets/icons/hyt-chatbot-send.png" alt="Send Icon">
-          </button>
-        </div>
-
       </form>
     </div>
   </footer>

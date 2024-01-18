@@ -1,11 +1,12 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, QueryList, Renderer2, ViewChild, ViewChildren, ViewEncapsulation} from "@angular/core";
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, Input, QueryList, ViewChild, ViewChildren, ViewEncapsulation} from "@angular/core";
 import { Logger, LoggerService } from "core";
 import { WebsocketChat } from "./models/websocket-chat";
 import { Subject, takeUntil } from "rxjs";
 import { PageStatus } from "./models/page-status";
-import * as moment from "moment";
 import { CookieService } from 'ngx-cookie-service';
 import { CatClient } from 'ccat-api'
+import * as moment_ from 'moment';
+const moment = moment_;
 
 @Component({
   selector: "hyt-chatbot",
@@ -34,8 +35,8 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
   /** Reference to the input element where the user types messages. */
   @ViewChild("inputMsg") inputMsgEl?: ElementRef;
 
-  /** The current input message text. */
-  inputMsg: string = "";
+  /** Url for ccat defined inside src/environments/ */
+  @Input() public ccatUrl: string;
 
   /** An array to store received WebSocket messages. */
   received: WebsocketChat[] = [];
@@ -48,9 +49,6 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
 
   /** Flag to indicate if it's the first interaction with the input. */
   firstTouch = false;
-
-  /** Timer for typing indicator. */
-  typingTimer: any;
 
   /** Number of retry attempts to regenerate the session before going into error. */
   retryAttempts = 1;
@@ -74,26 +72,31 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
   /** Subject for managing open subscriptions. */
   protected ngUnsubscribe: Subject<void> = new Subject<void>();
 
+  /** When true, the input is focus and hide the placeholder */
+  inputFocus: boolean = false;
+
+  /** The current input message text. */
+  _inputText: string = "";
+
   /** Margin between the message list and the chat container. */
-  readonly MARGIN_TOP_UL = 15;
+  readonly MARGIN_TOP_UL = 0;
 
   /** Top position of the fixed pills. */
   readonly FIXED_TOP_PILLS = 15;
 
-  /** Cat variable to establish connection */
-  readonly baseUrlCat = 'localhost';
+  /** Variable to show/not show disconnection advise when chatbot is collapsed */
+  public disconnected: boolean = false;
 
-  /* Always declare the cat client on the first chatbot window opened */
-  cat = new CatClient({
-    baseUrl: this.baseUrlCat,
-    user: this.cookieService.get('HIT-AUTH'),
-    ws : { 
-      retries: 1,
-    }
-  });
+  /** Variable to change the scroll animation */
+  public scrollBehaviour: string = "instant";
+
+  /** Cat variable */
+  public cat: CatClient;
+
+  /** Welcome message to send to ccat at start */
+  public firstMessage: string = $localize`:@@HYT_ai_first_message:Hello, who are you?`; 
 
   constructor(
-    private renderer2: Renderer2,
     private cookieService: CookieService,
     loggerService: LoggerService
   ) {
@@ -108,6 +111,14 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
   * At chatbot window opening 
   */
   ngOnInit(): void {
+    /* Always declare the cat client on the first chatbot window opened */
+    this.cat = new CatClient({
+      baseUrl: this.ccatUrl,
+      user: this.cookieService.get('HIT-AUTH'),
+      ws : { 
+        retries: 1,
+      }
+    });
     this.initCat();
   }
 
@@ -121,15 +132,18 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnDestroy(){
     this.cat.close();
+    if (this.ngUnsubscribe) {
+      this.ngUnsubscribe.next();
+      this.ngUnsubscribe.complete();
+    }
   }
 
   /** 
   * First Message sent by user (but hidden to him) in order to let introduce chatbot itself 
   */
-  firstMessage(){
+  sendFirstMessage(){
     this.logger.debug("Connected to Cheshire-cat-ai")
-    /* First message in ITALIANO */
-    this.cat.send('Ciao, chi sei?');
+    this.cat.send(this.firstMessage);
     this.pageStatus = PageStatus.READY;
   }
 
@@ -139,6 +153,7 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
   initCat(){
     this.cat.init();
     this.cat.onConnected(() => {
+      this.disconnected = false;
       }).onMessage(msg => {
         this.handleWSMessage(msg);
       }).onError(err => {
@@ -155,7 +170,7 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
     this.cat.close();
     /* Declare a new cat*/
     this.cat = new CatClient({
-      baseUrl: this.baseUrlCat,
+      baseUrl: this.ccatUrl,
       user: this.cookieService.get('HIT-AUTH'),
       ws : { 
         retries: 1,
@@ -166,7 +181,8 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
     this.cat.init();
     this.cat.onConnected(() => {
         this.retryAttempts = 1;
-        this.firstMessage(); /* "Ciao, chi sei?" */
+        this.disconnected = false;
+        this.sendFirstMessage();
       }).onMessage(msg => {
         this.handleWSMessage(msg);
       }).onError(err => { 
@@ -191,7 +207,6 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
       this.previous_message_type = 'chat_token'
       action = 'typing_indicator';
       show = true;
-      if (this.received.length > 1) { this.received[this.received.length-1].messageStatus = "delivery_success"; }
     }
 
     // Always show
@@ -200,7 +215,7 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
       this.previous_message_type = 'chat'
       action = 'text';
       show = true;
-      this.logger.info(msg.content);
+      this.logger.info("handleWSMessage()", msg.content);
     }
 
     // Choose to show message, adding to relative
@@ -208,17 +223,17 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
       this.received.push({
         action: action,
         text: msg.content,
-        author: "csr",
+        author: "bot",
         timestamp: new Date().getTime(),
         });
 
-        this.canIWrite = true;
+      this.canIWrite = true;
 
-        if (msg.type == 'chat'){
-          // add MatBadgeValue and show
-          this.badgeContent = 1;
-          this.badgeHidden = false;
-        }
+      if (msg.type == 'chat'){
+        // add MatBadgeValue and show
+        this.badgeContent++;
+        this.badgeHidden = false;
+      }
     }
   }
 
@@ -226,20 +241,22 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
   * Sends a user message to the WebSocket and resets the input field.
   */
   sendMessage() {
-    this.inputMsg = this.inputMsgEl?.nativeElement.value;
-    this.logger.info(this.inputMsg);
+    this.logger.info("sendMessage()", this.inputText);
     
     // Send message to ccat
-    this.cat.send(this.inputMsg);
+    this.cat.send(this.inputText);
 
     this.received.push({
         action: "text",
-        text: this.inputMsg,
-        author: "cx",
+        text: this.inputText,
+        author: "user",
         timestamp: new Date().getTime()
       });
 
-    if (this.inputMsgEl) this.inputMsgEl.nativeElement.value = "";
+    if (this.inputMsgEl) {
+      this.inputMsgEl.nativeElement.innerText = "";
+      this.inputText = "";
+    }
 
     // Disable send button and input text
     this.inputMsgEl?.nativeElement.focus();
@@ -252,7 +269,7 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
   */
   handleError(err){
     this.pageStatus = PageStatus.ERROR;
-    this.logger.error(err);
+    this.logger.error("handleError()", err);
   }
 
   /**
@@ -260,7 +277,9 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
   */
   handleDisconnection(){
     this.pageStatus = PageStatus.ERROR;
-    this.logger.warn('Disconnected from Cheshire-cat-ai');
+    this.disconnected = true;
+    this.badgeHidden = true;
+    this.logger.warn('handleDisconnection() -> disconnected from Cheshire-cat-ai');
   }
 
   /**
@@ -315,31 +334,15 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   /**
-   * Handles the delivery confirmation of a message.
-   * @param message The WebSocket message indicating message delivery.
-   */
-  messageDeliveryHandling(message: WebsocketChat) {
-    const textMessageFound = this.received.find(
-      (data) => data.messageId === message.messageId
-    );
-    if (textMessageFound) {
-      textMessageFound.messageStatus = "delivery_success";
-      //console.log("[messageDeliveryHandling]", textMessageFound);
-    } else {
-      //console.error("[messageDeliveryHandling] MESSAGE NOT FOUND");
-    }
-  }
-
-  /**
    * Prints the name of the user who sent the message
    * @param idAuthor the sender's id
    */
   returnAuthor(idAuthor: string): string {
     switch (idAuthor) {
-      case "csr":
-        return "Hyperis";
-      case "cx":
-        return "Tu";
+      case "bot":
+        return "Alice";
+      case "user":
+        return $localize`:@@HYT_ai_user_label:You`;
       default:
         return idAuthor;
     }
@@ -362,11 +365,17 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
    * and update the value of the messageList.
    */
   autoScrollDown(): void {
-    try {
-      this.content!.nativeElement.scrollTop =
-        this.content?.nativeElement.scrollHeight;
-    } catch (error) {
-      console.log("[autoScrollDown] Error", error);
+    if (!this.collapsed){
+      try {
+        this.content!.nativeElement!.scrollTo({
+          top: this.content?.nativeElement.scrollHeight,
+          behavior: this.scrollBehaviour,
+        });
+        // Change animation 
+        if (this.scrollBehaviour == "instant") this.scrollBehaviour = "smooth";
+      } catch (error) {
+        this.logger.error("autoScrollDown() Error", error);
+      }
     }
   }
 
@@ -376,7 +385,7 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
    * @param event Event emitted from input keyup
    */
   startTypingIndicator(event: any) {
-    if (event.target.value.length > 0 && this.firstTouch) {
+    if (event.target.innerText.length > 0 && this.firstTouch) {
       this.firstTouch = false;
     }
   }
@@ -387,7 +396,7 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
    */
   inputOnFocus(event: any) {
     this.firstTouch = true;
-    console.log("[inputOnFocus] FOCUS", event);
+    this.logger.info("inputOnFocus() FOCUS", event);
   }
 
   /**
@@ -409,9 +418,9 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
     );
 
     if (diffDate === 0) {
-      return "Oggi";
+      return $localize`:@@HYT_ai_today:Today`;
     } else if (diffDate === 1) {
-      return "Ieri";
+      return $localize`:@@HYT_ai_yesterday:Yesterday`;
     } else if (diffDate > 1 && diffDate < 7) {
       const daysOfWeek = moment.weekdays();
       const numberOfDay = moment(dataMomentFormat, "DD-MMM-YYYY").day();
@@ -431,7 +440,7 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
       const daysOfWeekName = daysOfWeek[numberOfDay].substring(0, 3);
       return daysOfWeekName + " " + dataMomentFormat;
     } else {
-      //console.warn("[returnMessageDate] not handled data", diffDate);
+      this.logger.warn("returnMessageDate() not handled data", diffDate);
       return dataMomentFormat;
     }
   }
@@ -450,7 +459,7 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
         arrayMsg[index - 1].timestamp!
       );
     } else {
-      //console.error("[displayMessageDateBox] negative message index", index);
+      this.logger.error("displayMessageDateBox() negative message index", index);
       return false;
     }
   }
@@ -473,25 +482,59 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   /**
-   * Returns the offset to the top of the chat container
-   * on the scroll event to manage the floatPills.
-   * @param e Event emitted by the scroll listener
-   */
-  getContentYPosition(e: Event): number {
-    return (e.target as Element).scrollTop;
-  }
-
-  /**
    * Reset the sessionId & retrieve again value from cookie.
    * @param forceRetry (optional) A boolean flag indicating whether to force a retry even if maximum retry attempts have been reached.
    * @returns void
    */
   retryConnection(): void {
-    this.logger.info("Retry connection to cheshire cat");
+    this.logger.info("retryConnection() -> retry connection to cheshire cat");
     this.pageStatus = PageStatus.RETRYING;
     // Retry connection to a new cat istance
     this.newCat();
   }
+
+  /**
+   * Return true if the input for writing message is enabled
+   */
+  get isEditable(): boolean {
+    return this.canIWrite && this.received.length > 0;
+  }
+
+  get inputText(): string {
+    return this._inputText;
+  }
+
+  set inputText(t: string) {
+    this._inputText = t;
+  }
+
+  inputKeyUp(e: KeyboardEvent) {
+    this.inputText = (e.target as HTMLElement)?.innerText || "";
+    this.startTypingIndicator(e);
+  }
+
+  /**
+   * Return if the user can send message, check if bot
+   * is not writing at the moment and the user has written something
+   */
+  get canSendMessage(): boolean {
+    if (!this.inputMsgEl) return false;
+    return !(
+      this.received.length == 0 ||
+      this.inputMsgEl?.nativeElement.innerText === "")
+  }
+
+   /**
+   * Function called on fake textarea keypress and check if
+   * the user press enter for send the message
+   * @param e
+   */
+    submitOnEnterNotShifted(e: any) {
+      if (e.which === 13 && !e.shiftKey) {
+        e.preventDefault();
+        if (this.canSendMessage) this.sendMessage();
+      }
+    }
 
   /**
   * Open/Close chatbot window
@@ -500,19 +543,26 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
     // Only first opening
     if (this.firstOpen && this.pageStatus != PageStatus.ERROR) {
       this.pageStatus = PageStatus.LOADING;
-      this.firstMessage(); /* "Ciao, chi sei?" solo alla prima apertura*/
       this.firstOpen = false;
+      if (this.disconnected == false) this.sendFirstMessage();
+      else this.retryConnection(); //if disconnected before, establish connection on click on icon collapsed
+      this.logger.debug("openCloseChatbot() - first open");
       return this.collapsed = false;
     }
     else if (this.collapsed){
       this.badgeContent = 0;
       this.badgeHidden = true;
+      //if disconnected before, establish connection on click on icon collapsed
+      if (this.disconnected == true) this.retryConnection();
+      this.logger.debug("openCloseChatbot() - open chatbot");
       return this.collapsed = false;
     }
     else if (!this.collapsed) {
       this.badgeContent = 0;
       this.badgeHidden = true;
+      this.scrollBehaviour = "instant";
+      this.logger.debug("openCloseChatbot() - collapse chatbot");
       return this.collapsed = true;
     }
-  }
+  }  
 }

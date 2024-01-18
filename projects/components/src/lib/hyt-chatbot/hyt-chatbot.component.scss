@@ -22,7 +22,7 @@ $chatBotAliceIconBGImage: #{var(--chatBotAliceIconBGImage)};
   }
 
   ::-webkit-scrollbar-thumb {
-    background-color: darkcyan;
+    background-color: #5F87EF;
   }
 
   ::-webkit-scrollbar-track {
@@ -48,7 +48,7 @@ $chatBotAliceIconBGImage: #{var(--chatBotAliceIconBGImage)};
       justify-content: space-between;
       min-height: 80px;
       flex-wrap: wrap;
-      padding: 0px 25px;
+      padding: 0px 10px;
       max-width: 1280px;
       margin: 0 auto;
 
@@ -93,43 +93,21 @@ $chatBotAliceIconBGImage: #{var(--chatBotAliceIconBGImage)};
 
       .header-end {
         display: flex;
-        height: 35px;
         align-items: center;
         justify-content: center;
-        /*width: 35px;*/
         cursor: pointer;
         border-radius: 50%;
+        border: 1px solid white;
+        padding: 4px 10px;
+        font-size: 0.9em;
 
         &:hover {
           background-color: #2d82cb;
           cursor: pointer;
         }
 
-        .dots {
-          position: relative;
-          width: 4px;
-          height: 4px;
-          background-color: white;
-          border-radius: 50%;
-
-          &:before,
-          &:after {
-            content: "";
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            left: 0px;
-            background-color: inherit;
-            border-radius: inherit;
-          }
-
-          &:before {
-            top: -10px;
-          }
-
-          &:after {
-            top: 10px;
-          }
+        .exit{
+          color: white
         }
       }
 
@@ -167,7 +145,7 @@ $chatBotAliceIconBGImage: #{var(--chatBotAliceIconBGImage)};
       list-style: none;
       display: flex;
       flex-direction: column;
-      margin: 15px 25px;
+      margin: 15px 15px;
 
       span {
         &.day-date {
@@ -177,7 +155,7 @@ $chatBotAliceIconBGImage: #{var(--chatBotAliceIconBGImage)};
           font-size: 0.8em;
           border-radius: 8px;
           color: white;
-          margin: 0 auto 10px;
+          margin: 10px 85px;
           transition: .2s ease-out;
 
           &.disappear {
@@ -209,14 +187,14 @@ $chatBotAliceIconBGImage: #{var(--chatBotAliceIconBGImage)};
           }
 
           &.is-bot {
-            background-color: #eaeaea;
+            background-color: lightsteelblue;
 
             &:before {
               left: -5px;
               bottom: -1px;
               border-width: 10px 10px 0px 0px;
               border-color: transparent;
-              border-right-color: #eaeaea;
+              border-right-color: lightsteelblue;
             }
 
             &:after {
@@ -240,6 +218,7 @@ $chatBotAliceIconBGImage: #{var(--chatBotAliceIconBGImage)};
           }
 
           &.is-user {
+            color: white;
             background-color: #81a0fc;
             align-self: flex-end;
 
@@ -250,20 +229,6 @@ $chatBotAliceIconBGImage: #{var(--chatBotAliceIconBGImage)};
               border-color: transparent;
               border-left-color: #81a0fc;
             }
-
-            &.read {
-              &:after {
-                content: "Consegnato";
-                position: absolute;
-                right: -4px;
-                bottom: -16px;
-                font-size: .7em;
-                color: #112a73;
-                font-style: italic;
-                font-weight: bold;
-              }
-            }
-
           }
 
           &.bot-typing {
@@ -307,6 +272,10 @@ $chatBotAliceIconBGImage: #{var(--chatBotAliceIconBGImage)};
               font-size: .8em;
               font-style: italic;
               color: #434343;
+            }
+
+            .white {
+              color: white !important;
             }
 
             .message-row {
@@ -476,6 +445,8 @@ $chatBotAliceIconBGImage: #{var(--chatBotAliceIconBGImage)};
 
         span {
           text-align: center;
+          margin: 15px 25px;
+          font-size: 0.9em;
         }
 
         button {
@@ -486,6 +457,7 @@ $chatBotAliceIconBGImage: #{var(--chatBotAliceIconBGImage)};
             padding: 8px 10px;
             border-radius: 5px;
             font-size: .9em;
+            border: transparent;
           }
 
           &:hover {
@@ -505,14 +477,15 @@ $chatBotAliceIconBGImage: #{var(--chatBotAliceIconBGImage)};
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        font-size: 0.9em;
 
         strong {
           background: linear-gradient(to bottom right, darkcyan, darkblue);
           color: #fff;
           margin-left: 3px;
-          padding: 2px 15px;
+          padding: 10px 15px;
           border-radius: 50%;
-          font-size: 22px;
+          font-size: 1em;
         }
       }
 
@@ -571,94 +544,110 @@ $chatBotAliceIconBGImage: #{var(--chatBotAliceIconBGImage)};
       display: flex;
       align-items: center;
       justify-content: flex-start;
-      height: 60px;
       flex-wrap: wrap;
-      padding: 0px 25px;
+      padding: 8px 25px 15px;
       max-width: 1280px;
       margin: 0 auto;
 
       form {
+        margin-top: 8px;
         display: flex;
+        align-items: center;
         flex: 1;
 
         .container-input-message {
           display: flex;
-          width: 90%;
-          height: 35px;
-
-          input {
-            width: 99%;
-            border: none;
-            font-size: 1.1em;
-            color: #505050;
-            background-color: #ebebeb;
-            border-radius: 5px;
-            padding: 10px;
-
-            &:disabled {
-              cursor: not-allowed;
-            }
-
-            &:focus-visible {
-              outline: #bebebe;
-            }
-
-            &::-webkit-input-placeholder {
-              /* Edge */
-              color: #bebebe;
-            }
-
-            &:-ms-input-placeholder {
-              /* Internet Explorer 10-11 */
-              color: #bebebe;
-            }
-
-            &::placeholder {
-              color: #bebebe;
-            }
-          }
-        }
-
-        .container-send-btn {
-          padding-left: 20px;
-          display: flex;
-          width: 10%;
-          height: 35px;
           align-items: center;
-          justify-content: center;
+          width: 100%;
+          background: #eaeaea;
+          border-radius: 4px;
+          box-shadow: 0 2px 2px 0 rgb(0 0 0 / 25%);
+          padding: 8px 5px 8px 15px;
+          position: relative;
 
-          button {
-            background-color: #ffffff;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            text-align: center;
-            border: 3px solid #1e58a5;
-            box-shadow: 0px 0px 3px 0px darkblue;
-            opacity: 1;
+          .content-editable {
+            max-height: 2.4em;
+            min-height: 1.3em;
+            padding: 0 5px 0 0;
+            user-select: text;
+            white-space: pre-wrap;
+            word-break: break-word;
+            overflow-y: auto;
+            caret-color: #000;
+            display: flex;
+            align-items: center;
+            outline: none !important;
+            width: 100%;
+            z-index: 2;
+            line-height: 1.15em;
 
-            &:disabled {
-              opacity: .4;
-              cursor: not-allowed;
+            &::-webkit-scrollbar {
+              width: 3px !important;
+              height: 3px !important;
+              background-color: #f5f5f5;
             }
 
-            &:hover {
-              box-shadow: 0px 0px 0px 0px darkblue;
+            &[contenteditable="false"] {
+              pointer-events: none;
+              user-select: none;
             }
+          }
 
-            img {
-              width: 17px;
-              margin: 0 auto;
+          .edit-placeholder {
+            position: absolute;
+            left: 10px;
+            z-index: 1;
+            opacity: .7;
+            color: #181818;
+          }
+          .container-send-btn {
+            padding-left: 10px;
+            display: flex;
+            width: auto;
+            height: 35px;
+            align-items: center;
+            justify-content: center;
+  
+            button {
+              background-color: #ffffff;
+              width: 35px;
+              height: 35px;
+              border-radius: 50%;
+              text-align: center;
+              border: 3px solid #1e58a5;
+              box-shadow: 0px 0px 3px 0px darkblue;
+              opacity: 1;
+  
+              &:disabled {
+                opacity: .4;
+                cursor: not-allowed;
+              }
+  
+              &:hover {
+                box-shadow: 0px 0px 0px 0px darkblue;
+              }
+  
+              img {
+                width: 17px;
+                margin: 0 auto;
+              }
+            }
+          }
+
+          &.container-input-messsage-disabled {
+            background: #e3e3e3;
+            color: #6b6b6b;
+            opacity: .7;
+            cursor: not-allowed;
+
+            .edit-placeholder {
+              opacity: 1;
             }
           }
         }
-
       }
-
     }
-
   }
-
 }
 
 /* Chatbot icon collapsed */
@@ -667,8 +656,8 @@ $chatBotAliceIconBGImage: #{var(--chatBotAliceIconBGImage)};
   bottom: 15px;
   right: 15px;
   z-index: 9999;
-  width: 64px;
-  height: 64px;
+  width: 44px;
+  height: 44px;
 
   .hyt-chatbot-collapsed {
     height: 100%;
@@ -681,15 +670,24 @@ $chatBotAliceIconBGImage: #{var(--chatBotAliceIconBGImage)};
     cursor: pointer;
 
     .hyt-chatbot-collapsed-icon {
-      width: 40px;
+      width: 33px;
       height: auto
     }
   }
 
-  .mat-badge-medium.mat-badge-overlap.mat-badge-before .mat-badge-content {
+  .hyt-chatbot-collapsed-disconnected { 
+    position: absolute;
+    top: -5px;
+    width: 20px;
+    color: white;
+    border-radius: 50%;
+    left: 30px;
+  }
+
+  .mat-badge-small.mat-badge-overlap.mat-badge-before .mat-badge-content {
     left: -5px;
   }
-  .mat-badge-medium.mat-badge-above .mat-badge-content {
+  .mat-badge-small.mat-badge-above .mat-badge-content {
     top: 0px;
   }
 
