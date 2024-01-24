@@ -9,7 +9,7 @@
 
     </div>
 
-    <div class="toolbar">
+    <div class="toolbar" *ngIf="pageStatus === PageStatus.Ready">
 
         <div class="row no-gutters">
 
@@ -24,7 +24,6 @@
             <div class="col-4 center-tools">
 
                 <hyt-select
-                    *ngIf="pageStatus === PageStatus.Ready"
                     label="Select a project"
                     name="project"
                     [options]="userProjectsOptions"
@@ -51,6 +50,13 @@
         </div>
 
     </div>
+
+    <!-- New -->
+    <hyt-empty-project-list-view
+        *ngIf="pageStatus === PageStatus.New"
+        title="There are no projects!"
+        message="To add a project click the button below."
+    ></hyt-empty-project-list-view>
 
     <div id="area-body" class="content">
         <hyt-areas-list
