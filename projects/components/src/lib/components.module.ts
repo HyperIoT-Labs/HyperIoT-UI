@@ -52,6 +52,7 @@ import { HytBadgeComponent } from './hyt-badge/hyt-badge.component';
 import { HytDetailedCardComponent } from './hyt-detailed-card/hyt-detailed-card.component';
 import { HytBimComponent } from './hyt-bim/bim.component';
 import { HytChatbotComponent } from './hyt-chatbot/hyt-chatbot.component';
+import { HytEmptyProjectListViewComponent } from './hyt-empty-project-list-view/hyt-empty-project-list-view.component';
 
 export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
 
@@ -106,7 +107,8 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     HytDetailedCardComponent,
     HytBadgeComponent,
     HytBimComponent,
-    HytChatbotComponent
+    HytChatbotComponent,
+    HytEmptyProjectListViewComponent,
   ],
   imports: [
     CommonModule,
@@ -160,7 +162,8 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     HytDetailedCardComponent,
     HytBadgeComponent,
     HytBimComponent,
-    HytChatbotComponent
+    HytChatbotComponent,
+    HytEmptyProjectListViewComponent,
   ],
   providers: [
     NotificationService,

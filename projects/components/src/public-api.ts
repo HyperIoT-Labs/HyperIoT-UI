@@ -72,6 +72,7 @@ export { HytNotificationBoxComponent } from './lib/hyt-notification-box/notifica
 export { NotificationService } from './lib/hyt-notification-box/services/notification.service';
 export { HytLoginComponent } from './lib/hyt-login/login.component';
 export { HytAccordionGroupComponent } from './lib/hyt-accordion/hyt-accordion-group.component';
+export { HytEmptyProjectListViewComponent } from './lib/hyt-empty-project-list-view/hyt-empty-project-list-view.component';
 export { HytAccordionItem } from './lib/hyt-accordion/hyt-directives/hyt-accordion-item.directive';
 export { HytAccordionContent } from './lib/hyt-accordion/hyt-directives/hyt-accordion-content.directive';
 export { HytAccordionHeader } from './lib/hyt-accordion/hyt-directives/hyt-accordion-header.directive';

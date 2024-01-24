@@ -266,50 +266,6 @@
         #newStatus {
             text-align: center;
 
-            #content-no-dashboards {
-
-                color: #bbbbbb;
-
-                i {
-                    color:#0956b636;
-
-                    &.fa {
-                        font-size: 15em;
-                    }
-
-                }
-
-                #title-no-dashboards {
-
-                    margin-top: 20px;
-                }
-
-            }
-
-            #btn-no-dashboards{
-                margin-top: 20px;
-
-                hyt-button {
-
-                    &#add-dashboard-btn {
-
-                        button {
-                            border-radius: 10px;
-                            color: white;
-                            background-color: #008aff;
-
-                            &:focus {
-                                outline: none;
-                            }
-
-                        }
-
-                    }
-
-                }
-
-            }
-
         }
 
         #loadingStatus {

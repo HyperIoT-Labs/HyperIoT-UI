@@ -8,6 +8,7 @@ import {takeUntil} from 'rxjs/operators';
 enum PageStatus {
   Loading = 0,
   Ready = 1,
+  New = 2,
   Error = -1
 }
 
@@ -115,6 +116,9 @@ export class AreasViewComponent implements OnDestroy {
           })
         });
         this.apiSuccess(projectList);
+        if (this.userProjectsOptions.length === 0) {
+          this.pageStatus = PageStatus.New;
+        }
     }, this.apiError);
   }
 

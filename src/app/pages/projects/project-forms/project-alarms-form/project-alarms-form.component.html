@@ -27,6 +27,8 @@
 
       <!-- Summary table of EVENTS -->
       <div class="col-12">
+        <hyt-input-text hidden type="text" [form]="form" id="alarm-counter" name="alarm-counter" [isRequired]="true">
+        </hyt-input-text>
         <table style="border:1px solid #1e58a5; width: 100%">
           <th colspan="2" style="background-color: #1e58a5;
                                  color:white; text-transform: uppercase;
@@ -111,7 +113,7 @@
 
       <div id="falarm-col-name" class="col-6">
 
-        <hyt-input-text [form]="formEvent" name="event-name" [isRequired]="true" i18n-placeholder="@@HYT_name"
+        <hyt-input-text [form]="formEvent" name="event-name" [isRequired]="true" [injectedErrorMsg]="getError('event-name')" i18n-placeholder="@@HYT_name"
           placeholder="Name" i18n-hintMessage="@@HYT_hint_event_name" hintMessage="Enter the event name">
         </hyt-input-text>
 
@@ -158,6 +160,7 @@
             </mat-option>
           </mat-autocomplete>
         </mat-form-field>
+        <label *ngIf="tagRetrievalError !== ''" i18n="@@HYT_error_tag_retrieval" class="tagError">{{ tagRetrievalError }}</label>
       </div> <!-- Tag selection -->
       <div id="falarm-col-container-rules" class="col-6">
         <hyt-select [form]="formEvent" i18n-label="@@HYT_alarm_event_severity" label="Severity" name="event-severity"

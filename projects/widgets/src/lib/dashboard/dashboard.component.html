@@ -196,17 +196,10 @@
 
         <div id="newStatus" *ngSwitchCase="PageStatus.New" class="row align-items-center justify-content-center">
             <!-- New -->
-            <div class="mt-5 no-dashboards">
-
-                <div id="content-no-dashboards" class="col-md-12">
-                    <i class="fa fa-bar-chart-o"></i>
-                    <h3 id="title-no-dashboards" i18n="@@HYT_no_dashboard_yet">You have not configured any dashboard yet.</h3>
-                    <!-- <h4 id="subtitle-no-dashboards">Start adding widgets.</h4> -->
-                </div>
-
-                <!-- <hyt-dashboard-view [dashboard]="currentDashboard"></hyt-dashboard-view> -->
-
-            </div> <!-- End No Projects Row -->
+            <hyt-empty-project-list-view
+                title="There are no projects!"
+                message="To add a project click the button below."
+            ></hyt-empty-project-list-view>
 
         </div>
 
