@@ -67,7 +67,7 @@ export class AuthenticationHttpErrorHandlerService extends HttpErrorHandlerServi
       case 403: {
         return [
           {
-            message: $localize`:@@HYT_error_403:Your account is not activated. Please activate your account with the activation link we send you by email`,
+            message: $localize`:@@HYT_error_403:Your account is not activated. Please activate it using the activation link we sent you via email.`,
             container: 'general'
           }
         ];

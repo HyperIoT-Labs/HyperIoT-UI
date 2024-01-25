@@ -42,11 +42,11 @@
               <span class="hyt-icon" [ngClass]="isActive ? 'icon-hyt_pause' : 'icon-hyt_play'"></span>
             </button>
             <div *ngIf="status === -2" class="data-simulator-error">
-              <span i18n="@@HYT_connection_failed">Conection to Hyperiot services failed.</span>
+              <span i18n="@@HYT_connection_failed">Connection to Hyperiot services failed.</span>
               <button mat-stroked-button (click)="connect()" i18n="@@HYT_reconnect">Reconnect</button>
             </div>
             <div *ngIf="status === -1" class="data-simulator-error">
-              <span i18n="@@HYT_not_authorized_password">Not authorized to connect. Please, check the device password in the widget configuration.</span>
+              <span i18n="@@HYT_not_authorized_password">Unauthorized to connect. Please check the device password in the widget configuration.</span>
             </div>
             <div *ngIf="status === 2" class="data-simulator-warn">
               <span i18n="@@HYT_connection_closed_host">Connection closed by host.</span>

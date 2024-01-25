@@ -23,7 +23,7 @@
         <target>Username o password errati</target>
       </trans-unit>
       <trans-unit id="HYT_error_403" datatype="html">
-        <source>Your account is not activated. Please activate your account with the activation link we send you by email</source>
+        <source>Your account is not activated. Please activate it using the activation link we sent you via email.</source>
         <target>Il tuo account non è attivo. Per favore, attiva il tuo account con la mail che ti abbiamo inviato.</target>
       </trans-unit>
       <trans-unit id="HYT_field_required" datatype="html">
@@ -432,8 +432,8 @@
         <source>Do you really want to delete this packet?</source>
         <target>Sei sicuro di voler eliminare il pacchetto?</target>
       </trans-unit>
-      <trans-unit id="HYT_operation_can_not_be_undone" datatype="html">
-        <source>This operation can not be undone</source>
+      <trans-unit id="HYT_operation_cannot_be_undone" datatype="html">
+        <source>This operation cannot be undone</source>
         <target>Questa operazione è definitiva</target>
       </trans-unit>
       <trans-unit id="HYT_hint_device_name" datatype="html">
@@ -463,6 +463,22 @@
       <trans-unit id="HYT_error_occurred" datatype="html">
         <source>An unexpected error has occurred</source>
         <target>Si è verificato un errore inaspettato</target>
+      </trans-unit>
+      <trans-unit id="HYT_error_loading_alarms" datatype="html">
+        <source>An unexpected error has occurred while loading the alarms</source>
+        <target>Si è verificato un errore inaspettato nel caricamento degli allarmi</target>
+      </trans-unit>
+      <trans-unit id="HYT_error_occurred_while_saving_the_event" datatype="html">
+        <source>There was an error saving the event, please try again and avoid closing this page since the data inserted has not been saved</source>
+        <target>Si è verificato un errore inaspettato durante il salvataggio, si prega di cliccare nuovamente il tasto salva senza chiudere la pagina in quanto i dati non sono ancora stati salvati</target>
+      </trans-unit>
+      <trans-unit id="HYT_error_occurred_while_saving_the_alarm" datatype="html">
+        <source>There was an error saving the alarm, please try again and avoid closing this page since the data inserted has not been saved</source>
+        <target>Si è verificato un errore inaspettato durante il salvataggio, si prega di cliccare nuovamente il tasto salva senza chiudere la pagina in quanto i dati non sono ancora stati salvati</target>
+      </trans-unit>
+      <trans-unit id="HYT_error_tag_retrieval" datatype="html">
+        <source>The event may already be associated with a tag, but due to an error, it is not being displayed</source>
+        <target>L'evento potrebbe già avere un tag ad esso associato ma a causa di un errore nel caricamento non viene mostrato</target>
       </trans-unit>
       <trans-unit id="HYT_close" datatype="html">
         <source>Close</source>
@@ -1176,6 +1192,14 @@
         <source>An error occurred while deleting the project.</source>
         <target>Errore nell'eliminazione del progetto</target>
       </trans-unit>
+      <trans-unit id="HYT_error_deleting_event" datatype="html">
+        <source>An error occurred while deleting the event.</source>
+        <target>Errore nell'eliminazione dell'evento.</target>
+      </trans-unit>
+      <trans-unit id="HYT_error_deleting_alarm" datatype="html">
+        <source>An error occurred while deleting the alarm.</source>
+        <target>Errore nell'eliminazione dell'allarme.</target>
+      </trans-unit>
       <trans-unit id="HYT_loading" datatype="html">
         <source>Loading</source>
         <target>Caricamento</target>
@@ -1409,7 +1433,7 @@
         <target>Attenzione!</target>
       </trans-unit>
       <trans-unit id="HYT_dashboard_end_registration" datatype="html">
-        <source>Proceeding with this action you will disable the registration of the data and they will not be stored until the rehabilitation of this property</source>
+        <source>Proceeding with this action will disable data registration, and the data will not be stored until this property is reactivated.</source>
         <target>Procedendo con questa azione disabiliterai la registrazione dei dati che non saranno salvati fino alla riabilitazione di questa proprietà</target>
       </trans-unit>
       <trans-unit id="HYT_dashboard_event_fired" datatype="html">
@@ -1673,9 +1697,7 @@
         <target>La registrazione dei dati è disabilitata</target>
       </trans-unit>
       <trans-unit id="HYT_data_recording_is_disabled_text" datatype="html">
-        <source>The online dashboard cannot be used in this state.
-        You can activate data recording by pressing the "RUN" button
-        or you can use the dasboard offline taking the "OFFLINE" button.</source>
+        <source>The online dashboard cannot be used in this state. You can activate data recording by pressing the "RUN" button or use the dashboard offline by selecting the "OFFLINE" button.</source>
         <target>La dashboard online non può essere utilizzata in questo stato.
         È possibile attivare la registrazione dei dati premendo il pulsante "RUN"
         oppure è possibile utilizzare la dasboard offline utilizzando il pulsante "OFFLINE".</target>
@@ -1685,9 +1707,7 @@
         <target>In attesa dei dati</target>
       </trans-unit>
       <trans-unit id="HYT_waiting_for_data_text" datatype="html">
-        <source>The data recording is activated but we waiting for the data.
-        This operation might take a while (from 20 seconds, up to 1 minute),
-        if the loading state persist click "Reload" or contact the administrator.</source>
+        <source>Data recording is activated, but we are awaiting data. This operation might take a while (from 20 seconds up to 1 minute). If the loading state persists, click "Reload" or contact the administrator.</source>
         <target>La registrazione dei dati è attiva ma siamo in attesa dei dati.
         Questa operazione potrebbe richiedere del tempo (da 20 secondi fino a 1 minuto),
         se lo stato di caricamento persiste, fare clic su "RELOAD" o contattare l'amministratore.</target>
@@ -1717,7 +1737,7 @@
         <target>Lista algoritmi</target>
       </trans-unit>
       <trans-unit id="HYT_no_algorithm_found" datatype="html">
-        <source>No algorithm that matches the search found...</source>
+        <source>No algorithm matching the search was found...</source>
         <target>Nessun algoritmo trovato che soddisfi la ricerca</target>
       </trans-unit>
       <trans-unit id="HYT_no_algorithm" datatype="html">
@@ -1833,7 +1853,7 @@
         <target>Per favore, definisci una nuova statistica ed elimina la precedente</target>
       </trans-unit>
       <trans-unit id="HYT_no_available_fields" datatype="html">
-        <source>There are not available fields anymore</source>
+        <source>There are no available fields anymore</source>
         <target>Non ci sono ulteriori campi disponibili</target>
       </trans-unit>
       <trans-unit id="HYT_no_field_found" datatype="html">
@@ -1921,7 +1941,7 @@
         <target>Almeno un nuovo evento deve essere aggiunto per salvare un nuovo allarme!</target>
       </trans-unit>
       <trans-unit id="HYT_aliases_description" datatype="html">
-        <source>Enter an alternate name to be displayed in the widget. In case the alias is empty the field name will be displayed</source>
+        <source>Enter an alternative name to be displayed in the widget. If the alias is empty, the field name will be displayed.</source>
         <target>Inserisci un nome alternativo da visualizzare come intestazione delle colonne, in caso l'alias sia vuoto verrà visualizzato il nome del field</target>
       </trans-unit>
       <trans-unit id="HYT_toolbar_full_screen" datatype="html">
@@ -1977,11 +1997,11 @@
         <target>I campi di tipo Object non possono avere molteplicità array o matrice</target>
       </trans-unit>
       <trans-unit id="HYT_auto_update_config_warn" datatype="html">
-        <source>Attention! An automatic update has been applied to the widget configuration to make it compatible with the latest updates. It is necessary to save the configuration to make the change effective.</source>
+        <source>Attention! An automatic update has been applied to the widget configuration to make it compatible with the latest updates. Save the configuration to make the change effective.</source>
         <target>Attenzione! È stato applicato un aggiornamento automatico alla configurazione del widget per renderla compatibile con gli ultimi aggiornamenti. È necessario salvare la configurazione per rendere effettiva la modifica.</target>
       </trans-unit>
       <trans-unit id="HYT_auto_update_config_error" datatype="html">
-        <source>Error! Unable to update the widget configuration automatically. The widget may not work correctly after the latest updates. It is recommended to delete the widget and set up a new one.</source>
+        <source>Error! Unable to update the widget configuration automatically. The widget may not function correctly after the latest updates. It is recommended to delete the widget and set up a new one.</source>
         <target>Errore! Impossibile aggiornare automaticamente la configurazione del widget. Il widget potrebbe non funzionare correttamente dopo gli ultimi aggiornamenti. È raccomandato eliminare il widget e riconfigurarne uno nuovo.</target>
       </trans-unit>
       <trans-unit id="HYT_fields_customization" datatype="html">
@@ -2013,7 +2033,7 @@
         <target>Attenzione, il widget e la sua configurazione saranno eliminati definitivamente. Continuare?</target>
       </trans-unit>
       <trans-unit id="HYT_widget_delete_confirm_dismiss" datatype="html">
-        <source>Do not ask for confirmation for this dashboard anymore</source>
+        <source>Don't request confirmation for this dashboard anymore</source>
         <target>Non richiedere più conferma per questa dashboard</target>
       </trans-unit>
       <trans-unit id="HYT_ok" datatype="html">
@@ -2021,7 +2041,7 @@
         <target>OK</target>
       </trans-unit>
       <trans-unit id="HYT_connection_failed" datatype="html">
-        <source>Conection to Hyperiot services failed.</source>
+        <source>Connection to Hyperiot services failed.</source>
         <target>Connessione ai servizi Hyperiot fallita.</target>
       </trans-unit>
       <trans-unit id="HYT_reconnect" datatype="html">
@@ -2029,7 +2049,7 @@
         <target>Riconnetti</target>
       </trans-unit>
       <trans-unit id="HYT_not_authorized_password" datatype="html">
-        <source>Not authorized to connect. Please, check the device password in the widget configuration.</source>
+        <source>Unauthorized to connect. Please check the device password in the widget configuration.</source>
         <target>Non autorizzato. Controlla che la password inserita nella configurazione del widget sia corretta.</target>
       </trans-unit>
       <trans-unit id="HYT_connection_closed_host" datatype="html">
@@ -2153,7 +2173,7 @@
         &lt;ma"/> attualmente non supportato </target>
       </trans-unit>
       <trans-unit id="HYT_outliers_description" datatype="html">
-        <source>Outlier value is a specific value emitted when the user press the 'oultier' button</source>
+        <source>The outlier value is a specific value emitted when the user presses the 'outlier' button.</source>
         <target>Il valore di outlier è un valore specifico che viene emesso quando l'utente preme il bottone 'outlier'</target>
       </trans-unit>
       <trans-unit id="HYT_packet_sent" datatype="html">
