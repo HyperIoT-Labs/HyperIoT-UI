@@ -44,7 +44,7 @@ export class PacketSelectComponent implements OnInit {
     {label: '5', value: 5},
   ];
 
-  aliasesDescription = $localize`:@@HYT_aliases_description:Enter an alternate name to be displayed in the widget. In case the alias is empty the field name will be displayed`;
+  aliasesDescription = $localize`:@@HYT_aliases_description:Enter an alternative name to be displayed in the widget. If the alias is empty, the field name will be displayed.`;
 
   allMIMETypesOptions: string[] = mimeTypeList;
   filteredMIMETypesOptions: string[];

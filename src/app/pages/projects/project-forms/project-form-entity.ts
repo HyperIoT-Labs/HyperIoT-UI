@@ -254,7 +254,7 @@ export abstract class ProjectFormEntity implements OnInit, AfterViewInit {
         // Packet case
         if (this.entity.trafficPlan && this.entity.type) textDialog = { title: $localize`:@@HYT_packet_delete_packet_question:Do you really want to delete this packet?`, message: $localize`:@@HYT_packet_operation_cannot_be_undone:If you delete the packet, any configurations inside the widgets will be reset and will have to be set again.`}
         // All other cases
-        else textDialog = { title: $localize`:@@HYT_delete_item_question:Do you really want to delete this item?`, message: $localize`:@@HYT_operation_can_not_be_undone:This operation can not be undone`}
+        else textDialog = { title: $localize`:@@HYT_delete_item_question:Do you really want to delete this item?`, message: $localize`:@@HYT_operation_cannot_be_undone:This operation cannot be undone`}
 
         const dialogRef = this.dialog.open(DeleteConfirmDialogComponent, {
             data: textDialog

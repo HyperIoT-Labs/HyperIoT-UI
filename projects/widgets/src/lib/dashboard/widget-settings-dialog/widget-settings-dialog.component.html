@@ -14,10 +14,10 @@
         <div class="dialog-form-content" hyt-dialog-content>
 
             <div *ngIf="autoUpdateConfigStatus === 'SUCCESS'" class="auto-update-config-warn" i18n="@@HYT_auto_update_config_warn">
-                Attention! An automatic update has been applied to the widget configuration to make it compatible with the latest updates. It is necessary to save the configuration to make the change effective.
+                Attention! An automatic update has been applied to the widget configuration to make it compatible with the latest updates. Save the configuration to make the change effective.
             </div>
             <div *ngIf="autoUpdateConfigStatus === 'ERROR'" class="auto-update-config-error" i18n="@@HYT_auto_update_config_error">
-                Error! Unable to update the widget configuration automatically. The widget may not work correctly after the latest updates. It is recommended to delete the widget and set up a new one.
+                Error! Unable to update the widget configuration automatically. The widget may not function correctly after the latest updates. It is recommended to delete the widget and set up a new one.
             </div>
     
             <form class="content flex-grow-1" #settingsForm="ngForm">

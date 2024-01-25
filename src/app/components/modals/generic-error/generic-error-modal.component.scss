@@ -1,0 +1,41 @@
+#container-option-modal {
+  .dialog-header {
+    background-color: #e60000;
+    position: relative;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border-bottom: 1px solid #e9ecef;
+    color: white;
+    padding: 0.5rem 1rem;
+    font-weight: 600;
+    font-size: 1.4rem;
+
+    span {
+
+      &.icon-hyt_cancelC {
+
+        position: absolute;
+        right: 10px;
+        font-size: 1.3em;
+        cursor: pointer;
+
+        &:hover {
+
+          color: #500000;
+
+        }
+
+      }
+
+    }
+
+  }
+
+  .dialog-body {
+    padding: 30px;
+  }
+
+}

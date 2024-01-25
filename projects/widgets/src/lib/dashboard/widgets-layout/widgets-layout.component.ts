@@ -399,7 +399,7 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
           } else {
             const confirmDialog = this.confirmDialogService.open({
               text: $localize`:@@HYT_widget_delete_confirm:Attention, the widget and its configuration will be permanently deleted. Proceed?`,
-              dismissable: $localize`:@@HYT_widget_delete_confirm_dismiss:Do not ask for confirmation for this dashboard anymore`,
+              dismissable: $localize`:@@HYT_widget_delete_confirm_dismiss:Don't request confirmation for this dashboard anymore`,
             });
             confirmDialog.afterClosed().subscribe(res => {
               if (res) {
