@@ -7,5 +7,6 @@ export const environment = {
   cookieSecure: false,
   mqttUrl: "tcp://broker.hyperiot.cloud",
   ccatUrl: "localhost",
+  ccatPort: 1865,
   version: packageInfo.version,
 };

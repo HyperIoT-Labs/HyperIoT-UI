@@ -38,6 +38,9 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
   /** Url for ccat defined inside src/environments/ */
   @Input() public ccatUrl: string;
 
+  /** Port for ccat defined inside src/environments/ */
+  @Input() public ccatPort: number;
+
   /** An array to store received WebSocket messages. */
   received: WebsocketChat[] = [];
 
@@ -115,8 +118,10 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
     this.cat = new CatClient({
       baseUrl: this.ccatUrl,
       user: this.cookieService.get('HIT-AUTH'),
+      port: this.ccatPort,
+      secure: true,
       ws : { 
-        retries: 1,
+        retries: 1
       }
     });
     this.initCat();
@@ -172,6 +177,8 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
     this.cat = new CatClient({
       baseUrl: this.ccatUrl,
       user: this.cookieService.get('HIT-AUTH'),
+      port: this.ccatPort,
+      secure: true,
       ws : { 
         retries: 1,
         delay: 2000,
