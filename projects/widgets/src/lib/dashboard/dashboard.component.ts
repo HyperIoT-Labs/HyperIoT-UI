@@ -348,7 +348,6 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
   timeLineSelection(event: Date[]) {
     if (event[0] && event[1]) {
-      this.offlineWidgetStatus = PageStatus.Loading;
       this.offlineDataService.getEventCount(event[0].getTime(), event[1].getTime());
     } else {
       this.offlineDataService.getEventCountEmpty();
@@ -425,7 +424,10 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
       this.widgetLayoutReady = false;
       // debounce 500ms to handle multiple packetsInDashboard update
       this.offlineDataService.resetService(this.idProjectSelected).pipe(debounceTime(500)).subscribe(response => {
-        this.packetsInDashboard = [...response];
+        // reset packetsInDashboard only if the current packets are different from the old ones
+        if (this.packetsInDashboard.sort().join(',') !== [...response].sort().join(',')) {
+          this.packetsInDashboard = [...response];
+        }
       });
       this.algorithmOfflineDataService.resetService(this.idProjectSelected);
       this.pageStatus = PageStatus.Standard;
