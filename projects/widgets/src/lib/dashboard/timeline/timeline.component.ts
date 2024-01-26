@@ -205,8 +205,6 @@ export class TimelineComponent implements OnChanges {
           }
         });
         this.timeAxis.updateData(this.timeLineData);
-        // emit time selection (to reload data when packetList changes)
-        this.dateOutput.emit(this.timeSelection);
       },
       // TODO handle error
       err => console.log(err)
