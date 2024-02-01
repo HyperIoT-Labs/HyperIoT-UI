@@ -1,22 +1,23 @@
 import {
+  AfterViewChecked,
+  AfterViewInit,
+  ChangeDetectorRef,
   Component,
-  ViewChild,
   ElementRef,
   Injector,
-  ChangeDetectorRef,
   Input,
-  AfterViewInit,
   OnInit,
-  AfterContentInit, AfterViewChecked
+  ViewChild,
+  ViewEncapsulation
 } from '@angular/core';
 
-import { Subject, PartialObserver } from 'rxjs';
+import {PartialObserver, Subject} from 'rxjs';
 
-import { AlgorithmsService, Algorithm } from 'core';
+import {Algorithm, AlgorithmsService} from 'core';
 
-import { LoadingStatusEnum } from 'src/app/pages/algorithms/algorithm-forms/algorithm-form-entity';
+import {LoadingStatusEnum} from 'src/app/pages/algorithms/algorithm-forms/algorithm-form-entity';
 
-import { Option, SelectOption } from 'components';
+import {Option, SelectOption} from 'components';
 import {MachineLearningFormEntity} from "../machinelearning-form-entity";
 import {MLAlgorithmConfig, MlAlgorithmsModel} from "../../models/ml.model";
 
@@ -24,8 +25,10 @@ import {MLAlgorithmConfig, MlAlgorithmsModel} from "../../models/ml.model";
   selector: 'hyt-machinelearning-info-form',
   templateUrl: './machinelearning-info-form.component.html',
   styleUrls: ['./machinelearning-info-form.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class MachineLearningInfoFormComponent extends MachineLearningFormEntity implements AfterViewInit,OnInit, AfterViewChecked {
+  @Input() editMode = false;
 
   algorithm: Algorithm;
 
@@ -109,7 +112,7 @@ export class MachineLearningInfoFormComponent extends MachineLearningFormEntity 
     }
   ];
 
-  selectedScriptType = "";
+  selectedScriptType = "all";
   selectedMLSource = "";
   errMsg = "";
 
@@ -140,6 +143,7 @@ export class MachineLearningInfoFormComponent extends MachineLearningFormEntity 
   changeOldScript(script){
     //DA SISTEMARE
     this.showMLconfig = true;
+    this.populateField();
   }
 
   cancel(): void {
@@ -181,14 +185,27 @@ export class MachineLearningInfoFormComponent extends MachineLearningFormEntity 
 
   divHeight: number;
   entity = {} as Algorithm;
-  entityFormMap = {
-    'algorithm-name': {
-      field: 'name'
+  entityFormMap = {};
+/*  entityFormMap = {
+    'mlAlgorithmFileName': {
+      field: 'mlAlgorithmFileName'
     },
-    'algorithm-description': {
-      field: 'description'
+    'mlAlgorithmConfiguration': {
+      field: 'mlAlgorithmConfiguration'
+    },
+    'slider-0': {
+      field: '0'
+    },
+    'slider-1': {
+      field: '1'
+    },
+    'radio-2': {
+      field: '2'
+    },
+    'radio-3': {
+      field: '3'
     }
-  };
+  };*/
   showPreloader: boolean;
 
   @Input() currentAlgorithmSubject: Subject<Algorithm>;
@@ -204,6 +221,7 @@ export class MachineLearningInfoFormComponent extends MachineLearningFormEntity 
     }
   }
 
+  mlCustomConfig: MlAlgorithmsModel;
   constructor(
     private algorithmsService: AlgorithmsService,
     injector: Injector,
@@ -228,10 +246,31 @@ export class MachineLearningInfoFormComponent extends MachineLearningFormEntity 
   }
 
   ngAfterViewChecked(): void {
-    this.initSliderController();
+
   }
 
-  configMLChanged(value) {
+  edit(entity?: any, readyCallback?) {
+    if (entity) {
+      this.entity = { ...entity };
+    }
+    if (this.mlCustomConfig) {
+      Object.keys(this.entityFormMap).forEach((key) => {
+        if (this.form.get(key)) {
+          const val = this.entity[this.entityFormMap[key].field];
+          if (val) {
+            this.form.get(key)
+              .setValue(this.entity[this.entityFormMap[key].field]);
+          }
+        }
+      });
+    }
+    if (readyCallback) {
+      readyCallback();
+    }
+    this.resetForm();
+  }
+
+  configMLChanged(value: string) {
     switch (value) {
       case "aggressive":
         this.paramMLOptions.filter(el => el.type === 'slider')[0].default = 1.5;
@@ -277,15 +316,25 @@ export class MachineLearningInfoFormComponent extends MachineLearningFormEntity 
             return ch;
           });
         break;
-      default:
+      case "custom":
+        if (this.mlCustomConfig?.algorithmConfig) {
+          this.paramMLOptions = JSON.parse(JSON.stringify(this.mlCustomConfig.algorithmConfig));
+          this.paramMLOptions = this.paramMLOptions.map(res => res);
+        } else {
+          this.setParamMLOptionsDefault();
+        }
+        break;
+      case "default":
         this.setParamMLOptionsDefault();
+        break;
 
     }
     this.selectedConfigMLName = value;
-    this.initSliderController();
+    this.populateField();
   }
 
   setParamMLOptionsDefault(): void {
+    this.paramMLOptions = [];
     this.paramMLOptions = JSON.parse(JSON.stringify(this.paramMLOptionsDefault));
   }
 
@@ -311,15 +360,24 @@ export class MachineLearningInfoFormComponent extends MachineLearningFormEntity 
     }
   }
 
-  initSliderController() {
-    let idSlider = 0;
-    this.paramMLOptions.filter(el => {
-      if (el.type === "slider") {
-        this.setSliderTooltip(+el.default, +el.max, idSlider);
-        idSlider++;
-      }
+  populateField() {
+    this.paramMLOptions.filter(el => el.type === 'slider').map((el, key) => {
+      this.form.get('slider'+key).setValue(el.default);
     })
-    this.cdr.detectChanges();
+
+    // Ci può essere un modo più furbo di farlo
+    this.sourceMLOptions = [
+      {
+        value: "choose",
+        label: "Choose an existing script",
+      },
+      {
+        value: "upload",
+        label: "Upload a new python script",
+        checked:true
+      }
+    ];
+    this.form.get('mlAlgorithmConfiguration').setValue(this.selectedConfigMLName);
   }
 
   load() {
@@ -333,42 +391,30 @@ export class MachineLearningInfoFormComponent extends MachineLearningFormEntity 
 
     // Carico configurazione file python (caso: FILE PY caricato)
     if (this.entity.algorithmFileName && this.entity.algorithmFileName.includes(".py")){
+      this.form.get('algorithm-name').setValue(this.algorithm.name);
+      this.form.get('algorithm-description').setValue(this.algorithm.description);
       this.nameOfPyFile = this.entity.algorithmFileName;
       this.selectedMLSource = 'upload';
 
-      const mlCustomConfig: MlAlgorithmsModel = <MlAlgorithmsModel>JSON.parse(<string>JSON.parse(this.entity.baseConfig)?.customConfig);
-      this.paramMLOptions = mlCustomConfig?.algorithmConfig;
+      this.mlCustomConfig = <MlAlgorithmsModel>JSON.parse(<string>JSON.parse(this.entity.baseConfig)?.customConfig);
+      this.paramMLOptions = this.mlCustomConfig?.algorithmConfig;
 
       this.configMLOptions.map(cfg => {
-        if (cfg.value === mlCustomConfig.algorithmConfigName) {
+        if (cfg.value === this.mlCustomConfig.algorithmConfigName) {
+          this.configMLChanged(cfg.value);
           cfg.checked = true;
         } else {
           cfg.checked = false;
         }
+        return cfg;
       })
-
-      // Ci può essere un modo più furbo di farlo
-      this.sourceMLOptions = [
-        {
-          value: "choose",
-          label: "Choose an existing script",
-        },
-        {
-          value: "upload",
-          label: "Upload a new python script",
-          checked:true
-        }
-      ];
-
       this.showMLconfig = true;
-      this.initSliderController();
     }
 
     // TO DO: carico configurazione file python (caso: algoritmo scelto dalla select)
     else if (this.entity.algorithmFileName && !this.entity.algorithmFileName.includes(".py")){
       this.selectedMLSource = 'choose';
       this.showMLconfig = true;
-
       // Ci può essere un modo più furbo di farlo pt.2
         this.sourceMLOptions = [
           {
@@ -532,7 +578,8 @@ export class MachineLearningInfoFormComponent extends MachineLearningFormEntity 
       return flag_1 && flag_2 && flag_3;
     }
 
-  setSliderAlgValue(value: string, i: number) {
+  setSliderAlgValue(value: number, i: number) {
+    this.form.markAsDirty();
     this.paramMLOptions[i].default = +value;
   }
 

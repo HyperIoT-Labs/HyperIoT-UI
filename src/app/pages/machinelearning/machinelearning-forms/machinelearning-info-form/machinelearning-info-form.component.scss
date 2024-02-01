@@ -257,25 +257,38 @@ mat-option {
   display: flex;
   justify-content: space-between;
   text-align: center;
+  align-items: center;
   label {
     text-align: center;
     min-width: 20px;
   }
-  .param-default {
-    position: absolute;
-    background-image: linear-gradient(#265ab0, #5e87ed, #bff0fb);
-    color: white;
-    padding: 3px;
-    border-radius: 10% 10% 80% 80%;
-    border: 1px solid #2642b0;
-    min-width: 30px;
-    min-height: 30px;
-    font-size: 0.9em;
-    margin-bottom: 0.5em;
-    box-shadow: 1px 1px 5px #0b5594;
-    margin-top: -5px;
-  }
 }
-input.slider {
-  accent-color: #5E87ED;
+mat-slider.slider {
+  &.mat-slider-disabled {
+    .mat-slider-track-fill {
+      background-color: lightgray !important;
+    }
+
+    .mat-slider-thumb-label {
+      background-color: lightgray !important;
+
+    }
+
+    .mat-slider-thumb {
+      background-color: lightgray !important;
+    }
+  }
+
+  .mat-slider-track-fill {
+    background-color: #5E87ED !important;
+  }
+
+  .mat-slider-thumb-label {
+    background-color: #5E87ED !important;
+
+  }
+
+  .mat-slider-thumb {
+    background-color: #5E87ED !important;
+  }
 }

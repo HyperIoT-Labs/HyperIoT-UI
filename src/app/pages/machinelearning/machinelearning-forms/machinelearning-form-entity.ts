@@ -29,6 +29,8 @@ export abstract class MachineLearningFormEntity implements OnInit, AfterViewInit
     formTitle = 'Algorithm Form Entity';
     private originalValue = '{}';
     protected validationError = [];
+    pyToUpload: File = null;
+    selectedConfigMLName: string = 'default';
 
     // the following 5 fields should implemented by a specific interface
     isProjectEntity = true;
@@ -60,7 +62,9 @@ export abstract class MachineLearningFormEntity implements OnInit, AfterViewInit
         this.form = this.formBuilder.group(
           {
             mlAlgorithmFileName: new FormControl(''),
-            mlAlgorithmConfiguration: new FormControl('')
+            mlAlgorithmConfiguration: new FormControl(''),
+            slider0: new FormControl(0),
+            slider1: new FormControl(0),
           }
         );
 		    this.algorithmService = injector.get(AlgorithmService);
@@ -123,7 +127,6 @@ export abstract class MachineLearningFormEntity implements OnInit, AfterViewInit
     }
 
     clone(entity?: any): any {
-        console.log();
         const cloned = { ...entity } || this.entity;
         cloned.id = 0;
         cloned.entityVersion = 1;

@@ -1,22 +1,17 @@
-import { AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation,ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation,ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import {HytModalService, HytStepperComponent} from 'components';
+import {HytModalService} from 'components';
 import { Algorithm, AlgorithmIOField, AlgorithmsService } from 'core';
 import { Subject } from 'rxjs';
 import { EntitiesService } from 'src/app/services/entities/entities.service';
 
-//TO DO: sistemare dipendenze
-import { AlgorithmFormEntity, LoadingStatusEnum } from 'src/app/pages/algorithms/algorithm-forms/algorithm-form-entity';
-import { AlgorithmInfoFormComponent } from 'src/app/pages/algorithms/algorithm-forms/algorithm-info-form/algorithm-info-form.component';
-import { AlgorithmJarFormComponent } from 'src/app/pages/algorithms/algorithm-forms/algorithm-jar-form/algorithm-jar-form.component';
-import { InputFieldsFormComponent } from 'src/app/pages/algorithms/algorithm-forms/input-fields-form/input-fields-form.component';
-import { OutputFieldsFormComponent } from 'src/app/pages/algorithms/algorithm-forms/output-fields-form/output-fields-form.component';
+import { LoadingStatusEnum } from 'src/app/pages/algorithms/algorithm-forms/algorithm-form-entity';
 import { AlgorithmWizardReportModalComponent } from 'src/app/pages/algorithms/algorithm-wizard/algorithm-wizard-report-modal/algorithm-wizard-report-modal.component';
 import {
   MachineLearningInfoFormComponent
 } from "../machinelearning-forms/machinelearning-info-form/machinelearning-info-form.component";
 import {MlAlgorithmsModel} from "../models/ml.model";
-//
+import {MachineLearningFormEntity} from "../machinelearning-forms/machinelearning-form-entity";
 
 @Component({
   selector: 'hyt-machinelearning-wizard',
@@ -29,32 +24,16 @@ export class MachineLearningWizardComponent implements OnInit {
   algorithmId: number;
   currentAlgorithm: Algorithm;
   currentAlgorithmSubject: Subject<Algorithm> = new Subject<Algorithm>();
-  currentForm: AlgorithmFormEntity;
-  currentInput: AlgorithmIOField[] = [];
-  currentOutput: AlgorithmIOField[] = [];
+  currentForm: MachineLearningFormEntity;
   currentCustomConfig: any[] = [];
-  currentStepIndex = 0;
 
   finishData: { iconPath: string, type: string, entities: string[] }[] = [];
   hintMessage = '';
   hintVisible = false;
-  optionModalViewed = false;
   panelIsVisible = true;
 
   @ViewChild('algorithmInfoForm')
-  algorithmInfoForm: AlgorithmInfoFormComponent;
-
-  @ViewChild('inputFieldsForm')
-  inputFieldsForm: InputFieldsFormComponent;
-
-  @ViewChild('outputFieldsForm')
-  outputFieldsForm: OutputFieldsFormComponent;
-
-  @ViewChild('algorithmJarForm')
-  algorithmJarForm: AlgorithmJarFormComponent;
-
-  @ViewChild('stepper')
-  stepper: HytStepperComponent;
+  algorithmInfoForm: MachineLearningInfoFormComponent;
 
   constructor(
       private algorithmsService: AlgorithmsService,
@@ -70,15 +49,11 @@ export class MachineLearningWizardComponent implements OnInit {
   ngOnInit() {
     this.cd.detectChanges();
     if (this.algorithmId) {
-
-        this.algorithmsService.findAlgorithm(this.algorithmId).subscribe((a: Algorithm) => {
-          this.currentAlgorithm = a;
-          this.currentInput = JSON.parse(this.currentAlgorithm.baseConfig).input;
-          this.currentOutput = JSON.parse(this.currentAlgorithm.baseConfig).output;
-          this.currentCustomConfig = JSON.parse(this.currentAlgorithm.baseConfig).customConfig;
-          this.currentAlgorithmSubject.next(this.currentAlgorithm);
-        });
-
+      this.algorithmsService.findAlgorithm(this.algorithmId).subscribe((a: Algorithm) => {
+        this.currentAlgorithm = a;
+        this.currentCustomConfig = JSON.parse(this.currentAlgorithm.baseConfig).customConfig;
+        this.currentAlgorithmSubject.next(this.currentAlgorithm);
+      });
     }
     else {
       this.algorithmInfoForm.loadingStatus = LoadingStatusEnum.Ready;
@@ -86,52 +61,10 @@ export class MachineLearningWizardComponent implements OnInit {
 
     this.currentForm = this.algorithmInfoForm;
     this.currentForm.entity.type = "MACHINE_LEARNING"; //Obbligatorio in questa area
-}
-
-  getDirty(index: number): boolean {
-    switch (index) {
-      case 0: {
-        return (this.algorithmInfoForm) ? this.algorithmInfoForm.isDirty() : false;
-      }
-      case 1: {
-        return (this.inputFieldsForm) ? this.inputFieldsForm.isDirty() : false;
-      }
-      case 2: {
-        return (this.outputFieldsForm) ? this.outputFieldsForm.isDirty() : false;
-      }
-      case 3: {
-        return (this.algorithmJarForm) ? this.algorithmJarForm.isDirty() : false;
-      }
-      default: {
-        return false;
-      }
-    }
   }
 
   hideHintMessage(): void {
     this.hintVisible = false;
-  }
-
-  isNextDisabled(): boolean {
-    switch (this.currentStepIndex) {
-      case 0: {
-        return !this.currentAlgorithm;
-      }
-      case 1: {
-        return this.currentInput.length === 0;
-      }
-      case 2: {
-        return this.currentOutput.length === 0;
-      }
-      case 3: {
-        return true
-        //return !this.currentAlgorithm.jarName || this.currentAlgorithm.jarName.length === 0;
-      }
-    }
-  }
-
-  isWizardDirty() {
-    return this.algorithmInfoForm.isDirty();
   }
 
   onCancelClick(e) {
@@ -148,8 +81,6 @@ export class MachineLearningWizardComponent implements OnInit {
         break;
       case 'pw:algorithm-updated':
         this.currentAlgorithm = data.algorithm;
-        this.currentInput = JSON.parse(this.currentAlgorithm.baseConfig).input;
-        this.currentOutput = JSON.parse(this.currentAlgorithm.baseConfig).output;
         this.currentAlgorithmSubject.next(this.currentAlgorithm);
         break;
     }
@@ -172,18 +103,37 @@ export class MachineLearningWizardComponent implements OnInit {
       output: [],
       customConfig: JSON.stringify(formML)
     }];
-    console.log('onSaveClick - BaseConfig', baseConfig);
+
     this.currentForm.entity.baseConfig = baseConfig;
 
+    const responseHandler = (res) => {
+      console.log('responseHandler: ', res);
+      // this.currentForm.entity  = res;
+/*      this.resetForm();
+      this.entityEvent.emit({
+        event: 'pw:algorithm-updated',
+        algorithm: res
+      });
+      this.loadingStatus = LoadingStatusEnum.Ready;
+      successCallback && successCallback(res);*/
+    };
+    console.log('CurrentForm: ', this.currentForm);
+
     this.currentForm.save((ent, isNew) => {
-      if (this.currentForm instanceof MachineLearningInfoFormComponent) {
+      if (this.currentForm instanceof MachineLearningFormEntity) {
         this.currentAlgorithm = ent;
 
         this.algorithmsService.saveAlgorithm(this.currentAlgorithm);
-
+        if (this.currentForm.pyToUpload) {
+          const updateFileObserver = {
+            next: (x: number) => responseHandler,
+            error: (err: Error) => console.log('Error:', err)
+          };
+          this.algorithmsService.updateAlgorithmFile(this.currentAlgorithm.id, this.currentAlgorithm.mainClassname, this.currentForm.pyToUpload)
+            .subscribe(updateFileObserver);
+        }
         // wait for step 0 validation (next cicle)
         this.cd.detectChanges();
-        this.stepper.next();
       }
     }, (error) => {
         // TODO: ...
@@ -196,40 +146,12 @@ export class MachineLearningWizardComponent implements OnInit {
   }
 
   showCancel(): boolean {
-    return this.currentForm instanceof InputFieldsFormComponent ||
-      this.currentForm instanceof OutputFieldsFormComponent ||
-      this.currentForm instanceof MachineLearningInfoFormComponent;
+    return this.currentForm instanceof MachineLearningInfoFormComponent;
   }
 
   showHintMessage(message: string): void {
     this.hintMessage = message;
     this.hintVisible = true;
-  }
-
-  stepChanged(event) {
-    this.currentStepIndex = event.selectedIndex;
-    // setting current form...
-    switch (event.selectedIndex) {
-      case 0: {
-        this.currentForm = this.algorithmInfoForm;
-        break;
-      }
-      case 1: {
-        this.currentForm = this.inputFieldsForm;
-        break;
-      }
-      case 2: {
-        this.currentForm = this.outputFieldsForm;
-        break;
-      }
-      case 3: {
-        this.currentForm = this.algorithmJarForm;
-        break;
-      }
-      default: {
-        console.log('error');
-      }
-    }
   }
 
   togglePanel() {

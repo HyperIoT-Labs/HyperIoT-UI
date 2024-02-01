@@ -10,10 +10,7 @@ import { MachineLearningComponent } from './machinelearning.component';
 import { MachineLearningCardComponent } from './machinelearning-card/machinelearning-card.component';
 import { MachineLearningWizardComponent } from '../machinelearning/machinelearning-wizard/machinelearning-wizard.component';
 import { MachineLearningInfoFormComponent } from '../machinelearning/machinelearning-forms/machinelearning-info-form/machinelearning-info-form.component';
-import { InputFieldsFormComponent } from '../machinelearning/machinelearning-forms/input-fields-form/input-fields-form.component';
-import { OutputFieldsFormComponent } from '../machinelearning/machinelearning-forms/output-fields-form/output-fields-form.component';;
 import { MachineLearningWizardReportModalComponent } from '../machinelearning/machinelearning-wizard/machinelearning-wizard-report-modal/machinelearning-wizard-report-modal.component';
-import { MachineLearningJarFormComponent } from '../machinelearning/machinelearning-forms/machinelearning-jar-form/machinelearning-jar-form.component';
 
 import { MatChipsModule } from '@angular/material/chips';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -28,6 +25,8 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatListModule} from '@angular/material/list';
 import {MatRippleModule} from '@angular/material/core';
+import {MatSliderModule} from "@angular/material/slider";
+import {MatRadioModule} from "@angular/material/radio";
 
 @NgModule({
   declarations: [
@@ -35,10 +34,7 @@ import {MatRippleModule} from '@angular/material/core';
     MachineLearningCardComponent,
     MachineLearningWizardComponent,
     MachineLearningInfoFormComponent,
-    OutputFieldsFormComponent,
-    MachineLearningJarFormComponent,
     MachineLearningWizardReportModalComponent,
-    InputFieldsFormComponent
   ],
   imports: [
     MatIconModule,
@@ -59,7 +55,9 @@ import {MatRippleModule} from '@angular/material/core';
     MatInputModule,
     MatExpansionModule,
     DragDropModule,
-    MatListModule
+    MatListModule,
+    MatSliderModule,
+    MatRadioModule
   ]
 })
 export class MachineLearningModule { }

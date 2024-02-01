@@ -26,12 +26,11 @@
         </hyt-text-area>
       </div>
     </div> <!--END Second Row -->
-
     <div class="form-group row">
-      <div id="fml-col-type-script" class="col-12">
+      <div id="fml-col-type-script-select" class="col-12">
         <label class="f-label">Select an option:</label>
         <div id="container-radio-btn-source" class="radio-options pl-2 pr-2">
-          <hyt-radio-button [options]="sourceMLOptions" (changeFn)="sourceMLChanged($event)"></hyt-radio-button>
+          <hyt-radio-button [options]="sourceMLOptions" (changeFn)="sourceMLChanged($event)" [ngClass]="!!entity.id  ? 'disabled' : ''"></hyt-radio-button>
         </div>
       </div>
     </div> <!-- Third Row -->
@@ -99,7 +98,12 @@
       <div id="fml-col-type" class="col-12">
         <label class="f-label">Algorithm Configuration </label>
         <div class="container-radio-btn-source radio-options pl-2 pr-2">
-          <hyt-radio-button formControlName="mlAlgorithmConfiguration" [options]="configMLOptions" (changeFn)="configMLChanged($event)"></hyt-radio-button>
+          <mat-radio-group class="example-radio-group" formControlName="mlAlgorithmConfiguration" (change)="configMLChanged($event.value)">
+            <mat-radio-button class="example-radio-button" *ngFor="let opt of configMLOptions" [value]="opt.value">
+              {{opt.label}}
+            </mat-radio-button>
+          </mat-radio-group>
+          <!--<hyt-radio-button formControlName="mlAlgorithmConfiguration" [options]="configMLOptions" (changeFn)="configMLChanged($event)"></hyt-radio-button>-->
         </div>
       </div>
     </div> <!-- Fifth Row -->
@@ -112,23 +116,23 @@
 
           <!-- SLIDER -->
           <div *ngIf="param.type == 'slider'">
-            <label class="f-label">{{ param.label }} </label>
             <div class="slider-container">
-              <label class="param-min">{{param.min}}</label>
-              <label [id]="'slider-value-' + i" class="param-default">{{param.default}}</label>
-              <label class="param-max">{{param.max}}</label>
+              <!--<label class="param-default" id="slider-value-{{i}}">{{param.default}}</label>-->
+              <label [ngClass]="{'disabled': selectedConfigMLName !== 'custom'}">{{param.min}}</label>
+              <mat-slider #sliderElement (change)="setSliderAlgValue(sliderElement.value, i)" [id]="'slider' + i"
+                          class="slider" type="range" min="{{param.min}}" max="{{param.max}}"
+                          step="{{param.steps}}" [attr.disabled]="selectedConfigMLName != 'custom'" style="width:100% !important" value="{{param.default}}"
+                          thumbLabel tickInterval="{{param.steps}}" [formControlName]="'slider' + i" [ngClass]="{'disabled': selectedConfigMLName !== 'custom'}">
+              </mat-slider>
+              <label [ngClass]="{'disabled': selectedConfigMLName !== 'custom'}">{{param.max}}</label>
             </div>
-            <input #sliderElement (change)="setSliderAlgValue(sliderElement.value, i)" [id]="'slider-' + i"
-                   [name]="'slider-' + i" (input)="setSliderTooltip(sliderElement.value, param.max, i)"
-                   class="slider" type="range" min="{{param.min}}" max="{{param.max}}"
-                   step="{{param.steps}}" [disabled]="selectedConfigMLName != 'custom'" style="width:100% !important" value="{{param.default}}">
           </div>
 
           <!-- RADIO -->
           <div *ngIf="param.type == 'radio'" class="fml-col-type">
             <label class="f-label">{{ param.label }} </label>
             <div class="container-radio-btn-source radio-options pl-2 pr-2">
-              <hyt-radio-button (changeFn)="setRadioAlgValue($event, i)" [id]="'radio-' + i" [name]="'radio-' + i"
+              <hyt-radio-button #radioElement (changeFn)="setRadioAlgValue($event, i)" [id]="'radio-' + i" [name]="'radio-' + i"
                                 [options]="param.choices"
                                 [ngClass]="selectedConfigMLName != 'custom' ? 'disabled' : ''"></hyt-radio-button>
             </div>
