@@ -38,9 +38,6 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
   /** Url for ccat defined inside src/environments/ */
   @Input() public ccatUrl: string;
 
-  /** Port for ccat defined inside src/environments/ */
-  @Input() public ccatPort: number;
-
   /** An array to store received WebSocket messages. */
   received: WebsocketChat[] = [];
 
