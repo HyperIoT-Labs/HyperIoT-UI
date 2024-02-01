@@ -9,7 +9,7 @@
       <td mat-cell *matCellDef="let eventAlarm"> {{eventAlarm?.event.description}}</td>
     </ng-container>
     <ng-container matColumnDef="severity">
-      <th mat-header-cell *matHeaderCellDef i18n="@@HYT_alarm_event_severity"> Severity </th>
+      <th mat-header-cell *matHeaderCellDef i18n="@@HYT_alarm_severity_severity"> Severity </th>
       <td mat-cell *matCellDef="let eventAlarm"> 
                 <mat-chip [selectable]="false" [removable]="false"  class="severity-{{eventAlarm?.severity}}" >
                     {{getSeverityLabel(eventAlarm?.severity)}}
@@ -17,7 +17,7 @@
      </td>
     </ng-container>
     <ng-container matColumnDef="actions">
-      <th mat-header-cell *matHeaderCellDef i18n="@@HYT_alarm_event_actions"> Actions </th>
+      <th mat-header-cell *matHeaderCellDef i18n="@@HYT_alarm_severity_actions"> Actions </th>
       <td mat-cell *matCellDef="let eventAlarm; let i = index" >
         <span class="hyt-icon icon-hyt_pencil" (click)="editEvent(i)"></span>
           &nbsp;&nbsp;

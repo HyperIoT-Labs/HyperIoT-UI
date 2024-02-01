@@ -378,7 +378,7 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity implements OnI
 
     // Case 1: new alarm
     if (this.newAlarm === true) {
-      this.toastr.info($localize`:@@HYT_remember_changes:Remember to save the alarm to maintain the changes`, $localize`:@@HYT_event_saved:Event saved!`, { toastClass: 'alarm-toastr alarm-info' });
+      this.toastr.info($localize`:@@HYT_remember_changes:Remember to save the alarm to maintain the changes`, $localize`:@@HYT_severity_saved:Severity saved!`, { toastClass: 'alarm-toastr alarm-info' });
       // Update eventListMap for all the 5 possibles scenario:
       if (this.indexMap != undefined && this.selectedId > 0) this.eventListMap.get(this.selectedId)[this.indexMap] = addEditEvent;
       else if (!this.indexMap && this.selectedId > 0) this.eventListMap.get(this.selectedId).push(addEditEvent);
@@ -415,11 +415,11 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity implements OnI
           next: (res) => {
             this.logger.debug('SaveEvent, new event added', res);
             this.updateSummaryList();
-            this.toastr.success($localize`:@@HYT_event_new_desc:New event saved correctly`, $localize`:@@HYT_event_new:New event!`, { toastClass: 'alarm-toastr alarm-success' });
+            this.toastr.success($localize`:@@HYT_severity_new_desc:New severity saved correctly`, $localize`:@@HYT_severity_new:New severity!`, { toastClass: 'alarm-toastr alarm-success' });
             addEditEvent.id = res.id;
 
-            if (this.form.touched === true) this.toastr.info($localize`:@@HYT_event_still_changes:You still have to save the alarm changes`,
-              $localize`:@@HYT_event_remember:Remember!`, { toastClass: 'alarm-toastr alarm-info' });
+            if (this.form.touched === true) this.toastr.info($localize`:@@HYT_alarm_still_changes:You still have to save the alarm changes`,
+              $localize`:@@HYT_severity_remember:Remember!`, { toastClass: 'alarm-toastr alarm-info' });
           },
           error: (err) => {
             this.logger.error('Error while saving event', err);
@@ -471,10 +471,10 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity implements OnI
           next: (res) => {
             this.logger.debug('SaveEvent, event updated', res[0])
             this.updateSummaryList();
-            this.toastr.success($localize`:@@HYT_event_updated_desc:Event updated correctly`, $localize`:@@HYT_event_updated:Event updated!`,
+            this.toastr.success($localize`:@@HYT_severity_updated_desc:Severity updated correctly`, $localize`:@@HYT_severity_updated:Severity updated!`,
               { toastClass: 'alarm-toastr alarm-success' });
             if (this.form.touched === true)
-              this.toastr.info($localize`:@@HYT_event_still_changes:You still have to save the alarm changes`, $localize`:@@HYT_event_remember:Remember!`, { toastClass: 'alarm-toastr alarm-info' });
+              this.toastr.info($localize`:@@HYT_alarm_still_changes:You still have to save the alarm changes`, $localize`:@@HYT_severity_remember:Remember!`, { toastClass: 'alarm-toastr alarm-info' });
 
             // addAnother boolean
             if (this.addAnother == undefined || !this.addAnother) this.addEventMode = false;
@@ -524,7 +524,7 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity implements OnI
               this.dialogService.open(GenericErrorModalComponent, {
                 backgroundClosable: true,
                 data: {
-                  message: $localize`:@@HYT_error_deleting_event:An error occurred while deleting the event.`,
+                  message: $localize`:@@HYT_error_deleting_severity:An error occurred while deleting the severity.`,
                 },
               });
             }
@@ -659,7 +659,7 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity implements OnI
         .subscribe({
           next: (res) => {
             this.logger.debug('New alarm added', res)
-            this.toastr.success($localize`:@@HYT_alarm_and_events_desc:Alarm and events added correctly`, $localize`:@@HYT_alarm_and_events:Alarm and events added!`, { toastClass: 'alarm-toastr alarm-success' });
+            this.toastr.success($localize`:@@HYT_alarm_and_severities_desc:Alarm and severities added correctly`, $localize`:@@HYT_alarm_and_severities:Alarm and severities added!`, { toastClass: 'alarm-toastr alarm-success' });
             this.addEventMode = false;
             this.loadingStatus = LoadingStatusEnum.Ready;
 
@@ -734,7 +734,7 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity implements OnI
         .pipe(takeUntil(this.ngUnsubscribe))
         .subscribe({
           next: () => {
-            this.toastr.success($localize`:@@HYT_event_deleted_desc:Event deleted correctly`, $localize`:@@HYT_event_deleted:Event deleted!`,
+            this.toastr.success($localize`:@@HYT_severity_deleted_desc:Severity deleted correctly`, $localize`:@@HYT_severity_deleted:Severity deleted!`,
               { toastClass: 'alarm-toastr alarm-success' });
             this.eventListMap.get(this.selectedId).splice(i, 1);
             this.updateSummaryList();
@@ -747,7 +747,7 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity implements OnI
               this.dialogService.open(GenericErrorModalComponent, {
                 backgroundClosable: true,
                 data: {
-                  message: $localize`:@@HYT_error_deleting_event:An error occurred while deleting the event.`,
+                  message: $localize`:@@HYT_error_deleting_severity:An error occurred while deleting the severity.`,
                 },
               });
             }
@@ -862,7 +862,7 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity implements OnI
   */
   openConfirmEventDialog() {
     const dialogRef = this.dialog.open(PendingChangesDialogComponent, {
-      data: { title: $localize`:@@HYT_alarm_save_changes:Do you want to save the alarm and lost the pending changes?`, message: $localize`:@@HYT_event_will_be_lost:The current event will be lost` }
+      data: { title: $localize`:@@HYT_alarm_save_changes:Do you want to save the alarm and lost the pending changes?`, message: $localize`:@@HYT_severity_will_be_lost:The current severity will be lost` }
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result == 'save') this.saveAlarm(); // DISCARD

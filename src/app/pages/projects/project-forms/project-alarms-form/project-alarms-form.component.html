@@ -36,7 +36,8 @@
                                  line-height: 20px;
                                  font-weight: bold;
                                  padding: 5px 0px;
-                                 text-align: center;">Event List</th>
+                                 text-align: center;"
+              i18n="@@HYT_severity_list">Severity List</th>
           <tbody>
             <!-- real event list -->
             <tr *ngFor="let event of eventListMap.get(selectedId); let i = index"
@@ -51,8 +52,8 @@
             </tr>
             <!-- message when there are no event in table-->
             <tr [ngClass]="{ hidden: selectedId != 0 }">
-              <td colspan="2" style="padding: 5px 7px 5px 10px;"><ng-container i18n="@@HYT_alarmEvent_message">At least
-                  one new event must be added to save the new alarm!</ng-container></td>
+              <td colspan="2" style="padding: 5px 7px 5px 10px;"><ng-container i18n="@@HYT_alarmSeverity_message">At least
+                  one new severity must be added to save the new alarm!</ng-container></td>
             </tr>
           </tbody>
         </table>
@@ -64,7 +65,7 @@
         <hyt-button [color]="'hyt-base-default-white'" (clickFn)="addEvent()"
           [isDisabled]="!form.get('alarm-name').valid || addEventMode">
           <span class="hyt-icon icon-hyt_plus"></span>
-          <span i18n="@@HYT_add_event">Add event</span>
+          <span i18n="@@HYT_add_severity">Add severity</span>
         </hyt-button>
 
       </div> <!-- Field Output -->
@@ -104,7 +105,7 @@
 
   </div>
 
-  <h3 id="form-title" [ngClass]="{ hidden: !addEventMode }" class="ng-star-inserted">Event Settings</h3>
+  <h3 id="form-title" [ngClass]="{ hidden: !addEventMode }" class="ng-star-inserted" i18n="@@HYT_severity_settings">Severity Settings</h3>
 
   <form [ngClass]="{ hidden: !addEventMode, 'blurred': loadingStatus !== LoadingStatus.Ready }"
     class="alarms-form rule-form" [formGroup]="formEvent" autocomplete="on">
@@ -163,7 +164,7 @@
         <label *ngIf="tagRetrievalError !== ''" i18n="@@HYT_error_tag_retrieval" class="tagError">{{ tagRetrievalError }}</label>
       </div> <!-- Tag selection -->
       <div id="falarm-col-container-rules" class="col-6">
-        <hyt-select [form]="formEvent" i18n-label="@@HYT_alarm_event_severity" label="Severity" name="event-severity"
+        <hyt-select [form]="formEvent" i18n-label="@@HYT_alarm_severity_severity" label="Severity" name="event-severity"
           hintMessage="Select Severity." [isRequired]="true" [options]="severityList"></hyt-select>
       </div> <!-- Field RuleDefinition -->
 
@@ -173,12 +174,12 @@
     <div id="btn-edit-mode" class="col-12">
       <hyt-button [color]="'hyt-base-default-white'" (clickFn)="saveEvent()" [isDisabled]="!formEvent.valid">
         <span class="hyt-icon icon-hyt_save"></span>
-        <ng-container *ngIf="!this.updateLabel" i18n="@@HYT_save_event">Save Event</ng-container>
-        <ng-container *ngIf="this.updateLabel" i18n="@@HYT_update_event">Update Event</ng-container>
+        <ng-container *ngIf="!this.updateLabel" i18n="@@HYT_save_severity">Save Severity</ng-container>
+        <ng-container *ngIf="this.updateLabel" i18n="@@HYT_update_severity">Update Severity</ng-container>
       </hyt-button>
       <hyt-checkbox [(ngModel)]="addAnother" [ngModelOptions]="{standalone: true}" name="another_event" type="checkbox"
         id="another_event">
-        <ng-container i18n="@@HYT_another_event">Add another Event</ng-container>
+        <ng-container i18n="@@HYT_another_severity">Add another Severity</ng-container>
       </hyt-checkbox>
     </div>
   </form>
