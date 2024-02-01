@@ -1020,65 +1020,65 @@
         <source>Update</source>
         <target>Aggiorna</target>
       </trans-unit>
-      <trans-unit id="HYT_save_event" datatype="html">
-        <source>Save Event</source>
-        <target>Salva Evento</target>
+      <trans-unit id="HYT_save_severity" datatype="html">
+        <source>Save Severity</source>
+        <target>Salva Severity</target>
       </trans-unit>
-      <trans-unit id="HYT_update_event" datatype="html">
-        <source>Update Event</source>
-        <target>Aggiorna Evento</target>
+      <trans-unit id="HYT_update_severity" datatype="html">
+        <source>Update Severity</source>
+        <target>Aggiorna Severity</target>
       </trans-unit>
-      <trans-unit id="HYT_another_event" datatype="html">
-        <source>Add another Event</source>
-        <target>Aggiunti un altro Evento</target>
+      <trans-unit id="HYT_another_severity" datatype="html">
+        <source>Add another Severity</source>
+        <target>Aggiunti un'altra Severity</target>
       </trans-unit>
       <trans-unit id="HYT_alarm_save_changes" datatype="html">
         <source>Do you want to save the alarm and lost the pending changes?</source>
         <target>Vuoi davvvero salvare l'allarme e perdere le modifiche in sospeso?</target>
       </trans-unit>
-      <trans-unit id="HYT_back_to_event" datatype="html">
+      <trans-unit id="HYT_back_to_alarm" datatype="html">
         <source>Back to Alarm</source>
         <target>Torna all'allarme</target>
       </trans-unit>
-      <trans-unit id="HYT_event_saved" datatype="html">
-        <source>Event saved!</source>
-        <target>Evento salvato!</target>
+      <trans-unit id="HYT_severity_saved" datatype="html">
+        <source>Severity saved!</source>
+        <target>Severity salvata!</target>
       </trans-unit>
       <trans-unit id="HYT_remember_changes" datatype="html">
         <source>Remember to save the alarm to maintain the changes</source>
         <target>Ricorda di salvare l'allarme per mantenere le modifiche</target>
       </trans-unit>
-      <trans-unit id="HYT_event_new" datatype="html">
-        <source>New event!</source>
-        <target>Nuovo evento!</target>
+      <trans-unit id="HYT_severity_new" datatype="html">
+        <source>New severity!</source>
+        <target>Nuova severity!</target>
       </trans-unit>
-      <trans-unit id="HYT_event_new_desc" datatype="html">
-        <source>New event saved correctly</source>
-        <target>Nuovo evento salvato correttamente</target>
+      <trans-unit id="HYT_severity_new_desc" datatype="html">
+        <source>New severity saved correctly</source>
+        <target>Nuova severity salvata correttamente</target>
       </trans-unit>
-      <trans-unit id="HYT_event_remember" datatype="html">
+      <trans-unit id="HYT_severity_remember" datatype="html">
         <source>Remember!</source>
         <target>Ricorda!</target>
       </trans-unit>
-      <trans-unit id="HYT_event_still_changes" datatype="html">
+      <trans-unit id="HYT_alarm_still_changes" datatype="html">
         <source>You still have to save the alarm changes</source>
         <target>Devi ancora salvare le modifiche dell'allarme</target>
       </trans-unit>
-      <trans-unit id="HYT_event_updated" datatype="html">
-        <source>Event updated!</source>
-        <target>Evento aggiornato!</target>
+      <trans-unit id="HYT_severity_updated" datatype="html">
+        <source>Severity updated!</source>
+        <target>Severity aggiornata!</target>
       </trans-unit>
-      <trans-unit id="HYT_event_updated_desc" datatype="html">
-        <source>Event updated correctly</source>
-        <target>Evento aggiornato correttamente</target>
+      <trans-unit id="HYT_severity_updated_desc" datatype="html">
+        <source>Severity updated correctly</source>
+        <target>Severity aggiornata correttamente</target>
       </trans-unit>
-      <trans-unit id="HYT_alarm_and_events" datatype="html">
-        <source>Alarm and events added!</source>
-        <target>Allarme ed Eventi aggiunti!</target>
+      <trans-unit id="HYT_alarm_and_severities" datatype="html">
+        <source>Alarm and severities added!</source>
+        <target>Allarme ed severities aggiunti!</target>
       </trans-unit>
-      <trans-unit id="HYT_alarm_and_events_desc" datatype="html">
-        <source>Alarm and events added correctly</source>
-        <target>Allarme ed Eventi aggiunti correttamente</target>
+      <trans-unit id="HYT_alarm_and_severities_desc" datatype="html">
+        <source>Alarm and severities added correctly</source>
+        <target>Allarme ed severities aggiunti correttamente</target>
       </trans-unit>
       <trans-unit id="HYT_alarm_updated" datatype="html">
         <source>Alarm updated!</source>
@@ -1088,17 +1088,17 @@
         <source>Alarm updated correctly</source>
         <target>Allarme aggiornato correttamente</target>
       </trans-unit>
-      <trans-unit id="HYT_event_deleted" datatype="html">
-        <source>Event deleted!</source>
-        <target>Evento eliminato!</target>
+      <trans-unit id="HYT_severity_deleted" datatype="html">
+        <source>Severity deleted!</source>
+        <target>Severity eliminata!</target>
       </trans-unit>
-      <trans-unit id="HYT_event_deleted_desc" datatype="html">
-        <source>Event deleted correctly</source>
-        <target>Evento eliminato correttamente</target>
+      <trans-unit id="HYT_severity_deleted_desc" datatype="html">
+        <source>Severity deleted correctly</source>
+        <target>Severity eliminata correttamente</target>
       </trans-unit>
-      <trans-unit id="HYT_event_will_be_lost" datatype="html">
-        <source>The current event will be lost</source>
-        <target>L'evento attuale andrà perso</target>
+      <trans-unit id="HYT_severity_will_be_lost" datatype="html">
+        <source>The current severity will be lost</source>
+        <target>La severity attuale andrà persa</target>
       </trans-unit>
       <trans-unit id="HYT_back" datatype="html">
         <source>Back</source>
@@ -1192,9 +1192,9 @@
         <source>An error occurred while deleting the project.</source>
         <target>Errore nell'eliminazione del progetto</target>
       </trans-unit>
-      <trans-unit id="HYT_error_deleting_event" datatype="html">
-        <source>An error occurred while deleting the event.</source>
-        <target>Errore nell'eliminazione dell'evento.</target>
+      <trans-unit id="HYT_error_deleting_severity" datatype="html">
+        <source>An error occurred while deleting the severity.</source>
+        <target>Errore nell'eliminazione della severity.</target>
       </trans-unit>
       <trans-unit id="HYT_error_deleting_alarm" datatype="html">
         <source>An error occurred while deleting the alarm.</source>
@@ -1928,17 +1928,17 @@
         <source>Enter the alarm name</source>
         <target>Inserire il nome dell'allarme.</target>
       </trans-unit>
-       <trans-unit id="HYT_alarm_event_severity" datatype="html">
+       <trans-unit id="HYT_alarm_severity_severity" datatype="html">
         <source>Severity</source>
         <target>Severity</target>
       </trans-unit>
-      <trans-unit id="HYT_alarm_event_actions" datatype="html">
+      <trans-unit id="HYT_alarm_severity_actions" datatype="html">
         <source>Actions</source>
         <target>Azioni</target>
       </trans-unit>
-      <trans-unit id="HYT_alarmEvent_message" datatype="html">
-        <source>At least one new event must be added to save the new alarm!</source>
-        <target>Almeno un nuovo evento deve essere aggiunto per salvare un nuovo allarme!</target>
+      <trans-unit id="HYT_alarmSeverity_message" datatype="html">
+        <source>At least one new severity must be added to save the new alarm!</source>
+        <target>Almeno una nuova severity deve essere aggiunta per salvare un nuovo allarme!</target>
       </trans-unit>
       <trans-unit id="HYT_aliases_description" datatype="html">
         <source>Enter an alternative name to be displayed in the widget. If the alias is empty, the field name will be displayed.</source>
@@ -2181,6 +2181,18 @@
     &lt;hype"/> </source>
         <target> Pacchetti inviati: <x id="INTERPOLATION" equiv-text="dget&gt;
     &lt;hype"/> </target>
+      </trans-unit>
+      <trans-unit id="HYT_severity_list" datatype="html">
+        <source>Severity List</source>
+        <target>Lista Severity</target>
+      </trans-unit>
+      <trans-unit id="HYT_add_severity" datatype="html">
+        <source>Add severity</source>
+        <target>Aggiungi Severity</target>
+      </trans-unit>
+      <trans-unit id="HYT_severity_settings" datatype="html">
+        <source>Severity Settings</source>
+        <target>Impostazioni Severity</target>
       </trans-unit>
     </body>
   </file>

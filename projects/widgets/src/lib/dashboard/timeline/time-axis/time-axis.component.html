@@ -1,10 +1,21 @@
 <div #axis id="axis">
 
     <div
-        id="resetSelBtn"
-        #resetSelBtn
-        (click)="resetSelectionByBtn()"
-    >Reset Selection</div>
+        id="tineline-control-buttons"
+        #controlButtons
+    >
+
+        <div
+            id="refresh-data-btn"
+            (click)="emitCurrentSelection()"
+        >Refresh Data</div>
+
+        <div
+            id="reset-sel-btn"
+            (click)="resetSelectionByBtn()"
+        >Reset Selection</div>
+
+    </div>
 
     <div
         id="selection-initial-tip"

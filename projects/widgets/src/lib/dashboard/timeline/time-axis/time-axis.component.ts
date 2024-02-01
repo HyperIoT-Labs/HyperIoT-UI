@@ -174,9 +174,9 @@ export class TimeAxisComponent implements AfterViewInit {
   leftHandle;
 
   /**
-   * Variable used to monitoring button to reset timeline selection
+   * Variable used to monitoring buttons to reset timeline selection and to emit current selection
    */
-  @ViewChild('resetSelBtn') resetSelBtn: ElementRef;
+  @ViewChild('controlButtons') controlButtons: ElementRef;
 
   /**
    * Variable used to monitoring text used as a timeline tip
@@ -416,7 +416,7 @@ export class TimeAxisComponent implements AfterViewInit {
   resetSelectionByBtn() {
     this.resetSelection();
     this.rect.attr('fill', d => this.setCubeIntensitiScale(d.value, this.maxValue));
-    this.resetSelBtn.nativeElement.style.display = 'none';
+    this.controlButtons.nativeElement.style.display = 'none';
     /* show text tip */
     this.selectionInitialTip.nativeElement.style.display = 'block';
   }
@@ -491,6 +491,13 @@ export class TimeAxisComponent implements AfterViewInit {
   }
 
   /**
+   * Emits the current time selection
+   */
+  emitCurrentSelection() {
+    this.dataTimeSelectionChanged.emit(this.timeInterval);
+  }
+
+  /**
    * appendBrush is used to append svg brush logic
    */
   appendBrush = g => {
@@ -516,8 +523,8 @@ export class TimeAxisComponent implements AfterViewInit {
           this.rightHandle.attr('style', '').attr('y', 0);
           this.setSelection([d3.event.subject.x, d3.event.subject.x], g, { type: 'start', mode: 'container' });
 
-          /* hide reset selection button */
-          this.resetSelBtn.nativeElement.style.display = 'none';
+          /* hide control buttons section */
+          this.controlButtons.nativeElement.style.display = 'none';
           /* show text tip */
           this.selectionInitialTip.nativeElement.style.display = 'block';
 
@@ -534,7 +541,7 @@ export class TimeAxisComponent implements AfterViewInit {
           /* show reset selection button */
           const elSelectionRender = document.querySelector('#brush-group .selection').getAttribute('style');
           if (!elSelectionRender) {
-            this.resetSelBtn.nativeElement.style.display = 'block';
+            this.controlButtons.nativeElement.style.display = 'flex';
             /* hide text tip */
             this.selectionInitialTip.nativeElement.style.display = 'none';
           }

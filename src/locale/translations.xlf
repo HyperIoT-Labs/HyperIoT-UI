@@ -765,56 +765,56 @@
       <trans-unit id="HYT_update" datatype="html">
         <source>Update</source>
       </trans-unit>
-      <trans-unit id="HYT_save_event" datatype="html">
-        <source>Save Event</source>
+      <trans-unit id="HYT_save_severity" datatype="html">
+        <source>Save Severity</source>
       </trans-unit>
-      <trans-unit id="HYT_update_event" datatype="html">
-        <source>Update Event</source>
+      <trans-unit id="HYT_update_severity" datatype="html">
+        <source>Update Severity</source>
       </trans-unit>
-      <trans-unit id="HYT_another_event" datatype="html">
-        <source>Add another Event</source>
+      <trans-unit id="HYT_another_severity" datatype="html">
+        <source>Add another Severity</source>
       </trans-unit>
       <trans-unit id="HYT_alarm_save_changes" datatype="html">
         <source>Do you want to save the alarm and lost the pending changes?</source>
       </trans-unit>
-      <trans-unit id="HYT_event_will_be_lost" datatype="html">
-        <source>The current event will be lost</source>
+      <trans-unit id="HYT_severity_will_be_lost" datatype="html">
+        <source>The current severity will be lost</source>
       </trans-unit>
-      <trans-unit id="HYT_back_to_event" datatype="html">
+      <trans-unit id="HYT_back_to_alarm" datatype="html">
         <source>Back to Alarm</source>
       </trans-unit>
       <trans-unit id="HYT_back" datatype="html">
         <source>Back</source>
       </trans-unit>
-      <trans-unit id="HYT_event_saved" datatype="html">
-        <source>Event saved!</source>
+      <trans-unit id="HYT_severity_saved" datatype="html">
+        <source>Severity saved!</source>
       </trans-unit>
-            <trans-unit id="HYT_remember_changes" datatype="html">
+      <trans-unit id="HYT_remember_changes" datatype="html">
         <source>Remember to save the alarm to maintain the changes</source>
       </trans-unit>
-      <trans-unit id="HYT_event_new" datatype="html">
-        <source>New event!</source>
+      <trans-unit id="HYT_severity_new" datatype="html">
+        <source>New severity!</source>
       </trans-unit>
-      <trans-unit id="HYT_event_new_desc" datatype="html">
-        <source>New event saved correctly</source>
+      <trans-unit id="HYT_severity_new_desc" datatype="html">
+        <source>New severity saved correctly</source>
       </trans-unit>
-      <trans-unit id="HYT_event_remember" datatype="html">
+      <trans-unit id="HYT_severity_remember" datatype="html">
         <source>Remember!</source>
       </trans-unit>
-      <trans-unit id="HYT_event_still_changes" datatype="html">
+      <trans-unit id="HYT_alarm_still_changes" datatype="html">
         <source>You still have to save the alarm changes</source>
       </trans-unit>
-      <trans-unit id="HYT_event_updated" datatype="html">
-        <source>Event updated!</source>
+      <trans-unit id="HYT_severity_updated" datatype="html">
+        <source>Severity updated!</source>
       </trans-unit>
-      <trans-unit id="HYT_event_updated_desc" datatype="html">
-        <source>Event updated correctly</source>
+      <trans-unit id="HYT_severity_updated_desc" datatype="html">
+        <source>Severity updated correctly</source>
       </trans-unit>
-      <trans-unit id="HYT_alarm_and_events" datatype="html">
-        <source>Alarm and events added!</source>
+      <trans-unit id="HYT_alarm_and_severities" datatype="html">
+        <source>Alarm and severities added!</source>
       </trans-unit>
-      <trans-unit id="HYT_alarm_and_events_desc" datatype="html">
-        <source>Alarm and events added correctly</source>
+      <trans-unit id="HYT_alarm_and_severities_desc" datatype="html">
+        <source>Alarm and severities added correctly</source>
       </trans-unit>
       <trans-unit id="HYT_alarm_updated" datatype="html">
         <source>Alarm updated!</source>
@@ -822,11 +822,11 @@
       <trans-unit id="HYT_alarm_updated_desc" datatype="html">
         <source>Alarm updated correctly</source>
       </trans-unit>
-      <trans-unit id="HYT_event_deleted" datatype="html">
-        <source>Event deleted!</source>
+      <trans-unit id="HYT_severity_deleted" datatype="html">
+        <source>Severity deleted!</source>
       </trans-unit>
-      <trans-unit id="HYT_event_deleted_desc" datatype="html">
-        <source>Event deleted correctly</source>
+      <trans-unit id="HYT_severity_deleted_desc" datatype="html">
+        <source>Severity deleted correctly</source>
       </trans-unit>
       <trans-unit id="HYT_application" datatype="html">
         <source>APPLICATION</source>
@@ -891,8 +891,8 @@
       <trans-unit id="HYT_project_successfully_deleted" datatype="html">
         <source>The project was successfully deleted.</source>
       </trans-unit>
-      <trans-unit id="HYT_error_deleting_event" datatype="html">
-        <source>An error occurred while deleting the event.</source>
+      <trans-unit id="HYT_error_deleting_severity" datatype="html">
+        <source>An error occurred while deleting the severity.</source>
       </trans-unit>
       <trans-unit id="HYT_error_deleting_alarm" datatype="html">
         <source>An error occurred while deleting the alarm.</source>
@@ -1441,14 +1441,14 @@
        <trans-unit id="HYT_hint_alarm_name" datatype="html">
         <source>Enter the alarm name</source>
       </trans-unit>
-       <trans-unit id="HYT_alarm_event_severity" datatype="html">
+       <trans-unit id="HYT_alarm_severity_severity" datatype="html">
         <source>Severity</source>
       </trans-unit>
-      <trans-unit id="HYT_alarm_event_actions" datatype="html">
+      <trans-unit id="HYT_alarm_severity_actions" datatype="html">
         <source>Actions</source>
       </trans-unit>
-      <trans-unit id="HYT_alarmEvent_message" datatype="html">
-        <source>At least one new event must be added to save the new alarm!</source>
+      <trans-unit id="HYT_alarmSeverity_message" datatype="html">
+        <source>At least one new severity must be added to save the new alarm!</source>
       </trans-unit>
       <trans-unit id="HYT_aliases_description" datatype="html">
         <source>Enter an alternative name to be displayed in the widget. If the alias is empty, the field name will be displayed.</source>
@@ -1629,6 +1629,15 @@
       <trans-unit id="HYT_packet_sent" datatype="html">
         <source> Packet sent: <x id="INTERPOLATION" equiv-text="dget&gt;
     &lt;hype"/> </source>
+      </trans-unit>
+      <trans-unit id="HYT_severity_list" datatype="html">
+        <source>Severity List</source>
+      </trans-unit>
+      <trans-unit id="HYT_add_severity" datatype="html">
+        <source>Add severity</source>
+      </trans-unit>
+      <trans-unit id="HYT_severity_settings" datatype="html">
+        <source>Severity Settings</source>
       </trans-unit>
     </body>
   </file>
