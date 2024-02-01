@@ -116,10 +116,9 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnInit(): void {
     /* Always declare the cat client on the first chatbot window opened */
     this.cat = new CatClient({
-      baseUrl: this.ccatUrl,
+      baseUrl: this.ccatUrl + "/hyperiot/llm",
       user: this.cookieService.get('HIT-AUTH'),
-      port: this.ccatPort,
-      secure: true,
+      port: 0,
       ws : { 
         retries: 1
       }
@@ -175,10 +174,9 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
     this.cat.close();
     /* Declare a new cat*/
     this.cat = new CatClient({
-      baseUrl: this.ccatUrl,
+      baseUrl: this.ccatUrl + "/hyperiot/llm",
       user: this.cookieService.get('HIT-AUTH'),
-      port: this.ccatPort,
-      secure: true,
+      port: 0,
       ws : { 
         retries: 1,
         delay: 2000,

@@ -124,5 +124,14 @@
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
+  },
+  "/hyperiot/llm/ws/*": {
+    "target": "ws://localhost:1865",
+    "secure": false,
+    "logLevel": "debug",
+    "ws": true,
+    "pathRewrite": {
+      "^/hyperiot/llm/ws/": "/ws/"
+    }
   }
 }
