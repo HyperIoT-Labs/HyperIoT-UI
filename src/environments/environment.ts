@@ -10,7 +10,18 @@ export const environment = {
   logRegistry: { },
   cookieSecure: false,
   mqttUrl: "tcp://broker-test.hyperiot.cloud",
-  ccatUrl: "localhost:4200",
+  // stragatto url
+  ccatUrl: "ai-test.hyperiot.cloud",
+  // stragatto path
+  ccatPath: "/hyperiot/llm",
+  // stragatto security (ws or wss)
+  ccaSecure: false,
+  // stragatto port (NOT CHANGE)
+  ccaPort: 0,
+  // stragatto number of retries
+  ccaRetries: 1,
+  // stragatto retry conncetion delay
+  ccaDelay: 2000,
   version: packageInfo.version,
 };
 

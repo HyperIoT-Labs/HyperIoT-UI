@@ -38,6 +38,22 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
   /** Url for ccat defined inside src/environments/ */
   @Input() public ccatUrl: string;
 
+  /** enable ccat secure connection (ws or wss) */
+  @Input() public secure = false;
+
+  /** ccat port */
+  @Input() public port = 0;
+
+  /** url path after domain */
+  @Input() public urlPath = "/hyperiot/llm/";
+
+  /** url path after domain */
+  @Input() public retries = 1;
+
+  /** url path after domain */
+  @Input() public delay = 2000;
+
+
   /** An array to store received WebSocket messages. */
   received: WebsocketChat[] = [];
 
@@ -94,7 +110,7 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
   public cat: CatClient;
 
   /** Welcome message to send to ccat at start */
-  public firstMessage: string = $localize`:@@HYT_ai_first_message:Hello, who are you?`; 
+  public firstMessage: string = $localize`:@@HYT_ai_first_message:Hello, who are you?`;
 
   constructor(
     private cookieService: CookieService,
@@ -107,17 +123,18 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
     moment.locale("it");
   }
 
-  /** 
-  * At chatbot window opening 
+  /**
+  * At chatbot window opening
   */
   ngOnInit(): void {
     /* Always declare the cat client on the first chatbot window opened */
     this.cat = new CatClient({
-      baseUrl: this.ccatUrl + "/hyperiot/llm",
+      baseUrl: this.ccatUrl + this.urlPath,
       user: this.cookieService.get('HIT-AUTH'),
-      port: 0,
-      ws : { 
-        retries: 1
+      secure: this.secure,
+      port: this.port,
+      ws : {
+        retries: this.retries
       }
     });
     this.initCat();
@@ -139,8 +156,8 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  /** 
-  * First Message sent by user (but hidden to him) in order to let introduce chatbot itself 
+  /**
+  * First Message sent by user (but hidden to him) in order to let introduce chatbot itself
   */
   sendFirstMessage(){
     this.logger.debug("Connected to Cheshire-cat-ai")
@@ -152,9 +169,10 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
    * Init the cat and open connection (1st time)
   */
   initCat(){
-    this.cat.init();
-    this.cat.onConnected(() => {
-      this.disconnected = false;
+    try {
+      this.cat.init();
+      this.cat.onConnected(() => {
+        this.disconnected = false;
       }).onMessage(msg => {
         this.handleWSMessage(msg);
       }).onError(err => {
@@ -162,6 +180,10 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
       }).onDisconnected(() => {
         this.handleDisconnection();
       });
+    } catch (e) {
+      console.error("Websocket error: ", e);
+    }
+
   }
 
   /**
@@ -171,12 +193,13 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
     this.cat.close();
     /* Declare a new cat*/
     this.cat = new CatClient({
-      baseUrl: this.ccatUrl + "/hyperiot/llm",
+      baseUrl: this.ccatUrl + this.urlPath,
       user: this.cookieService.get('HIT-AUTH'),
-      port: 0,
-      ws : { 
-        retries: 1,
-        delay: 2000,
+      secure: this.secure,
+      port: this.port,
+      ws : {
+        retries: this.retries,
+        delay: this.delay,
       }
     });
 
@@ -187,7 +210,7 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
         this.sendFirstMessage();
       }).onMessage(msg => {
         this.handleWSMessage(msg);
-      }).onError(err => { 
+      }).onError(err => {
         this.retryAttempts++;
         this.handleError(err);
       }).onDisconnected(() => {
@@ -195,7 +218,7 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
       });
   }
 
-  /** 
+  /**
   * Check if the WS message has to be showed or not into the chat
   * @param msg The WebSocket message indicating the message type.
   */
@@ -203,7 +226,7 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
     // Variable that enable show/hidden message/token:
     let show : boolean;
     let action : string;
-    
+
     // SHOW just 1 for time
     if (msg.type == 'chat_token' && this.previous_message_type != 'chat_token') {
       this.previous_message_type = 'chat_token'
@@ -244,7 +267,7 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
   */
   sendMessage() {
     this.logger.info("sendMessage()", this.inputText);
-    
+
     // Send message to ccat
     this.cat.send(this.inputText);
 
@@ -373,7 +396,7 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
           top: this.content?.nativeElement.scrollHeight,
           behavior: this.scrollBehaviour,
         });
-        // Change animation 
+        // Change animation
         if (this.scrollBehaviour == "instant") this.scrollBehaviour = "smooth";
       } catch (error) {
         this.logger.error("autoScrollDown() Error", error);
@@ -566,5 +589,5 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
       this.logger.debug("openCloseChatbot() - collapse chatbot");
       return this.collapsed = true;
     }
-  }  
+  }
 }
