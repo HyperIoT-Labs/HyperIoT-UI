@@ -6,17 +6,17 @@ export const environment = {
   logRegistry: { },
   cookieSecure: false,
   mqttUrl: "tcp://broker.hyperiot.cloud",
-  // stragatto url
+  // cheshire-cat-ai url
   ccatUrl: "dashboard.hyperiot.cloud",
-  // stragatto path
+  // cheshire-cat-ai path
   ccatPath: "/hyperiot/llm",
-  // stragatto security (ws or wss)
-  ccatSecure: false,
-  // stragatto port (NOT CHANGE)
+  // cheshire-cat-ai security (ws or wss)
+  ccatSecure: true,
+  // cheshire-cat-ai port (NOT CHANGE)
   ccatPort: 0,
-  // stragatto number of retries
+  // cheshire-cat-ai number of retries
   ccatRetries: 1,
-  // stragatto retry conncetion delay
+  // cheshire-cat-ai retry conncetion delay
   ccatDelay: 2000,
   version: packageInfo.version,
 };
