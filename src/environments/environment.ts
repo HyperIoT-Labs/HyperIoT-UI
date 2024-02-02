@@ -15,7 +15,7 @@ export const environment = {
   // stragatto path
   ccatPath: "/hyperiot/llm",
   // stragatto security (ws or wss)
-  ccatSecure: false,
+  ccatSecure: true,
   // stragatto port (NOT CHANGE)
   ccatPort: 0,
   // stragatto number of retries
