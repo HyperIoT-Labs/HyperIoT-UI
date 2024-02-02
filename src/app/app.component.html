@@ -20,6 +20,13 @@
   <hyt-notificationbar></hyt-notificationbar>
   <hyt-prompt></hyt-prompt>
 
-  <hyt-chatbot *ngIf="showToolBars()" [ccatUrl]="environment.ccatUrl"></hyt-chatbot>
+  <hyt-chatbot
+    *ngIf="showToolBars()"
+    [ccatUrl]="environment.ccatUrl"
+    [secure]="environment.ccatSecure"
+    [port]="environment.ccatPort"
+    [urlPath]="environment.ccatPath"
+    [retries]="environment.ccatRetries"
+    [delay]="environment.ccatDelay"></hyt-chatbot>
 
 </div>
