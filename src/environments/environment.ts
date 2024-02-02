@@ -11,17 +11,17 @@ export const environment = {
   cookieSecure: false,
   mqttUrl: "tcp://broker-test.hyperiot.cloud",
   // stragatto url
-  ccatUrl: "ai-test.hyperiot.cloud",
+  ccatUrl: "dashboard-test.hyperiot.cloud",
   // stragatto path
   ccatPath: "/hyperiot/llm",
   // stragatto security (ws or wss)
-  ccaSecure: false,
+  ccatSecure: false,
   // stragatto port (NOT CHANGE)
-  ccaPort: 0,
+  ccatPort: 0,
   // stragatto number of retries
-  ccaRetries: 1,
+  ccatRetries: 1,
   // stragatto retry conncetion delay
-  ccaDelay: 2000,
+  ccatDelay: 2000,
   version: packageInfo.version,
 };
 
