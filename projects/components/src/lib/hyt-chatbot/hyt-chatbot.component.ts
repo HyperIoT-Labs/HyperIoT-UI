@@ -36,7 +36,7 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild("inputMsg") inputMsgEl?: ElementRef;
 
   /** Url for ccat defined inside src/environments/ */
-  @Input() public ccatUrl: string;
+  @Input() public ccatUrl: string = location.hostname;
 
   /** enable ccat secure connection (ws or wss) */
   @Input() public secure = false;
