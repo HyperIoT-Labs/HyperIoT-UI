@@ -10,7 +10,7 @@ import { MachineLearningComponent } from './machinelearning.component';
 import { MachineLearningCardComponent } from './machinelearning-card/machinelearning-card.component';
 import { MachineLearningWizardComponent } from '../machinelearning/machinelearning-wizard/machinelearning-wizard.component';
 import { MachineLearningInfoFormComponent } from '../machinelearning/machinelearning-forms/machinelearning-info-form/machinelearning-info-form.component';
-import { MachineLearningWizardReportModalComponent } from '../machinelearning/machinelearning-wizard/machinelearning-wizard-report-modal/machinelearning-wizard-report-modal.component';
+// import { MachineLearningWizardReportModalComponent } from '../machinelearning/machinelearning-wizard/machinelearning-wizard-report-modal/machinelearning-wizard-report-modal.component';
 
 import { MatChipsModule } from '@angular/material/chips';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -34,7 +34,7 @@ import {MatRadioModule} from "@angular/material/radio";
     MachineLearningCardComponent,
     MachineLearningWizardComponent,
     MachineLearningInfoFormComponent,
-    MachineLearningWizardReportModalComponent,
+    // MachineLearningWizardReportModalComponent,
   ],
   imports: [
     MatIconModule,

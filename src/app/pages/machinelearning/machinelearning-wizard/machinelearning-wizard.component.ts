@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation,ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import {HytModalService} from 'components';
+import {DialogService} from 'components';
 import { Algorithm, AlgorithmIOField, AlgorithmsService } from 'core';
 import { Subject } from 'rxjs';
 import { EntitiesService } from 'src/app/services/entities/entities.service';
@@ -38,7 +38,7 @@ export class MachineLearningWizardComponent implements OnInit {
   constructor(
       private algorithmsService: AlgorithmsService,
       public entitiesService: EntitiesService,
-      private hytModalService: HytModalService,
+      private hytModalService: DialogService,
       private route: ActivatedRoute,
       private cd: ChangeDetectorRef) {
     this.route.params.subscribe(routeParams => {
@@ -142,7 +142,8 @@ export class MachineLearningWizardComponent implements OnInit {
 
   openFinishModal() {
     this.cd.detectChanges();
-    const modalRef = this.hytModalService.open(AlgorithmWizardReportModalComponent, this.finishData);
+    // TODO: fix modal
+    // const modalRef = this.hytModalService.open(AlgorithmWizardReportModalComponent, this.finishData);
   }
 
   showCancel(): boolean {

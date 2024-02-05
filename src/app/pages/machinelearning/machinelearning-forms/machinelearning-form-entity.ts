@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import {OnInit, Output, EventEmitter, Injector, AfterViewInit, ChangeDetectorRef, Component} from '@angular/core';
 import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
 import { EntitiesService } from 'src/app/services/entities/entities.service';
-import { HytModalService } from 'components';
+import { DialogService } from 'components';
 import { AlgorithmService } from 'src/app/services/algorithms/algorithm.service';
 import {MatRadioChange} from '@angular/material/radio';
 
@@ -48,7 +48,7 @@ export abstract class MachineLearningFormEntity implements OnInit, AfterViewInit
     unsavedChangesCallback;
 
     protected formBuilder: FormBuilder;
-    protected dialog: HytModalService;
+    protected dialog: DialogService;
     protected entitiesService: EntitiesService;
 	  protected algorithmService: AlgorithmService;
 
@@ -58,7 +58,7 @@ export abstract class MachineLearningFormEntity implements OnInit, AfterViewInit
     ) {
         this.formBuilder = injector.get(FormBuilder);
         this.entitiesService = injector.get(EntitiesService);
-        this.dialog = injector.get(HytModalService);
+        this.dialog = injector.get(DialogService);
         this.form = this.formBuilder.group(
           {
             mlAlgorithmFileName: new FormControl(''),
@@ -208,7 +208,7 @@ export abstract class MachineLearningFormEntity implements OnInit, AfterViewInit
         const dialogRef = this.dialog.open(DeleteConfirmDialogComponent, {
             data: { title: $localize`:@@HYT_delete_item_question:Do you really want to delete this item?`, message: $localize`:@@HYT_operation_can_not_be_undone:This operation can not be undone`}
         });
-        dialogRef.onClosed.subscribe((result) => {
+        dialogRef.afterClosed().subscribe((result) => {
             if (result === 'delete') {
                 this.delete(successCallback, errorCallback);
             }

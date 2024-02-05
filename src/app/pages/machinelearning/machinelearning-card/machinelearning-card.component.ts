@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ViewEncapsulation, Output, EventEmitter } from '@angular/core';
 import { Algorithm, AlgorithmsService } from 'core';
 import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
-import { HytModalService } from 'components';
+import { DialogService } from 'components';
 
 
 @Component({
@@ -19,7 +19,7 @@ export class MachineLearningCardComponent implements OnInit {
   rulesCount = 0;
   activeTimeout;
 
-  constructor( private dialog: HytModalService, private algorithmService: AlgorithmsService ) { }
+  constructor( private dialog: DialogService, private algorithmService: AlgorithmsService ) { }
 
   ngOnInit() { }
 
@@ -41,7 +41,7 @@ export class MachineLearningCardComponent implements OnInit {
       }
     );
 
-    dialogRef.onClosed.subscribe(
+    dialogRef.afterClosed().subscribe(
       (result) => {
         if ( result === 'delete') {
           this.toRefreshView(this.algorithm.id);

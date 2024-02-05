@@ -1,6 +1,8 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
-import { HytModal, HytModalService } from 'components';
+// TODO: fix it
+// import { HytModal, DialogService } from 'components';
+import { DialogService } from 'components';
 
 @Component({
   selector: 'hyt-machinelearning-wizard-report-modal',
@@ -8,18 +10,22 @@ import { HytModal, HytModalService } from 'components';
   styleUrls: ['./machinelearning-wizard-report-modal.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class MachineLearningWizardReportModalComponent extends HytModal {
+// TODO: fix it
+// export class MachineLearningWizardReportModalComponent extends HytModal {
+export class MachineLearningWizardReportModalComponent {
 
   constructor(
     private router: Router,
-    hytModalService: HytModalService
+    hytModalService: DialogService
   ) {
-    super(hytModalService);
+    // TODO: fix it
+    // super(hytModalService);
   }
 
   goToAlgorithmsWizard() {
     this.router.navigate(['/algorithms']);
-    this.close();
+    // TODO: fix it
+    // this.close();
   }
 
 }
