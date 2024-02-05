@@ -1,0 +1,50 @@
+.empty-project-list-view {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 3rem;
+
+    .content-empty-project-list {
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        
+        .title-no-project {
+            font-size: 2.2em;
+            text-transform: uppercase;
+            color: #0d416d;
+            margin-bottom: 0px;
+        }
+
+        .subtitle-no-project {
+            font-size: 1.1em;
+            color: #2d82cb;
+            margin-bottom: 60px;
+            font-style: italic;
+        }
+    }
+
+    .btn-empty-project-list {
+        .add-project-btn {
+            button.mat-raised-button {
+
+                background-color: #0d416d;
+                color: #fff;
+                font-family: "Exo";
+                font-size: 1.2em;
+                font-weight: 400;
+                text-transform: uppercase;
+                line-height: 45px;
+
+                &:hover {
+                  background-color: #105f99;
+                  box-shadow: none;
+                }
+
+            }
+        }
+    }
+
+}

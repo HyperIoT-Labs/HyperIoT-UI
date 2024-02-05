@@ -26,28 +26,33 @@
 
                     <div class="col-4 left-tools">
 
-                        <div *ngIf="enableOnlineOffline" id="signal-btn" (click)="changeSignalState($event)">
-                            <span class="hyt-icon {{(signalIsOn)?'icon-hyt_wifiOffFilled':'icon-hyt_wifiOnFilled'}}"></span>
-                            <p>{{(signalIsOn)?'Offline':'Online'}}</p>
-                        </div>
+                        <button mat-button *ngIf="enableOnlineOffline" (click)="changeSignalState($event)" [disabled]="pageStatus == 0">
+                            <div id="signal-btn">
+                                <span class="hyt-icon {{(signalIsOn)?'icon-hyt_wifiOffFilled':'icon-hyt_wifiOnFilled'}}"></span>
+                                <span class="button-label">{{(signalIsOn)?'Offline':'Online'}}</span>
+                            </div>
+                        </button>
 
-
-                        <div *ngIf="signalIsOn && enableStreamControl" id="play-btn" (click)="changeStreamState($event)">
-                            <span class="hyt-icon {{(streamIsOn)?'icon-hyt_pause':'icon-hyt_play'}}"></span>
-                            <p>{{(streamIsOn)?'Pause':'Play'}}</p>
-                            <!-- @@i18n -->
-                            <!-- <p i18n="@@HYT_stream_is_on">{streamIsOn, select, true {Play} false {Pause}}</p> -->
-                        </div>
+                        <button mat-button *ngIf="signalIsOn && enableStreamControl" (click)="changeStreamState($event)" [disabled]="pageStatus == 0">
+                            <div id="play-btn">
+                                <span class="hyt-icon {{(streamIsOn)?'icon-hyt_pause':'icon-hyt_play'}}"></span>
+                                <span class="button-label">{{(streamIsOn)?'Pause':'Play'}}</span>
+                                <!-- @@i18n -->
+                                <!-- <p i18n="@@HYT_stream_is_on">{streamIsOn, select, true {Play} false {Pause}}</p> -->
+                            </div>
+                        </button>
 
                         <hyt-topology-toolbar *ngIf="enableTopologyToolbar" [dataRecordingIsOn]="dataRecordingIsOn" [upTimeSec]="upTimeSec"
                             [idProjectSelected]="idProjectSelected" [recordStateInLoading]="recordStateInLoading"
                             (recordingStateChange)="changeTopologyState($event)">
                         </hyt-topology-toolbar>
 
-                        <div *ngIf="enableChangeEventNotification" id="event-notification-btn" (click)="changeEventNotificationState($event)">
-                            <span class="hyt-icon {{(eventNotificationIsOn)?'icon-hyt_notification':'icon-hyt_notification'}}"></span>
-                            <p>{{(eventNotificationIsOn)?'On':'Off'}}</p>
-                        </div>
+                        <button mat-button *ngIf="enableChangeEventNotification" (click)="changeEventNotificationState($event)" [disabled]="pageStatus == 0">
+                            <div id="event-notification-btn">
+                                <span class="hyt-icon {{(eventNotificationIsOn)?'icon-hyt_notification':'icon-hyt_notification'}}"></span>
+                                <span class="button-label">{{(eventNotificationIsOn)?'On':'Off'}}</span>
+                            </div>
+                        </button>
 
                     </div>
 
@@ -64,10 +69,12 @@
                         <span> {{getCurrentProjectData(idProjectSelected, 'name')}}</span>
                       </div>
 
-                        <div *ngIf="enableProjectEdit" id="edit-btn" (click)="goToEditProject()">
-                            <span class="hyt-icon icon-hyt_pencil"></span>
-                            <p i18n="@@HYT_edit">Edit</p>
-                        </div>
+                        <button mat-button *ngIf="enableProjectEdit" (click)="goToEditProject()">
+                            <div id="edit-btn">
+                                <span class="hyt-icon icon-hyt_pencil"></span>
+                                <span class="button-label" i18n="@@HYT_edit">Edit</span>
+                            </div>
+                        </button>
 
                     </div>
 
@@ -93,15 +100,19 @@
                         </div>
                         -->
 
-                        <div id="add-widget-btn" *ngIf="showAreas" [routerLink]="['/areas', idProjectSelected, areaId]">
-                            <span class="hyt-icon icon-hyt_areaB16"></span>
-                            <p>Areas</p>
-                        </div>
+                        <button mat-button *ngIf="showAreas" [routerLink]="['/areas', idProjectSelected, areaId]">
+                            <div id="area-widget-btn">
+                                <span class="hyt-icon icon-hyt_areaB16"></span>
+                                <span class="button-label">Areas</span>
+                            </div>
+                        </button>
 
-                        <div id="add-widget-btn" *ngIf="pageStatus == PageStatus.Standard && enableAddWidget" (click)="openWidgetModal()">
-                            <span class="hyt-icon icon-hyt_widgetPlus"></span>
-                            <p i18n="@@HYT_add_a_widget">Add a widget</p>
-                        </div>
+                        <button mat-button *ngIf="enableAddWidget" (click)="openWidgetModal()" [disabled]="pageStatus !== PageStatus.Standard">
+                            <div id="add-widget-btn">
+                                <span class="hyt-icon icon-hyt_widgetPlus"></span>
+                                <span class="button-label" i18n="@@HYT_add_a_widget">Add a widget</span>
+                            </div>
+                        </button>
 
                     </div>
 
@@ -139,9 +150,8 @@
                     <h2 i18n="@@HYT_data_recording_is_disabled" id="overlay-blurred-title">Data recording is disabled</h2>
                     <!--@I18N-->
                     <h3 i18n="@@HYT_data_recording_is_disabled_text" id="overlay-blurred-text">
-                        The online dashboard cannot be used in this state.
-                        You can activate data recording by pressing the "RUN" button
-                        or you can use the dasboard offline taking the "OFFLINE" button.
+                        The online dashboard cannot be used in this state. You can activate data recording by pressing the "RUN" 
+                        button or use the dashboard offline by selecting the "OFFLINE" button.
                     </h3>
                     <!--@I18N-->
                 </div>
@@ -150,9 +160,8 @@
                     <h2 i18n="@@HYT_waiting_for_data" id="overlay-blurred-title">Waiting for data</h2>
                     <!--@I18N-->
                     <h3 i18n="@@HYT_waiting_for_data_text" id="overlay-blurred-text">
-                        The data recording is activated but we waiting for the data.
-                        This operation might take a while (from 20 seconds, up to 1 minute),
-                        if the loading state persist click "Reload" or contact the administrator.
+                        Data recording is activated, but we are awaiting data. This operation might take a while (from 20 seconds up to 1 minute). 
+                        If the loading state persists, click "Reload" or contact the administrator.
                     </h3>
                     <!--@I18N-->
                     <mat-progress-bar mode="indeterminate"></mat-progress-bar>
@@ -185,17 +194,10 @@
 
         <div id="newStatus" *ngSwitchCase="PageStatus.New" class="row align-items-center justify-content-center">
             <!-- New -->
-            <div class="mt-5 no-dashboards">
-
-                <div id="content-no-dashboards" class="col-md-12">
-                    <i class="fa fa-bar-chart-o"></i>
-                    <h3 id="title-no-dashboards" i18n="@@HYT_no_dashboard_yet">You have not configured any dashboard yet.</h3>
-                    <!-- <h4 id="subtitle-no-dashboards">Start adding widgets.</h4> -->
-                </div>
-
-                <!-- <hyt-dashboard-view [dashboard]="currentDashboard"></hyt-dashboard-view> -->
-
-            </div> <!-- End No Projects Row -->
+            <hyt-empty-project-list-view
+                title="There are no projects!"
+                message="To add a project click the button below."
+            ></hyt-empty-project-list-view>
 
         </div>
 

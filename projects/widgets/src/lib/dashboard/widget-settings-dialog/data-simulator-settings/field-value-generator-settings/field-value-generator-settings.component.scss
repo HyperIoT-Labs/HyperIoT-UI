@@ -1,0 +1,36 @@
+.field-value-generator-settings {
+    padding: 20px;
+
+    .generation-settings {
+        display: flex;
+        flex-direction: column;
+
+        .rule-info {
+            background-color: #0096ff33;
+            padding: 1em;
+            margin: 0.5em 0;
+            border-radius: 0.4em;
+        
+            ul {
+                margin-bottom: 0px;
+            }
+        }
+
+        .rule-input {
+            display: flex;
+            gap: 20px;
+        }
+
+    }
+
+    mat-form-field {
+        width: 280px;
+    }
+
+    .no-rule-warn {
+        background-color: #ffd6005c;
+        padding: 1em;
+        margin: 0.5em 0;
+        border-radius: 0.4em;
+    }
+}

@@ -1,5 +1,5 @@
-import { HytModal, HytModalService } from 'components';
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { DIALOG_DATA, DialogRef } from 'components';
+import { Component, OnInit, Output, EventEmitter, Inject } from '@angular/core';
 import { ServiceType } from '../../service/model/service-type';
 import { PacketData } from 'core';
 
@@ -8,7 +8,7 @@ import { PacketData } from 'core';
   templateUrl: './widget-fullscreen-dialog.component.html',
   styleUrls: ['./widget-fullscreen-dialog.component.scss']
 })
-export class WidgetFullscreenDialogComponent extends HytModal implements OnInit {
+export class WidgetFullscreenDialogComponent implements OnInit {
 
   @Output() widgetAction: EventEmitter<any> = new EventEmitter();
 
@@ -18,10 +18,9 @@ export class WidgetFullscreenDialogComponent extends HytModal implements OnInit 
   serviceType: ServiceType;
 
   constructor(
-    hytModalService: HytModalService,
-  ) {
-    super(hytModalService);
-  }
+    private dialogRef: DialogRef<any>,
+    @Inject(DIALOG_DATA) public data: any,
+  ) { }
 
   ngOnInit(): void {
     this.widget = this.data?.widget;
@@ -32,11 +31,11 @@ export class WidgetFullscreenDialogComponent extends HytModal implements OnInit 
 
   closeModal(event?): void {
     this.fullScreenInitData = [];
-    this.close(event);
+    this.dialogRef.close(event);
   }
 
   configureWidget() {
-    this.close({
+    this.dialogRef.close({
       action: 'widget:setting',
       widget: this.widget
     })

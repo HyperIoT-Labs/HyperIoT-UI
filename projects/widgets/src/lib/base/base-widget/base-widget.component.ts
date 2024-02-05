@@ -32,7 +32,7 @@ export abstract class BaseWidgetComponent implements OnChanges, OnInit, OnDestro
   constructor(
     private injector: Injector,
     protected loggerService: LoggerService
-  ) { 
+  ) {
     this.logger = new Logger(this.loggerService);
     this.logger.registerClass(BaseWidgetComponent.name);
   }
@@ -138,6 +138,10 @@ export abstract class BaseWidgetComponent implements OnChanges, OnInit, OnDestro
           case 'DOUBLE':
           case 'FLOAT': {
             const unitConversion = this.widget.config.fieldUnitConversions[fieldId];
+            // temp fix. packet values shouldn't be forcibly converted
+            if (!isNaN(parseFloat(pd[packetKey]))) {
+              pd[packetKey] = parseFloat(pd[packetKey]);
+            }
             if (unitConversion && typeof pd[packetKey] === 'number') {
               // applying unit conversion
               if (unitConversion.convertFrom !== unitConversion.convertTo) {

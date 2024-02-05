@@ -905,4 +905,17 @@ export class DefibrillatorComponent extends BaseTableComponent implements OnInit
     }
   }
 
+  onSummaryChartInitialized(i: number) {
+    if (this.visualizationType !== 'summary') {
+      return;
+    }
+    const resizeObserver = new ResizeObserver((entries) => {
+      const graph = this.plotly.getInstanceByDivId(`widget-${this.widget.id}-chart${i}-${this.isToolbarVisible}`);
+      if (graph) {
+        this.plotly.resize(graph);
+      }
+    });
+    resizeObserver.observe(document.querySelector(`#widget-${this.widget.id}-chart${i}-${this.isToolbarVisible}`));
+  }
+
 }

@@ -21,7 +21,51 @@
         text-align: center !important;
     }
 }
-.label {
-    color: blue;
-    font-weight: 600;
+
+#box-fields-customization {
+
+    margin-top: 10px;
+    width: 100%;
+
+    .box-fields-customization-title {
+        display: flex;
+        color: #0856b6;
+        align-items: center;
+        gap: 4px;
+        text-transform: uppercase;
+    }
+
+    .customization-field-title {
+        color: #0856b6;
+        text-transform: uppercase;
+    }
+
+    .customization-container {
+        margin: 12px;
+        display: flex;
+        flex-wrap: wrap;
+        .customization-container-section {
+            display: flex;
+            flex-direction: column;
+            margin-top: 12px;
+            .section-title {
+                color: #0856b6;
+                display: flex;
+            }
+            .section-input {
+                margin-left: 24px;
+                margin-top: 8px;
+                display: flex;
+                gap: 32px;
+                hyt-select-template,
+                hyt-input-template {
+                    width: 30%;
+                }
+            }
+        }
+        .section-alias {
+            width: 50%;
+        }
+    }    
+
 }

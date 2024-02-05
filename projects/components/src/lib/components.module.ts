@@ -15,15 +15,12 @@ import { HytInputTemplateComponent } from './hyt-input-template/hyt-input-templa
 import { HytSelectTemplateComponent } from './hyt-select-template/hyt-select-template.component';
 import { HytTreeViewProjectComponent } from './hyt-tree-view-project/hyt-tree-view-project.component';
 import { HytTreeViewEditableComponent } from './hyt-tree-view-editable/hyt-tree-view-editable.component';
-import { HytModalEComponent } from './hyt-modal-e/hyt-modal-e.component';
 import { HytTagComponent } from './hyt-tag/hyt-tag.component';
 import { HytTagListComponent } from './hyt-tag-list/hyt-tag-list.component';
 import { HytTreeViewCategoryComponent } from './hyt-tree-view-category/hyt-tree-view-category.component';
 import { HytAutocompleteComponent } from './hyt-autocomplete/hyt-autocomplete.component';
 import { HytTriCheckboxComponent } from './hyt-tri-checkbox/hyt-tri-checkbox.component';
 import { HytHexagonComponent } from './hyt-hexagon/hyt-hexagon.component';
-import { HytModalContainerComponent } from './hyt-modal/hyt-modal-container.component';
-import { HytModalContentDirective } from './hyt-modal/hyt-modal-content.directive';
 import { HytDatePickerComponent } from './hyt-date-picker/hyt-date-picker.component';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
 import { PickerPopUpComponent } from './hyt-date-picker/picker-pop-up/picker-pop-up.component';
@@ -37,21 +34,25 @@ import { HytAccordionItem } from './hyt-accordion/hyt-directives/hyt-accordion-i
 import { HytAccordionContent } from './hyt-accordion/hyt-directives/hyt-accordion-content.directive';
 import { NotificationService } from './hyt-notification-box/services/notification.service';
 import { HytConfirmRecordingActionComponent } from './hyt-modal/hyt-confirm-recording-action/hyt-confirm-recording-action.component';
-import { HytGenericMessageDialogComponent } from './hyt-modal/hyt-generic-message-dialog/hyt-generic-message-dialog.component';
 import { HytInfoRecordingActionComponent } from './hyt-modal/hyt-info-recording-action/hyt-info-recording-action.component';
 import { HytTopologyToolbarComponent } from './hyt-shared-components/hyt-topology-toolbar/hyt-topology-toolbar.component';
-import { HytModalService } from './hyt-modal/hyt-modal.service';
 import { HytLoginComponent } from './hyt-login/login.component';
 import { RouterModule } from '@angular/router';
 import { HytInfoComponent } from './hyt-info/hyt-info.component';
 import { HytIconButtonComponent } from './hyt-icon-button/hyt-icon-button.component';
-import { DialogComponent } from './hyt-dialog/dialog/dialog.component';
 import { ConfirmDialogComponent } from './hyt-dialog/confirm-dialog/confirm-dialog.component';
-import { DynamicDialogComponent } from './hyt-dialog/dynamic-dialog/dynamic-dialog.component';
-import { DDComponentDirective } from './hyt-dialog/dynamic-dialog/DDComponent.directive';
+import { InfoDialogComponent } from './hyt-dialog/info-dialog/info-dialog.component';
 import { CronEditorComponent } from './cron-editor/cron-editor.component';
 import { TimePickerComponent } from './cron-editor/time-picker/time-picker.component';
 import { HytInnerFieldSelectComponent } from './hyt-inner-field-select/hyt-inner-field-select.component';
+import { DialogContainerComponent } from './hyt-dialog/dialog-container/dialog-container.component';
+import { HytDialogDirective, HytDialogContent, HytDialogFooter, HytDialogTitle } from './hyt-dialog/dialog-directives';
+import { HytFilterButtonComponent } from './hyt-filter-button/hyt-filter-button.component';
+import { HytBadgeComponent } from './hyt-badge/hyt-badge.component';
+import { HytDetailedCardComponent } from './hyt-detailed-card/hyt-detailed-card.component';
+import { HytBimComponent } from './hyt-bim/bim.component';
+import { HytChatbotComponent } from './hyt-chatbot/hyt-chatbot.component';
+import { HytEmptyProjectListViewComponent } from './hyt-empty-project-list-view/hyt-empty-project-list-view.component';
 
 export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
 
@@ -70,15 +71,12 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     HytSelectTemplateComponent,
     HytTreeViewProjectComponent,
     HytTreeViewEditableComponent,
-    HytModalEComponent,
     HytTagComponent,
     HytTagListComponent,
     HytTreeViewCategoryComponent,
     HytAutocompleteComponent,
     HytTriCheckboxComponent,
     HytHexagonComponent,
-    HytModalContainerComponent,
-    HytModalContentDirective,
     HytDatePickerComponent,
     PickerPopUpComponent,
     HytLazyPaginationTableComponent,
@@ -90,19 +88,27 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     HytAccordionItem,
     HytAccordionContent,
     HytConfirmRecordingActionComponent,
-    HytGenericMessageDialogComponent,
     HytInfoRecordingActionComponent,
     HytTopologyToolbarComponent,
     HytLoginComponent,
     HytInfoComponent,
     HytInnerFieldSelectComponent,
     HytIconButtonComponent,
-    DDComponentDirective,
-    DialogComponent,
     ConfirmDialogComponent,
-    DynamicDialogComponent,
+    InfoDialogComponent,
     CronEditorComponent,
     TimePickerComponent,
+    DialogContainerComponent,
+    HytDialogDirective,
+    HytDialogFooter,
+    HytDialogContent,
+    HytDialogTitle,
+    HytFilterButtonComponent,
+    HytDetailedCardComponent,
+    HytBadgeComponent,
+    HytBimComponent,
+    HytChatbotComponent,
+    HytEmptyProjectListViewComponent,
   ],
   imports: [
     CommonModule,
@@ -130,12 +136,9 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     HytTreeViewEditableComponent,
     HytTagComponent,
     HytTagListComponent,
-    HytModalEComponent,
     HytAutocompleteComponent,
     HytTriCheckboxComponent,
     HytHexagonComponent,
-    HytModalContainerComponent,
-    HytModalContentDirective,
     HytDatePickerComponent,
     HytLazyPaginationTableComponent,
     HytButtonToggleComponent,
@@ -145,22 +148,28 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     HytAccordionItem,
     HytAccordionContent,
     HytConfirmRecordingActionComponent,
-    HytGenericMessageDialogComponent,
     HytInfoRecordingActionComponent,
     HytInnerFieldSelectComponent,
     HytTopologyToolbarComponent,
     HytLoginComponent,
     HytInfoComponent,
     HytIconButtonComponent,
+    HytDialogDirective,
+    HytDialogFooter,
+    HytDialogContent,
+    HytDialogTitle,
+    HytFilterButtonComponent,
+    HytDetailedCardComponent,
+    HytBadgeComponent,
+    HytBimComponent,
+    HytChatbotComponent,
+    HytEmptyProjectListViewComponent,
   ],
   providers: [
     NotificationService,
-    HytModalService,
   ],
   entryComponents: [
-    HytModalContainerComponent,
     HytConfirmRecordingActionComponent,
-    HytGenericMessageDialogComponent,
     HytInfoRecordingActionComponent,
   ]
 })

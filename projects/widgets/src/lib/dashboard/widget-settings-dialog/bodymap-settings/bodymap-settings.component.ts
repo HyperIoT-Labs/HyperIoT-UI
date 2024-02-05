@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { ControlContainer, NgForm } from '@angular/forms';
-import { ConfirmDialogService, DynamicDialogService } from 'components';
+import { ConfirmDialogService, DialogService } from 'components';
 import { HPacket } from 'core';
 import { Observable } from 'rxjs';
 import { WidgetConfig } from '../../../base/base-widget/model/widget.model';
@@ -64,7 +64,7 @@ export class BodymapSettingsComponent implements OnInit, OnDestroy {
 
     constructor(
       public settingsForm: NgForm,
-      private dynamicDialogService: DynamicDialogService,
+      private dialogService: DialogService,
       private confirmDialogService: ConfirmDialogService
     ) { }
 
@@ -103,8 +103,8 @@ export class BodymapSettingsComponent implements OnInit, OnDestroy {
     onBodyMapChange(toggleChange) {
       const selectedBodyMap: string = toggleChange.value;
       if (this.musclesMap && this.musclesMap.length) {
-        const dialogRef = this.confirmDialogService.openDialog({
-          header: { label: 'Conferma modifica' },
+        const dialogRef = this.confirmDialogService.open({
+          header: 'Conferma modifica',
           text: 'Attenzione, cambiando la mappa saranno perse le assegnazioni precedemente inserite'
         });
         dialogRef.afterClosed().subscribe(
@@ -135,7 +135,7 @@ export class BodymapSettingsComponent implements OnInit, OnDestroy {
     }
 
   openDialog(association?: BodyMapAssociation) {
-    const elementTarget = document.getElementById('container-settings-content');
+    const elementTarget = document.getElementById('widget-settings-dialog');
 
     const animationKkeyframes: Keyframe[] = [
       { height: 0 },
@@ -146,13 +146,12 @@ export class BodymapSettingsComponent implements OnInit, OnDestroy {
       iterations: 1,
       easing: 'ease-in-out'
     };
-    const dialogRef = this.dynamicDialogService.openDialog(BodyMapAssociationComponent,
+    const dialogRef = this.dialogService.open(BodyMapAssociationComponent,
       {
-        association, projectId: this.widget.projectId,
-        bodyMap: this.bodyMap
-      },
-      {
-      extra: {
+        data: {
+          association, projectId: this.widget.projectId,
+          bodyMap: this.bodyMap,
+        },
         backgroundClosable: false,
         attachTarget: elementTarget,
         height: elementTarget.offsetHeight - 45 + 'px',
@@ -168,7 +167,7 @@ export class BodymapSettingsComponent implements OnInit, OnDestroy {
           keyframeAnimationOptions: Object.assign({ direction : 'reverse' }, animationOptions)
         }
       },
-    });
+    );
     dialogRef.afterClosed().subscribe(
       result => this.onAssociationSave(result)
     );

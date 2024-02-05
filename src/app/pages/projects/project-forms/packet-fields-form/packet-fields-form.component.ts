@@ -265,7 +265,7 @@ export class PacketFieldsFormComponent extends ProjectFormEntity implements OnDe
     const dialogRef = this.dialog.open(DeleteConfirmDialogComponent, {
       data: { title: $localize`:@@HYT_field_delete_item:Delete the field?`, message: $localize`:@@HYT_field_operation_cannot_be_undone:If you delete the field, any configurations inside the widgets will be reset and will have to be set again.` }
     });
-    dialogRef.onClosed.subscribe((result) => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result === 'delete') {
         if (this.currentField && this.currentField.id === fieldId) {
           this.currentField = null;

@@ -28,7 +28,8 @@
           divId="widget-{{widget.id}}-{{graph?.key}}-{{isToolbarVisible}}"
           [data]="graph?.data"
           [layout]="graph?.layout"
-          [config]="graph?.config">
+          [config]="graph?.config"
+          (initialized)="onChartInitialized(graph?.key)">
         </plotly-plot>
         </div>
       </ng-template>

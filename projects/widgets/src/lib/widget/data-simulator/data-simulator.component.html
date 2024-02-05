@@ -1,0 +1,85 @@
+<hyperiot-base-widget-template>
+
+  <header-widget>
+    <hyperiot-common-toolbar
+      widgetName="{{widget.name}}"
+      (action)="onToolbarAction($event)"
+      [toolbarIsVisible]="isToolbarVisible"
+      [config]="{
+                showClose: true,
+                showSettings: true,
+                showPlay: false,
+                showRefresh: false,
+                showTable: false,
+                hideFullScreen: true
+          }">
+    </hyperiot-common-toolbar>
+  </header-widget>
+
+  <content-widget>
+    <div *ngIf="!isConfigured; else configured" class="configure-notice">
+      <strong i18n="@@HYT_common_not_configured">Click 'Settings' button to configure.</strong>
+    </div>
+    <ng-template #configured>
+      <!-- TODO -->
+      <hyperiot-loader *ngIf="false; else loadingFinished">
+      </hyperiot-loader>
+
+      <ng-template #loadingFinished>
+        <div class="data-simulator-container">
+
+          <div class="data-simulator-info device ellipsis">
+            {{ packetInfo }}
+          </div>
+
+          <div class="data-simulator-info sent ellipsis" i18n="@@HYT_packet_sent">
+            Packet sent: {{ counter }}
+          </div>
+
+          <div class="data-simulator-starter">
+            <mat-spinner *ngIf="status === 0" strokeWidth="5" diameter="42"></mat-spinner>
+            <button *ngIf="status === 1" mat-fab extended class="data-simulator-starter-button" (click)="toggleActive()">
+              <span class="hyt-icon" [ngClass]="isActive ? 'icon-hyt_pause' : 'icon-hyt_play'"></span>
+            </button>
+            <div *ngIf="status === -2" class="data-simulator-error">
+              <span i18n="@@HYT_connection_failed">Connection to Hyperiot services failed.</span>
+              <button mat-stroked-button (click)="connect()" i18n="@@HYT_reconnect">Reconnect</button>
+            </div>
+            <div *ngIf="status === -1" class="data-simulator-error">
+              <span i18n="@@HYT_not_authorized_password">Unauthorized to connect. Please check the device password in the widget configuration.</span>
+            </div>
+            <div *ngIf="status === 2" class="data-simulator-warn">
+              <span i18n="@@HYT_connection_closed_host">Connection closed by host.</span>
+              <button mat-stroked-button (click)="connect()" i18n="@@HYT_reconnect">Reconnect</button>
+            </div>
+          </div>
+
+          <div class="data-simulator-fields">
+            <table>
+              <tr *ngFor="let field of fieldList | keyvalue">
+                <td>{{ field.value }}</td>
+                <td>
+                  <ng-container *ngIf="generationError[field.key]">
+                    <span style="color: red;" i18n="@@HYT_error">Error</span>
+                  </ng-container>
+                  {{ lastPacket[field.value] }}
+                </td>
+                <td class="outlier-button" *ngIf="isOutlierColumnVisible">
+                  <button
+                    *ngIf="fieldOutliers[field.key]"
+                    mat-stroked-button
+                    (click)="generateOutlier(field)"
+                    i18n="@@HYT_outlier"
+                  >Outlier</button>
+                </td>
+              </tr>
+            </table>
+          </div>
+
+        </div>
+      </ng-template>
+
+    </ng-template>
+  </content-widget>
+
+</hyperiot-base-widget-template>

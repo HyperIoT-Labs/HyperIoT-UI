@@ -82,6 +82,13 @@ export class LineChartComponent
   subscribeAndInit() {
     this.subscribeDataChannel();
     this.computePacketData(this.initData);
+    const resizeObserver = new ResizeObserver((entries) => {
+      const graph = this.plotly.getInstanceByDivId(`widget-${this.widget.id}${this.isToolbarVisible}`);
+      if (graph) {
+        this.plotly.resize(graph);
+      }
+    });
+    resizeObserver.observe(document.querySelector(`#widget-${this.widget.id}${this.isToolbarVisible}`));
   }
 
   subscribeDataChannel() {

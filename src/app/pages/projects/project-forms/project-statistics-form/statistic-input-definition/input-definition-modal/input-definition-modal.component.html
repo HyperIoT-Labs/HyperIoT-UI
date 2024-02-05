@@ -1,10 +1,10 @@
-<div id="container-input-definition-modal" class="dialog">
+<div id="container-input-definition-modal" hyt-dialog>
 
-    <div class="dialog-header">
+    <div class="dialog-header" hyt-dialog-header>
         <span class="hyt-icon icon-hyt_cancelC" (click)="close()"></span>
     </div>
 
-    <div class="dialog-body">
+    <div class="dialog-body" hyt-dialog-content>
 
       <p id="modal-body-title" i18n="@@HYT_input_definition_modal_title">
           Bind packet fields to algorithm input
@@ -59,7 +59,7 @@
               No field found
             </p>
             <p *ngIf="searchText.length === 0 && hPacketFieldList.length === 0" i18n="@@HYT_no_available_fields">
-              There are not available fields anymore
+              There are no available fields anymore
             </p>
             <div
               cdkDropList
@@ -85,7 +85,7 @@
 
     </div>
 
-    <div class="dialog-footer">
+    <div class="dialog-footer" hyt-dialog-footer align="center">
         <hyt-button 
           [isDisabled]="!hasFinished()" 
           (clickFn)="output('finish', {});" 

@@ -1,6 +1,6 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
-import { HytModal, HytModalService } from 'components';
+import { DialogRef } from 'components';
 
 @Component({
   selector: 'hyt-algorithm-wizard-report-modal',
@@ -8,18 +8,16 @@ import { HytModal, HytModalService } from 'components';
   styleUrls: ['./algorithm-wizard-report-modal.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class AlgorithmWizardReportModalComponent extends HytModal {
+export class AlgorithmWizardReportModalComponent {
 
   constructor(
     private router: Router,
-    hytModalService: HytModalService
-  ) {
-    super(hytModalService);
-  }
+    private dialogRef: DialogRef<void>,
+  ) { }
 
   goToAlgorithmsWizard() {
     this.router.navigate(['/algorithms']);
-    this.close();
+    this.dialogRef.close();
   }
 
 }

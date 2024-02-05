@@ -6,7 +6,7 @@ import { OnInit, Output, EventEmitter, Injector, AfterViewInit,ChangeDetectorRef
 import { SummaryList } from '../project-detail/generic-summary-list/generic-summary-list.component';
 import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
 import { EntitiesService } from 'src/app/services/entities/entities.service';
-import { HytModalService } from 'components';
+import { DialogService } from 'components';
 import { ProjectsService } from 'src/app/services/projects.service';
 import {MatRadioChange} from '@angular/material/radio';
 
@@ -53,7 +53,7 @@ export abstract class ProjectFormEntity implements OnInit, AfterViewInit {
     @Output() clickedTab: EventEmitter<any> = new EventEmitter();
 
     protected formBuilder: FormBuilder;
-    protected dialog: HytModalService;
+    protected dialog: DialogService;
     protected entitiesService: EntitiesService;
 	protected projectsService: ProjectsService;
 
@@ -63,7 +63,7 @@ export abstract class ProjectFormEntity implements OnInit, AfterViewInit {
     ) {
         this.formBuilder = injector.get(FormBuilder);
         this.entitiesService = injector.get(EntitiesService);
-        this.dialog = injector.get(HytModalService);
+        this.dialog = injector.get(DialogService);
         this.form = this.formBuilder.group({});
         //this.formAlarm = this.formBuilder.group({});
 		    this.projectsService = injector.get(ProjectsService);
@@ -95,6 +95,7 @@ export abstract class ProjectFormEntity implements OnInit, AfterViewInit {
     }
 
     edit(entity?: any, readyCallback?) {
+      console.log('EDIT', entity)
         if (entity) {
             this.entity = { ...entity };
         }
@@ -186,6 +187,7 @@ export abstract class ProjectFormEntity implements OnInit, AfterViewInit {
     }
 
     resetForm() {
+      console.log('EDIT - RESET')
       this.originalValue = this.serialize();
     }
 
@@ -252,12 +254,12 @@ export abstract class ProjectFormEntity implements OnInit, AfterViewInit {
         // Packet case
         if (this.entity.trafficPlan && this.entity.type) textDialog = { title: $localize`:@@HYT_packet_delete_packet_question:Do you really want to delete this packet?`, message: $localize`:@@HYT_packet_operation_cannot_be_undone:If you delete the packet, any configurations inside the widgets will be reset and will have to be set again.`}
         // All other cases
-        else textDialog = { title: $localize`:@@HYT_delete_item_question:Do you really want to delete this item?`, message: $localize`:@@HYT_operation_can_not_be_undone:This operation can not be undone`}
+        else textDialog = { title: $localize`:@@HYT_delete_item_question:Do you really want to delete this item?`, message: $localize`:@@HYT_operation_cannot_be_undone:This operation cannot be undone`}
 
         const dialogRef = this.dialog.open(DeleteConfirmDialogComponent, {
             data: textDialog
         });
-        dialogRef.onClosed.subscribe((result) => {
+        dialogRef.afterClosed().subscribe((result) => {
             if (result === 'delete') {
                 this.delete(successCallback, errorCallback);
             }

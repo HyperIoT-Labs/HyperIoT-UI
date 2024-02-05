@@ -355,7 +355,22 @@
             }
 
         } /* END TOTAL ICON-ONLY BUTTON */
+        
+        &.hyt-base-btn-outlined {
+            color: #0956b6;
+            height: 100%;
+            width: 100%;
+            border: 1px solid #0956b6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
     
+            &:hover {
+                background-color: #0956B6;
+                color: #fff; 
+            }
+        } /* END TOTAL WHITE BUTTON */
+
         &.mat-hyt-stepper-next,
         &.mat-hyt-stepper-prev {
     

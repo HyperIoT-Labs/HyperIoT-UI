@@ -4,7 +4,6 @@ import { AddWidgetDialogComponent } from './add-widget-dialog.component';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DashboardConfigService } from '../dashboard-config.service';
-import { HytModalConfService } from 'src/app/services/hyt-modal-conf.service';
 
 describe('ModalDialogComponent', () => {
   let component: AddWidgetDialogComponent;
@@ -12,7 +11,6 @@ describe('ModalDialogComponent', () => {
   let activatedRoute: ActivatedRoute;
   let router: Router;
   let dashboardConfigService: DashboardConfigService;
-  let hytModalService: HytModalConfService;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
@@ -20,8 +18,7 @@ describe('ModalDialogComponent', () => {
       schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
       providers: [{provide: ActivatedRoute, useValue: activatedRoute},
         {provide: Router, useValue: router},
-        {provide: DashboardConfigService, useValue: dashboardConfigService},
-        {provide: HytModalConfService, useValue: hytModalService}]
+        {provide: DashboardConfigService, useValue: dashboardConfigService}]
     })
       .compileComponents();
   }));

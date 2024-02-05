@@ -1,5 +1,8 @@
 html {
-  height: 100%;
+  /**
+  * commented to prevent the BIM navigation cube misalignment problem
+  **/
+ /* height: 100%;*/
 
   ::-webkit-scrollbar {
     width: .4em;
@@ -21,7 +24,7 @@ html {
   }
 
   body {
-    height: 100%;
+    /*height: 100%;*/
 
     &.hyt-modal-open {
       overflow: hidden;
@@ -33,17 +36,22 @@ html {
 
     #hyt-container {
 
-      position: relative;
+      /*position: relative;
       top: 0px;
       left: 0px;
       right: 0px;
       bottom: 0px;
-      height: 100%;
+      height: 100%;*/
       overflow-x: hidden;
-      overflow-y: auto;
+      margin-top: 64px;
+      /**
+      * Hidden vertical scrolling of the component to favor that of the whole page obtained by commenting on line 5.
+      * Previously set to "overflow-y: auto;"
+      **/
+      overflow-y: hidden;
 
       #hyt-container-topbar {
-        
+
         position: fixed;
         z-index: 999;
         top: 0;
@@ -59,13 +67,13 @@ html {
         #hyt-container-router {
 
           &.container-fluid {
-            position: relative;
+            /*position: relative;*/
             padding-left: 60px;
             padding-right: 0;
-            top: 64px;
+            /*top: 64px;*/
             padding-bottom: 60px;
             overflow: visible;
-            height: 100%;
+            /*height: 100%;*/
 
             -webkit-transition: all .5s ease-in-out;
             -moz-transition: all .5s ease-in-out;
@@ -192,6 +200,11 @@ html {
   100% {transform: scale(1)}
 }
 
+/* UTILS */
+.text-center{
+  text-align: center;
+}
+
 /* RESPONSIVE */
 
 @media (max-width: 991px) {
@@ -201,26 +214,27 @@ html {
     body {
 
       #hyt-container {
-  
+
         #hyt-container-nav {
-  
+
           #hyt-container-router {
-  
+
             &.container-fluid {
 
               padding-left: 0px;
-            
+
             }
-        
+
           }
-  
+
         }
-  
-      } 
-  
+
+      }
+
     }
 
   }
- 
+
 
 } /* END 991px */
+

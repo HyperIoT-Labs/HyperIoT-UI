@@ -1,7 +1,6 @@
 import {Component, OnDestroy, ViewEncapsulation} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {AreasService, Area, HprojectsService, HProject, Logger, LoggerService} from 'core';
-import { HytModalService } from 'components';
 import { HttpClient } from '@angular/common/http';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
@@ -9,6 +8,7 @@ import {takeUntil} from 'rxjs/operators';
 enum PageStatus {
   Loading = 0,
   Ready = 1,
+  New = 2,
   Error = -1
 }
 
@@ -47,7 +47,6 @@ export class AreasViewComponent implements OnDestroy {
   constructor(
     private projectService: HprojectsService,
     private areaService: AreasService,
-    private modalService: HytModalService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private httpClient: HttpClient,
@@ -117,6 +116,9 @@ export class AreasViewComponent implements OnDestroy {
           })
         });
         this.apiSuccess(projectList);
+        if (this.userProjectsOptions.length === 0) {
+          this.pageStatus = PageStatus.New;
+        }
     }, this.apiError);
   }
 

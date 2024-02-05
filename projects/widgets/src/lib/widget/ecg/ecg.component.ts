@@ -270,6 +270,16 @@ export class EcgComponent extends BaseTableComponent implements OnInit {
     this.dataSubscription = this.dataChannel.subject.subscribe(observerCallback);
   }
 
+  onChartInitialized(key: string) {
+    const resizeObserver = new ResizeObserver((entries) => {
+      const graph = this.plotly.getInstanceByDivId(`widget-${this.widget.id}-${key}-${this.isToolbarVisible}`);
+      if (graph) {
+        this.plotly.resize(graph);
+      }
+    });
+    resizeObserver.observe(document.querySelector(`#widget-${this.widget.id}-${key}-${this.isToolbarVisible}`));
+  }
+
   play(): void {
     this.dataChannel.controller.play();
     this.packetFields.forEach( async (field) => {

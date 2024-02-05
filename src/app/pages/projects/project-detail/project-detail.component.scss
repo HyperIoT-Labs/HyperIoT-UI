@@ -6,33 +6,35 @@
     padding-left: 15px;
     margin-right: 15px;
 
+    min-height: 700px;
+
     .header {
         border-bottom: 1px solid #1e58a5;
         min-height: 50px;
-    
+
         .breadcrumb {
             font-weight: 400;
             font-size: 1.2em;
             line-height: 48px;
             vertical-align: middle;
-    
+
             span {
-    
+
                 &.icon-hyt_projectSolo {
                 font-size: 1.8em;
                 vertical-align: middle;
                 margin-right: 3px;
-                color: #bec3c7;       
+                color: #bec3c7;
                 }
-    
+
             }
-    
+
             a {
                 color: #000000;
             }
-    
+
         }
-    
+
     }
 
     #container-general-form {
@@ -132,7 +134,7 @@
         }
 
         .side-bar {
-            
+
             text-align: center;
 
             hyt-button {
@@ -155,29 +157,29 @@
                 &#save-btn {
 
                     span {
-    
+
                         &.icon-hyt_save {
-    
+
                             font-size: 1.4em;
-    
+
                         }
-    
+
                     }
-    
+
                 }
-    
+
                 &#delete-btn {
-    
+
                     span {
-    
+
                         &.icon-hyt_trash {
-    
+
                             font-size: 1.3em;
-    
+
                         }
-    
+
                     }
-    
+
                 }
 
             }
@@ -187,7 +189,7 @@
                 margin-top: 25px;
 
                 .info-message {
-                    
+
                     -moz-border-radius: 5px;
                     -webkit-border-radius: 5px;
                     border-radius: 5px;
@@ -195,9 +197,9 @@
                     font-size: .9em;
                     border: .5px solid #bbc9da;
                     padding: 8px;
-                
+
                     & mat-icon {
-                        
+
                         position: absolute;
                         top: 0px;
                         right: 12px;
@@ -207,7 +209,7 @@
                         color: #0956b6;
 
                     }
-                
+
                     .text {
                         margin: 0;
                         line-height: 20px;
@@ -236,7 +238,7 @@
 
                             opacity: .5;
 
-                        } 
+                        }
 
                     }
 
@@ -280,7 +282,7 @@
                 }
 
                 &.displayBlock {
-                    
+
                     display: flex;
 
                 }
@@ -288,7 +290,7 @@
                 &.displayNone {
 
                     display: none;
-                    
+
                 }
 
                 #close-tree-btn {
@@ -348,7 +350,7 @@
                     border-style: dotted;
 
                     .treeview {
-                        
+
                         overflow: auto;
                         min-width: 300px;
                         max-height: 550px;
@@ -382,7 +384,7 @@
                         z-index: 1;
 
                         .box-back-btn {
-                            
+
                             display: flex;
                             flex-direction: row;
                             align-items: center;
@@ -416,8 +418,8 @@
                         align-items: center;
                         justify-content: flex-start;
                         flex: 0 0 100%;
-                        margin-bottom: 30px; 
-                        flex-wrap: wrap;   
+                        margin-bottom: 30px;
+                        flex-wrap: wrap;
 
                         #container-show-tree-btn {
 
@@ -508,7 +510,7 @@
 
                     flex: 0 0 100%;
 
-                } 
+                }
 
                 &.rightSeparator {
 
@@ -604,7 +606,7 @@
     #single-project-page {
 
         #container-general-form {
-            
+
             .content {
 
                 h2 {
@@ -619,7 +621,7 @@
                 }
 
             }
-            
+
             #row-detail {
                 #container-project-content {
                     .content {
@@ -655,7 +657,7 @@
 }
 
 @media (max-width: 992px) {
-   
+
     #single-project-page {
         #container-general-form {
             #row-detail {
@@ -672,22 +674,22 @@
 
                                 flex: 0 0 50%;
                                 order: 2;
-    
+
                             }
-    
+
                             #container-title {
-    
+
                                 flex: 0 0 100%;
                                 order: 1;
                                 margin-bottom: 15px;
-    
+
                             }
-    
+
                             #navButtonsContent {
 
                                 flex: 0 0 50%;
                                 order: 3;
-    
+
                             }
 
                         }
@@ -739,14 +741,14 @@
                 #container-project-treeview {
                     #treeViewBody {
                         .treeview {
-                            
+
                             font-size: .8em;
                             min-width: 200px;
                             width: 100%;
                             max-width: 450px;
-                            
+
                             .mat-tree {
-                                
+
                                 .mat-tree-node {
 
                                     font-size: .9em;
@@ -775,7 +777,7 @@
     .mat-tooltip-handset, .mat-tooltip { /* handle tooltips text */
 
         font-size: 14px;
-    
+
     }
 
 }
@@ -796,7 +798,7 @@
                     #treeViewHeader {
 
                         cursor: n-resize;
-                    
+
                     }
 
                     #treeViewBody {
@@ -837,7 +839,7 @@
             #row-detail {
                 #container-project-content {
                     .content {
-                       
+
                         .container-form-title {
 
                             #container-show-tree-btn {

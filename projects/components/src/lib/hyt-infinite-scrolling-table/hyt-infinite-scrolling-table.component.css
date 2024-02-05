@@ -23,6 +23,7 @@
   top: 0;
   text-overflow: ellipsis;
   overflow: hidden;
+  white-space: nowrap;
 }
 
 .hyt-lazy-pagination-table .table-navigation {
@@ -40,7 +41,7 @@
 }
 
 /* Rule to change according to use */
-.hyt-lazy-pagination-table tr.single-row-data-elements td:first-child {
+.hyt-lazy-pagination-table tr.single-row-data-elements td {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

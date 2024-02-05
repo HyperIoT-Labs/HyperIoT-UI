@@ -23,6 +23,7 @@
   top: 0;
   text-overflow: ellipsis;
   overflow: hidden;
+  white-space: nowrap;
 }
 
 .hyt-lazy-pagination-table .table-navigation {
@@ -32,6 +33,17 @@
   background-color: white;
   bottom: 0;
   left: 0;
+}
+
+.hyt-lazy-pagination-table tr.single-row-data-elements td {
+  padding: 0px 5px;
+}
+
+/* Rule to change according to use */
+.hyt-lazy-pagination-table tr.single-row-data-elements td {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .hyt-lazy-pagination-table .table-navigation mat-form-field {

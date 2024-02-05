@@ -31,7 +31,7 @@
         </div>
 
       <!-- START TAB -->
-        <mat-tab-group [(selectedIndex)]="currentSection" (selectedTabChange)="onTabChange($event)">
+        <mat-tab-group #tabGroup  [(selectedIndex)]="currentSection" (selectedTabChange)="onTabChange($event)">
 
             <mat-tab label="Info" i18n-label="@@HYT_area_section_info" aria-label="INFO">
                 <form [formGroup]="form" enctype="multipart/form-data" class="mt-4 d-flex flex-column justify-content-center">
@@ -61,6 +61,7 @@
                             label="Type"
                             i18n-hintMessage="@@HYT_hint_field_type"
                             hintMessage="Select field type."
+                            (changeFn)="onInfoTypeChange($event)"
                           >
                           </hyt-select>
                         </div>
@@ -79,41 +80,10 @@
                         </div>
                       </div>
                     </div>
-                    <!--<hyt-input-text [form]="form"
-                        name="area-name"
-                        i18n-placeholder="@@HYT_name"
-                        placeholder="Name"
-                        errorPosition="bottom"
-                        minlength="3"
-                        [injectedErrorMsg]="getError('area-name')"
-                        i18n-hintMessage="@@HYT_hint_area_name"
-                        hintMessage="Enter area name"
-                        [isRequired]="true"
-                    ></hyt-input-text>
-
-                    <hyt-text-area [form]="form"
-                        name="area-description"
-                        [injectedErrorMsg]="getError('area-description')"
-                        i18n-hintMessage="@@HYT_hint_area_description"
-                        hintMessage="Enter area description"
-                        i18n-placeholder="@@HYT_description"
-                        placeholder="Description"
-                    ></hyt-text-area>
-                  <hyt-select
-                    [form]="form"
-                    name="area-type"
-                    [options]="fieldAreaTypeOptions"
-                    [isRequired]="true"
-                    i18n-label="@@HYT_type"
-                    label="Type"
-                    i18n-hintMessage="@@HYT_hint_field_type"
-                    hintMessage="Select field type."
-                  >
-                  </hyt-select>-->
                 </form>
             </mat-tab>
 
-            <mat-tab *ngIf="areaId > 0" label="Sub-areas ({{ areaList.length }})" i18n-label="@@HYT_area_section_inner" aria-label="SUB-AREA">
+            <mat-tab *ngIf="areaId > 0 && entity.areaViewType !== 'BIM_XKT'" label="Sub-areas ({{ areaList.length }})" i18n-label="@@HYT_area_section_inner" aria-label="SUB-AREA">
                 <div class="actions">
                     <hyt-button [color]="'hyt-base-default-white'" mat-mini-fab (clickFn)="onAddInnerAreaClick($event)">
                         <span i18n="@@HYT_area_inner_add">Add sub-area</span>
@@ -129,7 +99,13 @@
                 </hyt-areas-list>
             </mat-tab>
 
-            <mat-tab *ngIf="areaId > 0" label="Image" i18n-label="@@HYT_area_section_static_image" aria-label="IMAGE">
+            <mat-tab
+              *ngIf="areaId > 0 && entity.areaViewType === 'IMAGE'"
+              label="Image"
+              i18n-label="@@HYT_area_section_static_image"
+              aria-label="IMAGE"
+
+            >
                 <div class="mt-4 mb-2 d-flex flex-row justify-content-center">
 
                     <hyt-button [color]="'hyt-base-default-white'">
@@ -150,6 +126,44 @@
 
                 </div>
                 <hyt-area-map #map [editMode]="true"></hyt-area-map>
+            </mat-tab>
+
+            <mat-tab *ngIf="areaId > 0 && (entity.areaViewType === 'BIM_XKT' || entity.areaViewType === 'BIM_IFC')" label="BIM" aria-label="BIM_XKT">
+
+              <div id="bimTabProject" class="mt-4 mb-2 d-flex flex-row justify-content-center">
+                <hyt-button [color]="'hyt-base-default-white'">
+                  <label class="m-0 p-0" for="map-bim-input" i18n="@@HYT_area_set_bim_model">Set Model</label>
+                </hyt-button>
+                <input
+                  class="hidden"
+                  id="map-bim-input"
+                  name="area-bim"
+                  (change)="onFileChangeBim($event)"
+                  type="file"
+                  placeholder="Upload file"
+                  accept="{{ allowedBimTypes }}"
+                >
+              </div>
+              <div id="container-bim-viewer">
+                <ng-container *ngIf="isBimLoading; else bimLoaded">
+                  <div id="bimLoading">
+                    <ng-container *ngIf="!isEmptyBim; else emptyBim">
+                      <span i18n="@@HYT_area_loading_bim_model">BIM Model Loading...</span>
+                    </ng-container>
+                    <ng-template #emptyBim>
+                      <span i18n="@@HYT_area_empty_bim_model">No Model</span>
+                    </ng-template>
+                  </div>
+                </ng-container>
+                <ng-template #bimLoaded>
+                  <hyt-bim
+                    [pathBim]="pathBim"
+                    [currentAreaConfiguration]="entity.areaConfiguration"
+                    [projectId]="projectId"
+                    [areaId]="areaId"
+                  ></hyt-bim>
+                </ng-template>
+              </div>
             </mat-tab>
 
         </mat-tab-group>

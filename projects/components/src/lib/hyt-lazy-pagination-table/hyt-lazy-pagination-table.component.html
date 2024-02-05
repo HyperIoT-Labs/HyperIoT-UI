@@ -10,7 +10,7 @@
                 </tr>
             </thead>
             <tbody *ngIf="tableStatus == 1">
-                <tr *ngFor="let data of pageData">
+                <tr class="single-row-data-elements" *ngFor="let data of pageData">
                     <td *ngFor="let item of headers">
                       <div *ngIf="item.type === 'FILE'" class="file-cell">
                         <span class="hyt-icon icon-hyt_search" (click)="openFile(data[item.value])"></span>

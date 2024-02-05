@@ -45,12 +45,12 @@
             <div id="algorithms-topfilters-box" class="col-12">
               <form #f="ngForm" [formGroup]="filteringForm" (ngSubmit)="filter()">
                 <div class="row">
-                  <div class="col-6">
+                  <div class="col-12 col-md-6">
                     <hyt-input-text id="hyt-search-bottom" [form]="filteringForm" formControlName="textFilter"
                       name="textFilter" i18n-placeholder="@@HYT_search" placeholder="Search" (keyup)="onChangeInputSearch($event)"></hyt-input-text>
                   </div>
-                  <div class="col-6 sort-right">
-                    <span id="sort-text">Sort by: </span>
+                  <div class="col-12 col-md-6 d-flex align-items-center justify-content-start justify-content-md-end">
+                    <span id="sort-text" class="mr-2">Sort by: </span>
                     <hyt-select [form]="filteringForm" i18n-label="@@HYT_select_sort_type" label="Select a sort type" formControlName="sort" name="sort"
                       (changeFn)="onChangeSelectSort($event)" [options]="sortOptions"></hyt-select>
                   </div>
@@ -81,19 +81,23 @@
   
           </div> <!-- END DISPLAY MESSAGE AREA -->
   
-          <div id="row-cotainer-cards" [ngClass]="{'cards-blurred' : deletingInLoading}" class="row">
+          <div id="row-cotainer-cards" [ngClass]="{'cards-blurred' : deletingInLoading}" class="row hyt-card-wrapper">
   
             <div *ngIf="algorithmsFiltered.length == 0" class="col-12">
-              <span i18n="@@HYT_no_algorithm_found">No algorithm that matches the search found...</span>
+              <span i18n="@@HYT_no_algorithm_found">No algorithm matching the search was found...</span>
             </div>
-  
-            <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2 single-card-container d-flex flex-row justify-content-center"
-              *ngFor="let p of algorithmsFiltered">
-  
-              <hyt-algorithm-card (refreshView)='refreshViewOnDelete($event)' [algorithm]="p"></hyt-algorithm-card>
-  
+            
+            <div class="hyt-card-container">
+              <hyt-detailed-card 
+                *ngFor="let p of algorithmsFiltered"
+                [title]="p.name"
+                [description]="p.description"
+                btnLabel="view projects"
+                valRouterLink="/algorithm-wizard/{{p.id}}"
+                [paramEmittedOnClick]="p"
+                (deleteClick)="openDeleteDialog($event)"
+              ></hyt-detailed-card>
             </div>
-  
           </div> <!-- End Row Cards -->
   
         </div>

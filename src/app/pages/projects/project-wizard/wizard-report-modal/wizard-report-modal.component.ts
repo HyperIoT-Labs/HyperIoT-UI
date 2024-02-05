@@ -1,6 +1,6 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, Inject, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
-import { HytModal, HytModalService } from 'components';
+import { DIALOG_DATA, DialogRef } from 'components';
 
 @Component({
   selector: 'hyt-wizard-report-modal',
@@ -8,23 +8,22 @@ import { HytModal, HytModalService } from 'components';
   styleUrls: ['./wizard-report-modal.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class WizardReportModalComponent extends HytModal {
+export class WizardReportModalComponent {
 
   constructor(
     private router: Router,
-    hytModalService: HytModalService
-  ) {
-    super(hytModalService);
-  }
+    private dialogRef: DialogRef<void>,
+    @Inject(DIALOG_DATA) public data: { iconPath: string; type:string; entities: string[] }[],
+  ) { }
 
   goToDashboard() {
     this.router.navigate(['/dashboards']);
-    this.close();
+    this.dialogRef.close();
   }
 
   goToProjectWizard() {
     this.router.navigate(['/projects']);
-    this.close();
+    this.dialogRef.close();
   }
 
 }

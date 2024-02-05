@@ -5,38 +5,44 @@
   position: relative;
   text-align: center;
 
-  #resetSelBtn {
+  #tineline-control-buttons {
     position: absolute;
     bottom: 5px;
     right: 15px;
     display: none;
-    cursor: pointer;
-    background-color: rgb(30, 88, 165);
-    padding: 3px 10px;
-    color: rgb(255, 255, 255);
+    gap: 0.5em;
 
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
+    #refresh-data-btn,
+    #reset-sel-btn {
+      cursor: pointer;
+      background-color: rgb(30, 88, 165);
+      padding: 3px 10px;
+      color: rgb(255, 255, 255);
 
-    -webkit-box-shadow: 0px 0px 4px -1px #000;
-    -moz-box-shadow: 0px 0px 4px -1px #000;
-    box-shadow: 0px 0px 4px -1px #000;
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      border-radius: 5px;
 
-    transition: all .2s ease-in-out;
+      -webkit-box-shadow: 0px 0px 4px -1px #000;
+      -moz-box-shadow: 0px 0px 4px -1px #000;
+      box-shadow: 0px 0px 4px -1px #000;
 
-    &:hover {
+      transition: all .2s ease-in-out;
 
-      background-color: #2469c6;
+      &:hover {
 
-      -webkit-box-shadow: rgb(0 0 0) 0px 0px 0px 0px;
-      -moz-box-shadow: rgb(0 0 0) 0px 0px 0px 0px;
-      box-shadow: rgb(0 0 0) 0px 0px 0px 0px;
+        background-color: #2469c6;
 
-    }
+        -webkit-box-shadow: rgb(0 0 0) 0px 0px 0px 0px;
+        -moz-box-shadow: rgb(0 0 0) 0px 0px 0px 0px;
+        box-shadow: rgb(0 0 0) 0px 0px 0px 0px;
 
-    &:active {
-      background-color: #3984e9;
+      }
+
+      &:active {
+        background-color: #3984e9;
+      }
+
     }
 
   }

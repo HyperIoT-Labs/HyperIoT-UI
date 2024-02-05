@@ -1,0 +1,196 @@
+$primary: #0956b6;
+$primaryDarker: #094894;
+
+.hyt-project-card {
+    position: relative;
+    width: 225px;
+    aspect-ratio: 4/5;
+
+    mat-card {
+        background-color: #0d416d;
+        background-image: url("/assets/images/projects/Card_Idle.png");
+        background-repeat: no-repeat;
+        background-position: bottom center;
+        background-size: cover;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        border-radius: 6px;
+        color: #fff;
+        font-family: "Exo", sans-serif;
+
+        .title-front-card {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            font-size: 1.5em;
+            line-height: 1.2em;
+            padding: 8px;
+            background: rgb(9, 72, 148);
+            background: linear-gradient(0deg, $primaryDarker 0%, #2558a5c7 100%);
+            overflow: hidden;
+            display: -webkit-box;
+            line-clamp: 2;
+            word-wrap: break-word;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+
+            &.title-front-card-custom-bg {
+                background: #2558a5c7;
+                background: linear-gradient(0deg, #084185 0%, #2558a5c7 50%, #2558a5c7 100%);
+            }
+        }
+
+        .detailed-front-icon {
+            position: absolute;
+            right: 6px;
+            top: 8px;
+        }
+
+        .box-card-hover {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: space-between;
+            flex-direction: column;
+            padding: 6px 6px 44px;
+            background-image: url("/assets/images/projects/Card_Round-Hover.png");
+            background-repeat: no-repeat;
+            background-position: bottom center;
+            background-size: cover;
+            transform: translateY(100%);
+            transition: all .25s ease-in-out;
+
+            .content-card {
+                display: grid;
+
+                .card-title {
+                    display: block;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    font-size: 1.2em;
+                    line-height: 35px;
+                    color: #0956b6;
+                }
+
+                .card-description {
+                    color: #414141;
+                    overflow: hidden;
+                    display: -webkit-box;
+                    font-size: 13px;
+                    line-height: 14px;
+                    font-style: italic;
+                    cursor: help;
+                    line-clamp: 2;
+                    word-wrap: break-word;
+                    -webkit-line-clamp: 2;
+                    -webkit-box-orient: vertical;
+                }
+            }
+
+            .card-elements {
+                color: #0956b6;
+                margin-bottom: 12px;
+
+                .single-element {
+                    display: flex;
+                    align-items: center;
+
+                    .hyt-icon {
+                        font-size: 26px;
+                        margin-right: 5px;
+                    }
+
+                    span {
+                        font-size: 16px;
+                        line-height: 26px;
+                    }
+                }
+            }
+
+            .btn-card {
+                height: 40px;
+                font-size: 16px;
+                line-height: 16px;
+                display: flex;
+                position: absolute;
+                bottom: 6px;
+                left: 0;
+                width: 100%;
+
+                .detailed-primary-btn {
+                    width: 90%;
+                    margin: 0 5%;
+                }
+
+                &.btn-card-secondary {
+                    height: 36px;
+
+                    .detailed-primary-btn {
+                        width: 60%;
+                        margin: 0 2% 0 8%;
+                        font-size: 15px;
+                        line-height: 13px;
+                    }
+
+                    .detailed-secondary-btn {
+                        width: 20%;
+                        margin: 3px 8% 3px 2%;
+                        font-size: 16px;
+                        line-height: 16px;
+                    }
+                }
+            }
+        }
+
+        &:hover {
+            .box-card-hover {
+                transform: translateY(0);
+            }
+        }
+    }
+
+    .delete-project-btn {
+        width: 30px;
+        height: 30px;
+        background-color: #523dd6;
+        text-align: center;
+        position: absolute;
+        top: -16px;
+        right: -12px;
+        color: #fff;
+        border-radius: 50%;
+        padding-top: 5px;
+        cursor: pointer;
+        display: none;
+    }
+
+    &:hover {
+        .delete-project-btn {
+            display: block;
+
+            &:hover {
+                background-color: #d40b0b;
+            }
+        }
+    }
+}
+
+:host ::ng-deep {
+    .detailed-card-btn {
+        button {
+            height: 100%;
+            min-height: 100%;
+        }
+
+        &.detailed-secondary-btn button {
+            border-radius: 1rem;
+            max-width: 40px;
+        }
+    }
+}

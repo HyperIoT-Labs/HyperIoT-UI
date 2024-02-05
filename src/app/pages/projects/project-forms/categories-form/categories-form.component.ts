@@ -1,6 +1,6 @@
 import { Component, OnInit, Injector, ViewChild, ElementRef, ViewEncapsulation,ChangeDetectorRef } from '@angular/core';
 import { ProjectFormEntity } from '../project-form-entity';
-import { TreeNodeCategory, HytModalService } from 'components';
+import { TreeNodeCategory, DialogService } from 'components';
 import { AssetscategoriesService, AssetCategory } from 'core';
 import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
 import { Router } from '@angular/router';
@@ -32,7 +32,7 @@ export class CategoriesFormComponent extends ProjectFormEntity implements OnInit
     injector: Injector,
     private router: Router,
     private assetCategoriesService: AssetscategoriesService,
-    private modalService: HytModalService,
+    private dialogService: DialogService,
     private cdr:ChangeDetectorRef 
   ) {
     super(injector,cdr);
@@ -73,12 +73,17 @@ export class CategoriesFormComponent extends ProjectFormEntity implements OnInit
 
   addFunction: (node: TreeNodeCategory) => Observable<TreeNodeCategory> = (node) => {
     return new Observable(sub => {
-      const dialogRef = this.modalService.open(AddCetegoryModalComponent, {
-        mode: 'add',
-        projectId: this.projectId,
-        category: node ? node.data : null
+      const dialogRef = this.dialogService.open(AddCetegoryModalComponent, {
+        data: {
+          mode: 'add',
+          projectId: this.projectId,
+          category: node ? node.data : null,
+        }
       });
-      dialogRef.onClosed.subscribe((result: AssetCategory) => {
+      dialogRef.afterClosed().subscribe((result: AssetCategory) => {
+        if (!result) {
+          return;
+        }
         sub.next({
           id: result.id,
           label: result.name,
@@ -94,11 +99,12 @@ export class CategoriesFormComponent extends ProjectFormEntity implements OnInit
 
   removeFunction: (node: TreeNodeCategory) => Observable<TreeNodeCategory> = (node) => {
     return new Observable(sub => {
-      const dialogRef = this.modalService.open(
-        DeleteConfirmDialogComponent,
-        { title: $localize`:@@HYT_delete_item:Delete item?`, message: $localize`:@@HYT_operation_cannot_be_undone:This operation cannot be undone.`}
+      const dialogRef = this.dialogService.open(
+        DeleteConfirmDialogComponent, {
+          data: { title: $localize`:@@HYT_delete_item:Delete item?`, message: $localize`:@@HYT_operation_cannot_be_undone:This operation cannot be undone.`}
+        }
       );
-      dialogRef.onClosed.subscribe((result) => {
+      dialogRef.afterClosed().subscribe((result) => {
         if (result === 'delete') {
           this.assetCategoriesService.deleteAssetCategory(node.id).subscribe(
             res => {
@@ -116,12 +122,17 @@ export class CategoriesFormComponent extends ProjectFormEntity implements OnInit
 
   editFunction: (node: TreeNodeCategory) => Observable<TreeNodeCategory> = (node) => {
     return new Observable(sub => {
-      const dialogRef = this.modalService.open(AddCetegoryModalComponent, {
-        mode: 'edit',
-        projectId: this.projectId,
-        category: node.data
+      const dialogRef = this.dialogService.open(AddCetegoryModalComponent, {
+        data: {
+          mode: 'edit',
+          projectId: this.projectId,
+          category: node.data,
+        }
       });
-      dialogRef.onClosed.subscribe((result) => {
+      dialogRef.afterClosed().subscribe((result) => {
+        if (!result) {
+          return;
+        }
         sub.next({
           id: node.id,
           label: result.name,

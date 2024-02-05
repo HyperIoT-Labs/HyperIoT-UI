@@ -1,16 +1,23 @@
 <div id="packet-select-component" class="padding-6 d-flex flex-row justify-content-stretch">
 
-    <ng-container *ngIf="widget.config">
+    <ng-container *ngIf="widget.config && !(widget.config.packetId && !selectedPacket)">
 
         <div id="packet-selection" class="d-flex flex-column">
-            <hyt-select-template
-                [(ngModel)]="selectedPacketOption"
-                (ngModelChange)="onPacketChange($event)" name="packet-select"
-                [label]="'Select packet'" i18n-placeholder="@@HYT_widget_settings_select_packet"
-                [options]="packetOptions" [sortingAlgorithm]="'A-Z'" [isSortable]="true"
-                required disableRipple
+
+            <hyt-select
+                [name]="'packetSelect'"
+                [label]="'Select Packet'"
+                [groups]="groupedPacketOptions"
+                [selected]="selectedPacketOption"
+                [isSearchable]="true"
+                (changeFn)="onPacketChange($event)"
+                [isRequired]="true"
+                [errorMsgRequired]="'Select one packet'"
+                [hint]="'select one packet'"
+                class="hyt-select-full-width"
             >
-            </hyt-select-template>
+            </hyt-select>
+
         </div>
 
     </ng-container>

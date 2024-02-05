@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { HytModal, HytModalService } from 'components';
+import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { DIALOG_DATA, DialogRef } from 'components';
 import { AreasService, HprojectsService, HdevicesService, AreaDevice, HDevice, Area } from 'core';
 import { LoadingStatusEnum } from '../../project-form-entity';
 
@@ -9,7 +9,7 @@ import { LoadingStatusEnum } from '../../project-form-entity';
   styleUrls: ['./area-device-select-dialog.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class AreaDeviceSelectDialogComponent extends HytModal implements OnInit {
+export class AreaDeviceSelectDialogComponent implements OnInit {
   projectDevices = [] as HDevice[];
   selectedDevice: HDevice;
   loadingStatus = LoadingStatusEnum.Ready;
@@ -30,12 +30,11 @@ export class AreaDeviceSelectDialogComponent extends HytModal implements OnInit 
   selectedDeviceIcon: string;
 
   constructor(
-    hytModalService: HytModalService,
+    private dialogRef: DialogRef<any>,
+    @Inject(DIALOG_DATA) public data: any,
     private areaService: AreasService,
     private deviceService: HdevicesService
-  ) {
-    super(hytModalService);
-  }
+  ) { }
 
   ngOnInit() {
     this.loadingStatus = LoadingStatusEnum.Loading;
@@ -57,8 +56,8 @@ export class AreaDeviceSelectDialogComponent extends HytModal implements OnInit 
     }, (err) => this.apiError(err));
   }
 
-  onAddButtonClick() {
-    this.close({ device: this.selectedDevice, icon: this.selectedDeviceIcon });
+  close(deviceData?) {
+    this.dialogRef.close(deviceData);
   }
 
   private apiError(err) {

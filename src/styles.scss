@@ -1,20 +1,40 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
-@import './assets/styles/main';
-
-.cdk-overlay-pane .base-dialog {
-    width: 100%;
-    height: 100%;
-}
+@import "./assets/styles/main";
 
 #bodyMap {
-    .blue{fill-rule:evenodd;clip-rule:evenodd;fill:#144B64;}
-    .blueDark{fill:#001A24;}
-    .Glow{fill:#001A24;filter:url(#glow);}
-    .st0{filter:url(#glow);}
-    .st1{fill:#001A24;}
-    .st2{opacity:0.0;fill:none;}
-    .st3{opacity:0.6;fill:#EA0707;}
+    .blue {
+        fill-rule: evenodd;
+        clip-rule: evenodd;
+        fill: #144b64;
+    }
+
+    .blueDark {
+        fill: #001a24;
+    }
+
+    .Glow {
+        fill: #001a24;
+        filter: url(#glow);
+    }
+
+    .st0 {
+        filter: url(#glow);
+    }
+
+    .st1 {
+        fill: #001a24;
+    }
+
+    .st2 {
+        opacity: 0;
+        fill: none;
+    }
+
+    .st3 {
+        opacity: 0.6;
+        fill: #ea0707;
+    }
 }
 
 .toastAlarmUp {
@@ -32,5 +52,85 @@
 .cdk-overlay-container .hyt-header-tooltip {
     font-size: 0.8rem;
     background-color: #266dca;
-  }
+}
+
+.hyt-card-wrapper {
+    width: 100%;
+    margin: 1rem 2rem;
+
+    .hyt-card-container {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(auto-fill,225px);
+        justify-content: space-evenly;
+        gap: 32px;
+    }
+
+}
   
+/* DEFAULT DIALOG STYLE. It can be overridden at the component level if necessary. */
+.hyt-dialog-container {
+    display: block;
+    width: 100%;
+
+    background-color: #fff;
+    border-radius: 0.5em;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 11px 15px -7px rgb(0 0 0 / 20%),
+        0px 24px 38px 3px rgb(0 0 0 / 14%), 0px 9px 46px 8px rgb(0 0 0 / 12%);
+    overflow-y: auto;
+}
+
+.hyt-dialog {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.hyt-dialog-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border-bottom: 1px solid #e9ecef;
+    color: white;
+    background-color: #225a95;
+    padding: 0.5rem 1rem;
+    font-weight: 600;
+    font-size: 1.4rem;
+}
+.hyt-dialog-header-align-start {
+    justify-content: flex-start;
+}
+.hyt-dialog-header-align-end {
+    justify-content: flex-end;
+}
+
+.hyt-dialog-content {
+    overflow-y: auto;
+    flex-grow: 1;
+    padding: 1em;
+    padding-bottom: 2em;
+}
+
+.hyt-dialog-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.6em;
+    flex-shrink: 0;
+    border-top: 1px solid #e9ecef;
+    color: #212529;
+    padding: 0.6rem;
+}
+.hyt-dialog-footer-align-start {
+    justify-content: flex-start;
+}
+.hyt-dialog-footer-align-center {
+    justify-content: center;
+}
+
+.ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

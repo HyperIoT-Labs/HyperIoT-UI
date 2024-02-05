@@ -1,0 +1,93 @@
+<div class="field-value-generator-settings">
+
+    <ng-container *ngIf="ruleOptions.length > 0">
+
+        <mat-form-field>
+            <mat-label i18n="@@HYT_generation_type">Generation Type</mat-label>
+            <mat-select [name]="'genType' + field.id" [(ngModel)]="genType" (ngModelChange)="onGenTypeChange()">
+                <mat-option *ngFor="let typeOption of ruleOptions" [value]="typeOption.value">
+                    {{ typeOption.label }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <div class="generation-settings">
+
+            <ng-container *ngIf="genType === 'fixed'">
+                <div class="rule-info" i18n="@@HYT_fixed_value_description">
+                    Emit a fixed value
+                </div>
+                <div class="rule-input">
+                    <mat-form-field class="example-full-width">
+                        <mat-label i18n="@@HYT_value">Value</mat-label>
+                        <input matInput [name]="'value' + field.id" [(ngModel)]="rule.value">
+                    </mat-form-field>
+                </div>
+            </ng-container>
+
+            <ng-container *ngIf="genType === 'range'">
+                <div class="rule-info" i18n="@@HYT_range_value_description">
+                    Emit a random value between two numbers
+                </div>
+                <div class="rule-input">
+                    <mat-form-field class="example-full-width">
+                        <mat-label>Value 1</mat-label>
+                        <input matInput [name]="'rangeMin' + field.id" type="number" [(ngModel)]="rule.min">
+                    </mat-form-field>
+                    <mat-form-field class="example-full-width">
+                        <mat-label>Value 2</mat-label>
+                        <input matInput [name]="'rangeMax' + field.id" type="number" [(ngModel)]="rule.max">
+                    </mat-form-field>
+                </div>
+            </ng-container>
+
+            <ng-container *ngIf="genType === 'dataset'">
+                <div class="rule-info" i18n="@@HYT_dataset_value_description">
+                    <span>Emit values of a dataset</span>
+                    <ul>
+                        <li>Dataset example: <b>[ 0, 2, 4, 8 ]</b></li>
+                        <li>Dataset example: <b>[ [ 0, 4 ], [ 3, -1] ]</b></li>
+                    </ul>
+                </div>
+                <div class="rule-input">
+                    <mat-form-field class="example-full-width">
+                        <mat-label i18n="@@HYT_dataset">Dataset</mat-label>
+                        <input matInput [name]="'dataset' + field.id" [(ngModel)]="rule.values" />
+                    </mat-form-field>
+                </div>
+            </ng-container>
+
+            <ng-container *ngIf="genType === 'expression'">
+                <div class="rule-info">
+                    Emit a value computed through an expression.
+                    <ul>
+                        <li>Supported operators: <b>abs</b>, <b>sin</b>, <b>cos</b>, <b>tan</b>, <b>sqrt</b>, <b>pow</b>, <b>log</b>, <b>random</b>, <b>PI</b></li>
+                        <li>Supported variables: <b>#x</b>: the timestamp value; <b>#i</b>: counter tracking the number of times the expression has been evaluated, <b>#r</b>: result of previous calculation (or 0)</li>
+                        <li>Expression example: <b>2*(sin(PI * #i / 100))</b></li>
+                    </ul>
+                </div>
+                <div class="rule-input">
+                    <mat-form-field class="example-full-width">
+                        <mat-label>Expression</mat-label>
+                        <input matInput [name]="'expression' + field.id" type="text" [(ngModel)]="rule.expression">
+                    </mat-form-field>
+                </div>
+            </ng-container> 
+
+        </div>
+
+    </ng-container>
+
+    <div
+        *ngIf="ruleOptions.length === 0"
+        class="field-value-generator-type"
+    >
+        <div class="no-rule-warn" i18n="@@HYT_data_simultaor_type_not_supported">
+            Type {{ field.type }} {{ field.multiplicity }} currently not supported
+        </div>
+    </div>
+
+    
+
+</div>
+

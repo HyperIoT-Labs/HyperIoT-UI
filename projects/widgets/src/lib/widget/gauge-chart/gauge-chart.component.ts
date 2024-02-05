@@ -162,25 +162,7 @@ export class GaugeChartComponent extends BaseGenericComponent implements OnInit 
     };
     this.graph.config = { responsive: true };
     this.isConfigured = true;
-    
-    /* Init ResizeObserver if the widget is being init on fullscreen */
-    if(document.getElementById('container-widget-fullscreen')) {
-      this.observeResize();
-    }
-  }
 
-  /**
-   * On screen resize update the value format on the chart
-   */
-  async observeResize() {
-    const Plotly = await this.plotly.getPlotly();
-    const container = document.getElementById('container-widget-fullscreen');
-    const resizeObserver = new ResizeObserver(() => {
-      const fullScreenGraph = this.plotly.getInstanceByDivId(`widget-${this.widget.id}${this.isToolbarVisible}`);
-      if (fullScreenGraph) Plotly.update(fullScreenGraph, { number: { valueformat: "." } });
-    });
-
-    resizeObserver.observe(container);
   }
 
   /**
@@ -237,6 +219,16 @@ export class GaugeChartComponent extends BaseGenericComponent implements OnInit 
    */
   pause(): void {
     this.dataChannel.controller.pause();
+  }
+
+  onChartInitialized() {
+    const resizeObserver = new ResizeObserver((entries) => {
+      const graph = this.plotly.getInstanceByDivId(`widget-${this.widget.id}${this.isToolbarVisible}`);
+      if (graph) {
+        this.plotly.resize(graph);
+      }
+    });
+    resizeObserver.observe(document.querySelector(`#widget-${this.widget.id}${this.isToolbarVisible}`));
   }
 
   /**

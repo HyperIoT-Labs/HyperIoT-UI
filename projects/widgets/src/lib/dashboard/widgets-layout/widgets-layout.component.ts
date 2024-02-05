@@ -23,7 +23,7 @@ import { DashboardConfigService } from '../dashboard-config.service';
 import { WidgetSettingsDialogComponent } from '../widget-settings-dialog/widget-settings-dialog.component';
 import { Subject, Observable, Subscription } from 'rxjs';
 import { takeUntil, map } from 'rxjs/operators';
-import { ConfirmDialogService, HytModalService, HytTopologyService } from 'components';
+import { ConfirmDialogService, DialogService, HytTopologyService } from 'components';
 import {ServiceType} from '../../service/model/service-type';
 import { WidgetFullscreenDialogComponent } from '../widget-fullscreen-dialog/widget-fullscreen-dialog.component';
 import { WidgetAction, WidgetConfig } from '../../base/base-widget/model/widget.model';
@@ -133,7 +133,7 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
    * @param dataStreamService Injected DataStreamService
    * @param configService
    * @param activatedRoute
-   * @param hytModalService
+   * @param dialogService
    * @param hytTopologyService
    * @param toastr
    */
@@ -141,7 +141,7 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
     private realtimeDataService: RealtimeDataService,
     private configService: DashboardConfigService,
     private activatedRoute: ActivatedRoute,
-    private hytModalService: HytModalService,
+    private dialogService: DialogService,
     private hytTopologyService: HytTopologyService,
     private toastr: ToastrService,
     private confirmDialogService: ConfirmDialogService,
@@ -183,7 +183,7 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
             this.topologyResTimeChange.emit({timeMs: remoteTimestamp});
             if (this.eventNotificationIsOn && packet.id === 0 && (packet.name.endsWith(this.eventPacketSuffix) || packet.name.endsWith(this.alarmPacketSuffix))) {
               // show toast if packet is a event
-              const event = JSON.parse(packet.fields.map.event.value.string).data;
+              const event = JSON.parse(packet.fields.event.value.string).data;
               const tag = event.tags[0]; // retrieve only first tag
               let toastBackgroundColor = this.DEFAULT_TOAST_BACKGROUND_COLOUR;
               let toastImage = 'info';
@@ -200,11 +200,13 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
                 }
               }
               const textColor = '#ffffff';  // TODO retrieve from tag when this property will have been added
-              this.toastr.show(this.toastMessage, event.ruleName, {}, toastImage)
-                .onShown.subscribe(((res) => {}), (err) => {}, () => {
-                    document.querySelector('.overlay-container #toast-container .ngx-toastr')
-                      .setAttribute('style', 'background-color: ' + toastBackgroundColor + '; color:' + textColor + ';');
-                  });
+              const toastId = this.toastr['index']; // temp fix toastId to give style to the correct toast
+              this.toastr.show(this.toastMessage, event.ruleName, { toastClass: 'ngx-toastr toast-' + toastId }, toastImage).onShown.subscribe({
+                complete: () => {
+                  document.querySelector('.overlay-container #toast-container .ngx-toastr.toast-' + toastId)
+                    .setAttribute('style', 'background-color: ' + toastBackgroundColor + '; color:' + textColor + ';');
+                },
+              });
             }
           });
           // get dashboard config
@@ -257,7 +259,7 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
       gridType: GridType.Fixed,
       setGridSize: true,
       compactType: CompactType.CompactUp,
-      displayGrid: DisplayGrid.OnDragAndResize,
+      displayGrid: DisplayGrid.None,
       disableWindowResize: true,
       disableAutoPositionOnConflict: false,
       scrollToNewItems: true,
@@ -267,12 +269,22 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
       keepFixedHeightInMobile: true,
       keepFixedWidthInMobile: false,
       minCols: 1, maxCols: 10, maxCellsize: 280,
+      minItemRows: 2,
       minRows: 1,
       margin: 6,
       draggable: {
         enabled: this.dragEnabled,
         dropOverItems: true,
-        dragHandleClass: 'drag-handle',
+        dragHandleClass: 'toolbar-title',
+        start: (item, itemComponent) => {
+          // adding class to set specific cursor and to prevent tooltip to show during drag
+          const dragElement = itemComponent.el?.getElementsByClassName('toolbar-title')[0] as HTMLElement;
+          dragElement?.classList?.add('dragging');
+        },
+        stop:(item, itemComponent) => {
+          const dragElement = itemComponent.el?.getElementsByClassName('toolbar-title')[0] as HTMLElement;
+          dragElement?.classList?.remove('dragging');
+        },
         ignoreContent: true
       },
       swap: false,
@@ -280,7 +292,7 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
       disableScrollVertical: true,
       pushItems: true,
       resizable: {
-        enabled: false
+        enabled: true,
       }
     };
 
@@ -385,9 +397,9 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
           if (JSON.parse(localStorage.getItem('confirm-delete-widget-dismissed-' + this.dashboardValue.id))) {
             removeWidget();
           } else {
-            const confirmDialog = this.confirmDialogService.openDialog({
+            const confirmDialog = this.confirmDialogService.open({
               text: $localize`:@@HYT_widget_delete_confirm:Attention, the widget and its configuration will be permanently deleted. Proceed?`,
-              dismissable: $localize`:@@HYT_widget_delete_confirm_dismiss:Do not ask for confirmation for this dashboard anymore`,
+              dismissable: $localize`:@@HYT_widget_delete_confirm_dismiss:Don't request confirmation for this dashboard anymore`,
             });
             confirmDialog.afterClosed().subscribe(res => {
               if (res) {
@@ -428,23 +440,29 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
 
   openModal(widget: GridsterItem) {
     const areaId = this.activatedRoute.snapshot.params.areaId;
-    const modalRef = this.hytModalService.open(WidgetSettingsDialogComponent, {
-      currentWidgetIdSetting: this.currentWidgetIdSetting,
-      widget,
-      areaId
+    const modalRef = this.dialogService.open(WidgetSettingsDialogComponent, {
+      width: '800px',
+      data: {
+        currentWidgetIdSetting: this.currentWidgetIdSetting,
+        widget,
+        areaId,
+      }
     });
-    modalRef.onClosed.subscribe(
+    modalRef.afterClosed().subscribe(
       event => { this.onWidgetSettingClose(event) }
     );
   }
 
   openFullScreenModal(widget: any, initData: PacketData[] = []) {
-    const modalRef = this.hytModalService.open(WidgetFullscreenDialogComponent, {
-      serviceType: this.dashboardValue.dashboardType === 'REALTIME' ? ServiceType.ONLINE : ServiceType.OFFLINE,
-      widget: { ...widget },
-      initData
+    const modalRef = this.dialogService.open(WidgetFullscreenDialogComponent, {
+      backgroundClosable: true,
+      data: {
+        serviceType: this.dashboardValue.dashboardType === 'REALTIME' ? ServiceType.ONLINE : ServiceType.OFFLINE,
+        widget: { ...widget },
+        initData,
+      }
     });
-    modalRef.onClosed.subscribe(event => {
+    modalRef.afterClosed().subscribe(event => {
       this.onWidgetFullscreenClose(event);
     });
   }
@@ -484,6 +502,9 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
   onItemResize(item, itemComponent) {
     if (typeof item.resize === 'function') {
       item.resize();
+    }
+    if (item.resizeCallback) {
+      item.resizeCallback(item, itemComponent);
     }
   }
 

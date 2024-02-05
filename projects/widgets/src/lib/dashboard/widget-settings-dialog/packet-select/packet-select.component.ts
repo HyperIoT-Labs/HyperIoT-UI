@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output, ViewEncapsulation } from '@angular/core';
 import { ControlContainer, NgForm } from '@angular/forms';
-import {SelectOption, UnitConversionService} from 'components';
+import { SelectOption, SelectOptionGroup, UnitConversionService } from 'components';
 import { LoggerService, Logger, HPacketFieldsHandlerService } from 'core';
 import { HPacket, HPacketField, HpacketsService, AreasService, AreaDevice, HDevice } from 'core';
 import { mimeTypeList } from './MIMETypes';
@@ -25,7 +25,7 @@ export class PacketSelectComponent implements OnInit {
   @Output()
   selectedFieldsChange = new EventEmitter();
   projectPackets: HPacket[] = [];
-  packetOptions: SelectOption[] = [];
+  groupedPacketOptions: SelectOptionGroup[] = [];
   @Input()
   multiPacketSelect = false;
   @Input()
@@ -44,7 +44,7 @@ export class PacketSelectComponent implements OnInit {
     {label: '5', value: 5},
   ];
 
-  aliasesDescription = $localize`:@@HYT_aliases_description:Enter an alternate name to be displayed in the widget. In case the alias is empty the field name will be displayed`;
+  aliasesDescription = $localize`:@@HYT_aliases_description:Enter an alternative name to be displayed in the widget. If the alias is empty, the field name will be displayed.`;
 
   allMIMETypesOptions: string[] = mimeTypeList;
   filteredMIMETypesOptions: string[];
@@ -82,8 +82,9 @@ export class PacketSelectComponent implements OnInit {
 
   }
 
-  onPacketChange($event) {
-    this.selectedPacket = this.projectPackets.find(p => p.id === $event);
+  onPacketChange(packetOption) {
+    this.selectedPacketOption = packetOption.value;
+    this.selectedPacket = this.projectPackets.find(p => p.id === this.selectedPacketOption);
     this.fieldsOption = [];
     const fieldsFlatList = this.hPacketFieldsHandlerService.flatPacketFieldsTree(this.selectedPacket);
     this.fieldsOption = fieldsFlatList.map(x => ({
@@ -173,15 +174,26 @@ export class PacketSelectComponent implements OnInit {
           });
         }
         this.projectPackets = packetList;
-        this.projectPackets.map((p) => {
-          this.packetOptions.push({
-            value: p.id,
-            label: p.name
-          })
-        });
+        this.projectPackets.sort((a, b) => a.name < b.name ? -1 : 1);
 
-        this.packetOptions.sort((a, b) => a.label < b.label ? -1 : 1);
-        this.projectPackets.sort((a, b) => a.name < b.name ? -1 : 1)
+        const packetDevices = this.projectPackets.map((x) => x.device);
+        const groupDevices = [];
+        packetDevices.forEach((x) => {
+          if (!groupDevices.some((y) => y.id === x.id)) {
+            groupDevices.push(x);
+          }
+        });
+        this.groupedPacketOptions = groupDevices.map((x) => ({
+          name: x.deviceName,
+          options: this.projectPackets
+            .filter((y) => y.device.id === x.id)
+            .map((y) => ({
+              value: y.id,
+              label: y.name,
+              icon: 'icon-hyt_packets',
+            })),
+          icon: 'icon-hyt_device',
+        }));
 
         const w = this.widget;
         // load curent packet data and set selected fields

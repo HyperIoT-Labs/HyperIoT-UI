@@ -9,7 +9,7 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { HytModalRef, HytModalService } from 'components';
+import { DialogService } from 'components';
 import { AlgorithmOfflineDataService, Area, AreasService, Dashboard, HProject, Logger, LoggerService, OfflineDataService } from 'core';
 import { debounceTime, Subject, Subscription, takeUntil } from 'rxjs';
 import { AddWidgetDialogComponent } from './add-widget-dialog/add-widget-dialog.component';
@@ -72,7 +72,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
   dataRecordingStatus = TopologyStatus.Off;
 
-  @Input() idProjectSelected: number | undefined = undefined;
+  idProjectSelected: number | undefined = undefined;
 
   currentDashboardId: number;
 
@@ -86,13 +86,11 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
   upTimeSec;
 
-  widgetModalRef: HytModalRef;
-
   packetsInDashboard: number[] = [];
 
-  @Input() areaId: number | undefined = undefined;
+  areaId: number | undefined = undefined;
   areaPath: Area[];
-  @Input() showAreas = false;
+  showAreas = false;
   areaListOptions = [] as any[];
   selectedAreaId: number;
 
@@ -156,7 +154,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     private offlineDataService: OfflineDataService,
     private algorithmOfflineDataService: AlgorithmOfflineDataService,
     private areaService: AreasService,
-    private hytModalService: HytModalService,
+    private dialogService: DialogService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private cd: ChangeDetectorRef,
@@ -168,11 +166,15 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
-    if (!this.areaId) {
-      this.showAreas = this.activatedRoute.snapshot.routeConfig.path.startsWith('areas/');
-    }
-    if (!this.showAreas && !this.idProjectSelected) {
-      this.idProjectSelected = +this.activatedRoute.snapshot.queryParams.projectId;
+
+    this.showAreas = this.activatedRoute.snapshot.routeConfig.path.startsWith('areas/');
+
+    if (!this.showAreas) {
+      if (this.activatedRoute.snapshot.queryParams.projectId) {
+        this.idProjectSelected = +this.activatedRoute.snapshot.queryParams.projectId;
+      } else if (localStorage.getItem('last-dashboard-project')) {
+        this.idProjectSelected = +localStorage.getItem('last-dashboard-project');
+      }
     }
 
     this.offlineDataService.countEventSubject.subscribe(res => {
@@ -241,7 +243,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.showAreas) {
       // TODO: select change still not implemented for Areas Dashboard
     } else {
-      this.getRealTimeDashboard(event.value);
+      this.getRealTimeDashboard();
     }
   }
 
@@ -258,9 +260,9 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
       this.signalIsOn = !this.signalIsOn;
       this.pageStatus = PageStatus.Loading;
       if (this.showAreas) {
-        this.getRealTimeDashboard(this.areaId);
+        this.getRealTimeDashboard();
       } else {
-        this.getRealTimeDashboard(this.idProjectSelected);
+        this.getRealTimeDashboard();
       }
     }
   }
@@ -330,15 +332,22 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   openWidgetModal() {
-    this.widgetModalRef = this.hytModalService.open(AddWidgetDialogComponent, { signalIsOn: this.signalIsOn });
-    this.widgetModalRef.onClosed.subscribe(res => {
+    const widgetModalRef = this.dialogService.open(
+      AddWidgetDialogComponent,
+      {
+        data: { signalIsOn: this.signalIsOn },
+        backgroundClosable: true,
+        height: '600px',
+        width: '1024px',
+      }
+    );
+    widgetModalRef.afterClosed().subscribe(res => {
       this.dashboardView?.onWidgetsAdd(res);
     });
   }
 
   timeLineSelection(event: Date[]) {
     if (event[0] && event[1]) {
-      this.offlineWidgetStatus = PageStatus.Loading;
       this.offlineDataService.getEventCount(event[0].getTime(), event[1].getTime());
     } else {
       this.offlineDataService.getEventCountEmpty();
@@ -401,9 +410,9 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         this.updateToplogyStatus();
       }, 60000);
       if (this.showAreas) {
-        this.getRealTimeDashboard(this.areaId);
+        this.getRealTimeDashboard();
       } else {
-        this.getRealTimeDashboard(this.idProjectSelected);
+        this.getRealTimeDashboard();
       }
     }
   }
@@ -415,7 +424,10 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
       this.widgetLayoutReady = false;
       // debounce 500ms to handle multiple packetsInDashboard update
       this.offlineDataService.resetService(this.idProjectSelected).pipe(debounceTime(500)).subscribe(response => {
-        this.packetsInDashboard = [...response];
+        // reset packetsInDashboard only if the current packets are different from the old ones
+        if (this.packetsInDashboard.sort().join(',') !== [...response].sort().join(',')) {
+          this.packetsInDashboard = [...response];
+        }
       });
       this.algorithmOfflineDataService.resetService(this.idProjectSelected);
       this.pageStatus = PageStatus.Standard;
@@ -433,7 +445,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         .subscribe(responseHandler, errorHandler);
     }
   }
-  private getRealTimeDashboard(id: number) {
+  private getRealTimeDashboard() {
     const errorHandler = error => {
       this.logger.error(error);
       this.pageStatus = PageStatus.Error;
@@ -442,20 +454,21 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
       try {
         this.currentDashboard = dashboardRes[0];
         this.currentDashboardId = this.currentDashboard.id;
+        if (!this.showAreas) {
+          localStorage.setItem('last-dashboard-project', String(this.idProjectSelected));
+        }
         this.pageStatus = PageStatus.Standard;
-        // AGGIUNTO IO, MA NON SO SE é GIUSTO
-        this.dataRecordingStatus = TopologyStatus.On;
       } catch (error) {
         errorHandler(error);
       }
     };
     if (this.showAreas) {
-      this.dashboardConfigService.getRealtimeDashboardFromArea(id)
+      this.dashboardConfigService.getRealtimeDashboardFromArea(this.areaId)
         .pipe(takeUntil(this.ngUnsubscribe))
         .subscribe(responseHandler, errorHandler);
     } else {
       // load project realtime Dashboard
-      this.dashboardConfigService.getRealtimeDashboardFromProject(id)
+      this.dashboardConfigService.getRealtimeDashboardFromProject(this.idProjectSelected)
         .pipe(takeUntil(this.ngUnsubscribe))
         .subscribe(responseHandler, errorHandler);
     }

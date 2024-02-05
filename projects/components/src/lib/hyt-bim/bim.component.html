@@ -1,0 +1,10 @@
+<div id="container-bim" #bimContainer>
+    <div id="treeViewContainer"></div>
+    <canvas id="bimCanvas"></canvas>
+    <canvas id="navCubeCanvas"></canvas>
+  <ng-container *ngIf="!isModelLoaded;">
+    <div id="noModelLoaded">
+      No model Loaded
+    </div>
+  </ng-container>
+</div>

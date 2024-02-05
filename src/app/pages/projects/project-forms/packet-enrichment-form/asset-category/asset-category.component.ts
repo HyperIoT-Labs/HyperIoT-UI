@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { HytModalService, TreeNodeCategory } from 'components';
+import { DialogService, TreeNodeCategory } from 'components';
 import { AssetCategory, AssetscategoriesService, HPacket, HProject } from 'core';
 import { Observable, Subscription } from 'rxjs';
 import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
@@ -37,7 +37,7 @@ export class AssetCategoryComponent implements OnInit {
 
   constructor(
     private assetCategoriesService: AssetscategoriesService,
-    private modalService: HytModalService
+    private dialogService: DialogService,
   ) { }
 
   ngOnInit() {
@@ -87,12 +87,17 @@ export class AssetCategoryComponent implements OnInit {
 
   addFunction: (node: TreeNodeCategory) => Observable<TreeNodeCategory> = (node) => {
     return new Observable(sub => {
-      const dialogRef = this.modalService.open(AddCetegoryModalComponent, {
-        mode: 'add',
-        projectId: this.project.id,
-        category: node ? node.data : null
+      const dialogRef = this.dialogService.open(AddCetegoryModalComponent, {
+        data: {
+          mode: 'add',
+          projectId: this.project.id,
+          category: node ? node.data : null,
+        }
       });
-      dialogRef.onClosed.subscribe((result: AssetCategory) => {
+      dialogRef.afterClosed().subscribe((result: AssetCategory) => {
+        if (!result) {
+          return;
+        }
         sub.next({
           id: result.id,
           label: result.name,
@@ -110,11 +115,11 @@ export class AssetCategoryComponent implements OnInit {
 
   removeFunction: (node: TreeNodeCategory) => Observable<TreeNodeCategory> = (node) => {
     return new Observable(sub => {
-      const dialogRef = this.modalService.open(
+      const dialogRef = this.dialogService.open(
         DeleteConfirmDialogComponent,
-        { title: 'Delete item?', message: 'This operation cannot be undone.' }
+        { data: { title: 'Delete item?', message: 'This operation cannot be undone.' } }
       );
-      dialogRef.onClosed.subscribe((result) => {
+      dialogRef.afterClosed().subscribe((result) => {
         if (result === 'delete') {
           this.assetCategoriesService.deleteAssetCategory(node.id).subscribe(
             res => {
@@ -132,12 +137,17 @@ export class AssetCategoryComponent implements OnInit {
 
   editFunction: (node: TreeNodeCategory) => Observable<TreeNodeCategory> = (node) => {
     return new Observable(sub => {
-      const dialogRef = this.modalService.open(AddCetegoryModalComponent, {
-        mode: 'edit',
-        projectId: this.project.id,
-        category: node.data
+      const dialogRef = this.dialogService.open(AddCetegoryModalComponent, {
+        data: {
+          mode: 'edit',
+          projectId: this.project.id,
+          category: node.data,
+        }
       });
-      dialogRef.onClosed.subscribe((result) => {
+      dialogRef.afterClosed().subscribe((result) => {
+        if (!result) {
+          return;
+        }
         sub.next({
           id: node.id,
           label: result.name,

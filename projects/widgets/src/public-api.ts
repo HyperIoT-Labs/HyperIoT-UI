@@ -19,6 +19,7 @@ export { DefaultWidgetComponent } from './lib/default-widget/default-widget.comp
 export { GaugeChartComponent } from './lib/widget/gauge-chart/gauge-chart.component';
 export { HistogramChartComponent } from './lib/widget/histogram-chart/histogram-chart.component';
 export { EcgComponent } from './lib/widget/ecg/ecg.component';
+export { DataSimulatorComponent } from './lib/widget/data-simulator/data-simulator.component';
 export { DefibrillatorComponent } from './lib/widget/defibrillator/defibrillator.component';
 
 export { ServiceType } from './lib/service/model/service-type';
