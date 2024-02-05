@@ -1,18 +1,19 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { PageStatus } from './models/pageStatus';
 import { Algorithm, AlgorithmsService } from 'core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { DialogService, SelectOption } from 'components';
+
+//TO DO: si deve creare il servizio
 import { AlgorithmService } from 'src/app/services/algorithms/algorithm.service';
-import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
+import {SelectOption} from "components";
 
 @Component({
-  selector: 'hyt-algorithms',
-  templateUrl: './algorithms.component.html',
-  styleUrls: ['./algorithms.component.scss']
+  selector: 'hyt-machinelearning',
+  templateUrl: './machinelearning.component.html',
+  styleUrls: ['./machinelearning.component.scss']
 })
-export class AlgorithmsComponent implements OnInit {
+export class MachineLearningComponent implements OnInit {
 
   PageStatus = PageStatus;
   pageStatus: PageStatus = PageStatus.Loading;
@@ -40,7 +41,6 @@ export class AlgorithmsComponent implements OnInit {
     private router: Router,
     private algorithmsService: AlgorithmsService,
     private fb: FormBuilder,
-    private dialog: DialogService,
     private algorithmService: AlgorithmService
   ) { }
 
@@ -89,7 +89,7 @@ export class AlgorithmsComponent implements OnInit {
       }
     });
 
-    this.algorithmService.updateAlgorithmList("STATISTICS");
+    this.algorithmService.updateAlgorithmList("MACHINE_LEARNING");
 
   }
 
@@ -177,26 +177,11 @@ export class AlgorithmsComponent implements OnInit {
   }
 
   addAlgorithm() {
-    this.router.navigate(['/algorithm-wizard']);
+    this.router.navigate(['/machinelearning-wizard']);
   }
 
-  openDeleteDialog(alg : Algorithm) {
-
-    const dialogRef = this.dialog.open(DeleteConfirmDialogComponent, {
-        data: { title: 'Are you sure you want to delete the algorithm?', message: 'This operation cannot be undone.' }
-      }
-    );
-
-    dialogRef.afterClosed().subscribe(
-      (result) => {
-        if ( result === 'delete') {
-          this.algorithmService.deleteAlgorithm(alg.id);
-        }
-      },
-      (err) => {
-        console.log('Errore nell\' AFTER CLOSED del DIALOG di MATERIAL \n', err);
-      }
-    );
+  refreshViewOnDelete(event) {
+    this.algorithmService.deleteAlgorithm(event.id);
   }
 
   algorithmsInLoading(algorithmId: number) {
@@ -208,7 +193,9 @@ export class AlgorithmsComponent implements OnInit {
   }
 
   updateAlgorithms(algorithmList: Algorithm[]) {
+
     this.algorithms = algorithmList;
+
     this.pageStatus = (this.algorithms.length !== 0)
       ? PageStatus.Standard
       : PageStatus.New;
@@ -219,7 +206,7 @@ export class AlgorithmsComponent implements OnInit {
   refreshComponent() {
     this.filteringForm = this.fb.group({});
 
-    this.algorithmsService.findAllAlgorithm('STATISTICS').subscribe(
+    this.algorithmsService.findAllAlgorithm("MACHINE_LEARNING").subscribe(
       res => {
         this.algorithms = res;
         this.pageStatus = (this.algorithms.length !== 0)

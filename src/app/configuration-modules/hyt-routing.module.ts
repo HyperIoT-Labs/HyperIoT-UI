@@ -30,6 +30,10 @@ import { AlgorithmWizardComponent } from '../pages/algorithms/algorithm-wizard/a
 import { ProjectStatisticsFormComponent } from '../pages/projects/project-forms/project-statistics-form/project-statistics-form.component';
 import { ProjectAlarmsFormComponent } from '../pages/projects/project-forms/project-alarms-form/project-alarms-form.component';
 import {DashComponent} from '../pages/dash/dash.component';
+import {
+  MachineLearningWizardComponent
+} from "../pages/machinelearning/machinelearning-wizard/machinelearning-wizard.component";
+import {MachineLearningComponent} from "../pages/machinelearning/machinelearning.component";
 
 @Injectable()
 export class LoggedInGuard implements CanActivate {
@@ -306,6 +310,38 @@ const hyperiotRoutes: Routes = [
     data: {
       showToolBar: true,
       resourceName: 'it.acsoftware.hyperiot.algorithm.model.Algorithm',
+      action: 'control_panel'
+    }
+  },
+  {
+    path: 'machinelearning',
+    component: MachineLearningComponent,
+    canActivate: [LoggedInGuard, IsProtectedResourceGuard],
+    data: {
+      showToolBar: true,
+      resourceName: 'it.acsoftware.hyperiot.algorithm.model.MachineLearning',
+      action: 'control_panel'
+    }
+  },
+  {
+    path: 'machinelearning-wizard',
+    component: MachineLearningWizardComponent,
+    canActivate: [LoggedInGuard, IsProtectedResourceGuard],
+    canDeactivate: [CanDeactivateGuard],
+    data: {
+      showToolBar: true,
+      resourceName: 'it.acsoftware.hyperiot.algorithm.model.MachineLearning',
+      action: 'control_panel'
+    }
+  },
+  {
+    path: 'machinelearning-wizard/:id',
+    component: MachineLearningWizardComponent,
+    canActivate: [LoggedInGuard, IsProtectedResourceGuard],
+    canDeactivate: [CanDeactivateGuard],
+    data: {
+      showToolBar: true,
+      resourceName: 'it.acsoftware.hyperiot.algorithm.model.MachineLearning',
       action: 'control_panel'
     }
   },

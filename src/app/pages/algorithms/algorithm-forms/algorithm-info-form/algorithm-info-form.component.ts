@@ -96,7 +96,7 @@ export class AlgorithmInfoFormComponent extends AlgorithmFormEntity implements A
     this.loadingStatus = LoadingStatusEnum.Loading;
     this.cdr.detectChanges();
     /******* VALUE LOADING OVERLAY *******/
-    this.divHeight = this.overlayHeight.nativeElement.clientHeight;  
+    this.divHeight = this.overlayHeight.nativeElement.clientHeight;
     /******* END VALUE LOADING OVERLAY *******/
 
     this.entity = this.algorithm;

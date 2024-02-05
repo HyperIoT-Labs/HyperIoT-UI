@@ -1639,6 +1639,33 @@
       <trans-unit id="HYT_severity_settings" datatype="html">
         <source>Severity Settings</source>
       </trans-unit>
+
+      <!-- ML ALGORITHM START-->
+      <trans-unit id="HYT_ml_algorithms" datatype="html">
+        <source>Machine Learning Algorithms</source>
+      </trans-unit>
+      <trans-unit id="HYT_ml_algorithms_list" datatype="html">
+        <source>Machine Learning Algorithms List</source>
+      </trans-unit>
+      <trans-unit id="HYT_add_new_ml_algorithm" datatype="html">
+        <source>Add new Machine Learning algorithm</source>
+      </trans-unit>
+      <trans-unit id="HYT_add_new_ml_algorithm" datatype="html">
+        <source>Showing <x id="INTERPOLATION" equiv-text="{{algorithmsFiltered.length}}"/> machine learning algorithms of <x id="INTERPOLATION" equiv-text="{{algorithms.length}}"/></source>
+      </trans-unit>
+      <trans-unit id="HYT_no_ml_algorithm_found" datatype="html">
+        <source>No ML algorithm that matches the search found...</source>
+      </trans-unit>
+      <trans-unit id="HYT_no_ml_algorithm" datatype="html">
+        <source>There are no Machine Learning ml-algorithms!</source>
+      </trans-unit>
+      <trans-unit id="HYT_add_ml_algorithm_button_hint" datatype="html">
+        <source>To add an algorithm click the button below.</source>
+      </trans-unit>
+      <trans-unit id="HYT_create_first_ml_algorithm" datatype="html">
+        <source>Create your first Machine Learning algorithm</source>
+      </trans-unit>
+      <!-- ML ALGORITHM STOP-->
     </body>
   </file>
 </xliff>
