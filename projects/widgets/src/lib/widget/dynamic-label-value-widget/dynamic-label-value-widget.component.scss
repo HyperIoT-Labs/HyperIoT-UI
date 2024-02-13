@@ -24,7 +24,7 @@
             font-weight: bold;
         }
 
-        .icon-span {
+        .label-span {
             display: flex;
             flex-direction: row;
             flex-wrap: nowrap;
@@ -37,8 +37,6 @@
 
             .item-label {
                 font-weight: bold;
-                font-family: 'Exo';
-                margin-top: 0.2em;
             }
         }
     }
