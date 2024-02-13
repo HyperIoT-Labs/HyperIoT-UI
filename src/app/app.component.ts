@@ -1,6 +1,6 @@
 import { Component, HostListener, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Logger, LoggerService, RealtimeDataService } from "core";
+import { HProject, HprojectsService, Logger, LoggerService, RealtimeDataService } from "core";
 import { ToastrService } from 'ngx-toastr';
 import { Subject, concatMap, forkJoin, takeUntil } from 'rxjs';
 import { DashboardConfigService } from 'widgets';
@@ -44,6 +44,7 @@ export class AppComponent implements OnDestroy {
 
   constructor(
     private activatedRoute: ActivatedRoute,
+    private hprojectsService: HprojectsService,
     private configService: DashboardConfigService,
     private realtimeDataService: RealtimeDataService,
     private toastr: ToastrService,
@@ -53,16 +54,10 @@ export class AppComponent implements OnDestroy {
     this.logger = new Logger(this.loggerService);
     this.logger.registerClass('AppComponent');
     // Retrive dashboard's data and connect to their data streams
-    this.configService.getDashboardList()
-      .pipe(
-        takeUntil(this.ngUnsubscribe),
-        concatMap((dashboardList) => {
-          const observables = dashboardList.map((value: any) => this.configService.getDashboard(value.id));
-          return forkJoin(observables);
-        }),
-      )
-      .subscribe((dashboard: any) => {
-        this.projectIds = dashboard.map(dash => dash.hproject.id);
+    this.hprojectsService.findAllHProject()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((projectsList: HProject[]) => {
+        this.projectIds = projectsList.map(project => project.id);
         this.realtimeDataService.connect(this.projectIds);
       });
     this.realtimeDataService.eventStream.subscribe((p) => {

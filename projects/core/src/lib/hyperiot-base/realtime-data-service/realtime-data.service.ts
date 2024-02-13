@@ -64,7 +64,7 @@ export class RealtimeDataService extends BaseDataService implements IDataService
   connect(projectIds: number[], url?: string) {
     console.log('Connecting websocket...');
     this.disconnect();
-    this.ws = new WebSocket(url != null ? url : `${this.wsUrl}[${projectIds}]`);
+    this.ws = new WebSocket(url != null ? url : `${this.wsUrl}${projectIds}`);
     this.ws.onmessage = this.onWsMessage.bind(this);
     this.ws.onerror = this.onWsError.bind(this);
     this.ws.onclose = this.onWsClose.bind(this);
