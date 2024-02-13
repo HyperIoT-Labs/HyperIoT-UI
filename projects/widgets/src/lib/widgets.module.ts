@@ -40,6 +40,7 @@ import { SensorValueComponent } from './widget/sensor-value/sensor-value.compone
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { DataSimulatorComponent } from './widget/data-simulator/data-simulator.component';
 import { DefibrillatorComponent } from './widget/defibrillator/defibrillator.component';
+import { DynamicLabelValueWidgetComponent } from './widget/dynamic-label-value-widget/dynamic-label-value-widget.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import { DefibrillatorComponent } from './widget/defibrillator/defibrillator.com
     BaseWidgetTemplateComponent,
     DataSimulatorComponent,
     DefibrillatorComponent,
+    DynamicLabelValueWidgetComponent,
   ],
   imports: [
     MatButtonModule,
@@ -109,6 +111,7 @@ import { DefibrillatorComponent } from './widget/defibrillator/defibrillator.com
     DefaultWidgetComponent,
     GaugeChartComponent,
     HistogramChartComponent,
+    DynamicLabelValueWidgetComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

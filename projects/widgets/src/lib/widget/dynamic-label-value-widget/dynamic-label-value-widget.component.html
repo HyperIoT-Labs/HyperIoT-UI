@@ -1,0 +1,48 @@
+<hyperiot-base-widget-template>
+    <header-widget>
+        <hyperiot-common-toolbar widgetName="{{widget.name}}" (action)="onToolbarAction($event)"
+            [toolbarIsVisible]="isToolbarVisible" [config]="{
+                showClose: true,
+                showSettings: true,
+                showPlay: serviceType === serviceTypeList.ONLINE,
+                showRefresh: false,
+                showTable: false,
+                hideFullScreen: true
+          }">
+        </hyperiot-common-toolbar>
+    </header-widget>
+
+    <content-widget>
+        <div *ngIf="!isConfigured; else configured" class="configure-notice">
+            <strong i18n="@@HYT_common_not_configured">Click 'Settings' button to configure.</strong>
+        </div>
+        <ng-template #configured>
+            <div class="key-value-container">
+                <ul class="items-list">
+                    <li class="item" *ngFor="let label of labels; let i = index">
+                        <div class="icon-span">
+                            <div class="icon-hyt_chip">
+                            </div>
+                            <div class="item-label">{{ label | uppercase }}:</div>
+                        </div>
+                        <span class="item-value" *ngIf="isString(values[i]); else number">{{ values[i] | uppercase }}</span>
+                        <ng-template #number>
+                            <span class="item-value">{{ values[i] }}</span>
+                        </ng-template>
+                    </li>
+                </ul>
+            </div>
+
+            <ng-template #loadingFinished>
+                <div *ngIf="loadingOfflineData" class="loading-overlay">
+                    <p>Loading data...</p>
+                    <mat-spinner strokeWidth="4" diameter="44"></mat-spinner>
+                </div>
+                <!-- </div> -->
+            </ng-template>
+
+        </ng-template>
+
+    </content-widget>
+
+</hyperiot-base-widget-template>

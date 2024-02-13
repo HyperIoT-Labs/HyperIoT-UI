@@ -1,0 +1,45 @@
+.items-list {
+    font-family: 'Exo';
+    list-style-type: none;
+    padding-inline-start: unset;
+    padding: 0px 7px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+
+
+    .item {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        padding: 5px 15px 5px 5px;
+        background-color: #f4f4f4;
+        border: 1px solid #c8c8c8;
+        border-radius: 5px;
+        justify-content: space-between;
+
+        .item-value {
+            color: #00a7ff;
+            font-weight: bold;
+        }
+
+        .icon-span {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            align-items: center;
+            gap: 6px;
+
+            .icon-hyt_chip {
+                font-size: 1.4em;
+            }
+
+            .item-label {
+                font-weight: bold;
+                font-family: 'Exo';
+                margin-top: 0.2em;
+            }
+        }
+    }
+}
