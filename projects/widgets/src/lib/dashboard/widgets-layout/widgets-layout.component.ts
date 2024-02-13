@@ -158,10 +158,6 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
 
           this.dashboardType = this.dashboardEntity.dashboardType;
           this.projectId = this.dashboardEntity.hproject.id;
-
-          if (!this.realtimeDataService.isConnected) {
-            this.realtimeDataService.connect(this.projectId);
-          }
           this.streamSubscription = this.realtimeDataService.eventStream.subscribe((p) => {
 
             const packet = p.data;

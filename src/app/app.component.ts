@@ -2,7 +2,7 @@ import { Component, HostListener, OnDestroy, ViewEncapsulation } from '@angular/
 import { ActivatedRoute } from '@angular/router';
 import { Logger, LoggerService, RealtimeDataService } from "core";
 import { ToastrService } from 'ngx-toastr';
-import { Subject, concatMap, from, takeUntil } from 'rxjs';
+import { Subject, concatMap, forkJoin, takeUntil } from 'rxjs';
 import { DashboardConfigService } from 'widgets';
 import { environment } from '../environments/environment';
 import { PacketSuffixsEnum } from './models/packetSuffixsEnum';
@@ -32,7 +32,7 @@ export class AppComponent implements OnDestroy {
 
   packetSuffixsEnum = PacketSuffixsEnum;
 
-  projectId: number;
+  projectIds: number[];
 
   /** Subject for manage the open subscriptions */
   protected ngUnsubscribe: Subject<void> = new Subject<void>();
@@ -52,63 +52,59 @@ export class AppComponent implements OnDestroy {
     // Init Logger
     this.logger = new Logger(this.loggerService);
     this.logger.registerClass('AppComponent');
-    this.realtimeDataService.connect(this.projectId);
     // Retrive dashboard's data and connect to their data streams
     this.configService.getDashboardList()
       .pipe(
         takeUntil(this.ngUnsubscribe),
         concatMap((dashboardList) => {
-          return from(dashboardList).pipe(
-            concatMap((dashboard: any) => {
-              return this.configService.getDashboard(dashboard.id);
-            })
-          );
+          const observables = dashboardList.map((value: any) => this.configService.getDashboard(value.id));
+          return forkJoin(observables);
         }),
       )
       .subscribe((dashboard: any) => {
-        this.projectId = dashboard.hproject.id;
-        if (!this.realtimeDataService.isConnected) {
-          this.realtimeDataService.connect(this.projectId);
-        }
-        this.configService.eventNotificationState.subscribe(res => {
+        this.projectIds = dashboard.map(dash => dash.hproject.id);
+        this.realtimeDataService.connect(this.projectIds);
+      });
+    this.realtimeDataService.eventStream.subscribe((p) => {
+      this.configService.eventNotificationState
+        .pipe(takeUntil(this.ngUnsubscribe))
+        .subscribe(res => {
           this.eventNotificationIsOn = res;
         });
 
-        if (!this.eventNotificationIsOn) {
-          return;
-        }
-      });
-      this.realtimeDataService.eventStream.subscribe((p) => {
-        const packet = p.data;
-        if (this.eventNotificationIsOn && packet.id === 0 && (packet.name.endsWith(PacketSuffixsEnum[PacketSuffixsEnum._event])
-          || packet.name.endsWith(PacketSuffixsEnum[PacketSuffixsEnum._event_alarm]))) {
-          // show toast if packet is a event or a alarm
-          const event = JSON.parse(packet.fields.event.value.string).data; JSON.parse(packet.fields.event.value.string).data;
-          const tag = event.tags[0]; // retrieve only first tag
-          let toastBackgroundColor = this.DEFAULT_TOAST_BACKGROUND_COLOUR;
-          let toastImage = 'info';
-          if (packet.name.endsWith(PacketSuffixsEnum[PacketSuffixsEnum._event])) {
-            toastBackgroundColor = tag ? tag.color : this.DEFAULT_TOAST_BACKGROUND_COLOUR;
-            toastImage = 'toastEvent';
-          } else if (packet.name.endsWith(PacketSuffixsEnum[PacketSuffixsEnum._event_alarm])) {
-            if (event.alarmState === 'UP') {
-              toastBackgroundColor = this.severityColors.get(event.severity) || this.DEFAULT_TOAST_BACKGROUND_COLOUR;
-              toastImage = 'toastAlarmUp';
-            } else {
-              toastBackgroundColor = '#51a351';
-              toastImage = 'toastAlarmDown';
-            }
+      if (!this.eventNotificationIsOn) {
+        return;
+      }
+      const packet = p.data;
+      if (this.eventNotificationIsOn && packet.id === 0 && (packet.name.endsWith(PacketSuffixsEnum[PacketSuffixsEnum._event])
+        || packet.name.endsWith(PacketSuffixsEnum[PacketSuffixsEnum._event_alarm]))) {
+        // show toast if packet is a event or a alarm
+        const event = JSON.parse(packet.fields.event.value.string).data; JSON.parse(packet.fields.event.value.string).data;
+        const tag = event.tags[0]; // retrieve only first tag
+        let toastBackgroundColor = this.DEFAULT_TOAST_BACKGROUND_COLOUR;
+        let toastImage = 'info';
+        if (packet.name.endsWith(PacketSuffixsEnum[PacketSuffixsEnum._event])) {
+          toastBackgroundColor = tag ? tag.color : this.DEFAULT_TOAST_BACKGROUND_COLOUR;
+          toastImage = 'toastEvent';
+        } else if (packet.name.endsWith(PacketSuffixsEnum[PacketSuffixsEnum._event_alarm])) {
+          if (event.alarmState === 'UP') {
+            toastBackgroundColor = this.severityColors.get(event.severity) || this.DEFAULT_TOAST_BACKGROUND_COLOUR;
+            toastImage = 'toastAlarmUp';
+          } else {
+            toastBackgroundColor = '#51a351';
+            toastImage = 'toastAlarmDown';
           }
-          const textColor = '#ffffff';  // TODO retrieve from tag when this property will have been added
-          const toastId = this.toastr['index'];
-          this.toastr.show(this.toastMessage, event.ruleName, { toastClass: 'ngx-toastr toast-' + toastId }, toastImage).onShown.subscribe({
-            complete: () => {
-              document.querySelector('.overlay-container #toast-container .ngx-toastr.toast-' + toastId)
-                .setAttribute('style', 'background-color: ' + toastBackgroundColor + '; color:' + textColor + ';');
-            },
-          });
         }
-      })
+        const textColor = '#ffffff';  // TODO retrieve from tag when this property will have been added
+        const toastId = this.toastr['index'];
+        this.toastr.show(this.toastMessage, event.ruleName, { toastClass: 'ngx-toastr toast-' + toastId }, toastImage).onShown.subscribe({
+          complete: () => {
+            document.querySelector('.overlay-container #toast-container .ngx-toastr.toast-' + toastId)
+              .setAttribute('style', 'background-color: ' + toastBackgroundColor + '; color:' + textColor + ';');
+          },
+        });
+      }
+    })
   }
 
 
