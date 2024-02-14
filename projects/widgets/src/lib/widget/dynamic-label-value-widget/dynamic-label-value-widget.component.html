@@ -17,26 +17,22 @@
             <strong i18n="@@HYT_common_not_configured">Click 'Settings' button to configure.</strong>
         </div>
         <ng-template #configured>
-            <hyperiot-loader *ngIf="this.chartData.length === 0; else loadingFinished">
-            </hyperiot-loader>
-            <ng-template #loadingFinished>
-                <div *ngIf="loadingOfflineData" class="loading-overlay">
-                    <p>Loading data...</p>
-                    <mat-spinner strokeWidth="4" diameter="44"></mat-spinner>
-                </div>
-                <div class="key-value-container">
-                    <ul class="items-list">
-                        <li class="item" *ngFor="let label of chartLabels; let i = index">
-                            <div class="label-span">
-                                <span class="hyt-icon icon-hyt_chip">
-                                </span>
-                                <span class="item-label">{{ label }}:</span>
-                            </div>
-                            <span class="item-value">{{ chartData[i] }}</span>
-                        </li>
-                    </ul>
-                </div>
-            </ng-template>
+            <div *ngIf="loadingOfflineData" class="loading-overlay">
+                <p>Loading data...</p>
+                <mat-spinner strokeWidth="4" diameter="44"></mat-spinner>
+            </div>
+            <div class="key-value-container">
+                <ul class="items-list">
+                    <li class="item" *ngFor="let label of chartLabels; let i = index">
+                        <div class="label-span field-row">
+                            <span class="item-label">{{ label.label }}</span>
+                        </div>
+                        <div class="value-span field-row">
+                            <span class="item-value">{{ chartData[label.id] }}</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
 
         </ng-template>
 
