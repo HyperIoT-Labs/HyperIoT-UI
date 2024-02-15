@@ -71,10 +71,15 @@ export class FieldTypes {
 }
 
 export class FieldValuesMapList {
-    [fieldId: number]: FieldValuesMap[];
+    [fieldId: number]: FieldValuesMap;
 }
 
 export class FieldValuesMap {
+    defaultValue: string;
+    valuesMap: FieldValueMap[];
+}
+
+export class FieldValueMap {
     value: any;
     output: {
         mappedValue: string;

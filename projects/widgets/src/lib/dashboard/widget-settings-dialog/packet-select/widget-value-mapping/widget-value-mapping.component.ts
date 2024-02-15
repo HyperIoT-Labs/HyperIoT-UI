@@ -19,9 +19,10 @@ export class WidgetValueMappingComponent implements ControlValueAccessor, OnInit
   
   @Input() field: HPacketField;
 
-  value: FieldValuesMap[] = [];
+  value: FieldValuesMap;
 
   valuesMapForm = new FormGroup({
+    defaultValue: new FormControl('UNKNOWN'), // Validators.required
     valuesMap: new FormArray([]),
   });
 
@@ -30,28 +31,28 @@ export class WidgetValueMappingComponent implements ControlValueAccessor, OnInit
 
   ngOnInit(): void {
     this.valuesMapForm.valueChanges.subscribe(res => {
-      this.value = res.valuesMap;
+      this.value = res;
       this.onChange(this.value);
     });
   }
 
-  writeValue(value: FieldValuesMap[]): void {
+  writeValue(value: FieldValuesMap): void {
     if (!value) {
-      value = [];
+      return;
     }
+    this.valuesMapForm.controls.defaultValue.patchValue(value.defaultValue);
     this.valuesMapFormArray.clear();
-    value.forEach(valueMap => {
+    value.valuesMap.forEach(valueMap => {
       this.valuesMapFormArray.push(new FormGroup({
-        value: new FormControl(valueMap.value, [Validators.required]),
+        value: new FormControl(valueMap.value),// Validators.required
         output: new FormGroup({
-          mappedValue: new FormControl(valueMap.output.mappedValue, Validators.required),
+          mappedValue: new FormControl(valueMap.output.mappedValue),// Validators.required
           color: new FormControl(valueMap.output.color),
           bgcolor: new FormControl(valueMap.output.bgcolor),
           icon: new FormControl(valueMap.output.icon),
         }),
       }));
     });
-    this.valuesMapFormArray.patchValue(value);
     this.value = value;
   }
 
@@ -65,11 +66,11 @@ export class WidgetValueMappingComponent implements ControlValueAccessor, OnInit
 
   addValueMap() {
     this.valuesMapFormArray.push(new FormGroup({
-      value: new FormControl('', [Validators.required]),
+      value: new FormControl(''),// Validators.required
       output: new FormGroup({
-        mappedValue: new FormControl('', Validators.required),
-        color: new FormControl(''),
-        bgcolor: new FormControl(''),
+        mappedValue: new FormControl(''),// Validators.required
+        color: new FormControl('#212529'),
+        bgcolor: new FormControl('#FFFFFF'),
         icon: new FormControl(''),
       }),
     }));
