@@ -4,7 +4,7 @@ import { SelectOption, SelectOptionGroup, UnitConversionService } from 'componen
 import { LoggerService, Logger, HPacketFieldsHandlerService } from 'core';
 import { HPacket, HPacketField, HpacketsService, AreasService, AreaDevice, HDevice } from 'core';
 import { mimeTypeList } from './MIMETypes';
-import { FieldAliases, FieldFileMimeTypes, FieldTypes, FieldUnitConversion } from '../../../base/base-widget/model/widget.model';
+import { FieldAliases, FieldFileMimeTypes, FieldTypes, FieldUnitConversion, FieldValuesMapList } from '../../../base/base-widget/model/widget.model';
 
 @Component({
   selector: 'hyperiot-packet-select',
@@ -43,6 +43,7 @@ export class PacketSelectComponent implements OnInit {
     {label: '4', value: 4},
     {label: '5', value: 5},
   ];
+  fieldValuesMapList: FieldValuesMapList;
 
   aliasesDescription = $localize`:@@HYT_aliases_description:Enter an alternative name to be displayed in the widget. If the alias is empty, the field name will be displayed.`;
 
@@ -135,6 +136,7 @@ export class PacketSelectComponent implements OnInit {
       this.widget.config.fieldFileMimeTypes = this.fieldFileMimeTypes;
       this.widget.config.fieldTypes = { };
       this.widget.config.fieldUnitConversions = this.fieldUnitConversions;
+      this.widget.config.fieldValuesMapList = this.fieldValuesMapList;
       // this.selectedPacket.fields.forEach(field => {
       //   this.widget.config.fieldTypes[field.id] = field.type;
       // });
@@ -161,6 +163,8 @@ export class PacketSelectComponent implements OnInit {
         JSON.parse(JSON.stringify(this.widget.config.fieldFileMimeTypes)) : { };
     this.fieldUnitConversions = this.widget.config.fieldUnitConversions ?
         JSON.parse(JSON.stringify(this.widget.config.fieldUnitConversions)) : { };
+    this.fieldValuesMapList = this.widget.config.fieldValuesMapList ?
+        JSON.parse(JSON.stringify(this.widget.config.fieldValuesMapList)) : { };
     // fetch all packets
     this.packetService
       .findAllHPacketByProjectIdAndType(this.widget.projectId,"INPUT,IO")

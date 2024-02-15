@@ -92,7 +92,7 @@
                                 </mat-form-field>
                             </div>
                         </div>
-                        
+
                         <div class="customization-container-section section-unit-conversion" *ngIf="field.type === 'INTEGER' || field.type === 'FLOAT' || field.type === 'DOUBLE'">
                             <div class="section-title">
                                 <span i18n="@@HYT_unit_conversion_title">Unit Conversion</span>
@@ -128,6 +128,16 @@
                                 </hyt-select-template>
                             </div>
                         </div>
+
+                        <div class="customization-container-section value-status-map" *ngIf="widget.type === 'multi-status'">
+                            <div class="section-title">
+                                <span i18n="@@HYT_unit_conversion_title">Value Mapping</span>
+                            </div>
+                            <div class="section-input">
+                                <hyperiot-widget-value-mapping name="hpacketfield-value-map-{{field.id}}" [(ngModel)]="fieldValuesMapList[field.id]"></hyperiot-widget-value-mapping>
+                            </div>
+                        </div>
+
                     </div>
 
                 </mat-expansion-panel>

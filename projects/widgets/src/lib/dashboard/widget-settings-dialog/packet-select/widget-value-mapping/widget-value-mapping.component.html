@@ -1,0 +1,33 @@
+<form class="widget-value-mapping-form" [formGroup]="valuesMapForm">
+
+  <button class="add-map-button" mat-mini-fab aria-label="Add value map" (click)="addValueMap()">
+    <mat-icon>add</mat-icon>
+  </button>
+
+  <div formArrayName="valuesMap">
+    <div class="map-row" *ngFor="let mappedValue of valuesMapFormArray.controls; let i = index" [formGroupName]="i">
+
+      <mat-form-field>
+        <mat-label>Input</mat-label>
+        <input matInput formControlName="value">
+      </mat-form-field>
+
+      <span class="hyt-icon icon-hyt_arrowRight"></span>
+
+      <div class ="value-map-output" formGroupName="output">
+        <mat-form-field>
+          <mat-label>Output</mat-label>
+          <input matInput formControlName="mappedValue">
+        </mat-form-field>
+        <input type="color" matInput formControlName="color">
+        <input type="color" matInput formControlName="bgcolor">
+      </div>
+
+      <button mat-icon-button aria-label="Remove value map" (click)="removeValueMap(i)">
+        <mat-icon>close</mat-icon>
+      </button>
+
+    </div>
+  </div>
+
+</form>
