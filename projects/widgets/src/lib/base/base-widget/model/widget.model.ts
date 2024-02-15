@@ -45,6 +45,7 @@ export interface ConfigModel {
     bgColor?: 'dark' | 'bright';
     defibrillator?: DefibrillatorSettings.DefibrillatorSettings;
     dataSimulatorSettings?: DataSimulatorSettings.DataSimulatorSettings;
+    fieldValuesMap?: FieldValuesMap;
 }
 
 export interface FieldUnitConversion {
@@ -67,6 +68,20 @@ export class FieldFileMimeTypes {
 
 export class FieldTypes {
     [fieldId: number]: HPacketField.TypeEnum;
+}
+
+export class FieldValuesMapList {
+    [fieldId: number]: FieldValuesMap[];
+}
+
+export class FieldValuesMap {
+    value: any;
+    output: {
+        mappedValue: string;
+        color?: string;
+        bgcolor?: string;
+        icon?: string;
+    }
 }
 
 export interface SeriesConfigModel {

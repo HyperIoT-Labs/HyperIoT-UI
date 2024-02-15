@@ -44,6 +44,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { DataSimulatorSettingsComponent } from './widget-settings-dialog/data-simulator-settings/data-simulator-settings.component';
 import { FieldValueGeneratorSettingsComponent } from './widget-settings-dialog/data-simulator-settings/field-value-generator-settings/field-value-generator-settings.component';
 import { MatButtonModule } from '@angular/material/button';
+import { WidgetValueMappingComponent } from './widget-settings-dialog/packet-select/widget-value-mapping/widget-value-mapping.component';
 
 @NgModule({
   declarations: [
@@ -72,6 +73,7 @@ import { MatButtonModule } from '@angular/material/button';
     PacketFieldsSelectComponent,
     DataSimulatorSettingsComponent,
     FieldValueGeneratorSettingsComponent,
+    WidgetValueMappingComponent,
   ],
   imports: [
     CommonModule,
