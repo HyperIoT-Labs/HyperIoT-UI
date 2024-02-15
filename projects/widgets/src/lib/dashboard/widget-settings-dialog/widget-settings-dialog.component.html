@@ -95,6 +95,11 @@
                         <hyperiot-data-simulator-settings [widget]="widget" [areaId]="areaId" [modalApply]="modalApply.asObservable()"
                             [settingsForm]="settingsForm"></hyperiot-data-simulator-settings>
                     </div>
+                    <div *ngSwitchCase="'multi-status'">
+                        <hyperiot-time-chart-settings [widget]="widget" [areaId]="areaId" [modalApply]="modalApply.asObservable()"
+                            [settingsForm]="settingsForm">
+                        </hyperiot-time-chart-settings>
+                    </div>
                     <div *ngSwitchDefault></div>
                 </div>
     

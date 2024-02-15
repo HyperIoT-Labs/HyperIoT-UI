@@ -12,6 +12,15 @@
     [serviceType]="serviceType"
   ></hyperiot-line-chart>
 
+  <hyperiot-multi-status-widget
+    *ngSwitchCase="'multi-status'"
+    [widget]="widget"
+    [initData]="initData"
+    [isToolbarVisible]="isToolbarVisible"
+    (widgetAction)="onWidgetAction($event)"
+    [serviceType]="serviceType"
+  ></hyperiot-multi-status-widget>
+
   <hyperiot-ecg
     *ngSwitchCase="'ecg'"
     [widget]="widget"

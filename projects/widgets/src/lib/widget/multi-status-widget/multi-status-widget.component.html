@@ -1,0 +1,42 @@
+<hyperiot-base-widget-template>
+    <header-widget>
+        <hyperiot-common-toolbar widgetName="{{widget.name}}" (action)="onToolbarAction($event)"
+            [toolbarIsVisible]="isToolbarVisible" [config]="{
+                showClose: true,
+                showSettings: true,
+                showPlay: serviceType === serviceTypeList.ONLINE,
+                showRefresh: false,
+                showTable: false,
+                hideFullScreen: true
+          }">
+        </hyperiot-common-toolbar>
+    </header-widget>
+
+    <content-widget>
+        <div *ngIf="!isConfigured; else configured" class="configure-notice">
+            <strong i18n="@@HYT_common_not_configured">Click 'Settings' button to configure.</strong>
+        </div>
+        <ng-template #configured>
+            <div *ngIf="loadingOfflineData" class="loading-overlay">
+                <p>Loading data...</p>
+                <mat-spinner strokeWidth="4" diameter="44"></mat-spinner>
+            </div>
+            <div class="key-value-container">
+                <ul class="items-list">
+                    <li class="item" *ngFor="let label of chartLabels; let i = index">
+                        <div class="label-span field-row">
+                            <span class="item-label">{{ label.label }}</span>
+                        </div>
+                        <div class="value-span field-row" [ngStyle]="{'background-color': chartData[label.id].bgcolor}">
+                            <span *ngIf="chartData[label.id].icon != ''" [class]="chartData[label.id].icon"></span>
+                            <span class="item-value" [ngStyle]="{'color': chartData[label.id].color}">{{ chartData[label.id].mappedValue }}</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+        </ng-template>
+
+    </content-widget>
+
+</hyperiot-base-widget-template>
