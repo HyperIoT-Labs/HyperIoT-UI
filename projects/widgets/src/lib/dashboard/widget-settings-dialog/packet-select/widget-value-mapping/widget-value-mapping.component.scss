@@ -1,5 +1,9 @@
 .widget-value-mapping-form {
 
+    .add-map-button {
+        margin: 12px 0;
+    }
+
     .map-row {
 
         display: flex;
@@ -18,9 +22,16 @@
 
     }
 
+    .color-form-field {
+        width: 100px;
+
+        input {
+            margin: -6px 0;
+        }
+    }
+
     input[type='color'] {
-        width: 26px;
-        height: 30px;
+        height: 24px;
     }
 
     input[type='color']::-webkit-color-swatch {
