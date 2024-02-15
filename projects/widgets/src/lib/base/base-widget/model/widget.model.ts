@@ -45,7 +45,7 @@ export interface ConfigModel {
     bgColor?: 'dark' | 'bright';
     defibrillator?: DefibrillatorSettings.DefibrillatorSettings;
     dataSimulatorSettings?: DataSimulatorSettings.DataSimulatorSettings;
-    fieldValuesMap?: FieldValuesMap;
+    fieldValuesMapList?: FieldValuesMapList;
 }
 
 export interface FieldUnitConversion {

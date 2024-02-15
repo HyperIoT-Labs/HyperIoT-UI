@@ -99,7 +99,7 @@ export class MultiStatusWidgetComponent extends BaseWidgetComponent implements O
         const field = Object.values(this.widget.config.packetFields).find(field => Object.keys(element).find(label => label === field));
         const fieldId = Object.keys(this.widget.config.packetFields).find(e => this.widget.config.packetFields[e] == field);
         if (field) {
-          this.chartData[field] = this.widget.config.fieldValuesMap[fieldId].find(ele => ele.value == element[field]).output;
+          this.chartData[field] = this.widget.config.fieldValuesMapList[fieldId].find(ele => ele.value == element[field]).output;
         }
       })
     })
