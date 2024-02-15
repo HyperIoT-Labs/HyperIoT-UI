@@ -6,7 +6,7 @@ import { BaseWidgetComponent } from '../../base/base-widget/base-widget.componen
 @Component({
   selector: 'hyperiot-multi-status-widget',
   templateUrl: './multi-status-widget.component.html',
-  styleUrls: ['./multi-status-widget.component.scss']
+  styleUrls: ['../../../../../../src/assets/widgets/styles/widget-commons.css', './multi-status-widget.component.scss']
 })
 export class MultiStatusWidgetComponent extends BaseWidgetComponent implements OnInit {
   /**
@@ -51,6 +51,7 @@ export class MultiStatusWidgetComponent extends BaseWidgetComponent implements O
     }
     this.isConfigured = true;
     const labelsIds = Object.keys(this.widget.config.packetFields);
+    this.chartLabels = [];
     labelsIds.forEach(id => this.chartLabels.push(this.widget.config.fieldAliases[id] ?
       { id: this.widget.config.packetFields[id], label: this.widget.config.fieldAliases[id] } :
       { id: this.widget.config.packetFields[id], label: this.widget.config.packetFields[id] }));
