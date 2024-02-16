@@ -1,0 +1,25 @@
+.icon-picker-list {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+
+    .icon-search-container {
+        align-self: center;
+    }
+
+    .grid-container {
+        overflow-y: auto;
+
+        .icon-btn {
+            font-size: 1.2em;
+        }
+    }
+
+}
+
+/* .grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 70px);
+    justify-content: space-evenly;
+} */

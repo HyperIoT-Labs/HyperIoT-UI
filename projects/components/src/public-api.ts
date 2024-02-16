@@ -80,6 +80,8 @@ export { HytFilterButtonComponent } from './lib/hyt-filter-button/hyt-filter-but
 export { HytDetailedCardComponent } from './lib/hyt-detailed-card/hyt-detailed-card.component'
 export { HytBadgeComponent } from './lib/hyt-badge/hyt-badge.component'
 export { HytChatbotComponent } from './lib/hyt-chatbot/hyt-chatbot.component'
+export { HytIconPickerComponent } from './lib/hyt-icon-picker/hyt-icon-picker.component';
+export { HytIconPickerListComponent } from './lib/hyt-icon-picker/hyt-icon-picker-list/hyt-icon-picker-list.component';
 
 export * from './lib/hyt-shared-components/hyt-topology-services/hyt-topology.service';
 export * from './lib/hyt-shared-components/hyt-topology-toolbar/hyt-topology-toolbar.component';
