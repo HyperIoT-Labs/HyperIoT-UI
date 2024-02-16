@@ -1,7 +1,9 @@
 import { Component, Injector, OnInit } from '@angular/core';
-import { DataChannel, DataPacketFilter, Logger, LoggerService } from 'core';
+import convert from 'convert-units';
+import { DataChannel, DataPacketFilter, Logger, LoggerService, PacketData } from 'core';
 import { PartialObserver, Subject } from 'rxjs';
 import { BaseWidgetComponent } from '../../base/base-widget/base-widget.component';
+import { WidgetAction } from '../../base/base-widget/model/widget.model';
 
 @Component({
   selector: 'hyperiot-multi-status-widget',
@@ -14,8 +16,8 @@ export class MultiStatusWidgetComponent extends BaseWidgetComponent implements O
    */
   dataChannel: DataChannel;
 
-  chartLabels: any = [];
-  chartData: any = [];
+  chartLabels: { id: number; label: string }[] = [];
+  chartData: { [field: string]: any }[] = [];
 
   loadingOfflineData: boolean = false;
 
@@ -52,7 +54,7 @@ export class MultiStatusWidgetComponent extends BaseWidgetComponent implements O
     this.isConfigured = true;
     const labelsIds = Object.keys(this.widget.config.packetFields);
     this.chartLabels = [];
-    labelsIds.forEach(id => this.chartLabels.push(this.widget.config.fieldAliases[id] ?
+    labelsIds.forEach((id: string) => this.chartLabels.push(this.widget.config.fieldAliases[id] ?
       { id: this.widget.config.packetFields[id], label: this.widget.config.fieldAliases[id] } :
       { id: this.widget.config.packetFields[id], label: this.widget.config.packetFields[id] }));
 
@@ -95,14 +97,91 @@ export class MultiStatusWidgetComponent extends BaseWidgetComponent implements O
       if (packetData.length === 0) {
         return;
       }
-
-      packetData.data.forEach(element => {
-        const field = Object.values(this.widget.config.packetFields).find(field => Object.keys(element).find(label => label === field));
-        const fieldId = Object.keys(this.widget.config.packetFields).find(e => this.widget.config.packetFields[e] == field);
-        if (field) {
-          this.chartData[field] = this.widget.config.fieldValuesMapList[fieldId].find(ele => ele.value == element[field]).output;
-        }
+      packetData.data.forEach((element: PacketData[]) => {
+        const filteredKeys = Object.keys(element).filter((key: string) => Object.values(this.widget.config.packetFields).includes(key));
+        filteredKeys.forEach((key: string) => {
+          console.log('key', key)
+          const field = Object.values(this.widget.config.packetFields).find(field => field === key);
+          const fieldId = this.getFieldIdByName(this.widget.config.packetFields, field);
+          this.chartData[field] = { defaultValue: this.widget.config.fieldValuesMapList[fieldId].defaultValue };
+          this.findFieldBasedOnType(fieldId, packetData.data, element[field], field);
+        })
       })
     })
+  }
+
+  getFieldIdByName(packetFields, fieldName) {
+    return +Object.keys(packetFields).find(key => packetFields[key] === fieldName);
+  }
+
+
+  findFieldBasedOnType(fieldId: number, field: any, element: any, fieldName: string) {
+    let fieldType = 'DEFAULT';
+    try {
+      fieldType = this.widget.config.fieldTypes[fieldId];
+    } catch (error) { }
+    let output;
+    switch (fieldType) {
+      case 'DEFAULT':
+      case 'INTEGER':
+      case 'DOUBLE':
+      case 'FLOAT': {
+        output = this.widget.config.fieldValuesMapList[fieldId].valuesMap.find(ele => typeof element === 'number' && parseInt(ele.value) === element)?.output;
+        break;
+      }
+      case 'FILE':
+      case 'TEXT': {
+        output = this.widget.config.fieldValuesMapList[fieldId].valuesMap.find(ele => ele.value === element)?.output;
+        break;
+      }
+      case 'OBJECT': {
+        output = this.widget.config.fieldValuesMapList[fieldId].valuesMap.find(ele => this.areObjectsEqual(ele.value, element))?.output;
+        break;
+      }
+    }
+
+    if (output) this.chartData[fieldName].output = output;
+  }
+
+  areObjectsEqual(configElement: {}, packetFieldElement: {}) {
+    Object.keys(configElement).length === Object.keys(packetFieldElement).length &&
+      (Object.keys(configElement) as (keyof typeof configElement)[]).every((key) => {
+        return (
+          Object.prototype.hasOwnProperty.call(packetFieldElement, key) && configElement[key] === packetFieldElement[key]
+        );
+      });
+  }
+
+  /**
+   * Called when the play button from the toolbar is pressed
+   * Unpauses the data channel stream
+   */
+  play(): void {
+    this.dataChannel.controller.play();
+  }
+
+  /**
+   * Called when the pause button from the toolbar is pressed
+   * Pauses the data channel stream
+   */
+  pause(): void {
+    this.dataChannel.controller.pause();
+  }
+
+  /**
+   * Called when one of the toolbar options is pressed and emits the correct event
+   * @param action 
+   */
+  onToolbarAction(action: string) {
+    const widgetAction: WidgetAction = { widget: this.widget, action };
+    switch (action) {
+      case 'toolbar:play':
+        this.play();
+        break;
+      case 'toolbar:pause':
+        this.pause();
+        break;
+    }
+    this.widgetAction.emit(widgetAction);
   }
 }

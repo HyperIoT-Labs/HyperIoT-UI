@@ -27,9 +27,9 @@
                         <div class="label-span field-row">
                             <span class="item-label">{{ label.label }}</span>
                         </div>
-                        <div *ngIf="chartData[label.id]" class="value-span field-row" [ngStyle]="{'background-color': chartData[label.id].bgcolor}">
-                            <span *ngIf="chartData[label.id].icon != ''" [class]="chartData[label.id].icon"></span>
-                            <span class="item-value" [ngStyle]="{'color': chartData[label.id].color}">{{ chartData[label.id].mappedValue }}</span>
+                        <div *ngIf="chartData[label.id]" class="value-span field-row" [ngStyle]="{'background-color': chartData[label.id].output?.bgcolor}">
+                            <span *ngIf="chartData[label.id].output?.icon != ''" [class]="chartData[label.id].output?.icon"></span>
+                            <span class="item-value" [ngStyle]="{'color': chartData[label.id].output?.color}">{{ chartData[label.id].output?.mappedValue ? chartData[label.id].output?.mappedValue : chartData[label.id].defaultValue }}</span>
                         </div>
                     </li>
                 </ul>
