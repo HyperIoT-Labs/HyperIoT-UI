@@ -32,9 +32,10 @@
           <input type="color" matInput formControlName="color">
         </mat-form-field>
         <mat-form-field class="color-form-field">
-          <mat-label>Background Color</mat-label>
+          <mat-label>Background</mat-label>
           <input type="color" matInput formControlName="bgcolor">
         </mat-form-field>
+        <hyt-icon-picker formControlName="icon"></hyt-icon-picker>
       </div>
 
       <button mat-icon-button aria-label="Remove value map" (click)="removeValueMap(i)">

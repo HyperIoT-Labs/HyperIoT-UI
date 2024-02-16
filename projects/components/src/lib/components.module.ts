@@ -53,6 +53,8 @@ import { HytDetailedCardComponent } from './hyt-detailed-card/hyt-detailed-card.
 import { HytBimComponent } from './hyt-bim/bim.component';
 import { HytChatbotComponent } from './hyt-chatbot/hyt-chatbot.component';
 import { HytEmptyProjectListViewComponent } from './hyt-empty-project-list-view/hyt-empty-project-list-view.component';
+import { HytIconPickerComponent } from './hyt-icon-picker/hyt-icon-picker.component';
+import { HytIconPickerListComponent } from './hyt-icon-picker/hyt-icon-picker-list/hyt-icon-picker-list.component';
 
 export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
 
@@ -109,6 +111,8 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     HytBimComponent,
     HytChatbotComponent,
     HytEmptyProjectListViewComponent,
+    HytIconPickerComponent,
+    HytIconPickerListComponent,
   ],
   imports: [
     CommonModule,
@@ -164,6 +168,8 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     HytBimComponent,
     HytChatbotComponent,
     HytEmptyProjectListViewComponent,
+    HytIconPickerComponent,
+    HytIconPickerListComponent,
   ],
   providers: [
     NotificationService,
