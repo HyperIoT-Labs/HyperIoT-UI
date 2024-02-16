@@ -1,0 +1,16 @@
+<div class="icon-picker-list">
+
+  <div class="icon-search-container">
+    <mat-form-field>
+      <input matInput [(ngModel)]="filterValue" (ngModelChange)="filterIconList()">
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+  </div>
+
+  <div class="grid-container">
+    <button *ngFor="let icon of filteredIcons" mat-icon-button class="icon-btn" (click)="onIconSelected(icon)">
+      <span [ngClass]="icon"></span>
+    </button>
+  </div>
+
+</div>
