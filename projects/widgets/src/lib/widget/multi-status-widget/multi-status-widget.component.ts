@@ -100,22 +100,42 @@ export class MultiStatusWidgetComponent extends BaseWidgetComponent implements O
       if (packetData.length === 0) {
         return;
       }
-      packetData.data.forEach((element: PacketData[]) => {
-        if (Object.keys(element).length > 1) {
-          Object.keys(element).filter((key: string) => Object.values(this.widget.config.packetFields).includes(key))
-            .forEach((key: string) => {
-              const field = Object.values(this.widget.config.packetFields).find(field => field === key);
+      try {
+        packetData.data.forEach((element: PacketData[]) => {
+          if (Object.keys(element).length > 1) {
+            Object.keys(element).filter((key: string) => Object.values(this.widget.config.packetFields).includes(key))
+              .forEach((key: string) => {
+                const field = Object.values(this.widget.config.packetFields).find(field => field === key);
+                try {
+                  const fieldId = this.getFieldIdByName(this.widget.config.packetFields, field);
+                  this.chartData[field] = { defaultValue: this.widget.config.fieldValuesMapList[fieldId].defaultValue };
+                  this.findFieldBasedOnType(fieldId, packetData.data, element[field], field);
+                } catch (e) {
+                  console.error('[convertAndBufferData] multiple fields in packet', e);
+                  this.chartData[field] = { defaultValue: '' };
+                }
+              })
+          } else {
+            const field = Object.keys(element)[0];
+            try {
               const fieldId = this.getFieldIdByName(this.widget.config.packetFields, field);
               this.chartData[field] = { defaultValue: this.widget.config.fieldValuesMapList[fieldId].defaultValue };
               this.findFieldBasedOnType(fieldId, packetData.data, element[field], field);
-            })
-        } else {
-          const field = Object.keys(element)[0];
-          const fieldId = this.getFieldIdByName(this.widget.config.packetFields, field);
-          this.chartData[field] = { defaultValue: this.widget.config.fieldValuesMapList[fieldId].defaultValue };
-          this.findFieldBasedOnType(fieldId, packetData.data, element[field], field);
-        }
-      })
+            } catch (e) {
+              console.error('[convertAndBufferData] single field in packet', e);
+              this.chartData[field] = { defaultValue: '' };
+            }
+          }
+        })
+      }
+      catch (e) {
+        console.error('[convertAndBufferData] external error', e);
+        this.chartLabels.forEach((label) => {
+          if (this.chartData[label.label] || !this.chartData[label.label].defaultValue) {
+            this.chartData[label.label] = { defaultValue: '' };
+          }
+        }) ;
+      }
     })
   }
 
@@ -140,15 +160,18 @@ export class MultiStatusWidgetComponent extends BaseWidgetComponent implements O
       }
       case 'TIMESTAMP':
         this.retrieveAttachments(this.widget.projectId, this.widget.config.packetId, fieldId, element)
-        .subscribe({
-          next: data => {
-            output = this.widget.config.fieldValuesMapList[fieldId].valuesMap.find(ele => ele.value === data)?.output;
-            if (output) this.chartData[fieldName].output = output;
-          },
-          error: error => console.error('[findFieldBasedOnType] retrieveAttachments', error)
-        });
+          .subscribe({
+            next: data => {
+              output = this.widget.config.fieldValuesMapList[fieldId].valuesMap.find(ele => ele.value === data)?.output;
+              if (output) this.chartData[fieldName].output = output;
+              else this.chartData[fieldName].output = '';
+            },
+            error: error => console.error('[findFieldBasedOnType] retrieveAttachments', error)
+          });
         break;
-      case 'BYTE':
+      // TODO: test byte type
+      // case 'BYTE':
+      case 'DATE':
       case 'TAG':
       case 'CATEGORY':
       case 'TEXT': {
@@ -166,7 +189,7 @@ export class MultiStatusWidgetComponent extends BaseWidgetComponent implements O
       packetId,
       fieldId,
       timestamp,
-      timestamp +1
+      timestamp + 1
     );
   }
 
@@ -203,7 +226,7 @@ export class MultiStatusWidgetComponent extends BaseWidgetComponent implements O
     this.widgetAction.emit(widgetAction);
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     if (this.ngUnsubscribe) {
       this.ngUnsubscribe.next();
       this.ngUnsubscribe.complete();
