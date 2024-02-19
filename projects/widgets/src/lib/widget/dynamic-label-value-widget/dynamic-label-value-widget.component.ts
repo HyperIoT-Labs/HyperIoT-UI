@@ -1,7 +1,8 @@
 import { Component, Injector, OnDestroy, OnInit } from '@angular/core';
-import { DataChannel, DataPacketFilter, Logger, LoggerService } from 'core';
-import { PartialObserver, Subject, takeUntil } from 'rxjs';
+import { DataChannel, DataPacketFilter, Logger, LoggerService, PacketDataChunk } from 'core';
+import { Subject } from 'rxjs';
 import { BaseWidgetComponent } from '../../base/base-widget/base-widget.component';
+import { WidgetAction } from '../../base/base-widget/model/widget.model';
 
 @Component({
   selector: 'hyperiot-dynamic-label-value-widget',
@@ -23,8 +24,6 @@ export class DynamicLabelValueWidgetComponent extends BaseWidgetComponent implem
   loadingOfflineData: boolean = false;
 
   protected logger: Logger;
-
-  allData$: Subject<any[]> = new Subject();
 
   constructor(
     injector: Injector,
@@ -54,6 +53,7 @@ export class DynamicLabelValueWidgetComponent extends BaseWidgetComponent implem
     }
     this.isConfigured = true;
     const labelsIds = Object.keys(this.widget.config.packetFields);
+    this.chartLabels = [];
     labelsIds.forEach(id => this.chartLabels.push(this.widget.config.fieldAliases[id] ?
       { id: this.widget.config.packetFields[id], label: this.widget.config.fieldAliases[id] } :
       { id: this.widget.config.packetFields[id], label: this.widget.config.packetFields[id] }));
@@ -65,31 +65,25 @@ export class DynamicLabelValueWidgetComponent extends BaseWidgetComponent implem
       this.widget.config.packetFields,
       true
     );
-    this.subscribeRealTimeStream(dataPacketFilter, (eventData) => {
-      this.allData$.next(eventData);
-    });
-  }
-
-  subscribeRealTimeStream(dataPacketFilter: DataPacketFilter, observerCallback: PartialObserver<[any, any]> | any): void {
     this.dataChannel = this.dataService.addDataChannel(+this.widget.id, [dataPacketFilter]);
-    this.dataSubscription = this.dataChannel.subject.subscribe(observerCallback);
-  }
-
-  /**
-   * Manipulate stream data from allData$ and set observer for pause/play features
-   */
-  initStream() {
-    if (this.initData.length > 0) {
-      this.convertAndBufferData(this.initData);
-    }
-    // subscribe data stream and update datatable
-    this.allData$.pipe(takeUntil(this.ngUnsubscribe)).subscribe((packet) => {
-      if (packet['data'].length > 0) {
+    this.dataSubscription = this.dataChannel.subject.subscribe((packet: PacketDataChunk) => {
+      if (packet.data.length > 0) {
+        this.logger.debug('computePacketData -> packetData: ', packet);
+        super.computePacketData(packet.data);
         this.convertAndBufferData([packet]);
       } else {
         this.logger.debug('initStream: data is empty');
       }
     });
+  }
+
+  /**
+   * Add initial data
+   */
+  initStream() {
+    if (this.initData.length > 0) {
+      this.convertAndBufferData(this.initData);
+    }
   }
 
   convertAndBufferData(packet) {
@@ -107,7 +101,41 @@ export class DynamicLabelValueWidgetComponent extends BaseWidgetComponent implem
     })
   }
 
-  ngOnDestroy(){
+  /**
+   * Called when the play button from the toolbar is pressed
+   * Unpauses the data channel stream
+   */
+  play(): void {
+    this.dataChannel.controller.play();
+  }
+  
+  /**
+   * Called when the pause button from the toolbar is pressed
+   * Pauses the data channel stream
+   */
+  pause(): void {
+    this.dataChannel.controller.pause();
+  }
+
+  /**
+   * Called when one of the toolbar options is pressed and emits the correct event
+   * @param action 
+   */
+  onToolbarAction(action: string) {
+    const widgetAction: WidgetAction = { widget: this.widget, action };
+    switch (action) {
+      case 'toolbar:play':
+        this.play();
+        break;
+      case 'toolbar:pause':
+        this.pause();
+        break;
+    }
+
+    this.widgetAction.emit(widgetAction);
+  }
+
+  ngOnDestroy() {
     if (this.ngUnsubscribe) {
       this.ngUnsubscribe.next();
       this.ngUnsubscribe.complete();
