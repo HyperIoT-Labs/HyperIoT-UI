@@ -14,8 +14,8 @@ export class DynamicLabelValueWidgetComponent extends BaseWidgetComponent implem
    */
   dataChannel: DataChannel;
 
-  chartLabels: any = [];
-  chartData: any = [];
+  chartLabels: { id: number; label: string }[] = [];
+  chartData: { [field: string]: any }[] = [];
 
   loadingOfflineData: boolean = false;
 
