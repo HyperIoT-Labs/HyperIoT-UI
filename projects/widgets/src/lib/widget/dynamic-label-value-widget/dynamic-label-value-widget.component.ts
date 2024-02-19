@@ -1,6 +1,6 @@
-import { Component, Injector, OnInit } from '@angular/core';
+import { Component, Injector, OnDestroy, OnInit } from '@angular/core';
 import { DataChannel, DataPacketFilter, Logger, LoggerService } from 'core';
-import { PartialObserver, Subject } from 'rxjs';
+import { PartialObserver, Subject, takeUntil } from 'rxjs';
 import { BaseWidgetComponent } from '../../base/base-widget/base-widget.component';
 
 @Component({
@@ -8,11 +8,14 @@ import { BaseWidgetComponent } from '../../base/base-widget/base-widget.componen
   templateUrl: './dynamic-label-value-widget.component.html',
   styleUrls: ['../../../../../../src/assets/widgets/styles/widget-commons.css', './dynamic-label-value-widget.component.scss']
 })
-export class DynamicLabelValueWidgetComponent extends BaseWidgetComponent implements OnInit {
+export class DynamicLabelValueWidgetComponent extends BaseWidgetComponent implements OnInit, OnDestroy {
   /**
    * DataChannel to subscribe to retrieve data
    */
   dataChannel: DataChannel;
+
+  /** Subject used to manage open subscriptions. */
+  protected ngUnsubscribe: Subject<void> = new Subject<void>();
 
   chartLabels: { id: number; label: string }[] = [];
   chartData: { [field: string]: any }[] = [];
@@ -80,7 +83,7 @@ export class DynamicLabelValueWidgetComponent extends BaseWidgetComponent implem
       this.convertAndBufferData(this.initData);
     }
     // subscribe data stream and update datatable
-    this.allData$.pipe().subscribe((packet) => {
+    this.allData$.pipe(takeUntil(this.ngUnsubscribe)).subscribe((packet) => {
       if (packet['data'].length > 0) {
         this.convertAndBufferData([packet]);
       } else {
@@ -102,5 +105,12 @@ export class DynamicLabelValueWidgetComponent extends BaseWidgetComponent implem
         });
       });
     })
+  }
+
+  ngOnDestroy(){
+    if (this.ngUnsubscribe) {
+      this.ngUnsubscribe.next();
+      this.ngUnsubscribe.complete();
+    }
   }
 }
