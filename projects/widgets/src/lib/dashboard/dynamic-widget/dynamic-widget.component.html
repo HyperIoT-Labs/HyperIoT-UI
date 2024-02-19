@@ -21,6 +21,15 @@
     [serviceType]="serviceType"
   ></hyperiot-multi-status-widget>
 
+  <hyperiot-dynamic-label-value-widget
+    *ngSwitchCase="'dynamic-label-value'"
+    [widget]="widget"
+    [initData]="initData"
+    [isToolbarVisible]="isToolbarVisible"
+    (widgetAction)="onWidgetAction($event)"
+    [serviceType]="serviceType"
+  ></hyperiot-dynamic-label-value-widget>
+
   <hyperiot-ecg
     *ngSwitchCase="'ecg'"
     [widget]="widget"
