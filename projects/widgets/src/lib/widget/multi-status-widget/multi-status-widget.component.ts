@@ -1,6 +1,6 @@
-import { Component, Injector, OnInit } from '@angular/core';
+import { Component, Injector, OnDestroy, OnInit } from '@angular/core';
 import { DataChannel, DataPacketFilter, HprojectsService, Logger, LoggerService, PacketData } from 'core';
-import { PartialObserver, Subject } from 'rxjs';
+import { PartialObserver, Subject, takeUntil } from 'rxjs';
 import { BaseWidgetComponent } from '../../base/base-widget/base-widget.component';
 import { WidgetAction } from '../../base/base-widget/model/widget.model';
 
@@ -9,11 +9,14 @@ import { WidgetAction } from '../../base/base-widget/model/widget.model';
   templateUrl: './multi-status-widget.component.html',
   styleUrls: ['../../../../../../src/assets/widgets/styles/widget-commons.css', './multi-status-widget.component.scss']
 })
-export class MultiStatusWidgetComponent extends BaseWidgetComponent implements OnInit {
+export class MultiStatusWidgetComponent extends BaseWidgetComponent implements OnInit, OnDestroy {
   /**
    * DataChannel to subscribe to retrieve data
    */
   dataChannel: DataChannel;
+
+  /** Subject used to manage open subscriptions. */
+  protected ngUnsubscribe: Subject<void> = new Subject<void>();
 
   chartLabels: { id: number; label: string }[] = [];
   chartData: { [field: string]: any }[] = [];
@@ -83,7 +86,7 @@ export class MultiStatusWidgetComponent extends BaseWidgetComponent implements O
       this.convertAndBufferData(this.initData);
     }
     // subscribe data stream and update data
-    this.allData$.pipe().subscribe((packet) => {
+    this.allData$.pipe(takeUntil(this.ngUnsubscribe)).subscribe((packet) => {
       if (packet['data'].length > 0) {
         this.convertAndBufferData([packet]);
       } else {
@@ -199,4 +202,12 @@ export class MultiStatusWidgetComponent extends BaseWidgetComponent implements O
     }
     this.widgetAction.emit(widgetAction);
   }
+
+  ngOnDestroy(){
+    if (this.ngUnsubscribe) {
+      this.ngUnsubscribe.next();
+      this.ngUnsubscribe.complete();
+    }
+  }
+
 }
