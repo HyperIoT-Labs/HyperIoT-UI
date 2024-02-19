@@ -1,6 +1,5 @@
 import { Component, Injector, OnInit } from '@angular/core';
-import convert from 'convert-units';
-import { DataChannel, DataPacketFilter, Logger, LoggerService, PacketData } from 'core';
+import { DataChannel, DataPacketFilter, HprojectsService, Logger, LoggerService, PacketData } from 'core';
 import { PartialObserver, Subject } from 'rxjs';
 import { BaseWidgetComponent } from '../../base/base-widget/base-widget.component';
 import { WidgetAction } from '../../base/base-widget/model/widget.model';
@@ -27,6 +26,7 @@ export class MultiStatusWidgetComponent extends BaseWidgetComponent implements O
 
   constructor(
     injector: Injector,
+    private hProjectsService: HprojectsService,
     protected loggerService: LoggerService
   ) {
     super(injector, loggerService);
@@ -98,14 +98,20 @@ export class MultiStatusWidgetComponent extends BaseWidgetComponent implements O
         return;
       }
       packetData.data.forEach((element: PacketData[]) => {
-        const filteredKeys = Object.keys(element).filter((key: string) => Object.values(this.widget.config.packetFields).includes(key));
-        filteredKeys.forEach((key: string) => {
-          console.log('key', key)
-          const field = Object.values(this.widget.config.packetFields).find(field => field === key);
+        if (Object.keys(element).length > 1) {
+          Object.keys(element).filter((key: string) => Object.values(this.widget.config.packetFields).includes(key))
+            .forEach((key: string) => {
+              const field = Object.values(this.widget.config.packetFields).find(field => field === key);
+              const fieldId = this.getFieldIdByName(this.widget.config.packetFields, field);
+              this.chartData[field] = { defaultValue: this.widget.config.fieldValuesMapList[fieldId].defaultValue };
+              this.findFieldBasedOnType(fieldId, packetData.data, element[field], field);
+            })
+        } else {
+          const field = Object.keys(element)[0];
           const fieldId = this.getFieldIdByName(this.widget.config.packetFields, field);
           this.chartData[field] = { defaultValue: this.widget.config.fieldValuesMapList[fieldId].defaultValue };
           this.findFieldBasedOnType(fieldId, packetData.data, element[field], field);
-        })
+        }
       })
     })
   }
@@ -129,13 +135,21 @@ export class MultiStatusWidgetComponent extends BaseWidgetComponent implements O
         output = this.widget.config.fieldValuesMapList[fieldId].valuesMap.find(ele => typeof element === 'number' && parseInt(ele.value) === element)?.output;
         break;
       }
-      case 'FILE':
+      case 'TIMESTAMP':
+        this.retrieveAttachments(this.widget.projectId, this.widget.config.packetId, fieldId, element)
+        .subscribe({
+          next: data => {
+            output = this.widget.config.fieldValuesMapList[fieldId].valuesMap.find(ele => ele.value === data)?.output;
+            if (output) this.chartData[fieldName].output = output;
+          },
+          error: error => console.error('[findFieldBasedOnType] retrieveAttachments', error)
+        });
+        break;
+      case 'BYTE':
+      case 'TAG':
+      case 'CATEGORY':
       case 'TEXT': {
         output = this.widget.config.fieldValuesMapList[fieldId].valuesMap.find(ele => ele.value === element)?.output;
-        break;
-      }
-      case 'OBJECT': {
-        output = this.widget.config.fieldValuesMapList[fieldId].valuesMap.find(ele => this.areObjectsEqual(ele.value, element))?.output;
         break;
       }
     }
@@ -143,13 +157,14 @@ export class MultiStatusWidgetComponent extends BaseWidgetComponent implements O
     if (output) this.chartData[fieldName].output = output;
   }
 
-  areObjectsEqual(configElement: {}, packetFieldElement: {}) {
-    Object.keys(configElement).length === Object.keys(packetFieldElement).length &&
-      (Object.keys(configElement) as (keyof typeof configElement)[]).every((key) => {
-        return (
-          Object.prototype.hasOwnProperty.call(packetFieldElement, key) && configElement[key] === packetFieldElement[key]
-        );
-      });
+  retrieveAttachments(projectId: number, packetId: number, fieldId: number, timestamp: number) {
+    return this.hProjectsService.scanHProject1(
+      projectId,
+      packetId,
+      fieldId,
+      timestamp,
+      timestamp +1
+    );
   }
 
   /**
