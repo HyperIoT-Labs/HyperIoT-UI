@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, Input, QueryList, ViewChild, ViewChildren, ViewEncapsulation} from "@angular/core";
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, Input, QueryList, ViewChild, ViewChildren, ViewEncapsulation, Optional} from "@angular/core";
 import { Logger, LoggerService } from "core";
 import { WebsocketChat } from "./models/websocket-chat";
 import { Subject, takeUntil } from "rxjs";
@@ -220,6 +220,15 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
       this.logger.info("handleWSMessage()", msg.content);
     }
 
+    // Always show -> LINECHART!
+    else if (msg.type == 'linechart'){
+      this.received.splice(this.received.length - 1, 1);
+      this.previous_message_type = 'chat'
+      action = 'chart';
+      show = true;
+      this.logger.info("handleWSMessage()", msg.content);
+    }
+
     // Choose to show message, adding to relative
     if (show == true) {
       this.received.push({
@@ -231,7 +240,7 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
 
       this.canIWrite = true;
 
-      if (msg.type == 'chat'){
+      if (msg.type == 'chat' || msg.type == 'linechart'){
         // add MatBadgeValue and show
         this.badgeContent++;
         this.badgeHidden = false;

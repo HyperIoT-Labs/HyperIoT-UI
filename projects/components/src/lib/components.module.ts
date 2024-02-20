@@ -53,6 +53,9 @@ import { HytDetailedCardComponent } from './hyt-detailed-card/hyt-detailed-card.
 import { HytBimComponent } from './hyt-bim/bim.component';
 import { HytChatbotComponent } from './hyt-chatbot/hyt-chatbot.component';
 import { HytEmptyProjectListViewComponent } from './hyt-empty-project-list-view/hyt-empty-project-list-view.component';
+import { HytChatbotChartMessageComponent } from './hyt-chatbot-chart-message/hyt-chatbot-chart-message.component';
+import { HytChatbotChartModalComponent } from './hyt-chatbot-chart-message/hyt-chatbot-chart-message.component';
+import { PlotlyModule } from 'angular-plotly.js';
 
 export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
 
@@ -109,6 +112,8 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     HytBimComponent,
     HytChatbotComponent,
     HytEmptyProjectListViewComponent,
+    HytChatbotChartMessageComponent,
+    HytChatbotChartModalComponent,
   ],
   imports: [
     CommonModule,
@@ -117,6 +122,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     DemoMaterialModule,
     NgxMaskModule.forRoot(options),
     RouterModule,
+    PlotlyModule,
   ],
   exports: [
     CronEditorComponent,
@@ -164,6 +170,8 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     HytBimComponent,
     HytChatbotComponent,
     HytEmptyProjectListViewComponent,
+    HytChatbotChartMessageComponent,
+    HytChatbotChartModalComponent,
   ],
   providers: [
     NotificationService,
