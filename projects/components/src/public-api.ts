@@ -81,7 +81,7 @@ export { HytDetailedCardComponent } from './lib/hyt-detailed-card/hyt-detailed-c
 export { HytBadgeComponent } from './lib/hyt-badge/hyt-badge.component'
 export { HytChatbotComponent } from './lib/hyt-chatbot/hyt-chatbot.component'
 export { HytChatbotChartMessageComponent} from './lib/hyt-chatbot-chart-message/hyt-chatbot-chart-message.component'
-export { HytChatbotChartModalComponent} from './lib/hyt-chatbot-chart-message/hyt-chatbot-chart-message.component'
+export { HytChartModalComponent } from './lib/hyt-modal/hyt-chart-modal/hyt-chart-modal.component';
 
 export * from './lib/hyt-shared-components/hyt-topology-services/hyt-topology.service';
 export * from './lib/hyt-shared-components/hyt-topology-toolbar/hyt-topology-toolbar.component';
