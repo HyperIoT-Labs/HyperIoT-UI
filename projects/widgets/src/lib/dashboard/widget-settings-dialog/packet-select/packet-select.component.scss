@@ -43,30 +43,39 @@
       display: flex;
       flex-wrap: wrap;
       flex-direction: column;
+
       .customization-container-section {
         display: flex;
         flex-direction: column;
         margin-top: 12px;
+
         .section-title {
           color: #0856b6;
           display: flex;
-        }
-        .section-input {
-          margin-left: 24px;
-          margin-top: 8px;
-          display: flex;
-          gap: 32px;
-          hyt-select-template,
-          hyt-input-template {
-            width: 30%;
+
+          &.key-value-mapping {
+            flex-direction: column;
+          }
+
+          .section-input {
+            margin-left: 24px;
+            margin-top: 8px;
+            display: flex;
+            gap: 32px;
+
+            hyt-select-template,
+            hyt-input-template {
+              width: 30%;
+            }
           }
         }
       }
+
       .section-alias,
       .section-fileType {
         width: 50%;
       }
-    }    
+    }
 
   }
 

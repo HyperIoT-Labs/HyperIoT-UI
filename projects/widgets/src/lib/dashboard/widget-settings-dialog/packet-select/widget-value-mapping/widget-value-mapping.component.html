@@ -1,16 +1,17 @@
 <form class="widget-value-mapping-form" [formGroup]="valuesMapForm">
+  <div class="default-add-container">
+    <div class="value-map-defulat-field">
+      <mat-form-field>
+        <mat-label>Default Value</mat-label>
+        <input matInput formControlName="defaultValue">
+        <hyt-info matSuffix text="Default value to display in case of an unmapped value."></hyt-info>
+      </mat-form-field>
+    </div>
 
-  <div class="value-map-defulat-field">
-    <mat-form-field>
-      <mat-label>Default Value</mat-label>
-      <input matInput formControlName="defaultValue">
-      <hyt-info matSuffix text="Default value to display in case of an unmapped value."></hyt-info>
-    </mat-form-field>
+    <button class="add-map-button" mat-mini-fab aria-label="Add value map" (click)="addValueMap()">
+      <mat-icon>add</mat-icon>
+    </button>
   </div>
-
-  <button class="add-map-button" mat-mini-fab aria-label="Add value map" (click)="addValueMap()">
-    <mat-icon>add</mat-icon>
-  </button>
 
   <div formArrayName="valuesMap">
     <div class="map-row" *ngFor="let mappedValue of valuesMapFormArray.controls; let i = index" [formGroupName]="i">
@@ -22,7 +23,7 @@
 
       <span class="hyt-icon icon-hyt_arrowRight"></span>
 
-      <div class ="value-map-output" formGroupName="output">
+      <div class="value-map-output" formGroupName="output">
         <mat-form-field>
           <mat-label>Output</mat-label>
           <input matInput formControlName="mappedValue">

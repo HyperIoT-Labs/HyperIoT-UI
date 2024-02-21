@@ -852,6 +852,9 @@
       <trans-unit id="HYT_search" datatype="html">
         <source>Search</source>
       </trans-unit>
+      <trans-unit id="HYT_search_icon" datatype="html">
+        <source>Search icon</source>
+      </trans-unit>
       <trans-unit id="HYT_select_sort_type" datatype="html">
         <source>Select a sort type</source>
       </trans-unit>

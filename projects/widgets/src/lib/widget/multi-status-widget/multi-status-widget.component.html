@@ -27,9 +27,10 @@
                         <div class="label-span field-row">
                             <span class="item-label">{{ label.label }}</span>
                         </div>
-                        <div *ngIf="chartData[label.id]" class="value-span field-row" [ngStyle]="{'background-color': chartData[label.id].output?.bgcolor}" [ngStyle]="{'color': chartData[label.id].output?.color}">
+                        <div *ngIf="chartData[label.id]" class="value-span field-row" [ngStyle]="{'color': chartData[label.id].output?.color, 'background-color': chartData[label.id].output?.bgcolor}">
                             <span class="item-value">{{ chartData[label.id].output?.mappedValue ? chartData[label.id].output?.mappedValue : chartData[label.id].defaultValue }}</span>
-                            <span class="icon" *ngIf="chartData[label.id].output?.icon != ''" [class]="chartData[label.id].output?.icon"></span>
+                            <span *ngIf="chartData[label.id].output?.icon != '' && (chartData[label.id].output?.icon.includes('fa ') || chartData[label.id].output?.icon.includes('hyt-icon '))" [ngClass]="chartData[label.id].output?.icon"></span>
+                            <span *ngIf="chartData[label.id].output?.icon != '' && !chartData[label.id].output?.icon.includes('fa ') && !chartData[label.id].output?.icon.includes('hyt-icon ')" class="material-icons">{{chartData[label.id].output?.icon}}</span>
                         </div>
                     </li>
                 </ul>

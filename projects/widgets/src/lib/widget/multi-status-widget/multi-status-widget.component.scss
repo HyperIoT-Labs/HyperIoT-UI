@@ -46,14 +46,16 @@
                 gap: 4%;
                 border-radius: 5px;
 
-                .icon {
-                    &.hyt-icon {
-                        font-size: 1.3em;
-                    }
+                .material-icons {
+                    font-size: 1.5em
+                } 
 
-                    &.fa {
-                        font-size: 1.2em;
-                    }
+                .hyt-icon {
+                    font-size: 1.4em
+                }
+
+                .fa {
+                    font-size: 1.2em;
                 }
             }
         }
