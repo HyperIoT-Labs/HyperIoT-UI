@@ -211,20 +211,11 @@ export class HytChatbotComponent implements OnInit, OnDestroy, AfterViewInit {
       show = true;
     }
 
-    // Always show
-    else if (msg.type == 'chat'){
+    // Always show (classic message or chart)
+    else if (msg.type == 'chat' || msg.type == 'linechart'){
       this.received.splice(this.received.length - 1, 1);
       this.previous_message_type = 'chat'
-      action = 'text';
-      show = true;
-      this.logger.info("handleWSMessage()", msg.content);
-    }
-
-    // Always show -> LINECHART!
-    else if (msg.type == 'linechart'){
-      this.received.splice(this.received.length - 1, 1);
-      this.previous_message_type = 'chat'
-      action = 'chart';
+      action = msg.type == 'chat' ? 'text' : 'chart';
       show = true;
       this.logger.info("handleWSMessage()", msg.content);
     }

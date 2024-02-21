@@ -1,12 +1,12 @@
 <div id="hyt-modal-chart" hyt-dialog>
     <div id="header-row" hyt-dialog-header>
-        <span i18n="@@HYT_data_recording">Chart</span>
+        <span i18n="@@HYT_ai_chart">Chart</span>
     </div>
     <plotly-plot class="hyt-chart" [data]="this.chartData" [layout]="this.chartLayout"></plotly-plot>
     <div id="footer-row" hyt-dialog-footer>
         <hyt-button [color]="'hyt-base-total-red'" (clickFn)="close('cancel')">
             <span class="hyt-icon icon-hyt_cancelC"></span>
-            <span i18n="@@HYT_back">Back</span>
+            <span i18n="@@HYT_close">Close</span>
         </hyt-button>
     </div>
 </div>
