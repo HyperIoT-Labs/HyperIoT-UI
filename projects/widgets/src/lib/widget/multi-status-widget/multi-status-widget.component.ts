@@ -154,10 +154,9 @@ export class MultiStatusWidgetComponent extends BaseWidgetComponent implements O
       case 'DEFAULT':
       case 'INTEGER':
       case 'DOUBLE':
-      case 'FLOAT': {
+      case 'FLOAT': 
         output = this.widget.config.fieldValuesMapList[fieldId].valuesMap.find(ele => typeof element === 'number' && parseInt(ele.value) === element)?.output;
         break;
-      }
       case 'TIMESTAMP':
         this.retrieveAttachments(this.widget.projectId, this.widget.config.packetId, fieldId, element)
           .subscribe({
@@ -169,15 +168,11 @@ export class MultiStatusWidgetComponent extends BaseWidgetComponent implements O
             error: error => console.error('[findFieldBasedOnType] retrieveAttachments', error)
           });
         break;
-      // TODO: test byte type
-      // case 'BYTE':
+      case 'BYTE':
       case 'DATE':
-      case 'TAG':
-      case 'CATEGORY':
-      case 'TEXT': {
+      case 'TEXT':
         output = this.widget.config.fieldValuesMapList[fieldId].valuesMap.find(ele => ele.value === element)?.output;
         break;
-      }
     }
 
     if (output) this.chartData[fieldName].output = output;
