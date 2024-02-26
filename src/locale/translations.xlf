@@ -1642,6 +1642,15 @@
       <trans-unit id="HYT_severity_settings" datatype="html">
         <source>Severity Settings</source>
       </trans-unit>
+      <trans-unit id="HYT_deselect_icon" datatype="html">
+        <source>Deselect icon</source>
+      </trans-unit>
+      <trans-unit id="HYT_dynamic_label" datatype="html">
+        <source>Dynamic Label</source>
+      </trans-unit>
+      <trans-unit id="HYT_dynamic_label_description" datatype="html">
+        <source>Dynamic Label Description  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quibusdam provident facere nulla hic eius! Minima laboriosam omnis aperiam, corporis nam accusamus rem itaque pariatur accusantium sunt, veritatis libero, molestiae sed.</source>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -1,5 +1,5 @@
 import { Component, Injector, OnDestroy, OnInit } from '@angular/core';
-import { DataChannel, DataPacketFilter, HprojectsService, Logger, LoggerService, PacketData } from 'core';
+import { DataChannel, DataPacketFilter, HprojectsService, Logger, LoggerService, PacketData, PacketDataChunk } from 'core';
 import { PartialObserver, Subject, takeUntil } from 'rxjs';
 import { BaseWidgetComponent } from '../../base/base-widget/base-widget.component';
 import { WidgetAction } from '../../base/base-widget/model/widget.model';
@@ -13,19 +13,17 @@ export class MultiStatusWidgetComponent extends BaseWidgetComponent implements O
   /**
    * DataChannel to subscribe to retrieve data
    */
-  dataChannel: DataChannel;
+  protected dataChannelList: DataChannel[] = [];
 
   /** Subject used to manage open subscriptions. */
   protected ngUnsubscribe: Subject<void> = new Subject<void>();
 
-  chartLabels: { id: number; label: string }[] = [];
-  chartData: { [field: string]: any }[] = [];
+  chartLabels: { id: string; label: string, subtitle?: { id: string, value?: string } }[] = [];
+  chartData: { [field: string]: any } = {};
 
   loadingOfflineData: boolean = false;
 
   protected logger: Logger;
-
-  allData$: Subject<any[]> = new Subject();
 
   constructor(
     injector: Injector,
@@ -55,44 +53,69 @@ export class MultiStatusWidgetComponent extends BaseWidgetComponent implements O
       return;
     }
     this.isConfigured = true;
-    const labelsIds = Object.keys(this.widget.config.packetFields);
+    const labelsIds = [...Object.keys(this.widget.config.packetFields)];
     this.chartLabels = [];
-    labelsIds.forEach((id: string) => this.chartLabels.push(this.widget.config.fieldAliases[id] ?
-      { id: this.widget.config.packetFields[id], label: this.widget.config.fieldAliases[id] } :
-      { id: this.widget.config.packetFields[id], label: this.widget.config.packetFields[id] }));
+    let packetAndFieldsToRetrive: { [packetId: number]: { [id: number]: string } } = {};
+    labelsIds.forEach((id: string) => {
+      this.chartLabels.push(this.widget.config.fieldAliases[id] ?
+        { id: this.widget.config.packetFields[id], label: this.widget.config.fieldAliases[id] } :
+        { id: this.widget.config.packetFields[id], label: this.widget.config.packetFields[id] })
 
+      if (this.widget.config.dynamicLabels?.field) {
+        const mergedValues: { [id: string]: string[] } = Object.entries(this.widget.config.dynamicLabels.field).reduce((acc, [id, values]) => {
+          const idNum = parseInt(this.widget.config.dynamicLabels.packet[id].id);
+          if (acc[idNum]) {
+            acc[idNum][values.fieldId] = values.fieldName;
+          } else {
+            acc[idNum] = {};
+            acc[idNum][values.fieldId] = values.fieldName;
+          }
+          return acc;
+        }, {});
+  
+        Object.keys(mergedValues).forEach((key: string) => {
+          packetAndFieldsToRetrive[parseInt(key)] = mergedValues[key];
+          if (packetAndFieldsToRetrive[parseInt(key)][id]) {
+            this.chartLabels.find(label => label.id === this.widget.config.packetFields[id]).subtitle = { id: packetAndFieldsToRetrive[parseInt(key)][id] } 
+          }
+        });
+      }
+    });
 
     this.initStream();
-    const dataPacketFilter = new DataPacketFilter(
-      this.widget.config.packetId,
-      this.widget.config.packetFields,
-      true
-    );
-    this.subscribeRealTimeStream(dataPacketFilter, (eventData) => {
-      this.allData$.next(eventData);
-    });
-  }
 
-  subscribeRealTimeStream(dataPacketFilter: DataPacketFilter, observerCallback: PartialObserver<[any, any]> | any): void {
-    this.dataChannel = this.dataService.addDataChannel(+this.widget.id, [dataPacketFilter]);
-    this.dataSubscription = this.dataChannel.subject.subscribe(observerCallback);
-  }
-
-  /**
-   * Manipulate stream data from allData$ and set observer for pause/play features
-   */
-  initStream() {
-    if (this.initData.length > 0) {
-      this.convertAndBufferData(this.initData);
+    if (packetAndFieldsToRetrive[this.widget.config.packetId]) {
+      Object.keys(this.widget.config.packetFields).forEach(key => {
+        if (!Object.keys(packetAndFieldsToRetrive[this.widget.config.packetId]).find(subKey => subKey === key)) {
+          packetAndFieldsToRetrive[this.widget.config.packetId][key] = this.widget.config.packetFields[key];
+        }
+      })
+    } else {
+      packetAndFieldsToRetrive[this.widget.config.packetId] = this.widget.config.packetFields;
     }
-    // subscribe data stream and update data
-    this.allData$.pipe(takeUntil(this.ngUnsubscribe)).subscribe((packet) => {
+    this.subscribeDataChannel(packetAndFieldsToRetrive);
+  }
+
+  subscribeDataChannel(packetAndFieldsToRetrive) {
+    const dataPacketFilterList = Object.keys(packetAndFieldsToRetrive).map(key => new DataPacketFilter(+key, packetAndFieldsToRetrive[key], true));
+    const dataChannel = this.dataService.addDataChannel(+this.widget.id, dataPacketFilterList);
+    this.dataSubscription = dataChannel.subject.subscribe((packet: PacketDataChunk) => {
       if (packet['data'].length > 0) {
         this.convertAndBufferData([packet]);
       } else {
         this.logger.debug('initStream: data is empty');
       }
     });
+    this.dataChannelList.push(dataChannel);
+  }
+
+  /**
+   * Add initial data
+   */
+  initStream() {
+    if (this.initData.length > 0) {
+      this.convertAndBufferData(this.initData);
+    }
   }
 
   convertAndBufferData(packet) {
@@ -102,6 +125,14 @@ export class MultiStatusWidgetComponent extends BaseWidgetComponent implements O
       }
       try {
         packetData.data.forEach((element: PacketData[]) => {
+          this.chartLabels.forEach(label => {
+            if (Object.keys(element).includes(label.subtitle.id)) {
+              label.subtitle.value = element[label.subtitle.id];
+            }
+          })
+          if (Object.keys(element).includes('timestamp') && !this.chartLabels.find(label => label.id === 'timestamp')) {
+            delete element['timestamp'];
+          }
           if (Object.keys(element).length > 1) {
             Object.keys(element).filter((key: string) => Object.values(this.widget.config.packetFields).includes(key))
               .forEach((key: string) => {
@@ -134,7 +165,7 @@ export class MultiStatusWidgetComponent extends BaseWidgetComponent implements O
           if (this.chartData[label.label] || !this.chartData[label.label].defaultValue) {
             this.chartData[label.label] = { defaultValue: '' };
           }
-        }) ;
+        });
       }
     })
   }
@@ -193,7 +224,7 @@ export class MultiStatusWidgetComponent extends BaseWidgetComponent implements O
    * Unpauses the data channel stream
    */
   play(): void {
-    this.dataChannel.controller.play();
+    this.dataChannelList.forEach(dataChannel => dataChannel.controller.play());
   }
 
   /**
@@ -201,7 +232,7 @@ export class MultiStatusWidgetComponent extends BaseWidgetComponent implements O
    * Pauses the data channel stream
    */
   pause(): void {
-    this.dataChannel.controller.pause();
+    this.dataChannelList.forEach(dataChannel => dataChannel.controller.pause());
   }
 
   /**

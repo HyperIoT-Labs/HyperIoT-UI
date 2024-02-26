@@ -48,6 +48,14 @@
         display: flex;
         flex-direction: column;
         margin-top: 12px;
+        
+        &.dynamic-label {
+          .section-input{
+            display: flex;
+            flex-direction: row;
+            gap: 56px;
+          }
+        }
 
         .section-title {
           color: #0856b6;

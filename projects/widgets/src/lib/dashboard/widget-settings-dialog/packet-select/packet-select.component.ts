@@ -11,19 +11,27 @@ import { FieldAliases, FieldFileMimeTypes, FieldTypes, FieldUnitConversion, Fiel
   templateUrl: './packet-select.component.html',
   styleUrls: ['./packet-select.component.scss'],
   encapsulation: ViewEncapsulation.None,
-  viewProviders: [ { provide: ControlContainer, useExisting: NgForm } ]
+  viewProviders: [{ provide: ControlContainer, useExisting: NgForm }]
 })
 export class PacketSelectComponent implements OnInit {
   @Input() widget;
   @Input()
   selectedPacket: HPacket = null;
   selectedPacketOption: number = null;
+
+  dynamicLabelSelectedPacket: { [id: number]: HPacket } = {};
+  
+  dynamicLabelFields: { [id: number]: HPacketField[] } = {};
+  dynamicLabelSelectedPacketOption: { [id: number]: number } = {};
   @Input()
   selectedFields: any = [];
   fieldsOption: SelectOption[] = [];
   selectedFieldsOptions: any = [];
+  dynamicLabelSelectedField: { [id: number]: { fieldId?: number, fieldName?: string } } = {};
+  dynamicLabelFieldsOption: SelectOption[] = [];
   @Output()
   selectedFieldsChange = new EventEmitter();
+  dynamicLabelSelectedFieldChange = new EventEmitter();
   projectPackets: HPacket[] = [];
   groupedPacketOptions: SelectOptionGroup[] = [];
   @Input()
@@ -36,16 +44,17 @@ export class PacketSelectComponent implements OnInit {
   fieldFileMimeTypes: FieldFileMimeTypes;
   fieldUnitConversions: FieldUnitConversion;
   conversionDecimalsOptions = [
-    {label: '0', value: 0},
-    {label: '1', value: 1},
-    {label: '2', value: 2},
-    {label: '3', value: 3},
-    {label: '4', value: 4},
-    {label: '5', value: 5},
+    { label: '0', value: 0 },
+    { label: '1', value: 1 },
+    { label: '2', value: 2 },
+    { label: '3', value: 3 },
+    { label: '4', value: 4 },
+    { label: '5', value: 5 },
   ];
   fieldValuesMapList: FieldValuesMapList;
 
   aliasesDescription = $localize`:@@HYT_aliases_description:Enter an alternative name to be displayed in the widget. If the alias is empty, the field name will be displayed.`;
+  dynamicLabelDescription = $localize`:@@HYT_dynamic_label_description:Dynamic Label Description  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quibusdam provident facere nulla hic eius! Minima laboriosam omnis aperiam, corporis nam accusamus rem itaque pariatur accusantium sunt, veritatis libero, molestiae sed.`;
 
   allMIMETypesOptions: string[] = mimeTypeList;
   filteredMIMETypesOptions: string[];
@@ -97,24 +106,47 @@ export class PacketSelectComponent implements OnInit {
     this.selectedFieldsChange.emit(this.selectedFields);
   }
 
+  onDynamicLabelPacketSelect(packetOption, fieldId) {
+    this.dynamicLabelSelectedPacketOption[fieldId] = packetOption.value;
+    this.dynamicLabelSelectedPacket[fieldId] = this.projectPackets.find(p => p.id === this.dynamicLabelSelectedPacketOption[fieldId]);
+    this.dynamicLabelFields[fieldId] = this.dynamicLabelSelectedPacket[fieldId].fields;
+    this.dynamicLabelFieldsOption = [];
+    const fieldsFlatList = this.hPacketFieldsHandlerService.flatPacketFieldsTree(this.dynamicLabelSelectedPacket[fieldId] as HPacket);
+    this.dynamicLabelFieldsOption = fieldsFlatList.map(x => ({
+      value: x.field.id,
+      label: x.label
+    }));
+    this.dynamicLabelSelectedField[fieldId] = {};
+    this.dynamicLabelSelectedFieldChange.emit([]);
+  }
+
+  onDynamicLabelPacketFieldSelect($event, fieldId) {
+    if ($event.length > 0) {
+      this.dynamicLabelSelectedField[fieldId] = { fieldId: $event, fieldName: this.dynamicLabelFields[fieldId].find(field => field.id === $event[0]).name};
+    } else {
+      delete this.dynamicLabelSelectedField[fieldId];
+    }
+    this.dynamicLabelSelectedFieldChange.emit(this.dynamicLabelSelectedField);
+  }
+
   onPacketFieldChange($event) {
     this.selectedFields = [];
     // if (this.multiPacketSelect) {
-      // multiple select
-      const nullIndex = this.selectedFields.indexOf(null);
-      if (nullIndex >= 0) {
-        delete this.selectedFields[nullIndex];
-      }
-      let selected = $event as any[];
-      selected.map(s => {
-        // this.selectedFields.push(this.selectedPacket.fields.find(p => p.name === s))
-        this.selectedFields.push(this.hPacketFieldsHandlerService.findFieldFromPacketFieldsTree(this.selectedPacket, s));
-      })
+    // multiple select
+    const nullIndex = this.selectedFields.indexOf(null);
+    if (nullIndex >= 0) {
+      delete this.selectedFields[nullIndex];
+    }
+    let selected = $event as any[];
+    selected.map(s => {
+      // this.selectedFields.push(this.selectedPacket.fields.find(p => p.name === s))
+      this.selectedFields.push(this.hPacketFieldsHandlerService.findFieldFromPacketFieldsTree(this.selectedPacket, s));
+    })
     // } else {
-      // single select
-      // let selected = $event as any;
-      // this.selectedFields = this.selectedPacket.fields.find(p => p.name === selected);
-      // this.selectedFields.push(this.hPacketFieldsHandlerService.findFieldFromPacketFieldsTree(this.selectedPacket, selected));
+    // single select
+    // let selected = $event as any;
+    // this.selectedFields = this.selectedPacket.fields.find(p => p.name === selected);
+    // this.selectedFields.push(this.hPacketFieldsHandlerService.findFieldFromPacketFieldsTree(this.selectedPacket, selected));
     // }
     // units conversion
     this.syncUnitsConversion();
@@ -134,9 +166,16 @@ export class PacketSelectComponent implements OnInit {
       this.selectedFields.map((pf) => this.widget.config.packetFields[pf.id] = this.hPacketFieldsHandlerService.getStringifiedSequenceFromPacket(this.selectedPacket, pf.id));
       this.widget.config.fieldAliases = this.fieldAliases;
       this.widget.config.fieldFileMimeTypes = this.fieldFileMimeTypes;
-      this.widget.config.fieldTypes = { };
+      this.widget.config.fieldTypes = {};
       this.widget.config.fieldUnitConversions = this.fieldUnitConversions;
       this.widget.config.fieldValuesMapList = this.fieldValuesMapList;
+      this.widget.config.dynamicLabels = { 
+        packet: this.dynamicLabelSelectedPacket, 
+        packetOption: this.dynamicLabelSelectedPacketOption, 
+        field: this.dynamicLabelSelectedField, 
+        fieldOptions: this.dynamicLabelFields
+      }
+
       // this.selectedPacket.fields.forEach(field => {
       //   this.widget.config.fieldTypes[field.id] = field.type;
       // });
@@ -158,16 +197,16 @@ export class PacketSelectComponent implements OnInit {
 
   loadPackets(devices?: HDevice[]) {
     this.fieldAliases = this.widget.config.fieldAliases ?
-        JSON.parse(JSON.stringify(this.widget.config.fieldAliases)) : { };
+      JSON.parse(JSON.stringify(this.widget.config.fieldAliases)) : {};
     this.fieldFileMimeTypes = this.widget.config.fieldFileMimeTypes ?
-        JSON.parse(JSON.stringify(this.widget.config.fieldFileMimeTypes)) : { };
+      JSON.parse(JSON.stringify(this.widget.config.fieldFileMimeTypes)) : {};
     this.fieldUnitConversions = this.widget.config.fieldUnitConversions ?
-        JSON.parse(JSON.stringify(this.widget.config.fieldUnitConversions)) : { };
+      JSON.parse(JSON.stringify(this.widget.config.fieldUnitConversions)) : {};
     this.fieldValuesMapList = this.widget.config.fieldValuesMapList ?
-        JSON.parse(JSON.stringify(this.widget.config.fieldValuesMapList)) : { };
+      JSON.parse(JSON.stringify(this.widget.config.fieldValuesMapList)) : {};
     // fetch all packets
     this.packetService
-      .findAllHPacketByProjectIdAndType(this.widget.projectId,"INPUT,IO")
+      .findAllHPacketByProjectIdAndType(this.widget.projectId, "INPUT,IO")
       .subscribe((packetList) => {
         // Filter out packets not belonging to the given `devices` list (if set)
         if (devices) {
@@ -206,15 +245,21 @@ export class PacketSelectComponent implements OnInit {
             .subscribe((packet: HPacket) => {
               this.selectedPacket = packet;
               this.selectedPacketOption = this.selectedPacket.id;
+              this.dynamicLabelSelectedPacket = this.widget.config.dynamicLabels['packet'] ? this.widget.config.dynamicLabels['packet'] : packet;
+              this.dynamicLabelSelectedPacketOption = this.widget.config.dynamicLabels['packetOption'] ? this.widget.config.dynamicLabels['packetOption'] : this.selectedPacketOption;
               const fieldsFlatList = this.hPacketFieldsHandlerService.flatPacketFieldsTree(this.selectedPacket);
               this.fieldsOption = fieldsFlatList.map(x => ({
                 value: x.field.id,
                 label: x.label
               }));
+              
+              this.dynamicLabelFieldsOption = this.widget.config.dynamicLabels.fieldOptions;
               if (this.widget.config.packetFields) {
                 this.selectedFields = [];
                 Object.keys(this.widget.config.packetFields).forEach(x => {
                   this.selectedFieldsOptions.push(+x);
+                  this.dynamicLabelSelectedField = this.widget.config.dynamicLabels['field'];
+                  this.dynamicLabelFields = this.widget.config.dynamicLabels['fieldOptions'] ? this.widget.config.dynamicLabels['fieldOptions'] : +x;
                   this.selectedFields.push(this.hPacketFieldsHandlerService.findFieldFromPacketFieldsTree(packet, +x));
                 });
                 // packet.fields.map((pf) => {
@@ -240,7 +285,7 @@ export class PacketSelectComponent implements OnInit {
     const addFieldConversion = (f: HPacketField) => {
       let unit = null
       let unitConvert = this.fieldUnitConversions[f.id];
-      unit = (f.unit == "")?null:f.unit;
+      unit = (f.unit == "") ? null : f.unit;
       if (!unitConvert) {
         unitConvert = {
           convertFrom: unit,
@@ -255,22 +300,22 @@ export class PacketSelectComponent implements OnInit {
       this.fieldUnitConversions[f.id] = unitConvert;
     };
     // if (this.multiPacketSelect) {
-      this.selectedFields.filter(field => field.type === 'INTEGER' || field.type === 'FLOAT' || field.type === 'DOUBLE').map((pf: HPacketField) => {
-        addFieldConversion(pf);
-      });
+    this.selectedFields.filter(field => field.type === 'INTEGER' || field.type === 'FLOAT' || field.type === 'DOUBLE').map((pf: HPacketField) => {
+      addFieldConversion(pf);
+    });
     // } else if (this.selectedFields) {
     //   addFieldConversion(this.selectedFields);
     // }
   }
 
   getUnit(unit: string) {
-    if(!unit)
+    if (!unit)
       return "";
     return this.unitConversionService.convert().describe(unit);
   }
 
   private getUnitOptions(unit: string): any[] {
-    if(!unit)
+    if (!unit)
       return [];
     const measurement = this.getUnit(unit);
     const measurementUnit = UnitConversionService.measurements.find((m) => m.type === measurement.measure);
@@ -297,5 +342,4 @@ export class PacketSelectComponent implements OnInit {
   getFullFieldName(hPacketFieldId) {
     return this.hPacketFieldsHandlerService.getStringifiedSequenceFromPacket(this.selectedPacket, hPacketFieldId);
   }
-
 }

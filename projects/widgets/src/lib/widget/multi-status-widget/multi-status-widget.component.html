@@ -26,6 +26,7 @@
                     <li class="item" *ngFor="let label of chartLabels; let i = index">
                         <div class="label-span field-row">
                             <span class="item-label">{{ label.label }}</span>
+                            <span class="item-subtitle" *ngIf="label.subtitle">{{ label.subtitle.value }}</span>
                         </div>
                         <div *ngIf="chartData[label.id]" class="value-span field-row" [ngStyle]="{'color': chartData[label.id].output?.color, 'background-color': chartData[label.id].output?.bgcolor}">
                             <span class="item-value">{{ chartData[label.id].output?.mappedValue ? chartData[label.id].output?.mappedValue : chartData[label.id].defaultValue }}</span>

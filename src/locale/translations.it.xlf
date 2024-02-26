@@ -2198,6 +2198,18 @@
         <source>Severity Settings</source>
         <target>Impostazioni Severity</target>
       </trans-unit>
+      <trans-unit id="HYT_deselect_icon" datatype="html">
+        <source>Deselect icon</source>
+        <target>Deseleziona icona</target>
+      </trans-unit>
+      <trans-unit id="HYT_dynamic_label" datatype="html">
+        <source>Dynamic Label</source>
+        <target>Etichetta Dinamica</target>
+      </trans-unit>
+      <trans-unit id="HYT_dynamic_label_description" datatype="html">
+        <source>Dynamic Label Description Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quibusdam provident facere nulla hic eius! Minima laboriosam omnis aperiam, corporis nam accusamus rem itaque pariatur accusantium sunt, veritatis libero, molestiae sed.</source>
+        <target>Dynamic Label Description Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quibusdam provident facere nulla hic eius! Minima laboriosam omnis aperiam, corporis nam accusamus rem itaque pariatur accusantium sunt, veritatis libero, molestiae sed.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
