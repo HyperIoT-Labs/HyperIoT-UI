@@ -53,7 +53,7 @@ export class PacketSelectComponent implements OnInit {
   fieldValuesMapList: FieldValuesMapList;
 
   aliasesDescription = $localize`:@@HYT_aliases_description:Enter an alternative name to be displayed in the widget. If the alias is empty, the field name will be displayed.`;
-  dynamicLabelDescription = $localize`:@@HYT_dynamic_label_description:Dynamic Label Description  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quibusdam provident facere nulla hic eius! Minima laboriosam omnis aperiam, corporis nam accusamus rem itaque pariatur accusantium sunt, veritatis libero, molestiae sed.`;
+  dynamicLabelDescription = $localize`:@@HYT_dynamic_label_description:Dynamic Label: The registered value of this label will be displayed beneath the main field label.`;
 
   allMIMETypesOptions: string[] = mimeTypeList;
   filteredMIMETypesOptions: string[];
