@@ -31,7 +31,6 @@ export class PacketSelectComponent implements OnInit {
   dynamicLabelFieldsOption: SelectOption[] = [];
   @Output()
   selectedFieldsChange = new EventEmitter();
-  dynamicLabelSelectedFieldChange = new EventEmitter();
   projectPackets: HPacket[] = [];
   groupedPacketOptions: SelectOptionGroup[] = [];
   @Input()
@@ -117,16 +116,14 @@ export class PacketSelectComponent implements OnInit {
       label: x.label
     }));
     this.dynamicLabelSelectedField[fieldId] = {};
-    this.dynamicLabelSelectedFieldChange.emit([]);
   }
 
   onDynamicLabelPacketFieldSelect($event, fieldId) {
     if ($event.length > 0) {
-      this.dynamicLabelSelectedField[fieldId] = { fieldId: $event, fieldName: this.dynamicLabelFields[fieldId].find(field => field.id === $event[0]).name};
+      this.dynamicLabelSelectedField[fieldId] = { fieldId: $event, fieldName: this.dynamicLabelFields[fieldId].find(field => field.id === $event[0]).name };
     } else {
       delete this.dynamicLabelSelectedField[fieldId];
     }
-    this.dynamicLabelSelectedFieldChange.emit(this.dynamicLabelSelectedField);
   }
 
   onPacketFieldChange($event) {
@@ -163,16 +160,18 @@ export class PacketSelectComponent implements OnInit {
       //   this.selectedFields = [ this.selectedFields ];
       // }
       // this.selectedFields.map((pf) => this.widget.config.packetFields[pf.id] = pf.name);
-      this.selectedFields.map((pf) => this.widget.config.packetFields[pf.id] = this.hPacketFieldsHandlerService.getStringifiedSequenceFromPacket(this.selectedPacket, pf.id));
+      this.selectedFields.map((pf) => {
+        this.widget.config.packetFields[pf.id] = this.hPacketFieldsHandlerService.getStringifiedSequenceFromPacket(this.selectedPacket, pf.id)
+      });
       this.widget.config.fieldAliases = this.fieldAliases;
       this.widget.config.fieldFileMimeTypes = this.fieldFileMimeTypes;
       this.widget.config.fieldTypes = {};
       this.widget.config.fieldUnitConversions = this.fieldUnitConversions;
       this.widget.config.fieldValuesMapList = this.fieldValuesMapList;
-      this.widget.config.dynamicLabels = { 
-        packet: this.dynamicLabelSelectedPacket, 
-        packetOption: this.dynamicLabelSelectedPacketOption, 
-        field: this.dynamicLabelSelectedField, 
+      this.widget.config.dynamicLabels = {
+        packet: this.dynamicLabelSelectedPacket,
+        packetOption: this.dynamicLabelSelectedPacketOption,
+        field: this.dynamicLabelSelectedField,
         fieldOptions: this.dynamicLabelFields
       }
 
@@ -245,21 +244,19 @@ export class PacketSelectComponent implements OnInit {
             .subscribe((packet: HPacket) => {
               this.selectedPacket = packet;
               this.selectedPacketOption = this.selectedPacket.id;
-              this.dynamicLabelSelectedPacket = this.widget.config.dynamicLabels['packet'] ? this.widget.config.dynamicLabels['packet'] : packet;
-              this.dynamicLabelSelectedPacketOption = this.widget.config.dynamicLabels['packetOption'] ? this.widget.config.dynamicLabels['packetOption'] : this.selectedPacketOption;
+              this.dynamicLabelSelectedPacket = this.widget.config.dynamicLabels.packet;
+              this.dynamicLabelSelectedPacketOption = this.widget.config.dynamicLabels.packetOption;
+              this.dynamicLabelFields = this.widget.config.dynamicLabels.fieldOptions;
+              this.dynamicLabelSelectedField = this.widget.config.dynamicLabels.field;
               const fieldsFlatList = this.hPacketFieldsHandlerService.flatPacketFieldsTree(this.selectedPacket);
               this.fieldsOption = fieldsFlatList.map(x => ({
                 value: x.field.id,
                 label: x.label
               }));
-              
-              this.dynamicLabelFieldsOption = this.widget.config.dynamicLabels.fieldOptions;
               if (this.widget.config.packetFields) {
                 this.selectedFields = [];
                 Object.keys(this.widget.config.packetFields).forEach(x => {
                   this.selectedFieldsOptions.push(+x);
-                  this.dynamicLabelSelectedField = this.widget.config.dynamicLabels['field'];
-                  this.dynamicLabelFields = this.widget.config.dynamicLabels['fieldOptions'] ? this.widget.config.dynamicLabels['fieldOptions'] : +x;
                   this.selectedFields.push(this.hPacketFieldsHandlerService.findFieldFromPacketFieldsTree(packet, +x));
                 });
                 // packet.fields.map((pf) => {

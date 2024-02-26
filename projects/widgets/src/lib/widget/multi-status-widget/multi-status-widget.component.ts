@@ -56,6 +56,7 @@ export class MultiStatusWidgetComponent extends BaseWidgetComponent implements O
     const labelsIds = [...Object.keys(this.widget.config.packetFields)];
     this.chartLabels = [];
     let packetAndFieldsToRetrive: { [packetId: number]: { [id: number]: string } } = {};
+    packetAndFieldsToRetrive[this.widget.config.packetId] = this.widget.config.packetFields;
     labelsIds.forEach((id: string) => {
       this.chartLabels.push(this.widget.config.fieldAliases[id] ?
         { id: this.widget.config.packetFields[id], label: this.widget.config.fieldAliases[id] } :
@@ -72,35 +73,28 @@ export class MultiStatusWidgetComponent extends BaseWidgetComponent implements O
           }
           return acc;
         }, {});
-  
+
+        packetAndFieldsToRetrive[this.widget.config.packetId] = this.widget.config.packetFields;
         Object.keys(mergedValues).forEach((key: string) => {
           packetAndFieldsToRetrive[parseInt(key)] = mergedValues[key];
-          if (packetAndFieldsToRetrive[parseInt(key)][id]) {
-            this.chartLabels.find(label => label.id === this.widget.config.packetFields[id]).subtitle = { id: packetAndFieldsToRetrive[parseInt(key)][id] } 
-          }
-        });
+        })
+
+        if (this.widget.config.dynamicLabels.field[id]?.fieldName) {
+          this.chartLabels.find(label => label.id === this.widget.config.packetFields[id]).subtitle = { id: this.widget.config.dynamicLabels.field[id].fieldName };
+        }
       }
     });
 
     this.initStream();
-
-    if (packetAndFieldsToRetrive[this.widget.config.packetId]) {
-      Object.keys(this.widget.config.packetFields).forEach(key => {
-        if (!Object.keys(packetAndFieldsToRetrive[this.widget.config.packetId]).find(subKey => subKey === key)) {
-          packetAndFieldsToRetrive[this.widget.config.packetId][key] = this.widget.config.packetFields[key];
-        }
-      })
-    } else {
-      packetAndFieldsToRetrive[this.widget.config.packetId] = this.widget.config.packetFields;
-    }
     this.subscribeDataChannel(packetAndFieldsToRetrive);
   }
 
   subscribeDataChannel(packetAndFieldsToRetrive) {
     const dataPacketFilterList = Object.keys(packetAndFieldsToRetrive).map(key => new DataPacketFilter(+key, packetAndFieldsToRetrive[key], true));
     const dataChannel = this.dataService.addDataChannel(+this.widget.id, dataPacketFilterList);
-    this.dataSubscription = dataChannel.subject.subscribe((packet: PacketDataChunk) => {
+    this.dataSubscription = dataChannel.subject.subscribe(packet => {
       if (packet['data'].length > 0) {
+        super.computePacketData(packet.data);
         this.convertAndBufferData([packet]);
       } else {
         this.logger.debug('initStream: data is empty');
@@ -126,7 +120,7 @@ export class MultiStatusWidgetComponent extends BaseWidgetComponent implements O
       try {
         packetData.data.forEach((element: PacketData[]) => {
           this.chartLabels.forEach(label => {
-            if (Object.keys(element).includes(label.subtitle.id)) {
+            if (label.subtitle && Object.keys(element).includes(label.subtitle.id)) {
               label.subtitle.value = element[label.subtitle.id];
             }
           })
@@ -186,7 +180,7 @@ export class MultiStatusWidgetComponent extends BaseWidgetComponent implements O
       case 'INTEGER':
       case 'DOUBLE':
       case 'FLOAT': 
-        output = this.widget.config.fieldValuesMapList[fieldId].valuesMap.find(ele => typeof element === 'number' && parseInt(ele.value) === element)?.output;
+        output = this.widget.config.fieldValuesMapList[fieldId].valuesMap.find(ele => parseInt(ele.value) === parseInt(element))?.output;
         break;
       case 'TIMESTAMP':
         this.retrieveAttachments(this.widget.projectId, this.widget.config.packetId, fieldId, element)
