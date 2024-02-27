@@ -58,11 +58,14 @@ export class AppComponent implements OnInit, OnDestroy {
       filter(event => event instanceof NavigationEnd)
     ).subscribe((urlObj: NavigationEnd) => {
       if (urlObj.url !== "/auth/login") {
-        this.subscribeToWebSockets();
-        this.isAlive = false;
+        if (this.isAlive) {
+          this.subscribeToWebSockets();
+          this.isAlive = false;
+        }
       } else {
         if (!this.isAlive) {
           this.realtimeDataService.disconnect();
+          this.isAlive = true;
         }
       }
     });
@@ -139,7 +142,6 @@ export class AppComponent implements OnInit, OnDestroy {
     if (this.ngUnsubscribe) {
       this.ngUnsubscribe.next();
     }
-    this.isAlive = false;
   }
 
 }
