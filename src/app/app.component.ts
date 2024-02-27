@@ -1,8 +1,8 @@
-import { Component, HostListener, OnDestroy, ViewEncapsulation } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, HostListener, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { HProject, HprojectsService, Logger, LoggerService, RealtimeDataService } from "core";
 import { ToastrService } from 'ngx-toastr';
-import { Subject, concatMap, forkJoin, takeUntil } from 'rxjs';
+import { Subject, filter, takeUntil } from 'rxjs';
 import { DashboardConfigService } from 'widgets';
 import { environment } from '../environments/environment';
 import { PacketSuffixsEnum } from './models/packetSuffixsEnum';
@@ -13,29 +13,26 @@ import { PacketSuffixsEnum } from './models/packetSuffixsEnum';
   styleUrls: ['./app.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class AppComponent implements OnDestroy {
+export class AppComponent implements OnInit, OnDestroy {
 
   public environment = environment;
-
   eventNotificationIsOn: boolean = true;
 
   private DEFAULT_TOAST_BACKGROUND_COLOUR = '#1f58a5';
-
   private severityColors = new Map<number, string>([
     [0, '#f8b606'],
     [1, '#f87a06'],
     [2, '#bd362f'],
     [3, '#9400d3'],
   ]);
-
   private toastMessage = $localize`:@@HYT_dashboard_event_fired:The event has been fired`;
-
   packetSuffixsEnum = PacketSuffixsEnum;
-
   projectIds: number[];
 
   /** Subject for manage the open subscriptions */
   protected ngUnsubscribe: Subject<void> = new Subject<void>();
+  /** Used to unsubscribe from router events sub when condition is met */
+  isAlive: boolean = true;
 
   /*
    * logger service
@@ -48,12 +45,33 @@ export class AppComponent implements OnDestroy {
     private configService: DashboardConfigService,
     private realtimeDataService: RealtimeDataService,
     private toastr: ToastrService,
-    private loggerService: LoggerService
+    private loggerService: LoggerService,
+    private router: Router
   ) {
     // Init Logger
     this.logger = new Logger(this.loggerService);
     this.logger.registerClass('AppComponent');
-    // Retrive dashboard's data and connect to their data streams
+  }
+
+  ngOnInit() {
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((urlObj: NavigationEnd) => {
+      if (urlObj.url !== "/auth/login") {
+        this.subscribeToWebSockets();
+        this.isAlive = false;
+      } else {
+        if (!this.isAlive) {
+          this.realtimeDataService.disconnect();
+        }
+      }
+    });
+  }
+
+  /**
+   * Retrive dashboard's data and connect to their data streams
+   */
+  subscribeToWebSockets() {
     this.hprojectsService.findAllHProject()
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((projectsList: HProject[]) => {
@@ -102,7 +120,6 @@ export class AppComponent implements OnDestroy {
     })
   }
 
-
   @HostListener('wheel', ['$event'])
   onMouseWheel(event: WheelEvent) {
     // do something with the mouse wheel event
@@ -122,6 +139,7 @@ export class AppComponent implements OnDestroy {
     if (this.ngUnsubscribe) {
       this.ngUnsubscribe.next();
     }
+    this.isAlive = false;
   }
 
 }
