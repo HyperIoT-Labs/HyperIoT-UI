@@ -132,7 +132,10 @@ export class MultiStatusWidgetComponent extends BaseWidgetComponent implements O
               .forEach((key: string) => {
                 const field = Object.values(this.widget.config.packetFields).find(field => field === key);
                 try {
-                  const fieldId = this.getFieldIdByName(this.widget.config.packetFields, field);
+                  const fieldId = this.getFieldIdByFieldName(field);
+                  if (!fieldId) {
+                    return;
+                  }
                   this.chartData[field] = { defaultValue: this.widget.config.fieldValuesMapList[fieldId].defaultValue };
                   this.findFieldBasedOnType(fieldId, packetData.data, element[field], field);
                 } catch (e) {
@@ -143,7 +146,10 @@ export class MultiStatusWidgetComponent extends BaseWidgetComponent implements O
           } else {
             const field = Object.keys(element)[0];
             try {
-              const fieldId = this.getFieldIdByName(this.widget.config.packetFields, field);
+              const fieldId = this.getFieldIdByFieldName(field);
+              if (!fieldId) {
+                return;
+              }
               this.chartData[field] = { defaultValue: this.widget.config.fieldValuesMapList[fieldId].defaultValue };
               this.findFieldBasedOnType(fieldId, packetData.data, element[field], field);
             } catch (e) {
@@ -164,8 +170,13 @@ export class MultiStatusWidgetComponent extends BaseWidgetComponent implements O
     })
   }
 
-  getFieldIdByName(packetFields, fieldName) {
-    return +Object.keys(packetFields).find(key => packetFields[key] === fieldName);
+  getFieldIdByFieldName(fieldName: string) {
+    const id = Object.values(this.widget.config.packetFields).find(field => field === fieldName) ?
+      +Object.keys(this.widget.config.packetFields).find(fieldId => this.widget.config.packetFields[fieldId] === fieldName) :
+      Object.values(this.widget.config.dynamicLabels).find(field => field === fieldName) ?
+      +Object.keys(this.widget.config.dynamicLabels).find(fieldId => this.widget.config.dynamicLabels[fieldId] === fieldName)
+       : undefined;
+    return id;
   }
 
 
