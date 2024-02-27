@@ -1,22 +1,98 @@
+@mixin hover-styles {
+    &:hover {
+        background-color: #dfdfdf;
+        border-radius: 8px;
+    }
+}
+
+@mixin icon-style {
+    overflow: hidden;
+}
+
 .icon-picker-list {
     height: 100%;
     display: flex;
     flex-direction: column;
-    padding: 12px;
+    padding: 0;
 
-    .icon-search-container {
-        align-self: center;
-    }
+    #header-row {
+        align-items: flex-end;
+        justify-content: end;
+        padding: 0;
+        border-radius: 5px 5px 0 0;
 
-    .grid-container {
-        overflow-y: auto;
-
-        .icon-btn {
+        button {
+            padding: 8px 10px 5px 0;
+            background: none;
+            border: none;
+            color: white;
             font-size: 1.2em;
         }
     }
 
+    .icons-container {
+        position: relative;
+        overflow-y: auto;
+        overflow-x: hidden;
+        display: flex;
+        flex-direction: column;
+        padding: 0;
+
+        .icon-search-container {
+            align-self: center;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            display: flex;
+            padding: 6px 10px 0;
+            width: 100%;
+            box-shadow: 0 2px 4px #0000001a;
+            background-color: #fff;
+            justify-content: space-between;
+
+            mat-icon {
+                font-size: 1.6em;
+            }
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+            padding: 25px;
+
+            .mat-icon-button {
+                padding: 5px 0;
+
+                &:hover {
+                    @include hover-styles;
+                }
+            }
+
+            .icon-btn {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                .material-icons {
+                    font-size: 1.9em;
+                    width: 1.5em;
+                    @include icon-style;
+                }
+
+                .hyt-icon {
+                    font-size: 1.7em;
+                    @include icon-style;
+                }
+
+                .fa {
+                    font-size: 1.6em;
+                    @include icon-style;
+                }
+            }
+        }
+    }
 }
+
 
 /* .grid-container {
     display: grid;

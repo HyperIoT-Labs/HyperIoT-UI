@@ -1136,6 +1136,10 @@
         <source>Search</source>
         <target>Cerca</target>
       </trans-unit>
+      <trans-unit id="HYT_search_icon" datatype="html">
+        <source>Search icon</source>
+        <target>Cerca l'icona</target>
+      </trans-unit>
       <trans-unit id="HYT_select_sort_type" datatype="html">
         <source>Select a sort type</source>
         <target>Seleziona tipo ordinamento</target>
@@ -2193,6 +2197,18 @@
       <trans-unit id="HYT_severity_settings" datatype="html">
         <source>Severity Settings</source>
         <target>Impostazioni Severity</target>
+      </trans-unit>
+      <trans-unit id="HYT_deselect_icon" datatype="html">
+        <source>Deselect icon</source>
+        <target>Deseleziona icona</target>
+      </trans-unit>
+      <trans-unit id="HYT_dynamic_label" datatype="html">
+        <source>Dynamic Label</source>
+        <target>Etichetta Dinamica</target>
+      </trans-unit>
+      <trans-unit id="HYT_dynamic_label_description" datatype="html">
+        <source>Dynamic Label: The registered value will be displayed beneath the main field label.</source>
+        <target>Etichetta dinamica: Il valore aggiornato verrà mostrato sotto l'etichetta del campo principale.</target>
       </trans-unit>
     </body>
   </file>

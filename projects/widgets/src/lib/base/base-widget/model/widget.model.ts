@@ -1,7 +1,7 @@
 import { GridsterItem } from 'angular-gridster2';
 import { BodyMap, BodyMapAssociation } from '../../../dashboard/widget-settings-dialog/bodymap-settings/bodymap.model';
 import { DefibrillatorSettings } from '../../../dashboard/widget-settings-dialog/defibrillator-settings/defibrillator-settings.model';
-import { HPacketField } from 'core';
+import { HPacket, HPacketField } from 'core';
 import { DataSimulatorSettings } from '../../../dashboard/widget-settings-dialog/data-simulator-settings/data-simulator.models';
 
 export interface WidgetConfig extends GridsterItem {
@@ -46,6 +46,7 @@ export interface ConfigModel {
     defibrillator?: DefibrillatorSettings.DefibrillatorSettings;
     dataSimulatorSettings?: DataSimulatorSettings.DataSimulatorSettings;
     fieldValuesMapList?: FieldValuesMapList;
+    dynamicLabels?: DynamicLabels;
 }
 
 export interface FieldUnitConversion {
@@ -72,6 +73,13 @@ export class FieldTypes {
 
 export class FieldValuesMapList {
     [fieldId: number]: FieldValuesMap;
+}
+
+export class DynamicLabels {
+    packet: { [id: number]: HPacket; };
+    packetOption: { [id: number]: number; };
+    field: { [id: number]: { fieldId: number, fieldName: string }; };
+    fieldOptions: { [id: number]: HPacketField };
 }
 
 export class FieldValuesMap {
@@ -123,7 +131,7 @@ export interface WidgetAction{
     widget: WidgetConfig;
     action: string;
     value?: any;
-  }
+}
 
 export enum AutoUpdateConfigStatus {
     UNNECESSARY = 'UNNECESSARY',

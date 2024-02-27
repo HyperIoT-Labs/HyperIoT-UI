@@ -1,7 +1,12 @@
 .widget-value-mapping-form {
-
-    .add-map-button {
-        margin: 12px 0;
+    .default-add-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 36px;
+        margin-bottom: 23px;
+        margin-top: 14px;
     }
 
     .map-row {

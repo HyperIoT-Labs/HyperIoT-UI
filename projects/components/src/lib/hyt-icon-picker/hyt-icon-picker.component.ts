@@ -2,6 +2,7 @@ import { Component, OnInit, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DialogService } from '../hyt-dialog/dialog.service';
 import { HytIconPickerListComponent } from './hyt-icon-picker-list/hyt-icon-picker-list.component';
+import { DialogLayout } from '../hyt-dialog/dialog.models';
 
 @Component({
   selector: 'hyt-icon-picker',
@@ -39,7 +40,8 @@ export class HytIconPickerComponent implements ControlValueAccessor {
   }
 
   openIconPickerList() {
-    const dialogRef = this.dialogService.open(HytIconPickerListComponent, { width: '900px', height: '700px', backgroundClosable: true });
+    const layout: DialogLayout = { width: '900px', height: '700px', backgroundClosable: true };
+    const dialogRef = this.dialogService.open(HytIconPickerListComponent, { data: this.value, ...layout  });
     dialogRef.afterClosed().subscribe(res => {
       this.value = res;
       this.onChange(this.value);

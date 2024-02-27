@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, forwardRef } from '@angular/core';
-import { ControlValueAccessor, FormArray, FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
+import { ControlValueAccessor, FormArray, FormControl, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { HPacketField } from 'core';
 import { FieldValuesMap } from '../../../../base/base-widget/model/widget.model';
 
@@ -26,10 +26,11 @@ export class WidgetValueMappingComponent implements ControlValueAccessor, OnInit
     valuesMap: new FormArray([]),
   });
 
-  onChange: any = () => {};
-  onTouched: any = () => {};
+  onChange: any = () => { };
+  onTouched: any = () => { };
 
   ngOnInit(): void {
+    this.value = this.valuesMapForm.value;
     this.valuesMapForm.valueChanges.subscribe(res => {
       this.value = res;
       this.onChange(this.value);
@@ -58,6 +59,7 @@ export class WidgetValueMappingComponent implements ControlValueAccessor, OnInit
 
   registerOnChange(fn: any): void {
     this.onChange = fn;
+    this.onChange(this.value);
   }
 
   registerOnTouched(fn: any): void {
