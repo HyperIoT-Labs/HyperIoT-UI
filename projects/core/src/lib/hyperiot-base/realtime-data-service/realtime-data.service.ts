@@ -41,7 +41,7 @@ export class RealtimeDataService extends BaseDataService implements IDataService
 
   private baseWs = (location.protocol == 'https:') ? 'wss:' : 'ws:';
   private timer;
-  private wsUrl = this.baseWs + '//' + location.hostname + (location.port ? ':' + location.port : '') + '/hyperiot/ws/project?projectId=';
+  private wsUrl = this.baseWs + '//' + location.hostname + (location.port ? ':' + location.port : '') + '/hyperiot/ws/project?';
   private ws: WebSocket;
 
   pingMessage = {
@@ -64,7 +64,8 @@ export class RealtimeDataService extends BaseDataService implements IDataService
   connect(projectIds: number[], url?: string) {
     console.log('Connecting websocket...');
     this.disconnect();
-    this.ws = new WebSocket(url != null ? url : `${this.wsUrl}${projectIds}`);
+    const projectIdsQueryString = projectIds.map(id => `projectId=${id}`).join('&');
+    this.ws = new WebSocket(url ? url : `${this.wsUrl}${projectIdsQueryString}`);
     this.ws.onmessage = this.onWsMessage.bind(this);
     this.ws.onerror = this.onWsError.bind(this);
     this.ws.onclose = this.onWsClose.bind(this);
