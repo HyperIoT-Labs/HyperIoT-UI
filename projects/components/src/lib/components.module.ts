@@ -53,6 +53,8 @@ import { HytDetailedCardComponent } from './hyt-detailed-card/hyt-detailed-card.
 import { HytBimComponent } from './hyt-bim/bim.component';
 import { HytChatbotComponent } from './hyt-chatbot/hyt-chatbot.component';
 import { HytEmptyProjectListViewComponent } from './hyt-empty-project-list-view/hyt-empty-project-list-view.component';
+import { RuleDefinitionComponent } from './rule-definition/rule-definition.component';
+import { RuleErrorModalComponent } from './rule-definition/rule-error/rule-error-modal.component';
 
 export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
 
@@ -109,6 +111,8 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     HytBimComponent,
     HytChatbotComponent,
     HytEmptyProjectListViewComponent,
+    RuleDefinitionComponent,
+    RuleErrorModalComponent,
   ],
   imports: [
     CommonModule,
@@ -164,6 +168,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     HytBimComponent,
     HytChatbotComponent,
     HytEmptyProjectListViewComponent,
+    RuleDefinitionComponent,
   ],
   providers: [
     NotificationService,

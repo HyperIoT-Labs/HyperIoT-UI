@@ -3,8 +3,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatAutocomplete, MatAutocompleteSelectedEvent, MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { ActivatedRoute } from '@angular/router';
-import { DialogService, Option } from 'components';
-import { Alarm, AlarmEvent, AlarmeventsService, AlarmsService, AssetTag, AssetstagsService, HProject, Logger, LoggerService, Rule } from 'core';
+import { DialogService, Option, RuleDefinitionComponent } from 'components';
+import { Alarm, AlarmEvent, AlarmeventsService, AlarmsService, AssetTag, AssetstagsService, HPacket, HProject, HpacketsService, Logger, LoggerService, Rule } from 'core';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, Subject, Subscription, forkJoin, of, switchMap, takeUntil, zip } from 'rxjs';
 import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
@@ -13,7 +13,6 @@ import { GenericErrorModalComponent } from 'src/app/components/modals/generic-er
 import { SummaryListItem } from '../../project-detail/generic-summary-list/generic-summary-list.component';
 import { TagStatus } from '../packet-enrichment-form/asset-tag/asset-tag.component';
 import { LoadingStatusEnum, ProjectFormEntity } from '../project-form-entity';
-import { RuleDefinitionComponent } from '../rule-definition/rule-definition.component';
 
 @Component({
   selector: 'hyt-project-alarms-form',
@@ -75,6 +74,7 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity implements OnI
   alarmCounter = 0;
   selectedEventId: number;
   ruleEventId: number;
+  allPackets: HPacket;
 
   tagRetrievalError: string = "";
 
@@ -117,6 +117,7 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity implements OnI
     private assetsTagService: AssetstagsService,
     private dialogService: DialogService,
     private toastr: ToastrService,
+    private hPacketsService: HpacketsService,
     private loggerService: LoggerService
   ) {
 
@@ -143,11 +144,15 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity implements OnI
   }
 
   ngOnInit(): void {
+    this.formEvent.addControl('ruleDefinition', new FormControl(''));
     this.eventListMap = new Map<number, any>();
     this.selectedId = 0;
     this.logger.debug('Current Project', this.currentProject)
     this.getAssetTags();
     this.updateLabel = false;
+    this.hPacketsService.findAllHPacketByProjectIdAndType(this.currentProject.id, 'INPUT,IO').subscribe(
+      res => this.allPackets = res,
+    );
   }
 
   ngOnChanges() {
@@ -223,7 +228,6 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity implements OnI
   loadEmpty() {
     this.form.reset();
     this.formEvent.reset();
-    this.ruleDefinitionComponent.resetRuleDefinition();
     this.entity = { ... this.entitiesService.alarm.emptyModel };
   }
 
@@ -315,11 +319,10 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity implements OnI
     this.updateLabel = false;
     this.addEventMode = true;
     this.formEvent.reset();
-    this.ruleDefinitionComponent.resetRuleDefinition();
     this.eventToEdit = { ... this.entitiesService.event.emptyModel };
     this.eventToEdit.type = Rule.TypeEnum.ALARMEVENT;
     this.selectedTags = [];
-    this.ruleDefinitionComponent.setRuleDefinition(this.eventToEdit.ruleDefinition);
+    this.formEvent.get('ruleDefinition').setValue(this.eventToEdit.ruleDefinition);
   }
 
   /*
@@ -345,8 +348,7 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity implements OnI
     catch {
       this.selectedEventId = undefined
     }
-    this.ruleDefinitionComponent.resetRuleDefinition();
-    this.ruleDefinitionComponent.setRuleDefinition(e.event.ruleDefinition.toString());
+    this.formEvent.get('ruleDefinition').setValue(e.event.ruleDefinition.toString());
     this.eventToEdit.type = Rule.TypeEnum.ALARMEVENT;
     // Empty and load tags
     this.selectedTags = []
@@ -364,7 +366,7 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity implements OnI
       event: {
         name: this.formEvent.get('event-name').value,
         description: this.formEvent.get('event-description').value,
-        ruleDefinition: this.ruleDefinitionComponent.buildRuleDefinition(),
+        ruleDefinition: this.formEvent.get('ruleDefinition').value,
         project: {
           id: this.currentProject.id,
         },
@@ -543,8 +545,7 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity implements OnI
     this.formEvent.get('event-description').setValue(e.event.description);
     this.formEvent.get('event-severity').setValue(e.severity.toString());
     this.eventToEdit = { ... this.entitiesService.event.emptyModel };
-    this.ruleDefinitionComponent.resetRuleDefinition();
-    this.ruleDefinitionComponent.setRuleDefinition(e.event.ruleDefinition.toString());
+    this.formEvent.get('ruleDefinition').setValue(e.event.ruleDefinition.toString());
     this.eventToEdit.type = Rule.TypeEnum.ALARMEVENT;
     // Empty and load tags
     this.selectedTags = []

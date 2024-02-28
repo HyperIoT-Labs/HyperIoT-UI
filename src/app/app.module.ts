@@ -43,7 +43,6 @@ import { NotificationbarComponent } from './components/notificationbar/notificat
 import { WizardDeactivationModalComponent } from './pages/projects/project-wizard/wizard-deactivation-modal/wizard-deactivation-modal.component';
 import { WizardOptionsModalComponent } from './pages/projects/project-wizard/wizard-options-modal/wizard-options-modal.component';
 import { WizardReportModalComponent } from './pages/projects/project-wizard/wizard-report-modal/wizard-report-modal.component';
-import { RuleErrorModalComponent } from './pages/projects/project-forms/rule-definition/rule-error/rule-error-modal.component';
 import { AreasViewComponent } from './pages/areas/areas-view/areas-view.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 
@@ -107,7 +106,6 @@ export function apiConfigFactory(): Configuration {
     WizardDeactivationModalComponent,
     WizardOptionsModalComponent,
     WizardReportModalComponent,
-    RuleErrorModalComponent,
     AddWidgetDialogComponent,
     WidgetSettingsDialogComponent
   ],

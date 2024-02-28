@@ -1,0 +1,42 @@
+.ruleDefinition {
+    background-color: white;
+
+    h3 {
+        color: #0956b6;
+    }
+
+    .rule-row {
+
+        border: 0.5px solid #dbdbdb;
+        border-radius: 10px;
+        margin: 10px;
+        padding: 8px 20px;
+    }
+    
+    .form-group {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+        .rule-parts-container {
+            flex: 1;
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+    }
+    
+    .containerputRule-form-field {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+    }
+    
+    .mat-radio-group {
+        display: flex;
+        gap: 12px;
+    
+        label {
+            margin-bottom: 0px;
+        }
+    }
+}

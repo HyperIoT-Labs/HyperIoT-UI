@@ -1,6 +1,6 @@
 import { Component, ElementRef, Injector, OnDestroy, OnInit, ViewChild, ViewEncapsulation, ChangeDetectorRef, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Option, SelectOption } from 'components';
+import { Option, RuleDefinitionComponent, SelectOption } from 'components';
 import { HPacket, HpacketsService, HProject, Rule, RulesService } from 'core';
 import { Observable, Subscription, of } from 'rxjs';
 import { map, switchMap, filter } from 'rxjs/operators';
@@ -8,11 +8,11 @@ import { EnrichmentsService } from 'src/app/services/enrichments/enrichments.ser
 import { SummaryListItem } from '../../project-detail/generic-summary-list/generic-summary-list.component';
 // TODO: find a bettere placement for PageStatusEnum
 import { LoadingStatusEnum, ProjectFormEntity } from '../project-form-entity';
-import { RuleDefinitionComponent } from '../rule-definition/rule-definition.component';
 import { AssetCategoryComponent } from './asset-category/asset-category.component';
 import { AssetTagComponent } from './asset-tag/asset-tag.component';
 import { EnrichmentType } from './enrichment-type.enum';
 import { FourierTransformComponent } from './fourier-transform/fourier-transform.component';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'hyt-packet-enrichment-form',
@@ -77,6 +77,8 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
 
   private packetId: number;
 
+  allPackets: HPacket[];
+
   constructor(
     injector: Injector,
     private rulesService: RulesService,
@@ -95,6 +97,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
   }
 
   ngOnInit() {
+    this.form.addControl('ruleDefinition', new FormControl(''));
     this.activatedRouteSubscription = this.activatedRoute.params.subscribe(routeParams => {
       this.packetId = +(this.activatedRoute.snapshot.params.packetId);
       if (this.packetId) {
@@ -150,10 +153,8 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
         }
         this.form.get('rule-type').setValue(this.enrichmentType);
         this.form.get('active').setValue(typeJSON.active);
+        this.form.get('ruleDefinition').setValue(this.entity.ruleDefinition);
         this.cdr.detectChanges();
-        if (this.ruleDefinitionComponent) {
-          this.ruleDefinitionComponent.setRuleDefinition(this.entity.ruleDefinition);
-        }
         if (readyCallback) {
           readyCallback();
         }
@@ -194,6 +195,10 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
     if (packetId) { this.packetId = packetId; }
     return this.packetService.findHPacket(this.packetId).pipe(map((p => {
       this.project = p.device.project;
+      // load allPackets for ruleDefinition
+      this.packetService.findAllHPacketByProjectIdAndType(this.project.id, 'INPUT,IO').subscribe(
+        res => this.allPackets = res,
+      );
       this.packet = p;
       this.updateSummaryList();
       this.entityEvent.emit({
@@ -229,11 +234,10 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
     this.resetErrors();
 
     const rule = this.entity;
-    const rd = this.ruleDefinitionComponent ? this.ruleDefinitionComponent.buildRuleDefinition() : null;
 
     Object.assign(rule, {
       name: this.form.get('rule-name').value,
-      ruleDefinition: rd,
+      ruleDefinition: this.form.get('ruleDefinition').value,
       description: this.form.get('rule-description').value,
       project: {
         id: this.project.id
@@ -278,7 +282,6 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
     this.assetTags = [];
     this.assetCategories = [];
     this.cdr.detectChanges();
-    this.ruleDefinitionComponent.resetRuleDefinition();
     this.entity = { ...this.entitiesService.enrichment.emptyModel };
     this.edit();
   }

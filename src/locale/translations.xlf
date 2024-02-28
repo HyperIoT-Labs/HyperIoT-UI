@@ -405,8 +405,11 @@
       <trans-unit id="HYT_error" datatype="html">
         <source>Error</source>
       </trans-unit>
-      <trans-unit id="HYT_error_loading_rule" datatype="html">
-        <source>An error occurred while loading the rule. This may have happened for one or more of the following reasons:</source>
+      <trans-unit id="HYT_error_loading_rule_description_1" datatype="html">
+        <source>An error occurred while loading rule</source>
+      </trans-unit>
+      <trans-unit id="HYT_error_loading_rule_description_2" datatype="html">
+        <source>This situation could be a result of one or more of the following reasons:</source>
       </trans-unit>
       <trans-unit id="HYT_field_name_modified" datatype="html">
         <source>The name of one rule&apos;s field has been modified</source>
@@ -421,7 +424,7 @@
         <source>Rule&apos;s syntax was updated making the rule now obsolete</source>
       </trans-unit>
       <trans-unit id="HYT_error_loading_rule_2" datatype="html">
-        <source>Please, redefine a new rule and delete the old one. </source>
+        <source>Please, redefine the rule definition.</source>
       </trans-unit>
       <trans-unit id="HYT_packet" datatype="html">
         <source>Packet</source>
@@ -1638,6 +1641,36 @@
       </trans-unit>
       <trans-unit id="HYT_severity_settings" datatype="html">
         <source>Severity Settings</source>
+      </trans-unit>
+      <trans-unit id="HYT_operations_EqualTo" datatype="html">
+        <source>(=) Equal</source>
+      </trans-unit>
+      <trans-unit id="HYT_operations_GreaterOrEqualThan" datatype="html">
+        <source>(&gt;=) Greater/Equal</source>
+      </trans-unit>
+      <trans-unit id="HYT_operations_GreaterThan" datatype="html">
+        <source>(&gt;) Greater</source>
+      </trans-unit>
+      <trans-unit id="HYT_operations_Like" datatype="html">
+        <source>(()) Like</source>
+      </trans-unit>
+      <trans-unit id="HYT_operations_LowerOrEqualThan" datatype="html">
+        <source>(&lt;=) Lower/Equal</source>
+      </trans-unit>
+      <trans-unit id="HYT_operations_LowerThan" datatype="html">
+        <source>(&lt;) Lower</source>
+      </trans-unit>
+      <trans-unit id="HYT_operations_MaxPeriodicity" datatype="html">
+        <source>Periodicity (ms)</source>
+      </trans-unit>
+      <trans-unit id="HYT_operations_NotEqualTo" datatype="html">
+        <source>(!=) Different</source>
+      </trans-unit>
+      <trans-unit id="HYT_operations_isFalse" datatype="html">
+        <source>Is true</source>
+      </trans-unit>
+      <trans-unit id="HYT_operations_isTrue" datatype="html">
+        <source>Is false</source>
       </trans-unit>
     </body>
   </file>

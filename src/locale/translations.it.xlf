@@ -540,9 +540,13 @@
         <source>Error</source>
         <target>Errore</target>
       </trans-unit>
-      <trans-unit id="HYT_error_loading_rule" datatype="html">
-        <source>An error occurred while loading the rule. This may have happened for one or more of the following reasons:</source>
-        <target>Errore nel caricamento della regola. Questo può essere legato ad una o più delle seguenti ragioni:</target>
+      <trans-unit id="HYT_error_loading_rule_description_1" datatype="html">
+        <source>An error occurred while loading rule</source>
+        <target>Errore nel caricamento della regola</target>
+      </trans-unit>
+      <trans-unit id="HYT_error_loading_rule_description_2" datatype="html">
+        <source>This situation could be a result of one or more of the following reasons:</source>
+        <target>Questo può essere legato ad una o più delle seguenti ragioni:</target>
       </trans-unit>
       <trans-unit id="HYT_field_name_modified" datatype="html">
         <source>The name of one rule's field has been modified</source>
@@ -561,8 +565,8 @@
         <target>La sintassi delle regole è stata modificata e quindi ora la regola è obsoleta</target>
       </trans-unit>
       <trans-unit id="HYT_error_loading_rule_2" datatype="html">
-        <source>Please, redefine a new rule and delete the old one. </source>
-        <target>Per favore, ricrea la regola ed elimina la vecchia</target>
+        <source>Please, redefine the rule definition.</source>
+        <target>Per favore, ricrea la regola</target>
       </trans-unit>
       <trans-unit id="HYT_packet" datatype="html">
         <source>Packet</source>
@@ -2193,6 +2197,46 @@
       <trans-unit id="HYT_severity_settings" datatype="html">
         <source>Severity Settings</source>
         <target>Impostazioni Severity</target>
+      </trans-unit>
+      <trans-unit id="HYT_operations_EqualTo" datatype="html">
+        <source>(=) Equal</source>
+        <target>(=) Uguale</target>
+      </trans-unit>
+      <trans-unit id="HYT_operations_GreaterOrEqualThan" datatype="html">
+        <source>(&gt;=) Greater/Equal</source>
+        <target>(&gt;=) Maggiore/Uguale</target>
+      </trans-unit>
+      <trans-unit id="HYT_operations_GreaterThan" datatype="html">
+        <source>(&gt;) Greater</source>
+        <target>(&gt;) Maggiore</target>
+      </trans-unit>
+      <trans-unit id="HYT_operations_Like" datatype="html">
+        <source>(()) Like</source>
+        <target>(()) Like</target>
+      </trans-unit>
+      <trans-unit id="HYT_operations_LowerOrEqualThan" datatype="html">
+        <source>(&lt;=) Lower/Equal</source>
+        <target>(&lt;=) Minore/Uguale</target>
+      </trans-unit>
+      <trans-unit id="HYT_operations_LowerThan" datatype="html">
+        <source>(&lt;) Lower</source>
+        <target>(&lt;) Minore</target>
+      </trans-unit>
+      <trans-unit id="HYT_operations_MaxPeriodicity" datatype="html">
+        <source>Periodicity (ms)</source>
+        <target>Periodicità (ms)</target>
+      </trans-unit>
+      <trans-unit id="HYT_operations_NotEqualTo" datatype="html">
+        <source>(!=) Different</source>
+        <target>(!=) Diverso</target>
+      </trans-unit>
+      <trans-unit id="HYT_operations_isFalse" datatype="html">
+        <source>Is true</source>
+        <target>è vero</target>
+      </trans-unit>
+      <trans-unit id="HYT_operations_isTrue" datatype="html">
+        <source>Is false</source>
+        <target>è falso</target>
       </trans-unit>
     </body>
   </file>
