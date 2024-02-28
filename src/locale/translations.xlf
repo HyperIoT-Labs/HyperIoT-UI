@@ -1044,8 +1044,8 @@
       <trans-unit id="HYT_connecting" datatype="html">
         <source>Connecting...</source>
       </trans-unit>
-      <trans-unit id="HYT_connecting_failed" datatype="html">
-        <source>Connecting failed</source>
+      <trans-unit id="HYT_connection_failed" datatype="html">
+        <source>Connection failed</source>
       </trans-unit>
       <trans-unit id="HYT_starting" datatype="html">
         <source>Starting...</source>

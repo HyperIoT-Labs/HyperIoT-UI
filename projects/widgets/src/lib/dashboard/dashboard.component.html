@@ -46,14 +46,6 @@
                             [idProjectSelected]="idProjectSelected" [recordStateInLoading]="recordStateInLoading"
                             (recordingStateChange)="changeTopologyState($event)">
                         </hyt-topology-toolbar>
-
-                        <button mat-button *ngIf="enableChangeEventNotification" (click)="changeEventNotificationState($event)" [disabled]="pageStatus == 0">
-                            <div id="event-notification-btn">
-                                <span class="hyt-icon {{(eventNotificationIsOn)?'icon-hyt_notification':'icon-hyt_notification'}}"></span>
-                                <span class="button-label">{{(eventNotificationIsOn)?'On':'Off'}}</span>
-                            </div>
-                        </button>
-
                     </div>
 
                     <div class="col-4 center-tools">
