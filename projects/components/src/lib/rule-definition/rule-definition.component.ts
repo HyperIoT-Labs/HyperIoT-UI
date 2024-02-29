@@ -2,18 +2,19 @@ import { Component, Input, OnChanges, ViewEncapsulation, forwardRef } from '@ang
 import { ControlValueAccessor, FormArray, FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
 import { HPacket, HPacketFieldsHandlerService } from 'core';
 import { IRulePart } from './rule-part/rule-part.interface';
-import { FieldConditionRulePart } from './rule-part/field-condition-rule-part';
 import { SelectOption } from '../hyt-select/hyt-select.component';
 import { Option } from '../hyt-radio-button/hyt-radio-button.component';
 import { DialogService } from '../hyt-dialog/dialog.service';
 import { RuleErrorModalComponent } from './rule-error/rule-error-modal.component';
+import { PacketRulePart } from './rule-part/packet-rule-part';
 
 interface RulePart {
   label: string;
   fieldType: 'select' | 'text';
   options?: SelectOption[];
-  valueMap: Map<string, IRulePart>;
-  toString: (value: string) => string;
+  valueMap?: Map<string, IRulePart>;
+  ruleify: (value: string) => string;
+  prettify: (value: string) => string;
 }
 
 interface RuleRow {
@@ -46,9 +47,7 @@ export class RuleDefinitionComponent implements ControlValueAccessor, OnChanges 
     ruleRowsArray: new FormArray([]),
   });
 
-  // TODO servono questi?
-  // TODO gestione errori rules sbagliate
-  value = '';
+  value: { ruleDefinition: string; rulePrettyDefinition: string };
   originalValue = '';
 
   constructor(
@@ -95,7 +94,8 @@ export class RuleDefinitionComponent implements ControlValueAccessor, OnChanges 
       fieldType: selectedIPart.fieldType,
       options: selectedIPart.generateOptions?.() || [],
       valueMap:  selectedIPart.generateChildrenRuleParts?.() || new Map<string, IRulePart>(),
-      toString: selectedIPart.toString,
+      ruleify: selectedIPart.ruleify,
+      prettify: selectedIPart.prettify,
     });
 
     this.getRowFormGroup(ruleRowIndex).addControl('rule-part-' + (rulePartIndex + 1), new FormControl('', Validators.required));
@@ -105,16 +105,15 @@ export class RuleDefinitionComponent implements ControlValueAccessor, OnChanges 
   addCondition(index) {
     if (this.ruleRows.length === index + 1) {
 
+      const packetRulePart = new PacketRulePart(this.allPackets, this.hPacketFieldsHandlerService);
       this.ruleRows.push({
         ruleParts: [{
-          label: 'Packet',
-          options: this.allPackets.map((p) => ({
-            label: p.name,
-            value: String(p.id),
-          })),
-          fieldType: 'select',
-          valueMap: new Map<string, IRulePart>(this.allPackets.map(x => ([String(x.id), new FieldConditionRulePart(x, this.hPacketFieldsHandlerService)]))),
-          toString: (value) => '"' + value,
+          label: packetRulePart.label,
+          fieldType: packetRulePart.fieldType,
+          options: packetRulePart.generateOptions(),
+          valueMap: packetRulePart.generateChildrenRuleParts(),
+          ruleify: packetRulePart.ruleify,
+          prettify: packetRulePart.prettify,
         }],
       });
 
@@ -139,21 +138,23 @@ export class RuleDefinitionComponent implements ControlValueAccessor, OnChanges 
   }
 
   joinOptions: Option[] = [
-    { value: ' AND ', label: $localize`:@@HYT_and:AND`, checked: false },
-    { value: ' OR ', label: $localize`:@@HYT_or:OR`, checked: false },
+    { value: 'AND', label: $localize`:@@HYT_and:AND`, checked: false },
+    { value: 'OR', label: $localize`:@@HYT_or:OR`, checked: false },
   ];
 
   onChange: any = (value: any) => { };
   onTouched: any = () => { };
 
 
-  writeValue(ruleDefinition: string): void {
+  writeValue(rule: { ruleDefinition: string; rulePrettyDefinition: string }): void {
 
     this.resetRuleDefinition();
 
-    if (!ruleDefinition) {
+    if (!rule || !rule.ruleDefinition) {
       return;
     }
+
+    let ruleDefinition = rule.ruleDefinition;
 
     try {
 
@@ -169,10 +170,10 @@ export class RuleDefinitionComponent implements ControlValueAccessor, OnChanges 
   
         splitted.forEach((part, i) => {
   
-          if (part === 'AND' || part === 'OR') {
+          if (this.joinOptions.some(jo => jo.value === part)) {
   
             // set operator on previous form row
-            this.ruleRowsFormArray.at(k).get('ruleJoin').setValue(' ' + part + ' ');
+            this.ruleRowsFormArray.at(k).get('ruleJoin').setValue(part);
   
           } else {
   
@@ -198,6 +199,7 @@ export class RuleDefinitionComponent implements ControlValueAccessor, OnChanges 
 
   buildRuleDefinition() {
     let rd = '';
+    let ptf = '';
     for (let i = 0; i < this.ruleRows.length; i++) {
 
       const ruleRow = this.ruleRows[i];
@@ -206,15 +208,21 @@ export class RuleDefinitionComponent implements ControlValueAccessor, OnChanges 
 
         const rulePart  = ruleRow.ruleParts[j];
         const value = ruleRowFormGroup.get('rule-part-' + j).value;
-        rd = rd.concat(rulePart.toString(value));
+        rd = rd.concat(rulePart.ruleify(value));
+        ptf = ptf.concat(rulePart.prettify(value));
 
       }
       if (ruleRowFormGroup.get('ruleJoin').value) {
-        rd = ' ' + rd.concat(ruleRowFormGroup.get('ruleJoin').value) + ' ';
+        const ruleJoinValue = ruleRowFormGroup.get('ruleJoin').value;
+        rd = rd.concat(' ' + ruleJoinValue) + ' ';
+        ptf = ptf.concat(' ' + this.joinOptions.find(jo => jo.value === ruleJoinValue).label + ' ');
       }
 
     }
-    this.value = rd;
+    this.value = {
+      ruleDefinition: rd,
+      rulePrettyDefinition: ptf,
+    };
     this.onChange(this.value);
   }
 

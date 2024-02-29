@@ -153,7 +153,10 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
         }
         this.form.get('rule-type').setValue(this.enrichmentType);
         this.form.get('active').setValue(typeJSON.active);
-        this.form.get('ruleDefinition').setValue(this.entity.ruleDefinition);
+        this.form.get('ruleDefinition').setValue({
+          ruleDefinition: this.entity.ruleDefinition,
+          rulePrettyDefinition: this.entity.rulePrettyDefinition,
+        });
         this.cdr.detectChanges();
         if (readyCallback) {
           readyCallback();
@@ -237,7 +240,8 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
 
     Object.assign(rule, {
       name: this.form.get('rule-name').value,
-      ruleDefinition: this.form.get('ruleDefinition').value,
+      ruleDefinition: this.form.get('ruleDefinition').value.ruleDefinition,
+      rulePrettyDefinition: this.form.get('ruleDefinition').value.rulePrettyDefinition,
       description: this.form.get('rule-description').value,
       project: {
         id: this.project.id

@@ -74,7 +74,11 @@ export class ConditionRulePart implements IRulePart {
     },
   ];
 
-  toString(value: string): string {
+  ruleify = (value: string): string => {
     return '" ' + value + ' ';
+  }
+
+  prettify = (value: string): string => {
+    return ' ' + this.allConditionOptions.find(x => x.value === value).label + ' ';
   }
 }

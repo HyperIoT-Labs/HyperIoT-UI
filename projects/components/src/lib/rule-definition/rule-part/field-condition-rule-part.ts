@@ -70,12 +70,18 @@ export class FieldConditionRulePart implements IRulePart {
     { value: 'hour', label: ' (Hour)' },
   ];
 
-  toString(value: string): string {
-    if ([ // TODO
-      { value: '@@', label: ' Periodicity (ms)' }
-    ].map(pc => pc.value).includes(value)) {
+  ruleify = (value: string): string => {
+    if (this.packetConditions.some(pc => pc.value === value)) {
       return '" ' +  value + ' ';
     }
     return '.' + value;
+  }
+
+  prettify = (value: string): string => {
+    if (this.packetConditions.some(pc => pc.value === value)) { // TODO temp, use /rules/operations instead
+      return ' has not sent data for milliseconds: ';
+    }
+    const options = this.generateOptions();
+    return '.' + options.find(op => op.value === value).label;
   }
 }

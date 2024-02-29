@@ -166,7 +166,10 @@ export class ProjectEventsFormComponent extends ProjectFormEntity implements OnI
         const oldTag = (oldTagId === 0) ? null : this.allTags.find(tag => tag.id === this.entity.tagIds[0]);
         // if a tag has been found, set it to selectedTag property (at the moment, only one tag inside array)
         this.selectedTags = oldTag ? [oldTag] : [];
-        this.form.get('ruleDefinition').setValue(this.entity.ruleDefinition);
+        this.form.get('ruleDefinition').setValue({
+          ruleDefinition: this.entity.ruleDefinition,
+          rulePrettyDefinition: this.entity.rulePrettyDefinition,
+        });
         let actionName = JSON.parse(JSON.parse(this.entity.jsonActions)[0]).actionName;
         this.changeEventView(actionName,JSON.parse(this.entity.jsonActions));
         this.form.get('eventOutput').setValue(actionName);
@@ -230,7 +233,8 @@ export class ProjectEventsFormComponent extends ProjectFormEntity implements OnI
     const e = this.entity;
     e.name = this.form.get('rule-name').value;
     e.description = this.form.get('rule-description').value;
-    e.ruleDefinition = this.form.get('ruleDefinition').value;
+    e.ruleDefinition = this.form.get('ruleDefinition').value.ruleDefinition;
+    e.rulePrettyDefinition = this.form.get('ruleDefinition').value.rulePrettyDefinition;
     e.jsonActions = jActionStr;
     if (this.selectedTags[0]) {
       // if a tag has been selected, get its id

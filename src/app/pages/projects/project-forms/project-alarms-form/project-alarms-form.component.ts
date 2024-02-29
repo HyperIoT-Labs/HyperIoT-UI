@@ -322,7 +322,10 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity implements OnI
     this.eventToEdit = { ... this.entitiesService.event.emptyModel };
     this.eventToEdit.type = Rule.TypeEnum.ALARMEVENT;
     this.selectedTags = [];
-    this.formEvent.get('ruleDefinition').setValue(this.eventToEdit.ruleDefinition);
+    this.formEvent.get('ruleDefinition').setValue({
+      ruleDefinition: this.eventToEdit.ruleDefinition,
+      rulePrettyDefinition: this.eventToEdit.rulePrettyDefinition,
+    });
   }
 
   /*
@@ -348,7 +351,10 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity implements OnI
     catch {
       this.selectedEventId = undefined
     }
-    this.formEvent.get('ruleDefinition').setValue(e.event.ruleDefinition.toString());
+    this.formEvent.get('ruleDefinition').setValue({
+      ruleDefinition: e.event.ruleDefinition.toString(),
+      rulePrettyDefinition: e.event.rulePrettyDefinition,
+    });
     this.eventToEdit.type = Rule.TypeEnum.ALARMEVENT;
     // Empty and load tags
     this.selectedTags = []
@@ -366,7 +372,8 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity implements OnI
       event: {
         name: this.formEvent.get('event-name').value,
         description: this.formEvent.get('event-description').value,
-        ruleDefinition: this.formEvent.get('ruleDefinition').value,
+        ruleDefinition: this.formEvent.get('ruleDefinition').value.ruleDefinition,
+        rulePrettyDefinition: this.formEvent.get('ruleDefinition').value.rulePrettyDefinition,
         project: {
           id: this.currentProject.id,
         },
@@ -400,6 +407,7 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity implements OnI
           name: addEditEvent.event.name,
           description: addEditEvent.event.description,
           ruleDefinition: addEditEvent.event.ruleDefinition,
+          rulePrettyDefinition: addEditEvent.event.rulePrettyDefinition,
           project: {
             id: this.currentProject.id
           },
@@ -451,6 +459,7 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity implements OnI
           name: addEditEvent.event.name,
           description: addEditEvent.event.description,
           ruleDefinition: addEditEvent.event.ruleDefinition,
+          rulePrettyDefinition: addEditEvent.event.rulePrettyDefinition,
           project: {
             id: this.currentProject.id
           },
@@ -545,7 +554,10 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity implements OnI
     this.formEvent.get('event-description').setValue(e.event.description);
     this.formEvent.get('event-severity').setValue(e.severity.toString());
     this.eventToEdit = { ... this.entitiesService.event.emptyModel };
-    this.formEvent.get('ruleDefinition').setValue(e.event.ruleDefinition.toString());
+    this.formEvent.get('ruleDefinition').setValue({
+      ruleDefinition: e.event.ruleDefinition.toString(),
+      rulePrettyDefinition: e.event.rulePrettyDefinition,
+    });
     this.eventToEdit.type = Rule.TypeEnum.ALARMEVENT;
     // Empty and load tags
     this.selectedTags = []
