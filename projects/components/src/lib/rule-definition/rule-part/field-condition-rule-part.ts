@@ -25,9 +25,11 @@ export class FieldConditionRulePart implements IRulePart {
     const rulePartsMap = new Map<string, IRulePart>();
 
     // add packet fields
-    const flatFieldList = this.hPacketFieldsHandlerService.flatPacketFieldsTree(this.hPacket);
+    let flatFieldList = this.hPacketFieldsHandlerService.flatPacketFieldsTree(this.hPacket);
+    // use single fields only
+    flatFieldList = flatFieldList.filter(ff => ff.field.multiplicity === HPacketField.MultiplicityEnum.SINGLE);
     flatFieldList.forEach(field => {
-      rulePartsMap.set(String(field.field.id), new ConditionRulePart(this.operators));
+      rulePartsMap.set(String(field.field.id), new ConditionRulePart(this.operators, field.field.type));
     });
 
     // add packet conditions
@@ -37,7 +39,7 @@ export class FieldConditionRulePart implements IRulePart {
 
     // add packet timestamp conditions
     this.timestampConditions.forEach(tc => {
-      rulePartsMap.set(tc.value + '(' + this.hPacket.timestampField + ')', new ConditionRulePart(this.operators));
+      rulePartsMap.set(tc.value + '(' + this.hPacket.timestampField + ')', new ConditionRulePart(this.operators, HPacketField.TypeEnum.TIMESTAMP));
     });
     return rulePartsMap;
   }
@@ -46,7 +48,9 @@ export class FieldConditionRulePart implements IRulePart {
     let packetOptions: SelectOption[] = [];
 
     // add packet fields
-    const flatFieldList = this.hPacketFieldsHandlerService.flatPacketFieldsTree(this.hPacket);
+    let flatFieldList = this.hPacketFieldsHandlerService.flatPacketFieldsTree(this.hPacket);
+    // use single fields only
+    flatFieldList = flatFieldList.filter(ff => ff.field.multiplicity === HPacketField.MultiplicityEnum.SINGLE);
     packetOptions = flatFieldList.map((f) => ({
       value: String(f.field.id),
       label: this.hPacketFieldsHandlerService.getStringifiedSequenceFromPacket(this.hPacket, f.field.id),

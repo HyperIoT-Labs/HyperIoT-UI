@@ -1,5 +1,5 @@
 import { IRulePart, RuleOperator } from "./rule-part.interface";
-import { RuleNode } from "core";
+import { HPacketField, RuleNode } from "core";
 import { ValueRulePart } from "./value-rule-part";
 import { SelectOption } from "../../hyt-select/hyt-select.component";
 
@@ -8,11 +8,16 @@ export class ConditionRulePart implements IRulePart {
   label = 'Condition';
 
   fieldConditionOptions: RuleOperator[] = [];
+  hPacketFieldType: HPacketField.TypeEnum;
 
   constructor(
     operators: RuleOperator[],
+    hPacketFieldType: HPacketField.TypeEnum,
   ) {
-    this.fieldConditionOptions = operators.filter(o => o.appliance === RuleNode.ApplianceEnum.FIELD);
+    this.hPacketFieldType = hPacketFieldType;
+    this.fieldConditionOptions = operators
+      .filter(o => o.appliance === RuleNode.ApplianceEnum.FIELD)
+      .filter(o => o.supportedFieldTypes.includes(this.hPacketFieldType));
   }
 
   generateChildrenRuleParts(): Map<string, IRulePart> {
