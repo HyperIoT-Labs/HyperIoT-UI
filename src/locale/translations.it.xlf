@@ -2262,6 +2262,38 @@
         <source>is false</source>
         <target>è falso</target>
       </trans-unit>
+      <trans-unit id="HYT_rule_definition" datatype="html">
+        <source>Rule Definition</source>
+        <target>Definizione Regola</target>
+      </trans-unit>
+      <trans-unit id="HYT_rule_engine_error" datatype="html">
+        <source>Error loading rule engine</source>
+        <target>Errore caricamento del motore regole</target>
+      </trans-unit>
+      <trans-unit id="HYT_required_field" datatype="html">
+        <source>Field Required</source>
+        <target>Campo richiesto</target>
+      </trans-unit>
+      <trans-unit id="HYT_invalid_pattern" datatype="html">
+        <source>Invalid pattern</source>
+        <target>Formato non valido</target>
+      </trans-unit>
+      <trans-unit id="HYT_packet_rule_part_label" datatype="html">
+        <source>Packet</source>
+        <target>Pacchetto</target>
+      </trans-unit>
+      <trans-unit id="HYT_field_condition_rule_part_label" datatype="html">
+        <source>Field or Condition</source>
+        <target>Campo o Condizione</target>
+      </trans-unit>
+      <trans-unit id="HYT_condition_rule_part_label" datatype="html">
+        <source>Condition</source>
+        <target>Condizione</target>
+      </trans-unit>
+      <trans-unit id="HYT_value_rule_part_label" datatype="html">
+        <source>Value</source>
+        <target>Valore</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

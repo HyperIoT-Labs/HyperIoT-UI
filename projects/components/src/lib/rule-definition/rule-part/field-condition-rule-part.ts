@@ -8,7 +8,7 @@ import { operationNameLabels } from './operations.utils';
 
 export class FieldConditionRulePart implements IRulePart {
   fieldType: 'select' | 'text' = 'select';
-  label = 'Field or Condition';
+  label = $localize`:@@HYT_field_condition_rule_part_label:Field or Condition`;
   validators = [ Validators.required ];
 
   packetConditions: RuleOperator[] = [];

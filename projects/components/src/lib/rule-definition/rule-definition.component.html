@@ -1,9 +1,9 @@
 <div class="ruleDefinition">
 
-  <h3>Rule Definition</h3>
+  <h3 i18n="@@HYT_rule_definition">Rule Definition</h3>
 
   <div *ngIf="ruleDefinitionError" class="rule-definition-error">
-    <span>Error loading rule engine</span>
+    <span i18n="@@HYT_rule_engine_error">Error loading rule engine</span>
   </div>
 
   <form *ngIf="!ruleDefinitionError" [formGroup]="ruleForm" autocomplete="on">
@@ -27,7 +27,7 @@
                   </mat-option>
                 </mat-select>
                 <mat-error *ngIf="getFormControl(i, j).invalid">
-                  <span *ngIf="getFormControl(i, j).errors.required">Field Required</span>
+                  <span *ngIf="getFormControl(i, j).errors.required" i18n="@@HYT_required_field">Field Required</span>
                 </mat-error>
               </mat-form-field>
 
@@ -35,8 +35,8 @@
                 <mat-label>{{ rulePart.label }}</mat-label>
                 <input matInput formControlName="rule-part-{{j}}" (change)="onRuleValueChanged($event, i, j)">
                 <mat-error *ngIf="getFormControl(i, j).invalid">
-                  <span *ngIf="getFormControl(i, j).errors.required">Field Required</span>
-                  <span *ngIf="getFormControl(i, j).errors.pattern">Invalid pattern</span>
+                  <span *ngIf="getFormControl(i, j).errors.required" i18n="@@HYT_required_field">Field Required</span>
+                  <span *ngIf="getFormControl(i, j).errors.pattern" i18n="@@HYT_invalid_pattern">Invalid pattern</span>
                 </mat-error>
               </mat-form-field>
 

@@ -6,7 +6,7 @@ import { Validators } from '@angular/forms';
 
 export class PacketRulePart implements IRulePart {
   fieldType: 'select' | 'text' = 'select';
-  label = 'Packet';
+  label = $localize`:@@HYT_packet_rule_part_label:Packet`;
   validators = [ Validators.required ];
 
   private packetList: HPacket[];

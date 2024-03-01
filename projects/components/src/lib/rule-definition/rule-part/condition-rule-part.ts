@@ -7,7 +7,7 @@ import { operationNameLabels } from "./operations.utils";
 
 export class ConditionRulePart implements IRulePart {
   fieldType: "select" | "text" = 'select';
-  label = 'Condition';
+  label = $localize`:@@HYT_condition_rule_part_label:Condition`;
   validators = [ Validators.required ];
 
   fieldConditionOptions: RuleOperator[] = [];

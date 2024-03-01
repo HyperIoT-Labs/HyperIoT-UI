@@ -17,7 +17,7 @@ const validationRules = new Map<HPacketField.TypeEnum, ValidatorFn[]>([
 
 export class ValueRulePart implements IRulePart {
     fieldType: "select" | "text" = 'text';
-    label = 'Value';
+    label = $localize`:@@HYT_value_rule_part_label:Value`;
     validators = [Validators.required ];
 
     constructor(
