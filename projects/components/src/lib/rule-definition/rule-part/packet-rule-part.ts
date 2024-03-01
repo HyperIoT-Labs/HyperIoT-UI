@@ -2,10 +2,12 @@ import { IRulePart, RuleOperator } from './rule-part.interface';
 import { HPacket, HPacketFieldsHandlerService } from 'core';
 import { SelectOption } from '../../hyt-select/hyt-select.component';
 import { FieldConditionRulePart } from './field-condition-rule-part';
+import { Validators } from '@angular/forms';
 
 export class PacketRulePart implements IRulePart {
   fieldType: 'select' | 'text' = 'select';
   label = 'Packet';
+  validators = [ Validators.required ];
 
   private packetList: HPacket[];
   constructor(

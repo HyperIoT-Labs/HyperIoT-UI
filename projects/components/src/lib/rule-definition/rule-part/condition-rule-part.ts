@@ -2,10 +2,12 @@ import { IRulePart, RuleOperator } from "./rule-part.interface";
 import { HPacketField, RuleNode } from "core";
 import { ValueRulePart } from "./value-rule-part";
 import { SelectOption } from "../../hyt-select/hyt-select.component";
+import { Validators } from "@angular/forms";
 
 export class ConditionRulePart implements IRulePart {
   fieldType: "select" | "text" = 'select';
   label = 'Condition';
+  validators = [ Validators.required ];
 
   fieldConditionOptions: RuleOperator[] = [];
   hPacketFieldType: HPacketField.TypeEnum;
@@ -26,7 +28,7 @@ export class ConditionRulePart implements IRulePart {
     // add field conditions
     this.fieldConditionOptions.forEach(pc => {
       if (pc.operator !== 'isTrue' && pc.operator !== 'isFalse') {
-        fieldPartsMap.set(pc.operator, new ValueRulePart());
+        fieldPartsMap.set(pc.operator, new ValueRulePart(this.hPacketFieldType));
       }
     });
     

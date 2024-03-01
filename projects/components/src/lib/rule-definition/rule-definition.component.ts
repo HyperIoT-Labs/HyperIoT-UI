@@ -105,7 +105,7 @@ export class RuleDefinitionComponent implements ControlValueAccessor, OnChanges 
       prettify: selectedIPart.prettify,
     });
 
-    this.getRowFormGroup(ruleRowIndex).addControl('rule-part-' + (rulePartIndex + 1), new FormControl('', Validators.required));
+    this.getRowFormGroup(ruleRowIndex).addControl('rule-part-' + (rulePartIndex + 1), new FormControl('', selectedIPart.validators));
 
   }
 
@@ -125,7 +125,7 @@ export class RuleDefinitionComponent implements ControlValueAccessor, OnChanges 
       });
 
       this.ruleRowsFormArray.push(new FormGroup({
-        'rule-part-0': new FormControl('', Validators.required),
+        'rule-part-0': new FormControl('', packetRulePart.validators),
         'ruleJoin': new FormControl(''),
       }));
 
@@ -255,6 +255,10 @@ export class RuleDefinitionComponent implements ControlValueAccessor, OnChanges 
 
   getRowFormGroup(index): FormGroup {
     return this.ruleRowsFormArray.at(index) as FormGroup;
+  }
+
+  getFormControl(rowIndex, partIndex) {
+    return this.ruleForm.get('ruleRowsArray.' + rowIndex + '.rule-part-' + partIndex) as FormControl;
   }
 
 }

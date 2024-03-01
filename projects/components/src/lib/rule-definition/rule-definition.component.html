@@ -26,11 +26,18 @@
                     {{ option.label }}
                   </mat-option>
                 </mat-select>
+                <mat-error *ngIf="getFormControl(i, j).invalid">
+                  <span *ngIf="getFormControl(i, j).errors.required">Field Required</span>
+                </mat-error>
               </mat-form-field>
 
               <mat-form-field *ngIf="rulePart.fieldType === 'text'">
                 <mat-label>{{ rulePart.label }}</mat-label>
                 <input matInput formControlName="rule-part-{{j}}" (change)="onRuleValueChanged($event, i, j)">
+                <mat-error *ngIf="getFormControl(i, j).invalid">
+                  <span *ngIf="getFormControl(i, j).errors.required">Field Required</span>
+                  <span *ngIf="getFormControl(i, j).errors.pattern">Invalid pattern</span>
+                </mat-error>
               </mat-form-field>
 
             </div>

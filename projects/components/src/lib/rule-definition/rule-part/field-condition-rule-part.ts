@@ -3,10 +3,12 @@ import { HPacket, HPacketField, HPacketFieldsHandlerService, RuleNode } from 'co
 import { ValueRulePart } from './value-rule-part';
 import { ConditionRulePart } from './condition-rule-part';
 import { SelectOption } from '../../hyt-select/hyt-select.component';
+import { Validators } from '@angular/forms';
 
 export class FieldConditionRulePart implements IRulePart {
   fieldType: 'select' | 'text' = 'select';
   label = 'Field or Condition';
+  validators = [ Validators.required ];
 
   packetConditions: RuleOperator[] = [];
 
@@ -34,7 +36,7 @@ export class FieldConditionRulePart implements IRulePart {
 
     // add packet conditions
     this.packetConditions.forEach(pc => {
-      rulePartsMap.set(pc.operator, new ValueRulePart());
+      rulePartsMap.set(pc.operator, new ValueRulePart(HPacketField.TypeEnum.TIMESTAMP));
     });
 
     // add packet timestamp conditions
