@@ -438,36 +438,6 @@
       <trans-unit id="HYT_value" datatype="html">
         <source>Value</source>
       </trans-unit>
-      <trans-unit id="HYT_(&gt;)_greater" datatype="html">
-        <source>(&gt;) Greater</source>
-      </trans-unit>
-      <trans-unit id="HYT_(&gt;=)_greater_equal" datatype="html">
-        <source>(&gt;=) Greater/Equal</source>
-      </trans-unit>
-      <trans-unit id="HYT_(&lt;)_lower" datatype="html">
-        <source>(&lt;) Lower</source>
-      </trans-unit>
-      <trans-unit id="HYT_(&lt;=)_lower_equal" datatype="html">
-        <source>(&lt;=) Lower/Equal</source>
-      </trans-unit>
-      <trans-unit id="HYT_(==)_equal" datatype="html">
-        <source>(=) Equal</source>
-      </trans-unit>
-      <trans-unit id="HYT_(!=)_different" datatype="html">
-        <source>(!=) Different</source>
-      </trans-unit>
-      <trans-unit id="HYT_(())_like" datatype="html">
-        <source>(()) Like</source>
-      </trans-unit>
-      <trans-unit id="HYT_is_true" datatype="html">
-        <source>Is true</source>
-      </trans-unit>
-      <trans-unit id="HYT_is_false" datatype="html">
-        <source>Is false</source>
-      </trans-unit>
-      <trans-unit id="HYT_or" datatype="html">
-        <source>OR</source>
-      </trans-unit>
       <trans-unit id="HYT_title_categories" datatype="html">
         <source>Categories</source>
       </trans-unit>
@@ -1648,6 +1618,12 @@
       <trans-unit id="HYT_severity_settings" datatype="html">
         <source>Severity Settings</source>
       </trans-unit>
+      <trans-unit id="HYT_operations_AND" datatype="html">
+        <source>AND</source>
+      </trans-unit>
+      <trans-unit id="HYT_operations_OR" datatype="html">
+        <source>OR</source>
+      </trans-unit>
       <trans-unit id="HYT_operations_EqualTo" datatype="html">
         <source>(=) Equal</source>
       </trans-unit>
@@ -1677,6 +1653,42 @@
       </trans-unit>
       <trans-unit id="HYT_operations_isTrue" datatype="html">
         <source>Is false</source>
+      </trans-unit>
+      <trans-unit id="HYT_pretty_AND" datatype="html">
+        <source>AND</source>
+      </trans-unit>
+      <trans-unit id="HYT_pretty_OR" datatype="html">
+        <source>OR</source>
+      </trans-unit>
+      <trans-unit id="HYT_pretty_EqualTo" datatype="html">
+        <source>is equal to</source>
+      </trans-unit>
+      <trans-unit id="HYT_pretty_GreaterOrEqualThan" datatype="html">
+        <source>is greater/equal than</source>
+      </trans-unit>
+      <trans-unit id="HYT_pretty_GreaterThan" datatype="html">
+        <source>is greater than</source>
+      </trans-unit>
+      <trans-unit id="HYT_pretty_Like" datatype="html">
+        <source>is like</source>
+      </trans-unit>
+      <trans-unit id="HYT_pretty_LowerOrEqualThan" datatype="html">
+        <source>is lower/equal than</source>
+      </trans-unit>
+      <trans-unit id="HYT_pretty_LowerThan" datatype="html">
+        <source>is lower than</source>
+      </trans-unit>
+      <trans-unit id="HYT_pretty_MaxPeriodicity" datatype="html">
+        <source>has not sent data for milliseconds:</source>
+      </trans-unit>
+      <trans-unit id="HYT_pretty_NotEqualTo" datatype="html">
+        <source>is different from</source>
+      </trans-unit>
+      <trans-unit id="HYT_pretty_isFalse" datatype="html">
+        <source>is true</source>
+      </trans-unit>
+      <trans-unit id="HYT_pretty_isTrue" datatype="html">
+        <source>is false</source>
       </trans-unit>
     </body>
   </file>

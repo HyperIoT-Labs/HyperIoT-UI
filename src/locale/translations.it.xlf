@@ -584,46 +584,6 @@
         <source>Value</source>
         <target>Valore</target>
       </trans-unit>
-      <trans-unit id="HYT_(&gt;)_greater" datatype="html">
-        <source>(&gt;) Greater</source>
-        <target>(&gt;) Maggiore</target>
-      </trans-unit>
-      <trans-unit id="HYT_(&gt;=)_greater_equal" datatype="html">
-        <source>(&gt;=) Greater/Equal</source>
-        <target>(&gt;=) Maggiore/Uguale</target>
-      </trans-unit>
-      <trans-unit id="HYT_(&lt;)_lower" datatype="html">
-        <source>(&lt;) Lower</source>
-        <target>(&lt;) Minore</target>
-      </trans-unit>
-      <trans-unit id="HYT_(&lt;=)_lower_equal" datatype="html">
-        <source>(&lt;=) Lower/Equal</source>
-        <target>(&lt;=) Minore/Uguale</target>
-      </trans-unit>
-      <trans-unit id="HYT_(==)_equal" datatype="html">
-        <source>(=) Equal</source>
-        <target>(=) Uguale</target>
-      </trans-unit>
-      <trans-unit id="HYT_(!=)_different" datatype="html">
-        <source>(!=) Different</source>
-        <target>(!=) Diverso</target>
-      </trans-unit>
-      <trans-unit id="HYT_(())_like" datatype="html">
-        <source>(()) Like</source>
-        <target>(()) Like</target>
-      </trans-unit>
-      <trans-unit id="HYT_is_true" datatype="html">
-        <source>Is true</source>
-        <target>è vero</target>
-      </trans-unit>
-      <trans-unit id="HYT_is_false" datatype="html">
-        <source>Is false</source>
-        <target>è falso</target>
-      </trans-unit>
-      <trans-unit id="HYT_or" datatype="html">
-        <source>OR</source>
-        <target>OR</target>
-      </trans-unit>
       <trans-unit id="HYT_title_categories" datatype="html">
         <source>Categories</source>
         <target>Categorie</target>
@@ -2206,6 +2166,14 @@
         <source>Severity Settings</source>
         <target>Impostazioni Severity</target>
       </trans-unit>
+      <trans-unit id="HYT_operations_AND" datatype="html">
+        <source>AND</source>
+        <target>E</target>
+      </trans-unit>
+      <trans-unit id="HYT_operations_OR" datatype="html">
+        <source>OR</source>
+        <target>O</target>
+      </trans-unit>
       <trans-unit id="HYT_operations_EqualTo" datatype="html">
         <source>(=) Equal</source>
         <target>(=) Uguale</target>
@@ -2244,6 +2212,54 @@
       </trans-unit>
       <trans-unit id="HYT_operations_isTrue" datatype="html">
         <source>Is false</source>
+        <target>è falso</target>
+      </trans-unit>
+      <trans-unit id="HYT_pretty_AND" datatype="html">
+        <source>AND</source>
+        <target>E</target>
+      </trans-unit>
+      <trans-unit id="HYT_pretty_OR" datatype="html">
+        <source>OR</source>
+        <target>O</target>
+      </trans-unit>
+      <trans-unit id="HYT_pretty_EqualTo" datatype="html">
+        <source>is equal to</source>
+        <target>è uguale a</target>
+      </trans-unit>
+      <trans-unit id="HYT_pretty_GreaterOrEqualThan" datatype="html">
+        <source>is greater/equal than</source>
+        <target>è maggiore/uguale di</target>
+      </trans-unit>
+      <trans-unit id="HYT_pretty_GreaterThan" datatype="html">
+        <source>is greater than</source>
+        <target>è maggiore di</target>
+      </trans-unit>
+      <trans-unit id="HYT_pretty_Like" datatype="html">
+        <source>is like</source>
+        <target>like</target>
+      </trans-unit>
+      <trans-unit id="HYT_pretty_LowerOrEqualThan" datatype="html">
+        <source>is lower/equal than</source>
+        <target>è minore/uguale di</target>
+      </trans-unit>
+      <trans-unit id="HYT_pretty_LowerThan" datatype="html">
+        <source>is lower than</source>
+        <target>è minore di</target>
+      </trans-unit>
+      <trans-unit id="HYT_pretty_MaxPeriodicity" datatype="html">
+        <source>has not sent data for milliseconds:</source>
+        <target>non ha inviato dati da millisecondi:</target>
+      </trans-unit>
+      <trans-unit id="HYT_pretty_NotEqualTo" datatype="html">
+        <source>is different from</source>
+        <target>è diverso da</target>
+      </trans-unit>
+      <trans-unit id="HYT_pretty_isFalse" datatype="html">
+        <source>is true</source>
+        <target>è vero</target>
+      </trans-unit>
+      <trans-unit id="HYT_pretty_isTrue" datatype="html">
+        <source>is false</source>
         <target>è falso</target>
       </trans-unit>
     </body>

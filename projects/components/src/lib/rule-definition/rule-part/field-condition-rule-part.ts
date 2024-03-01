@@ -4,6 +4,7 @@ import { ValueRulePart } from './value-rule-part';
 import { ConditionRulePart } from './condition-rule-part';
 import { SelectOption } from '../../hyt-select/hyt-select.component';
 import { Validators } from '@angular/forms';
+import { operationNameLabels } from './operations.utils';
 
 export class FieldConditionRulePart implements IRulePart {
   fieldType: 'select' | 'text' = 'select';
@@ -60,7 +61,11 @@ export class FieldConditionRulePart implements IRulePart {
     }));
 
     // add packet conditions
-    packetOptions = packetOptions.concat(this.packetConditions.map(x => ({ value: x.operator, label: x.name, icon: 'icon-hyt_setting' })));
+    packetOptions = packetOptions.concat(this.packetConditions.map(x => ({
+      value: x.operator,
+      label: operationNameLabels.find(y => y.name === x.name).label,
+      icon:'icon-hyt_setting',
+    })));
 
     // add packet timestamp conditions
     packetOptions = packetOptions.concat(this.timestampConditions.map(x => ({
@@ -89,8 +94,9 @@ export class FieldConditionRulePart implements IRulePart {
     if (!value) {
       return '';
     }
-    if (this.packetConditions.some(pc => pc.operator === value)) { // TODO temp, use /rules/operations instead
-      return ' has not sent data for milliseconds: ';
+    if (this.packetConditions.some(pc => pc.operator === value)) {
+      const conditionName = this.packetConditions.find(pc => pc.operator === value).name;
+      return ' ' + operationNameLabels.find(x => x.name === conditionName).pretty + ' ';
     }
     const options = this.generateOptions();
     return '.' + options.find(op => op.value === value).label;

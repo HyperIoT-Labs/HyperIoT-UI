@@ -3,6 +3,7 @@ import { HPacketField, RuleNode } from "core";
 import { ValueRulePart } from "./value-rule-part";
 import { SelectOption } from "../../hyt-select/hyt-select.component";
 import { Validators } from "@angular/forms";
+import { operationNameLabels } from "./operations.utils";
 
 export class ConditionRulePart implements IRulePart {
   fieldType: "select" | "text" = 'select';
@@ -36,7 +37,10 @@ export class ConditionRulePart implements IRulePart {
   }
 
   generateOptions(): SelectOption[] {
-    return this.fieldConditionOptions.map(x => ({ value: x.operator, label: x.name }));
+    return this.fieldConditionOptions.map(x => ({
+      value: x.operator,
+      label: operationNameLabels.find(y => y.name === x.name).label,
+    }));
   }
 
   ruleify = (value: string): string => {
@@ -47,6 +51,7 @@ export class ConditionRulePart implements IRulePart {
     if (!value) {
       return '';
     }
-    return ' ' + this.fieldConditionOptions.find(x => x.operator === value).name + ' ';
+    const operatorName = this.fieldConditionOptions.find(x => x.operator === value).name;
+    return ' ' + operationNameLabels.find(x => x.name === operatorName).pretty + ' ';
   }
 }

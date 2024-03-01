@@ -52,6 +52,11 @@ export class RuleDefinitionComponent implements ControlValueAccessor, OnChanges 
   value: { ruleDefinition: string; rulePrettyDefinition: string };
   originalValue = '';
 
+  joinOptions: Option[] = [
+    { value: 'AND', label: $localize`:@@HYT_operations_AND:AND`, checked: false },
+    { value: 'OR', label: $localize`:@@HYT_operations_OR:OR`, checked: false },
+  ];
+
   constructor(
     private hPacketFieldsHandlerService: HPacketFieldsHandlerService,
     private dialogService: DialogService,
@@ -144,14 +149,8 @@ export class RuleDefinitionComponent implements ControlValueAccessor, OnChanges 
     this.ruleRowsFormArray.at(this.ruleRows.length - 1).get('ruleJoin').setValue('');
   }
 
-  joinOptions: Option[] = [
-    { value: 'AND', label: $localize`:@@HYT_and:AND`, checked: false },
-    { value: 'OR', label: $localize`:@@HYT_or:OR`, checked: false },
-  ];
-
   onChange: any = (value: any) => { };
   onTouched: any = () => { };
-
 
   writeValue(rule: { ruleDefinition: string; rulePrettyDefinition: string }): void {
 
