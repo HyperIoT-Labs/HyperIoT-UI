@@ -32,6 +32,9 @@ export class PacketRulePart implements IRulePart {
   }
 
   prettify = (value: string): string => {
+    if (!value) {
+      return '';
+    }
     const hPacket = this.packetList.find(x => String(x.id) === value);
     return hPacket.device.deviceName + '.' + hPacket.name;
   }

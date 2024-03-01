@@ -37,6 +37,9 @@ export class ConditionRulePart implements IRulePart {
   }
 
   prettify = (value: string): string => {
+    if (!value) {
+      return '';
+    }
     return ' ' + this.fieldConditionOptions.find(x => x.operator === value).name + ' ';
   }
 }

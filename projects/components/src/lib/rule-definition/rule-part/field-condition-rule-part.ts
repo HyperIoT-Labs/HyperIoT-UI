@@ -80,6 +80,9 @@ export class FieldConditionRulePart implements IRulePart {
   }
 
   prettify = (value: string): string => {
+    if (!value) {
+      return '';
+    }
     if (this.packetConditions.some(pc => pc.operator === value)) { // TODO temp, use /rules/operations instead
       return ' has not sent data for milliseconds: ';
     }
