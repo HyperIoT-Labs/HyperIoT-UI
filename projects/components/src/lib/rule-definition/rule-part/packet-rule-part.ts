@@ -1,4 +1,4 @@
-import { IRulePart } from './rule-part.interface';
+import { IRulePart, RuleOperator } from './rule-part.interface';
 import { HPacket, HPacketFieldsHandlerService } from 'core';
 import { SelectOption } from '../../hyt-select/hyt-select.component';
 import { FieldConditionRulePart } from './field-condition-rule-part';
@@ -10,13 +10,14 @@ export class PacketRulePart implements IRulePart {
   private packetList: HPacket[];
   constructor(
     packetList: HPacket[],
-    private hPacketFieldsHandlerService: HPacketFieldsHandlerService
+    private operators: RuleOperator[],
+    private hPacketFieldsHandlerService: HPacketFieldsHandlerService,
   ) {
     this.packetList = packetList;
   }
 
   generateChildrenRuleParts(): Map<string, IRulePart> {
-    return new Map<string, IRulePart>(this.packetList.map(x => ([String(x.id), new FieldConditionRulePart(x, this.hPacketFieldsHandlerService)])));
+    return new Map<string, IRulePart>(this.packetList.map(x => ([String(x.id), new FieldConditionRulePart(x, this.operators, this.hPacketFieldsHandlerService)])));
   }
 
   generateOptions(): SelectOption[] {

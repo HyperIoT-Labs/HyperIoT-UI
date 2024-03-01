@@ -2,7 +2,11 @@
 
   <h3>Rule Definition</h3>
 
-  <form [formGroup]="ruleForm" autocomplete="on">
+  <div *ngIf="ruleDefinitionError" class="rule-definition-error">
+    <span>Error loading rule engine</span>
+  </div>
+
+  <form *ngIf="!ruleDefinitionError" [formGroup]="ruleForm" autocomplete="on">
 
     <div formArrayName="ruleRowsArray">
 

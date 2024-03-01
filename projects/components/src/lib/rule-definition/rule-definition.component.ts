@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, ViewEncapsulation, forwardRef } from '@angular/core';
 import { ControlValueAccessor, FormArray, FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
-import { HPacket, HPacketFieldsHandlerService } from 'core';
+import { CoreConfig, HPacket, HPacketFieldsHandlerService } from 'core';
 import { IRulePart } from './rule-part/rule-part.interface';
 import { SelectOption } from '../hyt-select/hyt-select.component';
 import { Option } from '../hyt-radio-button/hyt-radio-button.component';
@@ -42,6 +42,8 @@ export class RuleDefinitionComponent implements ControlValueAccessor, OnChanges 
   @Input() allPackets: HPacket[] = [];
   @Input() currentPacket: HPacket;
 
+  ruleDefinitionError = false;
+
   ruleRows: RuleRow[] = [];
   ruleForm = new FormGroup({
     ruleRowsArray: new FormArray([]),
@@ -53,7 +55,12 @@ export class RuleDefinitionComponent implements ControlValueAccessor, OnChanges 
   constructor(
     private hPacketFieldsHandlerService: HPacketFieldsHandlerService,
     private dialogService: DialogService,
-  ) { }
+    private coreConfigService: CoreConfig,
+  ) {
+    if (!this.coreConfigService.ruleNodes) {
+      this.ruleDefinitionError = true;
+    }
+  }
 
   ngOnChanges() {
     if (this.allPackets) {
@@ -105,7 +112,7 @@ export class RuleDefinitionComponent implements ControlValueAccessor, OnChanges 
   addCondition(index) {
     if (this.ruleRows.length === index + 1) {
 
-      const packetRulePart = new PacketRulePart(this.allPackets, this.hPacketFieldsHandlerService);
+      const packetRulePart = new PacketRulePart(this.allPackets, this.coreConfigService.ruleNodes, this.hPacketFieldsHandlerService);
       this.ruleRows.push({
         ruleParts: [{
           label: packetRulePart.label,
@@ -239,7 +246,7 @@ export class RuleDefinitionComponent implements ControlValueAccessor, OnChanges 
     // return this.value !== this.originalValue;
   }
   isInvalid() {
-    return this.ruleForm.invalid;
+    return this.ruleForm.invalid || this.ruleDefinitionError;
   }
 
   get ruleRowsFormArray() {
