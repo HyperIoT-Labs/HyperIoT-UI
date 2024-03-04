@@ -52,6 +52,11 @@
                             [settingsForm]="settingsForm">
                         </hyperiot-time-chart-settings>
                     </div>
+                    <div *ngSwitchCase="'production-target-widget'">
+                        <hyperiot-production-target-settings [widget]="widget" [areaId]="areaId" [modalApply]="modalApply.asObservable()"
+                            [settingsForm]="settingsForm">
+                        </hyperiot-production-target-settings>
+                    </div>
                     <div class="container-widget-type" *ngSwitchCase="'realtime-table'">
                         <hyperiot-time-chart-settings [widget]="widget" [areaId]="areaId" [modalApply]="modalApply.asObservable()"
                             [settingsForm]="settingsForm">

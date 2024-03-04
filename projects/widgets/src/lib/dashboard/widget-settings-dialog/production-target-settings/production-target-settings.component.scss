@@ -1,0 +1,20 @@
+.section-group {
+  display: flex;
+  flex-direction: column;
+  margin-left: 24px;
+  margin-bottom: 6%;
+
+  .target-input {
+    width: 23%;
+  }
+
+  .section-input {
+    display: flex;
+    flex-direction: row;
+    gap: 32px;
+    hyt-select-template,
+    hyt-input-template {
+      width: 30%;
+    }
+  }
+}

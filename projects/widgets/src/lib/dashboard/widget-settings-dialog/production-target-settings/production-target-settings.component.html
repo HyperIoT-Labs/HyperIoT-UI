@@ -1,0 +1,28 @@
+<div id="production-target-settings">
+    <div *ngFor="let field of settableParameters">
+        <div class="section-group">
+            <span>{{ returnFieldName(field) }}</span>
+            <mat-form-field *ngIf="field === 'target'" class="target-input">
+                <input matInput #input class="hyt-input form-control" [(ngModel)]="targetManualValue"
+                    placeholder="Manually enter a target string">
+            </mat-form-field>
+
+            <div class="section-input">
+                {{targetManualValue}}
+                <hyt-select [name]="'packetSelect-' + field" [label]="'Select Packet'" [groups]="groupedPacketOptions"
+                    [selected]="selectedPackets && selectedPackets[field] ? selectedPackets[field] : []"
+                    [isSearchable]="true" (changeFn)="onPacketChange($event, field)"
+                    [disabled]="targetManualValue !== ''" [errorMsgRequired]="'Select one packet'"
+                    [hint]="'select one packet'" class="hyt-select-full-width">
+                </hyt-select>
+                <div *ngIf="selectedPackets && selectedPackets[field] != null" id="field-selection"
+                    class="d-flex flex-column">
+                    <hyt-inner-field-select [fields]="selectedPackets[field].fields"
+                        [selectedFieldsIds]="selectedFieldsOptions && selectedFieldsOptions[field] ? [selectedFieldsOptions[field]] : []"
+                        [isMultiSelect]="false" [name]="'selectField-' + field"
+                        (fieldSelectionChanged)="onPacketFieldChange($event, field)"></hyt-inner-field-select>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -22,6 +22,7 @@ export { EcgComponent } from './lib/widget/ecg/ecg.component';
 export { DataSimulatorComponent } from './lib/widget/data-simulator/data-simulator.component';
 export { DefibrillatorComponent } from './lib/widget/defibrillator/defibrillator.component';
 export { DynamicLabelValueWidgetComponent } from './lib/widget/dynamic-label-value-widget/dynamic-label-value-widget.component';
+export { ProductionTargetComponent } from './lib/widget/production-target/production-target.component';
 
 export { ServiceType } from './lib/service/model/service-type';
 export * from './lib/dashboard/dashboard.module'
