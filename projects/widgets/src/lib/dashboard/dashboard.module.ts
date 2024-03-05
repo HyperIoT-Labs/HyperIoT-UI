@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { ComponentsModule} from 'components';
+import { ComponentsModule, HytRadioButtonComponent} from 'components';
 import { GridsterModule } from 'angular-gridster2';
 import { AddWidgetDialogComponent } from './add-widget-dialog/add-widget-dialog.component';
 import { DashboardConfigService } from './dashboard-config.service';
@@ -106,6 +106,7 @@ import { ProductionTargetSettingsComponent } from './widget-settings-dialog/prod
     DashboardViewComponent,
     DynamicWidgetComponent,
     WidgetsDashboardLayoutComponent,
+    HytRadioButtonComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SelectOption, SelectOptionGroup } from 'components';
-import { HPacket, HPacketField, HPacketFieldsHandlerService, HpacketsService, Logger, LoggerService } from 'core';
+import { HPacket, HPacketFieldsHandlerService, HpacketsService, Logger, LoggerService } from 'core';
 import { WidgetConfig } from '../../../base/base-widget/model/widget.model';
 import { Observable } from 'rxjs';
 
@@ -16,6 +16,11 @@ export class ProductionTargetSettingsComponent implements OnInit {
   @Input() modalApply: Observable<any>;
 
   private logger: Logger;
+
+  options = [
+    { value: 'string', label: 'Set Manually', checked: true },
+    { value: 'packet', label: 'Set Dynamically', checked: false }
+  ];
 
   subscription: any;
   allPackets: HPacket[] = [];
@@ -33,25 +38,59 @@ export class ProductionTargetSettingsComponent implements OnInit {
 
   settableParameters: string[] = ['target', 'produced', 'current_shift'];
 
+  form: FormGroup;
+
   constructor(
     loggerService: LoggerService,
     private hPacketsService: HpacketsService,
     private hPacketFieldsHandlerService: HPacketFieldsHandlerService,
+    private fb: FormBuilder
   ) {
     this.logger = new Logger(loggerService);
     this.logger.registerClass("ProductionTargetSettingsComponent");
   }
 
   ngOnInit(): void {
+    this.initForm();
     this.retrievePacketsAndFields();
   }
 
+  initForm() {
+    this.form = this.fb.group({
+      targetOption: ['string', Validators.required],
+      targetManualValue: [''],
+      target: this.fb.group({
+        packet: [''],
+        field: ['']
+      }),
+      produced: this.fb.group({
+        packet: ['', Validators.required],
+        field: ['', Validators.required]
+      }),
+      current_shift: this.fb.group({
+        packet: [''],
+        field: ['']
+      })
+    });
+    this.onTargetOptionChange('string');
+  }
+
+  onTargetOptionChange(option: string): void {
+    if (option === 'string') {
+      this.form.get('targetManualValue').enable();
+      this.form.get('target').disable();
+    } else {
+      this.form.get('targetManualValue').disable();
+      this.form.get('target').enable();
+    }
+  }
+
   retrievePacketsAndFields() {
-  this.subscription = this.modalApply.subscribe((event) => {
+    this.subscription = this.modalApply.subscribe((event) => {
       if (event === 'apply') {
-          this.apply();
+        this.apply();
       }
-  });
+    });
     this.hPacketsService
       .findAllHPacketByProjectId(this.widget.projectId)
       .subscribe((res) => {
@@ -83,8 +122,8 @@ export class ProductionTargetSettingsComponent implements OnInit {
                   this.selectedPackets[key] = packet;
                   this.selectedPacketsOption[key] = this.selectedPackets[key].id;
                 } else {
-                  this.selectedPackets = {[key]: packet};
-                  this.selectedPacketsOption = {[key]: this.selectedPackets[key].id};
+                  this.selectedPackets = { [key]: packet };
+                  this.selectedPacketsOption = { [key]: this.selectedPackets[key].id };
                 }
                 const fieldsFlatList = this.hPacketFieldsHandlerService.flatPacketFieldsTree(this.selectedPackets[key]);
                 if (this.fieldsOption) {
@@ -93,10 +132,12 @@ export class ProductionTargetSettingsComponent implements OnInit {
                     label: x.label
                   }));
                 } else {
-                  this.fieldsOption = { [key]: fieldsFlatList.map(x => ({
-                    value: x.field.id,
-                    label: x.label
-                  }))};
+                  this.fieldsOption = {
+                    [key]: fieldsFlatList.map(x => ({
+                      value: x.field.id,
+                      label: x.label
+                    }))
+                  };
                 }
                 if (this.selectedFieldsOptions) {
                   this.selectedFieldsOptions[key] = this.widget.config.productionTargetSettings.fields[key].field;
@@ -104,7 +145,7 @@ export class ProductionTargetSettingsComponent implements OnInit {
                   this.selectedFieldsOptions = { [key]: this.widget.config.productionTargetSettings.fields[key].packet }
                 }
                 if (this.widget.config.packetFields) {
-                  
+
                   packet.fields.sort((a, b) => a.name < b.name ? -1 : 1);
                 }
               }
@@ -116,6 +157,7 @@ export class ProductionTargetSettingsComponent implements OnInit {
   }
 
   onPacketChange(packetOption, field: string) {
+    debugger
     if (this.selectedPacketsOption) {
       this.selectedPacketsOption[field] = packetOption.value;
       this.selectedPackets[field] = this.allPackets.find(p => p.id === this.selectedPacketsOption[field]);
@@ -157,16 +199,19 @@ export class ProductionTargetSettingsComponent implements OnInit {
   }
 
   apply() {
+    if ((this.form.get('targetOption').value === 'string' && this.form.get('targetManualValue').value === '') || (this.form.get('targetOption').value !== 'string' && this.form.get('target').get('packet').value === '')) {
+      return console.error('Please set the target value');
+    }
     const config = {
-      isTargetManuallySet: this.targetManualValue !== '' ? true : false,
+      isTargetManuallySet: this.form.get('targetOption').value === 'string' ? true : false,
       fields: {
         produced: {
-          packet: this.selectedPackets.produced.id,
-          field: this.selectedFieldsOptions.produced
+          packet: this.form.get('produced').get('packet').value,
+          field: this.form.get('produced').get('field').value
         },
         current_shift: {
-          packet: this.selectedPackets.current_shift.id,
-          field: this.selectedFieldsOptions.current_shift
+          packet: this.form.get('current_shift').get('packet').value,
+          field: this.form.get('current_shift').get('field').value
         }
       }
     };
@@ -177,11 +222,11 @@ export class ProductionTargetSettingsComponent implements OnInit {
       this.widget.config.productionTargetSettings = config;
     }
 
-    if (this.targetManualValue === '') {
-      this.widget.config.productionTargetSettings.fields.target = 
+    if (!config.isTargetManuallySet && this.form.get('targetManualValue').value === '') {
+      this.widget.config.productionTargetSettings.fields.target =
       {
-        packet: this.selectedPackets.target.id,
-        field: this.selectedFieldsOptions.target
+        packet: this.form.get('target').get('packet').value,
+        field: this.form.get('target').get('field').value
       }
     } else {
       this.widget.config.productionTargetSettings.targetManuallySetValue = this.targetManualValue;

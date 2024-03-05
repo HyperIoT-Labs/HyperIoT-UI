@@ -4,10 +4,17 @@
   margin-left: 24px;
   margin-bottom: 6%;
 
-  .target-input {
-    width: 23%;
+  .label-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 35px;
   }
 
+  .target-input {
+    width: 28%;
+  }
+  
   .section-input {
     display: flex;
     flex-direction: row;

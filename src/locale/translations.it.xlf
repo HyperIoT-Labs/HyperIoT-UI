@@ -2202,6 +2202,18 @@
         <source>Severity Settings</source>
         <target>Impostazioni Severity</target>
       </trans-unit>
+      <trans-unit id="HYT_target" datatype="html">
+        <source>Target</source>
+        <target>Obiettivo</target>
+      </trans-unit>
+      <trans-unit id="HYT_produced" datatype="html">
+        <source>Produced</source>
+        <target>Prodotti</target>
+      </trans-unit>
+      <trans-unit id="HYT_current_shift" datatype="html">
+        <source>Current Shift</source>
+        <target>Turno Corrente</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

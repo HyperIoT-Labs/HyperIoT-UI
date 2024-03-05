@@ -6,14 +6,26 @@ import { BaseGenericComponent } from '../../base/base-generic/base-generic.compo
 @Component({
   selector: 'hyperiot-production-target',
   templateUrl: './production-target.component.html',
-  styleUrls: ['./production-target.component.css']
+  styleUrls: ['./production-target.component.scss']
 })
 export class ProductionTargetComponent extends BaseGenericComponent implements OnInit {
   isPaused = false;
 
+  /**
+   * Container for the graph specifics
+   */
+  graph: any = {};
+
   dataChannel: DataChannel;
-  
-  chartData: { [field: string]: any }[] = [];
+
+  chartData: { [field: string]: any }[] = [
+    { target: 'test' },
+    { produced: 'test' },
+    { current_shift: 'test' },
+    { remaining: '' }
+  ];
+
+  chartLabels: string[] = ['target', 'produced', 'current_shift', 'remaining']
 
   protected dataChannelList: DataChannel[] = [];
   dataSubscription: Subscription;
@@ -54,16 +66,19 @@ export class ProductionTargetComponent extends BaseGenericComponent implements O
     this.isConfigured = true;
     let packetAndFieldsToRetrive: { [id: number]: string } = {};
     if (this.widget.config.productionTargetSettings) {
-      packetAndFieldsToRetrive = Object.entries(this.widget.config.productionTargetSettings.fields).reduce((acc, [id, values]) => {
-        if (acc[id]) {
-          acc[id] = values;
+      Object.keys(this.widget.config.productionTargetSettings.fields).map(key => {
+        const obj = this.widget.config.productionTargetSettings.fields[key];
+        if (packetAndFieldsToRetrive[obj.packet]) {
+          if (packetAndFieldsToRetrive[obj.packet] !== obj.field) {
+            packetAndFieldsToRetrive[obj.packet] = obj.field;
+          }
         } else {
-          acc[id] = values;
+          packetAndFieldsToRetrive[obj.packet] = obj.field;
         }
-        return acc;
-      }, {});
+      });
     };
     this.subscribeDataChannel(packetAndFieldsToRetrive);
+    this.processPlotlyData()
   }
 
   subscribeDataChannel(packetAndFieldsToRetrive) {
@@ -99,6 +114,50 @@ export class ProductionTargetComponent extends BaseGenericComponent implements O
         console.error('[convertAndBufferData] external error', e);
       }
     })
+  }
+
+  processPlotlyData() {
+    this.graph = {
+      data: [
+        {
+          values: [70, 30],
+          type: 'pie',
+          marker: {
+            line: {
+              color: '#FFFFFF',
+              width: [2, 2, 2]
+            },
+          },
+          hole: .4,
+          showlegend: false,
+          textinfo: 'none',
+          textposition: 'inside',
+          hovertemplate: 'test'
+        },
+      ],
+      layout: {
+        width: '150',
+        height: '150',
+        autosize: true,
+        margin: {
+          l: 5,
+          r: 5,
+          b: 5,
+          t: 5
+        },
+        annotations: [
+          {
+            font: {
+              size: 13
+            },
+            showarrow: false,
+            text: '70',
+            x: 0.5,
+            y: 0.5
+          }
+        ]
+      },
+    };
   }
 
   play(): void {

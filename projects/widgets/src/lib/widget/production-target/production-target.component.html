@@ -25,7 +25,15 @@
         <ng-template #configured>
           <div id="modalAnchor"></div>
           <div #productionTarget id="productionTarget">
-            {{this.chartData | json}}
+            <div class="section-group">
+              <div class="data">
+                <div *ngFor="let label of chartLabels" class="main-data">
+                  <span>{{label}}</span>
+                  <span>{{chartData[label]}}</span>
+                </div>
+              </div>
+              <plotly-plot [data]="graph.data" [layout]="graph.layout" class="chart"></plotly-plot>
+            </div>
           </div>
           <div #target>
           </div>

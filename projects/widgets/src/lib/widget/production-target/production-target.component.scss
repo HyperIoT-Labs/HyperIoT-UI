@@ -1,0 +1,22 @@
+.section-group {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    padding: 10px;
+    
+    plotly-plot {
+        display: block;
+        width: auto;
+    }
+
+    .data {
+        display: flex;
+        flex-wrap: wrap;
+
+        .main-data {
+            width: 50%;
+            box-sizing: border-box;
+            padding: 10px;
+        }
+    }
+}

@@ -1645,6 +1645,15 @@
       <trans-unit id="HYT_severity_settings" datatype="html">
         <source>Severity Settings</source>
       </trans-unit>
+      <trans-unit id="HYT_target" datatype="html">
+        <source>Target</source>
+      </trans-unit>
+      <trans-unit id="HYT_produced" datatype="html">
+        <source>Produced</source>
+      </trans-unit>
+      <trans-unit id="HYT_current_shift" datatype="html">
+        <source>Current Shift</source>
+      </trans-unit>
     </body>
   </file>
 </xliff>
