@@ -23,6 +23,7 @@ export interface Rule {
     name?: string;
     description?: string;
     ruleDefinition?: string;
+    rulePrettyDefinition?: string;
     project?: HProject;
     packet?: HPacket;
     jsonActions?: string;

@@ -104,3 +104,5 @@ export { InfoDialogConfig, InfoDialogResult } from './lib/hyt-dialog/info-dialog
 
 export { CronEditorComponent } from './lib/cron-editor/cron-editor.component';
 export { CronOptions } from './lib/cron-editor/CronOptions';
+
+export { RuleDefinitionComponent } from './lib/rule-definition/rule-definition.component';
