@@ -1,5 +1,6 @@
-import { Component, ViewEncapsulation } from '@angular/core';
-import { DialogRef } from 'components';
+import { Component, Inject, ViewEncapsulation } from '@angular/core';
+import { DialogRef } from '../../hyt-dialog/dialog-ref';
+import { DIALOG_DATA } from '../../hyt-dialog/dialog-tokens';
 
 @Component({
   selector: 'hyt-rule-error-modal',
@@ -11,6 +12,7 @@ export class RuleErrorModalComponent {
 
   constructor(
     private dialogRef: DialogRef<void>,
+    @Inject(DIALOG_DATA) public data: { ruleDefinition: string },
   ) { }
 
   close() {

@@ -25,7 +25,7 @@ import { AccountButtonComponent } from './components/topbar/account-button/accou
 import { MatIconModule } from '@angular/material/icon';
 
 // hyperiot
-import { Configuration, ConfigurationParameters, HyperiotClientModule, LoggerService } from 'core';
+import { Configuration, ConfigurationParameters, CoreModule, HyperiotClientModule, LoggerService } from 'core';
 import { ComponentsModule } from 'components';
 import {AddWidgetDialogComponent, DashboardModule, WidgetSettingsDialogComponent, WidgetsModule} from 'widgets';
 import { RouterModule, DefaultUrlSerializer, UrlSerializer, UrlTree } from '@angular/router';
@@ -43,7 +43,6 @@ import { NotificationbarComponent } from './components/notificationbar/notificat
 import { WizardDeactivationModalComponent } from './pages/projects/project-wizard/wizard-deactivation-modal/wizard-deactivation-modal.component';
 import { WizardOptionsModalComponent } from './pages/projects/project-wizard/wizard-options-modal/wizard-options-modal.component';
 import { WizardReportModalComponent } from './pages/projects/project-wizard/wizard-report-modal/wizard-report-modal.component';
-import { RuleErrorModalComponent } from './pages/projects/project-forms/rule-definition/rule-error/rule-error-modal.component';
 import { AreasViewComponent } from './pages/areas/areas-view/areas-view.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 
@@ -107,7 +106,6 @@ export function apiConfigFactory(): Configuration {
     WizardDeactivationModalComponent,
     WizardOptionsModalComponent,
     WizardReportModalComponent,
-    RuleErrorModalComponent,
     AddWidgetDialogComponent,
     WidgetSettingsDialogComponent
   ],
@@ -135,7 +133,8 @@ export function apiConfigFactory(): Configuration {
     HyperiotClientModule.forRoot(apiConfigFactory),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production, registrationStrategy: 'registerImmediately' }),
     ToastrModule.forRoot(),
-    ScrollingModule
+    ScrollingModule,
+    CoreModule,
   ],
   providers: [
     // ActivatedRouteSnapshot,
