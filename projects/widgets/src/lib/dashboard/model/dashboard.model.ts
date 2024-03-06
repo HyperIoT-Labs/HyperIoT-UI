@@ -6,7 +6,6 @@ export interface DashboardPresetItemModel {
   enableAddWidget: boolean;
   enableProjectSelection: boolean;
   enableProjectEdit: boolean;
-  enableChangeEventNotification: boolean;
   enableTopologyToolbar: boolean;
   enableStreamControl: boolean;
   enableOnlineOffline: boolean;

@@ -1,6 +1,7 @@
-import { Component, OnInit, ViewEncapsulation, HostListener } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, HostListener, Input } from '@angular/core';
 import { ToggleSidebarService } from 'src/app/services/toggleSidebar/toggle-sidebar.service';
 import { environment } from 'src/environments/environment';
+import { DashboardConfigService } from 'widgets';
 
 @Component({
   selector: 'hyt-topbar',
@@ -9,7 +10,8 @@ import { environment } from 'src/environments/environment';
   encapsulation: ViewEncapsulation.None
 })
 export class TopbarComponent implements OnInit {
-
+  eventNotificationIsOn = true;
+  
   feVersion = environment.version;
 
   public winInnerWidth: any;
@@ -21,7 +23,10 @@ export class TopbarComponent implements OnInit {
     xs: 575
   };
 
-  constructor(private toggleSidebarService: ToggleSidebarService) { }
+  constructor(
+    private dashboardConfigService: DashboardConfigService,
+    private toggleSidebarService: ToggleSidebarService
+  ) { }
 
   @HostListener('window:resize', ['$event'])
 
@@ -54,4 +59,8 @@ export class TopbarComponent implements OnInit {
     this.isShow = !this.isShow;
   }
 
+  changeEventNotificationState() {
+    this.eventNotificationIsOn = !this.eventNotificationIsOn;
+    this.dashboardConfigService.eventNotificationState.next(this.eventNotificationIsOn);
+  }
 }
