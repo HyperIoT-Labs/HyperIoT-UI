@@ -170,7 +170,10 @@ export class RuleDefinitionComponent implements ControlValueAccessor, OnChanges 
       const ruleArray: string[] = ruleDefinition.match(/[^AND|OR]+(AND|OR)?/g).map(x => x.trim());
   
       for (let k = 0; k < ruleArray.length; k++) {
-        const splitted: string[] = ruleArray[k].split(/\.| /).filter(i => i); // TODO the rule parts should be recognized by RulePart classes somehow
+        // TODO the rule parts should be recognized by RulePart classes somehow
+        const tempSplitted: string[] = ruleArray[k].split(' ').filter(i => i);
+        const packetFieldPart = tempSplitted.shift();
+        const splitted: string[] = packetFieldPart.split('.').concat(tempSplitted);
   
         this.addCondition(k - 1);
   
