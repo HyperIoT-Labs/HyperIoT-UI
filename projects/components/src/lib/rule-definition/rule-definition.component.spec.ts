@@ -1,19 +1,17 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RuleDefinitionComponent } from './rule-definition.component';
-import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('RuleDefinitionComponent', () => {
   let component: RuleDefinitionComponent;
   let fixture: ComponentFixture<RuleDefinitionComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ RuleDefinitionComponent ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [ RuleDefinitionComponent ]
     })
     .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(RuleDefinitionComponent);

@@ -62,6 +62,15 @@
                 ></div>
               </ng-container>
 
+              <ng-container *ngSwitchCase="'chart'">
+                <div class="info-row" [ngClass]="{'white': message.author === 'user'}">
+                  <div class="name-cell">{{returnAuthor(message.author!)}}</div>
+                  <div class="time-cell">{{returnTimeMessage(message.timestamp!)}}</div>
+                </div>
+                <hyt-chatbot-chart-message [data]="message.text" [type]="'linechart'"></hyt-chatbot-chart-message>
+                <div class="message-row" i18n="@@HYT_ai_click_chart">Click to expand the chart</div>
+              </ng-container>
+
               <ng-container *ngSwitchCase="'typing_indicator'">
                 <div *ngIf="message.author === 'bot'" class="typing-box">
                   <div class="typing-text" i18n="@@HYT_ai_is_writing">Alice is writing...</div>

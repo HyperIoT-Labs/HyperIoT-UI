@@ -1,0 +1,34 @@
+.chart-preview {
+    width: 100%;
+    height: auto;
+    cursor: pointer;
+}
+
+.modal{
+    width: 700px;
+    position: fixed;
+    top: 20%;
+    left: 10%;
+    border: 1px solid black;
+    z-index: 9999999;
+
+    .modal-toolbar {
+        background: #1e58a5;
+        width: 100%;
+        height: 20px;
+    
+        .modal-toolbar-end{
+            position: relative;
+            height: 100%;
+            float: right;
+        
+            .exit-chart{
+                margin: 2px;
+                color: white;
+                cursor: pointer;
+            }
+        
+        }
+    }
+
+}

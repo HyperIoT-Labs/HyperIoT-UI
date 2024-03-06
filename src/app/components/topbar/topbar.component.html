@@ -42,6 +42,12 @@
             <!-- FINE -->
 
         </div>
+        <button class="event-bell" mat-button (click)="changeEventNotificationState()">
+            <div id="event-notification-btn">
+                <span class="hyt-icon icon-hyt_notification"></span>
+                <span class="button-label">{{(eventNotificationIsOn)?'On':'Off'}}</span>
+            </div>
+        </button>
         <hyt-account-button></hyt-account-button>
     </div>
     

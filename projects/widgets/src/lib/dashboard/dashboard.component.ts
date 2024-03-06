@@ -107,7 +107,6 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() enableAddWidget: boolean | undefined = undefined;
   @Input() enableProjectSelection: boolean | undefined = undefined;
   @Input() enableProjectEdit: boolean | undefined = undefined;
-  @Input() enableChangeEventNotification: boolean | undefined = undefined;
   @Input() enableTopologyToolbar: boolean | undefined = undefined;
   @Input() enableStreamControl: boolean | undefined = undefined;
   @Input() enableOnlineOffline: boolean | undefined = undefined;
@@ -119,7 +118,6 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
       enableAddWidget: false,
       enableProjectSelection: false,
       enableProjectEdit: false,
-      enableChangeEventNotification: false,
       enableTopologyToolbar: false,
       enableStreamControl: false,
       enableOnlineOffline: false,
@@ -129,7 +127,6 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
       enableAddWidget: false,
       enableProjectSelection: false,
       enableProjectEdit: false,
-      enableChangeEventNotification: false,
       enableTopologyToolbar: true,
       enableStreamControl: true,
       enableOnlineOffline: true,
@@ -139,7 +136,6 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
       enableAddWidget: true,
       enableProjectSelection: true,
       enableProjectEdit: true,
-      enableChangeEventNotification: true,
       enableTopologyToolbar: true,
       enableStreamControl: true,
       enableOnlineOffline: true,
@@ -275,11 +271,6 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         widget.instance.onDashboardPlay(this.streamIsOn);
       }
     });
-  }
-
-  changeEventNotificationState(event) {
-    this.eventNotificationIsOn = !this.eventNotificationIsOn;
-    this.dashboardConfigService.eventNotificationState.next(this.eventNotificationIsOn);
   }
 
   changeTopologyState(event) {

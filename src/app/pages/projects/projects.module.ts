@@ -14,7 +14,6 @@ import { DeviceFormComponent } from './project-forms/device-form/device-form.com
 import { PacketFormComponent } from './project-forms/packet-form/packet-form.component';
 import { PacketFieldsFormComponent } from './project-forms/packet-fields-form/packet-fields-form.component';
 import { PacketEnrichmentFormComponent } from './project-forms/packet-enrichment-form/packet-enrichment-form.component';
-import { RuleDefinitionComponent } from './project-forms/rule-definition/rule-definition.component';
 import { ProjectEventsFormComponent } from './project-forms/project-events-form/project-events-form.component';
 import { EventMailComponent } from './project-forms/project-events-form/event-mail/event-mail.component';
 import { SelectableTextComponent } from './project-forms/project-events-form/event-mail/selectable-text/selectable-text.component';
@@ -29,6 +28,8 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSelectModule } from '@angular/material/select';
+import { MatRadioModule } from '@angular/material/radio';
 
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -38,7 +39,6 @@ import { WizardReportModalComponent } from './project-wizard/wizard-report-modal
 import { WizardOptionsModalComponent } from './project-wizard/wizard-options-modal/wizard-options-modal.component';
 import { WizardDeactivationModalComponent } from './project-wizard/wizard-deactivation-modal/wizard-deactivation-modal.component';
 import { ApplicationFormComponent } from './project-forms/application-form/application-form.component';
-import { RuleErrorModalComponent } from './project-forms/rule-definition/rule-error/rule-error-modal.component';
 import { TagsFormComponent } from './project-forms/tags-form/tags-form.component';
 import { CategoriesFormComponent } from './project-forms/categories-form/categories-form.component';
 import { AddTagModalComponent } from './project-forms/tags-form/add-tag-modal/add-tag-modal.component';
@@ -77,7 +77,6 @@ import {MatListModule} from '@angular/material/list';
   declarations: [
     ProjectsComponent,
     ProjectWizardComponent,
-    RuleDefinitionComponent,
     ProjectDetailComponent,
     ProjectFormComponent,
     DeviceFormComponent,
@@ -99,7 +98,6 @@ import {MatListModule} from '@angular/material/list';
     WizardOptionsModalComponent,
     WizardDeactivationModalComponent,
     ApplicationFormComponent,
-    RuleErrorModalComponent,
     TagsFormComponent,
     CategoriesFormComponent,
     AddTagModalComponent,
@@ -120,7 +118,7 @@ import {MatListModule} from '@angular/material/list';
     HPacketFieldFilterPipe,
     EventComponentContainerComponent,
     EventMqttCommandComponent ,
-    AlarmEventsTableComponent
+    AlarmEventsTableComponent,
   ],
   imports: [
     ColorPickerModule,
@@ -144,6 +142,8 @@ import {MatListModule} from '@angular/material/list';
     DragDropModule,
     MatListModule,
     WidgetsModule,
+    MatRadioModule,
+    MatSelectModule,
     MatTooltipModule,
     MatTableModule
   ],

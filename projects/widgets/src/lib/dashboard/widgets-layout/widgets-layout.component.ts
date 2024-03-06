@@ -1,14 +1,13 @@
-import { Component, OnInit, Input, OnDestroy, HostListener, ViewChild, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 
 import {
-  GridsterConfig,
-  GridsterItem,
-  GridType,
-  DisplayGrid,
   CompactType,
-  GridsterComponent
+  DisplayGrid,
+  GridType,
+  GridsterComponent,
+  GridsterConfig,
+  GridsterItem
 } from 'angular-gridster2';
 
 import {
@@ -19,15 +18,15 @@ import {
   RealtimeDataService,
 } from 'core';
 
-import { DashboardConfigService } from '../dashboard-config.service';
-import { WidgetSettingsDialogComponent } from '../widget-settings-dialog/widget-settings-dialog.component';
-import { Subject, Observable, Subscription } from 'rxjs';
-import { takeUntil, map } from 'rxjs/operators';
 import { ConfirmDialogService, DialogService, HytTopologyService } from 'components';
-import {ServiceType} from '../../service/model/service-type';
-import { WidgetFullscreenDialogComponent } from '../widget-fullscreen-dialog/widget-fullscreen-dialog.component';
+import { Observable, Subject, Subscription } from 'rxjs';
+import { map, takeUntil } from 'rxjs/operators';
 import { WidgetAction, WidgetConfig } from '../../base/base-widget/model/widget.model';
+import { ServiceType } from '../../service/model/service-type';
+import { DashboardConfigService } from '../dashboard-config.service';
 import { WidgetSelection } from '../model/dashboard.model';
+import { WidgetFullscreenDialogComponent } from '../widget-fullscreen-dialog/widget-fullscreen-dialog.component';
+import { WidgetSettingsDialogComponent } from '../widget-settings-dialog/widget-settings-dialog.component';
 
 enum PageStatus {
   Loading = 0,
@@ -42,9 +41,6 @@ enum PageStatus {
   encapsulation: ViewEncapsulation.Emulated
 })
 export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
-
-  private DEFAULT_TOAST_BACKGROUND_COLOUR = '#1f58a5';
-
   widgetReadyCounter = 0;
 
   @ViewChild(GridsterComponent, { static: true }) gridster: GridsterComponent;
@@ -112,20 +108,9 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
     { breakPoint: 0, columns: 1, cell: 120 }
   ];
 
-  private severityColors = new Map<number, string>([
-    [0, '#f8b606'],
-    [1, '#f87a06'],
-    [2, '#bd362f'],
-    [3, '#9400d3'],
-  ]);
-
   lastWindowSize;
 
   eventNotificationIsOn: boolean;
-
-  private eventPacketSuffix = '_event';
-  private alarmPacketSuffix = '_event_alarm';
-  private toastMessage = $localize`:@@HYT_dashboard_event_fired:The event has been fired`;
 
   /**
    * This is a demo dashboard for testing widgets
@@ -143,7 +128,6 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private dialogService: DialogService,
     private hytTopologyService: HytTopologyService,
-    private toastr: ToastrService,
     private confirmDialogService: ConfirmDialogService,
   ) {
     this.eventNotificationIsOn = true;
@@ -171,43 +155,14 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
       .subscribe(
         (d) => {
           this.dashboardEntity = d;
-          const widgetConfFounded = this.dashboardEntity.widgets.find( x => (x.widgetConf.includes('"config"')));
 
           this.dashboardType = this.dashboardEntity.dashboardType;
           this.projectId = this.dashboardEntity.hproject.id;
-          // connect to data upstream
-          this.realtimeDataService.connect(this.projectId);
           this.streamSubscription = this.realtimeDataService.eventStream.subscribe((p) => {
+
             const packet = p.data;
             const remoteTimestamp: number = this.getTimestampFieldValue(packet);
-            this.topologyResTimeChange.emit({timeMs: remoteTimestamp});
-            if (this.eventNotificationIsOn && packet.id === 0 && (packet.name.endsWith(this.eventPacketSuffix) || packet.name.endsWith(this.alarmPacketSuffix))) {
-              // show toast if packet is a event
-              const event = JSON.parse(packet.fields.event.value.string).data;
-              const tag = event.tags[0]; // retrieve only first tag
-              let toastBackgroundColor = this.DEFAULT_TOAST_BACKGROUND_COLOUR;
-              let toastImage = 'info';
-              if (packet.name.endsWith(this.eventPacketSuffix)) {
-                toastBackgroundColor = tag ? tag.color : this.DEFAULT_TOAST_BACKGROUND_COLOUR;
-                toastImage = 'toastEvent';
-              } else if (packet.name.endsWith(this.alarmPacketSuffix)) {
-                if (event.alarmState === 'UP') {
-                  toastBackgroundColor = this.severityColors.get(event.severity) || this.DEFAULT_TOAST_BACKGROUND_COLOUR;
-                  toastImage = 'toastAlarmUp';
-                } else {
-                  toastBackgroundColor = '#51a351';
-                  toastImage = 'toastAlarmDown';
-                }
-              }
-              const textColor = '#ffffff';  // TODO retrieve from tag when this property will have been added
-              const toastId = this.toastr['index']; // temp fix toastId to give style to the correct toast
-              this.toastr.show(this.toastMessage, event.ruleName, { toastClass: 'ngx-toastr toast-' + toastId }, toastImage).onShown.subscribe({
-                complete: () => {
-                  document.querySelector('.overlay-container #toast-container .ngx-toastr.toast-' + toastId)
-                    .setAttribute('style', 'background-color: ' + toastBackgroundColor + '; color:' + textColor + ';');
-                },
-              });
-            }
+            this.topologyResTimeChange.emit({ timeMs: remoteTimestamp });
           });
           // get dashboard config
           this.getWidgetsMapped(d.widgets)
@@ -247,8 +202,6 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
     }
 
     this.saveDashboard();
-
-    this.realtimeDataService.disconnect();
   }
 
   setOptions() {
@@ -281,7 +234,7 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
           const dragElement = itemComponent.el?.getElementsByClassName('toolbar-title')[0] as HTMLElement;
           dragElement?.classList?.add('dragging');
         },
-        stop:(item, itemComponent) => {
+        stop: (item, itemComponent) => {
           const dragElement = itemComponent.el?.getElementsByClassName('toolbar-title')[0] as HTMLElement;
           dragElement?.classList?.remove('dragging');
         },
@@ -365,7 +318,7 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
     // change size based on the configuration. Later we will have to handle it in a more general way
     const configuredWidget = this.dashboard.filter(widget => widget['id'] === this.currentWidgetIdSetting)[0];
     if (configuredWidget.type === 'ecg') {
-      this.dashboard[this.dashboard.indexOf(configuredWidget)] = {...configuredWidget};
+      this.dashboard[this.dashboard.indexOf(configuredWidget)] = { ...configuredWidget };
     }
     this.pageStatus = PageStatus.Standard;
     this.widgetLayoutEvent.emit();
@@ -373,7 +326,7 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
 
   onWidgetFullscreenClose(data: any) {
 
-    if(data && data?.action == 'widget:setting') {
+    if (data && data?.action == 'widget:setting') {
       setTimeout(() => {
         this.openModal(data.widget)
       }, 100);
@@ -599,7 +552,7 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
     return singleCell;
   }
 
-  private getTimestampFieldValue(packet: HPacket){
+  private getTimestampFieldValue(packet: HPacket) {
     const timestampFieldName = packet.timestampField;
     return (packet.fields[timestampFieldName]) ? packet.fields[timestampFieldName].value.long : packet.fields['timestamp-default'].value.long;
   }

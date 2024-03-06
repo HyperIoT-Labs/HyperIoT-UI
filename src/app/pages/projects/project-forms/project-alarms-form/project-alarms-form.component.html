@@ -133,8 +133,14 @@
     <div class="form-group row">
 
       <div id="falarm-col-container-rules" class="col-12">
-        <hyt-rule-definition #alarmDef [currentPacket]="null" ruleType="event"
-          [projectId]="currentProject ? currentProject.id : null"></hyt-rule-definition>
+
+        <hyt-rule-definition
+          *ngIf="allPackets"
+          #alarmDef
+          formControlName="ruleDefinition"
+          [allPackets]="allPackets"
+        ></hyt-rule-definition>
+
       </div> <!-- Field RuleDefinition -->
 
     </div> <!-- END THIRD ROW -->
