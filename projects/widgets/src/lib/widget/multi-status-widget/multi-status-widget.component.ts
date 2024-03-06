@@ -74,9 +74,12 @@ export class MultiStatusWidgetComponent extends BaseWidgetComponent implements O
           return acc;
         }, {});
 
-        packetAndFieldsToRetrive[this.widget.config.packetId] = this.widget.config.packetFields;
         Object.keys(mergedValues).forEach((key: string) => {
-          packetAndFieldsToRetrive[parseInt(key)] = mergedValues[key];
+          if (packetAndFieldsToRetrive[parseInt(key)]) {
+            packetAndFieldsToRetrive[parseInt(key)] = { ...packetAndFieldsToRetrive[parseInt(key)], ...mergedValues[key] };
+          } else {
+            packetAndFieldsToRetrive[parseInt(key)] = mergedValues[key];
+          }
         })
 
         if (this.widget.config.dynamicLabels.field[id]?.fieldName) {
