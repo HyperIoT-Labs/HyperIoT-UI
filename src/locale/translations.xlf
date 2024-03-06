@@ -513,6 +513,18 @@
       <trans-unit id="HYT_description_of_rule" datatype="html">
         <source>The description of the rule</source>
       </trans-unit>
+      <trans-unit id="HYT_definition_of_rule" datatype="html">
+        <source>The definition of the rule</source>
+      </trans-unit>
+      <trans-unit id="HYT_packet_id" datatype="html">
+        <source>The id of packet</source>
+      </trans-unit>
+      <trans-unit id="HYT_event_trigger_time" datatype="html">
+        <source>Event trigger time</source>
+      </trans-unit>
+      <trans-unit id="HYT_event_values" datatype="html">
+        <source>Event values</source>
+      </trans-unit>
       <trans-unit id="HYT_name_of_field" datatype="html">
         <source>The name of the field</source>
       </trans-unit>
@@ -1578,16 +1590,16 @@
       </trans-unit>
       <trans-unit id="HYT_ai_error_button" datatype="html">
         <source>Retry connection</source>
-      </trans-unit>      
+      </trans-unit>
       <trans-unit id="HYT_ai_reconnection_message" datatype="html">
         <source>Attempt to reconnect number</source>
-      </trans-unit> 
+      </trans-unit>
       <trans-unit id="HYT_ai_user_label" datatype="html">
         <source>You</source>
       </trans-unit>
       <trans-unit id="HYT_ai_today" datatype="html">
         <source>Today</source>
-      </trans-unit> 
+      </trans-unit>
       <trans-unit id="HYT_ai_yesterday" datatype="html">
         <source>Yesterday</source>
       </trans-unit>
