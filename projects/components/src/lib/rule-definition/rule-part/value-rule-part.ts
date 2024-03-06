@@ -3,10 +3,10 @@ import { IRulePart } from "./rule-part.interface";
 import { ValidatorFn, Validators } from "@angular/forms";
 
 const validationRules = new Map<HPacketField.TypeEnum, ValidatorFn[]>([
-    [HPacketField.TypeEnum.OBJECT, [ Validators.pattern(/^[.\d]+$/) ]],
-    [HPacketField.TypeEnum.INTEGER, [ Validators.pattern("^[0-9]*$") ]],
-    [HPacketField.TypeEnum.FLOAT, [ Validators.pattern(/^[.\d]+$/) ]],
-    [HPacketField.TypeEnum.DOUBLE, [ Validators.pattern(/^[.\d]+$/) ]],
+    [HPacketField.TypeEnum.OBJECT, [ Validators.pattern(/^[-]?[.\d]+$/) ]],
+    [HPacketField.TypeEnum.INTEGER, [ Validators.pattern("^[-]?[0-9]*$") ]],
+    [HPacketField.TypeEnum.FLOAT, [ Validators.pattern(/^[-]?[.\d]+$/) ]],
+    [HPacketField.TypeEnum.DOUBLE, [ Validators.pattern(/^[-]?[.\d]+$/) ]],
     [HPacketField.TypeEnum.TEXT, []],
     [HPacketField.TypeEnum.DATE, []],
     [HPacketField.TypeEnum.BOOLEAN, []],
