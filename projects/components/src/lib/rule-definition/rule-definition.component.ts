@@ -147,6 +147,7 @@ export class RuleDefinitionComponent implements ControlValueAccessor, OnChanges 
     this.ruleRows.splice(index, 1);
     this.ruleRowsFormArray.removeAt(index);
     this.ruleRowsFormArray.at(this.ruleRows.length - 1).get('ruleJoin').setValue('');
+    this.buildRuleDefinition();
   }
 
   onChange: any = (value: any) => { };
