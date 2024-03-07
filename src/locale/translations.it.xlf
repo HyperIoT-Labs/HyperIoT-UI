@@ -648,6 +648,22 @@
         <source>The description of the rule</source>
         <target>Descrizione della regola</target>
       </trans-unit>
+      <trans-unit id="HYT_definition_of_rule" datatype="html">
+        <source>The definition of the rule</source>
+        <target>La definizione della regola</target>
+      </trans-unit>
+      <trans-unit id="HYT_packet_id" datatype="html">
+        <source>The id of packet</source>
+        <target>L'id del pacchetto</target>
+      </trans-unit>
+      <trans-unit id="HYT_event_trigger_time" datatype="html">
+        <source>Event trigger time</source>
+        <target>Data e ora dell'evento</target>
+      </trans-unit>
+      <trans-unit id="HYT_event_values" datatype="html">
+        <source>Event values</source>
+        <target>Valore dell'evento</target>
+      </trans-unit>
       <trans-unit id="HYT_name_of_field" datatype="html">
         <source>The name of the field</source>
         <target>Nome del campo</target>
