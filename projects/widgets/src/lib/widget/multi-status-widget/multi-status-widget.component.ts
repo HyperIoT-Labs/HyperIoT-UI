@@ -41,6 +41,7 @@ export class MultiStatusWidgetComponent extends BaseWidgetComponent implements O
   }
 
   configure() {
+    super.removeSubscriptionsAndDataChannels();
     if (
       !(
         this.widget.config != null &&
@@ -61,29 +62,28 @@ export class MultiStatusWidgetComponent extends BaseWidgetComponent implements O
       this.chartLabels.push(this.widget.config.fieldAliases[id] ?
         { id: this.widget.config.packetFields[id], label: this.widget.config.fieldAliases[id] } :
         { id: this.widget.config.packetFields[id], label: this.widget.config.packetFields[id] })
-
-      if (this.widget.config.dynamicLabels?.field) {
-        const mergedValues: { [id: string]: string[] } = Object.entries(this.widget.config.dynamicLabels.field).reduce((acc, [id, values]) => {
-          const idNum = parseInt(this.widget.config.dynamicLabels.packet[id].id);
-          if (acc[idNum]) {
-            acc[idNum][values.fieldId] = values.fieldName;
-          } else {
-            acc[idNum] = {};
-            acc[idNum][values.fieldId] = values.fieldName;
-          }
-          return acc;
-        }, {});
-
-        packetAndFieldsToRetrive[this.widget.config.packetId] = this.widget.config.packetFields;
-        Object.keys(mergedValues).forEach((key: string) => {
-          packetAndFieldsToRetrive[parseInt(key)] = mergedValues[key];
-        })
-
-        if (this.widget.config.dynamicLabels.field[id]?.fieldName) {
-          this.chartLabels.find(label => label.id === this.widget.config.packetFields[id]).subtitle = { id: this.widget.config.dynamicLabels.field[id].fieldName };
-        }
-      }
     });
+
+    if (this.widget.config.dynamicLabels?.field) {
+
+      Object.keys(this.widget.config.dynamicLabels.field).forEach(key => {
+        const packetId = this.widget.config.dynamicLabels.packet[key].id;
+        const field = this.widget.config.dynamicLabels.field[key];
+
+        const dynamicFieldValue = { [field.fieldId[0]]: field.fieldName };
+        if (packetAndFieldsToRetrive[parseInt(packetId)]) {
+          packetAndFieldsToRetrive[parseInt(packetId)] = { ...packetAndFieldsToRetrive[parseInt(packetId)], ...dynamicFieldValue };
+        } else {
+          packetAndFieldsToRetrive[parseInt(packetId)] = dynamicFieldValue;
+        }
+
+        const dynamicChartLabel = this.chartLabels.find(label => label.id === this.widget.config.packetFields[key]);
+        if (dynamicChartLabel) {
+          dynamicChartLabel.subtitle = { id: packetId + '.' + field.fieldName };
+        }
+      });
+
+    }
 
     this.initStream();
     this.subscribeDataChannel(packetAndFieldsToRetrive);
@@ -118,12 +118,15 @@ export class MultiStatusWidgetComponent extends BaseWidgetComponent implements O
         return;
       }
       try {
-        packetData.data.forEach((element: PacketData[]) => {
+        packetData.data.forEach((element: PacketData) => {
           this.chartLabels.forEach(label => {
-            if (label.subtitle && Object.keys(element).includes(label.subtitle.id)) {
-              label.subtitle.value = element[label.subtitle.id];
+            if (label.subtitle) {
+              const field = Object.keys(element).find(x => packetData.packetId + '.' + x === label.subtitle.id);
+              if (field) {
+                label.subtitle.value = element[field];
+              }
             }
-          })
+          });
           if (Object.keys(element).includes('timestamp') && !this.chartLabels.find(label => label.id === 'timestamp')) {
             delete element['timestamp'];
           }

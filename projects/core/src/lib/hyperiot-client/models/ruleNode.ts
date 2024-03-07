@@ -9,5 +9,15 @@
 
 
 export interface RuleNode { 
+    appliance?: RuleNode.ApplianceEnum;
     definition?: string;
+}
+export namespace RuleNode {
+    export type ApplianceEnum = 'FIELD' | 'PACKET' | 'LOGIC_OPERATOR' | 'ALL';
+    export const ApplianceEnum = {
+        FIELD: 'FIELD' as ApplianceEnum,
+        PACKET: 'PACKET' as ApplianceEnum,
+        LOGICOPERATOR: 'LOGIC_OPERATOR' as ApplianceEnum,
+        ALL: 'ALL' as ApplianceEnum
+    };
 }

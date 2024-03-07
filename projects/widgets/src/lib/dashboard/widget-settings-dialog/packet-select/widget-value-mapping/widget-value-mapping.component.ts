@@ -72,7 +72,7 @@ export class WidgetValueMappingComponent implements ControlValueAccessor, OnInit
       output: new FormGroup({
         mappedValue: new FormControl(''),// Validators.required
         color: new FormControl('#212529'),
-        bgcolor: new FormControl('#FFFFFF'),
+        bgcolor: new FormControl('#e4e4e4'),
         icon: new FormControl(''),
       }),
     }));

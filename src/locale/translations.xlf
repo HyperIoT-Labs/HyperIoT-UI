@@ -405,8 +405,11 @@
       <trans-unit id="HYT_error" datatype="html">
         <source>Error</source>
       </trans-unit>
-      <trans-unit id="HYT_error_loading_rule" datatype="html">
-        <source>An error occurred while loading the rule. This may have happened for one or more of the following reasons:</source>
+      <trans-unit id="HYT_error_loading_rule_description_1" datatype="html">
+        <source>An error occurred while loading rule</source>
+      </trans-unit>
+      <trans-unit id="HYT_error_loading_rule_description_2" datatype="html">
+        <source>This situation could be a result of one or more of the following reasons:</source>
       </trans-unit>
       <trans-unit id="HYT_field_name_modified" datatype="html">
         <source>The name of one rule&apos;s field has been modified</source>
@@ -421,7 +424,7 @@
         <source>Rule&apos;s syntax was updated making the rule now obsolete</source>
       </trans-unit>
       <trans-unit id="HYT_error_loading_rule_2" datatype="html">
-        <source>Please, redefine a new rule and delete the old one. </source>
+        <source>Please, redefine the rule definition.</source>
       </trans-unit>
       <trans-unit id="HYT_packet" datatype="html">
         <source>Packet</source>
@@ -434,36 +437,6 @@
       </trans-unit>
       <trans-unit id="HYT_value" datatype="html">
         <source>Value</source>
-      </trans-unit>
-      <trans-unit id="HYT_(&gt;)_greater" datatype="html">
-        <source>(&gt;) Greater</source>
-      </trans-unit>
-      <trans-unit id="HYT_(&gt;=)_greater_equal" datatype="html">
-        <source>(&gt;=) Greater/Equal</source>
-      </trans-unit>
-      <trans-unit id="HYT_(&lt;)_lower" datatype="html">
-        <source>(&lt;) Lower</source>
-      </trans-unit>
-      <trans-unit id="HYT_(&lt;=)_lower_equal" datatype="html">
-        <source>(&lt;=) Lower/Equal</source>
-      </trans-unit>
-      <trans-unit id="HYT_(==)_equal" datatype="html">
-        <source>(=) Equal</source>
-      </trans-unit>
-      <trans-unit id="HYT_(!=)_different" datatype="html">
-        <source>(!=) Different</source>
-      </trans-unit>
-      <trans-unit id="HYT_(())_like" datatype="html">
-        <source>(()) Like</source>
-      </trans-unit>
-      <trans-unit id="HYT_is_true" datatype="html">
-        <source>Is true</source>
-      </trans-unit>
-      <trans-unit id="HYT_is_false" datatype="html">
-        <source>Is false</source>
-      </trans-unit>
-      <trans-unit id="HYT_or" datatype="html">
-        <source>OR</source>
       </trans-unit>
       <trans-unit id="HYT_title_categories" datatype="html">
         <source>Categories</source>
@@ -512,6 +485,18 @@
       </trans-unit>
       <trans-unit id="HYT_description_of_rule" datatype="html">
         <source>The description of the rule</source>
+      </trans-unit>
+      <trans-unit id="HYT_definition_of_rule" datatype="html">
+        <source>The definition of the rule</source>
+      </trans-unit>
+      <trans-unit id="HYT_packet_id" datatype="html">
+        <source>The id of packet</source>
+      </trans-unit>
+      <trans-unit id="HYT_event_trigger_time" datatype="html">
+        <source>Event trigger time</source>
+      </trans-unit>
+      <trans-unit id="HYT_event_values" datatype="html">
+        <source>Event values</source>
       </trans-unit>
       <trans-unit id="HYT_name_of_field" datatype="html">
         <source>The name of the field</source>
@@ -1047,8 +1032,8 @@
       <trans-unit id="HYT_connecting" datatype="html">
         <source>Connecting...</source>
       </trans-unit>
-      <trans-unit id="HYT_connecting_failed" datatype="html">
-        <source>Connecting failed</source>
+      <trans-unit id="HYT_connection_failed" datatype="html">
+        <source>Connection failed</source>
       </trans-unit>
       <trans-unit id="HYT_starting" datatype="html">
         <source>Starting...</source>
@@ -1581,16 +1566,16 @@
       </trans-unit>
       <trans-unit id="HYT_ai_error_button" datatype="html">
         <source>Retry connection</source>
-      </trans-unit>      
+      </trans-unit>
       <trans-unit id="HYT_ai_reconnection_message" datatype="html">
         <source>Attempt to reconnect number</source>
-      </trans-unit> 
+      </trans-unit>
       <trans-unit id="HYT_ai_user_label" datatype="html">
         <source>You</source>
       </trans-unit>
       <trans-unit id="HYT_ai_today" datatype="html">
         <source>Today</source>
-      </trans-unit> 
+      </trans-unit>
       <trans-unit id="HYT_ai_yesterday" datatype="html">
         <source>Yesterday</source>
       </trans-unit>
@@ -1602,6 +1587,12 @@
       </trans-unit>
       <trans-unit id="HYT_ai_first_message" datatype="html">
         <source>Hello, who are you?</source>
+      </trans-unit>
+      <trans-unit id="HYT_ai_click_chart" datatype="html">
+        <source>Click to expand the chart</source>
+      </trans-unit>
+      <trans-unit id="HYT_ai_chart" datatype="html">
+        <source>Chart</source>
       </trans-unit>
       <trans-unit id="HYT_dataset_value_description" datatype="html">
         <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;ng-contain"/>Emit values of a dataset<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;mat-form-field&gt;"/><x id="START_UNORDERED_LIST" ctype="x-ul" equiv-text="abel i18n=&quot;@@HYT"/><x id="START_LIST_ITEM" ctype="x-li" equiv-text="{{ typeOption.label }}"/>Dataset example: <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="at-select&gt;
@@ -1650,6 +1641,102 @@
       </trans-unit>
       <trans-unit id="HYT_dynamic_label_description" datatype="html">
         <source>Dynamic Label: The registered value of this label will be displayed beneath the main field label.</source>
+      </trans-unit>
+      <trans-unit id="HYT_operations_AND" datatype="html">
+        <source>AND</source>
+      </trans-unit>
+      <trans-unit id="HYT_operations_OR" datatype="html">
+        <source>OR</source>
+      </trans-unit>
+      <trans-unit id="HYT_operations_EqualTo" datatype="html">
+        <source>(=) Equal</source>
+      </trans-unit>
+      <trans-unit id="HYT_operations_GreaterOrEqualThan" datatype="html">
+        <source>(&gt;=) Greater/Equal</source>
+      </trans-unit>
+      <trans-unit id="HYT_operations_GreaterThan" datatype="html">
+        <source>(&gt;) Greater</source>
+      </trans-unit>
+      <trans-unit id="HYT_operations_Like" datatype="html">
+        <source>(()) Like</source>
+      </trans-unit>
+      <trans-unit id="HYT_operations_LowerOrEqualThan" datatype="html">
+        <source>(&lt;=) Lower/Equal</source>
+      </trans-unit>
+      <trans-unit id="HYT_operations_LowerThan" datatype="html">
+        <source>(&lt;) Lower</source>
+      </trans-unit>
+      <trans-unit id="HYT_operations_MaxPeriodicity" datatype="html">
+        <source>Periodicity (ms)</source>
+      </trans-unit>
+      <trans-unit id="HYT_operations_NotEqualTo" datatype="html">
+        <source>(!=) Different</source>
+      </trans-unit>
+      <trans-unit id="HYT_operations_isFalse" datatype="html">
+        <source>Is true</source>
+      </trans-unit>
+      <trans-unit id="HYT_operations_isTrue" datatype="html">
+        <source>Is false</source>
+      </trans-unit>
+      <trans-unit id="HYT_pretty_AND" datatype="html">
+        <source>AND</source>
+      </trans-unit>
+      <trans-unit id="HYT_pretty_OR" datatype="html">
+        <source>OR</source>
+      </trans-unit>
+      <trans-unit id="HYT_pretty_EqualTo" datatype="html">
+        <source>is equal to</source>
+      </trans-unit>
+      <trans-unit id="HYT_pretty_GreaterOrEqualThan" datatype="html">
+        <source>is greater/equal than</source>
+      </trans-unit>
+      <trans-unit id="HYT_pretty_GreaterThan" datatype="html">
+        <source>is greater than</source>
+      </trans-unit>
+      <trans-unit id="HYT_pretty_Like" datatype="html">
+        <source>is like</source>
+      </trans-unit>
+      <trans-unit id="HYT_pretty_LowerOrEqualThan" datatype="html">
+        <source>is lower/equal than</source>
+      </trans-unit>
+      <trans-unit id="HYT_pretty_LowerThan" datatype="html">
+        <source>is lower than</source>
+      </trans-unit>
+      <trans-unit id="HYT_pretty_MaxPeriodicity" datatype="html">
+        <source>has not sent data for milliseconds:</source>
+      </trans-unit>
+      <trans-unit id="HYT_pretty_NotEqualTo" datatype="html">
+        <source>is different from</source>
+      </trans-unit>
+      <trans-unit id="HYT_pretty_isFalse" datatype="html">
+        <source>is true</source>
+      </trans-unit>
+      <trans-unit id="HYT_pretty_isTrue" datatype="html">
+        <source>is false</source>
+      </trans-unit>
+      <trans-unit id="HYT_rule_definition" datatype="html">
+        <source>Rule Definition</source>
+      </trans-unit>
+      <trans-unit id="HYT_rule_engine_error" datatype="html">
+        <source>Error loading rule engine</source>
+      </trans-unit>
+      <trans-unit id="HYT_required_field" datatype="html">
+        <source>Field Required</source>
+      </trans-unit>
+      <trans-unit id="HYT_invalid_pattern" datatype="html">
+        <source>Invalid pattern</source>
+      </trans-unit>
+      <trans-unit id="HYT_packet_rule_part_label" datatype="html">
+        <source>Packet</source>
+      </trans-unit>
+      <trans-unit id="HYT_field_condition_rule_part_label" datatype="html">
+        <source>Field or Condition</source>
+      </trans-unit>
+      <trans-unit id="HYT_condition_rule_part_label" datatype="html">
+        <source>Condition</source>
+      </trans-unit>
+      <trans-unit id="HYT_value_rule_part_label" datatype="html">
+        <source>Value</source>
       </trans-unit>
     </body>
   </file>
