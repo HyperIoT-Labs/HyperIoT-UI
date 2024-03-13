@@ -13,7 +13,7 @@ import {
   HprojectsService,
   HProjectSharingInfo,
   LoggerService,
-  Logger,
+Logger,
 } from "core";
 import { FormGroup, FormBuilder } from "@angular/forms";
 import {
@@ -28,8 +28,7 @@ import { ProjectsService } from "src/app/services/projects.service";
 import { NotificationService } from "components";
 import { DeleteConfirmDialogComponent } from "src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component";
 import { ShareType } from "./models/shared.model";
-import { InfoComponent } from "src/app/components/info/info.component";
-import { RepositionScrollStrategy } from "@angular/cdk/overlay";
+
 import { ShareProjectsComponent } from "./share-projects/share-projects.component";
 
 @Component({
@@ -357,7 +356,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
       },
     });
 
-    dialogRef.dialogRef.dialogRef.afterClosed().subscribe(
+    dialogRef.dialogRef.afterClosed().subscribe(
       (result) => {
         if (result === "delete") {
           this.projectsService.deleteProject(p.id);
@@ -513,7 +512,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
       data: emit.data,
       hideBackdrop: true,
     }).dialogRef;
-    this.sharedPanel.dialogRef.afterClosed().subscribe(() => {
+    this.sharedPanel.afterClosed().subscribe(() => {
       this.logger.info("Shared overlay closing", emit);
       this.forceHoverId = null;
     });

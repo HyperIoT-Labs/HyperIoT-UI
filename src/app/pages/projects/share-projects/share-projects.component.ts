@@ -1,7 +1,7 @@
 import { Component, Inject, OnDestroy, OnInit } from "@angular/core";
 import { DIALOG_DATA, DialogRef } from "components";
 import { HProject, HUser, SharedEntity, SharedentityService } from "core";
-import { SharedPages } from "../project-wizard/model/shared.models";
+import { SharedPages } from "../project-wizard/model/shared.model";
 import {
   animate,
   state,
