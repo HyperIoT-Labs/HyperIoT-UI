@@ -23,6 +23,7 @@ import { AssetTagComponent } from './project-forms/packet-enrichment-form/asset-
 import { ProjectWizardComponent } from './project-wizard/project-wizard.component';
 import { DeviceSelectComponent } from './project-wizard/device-select/device-select.component';
 import { PacketSelectComponent } from './project-wizard/packet-select/packet-select.component';
+import { ShareProjectsComponent } from "./share-projects/share-projects.component";
 
 import { MatChipsModule } from '@angular/material/chips';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -91,6 +92,7 @@ import {MatListModule} from '@angular/material/list';
     ProjectAlarmsFormComponent,
     SelectableTextComponent,
     PacketSelectComponent,
+    ShareProjectsComponent,
     GenericSummaryListComponent,
     DeviceSelectComponent,
     StatisticsStepComponent,
