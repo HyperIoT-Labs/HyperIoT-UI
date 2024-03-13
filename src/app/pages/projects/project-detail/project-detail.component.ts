@@ -318,7 +318,7 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
         width: '800px',
       }
     );
-    modalRef.afterClosed()
+    modalRef.dialogRef.afterClosed()
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
       (result) => {
@@ -573,7 +573,7 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
       const dialogRef = this.dialog.open(SaveChangesDialogComponent, {
         data: { title: 'Discard changes?', message: 'There are pending changes to be saved.' }
       });
-      dialogRef.afterClosed()
+      dialogRef.dialogRef.afterClosed()
         .pipe(takeUntil(this.ngUnsubscribe))
         .subscribe((result) => {
         this.logger.debug('openSaveDialog on closed', result);

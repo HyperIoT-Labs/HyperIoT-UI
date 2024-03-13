@@ -259,7 +259,7 @@ export abstract class ProjectFormEntity implements OnInit, AfterViewInit {
         const dialogRef = this.dialog.open(DeleteConfirmDialogComponent, {
             data: textDialog
         });
-        dialogRef.afterClosed().subscribe((result) => {
+        dialogRef.dialogRef.afterClosed().subscribe((result) => {
             if (result === 'delete') {
                 this.delete(successCallback, errorCallback);
             }

@@ -187,7 +187,7 @@ export class AlgorithmsComponent implements OnInit {
       }
     );
 
-    dialogRef.afterClosed().subscribe(
+    dialogRef.dialogRef.afterClosed().subscribe(
       (result) => {
         if ( result === 'delete') {
           this.algorithmService.deleteAlgorithm(alg.id);

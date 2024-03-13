@@ -357,7 +357,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
       },
     });
 
-    dialogRef.dialogRef.afterClosed().subscribe(
+    dialogRef.dialogRef.dialogRef.afterClosed().subscribe(
       (result) => {
         if (result === "delete") {
           this.projectsService.deleteProject(p.id);
@@ -513,7 +513,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
       data: emit.data,
       hideBackdrop: true,
     }).dialogRef;
-    this.sharedPanel.afterClosed().subscribe(() => {
+    this.sharedPanel.dialogRef.afterClosed().subscribe(() => {
       this.logger.info("Shared overlay closing", emit);
       this.forceHoverId = null;
     });
