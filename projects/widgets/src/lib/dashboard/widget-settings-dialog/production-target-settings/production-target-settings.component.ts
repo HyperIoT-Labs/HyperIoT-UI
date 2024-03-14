@@ -60,16 +60,16 @@ export class ProductionTargetSettingsComponent implements OnInit {
       targetOption: ['string', Validators.required],
       targetManualValue: [''],
       target: this.fb.group({
-        packet: [''],
-        field: ['']
+        packet: [null],
+        field: [null]
       }),
       produced: this.fb.group({
-        packet: ['', Validators.required],
-        field: ['', Validators.required]
+        packet: [null, Validators.required],
+        field: [null, Validators.required]
       }),
       current_shift: this.fb.group({
-        packet: [''],
-        field: ['']
+        packet: [null],
+        field: [null]
       })
     });
     this.onTargetOptionChange('string');
@@ -157,7 +157,6 @@ export class ProductionTargetSettingsComponent implements OnInit {
   }
 
   onPacketChange(packetOption, field: string) {
-    debugger
     if (this.selectedPacketsOption) {
       this.selectedPacketsOption[field] = packetOption.value;
       this.selectedPackets[field] = this.allPackets.find(p => p.id === this.selectedPacketsOption[field]);
@@ -165,6 +164,7 @@ export class ProductionTargetSettingsComponent implements OnInit {
       this.selectedPacketsOption = { [field]: packetOption.value };
       this.selectedPackets = { [field]: this.allPackets.find(p => p.id === this.selectedPacketsOption[field]) };
     }
+    this.form.get(field).get('packet').setValue(packetOption.value);
     const fieldsFlatList = this.hPacketFieldsHandlerService.flatPacketFieldsTree(this.selectedPackets[field]);
     if (this.fieldsOption && this.fieldsOption[field]) {
       delete this.fieldsOption[field];
@@ -193,6 +193,7 @@ export class ProductionTargetSettingsComponent implements OnInit {
       } else {
         this.selectedFieldsOptions = { [field]: $event[0] };
       }
+      this.form.get(field).get('field').setValue($event[0]);
     } else {
       delete this.selectedFieldsOptions[field];
     }
