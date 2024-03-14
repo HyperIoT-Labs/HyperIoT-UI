@@ -24,17 +24,20 @@ $primaryDarker: #094894;
             bottom: 0;
             left: 0;
             width: 100%;
-            font-size: 1.5em;
-            line-height: 1.2em;
-            padding: 8px;
             background: rgb(9, 72, 148);
             background: linear-gradient(0deg, $primaryDarker 0%, #2558a5c7 100%);
-            overflow: hidden;
-            display: -webkit-box;
-            line-clamp: 2;
-            word-wrap: break-word;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
+
+            span {
+                font-size: 1.5em;
+                line-height: 1.2em;
+                margin: 8px;
+                overflow: hidden;
+                display: -webkit-box;
+                line-clamp: 2;
+                word-wrap: break-word;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+            }
 
             &.title-front-card-custom-bg {
                 background: #2558a5c7;
@@ -95,6 +98,9 @@ $primaryDarker: #094894;
 
             .card-elements {
                 color: #0956b6;
+                display: flex;
+                flex-direction: column;
+                gap: 6px 0;
                 margin-bottom: 12px;
 
                 .single-element {
@@ -143,12 +149,17 @@ $primaryDarker: #094894;
                         margin: 3px 8% 3px 2%;
                         font-size: 16px;
                         line-height: 16px;
+
+                        .hyt-icon {
+                            font-size: 1.3em !important;
+                        }
                     }
                 }
             }
         }
 
-        &:hover {
+        &:hover,
+        &.hover {
             .box-card-hover {
                 transform: translateY(0);
             }

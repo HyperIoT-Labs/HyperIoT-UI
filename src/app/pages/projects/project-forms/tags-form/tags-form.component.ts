@@ -96,7 +96,7 @@ export class TagsFormComponent extends ProjectFormEntity implements OnInit {
         projectId: this.projectId,
       }
     });
-    dialogRef.afterClosed().subscribe((res: AssetTag) => {
+    dialogRef.dialogRef.afterClosed().subscribe((res: AssetTag) => {
       if (!res) {
         return;
       }
@@ -112,7 +112,7 @@ export class TagsFormComponent extends ProjectFormEntity implements OnInit {
         tag,
       }
     });
-    dialogRef.afterClosed().subscribe((res: AssetTag) => {
+    dialogRef.dialogRef.afterClosed().subscribe((res: AssetTag) => {
       if (!res) {
         return;
       }

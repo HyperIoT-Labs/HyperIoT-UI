@@ -1,7 +1,11 @@
 <div class="row d-flex flex-wrap align-items-center justify-content-center mt-2 mt-md-0">
     <span [innerHTML]="label" class="col-12 text-center mb-1"></span>
     <div class="hyt-filter-button-container d-flex flex-wrap align-items-center justify-content-center">
-        <label *ngFor="let option of options" class="hyt-filter-button hyt-filter-button-{{shape}}">
+        <label 
+        *ngFor="let option of options" 
+        class="hyt-filter-button hyt-filter-button-{{shape}}"
+        [matTooltip]="option.tooltip"
+    >
             <input
               type="radio"
               [value]="option.value"

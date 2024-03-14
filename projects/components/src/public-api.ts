@@ -37,7 +37,7 @@ export { Option } from './lib/hyt-radio-button/hyt-radio-button.component';
 export { TreeNodeCategory } from './lib/hyt-tree-view-category/hyt-tree-view-category.component';
 export { TimeStep } from './lib/hyt-date-picker/hyt-date-picker.component';
 export { HytFilterButtonShape, HytFilterButtonFilter } from './lib/hyt-filter-button/hyt-filter-button.component'
-export { CardDetailOnHover } from './lib/hyt-detailed-card/hyt-detailed-card.component'
+export { CardDetailOnHover, CardEmittedValue } from './lib/hyt-detailed-card/hyt-detailed-card.component'
 
 
 export { HytInputComponent } from './lib/hyt-input/hyt-input.component';
@@ -93,6 +93,7 @@ export * from './lib/hyt-models/hyt-loadStatus';
 export * from './lib/hyt-service/unit-conversion.service';
 
 export { DialogService } from './lib/hyt-dialog/dialog.service';
+export { OverlayService } from "./lib/hyt-overlay/overlay.service";
 export { DialogConfig, DialogLayout } from './lib/hyt-dialog/dialog.models';
 export { DIALOG_DATA } from './lib/hyt-dialog/dialog-tokens';
 export { DialogRef } from './lib/hyt-dialog/dialog-ref';

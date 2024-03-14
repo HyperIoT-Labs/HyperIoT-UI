@@ -1,15 +1,22 @@
-import { Component, OnInit, Input, Output, ViewEncapsulation, EventEmitter } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  ViewEncapsulation,
+  EventEmitter,
+} from "@angular/core";
 
 /**
  * Wrapper for the botton element.
  */
 @Component({
-  selector: 'hyt-button',
-  templateUrl: './hyt-button.component.html',
-  styleUrls: ['./hyt-button.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  selector: "hyt-button",
+  templateUrl: "./hyt-button.component.html",
+  styleUrls: ["./hyt-button.component.scss"],
+  encapsulation: ViewEncapsulation.None,
 })
-export class HytButtonComponent implements OnInit {
+export class HytButtonComponent {
   /** Specifies button color: primary, accent or warn */
   @Input() color: string;
 
@@ -19,18 +26,11 @@ export class HytButtonComponent implements OnInit {
   /** Button type */
   @Input() type: string; //outlined
 
+  /** Rounded border */
+  @Input() rounded: boolean = false; //outlined
+
   /** Function called when click event is triggered */
   @Output() clickFn: EventEmitter<any> = new EventEmitter();
-
-  /**
-   * constructor
-   */
-  constructor() { }
-
-  /**
-   * ngOnInit
-   */
-  ngOnInit() { }
 
   /**
    * Callback for click.

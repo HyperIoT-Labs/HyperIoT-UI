@@ -1,0 +1,150 @@
+<div id="container-share-projects">
+    <div id="header-overlay">
+        <div id="title-badge" class="overlay-badge overlay-badge-{{this.overlayState}}" i18n="@@HYT_projects_shared_title_{{overlayState}}" [attr.deCristoTag]="'@@HYT_projects_shared_title_'+overlayState" [innerHTML]="title"></div>
+        <div
+            id="close-overlay"
+            class="overlay-badge"
+            (click)="close()"
+        >
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
+            </svg>
+        </div>
+    </div>
+
+    <div id="share-container" [ngSwitch]="overlayState">
+        <div 
+            id="collaborator-list" 
+            *ngSwitchCase="sharedPagesEnum.COLLABORATOR" 
+            [@enterTrigger]="'fadeIn'"
+        >
+            <div class="add-collaborator">
+                <hyt-button
+                    class="detailed-card-btn detailed-primary-btn"
+                    type="outlined"
+                    [rounded]="true"
+                    (clickFn)="updateOverlayState(sharedPagesEnum.ADD_COLLABORATOR)"
+                    i18n="@@HYT_new_collaborator"
+                >
+                    New collaborator
+                </hyt-button>
+            </div>
+            <ul>
+                <li *ngFor="let coll of collaboratorList">
+                    <span [innerHTML]="coll"></span>
+                    <button 
+                        mat-icon-button 
+                        mat-icon-button color="primary"
+                        (click)="updateOverlayState(sharedPagesEnum.DELETE_COLLABORATOR, coll)"
+                    >
+                        <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M20 16H12" stroke="#1C274C" stroke-width="3" stroke-linecap="round"/>
+                            <path d="M9.33366 4.44978C11.2948 3.31531 13.5718 2.66602 16.0003 2.66602C23.3641 2.66602 29.3337 8.63555 29.3337 15.9993C29.3337 23.3631 23.3641 29.3327 16.0003 29.3327C8.63653 29.3327 2.66699 23.3631 2.66699 15.9993C2.66699 13.5708 3.31629 11.2938 4.45075 9.33268" stroke="#1C274C" stroke-width="3" stroke-linecap="round"/>
+                        </svg>
+                    </button>                     
+                </li>
+            </ul>
+        </div>
+        <div 
+            id="delete-collaborator" 
+            *ngSwitchCase="sharedPagesEnum.DELETE_COLLABORATOR"
+            [@enterTrigger]="'fadeIn'"
+        >
+            <h3 i18n="@@HYT_confirm_remove_coll">
+                ARE YOU SURE TO REMOVE
+                <span class="c-primary" style="font-size: 120%; margin-left: 6px;">{{collaboratorFocused}}</span><br>
+                AS COLLABORATOR OF THE PROJECT?
+            </h3>
+            <div class="confirm-grid-btn">
+                <hyt-button 
+                    type="outlined-error" 
+                    (clickFn)="updateOverlayState(sharedPagesEnum.COLLABORATOR)"
+                    i18n="@@HYT_area_confirm_btn_reject"
+                >Reject</hyt-button>
+                <hyt-button 
+                    type="outlined"
+                    (clickFn)="deleteCollaborator()"
+                    i18n="@@HYT_area_confirm_btn_confirm"
+                >Confirm</hyt-button>
+            </div>
+        </div>
+        <div 
+            id="add-collaborator" 
+            *ngSwitchCase="sharedPagesEnum.ADD_COLLABORATOR"
+            [@enterTrigger]="'fadeIn'"    
+        >
+            <div class="row justify-content-center">
+                <hyt-input-text 
+                    class="col-12"
+                    id="hyt-new-collaborator" 
+                    i18n-placeholder="@@HYT_username_or_email" 
+                    placeholder="Username or email"
+                    (keyup)="onCollaboratorChange($event)"
+                ></hyt-input-text>
+                <hyt-button
+                    class="detailed-card-btn detailed-primary-btn"
+                    type="outlined"
+                    style="width: 200px;"
+                    [rounded]="true"
+                    (clickFn)="addCollaborator()"
+                    [isDisabled]="!newCollaboratorValue.length"
+                    i18n="@@HYT_projects_share"
+                >
+                    share
+                </hyt-button>
+            </div>
+        </div>
+        <div 
+            id="confirm-collaborator"
+            *ngSwitchCase="sharedPagesEnum.SUCCESS_OPERATION"
+            [@enterTrigger]="'fadeIn'"    
+        >  
+            <div style="display: grid; place-items: center;">
+                <h3 i18n="@@HYT_success_share">Operation successful! Click the button below for go back to collaborator list</h3>
+                <div id="back-btn" (click)="updateOverlayState(sharedPagesEnum.COLLABORATOR)">
+                    <svg width="32" height="24" viewBox="0 0 9 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1.30391 4.69197L3.36205 6.75011C3.38762 6.77568 3.41745 6.79485 3.45154 6.80764C3.48562 6.82042 3.52398 6.82681 3.56659 6.82681C3.64329 6.82681 3.7072 6.80124 3.75834 6.75011C3.80947 6.69898 3.83504 6.6308 3.83504 6.54557C3.83504 6.51149 3.82865 6.4774 3.81586 6.44331C3.80308 6.40922 3.78391 6.37939 3.75834 6.35382L2.21154 4.80702H7.50389C7.58912 4.80702 7.66156 4.7772 7.72121 4.71754C7.78087 4.65788 7.8107 4.58544 7.8107 4.50022C7.8107 4.415 7.78087 4.34256 7.72121 4.2829C7.66156 4.22325 7.58912 4.19342 7.50389 4.19342H2.21154L3.75834 2.64662C3.78391 2.62105 3.80308 2.59122 3.81586 2.55713C3.82865 2.52304 3.83504 2.48896 3.83504 2.45487C3.83504 2.36964 3.80947 2.30146 3.75834 2.25033C3.7072 2.1992 3.64329 2.17363 3.56659 2.17363C3.52398 2.17363 3.48562 2.18002 3.45154 2.1928C3.41745 2.20559 3.38762 2.22476 3.36205 2.25033L1.30391 4.30847C1.27835 4.33404 1.25917 4.36173 1.24639 4.39156C1.2336 4.42139 1.22721 4.45761 1.22721 4.50022C1.22721 4.54283 1.2336 4.57905 1.24639 4.60888C1.25917 4.63871 1.27835 4.66641 1.30391 4.69197ZM4.43586 0.000440598C3.83078 0.00896263 3.25978 0.132537 2.72288 0.371161C2.18597 0.609786 1.71511 0.931503 1.31031 1.33631C0.905495 1.74112 0.588039 2.21198 0.357937 2.74889C0.127835 3.28579 0.00852231 3.85679 0 4.46187C0 4.47039 0 4.47891 0 4.48744C0 4.49596 0 4.50022 0 4.50022C0 4.84964 0.0383504 5.18627 0.115051 5.51011C0.191752 5.83396 0.298281 6.14076 0.434638 6.43052L0.421854 6.40496C0.447421 6.45609 0.485772 6.4987 0.536906 6.53279C0.588039 6.56688 0.643434 6.58393 0.703091 6.58393C0.728657 6.58393 0.756355 6.57966 0.786183 6.57114C0.816011 6.56262 0.839448 6.5541 0.856492 6.54557C0.899104 6.52001 0.935324 6.48379 0.965152 6.43692C0.99498 6.39004 1.00989 6.33678 1.00989 6.27712C1.00989 6.25155 1.00776 6.22812 1.0035 6.20681C0.999241 6.18551 0.992849 6.16633 0.984327 6.14929C0.865014 5.91066 0.7734 5.65073 0.709482 5.3695C0.645565 5.08826 0.613606 4.7985 0.613606 4.50022C0.613606 3.96332 0.715874 3.45624 0.92041 2.97899C1.12494 2.51026 1.40618 2.09906 1.76412 1.74538C2.12206 1.39171 2.53539 1.1126 3.00411 0.908067C3.48136 0.712053 3.98844 0.614047 4.52535 0.614047C5.05373 0.614047 5.55228 0.716314 6.02101 0.92085C6.48974 1.12539 6.89881 1.40236 7.24822 1.75178C7.59764 2.10119 7.87461 2.51026 8.07915 2.97899C8.28369 3.44772 8.38595 3.94627 8.38595 4.47465C8.38595 5.01156 8.28795 5.51864 8.09193 5.99589C7.8874 6.46461 7.60829 6.87794 7.25462 7.23588C6.90094 7.59382 6.48974 7.87506 6.02101 8.07959C5.54376 8.28413 5.03668 8.38639 4.49978 8.38639C4.31229 8.38639 4.12693 8.37361 3.9437 8.34804C3.76047 8.32248 3.58363 8.28413 3.41319 8.23299L3.45154 8.24578C3.43449 8.23725 3.41958 8.23299 3.40679 8.23299C3.39401 8.23299 3.3791 8.23299 3.36205 8.23299C3.29387 8.23299 3.23422 8.25217 3.18308 8.29052C3.13195 8.32887 3.09786 8.37361 3.08082 8.42474L3.06803 8.43753C3.06803 8.44605 3.0659 8.46096 3.06164 8.48227C3.05738 8.50358 3.05525 8.52275 3.05525 8.5398C3.05525 8.60797 3.07655 8.66976 3.11917 8.72516C3.16178 8.78055 3.21717 8.81677 3.28535 8.83381C3.46432 8.88495 3.65607 8.92543 3.86061 8.95526C4.06514 8.98509 4.2782 9 4.49978 9C4.49978 9 4.50404 9 4.51256 9C5.10912 9 5.68012 8.88069 6.22555 8.64206C6.76245 8.41196 7.23544 8.0945 7.64451 7.68969C8.05358 7.28489 8.38169 6.81403 8.62884 6.27712C8.86746 5.74022 8.99104 5.16922 8.99956 4.56414C9.00808 3.92496 8.89303 3.3284 8.65441 2.77445C8.41578 2.2205 8.0898 1.73686 7.67647 1.32353C7.26314 0.910197 6.7795 0.584219 6.22555 0.345594C5.66307 0.10697 5.06651 -0.00808144 4.43586 0.000440598Z" fill="white"/>
+                    </svg>
+                </div>
+            </div>
+                
+        </div>
+        <div 
+            id="loading-collaborator"
+            *ngSwitchCase="sharedPagesEnum.LOADING"
+            [@enterTrigger]="'fadeIn'" 
+            style="display: flex; justify-content: center; padding: 1em"
+        >
+            <mat-spinner></mat-spinner>
+        </div>
+        <div 
+            id="confirm-remove-collaborator"
+            *ngSwitchCase="sharedPagesEnum.ERROR"
+            [@enterTrigger]="'fadeIn'"
+        >
+            <h3 i18n="@@HYT_errorOverlay">Close the overlay by clicking X and try again. If the error persists, contact us</h3>
+        </div>
+        <div 
+            id="confirm-collaborator"
+            *ngSwitchCase="sharedPagesEnum.USER_ALREADY_EXIST"
+            [@enterTrigger]="'fadeIn'"    
+        >  
+            <div style="display: grid; place-items: center;">
+                <h3 i18n="@@HYT_projects_addAgain">he user is already linked to the project, what do you want to do?</h3>
+                <div class="confirm-grid-btn">
+                    <hyt-button 
+                        type="outlined-warning" 
+                        (clickFn)="updateOverlayState(sharedPagesEnum.COLLABORATOR)"
+                        i18n="@@HYT_projects_backToProjectList"
+                    >Back to the list</hyt-button>
+                    <hyt-button 
+                        type="outlined"
+                        (clickFn)="updateOverlayState(sharedPagesEnum.ADD_COLLABORATOR)"
+                        i18n="@@HYT_try_again"
+                    >Try again</hyt-button>
+                </div>
+            </div>
+                
+        </div>
+    </div>
+</div>

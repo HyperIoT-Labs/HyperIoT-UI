@@ -332,7 +332,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         width: '1024px',
       }
     );
-    widgetModalRef.afterClosed().subscribe(res => {
+    widgetModalRef.dialogRef.afterClosed().subscribe(res => {
       this.dashboardView?.onWidgetsAdd(res);
     });
   }
