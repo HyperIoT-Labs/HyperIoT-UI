@@ -1,0 +1,49 @@
+<form class="widget-value-mapping-form" [formGroup]="valuesMapForm">
+  <div class="default-add-container">
+    <div class="value-map-defulat-field">
+      <mat-form-field>
+        <mat-label>Default Value</mat-label>
+        <input matInput formControlName="defaultValue">
+        <hyt-info matSuffix text="Default value to display in case of an unmapped value."></hyt-info>
+      </mat-form-field>
+    </div>
+
+    <button class="add-map-button" mat-mini-fab aria-label="Add value map" (click)="addValueMap()">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+
+  <div formArrayName="valuesMap">
+    <div class="map-row" *ngFor="let mappedValue of valuesMapFormArray.controls; let i = index" [formGroupName]="i">
+
+      <mat-form-field>
+        <mat-label>Input</mat-label>
+        <input matInput formControlName="value">
+      </mat-form-field>
+
+      <span class="hyt-icon icon-hyt_arrowRight"></span>
+
+      <div class="value-map-output" formGroupName="output">
+        <mat-form-field>
+          <mat-label>Output</mat-label>
+          <input matInput formControlName="mappedValue">
+        </mat-form-field>
+        <mat-form-field class="color-form-field">
+          <mat-label>Color</mat-label>
+          <input type="color" matInput formControlName="color">
+        </mat-form-field>
+        <mat-form-field class="color-form-field">
+          <mat-label>Background</mat-label>
+          <input type="color" matInput formControlName="bgcolor">
+        </mat-form-field>
+        <hyt-icon-picker formControlName="icon"></hyt-icon-picker>
+      </div>
+
+      <button mat-icon-button aria-label="Remove value map" (click)="removeValueMap(i)">
+        <mat-icon>close</mat-icon>
+      </button>
+
+    </div>
+  </div>
+
+</form>

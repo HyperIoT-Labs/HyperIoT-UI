@@ -1,31 +1,50 @@
-import { AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { DialogService, Option } from 'components';
-import { HytStepperComponent } from 'components';
-import { HDevice, HdevicesService, HPacket, HpacketsService, HProject, HProjectAlgorithm, HprojectalgorithmsService, Rule } from 'core';
-import { Observable, Observer } from 'rxjs';
-import { EntitiesService } from 'src/app/services/entities/entities.service';
-import {SummaryList, SummaryListItem} from '../project-detail/generic-summary-list/generic-summary-list.component';
-import { DeviceFormComponent } from '../project-forms/device-form/device-form.component';
-import { PacketEnrichmentFormComponent } from '../project-forms/packet-enrichment-form/packet-enrichment-form.component';
-import { ProjectEventsFormComponent } from '../project-forms/project-events-form/project-events-form.component';
-import { PacketFieldsFormComponent } from '../project-forms/packet-fields-form/packet-fields-form.component';
-import { PacketFormComponent } from '../project-forms/packet-form/packet-form.component';
-import { ProjectFormEntity } from '../project-forms/project-form-entity';
-import { ProjectFormComponent } from '../project-forms/project-form/project-form.component';
-import { ProjectStatisticsFormComponent } from '../project-forms/project-statistics-form/project-statistics-form.component';
-import { DeviceSelectComponent } from './device-select/device-select.component';
-import { PacketSelectComponent } from './packet-select/packet-select.component';
-import { WizardDeactivationModalComponent } from './wizard-deactivation-modal/wizard-deactivation-modal.component';
-import { WizardOptionsModalComponent } from './wizard-options-modal/wizard-options-modal.component';
-import { WizardReportModalComponent } from './wizard-report-modal/wizard-report-modal.component';
-import { Subject } from 'rxjs';
+import {
+  AfterViewInit,
+  Component,
+  OnInit,
+  ViewChild,
+  ViewEncapsulation,
+  ChangeDetectorRef,
+} from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
+import { DialogService, Option } from "components";
+import { HytStepperComponent } from "components";
+import {
+  HDevice,
+  HdevicesService,
+  HPacket,
+  HpacketsService,
+  HProject,
+  HProjectAlgorithm,
+  HprojectalgorithmsService,
+  Rule,
+} from "core";
+import { Observable, Observer } from "rxjs";
+import { EntitiesService } from "src/app/services/entities/entities.service";
+import {
+  SummaryList,
+  SummaryListItem,
+} from "../project-detail/generic-summary-list/generic-summary-list.component";
+import { DeviceFormComponent } from "../project-forms/device-form/device-form.component";
+import { PacketEnrichmentFormComponent } from "../project-forms/packet-enrichment-form/packet-enrichment-form.component";
+import { ProjectEventsFormComponent } from "../project-forms/project-events-form/project-events-form.component";
+import { PacketFieldsFormComponent } from "../project-forms/packet-fields-form/packet-fields-form.component";
+import { PacketFormComponent } from "../project-forms/packet-form/packet-form.component";
+import { ProjectFormEntity } from "../project-forms/project-form-entity";
+import { ProjectFormComponent } from "../project-forms/project-form/project-form.component";
+import { ProjectStatisticsFormComponent } from "../project-forms/project-statistics-form/project-statistics-form.component";
+import { DeviceSelectComponent } from "./device-select/device-select.component";
+import { PacketSelectComponent } from "./packet-select/packet-select.component";
+import { WizardDeactivationModalComponent } from "./wizard-deactivation-modal/wizard-deactivation-modal.component";
+import { WizardOptionsModalComponent } from "./wizard-options-modal/wizard-options-modal.component";
+import { WizardReportModalComponent } from "./wizard-report-modal/wizard-report-modal.component";
+import { Subject } from "rxjs";
 
 @Component({
   selector: "hyt-project-wizard",
   templateUrl: "./project-wizard.component.html",
   styleUrls: ["./project-wizard.component.scss"],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class ProjectWizardComponent implements OnInit {
   @ViewChild("stepper")
@@ -100,7 +119,7 @@ export class ProjectWizardComponent implements OnInit {
     private cd: ChangeDetectorRef
   ) {}
 
-  ngOnInit(){
+  ngOnInit() {
     this.cd.detectChanges();
     this.fieldsForm.entityEvent.subscribe((res) => {
       if (res.event === "field:delete") {
@@ -142,7 +161,6 @@ export class ProjectWizardComponent implements OnInit {
   }
 
   stepChanged(event) {
-
     this.currentStepIndex = event.selectedIndex;
     // setting current form...
     switch (event.selectedIndex) {
@@ -219,7 +237,7 @@ export class ProjectWizardComponent implements OnInit {
     this.packetsForm.summaryList = {
       title: this.entitiesService.packet.displayListName,
       list: this.hPackets.map((p) => {
-        if(!p.device.deviceName){
+        if (!p.device.deviceName) {
           p.device.deviceName = this.currentDeviceName;
         }
         return { name: p.name, description: p.trafficPlan, data: p };
@@ -228,7 +246,6 @@ export class ProjectWizardComponent implements OnInit {
   }
 
   onSaveClick(e) {
-
     this.currentForm.save(
       (ent, isNew) => {
         if (this.currentForm instanceof ProjectFormComponent) {
@@ -252,13 +269,11 @@ export class ProjectWizardComponent implements OnInit {
           this.statisticsForm.loadHPackets();
           this.updateSelectFieldChanged(isNew);
         } else if (this.currentForm instanceof PacketEnrichmentFormComponent) {
-
           this.enrichmentRules = [
             ...this.updateList(ent, this.enrichmentRules),
           ];
 
           this.currentForm.loadEmpty();
-
         } else if (this.currentForm instanceof ProjectStatisticsFormComponent) {
           this.currentForm.loadEmpty();
         } else if (this.currentForm instanceof ProjectEventsFormComponent) {
@@ -303,7 +318,6 @@ export class ProjectWizardComponent implements OnInit {
   menuAction(event): void {
     switch (event.action) {
       case "edit":
-
         if (this.currentForm instanceof PacketFormComponent) {
           this.deviceSelect.selectSpecific(event.item.data.device.id);
           this.deviceSelect.freezeSelection();
@@ -379,9 +393,9 @@ export class ProjectWizardComponent implements OnInit {
 
   deviceChanged(event): void {
     this.currentDevice = event;
-    if(event){
+    if (event) {
       this.currentDeviceName = event.deviceName;
-      this.cd.detectChanges()
+      this.cd.detectChanges();
     }
   }
 
@@ -416,40 +430,43 @@ export class ProjectWizardComponent implements OnInit {
   enrichmentPacketChanged(event: number): void {
     if (event) {
       this.enrichmentPacketId = event;
-      this.enrichmentForm.loadData(this.enrichmentPacketId).subscribe(res =>{
+      this.enrichmentForm.loadData(this.enrichmentPacketId).subscribe((res) => {
         this.enrichmentForm.loadEmpty();
       });
     }
   }
 
   enrichmentDeviceChanged(event: string): void {
-    if(event) {
+    if (event) {
       this.currentDeviceName = event;
     }
   }
 
   openDeactivationModal(): Observable<boolean> {
     return new Observable((observer: Observer<boolean>) => {
-      const modalRef = this.dialogService.open(WizardDeactivationModalComponent, { width: '430px' });
-      modalRef.afterClosed().subscribe((res) => {
+      const modalRef = this.dialogService.open(
+        WizardDeactivationModalComponent,
+        { width: "430px" }
+      );
+      modalRef.dialogRef.afterClosed().subscribe((res) => {
         observer.next(res);
       });
     });
   }
 
   openOptionModal() {
-    const modalRef = this.dialogService.open(WizardOptionsModalComponent, { width: '960px', backgroundClosable: true });
+    const modalRef = this.dialogService.open(WizardOptionsModalComponent, {
+      width: "960px",
+      backgroundClosable: true,
+    });
     this.optionModalViewed = true;
 
-    modalRef.afterClosed().subscribe(
-      (res) => {
-        this.optionsModalClosed(res);
-      }
-    );
+    modalRef.dialogRef.afterClosed().subscribe((res) => {
+      this.optionsModalClosed(res);
+    });
   }
 
   optionsModalClosed(event: { action: string; data: any }) {
-
     switch (event?.action) {
       case "goToStep": {
         this.stepper.changeStep(event.data);
@@ -460,11 +477,9 @@ export class ProjectWizardComponent implements OnInit {
         break;
       }
     }
-
   }
 
   openFinishModal() {
-
     this.finishData = [];
     this.finishData.push({
       iconPath: this.entitiesService.project.icon,
@@ -494,15 +509,11 @@ export class ProjectWizardComponent implements OnInit {
 
     this.cd.detectChanges();
 
-    this.dialogService.open(
-      WizardReportModalComponent,
-      {
-        data: this.finishData,
-        backgroundClosable: true,
-        minWidth: '500px',
-      },
-    );
-
+    this.dialogService.open(WizardReportModalComponent, {
+      data: this.finishData,
+      backgroundClosable: true,
+      minWidth: "500px",
+    });
   }
 
   getDevices(): void {
@@ -575,7 +586,6 @@ export class ProjectWizardComponent implements OnInit {
   }
 
   getDirty(index: number): boolean {
-
     switch (index) {
       case 0: {
         return this.projectForm ? this.projectForm.isDirty() : false;
@@ -613,5 +623,4 @@ export class ProjectWizardComponent implements OnInit {
       }
     }
   }
-
 }

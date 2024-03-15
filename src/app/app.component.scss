@@ -2,7 +2,7 @@ html {
   /**
   * commented to prevent the BIM navigation cube misalignment problem
   **/
- /* height: 100%;*/
+  /* height: 100%;*/
 
   ::-webkit-scrollbar {
     width: .4em;
@@ -53,7 +53,7 @@ html {
       #hyt-container-topbar {
 
         position: fixed;
-        z-index: 999;
+        z-index: 10001;
         top: 0;
         right: 0;
         left: 0;
@@ -90,6 +90,40 @@ html {
         }
 
       }
+    }
+
+    .hyt-chatbot-collapsed-container {
+      position: fixed;
+      bottom: 15px;
+      right: 15px;
+      z-index: 999;
+      width: 64px;
+      height: 64px;
+
+      .hyt-chatbot-collapsed {
+        height: 100%;
+        width: 100%;
+        background-color: #0d416d !important;
+        color: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+
+        .hyt-chatbot-collapsed-icon {
+          width: 40px;
+          height: auto
+        }
+      }
+
+      .mat-badge-medium.mat-badge-overlap.mat-badge-before .mat-badge-content {
+        left: -5px;
+      }
+
+      .mat-badge-medium.mat-badge-above .mat-badge-content {
+        top: 0px;
+      }
+
     }
 
     /* MODAL STYLES
@@ -185,72 +219,38 @@ html {
 
 }
 
-.toast-container {
-  &.toast-top-right {
-    top: 7%;
+@keyframes modalOpacity {
+  0% {
+    opacity: 0
+  }
 
-    .alarm-toastr {
-      padding: 10px 10px 10px 45px;
-      z-index: 999999;
-      margin-bottom: 20px;
-      -webkit-box-shadow: 0px 0px 13px -4px #000000;
-      -moz-box-shadow: 0px 0px 13px -4px #000000;
-      box-shadow: 0px 0px 13px -4px #000000;
-      width: 300px;
-
-      &.alarm-success {
-        background-color: #51A351;
-        color: #FFFFFF;
-
-        background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' width='512' height='512'%3E%3Cpath fill='rgb(255,255,255)' d='M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z'/%3E%3C/svg%3E");
-        background-size: 30px;
-        background-repeat: no-repeat;
-        background-position: 9px 10px;
-
-      }
-
-      &.alarm-info {
-        background-color: #2f96b4;
-        color: #FFFFFF;
-        background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCA1MTIgNTEyJyB3aWR0aD0nNTEyJyBoZWlnaHQ9JzUxMic+PHBhdGggZmlsbD0ncmdiKDI1NSwyNTUsMjU1KScgZD0nTTI1NiA4QzExOS4wNDMgOCA4IDExOS4wODMgOCAyNTZjMCAxMzYuOTk3IDExMS4wNDMgMjQ4IDI0OCAyNDhzMjQ4LTExMS4wMDMgMjQ4LTI0OEM1MDQgMTE5LjA4MyAzOTIuOTU3IDggMjU2IDh6bTAgMTEwYzIzLjE5NiAwIDQyIDE4LjgwNCA0MiA0MnMtMTguODA0IDQyLTQyIDQyLTQyLTE4LjgwNC00Mi00MiAxOC44MDQtNDIgNDItNDJ6bTU2IDI1NGMwIDYuNjI3LTUuMzczIDEyLTEyIDEyaC04OGMtNi42MjcgMC0xMi01LjM3My0xMi0xMnYtMjRjMC02LjYyNyA1LjM3My0xMiAxMi0xMmgxMnYtNjRoLTEyYy02LjYyNyAwLTEyLTUuMzczLTEyLTEydi0yNGMwLTYuNjI3IDUuMzczLTEyIDEyLTEyaDY0YzYuNjI3IDAgMTIgNS4zNzMgMTIgMTJ2MTAwaDEyYzYuNjI3IDAgMTIgNS4zNzMgMTIgMTJ2MjR6Jy8+PC9zdmc+");
-        background-size: 30px;
-        background-repeat: no-repeat;
-        background-position: 9px 10px;
-      }
-
-      &.alarm-error {
-        background-color: red;
-        color: #FFFFFF;
-        background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCA1MTIgNTEyJyB3aWR0aD0nNTEyJyBoZWlnaHQ9JzUxMic+PHBhdGggZmlsbD0ncmdiKDI1NSwyNTUsMjU1KScgZD0nTTI1NiA4QzExOS4wNDMgOCA4IDExOS4wODMgOCAyNTZjMCAxMzYuOTk3IDExMS4wNDMgMjQ4IDI0OCAyNDhzMjQ4LTExMS4wMDMgMjQ4LTI0OEM1MDQgMTE5LjA4MyAzOTIuOTU3IDggMjU2IDh6bTAgMTEwYzIzLjE5NiAwIDQyIDE4LjgwNCA0MiA0MnMtMTguODA0IDQyLTQyIDQyLTQyLTE4LjgwNC00Mi00MiAxOC44MDQtNDIgNDItNDJ6bTU2IDI1NGMwIDYuNjI3LTUuMzczIDEyLTEyIDEyaC04OGMtNi42MjcgMC0xMi01LjM3My0xMi0xMnYtMjRjMC02LjYyNyA1LjM3My0xMiAxMi0xMmgxMnYtNjRoLTEyYy02LjYyNyAwLTEyLTUuMzczLTEyLTEydi0yNGMwLTYuNjI3IDUuMzczLTEyIDEyLTEyaDY0YzYuNjI3IDAgMTIgNS4zNzMgMTIgMTJ2MTAwaDEyYzYuNjI3IDAgMTIgNS4zNzMgMTIgMTJ2MjR6Jy8+PC9zdmc+");
-        background-size: 30px;
-        background-repeat: no-repeat;
-        background-position: 9px 10px;
-      }
-
-      .toast-title {
-        text-transform: uppercase;
-      }
-    }
+  100% {
+    opacity: 0.65
   }
 }
 
-@keyframes modalOpacity {
-  0% {opacity: 0}
-  100% {opacity: 0.65}
-}
-
 @keyframes modalOpacityBody {
-  0% {opacity: 0}
-  100% {opacity: 1}
+  0% {
+    opacity: 0
+  }
+
+  100% {
+    opacity: 1
+  }
 }
 
 @keyframes modalTransform {
-  0% {transform: scale(0.9)}
-  100% {transform: scale(1)}
+  0% {
+    transform: scale(0.9)
+  }
+
+  100% {
+    transform: scale(1)
+  }
 }
 
 /* UTILS */
-.text-center{
+.text-center {
   text-align: center;
 }
 
@@ -285,5 +285,6 @@ html {
   }
 
 
-} /* END 991px */
+}
 
+/* END 991px */

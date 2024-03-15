@@ -80,7 +80,7 @@ export class CategoriesFormComponent extends ProjectFormEntity implements OnInit
           category: node ? node.data : null,
         }
       });
-      dialogRef.afterClosed().subscribe((result: AssetCategory) => {
+      dialogRef.dialogRef.afterClosed().subscribe((result: AssetCategory) => {
         if (!result) {
           return;
         }
@@ -104,7 +104,7 @@ export class CategoriesFormComponent extends ProjectFormEntity implements OnInit
           data: { title: $localize`:@@HYT_delete_item:Delete item?`, message: $localize`:@@HYT_operation_cannot_be_undone:This operation cannot be undone.`}
         }
       );
-      dialogRef.afterClosed().subscribe((result) => {
+      dialogRef.dialogRef.afterClosed().subscribe((result) => {
         if (result === 'delete') {
           this.assetCategoriesService.deleteAssetCategory(node.id).subscribe(
             res => {
@@ -129,7 +129,7 @@ export class CategoriesFormComponent extends ProjectFormEntity implements OnInit
           category: node.data,
         }
       });
-      dialogRef.afterClosed().subscribe((result) => {
+      dialogRef.dialogRef.afterClosed().subscribe((result) => {
         if (!result) {
           return;
         }

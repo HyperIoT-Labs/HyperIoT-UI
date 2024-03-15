@@ -16,9 +16,9 @@ export enum HytFilterButtonShape {
  */
 export interface HytFilterButtonFilter {
   /**
-   * @param {string} value - The value of the filter that will be emitted to the form when selected
+   * @param {any} value - The value of the filter that will be emitted to the form when selected
    */
-  value: string;
+  value: any;
   /**
    * @param {string} label - Source tag in the translation file of the project
    */

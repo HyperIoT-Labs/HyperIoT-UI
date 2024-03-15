@@ -200,7 +200,7 @@ export abstract class AlgorithmFormEntity implements OnInit, AfterViewInit {
         const dialogRef = this.dialog.open(DeleteConfirmDialogComponent, {
             data: { title: $localize`:@@HYT_delete_item_question:Do you really want to delete this item?`, message: $localize`:@@HYT_operation_cannot_be_undone:This operation cannot be undone`}
         });
-        dialogRef.afterClosed().subscribe((result) => {
+        dialogRef.dialogRef.afterClosed().subscribe((result) => {
             if (result === 'delete') {
                 this.delete(successCallback, errorCallback);
             }

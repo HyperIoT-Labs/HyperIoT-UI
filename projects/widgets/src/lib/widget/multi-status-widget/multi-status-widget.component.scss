@@ -1,0 +1,65 @@
+.key-value-container {
+    max-height: -webkit-fill-available;
+    overflow-y: auto;
+
+    .items-list {
+        font-family: 'Exo';
+        list-style-type: none;
+        padding-inline-start: unset;
+        padding: 0px 7px;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        margin-top: 10px;
+
+
+        .item {
+            height: 48px;
+            display: flex;
+            flex-direction: row;
+            padding: 5px 15px 5px 5px;
+            border: 1px solid #c8c8c8;
+            border-radius: 5px;
+            justify-content: space-between;
+            height: auto;
+            word-break: break-word;
+
+            .field-row {
+                padding: 10px;
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+                
+                &.label-span {
+                    font-weight: bold;
+    
+                    .item-subtitle {
+                        color: #3e3e3e;
+                    }
+                }
+            }
+
+            .value-span {
+                background-color: #e4e4e4;
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-end;
+                align-items: center;
+                gap: 12px;
+                border-radius: 5px;
+
+                .material-icons {
+                    font-size: 1.5em
+                } 
+
+                .hyt-icon {
+                    font-size: 1.4em
+                }
+
+                .fa {
+                    font-size: 1.2em;
+                }
+            }
+        }
+    }
+}

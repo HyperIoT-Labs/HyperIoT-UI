@@ -23,7 +23,7 @@
         <target>Username o password errati</target>
       </trans-unit>
       <trans-unit id="HYT_error_403" datatype="html">
-        <source>Your account is not activated. Please activate it using the activation link we sent you via email.</source>
+        <source>Your account is not activated. Please activate your account with the activation link we send you by email</source>
         <target>Il tuo account non è attivo. Per favore, attiva il tuo account con la mail che ti abbiamo inviato.</target>
       </trans-unit>
       <trans-unit id="HYT_field_required" datatype="html">
@@ -246,10 +246,6 @@
         <source>Delete</source>
         <target>Elimina</target>
       </trans-unit>
-      <trans-unit id="HYT_source" datatype="html">
-        <source>Source</source>
-        <target>Fonte</target>
-      </trans-unit>
       <trans-unit id="HYT_application_short_definition" datatype="html">
         <source>Application short definition...</source>
         <target>Applicazione definizione breve...</target>
@@ -432,8 +428,8 @@
         <source>Do you really want to delete this packet?</source>
         <target>Sei sicuro di voler eliminare il pacchetto?</target>
       </trans-unit>
-      <trans-unit id="HYT_operation_cannot_be_undone" datatype="html">
-        <source>This operation cannot be undone</source>
+      <trans-unit id="HYT_operation_can_not_be_undone" datatype="html">
+        <source>This operation can not be undone</source>
         <target>Questa operazione è definitiva</target>
       </trans-unit>
       <trans-unit id="HYT_hint_device_name" datatype="html">
@@ -463,22 +459,6 @@
       <trans-unit id="HYT_error_occurred" datatype="html">
         <source>An unexpected error has occurred</source>
         <target>Si è verificato un errore inaspettato</target>
-      </trans-unit>
-      <trans-unit id="HYT_error_loading_alarms" datatype="html">
-        <source>An unexpected error has occurred while loading the alarms</source>
-        <target>Si è verificato un errore inaspettato nel caricamento degli allarmi</target>
-      </trans-unit>
-      <trans-unit id="HYT_error_occurred_while_saving_the_event" datatype="html">
-        <source>There was an error saving the event, please try again and avoid closing this page since the data inserted has not been saved</source>
-        <target>Si è verificato un errore inaspettato durante il salvataggio, si prega di cliccare nuovamente il tasto salva senza chiudere la pagina in quanto i dati non sono ancora stati salvati</target>
-      </trans-unit>
-      <trans-unit id="HYT_error_occurred_while_saving_the_alarm" datatype="html">
-        <source>There was an error saving the alarm, please try again and avoid closing this page since the data inserted has not been saved</source>
-        <target>Si è verificato un errore inaspettato durante il salvataggio, si prega di cliccare nuovamente il tasto salva senza chiudere la pagina in quanto i dati non sono ancora stati salvati</target>
-      </trans-unit>
-      <trans-unit id="HYT_error_tag_retrieval" datatype="html">
-        <source>The event may already be associated with a tag, but due to an error, it is not being displayed</source>
-        <target>L'evento potrebbe già avere un tag ad esso associato ma a causa di un errore nel caricamento non viene mostrato</target>
       </trans-unit>
       <trans-unit id="HYT_close" datatype="html">
         <source>Close</source>
@@ -1020,65 +1000,65 @@
         <source>Update</source>
         <target>Aggiorna</target>
       </trans-unit>
-      <trans-unit id="HYT_save_severity" datatype="html">
-        <source>Save Severity</source>
-        <target>Salva Severity</target>
+      <trans-unit id="HYT_save_event" datatype="html">
+        <source>Save Event</source>
+        <target>Salva Evento</target>
       </trans-unit>
-      <trans-unit id="HYT_update_severity" datatype="html">
-        <source>Update Severity</source>
-        <target>Aggiorna Severity</target>
+      <trans-unit id="HYT_update_event" datatype="html">
+        <source>Update Event</source>
+        <target>Aggiorna Evento</target>
       </trans-unit>
-      <trans-unit id="HYT_another_severity" datatype="html">
-        <source>Add another Severity</source>
-        <target>Aggiunti un'altra Severity</target>
+      <trans-unit id="HYT_another_event" datatype="html">
+        <source>Add another Event</source>
+        <target>Aggiunti un altro Evento</target>
       </trans-unit>
       <trans-unit id="HYT_alarm_save_changes" datatype="html">
         <source>Do you want to save the alarm and lost the pending changes?</source>
         <target>Vuoi davvvero salvare l'allarme e perdere le modifiche in sospeso?</target>
       </trans-unit>
-      <trans-unit id="HYT_back_to_alarm" datatype="html">
+      <trans-unit id="HYT_back_to_event" datatype="html">
         <source>Back to Alarm</source>
         <target>Torna all'allarme</target>
       </trans-unit>
-      <trans-unit id="HYT_severity_saved" datatype="html">
-        <source>Severity saved!</source>
-        <target>Severity salvata!</target>
+      <trans-unit id="HYT_event_saved" datatype="html">
+        <source>Event saved!</source>
+        <target>Evento salvato!</target>
       </trans-unit>
       <trans-unit id="HYT_remember_changes" datatype="html">
         <source>Remember to save the alarm to maintain the changes</source>
         <target>Ricorda di salvare l'allarme per mantenere le modifiche</target>
       </trans-unit>
-      <trans-unit id="HYT_severity_new" datatype="html">
-        <source>New severity!</source>
-        <target>Nuova severity!</target>
+      <trans-unit id="HYT_event_new" datatype="html">
+        <source>New event!</source>
+        <target>Nuovo evento!</target>
       </trans-unit>
-      <trans-unit id="HYT_severity_new_desc" datatype="html">
-        <source>New severity saved correctly</source>
-        <target>Nuova severity salvata correttamente</target>
+      <trans-unit id="HYT_event_new_desc" datatype="html">
+        <source>New event saved correctly</source>
+        <target>Nuovo evento salvato correttamente</target>
       </trans-unit>
-      <trans-unit id="HYT_severity_remember" datatype="html">
+      <trans-unit id="HYT_event_remember" datatype="html">
         <source>Remember!</source>
         <target>Ricorda!</target>
       </trans-unit>
-      <trans-unit id="HYT_alarm_still_changes" datatype="html">
+      <trans-unit id="HYT_event_still_changes" datatype="html">
         <source>You still have to save the alarm changes</source>
         <target>Devi ancora salvare le modifiche dell'allarme</target>
       </trans-unit>
-      <trans-unit id="HYT_severity_updated" datatype="html">
-        <source>Severity updated!</source>
-        <target>Severity aggiornata!</target>
+      <trans-unit id="HYT_event_updated" datatype="html">
+        <source>Event updated!</source>
+        <target>Evento aggiornato!</target>
       </trans-unit>
-      <trans-unit id="HYT_severity_updated_desc" datatype="html">
-        <source>Severity updated correctly</source>
-        <target>Severity aggiornata correttamente</target>
+      <trans-unit id="HYT_event_updated_desc" datatype="html">
+        <source>Event updated correctly</source>
+        <target>Evento aggiornato correttamente</target>
       </trans-unit>
-      <trans-unit id="HYT_alarm_and_severities" datatype="html">
-        <source>Alarm and severities added!</source>
-        <target>Allarme ed severities aggiunti!</target>
+      <trans-unit id="HYT_alarm_and_events" datatype="html">
+        <source>Alarm and events added!</source>
+        <target>Allarme ed Eventi aggiunti!</target>
       </trans-unit>
-      <trans-unit id="HYT_alarm_and_severities_desc" datatype="html">
-        <source>Alarm and severities added correctly</source>
-        <target>Allarme ed severities aggiunti correttamente</target>
+      <trans-unit id="HYT_alarm_and_events_desc" datatype="html">
+        <source>Alarm and events added correctly</source>
+        <target>Allarme ed Eventi aggiunti correttamente</target>
       </trans-unit>
       <trans-unit id="HYT_alarm_updated" datatype="html">
         <source>Alarm updated!</source>
@@ -1088,17 +1068,17 @@
         <source>Alarm updated correctly</source>
         <target>Allarme aggiornato correttamente</target>
       </trans-unit>
-      <trans-unit id="HYT_severity_deleted" datatype="html">
-        <source>Severity deleted!</source>
-        <target>Severity eliminata!</target>
+      <trans-unit id="HYT_event_deleted" datatype="html">
+        <source>Event deleted!</source>
+        <target>Evento eliminato!</target>
       </trans-unit>
-      <trans-unit id="HYT_severity_deleted_desc" datatype="html">
-        <source>Severity deleted correctly</source>
-        <target>Severity eliminata correttamente</target>
+      <trans-unit id="HYT_event_deleted_desc" datatype="html">
+        <source>Event deleted correctly</source>
+        <target>Evento eliminato correttamente</target>
       </trans-unit>
-      <trans-unit id="HYT_severity_will_be_lost" datatype="html">
-        <source>The current severity will be lost</source>
-        <target>La severity attuale andrà persa</target>
+      <trans-unit id="HYT_event_will_be_lost" datatype="html">
+        <source>The current event will be lost</source>
+        <target>L'evento attuale andrà perso</target>
       </trans-unit>
       <trans-unit id="HYT_back" datatype="html">
         <source>Back</source>
@@ -1191,14 +1171,6 @@
       <trans-unit id="HYT_error_deleting_project" datatype="html">
         <source>An error occurred while deleting the project.</source>
         <target>Errore nell'eliminazione del progetto</target>
-      </trans-unit>
-      <trans-unit id="HYT_error_deleting_severity" datatype="html">
-        <source>An error occurred while deleting the severity.</source>
-        <target>Errore nell'eliminazione della severity.</target>
-      </trans-unit>
-      <trans-unit id="HYT_error_deleting_alarm" datatype="html">
-        <source>An error occurred while deleting the alarm.</source>
-        <target>Errore nell'eliminazione dell'allarme.</target>
       </trans-unit>
       <trans-unit id="HYT_loading" datatype="html">
         <source>Loading</source>
@@ -1396,8 +1368,8 @@
         <source>Connecting...</source>
         <target>Connessione...</target>
       </trans-unit>
-      <trans-unit id="HYT_connection_failed" datatype="html">
-        <source>Connection failed</source>
+      <trans-unit id="HYT_connecting_failed" datatype="html">
+        <source>Connecting failed</source>
         <target>Connessione fallita</target>
       </trans-unit>
       <trans-unit id="HYT_starting" datatype="html">
@@ -1433,7 +1405,7 @@
         <target>Attenzione!</target>
       </trans-unit>
       <trans-unit id="HYT_dashboard_end_registration" datatype="html">
-        <source>Proceeding with this action will disable data registration, and the data will not be stored until this property is reactivated.</source>
+        <source>Proceeding with this action you will disable the registration of the data and they will not be stored until the rehabilitation of this property</source>
         <target>Procedendo con questa azione disabiliterai la registrazione dei dati che non saranno salvati fino alla riabilitazione di questa proprietà</target>
       </trans-unit>
       <trans-unit id="HYT_dashboard_event_fired" datatype="html">
@@ -1697,7 +1669,9 @@
         <target>La registrazione dei dati è disabilitata</target>
       </trans-unit>
       <trans-unit id="HYT_data_recording_is_disabled_text" datatype="html">
-        <source>The online dashboard cannot be used in this state. You can activate data recording by pressing the "RUN" button or use the dashboard offline by selecting the "OFFLINE" button.</source>
+        <source>The online dashboard cannot be used in this state.
+        You can activate data recording by pressing the "RUN" button
+        or you can use the dasboard offline taking the "OFFLINE" button.</source>
         <target>La dashboard online non può essere utilizzata in questo stato.
         È possibile attivare la registrazione dei dati premendo il pulsante "RUN"
         oppure è possibile utilizzare la dasboard offline utilizzando il pulsante "OFFLINE".</target>
@@ -1707,7 +1681,9 @@
         <target>In attesa dei dati</target>
       </trans-unit>
       <trans-unit id="HYT_waiting_for_data_text" datatype="html">
-        <source>Data recording is activated, but we are awaiting data. This operation might take a while (from 20 seconds up to 1 minute). If the loading state persists, click "Reload" or contact the administrator.</source>
+        <source>The data recording is activated but we waiting for the data.
+        This operation might take a while (from 20 seconds, up to 1 minute),
+        if the loading state persist click "Reload" or contact the administrator.</source>
         <target>La registrazione dei dati è attiva ma siamo in attesa dei dati.
         Questa operazione potrebbe richiedere del tempo (da 20 secondi fino a 1 minuto),
         se lo stato di caricamento persiste, fare clic su "RELOAD" o contattare l'amministratore.</target>
@@ -1737,7 +1713,7 @@
         <target>Lista algoritmi</target>
       </trans-unit>
       <trans-unit id="HYT_no_algorithm_found" datatype="html">
-        <source>No algorithm matching the search was found...</source>
+        <source>No algorithm that matches the search found...</source>
         <target>Nessun algoritmo trovato che soddisfi la ricerca</target>
       </trans-unit>
       <trans-unit id="HYT_no_algorithm" datatype="html">
@@ -1853,7 +1829,7 @@
         <target>Per favore, definisci una nuova statistica ed elimina la precedente</target>
       </trans-unit>
       <trans-unit id="HYT_no_available_fields" datatype="html">
-        <source>There are no available fields anymore</source>
+        <source>There are not available fields anymore</source>
         <target>Non ci sono ulteriori campi disponibili</target>
       </trans-unit>
       <trans-unit id="HYT_no_field_found" datatype="html">
@@ -1928,20 +1904,20 @@
         <source>Enter the alarm name</source>
         <target>Inserire il nome dell'allarme.</target>
       </trans-unit>
-       <trans-unit id="HYT_alarm_severity_severity" datatype="html">
+       <trans-unit id="HYT_alarm_event_severity" datatype="html">
         <source>Severity</source>
         <target>Severity</target>
       </trans-unit>
-      <trans-unit id="HYT_alarm_severity_actions" datatype="html">
+      <trans-unit id="HYT_alarm_event_actions" datatype="html">
         <source>Actions</source>
         <target>Azioni</target>
       </trans-unit>
-      <trans-unit id="HYT_alarmSeverity_message" datatype="html">
-        <source>At least one new severity must be added to save the new alarm!</source>
-        <target>Almeno una nuova severity deve essere aggiunta per salvare un nuovo allarme!</target>
+      <trans-unit id="HYT_alarmEvent_message" datatype="html">
+        <source>At least one new event must be added to save the new alarm!</source>
+        <target>Almeno un nuovo evento deve essere aggiunto per salvare un nuovo allarme!</target>
       </trans-unit>
       <trans-unit id="HYT_aliases_description" datatype="html">
-        <source>Enter an alternative name to be displayed in the widget. If the alias is empty, the field name will be displayed.</source>
+        <source>Enter an alternate name to be displayed in the widget. In case the alias is empty the field name will be displayed</source>
         <target>Inserisci un nome alternativo da visualizzare come intestazione delle colonne, in caso l'alias sia vuoto verrà visualizzato il nome del field</target>
       </trans-unit>
       <trans-unit id="HYT_toolbar_full_screen" datatype="html">
@@ -1997,11 +1973,11 @@
         <target>I campi di tipo Object non possono avere molteplicità array o matrice</target>
       </trans-unit>
       <trans-unit id="HYT_auto_update_config_warn" datatype="html">
-        <source>Attention! An automatic update has been applied to the widget configuration to make it compatible with the latest updates. Save the configuration to make the change effective.</source>
+        <source>Attention! An automatic update has been applied to the widget configuration to make it compatible with the latest updates. It is necessary to save the configuration to make the change effective.</source>
         <target>Attenzione! È stato applicato un aggiornamento automatico alla configurazione del widget per renderla compatibile con gli ultimi aggiornamenti. È necessario salvare la configurazione per rendere effettiva la modifica.</target>
       </trans-unit>
       <trans-unit id="HYT_auto_update_config_error" datatype="html">
-        <source>Error! Unable to update the widget configuration automatically. The widget may not function correctly after the latest updates. It is recommended to delete the widget and set up a new one.</source>
+        <source>Error! Unable to update the widget configuration automatically. The widget may not work correctly after the latest updates. It is recommended to delete the widget and set up a new one.</source>
         <target>Errore! Impossibile aggiornare automaticamente la configurazione del widget. Il widget potrebbe non funzionare correttamente dopo gli ultimi aggiornamenti. È raccomandato eliminare il widget e riconfigurarne uno nuovo.</target>
       </trans-unit>
       <trans-unit id="HYT_fields_customization" datatype="html">
@@ -2020,20 +1996,12 @@
         <source>Unit Conversion</source>
         <target>Conversione</target>
       </trans-unit>
-      <trans-unit id="HYT_source_count" datatype="html">
-        <source><x id="INTERPOLATION" equiv-text="{{ count }} Sources"/></source>
-        <target><x id="INTERPOLATION" equiv-text="{{ count }} Sources"/></target>
-      </trans-unit>
-      <trans-unit id="HYT_source_count" datatype="html">
-        <source><x id="INTERPOLATION" equiv-text="{{ count }} Source"/></source>
-        <target><x id="INTERPOLATION" equiv-text="{{ count }} Source"/></target>
-      </trans-unit>
       <trans-unit id="HYT_widget_delete_confirm" datatype="html">
         <source>Attention, the widget and its configuration will be permanently deleted. Proceed?</source>
         <target>Attenzione, il widget e la sua configurazione saranno eliminati definitivamente. Continuare?</target>
       </trans-unit>
       <trans-unit id="HYT_widget_delete_confirm_dismiss" datatype="html">
-        <source>Don't request confirmation for this dashboard anymore</source>
+        <source>Do not ask for confirmation for this dashboard anymore</source>
         <target>Non richiedere più conferma per questa dashboard</target>
       </trans-unit>
       <trans-unit id="HYT_ok" datatype="html">
@@ -2041,7 +2009,7 @@
         <target>OK</target>
       </trans-unit>
       <trans-unit id="HYT_connection_failed" datatype="html">
-        <source>Connection to Hyperiot services failed.</source>
+        <source>Conection to Hyperiot services failed.</source>
         <target>Connessione ai servizi Hyperiot fallita.</target>
       </trans-unit>
       <trans-unit id="HYT_reconnect" datatype="html">
@@ -2049,7 +2017,7 @@
         <target>Riconnetti</target>
       </trans-unit>
       <trans-unit id="HYT_not_authorized_password" datatype="html">
-        <source>Unauthorized to connect. Please check the device password in the widget configuration.</source>
+        <source>Not authorized to connect. Please, check the device password in the widget configuration.</source>
         <target>Non autorizzato. Controlla che la password inserita nella configurazione del widget sia corretta.</target>
       </trans-unit>
       <trans-unit id="HYT_connection_closed_host" datatype="html">
@@ -2088,66 +2056,6 @@
         <source>Emit a random value between two numbers</source>
         <target>Emette un valore casuale tra due numeri</target>
       </trans-unit>
-      <trans-unit id="HYT_ai_title" datatype="html">
-        <source>Alice</source>
-        <target>Alice</target>
-      </trans-unit>
-      <trans-unit id="HYT_ai_subtitle" datatype="html">
-        <source>Virtual assistant</source>
-        <target>Assistente virtuale</target>
-      </trans-unit>
-      <trans-unit id="HYT_ai_is_writing" datatype="html">
-        <source>Alice is writing...</source>
-        <target>Alice sta scrivendo...</target>
-      </trans-unit>
-      <trans-unit id="HYT_ai_is_loading" datatype="html">
-        <source>Alice is loading</source>
-        <target>Alice é in attesa</target>
-      </trans-unit>
-      <trans-unit id="HYT_ai_error_message" datatype="html">
-        <source>An error occurred while trying to connect to Alice, please try again by clicking the button below.</source>
-        <target>Si è verificato un errore durante il tentativo di connessione con Alice, ritenta cliccando il bottone in basso.</target>
-      </trans-unit>
-      <trans-unit id="HYT_ai_error_button" datatype="html">
-        <source>Retry connection</source>
-        <target>Ritenta connessione</target>
-      </trans-unit>
-      <trans-unit id="HYT_ai_reconnection_message" datatype="html">
-        <source>Attempt to reconnect number</source>
-        <target>Tentativo di connessione numero</target>
-      </trans-unit>
-      <trans-unit id="HYT_ai_user_label" datatype="html">
-        <source>You</source>
-        <target>Tu</target>
-      </trans-unit>
-      <trans-unit id="HYT_ai_today" datatype="html">
-        <source>Today</source>
-        <target>Oggi</target>
-      </trans-unit>
-      <trans-unit id="HYT_ai_yesterday" datatype="html">
-        <source>Yesterday</source>
-        <target>Ieri</target>
-      </trans-unit>
-      <trans-unit id="HYT_ai_placeholder" datatype="html">
-        <source>Write here</source>
-        <target>Scrivi qui</target>
-      </trans-unit>
-      <trans-unit id="HYT_ai_placeholder_title" datatype="html">
-        <source>Write a message</source>
-        <target>Scrivi un messaggio</target>
-      </trans-unit>
-      <trans-unit id="HYT_ai_first_message" datatype="html">
-        <source>Hello, who are you?</source>
-        <target>Ciao, chi sei?</target>
-      </trans-unit>
-      <trans-unit id="HYT_ai_click_chart" datatype="html">
-        <source>Click to expand the chart</source>
-        <target>Clicca per espandere il grafico</target>
-      </trans-unit>
-      <trans-unit id="HYT_ai_chart" datatype="html">
-        <source>Chart</source>
-        <target>Grafico</target>
-      </trans-unit>
       <trans-unit id="HYT_dataset_value_description" datatype="html">
         <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;ng-contain"/>Emit values of a dataset<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;mat-form-field&gt;"/><x id="START_UNORDERED_LIST" ctype="x-ul" equiv-text="abel i18n=&quot;@@HYT"/><x id="START_LIST_ITEM" ctype="x-li" equiv-text="{{ typeOption.label }}"/>Dataset example: <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="at-select&gt;
         &lt;/mat-form-fie"/>[ 0, 2, 4, 8 ]<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="gs&quot;&gt;
@@ -2181,7 +2089,7 @@
         &lt;ma"/> attualmente non supportato </target>
       </trans-unit>
       <trans-unit id="HYT_outliers_description" datatype="html">
-        <source>The outlier value is a specific value emitted when the user presses the 'outlier' button.</source>
+        <source>Outlier value is a specific value emitted when the user press the 'oultier' button</source>
         <target>Il valore di outlier è un valore specifico che viene emesso quando l'utente preme il bottone 'outlier'</target>
       </trans-unit>
       <trans-unit id="HYT_packet_sent" datatype="html">
@@ -2190,17 +2098,141 @@
         <target> Pacchetti inviati: <x id="INTERPOLATION" equiv-text="dget&gt;
     &lt;hype"/> </target>
       </trans-unit>
-      <trans-unit id="HYT_severity_list" datatype="html">
-        <source>Severity List</source>
-        <target>Lista Severity</target>
+      <trans-unit id="HYT_source" datatype="html">
+        <source>Source</source>
+        <target>Fonte di dati</target>
       </trans-unit>
-      <trans-unit id="HYT_add_severity" datatype="html">
-        <source>Add severity</source>
-        <target>Aggiungi Severity</target>
+      <trans-unit id="HYT_sources" datatype="html">
+        <source>Sources</source>
+        <target>Fonti di dati</target>
       </trans-unit>
-      <trans-unit id="HYT_severity_settings" datatype="html">
-        <source>Severity Settings</source>
-        <target>Impostazioni Severity</target>
+      <trans-unit id="HYT_sharedWith" datatype="html">
+        <source>Shared with</source>
+        <target>Condivisa con</target>
+      </trans-unit>
+      <trans-unit id="HYT_sharedBy" datatype="html">
+        <source>Shared by</source>
+        <target>Condivisa da</target>
+      </trans-unit>
+      <trans-unit id="HYT_sortNew" datatype="html">
+        <source>Sort by newest</source>
+        <target>Ordina per i piú recente</target>
+      </trans-unit>
+      <trans-unit id="HYT_sortOld" datatype="html">
+        <source>Sort by oldest</source>
+        <target>Ordina per meno recente</target>
+      </trans-unit>
+      <trans-unit id="HYT_sortAlphaAsc" datatype="html">
+        <source>Sort alphabetically A-Z</source>
+        <target>Ordine alfabetico A-Z</target>
+      </trans-unit>
+      <trans-unit id="HYT_sortAlphaDesc" datatype="html">
+        <source>Sort alphabetically Z-A</source>
+        <target>Ordine alfabetico Z-A</target>
+      </trans-unit>
+      <trans-unit id="HYT_all" datatype="html">
+        <source>All</source>
+        <target>Tutti</target>
+      </trans-unit>
+      <trans-unit id="HYT_filterPersonal" datatype="html">
+        <source>Show personal projects</source>
+        <target>Mostra progetti personali</target>
+      </trans-unit>
+      <trans-unit id="HYT_filterOwner" datatype="html">
+        <source>Show owned projects</source>
+        <target>Mostra progetti convidisi con altri utenti</target>
+      </trans-unit>
+      <trans-unit id="HYT_filterPartecipant" datatype="html">
+        <source>Show projects shared from other user</source>
+        <target>Mostra progetti condivisi da altri utenti</target>
+      </trans-unit>
+      <trans-unit id="HYT_projectType" datatype="html">
+        <source>Project Type</source>
+        <target>Tipo di progetto</target>
+      </trans-unit>
+      <trans-unit id="HYT_sortBy" datatype="html">
+        <source>Sort by</source>
+        <target>Ordina per</target>
+      </trans-unit>
+      <trans-unit id="HYT_viewProject" datatype="html">
+        <source>view project</source>
+        <target>apri progetto</target>
+      </trans-unit>
+      <trans-unit id="HYT_projectsCount" datatype="html">
+        <source>Showing <x id="INTERPOLATION" equiv-text="{{hProjectsFiltered.length}}"/> projects of <x id="INTERPOLATION_1" equiv-text="{{hProjects.length}}"/></source>
+        <target>Mostrati <x id="INTERPOLATION" equiv-text="{{hProjectsFiltered.length}}"/> progetti su <x id="INTERPOLATION_1" equiv-text="{{hProjects.length}}"/></target>
+      </trans-unit>
+      <trans-unit id="HYT_projects_shared_title_listColl" datatype="html">
+        <source>Collaborator list</source>
+        <target>Lista collaboratori</target>
+      </trans-unit>
+      <trans-unit id="HYT_projects_shared_title_deleteColl" datatype="html">
+        <source>Delete collaborator</source>
+        <target>Elimina collaboratore</target>
+      </trans-unit>
+      <trans-unit id="HYT_projects_shared_title_addColl" datatype="html">
+        <source>Add collaborator</source>
+        <target>Aggiungi collaboratore</target>
+      </trans-unit>
+      <trans-unit id="HYT_projects_shared_title_success" datatype="html">
+        <source>Operation confirmed</source>
+        <target>Operazione confermata</target>
+      </trans-unit>
+      <trans-unit id="HYT_projects_shared_title_loading" datatype="html">
+        <source>Loading</source>
+        <target>Caricamento</target>
+      </trans-unit>
+      <trans-unit id="HYT_projects_shared_title_error" datatype="html">
+        <source>Error</source>
+        <target>Errore</target>
+      </trans-unit>
+      <trans-unit id="HYT_projects_shared_title_userAlreadyExist" datatype="html">
+        <source>User already exist</source>
+        <target>Utente giá esistente</target>
+      </trans-unit>
+      <trans-unit id="HYT_projects_userAlreadyExist" datatype="html">
+        <source>The user is already linked to the project, what do you want to do?</source>
+        <target>L'utente é giá collegato a questo progetto, come vuoi continuare</target>
+      </trans-unit>
+      <trans-unit id="HYT_projects_addAgain" datatype="html">
+        <source>The user is already linked to the project, what do you want to do?</source>
+        <target>L'utente é giá collegato a questo progetto, come vuoi continuare</target>
+      </trans-unit>
+      <trans-unit id="HYT_projects_backToProjectList" datatype="html">
+        <source>Back to the list</source>
+        <target>Torna alla lista</target>
+      </trans-unit>
+      <trans-unit id="HYT_errorOverlay" datatype="html">
+        <source>Close the overlay by clicking X and try again. If the error persists, contact us</source>
+        <target>Chiudi il pannello cliccando la X e riprova. Se l'errore sussite, contattaci</target>
+      </trans-unit>
+      <trans-unit id="HYT_confirm_remove_coll" datatype="html">
+        <source>
+          ARE YOU SURE TO REMOVE
+          <x id="INTERPOLATION" equiv-text='<span class="c-primary" style="font-size: 120%; margin-left: 6px;">{{printCollaboratorName(collaboratorFocused)}}</span><br>'/>
+          AS COLLABORATOR OF THE PROJECT?
+        </source>
+        <target>
+          SEI SICURO DI VOLER RIMUOVERE
+          <x id="INTERPOLATION" equiv-text='<span class="c-primary" style="font-size: 120%; margin-left: 6px;">{{printCollaboratorName(collaboratorFocused)}}</span><br>'/>
+          COME COLLABORATORE DEL PROGETTO?
+        </target>
+      </trans-unit>
+      <trans-unit id="HYT_new_collaborator" datatype="html">
+        <source>New collaborator</source>
+        <target>Nuovo collaboratore</target>
+      </trans-unit>
+      <trans-unit id="HYT_projects_share" datatype="html">
+        <source>share</source>
+        <target>Condividi</target>
+      </trans-unit>
+      <trans-unit id="HYT_success_share" datatype="html">
+        <source>Operation successful! Click the button below for go back to collaborator list</source>
+        <target>Operazione riuscita! Fare clic sul pulsante qui sotto per tornare alla lista dei collaboratori</target>
+      </trans-unit>
+      <trans-unit id="HYT_generic_error_share" datatype="html">
+        <source>Chiudere la schermata facendo clic su X e riprovare. Se l'errore persiste, contattaci</source>
+        <target>Errore</target>
       </trans-unit>
       <trans-unit id="HYT_target" datatype="html">
         <source>Target</source>

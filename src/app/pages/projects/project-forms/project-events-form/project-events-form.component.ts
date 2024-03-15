@@ -3,10 +3,9 @@ import { ActivatedRoute } from '@angular/router';
 
 import { Subscription, Observable } from 'rxjs';
 
-import { HpacketsService, HProject, RulesService, Rule, AssetstagsService, AssetTag } from 'core';
+import { HpacketsService, HProject, RulesService, Rule, AssetstagsService, AssetTag, HPacket } from 'core';
 import { ProjectFormEntity, LoadingStatusEnum } from '../project-form-entity';
-import { RuleDefinitionComponent } from '../rule-definition/rule-definition.component';
-import { Option } from 'components';
+import { Option, RuleDefinitionComponent } from 'components';
 import { SummaryListItem } from '../../project-detail/generic-summary-list/generic-summary-list.component';
 import { TagStatus } from '../packet-enrichment-form/asset-tag/asset-tag.component';
 import { FormControl } from '@angular/forms';
@@ -44,6 +43,8 @@ export class ProjectEventsFormComponent extends ProjectFormEntity implements OnI
   @ViewChild('eventComponentContainer')
   eventComponentContainer: EventComponentContainerComponent;
 
+  allPackets: HPacket[];
+
   outputOptions: Option[] = [
     { value: EventComponentType.SEND_MAIL_ACTION, label: $localize`:@@HYT_send_email:SEND E-MAIL`, checked: true },
     { value: EventComponentType.SEND_MQTT_COMMAND_ACTION, label: $localize`:@@HYT_send_mqtt_command:SEND MQTT COMMAND`}
@@ -63,7 +64,7 @@ export class ProjectEventsFormComponent extends ProjectFormEntity implements OnI
 
   constructor(
     injector: Injector,
-    private hPacketService: HpacketsService,
+    private hPacketsService: HpacketsService,
     private rulesService: RulesService,
     private activatedRoute: ActivatedRoute,
     private cdr: ChangeDetectorRef,
@@ -86,6 +87,7 @@ export class ProjectEventsFormComponent extends ProjectFormEntity implements OnI
   }
 
   ngOnInit() {
+    this.form.addControl('ruleDefinition', new FormControl(''));
     this.getAssetTags();
   }
 
@@ -146,7 +148,6 @@ export class ProjectEventsFormComponent extends ProjectFormEntity implements OnI
 
   loadEmpty() {
     this.form.reset();
-    this.ruleDefinitionComponent.resetRuleDefinition();
     this.eventComponentContainer.reset();
     this.entity = { ... this.entitiesService.event.emptyModel };
     this.changeEventView(EventComponentType.SEND_MAIL_ACTION)
@@ -165,7 +166,10 @@ export class ProjectEventsFormComponent extends ProjectFormEntity implements OnI
         const oldTag = (oldTagId === 0) ? null : this.allTags.find(tag => tag.id === this.entity.tagIds[0]);
         // if a tag has been found, set it to selectedTag property (at the moment, only one tag inside array)
         this.selectedTags = oldTag ? [oldTag] : [];
-        this.ruleDefinitionComponent.setRuleDefinition(this.entity.ruleDefinition);
+        this.form.get('ruleDefinition').setValue({
+          ruleDefinition: this.entity.ruleDefinition,
+          rulePrettyDefinition: this.entity.rulePrettyDefinition,
+        });
         let actionName = JSON.parse(JSON.parse(this.entity.jsonActions)[0]).actionName;
         this.changeEventView(actionName,JSON.parse(this.entity.jsonActions));
         this.form.get('eventOutput').setValue(actionName);
@@ -195,10 +199,14 @@ export class ProjectEventsFormComponent extends ProjectFormEntity implements OnI
   }
 
   loadHPackets() {
-    this.ruleDefinitionComponent.loadHPackets();
+    // this.ruleDefinitionComponent.loadHPackets();
   }
 
   updateSummaryList() {
+    // load allPackets for ruleDefinition
+    this.hPacketsService.findAllHPacketByProjectIdAndType(this.currentProject.id, 'INPUT,IO').subscribe(
+      res => this.allPackets = res,
+    );
     this.rulesService.findAllRuleByProjectId(this.currentProject.id).subscribe((rules: Rule[]) => {
       this.summaryList = {
         title: this.formTitle,
@@ -225,7 +233,8 @@ export class ProjectEventsFormComponent extends ProjectFormEntity implements OnI
     const e = this.entity;
     e.name = this.form.get('rule-name').value;
     e.description = this.form.get('rule-description').value;
-    e.ruleDefinition = this.ruleDefinitionComponent.buildRuleDefinition();
+    e.ruleDefinition = this.form.get('ruleDefinition').value.ruleDefinition;
+    e.rulePrettyDefinition = this.form.get('ruleDefinition').value.rulePrettyDefinition;
     e.jsonActions = jActionStr;
     if (this.selectedTags[0]) {
       // if a tag has been selected, get its id
@@ -287,7 +296,7 @@ export class ProjectEventsFormComponent extends ProjectFormEntity implements OnI
   }
 
   isDirty() {
-    return this.editMode && (super.isDirty() || this.ruleDefinitionComponent.isDirty() ||
+    return this.editMode && (super.isDirty() || (this.ruleDefinitionComponent && this.ruleDefinitionComponent.isDirty())  ||
       this.eventComponentContainer.isDirty() || this.tagSelectionIsDirty());
   }
 

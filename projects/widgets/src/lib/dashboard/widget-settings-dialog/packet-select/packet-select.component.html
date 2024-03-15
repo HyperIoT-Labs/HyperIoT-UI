@@ -3,7 +3,6 @@
     <ng-container *ngIf="widget.config && !(widget.config.packetId && !selectedPacket)">
 
         <div id="packet-selection" class="d-flex flex-column">
-
             <hyt-select
                 [name]="'packetSelect'"
                 [label]="'Select Packet'"
@@ -33,13 +32,11 @@
                 [sortingAlgorithm]="'A-Z'" [isSortable]="true"
                 required disableRipple>
             </hyt-select-template> -->
-
             <hyt-inner-field-select
                 [fields]="selectedPacket.fields"
                 [selectedFieldsIds]="selectedFieldsOptions"
                 [isMultiSelect]="multiPacketSelect"
-                (fieldSelectionChanged)="onPacketFieldChange($event)"
-            ></hyt-inner-field-select>
+                (fieldSelectionChanged)="onPacketFieldChange($event)"></hyt-inner-field-select>
 
         </div>
 
@@ -92,7 +89,7 @@
                                 </mat-form-field>
                             </div>
                         </div>
-                        
+
                         <div class="customization-container-section section-unit-conversion" *ngIf="field.type === 'INTEGER' || field.type === 'FLOAT' || field.type === 'DOUBLE'">
                             <div class="section-title">
                                 <span i18n="@@HYT_unit_conversion_title">Unit Conversion</span>
@@ -126,6 +123,37 @@
                                     [sortingAlgorithm]="'A-Z'"
                                     [isSortable]="true">
                                 </hyt-select-template>
+                            </div>
+                        </div>
+
+                        <div class="customization-container-section value-status-map"
+                            *ngIf="widget.type === 'multi-status'">
+                            <div class="key-value-mapping">
+                                <span class="section-title" i18n="@@HYT_unit_conversion_title">Value Mapping</span>
+                                <div class="section-input">
+                                    <hyperiot-widget-value-mapping name="hpacketfield-value-map-{{field.id}}"
+                                        [(ngModel)]="fieldValuesMapList[field.id]"></hyperiot-widget-value-mapping>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="customization-container-section dynamic-label"
+                            *ngIf="widget.type === 'multi-status'">
+                            <div class="section-title">
+                                <span i18n="@@HYT_dynamic_label">Dynamic Label</span>
+                                <hyt-info [text]="dynamicLabelDescription"></hyt-info>
+                            </div>
+                            <div class="section-input">
+                                <hyt-select [name]="'packetSelect' + field.id" [label]="'Select Packet'"
+                                    [groups]="groupedPacketOptions" [selected]="dynamicLabelSelectedPacketOption[field.id]"
+                                    [isSearchable]="true" (changeFn)="onDynamicLabelPacketSelect($event, field.id)"
+                                    [errorMsgRequired]="'Select one packet'" [hint]="'select one packet'"
+                                    class="hyt-select-full-width">
+                                </hyt-select>
+                                <hyt-inner-field-select *ngIf="dynamicLabelFields[field.id] && dynamicLabelFields[field.id]?.length > 0" [fields]="dynamicLabelFields[field.id]" 
+                                    [selectedFieldsIds]="dynamicLabelSelectedField[field.id]?.fieldId ? dynamicLabelSelectedField[field.id].fieldId : []" [isMultiSelect]="false"
+                                    (fieldSelectionChanged)="onDynamicLabelPacketFieldSelect($event, field.id)">
+                                </hyt-inner-field-select>
                             </div>
                         </div>
                     </div>

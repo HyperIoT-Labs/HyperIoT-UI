@@ -1,0 +1,44 @@
+<hyperiot-base-widget-template>
+    <header-widget>
+        <hyperiot-common-toolbar widgetName="{{widget.name}}" (action)="onToolbarAction($event)"
+            [toolbarIsVisible]="isToolbarVisible" [config]="{
+                showClose: true,
+                showSettings: true,
+                showPlay: serviceType === serviceTypeList.ONLINE,
+                showRefresh: false,
+                showTable: false,
+                hideFullScreen: true
+          }">
+        </hyperiot-common-toolbar>
+    </header-widget>
+
+    <content-widget>
+        <div *ngIf="!isConfigured; else configured" class="configure-notice">
+            <strong i18n="@@HYT_common_not_configured">Click 'Settings' button to configure.</strong>
+        </div>
+        <ng-template #configured>
+            <div *ngIf="loadingOfflineData" class="loading-overlay">
+                <p>Loading data...</p>
+                <mat-spinner strokeWidth="4" diameter="44"></mat-spinner>
+            </div>
+            <div class="key-value-container">
+                <ul class="items-list">
+                    <li class="item" *ngFor="let label of chartLabels; let i = index">
+                        <div class="label-span field-row">
+                            <span class="item-label">{{ label.label }}</span>
+                            <span class="item-subtitle" *ngIf="label.subtitle">{{ label.subtitle.value }}</span>
+                        </div>
+                        <div *ngIf="chartData[label.id]" class="value-span field-row" [ngStyle]="{'color': chartData[label.id].output?.color, 'background-color': chartData[label.id].output?.bgcolor}">
+                            <span class="item-value">{{ chartData[label.id].output?.mappedValue ? chartData[label.id].output?.mappedValue : chartData[label.id].defaultValue }}</span>
+                            <span *ngIf="chartData[label.id].output?.icon && (chartData[label.id].output?.icon.includes('fa ') || chartData[label.id].output?.icon.includes('hyt-icon '))" [ngClass]="chartData[label.id].output?.icon"></span>
+                            <span *ngIf="chartData[label.id].output?.icon && !chartData[label.id].output?.icon.includes('fa ') && !chartData[label.id].output?.icon.includes('hyt-icon ')" class="material-icons">{{chartData[label.id].output?.icon}}</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+        </ng-template>
+
+    </content-widget>
+
+</hyperiot-base-widget-template>

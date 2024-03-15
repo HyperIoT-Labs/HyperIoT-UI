@@ -127,8 +127,8 @@
 
       <div class="col-12">
 
-        <hyt-rule-definition 
-          #ruleDef [currentPacket]="packet" ruleType="enrichment" [projectId]="project.id"
+        <hyt-rule-definition *ngIf="allPackets" [currentPacket]="packet"
+          #ruleDef formControlName="ruleDefinition" [allPackets]="allPackets"
         >
         </hyt-rule-definition>
 

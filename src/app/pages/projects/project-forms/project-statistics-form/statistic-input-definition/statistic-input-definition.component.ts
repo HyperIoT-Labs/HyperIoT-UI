@@ -167,7 +167,7 @@ export class StatisticInputDefinitionComponent implements OnInit {
     };
     const scrollStrategy = this.scrollStrategyOptions.noop(); // TODO passing noop scrollstrategy because of drag-drop scroll issue. Should be fixed in agular 16
     const modalRef = this.dialogService.open(InputDefinitionModalComponent, { data, width: '800px', scrollStrategy });
-    modalRef.afterClosed().subscribe(
+    modalRef.dialogRef.afterClosed().subscribe(
       (res) => {
         if (!res) {
           return;

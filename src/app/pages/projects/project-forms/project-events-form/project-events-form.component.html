@@ -82,6 +82,19 @@
 
     <div class="form-group row">
 
+      <div id="fevent-col-container-rules" class="col-12">
+        <hyt-rule-definition
+          *ngIf="allPackets"
+          #eventDef
+          formControlName="ruleDefinition"
+          [allPackets]="allPackets">
+        </hyt-rule-definition>
+      </div> <!-- Field RuleDefinition -->
+
+    </div>
+
+    <div class="form-group row">
+
       <div id="fevent-col-event" class="col-6">
 
         <p id="label-event-aoutput" i18n="@@HYT_output_data">Event output</p>
@@ -100,15 +113,6 @@
       </div> <!-- Field Oputput -->
 
     </div> <!-- END SECOND ROW -->
-
-
-    <div class="form-group row">
-
-      <div id="fevent-col-container-rules" class="col-12">
-        <hyt-rule-definition #eventDef [currentPacket]="null" ruleType="event" [projectId]="currentProject ? currentProject.id : null"></hyt-rule-definition>
-      </div> <!-- Field RuleDefinition -->
-
-    </div> <!-- END THIRD ROW -->
 
     <hyt-event-component-container [currentProjectId]="currentProject ? currentProject.id : null" #eventComponentContainer></hyt-event-component-container>
 

@@ -12,6 +12,7 @@ import { AutoUpdateConfigStatus, ConfigModel } from '../../base/base-widget/mode
 export class WidgetSettingsDialogComponent implements OnInit {
 
   modalApply: Subject<any> = new Subject();
+  // TODO quale e' il modello di widget?
   widget;
   widgetName;
   widgetId: string;

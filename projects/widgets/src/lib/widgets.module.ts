@@ -40,6 +40,7 @@ import { SensorValueComponent } from './widget/sensor-value/sensor-value.compone
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { DataSimulatorComponent } from './widget/data-simulator/data-simulator.component';
 import { DefibrillatorComponent } from './widget/defibrillator/defibrillator.component';
+import { MultiStatusWidgetComponent } from './widget/multi-status-widget/multi-status-widget.component';
 import { DynamicLabelValueWidgetComponent } from './widget/dynamic-label-value-widget/dynamic-label-value-widget.component';
 import { ProductionTargetComponent } from './widget/production-target/production-target.component';
 
@@ -62,6 +63,7 @@ import { ProductionTargetComponent } from './widget/production-target/production
     BaseWidgetTemplateComponent,
     DataSimulatorComponent,
     DefibrillatorComponent,
+    MultiStatusWidgetComponent,
     DynamicLabelValueWidgetComponent,
     ProductionTargetComponent
   ],
@@ -113,6 +115,7 @@ import { ProductionTargetComponent } from './widget/production-target/production
     DefaultWidgetComponent,
     GaugeChartComponent,
     HistogramChartComponent,
+    MultiStatusWidgetComponent,
     DynamicLabelValueWidgetComponent,
     ProductionTargetComponent
   ],

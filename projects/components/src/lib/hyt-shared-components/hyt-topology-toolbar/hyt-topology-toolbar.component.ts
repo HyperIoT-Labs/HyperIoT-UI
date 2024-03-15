@@ -38,7 +38,7 @@ export class HytTopologyToolbarComponent implements OnInit {
       this.recordStateInLoading = true;
       if (this.dataRecordingIsOn) {
         const modalRef = this.dialogService.open(HytInfoRecordingActionComponent, { width: '600px', backgroundClosable: true });
-        modalRef.afterClosed().subscribe(
+        modalRef.dialogRef.afterClosed().subscribe(
           result => {
             if (result === 'confirm') {
               setTimeout(() => {
@@ -68,7 +68,7 @@ export class HytTopologyToolbarComponent implements OnInit {
         width: '800px',
       }
     );
-    modalRef.afterClosed().subscribe(
+    modalRef.dialogRef.afterClosed().subscribe(
       result => {
         this.recordStateInLoading = false;
         this.updateTopologyData(result);
@@ -93,7 +93,7 @@ export class HytTopologyToolbarComponent implements OnInit {
           width: '800px',
         },
       );
-      modalRef.afterClosed().subscribe(
+      modalRef.dialogRef.afterClosed().subscribe(
         result => {
           this.recordReloading = false;
           this.recordStateInLoading = false;

@@ -161,7 +161,7 @@ export class InputFieldsFormComponent extends AlgorithmFormEntity implements OnI
     const dialogRef = this.dialog.open(DeleteConfirmDialogComponent, {
       data: { title: $localize`:@@HYT_delete_item:Delete item?`, message: $localize`:@@HYT_operation_cannot_be_undone:This operation cannot be undone.` }
     });
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.dialogRef.afterClosed().subscribe((result) => {
       if (result === 'delete') {
         if (this.currentInputField && this.currentInputField.id === fieldId) {
           this.currentInputField = null;

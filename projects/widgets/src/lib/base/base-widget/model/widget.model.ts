@@ -1,7 +1,7 @@
 import { GridsterItem } from 'angular-gridster2';
 import { BodyMap, BodyMapAssociation } from '../../../dashboard/widget-settings-dialog/bodymap-settings/bodymap.model';
 import { DefibrillatorSettings } from '../../../dashboard/widget-settings-dialog/defibrillator-settings/defibrillator-settings.model';
-import { HPacketField } from 'core';
+import { HPacket, HPacketField } from 'core';
 import { DataSimulatorSettings } from '../../../dashboard/widget-settings-dialog/data-simulator-settings/data-simulator.models';
 import { ProductionTargetSettings } from '../../../dashboard/widget-settings-dialog/production-target-settings/production-target.model';
 
@@ -47,6 +47,8 @@ export interface ConfigModel {
     defibrillator?: DefibrillatorSettings.DefibrillatorSettings;
     dataSimulatorSettings?: DataSimulatorSettings.DataSimulatorSettings;
     productionTargetSettings?: ProductionTargetSettings.ProductionTargetSettings;
+    fieldValuesMapList?: FieldValuesMapList;
+    dynamicLabels?: DynamicLabels;
 }
 
 export interface FieldUnitConversion {
@@ -69,6 +71,32 @@ export class FieldFileMimeTypes {
 
 export class FieldTypes {
     [fieldId: number]: HPacketField.TypeEnum;
+}
+
+export class FieldValuesMapList {
+    [fieldId: number]: FieldValuesMap;
+}
+
+export class DynamicLabels {
+    packet: { [id: number]: HPacket; };
+    packetOption: { [id: number]: number; };
+    field: { [id: number]: { fieldId: number, fieldName: string }; };
+    fieldOptions: { [id: number]: HPacketField };
+}
+
+export class FieldValuesMap {
+    defaultValue: string;
+    valuesMap: FieldValueMap[];
+}
+
+export class FieldValueMap {
+    value: any;
+    output: {
+        mappedValue: string;
+        color?: string;
+        bgcolor?: string;
+        icon?: string;
+    }
 }
 
 export interface SeriesConfigModel {
@@ -105,7 +133,7 @@ export interface WidgetAction{
     widget: WidgetConfig;
     action: string;
     value?: any;
-  }
+}
 
 export enum AutoUpdateConfigStatus {
     UNNECESSARY = 'UNNECESSARY',

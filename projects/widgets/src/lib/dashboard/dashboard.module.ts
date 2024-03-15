@@ -45,6 +45,7 @@ import { DataSimulatorSettingsComponent } from './widget-settings-dialog/data-si
 import { FieldValueGeneratorSettingsComponent } from './widget-settings-dialog/data-simulator-settings/field-value-generator-settings/field-value-generator-settings.component';
 import { MatButtonModule } from '@angular/material/button';
 import { ProductionTargetSettingsComponent } from './widget-settings-dialog/production-target-settings/production-target-settings.component';
+import { WidgetValueMappingComponent } from './widget-settings-dialog/packet-select/widget-value-mapping/widget-value-mapping.component';
 
 @NgModule({
   declarations: [
@@ -74,6 +75,7 @@ import { ProductionTargetSettingsComponent } from './widget-settings-dialog/prod
     DataSimulatorSettingsComponent,
     FieldValueGeneratorSettingsComponent,
     ProductionTargetSettingsComponent,
+    WidgetValueMappingComponent,
   ],
   imports: [
     CommonModule,

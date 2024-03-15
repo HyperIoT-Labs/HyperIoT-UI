@@ -83,17 +83,17 @@
 
 /*************************************
 *
-*  HYT FONT ICONS v1.28
+*  HYT FONT ICONS v1.29
 *
 *************************************/
 
 @font-face {
   font-family: 'HytFonts';
-  src: url('../../../assets/fonts/hyperiot-fonts/HytFonts.eot?5dovf4');
-  src: url('../../../assets/fonts/hyperiot-fonts/HytFonts.eot?5dovf4#iefix') format('embedded-opentype'),
-    url('../../../assets/fonts/hyperiot-fonts/HytFonts.ttf?5dovf4') format('truetype'),
-    url('../../../assets/fonts/hyperiot-fonts/HytFonts.woff?5dovf4') format('woff'),
-    url('../../../assets/fonts/hyperiot-fonts/HytFonts.svg?5dovf4#HytFonts') format('svg');
+  src: url('../../../assets/fonts/hyperiot-fonts/HytFonts.eot?t71uzm');
+  src: url('../../../assets/fonts/hyperiot-fonts/HytFonts.eot?t71uzm#iefix') format('embedded-opentype'),
+    url('../../../assets/fonts/hyperiot-fonts/HytFonts.ttf?t71uzm') format('truetype'),
+    url('../../../assets/fonts/hyperiot-fonts/HytFonts.woff?t71uzm') format('woff'),
+    url('../../../assets/fonts/hyperiot-fonts/HytFonts.svg?t71uzm#HytFonts') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -737,4 +737,48 @@
 
 .icon-hyt_source02:before {
   content: "\e99b";
+}
+
+.icon-hyt_owner:before {
+  content: "\e99f";
+}
+
+.icon-hyt_partecipant:before {
+  content: "\e99c";
+}
+
+.icon-hyt_share:before {
+  content: "\e99d";
+}
+
+.icon-hyt_share_circle:before {
+  content: "\e99e";
+}
+
+.icon-hyt_p_share:before {
+  content: "\e9a1";
+}
+
+.icon-hyt_p_share_fill:before {
+  content: "\e9a2";
+}
+
+.icon-hyt_p_import:before {
+  content: "\e9a3";
+}
+
+.icon-hyt_p_import_fill:before {
+  content: "\e9a4";
+}
+
+.icon-hyt_round_share:before {
+  content: "\e9a0";
+}
+
+.icon-hyt_p_owner:before {
+  content: "\e9a5";
+}
+
+.icon-hyt_p_partecipant:before {
+  content: "\e9a6";
 }

@@ -9,6 +9,7 @@
 import { Area } from './area';
 import { HDevice } from './hDevice';
 import { HUser } from './hUser';
+import { HProjectSharingInfo } from './hProjectSharingInfo';
 
 
 export interface HProject { 
@@ -24,6 +25,7 @@ export interface HProject {
     deviceCount?: number;
     statisticsCount?: number;
     rulesCount?: number;
+    hProjectSharingInfo?: HProjectSharingInfo;
     pubKey?: Array<string>;
     devices?: Array<HDevice>;
     areas?: Array<Area>;

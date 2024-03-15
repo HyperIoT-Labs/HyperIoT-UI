@@ -354,7 +354,7 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
               text: $localize`:@@HYT_widget_delete_confirm:Attention, the widget and its configuration will be permanently deleted. Proceed?`,
               dismissable: $localize`:@@HYT_widget_delete_confirm_dismiss:Don't request confirmation for this dashboard anymore`,
             });
-            confirmDialog.afterClosed().subscribe(res => {
+            confirmDialog.dialogRef.afterClosed().subscribe(res => {
               if (res) {
                 if (res.dismissed) {
                   localStorage.setItem('confirm-delete-widget-dismissed-' + this.dashboardValue.id, JSON.stringify(true));
@@ -401,7 +401,7 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
         areaId,
       }
     });
-    modalRef.afterClosed().subscribe(
+    modalRef.dialogRef.afterClosed().subscribe(
       event => { this.onWidgetSettingClose(event) }
     );
   }
@@ -415,7 +415,7 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
         initData,
       }
     });
-    modalRef.afterClosed().subscribe(event => {
+    modalRef.dialogRef.afterClosed().subscribe(event => {
       this.onWidgetFullscreenClose(event);
     });
   }

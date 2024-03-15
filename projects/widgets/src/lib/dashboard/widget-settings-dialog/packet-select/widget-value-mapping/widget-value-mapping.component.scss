@@ -1,0 +1,47 @@
+.widget-value-mapping-form {
+    .default-add-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 36px;
+        margin-bottom: 23px;
+        margin-top: 14px;
+    }
+
+    .map-row {
+
+        display: flex;
+        align-items: center;
+        gap: 12px;
+
+        .icon-hyt_arrowRight {
+            font-size: 2.4em;
+        }
+
+        .value-map-output {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+    }
+
+    .color-form-field {
+        width: 72px;
+
+        input {
+            margin: -6px 0;
+        }
+    }
+
+    input[type='color'] {
+        height: 24px;
+    }
+
+    input[type='color']::-webkit-color-swatch {
+        border: 1px solid black;
+        border-radius: 60px;
+    }
+
+}
