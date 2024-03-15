@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { BaseWidgetComponent } from "../../base/base-widget/base-widget.component";
-import { WsDataSenderService } from "core";
+import { HPacketField, WsDataSenderService } from "core";
 import { Subscription } from "rxjs";
 import { DataSimulatorSettings } from "../../dashboard/widget-settings-dialog/data-simulator-settings/data-simulator.models";
 
@@ -32,6 +32,7 @@ export class DataSimulatorComponent extends BaseWidgetComponent {
 
   fieldList: { [fieldId: number]: string };
   fieldRules: DataSimulatorSettings.FieldRules;
+  fieldType: DataSimulatorSettings.FieldType;
   fieldOutliers: DataSimulatorSettings.FieldOutliers;
 
   ngOnInit(): void {
@@ -57,6 +58,7 @@ export class DataSimulatorComponent extends BaseWidgetComponent {
 
     this.fieldList = this.widget.config.packetFields;
     this.fieldRules = this.widget.config.dataSimulatorSettings.fieldRules;
+    this.fieldType = this.widget.config.dataSimulatorSettings.fieldType;
     this.fieldOutliers = this.widget.config.dataSimulatorSettings.fieldOutliers;
 
     // setting isOutlierColumnVisible
@@ -125,8 +127,10 @@ export class DataSimulatorComponent extends BaseWidgetComponent {
               const minVal = Math.min(fieldRule.min, fieldRule.max);
               const maxVal = Math.max(fieldRule.min, fieldRule.max);
               fieldValue = Math.random() * (maxVal - minVal) + minVal;
-              console.log("datasim", this);
-              
+              debugger;
+              if (this.fieldType[+fieldId] == HPacketField.TypeEnum.INTEGER)
+                fieldValue = Math.round(fieldValue);
+
               break;
             case "dataset":
               const values = JSON.parse(fieldRule.values); // todo Move this conversion in the configuration to avoid having to perform it each time

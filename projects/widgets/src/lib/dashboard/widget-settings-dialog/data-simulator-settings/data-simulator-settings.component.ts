@@ -48,6 +48,8 @@ export class DataSimulatorSettingsComponent implements OnInit {
 
   fieldRules: DataSimulatorSettings.FieldRules = {};
 
+  fieldType: DataSimulatorSettings.FieldType = {};
+
   fieldOutliers: DataSimulatorSettings.FieldOutliers = {};
 
   constructor(
@@ -78,6 +80,7 @@ export class DataSimulatorSettingsComponent implements OnInit {
         this.widget.config.dataSimulatorSettings.deviceInfo.password;
       this.period = this.widget.config.dataSimulatorSettings.period;
       this.fieldRules = this.widget.config.dataSimulatorSettings.fieldRules;
+      this.fieldType = this.widget.config.dataSimulatorSettings.fieldType;
       this.fieldOutliers =
         this.widget.config.dataSimulatorSettings.fieldOutliers;
     }
@@ -135,11 +138,16 @@ export class DataSimulatorSettingsComponent implements OnInit {
       }
     });
 
+    //reset fieldType
+    this.fieldType = {};
+    this.selectedFields.forEach((field) => {
+      this.fieldType[field.id] = field.type;
+    });
+
     // reset fieldOutliers
     const tempFieldOutliers = { ...this.fieldOutliers };
     this.fieldOutliers = {};
     this.selectedFields.forEach((field) => {
-      debugger;
       if (tempFieldOutliers[field.id]) {
         this.fieldOutliers[field.id] = tempFieldOutliers[field.id];
       } else {
@@ -262,6 +270,7 @@ export class DataSimulatorSettingsComponent implements OnInit {
         this.selectedPacket.id,
       fieldRules: this.fieldRules,
       fieldOutliers: this.fieldOutliers,
+      fieldType: this.fieldType,
       period: this.period,
     };
   }
