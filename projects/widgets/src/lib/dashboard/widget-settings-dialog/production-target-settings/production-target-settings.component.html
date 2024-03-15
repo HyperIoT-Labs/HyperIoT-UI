@@ -1,34 +1,32 @@
-<div id="production-target-settings">
-    <form [formGroup]="form">
-        <div *ngFor="let field of settableParameters" class="section-group">
+<!-- TODO: fix set up template like data-simulator contentLoaded -->
+<div id="production-target-settings" *ngIf="contentLoaded">
+    <div *ngFor="let field of settableParameters" class="section-group">
+        <form [formGroup]="form">
             <div class="label-section">
                 <span>{{ returnFieldName(field) }}</span>
                 <div *ngIf="field === 'target'">
-                    <hyt-radio-button [form]="form" [formControlName]="'targetOption'" name="inputField-target"
-                        [isRequired]="true" [options]="options" [verticalAlign]="false" class="radio"
-                        (changeFn)="onTargetOptionChange($event)">
+                    <hyt-radio-button name="inputField-target" formControlName="isTargetOptionManual"
+                        [options]="isTargetManuallySetOptions" [verticalAlign]="false" class="radio" (changeFn)="onTargetOptionChange($event)">
                     </hyt-radio-button>
                 </div>
             </div>
-            <mat-form-field class="target-input"
-                *ngIf="form.get('targetOption').value === 'string' && field === 'target'">
+            <mat-form-field class="target-input" *ngIf="form.get('isTargetOptionManual').value == 'true' && field === 'target'">
                 <input matInput #input formControlName="targetManualValue" placeholder="Manually enter a target string">
             </mat-form-field>
-            <div class="section-input" [formGroupName]="field"
-                *ngIf="(field === 'target' && !form.get('target').disabled) || field !== 'target'">
-                <hyt-select [label]="'Select Packet'" [groups]="groupedPacketOptions" formGroupName="packet"
-                    [isSearchable]="true" (changeFn)="onPacketChange($event, field)"
-                    [errorMsgRequired]="'Select one packet'" [hint]="'select one packet'" class="hyt-select-full-width">
-                </hyt-select>
-                <div *ngIf="selectedPackets && selectedPackets[field] != null" id="field-selection"
-                    class="d-flex flex-column">
-                    <hyt-inner-field-select [fields]="selectedPackets[field].fields" formGroupName="field"
-                        [selectedFieldsIds]="selectedFieldsOptions && selectedFieldsOptions[field] ? [selectedFieldsOptions[field]] : []"
-                        [isMultiSelect]="false" [name]="'selectField-' + field"
-                        (fieldSelectionChanged)="onPacketFieldChange($event, field)"></hyt-inner-field-select>
-                </div>
+        </form>
+        <div class="section-input" *ngIf="(field === 'target' && form.get('isTargetOptionManual').value == 'false') || field !== 'target'">
+            <hyt-select [label]="'Select Packet'" [groups]="groupedPacketOptions"
+                [name]="'selectedPacket' + field" [selected]="selectedPacketsOption && selectedPacketsOption[field] ? selectedPacketsOption[field] : {}"
+                [isSearchable]="true" (changeFn)="onPacketChange($event, field)"
+                [errorMsgRequired]="'Select one packet'" [hint]="'select one packet'" class="hyt-select-full-width">
+            </hyt-select>
+            <div *ngIf="selectedPackets[field]" id="field-selection"
+                class="d-flex flex-column">
+                <hyt-inner-field-select *ngIf="fieldsOptions[field] && fieldsOptions[field].length > 0" [id]="'selectedField' + field" [fields]="fieldsOptions[field]"
+                    [selectedFieldsIds]="selectedFields && selectedFields[field] ? [selectedFields[field]] : []"
+                    [isMultiSelect]="false" [name]="'selectField-' + field"
+                    (fieldSelectionChanged)="onPacketFieldChange($event, field)"></hyt-inner-field-select>
             </div>
-
         </div>
-    </form>
+    </div>
 </div>

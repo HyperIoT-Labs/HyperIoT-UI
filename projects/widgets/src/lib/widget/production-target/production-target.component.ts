@@ -18,12 +18,7 @@ export class ProductionTargetComponent extends BaseGenericComponent implements O
 
   dataChannel: DataChannel;
 
-  chartData: { [field: string]: any }[] = [
-    { target: 'test' },
-    { produced: 'test' },
-    { current_shift: 'test' },
-    { remaining: '' }
-  ];
+  chartData: { [field: string]: any }[] = [];
 
   chartLabels: string[] = ['target', 'produced', 'current_shift', 'remaining']
 
@@ -32,6 +27,7 @@ export class ProductionTargetComponent extends BaseGenericComponent implements O
 
   protected logger: Logger;
 
+  // TODO: i am not subscribing the fields right
   constructor(
     injector: Injector,
     protected loggerService: LoggerService
@@ -78,6 +74,7 @@ export class ProductionTargetComponent extends BaseGenericComponent implements O
       });
     };
     this.subscribeDataChannel(packetAndFieldsToRetrive);
+    debugger
     this.processPlotlyData()
   }
 
@@ -106,6 +103,7 @@ export class ProductionTargetComponent extends BaseGenericComponent implements O
             delete element['timestamp'];
           }
           Object.keys(element).forEach((key: string) => {
+            debugger
             this.chartData[key] = element[key];
           })
         })
@@ -117,10 +115,12 @@ export class ProductionTargetComponent extends BaseGenericComponent implements O
   }
 
   processPlotlyData() {
+    const elementsInChartData = Object.keys(this.chartData).map(key => this.chartData[key]);
+    console.log('elementsInChartData', elementsInChartData);
     this.graph = {
       data: [
         {
-          values: [70, 30],
+          values: elementsInChartData,
           type: 'pie',
           marker: {
             line: {
@@ -151,7 +151,7 @@ export class ProductionTargetComponent extends BaseGenericComponent implements O
               size: 13
             },
             showarrow: false,
-            text: '70',
+            text: this.calculateCompletionPercentage(this.chartData['production'], this.chartData['target']),
             x: 0.5,
             y: 0.5
           }
@@ -159,6 +159,15 @@ export class ProductionTargetComponent extends BaseGenericComponent implements O
       },
     };
   }
+
+  calculateCompletionPercentage(totalElements: number, producedElements: number): number {
+    if (totalElements <= 0) {
+        return 0;
+    }
+
+    const completionPercentage = (producedElements / totalElements) * 100;
+    return Math.min(completionPercentage, 100); // Ensure the percentage does not exceed 100
+}
 
   play(): void {
     this.isPaused = false;

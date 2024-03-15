@@ -68,6 +68,7 @@ export class HytInnerFieldSelectComponent implements OnChanges, OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    console.log('production changes', changes);
     const sortedFields = this.sortFields(this.fields);
     this.dataSource.data = sortedFields;
     if (this.selectedFieldsIds.length > 0) {

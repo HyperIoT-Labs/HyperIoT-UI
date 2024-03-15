@@ -1,9 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SelectOption, SelectOptionGroup } from 'components';
-import { HPacket, HPacketFieldsHandlerService, HpacketsService, Logger, LoggerService } from 'core';
-import { WidgetConfig } from '../../../base/base-widget/model/widget.model';
+import { HPacket, HPacketField, HPacketFieldsHandlerService, HpacketsService, Logger, LoggerService } from 'core';
 import { Observable } from 'rxjs';
+import { WidgetConfig } from '../../../base/base-widget/model/widget.model';
+import { ProductionTargetSettings } from './production-target.model';
 
 @Component({
   selector: 'hyperiot-production-target-settings',
@@ -17,25 +18,21 @@ export class ProductionTargetSettingsComponent implements OnInit {
 
   private logger: Logger;
 
-  options = [
-    { value: 'string', label: 'Set Manually', checked: true },
-    { value: 'packet', label: 'Set Dynamically', checked: false }
+  contentLoaded: boolean = false;
+
+  isTargetManuallySetOptions = [
+    { value: 'true', label: 'Set Manually', checked: true },
+    { value: 'false', label: 'Set Dynamically', checked: true }
   ];
 
   subscription: any;
   allPackets: HPacket[] = [];
   groupedPacketOptions: SelectOptionGroup[] = [];
 
-  /** The target value manually setted data */
-  targetManualValue: string = "";
-
-  selectedPackets: { [key: string]: HPacket };
-  selectedPacketsOption: { [key: string]: number };
-
-  fieldsOption: { [key: string]: SelectOption[] };
-
-  selectedFieldsOptions: { [key: string]: number };
-
+  selectedPackets: { [key: string]: HPacket } = {};
+  selectedPacketsOption: { [key: string]: number } = {};
+  selectedFields: { [key: string]: number } = {};
+  fieldsOptions: { [key: string]: HPacketField[] } = {};
   settableParameters: string[] = ['target', 'produced', 'current_shift'];
 
   form: FormGroup;
@@ -51,48 +48,68 @@ export class ProductionTargetSettingsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (this.widget.config == null) {
+      this.widget.config = {};
+    }
+
+    if (this.widget.config.colors == null) {
+      this.widget.config.colors = {};
+    }
+
+    if (!this.widget.config) {
+      Object.assign(this.widget.config);
+    }
+
+    this.subscription = this.modalApply.subscribe((event) => {
+      if (event === 'apply') {
+        this.apply();
+      }
+    });
     this.initForm();
     this.retrievePacketsAndFields();
   }
 
   initForm() {
     this.form = this.fb.group({
-      targetOption: ['string', Validators.required],
-      targetManualValue: [''],
-      target: this.fb.group({
-        packet: [null],
-        field: [null]
-      }),
-      produced: this.fb.group({
-        packet: [null, Validators.required],
-        field: [null, Validators.required]
-      }),
-      current_shift: this.fb.group({
-        packet: [null],
-        field: [null]
-      })
+      isTargetOptionManual: ['true', Validators.required],
+      targetManualValue: ['']
     });
-    this.onTargetOptionChange('string');
+    this.onTargetOptionChange('true');
   }
 
   onTargetOptionChange(option: string): void {
-    if (option === 'string') {
+    if (option === 'true') {
+      this.form.get('targetManualValue').setValue(this.form.get('targetManualValue').value !== '' ? this.form.get('targetManualValue').value : '');
       this.form.get('targetManualValue').enable();
-      this.form.get('target').disable();
+      this.isTargetManuallySetOptions.forEach(target => {
+        if (target.value === 'true') {
+          target.checked = true;
+        } else {
+          target.checked = false;
+        }
+      })
     } else {
       this.form.get('targetManualValue').disable();
-      this.form.get('target').enable();
+      this.isTargetManuallySetOptions.forEach(target => {
+        if (target.value === 'false') {
+          target.checked = true;
+        } else {
+          target.checked = false;
+        }
+      })
     }
+
+    this.form.get('isTargetOptionManual').patchValue(option);
+    console.log('options', {
+      option: option,
+      value: this.form.get('targetManualValue').value,
+      disabled: this.form.get('targetManualValue').disabled
+    })
   }
 
   retrievePacketsAndFields() {
-    this.subscription = this.modalApply.subscribe((event) => {
-      if (event === 'apply') {
-        this.apply();
-      }
-    });
     this.hPacketsService
-      .findAllHPacketByProjectId(this.widget.projectId)
+      .findAllHPacketByProjectIdAndType(this.widget.projectId, "INPUT,IO")
       .subscribe((res) => {
         this.allPackets = res;
         const devices = this.allPackets.map((x) => x.device);
@@ -115,123 +132,138 @@ export class ProductionTargetSettingsComponent implements OnInit {
           icon: 'icon-hyt_device',
         }));
         if (this.widget.config?.productionTargetSettings?.fields.produced.packet) {
+          this.setFormValues();
+          const totalFields = Object.keys(this.widget.config?.productionTargetSettings.fields).length;
+          let processedFields = 0;
           Object.keys(this.widget.config?.productionTargetSettings.fields).forEach(key => {
             this.hPacketsService.findHPacket(this.widget.config?.productionTargetSettings.fields[key].packet).subscribe(
               (packet: HPacket) => {
-                if (this.selectedPackets) {
-                  this.selectedPackets[key] = packet;
-                  this.selectedPacketsOption[key] = this.selectedPackets[key].id;
-                } else {
-                  this.selectedPackets = { [key]: packet };
-                  this.selectedPacketsOption = { [key]: this.selectedPackets[key].id };
-                }
-                const fieldsFlatList = this.hPacketFieldsHandlerService.flatPacketFieldsTree(this.selectedPackets[key]);
-                if (this.fieldsOption) {
-                  this.fieldsOption[key] = fieldsFlatList.map(x => ({
-                    value: x.field.id,
-                    label: x.label
-                  }));
-                } else {
-                  this.fieldsOption = {
-                    [key]: fieldsFlatList.map(x => ({
-                      value: x.field.id,
-                      label: x.label
-                    }))
-                  };
-                }
-                if (this.selectedFieldsOptions) {
-                  this.selectedFieldsOptions[key] = this.widget.config.productionTargetSettings.fields[key].field;
-                } else {
-                  this.selectedFieldsOptions = { [key]: this.widget.config.productionTargetSettings.fields[key].packet }
-                }
+                this.isTargetManuallySetOptions = this.widget.config.productionTargetSettings.isTargetManuallySetOptions;
+                this.selectedPackets[key] = packet;
+                this.selectedPacketsOption[key] = this.selectedPackets[key].id;
+                this.selectedFields[key] = this.widget.config.productionTargetSettings.fields[key].field;
+                this.fieldsOptions[key] = this.selectedPackets[key].fields;
                 if (this.widget.config.packetFields) {
-
                   packet.fields.sort((a, b) => a.name < b.name ? -1 : 1);
                 }
+
+                processedFields++;
+                console.log('contentLoader load', this.contentLoaded)
+                if (processedFields === totalFields) {
+                  this.contentLoaded = true;
+                }
+                console.log('production load', {
+                  selectedPacketsOption: this.selectedPacketsOption,
+                  selectedPackets: this.selectedPackets,
+                  selectedFields: this.selectedFields,
+                  fieldsOptions: this.fieldsOptions
+                })
               }
             );
           });
+        } else {
+          this.contentLoaded = true;
         }
       });
 
   }
 
-  onPacketChange(packetOption, field: string) {
-    if (this.selectedPacketsOption) {
-      this.selectedPacketsOption[field] = packetOption.value;
-      this.selectedPackets[field] = this.allPackets.find(p => p.id === this.selectedPacketsOption[field]);
-    } else {
-      this.selectedPacketsOption = { [field]: packetOption.value };
-      this.selectedPackets = { [field]: this.allPackets.find(p => p.id === this.selectedPacketsOption[field]) };
+  setFormValues() {
+    this.form.get('isTargetOptionManual').setValue(this.widget.config.productionTargetSettings.isTargetManuallySet);
+    if (this.widget.config.productionTargetSettings.isTargetManuallySet) {
+      this.form.get('targetManualValue').setValue(this.widget.config.productionTargetSettings.targetManuallySetValue);
     }
-    this.form.get(field).get('packet').setValue(packetOption.value);
-    const fieldsFlatList = this.hPacketFieldsHandlerService.flatPacketFieldsTree(this.selectedPackets[field]);
-    if (this.fieldsOption && this.fieldsOption[field]) {
-      delete this.fieldsOption[field];
-      this.fieldsOption[field] = fieldsFlatList.map(x => ({
-        value: x.field.id,
-        label: x.label
-      }));
-    } else {
-      this.fieldsOption = {
-        [field]: fieldsFlatList.map(x => ({
-          value: x.field.id,
-          label: x.label
-        }))
-      };
-    }
+    this.onTargetOptionChange(this.form.get('isTargetOptionManual').value);
+    console.log('production target settings', this.form.value)
+  }
 
-    if (this.selectedFieldsOptions) {
-      delete this.selectedFieldsOptions[field];
+  onPacketChange(packetOption, field: string) {
+    this.selectedPacketsOption[field] = packetOption.value;
+    this.selectedPackets[field] = this.allPackets.find(p => p.id === this.selectedPacketsOption[field]);
+    this.fieldsOptions[field] = this.selectedPackets[field].fields;
+    // in the config I save the options but I need to save the full fields
+    console.log('production packet', {
+      selectedPacketsOption: this.selectedPacketsOption,
+      selectedPackets: this.selectedPackets
+    })
+    if (this.selectedFields) {
+      delete this.selectedFields[field];
     }
   }
 
   onPacketFieldChange($event, field) {
     if ($event.length > 0) {
-      if (this.selectedFieldsOptions) {
-        this.selectedFieldsOptions[field] = $event[0];
+      if (this.selectedFields) {
+        this.selectedFields[field] = $event[0];
       } else {
-        this.selectedFieldsOptions = { [field]: $event[0] };
+        this.selectedFields = { [field]: $event[0] };
       }
-      this.form.get(field).get('field').setValue($event[0]);
     } else {
-      delete this.selectedFieldsOptions[field];
+      delete this.selectedFields[field];
     }
+
+    console.log('production field', {
+      selectedFields: this.selectedFields
+    })
   }
 
   apply() {
-    if ((this.form.get('targetOption').value === 'string' && this.form.get('targetManualValue').value === '') || (this.form.get('targetOption').value !== 'string' && this.form.get('target').get('packet').value === '')) {
+    if (this.form.get('isTargetOptionManual').value == 'true' && this.form.get('targetManualValue').value === '') {
       return console.error('Please set the target value');
     }
-    const config = {
-      isTargetManuallySet: this.form.get('targetOption').value === 'string' ? true : false,
-      fields: {
-        produced: {
-          packet: this.form.get('produced').get('packet').value,
-          field: this.form.get('produced').get('field').value
-        },
-        current_shift: {
-          packet: this.form.get('current_shift').get('packet').value,
-          field: this.form.get('current_shift').get('field').value
+
+    if (this.form.get('isTargetOptionManual').value == 'false') {
+      const config: ProductionTargetSettings.ProductionTargetSettings = {
+        isTargetManuallySetOptions: this.isTargetManuallySetOptions,
+        isTargetManuallySet: this.form.get('isTargetOptionManual').value,
+        fields: {
+          produced: {
+            packet: this.selectedPacketsOption['produced'],
+            field: this.selectedFields['produced']
+          },
+          current_shift: {
+            packet: this.selectedPacketsOption['current_shift'],
+            field: this.selectedFields['current_shift']
+          },
+          target: {
+            packet: this.selectedPacketsOption['target'],
+            field: this.selectedFields['target']
+          }
         }
-      }
-    };
-
-    if (!this.widget.config) {
-      this.widget.config = { productionTargetSettings: config };
-    } else {
-      this.widget.config.productionTargetSettings = config;
-    }
-
-    if (!config.isTargetManuallySet && this.form.get('targetManualValue').value === '') {
-      this.widget.config.productionTargetSettings.fields.target =
-      {
-        packet: this.form.get('target').get('packet').value,
-        field: this.form.get('target').get('field').value
+      };
+      if (!this.widget.config) {
+        this.widget.config = { productionTargetSettings: config };
+      } else {
+        this.widget.config.productionTargetSettings = config;
       }
     } else {
-      this.widget.config.productionTargetSettings.targetManuallySetValue = this.targetManualValue;
+      const config: ProductionTargetSettings.ProductionTargetSettings = {
+        isTargetManuallySetOptions: this.isTargetManuallySetOptions,
+        isTargetManuallySet: this.form.get('isTargetOptionManual').value,
+        targetManuallySetValue: this.form.get('targetManualValue').value,
+        fields: {
+          produced: {
+            packet: this.selectedPacketsOption['produced'],
+            field: this.selectedFields['produced']
+          },
+          current_shift: {
+            packet: this.selectedPacketsOption['current_shift'],
+            field: this.selectedFields['current_shift']
+          }
+        }
+      };
+      if (!this.widget.config) {
+        this.widget.config = { productionTargetSettings: config };
+      } else {
+        this.widget.config.productionTargetSettings = config;
+      }
     }
+
+    console.log('production apply', {
+      selectedPacketsOption: this.selectedPacketsOption,
+      selectedPackets: this.selectedPackets,
+      selectedFields: this.selectedFields
+    })
   }
 
   /**

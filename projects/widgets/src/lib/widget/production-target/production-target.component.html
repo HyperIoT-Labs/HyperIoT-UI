@@ -14,13 +14,9 @@
         </hyperiot-common-toolbar>
       </header-widget>
       <content-widget>
-        <!-- <ng-container #contentWidget></ng-container> -->
-    
-        <!-- <div *ngIf="!isConfigured; else configured"> -->
           <div *ngIf="!isConfigured; else configured" class="configure-notice">
             <strong i18n="@@HYT_common_not_configured">Click 'Settings' button to configure.</strong>
           </div>
-        <!-- </div> -->
     
         <ng-template #configured>
           <div id="modalAnchor"></div>
