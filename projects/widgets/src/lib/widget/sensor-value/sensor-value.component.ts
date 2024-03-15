@@ -72,7 +72,8 @@ export class SensorValueComponent extends BaseWidgetComponent {
 
   renderData(datum: PacketData) {
     this.timestamp = datum.timestamp;
-    this.sensorRenderValue = datum[this.sensorField];
+    if( datum[this.sensorField])
+      this.sensorRenderValue = datum[this.sensorField];
 
     this.blinkLed();
   }

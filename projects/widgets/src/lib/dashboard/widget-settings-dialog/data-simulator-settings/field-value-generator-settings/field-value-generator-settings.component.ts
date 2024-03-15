@@ -20,6 +20,7 @@ export class FieldValueGeneratorSettingsComponent implements OnInit {
       value: 'fixed',
       label: 'Fixed Value',
       fields: [
+        { type: HPacketField.TypeEnum.TEXT, multiplicity: HPacketField.MultiplicityEnum.SINGLE },
         { type: HPacketField.TypeEnum.INTEGER, multiplicity: HPacketField.MultiplicityEnum.SINGLE },
         { type: HPacketField.TypeEnum.FLOAT, multiplicity: HPacketField.MultiplicityEnum.SINGLE },
         { type: HPacketField.TypeEnum.DOUBLE, multiplicity: HPacketField.MultiplicityEnum.SINGLE },
