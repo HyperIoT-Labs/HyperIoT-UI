@@ -23,9 +23,9 @@
           <div #productionTarget id="productionTarget">
             <div class="section-group">
               <div class="data">
-                <div *ngFor="let label of chartLabels" class="main-data">
-                  <span>{{label}}</span>
-                  <span>{{chartData[label]}}</span>
+                <div *ngFor="let label of widgetLabels" class="main-data">
+                  <span>{{returnFieldName(label) | uppercase}}</span>
+                  <span class="value">{{chartData[label]}}</span>
                 </div>
               </div>
               <plotly-plot [data]="graph.data" [layout]="graph.layout" class="chart"></plotly-plot>

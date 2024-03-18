@@ -1684,6 +1684,9 @@
       <trans-unit id="HYT_current_shift" datatype="html">
         <source>Current Shift</source>
       </trans-unit>
+      <trans-unit id="HYT_remaining" datatype="html">
+        <source>Left to Produce</source>
+      </trans-unit>
     </body>
   </file>
 </xliff>

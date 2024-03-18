@@ -1,4 +1,3 @@
-<!-- TODO: fix set up template like data-simulator contentLoaded -->
 <div id="production-target-settings" *ngIf="contentLoaded">
     <div *ngFor="let field of settableParameters" class="section-group">
         <form [formGroup]="form">
@@ -11,11 +10,11 @@
                 </div>
             </div>
             <mat-form-field class="target-input" *ngIf="form.get('isTargetOptionManual').value == 'true' && field === 'target'">
-                <input matInput #input formControlName="targetManualValue" placeholder="Manually enter a target string">
+                <input matInput #input formControlName="targetManualValue" i18n-placeholder="@@HYT_enter_target" placeholder="Manually enter a target number" required type="number">
             </mat-form-field>
         </form>
         <div class="section-input" *ngIf="(field === 'target' && form.get('isTargetOptionManual').value == 'false') || field !== 'target'">
-            <hyt-select [label]="'Select Packet'" [groups]="groupedPacketOptions"
+            <hyt-select [label]="'Select Packet'" [groups]="groupedPacketOptions" [isRequired]="field === 'produced'"
                 [name]="'selectedPacket' + field" [selected]="selectedPacketsOption && selectedPacketsOption[field] ? selectedPacketsOption[field] : {}"
                 [isSearchable]="true" (changeFn)="onPacketChange($event, field)"
                 [errorMsgRequired]="'Select one packet'" [hint]="'select one packet'" class="hyt-select-full-width">
@@ -23,7 +22,7 @@
             <div *ngIf="selectedPackets[field]" id="field-selection"
                 class="d-flex flex-column">
                 <hyt-inner-field-select *ngIf="fieldsOptions[field] && fieldsOptions[field].length > 0" [id]="'selectedField' + field" [fields]="fieldsOptions[field]"
-                    [selectedFieldsIds]="selectedFields && selectedFields[field] ? [selectedFields[field]] : []"
+                    [selectedFieldsIds]="selectedFields && selectedFields[field] ? selectedFields[field].fieldId : []" [isRequired]="field === 'produced'"
                     [isMultiSelect]="false" [name]="'selectField-' + field"
                     (fieldSelectionChanged)="onPacketFieldChange($event, field)"></hyt-inner-field-select>
             </div>

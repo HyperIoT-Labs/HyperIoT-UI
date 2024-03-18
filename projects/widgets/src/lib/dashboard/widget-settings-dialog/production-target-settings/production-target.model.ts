@@ -1,7 +1,7 @@
 export namespace ProductionTargetSettings {
     export interface ProductionTargetSettings {
         isTargetManuallySetOptions: any;
-        isTargetManuallySet: boolean;
+        isTargetManuallySet: 'true' | 'false';
         targetManuallySetValue?: string;
         fields: {
             target?: packetInfo,
@@ -12,6 +12,6 @@ export namespace ProductionTargetSettings {
 
     export interface packetInfo {
         packet: number,
-        field: number
+        field: { [id: number]: { fieldId: number, fieldName: string }; },
     }
 }

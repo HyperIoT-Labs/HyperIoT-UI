@@ -2246,6 +2246,14 @@
         <source>Current Shift</source>
         <target>Turno Corrente</target>
       </trans-unit>
+      <trans-unit id="HYT_enter_target" datatype="html">
+        <source>Manually enter a target number</source>
+        <target>Inserire un obiettivo di produzione</target>
+      </trans-unit>
+      <trans-unit id="HYT_remaining" datatype="html">
+        <source>Left to Produce</source>
+        <target>Residui</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

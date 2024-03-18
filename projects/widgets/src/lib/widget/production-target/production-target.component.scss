@@ -17,6 +17,14 @@
             width: 50%;
             box-sizing: border-box;
             padding: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            .value {
+                color: #575757;
+                font-weight: bold;
+            }
         }
     }
 }
