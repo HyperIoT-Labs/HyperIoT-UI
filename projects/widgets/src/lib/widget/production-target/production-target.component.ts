@@ -6,7 +6,7 @@ import { BaseGenericComponent } from '../../base/base-generic/base-generic.compo
 @Component({
   selector: 'hyperiot-production-target',
   templateUrl: './production-target.component.html',
-  styleUrls: ['./production-target.component.scss']
+  styleUrls: ['../../../../../../src/assets/widgets/styles/widget-commons.css', './production-target.component.scss']
 })
 export class ProductionTargetComponent extends BaseGenericComponent implements OnInit {
   isPaused = false;
