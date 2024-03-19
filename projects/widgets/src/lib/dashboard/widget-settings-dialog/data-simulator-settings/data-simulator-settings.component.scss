@@ -78,7 +78,20 @@
   display: flex;
   align-items: center;
   gap: 0 6px;
-  font-weight: 600;
+  
+  .falseTrueLabel{
+    opacity: .7;
+    transition: .4 ease-in-out;
+
+    &.focusedSwitch{
+      font-weight: 600;
+      opacity: 1;
+      padding: 2px 4px;
+      border-radius: 3px;
+      background: #0856b6;
+      color: #fff;
+    }
+  }
 
   .simulator-switch {
     position: relative;

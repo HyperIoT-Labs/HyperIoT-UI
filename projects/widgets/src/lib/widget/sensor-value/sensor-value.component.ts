@@ -72,10 +72,14 @@ export class SensorValueComponent extends BaseWidgetComponent {
 
   renderData(datum: PacketData) {
     this.timestamp = datum.timestamp;
-    if( datum[this.sensorField])
+    if(this.canRender(datum[this.sensorField]))
       this.sensorRenderValue = datum[this.sensorField];
 
     this.blinkLed();
+  }
+
+  canRender(field: any){
+    return field || typeof field == "boolean"
   }
 
   blinkLed() {

@@ -78,6 +78,10 @@ export class FieldValueGeneratorSettingsComponent implements OnInit {
     this.ruleOptions = this.allRuleOptions.filter(rule => rule.fields.some(field => field.type === this.field.type && field.multiplicity === this.field.multiplicity));
   }
 
+  get isBooleanField(){  
+    return this.field.type == HPacketField.TypeEnum.BOOLEAN
+  }
+
   onGenTypeChange() {
     this.rule.type = this.genType;
   }
