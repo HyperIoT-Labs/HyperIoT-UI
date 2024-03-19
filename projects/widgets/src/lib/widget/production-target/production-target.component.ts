@@ -70,10 +70,14 @@ export class ProductionTargetComponent extends BaseGenericComponent implements O
     this.isConfigured = true;
     let packetAndFieldsToRetrive: { [packetId: number]: { [id: number]: string } } = {};
     if (this.widget.config.productionTargetSettings) {
-      if (this.widget.config.productionTargetSettings.isTargetManuallySet === 'true') {
-        this.chartData['target'] = parseInt(this.widget.config.productionTargetSettings.targetManuallySetValue);
+      if (this.widget.config.productionTargetSettings.isTargetManuallySet) {
+        this.chartData['target'] = this.widget.config.productionTargetSettings.targetManuallySetValue;
       };
       Object.keys(this.widget.config.productionTargetSettings.fields).map(key => {
+        if (this.widget.config.productionTargetSettings.fields[key].fieldAlias) {
+          const labelIndex = this.widgetLabels.indexOf(key);
+          this.widgetLabels[labelIndex] = this.widget.config.productionTargetSettings.fields[key].fieldAlias;
+        }
         const packetId = this.widget.config.productionTargetSettings.fields[key].packet;
         const field = this.widget.config.productionTargetSettings.fields[key].field;
         const fieldValue = { [field.fieldId[0]]: field.fieldName };

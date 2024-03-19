@@ -1,15 +1,16 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
-import { SelectOption, SelectOptionGroup } from 'components';
-import { HPacket, HPacketField, HPacketFieldsHandlerService, HpacketsService, Logger, LoggerService } from 'core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { ControlContainer, NgForm } from '@angular/forms';
+import { SelectOptionGroup } from 'components';
+import { HPacket, HPacketField, HpacketsService, Logger, LoggerService } from 'core';
 import { Observable } from 'rxjs';
-import { WidgetConfig } from '../../../base/base-widget/model/widget.model';
+import { FieldAliases, WidgetConfig } from '../../../base/base-widget/model/widget.model';
 import { ProductionTargetSettings } from './production-target.model';
 
 @Component({
   selector: 'hyperiot-production-target-settings',
   templateUrl: './production-target-settings.component.html',
-  styleUrls: ['./production-target-settings.component.scss']
+  styleUrls: ['./production-target-settings.component.scss'],
+  viewProviders: [{ provide: ControlContainer, useExisting: NgForm }]
 })
 export class ProductionTargetSettingsComponent implements OnInit {
   @Input() widget: WidgetConfig;
@@ -23,8 +24,12 @@ export class ProductionTargetSettingsComponent implements OnInit {
 
   isTargetManuallySetOptions = [
     { value: 'true', label: 'Set Manually', checked: true },
-    { value: 'false', label: 'Set Dynamically', checked: true }
+    { value: 'false', label: 'Set Dynamically', checked: false }
   ];
+  isTargetOptionManual: boolean = true;
+  targetValue: number = null;
+
+  fieldAliases: FieldAliases;
 
   subscription: any;
   allPackets: HPacket[] = [];
@@ -36,12 +41,10 @@ export class ProductionTargetSettingsComponent implements OnInit {
   fieldsOptions: { [key: string]: HPacketField[] } = {};
   settableParameters: string[] = ['target', 'produced', 'current_shift'];
 
-  form: FormGroup;
-
   constructor(
     loggerService: LoggerService,
     private hPacketsService: HpacketsService,
-    private fb: FormBuilder
+    private cd: ChangeDetectorRef
   ) {
     this.logger = new Logger(loggerService);
     this.logger.registerClass("ProductionTargetSettingsComponent");
@@ -65,35 +68,32 @@ export class ProductionTargetSettingsComponent implements OnInit {
         this.apply();
       }
     });
-    this.initForm();
     this.retrievePacketsAndFields();
   }
 
-  initForm() {
-    this.form = this.fb.group({
-      isTargetOptionManual: ['true', Validators.required],
-      targetManualValue: [null]
-    });
-    this.onTargetOptionChange('true');
+  updateTargetValue(inputValue: number) {
+    this.targetValue = inputValue;
   }
 
-  onTargetOptionChange(option: string): void {
-    const isChecked = option === 'true';
+  onTargetOptionChange(option: boolean): void {
     this.isTargetManuallySetOptions.forEach(target => {
-      target.checked = isChecked ? target.value === 'true' : target.value === 'false';
+      target.checked = option ? target.value === 'true' : target.value === 'false';
     });
 
-    if (!isChecked) {
-      this.form.get('targetManualValue').setValue(null);
+    if (!option) {
+      this.targetValue = null;
     }
-    this.form.get('isTargetOptionManual').patchValue(option);
     
-    this.logger.debug('[onTargetOptionChange]', {
+    this.isTargetOptionManual = option;
+    this.cd.detectChanges();
+  
+    console.log('[onTargetOptionChange]', {
       option: option,
-      value: this.form.get('targetManualValue').value,
-      disabled: this.form.get('targetManualValue').disabled
-    })
+      isTargetManuallySetOptions: this.isTargetManuallySetOptions,
+      value: this.targetValue
+    });
   }
+
 
   /**
    * Setup widget data
@@ -157,10 +157,14 @@ export class ProductionTargetSettingsComponent implements OnInit {
    */
   processPacketAndConfiguration(packet: HPacket, key: string, totalFields: number, processedFields: number) {
     this.isTargetManuallySetOptions = this.widget.config.productionTargetSettings.isTargetManuallySetOptions;
+    this.targetValue = null;
     this.selectedPackets[key] = packet;
     this.selectedPacketsOption[key] = this.selectedPackets[key].id;
     this.selectedFields[key] = this.widget.config.productionTargetSettings.fields[key].field;
     this.fieldsOptions[key] = this.selectedPackets[key].fields;
+    if (this.widget.config.productionTargetSettings.fields[key].fieldAlias) {
+      this.fieldAliases[key] = this.widget.config.productionTargetSettings.fields[key].fieldAlias;
+    }
     if (this.widget.config.packetFields) {
       packet.fields.sort((a, b) => a.name < b.name ? -1 : 1);
     }
@@ -182,11 +186,11 @@ export class ProductionTargetSettingsComponent implements OnInit {
    * Set target option and (eventually) manual value
    */
   setFormValues() {
-    this.form.get('isTargetOptionManual').setValue(this.widget.config.productionTargetSettings.isTargetManuallySet);
+    this.isTargetOptionManual = this.widget.config.productionTargetSettings.isTargetManuallySet;
     if (this.widget.config.productionTargetSettings.isTargetManuallySet) {
-      this.form.get('targetManualValue').setValue(this.widget.config.productionTargetSettings.targetManuallySetValue);
+      this.targetValue = this.widget.config.productionTargetSettings.targetManuallySetValue;
     }
-    this.onTargetOptionChange(this.form.get('isTargetOptionManual').value);
+    this.onTargetOptionChange(this.isTargetOptionManual);
   }
 
   onPacketChange(packetOption, field: string) {
@@ -219,12 +223,13 @@ export class ProductionTargetSettingsComponent implements OnInit {
   }
 
   apply() {
-    const isTargetManual = this.form.get('isTargetOptionManual').value === 'true';
     const isCurrentShiftUndefined = this.selectedPacketsOption['current_shift'] === undefined;
-
+    if ((this.isTargetOptionManual && this.targetValue !== null) || (!this.selectedPackets['produced'] || !this.selectedFields['produced'])) {
+      return
+    }
     const config: ProductionTargetSettings.ProductionTargetSettings = {
       isTargetManuallySetOptions: this.isTargetManuallySetOptions,
-      isTargetManuallySet: this.form.get('isTargetOptionManual').value,
+      isTargetManuallySet: this.isTargetOptionManual,
       fields: {
         produced: {
           packet: this.selectedPacketsOption['produced'],
@@ -233,13 +238,13 @@ export class ProductionTargetSettingsComponent implements OnInit {
       }
     };
 
-    if (!isTargetManual) {
+    if (!this.isTargetOptionManual) {
       config.fields.target = {
         packet: this.selectedPacketsOption['target'],
         field: this.selectedFields['target']
       };
     } else {
-      config.targetManuallySetValue = this.form.get('targetManualValue').value
+      config.targetManuallySetValue = this.targetValue
     }
 
     if (!isCurrentShiftUndefined) {
@@ -247,6 +252,12 @@ export class ProductionTargetSettingsComponent implements OnInit {
         packet: this.selectedPacketsOption['current_shift'],
         field: this.selectedFields['current_shift']
       };
+    }
+
+    if (Object.keys(this.fieldAliases).length > 0) {
+      Object.keys(this.fieldAliases).forEach(fieldAlias => {
+        config.fields[fieldAlias].fieldAlias = this.fieldAliases[fieldAlias];
+      });
     }
 
     if (!this.widget.config) {
