@@ -20,6 +20,7 @@ export class FieldValueGeneratorSettingsComponent implements OnInit {
       value: 'fixed',
       label: 'Fixed Value',
       fields: [
+        { type: HPacketField.TypeEnum.BOOLEAN, multiplicity: HPacketField.MultiplicityEnum.SINGLE },
         { type: HPacketField.TypeEnum.TEXT, multiplicity: HPacketField.MultiplicityEnum.SINGLE },
         { type: HPacketField.TypeEnum.INTEGER, multiplicity: HPacketField.MultiplicityEnum.SINGLE },
         { type: HPacketField.TypeEnum.FLOAT, multiplicity: HPacketField.MultiplicityEnum.SINGLE },
@@ -57,6 +58,13 @@ export class FieldValueGeneratorSettingsComponent implements OnInit {
         { type: HPacketField.TypeEnum.INTEGER, multiplicity: HPacketField.MultiplicityEnum.SINGLE },
         { type: HPacketField.TypeEnum.FLOAT, multiplicity: HPacketField.MultiplicityEnum.SINGLE },
         { type: HPacketField.TypeEnum.DOUBLE, multiplicity: HPacketField.MultiplicityEnum.SINGLE },
+      ],
+    },
+    {
+      value: 'random',
+      label: 'Random',
+      fields: [
+        { type: HPacketField.TypeEnum.BOOLEAN, multiplicity: HPacketField.MultiplicityEnum.SINGLE },
       ],
     },
   ];

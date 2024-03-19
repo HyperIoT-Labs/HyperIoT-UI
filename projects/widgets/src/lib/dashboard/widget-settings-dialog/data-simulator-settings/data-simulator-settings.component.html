@@ -84,10 +84,22 @@
                             <hyt-info i18n-text="@@HYT_outliers_description" text="The outlier value is a specific value emitted when the user presses the 'outlier' button."></hyt-info>
                         </div>
                         <div class="field-outliner-settings">
-                            <mat-form-field>
+                            <mat-form-field *ngIf="fieldType[field.id] != 'BOOLEAN'">
                                 <mat-label i18n="@@HYT_value">Value</mat-label>
                                 <input matInput [name]="'outlier-' + field.id" [(ngModel)]="fieldOutliers[field.id]">
                             </mat-form-field>
+                            <div class="simulator-switch-container">
+                                <span class="falseTrueLabel">False</span>
+                                <label class="simulator-switch" *ngIf="fieldType[field.id] == 'BOOLEAN'">
+                                    <input 
+                                        type="checkbox"
+                                        [name]="'outlier-' + field.id" 
+                                        [(ngModel)]="fieldOutliers[field.id]"
+                                    >
+                                    <span class="slider round"></span>
+                                </label>
+                                <span class="falseTrueLabel">True</span>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -127,14 +127,16 @@ export class DataSimulatorComponent extends BaseWidgetComponent {
               const minVal = Math.min(fieldRule.min, fieldRule.max);
               const maxVal = Math.max(fieldRule.min, fieldRule.max);
               fieldValue = Math.random() * (maxVal - minVal) + minVal;
-              debugger;
               if (this.fieldType[+fieldId] == HPacketField.TypeEnum.INTEGER)
                 fieldValue = Math.round(fieldValue);
-
               break;
             case "dataset":
               const values = JSON.parse(fieldRule.values); // todo Move this conversion in the configuration to avoid having to perform it each time
               fieldValue = values[this.counter % values.length];
+              break;
+            case "random":
+                //ATM the random function emit only boolean value        
+                fieldValue = (Math.round(Math.random()) * 2) == 0;
               break;
             // TODO shouldn't use eval. The evaluation should be performed using a specific library.
             case "expression":
@@ -207,6 +209,8 @@ export class DataSimulatorComponent extends BaseWidgetComponent {
       timestamp: new Date().getTime(),
       [field.value]: this.fieldOutliers[field.key],
     };
+    console.log("outlier packet emitted", packet);
+    
     this.wsSenderService.send(packet);
   }
 
