@@ -1,67 +1,70 @@
+import { HPacketField } from "core";
+
 export namespace DataSimulatorSettings {
+  export interface DataSimulatorSettings {
+    deviceInfo: {
+      id: number;
+      name: string;
+      password: string;
+    };
+    packetInfo: {
+      packetId: number;
+      packetName: string;
+    };
+    topic: string;
+    fieldRules: FieldRules;
+    fieldType: FieldType;
+    fieldOutliers: FieldOutliers;
+    period: number;
+  }
 
-    export interface DataSimulatorSettings {
-        deviceInfo: {
-            id: number;
-            name: string;
-            password: string;
-        };
-        packetInfo: {
-            packetId: number;
-            packetName: string;
-        }
-        topic: string;
-        fieldRules: FieldRules;
-        fieldOutliers: FieldOutliers;
-        period: number;
-    }
+  export interface FieldOutliers {
+    [fieldId: number]: any;
+  }
 
-    export interface FieldOutliers {
-        [fieldId: number]: any;
-    }
+  export interface FieldRules {
+    [fieldId: number]: Rule;
+  }
 
-    export interface FieldRules {
-        [fieldId: number]: Rule;
-    }
+  export interface FieldType {
+    [fieldId: number]: HPacketField.TypeEnum;
+  }
 
-    export type FixedNum = {
-        value?: number;
-    }
-    
-    export interface Expression {
-        expression?: string;
-    }
-    
-    export interface NumRange {
-        min?: number;
-        max?: number;
-    }
-    
-    export interface DataSet {
-        values?: string;
-    }
-    
-    export type NumRule = FixedNum & Expression & NumRange & DataSet;
+  export type FixedNum = {
+    value?: number;
+  };
 
-    export type Rule = NumRule & { type: string; };
+  export interface Expression {
+    expression?: string;
+  }
 
-    export const Utils = {
+  export interface NumRange {
+    min?: number;
+    max?: number;
+  }
 
-        WS_CONNECTED: 'MQTT Client Connected!',
-        WS_UNAUTHORIZED: 'Not authorized to connect',
+  export interface DataSet {
+    values?: string;
+  }
 
-        expressionOperators: [
-            { regex: /abs/ig, function: 'Math.abs' },
-            { regex: /sin/ig, function: 'Math.sin' },
-            { regex: /cos/ig, function: 'Math.cos' },
-            { regex: /tan/ig, function: 'Math.tan' },
-            { regex: /sqrt/ig, function: 'Math.sqrt' },
-            { regex: /pow/ig, function: 'Math.pow' },
-            { regex: /log/ig, function: 'Math.log' },
-            { regex: /random/ig, function: 'Math.random' },
-            { regex: /pi/ig, function: 'Math.PI' },
-        ],
+  export type NumRule = FixedNum & Expression & NumRange & DataSet;
 
-    }
+  export type Rule = NumRule & { type: string };
 
+  export const Utils = {
+    WS_CONNECTED: "MQTT Client Connected!",
+    WS_UNAUTHORIZED: "Not authorized to connect",
+
+    expressionOperators: [
+      { regex: /abs/gi, function: "Math.abs" },
+      { regex: /sin/gi, function: "Math.sin" },
+      { regex: /cos/gi, function: "Math.cos" },
+      { regex: /tan/gi, function: "Math.tan" },
+      { regex: /sqrt/gi, function: "Math.sqrt" },
+      { regex: /pow/gi, function: "Math.pow" },
+      { regex: /log/gi, function: "Math.log" },
+      { regex: /random/gi, function: "Math.random" },
+      { regex: /pi/gi, function: "Math.PI" },
+    ],
+  };
 }

@@ -18,7 +18,19 @@
                     Emit a fixed value
                 </div>
                 <div class="rule-input">
-                    <mat-form-field class="example-full-width">
+                    <div class="simulator-switch-container" *ngIf="isBooleanField">
+                        <span class="falseTrueLabel {{!rule.value && 'focusedSwitch'}}">False</span>
+                        <label class="simulator-switch">
+                            <input 
+                                type="checkbox"
+                                [name]="'value' + field.id" 
+                                [(ngModel)]="rule.value"
+                            >
+                            <span class="slider round"></span>
+                        </label>
+                        <span class="falseTrueLabel {{rule.value && 'focusedSwitch'}}">True</span>
+                    </div>
+                    <mat-form-field class="example-full-width" *ngIf="!isBooleanField">
                         <mat-label i18n="@@HYT_value">Value</mat-label>
                         <input matInput [name]="'value' + field.id" [(ngModel)]="rule.value">
                     </mat-form-field>
