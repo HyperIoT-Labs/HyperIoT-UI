@@ -28,7 +28,12 @@ export class ProductionTargetComponent extends BaseGenericComponent implements O
   /**
    * Filled with labels on data channel data retrieval, starts with remaining since it's a value we extrapolate from target - produced
    */
-  widgetLabels: string[] = ["target", "current_shift", "produced", "remaining"];
+  widgetLabels = [
+    { label: "target", value: "target" },
+    { label: "current_shift", value: "current_shift" },
+    { label: "produced", value: "produced" },
+    { label: "remaining", value: "remaining" }
+  ];
 
   protected dataChannelList: DataChannel[] = [];
   dataSubscription: Subscription;
@@ -70,21 +75,38 @@ export class ProductionTargetComponent extends BaseGenericComponent implements O
     this.isConfigured = true;
     let packetAndFieldsToRetrive: { [packetId: number]: { [id: number]: string } } = {};
     if (this.widget.config.productionTargetSettings) {
-      if (this.widget.config.productionTargetSettings.isTargetManuallySet) {
-        this.chartData['target'] = this.widget.config.productionTargetSettings.targetManuallySetValue;
+      this.widgetLabels = [
+        { label: "target", value: "target" },
+        { label: "current_shift", value: "current_shift" },
+        { label: "produced", value: "produced" },
+        { label: "remaining", value: "remaining" }
+      ];
+      if (this.widget.config.productionTargetSettings.target.isTargetManuallySet) {
+        this.chartData['target'] = this.widget.config.productionTargetSettings.target.manuallySetField.targetManuallySetValue;
       };
-      Object.keys(this.widget.config.productionTargetSettings.fields).map(key => {
-        if (this.widget.config.productionTargetSettings.fields[key].fieldAlias) {
-          const labelIndex = this.widgetLabels.indexOf(key);
-          this.widgetLabels[labelIndex] = this.widget.config.productionTargetSettings.fields[key].fieldAlias;
+      Object.keys(this.widget.config.productionTargetSettings).map(key => {
+        if ((key === 'target' && (this.widget.config.productionTargetSettings[key].dynamicallySetField?.fieldAlias || this.widget.config.productionTargetSettings[key].manuallySetField?.fieldAlias)) || (key !== 'target' && this.widget.config.productionTargetSettings[key].fieldAlias)) {
+          const labelIndex = this.widgetLabels.findIndex(item => item.value === key);
+          if (labelIndex !== -1) {
+            if (key === 'target' && this.widget.config.productionTargetSettings[key].isTargetManuallySet) {
+              this.widgetLabels[labelIndex].label = this.widget.config.productionTargetSettings.target.manuallySetField.fieldAlias;
+            } else if (key === 'target' && !this.widget.config.productionTargetSettings[key].isTargetManuallySet) {
+              this.widgetLabels[labelIndex].label = this.widget.config.productionTargetSettings[key].dynamicallySetField.fieldAlias;
+            } else {
+              this.widgetLabels[labelIndex].label = this.widget.config.productionTargetSettings[key].fieldAlias;
+            }
+          }
         }
-        const packetId = this.widget.config.productionTargetSettings.fields[key].packet;
-        const field = this.widget.config.productionTargetSettings.fields[key].field;
-        const fieldValue = { [field.fieldId[0]]: field.fieldName };
-        if (packetAndFieldsToRetrive[parseInt(packetId)]) {
-          packetAndFieldsToRetrive[parseInt(packetId)] = { ...packetAndFieldsToRetrive[parseInt(packetId)], ...fieldValue };
-        } else {
-          packetAndFieldsToRetrive[parseInt(packetId)] = fieldValue;
+
+        if ((key === 'target' && !this.widget.config.productionTargetSettings.target.isTargetManuallySet) || (key !== 'target' && this.widget.config.productionTargetSettings[key].packet && this.widget.config.productionTargetSettings[key].field)) {
+          const packetId = key === 'target' ? this.widget.config.productionTargetSettings[key].dynamicallySetField.packet : this.widget.config.productionTargetSettings[key].packet;
+          const field = key === 'target' ? this.widget.config.productionTargetSettings[key].dynamicallySetField.field : this.widget.config.productionTargetSettings[key].field;
+          const fieldValue = { [field.fieldId[0]]: field.fieldName };
+          if (packetAndFieldsToRetrive[parseInt(packetId)]) {
+            packetAndFieldsToRetrive[parseInt(packetId)] = { ...packetAndFieldsToRetrive[parseInt(packetId)], ...fieldValue };
+          } else {
+            packetAndFieldsToRetrive[parseInt(packetId)] = fieldValue;
+          }
         }
       });
     };
@@ -125,7 +147,15 @@ export class ProductionTargetComponent extends BaseGenericComponent implements O
             delete element['timestamp'];
           }
           Object.keys(element).forEach((key: string) => {
-            const chartKeys = Object.keys(this.widget.config.productionTargetSettings.fields).filter(fieldKey => this.widget.config.productionTargetSettings.fields[fieldKey].field.fieldName === key)
+            const chartKeys = Object.keys(this.widget.config.productionTargetSettings).filter(fieldKey => {
+              if (fieldKey === 'target' && this.widget.config.productionTargetSettings[fieldKey].isTargetManuallySet) {
+                return false
+              } else if (fieldKey === 'target' && !this.widget.config.productionTargetSettings[fieldKey].isTargetManuallySet) {
+                return this.widget.config.productionTargetSettings[fieldKey].dynamicallySetField.field['fieldName'] === key
+              } else {
+                return this.widget.config.productionTargetSettings[fieldKey].field.fieldName === key
+              }
+            })
             chartKeys.forEach(chartKey => this.chartData[chartKey] = element[key]);
           })
           this.processPlotlyData();
@@ -141,24 +171,35 @@ export class ProductionTargetComponent extends BaseGenericComponent implements O
    * Process data and use it on chart
    */
   processPlotlyData() {
-    const remainingValue = typeof this.chartData['target'] === 'number' && typeof this.chartData['produced'] === 'number' ? this.chartData['target'] - this.chartData['produced'] : '';
+    debugger
+    const targetValue = typeof this.chartData['target'] === 'number' ? this.chartData['target'] : parseInt(this.chartData['target']);
+    const remainingValue = typeof targetValue === 'number' && typeof this.chartData['produced'] === 'number' ? targetValue - this.chartData['produced'] : null;
     this.chartData['remaining'] = remainingValue;
     const completedPercentage = Object.keys(this.chartData).includes('produced') && Object.keys(this.chartData).includes('target') ? this.calculateCompletionPercentage(this.chartData['target'], this.chartData['produced']) + '%' : '0%';
     this.logger.debug('[processPlotlyData]', {
-      remainingValue: remainingValue,
+      remainingValue: this.chartData['remaining'],
       target: this.chartData['target'],
       produced: this.chartData['produced'],
-      values: this.chartData['produced'] && remainingValue ? [this.chartData['produced'], remainingValue] : [0, 100],
+      values: this.chartData['produced'] && typeof remainingValue === 'number' && remainingValue >= 0 ? [this.chartData['produced'], remainingValue] : [0, 100],
       completedPercentage: completedPercentage
     });
+    let chartColors = this.chartDataColors;
+    if (this.chartData['produced'] === 0 || remainingValue === 0) {
+      if (this.chartData['produced'] === 0) {
+        chartColors = [this.chartDataColors[1], this.chartDataColors[1]];
+      } else {
+
+        chartColors = [this.chartDataColors[0], this.chartDataColors[0]];
+      }
+    }
     this.graph = {
       data: [
         {
-          values: this.chartData['produced'] && remainingValue ? [this.chartData['produced'], remainingValue] : [0, 100],
+          values: this.chartData['produced'] && typeof remainingValue === 'number' && remainingValue >= 0 ? [this.chartData['produced'], remainingValue] : [0, 100],
           labels: this.chartDataLabels,
           type: 'pie',
           marker: {
-            colors: this.chartData['produced'] > 0 ? this.chartDataColors : [this.chartDataColors[1], this.chartDataColors[1]],
+            colors: chartColors,
             line: {
               color: '#00aec5',
               width: [2, 2, 2]
@@ -226,7 +267,7 @@ export class ProductionTargetComponent extends BaseGenericComponent implements O
       case "remaining":
         return $localize`:@@HYT_remaining:Left to Produce`;
       default:
-        return;
+        return fieldId;
     }
   }
 

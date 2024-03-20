@@ -24,8 +24,8 @@
             <div class="section-group">
               <div class="data">
                 <div *ngFor="let label of widgetLabels" class="main-data">
-                  <span>{{returnFieldName(label) | uppercase}}</span>
-                  <span class="value">{{chartData[label] ? chartData[label] : '--'}}</span>
+                  <span>{{returnFieldName(label.label) | uppercase}}</span>
+                  <span class="value">{{chartData[label.value] !== undefined && chartData[label.value] !== null ? chartData[label.value] : '--'}}</span>
                 </div>
               </div>
               <plotly-plot [data]="graph.data" [layout]="graph.layout" class="chart"></plotly-plot>

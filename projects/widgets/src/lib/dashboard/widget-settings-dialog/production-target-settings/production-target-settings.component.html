@@ -32,10 +32,8 @@
 
             <input name="hidden-packet-id-set-target" [(ngModel)]="targetValue" style="display: none;" required>
         </div>
-
-        <div class="section-input" *ngIf="(field === 'target' && isTargetOptionManual == false) || field !== 'target'">
-            <div class="customization-container-section section-alias"
-                *ngIf="(field === 'target' && isTargetOptionManual == false) || field !== 'target'">
+        <div class="section-input" *ngIf="(field === 'target' && !isTargetOptionManual) || field !== 'target'">
+            <div class="customization-container-section section-alias">
                 <div class="section-title">
                     <span i18n="@@HYT_alias_title">Field Alias</span>
                     <hyt-info i18n-text="@@HYT_aliases_description"
@@ -56,13 +54,12 @@
             </hyt-select>
             <!-- TODO temp fix for hyt-select required issue -->
             <input [name]="'hidden-packet-id-select-packet-' + field"
-                *ngIf="(field === 'target' && !isTargetOptionManual) || field === 'produced'"
+                *ngIf="field === 'target' || field === 'produced'"
                 [(ngModel)]="selectedPackets[field]" style="display: none;" required>
 
-
-            <div *ngIf="selectedPackets[field]" id="field-selection" class="d-flex flex-column">
+            <div class="d-flex flex-column">
                 <hyt-inner-field-select
-                    *ngIf="fieldsOptions[field] && fieldsOptions[field].length > 0 && selectedFields[field]"
+                    *ngIf="fieldsOptions[field] && fieldsOptions[field].length > 0 && selectedPackets[field]"
                     [id]="'selectedField' + field" [fields]="fieldsOptions[field]"
                     [selectedFieldsIds]="selectedFields && selectedFields[field] ? selectedFields[field].fieldId : []"
                     [isRequired]="field === 'produced' || field === 'target'" [isMultiSelect]="false"
@@ -70,7 +67,7 @@
                     (fieldSelectionChanged)="onPacketFieldChange($event, field)"></hyt-inner-field-select>
                 <!-- TODO temp fix for hyt-select required issue -->
                 <input [name]="'hidden-packet-id-select-field-' + field"
-                    *ngIf="(field === 'target' && !isTargetOptionManual) || field === 'produced'"
+                    *ngIf="field === 'target' || field === 'produced'"
                     [(ngModel)]="selectedFields[field]" style="display: none;" required>
             </div>
         </div>
