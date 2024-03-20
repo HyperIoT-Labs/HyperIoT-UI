@@ -121,12 +121,13 @@ export class ProductionTargetSettingsComponent implements OnInit {
               })),
             icon: 'icon-hyt_device',
           }));
+          
+          this.setManualTargetValue();
+
           if (this.widget.config?.productionTargetSettings?.produced.packet) {
-            this.setManualTargetValue();
             const totalFields = Object.keys(this.widget.config?.productionTargetSettings).length;
             let processedFields = 0;
             Object.keys(this.widget.config?.productionTargetSettings).forEach(key => {
-              this.isTargetOptionManual = this.widget.config.productionTargetSettings[key].isTargetManuallySet;
               const packetId = key === 'target' ? this.isTargetOptionManual ? null : this.widget.config?.productionTargetSettings[key].dynamicallySetField.packet : this.widget.config?.productionTargetSettings[key]?.packet;
               if (packetId === undefined) {
                 this.fieldAliases[key] = this.widget.config.productionTargetSettings[key].fieldAlias;
@@ -195,11 +196,13 @@ export class ProductionTargetSettingsComponent implements OnInit {
    * Set target option and (eventually) manual value
    */
   setManualTargetValue() {
-    this.isTargetOptionManual = this.widget.config.productionTargetSettings.target.isTargetManuallySet;
-    if (this.widget.config.productionTargetSettings.target.isTargetManuallySet) {
-      this.targetValue = this.widget.config.productionTargetSettings.target.manuallySetField.targetManuallySetValue;
+    if (this.widget.config.productionTargetSettings) {
+      this.isTargetOptionManual = this.widget.config.productionTargetSettings.target.isTargetManuallySet;
+      if (this.widget.config.productionTargetSettings.target.isTargetManuallySet) {
+        this.targetValue = this.widget.config.productionTargetSettings.target.manuallySetField.targetManuallySetValue;
+      }
+      this.onTargetOptionChange(this.isTargetOptionManual ? "true" : "false");
     }
-    this.onTargetOptionChange(this.isTargetOptionManual ? "true" : "false");
   }
 
   onPacketChange(packetOption, field: string) {
@@ -238,6 +241,9 @@ export class ProductionTargetSettingsComponent implements OnInit {
         packet: this.selectedPacketsOption['produced'],
         field: this.selectedFields['produced'],
         fieldAlias: this.fieldAliases['produced']
+      },
+      remaining: {
+        fieldAlias: this.fieldAliases['remaining']
       }
     };
 

@@ -88,7 +88,9 @@ export class ProductionTargetComponent extends BaseGenericComponent implements O
         if ((key === 'target' && (this.widget.config.productionTargetSettings[key].dynamicallySetField?.fieldAlias || this.widget.config.productionTargetSettings[key].manuallySetField?.fieldAlias)) || (key !== 'target' && this.widget.config.productionTargetSettings[key].fieldAlias)) {
           const labelIndex = this.widgetLabels.findIndex(item => item.value === key);
           if (labelIndex !== -1) {
-            if (key === 'target' && this.widget.config.productionTargetSettings[key].isTargetManuallySet) {
+            if (key === 'remaining') {
+              this.widgetLabels[labelIndex].label = this.widget.config.productionTargetSettings[key].fieldAlias;
+            } else if (key === 'target' && this.widget.config.productionTargetSettings[key].isTargetManuallySet) {
               this.widgetLabels[labelIndex].label = this.widget.config.productionTargetSettings.target.manuallySetField.fieldAlias;
             } else if (key === 'target' && !this.widget.config.productionTargetSettings[key].isTargetManuallySet) {
               this.widgetLabels[labelIndex].label = this.widget.config.productionTargetSettings[key].dynamicallySetField.fieldAlias;
@@ -148,12 +150,16 @@ export class ProductionTargetComponent extends BaseGenericComponent implements O
           }
           Object.keys(element).forEach((key: string) => {
             const chartKeys = Object.keys(this.widget.config.productionTargetSettings).filter(fieldKey => {
-              if (fieldKey === 'target' && this.widget.config.productionTargetSettings[fieldKey].isTargetManuallySet) {
-                return false
+              if (fieldKey === 'remaining') {
+                return true;
+              } else if (fieldKey === 'current_shift' && !this.widget.config.productionTargetSettings[fieldKey].field) {
+                return false;
+              } else if (fieldKey === 'target' && this.widget.config.productionTargetSettings[fieldKey].isTargetManuallySet) {
+                return false;
               } else if (fieldKey === 'target' && !this.widget.config.productionTargetSettings[fieldKey].isTargetManuallySet) {
-                return this.widget.config.productionTargetSettings[fieldKey].dynamicallySetField.field['fieldName'] === key
+                return this.widget.config.productionTargetSettings[fieldKey].dynamicallySetField.field['fieldName'] === key;
               } else {
-                return this.widget.config.productionTargetSettings[fieldKey].field.fieldName === key
+                return this.widget.config.productionTargetSettings[fieldKey].field.fieldName === key;
               }
             })
             chartKeys.forEach(chartKey => this.chartData[chartKey] = element[key]);
@@ -180,7 +186,7 @@ export class ProductionTargetComponent extends BaseGenericComponent implements O
       remainingValue: this.chartData['remaining'],
       target: this.chartData['target'],
       produced: this.chartData['produced'],
-      values: this.chartData['produced'] && typeof remainingValue === 'number' && remainingValue >= 0 ? [this.chartData['produced'], remainingValue] : [0, 100],
+      values: this.chartData['produced'] && typeof remainingValue === 'number' && remainingValue >= 0 ? [this.chartData['produced'], remainingValue] : [100, 0],
       completedPercentage: completedPercentage
     });
     let chartColors = this.chartDataColors;
@@ -245,7 +251,7 @@ export class ProductionTargetComponent extends BaseGenericComponent implements O
    * @returns completition number (percentage)
    */
   calculateCompletionPercentage(totalElements: number, producedElements: number): number {
-    if (totalElements <= 0) {
+    if (totalElements <= 0 || totalElements < producedElements) {
       return 0;
     }
     const completionPercentage = (producedElements / totalElements) * 100;

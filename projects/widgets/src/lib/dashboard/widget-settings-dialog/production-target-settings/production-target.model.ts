@@ -8,6 +8,9 @@ export namespace ProductionTargetSettings {
         },
         produced: packetInfo,
         current_shift?: packetInfo
+        remaining: {
+            fieldAlias: string;
+        }
     }
 
     export interface manuallySetField {

@@ -1,7 +1,5 @@
 <div id="production-target-settings" *ngIf="contentLoaded">
     <div *ngFor="let field of settableParameters" class="section-group">
-        <!-- 
-                [disabled]="field === 'produced' && form.get('isTargetOptionManual').value == 'true' && form.get('targetManualValue').value === null" -->
         <div class="label-section">
             <span>{{ returnFieldName(field) }}</span>
             <div *ngIf="field === 'target'">
@@ -10,7 +8,7 @@
                 </hyt-radio-button>
             </div>
         </div>
-        <div class="manual-target" *ngIf="isTargetOptionManual && field === 'target'">
+        <div class="section-input" *ngIf="field === 'target' && isTargetOptionManual">
             <div class="customization-container-section section-alias">
                 <div class="section-title">
                     <span i18n="@@HYT_alias_title">Field Alias</span>
@@ -19,21 +17,40 @@
                 </div>
                 <div class="section-input">
                     <mat-form-field>
-                        <input matInput name="hpacketfield-custom-aliases-{{field}}" id="customAliasesLabel-{{field}}"
-                            type="text" placeholder="Alias" [(ngModel)]="fieldAliases[field]">
+                        <input matInput name="hpacketfield-custom-aliases-{{field}}"
+                            id="customAliasesLabel-{{field}}" type="text" placeholder="Alias"
+                            [(ngModel)]="fieldAliases[field]">
                     </mat-form-field>
                 </div>
             </div>
             <mat-form-field class="target-input">
-                <input matInput i18n-placeholder="@@HYT_enter_target" (blur)="updateTargetValue($event.target.value)"
-                    [ngModelOptions]="{ standalone: true }" placeholder="Manually enter a target number" required
-                    type="number" name="targetValue" [(ngModel)]="targetValue">
+                <input matInput i18n-placeholder="@@HYT_enter_target"
+                    (blur)="updateTargetValue($event.target.value)" [ngModelOptions]="{ standalone: true }"
+                    placeholder="Manually enter a target number" required type="number" name="targetValue"
+                    [(ngModel)]="targetValue">
             </mat-form-field>
 
-            <input name="hidden-packet-id-set-target" [(ngModel)]="targetValue" style="display: none;" required>
+            <input name="hidden-packet-id-set-target" [(ngModel)]="targetValue"
+                style="display: none;" required>
         </div>
         <div class="section-input" *ngIf="(field === 'target' && !isTargetOptionManual) || field !== 'target'">
-            <div class="customization-container-section section-alias">
+            <div class="manual-target" *ngIf="field === 'target'">
+                <div class="customization-container-section section-alias">
+                    <div class="section-title">
+                        <span i18n="@@HYT_alias_title">Field Alias</span>
+                        <hyt-info i18n-text="@@HYT_aliases_description"
+                            text="Enter an alternative name to be displayed in the widget. If the alias is empty, the field name will be displayed."></hyt-info>
+                    </div>
+                    <div class="section-input">
+                        <mat-form-field>
+                            <input matInput name="hpacketfield-custom-aliases-{{field}}"
+                                id="customAliasesLabel-{{field}}" type="text" placeholder="Alias"
+                                [(ngModel)]="fieldAliases[field]">
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div class="customization-container-section section-alias" *ngIf="field !== 'target'">
                 <div class="section-title">
                     <span i18n="@@HYT_alias_title">Field Alias</span>
                     <hyt-info i18n-text="@@HYT_aliases_description"
@@ -53,8 +70,7 @@
                 [errorMsgRequired]="'Select one packet'" [hint]="'select one packet'" class="hyt-select-full-width">
             </hyt-select>
             <!-- TODO temp fix for hyt-select required issue -->
-            <input [name]="'hidden-packet-id-select-packet-' + field"
-                *ngIf="field === 'target' || field === 'produced'"
+            <input [name]="'hidden-packet-id-select-packet-' + field" *ngIf="field === 'target' || field === 'produced'"
                 [(ngModel)]="selectedPackets[field]" style="display: none;" required>
 
             <div class="d-flex flex-column">
@@ -67,8 +83,26 @@
                     (fieldSelectionChanged)="onPacketFieldChange($event, field)"></hyt-inner-field-select>
                 <!-- TODO temp fix for hyt-select required issue -->
                 <input [name]="'hidden-packet-id-select-field-' + field"
-                    *ngIf="field === 'target' || field === 'produced'"
-                    [(ngModel)]="selectedFields[field]" style="display: none;" required>
+                    *ngIf="field === 'target' || field === 'produced'" [(ngModel)]="selectedFields[field]"
+                    style="display: none;" required>
+            </div>
+        </div>
+    </div>
+    <div class="remaining-label section-group">
+        <div class="label-section">
+            <span i18n="@@">Remaining</span>
+        </div>
+        <div class="customization-container-section section-alias">
+            <div class="section-title">
+                <span i18n="@@HYT_alias_title">Field Alias</span>
+                <hyt-info i18n-text="@@HYT_aliases_description"
+                    text="Enter an alternative name to be displayed in the widget. If the alias is empty, the field name will be displayed."></hyt-info>
+            </div>
+            <div class="section-input">
+                <mat-form-field>
+                    <input matInput name="hpacketfield-custom-aliases-remaining" id="customAliasesLabel-remaining"
+                        type="text" placeholder="Alias" [(ngModel)]="fieldAliases['remaining']">
+                </mat-form-field>
             </div>
         </div>
     </div>

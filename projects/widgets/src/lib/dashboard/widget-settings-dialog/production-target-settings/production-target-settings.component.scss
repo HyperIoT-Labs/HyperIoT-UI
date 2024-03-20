@@ -2,13 +2,18 @@
   display: flex;
   flex-direction: column;
   margin-left: 24px;
-  margin-bottom: 6%;
+  margin-bottom: 1em;
 
   .label-section {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     gap: 35px;
+
+    span {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
   }
 
   .manual-target {
