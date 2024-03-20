@@ -29,7 +29,7 @@ export class ProductionTargetSettingsComponent implements OnInit {
   isTargetOptionManual: boolean = true;
   targetValue: number = null;
 
-  fieldAliases: FieldAliases;
+  fieldAliases: FieldAliases = {};
 
   subscription: any;
   allPackets: HPacket[] = [];
@@ -85,7 +85,6 @@ export class ProductionTargetSettingsComponent implements OnInit {
     }
     
     this.isTargetOptionManual = option;
-    this.cd.detectChanges();
   
     console.log('[onTargetOptionChange]', {
       option: option,
@@ -157,7 +156,7 @@ export class ProductionTargetSettingsComponent implements OnInit {
    */
   processPacketAndConfiguration(packet: HPacket, key: string, totalFields: number, processedFields: number) {
     this.isTargetManuallySetOptions = this.widget.config.productionTargetSettings.isTargetManuallySetOptions;
-    this.targetValue = null;
+    this.targetValue = this.widget.config.productionTargetSettings.targetManuallySetValue;
     this.selectedPackets[key] = packet;
     this.selectedPacketsOption[key] = this.selectedPackets[key].id;
     this.selectedFields[key] = this.widget.config.productionTargetSettings.fields[key].field;

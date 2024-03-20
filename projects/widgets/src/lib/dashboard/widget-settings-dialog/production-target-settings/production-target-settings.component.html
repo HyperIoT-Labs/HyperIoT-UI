@@ -10,91 +10,68 @@
                 </hyt-radio-button>
             </div>
         </div>
-        <div *ngIf="isTargetOptionManual && field === 'target'; else targetSelect">
+        <div class="manual-target" *ngIf="isTargetOptionManual && field === 'target'">
+            <div class="customization-container-section section-alias">
+                <div class="section-title">
+                    <span i18n="@@HYT_alias_title">Field Alias</span>
+                    <hyt-info i18n-text="@@HYT_aliases_description"
+                        text="Enter an alternative name to be displayed in the widget. If the alias is empty, the field name will be displayed."></hyt-info>
+                </div>
+                <div class="section-input">
+                    <mat-form-field>
+                        <input matInput name="hpacketfield-custom-aliases-{{field}}" id="customAliasesLabel-{{field}}"
+                            type="text" placeholder="Alias" [(ngModel)]="fieldAliases[field]">
+                    </mat-form-field>
+                </div>
+            </div>
             <mat-form-field class="target-input">
-                <input matInput i18n-placeholder="@@HYT_enter_target" (input)="updateTargetValue($event.data)"
-                    placeholder="Manually enter a target number" required type="number">
+                <input matInput i18n-placeholder="@@HYT_enter_target" (blur)="updateTargetValue($event.target.value)"
+                    [ngModelOptions]="{ standalone: true }" placeholder="Manually enter a target number" required
+                    type="number" name="targetValue" [(ngModel)]="targetValue">
             </mat-form-field>
 
             <input name="hidden-packet-id-set-target" [(ngModel)]="targetValue" style="display: none;" required>
         </div>
 
-        <ng-template #targetSelect>
-            <div class="section-input">
-                <hyt-select [label]="'Select Packet'" [groups]="groupedPacketOptions"
-                    [required]="field !== 'current_shift'" [name]="'selectedPacket' + field"
-                    [selected]="selectedPacketsOption && selectedPacketsOption[field] ? selectedPacketsOption[field] : {}"
-                    [isSearchable]="true" (changeFn)="onPacketChange($event, field)"
-                    [errorMsgRequired]="'Select one packet'" [hint]="'select one packet'" class="hyt-select-full-width">
-                </hyt-select>
-                <!-- TODO temp fix for hyt-select required issue -->
-                <input [name]="'hidden-packet-id-select-packet' + field" [(ngModel)]="selectedPackets[field]" style="display: none;"
-                    [required]="field !== 'current_shift'">
-                >
-                <hyt-inner-field-select *ngIf="fieldsOptions[field] && fieldsOptions[field].length > 0"
+        <div class="section-input" *ngIf="(field === 'target' && isTargetOptionManual == false) || field !== 'target'">
+            <div class="customization-container-section section-alias"
+                *ngIf="(field === 'target' && isTargetOptionManual == false) || field !== 'target'">
+                <div class="section-title">
+                    <span i18n="@@HYT_alias_title">Field Alias</span>
+                    <hyt-info i18n-text="@@HYT_aliases_description"
+                        text="Enter an alternative name to be displayed in the widget. If the alias is empty, the field name will be displayed."></hyt-info>
+                </div>
+                <div class="section-input">
+                    <mat-form-field>
+                        <input matInput name="hpacketfield-custom-aliases-{{field}}" id="customAliasesLabel-{{field}}"
+                            type="text" placeholder="Alias" [(ngModel)]="fieldAliases[field]">
+                    </mat-form-field>
+                </div>
+            </div>
+            <hyt-select [label]="'Select Packet'" [groups]="groupedPacketOptions"
+                [isRequired]="field === 'produced' || field === 'target'" [name]="'selectedPacket' + field"
+                [selected]="selectedPacketsOption && selectedPacketsOption[field] ? selectedPacketsOption[field] : {}"
+                [isSearchable]="true" (changeFn)="onPacketChange($event, field)"
+                [errorMsgRequired]="'Select one packet'" [hint]="'select one packet'" class="hyt-select-full-width">
+            </hyt-select>
+            <!-- TODO temp fix for hyt-select required issue -->
+            <input [name]="'hidden-packet-id-select-packet-' + field"
+                *ngIf="(field === 'target' && !isTargetOptionManual) || field === 'produced'"
+                [(ngModel)]="selectedPackets[field]" style="display: none;" required>
+
+
+            <div *ngIf="selectedPackets[field]" id="field-selection" class="d-flex flex-column">
+                <hyt-inner-field-select
+                    *ngIf="fieldsOptions[field] && fieldsOptions[field].length > 0 && selectedFields[field]"
                     [id]="'selectedField' + field" [fields]="fieldsOptions[field]"
                     [selectedFieldsIds]="selectedFields && selectedFields[field] ? selectedFields[field].fieldId : []"
-                    [required]="field !== 'current_shift'" [isMultiSelect]="false" [name]="'selectField-' + field"
+                    [isRequired]="field === 'produced' || field === 'target'" [isMultiSelect]="false"
+                    [name]="'selectField-' + field"
                     (fieldSelectionChanged)="onPacketFieldChange($event, field)"></hyt-inner-field-select>
                 <!-- TODO temp fix for hyt-select required issue -->
-                <input [name]="'hidden-packet-id-select-field' + field" [(ngModel)]="selectedFields[field]" style="display: none;"
-                    [required]="field !== 'current_shift'">
-            </div>
-            <div class="customization-container-section section-alias">
-                <div class="section-title">
-                    <span i18n="@@HYT_alias_title">Field Alias</span>
-                    <hyt-info i18n-text="@@HYT_aliases_description"
-                        text="Enter an alternative name to be displayed in the widget. If the alias is empty, the field name will be displayed."></hyt-info>
-                </div>
-                <div class="section-input">
-                    <mat-form-field>
-                        <input matInput name="hpacketfield-custom-aliases-{{field}}" id="customAliasesLabel-{{field}}"
-                            type="text" placeholder="Alias" [(ngModel)]="fieldAliases[field]">
-                    </mat-form-field>
-                </div>
-            </div>
-        </ng-template>
-
-        <div class="defaultSelect">
-            <div class="section-input"
-                *ngIf="(field === 'target' && isTargetOptionManual == false) || field !== 'target'">
-                <hyt-select [label]="'Select Packet'" [groups]="groupedPacketOptions"
-                    [isRequired]="field === 'produced' || field === 'target'" [name]="'selectedPacket' + field"
-                    [selected]="selectedPacketsOption && selectedPacketsOption[field] ? selectedPacketsOption[field] : {}"
-                    [isSearchable]="true" (changeFn)="onPacketChange($event, field)"
-                    [errorMsgRequired]="'Select one packet'" [hint]="'select one packet'" class="hyt-select-full-width">
-                </hyt-select>
-                <!-- TODO temp fix for hyt-select required issue -->
-                <input [name]="'hidden-packet-id-select-packet-' + field"
+                <input [name]="'hidden-packet-id-select-field-' + field"
                     *ngIf="(field === 'target' && !isTargetOptionManual) || field === 'produced'"
-                    [(ngModel)]="selectedPackets[field]" style="display: none;" required>
-
-
-                <div *ngIf="selectedPackets[field]" id="field-selection" class="d-flex flex-column">
-                    <hyt-inner-field-select *ngIf="fieldsOptions[field] && fieldsOptions[field].length > 0"
-                        [id]="'selectedField' + field" [fields]="fieldsOptions[field]"
-                        [selectedFieldsIds]="selectedFields && selectedFields[field] ? selectedFields[field].fieldId : []"
-                        [isRequired]="field === 'produced' || field === 'target'" [isMultiSelect]="false"
-                        [name]="'selectField-' + field"
-                        (fieldSelectionChanged)="onPacketFieldChange($event, field)"></hyt-inner-field-select>
-                    <!-- TODO temp fix for hyt-select required issue -->
-                    <input [name]="'hidden-packet-id-select-field-' + field"
-                        *ngIf="(field === 'target' && !isTargetOptionManual) || field === 'produced'"
-                        [(ngModel)]="selectedFields[field]" style="display: none;" required>
-                </div>
-            </div>
-            <div class="customization-container-section section-alias">
-                <div class="section-title">
-                    <span i18n="@@HYT_alias_title">Field Alias</span>
-                    <hyt-info i18n-text="@@HYT_aliases_description"
-                        text="Enter an alternative name to be displayed in the widget. If the alias is empty, the field name will be displayed."></hyt-info>
-                </div>
-                <div class="section-input">
-                    <mat-form-field>
-                        <input matInput name="hpacketfield-custom-aliases-{{field}}" id="customAliasesLabel-{{field}}"
-                            type="text" placeholder="Alias" [(ngModel)]="fieldAliases[field]">
-                    </mat-form-field>
-                </div>
+                    [(ngModel)]="selectedFields[field]" style="display: none;" required>
             </div>
         </div>
     </div>

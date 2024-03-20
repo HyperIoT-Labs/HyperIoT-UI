@@ -11,14 +11,23 @@
     gap: 35px;
   }
 
-  .target-input {
-    width: 28%;
+  .manual-target {
+    display: flex;
+    align-items: flex-end;
+    gap: 2em;
+
+
+    .target-input {
+      width: 28%;
+    }
   }
-  
+
   .section-input {
     display: flex;
     flex-direction: row;
     gap: 32px;
+    align-items: flex-end;
+
     hyt-select-template,
     hyt-input-template {
       width: 30%;
