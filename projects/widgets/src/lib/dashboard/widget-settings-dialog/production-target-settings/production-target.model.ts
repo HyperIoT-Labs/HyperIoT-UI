@@ -1,6 +1,6 @@
 export namespace ProductionTargetSettings {
     export interface ProductionTargetSettings {
-        target?: {
+        target: {
             isTargetManuallySetOptions: any;
             isTargetManuallySet: boolean;
             manuallySetField?: manuallySetField;
