@@ -177,31 +177,30 @@ export class ProductionTargetComponent extends BaseGenericComponent implements O
    * Process data and use it on chart
    */
   processPlotlyData() {
-    debugger
     const targetValue = typeof this.chartData['target'] === 'number' ? this.chartData['target'] : parseInt(this.chartData['target']);
     const remainingValue = typeof targetValue === 'number' && typeof this.chartData['produced'] === 'number' ? targetValue - this.chartData['produced'] : null;
     this.chartData['remaining'] = remainingValue;
-    const completedPercentage = Object.keys(this.chartData).includes('produced') && Object.keys(this.chartData).includes('target') ? this.calculateCompletionPercentage(this.chartData['target'], this.chartData['produced']) + '%' : '0%';
+    const completedPercentage = Object.keys(this.chartData).includes('produced') && Object.keys(this.chartData).includes('target') ? this.calculateCompletionPercentage(this.chartData['target'], this.chartData['produced']) : 0;
+    const chartDataValues = this.chartData['produced'] && typeof remainingValue === 'number' && remainingValue >= 0 ? [this.chartData['produced'], remainingValue] : [0, 100];
     this.logger.debug('[processPlotlyData]', {
       remainingValue: this.chartData['remaining'],
       target: this.chartData['target'],
       produced: this.chartData['produced'],
-      values: this.chartData['produced'] && typeof remainingValue === 'number' && remainingValue >= 0 ? [this.chartData['produced'], remainingValue] : [100, 0],
+      values: chartDataValues,
       completedPercentage: completedPercentage
     });
     let chartColors = this.chartDataColors;
-    if (this.chartData['produced'] === 0 || remainingValue === 0) {
+    if (this.chartData['produced'] === 0 || remainingValue === 0 || completedPercentage > 100) {
       if (this.chartData['produced'] === 0) {
         chartColors = [this.chartDataColors[1], this.chartDataColors[1]];
       } else {
-
         chartColors = [this.chartDataColors[0], this.chartDataColors[0]];
       }
     }
     this.graph = {
       data: [
         {
-          values: this.chartData['produced'] && typeof remainingValue === 'number' && remainingValue >= 0 ? [this.chartData['produced'], remainingValue] : [0, 100],
+          values: chartDataValues,
           labels: this.chartDataLabels,
           type: 'pie',
           marker: {
@@ -235,7 +234,7 @@ export class ProductionTargetComponent extends BaseGenericComponent implements O
               size: 17
             },
             showarrow: false,
-            text: completedPercentage,
+            text: completedPercentage + '%',
             x: 0.5,
             y: 0.5
           }
@@ -251,11 +250,11 @@ export class ProductionTargetComponent extends BaseGenericComponent implements O
    * @returns completition number (percentage)
    */
   calculateCompletionPercentage(totalElements: number, producedElements: number): number {
-    if (totalElements <= 0 || totalElements < producedElements) {
+    if (totalElements <= 0) {
       return 0;
     }
     const completionPercentage = (producedElements / totalElements) * 100;
-    return Math.min(Math.round(completionPercentage), 100);
+    return Math.min(Math.round(completionPercentage));
   }
 
   /**
