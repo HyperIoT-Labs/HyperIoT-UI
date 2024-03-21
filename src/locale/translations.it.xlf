@@ -2254,6 +2254,10 @@
         <source>Left to Produce</source>
         <target>Residui</target>
       </trans-unit>
+      <trans-unit id="HYT_optional" datatype="html">
+        <source>(optional)</source>
+        <target>(facoltativo)</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -1687,6 +1687,9 @@
       <trans-unit id="HYT_remaining" datatype="html">
         <source>Left to Produce</source>
       </trans-unit>
+      <trans-unit id="HYT_optional" datatype="html">
+        <source>(optional)</source>
+      </trans-unit>
     </body>
   </file>
 </xliff>
