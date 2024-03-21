@@ -219,9 +219,9 @@ export class ProductionTargetComponent extends BaseGenericComponent implements O
         },
       ],
       layout: {
-        width: '150',
-        height: '150',
-        autosize: true,
+        autosize: false,
+        width: '200',
+        height: '200',
         margin: {
           l: 5,
           r: 5,
@@ -240,6 +240,9 @@ export class ProductionTargetComponent extends BaseGenericComponent implements O
           }
         ]
       },
+      config: {
+        responsive: true
+      }
     };
   }
 

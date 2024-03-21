@@ -1,38 +1,48 @@
-.section-group {
-    display: flex;
-    flex-direction: row;
-    align-items: stretch;
-    padding: 10px;
+#productionTarget {
+    margin-top: 5%;
 
-    plotly-plot {
-        display: block;
-        width: auto;
-    }
-
-    .data {
+    .section-group {
         display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
+        flex-direction: row;
+        align-items: center;
+        padding: 10px;
 
-        .main-data {
-            width: fit-content;
+        plotly-plot {
+            display: block;
+            width: 16em;
+        }
+
+        .data {
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            font-weight: bold;
-            min-width: 45%;
-            padding: 13px;
-            word-break: break-word;
+            flex-wrap: wrap;
             justify-content: center;
+            flex-grow: 1;
 
-            span {
+            .main-data {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                font-weight: bold;
+                width: 12em;
+                padding: 13px;
                 word-break: break-word;
-                text-align: center;
-            }
+                justify-content: center;
+                margin: 2% 4% 3% 0;
 
-            .value {
-                color: #575757;
-                font-weight: bolder;
+                &.main-data:nth-child(4n-2),
+                &.main-data:nth-child(4n) {
+                    margin-left: 4%;
+                }
+
+                span {
+                    word-break: break-word;
+                    text-align: center;
+                }
+
+                .value {
+                    color: #575757;
+                    font-weight: bolder;
+                }
             }
         }
     }
