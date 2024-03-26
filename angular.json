@@ -32,8 +32,16 @@
               "src/assets",
               "src/manifest.webmanifest"
             ],
-            "styles": ["src/styles.scss"],
-            "scripts": [],
+            "styles": [
+              "src/styles.scss",
+              "node_modules/primeicons/primeicons.css",
+              "node_modules/primeng/resources/primeng.min.css",
+              "node_modules/quill/dist/quill.snow.css",
+              "node_modules/primeflex/primeflex.css"
+            ],
+            "scripts": [
+              "node_modules/quill/dist/quill.js"
+            ],
             "vendorChunk": true,
             "extractLicenses": false,
             "buildOptimizer": false,
@@ -118,8 +126,16 @@
               "src/assets",
               "src/manifest.webmanifest"
             ],
-            "styles": ["src/styles.scss"],
-            "scripts": []
+            "styles": [
+              "src/styles.scss",
+              "node_modules/primeicons/primeicons.css",
+              "node_modules/primeng/resources/primeng.min.css",
+              "node_modules/quill/dist/quill.snow.css",
+              "node_modules/primeflex/primeflex.css"
+            ],
+            "scripts": [
+              "node_modules/quill/dist/quill.js"
+            ]
           }
         },
         "lint": {

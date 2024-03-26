@@ -1,4 +1,4 @@
-import { Component, Injector, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Injector, OnInit } from '@angular/core';
 import { DataChannel, DataPacketFilter, Logger, LoggerService, PacketData } from 'core';
 import { Subscription } from 'rxjs';
 import { BaseGenericComponent } from '../../base/base-generic/base-generic.component';
@@ -8,7 +8,7 @@ import { BaseGenericComponent } from '../../base/base-generic/base-generic.compo
   templateUrl: './production-target.component.html',
   styleUrls: ['../../../../../../src/assets/widgets/styles/widget-commons.css', './production-target.component.scss']
 })
-export class ProductionTargetComponent extends BaseGenericComponent implements OnInit {
+export class ProductionTargetComponent extends BaseGenericComponent implements OnInit, AfterViewInit {
   isPaused = false;
 
   /**
@@ -54,6 +54,33 @@ export class ProductionTargetComponent extends BaseGenericComponent implements O
     this.configure();
   }
 
+  ngAfterViewInit() {
+    this.adjustGridTemplate();
+    const resizeObserver = new ResizeObserver((entries) => {
+      this.adjustGridTemplate()
+    });
+    resizeObserver.observe(document.querySelector(`.main-data`));
+  }
+
+  adjustGridTemplate() {
+    const mainData = document.querySelector('.main-data') as HTMLElement;
+    const plotly = document.querySelector('.chart') as HTMLElement;
+    let numColumns = Math.floor(mainData.clientWidth / 300);
+    if (numColumns === 0) {
+      numColumns = 1;
+      mainData.style.marginRight = '2em';
+      plotly.style.marginLeft = '10px';
+    } else if (numColumns === 4) {
+      mainData.style.marginRight = '1em';
+      plotly.style.marginLeft = '10px';
+    } else {
+      numColumns = 2;
+      plotly.style.marginLeft = '40px';
+      mainData.style.marginRight = '0em';
+    }
+    mainData.style.gridTemplateColumns = `repeat(${numColumns}, 1fr)`;
+  }
+
   /**
    * Setup widget configuration
    */
@@ -90,10 +117,12 @@ export class ProductionTargetComponent extends BaseGenericComponent implements O
           if (labelIndex !== -1) {
             if (key === 'remaining') {
               this.widgetLabels[labelIndex].label = this.widget.config.productionTargetSettings[key].fieldAlias;
-            } else if (key === 'target' && this.widget.config.productionTargetSettings[key].isTargetManuallySet) {
-              this.widgetLabels[labelIndex].label = this.widget.config.productionTargetSettings.target.manuallySetField.fieldAlias;
-            } else if (key === 'target' && !this.widget.config.productionTargetSettings[key].isTargetManuallySet) {
-              this.widgetLabels[labelIndex].label = this.widget.config.productionTargetSettings[key].dynamicallySetField.fieldAlias;
+            } else if (key === 'target') {
+              if (this.widget.config.productionTargetSettings[key].isTargetManuallySet) {
+                this.widgetLabels[labelIndex].label = this.widget.config.productionTargetSettings.target.manuallySetField.fieldAlias;
+              } else {
+                this.widgetLabels[labelIndex].label = this.widget.config.productionTargetSettings[key].dynamicallySetField.fieldAlias;
+              }
             } else {
               this.widgetLabels[labelIndex].label = this.widget.config.productionTargetSettings[key].fieldAlias;
             }
@@ -101,8 +130,14 @@ export class ProductionTargetComponent extends BaseGenericComponent implements O
         }
 
         if ((key === 'target' && !this.widget.config.productionTargetSettings.target.isTargetManuallySet) || (key !== 'target' && this.widget.config.productionTargetSettings[key].packet && this.widget.config.productionTargetSettings[key].field)) {
-          const packetId = key === 'target' ? this.widget.config.productionTargetSettings[key].dynamicallySetField.packet : this.widget.config.productionTargetSettings[key].packet;
-          const field = key === 'target' ? this.widget.config.productionTargetSettings[key].dynamicallySetField.field : this.widget.config.productionTargetSettings[key].field;
+          let packetId = this.widget.config.productionTargetSettings[key].packet;
+          let field = this.widget.config.productionTargetSettings[key].field;
+          
+          if (key === 'target') {
+            packetId = this.widget.config.productionTargetSettings[key].dynamicallySetField.packet;
+            field = this.widget.config.productionTargetSettings[key].dynamicallySetField.field;
+            this.chartData['target'] = null;
+          }
           const fieldValue = { [field.fieldId[0]]: field.fieldName };
           if (packetAndFieldsToRetrive[parseInt(packetId)]) {
             packetAndFieldsToRetrive[parseInt(packetId)] = { ...packetAndFieldsToRetrive[parseInt(packetId)], ...fieldValue };
@@ -219,7 +254,7 @@ export class ProductionTargetComponent extends BaseGenericComponent implements O
         },
       ],
       layout: {
-        autosize: false,
+        autosize: true,
         width: '200',
         height: '200',
         margin: {

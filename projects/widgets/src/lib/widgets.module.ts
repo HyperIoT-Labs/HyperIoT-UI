@@ -43,6 +43,8 @@ import { DefibrillatorComponent } from './widget/defibrillator/defibrillator.com
 import { MultiStatusWidgetComponent } from './widget/multi-status-widget/multi-status-widget.component';
 import { DynamicLabelValueWidgetComponent } from './widget/dynamic-label-value-widget/dynamic-label-value-widget.component';
 import { ProductionTargetComponent } from './widget/production-target/production-target.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FieldsetModule } from 'primeng';
 
 @NgModule({
   declarations: [
@@ -77,6 +79,9 @@ import { ProductionTargetComponent } from './widget/production-target/production
     MatTableModule,
     MatPaginatorModule,
     MatTooltipModule,
+    FieldsetModule,
+    BrowserModule, 
+    BrowserAnimationsModule,
     MomentModule.forRoot({
       relativeTimeThresholdOptions: {
         m: 59
