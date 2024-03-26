@@ -73,6 +73,15 @@
     [serviceType]="serviceType"
   ></hyperiot-events-log>
 
+  <hyperiot-production-target
+    *ngSwitchCase="'production-target-widget'"
+    [widget]="widget"
+    [initData]="initData"
+    [isToolbarVisible]="isToolbarVisible"
+    (widgetAction)="onWidgetAction($event)"
+    [serviceType]="serviceType"
+  ></hyperiot-production-target>
+
   <hyperiot-hpacket-table
     *ngSwitchCase="'offline-table'"
     [widget]="widget"

@@ -1675,6 +1675,21 @@
       <trans-unit id="HYT_generic_error_share" datatype="html">
         <source>Close the overlay by clicking X and try again. If the error persists, contact us</source>
       </trans-unit>
+      <trans-unit id="HYT_target" datatype="html">
+        <source>Target</source>
+      </trans-unit>
+      <trans-unit id="HYT_produced" datatype="html">
+        <source>Produced</source>
+      </trans-unit>
+      <trans-unit id="HYT_current_shift" datatype="html">
+        <source>Current Shift</source>
+      </trans-unit>
+      <trans-unit id="HYT_remaining" datatype="html">
+        <source>Left to Produce</source>
+      </trans-unit>
+      <trans-unit id="HYT_optional" datatype="html">
+        <source>(optional)</source>
+      </trans-unit>
     </body>
   </file>
 </xliff>

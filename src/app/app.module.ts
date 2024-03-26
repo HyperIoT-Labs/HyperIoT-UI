@@ -27,7 +27,7 @@ import { MatIconModule } from '@angular/material/icon';
 // hyperiot
 import { Configuration, ConfigurationParameters, CoreModule, HyperiotClientModule, LoggerService } from 'core';
 import { ComponentsModule } from 'components';
-import {AddWidgetDialogComponent, DashboardModule, WidgetSettingsDialogComponent, WidgetsModule} from 'widgets';
+import { AddWidgetDialogComponent, DashboardModule, WidgetSettingsDialogComponent, WidgetsModule } from 'widgets';
 import { RouterModule, DefaultUrlSerializer, UrlSerializer, UrlTree } from '@angular/router';
 
 // local
@@ -50,16 +50,48 @@ import * as PlotlyJS from 'plotly.js/dist/plotly.js';
 import { PlotlyModule } from 'angular-plotly.js';
 import { PromptComponent } from './components/prompt/prompt/prompt.component';
 import { PendingChangesDialogComponent } from './components/dialogs/pending-changes-dialog/pending-changes-dialog.component';
-import {MatButtonModule} from '@angular/material/button';
-import {MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule} from '@angular/material/dialog';
-import {MatTabsModule} from '@angular/material/tabs';
-import {MatCardModule} from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule } from '@angular/material/dialog';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatCardModule } from '@angular/material/card';
 import { DashComponent } from './pages/dash/dash.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
-import {ScrollingModule} from '@angular/cdk/scrolling';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 import { InfoComponent } from './components/info/info.component';
 import { ContainerAreaMapComponent } from './pages/areas/container-area-map/container-area-map.component';
+import {   AccordionModule,
+  AutoCompleteModule,
+  BreadcrumbModule,
+  ButtonModule,
+  CalendarModule,
+  CardModule,
+  CheckboxModule,
+  CodeHighlighterModule,
+  ColorPickerModule,
+  ConfirmDialogModule,
+  ConfirmationService,
+  DialogModule,
+  DialogService,
+  DropdownModule,
+  DynamicDialogModule,
+  FieldsetModule,
+  ChipsModule,
+  InputMaskModule,
+  InputTextModule,
+  MenuModule,
+  MessageModule,
+  MessagesModule,
+  MultiSelectModule,
+  OverlayPanelModule,
+  PaginatorModule,
+  ProgressSpinnerModule,
+  RadioButtonModule,
+  SplitButtonModule,
+  TabMenuModule,
+  TabViewModule,
+  ToggleButtonModule,
+  TooltipModule } from 'primeng';
 PlotlyModule.plotlyjs = PlotlyJS;
 
 export class MyUrlSerializer extends DefaultUrlSerializer implements UrlSerializer {
@@ -135,6 +167,36 @@ export function apiConfigFactory(): Configuration {
     ToastrModule.forRoot(),
     ScrollingModule,
     CoreModule,
+    BrowserModule,
+    BrowserAnimationsModule,
+    AccordionModule,
+    AutoCompleteModule,
+    BreadcrumbModule,
+    ButtonModule,
+    CalendarModule,
+    CardModule,
+    CheckboxModule,
+    ColorPickerModule,
+    CodeHighlighterModule,
+    ConfirmDialogModule,
+    DialogModule,
+    DropdownModule,
+    FieldsetModule,
+    ChipsModule,
+    InputMaskModule,
+    InputTextModule,
+    MessageModule,
+    MessagesModule,
+    MultiSelectModule,
+    OverlayPanelModule,
+    PaginatorModule,
+    ProgressSpinnerModule,
+    RadioButtonModule,
+    SplitButtonModule,
+    TabMenuModule,
+    TabViewModule,
+    ToggleButtonModule,
+    TooltipModule,
   ],
   providers: [
     // ActivatedRouteSnapshot,

@@ -2234,6 +2234,30 @@
         <source>Chiudere la schermata facendo clic su X e riprovare. Se l'errore persiste, contattaci</source>
         <target>Errore</target>
       </trans-unit>
+      <trans-unit id="HYT_target" datatype="html">
+        <source>Target</source>
+        <target>Obiettivo</target>
+      </trans-unit>
+      <trans-unit id="HYT_produced" datatype="html">
+        <source>Produced</source>
+        <target>Prodotti</target>
+      </trans-unit>
+      <trans-unit id="HYT_current_shift" datatype="html">
+        <source>Current Shift</source>
+        <target>Turno Corrente</target>
+      </trans-unit>
+      <trans-unit id="HYT_enter_target" datatype="html">
+        <source>Manually enter a target number</source>
+        <target>Inserire un obiettivo di produzione</target>
+      </trans-unit>
+      <trans-unit id="HYT_remaining" datatype="html">
+        <source>Left to Produce</source>
+        <target>Residui</target>
+      </trans-unit>
+      <trans-unit id="HYT_optional" datatype="html">
+        <source>(optional)</source>
+        <target>(facoltativo)</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
