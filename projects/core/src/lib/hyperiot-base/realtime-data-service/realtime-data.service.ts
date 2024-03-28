@@ -139,7 +139,7 @@ export class RealtimeDataService extends BaseDataService implements IDataService
       throw Error(errorMessage);
     }
     // read AVRO-serialized HPacket from Kafka-Flux
-    const wsData = JSON.parse(event.data);
+    const wsData = JSON.parse(event.data);  
     // decode base-64 payload
     const decodedWsPayload = atob(wsData.payload);
     // TODO: add specific type 'SCHEMA' instead of using 'INFO'

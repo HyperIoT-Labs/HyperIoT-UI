@@ -68,7 +68,7 @@ export * from './lib/hyperiot-service/hyperiot-logger/logger.service';
 
 export { FileHandlerService } from './lib/hyperiot-service/hyperiot-file-handler/file-handler.service';
 export { HPacketFieldsHandlerService } from './lib/hyperiot-service/hyperiot-h-packet-fields-handler/hpacket-fields-handler.service';
-
+export { AlarmWrapperService } from './lib/hyperiot-service/hyperiot-alarm-wrapper/hyperiot-alarm-wrapper.service'
 export * from './lib/hyperiot-service/hyperiot-algorithm-offline-data/algorithm-offline-data.service';
 
 export { WsDataSenderService } from './lib/hyperiot-service/hyperiot-ws-data-sender/ws-data-sender.service';
