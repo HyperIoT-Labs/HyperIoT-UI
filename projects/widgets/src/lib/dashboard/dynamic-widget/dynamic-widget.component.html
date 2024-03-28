@@ -152,4 +152,12 @@
     (widgetAction)="onWidgetAction($event)">
   </hyperiot-default-widget>
 
+  <hyperiot-alarms-widget
+    *ngSwitchCase="'alarms-widget'"
+    [widget]="widget"
+    [isToolbarVisible]="isToolbarVisible"
+    (widgetAction)="onWidgetAction($event)"
+    [serviceType]="serviceType"
+  ></hyperiot-alarms-widget>
+
 </ng-container>

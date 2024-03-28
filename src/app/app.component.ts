@@ -132,6 +132,8 @@ export class AppComponent implements OnInit, OnDestroy {
         } else if (alarm.isAlarm) {
           toastImage =
             alarm.event.alarmState === "UP" ? "toastAlarmUp" : "toastAlarmDown";
+          if (alarm.event.alarmState === 'DOWN') 
+            alarm.color.background = '#51a351'; // Green of resolved alarm BG (OFF state)
         }
         const toastId = this.toastr["index"];
         this.toastr

@@ -1,0 +1,19 @@
+#no-alarms{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+#no-alarms svg{
+    transform: translateX(-30px);
+}
+#no-alarms h3{
+    text-transform: uppercase;
+    color: rgba(30, 88, 165, 75);
+}
+.alarm-container{
+    padding: 4px 6px;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+}

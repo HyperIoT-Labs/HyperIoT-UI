@@ -20,30 +20,29 @@ export class AlarmWrapperService {
     const SUFFIX = HytAlarm.AlarmSuffixsEnum;
     this.realtimeDataService.eventStream.subscribe((p) => {
       const packet = p.data;
-      if (packet.id === 0 && (packet.name.endsWith(SUFFIX[SUFFIX._event])
-        || packet.name.endsWith(SUFFIX[SUFFIX._event_alarm]))) {
+      const isEvent = packet.name.endsWith(SUFFIX[SUFFIX._event]);
+      const isAlarm = packet.name.endsWith(SUFFIX[SUFFIX._event_alarm]);
+      if (packet.id === 0 && (isEvent || isAlarm)) {
         const event = JSON.parse(packet.fields.event.value.string).data; JSON.parse(packet.fields.event.value.string).data;
         const tag = event.tags[0]; // retrieve only first tag
         let backgroundColor = this.DEFAULT_BACKGROUND_COLOUR;
         const textColor = "#fff"
-        if (packet.name.endsWith(SUFFIX[SUFFIX._event])) {
+        if (isEvent) {
           backgroundColor = tag ? tag.color : this.DEFAULT_BACKGROUND_COLOUR;
-        } else if (packet.name.endsWith(SUFFIX[SUFFIX._event_alarm])) {
-          backgroundColor = '#51a351'; // Resolved alarm BG (OFF state)
-          if (event.alarmState === 'UP') 
-            backgroundColor = this.severityColors.get(event.severity) || this.DEFAULT_BACKGROUND_COLOUR;    
+        } else if (isAlarm) {
+          backgroundColor = this.severityColors.get(event.severity) || this.DEFAULT_BACKGROUND_COLOUR;    
         }
-
-        this._alarmSubject.next({
+        const alarm : HytAlarm.LiveAlarm = {
           color: {
             background: backgroundColor,
             text: textColor
           },
           event: event as HytAlarm.Event,
           packet: packet,
-          isEvent: packet.name.endsWith(SUFFIX[SUFFIX._event]),
-          isAlarm: packet.name.endsWith(SUFFIX[SUFFIX._event_alarm])
-        })
+          isEvent: isEvent,
+          isAlarm: isAlarm
+        }
+        this._alarmSubject.next(alarm)
       }
     })
   }

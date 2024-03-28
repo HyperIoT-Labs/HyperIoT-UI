@@ -42,6 +42,7 @@ import { DataSimulatorComponent } from './widget/data-simulator/data-simulator.c
 import { DefibrillatorComponent } from './widget/defibrillator/defibrillator.component';
 import { MultiStatusWidgetComponent } from './widget/multi-status-widget/multi-status-widget.component';
 import { DynamicLabelValueWidgetComponent } from './widget/dynamic-label-value-widget/dynamic-label-value-widget.component';
+import { AlarmsWidgetComponent } from './widget/alarms-widget/alarms-widget.component';
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import { DynamicLabelValueWidgetComponent } from './widget/dynamic-label-value-w
     DefibrillatorComponent,
     MultiStatusWidgetComponent,
     DynamicLabelValueWidgetComponent,
+    AlarmsWidgetComponent
   ],
   imports: [
     MatButtonModule,
@@ -115,6 +117,7 @@ import { DynamicLabelValueWidgetComponent } from './widget/dynamic-label-value-w
     HistogramChartComponent,
     MultiStatusWidgetComponent,
     DynamicLabelValueWidgetComponent,
+    AlarmsWidgetComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

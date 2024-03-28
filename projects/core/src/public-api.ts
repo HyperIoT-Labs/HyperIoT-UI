@@ -82,5 +82,5 @@ export { RealtimeDataService } from './lib/hyperiot-base/realtime-data-service/r
 export { OfflineDataService } from './lib/hyperiot-base/offline-data-service/offline-data.service';
 export { DevDataService, DevDataSettings } from './lib/hyperiot-base/dev-data-service/dev-data.service';
 export { RealtimeDataChannelController } from './lib/hyperiot-base/realtime-data-service/realtimeDataChannelController';
-
+export { HytAlarm } from './lib/hyperiot-service/hyperiot-alarm-wrapper/hyperiot-alarm.model'
 export { CoreConfig } from './lib/config.service';
