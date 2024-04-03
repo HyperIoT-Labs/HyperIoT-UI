@@ -68,7 +68,7 @@ export class PickerPopUpComponent implements OnInit, OnChanges {
   @HostListener('document:click', ['$event'])
   clickout(event) {
     const btn = document.getElementById('hyt-date-picker-button')
-    if (event.target.parentElement.contains(this.eRef.nativeElement) || event.target.parentElement.contains(btn)) {
+    if (event.target.parentElement?.contains(this.eRef.nativeElement) || event.target.parentElement?.contains(btn)) {
       this.show = false;
       this.popUpEvent.emit(this.show);
     }
