@@ -1,58 +1,70 @@
 #productionTarget {
-    .section-group {
+    display: flex;
+    padding: .5em .25em 0;
+    #target-container {
+        flex: 65%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin: 0 2.5%;
+
+        .target{
+            flex: 0 0 auto;
+            width: calc(50% - 1em);
+            min-width: 125px;
+            margin: 0.5em;
+            border-radius: 0.5em;
+            box-shadow: 0 0 1px 1px #0956b6;
+            padding: 0.5em;
+            position: relative;
+            display: flex;
+            justify-content: center;
+
+            hyt-badge{
+                position: absolute;
+                top: -4px;
+                max-width: 100%;
+            }
+
+            h4{
+                font-size: 2em;
+                transform: translateY(5px);
+                font-size: 2em;
+                transform: translateY(5px);
+                margin-bottom: 0;
+                display: block;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                text-transform: uppercase;
+            }
+        }
+    }
+    #grap-container{
+        flex: 28%;
+        padding: .5em;
+        
+    }
+
+    @media (max-width: 400px) {
+        #target-container{
+            flex-direction: column;
+            flex-wrap: nowrap;
+            
+            .target{
+                flex: 0 0 auto;
+                width: calc(90% - 1em);
+                margin: 0.5em;
+                padding: 0.25em;
+            }
+        }
+      }
+
+}
+::ng-deep{
+    .plot-container.plotly{
         display: flex;
         align-items: center;
-        padding: 10px;
-        margin-top: 20px;
-
-        .data.main-data {
-            flex-grow: 1;
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            grid-gap: 42px;
-            gap: 42px;
-            width: calc(100% - 16.5em);
-            margin-right: 1em;
-
-            p-fieldset {
-                display: flex; // Ensure fieldsets are flex containers
-                flex-direction: column; // Stack legend and content vertically
-                justify-content: center; // Center the content vertically
-                align-items: center; // Center the content horizontally
-                text-align: center; // Center the content text
-
-                ::ng-deep .ui-widget {
-                    max-width: 21em;
-                    min-width: 14em;
-                    word-break: break-word;
-                    background-color: #f1f1f145;
-                    border: 1px solid #3ea6b4;
-                    min-height: 5em;
-                    max-height: 25em;
-                }
-
-                ::ng-deep .ui-fieldset .ui-fieldset-legend {
-                    font-size: 18px;
-                    background-color: #49c5d547 !important;
-                    border: 1px solid #3ea6b4;
-                    border-radius: 5px;
-                    margin: auto;
-                    padding: 0.35em;
-                    width: fit-content;
-                    min-width: 8em;
-                }
-            }
-        }
-
-        @media (max-width: 762px) {
-            .data.main-data {
-                grid-template-columns: repeat(1, 1fr);
-            }
-        }
-
-        plotly-plot {
-            width: 16em;
-            margin-left: 10px; // Added margin to separate from the fieldsets
-        }
+        justify-content: center;
     }
 }

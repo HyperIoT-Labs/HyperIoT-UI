@@ -1,14 +1,14 @@
-import { AfterViewInit, Component, Injector, OnInit } from '@angular/core';
+import { Component, Injector, OnInit } from '@angular/core';
 import { DataChannel, DataPacketFilter, Logger, LoggerService, PacketData } from 'core';
 import { Subscription } from 'rxjs';
 import { BaseGenericComponent } from '../../base/base-generic/base-generic.component';
-
+import { HytBadgeShape, HytBadgeSize } from 'components';
 @Component({
   selector: 'hyperiot-production-target',
   templateUrl: './production-target.component.html',
   styleUrls: ['../../../../../../src/assets/widgets/styles/widget-commons.css', './production-target.component.scss']
 })
-export class ProductionTargetComponent extends BaseGenericComponent implements OnInit, AfterViewInit {
+export class ProductionTargetComponent extends BaseGenericComponent implements OnInit {
   isPaused = false;
 
   /**
@@ -23,7 +23,7 @@ export class ProductionTargetComponent extends BaseGenericComponent implements O
    */
   chartData: { [field: string]: any }[] = [];
   chartDataLabels: string[] = ['Produced', 'Target'];
-  chartDataColors: string[] = ['#00aec5', '#ffffff'];
+  chartDataColors: string[] = ['#0956b6', '#ffffff'];
 
   /**
    * Filled with labels on data channel data retrieval, starts with remaining since it's a value we extrapolate from target - produced
@@ -52,33 +52,6 @@ export class ProductionTargetComponent extends BaseGenericComponent implements O
   ngOnInit(): void {
     super.ngOnInit();
     this.configure();
-  }
-
-  ngAfterViewInit() {
-    this.adjustGridTemplate();
-    const resizeObserver = new ResizeObserver((entries) => {
-      this.adjustGridTemplate()
-    });
-    resizeObserver.observe(document.querySelector(`.main-data`));
-  }
-
-  adjustGridTemplate() {
-    const mainData = document.querySelector('.main-data') as HTMLElement;
-    const plotly = document.querySelector('.chart') as HTMLElement;
-    let numColumns = Math.floor(mainData.clientWidth / 300);
-    if (numColumns === 0) {
-      numColumns = 1;
-      mainData.style.marginRight = '2em';
-      plotly.style.marginLeft = '10px';
-    } else if (numColumns === 4) {
-      mainData.style.marginRight = '1em';
-      plotly.style.marginLeft = '10px';
-    } else {
-      numColumns = 2;
-      plotly.style.marginLeft = '40px';
-      mainData.style.marginRight = '0em';
-    }
-    mainData.style.gridTemplateColumns = `repeat(${numColumns}, 1fr)`;
   }
 
   /**
@@ -241,7 +214,7 @@ export class ProductionTargetComponent extends BaseGenericComponent implements O
           marker: {
             colors: chartColors,
             line: {
-              color: '#00aec5',
+              color: '#0956b6',
               width: [2, 2, 2]
             },
           },
@@ -255,8 +228,8 @@ export class ProductionTargetComponent extends BaseGenericComponent implements O
       ],
       layout: {
         autosize: true,
-        width: '200',
-        height: '200',
+        width: '150',
+        height: '150',
         margin: {
           l: 5,
           r: 5,
@@ -312,6 +285,13 @@ export class ProductionTargetComponent extends BaseGenericComponent implements O
       default:
         return fieldId;
     }
+  }
+
+  get badgeShape(): HytBadgeShape{
+    return HytBadgeShape.PILLS;
+  }
+  get badgeSize(): HytBadgeSize{
+    return HytBadgeSize.XSMALL;
   }
 
   play(): void {

@@ -1,3 +1,4 @@
+@use "sass:math";
 $primary: #0956b6;
 $primaryDarker: #1c274c;
 
@@ -25,11 +26,11 @@ $primaryDarker: #1c274c;
 
     //font-size reduced by 25% using badge's width
     @if $notPills ==true {
-        font-size: $sz - round($sz / 4);
+        font-size: $sz - round(math.div($sz, 4));
     }
 
     @else {
-        font-size: $sz - round($sz / 3);
+        font-size: $sz - round(math.div($sz, 3));
     }
 
     height: $sz;
@@ -55,6 +56,10 @@ $primaryDarker: #1c274c;
         padding: .3rem 2rem;
         border-radius: 2rem;
         @include size(false);
+
+        &.hyt-badge-xs, &.hyt-badge-sm{
+            padding: .3rem 1rem;
+        }
     }
 
     &-square {
