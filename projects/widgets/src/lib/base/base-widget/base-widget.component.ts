@@ -164,6 +164,10 @@ export abstract class BaseWidgetComponent implements OnChanges, OnInit, OnDestro
             pd[packetKey] = pd[packetKey].bytes ? atob(pd[packetKey].bytes) : pd[packetKey];
             break;
           }
+          case 'BOOLEAN': {
+            // no action needed
+            break;
+          }
           case 'OBJECT': {
             // pd[packetKey] = JSON.stringify(pd[packetKey]);
             break;

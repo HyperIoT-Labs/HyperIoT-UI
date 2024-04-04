@@ -25,10 +25,10 @@
     <div *ngIf="isConfigured" class="sensor-value-container" [ngClass]="widget.config.bgColor">
     
       <div class="value-container">
-        <span *ngIf="sensorRenderValue" class="sensor-value" [ngStyle]="{'color': widget.config.textColor}">
+        <span *ngIf="canRender(sensorRenderValue)" class="sensor-value" [ngStyle]="{'color': widget.config.textColor}">
           {{ sensorRenderValue }}
         </span>
-        <span *ngIf="!sensorRenderValue">Waiting for data...</span>
+        <span *ngIf="!canRender(sensorRenderValue)">Waiting for data...</span>
         <div class="timestamp">
           {{ timestamp | amTimeAgo }}
         </div>

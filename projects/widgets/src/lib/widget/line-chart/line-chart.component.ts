@@ -2,11 +2,11 @@ import { Component, Injector, OnInit, Optional } from '@angular/core';
 import { DataChannel, DataPacketFilter, Logger, LoggerService, PacketData } from 'core';
 import { PlotlyService } from 'angular-plotly.js';
 import { Subscription, asyncScheduler, bufferTime, filter, map } from 'rxjs';
-
 import { BaseChartComponent } from '../../base/base-chart/base-chart.component';
 import { WidgetAction } from '../../base/base-widget/model/widget.model';
 import { TimeSeries } from '../../data/time-series';
 import { ServiceType } from '../../service/model/service-type';
+import * as moment from 'moment';
 
 @Component({
   selector: 'hyperiot-line-chart',
@@ -81,7 +81,9 @@ export class LineChartComponent
 
   subscribeAndInit() {
     this.subscribeDataChannel();
+    
     this.computePacketData(this.initData);
+    console.log(this.initData);
     const resizeObserver = new ResizeObserver((entries) => {
       const graph = this.plotly.getInstanceByDivId(`widget-${this.widget.id}${this.isToolbarVisible}`);
       if (graph) {
@@ -128,12 +130,14 @@ export class LineChartComponent
 
   computePacketData(packetData: PacketData[]) {
     super.computePacketData(packetData);
-
+    this.loadingOfflineData = false
+    console.log("computePacketData 0");
+    
     if (packetData.length === 0) {
       return;
     }
     this.allData = this.allData.concat(packetData);
-
+    console.log("computePacketData 1");
     packetData.forEach((datum) => {
       if (
         new Date(datum.timestamp) >
@@ -147,7 +151,6 @@ export class LineChartComponent
       this.convertAndBufferData(datum);
     });
     this.renderBufferedData();
-    this.loadingOfflineData = false;
     if (this.serviceType === ServiceType.OFFLINE) {
       this.lowerBound++;
       this.updateDataRequest();
@@ -218,7 +221,7 @@ export class LineChartComponent
     this.graph.layout.xaxis = {
       type: 'date',
       showgrid: false,
-      range: [],
+      range: []
     };
   }
 
@@ -304,5 +307,9 @@ export class LineChartComponent
     }
 
     this.widgetAction.emit(widgetAction);
+  }
+
+  get rangeSelected() : boolean{
+    return this.graph.layout?.xaxis?.range?.length;
   }
 }

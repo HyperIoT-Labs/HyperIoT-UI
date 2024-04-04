@@ -1,20 +1,27 @@
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
-import { AreaDevice, AreasService, HDevice, HPacket, HPacketField, HPacketFieldsHandlerService, HpacketsService } from 'core';
-import { WidgetConfig } from '../../../base/base-widget/model/widget.model';
-import { SelectOption, SelectOptionGroup } from 'components';
-import { Observable } from 'rxjs';
-import { DataSimulatorSettings } from './data-simulator.models';
-import { ControlContainer, NgForm } from '@angular/forms';
+import { Component, Input, OnInit, ViewEncapsulation } from "@angular/core";
+import {
+  AreaDevice,
+  AreasService,
+  HDevice,
+  HPacket,
+  HPacketField,
+  HPacketFieldsHandlerService,
+  HpacketsService,
+} from "core";
+import { WidgetConfig } from "../../../base/base-widget/model/widget.model";
+import { SelectOption, SelectOptionGroup } from "components";
+import { Observable } from "rxjs";
+import { DataSimulatorSettings } from "./data-simulator.models";
+import { ControlContainer, NgForm } from "@angular/forms";
 
 @Component({
-  selector: 'hyperiot-data-simulator-settings',
-  templateUrl: './data-simulator-settings.component.html',
-  styleUrls: ['./data-simulator-settings.component.scss'],
+  selector: "hyperiot-data-simulator-settings",
+  templateUrl: "./data-simulator-settings.component.html",
+  styleUrls: ["./data-simulator-settings.component.scss"],
   encapsulation: ViewEncapsulation.None,
-  viewProviders: [{ provide: ControlContainer, useExisting: NgForm }]
+  viewProviders: [{ provide: ControlContainer, useExisting: NgForm }],
 })
 export class DataSimulatorSettingsComponent implements OnInit {
-
   @Input() widget: WidgetConfig;
 
   @Input() areaId: number;
@@ -39,40 +46,47 @@ export class DataSimulatorSettingsComponent implements OnInit {
 
   period: number;
 
-  fieldRules: DataSimulatorSettings.FieldRules = { };
+  fieldRules: DataSimulatorSettings.FieldRules = {};
 
-  fieldOutliers: DataSimulatorSettings.FieldOutliers = { };
+  fieldType: DataSimulatorSettings.FieldType = {};
+
+  fieldOutliers: DataSimulatorSettings.FieldOutliers = {};
 
   constructor(
     private areaService: AreasService,
     private packetService: HpacketsService,
-    private hPacketFieldsHandlerService: HPacketFieldsHandlerService,
-  ) { }
+    private hPacketFieldsHandlerService: HPacketFieldsHandlerService
+  ) {}
 
   ngOnInit(): void {
     if (this.widget.config == null) {
-        this.widget.config = {};
+      this.widget.config = {};
     }
 
     // If `areaId` is set, then show only packets belonging to the given area devices
     if (this.areaId) {
-      this.areaService.getAreaDeviceList(this.areaId).subscribe((areaDevices: AreaDevice[]) => {
-        const devices = areaDevices.map((ad: AreaDevice) => ad.device);
-        this.loadPackets(devices);
-      });
+      this.areaService
+        .getAreaDeviceList(this.areaId)
+        .subscribe((areaDevices: AreaDevice[]) => {
+          const devices = areaDevices.map((ad: AreaDevice) => ad.device);
+          this.loadPackets(devices);
+        });
     } else {
       this.loadPackets();
     }
 
     if (this.widget.config.dataSimulatorSettings) {
-      this.sourcePassword = this.widget.config.dataSimulatorSettings.deviceInfo.password;
+      this.sourcePassword =
+        this.widget.config.dataSimulatorSettings.deviceInfo.password;
       this.period = this.widget.config.dataSimulatorSettings.period;
       this.fieldRules = this.widget.config.dataSimulatorSettings.fieldRules;
-      this.fieldOutliers = this.widget.config.dataSimulatorSettings.fieldOutliers;
+      this.fieldType = this.widget.config.dataSimulatorSettings.fieldType;
+      this.fieldOutliers =
+        this.widget.config.dataSimulatorSettings.fieldOutliers;
     }
 
     this.modalApply.subscribe((event) => {
-      if (event === 'apply') {
+      if (event === "apply") {
         this.apply();
       }
     });
@@ -80,12 +94,17 @@ export class DataSimulatorSettingsComponent implements OnInit {
 
   onPacketChange(packetOption) {
     this.selectedPacketOption = packetOption.value;
-    this.selectedPacket = this.projectPackets.find(p => p.id === this.selectedPacketOption);
+    this.selectedPacket = this.projectPackets.find(
+      (p) => p.id === this.selectedPacketOption
+    );
     this.fieldsOption = [];
-    const fieldsFlatList = this.hPacketFieldsHandlerService.flatPacketFieldsTree(this.selectedPacket);
-    this.fieldsOption = fieldsFlatList.map(x => ({
+    const fieldsFlatList =
+      this.hPacketFieldsHandlerService.flatPacketFieldsTree(
+        this.selectedPacket
+      );
+    this.fieldsOption = fieldsFlatList.map((x) => ({
       value: x.field.id,
-      label: x.label
+      label: x.label,
     }));
     this.selectedFields = [];
     this.selectedFieldsOptions = [];
@@ -99,14 +118,19 @@ export class DataSimulatorSettingsComponent implements OnInit {
       delete this.selectedFields[nullIndex];
     }
     let selected = $event as any[];
-    selected.map(s => {
-      this.selectedFields.push(this.hPacketFieldsHandlerService.findFieldFromPacketFieldsTree(this.selectedPacket, s));
+    selected.map((s) => {
+      this.selectedFields.push(
+        this.hPacketFieldsHandlerService.findFieldFromPacketFieldsTree(
+          this.selectedPacket,
+          s
+        )
+      );
     });
 
     // reset fieldRules
     const tempFieldRules = { ...this.fieldRules };
-    this.fieldRules = { };
-    this.selectedFields.forEach(field => {
+    this.fieldRules = {};
+    this.selectedFields.forEach((field) => {
       if (tempFieldRules[field.id]) {
         this.fieldRules[field.id] = { ...tempFieldRules[field.id] };
       } else {
@@ -114,10 +138,16 @@ export class DataSimulatorSettingsComponent implements OnInit {
       }
     });
 
+    //reset fieldType
+    this.fieldType = {};
+    this.selectedFields.forEach((field) => {
+      this.fieldType[field.id] = field.type;
+    });
+
     // reset fieldOutliers
     const tempFieldOutliers = { ...this.fieldOutliers };
-    this.fieldOutliers = { };
-    this.selectedFields.forEach(field => {
+    this.fieldOutliers = {};
+    this.selectedFields.forEach((field) => {
       if (tempFieldOutliers[field.id]) {
         this.fieldOutliers[field.id] = tempFieldOutliers[field.id];
       } else {
@@ -125,23 +155,24 @@ export class DataSimulatorSettingsComponent implements OnInit {
       }
     });
 
-    this.selectedFieldsValidation = this.selectedFields.length > 0 ? true : null;
+    this.selectedFieldsValidation =
+      this.selectedFields.length > 0 ? true : null;
   }
 
   loadPackets(devices?: HDevice[]) {
     this.packetService
-      .findAllHPacketByProjectIdAndType(this.widget.projectId,"INPUT,IO")
+      .findAllHPacketByProjectIdAndType(this.widget.projectId, "INPUT,IO")
       .subscribe((packetList) => {
         // Filter out packets not belonging to the given `devices` list (if set)
         if (devices) {
           packetList = packetList.filter((p: HPacket) => {
-            if (p.device && devices.find(d => d.id === p.device.id)) {
+            if (p.device && devices.find((d) => d.id === p.device.id)) {
               return p;
             }
           });
         }
         this.projectPackets = packetList;
-        this.projectPackets.sort((a, b) => a.name < b.name ? -1 : 1);
+        this.projectPackets.sort((a, b) => (a.name < b.name ? -1 : 1));
 
         const packetDevices = this.projectPackets.map((x) => x.device);
         const groupDevices = [];
@@ -157,50 +188,69 @@ export class DataSimulatorSettingsComponent implements OnInit {
             .map((y) => ({
               value: y.id,
               label: y.name,
-              icon: 'icon-hyt_packets',
+              icon: "icon-hyt_packets",
             })),
-          icon: 'icon-hyt_device',
+          icon: "icon-hyt_device",
         }));
 
         // load current packet data and set selected fields
         if (this.widget.config?.dataSimulatorSettings?.packetInfo?.packetId) {
-          this.packetService.findHPacket(this.widget.config.dataSimulatorSettings.packetInfo.packetId).subscribe(
-            (packet: HPacket) => {
+          this.packetService
+            .findHPacket(
+              this.widget.config.dataSimulatorSettings.packetInfo.packetId
+            )
+            .subscribe((packet: HPacket) => {
               this.selectedPacket = packet;
               this.selectedPacketOption = this.selectedPacket.id;
-              const fieldsFlatList = this.hPacketFieldsHandlerService.flatPacketFieldsTree(this.selectedPacket);
-              this.fieldsOption = fieldsFlatList.map(x => ({
+              const fieldsFlatList =
+                this.hPacketFieldsHandlerService.flatPacketFieldsTree(
+                  this.selectedPacket
+                );
+              this.fieldsOption = fieldsFlatList.map((x) => ({
                 value: x.field.id,
-                label: x.label
+                label: x.label,
               }));
               if (this.widget.config.packetFields) {
                 this.selectedFields = [];
-                Object.keys(this.widget.config.packetFields).forEach(x => {
+                Object.keys(this.widget.config.packetFields).forEach((x) => {
                   this.selectedFieldsOptions.push(+x);
-                  this.selectedFields.push(this.hPacketFieldsHandlerService.findFieldFromPacketFieldsTree(packet, +x));
+                  this.selectedFields.push(
+                    this.hPacketFieldsHandlerService.findFieldFromPacketFieldsTree(
+                      packet,
+                      +x
+                    )
+                  );
                 });
-                packet.fields.sort((a, b) => a.name < b.name ? -1 : 1);
+                packet.fields.sort((a, b) => (a.name < b.name ? -1 : 1));
               }
-            }
-          );
+            });
         }
       });
   }
 
   apply() {
-    this.selectedPacket = this.projectPackets.find(p => p.id === +this.selectedPacketOption);
+    this.selectedPacket = this.projectPackets.find(
+      (p) => p.id === +this.selectedPacketOption
+    );
 
     this.widget.config.packetId = this.selectedPacket.id;
     (this.widget.config.packetFields as any) = {};
-    this.selectedFields.map((pf) => this.widget.config.packetFields[pf.id] = this.hPacketFieldsHandlerService.getStringifiedSequenceFromPacket(this.selectedPacket, pf.id));
+    this.selectedFields.map(
+      (pf) =>
+        (this.widget.config.packetFields[pf.id] =
+          this.hPacketFieldsHandlerService.getStringifiedSequenceFromPacket(
+            this.selectedPacket,
+            pf.id
+          ))
+    );
 
     // remove null values from field outliers
-    Object.keys(this.fieldOutliers).forEach(key => {
+    Object.keys(this.fieldOutliers).forEach((key) => {
       if (!this.fieldOutliers[key]) {
-        delete this.fieldOutliers [key];
+        delete this.fieldOutliers[key];
       }
     });
-    
+
     this.widget.config.dataSimulatorSettings = {
       deviceInfo: {
         password: this.sourcePassword,
@@ -211,15 +261,24 @@ export class DataSimulatorSettingsComponent implements OnInit {
         packetId: this.selectedPacket.id,
         packetName: this.selectedPacket.name,
       },
-      topic: 'streaming/' + this.selectedPacket.device.project.id + '/' + this.selectedPacket.device.id + '/' + this.selectedPacket.id,
+      topic:
+        "streaming/" +
+        this.selectedPacket.device.project.id +
+        "/" +
+        this.selectedPacket.device.id +
+        "/" +
+        this.selectedPacket.id,
       fieldRules: this.fieldRules,
       fieldOutliers: this.fieldOutliers,
+      fieldType: this.fieldType,
       period: this.period,
-    }
+    };
   }
 
   getFullFieldName(hPacketFieldId) {
-    return this.hPacketFieldsHandlerService.getStringifiedSequenceFromPacket(this.selectedPacket, hPacketFieldId);
+    return this.hPacketFieldsHandlerService.getStringifiedSequenceFromPacket(
+      this.selectedPacket,
+      hPacketFieldId
+    );
   }
-
 }
