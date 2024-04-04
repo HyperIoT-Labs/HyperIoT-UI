@@ -1,0 +1,33 @@
+<hyperiot-base-widget-template>
+  <header-widget>
+    <hyperiot-common-toolbar widgetName="{{widget.name}}" (action)="onToolbarAction($event)"
+      [toolbarIsVisible]="isToolbarVisible" [config]="{
+                    showClose: true,
+                    showSettings: true,
+                    showPlay: true,
+                    showRefresh: false,
+                    showTable: false
+              }">
+    </hyperiot-common-toolbar>
+  </header-widget>
+  <content-widget>
+    <div *ngIf="!isConfigured; else configured" class="configure-notice">
+      <strong i18n="@@HYT_common_not_configured">Click 'Settings' button to configure.</strong>
+    </div>
+
+    <ng-template #configured>
+      <div id="modalAnchor"></div>
+      <div #productionTarget id="productionTarget">
+        <div class="section-group">
+          <div class="data main-data">
+            <p-fieldset *ngFor="let label of widgetLabels" [legend]="returnFieldName(label.label)">
+              <span class="value">{{chartData[label.value] !== undefined && chartData[label.value] !== null ? chartData[label.value] : '--'}}</span>
+            </p-fieldset>
+          </div>
+          <plotly-plot [data]="graph.data" [layout]="graph.layout" class="chart"></plotly-plot>
+        </div>
+      </div>
+    </ng-template>
+
+  </content-widget>
+</hyperiot-base-widget-template>

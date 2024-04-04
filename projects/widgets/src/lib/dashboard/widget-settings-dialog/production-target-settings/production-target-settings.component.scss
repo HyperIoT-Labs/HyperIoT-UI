@@ -1,0 +1,56 @@
+.section-group {
+  display: flex;
+  flex-direction: column;
+  margin-left: 24px;
+  margin-bottom: 1em;
+
+  .label-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 35px;
+
+    .label {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+
+      span {
+        font-weight: bold;
+        margin-bottom: 10px;
+  
+        &.label-info {
+          font-size: 13px;
+          color: #323232;
+
+          &.required {
+            font-size: 17px;
+          }
+        }
+      }      
+    }
+  }
+
+  .manual-target {
+    display: flex;
+    align-items: flex-end;
+    gap: 2em;
+
+
+    .target-input {
+      width: 28%;
+    }
+  }
+
+  .section-input {
+    display: flex;
+    flex-direction: row;
+    gap: 32px;
+    align-items: flex-end;
+
+    hyt-select-template,
+    hyt-input-template {
+      width: 30%;
+    }
+  }
+}

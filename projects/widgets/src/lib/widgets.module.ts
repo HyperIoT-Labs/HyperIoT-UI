@@ -42,6 +42,9 @@ import { DataSimulatorComponent } from './widget/data-simulator/data-simulator.c
 import { DefibrillatorComponent } from './widget/defibrillator/defibrillator.component';
 import { MultiStatusWidgetComponent } from './widget/multi-status-widget/multi-status-widget.component';
 import { DynamicLabelValueWidgetComponent } from './widget/dynamic-label-value-widget/dynamic-label-value-widget.component';
+import { ProductionTargetComponent } from './widget/production-target/production-target.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FieldsetModule } from 'primeng';
 
 @NgModule({
   declarations: [
@@ -64,6 +67,7 @@ import { DynamicLabelValueWidgetComponent } from './widget/dynamic-label-value-w
     DefibrillatorComponent,
     MultiStatusWidgetComponent,
     DynamicLabelValueWidgetComponent,
+    ProductionTargetComponent
   ],
   imports: [
     MatButtonModule,
@@ -75,6 +79,9 @@ import { DynamicLabelValueWidgetComponent } from './widget/dynamic-label-value-w
     MatTableModule,
     MatPaginatorModule,
     MatTooltipModule,
+    FieldsetModule,
+    BrowserModule, 
+    BrowserAnimationsModule,
     MomentModule.forRoot({
       relativeTimeThresholdOptions: {
         m: 59
@@ -115,6 +122,7 @@ import { DynamicLabelValueWidgetComponent } from './widget/dynamic-label-value-w
     HistogramChartComponent,
     MultiStatusWidgetComponent,
     DynamicLabelValueWidgetComponent,
+    ProductionTargetComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
