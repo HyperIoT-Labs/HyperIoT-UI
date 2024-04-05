@@ -24,6 +24,7 @@
         <div 
           *ngFor="let alarm of alarmListArray" 
           class="alarm-container"
+          [class.alarm-out]="alarm.event.alarmState == 'DOWN'"
           [style]="containerStyle(alarm)"
         >
           <h4 [innerHTML]="alarm.isAlarm ? alarm.event.alarmName : alarm.event.ruleName"></h4>

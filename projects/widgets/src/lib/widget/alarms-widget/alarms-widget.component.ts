@@ -12,7 +12,6 @@ const moment = moment_;
 export class AlarmsWidgetComponent extends BaseWidgetComponent {
   protected logger: Logger;
   alarmsList: Map<number, HytAlarm.LiveAlarm> = new Map();
-
   constructor(injector: Injector, protected loggerService: LoggerService, private alarmWrapper: AlarmWrapperService) {
     super(injector, loggerService);
     this.logger = new Logger(this.loggerService);
@@ -31,6 +30,12 @@ export class AlarmsWidgetComponent extends BaseWidgetComponent {
         this.logger.info("EMITTED ALARM ON DASHBOARD", alarm)
         //NOT FILTER FOR PROJECT, NEED TO CHANGE REALTIME DATA SERVICE
         this.alarmsList.set(alarm.event.alarmId, alarm);
+        if(alarm.event.alarmState == "DOWN"){
+          // ANIMATE ALARM USING ALARMSTATE AND AFTER D
+          setTimeout(()=>{
+            this.alarmsList.delete(alarm.event.alarmId);
+          }, 1000)
+        }
       })
   }
 

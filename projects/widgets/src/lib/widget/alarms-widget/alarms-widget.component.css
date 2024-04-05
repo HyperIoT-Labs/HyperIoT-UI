@@ -16,4 +16,13 @@
     border-radius: 6px;
     display: flex;
     flex-direction: column;
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    left: 0;
+    transition: all 0.6s ease-out;
+}
+.alarm-container.alarm-out{
+    transform: translateX(-300px);
+    opacity: 0;
 }
