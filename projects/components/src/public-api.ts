@@ -78,7 +78,7 @@ export { HytAccordionContent } from './lib/hyt-accordion/hyt-directives/hyt-acco
 export { HytAccordionHeader } from './lib/hyt-accordion/hyt-directives/hyt-accordion-header.directive';
 export { HytFilterButtonComponent } from './lib/hyt-filter-button/hyt-filter-button.component'
 export { HytDetailedCardComponent } from './lib/hyt-detailed-card/hyt-detailed-card.component'
-export { HytBadgeComponent } from './lib/hyt-badge/hyt-badge.component'
+export { HytBadgeComponent, HytBadgeShape, HytBadgeSize } from './lib/hyt-badge/hyt-badge.component'
 export { HytChatbotComponent } from './lib/hyt-chatbot/hyt-chatbot.component'
 export { HytIconPickerComponent } from './lib/hyt-icon-picker/hyt-icon-picker.component';
 export { HytIconPickerListComponent } from './lib/hyt-icon-picker/hyt-icon-picker-list/hyt-icon-picker-list.component';

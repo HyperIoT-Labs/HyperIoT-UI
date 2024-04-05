@@ -44,7 +44,6 @@ import { MultiStatusWidgetComponent } from './widget/multi-status-widget/multi-s
 import { DynamicLabelValueWidgetComponent } from './widget/dynamic-label-value-widget/dynamic-label-value-widget.component';
 import { ProductionTargetComponent } from './widget/production-target/production-target.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FieldsetModule } from 'primeng';
 
 @NgModule({
   declarations: [
@@ -79,7 +78,6 @@ import { FieldsetModule } from 'primeng';
     MatTableModule,
     MatPaginatorModule,
     MatTooltipModule,
-    FieldsetModule,
     BrowserModule, 
     BrowserAnimationsModule,
     MomentModule.forRoot({
