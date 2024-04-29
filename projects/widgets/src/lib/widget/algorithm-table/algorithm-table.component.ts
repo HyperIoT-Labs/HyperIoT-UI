@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, Injector, OnInit, ViewChild } from '@angular/core';
 import { AlgorithmOfflineDataService, HpacketsService, LoggerService, PacketData } from 'core';
 import * as moment_ from 'moment';
-import { Subject, Subscription } from 'rxjs';
+import { Subject, Subscription, lastValueFrom } from 'rxjs';
 import { BaseTableComponent } from '../../base/base-table/base-table.component';
 import { WidgetAction } from '../../base/base-widget/model/widget.model';
 
@@ -112,7 +112,7 @@ export class AlgorithmTableComponent extends BaseTableComponent implements After
           const rowKey = Object.keys(res.rows)[0];  // take only first value
           const value = res.rows[rowKey].value;
 
-          // TO DO: effetturare questa operazione sul solo campo output (?)
+          // TO DO: check conversion problem on output value
           //this.computePacketData([value]);
 
           // Compute timeStamp
@@ -149,7 +149,7 @@ export class AlgorithmTableComponent extends BaseTableComponent implements After
         }));
 
         if (groupingKeys.length > 0 && this.hPacketIdMap.size == 0) {
-            const res = await this.packetService.getHPacketField(groupingKeys).toPromise();
+            const res = await lastValueFrom(this.packetService.getHPacketField(groupingKeys));
             res.forEach(element => {
                 this.hPacketIdMap.set(element.id, element.name);
             });
@@ -165,7 +165,7 @@ export class AlgorithmTableComponent extends BaseTableComponent implements After
             }
         }
 
-        // Infine, aggiungi la colonna timestamp
+        // Finally, add the timestamp column
         this.tableHeaders.push({
             value: 'timestamp',
             label: this.widget.config.timestampFieldName,
@@ -191,7 +191,6 @@ export class AlgorithmTableComponent extends BaseTableComponent implements After
       });
     }
     pageData.unshift(obj);
-    return pageData
   }
 
 }
