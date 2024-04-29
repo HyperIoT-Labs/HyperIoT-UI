@@ -1,7 +1,7 @@
 import { Component, Injector, OnInit, Optional } from '@angular/core';
 import { DataChannel, DataPacketFilter, Logger, LoggerService, PacketData } from 'core';
 import { PlotlyService } from 'angular-plotly.js';
-import { Subscription, asyncScheduler, bufferTime, filter, map } from 'rxjs';
+import { BehaviorSubject, Subscription, asyncScheduler, bufferTime, filter, map } from 'rxjs';
 
 import { BaseChartComponent } from '../../base/base-chart/base-chart.component';
 import { WidgetAction } from '../../base/base-widget/model/widget.model';
@@ -46,6 +46,12 @@ export class LineChartComponent
   ngOnInit(): void {
     super.ngOnInit();
     this.configure();
+    
+    (
+      this.dataService["rangeSelectionDataAlreadyLoaded"] as BehaviorSubject<number>
+    ).subscribe((res) => {
+      if (res) this.loadingOfflineData = false;
+    });
   }
 
   configure() {
@@ -182,6 +188,7 @@ export class LineChartComponent
         x: [],
         y: [],
         yaxis: 'y' + (i + 1),
+        type: ''
       };
       Object.assign(tsd, this.defaultSeriesConfig);
       this.graph.data.push(tsd);
@@ -262,12 +269,25 @@ export class LineChartComponent
 
   // OFFLINE
   dataRequest() {
-    if (this.loadingOfflineData) {
+    console.warn(this);
+    if (this.loadingOfflineData || this.dataService['rangeSelectionDataAlreadyLoaded'].value) {
       return;
     }
     this.loadingOfflineData = true;
 
     this.dataService.loadNextData(this.widget.id);
+  }
+
+  isLoadingData(){
+    if(this.dataService['rangeSelectionDataAlreadyLoaded'].value){
+      return false;
+    }
+    return this.loadingOfflineData;
+  }
+
+  noRangeSelected(){
+    // return false;
+    return this.dataChannel && !this.dataChannel.controller.channelLowerBound;
   }
 
   updateDataRequest() {

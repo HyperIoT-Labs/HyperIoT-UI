@@ -15,7 +15,7 @@
       </hyperiot-common-toolbar>
     </header-widget>
   
-    <content-widget>
+    <content-widget style="position: relative;">
       <div *ngIf="!isConfigured; else configured" class="configure-notice">
         <strong i18n="@@HYT_common_not_configured">Click 'Settings' button to configure.</strong>
       </div>
@@ -25,32 +25,32 @@
         </hyperiot-loader>
   
         <ng-template #loadingFinished>
-            <!-- <div class="line-chart-container"> -->
+          <plotly-plot
+            divId="widget-{{widget.id}}{{isToolbarVisible}}"
+            [data]="graph?.data"
+            [layout]="graph?.layout"
+            [useResizeHandler]="true"
+            [updateOnLayoutChange]="false"
+            [config]="{
+              scrollZoom: true,
+              displayModeBar: 'hover',
+              displaylogo: false,
+              modeBarButtonsToRemove: ['hoverClosestCartesian', 'hoverCompareCartesian', 'toggleSpikelines', 'autoScale2d'],
+              editable: false,
+              showAxisDragHandles: false
+            }"
+            (initialized)="subscribeAndInit()"
+          >
+          </plotly-plot>
+              
+          <div *ngIf="noRangeSelected()" class="loading-overlay">
+            <p>Seleziona un range per mostrare il grafico...</p>
+          </div>
 
-                <plotly-plot
-                  divId="widget-{{widget.id}}{{isToolbarVisible}}"
-                  [data]="graph?.data"
-                  [layout]="graph?.layout"
-                  [useResizeHandler]="true"
-                  [updateOnLayoutChange]="false"
-                  [config]="{
-                    scrollZoom: true,
-                    displayModeBar: 'hover',
-                    displaylogo: false,
-                    modeBarButtonsToRemove: ['hoverClosestCartesian', 'hoverCompareCartesian', 'toggleSpikelines', 'autoScale2d'],
-                    editable: false,
-                    showAxisDragHandles: false
-                  }"
-                  (initialized)="subscribeAndInit()"
-                    >
-                    <!-- resetViews 'zoom2d', 'pan2d'-->
-                </plotly-plot>
-                
-              <div *ngIf="loadingOfflineData" class="loading-overlay">
-                <p>Loading data...</p>
-                <mat-spinner  strokeWidth="4" diameter="44"></mat-spinner>
-              </div>
-            <!-- </div> -->
+          <div *ngIf="isLoadingData()" class="loading-overlay">
+            <p>Loading data...</p>
+            <mat-spinner  strokeWidth="4" diameter="44"></mat-spinner>
+          </div>
         </ng-template>
   
       </ng-template>
