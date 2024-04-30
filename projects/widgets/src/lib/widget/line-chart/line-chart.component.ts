@@ -86,6 +86,7 @@ export class LineChartComponent
   }
 
   subscribeAndInit() {
+    this.logger.debug("subscribeAndInit");
     this.subscribeDataChannel();
     this.computePacketData(this.initData);
     const resizeObserver = new ResizeObserver((entries) => {
@@ -98,7 +99,7 @@ export class LineChartComponent
   }
 
   subscribeDataChannel() {
-
+    this.logger.debug("subscribeDataChannel");
     const dataPacketFilter = new DataPacketFilter(
       this.widget.config.packetId,
       this.widget.config.packetFields,
@@ -117,6 +118,7 @@ export class LineChartComponent
       )
       .subscribe((eventData) => this.computePacketData(eventData));
     if (this.serviceType === ServiceType.OFFLINE) {
+      this.logger.debug("subscribeAndInit - OFFLINE Service");
       this.offControllerSubscription = this.dataChannel.controller.$totalCount.subscribe((res) => {
         this.totalLength = res;
         this.allData = [];
@@ -133,6 +135,7 @@ export class LineChartComponent
   }
 
   computePacketData(packetData: PacketData[]) {
+    this.logger.debug("computePacketData", packetData);
     super.computePacketData(packetData);
 
     if (packetData.length === 0) {
@@ -161,6 +164,7 @@ export class LineChartComponent
   }
 
   setTimeChartLayout() {
+    this.logger.debug("setTimeChartLayout")
     this.chartData.forEach((timeSeries, i) => {
       const fieldName = timeSeries.name;
       const a = i + 1;
@@ -230,6 +234,7 @@ export class LineChartComponent
   }
 
   setTimeSeries(): void {
+    this.logger.debug("setTimeSeries");
     this.chartData = [];
     Object.keys(this.widget.config.packetFields).forEach((fieldId) => {
       this.chartData.push(
@@ -238,6 +243,7 @@ export class LineChartComponent
     });
   }
   async renderBufferedData() {
+    this.logger.debug("renderBufferedData");
     const Plotly = await this.plotly.getPlotly();
     const graph = this.plotly.getInstanceByDivId(`widget-${this.widget.id}${this.isToolbarVisible}`); // TODO change isToolbarVisible
     if (graph) {
@@ -254,6 +260,7 @@ export class LineChartComponent
   }
 
   convertAndBufferData(ed: PacketData) {
+    this.logger.debug("convertAndBufferData");
     Object.keys(ed).forEach((k) => {
       if (k !== 'timestamp') {
         if (this.chartData.some((x) => x.name === k)) {
@@ -269,9 +276,11 @@ export class LineChartComponent
 
   // OFFLINE
   dataRequest() {
+    this.logger.debug("dataRequest");
     if (this.loadingOfflineData || this.dataService['rangeSelectionDataAlreadyLoaded'].value) {
       return;
     }
+    this.logger.debug("dataRequest triggered");
     this.loadingOfflineData = true;
 
     this.dataService.loadNextData(this.widget.id);
@@ -289,6 +298,7 @@ export class LineChartComponent
   }
 
   updateDataRequest() {
+    this.logger.debug("updateDataRequest");
     if (
       !this.lastRequestedDate ||
       !this.lastOfflineDate ||
@@ -300,10 +310,12 @@ export class LineChartComponent
   }
 
   play(): void {
+    this.logger.debug("play");
     this.dataChannel.controller.play();
   }
 
   pause(): void {
+    this.logger.debug("pause");
     this.dataChannel.controller.pause();
   }
 

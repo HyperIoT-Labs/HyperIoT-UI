@@ -2258,6 +2258,10 @@
         <source>(optional)</source>
         <target>(facoltativo)</target>
       </trans-unit>
+      <trans-unit id="HYT_noRangeSelected" datatype="html">
+        <source>Select a range to display the graph...</source>
+        <target>Seleziona un range per mostrare il grafico...</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

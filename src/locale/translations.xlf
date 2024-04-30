@@ -1690,6 +1690,9 @@
       <trans-unit id="HYT_optional" datatype="html">
         <source>(optional)</source>
       </trans-unit>
+      <trans-unit id="HYT_noRangeSelected" datatype="html">
+        <source>Select a range to display the graph...</source>
+      </trans-unit>
     </body>
   </file>
 </xliff>
