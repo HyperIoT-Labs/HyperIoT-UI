@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { asyncScheduler, map, Observable, Subject, Subscription } from 'rxjs';
+import { asyncScheduler, BehaviorSubject, map, Observable, Subject, Subscription } from 'rxjs';
 import { HprojectsService } from '../../hyperiot-client/h-project-client/api-module';
 import { BaseDataService } from '../base-data.service';
 import { DataChannel } from '../models/data-channel';
@@ -21,6 +21,9 @@ export class OfflineDataService extends BaseDataService {
 
   countEventSubject: Subject<PageStatus>;
 
+  /** Emit true when all the timeline selected range is loaded */
+  rangeSelectionDataAlreadyLoaded = new BehaviorSubject(false);
+
   DEFAULT_CHUNK_LENGTH = 50;
   hProjectId;
   private dashboardTimeBounds = { lower: 0, upper: 0 };
@@ -36,6 +39,7 @@ export class OfflineDataService extends BaseDataService {
     this.countEventSubject = new Subject<PageStatus>();
   }
 
+  
   public resetService(hProjectId: number): Subject<number[]> {
     this.hProjectId = hProjectId;
     this.getEventCountEmpty(); // resetting time bounds and subscriptions
@@ -43,6 +47,7 @@ export class OfflineDataService extends BaseDataService {
     return this.dashboardPackets;
   }
 
+  
   addDataChannel(widgetId: number, dataPacketFilterList: DataPacketFilter[]) {
     const dataChannel = super.addDataChannel(widgetId, dataPacketFilterList);
     const packetIds = this.getPacketIdsFromDataChannels();
@@ -61,6 +66,7 @@ export class OfflineDataService extends BaseDataService {
     return dataChannel;
   }
 
+  
   removeDataChannel(widgetId: number) {
     super.removeDataChannel(widgetId);
     const packetIds = this.getPacketIdsFromDataChannels();
@@ -74,6 +80,7 @@ export class OfflineDataService extends BaseDataService {
 
   // Setting counter for specific widget
   // can avoid to reset data channel controller because this function is called after a new data channel is created so the controller is new
+  
   private getEventCountByWidgetId(widgetId: number) {
     const dataChannel = this.dataChannels[widgetId];
     if (!dataChannel) {
@@ -104,7 +111,9 @@ export class OfflineDataService extends BaseDataService {
   }
 
   // Setting counter after user selection
+  
   public getEventCount(rowKeyLowerBound: number, rowKeyUpperBound: number): void {
+    this.rangeSelectionDataAlreadyLoaded.next(false)
     this.resetSubscription();
     this.countEventSubject.next(PageStatus.Loading);
 
@@ -137,6 +146,7 @@ export class OfflineDataService extends BaseDataService {
   }
 
   // Setting counter after user remove selection
+  
   public getEventCountEmpty() {
     this.resetSubscription();
     this.dashboardTimeBounds.lower = 0;
@@ -144,6 +154,7 @@ export class OfflineDataService extends BaseDataService {
   }
 
   // reset actual subscription and data channel controllers 
+  
   private resetSubscription() {
     if (this.countSubscription) {
       this.countSubscription.unsubscribe();
@@ -158,6 +169,7 @@ export class OfflineDataService extends BaseDataService {
   }
 
   // get paginated data
+  
   scanAndSaveHProject(dataChannel: DataChannel, deviceId, alarmState): Observable<PacketDataChunk[]> {
     const packetIds = dataChannel.packetFilterList.map(packetFilter => packetFilter.packetId);
     return this.hprojectsService.scanHProject(this.hProjectId, dataChannel.controller.channelLowerBound, this.dashboardTimeBounds.upper, this.DEFAULT_CHUNK_LENGTH, packetIds.toString(), deviceId, alarmState).pipe(
@@ -177,12 +189,21 @@ export class OfflineDataService extends BaseDataService {
             packetData.values = packetData.values.filter(datum => datum.fields.find(x => x.name === datum.timestampField).value <= minRowKeyUpperBound);
           });
         }
-
+        
         // converting data to packetData
-        const convertData: PacketDataChunk[] = res.map(packetData => ({
-          packetId: packetData.hPacketId,
-          data: this.convertData(packetData.values)
-        }));
+        let countConverted = 0;
+        const convertData: PacketDataChunk[] = res.map(packetData => {
+          countConverted += packetData.values.length;
+          return {
+            packetId: packetData.hPacketId,
+            data: this.convertData(packetData.values)
+          }
+        });
+
+        if(countConverted == 0){
+          // NO MORE DATA TO LOAD
+          this.rangeSelectionDataAlreadyLoaded.next(true);
+        }
 
         // setting channel lower bound with new min rowKeyUpperBound
         dataChannel.controller.channelLowerBound = minRowKeyUpperBound + 1;
@@ -193,6 +214,7 @@ export class OfflineDataService extends BaseDataService {
   }
 
   // Download additional data for a specified channel
+  
   public loadNextData(channelId: number): void {
     
     const dataChannel = this.dataChannels[channelId];
@@ -209,6 +231,7 @@ export class OfflineDataService extends BaseDataService {
   }
 
   // Convert offline data to PacketData
+  
   private convertData(packetValues: any): PacketData[] {
     return packetValues.map(pv => {
       const convertedPV: PacketData = {};
@@ -219,6 +242,10 @@ export class OfflineDataService extends BaseDataService {
 
       return convertedPV;
     });
+  }
+
+  get isRangeSelected(){
+    return this.dashboardTimeBounds.lower && this.dashboardTimeBounds.upper;
   }
 
 }

@@ -197,6 +197,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
+    if(localStorage.getItem('offline')) this.changeSignalState(null)
     this.cd.detectChanges();
   }
 
