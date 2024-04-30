@@ -269,7 +269,6 @@ export class LineChartComponent
 
   // OFFLINE
   dataRequest() {
-    console.warn(this);
     if (this.loadingOfflineData || this.dataService['rangeSelectionDataAlreadyLoaded'].value) {
       return;
     }
@@ -286,8 +285,7 @@ export class LineChartComponent
   }
 
   noRangeSelected(){
-    // return false;
-    return this.dataChannel && !this.dataChannel.controller.channelLowerBound;
+    return !this.dataService['isRangeSelected'];
   }
 
   updateDataRequest() {

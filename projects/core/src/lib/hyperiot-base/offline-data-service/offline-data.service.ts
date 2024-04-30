@@ -244,4 +244,8 @@ export class OfflineDataService extends BaseDataService {
     });
   }
 
+  get isRangeSelected(){
+    return this.dashboardTimeBounds.lower && this.dashboardTimeBounds.upper;
+  }
+
 }
