@@ -321,14 +321,14 @@ export class LineChartComponent
   }
 
   isLoadingData(){
-    if(this.dataService['rangeSelectionDataAlreadyLoaded'].value){
+    if(this.dataService['rangeSelectionDataAlreadyLoaded']?.value){
       return false;
     }
     return this.loadingOfflineData;
   }
 
   noRangeSelected(){
-    return !this.dataService['isRangeSelected'];
+    return this.serviceType === ServiceType.OFFLINE && !this.dataService['isRangeSelected'];
   }
 
   updateDataRequest() {
