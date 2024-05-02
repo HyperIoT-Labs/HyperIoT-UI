@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { asyncScheduler, BehaviorSubject, map, Observable, Subject, Subscription } from 'rxjs';
+import { asyncScheduler, BehaviorSubject, catchError, expand, map, Observable, Subject, Subscription, takeWhile, throwError } from 'rxjs';
 import { HprojectsService } from '../../hyperiot-client/h-project-client/api-module';
 import { BaseDataService } from '../base-data.service';
 import { DataChannel } from '../models/data-channel';
@@ -31,6 +31,8 @@ export class OfflineDataService extends BaseDataService {
   dashboardPackets: Subject<number[]>;
 
   private countSubscription: Subscription;
+
+  isLoadAllRangeDataRunning = false;
 
   constructor(
     private hprojectsService: HprojectsService,
@@ -169,10 +171,9 @@ export class OfflineDataService extends BaseDataService {
   }
 
   // get paginated data
-  
-  scanAndSaveHProject(dataChannel: DataChannel, deviceId, alarmState): Observable<PacketDataChunk[]> {
+  scanAndSaveHProject(dataChannel: DataChannel, deviceId, alarmState, chunkLength = this.DEFAULT_CHUNK_LENGTH, lowerBound: number = dataChannel.controller.channelLowerBound): Observable<PacketDataChunk[]> {
     const packetIds = dataChannel.packetFilterList.map(packetFilter => packetFilter.packetId);
-    return this.hprojectsService.scanHProject(this.hProjectId, dataChannel.controller.channelLowerBound, this.dashboardTimeBounds.upper, this.DEFAULT_CHUNK_LENGTH, packetIds.toString(), deviceId, alarmState).pipe(
+    return this.hprojectsService.scanHProject(this.hProjectId, lowerBound, this.dashboardTimeBounds.upper, chunkLength, packetIds.toString(), deviceId, alarmState).pipe(
       map(res => {
 
         // TODO fix BE. This request should always return an array
@@ -246,6 +247,50 @@ export class OfflineDataService extends BaseDataService {
 
   get isRangeSelected(){
     return this.dashboardTimeBounds.lower && this.dashboardTimeBounds.upper;
+  }
+
+  public loadAllRangeData(channelId: number): void {
+    if (this.isLoadAllRangeDataRunning) {
+      console.debug('loadAllRangeData: already running');
+      return;
+    }
+    this.isLoadAllRangeDataRunning = true;
+
+    const dataChannel = this.dataChannels[channelId];
+    if (!dataChannel) {
+      throw new Error('unavailable dataChannel');
+    }
+    if(!this.isRangeSelected) {
+      throw new Error('no range selected');
+    }
+
+    console.debug('loadAllRangeData: start');
+    dataChannel.controller.dataSubscription = this.scanAndSaveHProject(dataChannel, '', '', 500)
+    .pipe(
+      expand(() => {
+        return this.scanAndSaveHProject(dataChannel, '', '', 500);
+      }),
+      takeWhile(() => {
+        if (this.rangeSelectionDataAlreadyLoaded.getValue()) {
+          this.isLoadAllRangeDataRunning = false;
+          console.debug('loadAllRangeData: finish');
+        }
+        return !this.rangeSelectionDataAlreadyLoaded.getValue()
+      }),
+      catchError(err => {
+        return throwError(() => err);
+      })
+    )
+    .subscribe({
+      next: res => {
+        console.debug('loadAllRangeData: next data', res);
+        res.forEach(packetDataChunk => dataChannel.subject.next(packetDataChunk));
+      },
+      error: err => {
+        this.isLoadAllRangeDataRunning = false;
+        console.error('loadAllRangeData error:', err);
+      }
+    });
   }
 
 }

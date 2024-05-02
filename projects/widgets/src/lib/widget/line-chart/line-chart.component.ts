@@ -32,7 +32,21 @@ export class LineChartComponent
 
   allData: PacketData[] = [];
 
-  protected logger: Logger; 
+  protected logger: Logger;
+
+  private _chartConfig = { 
+    scrollZoom: true,
+    displayModeBar: 'hover',
+    displaylogo: false,
+    modeBarButtonsToRemove: ['hoverClosestCartesian', 'hoverCompareCartesian', 'toggleSpikelines', 'autoScale2d'],
+    modeBarButtonsToAdd: [],
+    editable: false,
+    showAxisDragHandles: false
+  };
+
+  get chartConfig() {
+    return this._chartConfig;
+  }
 
   constructor(
     injector: Injector, 
@@ -48,10 +62,30 @@ export class LineChartComponent
     this.configure();
     
     (
-      this.dataService["rangeSelectionDataAlreadyLoaded"] as BehaviorSubject<number>
+      this.dataService["rangeSelectionDataAlreadyLoaded"]
     ).subscribe((res) => {
       if (res) this.loadingOfflineData = false;
     });
+
+    if (this.serviceType === ServiceType.OFFLINE) {
+      this.plotly.getPlotly().then(plotly => {
+        this._chartConfig.modeBarButtonsToAdd.push({
+          name: $localize`:@@HYT_plotly_fit_to_timeline:Fit to timeline`,
+          icon: plotly.Icons.autoscale,
+          click: (el) => {
+            console.debug('clicked on fit to timeline button; widget:', this.widget.id);
+            plotly.relayout(el, {
+              'xaxis.autorange': true,
+              'yaxis.autorange': true
+            });
+            console.debug('range selection data already loaded:', this.dataService.rangeSelectionDataAlreadyLoaded.getValue())
+            if (!this.dataService.rangeSelectionDataAlreadyLoaded.getValue()) {
+              this.dataService.loadAllRangeData(this.widget.id);
+            }
+          }
+        });
+      });
+    }
   }
 
   configure() {
