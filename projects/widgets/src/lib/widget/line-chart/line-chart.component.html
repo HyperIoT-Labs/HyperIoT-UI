@@ -31,14 +31,7 @@
             [layout]="graph?.layout"
             [useResizeHandler]="true"
             [updateOnLayoutChange]="false"
-            [config]="{
-              scrollZoom: true,
-              displayModeBar: 'hover',
-              displaylogo: false,
-              modeBarButtonsToRemove: ['hoverClosestCartesian', 'hoverCompareCartesian', 'toggleSpikelines', 'autoScale2d'],
-              editable: false,
-              showAxisDragHandles: false
-            }"
+            [config]="chartConfig"
             (initialized)="subscribeAndInit()"
           >
           </plotly-plot>

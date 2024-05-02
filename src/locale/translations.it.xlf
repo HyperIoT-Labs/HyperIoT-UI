@@ -2262,6 +2262,10 @@
         <source>Select a range to display the graph...</source>
         <target>Seleziona un range per mostrare il grafico...</target>
       </trans-unit>
+      <trans-unit id="HYT_plotly_fit_to_timeline" datatype="html">
+        <source>Fit to timeline</source>
+        <target>Adatta alla selezione</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

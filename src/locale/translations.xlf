@@ -1693,6 +1693,9 @@
       <trans-unit id="HYT_noRangeSelected" datatype="html">
         <source>Select a range to display the graph...</source>
       </trans-unit>
+      <trans-unit id="HYT_plotly_fit_to_timeline" datatype="html">
+        <source>Fit to timeline</source>
+      </trans-unit>
     </body>
   </file>
 </xliff>
