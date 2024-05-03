@@ -1,12 +1,13 @@
-import { Component, Injector, OnInit, Optional } from '@angular/core';
+import { Component, ElementRef, Injector, OnInit, Optional, ViewChild } from '@angular/core';
 import { DataChannel, DataPacketFilter, Logger, LoggerService, PacketData } from 'core';
-import { PlotlyService } from 'angular-plotly.js';
+import { PlotlyComponent, PlotlyService } from 'angular-plotly.js';
 import { BehaviorSubject, Subscription, asyncScheduler, bufferTime, filter, map } from 'rxjs';
 
 import { BaseChartComponent } from '../../base/base-chart/base-chart.component';
 import { WidgetAction } from '../../base/base-widget/model/widget.model';
 import { TimeSeries } from '../../data/time-series';
 import { ServiceType } from '../../service/model/service-type';
+import { Plotly } from 'angular-plotly.js/lib/plotly.interface';
 
 @Component({
   selector: 'hyperiot-line-chart',
@@ -17,6 +18,7 @@ export class LineChartComponent
   extends BaseChartComponent
   implements OnInit
 {
+  @ViewChild('lineChartPlotly') lineChartPlotly: PlotlyComponent;
   lowerBound = 0;
   sideMarginGap = 0.12;
   totalLength = 0;
@@ -60,12 +62,6 @@ export class LineChartComponent
   ngOnInit(): void {
     super.ngOnInit();
     this.configure();
-    
-    (
-      this.dataService["rangeSelectionDataAlreadyLoaded"]
-    ).subscribe((res) => {
-      if (res) this.loadingOfflineData = false;
-    });
 
     if (this.serviceType === ServiceType.OFFLINE) {
       this.plotly.getPlotly().then(plotly => {
@@ -73,17 +69,37 @@ export class LineChartComponent
           name: $localize`:@@HYT_plotly_fit_to_timeline:Fit to timeline`,
           icon: plotly.Icons.autoscale,
           click: (el) => {
-            console.debug('clicked on fit to timeline button; widget:', this.widget.id);
+            this.logger.debug('clicked on fit to timeline button; widget:', this.widget.id);
             plotly.relayout(el, {
               'xaxis.autorange': true,
               'yaxis.autorange': true
             });
-            console.debug('range selection data already loaded:', this.dataService.rangeSelectionDataAlreadyLoaded.getValue())
-            if (!this.dataService.rangeSelectionDataAlreadyLoaded.getValue()) {
+            this.logger.debug('range selection data already loaded:', !this.dataChannel.controller.rangeLoaded)
+            if (!this.dataChannel.controller.rangeLoaded) {
               this.dataService.loadAllRangeData(this.widget.id);
             }
           }
         });
+      });
+
+      (
+        this.dataService["timelineEvent"] as BehaviorSubject<string>
+      ).subscribe(async (res) => {
+        this.loadingOfflineData = false;
+        if (res == 'reset'){
+          this.lastOfflineDate = null;
+          this.lastRequestedDate = null;
+          this.allData = [];
+        }
+
+        if(res == 'newRange'){
+          const plotly = await this.plotly.getPlotly();
+          const graph = this.plotly.getInstanceByDivId(`widget-${this.widget.id}${this.isToolbarVisible}`);
+          plotly.relayout(graph, {
+            'xaxis.autorange': true,
+            'yaxis.autorange': true
+          });
+        }
       });
     }
   }
@@ -311,7 +327,7 @@ export class LineChartComponent
   // OFFLINE
   dataRequest() {
     this.logger.debug("dataRequest");
-    if (this.loadingOfflineData || this.dataService['rangeSelectionDataAlreadyLoaded'].value) {
+    if (this.loadingOfflineData || this.dataChannel?.controller.rangeLoaded) {
       return;
     }
     this.logger.debug("dataRequest triggered");
@@ -321,7 +337,7 @@ export class LineChartComponent
   }
 
   isLoadingData(){
-    if(this.dataService['rangeSelectionDataAlreadyLoaded']?.value){
+    if(this.dataChannel?.controller.rangeLoaded){
       return false;
     }
     return this.loadingOfflineData;
@@ -337,6 +353,7 @@ export class LineChartComponent
       !this.lastRequestedDate ||
       !this.lastOfflineDate ||
       this.lastRequestedDate <= this.lastOfflineDate
+
     ) {
       return;
     }
