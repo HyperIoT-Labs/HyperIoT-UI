@@ -340,7 +340,7 @@ export class LineChartComponent
     if(this.dataChannel?.controller.rangeLoaded){
       return false;
     }
-    return this.loadingOfflineData;
+    return this.dataChannel?.controller.isLoadAllRangeDataRunning || this.loadingOfflineData;
   }
 
   noRangeSelected(){

@@ -252,11 +252,8 @@ export class OfflineDataService extends BaseDataService {
   }
 
   public loadAllRangeData(channelId: number): void {
-    if (this.isLoadAllRangeDataRunning) {
-      return;
-    }
-    this.isLoadAllRangeDataRunning = true;
-
+    
+    
     const dataChannel = this.dataChannels[channelId];
     if (!dataChannel) {
       throw new Error('unavailable dataChannel');
@@ -264,6 +261,10 @@ export class OfflineDataService extends BaseDataService {
     if(!this.isRangeSelected) {
       throw new Error('no range selected');
     }
+    if (dataChannel.controller.isLoadAllRangeDataRunning) {
+      return;
+    }
+    dataChannel.controller.isLoadAllRangeDataRunning = true;
 
     dataChannel.controller.dataSubscription = this.scanAndSaveHProject(dataChannel, '', '', 500)
     .pipe(
@@ -272,7 +273,7 @@ export class OfflineDataService extends BaseDataService {
       }),
       takeWhile(() => {
         if (dataChannel.controller.rangeLoaded) {
-          this.isLoadAllRangeDataRunning = false;
+          dataChannel.controller.isLoadAllRangeDataRunning = false;
         }
         return !dataChannel.controller.rangeLoaded
       }),
@@ -285,7 +286,7 @@ export class OfflineDataService extends BaseDataService {
         res.forEach(packetDataChunk => dataChannel.subject.next(packetDataChunk));
       },
       error: err => {
-        this.isLoadAllRangeDataRunning = false;
+        dataChannel.controller.isLoadAllRangeDataRunning = false;
         console.error('loadAllRangeData error:', err);
       }
     });
