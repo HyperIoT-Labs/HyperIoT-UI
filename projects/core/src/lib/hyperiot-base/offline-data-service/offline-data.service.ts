@@ -21,8 +21,8 @@ export class OfflineDataService extends BaseDataService {
 
   countEventSubject: Subject<PageStatus>;
 
-  /** Emit true when all the timeline selected range is loaded */
-  rangeSelectionDataAlreadyLoaded = new BehaviorSubject(false);
+  /** Emit value when refresh and reset event is fired */
+  timelineEvent = new BehaviorSubject<string>('');
 
   DEFAULT_CHUNK_LENGTH = 50;
   hProjectId;
@@ -115,7 +115,7 @@ export class OfflineDataService extends BaseDataService {
   // Setting counter after user selection
   
   public getEventCount(rowKeyLowerBound: number, rowKeyUpperBound: number): void {
-    this.rangeSelectionDataAlreadyLoaded.next(false)
+    this.timelineEvent.next('newRange');
     this.resetSubscription();
     this.countEventSubject.next(PageStatus.Loading);
 
@@ -125,6 +125,7 @@ export class OfflineDataService extends BaseDataService {
     // setting channelLowerBound in dataChannels
     Object.values(this.dataChannels).forEach(dataChannel => {
       dataChannel.controller.channelLowerBound = this.dashboardTimeBounds.lower;
+      dataChannel.controller.rangeLoaded = false;
     });
 
     this.countSubscription = this.hprojectsService.timelineEventCount(
@@ -150,6 +151,7 @@ export class OfflineDataService extends BaseDataService {
   // Setting counter after user remove selection
   
   public getEventCountEmpty() {
+    this.timelineEvent.next('reset');
     this.resetSubscription();
     this.dashboardTimeBounds.lower = 0;
     this.dashboardTimeBounds.upper = 0;
@@ -203,7 +205,7 @@ export class OfflineDataService extends BaseDataService {
 
         if(countConverted == 0){
           // NO MORE DATA TO LOAD
-          this.rangeSelectionDataAlreadyLoaded.next(true);
+          dataChannel.controller.rangeLoaded = true;
         }
 
         // setting channel lower bound with new min rowKeyUpperBound
@@ -250,12 +252,8 @@ export class OfflineDataService extends BaseDataService {
   }
 
   public loadAllRangeData(channelId: number): void {
-    if (this.isLoadAllRangeDataRunning) {
-      console.debug('loadAllRangeData: already running');
-      return;
-    }
-    this.isLoadAllRangeDataRunning = true;
-
+    
+    
     const dataChannel = this.dataChannels[channelId];
     if (!dataChannel) {
       throw new Error('unavailable dataChannel');
@@ -263,19 +261,21 @@ export class OfflineDataService extends BaseDataService {
     if(!this.isRangeSelected) {
       throw new Error('no range selected');
     }
+    if (dataChannel.controller.isLoadAllRangeDataRunning) {
+      return;
+    }
+    dataChannel.controller.isLoadAllRangeDataRunning = true;
 
-    console.debug('loadAllRangeData: start');
     dataChannel.controller.dataSubscription = this.scanAndSaveHProject(dataChannel, '', '', 500)
     .pipe(
       expand(() => {
         return this.scanAndSaveHProject(dataChannel, '', '', 500);
       }),
       takeWhile(() => {
-        if (this.rangeSelectionDataAlreadyLoaded.getValue()) {
-          this.isLoadAllRangeDataRunning = false;
-          console.debug('loadAllRangeData: finish');
+        if (dataChannel.controller.rangeLoaded) {
+          dataChannel.controller.isLoadAllRangeDataRunning = false;
         }
-        return !this.rangeSelectionDataAlreadyLoaded.getValue()
+        return !dataChannel.controller.rangeLoaded
       }),
       catchError(err => {
         return throwError(() => err);
@@ -283,11 +283,10 @@ export class OfflineDataService extends BaseDataService {
     )
     .subscribe({
       next: res => {
-        console.debug('loadAllRangeData: next data', res);
         res.forEach(packetDataChunk => dataChannel.subject.next(packetDataChunk));
       },
       error: err => {
-        this.isLoadAllRangeDataRunning = false;
+        dataChannel.controller.isLoadAllRangeDataRunning = false;
         console.error('loadAllRangeData error:', err);
       }
     });

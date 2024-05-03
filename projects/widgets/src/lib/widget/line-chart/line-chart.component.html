@@ -26,6 +26,7 @@
   
         <ng-template #loadingFinished>
           <plotly-plot
+            #lineChartPlotly
             divId="widget-{{widget.id}}{{isToolbarVisible}}"
             [data]="graph?.data"
             [layout]="graph?.layout"
