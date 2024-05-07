@@ -65,9 +65,7 @@ export class GenericSummaryListComponent implements OnInit, OnChanges {
    * @param device 
    * @param packetId optional
    */
-  filterElements(list: SummaryList, device: any, packetId?: number) {
-    console.warn("filterElements", list, device);
-    
+  filterElements(list: SummaryList, device: any, packetId?: number) { 
     this.logger.debug('filterElements: list', list);
     switch (list.title) {
       case 'Packets':
