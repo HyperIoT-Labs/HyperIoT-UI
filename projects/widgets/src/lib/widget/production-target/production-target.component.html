@@ -1,13 +1,17 @@
 <hyperiot-base-widget-template>
   <header-widget>
-    <hyperiot-common-toolbar widgetName="{{widget.name}}" (action)="onToolbarAction($event)"
-      [toolbarIsVisible]="isToolbarVisible" [config]="{
-                    showClose: true,
-                    showSettings: true,
-                    showPlay: true,
-                    showRefresh: false,
-                    showTable: false
-              }">
+    <hyperiot-common-toolbar 
+      #toolbar
+      widgetName="{{widget.name}}" 
+      (action)="onToolbarAction($event)"
+      [toolbarIsVisible]="isToolbarVisible" 
+      [config]="{
+        showClose: true,
+        showSettings: true,
+        showPlay: true,
+        showRefresh: false,
+        showTable: false
+      }">
     </hyperiot-common-toolbar>
   </header-widget>
   <content-widget style="overflow-y: auto;height: 100%;display: block;">

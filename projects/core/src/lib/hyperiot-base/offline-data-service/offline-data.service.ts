@@ -21,9 +21,6 @@ export class OfflineDataService extends BaseDataService {
 
   countEventSubject: Subject<PageStatus>;
 
-  /** Emit value when refresh and reset event is fired */
-  timelineEvent = new BehaviorSubject<string>('');
-
   DEFAULT_CHUNK_LENGTH = 50;
   hProjectId;
   private dashboardTimeBounds = { lower: 0, upper: 0 };
@@ -115,7 +112,6 @@ export class OfflineDataService extends BaseDataService {
   // Setting counter after user selection
   
   public getEventCount(rowKeyLowerBound: number, rowKeyUpperBound: number): void {
-    this.timelineEvent.next('newRange');
     this.resetSubscription();
     this.countEventSubject.next(PageStatus.Loading);
 
@@ -151,7 +147,6 @@ export class OfflineDataService extends BaseDataService {
   // Setting counter after user remove selection
   
   public getEventCountEmpty() {
-    this.timelineEvent.next('reset');
     this.resetSubscription();
     this.dashboardTimeBounds.lower = 0;
     this.dashboardTimeBounds.upper = 0;

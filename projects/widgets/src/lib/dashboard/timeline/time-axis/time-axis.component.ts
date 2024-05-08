@@ -3,6 +3,8 @@ import { TimeStep } from 'components';
 import * as d3 from 'd3';
 import * as moment_ from 'moment';
 import {HYTData} from "../models/timeline.model";
+import { DashboardEventService } from '../../services/dashboard-event.service';
+import { DashboardEvent } from '../../services/dashboard-event.model';
 
 const moment = moment_;
 const animation = false;
@@ -21,7 +23,7 @@ const animation = false;
   encapsulation: ViewEncapsulation.None
 })
 export class TimeAxisComponent implements AfterViewInit {
-
+  constructor(private dashboardEvent: DashboardEventService){}
   /**
    * timeStepMap is used to convert a step to a d3 TimeInterval
    */
@@ -203,6 +205,7 @@ export class TimeAxisComponent implements AfterViewInit {
         this.timeInterval = selection.map(d => this.axisInterval.round(this.axisScale.invert(d)));
       }
       if (mode === 'code-released') {
+        this.dashboardEvent.timelineEvent.next(DashboardEvent.Timeline.NEW_RANGE);
         this.dataTimeSelectionChanged.emit(this.timeInterval);
       }
       this.rect?.attr('fill', (d) =>
@@ -473,6 +476,7 @@ export class TimeAxisComponent implements AfterViewInit {
   resetSelection() {
     this.selectionPx = [null, null];
     this.timeInterval = [null, null];
+    this.dashboardEvent.timelineEvent.next(DashboardEvent.Timeline.RESET);
     this.dataTimeSelectionChanged.emit(this.timeInterval);
     this.selectionRenderSvg
       .attr('width', null)
@@ -494,6 +498,7 @@ export class TimeAxisComponent implements AfterViewInit {
    * Emits the current time selection
    */
   emitCurrentSelection() {
+    this.dashboardEvent.timelineEvent.next(DashboardEvent.Timeline.REFRESH);
     this.dataTimeSelectionChanged.emit(this.timeInterval);
   }
 
