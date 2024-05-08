@@ -1,8 +1,10 @@
-import { Component } from "@angular/core";
+import { Component, Injector } from "@angular/core";
 import { BaseWidgetComponent } from "../../base/base-widget/base-widget.component";
-import { HPacketField, WsDataSenderService } from "core";
+import { HPacketField, LoggerService, WsDataSenderService } from "core";
 import { Subscription } from "rxjs";
 import { DataSimulatorSettings } from "../../dashboard/widget-settings-dialog/data-simulator-settings/data-simulator.models";
+import { DashboardEventService } from "../../dashboard/services/dashboard-event.service";
+import { DashboardEvent } from "../../dashboard/services/dashboard-event.model";
 
 enum SimulatorStatus {
   PENDING = 0,
@@ -27,6 +29,8 @@ export class DataSimulatorComponent extends BaseWidgetComponent {
 
   isActive = false;
 
+  wasActiveBeforeStop = false;
+
   packetInfo: string;
   isOutlierColumnVisible = false;
 
@@ -34,6 +38,14 @@ export class DataSimulatorComponent extends BaseWidgetComponent {
   fieldRules: DataSimulatorSettings.FieldRules;
   fieldType: DataSimulatorSettings.FieldType;
   fieldOutliers: DataSimulatorSettings.FieldOutliers;
+
+  constructor(
+    private dashboardEvent: DashboardEventService,
+    injector: Injector,
+    protected loggerService: LoggerService,
+  ) {
+    super(injector, loggerService);
+  }
 
   ngOnInit(): void {
     super.ngOnInit();
@@ -63,6 +75,18 @@ export class DataSimulatorComponent extends BaseWidgetComponent {
 
     // setting isOutlierColumnVisible
     this.isOutlierColumnVisible = Object.keys(this.fieldOutliers).length > 0;
+
+    // save old status of simulator before pause/stop & and start if was active, trigger again the start
+    this.dashboardEvent.commandEvent.subscribe((res)=>{
+      if((res === DashboardEvent.Command.PAUSE || res == DashboardEvent.Command.STOP) && this.isActive){
+        this.wasActiveBeforeStop = true;
+        this.isActive = false;
+      }
+      if((res === DashboardEvent.Command.PLAY || res == DashboardEvent.Command.RUN) && this.wasActiveBeforeStop){
+        this.wasActiveBeforeStop = false;
+        this.isActive = true;
+      }
+    })
 
     this.connect();
   }
