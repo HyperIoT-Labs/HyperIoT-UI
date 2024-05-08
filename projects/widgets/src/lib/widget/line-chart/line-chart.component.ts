@@ -33,6 +33,7 @@ export class LineChartComponent
   lastRequestedDate: Date;
   lastOfflineDate: Date;
   loadingOfflineData = false;
+  loadAllRangeData = false;
 
   allData: PacketData[] = [];
 
@@ -79,6 +80,7 @@ export class LineChartComponent
             });
             this.logger.debug('range selection data already loaded:', !this.dataChannel.controller.rangeLoaded)
             if (!this.dataChannel.controller.rangeLoaded) {
+              this.loadAllRangeData = true;
               this.dataService.loadAllRangeData(this.widget.id);
             }
           }
@@ -86,6 +88,8 @@ export class LineChartComponent
       });
 
       this.dashboardEvent.timelineEvent.subscribe(async (res) => {
+        const plotly = await this.plotly.getPlotly();
+        const graph = this.plotly.getInstanceByDivId(`widget-${this.widget.id}${this.isToolbarVisible}`);
         this.loadingOfflineData = false;
         if (res == DashboardEvent.Timeline.RESET){
           this.lastOfflineDate = null;
@@ -94,12 +98,15 @@ export class LineChartComponent
         }
 
         if(res == DashboardEvent.Timeline.NEW_RANGE){
-          const plotly = await this.plotly.getPlotly();
-          const graph = this.plotly.getInstanceByDivId(`widget-${this.widget.id}${this.isToolbarVisible}`);
+          this.loadAllRangeData = false;
           plotly.relayout(graph, {
             'xaxis.autorange': true,
             'yaxis.autorange': true
           });
+        }
+
+        if(res == DashboardEvent.Timeline.REFRESH && this.loadAllRangeData){
+          this.dataService.loadAllRangeData(this.widget.id);
         }
       });
     }
@@ -328,7 +335,7 @@ export class LineChartComponent
   // OFFLINE
   dataRequest() {
     this.logger.debug("dataRequest");
-    if (this.loadingOfflineData || this.dataChannel?.controller.rangeLoaded) {
+    if (this.loadingOfflineData || this.dataChannel?.controller.rangeLoaded || this.loadAllRangeData) {
       return;
     }
     this.logger.debug("dataRequest triggered");
