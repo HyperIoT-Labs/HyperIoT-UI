@@ -31,6 +31,7 @@ export class CommonToolbarComponent {
     isDisabled: boolean;
 
     constructor() {
+        this.isPaused = false;
         this.isDisabled = false;
     }
 

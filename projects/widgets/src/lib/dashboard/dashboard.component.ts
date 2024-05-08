@@ -16,6 +16,8 @@ import { AddWidgetDialogComponent } from './add-widget-dialog/add-widget-dialog.
 import { DashboardConfigService } from './dashboard-config.service';
 import { DashboardViewComponent } from './dashboard-view/dashboard-view.component';
 import { DashboardPreset, DashboardPresetModel } from './model/dashboard.model';
+import { DashboardEventService } from './services/dashboard-event.service';
+import { DashboardEvent } from './services/dashboard-event.model';
 
 enum PageStatus {
   Loading = 0,
@@ -154,7 +156,8 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private cd: ChangeDetectorRef,
-    private loggerService: LoggerService
+    private loggerService: LoggerService,
+    private dashboardEvent: DashboardEventService
   ) {
     this.offlineWidgetStatus = PageStatus.Standard;
     this.logger = new Logger(this.loggerService);
@@ -266,16 +269,18 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
   changeStreamState(event) {
     this.streamIsOn = !this.streamIsOn;
+    this.dashboardEvent.commandEvent.next(this.streamIsOn ? DashboardEvent.Command.PLAY : DashboardEvent.Command.PAUSE);
     this.dashboardView.dashboardLayout.dashboard.forEach(widget => {
-      if (widget?.instance?.toolbar.config.showPlay) {
+      if (widget?.instance?.toolbar?.config?.showPlay) {
         // handle only with widgets which have play/pause button on their toolbar
-        widget.instance.onDashboardPlay(this.streamIsOn);
+        widget.instance.toolbar.play(this.streamIsOn);
       }
     });
   }
-
+  
   changeTopologyState(event) {
     this.dataRecordingIsOn = event.dataRecordingIsOn;
+    this.dashboardEvent.commandEvent.next(this.dataRecordingIsOn ? DashboardEvent.Command.RUN : DashboardEvent.Command.STOP);
     this.dataRecordingStatus = (event.dataRecordingIsOn) ? TopologyStatus.Activated : TopologyStatus.Off;
     this.upTimeSec = event.upTimeSec;
   }

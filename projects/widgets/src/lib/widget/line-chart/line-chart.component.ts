@@ -8,6 +8,8 @@ import { WidgetAction } from '../../base/base-widget/model/widget.model';
 import { TimeSeries } from '../../data/time-series';
 import { ServiceType } from '../../service/model/service-type';
 import { Plotly } from 'angular-plotly.js/lib/plotly.interface';
+import { DashboardEventService } from '../../dashboard/services/dashboard-event.service';
+import { DashboardEvent } from '../../dashboard/services/dashboard-event.model';
 
 @Component({
   selector: 'hyperiot-line-chart',
@@ -31,6 +33,7 @@ export class LineChartComponent
   lastRequestedDate: Date;
   lastOfflineDate: Date;
   loadingOfflineData = false;
+  loadAllRangeData = false;
 
   allData: PacketData[] = [];
 
@@ -52,6 +55,7 @@ export class LineChartComponent
 
   constructor(
     injector: Injector, 
+    private dashboardEvent: DashboardEventService,
     @Optional() public plotly: PlotlyService,
     protected loggerService: LoggerService) {
     super(injector, plotly, loggerService);
@@ -76,29 +80,33 @@ export class LineChartComponent
             });
             this.logger.debug('range selection data already loaded:', !this.dataChannel.controller.rangeLoaded)
             if (!this.dataChannel.controller.rangeLoaded) {
+              this.loadAllRangeData = true;
               this.dataService.loadAllRangeData(this.widget.id);
             }
           }
         });
       });
 
-      (
-        this.dataService["timelineEvent"] as BehaviorSubject<string>
-      ).subscribe(async (res) => {
+      this.dashboardEvent.timelineEvent.subscribe(async (res) => {
+        const plotly = await this.plotly.getPlotly();
+        const graph = this.plotly.getInstanceByDivId(`widget-${this.widget.id}${this.isToolbarVisible}`);
         this.loadingOfflineData = false;
-        if (res == 'reset'){
+        if (res == DashboardEvent.Timeline.RESET){
           this.lastOfflineDate = null;
           this.lastRequestedDate = null;
           this.allData = [];
         }
 
-        if(res == 'newRange'){
-          const plotly = await this.plotly.getPlotly();
-          const graph = this.plotly.getInstanceByDivId(`widget-${this.widget.id}${this.isToolbarVisible}`);
+        if(res == DashboardEvent.Timeline.NEW_RANGE){
+          this.loadAllRangeData = false;
           plotly.relayout(graph, {
             'xaxis.autorange': true,
             'yaxis.autorange': true
           });
+        }
+
+        if(res == DashboardEvent.Timeline.REFRESH && this.loadAllRangeData){
+          this.dataService.loadAllRangeData(this.widget.id);
         }
       });
     }
@@ -327,7 +335,7 @@ export class LineChartComponent
   // OFFLINE
   dataRequest() {
     this.logger.debug("dataRequest");
-    if (this.loadingOfflineData || this.dataChannel?.controller.rangeLoaded) {
+    if (this.loadingOfflineData || this.dataChannel?.controller.rangeLoaded || this.loadAllRangeData) {
       return;
     }
     this.logger.debug("dataRequest triggered");

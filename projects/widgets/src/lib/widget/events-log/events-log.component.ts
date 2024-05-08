@@ -19,7 +19,9 @@ export class EventsLogComponent extends BaseGenericComponent implements OnInit {
 
   eventLogObserver: PartialObserver<any> = {
     next: event => {
-      if (this.isPaused) {
+      // i don't emit if the FE is paused OR 
+      //the packet of type systemTick have the projectId attributes and it's different from the project of the dashboard loaded
+      if (this.isPaused || (event.data['name'] == 'systemTick' && event.data['projectId'] && this.widget.projectId !=  event.data['projectId'])) {
         return;
       }
       const packet = JSON.stringify(event.data);
