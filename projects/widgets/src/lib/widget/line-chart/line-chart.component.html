@@ -2,16 +2,17 @@
 
     <header-widget>
       <hyperiot-common-toolbar
+        #toolbar
         widgetName="{{widget.name}}"
         (action)="onToolbarAction($event)"
         [toolbarIsVisible]="isToolbarVisible"
         [config]="{
-                showClose: true,
-                showSettings: true,
-                showPlay: serviceType === serviceTypeList.ONLINE,
-                showRefresh: false,
-                showTable: false
-          }">
+          showClose: true,
+          showSettings: true,
+          showPlay: serviceType === serviceTypeList.ONLINE,
+          showRefresh: false,
+          showTable: false
+        }">
       </hyperiot-common-toolbar>
     </header-widget>
   
