@@ -273,7 +273,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     this.dashboardView.dashboardLayout.dashboard.forEach(widget => {
       if (widget?.instance?.toolbar?.config?.showPlay) {
         // handle only with widgets which have play/pause button on their toolbar
-        widget.instance.onDashboardPlay(this.streamIsOn);
+        widget.instance.toolbar.play(this.streamIsOn);
       }
     });
   }
