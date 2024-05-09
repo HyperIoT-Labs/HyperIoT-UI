@@ -16,7 +16,7 @@ export class DashboardEventService {
   constructor(loggerService: LoggerService){
     const logger = new Logger(loggerService);
     logger.registerClass("DashboardEventService");
-    this.timelineEvent.subscribe((res)=> logger.info("timelineEvent", res))
-    this.commandEvent.subscribe((res)=> logger.info("commandEvent", res))
+    this.timelineEvent.subscribe((res)=> logger.info("emit timelineEvent", res))
+    this.commandEvent.subscribe((res)=> logger.info("emit commandEvent", res))
   }
 }
