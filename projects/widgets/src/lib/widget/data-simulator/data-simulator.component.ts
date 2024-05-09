@@ -78,11 +78,11 @@ export class DataSimulatorComponent extends BaseWidgetComponent {
 
     // save old status of simulator before pause/stop & and start if was active, trigger again the start
     this.dashboardEvent.commandEvent.subscribe((res)=>{
-      if((res === DashboardEvent.Command.PAUSE || res == DashboardEvent.Command.STOP) && this.isActive){
+      if((res == DashboardEvent.Command.STOP) && this.isActive){
         this.wasActiveBeforeStop = true;
         this.isActive = false;
       }
-      if((res === DashboardEvent.Command.PLAY || res == DashboardEvent.Command.RUN) && this.wasActiveBeforeStop){
+      if((res == DashboardEvent.Command.RUN) && this.wasActiveBeforeStop){
         this.wasActiveBeforeStop = false;
         this.isActive = true;
       }
