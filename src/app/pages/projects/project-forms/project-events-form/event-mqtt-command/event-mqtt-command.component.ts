@@ -68,13 +68,13 @@ export class EventMqttCommandComponent implements OnInit,EventComponent {
     let action = {
       actionName: EventComponentType.SEND_MQTT_COMMAND_ACTION,
       packetId:this.mqttFieldsFormGroup.get("packet").value,
-      packetFormat: this.currentOutputPacket.format,
+      packetFormat: this.currentOutputPacket?.format,
       active: this.mqttFieldsFormGroup.get("active").value,
       topic: this.mqttTopic,
       message : ""
     };
 
-    this.currentOutputPacket.fields.forEach(field => {
+    this.currentOutputPacket?.fields.forEach(field => {
       innerJSON[field.name] = this.mqttFieldsFormGroup.get(field.name).value;
     })
 
