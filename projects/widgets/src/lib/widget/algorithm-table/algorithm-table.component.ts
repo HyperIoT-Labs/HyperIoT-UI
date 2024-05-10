@@ -60,7 +60,7 @@ export class AlgorithmTableComponent extends BaseTableComponent implements After
     }
 
     this.isConfigured = true;
-
+    this.hPacketIdMap.clear();
     // set data source
     this.setDatasource();
 
@@ -140,6 +140,8 @@ export class AlgorithmTableComponent extends BaseTableComponent implements After
   }
 
   async setHeadersTable(groupingKeys: any) {
+    console.warn("gggg", groupingKeys);
+    
     try {
         const fieldIds = Object.keys(this.widget.config?.packetFields) || [];
         this.tableHeaders = fieldIds.map(hPacketFieldId => ({
@@ -153,10 +155,12 @@ export class AlgorithmTableComponent extends BaseTableComponent implements After
             res.forEach(element => {
                 this.hPacketIdMap.set(element.id, element.name);
             });
+            console.warn("res", res);
 
             for (let i = 0; i < groupingKeys.length; i++) {
-                let key = Number(groupingKeys[i]);
-                let groupingName = this.hPacketIdMap.get(key);
+              let key = Number(groupingKeys[i]);
+              let groupingName = this.hPacketIdMap.get(key);
+              console.warn("ttt", key, groupingName);
                 this.tableHeaders.unshift({
                     value: groupingName,
                     label: groupingName,
