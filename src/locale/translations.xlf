@@ -1696,6 +1696,15 @@
       <trans-unit id="HYT_plotly_fit_to_timeline" datatype="html">
         <source>Fit to timeline</source>
       </trans-unit>
+      <trans-unit id="HYT_authorization_error" datatype="html">
+        <source>Athorization error</source>
+      </trans-unit>
+      <trans-unit id="HYT_authentication_error" datatype="html">
+        <source>Authentication error</source>
+      </trans-unit>
+      <trans-unit id="HYT_you_do_not_have_sufficient_permissions_to_perform_this_operation" datatype="html">
+        <source>You do not have sufficient permissions to perform this operation</source>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -31,6 +31,10 @@ import { ProjectStatisticsFormComponent } from '../pages/projects/project-forms/
 import { ProjectAlarmsFormComponent } from '../pages/projects/project-forms/project-alarms-form/project-alarms-form.component';
 import {DashComponent} from '../pages/dash/dash.component';
 
+export enum HytRoutesDataFields {
+  IGNORE_HTTP_ERROR_INTERCEPTOR = 'ignoreHttpErrorInterceptor'
+}
+
 @Injectable()
 export class LoggedInGuard implements CanActivate {
 
@@ -122,6 +126,7 @@ const hyperiotRoutes: Routes = [
     ],
     data: {
       showToolBar: false,
+      [HytRoutesDataFields.IGNORE_HTTP_ERROR_INTERCEPTOR]: true,
     }
   },
   {

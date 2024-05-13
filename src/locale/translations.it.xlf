@@ -2266,6 +2266,18 @@
         <source>Fit to timeline</source>
         <target>Adatta alla selezione</target>
       </trans-unit>
+      <trans-unit id="HYT_authorization_error" datatype="html">
+        <source>Athorization error</source>
+        <target>Errore di Autorizzazione</target>
+      </trans-unit>
+      <trans-unit id="HYT_authentication_error" datatype="html">
+        <source>Authentication error</source>
+        <target>Errore di Autenticazione</target>
+      </trans-unit>
+      <trans-unit id="HYT_you_do_not_have_sufficient_permissions_to_perform_this_operation" datatype="html">
+        <source>You do not have sufficient permissions to perform this operation</source>
+        <target>Non hai i permessi sufficienti per effettuare questa operazione</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
