@@ -1,5 +1,5 @@
 import { HPacketField } from "core";
-import { IRulePart } from "./rule-part.interface";
+import {FieldType, IRulePart} from "./rule-part.interface";
 import { ValidatorFn, Validators } from "@angular/forms";
 
 const validationRules = new Map<HPacketField.TypeEnum, ValidatorFn[]>([
@@ -16,7 +16,7 @@ const validationRules = new Map<HPacketField.TypeEnum, ValidatorFn[]>([
 ]);
 
 export class ValueRulePart implements IRulePart {
-    fieldType: "select" | "text" = 'text';
+    fieldType: FieldType = 'text';
     label = $localize`:@@HYT_value_rule_part_label:Value`;
     validators = [Validators.required ];
 
