@@ -61,7 +61,7 @@ export const operationNameLabels = [
     }
 ];
 
-export const parseRuleText = (value: any, fieldType: string) : string =>{
+export const parseRuleText = (value: string, fieldType: string) : string =>{
     if (fieldType == 'text' && !value.startsWith('"') && !value.endsWith('"')) {
       value = `"${value}"`;
     }
