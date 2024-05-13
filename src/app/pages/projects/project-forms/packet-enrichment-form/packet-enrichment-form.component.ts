@@ -237,7 +237,6 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
     this.resetErrors();
 
     const rule = this.entity;
-
     Object.assign(rule, {
       name: this.form.get('rule-name').value,
       ruleDefinition: this.form.get('ruleDefinition').value.ruleDefinition,

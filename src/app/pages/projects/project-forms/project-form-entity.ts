@@ -187,7 +187,6 @@ export abstract class ProjectFormEntity implements OnInit, AfterViewInit {
     }
 
     resetForm() {
-      console.log('EDIT - RESET')
       this.originalValue = this.serialize();
     }
 

@@ -247,7 +247,8 @@ export class ProjectEventsFormComponent extends ProjectFormEntity implements OnI
     const wasNew = this.isNew();
     const responseHandler = (res) => {
       this.entity = res;
-      this.resetForm();
+      this.cancel();
+      this.ruleDefinitionComponent.ruleForm.reset();
       this.updateSummaryList();
       this.showCancel = false;
       this.loadingStatus = LoadingStatusEnum.Ready;
@@ -342,5 +343,4 @@ export class ProjectEventsFormComponent extends ProjectFormEntity implements OnI
   changeEventView(eventComponentId,data?){
     this.eventComponentContainer.show(eventComponentId,data);
   }
-
 }

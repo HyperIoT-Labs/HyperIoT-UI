@@ -7,6 +7,7 @@ import { Option } from '../hyt-radio-button/hyt-radio-button.component';
 import { DialogService } from '../hyt-dialog/dialog.service';
 import { RuleErrorModalComponent } from './rule-error/rule-error-modal.component';
 import { PacketRulePart } from './rule-part/packet-rule-part';
+import { parseRuleText } from './rule-part/operations.utils';
 
 interface RulePart {
   label: string;
@@ -217,7 +218,8 @@ export class RuleDefinitionComponent implements ControlValueAccessor, OnChanges 
       for (let j = 0; j < ruleRow.ruleParts.length; j ++) {
 
         const rulePart  = ruleRow.ruleParts[j];
-        const value = ruleRowFormGroup.get('rule-part-' + j).value;
+        const value = parseRuleText(ruleRowFormGroup.get('rule-part-' + j).value, rulePart.fieldType);
+        
         rd = rd.concat(rulePart.ruleify(value));
         ptf = ptf.concat(rulePart.prettify(value));
 

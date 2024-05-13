@@ -612,7 +612,7 @@ export class ProjectWizardComponent implements OnInit {
       case 5: {
         return this.statisticsForm ? this.statisticsForm.isDirty() : false;
       }
-      case 6: {
+      case 6: {      
         return this.eventsForm && this.eventsForm.editMode
           ? this.eventsForm.isDirty()
           : false;

@@ -60,7 +60,7 @@ export class AlgorithmTableComponent extends BaseTableComponent implements After
     }
 
     this.isConfigured = true;
-
+    this.hPacketIdMap.clear();
     // set data source
     this.setDatasource();
 
@@ -155,8 +155,8 @@ export class AlgorithmTableComponent extends BaseTableComponent implements After
             });
 
             for (let i = 0; i < groupingKeys.length; i++) {
-                let key = Number(groupingKeys[i]);
-                let groupingName = this.hPacketIdMap.get(key);
+              let key = Number(groupingKeys[i]);
+              let groupingName = this.hPacketIdMap.get(key);
                 this.tableHeaders.unshift({
                     value: groupingName,
                     label: groupingName,
