@@ -42,6 +42,7 @@ export class AlarmWrapperService {
           isEvent: isEvent,
           isAlarm: isAlarm
         }
+        console.warn(alarm);
         this._alarmSubject.next(alarm)
       }
     })

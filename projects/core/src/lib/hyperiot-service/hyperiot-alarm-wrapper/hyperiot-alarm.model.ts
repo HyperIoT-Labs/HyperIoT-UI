@@ -9,6 +9,7 @@ export namespace HytAlarm{
         deviceName: string | null;
         deviceId: number;
         tags: AssetTag[];
+        packetIds: number[];
         alarmState: string;
         ruleType: string;
         alarmId: number;
@@ -25,9 +26,14 @@ export namespace HytAlarm{
       _event,
     }
 
+    export interface AlarmPacket extends Omit<HPacket, 'device' | 'fields'>{
+        device: number;
+        fields: any;
+    }
+
     export interface LiveAlarm {
         event: Event,
-        packet: HPacket,
+        packet: AlarmPacket,
         color: {
             background: string,
             text: string, 

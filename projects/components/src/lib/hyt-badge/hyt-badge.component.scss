@@ -1,5 +1,5 @@
 $primary: #0956b6;
-$primaryDarker: #1c274c;
+$primaryDarker: #00008B;
 
 @mixin size($notPills) {
     &.hyt-badge- {
@@ -41,7 +41,6 @@ $primaryDarker: #1c274c;
 }
 
 .hyt-badge {
-    background: linear-gradient(180deg, $primary, $primaryDarker);
     font-weight: 600;
     color: #fff;
     margin: auto;
@@ -70,6 +69,22 @@ $primaryDarker: #1c274c;
     &-circle {
         border-radius: 50%;
         @include size(true);
+    }
+
+    &-bottom{
+        background: linear-gradient(180deg, $primary, $primaryDarker);
+    }
+    
+    &-left{
+        background: linear-gradient(90deg, $primary, $primaryDarker);
+    }
+
+    &-right{
+        background: linear-gradient(270deg, $primary, $primaryDarker);
+    }
+
+    &-top{
+        background: linear-gradient(0deg, $primary, $primaryDarker);
     }
 
     span {

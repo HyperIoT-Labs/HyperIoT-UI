@@ -1675,6 +1675,12 @@
       <trans-unit id="HYT_generic_error_share" datatype="html">
         <source>Close the overlay by clicking X and try again. If the error persists, contact us</source>
       </trans-unit>
+      <trans-unit id="HYT_alarm_status_active" datatype="html">
+        <source>Active</source>
+      </trans-unit>
+      <trans-unit id="HYT_alarm_status_inactive" datatype="html">
+        <source>Inactive</source>
+      </trans-unit>
     </body>
   </file>
 </xliff>
