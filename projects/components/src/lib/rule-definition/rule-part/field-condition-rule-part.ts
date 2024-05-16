@@ -1,4 +1,4 @@
-import { IRulePart, RuleOperator } from './rule-part.interface';
+import {FieldType, IRulePart, RuleOperator} from './rule-part.interface';
 import { HPacket, HPacketField, HPacketFieldsHandlerService, RuleNode } from 'core';
 import { ValueRulePart } from './value-rule-part';
 import { ConditionRulePart } from './condition-rule-part';
@@ -7,7 +7,7 @@ import { Validators } from '@angular/forms';
 import { operationNameLabels } from './operations.utils';
 
 export class FieldConditionRulePart implements IRulePart {
-  fieldType: 'select' | 'text' = 'select';
+  fieldType: FieldType = 'select';
   label = $localize`:@@HYT_field_condition_rule_part_label:Field or Condition`;
   validators = [ Validators.required ];
 
