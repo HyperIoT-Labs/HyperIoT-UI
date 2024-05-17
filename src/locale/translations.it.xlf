@@ -2093,10 +2093,8 @@
         <target>Il valore di outlier è un valore specifico che viene emesso quando l'utente preme il bottone 'outlier'</target>
       </trans-unit>
       <trans-unit id="HYT_packet_sent" datatype="html">
-        <source> Packet sent: <x id="INTERPOLATION" equiv-text="dget&gt;
-    &lt;hype"/> </source>
-        <target> Pacchetti inviati: <x id="INTERPOLATION" equiv-text="dget&gt;
-    &lt;hype"/> </target>
+        <source> Packet sent: <x id="INTERPOLATION" equiv-text="dget&gt;&lt;hype"/> </source>
+        <target> Pacchetti inviati: <x id="INTERPOLATION" equiv-text="dget&gt;&lt;hype"/> </target>
       </trans-unit>
       <trans-unit id="HYT_source" datatype="html">
         <source>Source</source>
@@ -2277,6 +2275,7 @@
       <trans-unit id="HYT_you_do_not_have_sufficient_permissions_to_perform_this_operation" datatype="html">
         <source>You do not have sufficient permissions to perform this operation</source>
         <target>Non hai i permessi sufficienti per effettuare questa operazione</target>
+      </trans-unit>
       <trans-unit id="HYT_alarm_status_active" datatype="html">
         <source>Active</source>
         <target>Attivo</target>
@@ -2321,9 +2320,13 @@
         <source>Critical</source>
         <target>Critico</target>
       </trans-unit>
-      <trans-unit id="HYT_alarm_showing_filter_counter" datatype="html">
-        <source>Showing <x id="INTERPOLATION" equiv-text='<strong class="showing-counter">{{filteredList.length}}</strong>'/> of <x id="INTERPOLATION_1" equiv-text='<strong class="text-primary">{{alarmsList.size}}</strong>'/></source>
-        <target>Mostrando <x id="INTERPOLATION" equiv-text='<strong class="showing-counter">{{filteredList.length}}</strong>'/> su <x id="INTERPOLATION_1" equiv-text='<strong class="text-primary">{{alarmsList.size}}</strong>'/></target>
+      <trans-unit id="HYT_alarm_showing_text" datatype="html">
+        <source>Showing </source>
+        <target>Mostrando </target>
+      </trans-unit>
+      <trans-unit id="HYT_alarm_showing_text_of" datatype="html">
+        <source> of </source>
+        <target> su </target>
       </trans-unit>
     </body>
   </file>

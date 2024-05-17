@@ -38,8 +38,11 @@
             <mat-option *ngFor="let sev of severityList" [value]="sev.value">{{sev.label}}</mat-option>
           </mat-select>
         </mat-form-field>
-        <div class="counter-alarm" i18n="@@HYT_alarm_showing_filter_counter">
-          Showing <strong class="showing-counter">{{filteredList.length}}</strong> of <strong class="text-primary">{{alarmsList.size}}</strong>
+        <div class="counter-alarm">
+          <span i18n="@@HYT_alarm_showing_text">Showing </span>
+          <strong class="showing-counter">{{filteredList.length}}</strong>
+          <span i18n="@@HYT_alarm_showing_text_of"> of </span> 
+          <strong class="text-primary">{{alarmsList.size}}</strong>
         </div>
         <div class="filter-button">
           <hyt-button

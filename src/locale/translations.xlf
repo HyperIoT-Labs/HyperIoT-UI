@@ -1737,9 +1737,14 @@
       <trans-unit id="HYT_alarm_critical_sev" datatype="html">
         <source>Critical</source>
       </trans-unit>
-      <trans-unit id="HYT_alarm_showing_filter_counter" datatype="html">
-        <source>Showing <x id="INTERPOLATION" equiv-text='<strong class="showing-counter">{{filteredList.length}}</strong>'/> of <x id="INTERPOLATION_1" equiv-text='<strong class="text-primary">{{alarmsList.size}}</strong>'/></source>
+      <trans-unit id="HYT_alarm_showing_text" datatype="html">
+        <source>Showing </source>
       </trans-unit>
+      <trans-unit id="HYT_alarm_showing_text_of" datatype="html">
+        <source> of </source>
+      </trans-unit>
+      
+      
     </body>
   </file>
 </xliff>
