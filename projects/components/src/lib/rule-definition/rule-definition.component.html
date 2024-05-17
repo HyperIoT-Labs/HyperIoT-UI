@@ -34,14 +34,14 @@
 
               <mat-form-field *ngIf="rulePart.fieldType === 'select-group'">
                 <mat-label>{{ rulePart.label }}</mat-label>
-                <mat-select formControlName="rule-part-{{j}}"
-                            (selectionChange)="onRuleValueChanged($event.value, i, j)">
-                  <mat-optgroup *ngFor="let group of rulePart.optionsGroup" [label]="group.name"
-                                [disabled]="group?.disabled">
-                    <mat-option *ngFor="let option of group.options" [value]="option.value">
-                      <span *ngIf="option.icon" class="hyt-icon {{ option.icon }}"></span>
-                      {{ option.label }}
-                    </mat-option>
+                <mat-select formControlName="rule-part-{{j}}" (selectionChange)="onRuleValueChanged($event.value, i, j)">
+                  <mat-optgroup *ngFor="let group of rulePart.optionsGroup" [disabled]="group?.disabled">
+                      <span *ngIf="group.icon" class="hyt-icon {{ group.icon }}"></span>
+                      {{ group.name }}
+                      <mat-option *ngFor="let option of group.options" [value]="option.value">
+                        <span *ngIf="option.icon" class="hyt-icon {{ option.icon }}"></span>
+                        {{ option.label }}
+                      </mat-option>
                   </mat-optgroup>
                 </mat-select>
                 <mat-error *ngIf="getFormControl(i, j).invalid">

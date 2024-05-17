@@ -108,6 +108,7 @@ export class RuleDefinitionComponent implements ControlValueAccessor, OnChanges 
       label: selectedIPart.label,
       fieldType: selectedIPart.fieldType,
       options: selectedIPart.generateOptions?.() || [],
+      optionsGroup: selectedIPart.generateOptionsGroup?.() || [],
       valueMap:  selectedIPart.generateChildrenRuleParts?.() || new Map<string, IRulePart>(),
       ruleify: selectedIPart.ruleify,
       prettify: selectedIPart.prettify,

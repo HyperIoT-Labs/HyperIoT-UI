@@ -2278,6 +2278,14 @@
         <source>You do not have sufficient permissions to perform this operation</source>
         <target>Non hai i permessi sufficienti per effettuare questa operazione</target>
       </trans-unit>
+      <trans-unit id="HYT_conditions" datatype="html">
+        <source>Conditions</source>
+        <target>Condizioni</target>
+      </trans-unit>
+      <trans-unit id="HYT_timestamp" datatype="html">
+        <source>Timestamp</source>
+        <target>Timestamp</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

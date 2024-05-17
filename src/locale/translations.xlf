@@ -1705,6 +1705,12 @@
       <trans-unit id="HYT_you_do_not_have_sufficient_permissions_to_perform_this_operation" datatype="html">
         <source>You do not have sufficient permissions to perform this operation</source>
       </trans-unit>
+      <trans-unit id="HYT_conditions" datatype="html">
+        <source>Conditions</source>
+      </trans-unit>
+      <trans-unit id="HYT_timestamp" datatype="html">
+        <source>Timestamp</source>
+      </trans-unit>
     </body>
   </file>
 </xliff>

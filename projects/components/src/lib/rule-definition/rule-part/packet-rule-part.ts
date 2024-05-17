@@ -27,15 +27,17 @@ export class PacketRulePart implements IRulePart {
     this.packetList.map((p) => {
       let currentOptGroup = optGroup.find(opts => opts.name === p.device.deviceName);
       if (currentOptGroup) {
-        currentOptGroup.options = [{label: p.name, value: String(p.id)}, ...currentOptGroup.options]
+        currentOptGroup.options = [{label: p.name, value: String(p.id), icon: 'icon-hyt_packets'}, ...currentOptGroup.options]
         optGroup.map(opg => (opg.name === p.device.deviceName) || opg)
       } else {
         currentOptGroup = {
           name: p.device.deviceName,
           options: [{
             label: p.name,
-            value: String(p.id)
-          }]
+            value: String(p.id),
+            icon: 'icon-hyt_packets'
+          }],
+          icon: 'icon-hyt_device'
         }
         optGroup.push(currentOptGroup);
       }
