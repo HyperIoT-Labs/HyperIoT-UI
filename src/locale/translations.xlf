@@ -1704,6 +1704,41 @@
       </trans-unit>
       <trans-unit id="HYT_you_do_not_have_sufficient_permissions_to_perform_this_operation" datatype="html">
         <source>You do not have sufficient permissions to perform this operation</source>
+      <trans-unit id="HYT_alarm_status_active" datatype="html">
+        <source>Active</source>
+      </trans-unit>
+      <trans-unit id="HYT_alarm_status_inactive" datatype="html">
+        <source>Inactive</source>
+      </trans-unit>
+      <trans-unit id="HYT_alarm_no_filter" datatype="html">
+        <source>NO FILTER SELECTED.</source>
+      </trans-unit>
+      <trans-unit id="HYT_alarm_click_to_filter" datatype="html">
+        <source>CLICK FILTER BUTTON TO FILTER ALARMS</source>
+      </trans-unit>
+      <trans-unit id="HYT_alarm_filter_from" datatype="html">
+        <source>FILTERING ALARMS FOR:</source>
+      </trans-unit>
+      <trans-unit id="HYT_alarm_hidden_filter" datatype="html">
+        <source>There are alarms, but they're being hidden by the filter!</source>
+      </trans-unit>
+      <trans-unit id="HYT_alarm_no_fired" datatype="html">
+        <source>No alarms fired</source>
+      </trans-unit>
+      <trans-unit id="HYT_alarm_low_sev" datatype="html">
+        <source>Low</source>
+      </trans-unit>
+      <trans-unit id="HYT_alarm_medium_sev" datatype="html">
+        <source>Medium</source>
+      </trans-unit>
+      <trans-unit id="HYT_alarm_high_sev" datatype="html">
+        <source>High</source>
+      </trans-unit>
+      <trans-unit id="HYT_alarm_critical_sev" datatype="html">
+        <source>Critical</source>
+      </trans-unit>
+      <trans-unit id="HYT_alarm_showing_filter_counter" datatype="html">
+        <source>Showing <x id="INTERPOLATION" equiv-text='<strong class="showing-counter">{{filteredList.length}}</strong>'/> of <x id="INTERPOLATION_1" equiv-text='<strong class="text-primary">{{alarmsList.size}}</strong>'/></source>
       </trans-unit>
     </body>
   </file>

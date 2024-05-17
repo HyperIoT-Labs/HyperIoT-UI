@@ -60,7 +60,8 @@ import { RuleErrorModalComponent } from './rule-definition/rule-error/rule-error
 import { HytChatbotChartMessageComponent } from './hyt-chatbot-chart-message/hyt-chatbot-chart-message.component';
 import { PlotlyModule } from 'angular-plotly.js';
 import { HytChartModalComponent } from './hyt-modal/hyt-chart-modal/hyt-chart-modal.component';
-
+import { HytAlarmComponent } from './hyt-alarm/hyt-alarm.component';
+import { HytNoData } from './hyt-no-data/hyt-no-data.component';
 export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
 
 @NgModule({
@@ -122,6 +123,8 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     RuleErrorModalComponent,
     HytChatbotChartMessageComponent,
     HytChartModalComponent,
+    HytAlarmComponent,
+    HytNoData
   ],
   imports: [
     CommonModule,
@@ -183,6 +186,8 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     RuleDefinitionComponent,
     HytChatbotChartMessageComponent,
     HytChartModalComponent,
+    HytAlarmComponent,
+    HytNoData
   ],
   providers: [
     NotificationService,

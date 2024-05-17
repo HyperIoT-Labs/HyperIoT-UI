@@ -2277,6 +2277,53 @@
       <trans-unit id="HYT_you_do_not_have_sufficient_permissions_to_perform_this_operation" datatype="html">
         <source>You do not have sufficient permissions to perform this operation</source>
         <target>Non hai i permessi sufficienti per effettuare questa operazione</target>
+      <trans-unit id="HYT_alarm_status_active" datatype="html">
+        <source>Active</source>
+        <target>Attivo</target>
+      </trans-unit>
+      <trans-unit id="HYT_alarm_status_inactive" datatype="html">
+        <source>Inactive</source>
+        <target>Inattivo</target>
+      </trans-unit>
+      <trans-unit id="HYT_alarm_no_filter" datatype="html">
+        <source>NO FILTER SELECTED.</source>
+        <target>NESSUN FILTRO SELEZIONATO.</target>
+      </trans-unit>
+      <trans-unit id="HYT_alarm_click_to_filter" datatype="html">
+        <source>CLICK FILTER BUTTON TO FILTER ALARMS</source>
+        <target>CLICCA IL BOTTONE PER FILTRARE GLI ALLARMI</target>
+      </trans-unit>
+      <trans-unit id="HYT_alarm_filter_from" datatype="html">
+        <source>FILTERING ALARMS FOR:</source>
+        <target>FILTRANDO ALLARMI PER:</target>
+      </trans-unit>
+      <trans-unit id="HYT_alarm_hidden_filter" datatype="html">
+        <source>There are alarms, but they're being hidden by the filter!</source>
+        <target>Ci sono allarmi ma vengono nascosti dai filtri selezionati!</target>
+      </trans-unit>
+      <trans-unit id="HYT_alarm_no_fired" datatype="html">
+        <source>No alarms fired</source>
+        <target>Nessun allarme attivo</target>
+      </trans-unit>
+      <trans-unit id="HYT_alarm_low_sev" datatype="html">
+        <source>Low</source>
+        <target>Bassa</target>
+      </trans-unit>
+      <trans-unit id="HYT_alarm_medium_sev" datatype="html">
+        <source>Medium</source>
+        <target>Media</target>
+      </trans-unit>
+      <trans-unit id="HYT_alarm_high_sev" datatype="html">
+        <source>High</source>
+        <target>Alta</target>
+      </trans-unit>
+      <trans-unit id="HYT_alarm_critical_sev" datatype="html">
+        <source>Critical</source>
+        <target>Critico</target>
+      </trans-unit>
+      <trans-unit id="HYT_alarm_showing_filter_counter" datatype="html">
+        <source>Showing <x id="INTERPOLATION" equiv-text='<strong class="showing-counter">{{filteredList.length}}</strong>'/> of <x id="INTERPOLATION_1" equiv-text='<strong class="text-primary">{{alarmsList.size}}</strong>'/></source>
+        <target>Mostrando <x id="INTERPOLATION" equiv-text='<strong class="showing-counter">{{filteredList.length}}</strong>'/> su <x id="INTERPOLATION_1" equiv-text='<strong class="text-primary">{{alarmsList.size}}</strong>'/></target>
       </trans-unit>
     </body>
   </file>

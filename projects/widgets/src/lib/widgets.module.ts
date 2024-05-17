@@ -1,12 +1,12 @@
 import { HttpClientModule } from '@angular/common/http';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { MomentModule } from 'ngx-moment';
 
 import { CommonToolbarComponent } from './widget/common-toolbar/common-toolbar.component';
-
+import {MatSelectModule} from '@angular/material/select';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 
@@ -44,6 +44,7 @@ import { MultiStatusWidgetComponent } from './widget/multi-status-widget/multi-s
 import { DynamicLabelValueWidgetComponent } from './widget/dynamic-label-value-widget/dynamic-label-value-widget.component';
 import { ProductionTargetComponent } from './widget/production-target/production-target.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AlarmsWidgetComponent } from './widget/alarms-widget/alarms-widget.component';
 
 @NgModule({
   declarations: [
@@ -66,13 +67,16 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     DefibrillatorComponent,
     MultiStatusWidgetComponent,
     DynamicLabelValueWidgetComponent,
-    ProductionTargetComponent
+    ProductionTargetComponent,
+    AlarmsWidgetComponent
   ],
   imports: [
     MatButtonModule,
     BrowserModule,
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
+    MatSelectModule,
     PlotlyModule,
     ComponentsModule,
     MatTableModule,
@@ -120,7 +124,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     HistogramChartComponent,
     MultiStatusWidgetComponent,
     DynamicLabelValueWidgetComponent,
-    ProductionTargetComponent
+    ProductionTargetComponent,
+    AlarmsWidgetComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

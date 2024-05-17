@@ -52,6 +52,10 @@ export class HytBadgeComponent {
    * @property {HytBadgeSize} size - Enum for declare the size, xs & sm(suggested for icon), md(default), lg
    */
   @Input() size: HytBadgeSize = HytBadgeSize.MEDIUM;
+  /**
+   * @property {HytBadgeSize} size - gradient direction for background
+   */
+  @Input() gradientDirection: 'top'|'left'|'bottom'|'right' = 'bottom';
 
   constructor(loggerService: LoggerService) {
     this.logger = new Logger(loggerService);
