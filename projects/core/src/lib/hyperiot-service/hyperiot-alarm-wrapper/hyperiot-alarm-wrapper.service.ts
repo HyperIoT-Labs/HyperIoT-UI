@@ -9,10 +9,10 @@ import { Subject } from "rxjs";
 export class AlarmWrapperService {
   private DEFAULT_BACKGROUND_COLOUR = '#1f58a5';
   private severityColors = new Map<number, string>([
-    [0, '#f8b606'],
-    [1, '#f87a06'],
-    [2, '#bd362f'],
-    [3, '#9400d3'],
+    [0, '#46A0F3'],
+    [1, '#F9BE26'],
+    [2, '#F35746'],
+    [3, '#8E20BC'],
   ]);
   private _alarmSubject: Subject<HytAlarm.LiveAlarm> = new Subject()
 
@@ -42,7 +42,6 @@ export class AlarmWrapperService {
           isEvent: isEvent,
           isAlarm: isAlarm
         }
-        console.warn(alarm);
         this._alarmSubject.next(alarm)
       }
     })

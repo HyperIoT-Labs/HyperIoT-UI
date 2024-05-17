@@ -140,3 +140,11 @@ pre.hyt-code {
     padding: 12px;
     border-radius: 8px;
 }
+.smaller-select{
+    .mat-form-field-wrapper, .mat-form-field-appearance-legacy .mat-form-field-wrapper{
+        padding-bottom: 0;
+    }
+    .mat-form-field-underline {
+        bottom: 0;
+    }
+}

@@ -84,6 +84,7 @@ export { HytIconPickerListComponent } from './lib/hyt-icon-picker/hyt-icon-picke
 export { HytChatbotChartMessageComponent} from './lib/hyt-chatbot-chart-message/hyt-chatbot-chart-message.component'
 export { HytChartModalComponent } from './lib/hyt-modal/hyt-chart-modal/hyt-chart-modal.component';
 export { HytAlarmComponent } from './lib/hyt-alarm/hyt-alarm.component';
+export { HytNoData } from './lib/hyt-no-data/hyt-no-data.component';
 export * from './lib/hyt-shared-components/hyt-topology-services/hyt-topology.service';
 export * from './lib/hyt-shared-components/hyt-topology-toolbar/hyt-topology-toolbar.component';
 export * from './lib/hyt-models/hyt-dashboard-models';

@@ -1,12 +1,12 @@
 import { HttpClientModule } from '@angular/common/http';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { MomentModule } from 'ngx-moment';
 
 import { CommonToolbarComponent } from './widget/common-toolbar/common-toolbar.component';
-
+import {MatSelectModule} from '@angular/material/select';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 
@@ -72,6 +72,8 @@ import { AlarmsWidgetComponent } from './widget/alarms-widget/alarms-widget.comp
     BrowserModule,
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
+    MatSelectModule,
     PlotlyModule,
     ComponentsModule,
     MatTableModule,

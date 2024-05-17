@@ -1,6 +1,6 @@
 import { HytAlarm } from "core";
 
-export const alarm : HytAlarm.LiveAlarm = {
+export const alarmMocked : HytAlarm.LiveAlarm = {
     "color": {
         "background": "#bd362f",
         "text": "#fff"
@@ -37,7 +37,7 @@ export const alarm : HytAlarm.LiveAlarm = {
         "ruleName": "SeveritySevera",
         "firePayload": "\nPacketIntensive:\n\tNotInteger : 14.788138405008226\n\tInteger : 99\n\ttimestamp : 2024-05-15 08:33:296 +0000\n\n",
         "ruleId": 6433,
-        "fireTimestamp": 1715762033296,
+        "fireTimestamp": 1715853971017,
         "bundleContext": null,
         "actionName": "it.acsoftware.hyperiot.alarm.service.actions.NoAlarmAction"
     },

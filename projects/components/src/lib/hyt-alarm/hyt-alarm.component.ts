@@ -1,7 +1,6 @@
-import { Component, Input, Output, EventEmitter } from "@angular/core";
+import { Component, Input, Output, EventEmitter, Inject, LOCALE_ID } from "@angular/core";
 import { HytAlarm, Logger, LoggerService } from "core";
 import * as moment_ from 'moment';
-import { HytBadgeSize } from "projects/components/src/lib/hyt-badge/hyt-badge.component";
 const moment = moment_;
 
 export enum AlarmBtnClicked {
@@ -11,7 +10,7 @@ export enum AlarmBtnClicked {
 }
 
 @Component({
-  selector: "hyt-alarm2",
+  selector: "hyt-alarm",
   templateUrl: "./hyt-alarm.component.html",
   styleUrls: ["./hyt-alarm.component.scss"],
 })
@@ -22,10 +21,10 @@ export class HytAlarmComponent {
    * map for retrieve label using value of severity
    */
   private severityLabel = new Map<number, string>([
-    [0, 'Low'],
-    [1, 'Medium'],
-    [2, 'High'],
-    [3, 'Critical'],
+    [0, $localize`:@@HYT_alarm_low_sev:Low`],
+    [1, $localize`:@@HYT_alarm_medium_sev:Medium`],
+    [2, $localize`:@@HYT_alarm_high_sev:High`],
+    [3, $localize`:@@HYT_alarm_critical_sev:Critical`],
   ]);
   /**
    * @property {HytAlarm.LiveAlarm} alarm - alarm to display
@@ -41,15 +40,14 @@ export class HytAlarmComponent {
   @Output() btnClick = new EventEmitter<HytAlarm.LiveAlarm>();
 
 
-  constructor(loggerService: LoggerService) {
+  constructor(loggerService: LoggerService, @Inject(LOCALE_ID) locale: string) {
     this.logger = new Logger(loggerService);
     this.logger.registerClass("HytAlarmComponent");
-    moment.locale("it");
+    moment.locale(locale || 'en');
   }
 
   /**
-   * Emit the event that the primary button has been clicked.
-   * @public
+   * Emit the event that a button has been clicked
    */
   onClick(btnType: AlarmBtnClicked) {
     this.logger.debug(
@@ -66,16 +64,14 @@ export class HytAlarmComponent {
   }
 
   /**
-   * Get the emitter of the alarm
+   * Print text description of the status of the alarm
    */
-  get emitter(){
-    return this.alarm.event.deviceName;
-  }
-  
   get alarmStatus(){
-    return this.alarm.event.alarmState == "UP" ? $localize`:@@HYT_alarm_status_inactive:Active` : $localize`:@@HYT_ai_user_label:Inactive`;
+    return this.alarm.event.alarmState == "UP" ? $localize`:@@HYT_alarm_status_active:Active` : $localize`:@@HYT_ai_user_label:Inactive`;
   }
-
+  /**
+   * Return text description of the severity of the alarm
+   */
   get alarmSeverityLabel(){
     return this.severityLabel.has(this.alarm.event.severity) ? this.severityLabel.get(this.alarm.event.severity) : "None";
   }
@@ -85,11 +81,9 @@ export class HytAlarmComponent {
   get isDocumentationAvaible(){
     return false;
   }
-
-  get footerBadgeSize(){
-    return HytBadgeSize
-  }
-
+  /**
+   * Display description when the alarm was fired(es: two minutes ago)
+   */
   get timeFromNow(){
     return moment(this.alarm.event.fireTimestamp).fromNow();
   }
