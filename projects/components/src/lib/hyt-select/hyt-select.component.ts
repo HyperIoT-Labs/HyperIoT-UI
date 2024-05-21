@@ -104,6 +104,10 @@ export class HytSelectComponent
   /** Specifies if it is a multiple select */
   @Input() isMultiple = false;
 
+  /** changePositionStrategy apply the positionSelect directive only if true */
+  @Input() changePositionStrategy = false;
+  
+
   @Input() chips = false;
 
   /**

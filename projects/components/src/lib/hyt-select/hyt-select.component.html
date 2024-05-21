@@ -10,6 +10,8 @@
     (selectionChange)="change($event)"
     (openedChange)="resetSearchValue()"
     [placeholder]="placeholder"
+    [changePositionStrategy]="changePositionStrategy"
+    positionSelect
   >
 
     <mat-select-trigger *ngIf="chips && isMultiple">

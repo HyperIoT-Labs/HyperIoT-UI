@@ -51,8 +51,13 @@
                     <div class="col-4 center-tools">
 
                         <hyt-select
-                            *ngIf="!showAreas && pageStatus == 1 && enableProjectSelection" [label]="'Select a project'" name="project"
-                            [options]="hProjectListOptions" [selected]="idProjectSelected"
+                            *ngIf="!showAreas && pageStatus == 1 && enableProjectSelection" 
+                            [label]="'Select a project'" 
+                            name="project"
+                            [options]="hProjectListOptions" 
+                            [selected]="idProjectSelected"
+                            [isSearchable]="true"
+                            [changePositionStrategy]="true"
                             (changeFn)="onSelectChange($event)"
                         >
                         </hyt-select>

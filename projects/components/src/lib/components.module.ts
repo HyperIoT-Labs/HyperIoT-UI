@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { ElementRef, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HytInputComponent } from './hyt-input/hyt-input.component';
@@ -62,6 +62,7 @@ import { PlotlyModule } from 'angular-plotly.js';
 import { HytChartModalComponent } from './hyt-modal/hyt-chart-modal/hyt-chart-modal.component';
 import { HytAlarmComponent } from './hyt-alarm/hyt-alarm.component';
 import { HytNoData } from './hyt-no-data/hyt-no-data.component';
+import { CustomSelectPositionDirective } from './directives/positionSelect.directive';
 export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
 
 @NgModule({
@@ -124,7 +125,8 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     HytChatbotChartMessageComponent,
     HytChartModalComponent,
     HytAlarmComponent,
-    HytNoData
+    HytNoData,
+    CustomSelectPositionDirective
   ],
   imports: [
     CommonModule,
