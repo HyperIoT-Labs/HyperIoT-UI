@@ -1,12 +1,16 @@
 import { Injectable } from "@angular/core";
 import { RealtimeDataService } from "../../hyperiot-base/realtime-data-service/realtime-data.service";
 import { HytAlarm } from "./hyperiot-alarm.model";
-import { Subject } from "rxjs";
+import { BehaviorSubject, Subject } from "rxjs";
 
 @Injectable({
   providedIn: "root",
 })
 export class AlarmWrapperService {
+  /**
+   * Flag if the notification is active, saved in localStorage the preference
+   */
+  public eventNotificationState: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(JSON.parse(localStorage.getItem(HytAlarm.NotificationActiveKey)) ?? true);
   private DEFAULT_BACKGROUND_COLOUR = '#1f58a5';
   private severityColors = new Map<number, string>([
     [0, '#46A0F3'],
@@ -45,6 +49,8 @@ export class AlarmWrapperService {
         this._alarmSubject.next(alarm)
       }
     })
+
+    this.eventNotificationState.subscribe(res=> localStorage.setItem(HytAlarm.NotificationActiveKey, JSON.stringify(res)))
   }
 
   get alarmSubject(){

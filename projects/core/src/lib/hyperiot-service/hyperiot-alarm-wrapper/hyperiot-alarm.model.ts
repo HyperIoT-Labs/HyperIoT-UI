@@ -41,6 +41,8 @@ export namespace HytAlarm{
         isEvent: boolean,
         isAlarm: boolean
     }
+
+    export const NotificationActiveKey = "NOTIFICATION_ACTIVE"
 }
 
 

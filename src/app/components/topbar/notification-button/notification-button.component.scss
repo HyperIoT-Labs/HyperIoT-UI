@@ -1,0 +1,140 @@
+#hyt-account-button {
+    font-family: "Exo";
+
+    &.dropdown {
+        position: relative;
+        display: inline-block;
+
+        &:hover {
+
+            .dropdown-content{
+                display: block;
+            }
+            
+            .dropbtn {
+
+                span {
+
+                    &.hyt-icon.icon-hyt_userCircle {
+
+                        color: #ffffff;
+                        background-color: #0956b6;
+
+                    }
+
+                }
+            }
+            
+        }
+    
+        .dropbtn {
+            background: none;
+            color: #1e58a5;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+    
+            &:focus {
+                outline: none;
+            }
+
+            &:hover {
+
+                span {
+                    &.hyt-icon.icon-hyt_userCircle {
+                        color: #ffffff;
+                        background: #0956b6;
+                    }
+                }
+            }
+
+            span {
+                
+                &.hyt-icon.icon-hyt_userCircle {
+                    font-size: 2.5em;
+                    border-radius: 50%;
+                    text-align: center;
+                    line-height: 46px;
+                }
+
+            }
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+
+            -moz-box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            -webkit-box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+
+            z-index: 1;
+            right: 0;
+            font-size: .95em;
+            font-weight: bold;
+
+            .submenu-element {
+
+                &:not(:last-of-type) {
+                    border-bottom: .5px solid #c7c7c7;
+                }
+
+                a {
+                    color: rgb(54, 54, 54);
+                    padding: 15px 8px 12px 8px;
+                    text-decoration: none;
+                    display: block;
+
+                    &:hover {
+                        color: white;
+                        background-color: #1e58a5;
+                    }
+
+                    span {
+
+                        &.hyt-icon {
+
+                            font-size: 1.5em;
+                            vertical-align: sub;
+                            margin-right: 5px;
+
+                        }
+
+                    }
+
+
+                }
+
+            }
+
+
+            .clickable {
+                cursor: pointer;
+            }
+
+        }
+
+        
+    }
+
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 991px) {
+
+    #hyt-account-button {
+
+        &.dropdown {
+
+            position: absolute;
+            top: 0px;
+            right: 10px;
+
+        }
+
+    }
+
+}

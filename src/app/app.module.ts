@@ -61,6 +61,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { InfoComponent } from './components/info/info.component';
 import { ContainerAreaMapComponent } from './pages/areas/container-area-map/container-area-map.component';
 import { HttpErrorInterceptor } from './interceptors/http-error.interceptor';
+import { NotificationButtonComponent } from './components/topbar/notification-button/notification-button.component';
 PlotlyModule.plotlyjs = PlotlyJS;
 
 export class MyUrlSerializer extends DefaultUrlSerializer implements UrlSerializer {
@@ -87,6 +88,7 @@ export function apiConfigFactory(): Configuration {
     SidebarComponent,
     TopbarComponent,
     AccountButtonComponent,
+    NotificationButtonComponent,
     ProfileComponent,
     SaveChangesDialogComponent,
     PendingChangesDialogComponent,

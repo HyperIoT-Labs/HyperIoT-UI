@@ -48,7 +48,6 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(
     private activatedRoute: ActivatedRoute,
     private hprojectsService: HprojectsService,
-    private configService: DashboardConfigService,
     private realtimeDataService: RealtimeDataService,
     private toastr: ToastrService,
     private loggerService: LoggerService,
@@ -61,8 +60,6 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    console.log(this.alarmWrapper);
-
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((urlObj: NavigationEnd) => {
@@ -92,7 +89,7 @@ export class AppComponent implements OnInit, OnDestroy {
         this.realtimeDataService.connect(this.projectIds);
       });
 
-    this.configService.eventNotificationState
+    this.alarmWrapper.eventNotificationState
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((res) => {
         this.eventNotificationIsOn = res;
