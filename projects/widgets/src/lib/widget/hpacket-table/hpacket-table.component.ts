@@ -1,10 +1,9 @@
 import { AfterViewInit, Component, Injector, ViewChild } from '@angular/core';
-import { DataChannel, DataPacketFilter, Logger, LoggerService, PacketData } from 'core';
+import { DataChannel, DataPacketFilter, HPacketField, Logger, LoggerService, PacketData, DateFormatterService } from 'core';
 import { Subject, Subscription } from 'rxjs';
 import { BaseTableComponent } from '../../base/base-table/base-table.component';
 import { WidgetAction } from '../../base/base-widget/model/widget.model';
 import { ServiceType } from '../../service/model/service-type';
-import { DateFormatterService } from '../../util/date-formatter.service';
 
 @Component({
   selector: 'hyperiot-hpacket-table',
@@ -106,7 +105,10 @@ export class HpacketTableComponent extends BaseTableComponent implements AfterVi
   subscribeDataChannel() {
     const dataPacketFilter = new DataPacketFilter(this.widget.config.packetId, this.widget.config.packetFields, true);
     this.dataChannel = this.dataService.addDataChannel(+this.widget.id, [dataPacketFilter]);
-    // this.initStream(); // ??????
+    this.dataChannel.addTimestampFieldToFormat(
+      this.tableHeaders.filter(el=> el.type === HPacketField.TypeEnum.TIMESTAMP).map(el=> el.value), 
+    );
+    
     this.dataSubscription = this.dataChannel.subject.subscribe((eventData) => this.computePacketData(eventData.data));
     if (this.serviceType === ServiceType.OFFLINE) {
       this.offControllerSubscription = this.dataChannel.controller.$totalCount.subscribe(res => {

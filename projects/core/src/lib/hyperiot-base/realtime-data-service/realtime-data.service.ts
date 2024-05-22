@@ -8,6 +8,7 @@ import { RealtimeDataChannelController } from './realtimeDataChannelController';
 import { PacketData, PacketDataChunk } from '../models/packet-data';
 import { HPacket } from '../../hyperiot-client/models/hPacket';
 import { HPacketField } from '../../hyperiot-client/models/hPacketField';
+import { DateFormatterService } from '../../hyperiot-service/date-formatter/date-formatter.service';
 
 // HPacketData created on top op HPacket
 // Unable to use HPacket directly because the 'fields' field is an array, but when decoded from Avro, 'fields' will be an object.
@@ -51,7 +52,7 @@ export class RealtimeDataService extends BaseDataService implements IDataService
   };
   packetSchema: any;
 
-  constructor() {
+  constructor(private dateFormatterService: DateFormatterService) {
     super();
     this.eventStream = new Subject<any>();
   }
@@ -182,6 +183,13 @@ export class RealtimeDataService extends BaseDataService implements IDataService
                     Object.assign(fields, field);
                   }
                 });
+              }
+              if(channelData.controller.timestampToFormat){
+                for (const key of channelData.controller.timestampToFormat.keys()) {
+                  if(fields[key]){
+                    fields[key] = this.dateFormatterService.formatTimestamp(fields[key]);
+                  }
+                }
               }
               const packetDataChunk: PacketDataChunk = {
                 packetId: packetFilter.packetId,

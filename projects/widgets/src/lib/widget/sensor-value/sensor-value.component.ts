@@ -59,6 +59,7 @@ export class SensorValueComponent extends BaseWidgetComponent {
       +this.widget.id,
       [dataPacketFilter]
     );
+    if(this.widget.config.fieldTypes[hPacketFieldId]) this.dataChannel.addTimestampFieldToFormat([this.sensorField])
     this.dataSubscription = this.dataChannel.subject.subscribe(res => {
       this.computePacketData(res.data);
     });
