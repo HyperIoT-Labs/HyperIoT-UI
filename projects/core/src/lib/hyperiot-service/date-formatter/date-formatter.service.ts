@@ -13,7 +13,7 @@ export class DateFormatterService {
   }
 
   public formatTimestamp(timestamp: number): string {
-    return moment(timestamp).format("L") + " " + moment(timestamp).format("LTS");
+    return moment(timestamp).format("DD/MM/YYYY HH:mm:ss");
   }
 
 }

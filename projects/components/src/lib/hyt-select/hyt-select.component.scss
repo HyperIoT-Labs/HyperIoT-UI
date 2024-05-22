@@ -4,6 +4,12 @@
     padding-bottom: 4px;
     justify-content: center;
     align-items: center;
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: #fff;
+    z-index: 1;
 
     .delete-icon {
         cursor: pointer;

@@ -15,4 +15,8 @@ export class DataChannel {
   public getPacketIds(): number[] {
     return this.packetFilterList.map(packetFilter => packetFilter.packetId);
   }
+
+  public addTimestampFieldToFormat(fieldNames: string[]){
+    this.controller['timestampToFormat'] = new Set(fieldNames);
+  }
 }

@@ -2093,10 +2093,8 @@
         <target>Il valore di outlier è un valore specifico che viene emesso quando l'utente preme il bottone 'outlier'</target>
       </trans-unit>
       <trans-unit id="HYT_packet_sent" datatype="html">
-        <source> Packet sent: <x id="INTERPOLATION" equiv-text="dget&gt;
-    &lt;hype"/> </source>
-        <target> Pacchetti inviati: <x id="INTERPOLATION" equiv-text="dget&gt;
-    &lt;hype"/> </target>
+        <source> Packet sent: <x id="INTERPOLATION" equiv-text="dget&gt;&lt;hype"/> </source>
+        <target> Pacchetti inviati: <x id="INTERPOLATION" equiv-text="dget&gt;&lt;hype"/> </target>
       </trans-unit>
       <trans-unit id="HYT_source" datatype="html">
         <source>Source</source>
@@ -2278,6 +2276,57 @@
         <source>You do not have sufficient permissions to perform this operation</source>
         <target>Non hai i permessi sufficienti per effettuare questa operazione</target>
       </trans-unit>
+      <trans-unit id="HYT_alarm_status_active" datatype="html">
+        <source>Active</source>
+        <target>Attivo</target>
+      </trans-unit>
+      <trans-unit id="HYT_alarm_status_inactive" datatype="html">
+        <source>Inactive</source>
+        <target>Inattivo</target>
+      </trans-unit>
+      <trans-unit id="HYT_alarm_no_filter" datatype="html">
+        <source>NO FILTER SELECTED.</source>
+        <target>NESSUN FILTRO SELEZIONATO.</target>
+      </trans-unit>
+      <trans-unit id="HYT_alarm_click_to_filter" datatype="html">
+        <source>CLICK FILTER BUTTON TO FILTER ALARMS</source>
+        <target>CLICCA IL BOTTONE PER FILTRARE GLI ALLARMI</target>
+      </trans-unit>
+      <trans-unit id="HYT_alarm_filter_from" datatype="html">
+        <source>FILTERING ALARMS FOR:</source>
+        <target>FILTRANDO ALLARMI PER:</target>
+      </trans-unit>
+      <trans-unit id="HYT_alarm_hidden_filter" datatype="html">
+        <source>There are alarms, but they're being hidden by the filter!</source>
+        <target>Ci sono allarmi ma vengono nascosti dai filtri selezionati!</target>
+      </trans-unit>
+      <trans-unit id="HYT_alarm_no_fired" datatype="html">
+        <source>No alarms fired</source>
+        <target>Nessun allarme attivo</target>
+      </trans-unit>
+      <trans-unit id="HYT_alarm_low_sev" datatype="html">
+        <source>Low</source>
+        <target>Bassa</target>
+      </trans-unit>
+      <trans-unit id="HYT_alarm_medium_sev" datatype="html">
+        <source>Medium</source>
+        <target>Media</target>
+      </trans-unit>
+      <trans-unit id="HYT_alarm_high_sev" datatype="html">
+        <source>High</source>
+        <target>Alta</target>
+      </trans-unit>
+      <trans-unit id="HYT_alarm_critical_sev" datatype="html">
+        <source>Critical</source>
+        <target>Critico</target>
+      </trans-unit>
+      <trans-unit id="HYT_alarm_showing_text" datatype="html">
+        <source>Showing </source>
+        <target>Mostrando </target>
+      </trans-unit>
+      <trans-unit id="HYT_alarm_showing_text_of" datatype="html">
+        <source> of </source>
+        <target> su </target>
       <trans-unit id="HYT_conditions" datatype="html">
         <source>Conditions</source>
         <target>Condizioni</target>

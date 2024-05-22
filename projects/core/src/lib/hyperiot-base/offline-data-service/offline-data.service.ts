@@ -6,6 +6,7 @@ import { DataChannel } from '../models/data-channel';
 import { DataPacketFilter } from '../models/data-packet-filter';
 import { PacketData, PacketDataChunk } from '../models/packet-data';
 import { OfflineDataChannelController } from './OfflineDataChannelController';
+import { DateFormatterService } from '../../hyperiot-service/date-formatter/date-formatter.service';
 
 enum PageStatus {
   Loading = 0,
@@ -33,6 +34,7 @@ export class OfflineDataService extends BaseDataService {
 
   constructor(
     private hprojectsService: HprojectsService,
+    private dateFormatterService: DateFormatterService
   ) {
     super();
     this.countEventSubject = new Subject<PageStatus>();
@@ -194,7 +196,7 @@ export class OfflineDataService extends BaseDataService {
           countConverted += packetData.values.length;
           return {
             packetId: packetData.hPacketId,
-            data: this.convertData(packetData.values)
+            data: this.convertData(packetData.values, dataChannel)
           }
         });
 
@@ -230,11 +232,16 @@ export class OfflineDataService extends BaseDataService {
 
   // Convert offline data to PacketData
   
-  private convertData(packetValues: any): PacketData[] {
+  private convertData(packetValues: any, dataChannel: DataChannel): PacketData[] {
     return packetValues.map(pv => {
       const convertedPV: PacketData = {};
       pv.fields.forEach(field => {
-        convertedPV[field.name] = field.value;
+        if(dataChannel.controller.timestampToFormat && dataChannel.controller.timestampToFormat.has(field.name)){
+          convertedPV[field.name] = this.dateFormatterService.formatTimestamp(field.value);
+        }else{
+          convertedPV[field.name] = field.value;
+
+        }
       });
       convertedPV.timestamp = new Date(convertedPV[pv.timestampField]);
 

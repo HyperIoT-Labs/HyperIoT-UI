@@ -1,9 +1,8 @@
 import { AfterViewInit, Component, Injector, OnInit, ViewChild } from '@angular/core';
-import { DataChannel, DataPacketFilter, Logger, LoggerService, PacketData } from 'core';
+import { DataChannel, DataPacketFilter, Logger, LoggerService, PacketData, DateFormatterService } from 'core';
 import { Subject, Subscription } from 'rxjs';
 import { BaseTableComponent } from '../../base/base-table/base-table.component';
 import { WidgetAction } from '../../base/base-widget/model/widget.model';
-import { DateFormatterService } from '../../util/date-formatter.service';
 
 @Component({
   selector: 'hyperiot-error-table',
