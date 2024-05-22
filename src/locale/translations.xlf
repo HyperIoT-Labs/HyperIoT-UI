@@ -1745,6 +1745,12 @@
       </trans-unit>
       
       
+      <trans-unit id="HYT_conditions" datatype="html">
+        <source>Conditions</source>
+      </trans-unit>
+      <trans-unit id="HYT_timestamp" datatype="html">
+        <source>Timestamp</source>
+      </trans-unit>
     </body>
   </file>
 </xliff>

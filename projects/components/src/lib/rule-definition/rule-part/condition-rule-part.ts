@@ -1,4 +1,4 @@
-import { IRulePart, RuleOperator } from "./rule-part.interface";
+import {FieldType, IRulePart, RuleOperator} from "./rule-part.interface";
 import { HPacketField, RuleNode } from "core";
 import { ValueRulePart } from "./value-rule-part";
 import { SelectOption } from "../../hyt-select/hyt-select.component";
@@ -6,7 +6,7 @@ import { Validators } from "@angular/forms";
 import { operationNameLabels } from "./operations.utils";
 
 export class ConditionRulePart implements IRulePart {
-  fieldType: "select" | "text" = 'select';
+  fieldType: FieldType = 'select';
   label = $localize`:@@HYT_condition_rule_part_label:Condition`;
   validators = [ Validators.required ];
 
@@ -32,7 +32,7 @@ export class ConditionRulePart implements IRulePart {
         fieldPartsMap.set(pc.operator, new ValueRulePart(this.hPacketFieldType));
       }
     });
-    
+
     return fieldPartsMap;
   }
 
