@@ -1,5 +1,5 @@
 import { Component, Injector } from '@angular/core';
-import { DataChannel, DataPacketFilter, Logger, LoggerService, PacketData } from 'core';
+import { DataChannel, DataPacketFilter, HPacketField, Logger, LoggerService, PacketData } from 'core';
 import { BaseWidgetComponent } from '../../base/base-widget/base-widget.component';
 import { WidgetAction } from '../../base/base-widget/model/widget.model';
 
@@ -59,7 +59,7 @@ export class SensorValueComponent extends BaseWidgetComponent {
       +this.widget.id,
       [dataPacketFilter]
     );
-    if(this.widget.config.fieldTypes[hPacketFieldId]) this.dataChannel.addTimestampFieldToFormat([this.sensorField])
+    if(this.widget.config.fieldTypes[hPacketFieldId] == HPacketField.TypeEnum.TIMESTAMP) this.dataChannel.addTimestampFieldToFormat([this.sensorField])
     this.dataSubscription = this.dataChannel.subject.subscribe(res => {
       this.computePacketData(res.data);
     });
