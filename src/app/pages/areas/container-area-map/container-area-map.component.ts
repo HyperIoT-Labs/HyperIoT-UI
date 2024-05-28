@@ -223,7 +223,6 @@ export class ContainerAreaMapComponent implements OnInit, OnDestroy {
    */
   onTreeNodeClick(node) {
     this.logger.debug('onTreeNodeClick start', node);
-    this.loadArea(node.data.item);
     if(node.data.item.id !== this.areaId){
       this.router.navigate(['areas', this.projectId, node.data.item.id])
         .then(() => {
