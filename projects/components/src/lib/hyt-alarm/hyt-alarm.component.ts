@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, Inject, LOCALE_ID } from "@angular/core";
+import { Component, Input, Output, EventEmitter, Inject, LOCALE_ID, ChangeDetectorRef, OnInit, AfterViewChecked } from "@angular/core";
 import { HytAlarm, Logger, LoggerService } from "core";
 import * as moment_ from 'moment';
 const moment = moment_;
@@ -40,10 +40,14 @@ export class HytAlarmComponent {
   @Output() btnClick = new EventEmitter<HytAlarm.LiveAlarm>();
 
 
-  constructor(loggerService: LoggerService, @Inject(LOCALE_ID) locale: string) {
+  constructor(loggerService: LoggerService, @Inject(LOCALE_ID) private locale: string, private cdr: ChangeDetectorRef) {
     this.logger = new Logger(loggerService);
     this.logger.registerClass("HytAlarmComponent");
-    moment.locale(locale || 'en');
+    /** Using setTimeout for avoid the ExpressionChangedAfterItHasBeenCheckedError */
+    setTimeout(()=>{
+      moment.locale(this.locale || 'en');
+      this.cdr.detectChanges();
+    }, 0)
   }
 
   /**

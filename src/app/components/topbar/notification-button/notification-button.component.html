@@ -1,6 +1,12 @@
-<button class="event-bell" mat-button (click)="changeEventNotificationState()">
-    <div id="event-notification-btn">
+<button 
+    mat-button 
+    class="event-bell" 
+    (click)="showPanel($event)"
+    [matTooltip]="tooltipStatus"
+    matTooltipPosition="below"
+>
+    <div class="notification-count" *ngIf="eventNotificationIsOn">{{ notificationCount }}</div>
+    <div id="event-notification-btn" [class.off-notification]="!eventNotificationIsOn">
         <span class="hyt-icon icon-hyt_notification"></span>
-        <span class="button-label">{{(eventNotificationIsOn)?'On':'Off'}}</span>
     </div>
 </button>

@@ -78,7 +78,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
     loggerService: LoggerService
   ) {
     this.logger = new Logger(loggerService);
-    this.logger.registerClass("HytChatbotComponent");
+    this.logger.registerClass("ProjectsComponent");
   }
 
   /**
