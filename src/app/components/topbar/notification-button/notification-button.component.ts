@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DialogRef, OverlayService } from 'components';
 import { AlarmWrapperService, Logger, LoggerService } from 'core';
 import { NotificationDialogComponent } from '../../dialogs/notification-dialog/notification-dialog.component';
@@ -8,7 +8,7 @@ import { NotificationDialogComponent } from '../../dialogs/notification-dialog/n
   templateUrl: './notification-button.component.html',
   styleUrls: ['./notification-button.component.scss'],
 })
-export class NotificationButtonComponent {
+export class NotificationButtonComponent implements OnInit{
   /** Notification active get from alarmWrapperService */
   eventNotificationIsOn : boolean;
   /** Overlay object valorized only when panel is open */
@@ -23,15 +23,11 @@ export class NotificationButtonComponent {
   ) {
     this.logger = new Logger(loggerService);
     this.logger.registerClass("NotificationButtonComponent");
-    this.eventNotificationIsOn = alarmWrapper.eventNotificationState.getValue();
   }
-
-  /**
-   * Set off the notification is active OR viceversa
-   */
-  changeEventNotificationState() {
-    this.eventNotificationIsOn = !this.eventNotificationIsOn;
-    this.alarmWrapper.eventNotificationState.next(this.eventNotificationIsOn);
+  
+  ngOnInit(): void {
+    this.eventNotificationIsOn = this.alarmWrapper.eventNotificationState.getValue();
+    this.alarmWrapper.eventNotificationState.subscribe((res)=> this.eventNotificationIsOn = res);
   }
 
   /**
@@ -39,11 +35,17 @@ export class NotificationButtonComponent {
    */
   showPanel(event: MouseEvent){
     this.logger.info("Notification overlay opening");
-    if (this.notificationPanel) this.notificationPanel.close();
-    this.notificationPanel = this.overlay.open(NotificationDialogComponent, {
-      attachTarget: event.target,
-      hideBackdrop: true,
-    }).dialogRef;
+    if (this.notificationPanel) {
+      // if already open, i close it
+      this.notificationPanel.close();
+      this.notificationPanel = null;
+    }else{
+      // open notification panel
+      this.notificationPanel = this.overlay.open(NotificationDialogComponent, {
+        attachTarget: event.target,
+        hideBackdrop: true,
+      }).dialogRef;
+    }
   }
 
   /**
@@ -58,5 +60,13 @@ export class NotificationButtonComponent {
    */
   get notificationCount(){
     return this.alarmWrapper.alarmListArray.length;
+  }
+
+  /**
+   * Display the number of notification active if the notificationIsOn, if higher than 99, it shows 99+
+   */
+  get notificationCountLabel(){
+    const count = this.notificationCount;
+    return count > 99 ? "99+" : count;
   }
 }

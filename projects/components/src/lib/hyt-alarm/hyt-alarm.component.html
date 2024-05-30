@@ -1,8 +1,8 @@
-<div class="hyt-alarm-container">
+<div class="hyt-alarm-container hyt-alarm-container-{{notificationMode && 'notification-mode'}}">
   <div class="alarm-details">
-    <h3>{{ alarm.event.alarmName | uppercase }}</h3>
+    <h3 [title]="alarm.event.alarmName">{{ alarm.event.alarmName | uppercase }}</h3>
     <!-- date -->
-    <div class="alarm-detail bold-detail">
+    <div class="alarm-detail bold-detail" *ngIf="!notificationMode">
       <svg class="alarm-icon" width="20" height="20" viewBox="0 0 37 37" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M18.0877 0C8.13945 0 0 8.13945 0 18.0877C0 28.0359 8.13945 36.1753 18.0877 36.1753C28.0359 36.1753 36.1753 28.0359 36.1753 18.0877C36.1753 8.13945 28.0359 0 18.0877 0ZM18.0877 4.52192C25.5941 4.52192 31.6534 10.5813 31.6534 18.0877C31.6534 25.5941 25.5941 31.6534 18.0877 31.6534C10.5813 31.6534 4.52192 25.5941 4.52192 18.0877C4.52192 10.5813 10.5813 4.52192 18.0877 4.52192ZM15.8267 9.04383V19.0825L16.5502 19.6703L18.8112 21.9313L20.3486 23.6496L23.6044 20.3938L21.8861 18.8564L20.3486 17.3189V9.13427H15.8267V9.04383Z" fill="currentColor"/>
       </svg>            
@@ -33,7 +33,7 @@
     >
       {{alarmSeverityLabel}}
     </div>
-    <div class="alarm-button">
+    <div class="alarm-button" *ngIf="!notificationMode">
       <hyt-button
         color="hyt-square-btn"
         (clickFn)="onClick(btnClicked.UPDATE)"

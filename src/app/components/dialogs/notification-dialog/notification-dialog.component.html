@@ -13,11 +13,37 @@
             </svg>
         </div>
     </div>
+    
+    <div id="notification-scroll-container">
+        <div id="notification-list">
+            <div id="no-notification" *ngIf="alarmListArray.length == 0; else notificationList">
+                <hyt-no-data width="150" height="150"></hyt-no-data>
+                <h3 class="alarm-title" i18n="@@HYT_alarm_no_fired">No alarms fired</h3>  
+            </div>
+            <ng-template #notificationList>
+                <hyt-alarm 
+                    *ngFor="let alarm of alarmListArray" 
+                    [alarm]="alarm"
+                    [class.alarm-out]="alarmListToRemove.has(alarm.event.alarmId)"
+                    [notificationMode]="true"
+                >
+                </hyt-alarm>
+            </ng-template>
+        </div>
+    </div>
 
-    <div id="notification-list">
-        <div id="no-notification">
-            <hyt-no-data width="150" height="150"></hyt-no-data>
-            <h3 class="alarm-title" i18n="@@HYT_alarm_no_fired">No alarms fired</h3>  
+    <div id="notification-footer">
+        <span class="hyt-icon icon-hyt_notification" [class.off-notification]="!eventNotificationIsOn"></span>
+        <span>NOTIFICATIONS</span>
+        <div class="simulator-switch-container">
+            <label class="simulator-switch">
+                <input 
+                    type="checkbox"
+                    (change)="changeEventNotificationState()"
+                    [checked]="eventNotificationIsOn"
+                >
+                <span class="slider round"></span>
+            </label>
         </div>
     </div>
 </div>

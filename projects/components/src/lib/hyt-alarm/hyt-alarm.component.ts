@@ -35,6 +35,10 @@ export class HytAlarmComponent {
    */
   @Input() dateFormat: string = "DD/MM/YYYY HH:mm:ss.SSS";
   /**
+   * @property {boolean} notificationMode - remove button, emit the main event on click on the element and don't print the detailed date
+   */
+  @Input() notificationMode: boolean = false;
+  /**
    * @property {EventEmitter<HytAlarmComponent>} btnClick - Emit when the primary button is clicked if valRouterLink is not passed
    */
   @Output() btnClick = new EventEmitter<HytAlarm.LiveAlarm>();

@@ -2,6 +2,8 @@ import { Injectable } from "@angular/core";
 import { RealtimeDataService } from "../../hyperiot-base/realtime-data-service/realtime-data.service";
 import { HytAlarm } from "./hyperiot-alarm.model";
 import { BehaviorSubject, Subject } from "rxjs";
+import { alarmMocked } from "./alarm";
+import { EmitAlarm } from "./alarm-to-emit";
 
 @Injectable({
   providedIn: "root",
@@ -30,6 +32,18 @@ export class AlarmWrapperService {
 
   constructor(private realtimeDataService: RealtimeDataService) {
     const SUFFIX = HytAlarm.AlarmSuffixsEnum;
+
+    // let index = 0;
+    // EmitAlarm.data.fields.event.id = index;
+    // EmitAlarm.data.fields.event.value.string = `{\"specversion\":\"1.0\",\"id\":\"${index}\",\"source\":\"http://dashboard-test.hyperiot.cloud/\",\"type\":\"SevUnderZero\",\"data\":{\"severity\": ${index % 4},\"active\":true,\"alarmName\":\"Integer Under Zero\",\"deviceName\":null,\"deviceId\":6728,\"tags\":[{\"id\":342,\"entityVersion\":1,\"entityCreateDate\":1646316178594,\"entityModifyDate\":1646316178594,\"name\":\"Temperatura Alta\",\"owner\":{\"ownerResourceName\":\"it.acsoftware.hyperiot.hproject\",\"ownerResourceId\":252,\"userId\":0,\"resourceName\":\"it.acsoftware.hyperiot.hproject\"},\"description\":\"\",\"color\":\"#f5360d\"}],\"alarmState\":\"UP\",\"packetIds\":[6729],\"ruleType\":\"ALARM_EVENT\",\"alarmId\":${index},\"ruleName\":\"SevUnderZero\",\"firePayload\":\"\\nPacket:\\n\\tInteger : 5\\n\\ttimestamp : 2024-05-30 08:29:67 +0000\\n\\n\",\"ruleId\":6732,\"fireTimestamp\":1717057796067,\"bundleContext\":null,\"actionName\":\"it.acsoftware.hyperiot.alarm.service.actions.NoAlarmAction\"}}`
+
+    // setInterval(()=>{
+    //   index++;
+    //   EmitAlarm.data.fields.event.id = index;
+    //   EmitAlarm.data.fields.event.value.string = `{\"specversion\":\"1.0\",\"id\":\"${index}\",\"source\":\"http://dashboard-test.hyperiot.cloud/\",\"type\":\"SevUnderZero\",\"data\":{\"severity\": ${index % 4},\"active\":true,\"alarmName\":\"Integer Under Zero\",\"deviceName\":null,\"deviceId\":6728,\"tags\":[{\"id\":342,\"entityVersion\":1,\"entityCreateDate\":1646316178594,\"entityModifyDate\":1646316178594,\"name\":\"Temperatura Alta\",\"owner\":{\"ownerResourceName\":\"it.acsoftware.hyperiot.hproject\",\"ownerResourceId\":252,\"userId\":0,\"resourceName\":\"it.acsoftware.hyperiot.hproject\"},\"description\":\"\",\"color\":\"#f5360d\"}],\"alarmState\":\"UP\",\"packetIds\":[6729],\"ruleType\":\"ALARM_EVENT\",\"alarmId\":${index},\"ruleName\":\"SevUnderZero\",\"firePayload\":\"\\nPacket:\\n\\tInteger : 5\\n\\ttimestamp : 2024-05-30 08:29:67 +0000\\n\\n\",\"ruleId\":6732,\"fireTimestamp\":1717057796067,\"bundleContext\":null,\"actionName\":\"it.acsoftware.hyperiot.alarm.service.actions.NoAlarmAction\"}}`
+    //   this.realtimeDataService.eventStream.next(EmitAlarm)
+    // }, 1000)
+
     this.realtimeDataService.eventStream.subscribe((p) => {
       const packet = p.data;
       const isEvent = packet.name.endsWith(SUFFIX[SUFFIX._event]);

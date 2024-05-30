@@ -81,4 +81,41 @@ $primary: #0956b6;
             font-size: .8em;
         }
     }
+
+    &.hyt-alarm-container-notification-mode{
+        position: relative;
+
+        .alarm-details{
+            padding-left: 1em;
+
+            h3{
+                padding: 0;
+                text-align: start;
+                padding-right: 120px;
+                overflow: hidden;
+                display: -webkit-box;
+                line-clamp: 2;
+                word-wrap: break-word;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                 cursor: help;
+            }
+        }
+        
+        .alarm-action{
+            position: absolute;
+            right: .5em;
+            top: .9em;
+            width: 100px;
+            padding: 0;
+
+            .alarm-severity{
+                min-width: 100%;
+                font-size: 1em;
+                height: 28px;
+            }
+        }
+        
+        
+    }
 }
