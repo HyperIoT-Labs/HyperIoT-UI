@@ -2344,10 +2344,12 @@
         <target>Notifiche INATTIVE </target>
       </trans-unit>
       <trans-unit id="HYT_notification_list" datatype="html">
-        <source>Lista notifiche</source>
+        <source>Notification list</source>
+        <target>Lista notifiche</target>
       </trans-unit>
       <trans-unit id="HYT_notifications" datatype="html">
-        <source>NOTIFICHE</source>
+        <source>NOTIFICATIONS</source>
+        <target>NOTIFICHE</target>
       </trans-unit>
     </body>
   </file>
