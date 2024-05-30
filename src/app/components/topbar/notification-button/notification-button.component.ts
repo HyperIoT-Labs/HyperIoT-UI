@@ -38,13 +38,16 @@ export class NotificationButtonComponent implements OnInit{
     if (this.notificationPanel) {
       // if already open, i close it
       this.notificationPanel.close();
-      this.notificationPanel = null;
     }else{
       // open notification panel
       this.notificationPanel = this.overlay.open(NotificationDialogComponent, {
         attachTarget: event.target,
         hideBackdrop: true,
-      }).dialogRef;
+        width: "350px"
+      }).dialogRef
+      this.notificationPanel.afterClosed().subscribe(()=>{
+        this.notificationPanel = null;
+      });
     }
   }
 

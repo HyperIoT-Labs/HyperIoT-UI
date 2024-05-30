@@ -24,7 +24,7 @@
                 <hyt-alarm 
                     *ngFor="let alarm of alarmListArray" 
                     [alarm]="alarm"
-                    [class.alarm-out]="alarmListToRemove.has(alarm.event.alarmId)"
+                    [class.animate-out]="alarmListToRemove.has(alarm.event.alarmId)"
                     [notificationMode]="true"
                 >
                 </hyt-alarm>

@@ -156,7 +156,7 @@ export class AppComponent implements OnInit, OnDestroy {
                 )
                 .setAttribute(
                   "style",
-                  `background-color: ${alarm.color.background}; color: ${alarm.color.text};`
+                  `background-color: ${alarm.color.background}; color: ${alarm.color.text}; transform: translateY(64px);`
                 );
             },
           });
