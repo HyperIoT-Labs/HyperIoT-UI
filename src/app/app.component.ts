@@ -27,7 +27,7 @@ import { environment } from "../environments/environment";
 })
 export class AppComponent implements OnInit, OnDestroy {
   public environment = environment;
-  eventNotificationIsOn: boolean = true;
+  eventNotificationIsOn: boolean;
 
   private toastMessage = $localize`:@@HYT_dashboard_event_fired:The event has been fired`;
   projectIds: number[];
@@ -48,7 +48,6 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(
     private activatedRoute: ActivatedRoute,
     private hprojectsService: HprojectsService,
-    private configService: DashboardConfigService,
     private realtimeDataService: RealtimeDataService,
     private toastr: ToastrService,
     private loggerService: LoggerService,
@@ -58,11 +57,10 @@ export class AppComponent implements OnInit, OnDestroy {
     // Init Logger
     this.logger = new Logger(this.loggerService);
     this.logger.registerClass("AppComponent");
+    this.eventNotificationIsOn = alarmWrapper.eventNotificationState.getValue();
   }
 
   ngOnInit() {
-    console.log(this.alarmWrapper);
-
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((urlObj: NavigationEnd) => {
@@ -92,19 +90,24 @@ export class AppComponent implements OnInit, OnDestroy {
         this.realtimeDataService.connect(this.projectIds);
       });
 
-    this.configService.eventNotificationState
+    this.alarmWrapper.eventNotificationState
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((res) => {
         this.eventNotificationIsOn = res;
-        if (this.eventNotificationIsOn) {
-          this.subscribeToNotification();
-        } else {
-          this.logger.info("Subscribe to notifications OFF");
-          this.alarmSubscription.unsubscribe();
-        }
+        this.manageNotificationSubscription();
       });
 
-    this.subscribeToNotification();
+    this.manageNotificationSubscription();
+  }
+
+  manageNotificationSubscription(){
+    if (this.eventNotificationIsOn) {
+      this.logger.info("Subscribe to notifications ON");
+      this.subscribeToNotification();
+    } else {
+      this.logger.info("Subscribe to notifications OFF");
+      if(this.alarmSubscription) this.alarmSubscription.unsubscribe();
+    }
   }
 
   @HostListener("wheel", ["$event"])
@@ -123,6 +126,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   subscribeToNotification() {
     this.logger.info("Subscribe to notifications ON");
+    if(this.alarmSubscription) this.alarmSubscription.unsubscribe();
     this.alarmSubscription = this.alarmWrapper.alarmSubject
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((alarm) => {
@@ -152,7 +156,7 @@ export class AppComponent implements OnInit, OnDestroy {
                 )
                 .setAttribute(
                   "style",
-                  `background-color: ${alarm.color.background}; color: ${alarm.color.text};`
+                  `background-color: ${alarm.color.background}; color: ${alarm.color.text}; transform: translateY(64px);`
                 );
             },
           });

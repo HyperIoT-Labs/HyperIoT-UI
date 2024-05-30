@@ -1743,6 +1743,12 @@
       <trans-unit id="HYT_alarm_showing_text_of" datatype="html">
         <source> of </source>
       </trans-unit>
+      <trans-unit id="HYT_notification_active" datatype="html">
+        <source>Notification ACTIVE</source>
+      </trans-unit>
+      <trans-unit id="HYT_notification_inactive" datatype="html">
+        <source>Notification INACTIVE</source>
+      </trans-unit>
       
       
       <trans-unit id="HYT_conditions" datatype="html">

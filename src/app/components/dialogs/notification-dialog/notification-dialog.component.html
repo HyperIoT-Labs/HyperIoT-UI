@@ -1,0 +1,49 @@
+<div id="container-notification-list" class="hyt-overlay-container">
+    <div class="header-overlay">
+        <div 
+            class="title-badge overlay-badge" 
+            i18n="@@HYT_notification_list" 
+        >Notification list</div>
+        <div
+            class="close-overlay overlay-badge"
+            (click)="close()"
+        >
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
+            </svg>
+        </div>
+    </div>
+    
+    <div id="notification-scroll-container">
+        <div id="notification-list">
+            <div id="no-notification" *ngIf="alarmListArray.length == 0; else notificationList">
+                <hyt-no-data width="150" height="150"></hyt-no-data>
+                <h3 class="alarm-title" i18n="@@HYT_alarm_no_fired">No alarms fired</h3>  
+            </div>
+            <ng-template #notificationList>
+                <hyt-alarm 
+                    *ngFor="let alarm of alarmListArray" 
+                    [alarm]="alarm"
+                    [class.animate-out]="alarmListToRemove.has(alarm.event.alarmId)"
+                    [notificationMode]="true"
+                >
+                </hyt-alarm>
+            </ng-template>
+        </div>
+    </div>
+
+    <div id="notification-footer">
+        <span class="hyt-icon icon-hyt_notification" [class.off-notification]="!eventNotificationIsOn"></span>
+        <span>NOTIFICATIONS</span>
+        <div class="simulator-switch-container">
+            <label class="simulator-switch">
+                <input 
+                    type="checkbox"
+                    (change)="changeEventNotificationState()"
+                    [checked]="eventNotificationIsOn"
+                >
+                <span class="slider round"></span>
+            </label>
+        </div>
+    </div>
+</div>

@@ -1,9 +1,8 @@
-<div id="container-share-projects">
-    <div id="header-overlay">
-        <div id="title-badge" class="overlay-badge overlay-badge-{{this.overlayState}}" i18n="@@HYT_projects_shared_title_{{overlayState}}" [attr.deCristoTag]="'@@HYT_projects_shared_title_'+overlayState" [innerHTML]="title"></div>
+<div id="container-share-projects" class="hyt-overlay-container">
+    <div class="header-overlay">
+        <div class="title-badge overlay-badge overlay-badge-{{this.overlayState}}" i18n="@@HYT_projects_shared_title_{{overlayState}}" [innerHTML]="title"></div>
         <div
-            id="close-overlay"
-            class="overlay-badge"
+            class="close-overlay overlay-badge"
             (click)="close()"
         >
             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
