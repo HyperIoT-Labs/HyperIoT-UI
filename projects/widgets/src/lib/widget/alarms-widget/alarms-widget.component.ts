@@ -9,15 +9,7 @@ import { Option } from 'components';
   styleUrls: ['../../../../../../src/assets/widgets/styles/widget-commons.css', './alarms-widget.component.scss']
 })
 export class AlarmsWidgetComponent extends BaseWidgetComponent {
-  protected logger: Logger;
-  /**
-   * Map contain all the active alarm
-   */
-  alarmsList: Map<number, HytAlarm.LiveAlarm> = new Map();
-  /**
-   * Map contain all the alarm that need to be animated out and after removed
-   */
-  alarmListToRemove: Map<number, boolean> = new Map();
+  protected logger: Logger;  
   /**
    * Show form for filter the alarm
    */
@@ -58,30 +50,18 @@ export class AlarmsWidgetComponent extends BaseWidgetComponent {
 
   configure() {
     this.isConfigured = true;
-    //LIVE ALARM
-    this.alarmWrapper.alarmSubject
-      .subscribe((alarm) => {
-        if(alarm.isEvent) return;
-        this.logger.info("EMITTED ALARM ON DASHBOARD", alarm)
-        //NOT FILTER FOR PROJECT, NEED TO CHANGE REALTIME DATA SERVICE
-        if(alarm.event.alarmState == "UP"){
-          this.alarmsList.set(alarm.event.alarmId, alarm);
-          
-        }else{
-          // ANIMATE ALARM USING ALARMSTATE AND AFTER D
-          this.alarmListToRemove.set(alarm.event.alarmId, true);
-          setTimeout(()=>{
-            this.alarmsList.delete(alarm.event.alarmId);
-            this.alarmListToRemove.delete(alarm.event.alarmId);
-          }, 1000)
-        }
-      })
   }
-  /**
-   * Return alarmList map as array
-   */
+
   get alarmListArray() : HytAlarm.LiveAlarm[]{
-    return Array.from(this.alarmsList.values());
+    return this.alarmWrapper.alarmListArray;
+  }
+
+  get alarmsList(){
+    return this.alarmWrapper.alarmsList;
+  }
+
+  get alarmListToRemove(){
+    return this.alarmWrapper.alarmListToRemove;
   }
   /**
    * If the user is filtering return the alarmList map as array filter, 

@@ -2335,6 +2335,22 @@
         <source>Timestamp</source>
         <target>Timestamp</target>
       </trans-unit>
+      <trans-unit id="HYT_notification_active" datatype="html">
+        <source>Notification ACTIVE</source>
+        <target>Notifiche ATTIVE </target>
+      </trans-unit>
+      <trans-unit id="HYT_notification_inactive" datatype="html">
+        <source>Notification INACTIVE</source>
+        <target>Notifiche INATTIVE </target>
+      </trans-unit>
+      <trans-unit id="HYT_notification_list" datatype="html">
+        <source>Notification list</source>
+        <target>Lista notifiche</target>
+      </trans-unit>
+      <trans-unit id="HYT_notifications" datatype="html">
+        <source>NOTIFICATIONS</source>
+        <target>NOTIFICHE</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -23,8 +23,6 @@ export class DashboardConfigService {
     widgetCategoryListUrl = 'assets/data/widget-category-list.json';
     widgetListUrl = 'assets/data/widget-list.json';
 
-    public eventNotificationState: Subject<boolean> = new Subject<boolean>();
-
     constructor(
         private dashboardService: DashboardsService,
         private dashboardWidgetService: DashboardwidgetsService,

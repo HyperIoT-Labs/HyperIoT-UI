@@ -1,0 +1,29 @@
+.notification-count {
+    position: absolute;
+    top: 0px;
+    right: 12px;
+    height: 16px;
+    width: 16px;
+    background: #F35746;
+    border-radius: 50%;
+    color: #fff;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.off-notification {
+    position: relative;
+
+    &:before {
+        content: "";
+        height: 1px;
+        width: 100%;
+        transform: rotate(330deg);
+        position: absolute;
+        top: 50%;
+        left: 0;
+        background: #0956b6;
+    }
+}

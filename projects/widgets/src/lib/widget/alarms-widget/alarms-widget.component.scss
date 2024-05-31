@@ -29,10 +29,6 @@
   overflow-y: auto;
   height: 100%;
 
-  .alarm-out {
-    animation: blinkAndOut 1s cubic-bezier(0.755, 0.05, 0.855, 0.06)
-      both;
-  }
   .alarm-filter-resume{
     display: flex;
     align-items: end;
@@ -79,28 +75,5 @@
   .filtering-no-data h3{
     font-weight: 600;
     margin-bottom: 0;
-  }
-}
-
-@keyframes blinkAndOut {
-  0% {
-    opacity: 1;
-  }
-  15% {
-    opacity: 0;
-  }
-  25% {
-    opacity: 1;
-  }
-  35% {
-    opacity: 0;
-  }
-  50% {
-    transform: translateX(0);
-    opacity: 1;
-  }
-  100% {
-    transform: translateX(-300px);
-    opacity: 0;
   }
 }

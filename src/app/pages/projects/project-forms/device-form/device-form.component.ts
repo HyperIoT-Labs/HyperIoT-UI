@@ -23,10 +23,6 @@ export class DeviceFormComponent extends ProjectFormEntity implements AfterViewI
   changePasswordForm: FormGroup;
   devicePasswordChangeEnabled: boolean = false;
   typeApplication: boolean = true;
-  /**
-   * This variable is used as a flag to make a success message appear when changing password goes well.
-   */
-   passwordChanged = false;
 
    /**
     * This variable is used as a flag to make an alert appear when an error occurs.
@@ -162,7 +158,6 @@ export class DeviceFormComponent extends ProjectFormEntity implements AfterViewI
   loadEmpty() {
     this.form.reset();
     this.devicePasswordChangeEnabled = false;
-    this.passwordChanged = false;
     this.entity = { ...this.entitiesService.device.emptyModel };
     this.edit();
   }
@@ -192,11 +187,13 @@ export class DeviceFormComponent extends ProjectFormEntity implements AfterViewI
 
   enablePasswordChange(event){
     this.devicePasswordChangeEnabled = true;
+    this.changePasswordForm = this.fb.group({});
+    this.cdr.detectChanges();
   }
-
+  
   cancelPasswordChange(event){
-    this.devicePasswordChangeEnabled = false;
     this.changePasswordForm.reset();
+    this.devicePasswordChangeEnabled = false;
   }
 
   /**
@@ -211,12 +208,10 @@ export class DeviceFormComponent extends ProjectFormEntity implements AfterViewI
 
     this.hDeviceService.updateHDevicePassword(this.entity.id,oldPassword,newPassword,confirmPassword).subscribe(
       res => {
-        this.passwordChanged = true;
         this.cancelPasswordChange(null);
       },
       err => {
         this.setErrors(this.httperrorHandler.handle(err));
-        this.passwordChanged = false;
         this.wentWrong = true;
         this.changePasswordForm.reset();
       }

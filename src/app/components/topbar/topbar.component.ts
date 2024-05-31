@@ -1,17 +1,19 @@
-import { Component, OnInit, ViewEncapsulation, HostListener, Input } from '@angular/core';
-import { ToggleSidebarService } from 'src/app/services/toggleSidebar/toggle-sidebar.service';
-import { environment } from 'src/environments/environment';
-import { DashboardConfigService } from 'widgets';
+import {
+  Component,
+  OnInit,
+  ViewEncapsulation,
+  HostListener,
+} from "@angular/core";
+import { ToggleSidebarService } from "src/app/services/toggleSidebar/toggle-sidebar.service";
+import { environment } from "src/environments/environment";
 
 @Component({
-  selector: 'hyt-topbar',
-  templateUrl: './topbar.component.html',
-  styleUrls: ['./topbar.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  selector: "hyt-topbar",
+  templateUrl: "./topbar.component.html",
+  styleUrls: ["./topbar.component.scss"],
+  encapsulation: ViewEncapsulation.None,
 })
 export class TopbarComponent implements OnInit {
-  eventNotificationIsOn = true;
-  
   feVersion = environment.version;
 
   public winInnerWidth: any;
@@ -20,47 +22,36 @@ export class TopbarComponent implements OnInit {
   mobileBreakPoints = {
     md: 991,
     sm: 767,
-    xs: 575
+    xs: 575,
   };
 
-  constructor(
-    private dashboardConfigService: DashboardConfigService,
-    private toggleSidebarService: ToggleSidebarService
-  ) { }
+  constructor(private toggleSidebarService: ToggleSidebarService) {}
 
-  @HostListener('window:resize', ['$event'])
-
+  @HostListener("window:resize", ["$event"])
   onResize(event) {
-
     this.winInnerWidth = event.target.innerWidth;
 
-    if (this.winInnerWidth > this.mobileBreakPoints.md && this.isShow === true) {
-
+    if (
+      this.winInnerWidth > this.mobileBreakPoints.md &&
+      this.isShow === true
+    ) {
       this.isShow = false;
-
     }
-
   }
 
   ngOnInit(): void {
-
     this.winInnerWidth = window.innerWidth;
 
-    if (this.winInnerWidth > this.mobileBreakPoints.md && this.isShow === true) {
-
+    if (
+      this.winInnerWidth > this.mobileBreakPoints.md &&
+      this.isShow === true
+    ) {
       this.isShow = false;
-
     }
-
   }
 
   toggleMenu() {
     this.toggleSidebarService.changeSidebarStatus();
     this.isShow = !this.isShow;
-  }
-
-  changeEventNotificationState() {
-    this.eventNotificationIsOn = !this.eventNotificationIsOn;
-    this.dashboardConfigService.eventNotificationState.next(this.eventNotificationIsOn);
   }
 }
