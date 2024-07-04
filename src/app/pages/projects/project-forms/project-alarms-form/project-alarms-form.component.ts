@@ -387,7 +387,7 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity implements OnI
 
     // Case 1: new alarm
     if (this.newAlarm === true) {
-      this.toastr.info($localize`:@@HYT_remember_changes:Remember to save the alarm to maintain the changes`, $localize`:@@HYT_severity_saved:Severity saved!`, { toastClass: 'alarm-toastr alarm-info' });
+      this.toastr.info($localize`:@@HYT_remember_changes:Remember to save the alarm to maintain the changes`, $localize`:@@HYT_severity_saved:Severity saved!`, { toastClass: 'alarm-toastr alarm-info', disableTimeOut: false });
       // Update eventListMap for all the 5 possibles scenario:
       if (this.indexMap != undefined && this.selectedId > 0) this.eventListMap.get(this.selectedId)[this.indexMap] = addEditEvent;
       else if (!this.indexMap && this.selectedId > 0) this.eventListMap.get(this.selectedId).push(addEditEvent);
@@ -395,6 +395,10 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity implements OnI
       else if (!this.indexMap && this.selectedId == 0) { this.eventListMap.set(-1, [addEditEvent]); this.selectedId = -1; }
       else this.eventListMap.get(-1).push(addEditEvent);
       this.setEventCounter();
+      this.formEvent.reset();
+      if (this.addAnother) {
+        this.addEvent(true);
+      } else this.addEventMode = false;
     }
 
     // Case 2: old alarm, new event
@@ -430,6 +434,10 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity implements OnI
 
             if (this.form.touched === true) this.toastr.info($localize`:@@HYT_alarm_still_changes:You still have to save the alarm changes`,
               $localize`:@@HYT_severity_remember:Remember!`, { toastClass: 'alarm-toastr alarm-info' });
+            this.formEvent.reset();
+            if (this.addAnother) {
+              this.addEvent(true);
+            } else this.addEventMode = false;
           },
           error: (err) => {
             this.logger.error('Error while saving event', err);
