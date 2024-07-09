@@ -67,7 +67,12 @@
         <hyt-pw-packet-select #fieldPacketSelect [hDevices]="hDevices" [hPackets]="hPackets"
           (currentPacket)="fieldPacketChanged($event)">-
         </hyt-pw-packet-select>
-        <hyt-packet-fields-form #fieldsForm></hyt-packet-fields-form>
+        <div [ngClass]="{'hide-element': fieldPacketId === undefined}">
+          <hyt-packet-fields-form #fieldsForm></hyt-packet-fields-form>
+        </div>
+        <div class="box-info" [ngClass]="{'show-element': fieldPacketId === undefined, 'hide-element': fieldPacketId !== undefined}">
+          <p i18n="@@HYT_field_box_info">Selection of the package and device is required!</p>
+        </div>
       </ng-template>
 
       <ng-template #enrichmentTemplate>

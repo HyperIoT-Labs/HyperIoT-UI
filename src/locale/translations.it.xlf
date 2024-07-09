@@ -2335,6 +2335,10 @@
         <source>Timestamp</source>
         <target>Timestamp</target>
       </trans-unit>
+      <trans-unit id="HYT_field_box_info" datatype="html">
+        <source>Selection of the package and device is required!</source>
+        <target>La selezione del pacchetto e del dispositivo è necessaria!</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
