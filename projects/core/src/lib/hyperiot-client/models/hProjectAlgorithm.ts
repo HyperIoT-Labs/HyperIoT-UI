@@ -15,8 +15,6 @@ export interface HProjectAlgorithm {
     entityVersion: number;
     readonly entityCreateDate?: Date;
     readonly entityModifyDate?: Date;
-    categoryIds?: Array<number>;
-    tagIds?: Array<number>;
     name?: string;
     project?: HProject;
     algorithm?: Algorithm;

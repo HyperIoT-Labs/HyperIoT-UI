@@ -14,6 +14,7 @@
 import { Inject, Injectable, Optional }                      from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams,
          HttpResponse, HttpEvent }                           from '@angular/common/http';
+import { HttpContext }                                       from '@angular/common/http';
 import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
 import { Observable }                                        from 'rxjs';
@@ -62,10 +63,10 @@ export class DashboardsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public checkModuleWorking(observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public checkModuleWorking(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public checkModuleWorking(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public checkModuleWorking(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public checkModuleWorking(observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public checkModuleWorking(observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public checkModuleWorking(observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public checkModuleWorking(observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         let headers = this.defaultHeaders;
 
@@ -87,6 +88,7 @@ export class DashboardsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -99,10 +101,10 @@ export class DashboardsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deleteDashboard(id: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public deleteDashboard(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public deleteDashboard(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public deleteDashboard(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public deleteDashboard(id: number, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public deleteDashboard(id: number, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public deleteDashboard(id: number, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public deleteDashboard(id: number, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling deleteDashboard.');
@@ -134,6 +136,7 @@ export class DashboardsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -145,10 +148,10 @@ export class DashboardsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public findAllDashboard(observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public findAllDashboard(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public findAllDashboard(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public findAllDashboard(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public findAllDashboard(observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public findAllDashboard(observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public findAllDashboard(observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public findAllDashboard(observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         let headers = this.defaultHeaders;
 
@@ -175,6 +178,7 @@ export class DashboardsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -188,10 +192,10 @@ export class DashboardsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public findAllDashboardPaginated(delta?: number, page?: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public findAllDashboardPaginated(delta?: number, page?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public findAllDashboardPaginated(delta?: number, page?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public findAllDashboardPaginated(delta?: number, page?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public findAllDashboardPaginated(delta?: number, page?: number, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public findAllDashboardPaginated(delta?: number, page?: number, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public findAllDashboardPaginated(delta?: number, page?: number, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public findAllDashboardPaginated(delta?: number, page?: number, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
 
 
@@ -229,6 +233,7 @@ export class DashboardsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -241,10 +246,10 @@ export class DashboardsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public findAreaOfflineDashboard(areaId: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public findAreaOfflineDashboard(areaId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public findAreaOfflineDashboard(areaId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public findAreaOfflineDashboard(areaId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public findAreaOfflineDashboard(areaId: number, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public findAreaOfflineDashboard(areaId: number, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public findAreaOfflineDashboard(areaId: number, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public findAreaOfflineDashboard(areaId: number, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (areaId === null || areaId === undefined) {
             throw new Error('Required parameter areaId was null or undefined when calling findAreaOfflineDashboard.');
@@ -275,6 +280,7 @@ export class DashboardsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -287,10 +293,10 @@ export class DashboardsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public findAreaRealtimeDashboard(areaId: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public findAreaRealtimeDashboard(areaId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public findAreaRealtimeDashboard(areaId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public findAreaRealtimeDashboard(areaId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public findAreaRealtimeDashboard(areaId: number, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public findAreaRealtimeDashboard(areaId: number, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public findAreaRealtimeDashboard(areaId: number, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public findAreaRealtimeDashboard(areaId: number, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (areaId === null || areaId === undefined) {
             throw new Error('Required parameter areaId was null or undefined when calling findAreaRealtimeDashboard.');
@@ -321,6 +327,7 @@ export class DashboardsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -333,10 +340,10 @@ export class DashboardsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public findDashboard(id: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public findDashboard(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public findDashboard(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public findDashboard(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public findDashboard(id: number, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public findDashboard(id: number, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public findDashboard(id: number, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public findDashboard(id: number, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling findDashboard.');
@@ -367,6 +374,7 @@ export class DashboardsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -379,10 +387,10 @@ export class DashboardsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public findHProjectOfflineDashboard(projectId: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public findHProjectOfflineDashboard(projectId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public findHProjectOfflineDashboard(projectId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public findHProjectOfflineDashboard(projectId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public findHProjectOfflineDashboard(projectId: number, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public findHProjectOfflineDashboard(projectId: number, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public findHProjectOfflineDashboard(projectId: number, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public findHProjectOfflineDashboard(projectId: number, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (projectId === null || projectId === undefined) {
             throw new Error('Required parameter projectId was null or undefined when calling findHProjectOfflineDashboard.');
@@ -413,6 +421,7 @@ export class DashboardsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -425,10 +434,10 @@ export class DashboardsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public findHProjectRealtimeDashboard(projectId: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public findHProjectRealtimeDashboard(projectId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public findHProjectRealtimeDashboard(projectId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public findHProjectRealtimeDashboard(projectId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public findHProjectRealtimeDashboard(projectId: number, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public findHProjectRealtimeDashboard(projectId: number, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public findHProjectRealtimeDashboard(projectId: number, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public findHProjectRealtimeDashboard(projectId: number, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (projectId === null || projectId === undefined) {
             throw new Error('Required parameter projectId was null or undefined when calling findHProjectRealtimeDashboard.');
@@ -459,6 +468,7 @@ export class DashboardsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -471,10 +481,10 @@ export class DashboardsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public saveDashboard(body: Dashboard, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public saveDashboard(body: Dashboard, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public saveDashboard(body: Dashboard, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public saveDashboard(body: Dashboard, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public saveDashboard(body: Dashboard, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public saveDashboard(body: Dashboard, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public saveDashboard(body: Dashboard, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public saveDashboard(body: Dashboard, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling saveDashboard.');
@@ -511,6 +521,7 @@ export class DashboardsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -523,10 +534,10 @@ export class DashboardsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public updateDashboard(body: Dashboard, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public updateDashboard(body: Dashboard, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public updateDashboard(body: Dashboard, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public updateDashboard(body: Dashboard, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public updateDashboard(body: Dashboard, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public updateDashboard(body: Dashboard, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public updateDashboard(body: Dashboard, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public updateDashboard(body: Dashboard, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling updateDashboard.');
@@ -563,6 +574,7 @@ export class DashboardsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );

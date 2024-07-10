@@ -16,8 +16,6 @@ export interface AreaDevice {
     entityVersion: number;
     readonly entityCreateDate?: Date;
     readonly entityModifyDate?: Date;
-    categoryIds?: Array<number>;
-    tagIds?: Array<number>;
     area?: Area;
     device?: HDevice;
     mapInfo?: AreaMapInfo;

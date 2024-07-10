@@ -1,7 +1,4 @@
 /**
- * hyperiot SharedEntity
- * HyperIoT SharedEntity API
- *
  * OpenAPI spec version: 2.0.0
  * Contact: users@acsoftware.it
  *
@@ -10,10 +7,8 @@
  * Do not edit the class manually.
  */
 
-export interface SharedEntity {
+
+export interface SharedEntity { 
     entityResourceName?: string;
     entityId?: number;
-    userId?: number;
-    userEmail?: string;
-    username?: string;
-  }
+}

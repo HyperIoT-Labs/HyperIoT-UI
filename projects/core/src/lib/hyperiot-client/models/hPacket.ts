@@ -15,8 +15,6 @@ export interface HPacket {
     entityVersion: number;
     readonly entityCreateDate?: Date;
     readonly entityModifyDate?: Date;
-    categoryIds?: Array<number>;
-    tagIds?: Array<number>;
     name?: string;
     type?: HPacket.TypeEnum;
     format?: HPacket.FormatEnum;

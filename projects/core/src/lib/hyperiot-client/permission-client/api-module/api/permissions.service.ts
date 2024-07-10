@@ -14,6 +14,7 @@
 import { Inject, Injectable, Optional }                      from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams,
          HttpResponse, HttpEvent }                           from '@angular/common/http';
+import { HttpContext }                                       from '@angular/common/http';
 import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
 import { Observable }                                        from 'rxjs';
@@ -63,10 +64,10 @@ export class PermissionsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deletePermission(id: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public deletePermission(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public deletePermission(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public deletePermission(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public deletePermission(id: number, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public deletePermission(id: number, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public deletePermission(id: number, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public deletePermission(id: number, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling deletePermission.');
@@ -98,6 +99,7 @@ export class PermissionsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -109,10 +111,10 @@ export class PermissionsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public findAllActions(observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public findAllActions(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public findAllActions(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public findAllActions(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public findAllActions(observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public findAllActions(observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public findAllActions(observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public findAllActions(observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         let headers = this.defaultHeaders;
 
@@ -139,6 +141,7 @@ export class PermissionsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -150,10 +153,10 @@ export class PermissionsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public findAllPermission(observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public findAllPermission(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public findAllPermission(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public findAllPermission(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public findAllPermission(observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public findAllPermission(observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public findAllPermission(observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public findAllPermission(observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         let headers = this.defaultHeaders;
 
@@ -180,6 +183,7 @@ export class PermissionsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -193,10 +197,10 @@ export class PermissionsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public findAllPermissionPaginated(delta?: number, page?: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public findAllPermissionPaginated(delta?: number, page?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public findAllPermissionPaginated(delta?: number, page?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public findAllPermissionPaginated(delta?: number, page?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public findAllPermissionPaginated(delta?: number, page?: number, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public findAllPermissionPaginated(delta?: number, page?: number, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public findAllPermissionPaginated(delta?: number, page?: number, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public findAllPermissionPaginated(delta?: number, page?: number, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
 
 
@@ -234,6 +238,7 @@ export class PermissionsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -246,10 +251,10 @@ export class PermissionsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public findPermission(id: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public findPermission(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public findPermission(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public findPermission(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public findPermission(id: number, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public findPermission(id: number, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public findPermission(id: number, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public findPermission(id: number, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling findPermission.');
@@ -280,6 +285,59 @@ export class PermissionsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * /hyperiot/permissions/map
+     * Get User Permission Map for specific resources
+     * @param body Entity names and primary keys
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getPermissionMap(body: any, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public getPermissionMap(body: any, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public getPermissionMap(body: any, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public getPermissionMap(body: any, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling getPermissionMap.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (jwt-auth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["AUTHORIZATION"]) {
+            headers = headers.set('AUTHORIZATION', this.configuration.apiKeys["AUTHORIZATION"]);
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.post<any>(`${this.basePath}/map`,
+            body,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -292,10 +350,10 @@ export class PermissionsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public savePermission(body: Permission, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public savePermission(body: Permission, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public savePermission(body: Permission, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public savePermission(body: Permission, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public savePermission(body: Permission, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public savePermission(body: Permission, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public savePermission(body: Permission, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public savePermission(body: Permission, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling savePermission.');
@@ -332,6 +390,7 @@ export class PermissionsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -343,10 +402,10 @@ export class PermissionsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public sayHi(observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public sayHi(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public sayHi(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public sayHi(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public sayHi(observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public sayHi(observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public sayHi(observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public sayHi(observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         let headers = this.defaultHeaders;
 
@@ -373,6 +432,7 @@ export class PermissionsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -385,10 +445,10 @@ export class PermissionsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public updatePermission(body: Permission, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public updatePermission(body: Permission, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public updatePermission(body: Permission, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public updatePermission(body: Permission, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public updatePermission(body: Permission, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public updatePermission(body: Permission, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public updatePermission(body: Permission, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public updatePermission(body: Permission, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling updatePermission.');
@@ -425,6 +485,7 @@ export class PermissionsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );

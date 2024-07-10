@@ -12,4 +12,5 @@ import { AlgorithmIOField } from './algorithmIOField';
 export interface AlgorithmConfig { 
     input?: Array<AlgorithmIOField>;
     output?: Array<AlgorithmIOField>;
+    customConfig?: string;
 }

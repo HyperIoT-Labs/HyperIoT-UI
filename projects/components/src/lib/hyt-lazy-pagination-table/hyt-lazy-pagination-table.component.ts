@@ -80,7 +80,7 @@ export class HytLazyPaginationTableComponent implements OnInit {
   }
 
   retrieveFile(queryData) {
-    return this.hProjectsService.scanHProject1(
+    return this.hProjectsService.scanHProject(
       queryData.projectId,
       queryData.packetId,
       queryData.fieldId,

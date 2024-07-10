@@ -6,13 +6,10 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import { RuleNode } from './ruleNode';
 
 
-export interface Role { 
-    id?: number;
-    entityVersion: number;
-    readonly entityCreateDate?: Date;
-    readonly entityModifyDate?: Date;
-    name?: string;
-    description?: string;
+export interface RootRuleNode { 
+    packetIds?: Array<number>;
+    ruleNode?: RuleNode;
 }
