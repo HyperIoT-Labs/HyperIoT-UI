@@ -5,6 +5,7 @@ import { LoggerService, Logger, HPacketFieldsHandlerService } from 'core';
 import { HPacket, HPacketField, HpacketsService, AreasService, AreaDevice, HDevice } from 'core';
 import { mimeTypeList } from './MIMETypes';
 import { FieldAliases, FieldFileMimeTypes, FieldTypes, FieldUnitConversion, FieldValuesMapList } from '../../../base/base-widget/model/widget.model';
+import {DataSimulatorSettings} from "../data-simulator-settings/data-simulator.models";
 
 @Component({
   selector: 'hyperiot-packet-select',
@@ -20,7 +21,7 @@ export class PacketSelectComponent implements OnInit {
   selectedPacketOption: number = null;
 
   dynamicLabelSelectedPacket: { [id: number]: HPacket } = {};
-  
+
   dynamicLabelFields: { [id: number]: HPacketField[] } = {};
   dynamicLabelSelectedPacketOption: { [id: number]: number } = {};
   @Input()
@@ -63,6 +64,9 @@ export class PacketSelectComponent implements OnInit {
   eventPacketFieldName: string;
   offlineTableWidgetType: string;
   private logger: Logger;
+
+  fieldRules: DataSimulatorSettings.FieldRules = {};
+  expressionIsValid: boolean = true;
 
   constructor(
     private packetService: HpacketsService,
@@ -174,6 +178,7 @@ export class PacketSelectComponent implements OnInit {
         field: this.dynamicLabelSelectedField,
         fieldOptions: this.dynamicLabelFields
       }
+      this.widget.config.fieldCustomConversions = this.fieldRules;
 
       // this.selectedPacket.fields.forEach(field => {
       //   this.widget.config.fieldTypes[field.id] = field.type;
@@ -203,6 +208,8 @@ export class PacketSelectComponent implements OnInit {
       JSON.parse(JSON.stringify(this.widget.config.fieldUnitConversions)) : {};
     this.fieldValuesMapList = this.widget.config.fieldValuesMapList ?
       JSON.parse(JSON.stringify(this.widget.config.fieldValuesMapList)) : {};
+    this.fieldRules = this.widget.config.fieldCustomConversions ?
+      JSON.parse(JSON.stringify(this.widget.config.fieldCustomConversions)) : {};
     // fetch all packets
     this.packetService
       .findAllHPacketByProjectIdAndType(this.widget.projectId, "INPUT,IO")
@@ -338,5 +345,28 @@ export class PacketSelectComponent implements OnInit {
 
   getFullFieldName(hPacketFieldId) {
     return this.hPacketFieldsHandlerService.getStringifiedSequenceFromPacket(this.selectedPacket, hPacketFieldId);
+  }
+
+  updateExpression(ev, fieldId) {
+    let expression: string = ev.target.value;
+    this.fieldRules[fieldId] = {type: 'expression', expression};
+    try {
+      for (let operator of DataSimulatorSettings.Utils
+        .expressionOperators) {
+        expression = expression.replace(
+          operator.regex,
+          operator.function
+        );
+      }
+      const result = eval(expression.replace(/\$val/g, '2'));
+      this.logger.debug('expression is valid', expression.replace(/\$val/g, '2'), result);
+      this.expressionIsValid = true;
+      this.settingsForm.controls['expression' + fieldId].setErrors(null);
+    } catch (error) {
+      this.logger.debug('expression is not valid', expression.replace(/\$val/g, '2'));
+      this.expressionIsValid = false;
+      this.settingsForm.controls['expression' + fieldId].setErrors({ 'incorrect': true });
+    }
+    this.logger.debug(this.fieldRules);
   }
 }
