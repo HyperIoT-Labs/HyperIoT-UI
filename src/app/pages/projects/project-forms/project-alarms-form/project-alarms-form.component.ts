@@ -918,9 +918,13 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity implements OnI
 
   setEventCounter() {
     console.trace("setEventCounter");
-    this.alarmCounter = this.eventListMap.get(this.selectedId).length;
-    this.form.get('alarm-counter').setValue(this.alarmCounter);
-    this.form.updateValueAndValidity();
+    if (this.eventListMap.get(this.selectedId)) {
+      this.alarmCounter = this.eventListMap.get(this.selectedId).length;
+      this.form.get('alarm-counter').setValue(this.alarmCounter);
+      this.form.updateValueAndValidity();
+    } else {
+      this.logger.debug('setEventCounter, no events found', this.eventListMap);
+    }
   }
 }
 
