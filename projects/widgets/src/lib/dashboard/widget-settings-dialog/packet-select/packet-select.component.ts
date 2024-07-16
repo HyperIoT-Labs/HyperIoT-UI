@@ -151,6 +151,8 @@ export class PacketSelectComponent implements OnInit {
     // }
     // units conversion
     this.syncUnitsConversion();
+    // field custom conversion
+    this.syncFieldCustomConversion();
     this.selectedFieldsChange.emit(this.selectedFields);
   }
 
@@ -260,6 +262,13 @@ export class PacketSelectComponent implements OnInit {
                 value: x.field.id,
                 label: x.label
               }));
+              console.log('packet fields: ', packet.fields, this.widget.config.packetFields);
+              Object.entries(this.widget.config.packetFields).forEach((v,k) => {
+                console.log('values field: ', k, v);
+                if (!this.fieldRules[v[0]]) {
+                  this.fieldRules[v[0]] = {type: 'expression', expression: ''};
+                }
+              });
               if (this.widget.config.packetFields) {
                 this.selectedFields = [];
                 Object.keys(this.widget.config.packetFields).forEach(x => {
@@ -349,6 +358,7 @@ export class PacketSelectComponent implements OnInit {
 
   updateExpression(ev, fieldId) {
     let expression: string = ev.target.value;
+    expression = expression.replace(',', '.');
     this.fieldRules[fieldId] = {type: 'expression', expression};
     try {
       for (let operator of DataSimulatorSettings.Utils
@@ -368,5 +378,20 @@ export class PacketSelectComponent implements OnInit {
       this.settingsForm.controls['expression' + fieldId].setErrors({ 'incorrect': true });
     }
     this.logger.debug(this.fieldRules);
+  }
+
+  private syncFieldCustomConversion() {
+    this.selectedFields.map((sf) => {
+      if (!this.fieldRules[sf.id]) {
+        this.fieldRules[sf.id] = {type: 'expression', expression: ''};
+      }
+    });
+    Object.entries(this.fieldRules).forEach((v,k) => {
+      if (!this.selectedFields.find(f => f.id === +v[0])) {
+        delete this.fieldRules[+v[0]];
+        console.log('delete field: ', k, v);
+      }
+    });
+    console.log('field rules: ', this.fieldRules);
   }
 }
