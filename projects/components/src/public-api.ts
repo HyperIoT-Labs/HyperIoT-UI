@@ -68,7 +68,6 @@ export { HytInfoComponent } from './lib/hyt-info/hyt-info.component';
 export { HytInnerFieldSelectComponent } from './lib/hyt-inner-field-select/hyt-inner-field-select.component';
 export { HytButtonToggleComponent } from './lib/hyt-button-toggle/hyt-button-toggle.component';
 export { HytNotificationBoxComponent } from './lib/hyt-notification-box/notification-box.component';
-export { NotificationService } from './lib/hyt-notification-box/services/notification.service';
 export { HytLoginComponent } from './lib/hyt-login/login.component';
 export { HytAccordionGroupComponent } from './lib/hyt-accordion/hyt-accordion-group.component';
 export { HytEmptyProjectListViewComponent } from './lib/hyt-empty-project-list-view/hyt-empty-project-list-view.component';
