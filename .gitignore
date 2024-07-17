@@ -61,3 +61,4 @@ localhost.key
 
 # Docker
 compose/data/
+proxy-config.json

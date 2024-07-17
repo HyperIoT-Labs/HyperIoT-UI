@@ -1743,13 +1743,16 @@
       <trans-unit id="HYT_alarm_showing_text_of" datatype="html">
         <source> of </source>
       </trans-unit>
-      
-      
+
+
       <trans-unit id="HYT_conditions" datatype="html">
         <source>Conditions</source>
       </trans-unit>
       <trans-unit id="HYT_timestamp" datatype="html">
         <source>Timestamp</source>
+      </trans-unit>
+      <trans-unit id="HYT_field_box_info" datatype="html">
+        <source>Selection of the package and device is required!</source>
       </trans-unit>
     </body>
   </file>

@@ -49,34 +49,34 @@
           <div id="projects-title-box" class="col-12 p-0">
 
             <div id="projects-topfilters-box" class="col-12 p-0">
-              <form 
-                #f="ngForm" 
-                [formGroup]="filteringForm" 
+              <form
+                #f="ngForm"
+                [formGroup]="filteringForm"
                 class="row shift-md-top"
               >
 
                 <div id="container-search" class="col-12 col-md-4 adapt-p-filter-btn">
-                  <hyt-input-text 
-                    id="hyt-search-bottom" 
-                    [form]="filteringForm" 
+                  <hyt-input-text
+                    id="hyt-search-bottom"
+                    [form]="filteringForm"
                     formControlName="textFilter"
-                    name="textFilter" 
-                    i18n-placeholder="@@HYT_search" 
-                    placeholder="Search" 
+                    name="textFilter"
+                    i18n-placeholder="@@HYT_search"
+                    placeholder="Search"
                     (keyup)="search($event.target.value, filteringForm.value['projectType'])"
                   ></hyt-input-text>
                 </div>
                 <hyt-filter-button
                   [options]="filterProjectType"
-                  i18n-label="@@HYT_projectType" 
-                  label="Project Type" 
+                  i18n-label="@@HYT_projectType"
+                  label="Project Type"
                   formControlName="projectType"
                   class="col-12 col-md-4"
                 ></hyt-filter-button>
                 <hyt-filter-button
                   [options]="filterSortType"
-                  i18n-label="@@HYT_sortBy" 
-                  label="Sort by" 
+                  i18n-label="@@HYT_sortBy"
+                  label="Sort by"
                   formControlName="sort"
                   class="col-12 col-md-4"
                 ></hyt-filter-button>
@@ -99,14 +99,14 @@
 
           <div class="hyt-card-wrapper">
             <div class="hyt-card-container">
-              <hyt-detailed-card 
+              <hyt-detailed-card
                 *ngFor="let p of hProjectsFiltered"
                 [title]="p.name"
                 [description]="p.description"
                 [detailedIcon]="sharedIconMap.get(sharedType(p.hProjectSharingInfo))"
                 btnLabel="view projects"
-                i18n-btnLabel="@@HYT_viewProject" 
-                btnLabel="view project" 
+                i18n-btnLabel="@@HYT_viewProject"
+                btnLabel="view project"
                 [valRouterLink]="p.id"
                 [details]="generateDetails(p)"
                 [paramEmittedOnClick]="p"
@@ -124,30 +124,15 @@
 
     </div> <!-- PageStatus.Standard -->
 
-    <div id="newStatus" *ngSwitchCase="PageStatus.New">
-      <!-- New -->
-
-      <div class="mt-5 no-projects">
-
-        <div id="content-no-projects" class="col-md-12">
-          <h3 id="title-no-project" i18n="@@HYT_no_project">There are no projects!</h3>
-          <h4 id="subtitle-no-project" i18n="@@HYT_add_project_button_hint">To add a project click the button below.</h4>
-        </div>
-
-        <div id="btn-no-projects" class="col-md-12">
-
-          <hyt-button id="add-project-btn" (click)="addProject()" type="button">
-            <ng-container i18n="@@HYT_create_first_project">Create your first project</ng-container>
-          </hyt-button>
-
-        </div>
-
-      </div> <!-- End No Projects Row -->
-
-    </div> <!-- PageStatus.New -->
+    <!-- PageStatus.New -->
+    <hyt-empty-project-list-view
+      *ngSwitchCase="PageStatus.New"
+      title="There are no projects!"
+      message="To add a project click the button below."
+    ></hyt-empty-project-list-view>
 
     <div id="errorStatus" *ngSwitchCase="PageStatus.Error" class="mt-5 d-flex flex-column align-items-center justify-content-center">
-      
+
       <h2 i18n="@@HYT_error_occurred_long">An error has occurred, contact the administrator!</h2>
 
     </div> <!-- PageStatus.Error -->

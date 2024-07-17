@@ -387,7 +387,7 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity implements OnI
 
     // Case 1: new alarm
     if (this.newAlarm === true) {
-      this.toastr.info($localize`:@@HYT_remember_changes:Remember to save the alarm to maintain the changes`, $localize`:@@HYT_severity_saved:Severity saved!`, { toastClass: 'alarm-toastr alarm-info', disableTimeOut: false });
+      this.toastr.info($localize`:@@HYT_remember_changes:Remember to save the alarm to maintain the changes`, $localize`:@@HYT_severity_saved:Severity saved!`);
       // Update eventListMap for all the 5 possibles scenario:
       if (this.indexMap != undefined && this.selectedId > 0) this.eventListMap.get(this.selectedId)[this.indexMap] = addEditEvent;
       else if (!this.indexMap && this.selectedId > 0) this.eventListMap.get(this.selectedId).push(addEditEvent);
@@ -429,11 +429,11 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity implements OnI
           next: (res) => {
             this.logger.debug('SaveEvent, new event added', res);
             this.updateSummaryList();
-            this.toastr.success($localize`:@@HYT_severity_new_desc:New severity saved correctly`, $localize`:@@HYT_severity_new:New severity!`, { toastClass: 'alarm-toastr alarm-success' });
+            this.toastr.success($localize`:@@HYT_severity_new_desc:New severity saved correctly`, $localize`:@@HYT_severity_new:New severity!`);
             addEditEvent.id = res.id;
 
             if (this.form.touched === true) this.toastr.info($localize`:@@HYT_alarm_still_changes:You still have to save the alarm changes`,
-              $localize`:@@HYT_severity_remember:Remember!`, { toastClass: 'alarm-toastr alarm-info' });
+              $localize`:@@HYT_severity_remember:Remember!`);
             this.formEvent.reset();
             if (this.addAnother) {
               this.addEvent(true);
@@ -490,10 +490,9 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity implements OnI
           next: (res) => {
             this.logger.debug('SaveEvent, event updated', res[0])
             this.updateSummaryList();
-            this.toastr.success($localize`:@@HYT_severity_updated_desc:Severity updated correctly`, $localize`:@@HYT_severity_updated:Severity updated!`,
-              { toastClass: 'alarm-toastr alarm-success' });
+            this.toastr.success($localize`:@@HYT_severity_updated_desc:Severity updated correctly`, $localize`:@@HYT_severity_updated:Severity updated!`);
             if (this.form.touched === true)
-              this.toastr.info($localize`:@@HYT_alarm_still_changes:You still have to save the alarm changes`, $localize`:@@HYT_severity_remember:Remember!`, { toastClass: 'alarm-toastr alarm-info' });
+              this.toastr.info($localize`:@@HYT_alarm_still_changes:You still have to save the alarm changes`, $localize`:@@HYT_severity_remember:Remember!`);
 
             // addAnother boolean
             if (this.addAnother == undefined || !this.addAnother) this.addEventMode = false;
@@ -680,7 +679,7 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity implements OnI
         .subscribe({
           next: (res) => {
             this.logger.debug('New alarm added', res)
-            this.toastr.success($localize`:@@HYT_alarm_and_severities_desc:Alarm and severities added correctly`, $localize`:@@HYT_alarm_and_severities:Alarm and severities added!`, { toastClass: 'alarm-toastr alarm-success' });
+            this.toastr.success($localize`:@@HYT_alarm_and_severities_desc:Alarm and severities added correctly`, $localize`:@@HYT_alarm_and_severities:Alarm and severities added!`);
             this.addEventMode = false;
             this.loadingStatus = LoadingStatusEnum.Ready;
 
@@ -717,7 +716,7 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity implements OnI
         .pipe(takeUntil(this.ngUnsubscribe))
         .subscribe({
           next: () => {
-            this.toastr.success($localize`:@@HYT_alarm_updated_desc:Event updated correctly`, $localize`:@@HYT_alarm_updated:Event updated!`, { toastClass: 'alarm-toastr alarm-success' });
+            this.toastr.success($localize`:@@HYT_alarm_updated_desc:Event updated correctly`, $localize`:@@HYT_alarm_updated:Event updated!`);
           },
           error: (error) => {
             this.logger.error(`saveAlarm save alarm only`, error);
@@ -755,8 +754,7 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity implements OnI
         .pipe(takeUntil(this.ngUnsubscribe))
         .subscribe({
           next: () => {
-            this.toastr.success($localize`:@@HYT_severity_deleted_desc:Severity deleted correctly`, $localize`:@@HYT_severity_deleted:Severity deleted!`,
-              { toastClass: 'alarm-toastr alarm-success' });
+            this.toastr.success($localize`:@@HYT_severity_deleted_desc:Severity deleted correctly`, $localize`:@@HYT_severity_deleted:Severity deleted!`);
             this.eventListMap.get(this.selectedId).splice(i, 1);
             this.updateSummaryList();
           },
@@ -917,7 +915,7 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity implements OnI
         }
       }
     } else if (err === 'undefined') {
-      this.toastr.error($localize`:@@HYT_error_loading_tags_data:Error loading tags data`, $localize`:@@HYT_error:Error`, { toastClass: 'alarm-toastr alarm-error' });
+      this.toastr.error($localize`:@@HYT_error_loading_tags_data:Error loading tags data`, $localize`:@@HYT_error:Error`);
     } else {
       this.loadingStatus = LoadingStatusEnum.Error;
     }
@@ -925,10 +923,13 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity implements OnI
   }
 
   setEventCounter() {
-    console.trace("setEventCounter");
-    this.alarmCounter = this.eventListMap.get(this.selectedId).length;
-    this.form.get('alarm-counter').setValue(this.alarmCounter);
-    this.form.updateValueAndValidity();
+    if (this.eventListMap.get(this.selectedId)) {
+      this.alarmCounter = this.eventListMap.get(this.selectedId).length;
+      this.form.get('alarm-counter').setValue(this.alarmCounter);
+      this.form.updateValueAndValidity();
+    } else {
+      this.logger.debug('setEventCounter, no events found', this.eventListMap);
+    }
   }
 }
 
