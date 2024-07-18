@@ -15,7 +15,7 @@ import {
   RealtimeDataService,
 } from "core";
 import { ToastrService } from "ngx-toastr";
-import { Subject, Subscription, filter, takeUntil } from "rxjs";
+import {Subject, Subscription, filter, takeUntil, distinctUntilChanged, tap} from "rxjs";
 import { DashboardConfigService } from "widgets";
 import { environment } from "../environments/environment";
 
@@ -124,7 +124,11 @@ export class AppComponent implements OnInit, OnDestroy {
   subscribeToNotification() {
     this.logger.info("Subscribe to notifications ON");
     this.alarmSubscription = this.alarmWrapper.alarmSubject
-      .pipe(takeUntil(this.ngUnsubscribe))
+      .pipe(
+        tap((alarm) => { this.logger.debug("Alarm received", alarm); }),
+        takeUntil(this.ngUnsubscribe),
+        distinctUntilChanged()
+      )
       .subscribe((alarm) => {
         let toastImage = "info";
         if (alarm.isEvent) {
@@ -132,7 +136,7 @@ export class AppComponent implements OnInit, OnDestroy {
         } else if (alarm.isAlarm) {
           toastImage =
             alarm.event.alarmState === "UP" ? "toastAlarmUp" : "toastAlarmDown";
-          if (alarm.event.alarmState === 'DOWN') 
+          if (alarm.event.alarmState === 'DOWN')
             alarm.color.background = '#51a351'; // Green of resolved alarm BG (OFF state)
         }
         const toastId = this.toastr["index"];
