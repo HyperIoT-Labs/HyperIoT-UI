@@ -144,7 +144,7 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity implements OnI
   }
 
   ngOnInit(): void {
-    this.formEvent.addControl('ruleDefinition', new FormControl(''));
+    this.formEvent.addControl('ruleDefinition', new FormControl('', Validators.required));
     this.eventListMap = new Map<number, any>();
     this.selectedId = 0;
     this.logger.debug('Current Project', this.currentProject)

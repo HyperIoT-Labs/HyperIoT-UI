@@ -1,5 +1,14 @@
 import { Component, Input, OnChanges, ViewEncapsulation, forwardRef } from '@angular/core';
-import { ControlValueAccessor, FormArray, FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  ControlValueAccessor,
+  FormArray,
+  FormControl,
+  FormGroup,
+  NG_VALIDATORS,
+  NG_VALUE_ACCESSOR, ValidationErrors,
+  Validators
+} from '@angular/forms';
 import { CoreConfig, HPacket, HPacketFieldsHandlerService } from 'core';
 import {FieldType, IRulePart} from './rule-part/rule-part.interface';
 import {SelectOption, SelectOptionGroup} from '../hyt-select/hyt-select.component';
@@ -36,6 +45,11 @@ interface RuleRow {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => RuleDefinitionComponent),
       multi: true
+    },
+    {
+      provide: NG_VALIDATORS,
+      useExisting: forwardRef(() => RuleDefinitionComponent),
+      multi: true
     }
   ],
   encapsulation: ViewEncapsulation.None,
@@ -43,6 +57,8 @@ interface RuleRow {
 export class RuleDefinitionComponent implements ControlValueAccessor, OnChanges {
   @Input() allPackets: HPacket[] = [];
   @Input() currentPacket: HPacket;
+  @Input() required: boolean = false;
+  errorMessage: string = '';
 
   ruleDefinitionError = false;
 
@@ -67,7 +83,6 @@ export class RuleDefinitionComponent implements ControlValueAccessor, OnChanges 
     if (!this.coreConfigService.ruleNodes) {
       this.ruleDefinitionError = true;
     }
-
   }
 
   ngOnChanges() {
@@ -145,6 +160,7 @@ export class RuleDefinitionComponent implements ControlValueAccessor, OnChanges 
         this.onRulePartChanged(String(this.currentPacket.id), index + 1, 0);
       }
     }
+    this.validateField();
 
   }
 
@@ -153,6 +169,7 @@ export class RuleDefinitionComponent implements ControlValueAccessor, OnChanges 
     this.ruleRowsFormArray.removeAt(index);
     this.ruleRowsFormArray.at(this.ruleRows.length - 1).get('ruleJoin').setValue('');
     this.buildRuleDefinition();
+    this.validateField();
   }
 
   onChange: any = (value: any) => { };
@@ -204,6 +221,7 @@ export class RuleDefinitionComponent implements ControlValueAccessor, OnChanges 
       }
 
       this.originalValue = ruleDefinition;
+      this.validateField();
 
     } catch (error) {
       this.resetRuleDefinition();
@@ -223,7 +241,7 @@ export class RuleDefinitionComponent implements ControlValueAccessor, OnChanges 
 
         const rulePart  = ruleRow.ruleParts[j];
         const value = parseRuleText(ruleRowFormGroup.get('rule-part-' + j).value, rulePart.fieldType);
-        
+
         rd = rd.concat(rulePart.ruleify(value));
         ptf = ptf.concat(rulePart.prettify(value));
 
@@ -239,6 +257,7 @@ export class RuleDefinitionComponent implements ControlValueAccessor, OnChanges 
       ruleDefinition: rd,
       rulePrettyDefinition: ptf,
     };
+    this.validateField();
     this.onChange(this.value);
   }
 
@@ -254,8 +273,9 @@ export class RuleDefinitionComponent implements ControlValueAccessor, OnChanges 
     return this.ruleForm.dirty;
     // return this.value !== this.originalValue;
   }
+
   isInvalid() {
-    return this.ruleForm.invalid || this.ruleDefinitionError;
+    return this.ruleForm.invalid || this.ruleDefinitionError || !!!this.errorMessage;
   }
 
   get ruleRowsFormArray() {
@@ -268,6 +288,24 @@ export class RuleDefinitionComponent implements ControlValueAccessor, OnChanges 
 
   getFormControl(rowIndex, partIndex) {
     return this.ruleForm.get('ruleRowsArray.' + rowIndex + '.rule-part-' + partIndex) as FormControl;
+  }
+
+  validate(control: AbstractControl): ValidationErrors | null {
+    return this.validateField();
+  }
+
+
+  validateField(): ValidationErrors | null {
+    if (!this.ruleForm.valid) {
+      this.errorMessage = 'Not valid!';
+      return { notValid: true };
+    }
+    if (this.required && !this.ruleForm.valid) {
+      this.errorMessage = 'This field is required';
+      return { required: true };
+    }
+    this.errorMessage = '';
+    return null;
   }
 
 }

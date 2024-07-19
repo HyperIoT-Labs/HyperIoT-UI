@@ -9,19 +9,16 @@
   <form *ngIf="!ruleDefinitionError" [formGroup]="ruleForm" autocomplete="on">
 
     <div formArrayName="ruleRowsArray">
-
       <div *ngFor="let ruleForm of ruleRows; let i = index" class="rule-row" [formGroupName]="i">
 
         <div class="form-group">
 
           <div class="rule-parts-container">
-
             <div *ngFor="let rulePart of ruleForm.ruleParts; let j = index" class="">
-
               <mat-form-field *ngIf="rulePart.fieldType === 'select'">
                 <mat-label>{{ rulePart.label }}</mat-label>
                 <mat-select formControlName="rule-part-{{j}}"
-                  (selectionChange)="onRuleValueChanged($event.value, i, j)">
+                  (selectionChange)="onRuleValueChanged($event.value, i, j)" [required]="required">
                   <mat-option *ngFor="let option of rulePart.options" [value]="option.value">
                     <span *ngIf="option.icon" class="hyt-icon {{ option.icon }}"></span>
                     {{ option.label }}

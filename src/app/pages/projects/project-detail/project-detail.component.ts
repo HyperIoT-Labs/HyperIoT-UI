@@ -717,7 +717,7 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
   / Method to verify if you can save or not the alarm
   */
   isDisableProjectAlarmsFormComponent(e: any){
-    this.logger.debug('isDisableProjectAlarmsFormComponent', e);
+    // this.logger.debug('isDisableProjectAlarmsFormComponent', e);
     if ((e instanceof ProjectAlarmsFormComponent) === false) return true;
     else if (e.form.touched == false) return true;
     else if (e.form.status == 'VALID') return false;
