@@ -29,7 +29,7 @@ export class AppComponent implements OnInit, OnDestroy {
   public environment = environment;
   eventNotificationIsOn: boolean = true;
 
-  private toastMessage = $localize`:@@HYT_dashboard_event_fired:The alarm is over`;
+  private toastMessage = $localize`:@@HYT_dashboard_event_fired:Alarm cleared`;
   projectIds: number[];
 
   /** Subject for manage the open subscriptions */
