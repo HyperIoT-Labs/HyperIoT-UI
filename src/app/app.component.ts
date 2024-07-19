@@ -29,7 +29,7 @@ export class AppComponent implements OnInit, OnDestroy {
   public environment = environment;
   eventNotificationIsOn: boolean = true;
 
-  private toastMessage = $localize`:@@HYT_dashboard_event_fired:The event has been fired`;
+  private toastMessage = $localize`:@@HYT_dashboard_event_fired:The alarm is over`;
   projectIds: number[];
 
   /** Subject for manage the open subscriptions */
@@ -132,7 +132,7 @@ export class AppComponent implements OnInit, OnDestroy {
         } else if (alarm.isAlarm) {
           toastImage =
             alarm.event.alarmState === "UP" ? "toastAlarmUp" : "toastAlarmDown";
-          if (alarm.event.alarmState === 'DOWN') 
+          if (alarm.event.alarmState === 'DOWN')
             alarm.color.background = '#51a351'; // Green of resolved alarm BG (OFF state)
         }
         const toastId = this.toastr["index"];
