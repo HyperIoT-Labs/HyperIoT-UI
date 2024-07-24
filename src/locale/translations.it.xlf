@@ -1409,8 +1409,8 @@
         <target>Procedendo con questa azione disabiliterai la registrazione dei dati che non saranno salvati fino alla riabilitazione di questa proprietà</target>
       </trans-unit>
       <trans-unit id="HYT_dashboard_event_fired" datatype="html">
-        <source>The event has been fired</source>
-        <target>L'evento è stato emesso</target>
+        <source>Alarm cleared</source>
+        <target>Allarme rientrato</target>
       </trans-unit>
       <trans-unit id="HYT_reload" datatype="html">
         <source>Reload</source>
