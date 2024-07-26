@@ -56,11 +56,14 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatCardModule } from '@angular/material/card';
 import { DashComponent } from './pages/dash/dash.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { InfoComponent } from './components/info/info.component';
 import { ContainerAreaMapComponent } from './pages/areas/container-area-map/container-area-map.component';
 import { HttpErrorInterceptor } from './interceptors/http-error.interceptor';
+import { NotificationButtonComponent } from './components/topbar/notification-button/notification-button.component';
+import { NotificationDialogComponent } from './components/dialogs/notification-dialog/notification-dialog.component';
 PlotlyModule.plotlyjs = PlotlyJS;
 
 export class MyUrlSerializer extends DefaultUrlSerializer implements UrlSerializer {
@@ -87,10 +90,12 @@ export function apiConfigFactory(): Configuration {
     SidebarComponent,
     TopbarComponent,
     AccountButtonComponent,
+    NotificationButtonComponent,
     ProfileComponent,
     SaveChangesDialogComponent,
     PendingChangesDialogComponent,
     DeleteConfirmDialogComponent,
+    NotificationDialogComponent,
     HomeComponent,
     NotificationbarComponent,
     AreasViewComponent,
@@ -104,6 +109,7 @@ export function apiConfigFactory(): Configuration {
     SaveChangesDialogComponent,
     PendingChangesDialogComponent,
     DeleteConfirmDialogComponent,
+    NotificationDialogComponent,
     WizardDeactivationModalComponent,
     WizardOptionsModalComponent,
     WizardReportModalComponent,
@@ -122,6 +128,7 @@ export function apiConfigFactory(): Configuration {
     MatTabsModule,
     MatCardModule,
     MatProgressSpinnerModule,
+    MatTooltipModule,
     CustomMaterialModule,
     DashboardModule,
     ReactiveFormsModule,
