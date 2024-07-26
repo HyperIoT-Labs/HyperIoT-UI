@@ -1754,6 +1754,12 @@
       <trans-unit id="HYT_field_box_info" datatype="html">
         <source>Selection of the package and device is required!</source>
       </trans-unit>
+      <trans-unit id="HYT_fields_fit_to_timeline" datatype="html">
+        <source>Fit to timeline</source>
+      </trans-unit>
+      <trans-unit id="HYT_noData" datatype="html">
+        <source>No data to display</source>
+      </trans-unit>
     </body>
   </file>
 </xliff>

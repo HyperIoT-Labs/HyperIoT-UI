@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, EventEmitter, Output, ViewEncapsulation } from '@angular/core';
-import { ControlContainer, NgForm } from '@angular/forms';
+import {ControlContainer, NgForm} from '@angular/forms';
 import { SelectOption, SelectOptionGroup, UnitConversionService } from 'components';
 import { LoggerService, Logger, HPacketFieldsHandlerService } from 'core';
 import { HPacket, HPacketField, HpacketsService, AreasService, AreaDevice, HDevice } from 'core';
@@ -20,7 +20,7 @@ export class PacketSelectComponent implements OnInit {
   selectedPacketOption: number = null;
 
   dynamicLabelSelectedPacket: { [id: number]: HPacket } = {};
-  
+
   dynamicLabelFields: { [id: number]: HPacketField[] } = {};
   dynamicLabelSelectedPacketOption: { [id: number]: number } = {};
   @Input()
@@ -63,6 +63,8 @@ export class PacketSelectComponent implements OnInit {
   eventPacketFieldName: string;
   offlineTableWidgetType: string;
   private logger: Logger;
+  fitToTimelineCheckbox = false;
+  widgetType: string;
 
   constructor(
     private packetService: HpacketsService,
@@ -89,6 +91,8 @@ export class PacketSelectComponent implements OnInit {
     }
     this.filteredMIMETypesOptions = [...this.allMIMETypesOptions];
 
+    // Set widget type, used to show/hide fit to timeline checkbox
+    this.widgetType = this.widget.type;
   }
 
   onPacketChange(packetOption) {
@@ -174,6 +178,7 @@ export class PacketSelectComponent implements OnInit {
         field: this.dynamicLabelSelectedField,
         fieldOptions: this.dynamicLabelFields
       }
+      this.widget.config.fitToTimeline = this.fitToTimelineCheckbox;
 
       // this.selectedPacket.fields.forEach(field => {
       //   this.widget.config.fieldTypes[field.id] = field.type;
@@ -203,6 +208,7 @@ export class PacketSelectComponent implements OnInit {
       JSON.parse(JSON.stringify(this.widget.config.fieldUnitConversions)) : {};
     this.fieldValuesMapList = this.widget.config.fieldValuesMapList ?
       JSON.parse(JSON.stringify(this.widget.config.fieldValuesMapList)) : {};
+    this.fitToTimelineCheckbox = this.widget.config.fitToTimeline || false;
     // fetch all packets
     this.packetService
       .findAllHPacketByProjectIdAndType(this.widget.projectId, "INPUT,IO")
@@ -339,4 +345,5 @@ export class PacketSelectComponent implements OnInit {
   getFullFieldName(hPacketFieldId) {
     return this.hPacketFieldsHandlerService.getStringifiedSequenceFromPacket(this.selectedPacket, hPacketFieldId);
   }
+
 }
