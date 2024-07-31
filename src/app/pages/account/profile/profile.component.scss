@@ -163,12 +163,12 @@
 
             #current-role {
                 margin-top: 25px;
-                margin-bottom: 5px;
-            }
-
-            #current-plan {
                 margin-bottom: 25px;
             }
+
+            /* #current-plan {
+                margin-bottom: 25px;
+            } */
 
             #title-summary-plan {
                 font-style: italic;
@@ -198,16 +198,22 @@
                     img {
                         width: 50px
                     }
+
+                    span {
+                        font-size: 50px;
+                    }
                 }
 
                 .txt-obj-plan {
+                    display: flex;
+                    gap: 15px;
                     text-align: left;
                     font-size: 1.5em;
                     font-weight: 400;
                     line-height: 50px;
 
                     .one-of {
-                        font-size: 1.4em;
+                        font-size: 1.2em;
 
                         .firstNumber {
                             font-weight: bold;
@@ -275,6 +281,34 @@
 
     }
 
+    /* #row-box-branding {
+
+        .title-box {
+
+            img.title-icon {
+                margin-right: 20px;
+                margin-left: 10px;
+
+                &#icon-branding-section {
+                    width: 35px;
+                }
+            }
+
+        }
+        
+        #container-box-branding {
+            #logo-uplaod,
+            #logo-preview {
+                margin-top: 25px;
+                margin-bottom: 5px;
+            }
+
+        }
+
+    } */
+
+
+    #row-box-branding,
     #row-box-details {
         border: 1px solid antiquewhite;
 
@@ -284,7 +318,8 @@
                 margin-right: 20px;
                 margin-left: 10px;
 
-                &#icon-details-section {
+                &#icon-details-section,
+                &#icon-branding-section  {
                     width: 35px;
                 }
     
@@ -296,14 +331,17 @@
         }
 
         #container-form-details,
-        #container-form-password {
+        #container-form-password,
+        #container-form-logo {
 
             form#form-details,
-            form#form-password {
+            form#form-password,
+            form#form-logo-branding {
                 margin-top: 40px;
 
                 .row-field-details,
-                .row-field-password {
+                .row-field-password,
+                .row-field-branding {
 
                     .container-form-field,
                     .container-form-field {
@@ -369,6 +407,15 @@
                                 font-family: "Exo";
                             }
 
+                        }
+
+                        .btn-group {
+                            display: flex;
+                            column-gap: 20px;
+                        }
+
+                        #upload-logo-text {
+                            margin-right: 15px;
                         }
 
                     }

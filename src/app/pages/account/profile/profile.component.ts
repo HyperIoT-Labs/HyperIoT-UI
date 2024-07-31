@@ -1,9 +1,13 @@
 import { Component, OnInit, ViewEncapsulation,ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { HusersService, HUser } from 'core';
+import { HusersService, HUser, UiBrandingService, HdevicesService, AreasService, HprojectsService } from 'core';
 import { AuthenticationHttpErrorHandlerService } from '../../../services/errorHandler/authentication-http-error-handler.service';
 import { HYTError } from 'src/app/services/errorHandler/models/models';
 import { Router } from '@angular/router';
+import { HyperiotLogoMobilePath, HyperiotLogoPath } from 'src/app/constants';
+import { HttpClient } from '@angular/common/http';
+import { forkJoin, map, of } from 'rxjs';
+import { BrandingService } from 'src/app/services/branding/branding.service';
 
 @Component({
   selector: 'hyt-profile',
@@ -27,6 +31,7 @@ export class ProfileComponent implements OnInit {
 
   personalInfoForm: FormGroup;
   changePasswordForm: FormGroup;
+  brandingForm: FormGroup;
 
   generalError = 0;
 
@@ -93,6 +98,20 @@ export class ProfileComponent implements OnInit {
    */
   confirmPassword: string;
 
+  
+  platformCounters = {
+    projects: '',
+    areas: '',
+    devices: '',
+  };
+
+  logoPaths = this.brandingService.logoPath$;
+
+  /* fileToUpload: string | ArrayBuffer; */
+  fileToUpload: File | null = null;
+  fileToUploadBase64: string | ArrayBuffer = '';
+  //imageUrl = HyperiotLogoPath;
+
   /**
    * This is the constructor of the class.
    */
@@ -101,7 +120,13 @@ export class ProfileComponent implements OnInit {
     private fb: FormBuilder,
     private httperrorHandler: AuthenticationHttpErrorHandlerService,
     private router: Router,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private uiBrandingService: UiBrandingService,
+    private httpClient: HttpClient,
+    private hDevicesService: HdevicesService,
+    private areasService: AreasService,
+    private hProjectService: HprojectsService,
+    private brandingService: BrandingService
   ) { }
 
   /**
@@ -110,6 +135,7 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     this.personalInfoForm = this.fb.group({});
     this.changePasswordForm = this.fb.group({});
+    this.brandingForm = this.fb.group({});
     if (localStorage.getItem('user') !== null) {
       this.user = JSON.parse(localStorage.getItem('user'));
       this.userId = this.user.id;
@@ -119,6 +145,8 @@ export class ProfileComponent implements OnInit {
     } else {
       this.router.navigate(['/auth/login']);
     }
+
+    this.loadData();
   }
 
   /**
@@ -209,6 +237,76 @@ export class ProfileComponent implements OnInit {
       this.changePasswordForm.get('newPassword').invalid ||
       this.changePasswordForm.get('confirmPassword').invalid
     );
+  }
+
+  initUpload() {
+    let fileInput = document.getElementById('logo-file-input');
+    if (fileInput)
+      fileInput.click();
+    else
+      console.error('ERROR: cannot find file input');
+  }
+
+  handleLogoInput(files: FileList) {
+    const file = files.item(0);
+    this.fileToUpload = file;
+    let reader = new FileReader();
+    reader.onload = (event: any) => {
+      //this.imageUrl = event.target.result;
+      this.logoPaths = of({
+        standard: event.target.result,
+        mobile: event.target.result
+      });
+      this.fileToUploadBase64 = reader.result;
+    }
+    reader.readAsDataURL(file); 
+  }
+
+  resetLogo() {
+    //this.imageUrl = HyperiotLogoPath;
+    this.logoPaths = of({
+      standard: HyperiotLogoPath,
+      mobile: HyperiotLogoMobilePath
+    });
+    this.fileToUpload = null;
+    this.saveLogo(true);
+  }
+
+  saveLogo(resetLogo = false) {
+    const formData = new FormData();
+    formData.append('name', 'test');
+    formData.append('colorScheme', 'test');
+    if (resetLogo) {
+      // save logo to null or empty string
+      formData.append('logo', null);
+      formData.append('favicon', null);
+    } else {
+      formData.append('logo', this.fileToUpload, this.fileToUpload.name);
+      formData.append('favicon', this.fileToUpload, this.fileToUpload.name);
+    }
+    this.httpClient.put(`/hyperiot/ui-branding`, formData).subscribe({
+      next: (value) => {
+        console.log('save response', value)
+      },
+      error: (err) => {
+        console.log('save error', err)
+      }
+    });
+  }
+ 
+  loadData() {
+    forkJoin({
+      projects: this.hProjectService.findAllHProjectPaginated(1).pipe(map(res => res.numPages)),
+      areas: this.areasService.findAllAreaPaginated(1).pipe(map(res => res.numPages)),
+      devices: this.hDevicesService.findAllHDevicePaginated(1).pipe(map(res => res.numPages))
+    }).subscribe({
+      next: (value) => {
+        this.platformCounters = value;
+      },
+      error: (err) => {
+        console.log(err)
+      },
+    });
   }
 
 }

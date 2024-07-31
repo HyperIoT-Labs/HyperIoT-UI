@@ -4,8 +4,10 @@ import {
   ViewEncapsulation,
   HostListener,
 } from "@angular/core";
+import { HyperiotLogoMobilePath, HyperiotLogoPath } from "src/app/constants";
 import { ToggleSidebarService } from "src/app/services/toggleSidebar/toggle-sidebar.service";
 import { environment } from "src/environments/environment";
+import { DashboardConfigService } from 'widgets';
 
 @Component({
   selector: "hyt-topbar",
@@ -24,6 +26,11 @@ export class TopbarComponent implements OnInit {
     sm: 767,
     xs: 575,
   };
+
+  @Input('preview-mode') previewMode = false;
+
+  @Input('logoPath') logoPath = HyperiotLogoPath;
+  @Input('logoMobilePath') logoMobilePath = HyperiotLogoMobilePath;
 
   constructor(private toggleSidebarService: ToggleSidebarService) {}
 
@@ -51,7 +58,9 @@ export class TopbarComponent implements OnInit {
   }
 
   toggleMenu() {
-    this.toggleSidebarService.changeSidebarStatus();
-    this.isShow = !this.isShow;
+    if (!this.previewMode) {
+      this.toggleSidebarService.changeSidebarStatus();
+      this.isShow = !this.isShow;
+    }
   }
 }
