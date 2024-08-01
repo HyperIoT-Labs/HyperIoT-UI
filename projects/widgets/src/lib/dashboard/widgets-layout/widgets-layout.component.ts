@@ -11,6 +11,7 @@ import {
 } from 'angular-gridster2';
 
 import {
+  AlarmWrapperService,
   Dashboard,
   DashboardWidget,
   HPacket,
@@ -18,7 +19,7 @@ import {
   RealtimeDataService,
 } from 'core';
 
-import { ConfirmDialogService, DialogService, HytTopologyService } from 'components';
+import { ConfirmDialogService, DialogService } from 'components';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 import { WidgetAction, WidgetConfig } from '../../base/base-widget/model/widget.model';
@@ -119,19 +120,18 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
    * @param configService
    * @param activatedRoute
    * @param dialogService
-   * @param hytTopologyService
    * @param toastr
    */
   constructor(
     private realtimeDataService: RealtimeDataService,
     private configService: DashboardConfigService,
+    private alarmWrapper: AlarmWrapperService,
     private activatedRoute: ActivatedRoute,
     private dialogService: DialogService,
-    private hytTopologyService: HytTopologyService,
     private confirmDialogService: ConfirmDialogService,
   ) {
     this.eventNotificationIsOn = true;
-    this.configService.eventNotificationState.subscribe(res => {
+    this.alarmWrapper.eventNotificationState.subscribe(res => {
       this.eventNotificationIsOn = res;
     });
   }

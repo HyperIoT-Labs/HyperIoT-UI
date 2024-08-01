@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, Inject, LOCALE_ID } from "@angular/core";
+import { Component, Input, Output, EventEmitter, Inject, LOCALE_ID, ChangeDetectorRef } from "@angular/core";
 import { HytAlarm, Logger, LoggerService } from "core";
 import * as moment_ from 'moment';
 const moment = moment_;
@@ -35,15 +35,23 @@ export class HytAlarmComponent {
    */
   @Input() dateFormat: string = "DD/MM/YYYY HH:mm:ss.SSS";
   /**
+   * @property {boolean} notificationMode - remove button, emit the main event on click on the element and don't print the detailed date
+   */
+  @Input() notificationMode: boolean = false;
+  /**
    * @property {EventEmitter<HytAlarmComponent>} btnClick - Emit when the primary button is clicked if valRouterLink is not passed
    */
   @Output() btnClick = new EventEmitter<HytAlarm.LiveAlarm>();
 
 
-  constructor(loggerService: LoggerService, @Inject(LOCALE_ID) locale: string) {
+  constructor(loggerService: LoggerService, @Inject(LOCALE_ID) private locale: string, private cdr: ChangeDetectorRef) {
     this.logger = new Logger(loggerService);
     this.logger.registerClass("HytAlarmComponent");
-    moment.locale(locale || 'en');
+    /** Using setTimeout for avoid the ExpressionChangedAfterItHasBeenCheckedError */
+    setTimeout(()=>{
+      moment.locale(this.locale || 'en');
+      this.cdr.detectChanges();
+    }, 0);
   }
 
   /**
@@ -60,7 +68,7 @@ export class HytAlarmComponent {
    * Get the date when the alarm is fired
    */
   get date(){
-    return moment(this.alarm.event.fireTimestamp).format(this.dateFormat)
+    return moment(this.alarm.event.lastFiredTimestamp).format(this.dateFormat)
   }
 
   /**
@@ -85,6 +93,6 @@ export class HytAlarmComponent {
    * Display description when the alarm was fired(es: two minutes ago)
    */
   get timeFromNow(){
-    return moment(this.alarm.event.fireTimestamp).fromNow();
+    return moment(this.alarm.event.lastFiredTimestamp).fromNow();
   }
 }

@@ -1743,8 +1743,6 @@
       <trans-unit id="HYT_alarm_showing_text_of" datatype="html">
         <source> of </source>
       </trans-unit>
-
-
       <trans-unit id="HYT_conditions" datatype="html">
         <source>Conditions</source>
       </trans-unit>
@@ -1753,6 +1751,21 @@
       </trans-unit>
       <trans-unit id="HYT_field_box_info" datatype="html">
         <source>Selection of the package and device is required!</source>
+      </trans-unit>
+      <trans-unit id="HYT_notification_active" datatype="html">
+        <source>Notification ACTIVE</source>
+      </trans-unit>
+      <trans-unit id="HYT_notification_inactive" datatype="html">
+        <source>Notification INACTIVE</source>
+      </trans-unit>
+      <trans-unit id="HYT_notification_list" datatype="html">
+        <source>Notification list</source>
+      </trans-unit>
+      <trans-unit id="HYT_notifications" datatype="html">
+        <source>NOTIFICATIONS</source>
+      </trans-unit>
+      <trans-unit id="HYT_no_notifications" datatype="html">
+        <source>No notifications</source>
       </trans-unit>
     </body>
   </file>
