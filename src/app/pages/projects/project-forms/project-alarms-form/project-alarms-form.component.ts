@@ -810,6 +810,10 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity implements OnI
     return this.editMode && this.form.dirty;
   }
 
+  isSeverityInvalid(): boolean {
+    return !this.formEvent.valid || this.ruleDefinitionComponent.isInvalid();
+  }
+
   cancel() {
     this.resetErrors();
     this.resetForm();
