@@ -144,7 +144,7 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity implements OnI
   }
 
   ngOnInit(): void {
-    this.formEvent.addControl('ruleDefinition', new FormControl('', Validators.required));
+    this.formEvent.addControl('ruleDefinition', new FormControl(''));
     this.eventListMap = new Map<number, any>();
     this.selectedId = 0;
     this.logger.debug('Current Project', this.currentProject)
@@ -808,6 +808,10 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity implements OnI
 
   isDirty(): boolean {
     return this.editMode && this.form.dirty;
+  }
+
+  isSeverityInvalid(): boolean {
+    return !this.formEvent.valid || this.ruleDefinitionComponent.isInvalid();
   }
 
   cancel() {

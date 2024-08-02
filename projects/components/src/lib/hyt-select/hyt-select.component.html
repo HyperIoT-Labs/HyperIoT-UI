@@ -5,6 +5,7 @@
   </mat-label>
 
   <mat-select
+    #select="matSelect"
     [formControl]="formControl"
     [multiple]="isMultiple"
     (selectionChange)="change($event)"
