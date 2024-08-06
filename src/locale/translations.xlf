@@ -1767,6 +1767,12 @@
       <trans-unit id="HYT_no_notifications" datatype="html">
         <source>No notifications</source>
       </trans-unit>
+      <trans-unit id="HYT_reset_logo_error" datatype="html">
+        <source>Reset logo error</source>
+      </trans-unit>
+      <trans-unit id="HYT_saving_logo_error" datatype="html">
+        <source>Saving logo error</source>
+      </trans-unit>
     </body>
   </file>
 </xliff>

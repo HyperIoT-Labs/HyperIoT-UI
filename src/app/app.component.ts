@@ -13,14 +13,11 @@ import {
   Logger,
   LoggerService,
   RealtimeDataService,
-  UiBrandingService,
 } from "core";
 import { ToastrService } from "ngx-toastr";
 import {Subject, Subscription, filter, takeUntil, distinctUntilChanged, tap} from "rxjs";
 import { DashboardConfigService } from "widgets";
 import { environment } from "../environments/environment";
-import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser";
-import { HyperiotLogoMobilePath, HyperiotLogoPath } from "./constants";
 import { BrandingService } from "./services/branding/branding.service";
 
 @Component({

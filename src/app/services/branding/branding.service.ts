@@ -1,7 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { UiBrandingService } from 'core';
-import { catchError, map, Observable, of } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, of, Subject, tap } from 'rxjs';
 import { HyperiotLogoMobilePath, HyperiotLogoPath } from 'src/app/constants';
 
 @Injectable({
@@ -9,54 +10,91 @@ import { HyperiotLogoMobilePath, HyperiotLogoPath } from 'src/app/constants';
 })
 export class BrandingService {
 
-  /* logoImagePath: SafeResourceUrl = '';
-  logoMobileImagePath: SafeResourceUrl = ''; */
+  private _isBrandedTheme = false;
 
-  logoPath$: Observable<{
+  get isBrandedTheme() {
+    return this._isBrandedTheme;
+  }
+
+  private _logoPath$ = new BehaviorSubject<{
     standard: SafeResourceUrl,
     mobile: SafeResourceUrl
-  }>;
+  }>({
+    standard: '',
+    mobile: ''
+  });
+
+  get logoPath$(): Observable<{
+    standard: SafeResourceUrl,
+    mobile: SafeResourceUrl
+  }> {
+    return this._logoPath$.asObservable();
+  }
 
   constructor(
     private uiBrandingService: UiBrandingService,
-    private _sanitizer: DomSanitizer
+    private _sanitizer: DomSanitizer,
+    private httpClient: HttpClient,
   ) {
-    this.logoPath$ = this.getLogoBrand();
+    this.loadBranding();
   }
 
-  /* loadBranding() {
+  loadBranding() {
     this.uiBrandingService.getUIBranding().subscribe({
       next: ({logoBase64}) => {
-        console.log('get branding response', logoBase64)
-        if (logoBase64) {
-          this.logoImagePath = this._sanitizer.bypassSecurityTrustResourceUrl('data:image/jpg;base64,' + logoBase64);
-        } else {
-          this.loadHyperiotDefaultLogo();
-        }
+        this.updateLogo({
+          standard: this.getSanitizedLogo(logoBase64),
+          mobile: this.getSanitizedLogo(logoBase64)
+        });
+        this._isBrandedTheme  = true;
       },
-      error: (err) => {
-        console.log('get branding error', err)
-        this.loadHyperiotDefaultLogo();
+      error: () => {
+        this.resetDefaultLogo();
       }
     }) 
   }
-  
-  loadHyperiotDefaultLogo() {
-    this.logoImagePath = HyperiotLogoPath;
-    this.logoMobileImagePath = HyperiotLogoMobilePath;
-  } */
 
-  getLogoBrand() {
-    return this.uiBrandingService.getUIBranding().pipe(
-      map(({logoBase64}) => ({
-        standard: this._sanitizer.bypassSecurityTrustResourceUrl('data:image/jpg;base64,' + logoBase64),
-        mobile: this._sanitizer.bypassSecurityTrustResourceUrl('data:image/jpg;base64,' + logoBase64)
-      })),
-      catchError(() => of({
-        standard: HyperiotLogoPath,
-        mobile: HyperiotLogoMobilePath
-      }))
-    )
+  updateBranding(file: File) {
+    const formData = new FormData();
+    formData.append('name', '');
+    formData.append('colorScheme', '');
+    formData.append('logo', file, file.name);
+    formData.append('favicon', file, file.name);
+    return this.httpClient.put<any>(`/hyperiot/ui-branding`, formData)
+    .pipe(tap({
+      next: () => {
+        this._isBrandedTheme = true;
+      }
+    }));
+  }
+
+  resetBranding() {
+    return this.httpClient.delete(`/hyperiot/ui-branding`)
+    .pipe(tap({
+      next: () => {
+        this.resetDefaultLogo();
+        this._isBrandedTheme = false;
+      },
+    }));
+  }
+
+  updateLogo(value: {
+    standard: SafeResourceUrl,
+    mobile: SafeResourceUrl
+  }) {
+    console.log(value)
+    this._logoPath$.next(value);
+  }
+
+  resetDefaultLogo() {
+    this._logoPath$.next({
+      standard: HyperiotLogoPath,
+      mobile: HyperiotLogoMobilePath
+    });
+  }
+
+  getSanitizedLogo(logoBase64: string) {
+    return this._sanitizer.bypassSecurityTrustResourceUrl('data:image/jpg;base64,' + logoBase64);
   }
 
 }

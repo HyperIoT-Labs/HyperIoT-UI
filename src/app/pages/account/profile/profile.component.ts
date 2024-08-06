@@ -6,8 +6,9 @@ import { HYTError } from 'src/app/services/errorHandler/models/models';
 import { Router } from '@angular/router';
 import { HyperiotLogoMobilePath, HyperiotLogoPath } from 'src/app/constants';
 import { HttpClient } from '@angular/common/http';
-import { forkJoin, map, of } from 'rxjs';
+import { BehaviorSubject, forkJoin, map, Observable, of, Subject } from 'rxjs';
 import { BrandingService } from 'src/app/services/branding/branding.service';
+import { SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'hyt-profile',
@@ -98,19 +99,21 @@ export class ProfileComponent implements OnInit {
    */
   confirmPassword: string;
 
-  
   platformCounters = {
     projects: '',
     areas: '',
     devices: '',
   };
 
-  logoPaths = this.brandingService.logoPath$;
+  logoPath;
+  logoMobilePath;
 
-  /* fileToUpload: string | ArrayBuffer; */
   fileToUpload: File | null = null;
-  fileToUploadBase64: string | ArrayBuffer = '';
-  //imageUrl = HyperiotLogoPath;
+
+  logoErrorMessage = {
+    showError: false,
+    message: ''
+  };
 
   /**
    * This is the constructor of the class.
@@ -121,7 +124,6 @@ export class ProfileComponent implements OnInit {
     private httperrorHandler: AuthenticationHttpErrorHandlerService,
     private router: Router,
     private cd: ChangeDetectorRef,
-    private uiBrandingService: UiBrandingService,
     private httpClient: HttpClient,
     private hDevicesService: HdevicesService,
     private areasService: AreasService,
@@ -146,7 +148,7 @@ export class ProfileComponent implements OnInit {
       this.router.navigate(['/auth/login']);
     }
 
-    this.loadData();
+    this.loadGeneralData();
   }
 
   /**
@@ -248,53 +250,69 @@ export class ProfileComponent implements OnInit {
   }
 
   handleLogoInput(files: FileList) {
+    this.logoErrorMessage = {
+      showError: false,
+      message: ''
+    };
     const file = files.item(0);
     this.fileToUpload = file;
     let reader = new FileReader();
     reader.onload = (event: any) => {
-      //this.imageUrl = event.target.result;
-      this.logoPaths = of({
-        standard: event.target.result,
-        mobile: event.target.result
-      });
-      this.fileToUploadBase64 = reader.result;
+      this.logoPath = event.target.result;
+      this.logoMobilePath = event.target.result;
     }
     reader.readAsDataURL(file); 
   }
 
-  resetLogo() {
-    //this.imageUrl = HyperiotLogoPath;
-    this.logoPaths = of({
-      standard: HyperiotLogoPath,
-      mobile: HyperiotLogoMobilePath
-    });
-    this.fileToUpload = null;
-    this.saveLogo(true);
+  resetLogo(logoFileInput) {
+    this.logoErrorMessage = {
+      showError: false,
+      message: ''
+    };
+    if (this.brandingService.isBrandedTheme) {
+      this.brandingService.resetBranding().subscribe({
+        next: () => {
+          this.fileToUpload = null;
+          logoFileInput.value = null;
+        },
+        error: () => {
+          this.logoErrorMessage = {
+            showError: true,
+            message: $localize`:@@HYT_reset_logo_error:Reset logo error`
+          };
+        }
+      });
+    } else {
+      this.logoPath = HyperiotLogoPath;
+      this.logoMobilePath = HyperiotLogoMobilePath;
+      this.fileToUpload = null;
+      logoFileInput.value = null;
+    }
+
   }
 
-  saveLogo(resetLogo = false) {
-    const formData = new FormData();
-    formData.append('name', 'test');
-    formData.append('colorScheme', 'test');
-    if (resetLogo) {
-      // save logo to null or empty string
-      formData.append('logo', null);
-      formData.append('favicon', null);
-    } else {
-      formData.append('logo', this.fileToUpload, this.fileToUpload.name);
-      formData.append('favicon', this.fileToUpload, this.fileToUpload.name);
-    }
-    this.httpClient.put(`/hyperiot/ui-branding`, formData).subscribe({
-      next: (value) => {
-        console.log('save response', value)
+  saveLogo() {
+    this.logoErrorMessage = {
+      showError: false,
+      message: ''
+    };
+    this.brandingService.updateBranding(this.fileToUpload).subscribe({
+      next: () => {
+        this.brandingService.updateLogo({
+          standard: this.logoPath,
+          mobile: this.logoPath
+        })
       },
-      error: (err) => {
-        console.log('save error', err)
+      error: () => {
+        this.logoErrorMessage = {
+          showError: true,
+          message: $localize`:@@HYT_saving_logo_error:Saving logo error`
+        };
       }
     });
   }
  
-  loadData() {
+  loadGeneralData() {
     forkJoin({
       projects: this.hProjectService.findAllHProjectPaginated(1).pipe(map(res => res.numPages)),
       areas: this.areasService.findAllAreaPaginated(1).pipe(map(res => res.numPages)),
@@ -302,11 +320,15 @@ export class ProfileComponent implements OnInit {
     }).subscribe({
       next: (value) => {
         this.platformCounters = value;
-      },
-      error: (err) => {
-        console.log(err)
-      },
+      }
     });
+
+    this.brandingService.logoPath$.subscribe({
+      next: ({standard, mobile}) => {
+        this.logoPath = standard;
+        this.logoMobilePath = mobile;
+      },
+    })
   }
 
 }

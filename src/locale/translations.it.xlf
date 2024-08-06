@@ -2359,6 +2359,14 @@
         <source>No notifications</source>
         <target>Nessuna notifica</target>
       </trans-unit>
+      <trans-unit id="HYT_reset_logo_error" datatype="html">
+        <source>Reset logo error</source>
+        <target>Errore durante il ripristino del logo</target>
+      </trans-unit>
+      <trans-unit id="HYT_saving_logo_error" datatype="html">
+        <source>Saving logo error</source>
+        <target>Errore nel salvataggio del logo</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

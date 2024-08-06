@@ -188,14 +188,14 @@
                     <div class="row row-field-branding">
                         <div class="container-form-field col-12">
                             <span i18n="@@HYT_upload_your_logo" id="upload-logo-text">Upload your logo</span>
-                            <input type="file" id="logo-file-input" name="logo" accept="image/png, image/jpeg" (change)="handleLogoInput($event.target.files)" hidden />
+                            <input #logoFileInput type="file" id="logo-file-input" name="logo" accept="image/png, image/jpeg" (change)="handleLogoInput($event.target.files)" hidden />
                             <hyt-button (clickFn)="initUpload()">
                                 <ng-container i18n="@@HYT_upload">Upload</ng-container>
                             </hyt-button>
                         </div>
                         <div class="container-form-field col-12">
                             <p i18n="@@HYT_preview">Preview</p>
-                            <hyt-topbar [preview-mode]="true" [logoPath]="(logoPaths | async)?.standard" [logoMobilePath]="(logoPaths | async)?.mobile"></hyt-topbar>
+                            <hyt-topbar [preview-mode]="true" [logoPath]="logoPath" [logoMobilePath]="logoMobilePath"></hyt-topbar>
                         </div>
     
                         <div class="container-form-field col-12">
@@ -211,7 +211,7 @@
     
                                 <hyt-button 
                                     id ="reset-logo-btn" 
-                                    (clickFn)="resetLogo()"
+                                    (clickFn)="resetLogo(logoFileInput)"
                                     type="submit"
                                 >
                                     <ng-container i18n="@@HYT_reset">Reset</ng-container>
@@ -219,6 +219,14 @@
                             </div>
       
                         </div>
+
+                        <ng-container *ngIf="logoErrorMessage.showError">
+                            <div class="container-form-field col-12">
+                                <div id="logo-error-container">
+                                    {{logoErrorMessage.message}}
+                                </div>
+                            </div>
+                        </ng-container>
                     </div>
 
                 </form>
