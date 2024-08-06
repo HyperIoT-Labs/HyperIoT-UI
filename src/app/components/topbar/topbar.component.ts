@@ -3,6 +3,7 @@ import {
   OnInit,
   ViewEncapsulation,
   HostListener,
+  Input,
 } from "@angular/core";
 import { HyperiotLogoMobilePath, HyperiotLogoPath } from "src/app/constants";
 import { ToggleSidebarService } from "src/app/services/toggleSidebar/toggle-sidebar.service";
