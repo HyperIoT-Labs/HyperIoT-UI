@@ -1,7 +1,10 @@
 <div id="hyt-container" cdkScrollable>
 
   <div *ngIf="showToolBars()" id="hyt-container-topbar">
-    <hyt-topbar></hyt-topbar>
+    <hyt-topbar
+      [logoPath]="(logoPaths | async)?.standard"
+      [logoMobilePath]="(logoPaths | async)?.mobile"
+    ></hyt-topbar>
   </div>
 
   <div id="hyt-container-nav">

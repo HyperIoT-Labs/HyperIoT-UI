@@ -18,6 +18,7 @@ import { ToastrService } from "ngx-toastr";
 import {Subject, Subscription, filter, takeUntil, distinctUntilChanged, tap} from "rxjs";
 import { DashboardConfigService } from "widgets";
 import { environment } from "../environments/environment";
+import { BrandingService } from "./services/branding/branding.service";
 
 @Component({
   selector: "hyt-root",
@@ -45,6 +46,8 @@ export class AppComponent implements OnInit, OnDestroy {
    */
   private logger: Logger;
 
+  logoPaths = this.brandingService.logoPath$;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private hprojectsService: HprojectsService,
@@ -52,7 +55,8 @@ export class AppComponent implements OnInit, OnDestroy {
     private toastr: ToastrService,
     private loggerService: LoggerService,
     private router: Router,
-    private alarmWrapper: AlarmWrapperService
+    private alarmWrapper: AlarmWrapperService,
+    private brandingService: BrandingService
   ) {
     // Init Logger
     this.logger = new Logger(this.loggerService);

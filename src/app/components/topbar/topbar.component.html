@@ -1,19 +1,19 @@
-<div id="hyt-topbar" class="container-fluid" [ngClass]="{'topbarMob': winInnerWidth <= mobileBreakPoints.md}">
+<div id="hyt-topbar" class="container-fluid" [ngClass]="{'topbarMob': winInnerWidth <= mobileBreakPoints.md, 'previewMode': previewMode}">
     
     <div id="logo-container">
         
-        <a routerLink="/">
+        <a routerLink="/" [ngStyle]="{'pointer-events': previewMode ? 'none' : 'auto' }">
 
             <img 
                 id="img-logo-hyt" 
-                src="assets/images/logo/Hyperiot-Ex_S.png" 
+                [src]="logoPath" 
                 alt="HyperIoT Logo Extended"
                 *ngIf="winInnerWidth > mobileBreakPoints.xs"
             > <!--@I18N@-->
 
             <img 
                 id="img-logo-mob-hyt" 
-                src="assets/images/hyperiot_logo_single_char_animated.svg" 
+                [src]="logoMobilePath" 
                 alt="HyperIoT Logo Single Char"
                 *ngIf="winInnerWidth <= mobileBreakPoints.xs"
             > <!--@I18N@-->
@@ -42,8 +42,10 @@
             <!-- FINE -->
 
         </div>
-        <hyt-notification-button></hyt-notification-button>
-        <hyt-account-button></hyt-account-button>
+        <ng-container *ngIf="!previewMode">
+            <hyt-notification-button></hyt-notification-button>
+            <hyt-account-button></hyt-account-button>
+        </ng-container>
     </div>
     
 </div>
