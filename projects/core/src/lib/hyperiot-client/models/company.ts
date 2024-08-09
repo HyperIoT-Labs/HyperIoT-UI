@@ -14,8 +14,6 @@ export interface Company {
     entityVersion: number;
     readonly entityCreateDate?: Date;
     readonly entityModifyDate?: Date;
-    categoryIds?: Array<number>;
-    tagIds?: Array<number>;
     businessName?: string;
     invoiceAddress?: string;
     city?: string;

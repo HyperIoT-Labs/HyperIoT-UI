@@ -15,8 +15,6 @@ export interface AlarmEvent {
     entityVersion: number;
     readonly entityCreateDate?: Date;
     readonly entityModifyDate?: Date;
-    categoryIds?: Array<number>;
-    tagIds?: Array<number>;
     alarm?: Alarm;
     event?: Rule;
     severity?: number;

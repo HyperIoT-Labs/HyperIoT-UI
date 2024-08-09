@@ -32,7 +32,7 @@ import { ProjectAlarmsFormComponent } from '../pages/projects/project-forms/proj
 import {DashComponent} from '../pages/dash/dash.component';
 
 export enum HytRoutesDataFields {
-  IGNORE_HTTP_ERROR_INTERCEPTOR = 'ignoreHttpErrorInterceptor'
+  IGNORE_HTTP_ERROR_NOTIFY = 'ignoreHttpErrorNotify'
 }
 
 @Injectable()
@@ -126,7 +126,7 @@ const hyperiotRoutes: Routes = [
     ],
     data: {
       showToolBar: false,
-      [HytRoutesDataFields.IGNORE_HTTP_ERROR_INTERCEPTOR]: true,
+      [HytRoutesDataFields.IGNORE_HTTP_ERROR_NOTIFY]: true,
     }
   },
   {

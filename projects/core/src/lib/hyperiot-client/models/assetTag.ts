@@ -14,8 +14,6 @@ export interface AssetTag {
     entityVersion: number;
     readonly entityCreateDate?: Date;
     readonly entityModifyDate?: Date;
-    categoryIds?: Array<number>;
-    tagIds?: Array<number>;
     name?: string;
     owner?: HyperIoTAssetOwnerImpl;
     description?: string;

@@ -14,6 +14,7 @@
 import { Inject, Injectable, Optional }                      from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams,
          HttpResponse, HttpEvent }                           from '@angular/common/http';
+import { HttpContext }                                       from '@angular/common/http';
 import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
 import { Observable }                                        from 'rxjs';
@@ -65,10 +66,10 @@ export class HpacketsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public addHPacketField(id: number, body: HPacketField, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public addHPacketField(id: number, body: HPacketField, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public addHPacketField(id: number, body: HPacketField, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public addHPacketField(id: number, body: HPacketField, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public addHPacketField(id: number, body: HPacketField, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public addHPacketField(id: number, body: HPacketField, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public addHPacketField(id: number, body: HPacketField, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public addHPacketField(id: number, body: HPacketField, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling addHPacketField.');
@@ -109,6 +110,7 @@ export class HpacketsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -120,10 +122,10 @@ export class HpacketsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public checkModuleWorking(observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public checkModuleWorking(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public checkModuleWorking(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public checkModuleWorking(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public checkModuleWorking(observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public checkModuleWorking(observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public checkModuleWorking(observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public checkModuleWorking(observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         let headers = this.defaultHeaders;
 
@@ -145,6 +147,7 @@ export class HpacketsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -157,10 +160,10 @@ export class HpacketsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deleteHPacket(id: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public deleteHPacket(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public deleteHPacket(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public deleteHPacket(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public deleteHPacket(id: number, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public deleteHPacket(id: number, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public deleteHPacket(id: number, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public deleteHPacket(id: number, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling deleteHPacket.');
@@ -192,6 +195,7 @@ export class HpacketsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -204,10 +208,10 @@ export class HpacketsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deleteHPacketField(fieldId: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public deleteHPacketField(fieldId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public deleteHPacketField(fieldId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public deleteHPacketField(fieldId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public deleteHPacketField(fieldId: number, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public deleteHPacketField(fieldId: number, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public deleteHPacketField(fieldId: number, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public deleteHPacketField(fieldId: number, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (fieldId === null || fieldId === undefined) {
             throw new Error('Required parameter fieldId was null or undefined when calling deleteHPacketField.');
@@ -239,6 +243,7 @@ export class HpacketsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -250,10 +255,10 @@ export class HpacketsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public findAllHPacket(observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public findAllHPacket(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public findAllHPacket(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public findAllHPacket(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public findAllHPacket(observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public findAllHPacket(observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public findAllHPacket(observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public findAllHPacket(observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         let headers = this.defaultHeaders;
 
@@ -280,6 +285,7 @@ export class HpacketsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -292,10 +298,10 @@ export class HpacketsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public findAllHPacketByProjectId(id: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public findAllHPacketByProjectId(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public findAllHPacketByProjectId(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public findAllHPacketByProjectId(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public findAllHPacketByProjectId(id: number, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public findAllHPacketByProjectId(id: number, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public findAllHPacketByProjectId(id: number, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public findAllHPacketByProjectId(id: number, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling findAllHPacketByProjectId.');
@@ -326,6 +332,7 @@ export class HpacketsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -339,10 +346,10 @@ export class HpacketsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public findAllHPacketByProjectIdAndType(id: number, types?: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public findAllHPacketByProjectIdAndType(id: number, types?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public findAllHPacketByProjectIdAndType(id: number, types?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public findAllHPacketByProjectIdAndType(id: number, types?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public findAllHPacketByProjectIdAndType(id: number, types?: string, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public findAllHPacketByProjectIdAndType(id: number, types?: string, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public findAllHPacketByProjectIdAndType(id: number, types?: string, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public findAllHPacketByProjectIdAndType(id: number, types?: string, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling findAllHPacketByProjectIdAndType.');
@@ -380,6 +387,7 @@ export class HpacketsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -393,10 +401,10 @@ export class HpacketsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public findAllHPacketPaginated(delta?: number, page?: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public findAllHPacketPaginated(delta?: number, page?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public findAllHPacketPaginated(delta?: number, page?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public findAllHPacketPaginated(delta?: number, page?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public findAllHPacketPaginated(delta?: number, page?: number, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public findAllHPacketPaginated(delta?: number, page?: number, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public findAllHPacketPaginated(delta?: number, page?: number, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public findAllHPacketPaginated(delta?: number, page?: number, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
 
 
@@ -434,6 +442,7 @@ export class HpacketsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -446,10 +455,10 @@ export class HpacketsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public findHPacket(id: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public findHPacket(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public findHPacket(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public findHPacket(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public findHPacket(id: number, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public findHPacket(id: number, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public findHPacket(id: number, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public findHPacket(id: number, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling findHPacket.');
@@ -480,6 +489,7 @@ export class HpacketsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -492,10 +502,10 @@ export class HpacketsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public findTreeFields(id: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public findTreeFields(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public findTreeFields(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public findTreeFields(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public findTreeFields(id: number, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public findTreeFields(id: number, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public findTreeFields(id: number, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public findTreeFields(id: number, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling findTreeFields.');
@@ -526,6 +536,7 @@ export class HpacketsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -538,10 +549,10 @@ export class HpacketsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getHDevicePacketList(id: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public getHDevicePacketList(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public getHDevicePacketList(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public getHDevicePacketList(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getHDevicePacketList(id: number, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public getHDevicePacketList(id: number, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public getHDevicePacketList(id: number, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public getHDevicePacketList(id: number, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling getHDevicePacketList.');
@@ -572,6 +583,7 @@ export class HpacketsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -584,10 +596,10 @@ export class HpacketsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getHPacketField(fieldId: Array<number>, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public getHPacketField(fieldId: Array<number>, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public getHPacketField(fieldId: Array<number>, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public getHPacketField(fieldId: Array<number>, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getHPacketField(fieldId: Array<number>, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public getHPacketField(fieldId: Array<number>, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public getHPacketField(fieldId: Array<number>, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public getHPacketField(fieldId: Array<number>, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (fieldId === null || fieldId === undefined) {
             throw new Error('Required parameter fieldId was null or undefined when calling getHPacketField.');
@@ -627,6 +639,7 @@ export class HpacketsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -639,10 +652,10 @@ export class HpacketsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public saveHPacket(body: HPacket, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public saveHPacket(body: HPacket, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public saveHPacket(body: HPacket, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public saveHPacket(body: HPacket, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public saveHPacket(body: HPacket, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public saveHPacket(body: HPacket, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public saveHPacket(body: HPacket, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public saveHPacket(body: HPacket, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling saveHPacket.');
@@ -679,6 +692,7 @@ export class HpacketsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -691,10 +705,10 @@ export class HpacketsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public updateHPacket(body: HPacket, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public updateHPacket(body: HPacket, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public updateHPacket(body: HPacket, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public updateHPacket(body: HPacket, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public updateHPacket(body: HPacket, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public updateHPacket(body: HPacket, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public updateHPacket(body: HPacket, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public updateHPacket(body: HPacket, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling updateHPacket.');
@@ -731,6 +745,7 @@ export class HpacketsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -744,10 +759,10 @@ export class HpacketsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public updateHPacketField(id: number, body: HPacketField, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public updateHPacketField(id: number, body: HPacketField, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public updateHPacketField(id: number, body: HPacketField, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public updateHPacketField(id: number, body: HPacketField, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public updateHPacketField(id: number, body: HPacketField, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public updateHPacketField(id: number, body: HPacketField, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public updateHPacketField(id: number, body: HPacketField, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public updateHPacketField(id: number, body: HPacketField, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling updateHPacketField.');
@@ -788,6 +803,7 @@ export class HpacketsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );

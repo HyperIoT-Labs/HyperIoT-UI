@@ -8,8 +8,8 @@
  */
 import { Area } from './area';
 import { HDevice } from './hDevice';
-import { HUser } from './hUser';
 import { HProjectSharingInfo } from './hProjectSharingInfo';
+import { HUser } from './hUser';
 
 
 export interface HProject { 
@@ -17,8 +17,6 @@ export interface HProject {
     entityVersion: number;
     readonly entityCreateDate?: Date;
     readonly entityModifyDate?: Date;
-    categoryIds?: Array<number>;
-    tagIds?: Array<number>;
     name?: string;
     description?: string;
     user?: HUser;

@@ -13,7 +13,5 @@ export interface DashboardWidget {
     entityVersion: number;
     readonly entityCreateDate?: Date;
     readonly entityModifyDate?: Date;
-    categoryIds?: Array<number>;
-    tagIds?: Array<number>;
     widgetConf?: string;
 }

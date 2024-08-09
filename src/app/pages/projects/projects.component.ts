@@ -4,7 +4,6 @@ import {
   ViewEncapsulation,
   OnDestroy,
   HostListener,
-  ChangeDetectorRef,
 } from "@angular/core";
 import { Router } from "@angular/router";
 import { PageStatus } from "./models/pageStatus";
@@ -13,7 +12,8 @@ import {
   HprojectsService,
   HProjectSharingInfo,
   LoggerService,
-Logger,
+  Logger,
+  NotificationManagerService
 } from "core";
 import { FormGroup, FormBuilder } from "@angular/forms";
 import {
@@ -25,7 +25,6 @@ import {
   OverlayService,
 } from "components";
 import { ProjectsService } from "src/app/services/projects.service";
-import { NotificationService } from "components";
 import { DeleteConfirmDialogComponent } from "src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component";
 import { ShareType } from "./models/shared.model";
 
@@ -72,7 +71,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
     private hProjectService: HprojectsService,
     private fb: FormBuilder,
     private projectsService: ProjectsService,
-    private notificationservice: NotificationService,
+    private notificationManagerService: NotificationManagerService,
     private dialog: DialogService,
     private overlay: OverlayService,
     loggerService: LoggerService
@@ -327,15 +326,15 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   launchNotification(type: string, title: string, message: string) {
     switch (type) {
       case "success":
-        this.notificationservice.success(title, message);
+        this.notificationManagerService.success(title, message);
         break;
 
       case "info":
-        this.notificationservice.info(title, message);
+        this.notificationManagerService.info(title, message);
         break;
 
       case "error":
-        this.notificationservice.error(title, message);
+        this.notificationManagerService.error(title, message);
         break;
 
       default:
