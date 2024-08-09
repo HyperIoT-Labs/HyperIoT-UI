@@ -178,7 +178,7 @@
 
     <!-- Save button for event only-->
     <div id="btn-edit-mode" class="col-12">
-      <hyt-button [color]="'hyt-base-default-white'" (clickFn)="saveEvent()" [isDisabled]="!formEvent.valid">
+      <hyt-button [color]="'hyt-base-default-white'" (clickFn)="saveEvent()" [isDisabled]="isSeverityInvalid()">
         <span class="hyt-icon icon-hyt_save"></span>
         <ng-container *ngIf="!this.updateLabel" i18n="@@HYT_save_severity">Save Severity</ng-container>
         <ng-container *ngIf="this.updateLabel" i18n="@@HYT_update_severity">Update Severity</ng-container>

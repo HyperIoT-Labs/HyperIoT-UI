@@ -112,8 +112,7 @@ export class ShareProjectsComponent implements OnInit, OnDestroy {
     const newCollValue = this.newCollaboratorValue;
     const body: SharedEntity = {
       entityId: this.data.id,
-      entityResourceName: "it.acsoftware.hyperiot.hproject.model.HProject",
-      userId: 0,
+      entityResourceName: "it.acsoftware.hyperiot.hproject.model.HProject"
     };
     if(this.isEmail(newCollValue)){
       body['userEmail'] = newCollValue
@@ -141,7 +140,7 @@ export class ShareProjectsComponent implements OnInit, OnDestroy {
     const body: SharedEntity = {
       entityId: this.data.id,
       entityResourceName: "it.acsoftware.hyperiot.hproject.model.HProject",
-      username: this.collaboratorFocused,
+      //username: this.collaboratorFocused,
     };
     this.updateOverlayState(
       this.sharedPagesEnum.LOADING,

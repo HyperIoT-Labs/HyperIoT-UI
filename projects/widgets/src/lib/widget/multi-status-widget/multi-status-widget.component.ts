@@ -218,7 +218,7 @@ export class MultiStatusWidgetComponent extends BaseWidgetComponent implements O
   }
 
   retrieveAttachments(projectId: number, packetId: number, fieldId: number, timestamp: number) {
-    return this.hProjectsService.scanHProject1(
+    return this.hProjectsService.scanHProject(
       projectId,
       packetId,
       fieldId,

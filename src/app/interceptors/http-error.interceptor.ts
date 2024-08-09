@@ -24,18 +24,15 @@ import {
   HttpHandler,
   HttpEvent,
   HttpInterceptor,
-  HttpErrorResponse,
-  HttpContextToken
+  HttpErrorResponse
 } from '@angular/common/http';
 import { Observable, filter, tap } from 'rxjs';
-import { NotificationService } from 'components';
 import { ActivationEnd, Data, Router } from '@angular/router';
 import { HytRoutesDataFields } from '../configuration-modules/hyt-routing.module';
-import { HttpErrorsDictionary } from '../constants/httpErrorsDictionary';
-import { LoggerService } from 'core';
-
-export const ERROR_MESSAGES = new HttpContextToken(() => HttpErrorsDictionary);
-export const IGNORE_ERROR_INTERCEPTOR = new HttpContextToken(() => false);
+import { LoggerService, GlobalErrorHandlerService, NotificationSeverity,
+  ERROR_MESSAGES, IGNORE_ERROR_NOTIFY, NOTIFY_CHANNEL_ID 
+ } from 'core';
+import { ErrorMessageDefault, HttpErrorsDictionary } from '../constants/http-errors-dictionary';
 
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
@@ -43,9 +40,9 @@ export class HttpErrorInterceptor implements HttpInterceptor {
   private lastRouteData: Data = {};
 
   constructor(
-    private notificationService: NotificationService,
     private router: Router,
-    private loggerService: LoggerService
+    private loggerService: LoggerService,
+    private globalErrorHandlerService: GlobalErrorHandlerService
   ) {
     this.router.events
     .pipe(filter(event => event instanceof ActivationEnd))
@@ -57,13 +54,10 @@ export class HttpErrorInterceptor implements HttpInterceptor {
   }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    const ignoreInterceptorByRoute: boolean = this.lastRouteData[HytRoutesDataFields.IGNORE_HTTP_ERROR_INTERCEPTOR]
-    const ignoreInterceptorByRequest: boolean = request.context.get(IGNORE_ERROR_INTERCEPTOR);
-    this.loggerService.debug('route ignore http error interceptor:', ignoreInterceptorByRoute);
-    this.loggerService.debug('request ignore http error interceptor:', ignoreInterceptorByRequest);
-    if (ignoreInterceptorByRoute || ignoreInterceptorByRequest) {
-      return next.handle(request);
-    }
+    const ignoreErrorNotifyByRoute: boolean = this.lastRouteData[HytRoutesDataFields.IGNORE_HTTP_ERROR_NOTIFY];
+    const ignoreErrorNotifyByRequest: boolean = request.context.get(IGNORE_ERROR_NOTIFY);
+    const notifyChannelId = request.context.get(NOTIFY_CHANNEL_ID); 
+
     return next.handle(request)
     .pipe(
       tap({
@@ -73,15 +67,20 @@ export class HttpErrorInterceptor implements HttpInterceptor {
             ...HttpErrorsDictionary,
             ...request.context.get(ERROR_MESSAGES),
           };
-          const errorMessage = newErrorsMessages[err.status];
-          switch (err.status) {
-            case 401:
-            case 403:
-              this.loggerService.debug('http error message to notifiy:', errorMessage);
-              this.notificationService.error(errorMessage.title, errorMessage.message);
-            default:
-              break;
-          }
+          const errorMessage = newErrorsMessages[err.status] || ErrorMessageDefault;
+          this.globalErrorHandlerService.emitError({
+            originType: 'http',
+            notify: {
+              show: !ignoreErrorNotifyByRoute && !ignoreErrorNotifyByRequest,
+              message: errorMessage,
+              channelId: notifyChannelId,
+              severity: NotificationSeverity.Error
+            },
+            http: {
+              request,
+              error: err
+            }
+          });
         },
       })
     );

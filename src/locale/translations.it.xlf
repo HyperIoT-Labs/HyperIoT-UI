@@ -1409,8 +1409,8 @@
         <target>Procedendo con questa azione disabiliterai la registrazione dei dati che non saranno salvati fino alla riabilitazione di questa proprietà</target>
       </trans-unit>
       <trans-unit id="HYT_dashboard_event_fired" datatype="html">
-        <source>The event has been fired</source>
-        <target>L'evento è stato emesso</target>
+        <source>Alarm cleared</source>
+        <target>Allarme rientrato</target>
       </trans-unit>
       <trans-unit id="HYT_reload" datatype="html">
         <source>Reload</source>
@@ -2346,6 +2346,26 @@
       <trans-unit id="HYT_noData" datatype="html">
         <source>No data to display</source>
         <target>Nessun dato da visualizzare</target>
+      </trans-unit>
+      <trans-unit id="HYT_notification_active" datatype="html">
+        <source>Notification ACTIVE</source>
+        <target>Notifiche ATTIVE </target>
+      </trans-unit>
+      <trans-unit id="HYT_notification_inactive" datatype="html">
+        <source>Notification INACTIVE</source>
+        <target>Notifiche INATTIVE </target>
+      </trans-unit>
+      <trans-unit id="HYT_notification_list" datatype="html">
+        <source>Notification list</source>
+        <target>Lista notifiche</target>
+      </trans-unit>
+      <trans-unit id="HYT_notifications" datatype="html">
+        <source>NOTIFICATIONS</source>
+        <target>NOTIFICHE</target>
+      </trans-unit>
+      <trans-unit id="HYT_no_notifications" datatype="html">
+        <source>No notifications</source>
+        <target>Nessuna notifica</target>
       </trans-unit>
     </body>
   </file>

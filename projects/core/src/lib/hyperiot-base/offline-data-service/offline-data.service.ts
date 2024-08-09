@@ -172,7 +172,7 @@ export class OfflineDataService extends BaseDataService {
   // get paginated data
   scanAndSaveHProject(dataChannel: DataChannel, deviceId, alarmState, chunkLength = this.DEFAULT_CHUNK_LENGTH, lowerBound: number = dataChannel.controller.channelLowerBound): Observable<PacketDataChunk[]> {
     const packetIds = dataChannel.packetFilterList.map(packetFilter => packetFilter.packetId);
-    return this.hprojectsService.scanHProject(this.hProjectId, lowerBound, this.dashboardTimeBounds.upper, chunkLength, packetIds.toString(), deviceId, alarmState).pipe(
+    return this.hprojectsService.scanHProject1(this.hProjectId, lowerBound, this.dashboardTimeBounds.upper, chunkLength, packetIds.toString(), deviceId, alarmState).pipe(
       map(res => {
 
         // TODO fix BE. This request should always return an array

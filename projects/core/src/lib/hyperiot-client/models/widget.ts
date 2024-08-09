@@ -13,8 +13,6 @@ export interface Widget {
     entityVersion: number;
     readonly entityCreateDate?: Date;
     readonly entityModifyDate?: Date;
-    categoryIds?: Array<number>;
-    tagIds?: Array<number>;
     name?: string;
     description?: string;
     widgetCategory?: Widget.WidgetCategoryEnum;
@@ -30,7 +28,7 @@ export interface Widget {
     realTime?: boolean;
 }
 export namespace Widget {
-    export type WidgetCategoryEnum = 'ALL' | 'BAR' | 'LINE' | 'PIE' | 'RADAR' | 'GAUGES' | 'MAP' | 'ACTION' | 'TABLES';
+    export type WidgetCategoryEnum = 'ALL' | 'BAR' | 'LINE' | 'PIE' | 'RADAR' | 'GAUGES' | 'MAP' | 'ACTION' | 'TABLES' | 'HISTOGRAM';
     export const WidgetCategoryEnum = {
         ALL: 'ALL' as WidgetCategoryEnum,
         BAR: 'BAR' as WidgetCategoryEnum,
@@ -40,7 +38,8 @@ export namespace Widget {
         GAUGES: 'GAUGES' as WidgetCategoryEnum,
         MAP: 'MAP' as WidgetCategoryEnum,
         ACTION: 'ACTION' as WidgetCategoryEnum,
-        TABLES: 'TABLES' as WidgetCategoryEnum
+        TABLES: 'TABLES' as WidgetCategoryEnum,
+        HISTOGRAM: 'HISTOGRAM' as WidgetCategoryEnum
     };
     export type DomainsEnum = 'INDUSTRY_40' | 'SMART_FIELDS' | 'HEALTH' | 'IOT';
     export const DomainsEnum = {

@@ -14,6 +14,7 @@
 import { Inject, Injectable, Optional }                      from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams,
          HttpResponse, HttpEvent }                           from '@angular/common/http';
+import { HttpContext }                                       from '@angular/common/http';
 import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
 import { Observable }                                        from 'rxjs';
@@ -61,10 +62,10 @@ export class AuthenticationService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public checkModuleWorking(observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public checkModuleWorking(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public checkModuleWorking(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public checkModuleWorking(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public checkModuleWorking(observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public checkModuleWorking(observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public checkModuleWorking(observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public checkModuleWorking(observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         let headers = this.defaultHeaders;
 
@@ -86,6 +87,7 @@ export class AuthenticationService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -99,10 +101,10 @@ export class AuthenticationService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public login(username?: string, password?: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public login(username?: string, password?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public login(username?: string, password?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public login(username?: string, password?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public login(username?: string, password?: string, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public login(username?: string, password?: string, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public login(username?: string, password?: string, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public login(username?: string, password?: string, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
 
 
@@ -146,6 +148,7 @@ export class AuthenticationService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -157,10 +160,10 @@ export class AuthenticationService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public whoAmI(observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public whoAmI(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public whoAmI(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public whoAmI(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public whoAmI(observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public whoAmI(observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public whoAmI(observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public whoAmI(observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         let headers = this.defaultHeaders;
 
@@ -182,6 +185,7 @@ export class AuthenticationService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );

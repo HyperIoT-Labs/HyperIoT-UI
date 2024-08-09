@@ -14,8 +14,6 @@ export interface HUser {
     entityVersion: number;
     readonly entityCreateDate?: Date;
     readonly entityModifyDate?: Date;
-    categoryIds?: Array<number>;
-    tagIds?: Array<number>;
     name?: string;
     lastname?: string;
     username?: string;

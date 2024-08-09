@@ -1,11 +1,10 @@
 import {Component, OnInit, Input, ViewChild, ElementRef, Renderer2, AfterViewInit, OnDestroy} from '@angular/core';
 
-import { Notification, NotificationType, NotifyPosition } from './models/notification.model';
+/* import { Notification, NotificationSeverity, NotifyPosition } from './models/notification.model'; */
 
-import { NotificationService } from './services/notification.service';
-import {Subject} from 'rxjs';
+import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
-
+import { NotificationGlobalChannels, NotificationManagerService, Notification, NotificationSeverity, NotifyPosition } from 'core';
 @Component({
   selector: 'hyt-notification-box',
   templateUrl: './notification-box.component.html',
@@ -28,40 +27,42 @@ export class HytNotificationBoxComponent implements OnInit, AfterViewInit, OnDes
 
   notifications: Notification[] = [];
 
+  @Input('channel-id') channelId: string = NotificationGlobalChannels.GLOBAL_USER_TOAST;
+
+  notificationsChannel: Observable<Notification>;
+
   constructor(
-    public notificationService: NotificationService,
+    public notificationManagerService: NotificationManagerService,
     private renderer: Renderer2
   ) { }
 
   ngOnInit(): void {
-
     if (!(this.notifyPosition in NotifyPosition)) {
       this.notifyPosition = 'notify-top-right';
     }else{
       this.notifyPosition = NotifyPosition[this.notifyPosition];
     }
 
-    this.notificationService.getAlert()
-      .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe((alert: Notification) => {
+    this.notificationsChannel = this.notificationManagerService.getNotifications(this.channelId);
+    this.notificationsChannel
+    .pipe(takeUntil(this.ngUnsubscribe))
+    .subscribe({
+      next:(alert) => {
+        this.notifications = [];
+        if (alert.clear) {
+            return;
+        }
 
-      this.notifications = [];
-      if (!alert || Object.keys(alert).length === 0) {
-          this.notifications = [];
-          return;
+        this.notifications.push(alert);
+
+        if(this.isTimed) {
+          this.timeToExpire = !isNaN(+this.timeToExpire) ? this.timeToExpire : 4000
+          setTimeout(() => {
+            this.notifications = this.notifications.filter(x => x !== alert);
+          }, this.timeToExpire);
+        }
       }
-
-      this.notifications.push(alert);
-
-      if(this.isTimed) {
-        this.timeToExpire = !isNaN(+this.timeToExpire) ? this.timeToExpire : 4000
-        setTimeout(() => {
-          this.notifications = this.notifications.filter(x => x !== alert);
-        }, this.timeToExpire);
-      }
-
     });
-
   }
 
   ngAfterViewInit() {
@@ -83,18 +84,18 @@ export class HytNotificationBoxComponent implements OnInit, AfterViewInit, OnDes
       return;
     }
 
-    switch (notification.type) {
+    switch (notification.severity) {
 
-      case NotificationType.Success:
+      case NotificationSeverity.Success:
           return 'notify-success';
 
-      case NotificationType.Error:
+      case NotificationSeverity.Error:
           return 'notify-error';
 
-      case NotificationType.Info:
+      case NotificationSeverity.Info:
           return 'notify-info';
 
-      case NotificationType.Warning:
+      case NotificationSeverity.Warning:
           return 'notify-warning';
 
     }

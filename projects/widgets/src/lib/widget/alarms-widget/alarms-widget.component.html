@@ -17,7 +17,7 @@
   </header-widget>
 
   <content-widget style="position: relative;">
-    <div class="alarm-list" *ngIf="alarmsList.size; else noAlarm">
+    <div class="alarm-list" *ngIf="alarmListArray.length; else noAlarm" [@containerAnim]="alarmListArray.length">
       <div class="alarm-filter alarm-filter-resume">
         <div class="description-filter" *ngIf="!showFilter && !filteringSev.length">
           <strong i18n="@@HYT_alarm_no_filter">NO FILTER SELECTED.</strong>
@@ -42,7 +42,7 @@
           <span i18n="@@HYT_alarm_showing_text">Showing </span>
           <strong class="showing-counter">{{filteredList.length}}</strong>
           <span i18n="@@HYT_alarm_showing_text_of"> of </span> 
-          <strong class="text-primary">{{alarmsList.size}}</strong>
+          <strong class="text-primary">{{alarmListArray.length}}</strong>
         </div>
         <div class="filter-button">
           <hyt-button
@@ -55,13 +55,12 @@
           </hyt-button>
         </div>
       </div>
-      <div class="filtering-no-data" *ngIf="alarmsList.size && filteredList.length == 0">
+      <div class="filtering-no-data" *ngIf="alarmListArray.length && filteredList.length == 0">
         <span class="alarm-title" i18n="@@HYT_alarm_hidden_filter">There are alarms, but they're being hidden by the filter!</span>
       </div>
       <hyt-alarm 
         *ngFor="let alarm of filteredList" 
         [alarm]="alarm"
-        [class.alarm-out]="alarmListToRemove.get(alarm.event.alarmId)"
       >
       </hyt-alarm>
     </div>

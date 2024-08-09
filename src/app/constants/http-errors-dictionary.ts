@@ -17,18 +17,23 @@
  *
  */
 
+export const ErrorMessageDefault = {
+  title: $localize`:@@HYT_error:Error`,
+  body: $localize`:@@HYT_something_wrong:Something's wrong`
+}
+
 export const HttpErrorsDictionary: {
     [index: number]: {
       title: string,
-      message: string
+      body: string
     }
 } = {
     401: {
       title: $localize`:@@HYT_authorization_error:Athorization error`,
-      message: $localize`:@@HYT_you_do_not_have_sufficient_permissions_to_perform_this_operation:You do not have sufficient permissions to perform this operation`
+      body: $localize`:@@HYT_you_do_not_have_sufficient_permissions_to_perform_this_operation:You do not have sufficient permissions to perform this operation`
     },
     403: {
       title: $localize`:@@HYT_authentication_error:Authentication error`,
-      message: $localize`:@@HYT_you_do_not_have_sufficient_permissions_to_perform_this_operation:You do not have sufficient permissions to perform this operation`
+      body: $localize`:@@HYT_you_do_not_have_sufficient_permissions_to_perform_this_operation:You do not have sufficient permissions to perform this operation`
     }
 };

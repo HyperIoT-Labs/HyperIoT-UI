@@ -4,6 +4,7 @@ import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { DialogRef } from '../../hyt-dialog/dialog-ref';
 import { DIALOG_DATA } from '../../hyt-dialog/dialog-tokens';
+import {Logger, LoggerService} from "core";
 
 enum TopologyActionState {
   Confirm = 0,
@@ -38,13 +39,19 @@ export class HytConfirmRecordingActionComponent implements OnDestroy {
   /** Subject for manage the open subscriptions */
   protected ngUnsubscribe: Subject<void> = new Subject<void>();
 
+  private logger: Logger;
+
   checkTopology = true;
 
   constructor(
     private hytTopologyService: HytTopologyService,
+    private loggerService: LoggerService,
     private dialogRef: DialogRef<{ dataRecordingIsOn: boolean; upTimeSec: number; }>,
     @Inject(DIALOG_DATA) public data: any,
-  ) { }
+  ) {
+    this.logger = new Logger(this.loggerService);
+    this.logger.registerClass(HytConfirmRecordingActionComponent.name);
+  }
 
   confirm() {
     if (this.data.actionType === 'start-stop' && this.data.dataRecordingIsOn) {
@@ -61,7 +68,7 @@ export class HytConfirmRecordingActionComponent implements OnDestroy {
         },
         error => {
             this.topologyRequestState = TopologyRequestState.ToOffFailed;
-            console.error(error);
+            this.logger.error(error);
         });
     } else {
       this.topologyActionState = TopologyActionState.LoadingOn;
@@ -87,7 +94,7 @@ export class HytConfirmRecordingActionComponent implements OnDestroy {
       },
       error => {
         this.topologyRequestState = TopologyRequestState.ConnectingFailed;
-        console.error(error);
+        this.logger.error(error);
       }
     );
 
@@ -108,7 +115,7 @@ export class HytConfirmRecordingActionComponent implements OnDestroy {
       },
       error => {
         this.topologyRequestState = TopologyRequestState.ToOffFailed;
-        console.error(error);
+        this.logger.error(error);
       }
     );
   }

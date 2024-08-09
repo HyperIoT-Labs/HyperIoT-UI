@@ -1,23 +1,34 @@
 import { Component, Injector } from '@angular/core';
-import { Logger, LoggerService, HytAlarm, AlarmWrapperService } from 'core';
+import { Logger, LoggerService, HytAlarm, AlarmWrapperService, HpacketsService } from 'core';
 import { BaseWidgetComponent } from '../../base/base-widget/base-widget.component';
 import { Option } from 'components';
+import { animate, group, query, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'hyperiot-alarms-widget',
   templateUrl: './alarms-widget.component.html',
-  styleUrls: ['../../../../../../src/assets/widgets/styles/widget-commons.css', './alarms-widget.component.scss']
+  styleUrls: ['../../../../../../src/assets/widgets/styles/widget-commons.css', './alarms-widget.component.scss'],
+  animations: [
+    trigger('containerAnim', [
+      transition('* => *', [
+        group([
+          query('hyt-alarm:enter', [
+            style({ height: 0, opacity: 0, 'overflow-y': 'clip' }),
+            animate('200ms ease-in', style({ height: '*', opacity: 1 })),
+            style({ 'overflow-y': 'auto' }),
+          ], { optional: true }),
+          query('hyt-alarm:leave', [
+            animate('200ms ease-out', style({ opacity: 0, transform: 'translateX(-300px)','overflow-y': 'clip' })),
+            animate('200ms', style({ height: 0, padding: 0 })),
+          ], { optional: true }),
+        ]),
+      ]),
+    ]),
+  ],
 })
 export class AlarmsWidgetComponent extends BaseWidgetComponent {
-  protected logger: Logger;
-  /**
-   * Map contain all the active alarm
-   */
-  alarmsList: Map<number, HytAlarm.LiveAlarm> = new Map();
-  /**
-   * Map contain all the alarm that need to be animated out and after removed
-   */
-  alarmListToRemove: Map<number, boolean> = new Map();
+  protected logger: Logger;  
+  hPacketIdList = [];
   /**
    * Show form for filter the alarm
    */
@@ -46,6 +57,7 @@ export class AlarmsWidgetComponent extends BaseWidgetComponent {
     injector: Injector, 
     protected loggerService: LoggerService, 
     private alarmWrapper: AlarmWrapperService,
+    private hPacketsService: HpacketsService,
   ) {
     super(injector, loggerService);
     this.logger = new Logger(this.loggerService);
@@ -54,35 +66,22 @@ export class AlarmsWidgetComponent extends BaseWidgetComponent {
   
   ngAfterViewInit() {
     this.configure();
+    this.hPacketsService.findAllHPacketByProjectId(this.widget.projectId).subscribe(
+      res => this.hPacketIdList = res.map(packet => packet.id)
+    );
   }
 
   configure() {
     this.isConfigured = true;
-    //LIVE ALARM
-    this.alarmWrapper.alarmSubject
-      .subscribe((alarm) => {
-        if(alarm.isEvent) return;
-        this.logger.info("EMITTED ALARM ON DASHBOARD", alarm)
-        //NOT FILTER FOR PROJECT, NEED TO CHANGE REALTIME DATA SERVICE
-        if(alarm.event.alarmState == "UP"){
-          this.alarmsList.set(alarm.event.alarmId, alarm);
-          
-        }else{
-          // ANIMATE ALARM USING ALARMSTATE AND AFTER D
-          this.alarmListToRemove.set(alarm.event.alarmId, true);
-          setTimeout(()=>{
-            this.alarmsList.delete(alarm.event.alarmId);
-            this.alarmListToRemove.delete(alarm.event.alarmId);
-          }, 1000)
-        }
-      })
   }
-  /**
-   * Return alarmList map as array
-   */
-  get alarmListArray() : HytAlarm.LiveAlarm[]{
-    return Array.from(this.alarmsList.values());
+
+  get alarmListArray() : HytAlarm.LiveAlarm[] {
+    return this.alarmWrapper.alarmListArray.filter(
+      alarm => alarm.projectId === this.widget.projectId ||
+      (alarm.packetIds?.some(packetId => this.hPacketIdList.includes(packetId)))
+    );
   }
+
   /**
    * If the user is filtering return the alarmList map as array filter, 
    * if not call the get alarmListArray

@@ -15,7 +15,7 @@ import {
   RealtimeDataService,
 } from "core";
 import { ToastrService } from "ngx-toastr";
-import { Subject, Subscription, filter, takeUntil } from "rxjs";
+import {Subject, Subscription, filter, takeUntil, distinctUntilChanged, tap} from "rxjs";
 import { DashboardConfigService } from "widgets";
 import { environment } from "../environments/environment";
 
@@ -27,9 +27,9 @@ import { environment } from "../environments/environment";
 })
 export class AppComponent implements OnInit, OnDestroy {
   public environment = environment;
-  eventNotificationIsOn: boolean = true;
+  eventNotificationIsOn: boolean;
 
-  private toastMessage = $localize`:@@HYT_dashboard_event_fired:The event has been fired`;
+  private toastMessage = $localize`:@@HYT_dashboard_event_fired:Alarm cleared`;
   projectIds: number[];
 
   /** Subject for manage the open subscriptions */
@@ -48,7 +48,6 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(
     private activatedRoute: ActivatedRoute,
     private hprojectsService: HprojectsService,
-    private configService: DashboardConfigService,
     private realtimeDataService: RealtimeDataService,
     private toastr: ToastrService,
     private loggerService: LoggerService,
@@ -58,11 +57,10 @@ export class AppComponent implements OnInit, OnDestroy {
     // Init Logger
     this.logger = new Logger(this.loggerService);
     this.logger.registerClass("AppComponent");
+    this.eventNotificationIsOn = alarmWrapper.eventNotificationState.getValue();
   }
 
   ngOnInit() {
-    console.log(this.alarmWrapper);
-
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((urlObj: NavigationEnd) => {
@@ -92,19 +90,24 @@ export class AppComponent implements OnInit, OnDestroy {
         this.realtimeDataService.connect(this.projectIds);
       });
 
-    this.configService.eventNotificationState
+    this.alarmWrapper.eventNotificationState
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((res) => {
         this.eventNotificationIsOn = res;
-        if (this.eventNotificationIsOn) {
-          this.subscribeToNotification();
-        } else {
-          this.logger.info("Subscribe to notifications OFF");
-          this.alarmSubscription.unsubscribe();
-        }
+        this.manageNotificationSubscription();
       });
 
-    this.subscribeToNotification();
+    this.manageNotificationSubscription();
+  }
+
+  manageNotificationSubscription(){
+    if (this.eventNotificationIsOn) {
+      this.logger.info("Subscribe to notifications ON");
+      this.subscribeToNotification();
+    } else {
+      this.logger.info("Subscribe to notifications OFF");
+      if(this.alarmSubscription) this.alarmSubscription.unsubscribe();
+    }
   }
 
   @HostListener("wheel", ["$event"])
@@ -123,8 +126,13 @@ export class AppComponent implements OnInit, OnDestroy {
 
   subscribeToNotification() {
     this.logger.info("Subscribe to notifications ON");
+    if(this.alarmSubscription) this.alarmSubscription.unsubscribe();
     this.alarmSubscription = this.alarmWrapper.alarmSubject
-      .pipe(takeUntil(this.ngUnsubscribe))
+      .pipe(
+        tap((alarm) => { this.logger.debug("Alarm received", alarm); }),
+        takeUntil(this.ngUnsubscribe),
+        distinctUntilChanged()
+      )
       .subscribe((alarm) => {
         let toastImage = "info";
         if (alarm.isEvent) {
@@ -132,14 +140,14 @@ export class AppComponent implements OnInit, OnDestroy {
         } else if (alarm.isAlarm) {
           toastImage =
             alarm.event.alarmState === "UP" ? "toastAlarmUp" : "toastAlarmDown";
-          if (alarm.event.alarmState === 'DOWN') 
+          if (alarm.event.alarmState === 'DOWN')
             alarm.color.background = '#51a351'; // Green of resolved alarm BG (OFF state)
         }
         const toastId = this.toastr["index"];
         this.toastr
           .show(
             this.toastMessage,
-            alarm.event.ruleName,
+            alarm.event.alarmEventName,
             { toastClass: "ngx-toastr toast-" + toastId },
             toastImage
           )
@@ -152,7 +160,7 @@ export class AppComponent implements OnInit, OnDestroy {
                 )
                 .setAttribute(
                   "style",
-                  `background-color: ${alarm.color.background}; color: ${alarm.color.text};`
+                  `background-color: ${alarm.color.background}; color: ${alarm.color.text}; transform: translateY(64px);`
                 );
             },
           });

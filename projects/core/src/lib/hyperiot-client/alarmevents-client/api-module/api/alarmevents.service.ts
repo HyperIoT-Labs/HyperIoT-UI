@@ -14,6 +14,7 @@
 import { Inject, Injectable, Optional }                      from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams,
          HttpResponse, HttpEvent }                           from '@angular/common/http';
+import { HttpContext }                                       from '@angular/common/http';
 import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
 import { Observable }                                        from 'rxjs';
@@ -62,10 +63,10 @@ export class AlarmeventsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public checkModuleWorking(observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public checkModuleWorking(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public checkModuleWorking(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public checkModuleWorking(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public checkModuleWorking(observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public checkModuleWorking(observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public checkModuleWorking(observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public checkModuleWorking(observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         let headers = this.defaultHeaders;
 
@@ -87,6 +88,7 @@ export class AlarmeventsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -99,10 +101,10 @@ export class AlarmeventsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deleteAlarmEvent(id: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public deleteAlarmEvent(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public deleteAlarmEvent(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public deleteAlarmEvent(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public deleteAlarmEvent(id: number, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public deleteAlarmEvent(id: number, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public deleteAlarmEvent(id: number, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public deleteAlarmEvent(id: number, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling deleteAlarmEvent.');
@@ -134,6 +136,7 @@ export class AlarmeventsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -146,10 +149,10 @@ export class AlarmeventsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public findAlarmEvent(id: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public findAlarmEvent(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public findAlarmEvent(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public findAlarmEvent(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public findAlarmEvent(id: number, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public findAlarmEvent(id: number, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public findAlarmEvent(id: number, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public findAlarmEvent(id: number, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling findAlarmEvent.');
@@ -180,6 +183,7 @@ export class AlarmeventsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -191,10 +195,10 @@ export class AlarmeventsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public findAllAlarmEvent(observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public findAllAlarmEvent(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public findAllAlarmEvent(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public findAllAlarmEvent(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public findAllAlarmEvent(observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public findAllAlarmEvent(observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public findAllAlarmEvent(observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public findAllAlarmEvent(observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         let headers = this.defaultHeaders;
 
@@ -221,6 +225,7 @@ export class AlarmeventsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -233,10 +238,10 @@ export class AlarmeventsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public findAllAlarmEventByAlarmId(alarmId: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public findAllAlarmEventByAlarmId(alarmId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public findAllAlarmEventByAlarmId(alarmId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public findAllAlarmEventByAlarmId(alarmId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public findAllAlarmEventByAlarmId(alarmId: number, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public findAllAlarmEventByAlarmId(alarmId: number, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public findAllAlarmEventByAlarmId(alarmId: number, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public findAllAlarmEventByAlarmId(alarmId: number, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (alarmId === null || alarmId === undefined) {
             throw new Error('Required parameter alarmId was null or undefined when calling findAllAlarmEventByAlarmId.');
@@ -267,6 +272,7 @@ export class AlarmeventsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -280,10 +286,10 @@ export class AlarmeventsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public findAllAlarmEventPaginated(delta?: number, page?: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public findAllAlarmEventPaginated(delta?: number, page?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public findAllAlarmEventPaginated(delta?: number, page?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public findAllAlarmEventPaginated(delta?: number, page?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public findAllAlarmEventPaginated(delta?: number, page?: number, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public findAllAlarmEventPaginated(delta?: number, page?: number, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public findAllAlarmEventPaginated(delta?: number, page?: number, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public findAllAlarmEventPaginated(delta?: number, page?: number, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
 
 
@@ -321,6 +327,7 @@ export class AlarmeventsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -333,10 +340,10 @@ export class AlarmeventsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public saveAlarmEvent(body: AlarmEvent, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public saveAlarmEvent(body: AlarmEvent, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public saveAlarmEvent(body: AlarmEvent, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public saveAlarmEvent(body: AlarmEvent, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public saveAlarmEvent(body: AlarmEvent, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public saveAlarmEvent(body: AlarmEvent, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public saveAlarmEvent(body: AlarmEvent, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public saveAlarmEvent(body: AlarmEvent, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling saveAlarmEvent.');
@@ -373,6 +380,7 @@ export class AlarmeventsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -385,10 +393,10 @@ export class AlarmeventsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public updateAlarmEvent(body: AlarmEvent, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public updateAlarmEvent(body: AlarmEvent, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public updateAlarmEvent(body: AlarmEvent, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public updateAlarmEvent(body: AlarmEvent, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public updateAlarmEvent(body: AlarmEvent, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public updateAlarmEvent(body: AlarmEvent, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public updateAlarmEvent(body: AlarmEvent, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public updateAlarmEvent(body: AlarmEvent, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling updateAlarmEvent.');
@@ -425,6 +433,7 @@ export class AlarmeventsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
