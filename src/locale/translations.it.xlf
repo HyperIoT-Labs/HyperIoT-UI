@@ -1180,9 +1180,9 @@
         <source>Deleting of project "<x id="PH" />" in loading. It may take a while.</source>
         <target>Eliminazione del progetto in corso. Questa operazione potrebbe richiedere un po' di tempo.</target>
       </trans-unit>
-      <trans-unit id="HYT_plan_info" datatype="html">
-        <source>Plan Info</source>
-        <target>Info piano</target>
+      <trans-unit id="HYT_general_info" datatype="html">
+        <source>General Info</source>
+        <target>Info generali</target>
       </trans-unit>
       <trans-unit id="HYT_your_role_is" datatype="html">
         <source>Your role is</source>
@@ -2366,6 +2366,30 @@
       <trans-unit id="HYT_saving_logo_error" datatype="html">
         <source>Saving logo error</source>
         <target>Errore nel salvataggio del logo</target>
+      </trans-unit>
+      <trans-unit id="HYT_you_have_access_to" datatype="html">
+        <source>You have access to</source>
+        <target>Hai accesso a</target>
+      </trans-unit>
+      <trans-unit id="HYT_theme_customization" datatype="html">
+        <source>Theme customization</source>
+        <target>Personalizzazione del tema</target>
+      </trans-unit>
+      <trans-unit id="HYT_upload_your_logo" datatype="html">
+        <source>Upload your logo</source>
+        <target>Carica il tuo logo</target>
+      </trans-unit>
+      <trans-unit id="HYT_upload" datatype="html">
+        <source>Upload</source>
+        <target>Carica</target>
+      </trans-unit>
+      <trans-unit id="HYT_preview" datatype="html">
+        <source>Preview</source>
+        <target>Anteprima</target>
+      </trans-unit>
+      <trans-unit id="HYT_reset" datatype="html">
+        <source>Reset</source>
+        <target>Ripristina</target>
       </trans-unit>
     </body>
   </file>
