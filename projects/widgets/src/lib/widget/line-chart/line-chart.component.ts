@@ -22,7 +22,7 @@ import {
 } from "rxjs";
 
 import { BaseChartComponent } from "../../base/base-chart/base-chart.component";
-import { WidgetAction } from "../../base/base-widget/model/widget.model";
+import {ConfigButtonWidget, WidgetAction} from "../../base/base-widget/model/widget.model";
 import { TimeSeries } from "../../data/time-series";
 import { ServiceType } from "../../service/model/service-type";
 import { DashboardEventService } from "../../dashboard/services/dashboard-event.service";
@@ -42,6 +42,15 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
   sideMarginGap = 0.12;
   totalLength = 0;
   fieldsName: any[] = [];
+   get initToolbarConfig() :ConfigButtonWidget  {
+     return {
+       showClose: true,
+       showSettings: true,
+       showPlay: this.serviceType === this.serviceTypeList.ONLINE,
+       showRefresh: false,
+       showTable: false
+     }
+  }
 
   dataChannel: DataChannel;
   dataSubscription: Subscription;

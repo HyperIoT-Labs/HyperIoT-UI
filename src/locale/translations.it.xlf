@@ -2327,6 +2327,7 @@
       <trans-unit id="HYT_alarm_showing_text_of" datatype="html">
         <source> of </source>
         <target> su </target>
+      </trans-unit>
       <trans-unit id="HYT_conditions" datatype="html">
         <source>Conditions</source>
         <target>Condizioni</target>

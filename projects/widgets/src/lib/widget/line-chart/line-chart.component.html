@@ -6,13 +6,7 @@
         widgetName="{{widget.name}}"
         (action)="onToolbarAction($event)"
         [toolbarIsVisible]="isToolbarVisible"
-        [config]="{
-          showClose: true,
-          showSettings: true,
-          showPlay: serviceType === serviceTypeList.ONLINE,
-          showRefresh: false,
-          showTable: false,
-        }">
+        [config]="initToolbarConfig">
       </hyperiot-common-toolbar>
     </header-widget>
 
