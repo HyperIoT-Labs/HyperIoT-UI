@@ -64,6 +64,8 @@ import { ContainerAreaMapComponent } from './pages/areas/container-area-map/cont
 import { HttpErrorInterceptor } from './interceptors/http-error.interceptor';
 import { NotificationButtonComponent } from './components/topbar/notification-button/notification-button.component';
 import { NotificationDialogComponent } from './components/dialogs/notification-dialog/notification-dialog.component';
+import { StoreModule } from '@ngrx/store';
+import { STORE } from './state/store/store';
 PlotlyModule.plotlyjs = PlotlyJS;
 
 export class MyUrlSerializer extends DefaultUrlSerializer implements UrlSerializer {
@@ -144,7 +146,8 @@ export function apiConfigFactory(): Configuration {
     ScrollingModule,
     CoreModule,
     BrowserModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    StoreModule.forRoot(STORE)
   ],
   providers: [
     // ActivatedRouteSnapshot,

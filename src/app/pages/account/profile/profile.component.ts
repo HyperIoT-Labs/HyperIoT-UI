@@ -296,7 +296,7 @@ export class ProfileComponent implements OnInit {
       showError: false,
       message: ''
     };
-    this.brandingService.updateBranding(this.fileToUpload).subscribe({
+    this.brandingService.updateBranding({file: this.fileToUpload}).subscribe({
       next: () => {
         this.brandingService.updateLogo({
           standard: this.logoPath,

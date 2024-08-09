@@ -4,6 +4,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { UiBrandingService } from 'core';
 import { BehaviorSubject, catchError, map, Observable, of, Subject, tap } from 'rxjs';
 import { HyperiotLogoMobilePath, HyperiotLogoPath } from 'src/app/constants';
+import { BrandingTheme } from './models/branding';
 
 @Injectable({
   providedIn: 'root'
@@ -54,12 +55,12 @@ export class BrandingService {
     }) 
   }
 
-  updateBranding(file: File) {
+  updateBranding(theme: BrandingTheme) {
     const formData = new FormData();
     formData.append('name', '');
     formData.append('colorScheme', '');
-    formData.append('logo', file, file.name);
-    formData.append('favicon', file, file.name);
+    formData.append('logo', theme.file, theme.file.name);
+    formData.append('favicon', theme.file, theme.file.name);
     return this.httpClient.put<any>(`/hyperiot/ui-branding`, formData)
     .pipe(tap({
       next: () => {
