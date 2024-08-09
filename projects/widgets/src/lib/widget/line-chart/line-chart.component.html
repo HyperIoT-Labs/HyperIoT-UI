@@ -11,11 +11,11 @@
           showSettings: true,
           showPlay: serviceType === serviceTypeList.ONLINE,
           showRefresh: false,
-          showTable: false
+          showTable: false,
         }">
       </hyperiot-common-toolbar>
     </header-widget>
-  
+
     <content-widget class="relative-content">
       <div *ngIf="!isConfigured; else configured" class="configure-notice">
         <strong i18n="@@HYT_common_not_configured">Click 'Settings' button to configure.</strong>
@@ -24,7 +24,7 @@
         <hyperiot-loader
           *ngIf="!graph ||!graph?.data || graph?.data.length === 0; else loadingFinished">
         </hyperiot-loader>
-  
+
         <ng-template #loadingFinished>
           <plotly-plot
             #lineChartPlotly
@@ -37,9 +37,13 @@
             (initialized)="subscribeAndInit()"
           >
           </plotly-plot>
-              
+
+          <div *ngIf="!noRangeSelected() && (graph && graph?.data && graph?.data[0]?.y?.length === 0)" class="loading-overlay">
+            <p i18n="@@HYT_noData">No data to display</p>
+          </div>
+
           <div *ngIf="noRangeSelected()" class="loading-overlay">
-            <p i18n="@@HYT_noRangeSelected">Select a range to display the graph...</p>
+            <p i18n="@@HYT_noRangeSelected">Select a range to display the graph... </p>
           </div>
 
           <div *ngIf="isLoadingData()" class="loading-overlay">
@@ -47,10 +51,9 @@
             <mat-spinner  strokeWidth="4" diameter="44"></mat-spinner>
           </div>
         </ng-template>
-  
+
       </ng-template>
 
     </content-widget>
-  
+
   </hyperiot-base-widget-template>
-  

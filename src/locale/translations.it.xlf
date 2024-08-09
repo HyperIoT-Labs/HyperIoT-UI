@@ -2339,6 +2339,14 @@
         <source>Selection of the package and device is required!</source>
         <target>La selezione del pacchetto e del dispositivo è necessaria!</target>
       </trans-unit>
+      <trans-unit id="HYT_fields_fit_to_timeline" datatype="html">
+        <source>Fit to timeline</source>
+        <target>Adatta alla timeline</target>
+      </trans-unit>
+      <trans-unit id="HYT_noData" datatype="html">
+        <source>No data to display</source>
+        <target>Nessun dato da visualizzare</target>
+      </trans-unit>
       <trans-unit id="HYT_notification_active" datatype="html">
         <source>Notification ACTIVE</source>
         <target>Notifiche ATTIVE </target>

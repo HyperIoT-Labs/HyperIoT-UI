@@ -4,6 +4,7 @@ import {
     Output,
     EventEmitter
 } from '@angular/core';
+import {ConfigButtonWidget} from "../../base/base-widget/model/widget.model";
 
 @Component({
     selector: 'hyperiot-common-toolbar',
@@ -13,7 +14,7 @@ import {
 export class CommonToolbarComponent {
     @Input() widgetName: string;
 
-    @Input() config = {
+    @Input() config: ConfigButtonWidget = {
         showClose: true,
         showSettings: true,
         showPlay: false,
@@ -46,7 +47,7 @@ export class CommonToolbarComponent {
     }
 
     /**
-     * This method tells if the toolbar is in play mode 
+     * This method tells if the toolbar is in play mode
      * @param play Whether to play or pause the data
      */
     play(play: boolean) {
