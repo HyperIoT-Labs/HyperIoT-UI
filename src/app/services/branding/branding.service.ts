@@ -82,7 +82,6 @@ export class BrandingService {
     standard: SafeResourceUrl,
     mobile: SafeResourceUrl
   }) {
-    console.log(value)
     this._logoPath$.next(value);
   }
 
