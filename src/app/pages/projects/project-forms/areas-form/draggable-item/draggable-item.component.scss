@@ -11,6 +11,10 @@
   margin-left: -32px;
   margin-top: -32px;
 
+  &.menu-enabled {
+    cursor: pointer;
+  }
+
   .remove-button {
     outline: none;
     position: absolute;
@@ -43,6 +47,10 @@
 
     &.area-title {
       background-color: rgba($color: yellow, $alpha: 0.65);
+    }
+
+    &.menu-disabled {
+      cursor: default;
     }
 
     .name {

@@ -1,6 +1,7 @@
 <div 
     [matMenuTriggerFor]="!!itemData.device && !editMode ? menu : null"
     class="draggable-item"
+    [ngClass]="{ 'menu-enabled': !!itemData.device && !editMode }"
     [title]="setTitleAttribute(itemData, editMode, 'move')"
     [ngStyle]="style"
     cdkDrag
@@ -42,12 +43,15 @@
     <!--Remove {{itemData.device ? itemData.device.deviceName : itemData.name}}-->
 
     <div 
-        class="title" [ngClass]="{ 'area-title': !itemData.device }"
+        class="title" [ngClass]="{ 
+            'area-title': !itemData.device,
+            'menu-disabled': !!itemData.device && editMode
+        }"
         title="Open {{itemData.device ? itemData.device.deviceName : itemData.name}}"
         i18n-title="@@HYT_area_draggable_open"
         (mousedown)="$event.stopPropagation()"
         (click)="onOpenButtonClick($event)"
-        [ngStyle]="{ display: (showName || editMode) ? '' : 'none' }"
+        [ngStyle]="{ display: (showName || editMode || (!!itemData.device && !editMode)) ? '' : 'none' }"
     >
         <div class="name">{{itemData.device ? itemData.device.deviceName : itemData.name}}</div>
         <!-- BEGIN -- custom render data passed on component refresh event -->
