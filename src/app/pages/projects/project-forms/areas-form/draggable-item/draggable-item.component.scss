@@ -75,6 +75,19 @@
   }
 }
 
+.menu-item-flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  
+  mat-icon {
+    &.mat-icon {
+      margin-left: 16px;
+      margin-right: 0;
+    }
+  }
+}
+
 @keyframes pulsate {
   0% {
     opacity: 0.1;

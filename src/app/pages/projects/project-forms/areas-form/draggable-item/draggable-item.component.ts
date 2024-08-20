@@ -52,6 +52,7 @@ export class DraggableItemComponent {
   setConfig(container: HTMLElement, itemData: AreaDevice) {
     this.container = container;
     this.itemData = itemData;
+    if (!!this.itemData.device && !this.editMode) this.showName = true;
     this.style['background-image'] = `url(assets/icons/${itemData.mapInfo.icon})`;
     this.style['background-size'] = `contain`;
     this.style['background-repeat'] = `no-repeat`;
@@ -74,10 +75,12 @@ export class DraggableItemComponent {
   }
 
   showNameLabel(){
+    if (!!this.itemData.device && !this.editMode) return;
     this.showName = true;
   }
 
   hideNameLabel(){
+    if (!!this.itemData.device && !this.editMode) return;
     this.showName = false;
   }
 

@@ -1,4 +1,5 @@
 <div 
+    [matMenuTriggerFor]="!!itemData.device && !editMode ? menu : null"
     class="draggable-item"
     [title]="setTitleAttribute(itemData, editMode, 'move')"
     [ngStyle]="style"
@@ -13,6 +14,19 @@
     (mouseover)="showNameLabel()" 
     (mouseout)="hideNameLabel()" 
 >
+
+    <mat-menu #menu="matMenu">
+        <button mat-menu-item class="menu-item-flex">
+            <span i18n="@@HYT_go_to_device_dashboard">Go to Device Dashboard</span>
+            <mat-icon>apps</mat-icon>
+        </button>
+        <button mat-menu-item class="menu-item-flex" [disabled]="true">
+            <span i18n="@@HYT_go_to_alarm_manager">Go to Alarm Manager</span>
+            <mat-icon>info</mat-icon>
+        </button>
+    </mat-menu>
+
+
 <!-- i18n-title="@@HYT_area_draggable_title" -->
     
     <button 
