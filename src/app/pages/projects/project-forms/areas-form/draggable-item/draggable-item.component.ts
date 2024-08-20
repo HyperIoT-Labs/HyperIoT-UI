@@ -81,6 +81,16 @@ export class DraggableItemComponent {
     this.showName = false;
   }
 
+  redirectToDeviceDashboard(projectID: string) {
+    console.log("Redirect to DeviceDashboard", projectID);
+    return;
+  }
+
+  redirectToAlarmManager(deviceID: string) {
+    console.log("Redirect to AlarmManager", deviceID);
+    return;
+  }
+
   setTitleAttribute(itemData: any, editMode: boolean, action: string): string {
 
     const deviceName = itemData.device ? itemData.device.deviceName : itemData.name;

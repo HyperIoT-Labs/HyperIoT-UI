@@ -17,11 +17,11 @@
 >
 
     <mat-menu #menu="matMenu">
-        <button mat-menu-item class="menu-item-flex">
+        <button mat-menu-item class="menu-item-flex" (click)="redirectToDeviceDashboard(itemData.device.project.id)">
             <span i18n="@@HYT_go_to_device_dashboard">Go to Device Dashboard</span>
             <mat-icon>apps</mat-icon>
         </button>
-        <button mat-menu-item class="menu-item-flex" [disabled]="true">
+        <button mat-menu-item class="menu-item-flex" [disabled]="true" (click)="redirectToAlarmManager(itemData.device.id)">
             <span i18n="@@HYT_go_to_alarm_manager">Go to Alarm Manager</span>
             <mat-icon>info</mat-icon>
         </button>
