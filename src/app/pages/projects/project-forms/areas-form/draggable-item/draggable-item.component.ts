@@ -2,6 +2,11 @@ import { Component, HostListener, EventEmitter } from '@angular/core';
 import { CdkDrag } from '@angular/cdk/drag-drop';
 import { AreaDevice } from 'core';
 
+export enum DeviceActions {
+  ALARMMANAGER,
+  DASHBOARD
+}
+
 @Component({
   selector: 'hyt-draggable-item',
   templateUrl: './draggable-item.component.html',
@@ -12,6 +17,9 @@ export class DraggableItemComponent {
   removeClicked = new EventEmitter<any>();
   positionChanged = new EventEmitter<any>();
   renderDataRequest = new EventEmitter<any>();
+
+  deviceActions = DeviceActions;
+
   editMode = false;
   itemData = {} as any;
   container;
@@ -42,8 +50,8 @@ export class DraggableItemComponent {
     this.positionChanged.emit();
   }
 
-  onOpenButtonClick(e) {
-    this.openClicked.emit();
+  onOpenButtonClick(e: any, deviceActionType?: DeviceActions) {
+    this.openClicked.emit(deviceActionType);
   }
   onRemoveButtonClick(e) {
     this.removeClicked.emit();
@@ -81,13 +89,10 @@ export class DraggableItemComponent {
     this.showName = false;
   }
 
-  redirectToDeviceDashboard(projectID: string) {
-    console.log("Redirect to DeviceDashboard", projectID);
-    return;
-  }
-
-  redirectToAlarmManager(deviceID: string) {
-    console.log("Redirect to AlarmManager", deviceID);
+  redirectTo(device: any, deviceAction: DeviceActions) {
+    console.log("Redirect to", deviceAction);
+    console.log("Device", device);
+    this.onOpenButtonClick(device, deviceAction);
     return;
   }
 
@@ -99,7 +104,7 @@ export class DraggableItemComponent {
       case 'move':
 
         if(!editMode){
-
+          if (itemData.device) return `Open ${deviceName} menu`;
           return deviceName;
 
         } else {

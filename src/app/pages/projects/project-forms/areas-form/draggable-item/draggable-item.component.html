@@ -17,11 +17,11 @@
 >
 
     <mat-menu #menu="matMenu">
-        <button mat-menu-item class="menu-item-flex" (click)="redirectToDeviceDashboard(itemData.device.project.id)">
+        <button mat-menu-item class="menu-item-flex" (click)="redirectTo(itemData, deviceActions.DASHBOARD)">
             <span i18n="@@HYT_go_to_device_dashboard">Go to Device Dashboard</span>
             <mat-icon>apps</mat-icon>
         </button>
-        <button mat-menu-item class="menu-item-flex" [disabled]="true" (click)="redirectToAlarmManager(itemData.device.id)">
+        <button mat-menu-item class="menu-item-flex" [disabled]="true" (click)="redirectTo(itemData, deviceActions.ALARMMANAGER)">
             <span i18n="@@HYT_go_to_alarm_manager">Go to Alarm Manager</span>
             <mat-icon>info</mat-icon>
         </button>
@@ -45,12 +45,13 @@
     <div 
         class="title" [ngClass]="{ 
             'area-title': !itemData.device,
-            'menu-disabled': !!itemData.device && editMode
+            'menu-disabled': !!itemData.device && editMode,
+            'menu-enabled': !!itemData.device && !editMode
         }"
-        title="Open {{itemData.device ? itemData.device.deviceName : itemData.name}}"
+        title="Open {{itemData.device ? itemData.device.deviceName : itemData.name}}{{itemData.device && !editMode ? ' menu' : ''}}"
         i18n-title="@@HYT_area_draggable_open"
-        (mousedown)="$event.stopPropagation()"
-        (click)="onOpenButtonClick($event)"
+        (mousedown)="!!itemData.device && !editMode ? null : $event.stopPropagation()"
+        (click)="!!itemData.device && !editMode ? null : onOpenButtonClick($event)"
         [ngStyle]="{ display: (showName || editMode || (!!itemData.device && !editMode)) ? '' : 'none' }"
     >
         <div class="name">{{itemData.device ? itemData.device.deviceName : itemData.name}}</div>

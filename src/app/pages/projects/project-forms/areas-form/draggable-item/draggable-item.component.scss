@@ -51,6 +51,16 @@
 
     &.menu-disabled {
       cursor: default;
+      /* bottom: -17px; */
+    }
+
+    &.menu-enabled {
+      border-radius: 0.3em;
+      border: none;
+      padding: 0;
+      bottom: -17px;
+      font-size: .96em;
+      background-color: rgba($color: yellow, $alpha: 0.65);
     }
 
     .name {
