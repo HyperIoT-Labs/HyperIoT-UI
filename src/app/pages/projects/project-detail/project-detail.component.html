@@ -55,18 +55,21 @@
                 <div class="content">
 
                     <div id="back-to-back-btn">
+                        <div *ngIf="areaId; else defaultBackBtn">
+                            <a class="box-back-btn" [routerLink]="['/areas', this.projectId, this.currentEntity.areaId]">
+                                <span class="icon-hyt_caretDown hyt-icon-back"></span>
 
-                        <a
-                            class="box-back-btn"
-                            [routerLink]="['/projects']"
-                        >
-                            <span class="icon-hyt_caretDown hyt-icon-back"></span>
+                                <span id="title-back-btn" i18n="@@HYT_back_to_areas">Back to area</span>
+                            </a>
+                        </div>
 
-                            <span id="title-back-btn">Back to projects</span>
+                        <ng-template #defaultBackBtn>
+                            <a class="box-back-btn" [routerLink]="['/projects']">
+                                <span class="icon-hyt_caretDown hyt-icon-back"></span>
 
-
-                        </a>
-
+                                <span id="title-back-btn">Back to projects</span>
+                            </a>
+                        </ng-template>
                     </div>
 
                     <div class="container-form-title">
