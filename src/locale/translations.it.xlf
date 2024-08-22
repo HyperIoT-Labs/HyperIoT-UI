@@ -2400,6 +2400,10 @@
         <source>Reset</source>
         <target>Ripristina</target>
       </trans-unit>
+      <trans-unit id="HYT_back_to_projects" datatype="html">
+        <source>Back to projects</source>
+        <target>Torna ai progetti</target>        
+      </trans-unit>
     </body>
   </file>
 </xliff>
