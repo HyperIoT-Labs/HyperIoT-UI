@@ -50,6 +50,7 @@ export interface ConfigModel {
     fieldValuesMapList?: FieldValuesMapList;
     dynamicLabels?: DynamicLabels;
     fitToTimeline?: boolean;
+    maxValue?: number;
 }
 
 export interface FieldUnitConversion {

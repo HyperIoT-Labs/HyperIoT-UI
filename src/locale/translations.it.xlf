@@ -2400,6 +2400,10 @@
         <source>Reset</source>
         <target>Ripristina</target>
       </trans-unit>
+      <trans-unit id="HYT_widget_settings_max_value" datatype="html">
+        <source>Set max value:</source>
+        <target>Imposta il valore massimo:</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

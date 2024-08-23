@@ -1794,6 +1794,9 @@
       <trans-unit id="HYT_preview" datatype="html">
         <source>Preview</source>
       </trans-unit>
+      <trans-unit id="HYT_widget_settings_max_value" datatype="html">
+        <source>Set max value:</source>
+      </trans-unit>
     </body>
   </file>
 </xliff>
