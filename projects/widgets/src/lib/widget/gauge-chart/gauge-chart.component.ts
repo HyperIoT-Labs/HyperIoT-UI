@@ -74,6 +74,8 @@ export class GaugeChartComponent extends BaseGenericComponent implements OnInit 
     }
     this.isConfigured = true;
 
+    if (this.widget.config.maxValue) this.maxValue = this.widget.config.maxValue;
+
     this.graph.layout = {};
     this.graph.data = [];
     this.graph.config = {};

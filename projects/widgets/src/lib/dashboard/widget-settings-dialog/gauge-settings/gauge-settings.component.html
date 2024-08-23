@@ -1,0 +1,17 @@
+<hyperiot-packet-select
+    [widget]="widget"
+    [multiPacketSelect]="false"
+    [selectedFields]="selectedFields"
+    [areaId]="areaId"
+    (selectedFieldsChange)="onSelectedFieldsChange($event)"></hyperiot-packet-select>
+<hr>
+<div class="text-color">
+    <label class="ba-label" i18n="@@HYT_widget_settings_text_color">Text color:</label>
+    <hyt-input-template type="color" [(ngModel)]="widget.config.textColor" name="color">
+    </hyt-input-template>
+</div>
+<div class="max-value">
+    <label class="ba-label" i18n="@@HYT_widget_settings_max_value">Set max value:</label>
+    <hyt-input-template type="number" [(ngModel)]="widget.config.maxValue" name="max-value">
+    </hyt-input-template>
+</div>
