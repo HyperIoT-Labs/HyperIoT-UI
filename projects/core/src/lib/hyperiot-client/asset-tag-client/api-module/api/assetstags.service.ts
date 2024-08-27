@@ -14,6 +14,7 @@
 import { Inject, Injectable, Optional }                      from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams,
          HttpResponse, HttpEvent }                           from '@angular/common/http';
+import { HttpContext }                                       from '@angular/common/http';
 import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
 import { Observable }                                        from 'rxjs';
@@ -62,10 +63,10 @@ export class AssetstagsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public checkModuleWorking(observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public checkModuleWorking(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public checkModuleWorking(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public checkModuleWorking(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public checkModuleWorking(observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public checkModuleWorking(observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public checkModuleWorking(observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public checkModuleWorking(observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         let headers = this.defaultHeaders;
 
@@ -87,6 +88,7 @@ export class AssetstagsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -99,10 +101,10 @@ export class AssetstagsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deleteAssetTag(id: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public deleteAssetTag(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public deleteAssetTag(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public deleteAssetTag(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public deleteAssetTag(id: number, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public deleteAssetTag(id: number, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public deleteAssetTag(id: number, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public deleteAssetTag(id: number, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling deleteAssetTag.');
@@ -134,6 +136,7 @@ export class AssetstagsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -145,10 +148,10 @@ export class AssetstagsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public findAllAssetTag(observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public findAllAssetTag(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public findAllAssetTag(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public findAllAssetTag(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public findAllAssetTag(observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public findAllAssetTag(observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public findAllAssetTag(observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public findAllAssetTag(observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         let headers = this.defaultHeaders;
 
@@ -175,6 +178,7 @@ export class AssetstagsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -188,10 +192,10 @@ export class AssetstagsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public findAllAssetTagPaginated(delta?: number, page?: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public findAllAssetTagPaginated(delta?: number, page?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public findAllAssetTagPaginated(delta?: number, page?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public findAllAssetTagPaginated(delta?: number, page?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public findAllAssetTagPaginated(delta?: number, page?: number, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public findAllAssetTagPaginated(delta?: number, page?: number, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public findAllAssetTagPaginated(delta?: number, page?: number, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public findAllAssetTagPaginated(delta?: number, page?: number, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
 
 
@@ -229,6 +233,7 @@ export class AssetstagsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -241,10 +246,10 @@ export class AssetstagsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public findAssetTag(id: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public findAssetTag(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public findAssetTag(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public findAssetTag(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public findAssetTag(id: number, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public findAssetTag(id: number, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public findAssetTag(id: number, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public findAssetTag(id: number, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling findAssetTag.');
@@ -275,6 +280,7 @@ export class AssetstagsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -288,10 +294,10 @@ export class AssetstagsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getAssetTagResourceList(resourceName: string, resourceId: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public getAssetTagResourceList(resourceName: string, resourceId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public getAssetTagResourceList(resourceName: string, resourceId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public getAssetTagResourceList(resourceName: string, resourceId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getAssetTagResourceList(resourceName: string, resourceId: number, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public getAssetTagResourceList(resourceName: string, resourceId: number, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public getAssetTagResourceList(resourceName: string, resourceId: number, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public getAssetTagResourceList(resourceName: string, resourceId: number, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (resourceName === null || resourceName === undefined) {
             throw new Error('Required parameter resourceName was null or undefined when calling getAssetTagResourceList.');
@@ -326,6 +332,7 @@ export class AssetstagsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -338,10 +345,10 @@ export class AssetstagsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public saveAssetTag(body: AssetTag, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public saveAssetTag(body: AssetTag, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public saveAssetTag(body: AssetTag, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public saveAssetTag(body: AssetTag, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public saveAssetTag(body: AssetTag, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public saveAssetTag(body: AssetTag, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public saveAssetTag(body: AssetTag, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public saveAssetTag(body: AssetTag, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling saveAssetTag.');
@@ -378,6 +385,7 @@ export class AssetstagsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -390,10 +398,10 @@ export class AssetstagsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public updateAssetTag(body: AssetTag, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public updateAssetTag(body: AssetTag, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public updateAssetTag(body: AssetTag, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public updateAssetTag(body: AssetTag, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public updateAssetTag(body: AssetTag, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public updateAssetTag(body: AssetTag, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public updateAssetTag(body: AssetTag, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public updateAssetTag(body: AssetTag, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling updateAssetTag.');
@@ -430,6 +438,7 @@ export class AssetstagsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );

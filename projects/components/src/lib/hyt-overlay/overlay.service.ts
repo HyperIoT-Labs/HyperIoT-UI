@@ -51,7 +51,6 @@ import {
         overlay.style.border = "none";
         overlay.style.boxShadow = "none";
         overlay.style.overflowY = "inherit";
-        overlay.style.transform = "translateY(15px)";
   
         // If overlay is render outside of the screen because is on the right side
         // i fix it gaining 15px of from right
@@ -94,26 +93,33 @@ import {
   
     get overlayPositions(): ConnectedPosition[] {
       return [
-        // Preferred position: Below the trigger element
+        // Preferred position: Below the trigger element (bottom right)
         {
-          originX: "start",
+          originX: "center",
           originY: "bottom",
           overlayX: "start",
           overlayY: "top",
         },
-        // If there's not enough space below, try above
+        // (top right)
         {
-          originX: "start",
+          originX: "center",
           originY: "top",
           overlayX: "start",
           overlayY: "bottom",
         },
-        // If space is limited on the right, try to position it to the left of the trigger
+        // (bottom left)
         {
-          originX: "end",
-          originY: "center",
-          overlayX: "start",
-          overlayY: "center",
+          originX: "center",
+          originY: "bottom",
+          overlayX: "end",
+          overlayY: "top",
+        },
+        // (top left)
+        {
+          originX: "center",
+          originY: "top",
+          overlayX: "end",
+          overlayY: "bottom",
         },
       ];
     }

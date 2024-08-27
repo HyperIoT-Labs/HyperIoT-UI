@@ -51,6 +51,7 @@ export interface ConfigModel {
     productionTargetSettings?: ProductionTargetSettings.ProductionTargetSettings;
     fieldValuesMapList?: FieldValuesMapList;
     dynamicLabels?: DynamicLabels;
+    fitToTimeline?: boolean;
 }
 
 export interface FieldUnitConversion {
@@ -141,4 +142,13 @@ export enum AutoUpdateConfigStatus {
     UNNECESSARY = 'UNNECESSARY',
     SUCCESS = 'SUCCESS',
     ERROR = 'ERROR',
+}
+
+export interface ConfigButtonWidget{
+  showClose?: boolean,
+  showSettings?: boolean,
+  showPlay?: boolean,
+  showRefresh?: boolean,
+  showTable?: boolean,
+  hideFullScreen?: boolean
 }

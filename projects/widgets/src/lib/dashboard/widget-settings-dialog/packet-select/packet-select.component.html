@@ -39,6 +39,13 @@
                 (fieldSelectionChanged)="onPacketFieldChange($event)"></hyt-inner-field-select>
 
         </div>
+        <div *ngIf="widgetType === 'time-chart'" id="field-fit-to-timeline" class="d-flex flex-column">
+          <mat-checkbox
+            color="primary"
+            name="fitToTimelineCheckbox"
+            id="fitToTimelineCheckbox"
+            [(ngModel)]="fitToTimelineCheckbox" i18n="@@HYT_fields_fit_to_timeline">Fit to timeline</mat-checkbox>
+        </div>
 
         <div id="box-fields-customization" *ngIf="selectedFields && selectedFields.length > 0">
 
@@ -151,7 +158,9 @@
                                     class="hyt-select-full-width">
                                 </hyt-select>
                                 <hyt-inner-field-select *ngIf="dynamicLabelFields[field.id] && dynamicLabelFields[field.id]?.length > 0" [fields]="dynamicLabelFields[field.id]"
+
                                     [selectedFieldsIds]="dynamicLabelSelectedField[field.id]?.fieldId ? [dynamicLabelSelectedField[field.id].fieldId] : []" [isMultiSelect]="false"
+
                                     (fieldSelectionChanged)="onDynamicLabelPacketFieldSelect($event, field.id)">
                                 </hyt-inner-field-select>
                             </div>
@@ -189,4 +198,5 @@
         </div>
 
     </ng-container>
+
 </div>

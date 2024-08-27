@@ -1180,9 +1180,9 @@
         <source>Deleting of project "<x id="PH" />" in loading. It may take a while.</source>
         <target>Eliminazione del progetto in corso. Questa operazione potrebbe richiedere un po' di tempo.</target>
       </trans-unit>
-      <trans-unit id="HYT_plan_info" datatype="html">
-        <source>Plan Info</source>
-        <target>Info piano</target>
+      <trans-unit id="HYT_general_info" datatype="html">
+        <source>General Info</source>
+        <target>Info generali</target>
       </trans-unit>
       <trans-unit id="HYT_your_role_is" datatype="html">
         <source>Your role is</source>
@@ -1409,8 +1409,8 @@
         <target>Procedendo con questa azione disabiliterai la registrazione dei dati che non saranno salvati fino alla riabilitazione di questa proprietà</target>
       </trans-unit>
       <trans-unit id="HYT_dashboard_event_fired" datatype="html">
-        <source>The event has been fired</source>
-        <target>L'evento è stato emesso</target>
+        <source>Alarm cleared</source>
+        <target>Allarme rientrato</target>
       </trans-unit>
       <trans-unit id="HYT_reload" datatype="html">
         <source>Reload</source>
@@ -2327,6 +2327,7 @@
       <trans-unit id="HYT_alarm_showing_text_of" datatype="html">
         <source> of </source>
         <target> su </target>
+      </trans-unit>
       <trans-unit id="HYT_conditions" datatype="html">
         <source>Conditions</source>
         <target>Condizioni</target>
@@ -2334,6 +2335,70 @@
       <trans-unit id="HYT_timestamp" datatype="html">
         <source>Timestamp</source>
         <target>Timestamp</target>
+      </trans-unit>
+      <trans-unit id="HYT_field_box_info" datatype="html">
+        <source>Selection of the package and device is required!</source>
+        <target>La selezione del pacchetto e del dispositivo è necessaria!</target>
+      </trans-unit>
+      <trans-unit id="HYT_fields_fit_to_timeline" datatype="html">
+        <source>Fit to timeline</source>
+        <target>Adatta alla timeline</target>
+      </trans-unit>
+      <trans-unit id="HYT_noData" datatype="html">
+        <source>No data to display</source>
+        <target>Nessun dato da visualizzare</target>
+      </trans-unit>
+      <trans-unit id="HYT_notification_active" datatype="html">
+        <source>Notification ACTIVE</source>
+        <target>Notifiche ATTIVE </target>
+      </trans-unit>
+      <trans-unit id="HYT_notification_inactive" datatype="html">
+        <source>Notification INACTIVE</source>
+        <target>Notifiche INATTIVE </target>
+      </trans-unit>
+      <trans-unit id="HYT_notification_list" datatype="html">
+        <source>Notification list</source>
+        <target>Lista notifiche</target>
+      </trans-unit>
+      <trans-unit id="HYT_notifications" datatype="html">
+        <source>NOTIFICATIONS</source>
+        <target>NOTIFICHE</target>
+      </trans-unit>
+      <trans-unit id="HYT_no_notifications" datatype="html">
+        <source>No notifications</source>
+        <target>Nessuna notifica</target>
+      </trans-unit>
+      <trans-unit id="HYT_reset_logo_error" datatype="html">
+        <source>Reset logo error</source>
+        <target>Errore durante il ripristino del logo</target>
+      </trans-unit>
+      <trans-unit id="HYT_saving_logo_error" datatype="html">
+        <source>Saving logo error</source>
+        <target>Errore nel salvataggio del logo</target>
+      </trans-unit>
+      <trans-unit id="HYT_you_have_access_to" datatype="html">
+        <source>You have access to</source>
+        <target>Hai accesso a</target>
+      </trans-unit>
+      <trans-unit id="HYT_theme_customization" datatype="html">
+        <source>Theme customization</source>
+        <target>Personalizzazione del tema</target>
+      </trans-unit>
+      <trans-unit id="HYT_upload_your_logo" datatype="html">
+        <source>Upload your logo</source>
+        <target>Carica il tuo logo</target>
+      </trans-unit>
+      <trans-unit id="HYT_upload" datatype="html">
+        <source>Upload</source>
+        <target>Carica</target>
+      </trans-unit>
+      <trans-unit id="HYT_preview" datatype="html">
+        <source>Preview</source>
+        <target>Anteprima</target>
+      </trans-unit>
+      <trans-unit id="HYT_reset" datatype="html">
+        <source>Reset</source>
+        <target>Ripristina</target>
       </trans-unit>
     </body>
   </file>

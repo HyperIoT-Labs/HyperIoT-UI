@@ -885,8 +885,8 @@
       <trans-unit id="HYT_deleting_project" datatype="html">
         <source>Deleting of project &quot;<x id="PH"/>&quot; in loading. It may take a while.</source>
       </trans-unit>
-      <trans-unit id="HYT_plan_info" datatype="html">
-        <source>Plan Info</source>
+      <trans-unit id="HYT_general_info" datatype="html">
+        <source>General Info</source>
       </trans-unit>
       <trans-unit id="HYT_your_role_is" datatype="html">
         <source>Your role is</source>
@@ -1057,7 +1057,7 @@
         <source>Proceeding with this action you will disable the registration of the data and they will not be stored until the rehabilitation of this property</source>
       </trans-unit>
       <trans-unit id="HYT_dashboard_event_fired" datatype="html">
-        <source>The event has been fired</source>
+        <source>Alarm cleared</source>
       </trans-unit>
       <trans-unit id="HYT_reload" datatype="html">
         <source>Reload</source>
@@ -1743,13 +1743,56 @@
       <trans-unit id="HYT_alarm_showing_text_of" datatype="html">
         <source> of </source>
       </trans-unit>
-      
-      
       <trans-unit id="HYT_conditions" datatype="html">
         <source>Conditions</source>
       </trans-unit>
       <trans-unit id="HYT_timestamp" datatype="html">
         <source>Timestamp</source>
+      </trans-unit>
+      <trans-unit id="HYT_field_box_info" datatype="html">
+        <source>Selection of the package and device is required!</source>
+      </trans-unit>
+      <trans-unit id="HYT_fields_fit_to_timeline" datatype="html">
+        <source>Fit to timeline</source>
+      </trans-unit>
+      <trans-unit id="HYT_noData" datatype="html">
+        <source>No data to display</source>
+      </trans-unit>
+      <trans-unit id="HYT_notification_active" datatype="html">
+        <source>Notification ACTIVE</source>
+      </trans-unit>
+      <trans-unit id="HYT_notification_inactive" datatype="html">
+        <source>Notification INACTIVE</source>
+      </trans-unit>
+      <trans-unit id="HYT_notification_list" datatype="html">
+        <source>Notification list</source>
+      </trans-unit>
+      <trans-unit id="HYT_notifications" datatype="html">
+        <source>NOTIFICATIONS</source>
+      </trans-unit>
+      <trans-unit id="HYT_no_notifications" datatype="html">
+        <source>No notifications</source>
+      </trans-unit>
+      <trans-unit id="HYT_reset_logo_error" datatype="html">
+        <source>Reset logo error</source>
+      </trans-unit>
+      <trans-unit id="HYT_saving_logo_error" datatype="html">
+        <source>Saving logo error</source>
+      </trans-unit>
+      <trans-unit id="HYT_you_have_access_to" datatype="html">
+        <source>You have access to</source>
+      </trans-unit>
+      <trans-unit id="HYT_theme_customization" datatype="html">
+        <source>Theme customization</source>
+      </trans-unit>
+      <trans-unit id="HYT_upload_your_logo" datatype="html">
+        <source>Upload your logo</source>
+      </trans-unit>
+      <trans-unit id="HYT_upload" datatype="html">
+        <source>Upload</source>
+      </trans-unit>
+      <trans-unit id="HYT_preview" datatype="html">
+        <source>Preview</source>
       </trans-unit>
     </body>
   </file>

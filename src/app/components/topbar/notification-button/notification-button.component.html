@@ -1,0 +1,16 @@
+<button 
+    mat-button 
+    class="event-bell" 
+    (click)="showPanel($event)"
+    [matTooltip]="tooltipStatus"
+    matTooltipPosition="below"
+>
+    <div 
+        class="notification-count" 
+        [ngStyle]="{'font-size': notificationCount > 99 ? '.65em' : '.8em'}"
+        *ngIf="eventNotificationIsOn"
+    >{{ notificationCountLabel }}</div>
+    <div id="event-notification-btn" [class.off-notification]="!eventNotificationIsOn">
+        <span class="hyt-icon icon-hyt_notification"></span>
+    </div>
+</button>

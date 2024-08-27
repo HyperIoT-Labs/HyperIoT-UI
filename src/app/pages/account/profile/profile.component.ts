@@ -1,9 +1,14 @@
 import { Component, OnInit, ViewEncapsulation,ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { HusersService, HUser } from 'core';
+import { HusersService, HUser, UiBrandingService, HdevicesService, AreasService, HprojectsService } from 'core';
 import { AuthenticationHttpErrorHandlerService } from '../../../services/errorHandler/authentication-http-error-handler.service';
 import { HYTError } from 'src/app/services/errorHandler/models/models';
 import { Router } from '@angular/router';
+import { HyperiotLogoMobilePath, HyperiotLogoPath } from 'src/app/constants';
+import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject, forkJoin, map, Observable, of, Subject } from 'rxjs';
+import { BrandingService } from 'src/app/services/branding/branding.service';
+import { SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'hyt-profile',
@@ -27,6 +32,7 @@ export class ProfileComponent implements OnInit {
 
   personalInfoForm: FormGroup;
   changePasswordForm: FormGroup;
+  brandingForm: FormGroup;
 
   generalError = 0;
 
@@ -93,6 +99,22 @@ export class ProfileComponent implements OnInit {
    */
   confirmPassword: string;
 
+  platformCounters = {
+    projects: '',
+    areas: '',
+    devices: '',
+  };
+
+  logoPath;
+  logoMobilePath;
+
+  fileToUpload: File | null = null;
+
+  logoErrorMessage = {
+    showError: false,
+    message: ''
+  };
+
   /**
    * This is the constructor of the class.
    */
@@ -101,7 +123,12 @@ export class ProfileComponent implements OnInit {
     private fb: FormBuilder,
     private httperrorHandler: AuthenticationHttpErrorHandlerService,
     private router: Router,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private httpClient: HttpClient,
+    private hDevicesService: HdevicesService,
+    private areasService: AreasService,
+    private hProjectService: HprojectsService,
+    private brandingService: BrandingService
   ) { }
 
   /**
@@ -110,6 +137,7 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     this.personalInfoForm = this.fb.group({});
     this.changePasswordForm = this.fb.group({});
+    this.brandingForm = this.fb.group({});
     if (localStorage.getItem('user') !== null) {
       this.user = JSON.parse(localStorage.getItem('user'));
       this.userId = this.user.id;
@@ -119,6 +147,8 @@ export class ProfileComponent implements OnInit {
     } else {
       this.router.navigate(['/auth/login']);
     }
+
+    this.loadGeneralData();
   }
 
   /**
@@ -209,6 +239,96 @@ export class ProfileComponent implements OnInit {
       this.changePasswordForm.get('newPassword').invalid ||
       this.changePasswordForm.get('confirmPassword').invalid
     );
+  }
+
+  initUpload() {
+    let fileInput = document.getElementById('logo-file-input');
+    if (fileInput)
+      fileInput.click();
+    else
+      console.error('ERROR: cannot find file input');
+  }
+
+  handleLogoInput(files: FileList) {
+    this.logoErrorMessage = {
+      showError: false,
+      message: ''
+    };
+    const file = files.item(0);
+    this.fileToUpload = file;
+    let reader = new FileReader();
+    reader.onload = (event: any) => {
+      this.logoPath = event.target.result;
+      this.logoMobilePath = event.target.result;
+    }
+    reader.readAsDataURL(file); 
+  }
+
+  resetLogo(logoFileInput) {
+    this.logoErrorMessage = {
+      showError: false,
+      message: ''
+    };
+    if (this.brandingService.isBrandedTheme) {
+      this.brandingService.resetBranding().subscribe({
+        next: () => {
+          this.fileToUpload = null;
+          logoFileInput.value = null;
+        },
+        error: () => {
+          this.logoErrorMessage = {
+            showError: true,
+            message: $localize`:@@HYT_reset_logo_error:Reset logo error`
+          };
+        }
+      });
+    } else {
+      this.logoPath = HyperiotLogoPath;
+      this.logoMobilePath = HyperiotLogoMobilePath;
+      this.fileToUpload = null;
+      logoFileInput.value = null;
+    }
+
+  }
+
+  saveLogo() {
+    this.logoErrorMessage = {
+      showError: false,
+      message: ''
+    };
+    this.brandingService.updateBranding(this.fileToUpload).subscribe({
+      next: () => {
+        this.brandingService.updateLogo({
+          standard: this.logoPath,
+          mobile: this.logoPath
+        })
+      },
+      error: () => {
+        this.logoErrorMessage = {
+          showError: true,
+          message: $localize`:@@HYT_saving_logo_error:Saving logo error`
+        };
+      }
+    });
+  }
+ 
+  loadGeneralData() {
+    forkJoin({
+      projects: this.hProjectService.findAllHProjectPaginated(1).pipe(map(res => res.numPages)),
+      areas: this.areasService.findAllAreaPaginated(1).pipe(map(res => res.numPages)),
+      devices: this.hDevicesService.findAllHDevicePaginated(1).pipe(map(res => res.numPages))
+    }).subscribe({
+      next: (value) => {
+        this.platformCounters = value;
+      }
+    });
+
+    this.brandingService.logoPath$.subscribe({
+      next: ({standard, mobile}) => {
+        this.logoPath = standard;
+        this.logoMobilePath = mobile;
+      },
+    })
   }
 
 }

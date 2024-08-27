@@ -14,6 +14,7 @@
 import { Inject, Injectable, Optional }                      from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams,
          HttpResponse, HttpEvent }                           from '@angular/common/http';
+import { HttpContext }                                       from '@angular/common/http';
 import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
 import { Observable }                                        from 'rxjs';
@@ -63,10 +64,10 @@ export class HprojectalgorithmsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public checkModuleWorking(observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public checkModuleWorking(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public checkModuleWorking(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public checkModuleWorking(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public checkModuleWorking(observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public checkModuleWorking(observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public checkModuleWorking(observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public checkModuleWorking(observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         let headers = this.defaultHeaders;
 
@@ -88,6 +89,7 @@ export class HprojectalgorithmsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -100,10 +102,10 @@ export class HprojectalgorithmsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deleteHProjectAlgorithm(id: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public deleteHProjectAlgorithm(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public deleteHProjectAlgorithm(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public deleteHProjectAlgorithm(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public deleteHProjectAlgorithm(id: number, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public deleteHProjectAlgorithm(id: number, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public deleteHProjectAlgorithm(id: number, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public deleteHProjectAlgorithm(id: number, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling deleteHProjectAlgorithm.');
@@ -135,6 +137,7 @@ export class HprojectalgorithmsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -146,10 +149,10 @@ export class HprojectalgorithmsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public findAllHProjectAlgorithm(observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public findAllHProjectAlgorithm(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public findAllHProjectAlgorithm(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public findAllHProjectAlgorithm(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public findAllHProjectAlgorithm(observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public findAllHProjectAlgorithm(observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public findAllHProjectAlgorithm(observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public findAllHProjectAlgorithm(observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         let headers = this.defaultHeaders;
 
@@ -176,6 +179,7 @@ export class HprojectalgorithmsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -189,10 +193,10 @@ export class HprojectalgorithmsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public findAllHProjectAlgorithmPaginated(delta?: number, page?: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public findAllHProjectAlgorithmPaginated(delta?: number, page?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public findAllHProjectAlgorithmPaginated(delta?: number, page?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public findAllHProjectAlgorithmPaginated(delta?: number, page?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public findAllHProjectAlgorithmPaginated(delta?: number, page?: number, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public findAllHProjectAlgorithmPaginated(delta?: number, page?: number, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public findAllHProjectAlgorithmPaginated(delta?: number, page?: number, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public findAllHProjectAlgorithmPaginated(delta?: number, page?: number, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
 
 
@@ -230,6 +234,7 @@ export class HprojectalgorithmsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -242,10 +247,10 @@ export class HprojectalgorithmsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public findByHProjectId(id: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public findByHProjectId(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public findByHProjectId(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public findByHProjectId(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public findByHProjectId(id: number, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public findByHProjectId(id: number, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public findByHProjectId(id: number, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public findByHProjectId(id: number, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling findByHProjectId.');
@@ -276,6 +281,7 @@ export class HprojectalgorithmsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -288,10 +294,10 @@ export class HprojectalgorithmsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public findHProjectAlgorithm(id: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public findHProjectAlgorithm(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public findHProjectAlgorithm(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public findHProjectAlgorithm(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public findHProjectAlgorithm(id: number, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public findHProjectAlgorithm(id: number, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public findHProjectAlgorithm(id: number, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public findHProjectAlgorithm(id: number, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling findHProjectAlgorithm.');
@@ -322,6 +328,7 @@ export class HprojectalgorithmsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -332,13 +339,14 @@ export class HprojectalgorithmsService {
      * Return outputs of algorithm which have been defined for a project
      * @param projectId ID of project
      * @param hProjectAlgorithmId ID of HProjectAlgorithm
+     * @param asRowResult 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getAlgorithmOutputs(projectId: number, hProjectAlgorithmId: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public getAlgorithmOutputs(projectId: number, hProjectAlgorithmId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public getAlgorithmOutputs(projectId: number, hProjectAlgorithmId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public getAlgorithmOutputs(projectId: number, hProjectAlgorithmId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getAlgorithmOutputs(projectId: number, hProjectAlgorithmId: number, asRowResult?: boolean, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public getAlgorithmOutputs(projectId: number, hProjectAlgorithmId: number, asRowResult?: boolean, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public getAlgorithmOutputs(projectId: number, hProjectAlgorithmId: number, asRowResult?: boolean, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public getAlgorithmOutputs(projectId: number, hProjectAlgorithmId: number, asRowResult?: boolean, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (projectId === null || projectId === undefined) {
             throw new Error('Required parameter projectId was null or undefined when calling getAlgorithmOutputs.');
@@ -346,6 +354,12 @@ export class HprojectalgorithmsService {
 
         if (hProjectAlgorithmId === null || hProjectAlgorithmId === undefined) {
             throw new Error('Required parameter hProjectAlgorithmId was null or undefined when calling getAlgorithmOutputs.');
+        }
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (asRowResult !== undefined && asRowResult !== null) {
+            queryParameters = queryParameters.set('asRowResult', <any>asRowResult);
         }
 
         let headers = this.defaultHeaders;
@@ -370,9 +384,11 @@ export class HprojectalgorithmsService {
 
         return this.httpClient.get<any>(`${this.basePath}/projects/${encodeURIComponent(String(projectId))}/algorithms/${encodeURIComponent(String(hProjectAlgorithmId))}`,
             {
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -385,10 +401,10 @@ export class HprojectalgorithmsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public saveHProjectAlgorithm(body: HProjectAlgorithm, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public saveHProjectAlgorithm(body: HProjectAlgorithm, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public saveHProjectAlgorithm(body: HProjectAlgorithm, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public saveHProjectAlgorithm(body: HProjectAlgorithm, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public saveHProjectAlgorithm(body: HProjectAlgorithm, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public saveHProjectAlgorithm(body: HProjectAlgorithm, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public saveHProjectAlgorithm(body: HProjectAlgorithm, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public saveHProjectAlgorithm(body: HProjectAlgorithm, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling saveHProjectAlgorithm.');
@@ -425,6 +441,7 @@ export class HprojectalgorithmsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -438,10 +455,10 @@ export class HprojectalgorithmsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public updateBaseConfig(hProjectAlgorithmId: number, body: HProjectAlgorithmConfig, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public updateBaseConfig(hProjectAlgorithmId: number, body: HProjectAlgorithmConfig, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public updateBaseConfig(hProjectAlgorithmId: number, body: HProjectAlgorithmConfig, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public updateBaseConfig(hProjectAlgorithmId: number, body: HProjectAlgorithmConfig, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public updateBaseConfig(hProjectAlgorithmId: number, body: HProjectAlgorithmConfig, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public updateBaseConfig(hProjectAlgorithmId: number, body: HProjectAlgorithmConfig, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public updateBaseConfig(hProjectAlgorithmId: number, body: HProjectAlgorithmConfig, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public updateBaseConfig(hProjectAlgorithmId: number, body: HProjectAlgorithmConfig, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (hProjectAlgorithmId === null || hProjectAlgorithmId === undefined) {
             throw new Error('Required parameter hProjectAlgorithmId was null or undefined when calling updateBaseConfig.');
@@ -482,6 +499,7 @@ export class HprojectalgorithmsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -494,10 +512,10 @@ export class HprojectalgorithmsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public updateHProjectAlgorithm(body: HProjectAlgorithm, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public updateHProjectAlgorithm(body: HProjectAlgorithm, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public updateHProjectAlgorithm(body: HProjectAlgorithm, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public updateHProjectAlgorithm(body: HProjectAlgorithm, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public updateHProjectAlgorithm(body: HProjectAlgorithm, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public updateHProjectAlgorithm(body: HProjectAlgorithm, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public updateHProjectAlgorithm(body: HProjectAlgorithm, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public updateHProjectAlgorithm(body: HProjectAlgorithm, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling updateHProjectAlgorithm.');
@@ -534,6 +552,7 @@ export class HprojectalgorithmsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );

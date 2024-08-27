@@ -1,6 +1,5 @@
 import {
   Component,
-  ElementRef,
   Injector,
   OnInit,
   Optional,
@@ -15,7 +14,6 @@ import {
 } from "core";
 import { PlotlyComponent, PlotlyService } from "angular-plotly.js";
 import {
-  BehaviorSubject,
   Subscription,
   asyncScheduler,
   bufferTime,
@@ -24,10 +22,9 @@ import {
 } from "rxjs";
 
 import { BaseChartComponent } from "../../base/base-chart/base-chart.component";
-import { WidgetAction } from "../../base/base-widget/model/widget.model";
+import {ConfigButtonWidget, WidgetAction} from "../../base/base-widget/model/widget.model";
 import { TimeSeries } from "../../data/time-series";
 import { ServiceType } from "../../service/model/service-type";
-import { Plotly } from "angular-plotly.js/lib/plotly.interface";
 import { DashboardEventService } from "../../dashboard/services/dashboard-event.service";
 import { DashboardEvent } from "../../dashboard/services/dashboard-event.model";
 
@@ -45,6 +42,15 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
   sideMarginGap = 0.12;
   totalLength = 0;
   fieldsName: any[] = [];
+   get initToolbarConfig() :ConfigButtonWidget  {
+     return {
+       showClose: true,
+       showSettings: true,
+       showPlay: this.serviceType === this.serviceTypeList.ONLINE,
+       showRefresh: false,
+       showTable: false
+     }
+  }
 
   dataChannel: DataChannel;
   dataSubscription: Subscription;
@@ -98,21 +104,7 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
           name: $localize`:@@HYT_plotly_fit_to_timeline:Fit to timeline`,
           icon: plotly.Icons.autoscale,
           click: (el) => {
-            this.logger.debug(
-              "clicked on fit to timeline button; widget:",
-              this.widget.id
-            );
-            plotly.relayout(el, {
-              "xaxis.autorange": true,
-              "yaxis.autorange": true,
-            });
-            this.logger.debug(
-              "range selection data already loaded:",
-              !this.dataChannel.controller.rangeLoaded
-            );
-            if (!this.dataChannel.controller.rangeLoaded) {
-              this.dataService.loadAllRangeData(this.widget.id);
-            }
+            this.fitToTimeline(plotly, el);
           },
         });
       });
@@ -132,6 +124,31 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
           this.newRange();
         }
       });
+    }
+  }
+
+  async fitToTimeline(plotly?: any, element?: PlotlyComponent) {
+    if (!plotly) {
+      const plotly = await this.plotly.getPlotly();
+      const graph = this.plotly.getInstanceByDivId(
+        `widget-${this.widget.id}${this.isToolbarVisible}`
+      );
+
+      plotly.relayout(graph, {
+        "xaxis.autorange": true,
+        "yaxis.autorange": true,
+      });
+      if (!this.dataChannel.controller.rangeLoaded) {
+        this.dataService.loadAllRangeData(this.widget.id);
+      }
+    } else {
+      plotly.relayout(element, {
+        "xaxis.autorange": true,
+        "yaxis.autorange": true,
+      });
+      if (!this.dataChannel.controller.rangeLoaded) {
+        this.dataService.loadAllRangeData(this.widget.id);
+      }
     }
   }
 
@@ -187,6 +204,7 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
     this.logger.debug("subscribeAndInit");
     this.subscribeDataChannel();
     this.computePacketData(this.initData);
+
     const resizeObserver = new ResizeObserver((entries) => {
       const graph = this.plotly.getInstanceByDivId(
         `widget-${this.widget.id}${this.isToolbarVisible}`
@@ -230,7 +248,11 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
             (tsd.x = []), (tsd.y = []);
           });
           if (res !== 0) {
-            this.dataRequest();
+            if (this.widget.config.fitToTimeline) {
+              this.fitToTimeline();
+            } else {
+              this.dataRequest();
+            }
           }
         });
     }

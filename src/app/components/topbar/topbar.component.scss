@@ -12,9 +12,15 @@
   -webkit-box-shadow: 4px -7px 13px 2px #aeaeae;
   box-shadow: 4px -7px 13px 2px #aeaeae;
 
+  &.previewMode {
+    -moz-box-shadow: 0px -1px 13px 0px #aeaeae;
+    -webkit-box-shadow: 0px -1px 13px 0px #aeaeae;
+    box-shadow: 0px -1px 13px 0px #aeaeae;
+  }
+
   .event-bell {
     position: absolute;
-    top: 12px;
+    top: 16px;
     right: 65px;
   }
 
@@ -44,6 +50,7 @@
       align-self: end;
       font-size: 14px;
       line-height: 12px;
+      margin-left: 3px;
     }
 
   }

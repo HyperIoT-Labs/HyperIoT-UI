@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, EventEmitter, Output, ViewEncapsulation } from '@angular/core';
-import { ControlContainer, NgForm } from '@angular/forms';
+import {ControlContainer, NgForm} from '@angular/forms';
 import { SelectOption, SelectOptionGroup, UnitConversionService } from 'components';
 import { LoggerService, Logger, HPacketFieldsHandlerService } from 'core';
 import { HPacket, HPacketField, HpacketsService, AreasService, AreaDevice, HDevice } from 'core';
@@ -64,6 +64,8 @@ export class PacketSelectComponent implements OnInit {
   eventPacketFieldName: string;
   offlineTableWidgetType: string;
   private logger: Logger;
+  fitToTimelineCheckbox = false;
+  widgetType: string;
 
   fieldRules: DataSimulatorSettings.FieldRules = {};
   expressionIsValid: boolean = true;
@@ -93,6 +95,8 @@ export class PacketSelectComponent implements OnInit {
     }
     this.filteredMIMETypesOptions = [...this.allMIMETypesOptions];
 
+    // Set widget type, used to show/hide fit to timeline checkbox
+    this.widgetType = this.widget.type;
   }
 
   onPacketChange(packetOption) {
@@ -132,7 +136,7 @@ export class PacketSelectComponent implements OnInit {
 
   onPacketFieldChange($event) {
     this.selectedFields = [];
-    // if (this.multiPacketSelect) {
+ 
     // multiple select
     const nullIndex = this.selectedFields.indexOf(null);
     if (nullIndex >= 0) {
@@ -143,12 +147,7 @@ export class PacketSelectComponent implements OnInit {
       // this.selectedFields.push(this.selectedPacket.fields.find(p => p.name === s))
       this.selectedFields.push(this.hPacketFieldsHandlerService.findFieldFromPacketFieldsTree(this.selectedPacket, s));
     })
-    // } else {
-    // single select
-    // let selected = $event as any;
-    // this.selectedFields = this.selectedPacket.fields.find(p => p.name === selected);
-    // this.selectedFields.push(this.hPacketFieldsHandlerService.findFieldFromPacketFieldsTree(this.selectedPacket, selected));
-    // }
+   
     // units conversion
     this.syncUnitsConversion();
     // field custom conversion
@@ -162,10 +161,7 @@ export class PacketSelectComponent implements OnInit {
       this.widget.config.packetId = this.selectedPacket.id;
       this.widget.config.timestampFieldName = this.selectedPacket.timestampField;
       this.widget.config.packetFields = {};
-      // if (!this.multiPacketSelect) {
-      //   this.selectedFields = [ this.selectedFields ];
-      // }
-      // this.selectedFields.map((pf) => this.widget.config.packetFields[pf.id] = pf.name);
+      
       this.selectedFields.map((pf) => {
         this.widget.config.packetFields[pf.id] = this.hPacketFieldsHandlerService.getStringifiedSequenceFromPacket(this.selectedPacket, pf.id)
       });
@@ -180,11 +176,11 @@ export class PacketSelectComponent implements OnInit {
         field: this.dynamicLabelSelectedField,
         fieldOptions: this.dynamicLabelFields
       }
+      
       this.widget.config.fieldCustomConversions = this.fieldRules;
+      this.widget.config.fitToTimeline = this.fitToTimelineCheckbox;
 
-      // this.selectedPacket.fields.forEach(field => {
-      //   this.widget.config.fieldTypes[field.id] = field.type;
-      // });
+    
       this.selectedFields.forEach(pf => {
         const field = this.hPacketFieldsHandlerService.findFieldFromPacketFieldsTree(this.selectedPacket, pf.id);
         this.widget.config.fieldTypes[field.id] = field.type;
@@ -192,10 +188,6 @@ export class PacketSelectComponent implements OnInit {
       this.logger.debug('Saving widget congiguration:', this.widget.config);
     }
   }
-
-  // packetCompare(p1: HPacket, p2: HPacket) {
-  //   return p1 != null && p2 != null && p1.id === p2.id;
-  // }
 
   packetCompare($event) {
     return $event.o1 != null && $event.o2 != null && $event.o1.value === $event.o2.value;
@@ -212,6 +204,7 @@ export class PacketSelectComponent implements OnInit {
       JSON.parse(JSON.stringify(this.widget.config.fieldValuesMapList)) : {};
     this.fieldRules = this.widget.config.fieldCustomConversions ?
       JSON.parse(JSON.stringify(this.widget.config.fieldCustomConversions)) : {};
+    this.fitToTimelineCheckbox = this.widget.config.fitToTimeline || false;
     // fetch all packets
     this.packetService
       .findAllHPacketByProjectIdAndType(this.widget.projectId, "INPUT,IO")
@@ -275,17 +268,6 @@ export class PacketSelectComponent implements OnInit {
                   this.selectedFieldsOptions.push(+x);
                   this.selectedFields.push(this.hPacketFieldsHandlerService.findFieldFromPacketFieldsTree(packet, +x));
                 });
-                // packet.fields.map((pf) => {
-                //   if (this.widget.config.packetFields[pf.id]) {
-                //     if (this.multiPacketSelect) {
-                //       this.selectedFieldsOptions.push(pf.id);
-                //       this.selectedFields.push(pf);
-                //     } else {
-                //       this.selectedFieldsOptions = pf.id;
-                //       this.selectedFields = pf;
-                //     }
-                //   }
-                // })
                 packet.fields.sort((a, b) => a.name < b.name ? -1 : 1);
                 this.syncUnitsConversion();
               }
@@ -312,13 +294,9 @@ export class PacketSelectComponent implements OnInit {
       }
       this.fieldUnitConversions[f.id] = unitConvert;
     };
-    // if (this.multiPacketSelect) {
     this.selectedFields.filter(field => field.type === 'INTEGER' || field.type === 'FLOAT' || field.type === 'DOUBLE').map((pf: HPacketField) => {
       addFieldConversion(pf);
     });
-    // } else if (this.selectedFields) {
-    //   addFieldConversion(this.selectedFields);
-    // }
   }
 
   getUnit(unit: string) {

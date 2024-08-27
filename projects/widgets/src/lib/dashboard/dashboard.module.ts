@@ -46,6 +46,7 @@ import { FieldValueGeneratorSettingsComponent } from './widget-settings-dialog/d
 import { MatButtonModule } from '@angular/material/button';
 import { ProductionTargetSettingsComponent } from './widget-settings-dialog/production-target-settings/production-target-settings.component';
 import { WidgetValueMappingComponent } from './widget-settings-dialog/packet-select/widget-value-mapping/widget-value-mapping.component';
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 @NgModule({
   declarations: [
@@ -98,6 +99,7 @@ import { WidgetValueMappingComponent } from './widget-settings-dialog/packet-sel
     MatIconModule,
     MatTabsModule,
     WidgetsModule,
+    MatCheckboxModule,
   ],
   providers: [
     DashboardConfigService,

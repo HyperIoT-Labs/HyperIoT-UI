@@ -6,11 +6,10 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { HPacket } from './hPacket';
 import { HProject } from './hProject';
 import { HyperIoTBaseEntity } from './hyperIoTBaseEntity';
+import { RootRuleNode } from './rootRuleNode';
 import { RuleAction } from './ruleAction';
-import { RuleNode } from './ruleNode';
 
 
 export interface Rule { 
@@ -18,19 +17,18 @@ export interface Rule {
     entityVersion: number;
     readonly entityCreateDate?: Date;
     readonly entityModifyDate?: Date;
-    categoryIds?: Array<number>;
-    tagIds?: Array<number>;
     name?: string;
     description?: string;
     ruleDefinition?: string;
     rulePrettyDefinition?: string;
     project?: HProject;
-    packet?: HPacket;
+    readonly packetIds?: string;
     jsonActions?: string;
     actions?: Array<RuleAction>;
     type?: Rule.TypeEnum;
-    rule?: RuleNode;
+    rule?: RootRuleNode;
     parent?: HyperIoTBaseEntity;
+    tagIds?: Array<number>;
 }
 export namespace Rule {
     export type TypeEnum = 'ENRICHMENT' | 'EVENT' | 'ALARM_EVENT';

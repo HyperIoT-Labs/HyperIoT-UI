@@ -14,6 +14,7 @@
 import { Inject, Injectable, Optional }                      from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams,
          HttpResponse, HttpEvent }                           from '@angular/common/http';
+import { HttpContext }                                       from '@angular/common/http';
 import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
 import { Observable }                                        from 'rxjs';
@@ -66,10 +67,10 @@ export class AreasService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public addAreaDevice(id: number, body: AreaDevice, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public addAreaDevice(id: number, body: AreaDevice, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public addAreaDevice(id: number, body: AreaDevice, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public addAreaDevice(id: number, body: AreaDevice, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public addAreaDevice(id: number, body: AreaDevice, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public addAreaDevice(id: number, body: AreaDevice, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public addAreaDevice(id: number, body: AreaDevice, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public addAreaDevice(id: number, body: AreaDevice, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling addAreaDevice.');
@@ -110,6 +111,7 @@ export class AreasService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -121,10 +123,10 @@ export class AreasService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public checkModuleWorking(observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public checkModuleWorking(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public checkModuleWorking(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public checkModuleWorking(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public checkModuleWorking(observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public checkModuleWorking(observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public checkModuleWorking(observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public checkModuleWorking(observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         let headers = this.defaultHeaders;
 
@@ -146,6 +148,7 @@ export class AreasService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -158,10 +161,10 @@ export class AreasService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deleteArea(id: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public deleteArea(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public deleteArea(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public deleteArea(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public deleteArea(id: number, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public deleteArea(id: number, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public deleteArea(id: number, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public deleteArea(id: number, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling deleteArea.');
@@ -193,6 +196,7 @@ export class AreasService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -204,10 +208,10 @@ export class AreasService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public findAllArea(observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public findAllArea(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public findAllArea(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public findAllArea(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public findAllArea(observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public findAllArea(observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public findAllArea(observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public findAllArea(observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         let headers = this.defaultHeaders;
 
@@ -234,6 +238,7 @@ export class AreasService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -247,10 +252,10 @@ export class AreasService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public findAllAreaPaginated(delta?: number, page?: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public findAllAreaPaginated(delta?: number, page?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public findAllAreaPaginated(delta?: number, page?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public findAllAreaPaginated(delta?: number, page?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public findAllAreaPaginated(delta?: number, page?: number, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public findAllAreaPaginated(delta?: number, page?: number, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public findAllAreaPaginated(delta?: number, page?: number, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public findAllAreaPaginated(delta?: number, page?: number, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
 
 
@@ -288,6 +293,7 @@ export class AreasService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -300,10 +306,10 @@ export class AreasService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public findArea(id: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public findArea(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public findArea(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public findArea(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public findArea(id: number, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public findArea(id: number, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public findArea(id: number, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public findArea(id: number, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling findArea.');
@@ -334,6 +340,7 @@ export class AreasService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -346,10 +353,10 @@ export class AreasService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public findInnerAreas(id: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public findInnerAreas(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public findInnerAreas(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public findInnerAreas(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public findInnerAreas(id: number, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public findInnerAreas(id: number, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public findInnerAreas(id: number, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public findInnerAreas(id: number, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling findInnerAreas.');
@@ -380,6 +387,7 @@ export class AreasService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -392,10 +400,10 @@ export class AreasService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getAreaDevice(areaDeviceId: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public getAreaDevice(areaDeviceId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public getAreaDevice(areaDeviceId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public getAreaDevice(areaDeviceId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getAreaDevice(areaDeviceId: number, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public getAreaDevice(areaDeviceId: number, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public getAreaDevice(areaDeviceId: number, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public getAreaDevice(areaDeviceId: number, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (areaDeviceId === null || areaDeviceId === undefined) {
             throw new Error('Required parameter areaDeviceId was null or undefined when calling getAreaDevice.');
@@ -426,6 +434,7 @@ export class AreasService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -438,10 +447,10 @@ export class AreasService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getAreaDeviceDeepList(id: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public getAreaDeviceDeepList(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public getAreaDeviceDeepList(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public getAreaDeviceDeepList(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getAreaDeviceDeepList(id: number, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public getAreaDeviceDeepList(id: number, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public getAreaDeviceDeepList(id: number, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public getAreaDeviceDeepList(id: number, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling getAreaDeviceDeepList.');
@@ -472,6 +481,7 @@ export class AreasService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -484,10 +494,10 @@ export class AreasService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getAreaDeviceDeepListFromRoot(id: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public getAreaDeviceDeepListFromRoot(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public getAreaDeviceDeepListFromRoot(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public getAreaDeviceDeepListFromRoot(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getAreaDeviceDeepListFromRoot(id: number, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public getAreaDeviceDeepListFromRoot(id: number, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public getAreaDeviceDeepListFromRoot(id: number, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public getAreaDeviceDeepListFromRoot(id: number, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling getAreaDeviceDeepListFromRoot.');
@@ -518,6 +528,7 @@ export class AreasService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -530,10 +541,10 @@ export class AreasService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getAreaDeviceList(id: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public getAreaDeviceList(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public getAreaDeviceList(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public getAreaDeviceList(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getAreaDeviceList(id: number, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public getAreaDeviceList(id: number, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public getAreaDeviceList(id: number, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public getAreaDeviceList(id: number, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling getAreaDeviceList.');
@@ -564,6 +575,7 @@ export class AreasService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -576,10 +588,10 @@ export class AreasService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getAreaImage(id: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public getAreaImage(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public getAreaImage(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public getAreaImage(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getAreaImage(id: number, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public getAreaImage(id: number, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public getAreaImage(id: number, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public getAreaImage(id: number, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling getAreaImage.');
@@ -610,6 +622,7 @@ export class AreasService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -622,10 +635,10 @@ export class AreasService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getAreaPath(id: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public getAreaPath(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public getAreaPath(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public getAreaPath(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getAreaPath(id: number, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public getAreaPath(id: number, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public getAreaPath(id: number, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public getAreaPath(id: number, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling getAreaPath.');
@@ -656,6 +669,7 @@ export class AreasService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -667,10 +681,10 @@ export class AreasService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getConfig(observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public getConfig(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public getConfig(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public getConfig(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getConfig(observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public getConfig(observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public getConfig(observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public getConfig(observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         let headers = this.defaultHeaders;
 
@@ -692,6 +706,7 @@ export class AreasService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -705,10 +720,10 @@ export class AreasService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public removeAreaDevice(id: number, areaDeviceId: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public removeAreaDevice(id: number, areaDeviceId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public removeAreaDevice(id: number, areaDeviceId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public removeAreaDevice(id: number, areaDeviceId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public removeAreaDevice(id: number, areaDeviceId: number, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public removeAreaDevice(id: number, areaDeviceId: number, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public removeAreaDevice(id: number, areaDeviceId: number, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public removeAreaDevice(id: number, areaDeviceId: number, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling removeAreaDevice.');
@@ -743,6 +758,7 @@ export class AreasService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -755,10 +771,10 @@ export class AreasService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public saveArea(body: Area, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public saveArea(body: Area, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public saveArea(body: Area, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public saveArea(body: Area, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public saveArea(body: Area, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public saveArea(body: Area, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public saveArea(body: Area, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public saveArea(body: Area, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling saveArea.');
@@ -795,6 +811,7 @@ export class AreasService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -808,10 +825,10 @@ export class AreasService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public setAreaImage(id: number, body?: Attachment, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public setAreaImage(id: number, body?: Attachment, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public setAreaImage(id: number, body?: Attachment, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public setAreaImage(id: number, body?: Attachment, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public setAreaImage(id: number, body?: Attachment, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public setAreaImage(id: number, body?: Attachment, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public setAreaImage(id: number, body?: Attachment, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public setAreaImage(id: number, body?: Attachment, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling setAreaImage.');
@@ -849,6 +866,7 @@ export class AreasService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -861,10 +879,10 @@ export class AreasService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public unsetAreaImage(id: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public unsetAreaImage(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public unsetAreaImage(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public unsetAreaImage(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public unsetAreaImage(id: number, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public unsetAreaImage(id: number, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public unsetAreaImage(id: number, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public unsetAreaImage(id: number, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling unsetAreaImage.');
@@ -895,6 +913,7 @@ export class AreasService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -907,10 +926,10 @@ export class AreasService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public updateArea(body: Area, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public updateArea(body: Area, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public updateArea(body: Area, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public updateArea(body: Area, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public updateArea(body: Area, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public updateArea(body: Area, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public updateArea(body: Area, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public updateArea(body: Area, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling updateArea.');
@@ -947,6 +966,7 @@ export class AreasService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );

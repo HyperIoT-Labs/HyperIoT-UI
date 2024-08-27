@@ -10,4 +10,6 @@ export class HytInfoComponent {
 
   @Input() text = '';
 
+  @Input() position : 'above'|'below'|'left'|'right'|'before'|'after' = 'above';
+
 }

@@ -32,7 +32,6 @@ import { HytNotificationBoxComponent } from './hyt-notification-box/notification
 import { HytAccordionGroupComponent } from './hyt-accordion/hyt-accordion-group.component';
 import { HytAccordionItem } from './hyt-accordion/hyt-directives/hyt-accordion-item.directive';
 import { HytAccordionContent } from './hyt-accordion/hyt-directives/hyt-accordion-content.directive';
-import { NotificationService } from './hyt-notification-box/services/notification.service';
 import { HytConfirmRecordingActionComponent } from './hyt-modal/hyt-confirm-recording-action/hyt-confirm-recording-action.component';
 import { HytInfoRecordingActionComponent } from './hyt-modal/hyt-info-recording-action/hyt-info-recording-action.component';
 import { HytTopologyToolbarComponent } from './hyt-shared-components/hyt-topology-toolbar/hyt-topology-toolbar.component';
@@ -190,9 +189,6 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     HytChartModalComponent,
     HytAlarmComponent,
     HytNoData
-  ],
-  providers: [
-    NotificationService,
   ],
   entryComponents: [
     HytConfirmRecordingActionComponent,
