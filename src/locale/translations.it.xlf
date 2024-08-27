@@ -2402,7 +2402,7 @@
       </trans-unit>
       <trans-unit id="HYT_back_to_projects" datatype="html">
         <source>Back to projects</source>
-        <target>Torna ai progetti</target>    
+        <target>Torna ai progetti</target>  
       </trans-unit>
       <trans-unit id="HYT_back_to_area" datatype="html">
         <source>Back to area</source>
