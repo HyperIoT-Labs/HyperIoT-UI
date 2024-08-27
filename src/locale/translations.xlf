@@ -1797,6 +1797,9 @@
       <trans-unit id="HYT_back_to_projects" datatype="html">
         <source>Back to projects</source>
       </trans-unit>
+      <trans-unit id="HYT_back_to_area" datatype="html">
+        <source>Back to area</source>
+      </trans-unit>
     </body>
   </file>
 </xliff>
