@@ -62,7 +62,8 @@ export class EventTableComponent extends BaseTableComponent implements AfterView
     super.configure();
     this.isConfigured = true;
 
-    // Set header
+    // Set headers
+    this.tableHeaders = [];
     this.tableHeaders.push({ value: this.eventPacketFieldName });
     this.tableHeaders.push({ value: this.eventPacketTimestampFieldName });
 
