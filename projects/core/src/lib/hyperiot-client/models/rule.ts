@@ -12,7 +12,7 @@ import { RootRuleNode } from './rootRuleNode';
 import { RuleAction } from './ruleAction';
 
 
-export interface Rule { 
+export interface Rule {
     id?: number;
     entityVersion: number;
     readonly entityCreateDate?: Date;
@@ -28,6 +28,7 @@ export interface Rule {
     type?: Rule.TypeEnum;
     rule?: RootRuleNode;
     parent?: HyperIoTBaseEntity;
+    tagIds?: Array<number>;
 }
 export namespace Rule {
     export type TypeEnum = 'ENRICHMENT' | 'EVENT' | 'ALARM_EVENT';

@@ -12,7 +12,7 @@ import { HProjectSharingInfo } from './hProjectSharingInfo';
 import { HUser } from './hUser';
 
 
-export interface HProject { 
+export interface HProject {
     id?: number;
     entityVersion: number;
     readonly entityCreateDate?: Date;
@@ -23,7 +23,7 @@ export interface HProject {
     deviceCount?: number;
     statisticsCount?: number;
     rulesCount?: number;
-    gethProjectSharingInfo?: HProjectSharingInfo;
+    hProjectSharingInfo?: HProjectSharingInfo;
     pubKey?: Array<string>;
     devices?: Array<HDevice>;
     areas?: Array<Area>;
