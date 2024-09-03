@@ -47,7 +47,7 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
   treeData: TreeDataNode[] = [];
   currentNode;
 
-  currentEntity = null;
+  currentEntity: ProjectFormEntity = null;
 
   private focusTimeout: any = null;
   projectId: 0;
@@ -155,7 +155,9 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.areaId = parseInt(this.router.url.split('areas/')[1].split(')')[0]);
+    if (this.activatedRoute.snapshot.routeConfig.path.indexOf('areas/') > -1) {
+      this.areaId = parseInt(this.router.url.split('areas/')[1].split(')')[0]);
+    }
     this.projectId = this.activatedRoute.snapshot.params.projectId;
     this.refresh();
     this.enrichmentsService.changeDeviceName$
@@ -195,6 +197,7 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
       this.toggleInfoActionColumn(childComponent);
 
       this.currentEntity = childComponent;
+      this.logger.debug('Current Entity', this.currentEntity);
 
       this.currentEntity.unsavedChangesCallback = () => {
         return this.openSaveDialog();
