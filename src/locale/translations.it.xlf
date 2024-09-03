@@ -1409,8 +1409,16 @@
         <target>Procedendo con questa azione disabiliterai la registrazione dei dati che non saranno salvati fino alla riabilitazione di questa proprietà</target>
       </trans-unit>
       <trans-unit id="HYT_dashboard_event_fired" datatype="html">
+        <source>The event has been fired</source>
+        <target>L'evento è stato attivato</target>
+      </trans-unit>
+      <trans-unit id="HYT_dashboard_alarm_fired" datatype="html">
+        <source>The alarm has been fired</source>
+        <target>L'allarme è stato attivato</
+      </trans-unit>
+      <trans-unit id="HYT_dashboard_alarm_cleared" datatype="html">
         <source>Alarm cleared</source>
-        <target>Allarme rientrato</target>
+        <target>Allarme rimosso</target>
       </trans-unit>
       <trans-unit id="HYT_reload" datatype="html">
         <source>Reload</source>
@@ -2402,7 +2410,7 @@
       </trans-unit>
       <trans-unit id="HYT_back_to_projects" datatype="html">
         <source>Back to projects</source>
-        <target>Torna ai progetti</target>  
+        <target>Torna ai progetti</target>
       </trans-unit>
       <trans-unit id="HYT_back_to_area" datatype="html">
         <source>Back to area</source>

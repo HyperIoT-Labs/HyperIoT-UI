@@ -155,7 +155,7 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    if (this.activatedRoute.snapshot.routeConfig.path.indexOf('areas/') > -1) {
+    if (this.router.url.indexOf('areas/') > -1) {
       this.areaId = parseInt(this.router.url.split('areas/')[1].split(')')[0]);
     }
     this.projectId = this.activatedRoute.snapshot.params.projectId;
