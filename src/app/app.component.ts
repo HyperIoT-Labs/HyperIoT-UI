@@ -31,6 +31,10 @@ export class AppComponent implements OnInit, OnDestroy {
   eventNotificationIsOn: boolean;
 
   private toastMessage = $localize`:@@HYT_dashboard_event_fired:The event has been fired`;
+  private toastMessageUp = $localize`:@@HYT_dashboard_event_fired:The event has been fired`;
+  private toastMessageDown = $localize`:@@HYT_dashboard_event_clean:Event cleared`;
+  private toastMessageAlarmUp = $localize`:@@HYT_dashboard_alarm_fired:The alarm has been fired`;
+  private toastMessageAlarmDown = $localize`:@@HYT_dashboard_alarm_clean:Alarm cleared`;
   projectIds: number[];
 
   /** Subject for manage the open subscriptions */
@@ -139,11 +143,16 @@ export class AppComponent implements OnInit, OnDestroy {
       )
       .subscribe((alarm) => {
         let toastImage = "info";
+        console.log("Alarm received", alarm);
         if (alarm.isEvent) {
           toastImage = "toastEvent";
+          this.toastMessage =
+            alarm.event.alarmState === "UP" ? this.toastMessageUp : this.toastMessageDown;
         } else if (alarm.isAlarm) {
           toastImage =
             alarm.event.alarmState === "UP" ? "toastAlarmUp" : "toastAlarmDown";
+          this.toastMessage =
+            alarm.event.alarmState === "UP" ? this.toastMessageAlarmUp : this.toastMessageAlarmDown;
           if (alarm.event.alarmState === 'DOWN')
             alarm.color.background = '#51a351'; // Green of resolved alarm BG (OFF state)
         }
