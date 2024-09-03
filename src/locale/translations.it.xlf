@@ -1410,7 +1410,7 @@
       </trans-unit>
       <trans-unit id="HYT_dashboard_event_fired" datatype="html">
         <source>The event has been fired</source>
-        <target>L'evento è stato attivato</target>
+        <target>L'evento è stato emesso</target>
       </trans-unit>
       <trans-unit id="HYT_dashboard_alarm_fired" datatype="html">
         <source>The alarm has been fired</source>
