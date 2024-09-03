@@ -387,7 +387,7 @@ export class HprojectsService {
      * @param rowKeyLowerBound HBase row key lower bound
      * @param rowKeyUpperBound HBase row key upper bound
      * @param prettyTimestamp Prettify timestamp
-     * @param timestampPattern Prettify timestamp
+     * @param timestampPattern timestamp pattern
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -664,6 +664,53 @@ export class HprojectsService {
     }
 
     /**
+     * /hyperiot/hprojects/{id}
+     * Service for finding hproject with deeper details
+     * @param id id from which project object will retrieve
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public findHProjectDetails(id: number, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public findHProjectDetails(id: number, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public findHProjectDetails(id: number, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public findHProjectDetails(id: number, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
+
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling findHProjectDetails.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (jwt-auth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["AUTHORIZATION"]) {
+            headers = headers.set('AUTHORIZATION', this.configuration.apiKeys["AUTHORIZATION"]);
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.get<any>(`${this.basePath}/${encodeURIComponent(String(id))}/details`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                context: context,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
      * /hyperiot/hprojects/export/{exportId}
      * Service for getting the status of HPacket export
      * @param exportId Export ID 
@@ -911,73 +958,6 @@ export class HprojectsService {
     }
 
     /**
-     * /hyperiot/hprojects/{hProjectId}/hpacket/{hPacketId}/attachments/{fieldId}/{timestamp}
-     * Service for retrieving HProject attachments
-     * @param hProjectId HProject ID from retrieve HPackets in Avro format and events
-     * @param hPacketId HPacket ID
-     * @param fieldId Attachment field id
-     * @param rowKeyLowerBound Attachment Timestamp identifier
-     * @param rowKeyUpperBound Attachment Timestamp identifier
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public scanHProject(hProjectId: number, hPacketId: number, fieldId: number, rowKeyLowerBound: number, rowKeyUpperBound: number, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
-    public scanHProject(hProjectId: number, hPacketId: number, fieldId: number, rowKeyLowerBound: number, rowKeyUpperBound: number, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
-    public scanHProject(hProjectId: number, hPacketId: number, fieldId: number, rowKeyLowerBound: number, rowKeyUpperBound: number, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
-    public scanHProject(hProjectId: number, hPacketId: number, fieldId: number, rowKeyLowerBound: number, rowKeyUpperBound: number, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
-
-        if (hProjectId === null || hProjectId === undefined) {
-            throw new Error('Required parameter hProjectId was null or undefined when calling scanHProject.');
-        }
-
-        if (hPacketId === null || hPacketId === undefined) {
-            throw new Error('Required parameter hPacketId was null or undefined when calling scanHProject.');
-        }
-
-        if (fieldId === null || fieldId === undefined) {
-            throw new Error('Required parameter fieldId was null or undefined when calling scanHProject.');
-        }
-
-        if (rowKeyLowerBound === null || rowKeyLowerBound === undefined) {
-            throw new Error('Required parameter rowKeyLowerBound was null or undefined when calling scanHProject.');
-        }
-
-        if (rowKeyUpperBound === null || rowKeyUpperBound === undefined) {
-            throw new Error('Required parameter rowKeyUpperBound was null or undefined when calling scanHProject.');
-        }
-
-        let headers = this.defaultHeaders;
-
-        // authentication (jwt-auth) required
-        if (this.configuration.apiKeys && this.configuration.apiKeys["AUTHORIZATION"]) {
-            headers = headers.set('AUTHORIZATION', this.configuration.apiKeys["AUTHORIZATION"]);
-        }
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-        ];
-
-        return this.httpClient.get<any>(`${this.basePath}/${encodeURIComponent(String(hProjectId))}/hpacket/${encodeURIComponent(String(hPacketId))}/attachments/${encodeURIComponent(String(fieldId))}/${encodeURIComponent(String(rowKeyLowerBound))}/${encodeURIComponent(String(rowKeyUpperBound))}`,
-            {
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                context: context,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
      * /hyperiot/hprojects/{hProjectId}/hpackets/{rowKeyLowerBound}/{rowKeyUpperBound}
      * Service for scan HProject data
      * @param hProjectId HProject ID from retrieve HPackets in Avro format and events
@@ -990,37 +970,37 @@ export class HprojectsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public scanHProject1(hProjectId: number, rowKeyLowerBound: number, rowKeyUpperBound: number, maxResults: number, packetIds: string, deviceIds: string, alarmState: string, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
-    public scanHProject1(hProjectId: number, rowKeyLowerBound: number, rowKeyUpperBound: number, maxResults: number, packetIds: string, deviceIds: string, alarmState: string, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
-    public scanHProject1(hProjectId: number, rowKeyLowerBound: number, rowKeyUpperBound: number, maxResults: number, packetIds: string, deviceIds: string, alarmState: string, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
-    public scanHProject1(hProjectId: number, rowKeyLowerBound: number, rowKeyUpperBound: number, maxResults: number, packetIds: string, deviceIds: string, alarmState: string, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
+    public scanHProject(hProjectId: number, rowKeyLowerBound: number, rowKeyUpperBound: number, maxResults: number, packetIds: string, deviceIds: string, alarmState: string, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public scanHProject(hProjectId: number, rowKeyLowerBound: number, rowKeyUpperBound: number, maxResults: number, packetIds: string, deviceIds: string, alarmState: string, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public scanHProject(hProjectId: number, rowKeyLowerBound: number, rowKeyUpperBound: number, maxResults: number, packetIds: string, deviceIds: string, alarmState: string, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public scanHProject(hProjectId: number, rowKeyLowerBound: number, rowKeyUpperBound: number, maxResults: number, packetIds: string, deviceIds: string, alarmState: string, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (hProjectId === null || hProjectId === undefined) {
-            throw new Error('Required parameter hProjectId was null or undefined when calling scanHProject1.');
+            throw new Error('Required parameter hProjectId was null or undefined when calling scanHProject.');
         }
 
         if (rowKeyLowerBound === null || rowKeyLowerBound === undefined) {
-            throw new Error('Required parameter rowKeyLowerBound was null or undefined when calling scanHProject1.');
+            throw new Error('Required parameter rowKeyLowerBound was null or undefined when calling scanHProject.');
         }
 
         if (rowKeyUpperBound === null || rowKeyUpperBound === undefined) {
-            throw new Error('Required parameter rowKeyUpperBound was null or undefined when calling scanHProject1.');
+            throw new Error('Required parameter rowKeyUpperBound was null or undefined when calling scanHProject.');
         }
 
         if (maxResults === null || maxResults === undefined) {
-            throw new Error('Required parameter maxResults was null or undefined when calling scanHProject1.');
+            throw new Error('Required parameter maxResults was null or undefined when calling scanHProject.');
         }
 
         if (packetIds === null || packetIds === undefined) {
-            throw new Error('Required parameter packetIds was null or undefined when calling scanHProject1.');
+            throw new Error('Required parameter packetIds was null or undefined when calling scanHProject.');
         }
 
         if (deviceIds === null || deviceIds === undefined) {
-            throw new Error('Required parameter deviceIds was null or undefined when calling scanHProject1.');
+            throw new Error('Required parameter deviceIds was null or undefined when calling scanHProject.');
         }
 
         if (alarmState === null || alarmState === undefined) {
-            throw new Error('Required parameter alarmState was null or undefined when calling scanHProject1.');
+            throw new Error('Required parameter alarmState was null or undefined when calling scanHProject.');
         }
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
@@ -1070,6 +1050,73 @@ export class HprojectsService {
     }
 
     /**
+     * /hyperiot/hprojects/{hProjectId}/hpacket/{hPacketId}/attachments/{fieldId}/{timestamp}
+     * Service for retrieving HProject attachments
+     * @param hProjectId HProject ID from retrieve HPackets in Avro format and events
+     * @param hPacketId HPacket ID
+     * @param fieldId Attachment field id
+     * @param rowKeyLowerBound Attachment Timestamp identifier
+     * @param rowKeyUpperBound Attachment Timestamp identifier
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public scanHProject1(hProjectId: number, hPacketId: number, fieldId: number, rowKeyLowerBound: number, rowKeyUpperBound: number, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public scanHProject1(hProjectId: number, hPacketId: number, fieldId: number, rowKeyLowerBound: number, rowKeyUpperBound: number, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public scanHProject1(hProjectId: number, hPacketId: number, fieldId: number, rowKeyLowerBound: number, rowKeyUpperBound: number, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public scanHProject1(hProjectId: number, hPacketId: number, fieldId: number, rowKeyLowerBound: number, rowKeyUpperBound: number, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
+
+        if (hProjectId === null || hProjectId === undefined) {
+            throw new Error('Required parameter hProjectId was null or undefined when calling scanHProject1.');
+        }
+
+        if (hPacketId === null || hPacketId === undefined) {
+            throw new Error('Required parameter hPacketId was null or undefined when calling scanHProject1.');
+        }
+
+        if (fieldId === null || fieldId === undefined) {
+            throw new Error('Required parameter fieldId was null or undefined when calling scanHProject1.');
+        }
+
+        if (rowKeyLowerBound === null || rowKeyLowerBound === undefined) {
+            throw new Error('Required parameter rowKeyLowerBound was null or undefined when calling scanHProject1.');
+        }
+
+        if (rowKeyUpperBound === null || rowKeyUpperBound === undefined) {
+            throw new Error('Required parameter rowKeyUpperBound was null or undefined when calling scanHProject1.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (jwt-auth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["AUTHORIZATION"]) {
+            headers = headers.set('AUTHORIZATION', this.configuration.apiKeys["AUTHORIZATION"]);
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.get<any>(`${this.basePath}/${encodeURIComponent(String(hProjectId))}/hpacket/${encodeURIComponent(String(hPacketId))}/attachments/${encodeURIComponent(String(fieldId))}/${encodeURIComponent(String(rowKeyLowerBound))}/${encodeURIComponent(String(rowKeyUpperBound))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                context: context,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
      * /hyperiot/hprojects/export/{exportId}/stop
      * Service for stopping HPacket export
      * @param exportId Export ID 
@@ -1105,7 +1152,7 @@ export class HprojectsService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.post<any>(`${this.basePath}/export/${encodeURIComponent(String(exportId))}/stop`,
+        return this.httpClient.post<any>(`${this.basePath}/export/stop/${encodeURIComponent(String(exportId))}`,
             null,
             {
                 withCredentials: this.configuration.withCredentials,

@@ -25,7 +25,6 @@ import { RulesService } from './rule-client/api-module/api/rules.service';
 import { StormService } from './storm-manager-client/api-module/api/storm.service';
 import { WidgetsService } from './widgets-client/api-module/api/widgets.service';
 import { ServicesService } from './services/api-module/api/services.service';
-import { UiBrandingService } from './uibranding-client/api-module';
 
 @NgModule({
   declarations: [],
@@ -57,7 +56,6 @@ import { UiBrandingService } from './uibranding-client/api-module';
     CompaniesService,
     WidgetsService,
     ServicesService,
-    UiBrandingService
   ]
 })
 export class HyperiotClientModule {

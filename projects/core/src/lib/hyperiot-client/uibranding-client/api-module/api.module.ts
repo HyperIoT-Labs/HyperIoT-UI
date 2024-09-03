@@ -3,7 +3,7 @@ import { Configuration } from '../../models/configuration';
 import { HttpClient } from '@angular/common/http';
 
 
-import { UiBrandingService } from './api/uibranding.service';
+import { UiBrandingService } from './api/uiBranding.service';
 
 @NgModule({
   imports:      [],

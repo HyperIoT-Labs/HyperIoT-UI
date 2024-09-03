@@ -19,8 +19,7 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
 import { Observable }                                        from 'rxjs';
 
-import { Alarm } from '../../../models/alarm'
-;
+import { Alarm } from '../../../models/alarm';
 import { AlarmEvent } from '../../../models/alarmEvent';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -198,10 +197,10 @@ export class AlarmsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public findAlarmStatusByProjectId(projectId: Array<number>, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public findAlarmStatusByProjectId(projectId: Array<number>, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public findAlarmStatusByProjectId(projectId: Array<number>, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public findAlarmStatusByProjectId(projectId: Array<number>, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public findAlarmStatusByProjectId(projectId: Array<number>, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public findAlarmStatusByProjectId(projectId: Array<number>, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public findAlarmStatusByProjectId(projectId: Array<number>, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public findAlarmStatusByProjectId(projectId: Array<number>, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (projectId === null || projectId === undefined) {
             throw new Error('Required parameter projectId was null or undefined when calling findAlarmStatusByProjectId.');
@@ -240,6 +239,7 @@ export class AlarmsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );

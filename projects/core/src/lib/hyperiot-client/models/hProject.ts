@@ -23,7 +23,7 @@ export interface HProject {
     deviceCount?: number;
     statisticsCount?: number;
     rulesCount?: number;
-    hProjectSharingInfo?: HProjectSharingInfo;
+    gethProjectSharingInfo?: HProjectSharingInfo;
     pubKey?: Array<string>;
     devices?: Array<HDevice>;
     areas?: Array<Area>;

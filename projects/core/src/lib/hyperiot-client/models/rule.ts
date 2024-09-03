@@ -28,7 +28,6 @@ export interface Rule {
     type?: Rule.TypeEnum;
     rule?: RootRuleNode;
     parent?: HyperIoTBaseEntity;
-    tagIds?: Array<number>;
 }
 export namespace Rule {
     export type TypeEnum = 'ENRICHMENT' | 'EVENT' | 'ALARM_EVENT';
