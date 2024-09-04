@@ -18,6 +18,7 @@ export interface Dashboard {
     name?: string;
     dashboardType?: Dashboard.DashboardTypeEnum;
     readonly widgets?: Array<DashboardWidget>;
+    deviceId?: number;
     hproject?: HProject;
 }
 export namespace Dashboard {

@@ -65,6 +65,7 @@ import { HttpErrorInterceptor } from './interceptors/http-error.interceptor';
 import { NotificationButtonComponent } from './components/topbar/notification-button/notification-button.component';
 import { NotificationDialogComponent } from './components/dialogs/notification-dialog/notification-dialog.component';
 import { GlobalErrorHandlerService } from '../../projects/core/src/lib/hyperiot-service/error-handler/global-error-handler.service';
+import {BrandingService} from "./services/branding/branding.service";
 PlotlyModule.plotlyjs = PlotlyJS;
 
 export class MyUrlSerializer extends DefaultUrlSerializer implements UrlSerializer {
@@ -160,7 +161,9 @@ export function apiConfigFactory(): Configuration {
     CookieService,
     { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: true } },
     { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
-    { provide: ErrorHandler, useClass: GlobalErrorHandlerService }
+    { provide: ErrorHandler, useClass: GlobalErrorHandlerService },
+    BrandingService,
+
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
