@@ -1,5 +1,9 @@
 export interface BrandingTheme {
-    file: File;
+    file?: File;
+    fileBase64?: string;
     name?: string;
-    colorScheme?: string;
+    colorSchema?: {
+        primaryColor: string;
+        secondaryColor: string;
+    };
 };

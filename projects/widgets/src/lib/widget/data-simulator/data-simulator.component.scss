@@ -1,3 +1,5 @@
+@import "src/assets/styles/abstracts/_variables.scss";
+
 .data-simulator-container {
     height: 100%;
     display: flex;
@@ -38,7 +40,7 @@
     font-size: 48px;
     width: 80px;
     height: 80px;
-    background-color: #1e58a5;
+    background-color: $primary-color;
 }
 
 .data-simulator-fields {
@@ -55,7 +57,7 @@
     
         tr {
             height: 45px;
-            border-bottom: 1px solid #1e58a5;
+            border-bottom: 1px solid $primary-color;
             border-radius: 10px;
     
             td {

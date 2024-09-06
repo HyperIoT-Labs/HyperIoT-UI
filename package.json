@@ -30,6 +30,7 @@
     "@angular/service-worker": "12.2.16",
     "@ngrx/effects": "^12.5.1",
     "@ngrx/store": "^12.5.1",
+    "@ngrx/store-devtools": "^12.5.1",
     "@types/jasmine": "^4.3.0",
     "@types/jasminewd2": "^2.0.10",
     "@types/ws": "8.5.4",

@@ -1,3 +1,5 @@
+@import "src/assets/styles/abstracts/_variables.scss";
+
 #container-algorithm-jar {
 
     min-height: 200px;
@@ -71,7 +73,7 @@
                         font-style: italic;
 
                         &.exists {
-                            color: #1e58a5;
+                            color: $primary-color;
                         }
 
                         &.not-exists {

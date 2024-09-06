@@ -1,10 +1,12 @@
+@import "src/assets/styles/abstracts/_variables.scss";
+
 #hyt-topbar {
   display: flex;
   justify-content: space-between;
   height: 64px;
 
   background-color: #fdfdfd;
-  color: #0956B6;
+  color: $primary-color;
   text-transform: uppercase;
   border-bottom: 1px solid #dadada;
 
@@ -50,7 +52,7 @@
       align-self: end;
       font-size: 14px;
       line-height: 12px;
-      margin-left: 3px;
+      margin-left: 6px;
     }
 
   }
@@ -95,7 +97,7 @@
 
             span {
 
-              background-color: #1e58a5;
+              background-color: $primary-color;
               position: absolute;
               border-radius: 2px;
               transition: .2s cubic-bezier(.8, .5, .2, 1.4);

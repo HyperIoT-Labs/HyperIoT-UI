@@ -2359,13 +2359,53 @@
         <source>No notifications</source>
         <target>Nessuna notifica</target>
       </trans-unit>
-      <trans-unit id="HYT_reset_logo_error" datatype="html">
-        <source>Reset logo error</source>
-        <target>Errore durante il ripristino del logo</target>
+      <trans-unit id="HYT_branding" datatype="html">
+        <source>Branding</source>
+        <target>Brandizzazione</target>
       </trans-unit>
-      <trans-unit id="HYT_saving_logo_error" datatype="html">
-        <source>Saving logo error</source>
-        <target>Errore nel salvataggio del logo</target>
+      <trans-unit id="HYT_logo" datatype="html">
+        <source>Logo</source>
+        <target>Logo</target>
+      </trans-unit>
+      <trans-unit id="HYT_logo_is_required_for_the_first_theme_customization" datatype="html">
+        <source>* Logo is required for the first theme customization</source>
+        <target>* Il logo è obbligatorio per la prima personalizzazione del tema</target>
+      </trans-unit>
+      <trans-unit id="HYT_upload_your_logo" datatype="html">
+        <source>Upload your logo</source>
+        <target>Carica il tuo logo</target>
+      </trans-unit>
+      <trans-unit id="HYT_upload" datatype="html">
+        <source>Upload</source>
+        <target>Carica</target>
+      </trans-unit>
+      <trans-unit id="HYT_preview" datatype="html">
+        <source>Preview</source>
+        <target>Anteprima</target>
+      </trans-unit>
+      <trans-unit id="HYT_color_schema" datatype="html">
+        <source>Color Schema</source>
+        <target>Schema Colore</target>
+      </trans-unit>
+      <trans-unit id="HYT_primary_color" datatype="html">
+        <source>Primary Color</source>
+        <target>Colore primario</target>
+      </trans-unit>
+      <trans-unit id="HYT_secondary_color" datatype="html">
+        <source>Secondary Color</source>
+        <target>Colore Secondario</target>
+      </trans-unit>
+      <trans-unit id="HYT_restore_default" datatype="html">
+        <source>Restore default</source>
+        <target>Ripristina default</target>
+      </trans-unit>
+      <trans-unit id="HYT_saving_branding_theme_error" datatype="html">
+        <source>Saving branding theme error</source>
+        <target>Errore nel salvataggio del tema</target>
+      </trans-unit>
+      <trans-unit id="HYT_restoring_default_theme_error" datatype="html">
+        <source>Restoring default theme error</source>
+        <target>Errore nella ripristinazione del tema</target>
       </trans-unit>
     </body>
   </file>
