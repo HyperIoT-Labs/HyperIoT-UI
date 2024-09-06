@@ -1057,6 +1057,12 @@
         <source>Proceeding with this action you will disable the registration of the data and they will not be stored until the rehabilitation of this property</source>
       </trans-unit>
       <trans-unit id="HYT_dashboard_event_fired" datatype="html">
+        <source>The event has been fired</source>
+      </trans-unit>
+      <trans-unit id="HYT_dashboard_alarm_fired" datatype="html">
+        <source>The alarm has been fired</source>
+      </trans-unit>
+      <trans-unit id="HYT_dashboard_alarm_cleared" datatype="html">
         <source>Alarm cleared</source>
       </trans-unit>
       <trans-unit id="HYT_reload" datatype="html">
@@ -1799,6 +1805,12 @@
       </trans-unit>
       <trans-unit id="HYT_go_to_alarm_manager" datatype="html">
         <source>Go to Alarm Manager</source>
+      </trans-unit>
+      <trans-unit id="HYT_back_to_projects" datatype="html">
+        <source>Back to projects</source>
+      </trans-unit>
+      <trans-unit id="HYT_back_to_area" datatype="html">
+        <source>Back to area</source>
       </trans-unit>
     </body>
   </file>

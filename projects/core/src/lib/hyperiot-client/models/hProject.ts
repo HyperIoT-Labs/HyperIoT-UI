@@ -12,7 +12,7 @@ import { HProjectSharingInfo } from './hProjectSharingInfo';
 import { HUser } from './hUser';
 
 
-export interface HProject { 
+export interface HProject {
     id?: number;
     entityVersion: number;
     readonly entityCreateDate?: Date;

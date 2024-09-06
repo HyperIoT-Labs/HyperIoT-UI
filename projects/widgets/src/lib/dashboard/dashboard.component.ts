@@ -375,7 +375,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
             });
 
             if (this.hProjectListOptions.length > 0) {
-              if (!this.idProjectSelected) {
+              if (!this.idProjectSelected || !this.hProjectList.some(hProject => hProject.id === this.idProjectSelected)) {
                 this.idProjectSelected = this.hProjectListOptions[0].id;
               }
               this.showDashboard();

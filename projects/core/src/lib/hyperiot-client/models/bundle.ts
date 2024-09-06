@@ -14,6 +14,8 @@ import { Version } from './version';
 
 export interface Bundle { 
     version?: Version;
+    location?: string;
+    state?: number;
     bundleContext?: BundleContext;
     headers?: DictionaryStringString;
     bundleId?: number;
@@ -21,6 +23,4 @@ export interface Bundle {
     lastModified?: number;
     registeredServices?: Array<ServiceReferenceObject>;
     servicesInUse?: Array<ServiceReferenceObject>;
-    location?: string;
-    state?: number;
 }

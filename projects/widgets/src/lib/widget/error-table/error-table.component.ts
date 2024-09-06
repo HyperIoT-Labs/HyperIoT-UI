@@ -64,6 +64,7 @@ export class ErrorTableComponent extends BaseTableComponent implements AfterView
     this.isConfigured = true;
 
     // Set header
+    this.tableHeaders = [];
     this.tableHeaders.push({ value: this.errorMessageFieldName });
     this.tableHeaders.push({ value: this.errorPacketFieldName });
     this.tableHeaders.push({ value: this.errorPacketTimestampFieldName });

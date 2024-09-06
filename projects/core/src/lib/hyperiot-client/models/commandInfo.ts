@@ -9,6 +9,6 @@
 
 
 export interface CommandInfo { 
-    commandClass?: string;
     commandName?: string;
+    commandClass?: string;
 }
