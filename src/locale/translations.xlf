@@ -1800,6 +1800,12 @@
       <trans-unit id="HYT_preview" datatype="html">
         <source>Preview</source>
       </trans-unit>
+      <trans-unit id="HYT_go_to_device_dashboard" datatype="html">
+        <source>Go to Device Dashboard</source>
+      </trans-unit>
+      <trans-unit id="HYT_go_to_alarm_manager" datatype="html">
+        <source>Go to Alarm Manager</source>
+      </trans-unit>
       <trans-unit id="HYT_back_to_projects" datatype="html">
         <source>Back to projects</source>
       </trans-unit>

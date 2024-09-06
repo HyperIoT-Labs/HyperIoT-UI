@@ -29,7 +29,7 @@ import {
   Input,
   Output, OnDestroy
 } from '@angular/core';
-import { DraggableItemComponent } from '../draggable-item/draggable-item.component';
+import { DeviceActions, DraggableItemComponent } from '../draggable-item/draggable-item.component';
 import { MapDirective } from '../map.directive';
 import {AreaDevice, Area, Logger, LoggerService} from 'core';
 import {Subject} from 'rxjs';
@@ -186,8 +186,8 @@ export class AreaMapComponent implements OnDestroy {
     // handle click on component label (open button)
     component.instance.openClicked
       .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe(() => {
-      this.openItem(component);
+      .subscribe((deviceAction: DeviceActions) => {
+        this.openItem(component, deviceAction);
     });
     // handle component removal
     component.instance.removeClicked
@@ -216,8 +216,9 @@ export class AreaMapComponent implements OnDestroy {
    * @param component
    * @param disableEvent
    */
-  openItem(component: ComponentRef<DraggableItemComponent>, disableEvent?: boolean) {
-    this.itemOpen.emit(component.instance.itemData);
+  openItem(component: ComponentRef<DraggableItemComponent>, deviceAction?: DeviceActions) {
+    if (deviceAction) this.itemOpen.emit({item: component.instance.itemData, deviceAction});
+    else this.itemOpen.emit(component.instance.itemData);
   }
 
   /**
