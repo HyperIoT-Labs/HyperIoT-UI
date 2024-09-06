@@ -1,7 +1,7 @@
 // angular
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule, TRANSLATIONS, LOCALE_ID, TRANSLATIONS_FORMAT, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA, Injectable, ErrorHandler, APP_INITIALIZER } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA, ErrorHandler } from '@angular/core';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 
