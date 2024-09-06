@@ -264,7 +264,6 @@ export class ProjectEventsFormComponent extends ProjectFormEntity implements OnI
     } else {
       e.entityVersion = 1;
       e.project = { id: this.currentProject.id, entityVersion: this.currentProject.entityVersion };
-      e.packet = null;  // event rules are not bound to packets anymore
       e.type = 'EVENT';
       this.rulesService.saveRule(e).subscribe(responseHandler, (err) => {
         this.setErrors(err);

@@ -87,3 +87,11 @@ export { DevDataService, DevDataSettings } from './lib/hyperiot-base/dev-data-se
 export { RealtimeDataChannelController } from './lib/hyperiot-base/realtime-data-service/realtimeDataChannelController';
 export { HytAlarm } from './lib/hyperiot-service/hyperiot-alarm-wrapper/hyperiot-alarm.model'
 export { CoreConfig } from './lib/config.service';
+
+export { NotificationManagerService } from './lib/hyperiot-service/notification-manager/notification-manager.service';
+export * from './lib/hyperiot-service/notification-manager/models/notification.model';
+
+export { GlobalErrorHandlerService } from './lib/hyperiot-service/error-handler/global-error-handler.service';
+export * from './lib/hyperiot-service/error-handler/models/error.model';
+
+export * from './lib/constants/http-context-tokens';

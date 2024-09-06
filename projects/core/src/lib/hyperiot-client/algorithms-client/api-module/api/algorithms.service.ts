@@ -14,6 +14,7 @@
 import { Inject, Injectable, Optional }                      from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams,
          HttpResponse, HttpEvent }                           from '@angular/common/http';
+import { HttpContext }                                       from '@angular/common/http';
 import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
 import { Observable }                                        from 'rxjs';
@@ -66,10 +67,10 @@ export class AlgorithmsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public addIOField(id: number, body: AlgorithmIOField, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public addIOField(id: number, body: AlgorithmIOField, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public addIOField(id: number, body: AlgorithmIOField, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public addIOField(id: number, body: AlgorithmIOField, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public addIOField(id: number, body: AlgorithmIOField, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public addIOField(id: number, body: AlgorithmIOField, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public addIOField(id: number, body: AlgorithmIOField, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public addIOField(id: number, body: AlgorithmIOField, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling addIOField.');
@@ -110,6 +111,7 @@ export class AlgorithmsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -121,10 +123,10 @@ export class AlgorithmsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public checkModuleWorking(observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public checkModuleWorking(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public checkModuleWorking(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public checkModuleWorking(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public checkModuleWorking(observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public checkModuleWorking(observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public checkModuleWorking(observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public checkModuleWorking(observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         let headers = this.defaultHeaders;
 
@@ -146,6 +148,7 @@ export class AlgorithmsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -158,10 +161,10 @@ export class AlgorithmsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deleteAlgorithm(id: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public deleteAlgorithm(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public deleteAlgorithm(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public deleteAlgorithm(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public deleteAlgorithm(id: number, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public deleteAlgorithm(id: number, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public deleteAlgorithm(id: number, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public deleteAlgorithm(id: number, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling deleteAlgorithm.');
@@ -193,6 +196,7 @@ export class AlgorithmsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -207,10 +211,10 @@ export class AlgorithmsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deleteIOField(id: number, fieldType: 'INPUT' | 'OUTPUT', ioFieldId: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public deleteIOField(id: number, fieldType: 'INPUT' | 'OUTPUT', ioFieldId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public deleteIOField(id: number, fieldType: 'INPUT' | 'OUTPUT', ioFieldId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public deleteIOField(id: number, fieldType: 'INPUT' | 'OUTPUT', ioFieldId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public deleteIOField(id: number, fieldType: 'INPUT' | 'OUTPUT', ioFieldId: number, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public deleteIOField(id: number, fieldType: 'INPUT' | 'OUTPUT', ioFieldId: number, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public deleteIOField(id: number, fieldType: 'INPUT' | 'OUTPUT', ioFieldId: number, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public deleteIOField(id: number, fieldType: 'INPUT' | 'OUTPUT', ioFieldId: number, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling deleteIOField.');
@@ -249,6 +253,7 @@ export class AlgorithmsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -261,10 +266,10 @@ export class AlgorithmsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public findAlgorithm(id: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public findAlgorithm(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public findAlgorithm(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public findAlgorithm(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public findAlgorithm(id: number, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public findAlgorithm(id: number, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public findAlgorithm(id: number, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public findAlgorithm(id: number, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling findAlgorithm.');
@@ -295,6 +300,7 @@ export class AlgorithmsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -307,10 +313,10 @@ export class AlgorithmsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public findAllAlgorithm(algorithmType: 'STATISTICS' | 'MACHINE_LEARNING' | 'DEEP_LEARNING', observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public findAllAlgorithm(algorithmType: 'STATISTICS' | 'MACHINE_LEARNING' | 'DEEP_LEARNING', observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public findAllAlgorithm(algorithmType: 'STATISTICS' | 'MACHINE_LEARNING' | 'DEEP_LEARNING', observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public findAllAlgorithm(algorithmType: 'STATISTICS' | 'MACHINE_LEARNING' | 'DEEP_LEARNING', observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public findAllAlgorithm(algorithmType: 'STATISTICS' | 'MACHINE_LEARNING' | 'DEEP_LEARNING', observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public findAllAlgorithm(algorithmType: 'STATISTICS' | 'MACHINE_LEARNING' | 'DEEP_LEARNING', observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public findAllAlgorithm(algorithmType: 'STATISTICS' | 'MACHINE_LEARNING' | 'DEEP_LEARNING', observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public findAllAlgorithm(algorithmType: 'STATISTICS' | 'MACHINE_LEARNING' | 'DEEP_LEARNING', observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (algorithmType === null || algorithmType === undefined) {
             throw new Error('Required parameter algorithmType was null or undefined when calling findAllAlgorithm.');
@@ -341,6 +347,7 @@ export class AlgorithmsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -355,10 +362,10 @@ export class AlgorithmsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public findAllAlgorithmPaginated(algorithmType: 'STATISTICS' | 'MACHINE_LEARNING' | 'DEEP_LEARNING', delta?: number, page?: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public findAllAlgorithmPaginated(algorithmType: 'STATISTICS' | 'MACHINE_LEARNING' | 'DEEP_LEARNING', delta?: number, page?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public findAllAlgorithmPaginated(algorithmType: 'STATISTICS' | 'MACHINE_LEARNING' | 'DEEP_LEARNING', delta?: number, page?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public findAllAlgorithmPaginated(algorithmType: 'STATISTICS' | 'MACHINE_LEARNING' | 'DEEP_LEARNING', delta?: number, page?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public findAllAlgorithmPaginated(algorithmType: 'STATISTICS' | 'MACHINE_LEARNING' | 'DEEP_LEARNING', delta?: number, page?: number, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public findAllAlgorithmPaginated(algorithmType: 'STATISTICS' | 'MACHINE_LEARNING' | 'DEEP_LEARNING', delta?: number, page?: number, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public findAllAlgorithmPaginated(algorithmType: 'STATISTICS' | 'MACHINE_LEARNING' | 'DEEP_LEARNING', delta?: number, page?: number, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public findAllAlgorithmPaginated(algorithmType: 'STATISTICS' | 'MACHINE_LEARNING' | 'DEEP_LEARNING', delta?: number, page?: number, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (algorithmType === null || algorithmType === undefined) {
             throw new Error('Required parameter algorithmType was null or undefined when calling findAllAlgorithmPaginated.');
@@ -400,6 +407,7 @@ export class AlgorithmsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -412,10 +420,10 @@ export class AlgorithmsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getBaseConfig(algorithmId: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public getBaseConfig(algorithmId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public getBaseConfig(algorithmId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public getBaseConfig(algorithmId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getBaseConfig(algorithmId: number, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public getBaseConfig(algorithmId: number, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public getBaseConfig(algorithmId: number, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public getBaseConfig(algorithmId: number, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (algorithmId === null || algorithmId === undefined) {
             throw new Error('Required parameter algorithmId was null or undefined when calling getBaseConfig.');
@@ -446,6 +454,7 @@ export class AlgorithmsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -458,10 +467,10 @@ export class AlgorithmsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public saveAlgorithm(body: Algorithm, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public saveAlgorithm(body: Algorithm, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public saveAlgorithm(body: Algorithm, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public saveAlgorithm(body: Algorithm, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public saveAlgorithm(body: Algorithm, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public saveAlgorithm(body: Algorithm, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public saveAlgorithm(body: Algorithm, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public saveAlgorithm(body: Algorithm, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling saveAlgorithm.');
@@ -498,6 +507,7 @@ export class AlgorithmsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -510,10 +520,10 @@ export class AlgorithmsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public updateAlgorithm(body: Algorithm, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public updateAlgorithm(body: Algorithm, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public updateAlgorithm(body: Algorithm, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public updateAlgorithm(body: Algorithm, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public updateAlgorithm(body: Algorithm, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public updateAlgorithm(body: Algorithm, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public updateAlgorithm(body: Algorithm, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public updateAlgorithm(body: Algorithm, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling updateAlgorithm.');
@@ -550,120 +560,7 @@ export class AlgorithmsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     * /hyperiot/algorithms/{algorithmId}/baseConfig
-     * Service for updating base configuration of algorithm
-     * @param algorithmId Algorithm ID which updates base configuration for
-     * @param body Base config
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public updateBaseConfig(algorithmId: number, body: AlgorithmConfig, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public updateBaseConfig(algorithmId: number, body: AlgorithmConfig, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public updateBaseConfig(algorithmId: number, body: AlgorithmConfig, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public updateBaseConfig(algorithmId: number, body: AlgorithmConfig, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-        if (algorithmId === null || algorithmId === undefined) {
-            throw new Error('Required parameter algorithmId was null or undefined when calling updateBaseConfig.');
-        }
-
-        if (body === null || body === undefined) {
-            throw new Error('Required parameter body was null or undefined when calling updateBaseConfig.');
-        }
-
-        let headers = this.defaultHeaders;
-
-        // authentication (jwt-auth) required
-        if (this.configuration.apiKeys && this.configuration.apiKeys["AUTHORIZATION"]) {
-            headers = headers.set('AUTHORIZATION', this.configuration.apiKeys["AUTHORIZATION"]);
-        }
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-            'application/json'
-        ];
-        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-        if (httpContentTypeSelected != undefined) {
-            headers = headers.set('Content-Type', httpContentTypeSelected);
-        }
-
-        return this.httpClient.post<any>(`${this.basePath}/${encodeURIComponent(String(algorithmId))}/baseConfig`,
-            body,
-            {
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     * /hyperiot/algorithms/{id}/ioFields
-     * Service for updating IO field
-     * @param id The algorithm which must be updated
-     * @param body The IO field which must be updated
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public updateIOField(id: number, body: AlgorithmIOField, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public updateIOField(id: number, body: AlgorithmIOField, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public updateIOField(id: number, body: AlgorithmIOField, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public updateIOField(id: number, body: AlgorithmIOField, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-        if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling updateIOField.');
-        }
-
-        if (body === null || body === undefined) {
-            throw new Error('Required parameter body was null or undefined when calling updateIOField.');
-        }
-
-        let headers = this.defaultHeaders;
-
-        // authentication (jwt-auth) required
-        if (this.configuration.apiKeys && this.configuration.apiKeys["AUTHORIZATION"]) {
-            headers = headers.set('AUTHORIZATION', this.configuration.apiKeys["AUTHORIZATION"]);
-        }
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-            'application/json'
-        ];
-        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-        if (httpContentTypeSelected != undefined) {
-            headers = headers.set('Content-Type', httpContentTypeSelected);
-        }
-
-        return this.httpClient.put<any>(`${this.basePath}/${encodeURIComponent(String(id))}/ioFields`,
-            body,
-            {
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );
@@ -678,10 +575,10 @@ export class AlgorithmsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public updateAlgorithmFile(algorithmId: number, mainClassname: string, body: Blob, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public updateAlgorithmFile(algorithmId: number, mainClassname: string, body: Blob, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public updateAlgorithmFile(algorithmId: number, mainClassname: string, body: Blob, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public updateAlgorithmFile(algorithmId: number, mainClassname: string, body: Blob, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public updateAlgorithmFile(algorithmId: number, mainClassname: string, body: Blob, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public updateAlgorithmFile(algorithmId: number, mainClassname: string, body: Blob, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public updateAlgorithmFile(algorithmId: number, mainClassname: string, body: Blob, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public updateAlgorithmFile(algorithmId: number, mainClassname: string, body: Blob, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (algorithmId === null || algorithmId === undefined) {
             throw new Error('Required parameter algorithmId was null or undefined when calling updateAlgorithmFile.');
@@ -725,6 +622,123 @@ export class AlgorithmsService {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
+                context: context,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * /hyperiot/algorithms/{algorithmId}/baseConfig
+     * Service for updating base configuration of algorithm
+     * @param algorithmId Algorithm ID which updates base configuration for
+     * @param body Base config
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public updateBaseConfig(algorithmId: number, body: AlgorithmConfig, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public updateBaseConfig(algorithmId: number, body: AlgorithmConfig, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public updateBaseConfig(algorithmId: number, body: AlgorithmConfig, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public updateBaseConfig(algorithmId: number, body: AlgorithmConfig, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
+
+        if (algorithmId === null || algorithmId === undefined) {
+            throw new Error('Required parameter algorithmId was null or undefined when calling updateBaseConfig.');
+        }
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling updateBaseConfig.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (jwt-auth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["AUTHORIZATION"]) {
+            headers = headers.set('AUTHORIZATION', this.configuration.apiKeys["AUTHORIZATION"]);
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.post<any>(`${this.basePath}/${encodeURIComponent(String(algorithmId))}/baseConfig`,
+            body,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                context: context,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * /hyperiot/algorithms/{id}/ioFields
+     * Service for updating IO field
+     * @param id The algorithm which must be updated
+     * @param body The IO field which must be updated
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public updateIOField(id: number, body: AlgorithmIOField, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public updateIOField(id: number, body: AlgorithmIOField, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public updateIOField(id: number, body: AlgorithmIOField, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public updateIOField(id: number, body: AlgorithmIOField, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
+
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling updateIOField.');
+        }
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling updateIOField.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (jwt-auth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["AUTHORIZATION"]) {
+            headers = headers.set('AUTHORIZATION', this.configuration.apiKeys["AUTHORIZATION"]);
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.put<any>(`${this.basePath}/${encodeURIComponent(String(id))}/ioFields`,
+            body,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                context: context,
                 reportProgress: reportProgress
             }
         );

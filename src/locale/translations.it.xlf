@@ -1180,9 +1180,9 @@
         <source>Deleting of project "<x id="PH" />" in loading. It may take a while.</source>
         <target>Eliminazione del progetto in corso. Questa operazione potrebbe richiedere un po' di tempo.</target>
       </trans-unit>
-      <trans-unit id="HYT_plan_info" datatype="html">
-        <source>Plan Info</source>
-        <target>Info piano</target>
+      <trans-unit id="HYT_general_info" datatype="html">
+        <source>General Info</source>
+        <target>Info generali</target>
       </trans-unit>
       <trans-unit id="HYT_your_role_is" datatype="html">
         <source>Your role is</source>
@@ -1409,8 +1409,16 @@
         <target>Procedendo con questa azione disabiliterai la registrazione dei dati che non saranno salvati fino alla riabilitazione di questa proprietà</target>
       </trans-unit>
       <trans-unit id="HYT_dashboard_event_fired" datatype="html">
+        <source>The event has been fired</source>
+        <target>L'evento è stato emesso</target>
+      </trans-unit>
+      <trans-unit id="HYT_dashboard_alarm_fired" datatype="html">
+        <source>The alarm has been fired</source>
+        <target>L'allarme è stato attivato</
+      </trans-unit>
+      <trans-unit id="HYT_dashboard_alarm_cleared" datatype="html">
         <source>Alarm cleared</source>
-        <target>Allarme rientrato</target>
+        <target>Allarme rimosso</target>
       </trans-unit>
       <trans-unit id="HYT_reload" datatype="html">
         <source>Reload</source>
@@ -2327,6 +2335,7 @@
       <trans-unit id="HYT_alarm_showing_text_of" datatype="html">
         <source> of </source>
         <target> su </target>
+      </trans-unit>
       <trans-unit id="HYT_conditions" datatype="html">
         <source>Conditions</source>
         <target>Condizioni</target>
@@ -2338,6 +2347,14 @@
       <trans-unit id="HYT_field_box_info" datatype="html">
         <source>Selection of the package and device is required!</source>
         <target>La selezione del pacchetto e del dispositivo è necessaria!</target>
+      </trans-unit>
+      <trans-unit id="HYT_fields_fit_to_timeline" datatype="html">
+        <source>Fit to timeline</source>
+        <target>Adatta alla timeline</target>
+      </trans-unit>
+      <trans-unit id="HYT_noData" datatype="html">
+        <source>No data to display</source>
+        <target>Nessun dato da visualizzare</target>
       </trans-unit>
       <trans-unit id="HYT_notification_active" datatype="html">
         <source>Notification ACTIVE</source>
@@ -2406,6 +2423,46 @@
       <trans-unit id="HYT_restoring_default_theme_error" datatype="html">
         <source>Restoring default theme error</source>
         <target>Errore nella ripristinazione del tema</target>
+      </trans-unit>
+      <trans-unit id="HYT_you_have_access_to" datatype="html">
+        <source>You have access to</source>
+        <target>Hai accesso a</target>
+      </trans-unit>
+      <trans-unit id="HYT_theme_customization" datatype="html">
+        <source>Theme customization</source>
+        <target>Personalizzazione del tema</target>
+      </trans-unit>
+      <trans-unit id="HYT_upload_your_logo" datatype="html">
+        <source>Upload your logo</source>
+        <target>Carica il tuo logo</target>
+      </trans-unit>
+      <trans-unit id="HYT_upload" datatype="html">
+        <source>Upload</source>
+        <target>Carica</target>
+      </trans-unit>
+      <trans-unit id="HYT_preview" datatype="html">
+        <source>Preview</source>
+        <target>Anteprima</target>
+      </trans-unit>
+      <trans-unit id="HYT_reset" datatype="html">
+        <source>Reset</source>
+        <target>Ripristina</target>
+      </trans-unit>
+      <trans-unit id="HYT_go_to_device_dashboard" datatype="html">
+        <source>Go to Device Dashboard</source>
+        <target>Vai alla dashboard del device</target>
+      </trans-unit>
+      <trans-unit id="HYT_go_to_alarm_manager" datatype="html">
+        <source>Go to Alarm Manager</source>
+        <target>Vai al manager dell'allarme</target>
+     </trans-unit>
+      <trans-unit id="HYT_back_to_projects" datatype="html">
+        <source>Back to projects</source>
+        <target>Torna ai progetti</target>
+      </trans-unit>
+      <trans-unit id="HYT_back_to_area" datatype="html">
+        <source>Back to area</source>
+        <target>Torna all'area</target>
       </trans-unit>
     </body>
   </file>

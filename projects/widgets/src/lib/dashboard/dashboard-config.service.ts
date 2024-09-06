@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpEvent, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpContext, HttpEvent, HttpResponse } from '@angular/common/http';
 
 import { map, catchError, tap } from 'rxjs/operators';
 import { Subject, forkJoin, of, mergeMap, Observable } from 'rxjs';
@@ -15,6 +15,7 @@ import {
 } from 'core';
 import { DashboardWidgetPlus } from 'components';
 import { WidgetConfig } from '../base/base-widget/model/widget.model';
+import { IGNORE_ERROR_NOTIFY } from 'core';
 
 @Injectable()
 export class DashboardConfigService {
@@ -154,7 +155,7 @@ export class DashboardConfigService {
         // Save the dashboard structure
         // console.log('Saving Dashboard', dashboardId, dashboardWidgets);
         return this.dashboardWidgetService
-            .saveAllDashboardWidget(+dashboardId, dashboardWidgets);
+            .saveAllDashboardWidget(+dashboardId, dashboardWidgets, 'body', false, new HttpContext().set(IGNORE_ERROR_NOTIFY, true));
     }
 
     getWidgetCategoryList() {

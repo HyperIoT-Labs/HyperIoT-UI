@@ -885,8 +885,8 @@
       <trans-unit id="HYT_deleting_project" datatype="html">
         <source>Deleting of project &quot;<x id="PH"/>&quot; in loading. It may take a while.</source>
       </trans-unit>
-      <trans-unit id="HYT_plan_info" datatype="html">
-        <source>Plan Info</source>
+      <trans-unit id="HYT_general_info" datatype="html">
+        <source>General Info</source>
       </trans-unit>
       <trans-unit id="HYT_your_role_is" datatype="html">
         <source>Your role is</source>
@@ -1057,6 +1057,12 @@
         <source>Proceeding with this action you will disable the registration of the data and they will not be stored until the rehabilitation of this property</source>
       </trans-unit>
       <trans-unit id="HYT_dashboard_event_fired" datatype="html">
+        <source>The event has been fired</source>
+      </trans-unit>
+      <trans-unit id="HYT_dashboard_alarm_fired" datatype="html">
+        <source>The alarm has been fired</source>
+      </trans-unit>
+      <trans-unit id="HYT_dashboard_alarm_cleared" datatype="html">
         <source>Alarm cleared</source>
       </trans-unit>
       <trans-unit id="HYT_reload" datatype="html">
@@ -1752,6 +1758,12 @@
       <trans-unit id="HYT_field_box_info" datatype="html">
         <source>Selection of the package and device is required!</source>
       </trans-unit>
+      <trans-unit id="HYT_fields_fit_to_timeline" datatype="html">
+        <source>Fit to timeline</source>
+      </trans-unit>
+      <trans-unit id="HYT_noData" datatype="html">
+        <source>No data to display</source>
+      </trans-unit>
       <trans-unit id="HYT_notification_active" datatype="html">
         <source>Notification ACTIVE</source>
       </trans-unit>
@@ -1802,6 +1814,33 @@
       </trans-unit>
       <trans-unit id="HYT_restoring_default_theme_error" datatype="html">
         <source>Restoring default theme error</source>
+      </trans-unit>
+      <trans-unit id="HYT_you_have_access_to" datatype="html">
+        <source>You have access to</source>
+      </trans-unit>
+      <trans-unit id="HYT_theme_customization" datatype="html">
+        <source>Theme customization</source>
+      </trans-unit>
+      <trans-unit id="HYT_upload_your_logo" datatype="html">
+        <source>Upload your logo</source>
+      </trans-unit>
+      <trans-unit id="HYT_upload" datatype="html">
+        <source>Upload</source>
+      </trans-unit>
+      <trans-unit id="HYT_preview" datatype="html">
+        <source>Preview</source>
+      </trans-unit>
+      <trans-unit id="HYT_go_to_device_dashboard" datatype="html">
+        <source>Go to Device Dashboard</source>
+      </trans-unit>
+      <trans-unit id="HYT_go_to_alarm_manager" datatype="html">
+        <source>Go to Alarm Manager</source>
+      </trans-unit>
+      <trans-unit id="HYT_back_to_projects" datatype="html">
+        <source>Back to projects</source>
+      </trans-unit>
+      <trans-unit id="HYT_back_to_area" datatype="html">
+        <source>Back to area</source>
       </trans-unit>
     </body>
   </file>

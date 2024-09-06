@@ -33,7 +33,7 @@ import {DashComponent} from '../pages/dash/dash.component';
 import { BrandingService } from '../services/branding/branding.service';
 
 export enum HytRoutesDataFields {
-  IGNORE_HTTP_ERROR_INTERCEPTOR = 'ignoreHttpErrorInterceptor'
+  IGNORE_HTTP_ERROR_NOTIFY = 'ignoreHttpErrorNotify'
 }
 
 @Injectable()
@@ -130,7 +130,7 @@ const hyperiotRoutes: Routes = [
     ],
     data: {
       showToolBar: false,
-      [HytRoutesDataFields.IGNORE_HTTP_ERROR_INTERCEPTOR]: true,
+      [HytRoutesDataFields.IGNORE_HTTP_ERROR_NOTIFY]: true,
     }
   },
   {

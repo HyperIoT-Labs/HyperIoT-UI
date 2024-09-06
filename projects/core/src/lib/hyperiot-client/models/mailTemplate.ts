@@ -13,8 +13,6 @@ export interface MailTemplate {
     entityVersion: number;
     readonly entityCreateDate?: Date;
     readonly entityModifyDate?: Date;
-    categoryIds?: Array<number>;
-    tagIds?: Array<number>;
     name?: string;
     description?: string;
     content?: string;

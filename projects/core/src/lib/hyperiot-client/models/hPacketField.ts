@@ -13,8 +13,6 @@ export interface HPacketField {
     entityVersion: number;
     readonly entityCreateDate?: Date;
     readonly entityModifyDate?: Date;
-    categoryIds?: Array<number>;
-    tagIds?: Array<number>;
     name?: string;
     description?: string;
     type?: HPacketField.TypeEnum;
@@ -25,10 +23,11 @@ export interface HPacketField {
     value?: any;
 }
 export namespace HPacketField {
-    export type TypeEnum = 'OBJECT' | 'INTEGER' | 'DOUBLE' | 'FLOAT' | 'BOOLEAN' | 'DATE' | 'TEXT' | 'TIMESTAMP' | 'BYTE' | 'FILE';
+    export type TypeEnum = 'OBJECT' | 'INTEGER' | 'LONG' | 'DOUBLE' | 'FLOAT' | 'BOOLEAN' | 'DATE' | 'TEXT' | 'TIMESTAMP' | 'BYTE' | 'FILE';
     export const TypeEnum = {
         OBJECT: 'OBJECT' as TypeEnum,
         INTEGER: 'INTEGER' as TypeEnum,
+        LONG: 'LONG' as TypeEnum,
         DOUBLE: 'DOUBLE' as TypeEnum,
         FLOAT: 'FLOAT' as TypeEnum,
         BOOLEAN: 'BOOLEAN' as TypeEnum,

@@ -4,6 +4,7 @@ import { DefibrillatorSettings } from '../../../dashboard/widget-settings-dialog
 import { HPacket, HPacketField } from 'core';
 import { DataSimulatorSettings } from '../../../dashboard/widget-settings-dialog/data-simulator-settings/data-simulator.models';
 import { ProductionTargetSettings } from '../../../dashboard/widget-settings-dialog/production-target-settings/production-target.model';
+import FieldRules = DataSimulatorSettings.FieldRules;
 
 export interface WidgetConfig extends GridsterItem {
     projectId?: number;
@@ -29,6 +30,7 @@ export interface ConfigModel {
     fieldTypes?: FieldTypes;
     fieldFileMimeTypes?: FieldFileMimeTypes;
     fieldUnitConversions?: FieldUnitConversion;
+    fieldCustomConversions?: FieldRules;
     timeAxisRange?: number;
     maxDataPoints?: number;
     timeWindow?: number;
@@ -49,6 +51,7 @@ export interface ConfigModel {
     productionTargetSettings?: ProductionTargetSettings.ProductionTargetSettings;
     fieldValuesMapList?: FieldValuesMapList;
     dynamicLabels?: DynamicLabels;
+    fitToTimeline?: boolean;
 }
 
 export interface FieldUnitConversion {
@@ -64,7 +67,7 @@ export interface FieldUnitConversion {
 export class FieldAliases {
     [fieldId: number]: string;
 }
-  
+
 export class FieldFileMimeTypes {
     [fieldId: number]: string;
 }
@@ -139,4 +142,13 @@ export enum AutoUpdateConfigStatus {
     UNNECESSARY = 'UNNECESSARY',
     SUCCESS = 'SUCCESS',
     ERROR = 'ERROR',
+}
+
+export interface ConfigButtonWidget{
+  showClose?: boolean,
+  showSettings?: boolean,
+  showPlay?: boolean,
+  showRefresh?: boolean,
+  showTable?: boolean,
+  hideFullScreen?: boolean
 }

@@ -40,7 +40,7 @@ export class OfflineDataService extends BaseDataService {
     this.countEventSubject = new Subject<PageStatus>();
   }
 
-  
+
   public resetService(hProjectId: number): Subject<number[]> {
     this.hProjectId = hProjectId;
     this.getEventCountEmpty(); // resetting time bounds and subscriptions
@@ -48,7 +48,7 @@ export class OfflineDataService extends BaseDataService {
     return this.dashboardPackets;
   }
 
-  
+
   addDataChannel(widgetId: number, dataPacketFilterList: DataPacketFilter[]) {
     const dataChannel = super.addDataChannel(widgetId, dataPacketFilterList);
     const packetIds = this.getPacketIdsFromDataChannels();
@@ -67,7 +67,7 @@ export class OfflineDataService extends BaseDataService {
     return dataChannel;
   }
 
-  
+
   removeDataChannel(widgetId: number) {
     super.removeDataChannel(widgetId);
     const packetIds = this.getPacketIdsFromDataChannels();
@@ -81,7 +81,7 @@ export class OfflineDataService extends BaseDataService {
 
   // Setting counter for specific widget
   // can avoid to reset data channel controller because this function is called after a new data channel is created so the controller is new
-  
+
   private getEventCountByWidgetId(widgetId: number) {
     const dataChannel = this.dataChannels[widgetId];
     if (!dataChannel) {
@@ -112,7 +112,7 @@ export class OfflineDataService extends BaseDataService {
   }
 
   // Setting counter after user selection
-  
+
   public getEventCount(rowKeyLowerBound: number, rowKeyUpperBound: number): void {
     this.resetSubscription();
     this.countEventSubject.next(PageStatus.Loading);
@@ -147,15 +147,15 @@ export class OfflineDataService extends BaseDataService {
   }
 
   // Setting counter after user remove selection
-  
+
   public getEventCountEmpty() {
     this.resetSubscription();
     this.dashboardTimeBounds.lower = 0;
     this.dashboardTimeBounds.upper = 0;
   }
 
-  // reset actual subscription and data channel controllers 
-  
+  // reset actual subscription and data channel controllers
+
   private resetSubscription() {
     if (this.countSubscription) {
       this.countSubscription.unsubscribe();
@@ -189,7 +189,7 @@ export class OfflineDataService extends BaseDataService {
             packetData.values = packetData.values.filter(datum => datum.fields.find(x => x.name === datum.timestampField).value <= minRowKeyUpperBound);
           });
         }
-        
+
         // converting data to packetData
         let countConverted = 0;
         const convertData: PacketDataChunk[] = res.map(packetData => {
@@ -214,9 +214,9 @@ export class OfflineDataService extends BaseDataService {
   }
 
   // Download additional data for a specified channel
-  
+
   public loadNextData(channelId: number): void {
-    
+
     const dataChannel = this.dataChannels[channelId];
     if (!dataChannel) {
       throw new Error('unavailable dataChannel');
@@ -231,7 +231,7 @@ export class OfflineDataService extends BaseDataService {
   }
 
   // Convert offline data to PacketData
-  
+
   private convertData(packetValues: any, dataChannel: DataChannel): PacketData[] {
     return packetValues.map(pv => {
       const convertedPV: PacketData = {};
@@ -254,8 +254,8 @@ export class OfflineDataService extends BaseDataService {
   }
 
   public loadAllRangeData(channelId: number): void {
-    
-    
+
+
     const dataChannel = this.dataChannels[channelId];
     if (!dataChannel) {
       throw new Error('unavailable dataChannel');

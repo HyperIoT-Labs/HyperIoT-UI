@@ -9,6 +9,7 @@ import {HytTreeViewProjectComponent} from 'components';
 import {takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
 import {installTempPackage} from '@angular/cli/utilities/install-package';
+import { DeviceActions } from '../../projects/project-forms/areas-form/draggable-item/draggable-item.component';
 
 @Component({
   selector: 'hyt-container-area-map',
@@ -386,7 +387,16 @@ export class ContainerAreaMapComponent implements OnInit, OnDestroy {
    */
   public onItemMapClicked(itemMap){
     this.logger.debug('onItemMapClicked start', itemMap);
-    if(itemMap.innerArea){
+    if (itemMap.deviceAction) {
+      if (itemMap.deviceAction === DeviceActions.DASHBOARD) {
+        // TODO implement navigation to device dashboard
+        this.logger.debug('navigation to device dashboard', itemMap);
+      } else if (itemMap.deviceAction === DeviceActions.ALARMMANAGER) {
+        // TODO implement navigation to alarmmanager
+        this.logger.debug('navigation to alarmmanager', itemMap);
+      }
+    }
+    else if(itemMap.innerArea){
       this.router.navigate(['areas', this.projectId, itemMap.id])
         .then(() => {
           //TODO: Change method to navigate

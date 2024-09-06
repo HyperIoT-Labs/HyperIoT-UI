@@ -405,7 +405,8 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity implements OnI
     else if (this.newAlarm == false && this.selectedEventId == undefined) {
       const obj = {
         alarm: {
-          id: this.selectedId
+          id: this.selectedId,
+          entityVersion: 0
         },
         event: {
           name: addEditEvent.event.name,
@@ -413,14 +414,17 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity implements OnI
           ruleDefinition: addEditEvent.event.ruleDefinition,
           rulePrettyDefinition: addEditEvent.event.rulePrettyDefinition,
           project: {
-            id: this.currentProject.id
+            id: this.currentProject.id,
+            entityVersion: this.currentProject.entityVersion
           },
           packet: null,
           jsonActions: '["{\\"actionName\\": \\"it.acsoftware.hyperiot.alarm.service.actions.NoAlarmAction\\", \\"active\\": true}"]',
           type: Rule.TypeEnum.ALARMEVENT,
           tagIds: this.selectedTags.map(o => o.id),
+          entityVersion: 0
         },
-        severity: addEditEvent.severity
+        severity: addEditEvent.severity,
+        entityVersion: 0
       } as AlarmEvent
 
       this.alarmEventsService.saveAlarmEvent(obj)
@@ -459,7 +463,8 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity implements OnI
     else {
       const obj = {
         alarm: {
-          id: this.selectedId
+          id: this.selectedId,
+          entityVersion: 0
         },
         id: this.selectedEventId,
         event: {
@@ -469,14 +474,17 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity implements OnI
           ruleDefinition: addEditEvent.event.ruleDefinition,
           rulePrettyDefinition: addEditEvent.event.rulePrettyDefinition,
           project: {
-            id: this.currentProject.id
+            id: this.currentProject.id,
+            entityVersion: this.currentProject.entityVersion
           },
           packet: null,
           jsonActions: '["{\\"actionName\\": \\"it.acsoftware.hyperiot.alarm.service.actions.NoAlarmAction\\", \\"active\\": true}"]',
           type: Rule.TypeEnum.ALARMEVENT,
           tagIds: this.selectedTags.map(o => o.id),
+          entityVersion: 0
         },
-        severity: addEditEvent.severity
+        severity: addEditEvent.severity,
+        entityVersion: 0
       } as AlarmEvent
       this.alarmEventsService.updateAlarmEvent(obj)
         .pipe(

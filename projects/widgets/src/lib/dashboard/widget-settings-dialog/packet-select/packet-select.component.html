@@ -39,13 +39,20 @@
                 (fieldSelectionChanged)="onPacketFieldChange($event)"></hyt-inner-field-select>
 
         </div>
+        <div *ngIf="widgetType === 'time-chart'" id="field-fit-to-timeline" class="d-flex flex-column">
+          <mat-checkbox
+            color="primary"
+            name="fitToTimelineCheckbox"
+            id="fitToTimelineCheckbox"
+            [(ngModel)]="fitToTimelineCheckbox" i18n="@@HYT_fields_fit_to_timeline">Fit to timeline</mat-checkbox>
+        </div>
 
         <div id="box-fields-customization" *ngIf="selectedFields && selectedFields.length > 0">
 
             <div class="box-fields-customization-title">
                 <h3 id="title-customization" i18n="@@HYT_fields_customization">Fields Customization</h3>
             </div>
-            
+
             <mat-accordion>
                 <mat-expansion-panel *ngFor="let field of selectedFields">
                     <mat-expansion-panel-header>
@@ -54,7 +61,7 @@
                             <span class="customization-field-title">{{ getFullFieldName(field.id) }}</span>
                         </mat-panel-title>
                     </mat-expansion-panel-header>
-                    
+
                     <mat-divider></mat-divider>
 
                     <div class="customization-container">
@@ -71,7 +78,7 @@
                                 </mat-form-field>
                             </div>
                         </div>
-        
+
                         <div class="customization-container-section section-fileType" *ngIf="field.type === 'FILE'">
                             <div class="section-title">
                                 <span i18n="@@HYT_file_mime_type_title">File MIME Type</span>
@@ -150,17 +157,44 @@
                                     [errorMsgRequired]="'Select one packet'" [hint]="'select one packet'"
                                     class="hyt-select-full-width">
                                 </hyt-select>
-                                <hyt-inner-field-select *ngIf="dynamicLabelFields[field.id] && dynamicLabelFields[field.id]?.length > 0" [fields]="dynamicLabelFields[field.id]" 
-                                    [selectedFieldsIds]="dynamicLabelSelectedField[field.id]?.fieldId ? dynamicLabelSelectedField[field.id].fieldId : []" [isMultiSelect]="false"
+                                <hyt-inner-field-select *ngIf="dynamicLabelFields[field.id] && dynamicLabelFields[field.id]?.length > 0" [fields]="dynamicLabelFields[field.id]"
+
+                                    [selectedFieldsIds]="dynamicLabelSelectedField[field.id]?.fieldId ? [dynamicLabelSelectedField[field.id].fieldId] : []" [isMultiSelect]="false"
+
                                     (fieldSelectionChanged)="onDynamicLabelPacketFieldSelect($event, field.id)">
                                 </hyt-inner-field-select>
                             </div>
                         </div>
-                    </div>
 
+                        <div class="customization-container-section section-custom-expression" *ngIf="field.type === 'INTEGER' || field.type === 'FLOAT' || field.type === 'DOUBLE'">
+                            <div class="section-title">
+                                <span i18n="@@HYT_expressions_title">Expressions</span>
+                            </div>
+                            <div class="section-input">
+                                <ng-container>
+                                    <div class="rule-info">
+                                        Emit a value computed through an expression.
+                                        <ul>
+                                            <li>Placeholder: <b>$val</b>: the current selected filed value</li>
+                                            <li>Supported operators: <b>abs</b>, <b>sin</b>, <b>cos</b>, <b>tan</b>, <b>sqrt</b>, <b>pow</b>, <b>log</b>, <b>random</b>, <b>PI</b></li>
+                                            <li>Expression example: <b>2*(sin(PI*$val/100))</b></li>
+                                        </ul>
+                                    </div>
+                                    <div class="rule-input">
+                                        <mat-form-field class="example-full-width">
+                                            <mat-label>Expression</mat-label>
+                                            <input [(ngModel)]="fieldRules[field.id].expression" matInput [name]="'expression' + field.id" type="text" (keyup)="updateExpression($event, field.id)" [value]="fieldRules[field.id]?.expression">
+                                            <mat-icon *ngIf="expressionIsValid" color="primary" matSuffix>done_outline</mat-icon>
+                                            <mat-icon *ngIf="!expressionIsValid" color="warn" matSuffix>highlight_off</mat-icon>
+                                            <mat-hint class="mat-error" *ngIf="!expressionIsValid">Invalid expression!</mat-hint>
+                                        </mat-form-field>
+                                    </div>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
                 </mat-expansion-panel>
             </mat-accordion>
-
         </div>
 
     </ng-container>
