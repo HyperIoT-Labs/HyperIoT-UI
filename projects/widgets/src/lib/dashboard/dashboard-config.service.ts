@@ -49,6 +49,14 @@ export class DashboardConfigService {
         return this.dashboardService.findAreaOfflineDashboard(areaId);
     }
 
+    getRealtimeDashboardFromHDevice(hDeviceId: number): Observable<any> | Observable<HttpResponse<any>> | Observable<HttpEvent<any>> | any {
+      return this.dashboardService.findDeviceRealtimeDashboard(hDeviceId);
+    }
+
+    getOfflineDashboardFromHDevice(hDeviceId: number): Observable<any> | Observable<HttpResponse<any>> | Observable<HttpEvent<any>> | any {
+      return this.dashboardService.findDeviceOfflineDashboard(hDeviceId);
+    }
+
     getAllDashboardsAndProjects() {
 
         return forkJoin([

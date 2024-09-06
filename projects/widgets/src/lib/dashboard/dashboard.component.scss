@@ -9,6 +9,13 @@
     padding-right: 15px;
     padding-top: 15px;
 
+    .tooltip-multiline {
+      height: auto;
+    }
+    .md-tooltip {
+      height: auto;
+    }
+
     .header {
       border-bottom: 1px solid #1e58a5;
       min-height: 50px;
@@ -300,7 +307,7 @@
         font-family: 'Exo', serif;
         font-size: 16px;
         min-width: unset;
-    }    
+    }
 
 }
 

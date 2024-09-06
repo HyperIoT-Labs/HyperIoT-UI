@@ -10,7 +10,17 @@ import {
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DialogService } from 'components';
-import { AlgorithmOfflineDataService, Area, AreasService, Dashboard, HProject, Logger, LoggerService, OfflineDataService } from 'core';
+import {
+  AlgorithmOfflineDataService,
+  Area,
+  AreasService,
+  Dashboard, HDevice,
+  HdevicesService,
+  HProject,
+  Logger,
+  LoggerService,
+  OfflineDataService
+} from 'core';
 import { debounceTime, Subject, Subscription, takeUntil } from 'rxjs';
 import { AddWidgetDialogComponent } from './add-widget-dialog/add-widget-dialog.component';
 import { DashboardConfigService } from './dashboard-config.service';
@@ -91,10 +101,17 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   packetsInDashboard: number[] = [];
 
   areaId: number | undefined = undefined;
+  hDeviceId: number | undefined = undefined;
   areaPath: Area[];
   showAreas = false;
   areaListOptions = [] as any[];
   selectedAreaId: number;
+
+  showHDevice = false;
+  hDeviceListOptions = [] as any[];
+  selectedHDeviceId: number;
+  currentDevice: HDevice;
+  currentDeviceTooltip: string;
 
   @Input() debug = false;
 
@@ -152,6 +169,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     private offlineDataService: OfflineDataService,
     private algorithmOfflineDataService: AlgorithmOfflineDataService,
     private areaService: AreasService,
+    private hDeviceService: HdevicesService,
     private dialogService: DialogService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -167,6 +185,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit() {
 
     this.showAreas = this.activatedRoute.snapshot.routeConfig.path.startsWith('areas/');
+    this.showHDevice = this.activatedRoute.snapshot.routeConfig.path.startsWith('hdevice/');
 
     if (!this.showAreas) {
       if (this.activatedRoute.snapshot.queryParams.projectId) {
@@ -189,6 +208,28 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
       if (this.areaId) {
         this.areaService.getAreaPath(this.areaId).subscribe((areas: Area[]) => {
           this.areaPath = areas;
+          this.showDashboard();
+        });
+      }
+    } else if (this.showHDevice) {
+      this.idProjectSelected = +this.activatedRoute.snapshot.params.projectId;
+      // load area realtime Dashboard
+      if (!this.hDeviceId) {
+        this.hDeviceId = +this.activatedRoute.snapshot.params.hDeviceId;
+      }
+      if (this.hDeviceId) {
+        this.hDeviceService.findHDevice(this.hDeviceId).subscribe((hDevice: HDevice) => {
+          if (hDevice) {
+            this.currentDevice = hDevice;
+            // TODO: terminate tooltip
+/*            this.currentDeviceTooltip = `
+            Brand: ${hDevice.brand}
+            Model: ${hDevice.model}
+            Firmware ver.: ${hDevice.firmwareVersion}
+            SW ver.: ${hDevice.softwareVersion}
+            Device id: ${hDevice.id}
+          `;*/
+          }
           this.showDashboard();
         });
       }
@@ -277,7 +318,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     });
   }
-  
+
   changeTopologyState(event) {
     this.dataRecordingIsOn = event.dataRecordingIsOn;
     this.dashboardEvent.commandEvent.next(this.dataRecordingIsOn ? DashboardEvent.Command.RUN : DashboardEvent.Command.STOP);
@@ -397,6 +438,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private showDashboard() {
+    console.log('DeviceId/AreaId/ProjectId/SignalIsOn: ', this.hDeviceId, this.areaId, this.idProjectSelected, this.signalIsOn);
     if (!this.signalIsOn) {
       this.pageStatus = PageStatus.Loading;
       this.getOfflineDashboard();
@@ -416,6 +458,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private getOfflineDashboard() {
     const responseHandler = (res: Dashboard[]) => {
+      console.log('getOfflineDashboard', res);
       this.currentDashboard = res[0];
       this.currentDashboardId = this.currentDashboard?.id;
       this.widgetLayoutReady = false;
@@ -434,6 +477,10 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     };
     if (this.showAreas) {
       this.dashboardConfigService.getOfflineDashboardFromArea(this.areaId)
+        .pipe(takeUntil(this.ngUnsubscribe))
+        .subscribe(responseHandler, errorHandler);
+    } else if (this.showHDevice) {
+      this.dashboardConfigService.getOfflineDashboardFromHDevice(this.hDeviceId)
         .pipe(takeUntil(this.ngUnsubscribe))
         .subscribe(responseHandler, errorHandler);
     } else {
@@ -461,6 +508,11 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     };
     if (this.showAreas) {
       this.dashboardConfigService.getRealtimeDashboardFromArea(this.areaId)
+        .pipe(takeUntil(this.ngUnsubscribe))
+        .subscribe(responseHandler, errorHandler);
+    } else if (this.showHDevice) {
+      console.log('getRealtimeDashboardFromHDevice', this.hDeviceId, this.showHDevice);
+      this.dashboardConfigService.getRealtimeDashboardFromHDevice(this.hDeviceId)
         .pipe(takeUntil(this.ngUnsubscribe))
         .subscribe(responseHandler, errorHandler);
     } else {

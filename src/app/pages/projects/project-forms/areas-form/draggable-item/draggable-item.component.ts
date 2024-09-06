@@ -1,6 +1,6 @@
-import { Component, HostListener, EventEmitter } from '@angular/core';
-import { CdkDrag } from '@angular/cdk/drag-drop';
-import { AreaDevice } from 'core';
+import {Component, EventEmitter, HostListener, ViewEncapsulation} from '@angular/core';
+import {CdkDrag} from '@angular/cdk/drag-drop';
+import {AreaDevice} from 'core';
 
 export enum DeviceActions {
   ALARMMANAGER,
@@ -10,7 +10,8 @@ export enum DeviceActions {
 @Component({
   selector: 'hyt-draggable-item',
   templateUrl: './draggable-item.component.html',
-  styleUrls: ['./draggable-item.component.scss']
+  styleUrls: ['./draggable-item.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class DraggableItemComponent {
   openClicked = new EventEmitter<any>();

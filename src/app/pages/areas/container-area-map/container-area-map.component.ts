@@ -390,7 +390,12 @@ export class ContainerAreaMapComponent implements OnInit, OnDestroy {
     if (itemMap.deviceAction) {
       if (itemMap.deviceAction === DeviceActions.DASHBOARD) {
         // TODO implement navigation to device dashboard
-        this.logger.debug('navigation to device dashboard', itemMap);
+        this.logger.debug('navigation to device dashboard', itemMap.item);
+        if (itemMap.item.device) {
+          this.router.navigate(['hdevice', this.projectId, itemMap.item.device.id, 'dashboards'])
+        } else{
+          this.logger.error('Device not found', itemMap.item);
+        }
       } else if (itemMap.deviceAction === DeviceActions.ALARMMANAGER) {
         // TODO implement navigation to alarmmanager
         this.logger.debug('navigation to alarmmanager', itemMap);

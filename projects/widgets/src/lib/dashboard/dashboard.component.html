@@ -19,7 +19,10 @@
     <div id="container-dashboard" [ngSwitch]="pageStatus">
 
         <div class="row">
-
+<!--            <div class="d-flex text-center">
+              <span style="font-size: 2em; padding-top: 0.2em; padding-left: 0.4em;" class="hyt-icon icon-hyt_device"></span>
+              <h3>Dashboard device</h3>
+            </div>-->
             <div id="tools-dashboard-box" class="col-12 {{(pageStatus == 0)?'inLoading':''}}" *ngIf="pageStatus != -1 && pageStatus !== 2">
 
                 <div class="row no-gutters">
@@ -48,7 +51,12 @@
                         </hyt-topology-toolbar>
                     </div>
 
-                    <div class="col-4 center-tools">
+                  <div *ngIf="showHDevice" class="col-4 center-tools flex-column">
+                    <h4 *ngIf="currentDevice.deviceName" class="title-badge">{{currentDevice.deviceName}}</h4>
+                    <small *ngIf="currentDevice.description">{{currentDevice.description}}</small>
+                  </div>
+
+                    <div *ngIf="!showHDevice" class="col-4 center-tools">
 
                         <hyt-select
                             *ngIf="!showAreas && pageStatus == 1 && enableProjectSelection"

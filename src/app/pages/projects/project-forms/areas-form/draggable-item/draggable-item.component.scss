@@ -93,15 +93,28 @@
   }
 }
 
+.mat-menu-panel {
+  border-radius: 0.8em !important;
+  h3 {
+    font-size: 1.2em;
+    font-weight: bold;
+    padding: 8px;
+    margin: 0;
+    border-bottom: solid 1px gray;
+    text-align: center;
+  }
+}
+
 .menu-item-flex {
-  display: flex;
+  display: flex !important;
   align-items: center;
   justify-content: space-between;
-  
-  mat-icon {
+
+  span {
     &.mat-icon {
       margin-left: 16px;
       margin-right: 0;
+      font-size: 1.5em;
     }
   }
 }
