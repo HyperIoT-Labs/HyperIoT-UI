@@ -1,4 +1,6 @@
-$overlay-blu: #0d416d;
+@import "src/assets/styles/abstracts/_variables.scss";
+
+$overlay-blu: $primary-color-dark-unsaturated;
 $hyt-primary: #0956B6;
 $hyt-error: #F44336;
 $hyt-success: #4CAF50;
@@ -46,7 +48,7 @@ $hyt-success: #4CAF50;
         overflow-y: auto;
 
         li {
-            box-shadow: 0px 0px 3px -1px #0d416d;
+            box-shadow: 0px 0px 3px -1px $primary-color-dark-unsaturated;
             border-radius: 14px;
             font-size: 1em;
             display: flex;

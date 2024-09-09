@@ -1,3 +1,4 @@
+@import "src/assets/styles/abstracts/_variables.scss";
 @import '../../../../assets/styles/abstracts/mixins';
 
 #container-login {
@@ -155,7 +156,7 @@
               font-style: italic;
 
               a {
-                color: #0d416d;
+                color: $primary-color-dark-unsaturated;
 
                 &:hover {
                   color: #105f99;

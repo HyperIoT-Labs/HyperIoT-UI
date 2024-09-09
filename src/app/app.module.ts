@@ -1,7 +1,7 @@
 // angular
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule, TRANSLATIONS, LOCALE_ID, TRANSLATIONS_FORMAT, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA, Injectable, ErrorHandler } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA, ErrorHandler } from '@angular/core';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 
@@ -57,6 +57,7 @@ import { MatCardModule } from '@angular/material/card';
 import { DashComponent } from './pages/dash/dash.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatInputModule} from '@angular/material/input';
 
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { InfoComponent } from './components/info/info.component';
@@ -64,6 +65,11 @@ import { ContainerAreaMapComponent } from './pages/areas/container-area-map/cont
 import { HttpErrorInterceptor } from './interceptors/http-error.interceptor';
 import { NotificationButtonComponent } from './components/topbar/notification-button/notification-button.component';
 import { NotificationDialogComponent } from './components/dialogs/notification-dialog/notification-dialog.component';
+import { StoreModule } from '@ngrx/store';
+import { STORE } from './state/store/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { EffectsModule } from '@ngrx/effects';
+import { BrandingEffects } from './state/branding/branding.effects';
 import { GlobalErrorHandlerService } from '../../projects/core/src/lib/hyperiot-service/error-handler/global-error-handler.service';
 import {BrandingService} from "./services/branding/branding.service";
 PlotlyModule.plotlyjs = PlotlyJS;
@@ -146,7 +152,17 @@ export function apiConfigFactory(): Configuration {
     ScrollingModule,
     CoreModule,
     BrowserModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatInputModule,
+    StoreModule.forRoot(STORE),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25, // Retains last 25 states
+      logOnly: environment.production, // Restrict extension to log-only mode
+      autoPause: true, // Pauses recording actions and state changes when the extension window is not open
+    }),
+    EffectsModule.forRoot([ 
+      BrandingEffects
+    ]),
   ],
   providers: [
     // ActivatedRouteSnapshot,

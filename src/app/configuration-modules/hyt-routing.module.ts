@@ -30,6 +30,7 @@ import { AlgorithmWizardComponent } from '../pages/algorithms/algorithm-wizard/a
 import { ProjectStatisticsFormComponent } from '../pages/projects/project-forms/project-statistics-form/project-statistics-form.component';
 import { ProjectAlarmsFormComponent } from '../pages/projects/project-forms/project-alarms-form/project-alarms-form.component';
 import {DashComponent} from '../pages/dash/dash.component';
+import { BrandingService } from '../services/branding/branding.service';
 
 export enum HytRoutesDataFields {
   IGNORE_HTTP_ERROR_NOTIFY = 'ignoreHttpErrorNotify'
@@ -38,11 +39,14 @@ export enum HytRoutesDataFields {
 @Injectable()
 export class LoggedInGuard implements CanActivate {
 
-  constructor(private router: Router, private cookieService: CookieService) { }
+  constructor(private router: Router, private cookieService: CookieService, private brandingService: BrandingService) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):
     Observable<boolean> | Promise<boolean> | boolean {
     if (this.cookieService.check('HIT-AUTH') && localStorage.getItem('user') && localStorage.getItem('userInfo')) {
+      if (!this.brandingService.isBrandedTheme) {
+        this.brandingService.loadThemeBranding()
+      }
       return true;
     }
     this.router.navigate(['/auth/login'], { state: { returnUrl: state.url } });

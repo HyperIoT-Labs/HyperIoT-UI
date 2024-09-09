@@ -2,3 +2,13 @@ $overlay-blu: #0d416d;
 $hyt-primary: #0956B6;
 $hyt-error: #F44336;
 $hyt-success: #4CAF50;
+$theme-black: #212529;
+
+/* Customization theme variables */
+$primary-color: var(--primary-color);
+$primary-color-dark: unquote($string: "hsl(from var(--primary-color) h 100% 24%)");
+$primary-color-dark-unsaturated: unquote($string: "hsl(from var(--primary-color) calc(h - 7) 78% 24%);");
+$primary-color-light: unquote($string: "hsl(from var(--primary-color) h 43% 46%)");
+$secondary-color: var(--secondary-color);
+$secondary-color-unsaturated: unquote($string: "hsl(from var(--secondary-color) h 63% l)");
+$secondary-color-dark: unquote($string: "hsl(from var(--secondary-color) h s 40%)")
