@@ -1598,6 +1598,10 @@
         <source>Dashboard</source>
         <target>Dashboard</target>
       </trans-unit>
+      <trans-unit id="HYT_dashboard_device" datatype="html">
+        <source>Dashboard device</source>
+        <target>Dashboard dispositivo</target
+      </trans-unit>
       <trans-unit id="HYT_areas" datatype="html">
         <source>Areas</source>
         <target>Aree</target>
