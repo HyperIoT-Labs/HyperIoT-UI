@@ -60,6 +60,10 @@ import { RuleErrorModalComponent } from './rule-definition/rule-error/rule-error
 import { HytChatbotChartMessageComponent } from './hyt-chatbot-chart-message/hyt-chatbot-chart-message.component';
 import { PlotlyModule } from 'angular-plotly.js';
 import { HytChartModalComponent } from './hyt-modal/hyt-chart-modal/hyt-chart-modal.component';
+import { MapComponent } from './hyt-map/map.component';
+import { LeafletMapComponent } from './hyt-map/components/leaflet-map/leaflet-map.component';
+import {LeafletModule} from "@asymmetrik/ngx-leaflet";
+import { DynamicMapUserConfiguratorComponent } from './hyt-map/components/dynamic-map-user-configurator/dynamic-map-user-configurator.component';
 
 export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
 
@@ -122,6 +126,9 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     RuleErrorModalComponent,
     HytChatbotChartMessageComponent,
     HytChartModalComponent,
+    MapComponent,
+    LeafletMapComponent,
+    DynamicMapUserConfiguratorComponent,
   ],
   imports: [
     CommonModule,
@@ -131,6 +138,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     NgxMaskModule.forRoot(options),
     RouterModule,
     PlotlyModule,
+    LeafletModule,
   ],
   exports: [
     CronEditorComponent,
@@ -183,6 +191,8 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     RuleDefinitionComponent,
     HytChatbotChartMessageComponent,
     HytChartModalComponent,
+    MapComponent,
+    LeafletMapComponent,
   ],
   providers: [
     NotificationService,

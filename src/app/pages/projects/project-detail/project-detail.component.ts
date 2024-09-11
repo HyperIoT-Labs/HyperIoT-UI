@@ -646,6 +646,7 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
       (childComponent.formTemplateId.includes('areas-form') && this.areaSection === 'Tab-Map-IMAGE') ||
       (childComponent.formTemplateId.includes('areas-form') && this.areaSection === 'Tab-Map-BIM_XKT') ||
       (childComponent.formTemplateId.includes('areas-form') && this.areaSection === 'Tab-Map-BIM_IFC') ||
+      (childComponent.formTemplateId.includes('areas-form') && this.areaSection === 'Dynamic-MAP') ||
       (childComponent.formTemplateId.includes('areas-form') && this.areaSection === 'Tab-Info') &&
 
       childComponent.editMode === false ||

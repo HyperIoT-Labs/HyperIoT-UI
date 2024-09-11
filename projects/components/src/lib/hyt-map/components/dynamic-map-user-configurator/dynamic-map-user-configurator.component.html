@@ -1,0 +1,75 @@
+<div id="container-dmuc">
+
+  <div id="current-status-configuration">
+    <div class="status-icon">
+      <mat-icon aria-hidden="false" aria-label="warning icon">warning</mat-icon>
+      <!-- Alternative Icon for Ok status -->
+      <!--<mat-icon aria-hidden="false" aria-label="thumb up icon">thumb_up_off_alt</mat-icon>-->
+    </div>
+    <div class="status-text">
+      Set the coordinates of the center of the map
+    </div>
+    <div class="toggle-arrow">
+      <mat-icon aria-hidden="false" aria-label="arrow icon">arrow_forward_ios</mat-icon>
+    </div>
+  </div>
+
+  <div id="coordinates-configuration">
+    <div class="title-configuration">
+      Set Map Location
+    </div>
+    <div class="container-toogle-btn">
+      <mat-button-toggle-group
+        name="coordinatesType"
+        aria-label="Coordinates Type"
+        [value]="selectedCoordType"
+        (change)="changeCoordType($event)"
+      >
+        <mat-button-toggle value="GEOCODING">Address</mat-button-toggle>
+        <mat-button-toggle value="LATLONG">Coordinates</mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+  </div>
+  <div id="container-coord-forms" [ngSwitch]="selectedCoordType">
+    <div *ngSwitchCase="'GEOCODING'">
+      <p>GEOCODING</p>
+      <div class="container-geocoding-form">
+        <form>
+          <div class=" form-row container-address">
+            <label for="geocoding-address">Indirizzo</label>
+            <input id="geocoding-address" placeholder="Inserisci un indirizzo valido" type="text" />
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>Indirizzo</mat-label>
+              <input matInput placeholder="Inserisci un indirizzo valido" value="Sushi">
+            </mat-form-field>
+          </div>
+          <div class=" form-row zoom-lvl">
+            <label for="geocoding-zoom">Zoom Level</label>
+            <input id="geocoding-zoom" type="number" />
+          </div>
+          <button>Salva indirizzo</button>
+        </form>
+      </div>
+    </div>
+    <div *ngSwitchCase="'LATLONG'">
+      <p>LATLONG</p>
+      <div class="container-latlong-form">
+        <form>
+          <div class=" form-row container-lat-long">
+            <label for="latlong-latitude">Latitudine</label>
+            <input id="latlong-latitude" placeholder="Inserisci latitudine" type="text" />
+          </div>
+          <div class=" form-row container-lat-long">
+            <label for="latlong-longitude">Longitudine</label>
+            <input id="latlong-longitude" placeholder="Inserisci Longitudine" type="text" />
+          </div>
+          <div class="zoom-lvl">
+            <label for="latlong-zoom">Zoom Level</label>
+            <input id="latlong-zoom" type="number">
+          </div>
+          <button>Salva Coordinate</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -166,6 +166,19 @@
               </div>
             </mat-tab>
 
+            <mat-tab
+              *ngIf="areaId > 0 && entity.areaViewType === 'MAP'"
+              label="MAP"
+              i18n-label="@@HYT_area_section_map"
+              aria-label="MAP"
+            >
+              <div class="mt-4 mb-2 d-flex flex-row justify-content-center">
+                <hyt-button [color]="'hyt-base-default-white'" (clickFn)="onMapDeviceAddClick($event)" i18n="@@HYT_area_map_device_add">Add device</hyt-button>
+                <hyt-button [color]="'hyt-base-default-white'" [isDisabled]="areaList.length === 0" (clickFn)="onMapAreaAddClick($event)" i18n="@@HYT_area_map_area_add">Add sub-area</hyt-button>
+              </div>
+              <hyt-map [mapType]="'LEAFLETMAP'" [editMode]="editMode" [option]="{latitude: 27.95627547111574, longitude: -82.4575729209193, zoom: 10}"></hyt-map>
+            </mat-tab>
+
         </mat-tab-group>
       <!-- END TAB -->
     </div>

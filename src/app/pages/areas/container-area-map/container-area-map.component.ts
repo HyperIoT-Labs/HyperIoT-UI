@@ -8,7 +8,7 @@ import {Router} from '@angular/router';
 import {HytTreeViewProjectComponent} from 'components';
 import {takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
-import {installTempPackage} from '@angular/cli/utilities/install-package';
+import {MapTypeKey} from "../../../../../projects/components/src/lib/hyt-map/models/map-type-key";
 
 @Component({
   selector: 'hyt-container-area-map',
@@ -103,6 +103,7 @@ export class ContainerAreaMapComponent implements OnInit, OnDestroy {
   isBimLoading: boolean = true;
   isEmptyBim: boolean = false;
   areaConfiguration: string;
+  currentMapTypeKey: MapTypeKey = MapTypeKey.LEAFLET;
   /*
    * logger service
    */

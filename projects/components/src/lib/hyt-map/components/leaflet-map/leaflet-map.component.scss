@@ -1,0 +1,17 @@
+#container-leaflet-map {
+  min-height: 650px;
+  border: 1px solid #e9e9e9;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+
+  .container-user-config-map {
+    position: relative;
+    top: 10px;
+    left: 70px;
+    display: flex;
+    width: fit-content;
+    height: auto;
+    z-index: 1001;
+  }
+}

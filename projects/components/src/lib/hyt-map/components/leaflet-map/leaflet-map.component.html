@@ -1,0 +1,9 @@
+<div id="container-leaflet-map"
+   leaflet
+   [leafletOptions]="mapOptions"
+   (leafletMapReady)="onMapReady($event)"
+>
+  <div *ngIf="editMode" class="container-user-config-map">
+    <hyt-dynamic-map-user-configurator></hyt-dynamic-map-user-configurator>
+  </div>
+</div>

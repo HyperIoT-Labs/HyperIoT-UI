@@ -1,0 +1,80 @@
+#container-dmuc {
+  font-family: "Exo";
+  background-color: white;
+  width: fit-content;
+  max-width: 400px;
+  //height: 40px;
+  height: auto;
+  padding: 5px 15px;
+  border: 1px solid #8f8f8f;
+
+  -moz-border-radius: 15px;
+  -webkit-border-radius: 15px;
+  border-radius: 15px;
+
+  -moz-box-shadow: 0px 0px 11px -2px #000;
+  -webkit-box-shadow: 0px 0px 11px -2px #000;
+  box-shadow: 0px 0px 11px -2px #000;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  #current-status-configuration {
+    display: flex;
+    align-items: center;
+
+    .status-icon {
+      margin-right: 5px;
+
+      mat-icon {
+        color: red;
+      }
+    }
+
+    .status-text {
+      min-width: 250px;
+      width: 100%;
+    }
+
+    .toggle-arrow {
+      margin-left: 15px;
+      mat-icon {
+        font-size: 1.5em;
+        display: flex;
+        align-items: center;
+      }
+    }
+  }
+
+  #coordinates-configuration {
+    margin-top: 10px;
+    border-top: 1px solid #d4d4d4;
+    width: 100%;
+    padding-top: 10px;
+
+    .title-configuration {
+      margin-bottom: 20px;
+      font-size: 1.4em;
+      color: #2B7EE2;
+    }
+  }
+
+  #container-coord-forms {
+    margin-top: 20px;
+
+    .container-geocoding-form,
+    .container-latlong-form {
+      display: flex;
+      flex-direction: column;
+      .form-row {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 15px;
+        label {
+          margin-bottom: 2px;
+        }
+      }
+    }
+  }
+}

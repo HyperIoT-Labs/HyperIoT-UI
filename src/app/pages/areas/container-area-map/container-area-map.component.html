@@ -101,6 +101,10 @@
           </ng-template>
         </div>
 
+        <div *ngIf="areaViewType === 'MAP'">
+          <hyt-map [mapType]="currentMapTypeKey"></hyt-map>
+        </div>
+
       </div>
 
     </div>

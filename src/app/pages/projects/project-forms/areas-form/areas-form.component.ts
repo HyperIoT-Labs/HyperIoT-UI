@@ -113,16 +113,22 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
   allowedBimTypes = ['.xkt'];
   acceptFiles = this.allowedImageTypes.join(',').replace(/\./,'image/');
   maxFileSize = 1000000;
+  /**
+   *  Overlay Media string
+   */
   overlayLoadingString = $localize`:@@HYT_loading_area_media:Loading Area Media`;
   ovelayErrorString = $localize`:@@HYT_loading_media_error:Loading Media Error`;
   overlayEmptyString = $localize`:@@HYT_no_area_media:No Media`;
   /**
-   *  Types of areas used to identify the value of the current tab
+   *  BIM status data
    */
-  currentTabAreaType?: AreaType;
   pathBim: string = '';
   isBimLoading: boolean = true;
   isEmptyBim: boolean = false;
+  /**
+   *  Dynamic Map loading status status data
+   */
+  isDynamicMapLoading: boolean = true;
   /**
    * Will contain the old value in case a change is made on the area type
    */
@@ -149,7 +155,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
         case 'IMAGE':
           return {label: $localize`:@@HYT_project_areas_static_image:STATIC IMAGE`, value: Area.AreaViewTypeEnum[k]}
         case 'MAP':
-          return {label: $localize`:@@HYT_project_areas_dynamic_map:DYNAMIC MAP`, value: Area.AreaViewTypeEnum[k], disabled: true}
+          return {label: $localize`:@@HYT_project_areas_dynamic_map:DYNAMIC MAP`, value: Area.AreaViewTypeEnum[k]}
         case 'BIMXKT':
           return {label: $localize`:@@HYT_project_areas_bim_xkt_format:BIM IN XKT FORMAT`, value: Area.AreaViewTypeEnum[k]}
         case 'BIMIFC':
@@ -183,9 +189,9 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
       .subscribe((conf) => {
         if (conf && conf.maxFileSize > 0) {
           this.maxFileSize = +conf.maxFileSize;
-          this.logger.debug('Configuration Max File Size', this.maxFileSize);
+          this.logger.debug('GETCONFIG - Configuration Max File Size', this.maxFileSize);
         } else {
-          this.logger.warn('The configuration does not contain the maximum size parameter of the file to upload', conf);
+          this.logger.warn('GETCONFIG - The configuration does not contain the maximum size parameter of the file to upload', conf);
         }
     });
   }
@@ -223,8 +229,8 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
   }
 
   ngAfterViewInit() {
+    // Automatically the first tab is the Info tab but we have to change this logic
     this.clickedTab.emit('Tab-Info');
-
     /**
      * We subscribe to the change of the specific variable to keep the old value in memory
      */
@@ -559,7 +565,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
     if(event.value && this.entity.areaViewType !== undefined && event.value !== this.entity.areaViewType){
       this.openModalChangeType(event.value);
     } else {
-      this.logger.info('onInfoTypeChange function, no type changed: '+event.value + ' - ' +this.entity.areaViewType);
+      this.logger.info('onInfoTypeChange function, no type changed: ' + event.value + ' - ' + this.entity.areaViewType);
     }
 
   }
@@ -945,6 +951,10 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
         this.clickedTab.emit('Tab-Map-'+ariaLabelValue.toUpperCase());
         this.logger.debug('onTabChange Tab-Map', e);
         break;
+      case 'MAP':
+        this.loadAreaData();
+        this.clickedTab.emit('Dynamic-'+ e.tab.ariaLabel.toUpperCase());
+        this.logger.debug('onTabChange Dynamic-Map', e);
     }
 
   }
@@ -1085,6 +1095,10 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
     }
   }
 
+  /**
+   * Loading a BIM model of an area
+   * @private
+   */
   private loadAreaBim() {
     this.logger.debug('loadAreaBim function start');
     this.isBimLoading = true;
@@ -1113,6 +1127,16 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
       console.log('%cBIM WARNING isBimLoading', 'color:yellowgreen', this.isBimLoading);
       this.logger.warn('No configuration data for this area');
     }
+  }
+
+  /**
+   * Loading a BIM model of an area
+   * @private
+   */
+  private loadDynamicMap() {
+    this.logger.debug('loadDynamicMap function start');
+    this.isDynamicMapLoading = true;
+    const dynamicMapConfig = JSON.parse(this.entity.areaConfiguration);
   }
 
   /**
@@ -1170,7 +1194,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
   }
 
   loadMediaDataBySelectedTab(ariaLabelValue: string){
-    if (ariaLabelValue === 'IMAGE' || ariaLabelValue === 'BIM_XKT'){
+    if (ariaLabelValue === 'IMAGE' || ariaLabelValue === 'BIM_XKT' || ariaLabelValue === 'MAP'){
       this.loadMediaElements(this.entity.areaViewType);
     } else if(ariaLabelValue === '') {
       // @@TODO: remember to display a modal with error message
@@ -1319,6 +1343,9 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
         break;
       case AreaViewTypeEnum.BIMXKT:
         this.loadAreaBim();
+        break;
+      case AreaViewTypeEnum.MAP:
+        console.log('loadMediaElements', areaViewType);
         break;
     }
   }
