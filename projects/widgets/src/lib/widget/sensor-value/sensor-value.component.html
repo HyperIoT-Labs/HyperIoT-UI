@@ -2,17 +2,18 @@
 
   <header-widget>
     <hyperiot-common-toolbar
+      #toolbar
       widgetName="{{widget.name}}"
       (action)="onToolbarAction($event)"
       [toolbarIsVisible]="isToolbarVisible"
       [config]="{
-              showClose: true,
-              showSettings: true,
-              showPlay: serviceType === serviceTypeList.ONLINE,
-              showRefresh: false,
-              showTable: false,
-              hideFullScreen: true
-        }">
+        showClose: true,
+        showSettings: true,
+        showPlay: serviceType === serviceTypeList.ONLINE,
+        showRefresh: false,
+        showTable: false,
+        hideFullScreen: true
+      }">
     </hyperiot-common-toolbar>
   </header-widget>
 
@@ -25,10 +26,10 @@
     <div *ngIf="isConfigured" class="sensor-value-container" [ngClass]="widget.config.bgColor">
     
       <div class="value-container">
-        <span *ngIf="sensorRenderValue" class="sensor-value" [ngStyle]="{'color': widget.config.textColor}">
+        <span *ngIf="canRender(sensorRenderValue)" class="sensor-value" [ngStyle]="{'color': widget.config.textColor}">
           {{ sensorRenderValue }}
         </span>
-        <span *ngIf="!sensorRenderValue">Waiting for data...</span>
+        <span *ngIf="!canRender(sensorRenderValue)">Waiting for data...</span>
         <div class="timestamp">
           {{ timestamp | amTimeAgo }}
         </div>

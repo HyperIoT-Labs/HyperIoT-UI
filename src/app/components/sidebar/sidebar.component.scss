@@ -1,3 +1,5 @@
+
+@import "src/assets/styles/abstracts/_variables.scss";
 @import url(//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css);
 
 #hyt-sidebar {
@@ -17,14 +19,14 @@
         user-select:none;
 
         &.main-menu {
-            border-right: 1px solid #074290;
+            border-right: 1px solid $primary-color-dark;
             position:fixed;
             top:0px;
             bottom:0;
             height:100%;
             left:0;
             z-index: 1001;
-            background-color: #1e58a5;
+            background-color: $primary-color;
 
             -webkit-transition: left .15s ease-in-out;
             -moz-transition: left .15s ease-in-out;
@@ -38,7 +40,7 @@
                 height: 100%;
                 padding-top: 65px;
                 overflow: hidden;
-                background: #1e58a5;
+                background: $primary-color;
                 -webkit-transition: width .1s ease-in-out;
                 -moz-transition: width .1s ease-in-out;
                 transition: width .1s ease-in-out;
@@ -51,7 +53,7 @@
                     width: 250px;
                     overflow: visible;
                     height: 100%;
-                    border-right: 1px solid #0b5594;
+                    /* border-right: 1px solid #0b5594; */
                     -moz-box-shadow: -7px 0px 24px -4px #000;
                     -webkit-box-shadow: -7px 0px 24px -4px #000;
                     box-shadow: -7px 0px 24px -4px #000;
@@ -86,19 +88,20 @@
 
                 &.selected {
                     // border-bottom: solid 1px #ffffff;
-                    background-color: #003679;
+                    //background-color: #003679;
+                    background-color: $primary-color-dark;
                 }
 
                 &:hover:not(.selected) {
 
                     a {
                         color: #f9f9f9;
-                        background-color: #4371ab;
+                        background-color: $primary-color-light;
                     }
                 }
 
                 &:active {
-                    background-color: #5fa2db;
+                    background-color: $primary-color-light;
                 }
 
                 a {
@@ -209,7 +212,7 @@
                         width: 250px;
                         overflow: visible;
                         height: 100%;
-                        border-right: 1px solid #0b5594;
+                        /* border-right: 1px solid #0b5594; */
                         box-shadow: -7px 0px 24px -4px #000;
 
                         li {

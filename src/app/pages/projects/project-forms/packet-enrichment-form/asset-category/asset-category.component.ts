@@ -94,7 +94,7 @@ export class AssetCategoryComponent implements OnInit {
           category: node ? node.data : null,
         }
       });
-      dialogRef.afterClosed().subscribe((result: AssetCategory) => {
+      dialogRef.dialogRef.afterClosed().subscribe((result: AssetCategory) => {
         if (!result) {
           return;
         }
@@ -119,7 +119,7 @@ export class AssetCategoryComponent implements OnInit {
         DeleteConfirmDialogComponent,
         { data: { title: 'Delete item?', message: 'This operation cannot be undone.' } }
       );
-      dialogRef.afterClosed().subscribe((result) => {
+      dialogRef.dialogRef.afterClosed().subscribe((result) => {
         if (result === 'delete') {
           this.assetCategoriesService.deleteAssetCategory(node.id).subscribe(
             res => {
@@ -144,7 +144,7 @@ export class AssetCategoryComponent implements OnInit {
           category: node.data,
         }
       });
-      dialogRef.afterClosed().subscribe((result) => {
+      dialogRef.dialogRef.afterClosed().subscribe((result) => {
         if (!result) {
           return;
         }

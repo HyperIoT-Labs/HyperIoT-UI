@@ -65,7 +65,7 @@ export class GenericSummaryListComponent implements OnInit, OnChanges {
    * @param device 
    * @param packetId optional
    */
-  filterElements(list: SummaryList, device: any, packetId?: number) {
+  filterElements(list: SummaryList, device: any, packetId?: number) { 
     this.logger.debug('filterElements: list', list);
     switch (list.title) {
       case 'Packets':
@@ -111,7 +111,7 @@ export class GenericSummaryListComponent implements OnInit, OnChanges {
     this.filteredElementList = [];
     itemList.forEach((singleItem) => {
       if (isEnrichment) {
-        if(singleItem.data.packet.id === packetIDToFilter && singleItem.data.packet.device.deviceName === deviceToFilter) {
+        if(singleItem.data.packetIds == packetIDToFilter) {
           this.filteredElementList.push(singleItem);
         }
       } else if (isEvent) {

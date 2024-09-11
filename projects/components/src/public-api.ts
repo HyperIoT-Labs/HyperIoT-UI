@@ -39,8 +39,7 @@ export { Option } from './lib/hyt-radio-button/hyt-radio-button.component';
 export { TreeNodeCategory } from './lib/hyt-tree-view-category/hyt-tree-view-category.component';
 export { TimeStep } from './lib/hyt-date-picker/hyt-date-picker.component';
 export { HytFilterButtonShape, HytFilterButtonFilter } from './lib/hyt-filter-button/hyt-filter-button.component'
-export { CardDetailOnHover } from './lib/hyt-detailed-card/hyt-detailed-card.component'
-
+export { CardDetailOnHover, CardEmittedValue } from './lib/hyt-detailed-card/hyt-detailed-card.component'
 
 export { HytInputComponent } from './lib/hyt-input/hyt-input.component';
 export { HytButtonComponent } from './lib/hyt-button/hyt-button.component';
@@ -71,7 +70,6 @@ export { HytInfoComponent } from './lib/hyt-info/hyt-info.component';
 export { HytInnerFieldSelectComponent } from './lib/hyt-inner-field-select/hyt-inner-field-select.component';
 export { HytButtonToggleComponent } from './lib/hyt-button-toggle/hyt-button-toggle.component';
 export { HytNotificationBoxComponent } from './lib/hyt-notification-box/notification-box.component';
-export { NotificationService } from './lib/hyt-notification-box/services/notification.service';
 export { HytLoginComponent } from './lib/hyt-login/login.component';
 export { HytAccordionGroupComponent } from './lib/hyt-accordion/hyt-accordion-group.component';
 export { HytEmptyProjectListViewComponent } from './lib/hyt-empty-project-list-view/hyt-empty-project-list-view.component';
@@ -80,13 +78,14 @@ export { HytAccordionContent } from './lib/hyt-accordion/hyt-directives/hyt-acco
 export { HytAccordionHeader } from './lib/hyt-accordion/hyt-directives/hyt-accordion-header.directive';
 export { HytFilterButtonComponent } from './lib/hyt-filter-button/hyt-filter-button.component'
 export { HytDetailedCardComponent } from './lib/hyt-detailed-card/hyt-detailed-card.component'
-export { HytBadgeComponent } from './lib/hyt-badge/hyt-badge.component'
+export { HytBadgeComponent, HytBadgeShape, HytBadgeSize } from './lib/hyt-badge/hyt-badge.component'
 export { HytChatbotComponent } from './lib/hyt-chatbot/hyt-chatbot.component'
 export { HytIconPickerComponent } from './lib/hyt-icon-picker/hyt-icon-picker.component';
 export { HytIconPickerListComponent } from './lib/hyt-icon-picker/hyt-icon-picker-list/hyt-icon-picker-list.component';
 export { HytChatbotChartMessageComponent} from './lib/hyt-chatbot-chart-message/hyt-chatbot-chart-message.component'
 export { HytChartModalComponent } from './lib/hyt-modal/hyt-chart-modal/hyt-chart-modal.component';
-
+export { HytAlarmComponent } from './lib/hyt-alarm/hyt-alarm.component';
+export { HytNoData } from './lib/hyt-no-data/hyt-no-data.component';
 export * from './lib/hyt-shared-components/hyt-topology-services/hyt-topology.service';
 export * from './lib/hyt-shared-components/hyt-topology-toolbar/hyt-topology-toolbar.component';
 export * from './lib/hyt-models/hyt-dashboard-models';
@@ -95,6 +94,7 @@ export * from './lib/hyt-models/hyt-loadStatus';
 export * from './lib/hyt-service/unit-conversion.service';
 
 export { DialogService } from './lib/hyt-dialog/dialog.service';
+export { OverlayService } from "./lib/hyt-overlay/overlay.service";
 export { DialogConfig, DialogLayout } from './lib/hyt-dialog/dialog.models';
 export { DIALOG_DATA } from './lib/hyt-dialog/dialog-tokens';
 export { DialogRef } from './lib/hyt-dialog/dialog-ref';

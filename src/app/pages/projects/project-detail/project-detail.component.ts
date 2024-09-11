@@ -50,7 +50,8 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
   currentEntity: ProjectFormEntity = null;
 
   private focusTimeout: any = null;
-  private projectId: 0;
+  projectId: 0;
+  areaId: number;
 
   projectName: string;
   validationErrors: [];
@@ -154,7 +155,9 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-
+    if (this.router.url.indexOf('areas/') > -1) {
+      this.areaId = parseInt(this.router.url.split('areas/')[1].split(')')[0]);
+    }
     this.projectId = this.activatedRoute.snapshot.params.projectId;
     this.refresh();
     this.enrichmentsService.changeDeviceName$
@@ -163,7 +166,6 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
       this.logger.debug('Current Device name', deviceName);
       this.currentDeviceName = deviceName;
     });
-
     this.enrichmentsService.changePacket$
     .pipe(takeUntil(this.ngUnsubscribe))
     .subscribe(packetID => {
@@ -195,6 +197,7 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
       this.toggleInfoActionColumn(childComponent);
 
       this.currentEntity = childComponent;
+      this.logger.debug('Current Entity', this.currentEntity);
 
       this.currentEntity.unsavedChangesCallback = () => {
         return this.openSaveDialog();
@@ -318,7 +321,7 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
         width: '800px',
       }
     );
-    modalRef.afterClosed()
+    modalRef.dialogRef.afterClosed()
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
       (result) => {
@@ -573,7 +576,7 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
       const dialogRef = this.dialog.open(SaveChangesDialogComponent, {
         data: { title: 'Discard changes?', message: 'There are pending changes to be saved.' }
       });
-      dialogRef.afterClosed()
+      dialogRef.dialogRef.afterClosed()
         .pipe(takeUntil(this.ngUnsubscribe))
         .subscribe((result) => {
         this.logger.debug('openSaveDialog on closed', result);

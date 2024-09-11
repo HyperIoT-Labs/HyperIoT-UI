@@ -7,17 +7,28 @@ import {
 } from "@angular/core";
 import { Router } from "@angular/router";
 import { PageStatus } from "./models/pageStatus";
-import { HProject, HprojectsService } from "core";
+import {
+  HProject,
+  HprojectsService,
+  HProjectSharingInfo,
+  LoggerService,
+  Logger,
+  NotificationManagerService
+} from "core";
 import { FormGroup, FormBuilder } from "@angular/forms";
 import {
   CardDetailOnHover,
+  CardEmittedValue,
+  DialogRef,
   DialogService,
   HytFilterButtonFilter,
-  SelectOption,
+  OverlayService,
 } from "components";
 import { ProjectsService } from "src/app/services/projects.service";
-import { NotificationService } from "components";
 import { DeleteConfirmDialogComponent } from "src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component";
+import { ShareType } from "./models/shared.model";
+
+import { ShareProjectsComponent } from "./share-projects/share-projects.component";
 
 @Component({
   selector: "hyt-projects",
@@ -25,7 +36,7 @@ import { DeleteConfirmDialogComponent } from "src/app/components/dialogs/delete-
   styleUrls: ["./projects.component.scss"],
   encapsulation: ViewEncapsulation.None,
 })
-export class ProjectsComponent implements OnInit {
+export class ProjectsComponent implements OnInit, OnDestroy {
   PageStatus = PageStatus;
   pageStatus: PageStatus = PageStatus.Loading;
 
@@ -38,7 +49,6 @@ export class ProjectsComponent implements OnInit {
   /**
    * this variariable is used to set scrollToTop div on show or hide
    */
-
   scrolled: boolean = false;
 
   /**
@@ -46,6 +56,11 @@ export class ProjectsComponent implements OnInit {
    */
   scrollTop: number;
 
+  /** HYOT logger */
+  private logger: Logger;
+
+  forceHoverId: number = -1;
+  sharedPanel!: DialogRef<any>;
   deletingInLoading = false;
   displayMessageArea = false;
   typeMessageArea: string;
@@ -56,9 +71,14 @@ export class ProjectsComponent implements OnInit {
     private hProjectService: HprojectsService,
     private fb: FormBuilder,
     private projectsService: ProjectsService,
-    private notificationservice: NotificationService,
+    private notificationManagerService: NotificationManagerService,
     private dialog: DialogService,
-  ) {}
+    private overlay: OverlayService,
+    loggerService: LoggerService
+  ) {
+    this.logger = new Logger(loggerService);
+    this.logger.registerClass("ProjectsComponent");
+  }
 
   /**
    * This is a scroll window event listener
@@ -126,6 +146,13 @@ export class ProjectsComponent implements OnInit {
     this.projectsService.updateProjectList();
   }
 
+  /**
+   * Close overlay when exit from the projects page
+   */
+  ngOnDestroy(): void {
+    this.sharedPanel?.close();
+  }
+
   initForm() {
     this.filteringForm = this.fb.group({
       projectType: [""],
@@ -134,36 +161,39 @@ export class ProjectsComponent implements OnInit {
     this.filteringForm.controls["sort"].valueChanges.subscribe((val) =>
       this.sortBy(val)
     );
+    this.filteringForm.controls["projectType"].valueChanges.subscribe((val) =>
+      this.search(this.filteringForm.value.textFilter, val)
+    );
   }
 
-  search(value: string) {
-    if (value) {
-      if (value.split("*").length > 18) {
-        this.hProjectsFiltered = [];
-      } else {
-        const reg = new RegExp(
-          value
-            .replace(/[.+^${}()|[\]\\]/g, "\\$&")
-            .replace(/\*/g, ".+")
-            .replace(/\?/g, "."),
-          "i"
-        );
-        this.hProjectsFiltered = this.hProjects.filter((el) =>
-          el.name.match(reg)
-        );
-        this.sortBy(this.filteringForm.value.sort);
-      }
-    } else {
-      this.hProjectsFiltered = [...this.hProjects];
-      this.sortBy(this.filteringForm.value.sort);
+  search(byName: string, bySharedType: ShareType) {
+    this.hProjectsFiltered = [...this.hProjects];
+    if (byName.length) {
+      const reg = new RegExp(
+        byName
+          .replace(/[.+^${}()|[\]\\]/g, "\\$&")
+          .replace(/\*/g, ".+")
+          .replace(/\?/g, "."),
+        "i"
+      );
+      this.hProjectsFiltered = this.hProjectsFiltered.filter((el) =>
+        el.name.match(reg)
+      );
     }
+
+    if (Object.values(ShareType).includes(bySharedType))
+      this.hProjectsFiltered = this.hProjectsFiltered.filter(
+        (p) => this.sharedType(p.hProjectSharingInfo) === bySharedType
+      );
+    this.sortBy(this.filteringForm.value.sort);
   }
 
-  onChangeInputSearch(event) {
-    this.search(this.filteringForm.value.textFilter);
-  }
-
+  /**
+   * triggered when onChange on the sort filter is fired
+   * @param type value emitted by the FilterButton
+   */
   sortBy(type: string) {
+    if (this.sharedPanel) this.sharedPanel.close();
     switch (type) {
       case "none":
         this.hProjectsFiltered.sort((a, b) => {
@@ -296,15 +326,15 @@ export class ProjectsComponent implements OnInit {
   launchNotification(type: string, title: string, message: string) {
     switch (type) {
       case "success":
-        this.notificationservice.success(title, message);
+        this.notificationManagerService.success(title, message);
         break;
 
       case "info":
-        this.notificationservice.info(title, message);
+        this.notificationManagerService.info(title, message);
         break;
 
       case "error":
-        this.notificationservice.error(title, message);
+        this.notificationManagerService.error(title, message);
         break;
 
       default:
@@ -316,7 +346,8 @@ export class ProjectsComponent implements OnInit {
    * Dialog open for confirm the user wants to delete a project
    * @public
    */
-  openDeleteDialog(p: HProject) {
+  openDeleteDialog(emit: CardEmittedValue) {
+    let p = emit.data as HProject;
     const dialogRef = this.dialog.open(DeleteConfirmDialogComponent, {
       data: {
         title: "Are you sure you want to delete the project?",
@@ -324,7 +355,7 @@ export class ProjectsComponent implements OnInit {
       },
     });
 
-    dialogRef.afterClosed().subscribe(
+    dialogRef.dialogRef.afterClosed().subscribe(
       (result) => {
         if (result === "delete") {
           this.projectsService.deleteProject(p.id);
@@ -342,25 +373,25 @@ export class ProjectsComponent implements OnInit {
    */
   filterProjectType: HytFilterButtonFilter[] = [
     {
-      value: "all",
+      value: "",
       keyLabel: "",
       label: "ALL",
-      tooltip: "ALL",
+      tooltip: $localize`:@@HYT_all:All`,
     },
     {
-      icon: "warnT_Negative",
-      value: "personal",
-      tooltip: "Personal",
+      icon: "projectSolo",
+      value: ShareType.PERSONAL,
+      tooltip: $localize`:@@HYT_filterPersonal:Show personal projects`,
     },
     {
-      icon: "warnT_Negative",
-      value: "owners",
-      tooltip: "Owners",
+      icon: "p_owner",
+      value: ShareType.OWNER,
+      tooltip: $localize`:@@HYT_filterOwner:Show owned projects`,
     },
     {
-      icon: "warnT_Negative",
-      value: "shared",
-      tooltip: "Shared",
+      icon: "p_partecipant",
+      value: ShareType.PARTECIPANT,
+      tooltip: $localize`:@@HYT_filterPartecipant:Show projects shared from other user`,
     },
   ];
 
@@ -373,42 +404,116 @@ export class ProjectsComponent implements OnInit {
       value: "date-decreasing",
       keyLabel: "NEW",
       label: "NEW",
-      tooltip: "NEW",
+      tooltip: $localize`:@@HYT_sortNew:Sort by newest`,
     },
     {
       value: "date-increasing",
       keyLabel: "OLD",
       label: "OLD",
-      tooltip: "OLD",
+      tooltip: $localize`:@@HYT_sortOld:Sort by oldest`,
     },
     {
       value: "alfabetic-increasing",
       keyLabel: "A-Z",
       label: "A-Z",
-      tooltip: "A-Z",
+      tooltip: $localize`:@@HYT_sortAlphaAsc:Sort alphabetically A-Z`,
     },
     {
       value: "alfabetic-decreasing",
       keyLabel: "Z-A",
       label: "Z-A",
-      tooltip: "Z-A",
+      tooltip: $localize`:@@HYT_sortAlphaDesc:Sort alphabetically Z-A`,
     },
   ];
+
+  /**
+   * get the userId of the logged user from the localStorage
+   */
+  get userId() {
+    return JSON.parse(localStorage.getItem("user")).id;
+  }
+
+  /**
+   * return the icon for the detailedIcon of the project card, if PERSONAL return empty value
+   * @param shared share detail of the project
+   * @param icon add default value for icon
+   * @returns
+   */
+  sharedType(shared: HProjectSharingInfo): ShareType {
+    if (shared?.ownerId === this.userId) {
+      // Owner of the project
+      if (shared.collaboratorCounters > 0) {
+        return ShareType.OWNER;
+      } else {
+        return ShareType.PERSONAL;
+      }
+    } else {
+      return ShareType.PARTECIPANT;
+    }
+  }
+
+  sharedIconMap: Map<ShareType, string> = new Map([
+    [ShareType.PERSONAL, ""],
+    [ShareType.OWNER, "p_owner"],
+    [ShareType.PARTECIPANT, "p_partecipant"],
+  ]);
 
   /**
    * Generate the list of details that will be printed on project hover
    * @public
    */
   generateDetails(p: HProject): CardDetailOnHover[] {
-    return [
+    const translation =
+      p.deviceCount > 1
+        ? $localize`:@@HYT_sources:Sources`
+        : $localize`:@@HYT_source:Source`;
+
+    let details = [
       {
         icon: "source02",
-        label: `<strong>${p.deviceCount}</strong> Sources`,
+        label: `<strong>${p.deviceCount}</strong> ${translation}`,
       },
-      // {
-      //   icon: "warnT_Negative",
-      //   label: `Shared with <strong>Not impl.</strong>`
-      // },
     ];
+    let isOwner = this.isOwner(p.hProjectSharingInfo.ownerId);
+    if (p.hProjectSharingInfo.collaboratorCounters > 0 || !isOwner) {
+      details.push({
+        icon: isOwner ? "p_owner" : "p_partecipant",
+        label: this.generateSharedLabel(p.hProjectSharingInfo),
+      });
+    }
+    return details;
+  }
+
+  /**
+   * Generate the list of details that will be printed on project hover
+   * @public
+   */
+  generateSharedLabel(s: HProjectSharingInfo): string {
+    return s?.ownerId === this.userId
+      ? `${$localize`:@@HYT_sharedWith:Shared with`} <strong>${
+          s.collaboratorCounters
+        }</strong>`
+      : `${$localize`:@@HYT_sharedBy:Shared by`} <strong>${s.ownerLastName} ${
+          s.ownerName
+        }</strong>`;
+  }
+
+  isOwner(idUser: number): boolean {
+    return idUser == this.userId;
+  }
+
+  showPanel(emit: CardEmittedValue) {
+    this.logger.info("Shared overlay opening", emit);
+    if (this.sharedPanel) this.sharedPanel.close();
+    this.forceHoverId = (emit.data as HProject).id;
+    this.sharedPanel = this.overlay.open(ShareProjectsComponent, {
+      attachTarget: emit.event.target,
+      data: emit.data,
+      hideBackdrop: true,
+    }).dialogRef;
+    this.sharedPanel.afterClosed().subscribe(() => {
+      this.logger.info("Shared overlay closing", emit);
+      this.forceHoverId = null;
+    });
   }
 }

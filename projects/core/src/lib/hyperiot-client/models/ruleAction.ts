@@ -14,9 +14,12 @@ export interface RuleAction {
     actionName?: string;
     ruleId?: number;
     ruleName?: string;
+    packetIds?: Array<number>;
     tags?: Array<AssetTag>;
     active?: boolean;
     bundleContext?: BundleContext;
+    fireTimestamp?: number;
+    firePayload?: string;
     ruleType?: RuleAction.RuleTypeEnum;
 }
 export namespace RuleAction {

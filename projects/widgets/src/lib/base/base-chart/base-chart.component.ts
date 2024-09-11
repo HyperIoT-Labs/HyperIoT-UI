@@ -4,6 +4,7 @@ import { PlotlyService } from 'angular-plotly.js';
 import { TimeSeries } from '../../data/time-series';
 import { BaseWidgetComponent } from '../base-widget/base-widget.component';
 import { LoggerService } from 'core';
+import { ServiceType } from '../../service/model/service-type';
 
 @Directive()
 export abstract class BaseChartComponent extends BaseWidgetComponent {
@@ -122,7 +123,9 @@ export abstract class BaseChartComponent extends BaseWidgetComponent {
     // console.log(series);
     if (!isPaused){
       // keeps data length < this.maxDataPoints
-      this.applySizeConstraints(series);
+      if (this.serviceType !== ServiceType.OFFLINE) {
+        this.applySizeConstraints(series);
+      }
       // reset x axis range to default
       // this.requestRelayout(series.x[series.x.length - 1], graph);
       // updating only if there's data
@@ -182,7 +185,7 @@ export abstract class BaseChartComponent extends BaseWidgetComponent {
     // }
 
     // const graph = this.plotly.getInstanceByDivId(`widget-${this.widget.id}`);
-    if (graph) {
+    if (graph) {    
       plotly.relayout(graph, {
         'xaxis.range': [rangeStart, rangeEnd],
         'xaxis.domain': [0.125, 1 - (0.075) * (this.graph.data.length - 1)]

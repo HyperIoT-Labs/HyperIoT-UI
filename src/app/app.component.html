@@ -1,7 +1,10 @@
 <div id="hyt-container" cdkScrollable>
 
   <div *ngIf="showToolBars()" id="hyt-container-topbar">
-    <hyt-topbar></hyt-topbar>
+    <hyt-topbar
+      [logoPath]="(logoPaths | async)?.standard"
+      [logoMobilePath]="(logoPaths | async)?.mobile"
+    ></hyt-topbar>
   </div>
 
   <div id="hyt-container-nav">
@@ -20,12 +23,14 @@
   <hyt-notificationbar></hyt-notificationbar>
   <hyt-prompt></hyt-prompt>
 
-  <hyt-chatbot
+  <!-- hyt-chatbot
     *ngIf="showToolBars()"
     [secure]="environment.ccatSecure"
     [port]="environment.ccatPort"
     [urlPath]="environment.ccatPath"
     [retries]="environment.ccatRetries"
-    [delay]="environment.ccatDelay"></hyt-chatbot>
+    [delay]="environment.ccatDelay"></hyt-chatbot-->
 
 </div>
+
+<hyt-notification-box [notify-position]="'TOP_CENTER'"></hyt-notification-box>

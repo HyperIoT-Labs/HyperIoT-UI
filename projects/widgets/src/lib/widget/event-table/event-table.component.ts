@@ -1,9 +1,8 @@
 import { AfterViewInit, Component, Injector, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { DataChannel, DataPacketFilter, Logger, LoggerService, PacketData } from 'core';
+import { DataChannel, DataPacketFilter, Logger, LoggerService, PacketData, DateFormatterService } from 'core';
 import { Subject, Subscription } from 'rxjs';
 import { BaseTableComponent } from '../../base/base-table/base-table.component';
 import { WidgetAction } from '../../base/base-widget/model/widget.model';
-import { DateFormatterService } from '../../util/date-formatter.service';
 
 @Component({
   selector: 'hyperiot-event-table',
@@ -63,7 +62,8 @@ export class EventTableComponent extends BaseTableComponent implements AfterView
     super.configure();
     this.isConfigured = true;
 
-    // Set header
+    // Set headers
+    this.tableHeaders = [];
     this.tableHeaders.push({ value: this.eventPacketFieldName });
     this.tableHeaders.push({ value: this.eventPacketTimestampFieldName });
 

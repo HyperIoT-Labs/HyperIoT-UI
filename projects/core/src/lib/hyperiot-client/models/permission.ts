@@ -6,6 +6,7 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import { HUser } from './hUser';
 import { Role } from './role';
 
 
@@ -14,11 +15,10 @@ export interface Permission {
     entityVersion: number;
     readonly entityCreateDate?: Date;
     readonly entityModifyDate?: Date;
-    categoryIds?: Array<number>;
-    tagIds?: Array<number>;
     name?: string;
     actionIds?: number;
     entityResourceName?: string;
     resourceId?: number;
     role?: Role;
+    huser?: HUser;
 }

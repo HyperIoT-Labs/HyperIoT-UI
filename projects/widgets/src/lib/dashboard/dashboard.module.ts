@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { ComponentsModule} from 'components';
+import { ComponentsModule, HytRadioButtonComponent} from 'components';
 import { GridsterModule } from 'angular-gridster2';
 import { AddWidgetDialogComponent } from './add-widget-dialog/add-widget-dialog.component';
 import { DashboardConfigService } from './dashboard-config.service';
@@ -44,7 +44,9 @@ import { MatDividerModule } from '@angular/material/divider';
 import { DataSimulatorSettingsComponent } from './widget-settings-dialog/data-simulator-settings/data-simulator-settings.component';
 import { FieldValueGeneratorSettingsComponent } from './widget-settings-dialog/data-simulator-settings/field-value-generator-settings/field-value-generator-settings.component';
 import { MatButtonModule } from '@angular/material/button';
+import { ProductionTargetSettingsComponent } from './widget-settings-dialog/production-target-settings/production-target-settings.component';
 import { WidgetValueMappingComponent } from './widget-settings-dialog/packet-select/widget-value-mapping/widget-value-mapping.component';
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 @NgModule({
   declarations: [
@@ -73,6 +75,7 @@ import { WidgetValueMappingComponent } from './widget-settings-dialog/packet-sel
     PacketFieldsSelectComponent,
     DataSimulatorSettingsComponent,
     FieldValueGeneratorSettingsComponent,
+    ProductionTargetSettingsComponent,
     WidgetValueMappingComponent,
   ],
   imports: [
@@ -96,6 +99,7 @@ import { WidgetValueMappingComponent } from './widget-settings-dialog/packet-sel
     MatIconModule,
     MatTabsModule,
     WidgetsModule,
+    MatCheckboxModule,
   ],
   providers: [
     DashboardConfigService,
@@ -106,6 +110,7 @@ import { WidgetValueMappingComponent } from './widget-settings-dialog/packet-sel
     DashboardViewComponent,
     DynamicWidgetComponent,
     WidgetsDashboardLayoutComponent,
+    HytRadioButtonComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

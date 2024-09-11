@@ -1,15 +1,20 @@
 <hyperiot-base-widget-template>
 
     <header-widget>
-        <hyperiot-common-toolbar widgetName="{{widget.name}}" (action)="onToolbarAction($event)"
-            [toolbarIsVisible]="isToolbarVisible" [config]="{
+        <hyperiot-common-toolbar 
+            #toolbar
+            widgetName="{{widget.name}}" 
+            (action)="onToolbarAction($event)"
+            [toolbarIsVisible]="isToolbarVisible" 
+            [config]="{
                 showClose: true,
                 showSettings: false,
                 showPlay: false,
                 showRefresh: false,
                 showTable: false,
                 hideFullScreen: true
-          }">
+            }"
+          >
         </hyperiot-common-toolbar>
     </header-widget>
 

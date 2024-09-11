@@ -8,22 +8,22 @@
  */
 import { Area } from './area';
 import { HDevice } from './hDevice';
+import { HProjectSharingInfo } from './hProjectSharingInfo';
 import { HUser } from './hUser';
 
 
-export interface HProject { 
+export interface HProject {
     id?: number;
     entityVersion: number;
     readonly entityCreateDate?: Date;
     readonly entityModifyDate?: Date;
-    categoryIds?: Array<number>;
-    tagIds?: Array<number>;
     name?: string;
     description?: string;
     user?: HUser;
     deviceCount?: number;
     statisticsCount?: number;
     rulesCount?: number;
+    hProjectSharingInfo?: HProjectSharingInfo;
     pubKey?: Array<string>;
     devices?: Array<HDevice>;
     areas?: Array<Area>;

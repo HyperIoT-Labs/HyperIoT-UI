@@ -7,9 +7,14 @@
 # Only exists if Bazel was run
 /bazel-out
 /test
+/generator
 
 # dependencies
 /node_modules
+.npmrc
+
+# proxy
+ignored-proxy.config.json
 
 # profiling files
 chrome-profiler-events.json
@@ -56,3 +61,4 @@ localhost.key
 
 # Docker
 compose/data/
+proxy-config.json

@@ -42,7 +42,7 @@ export class HytIconPickerComponent implements ControlValueAccessor {
   openIconPickerList() {
     const layout: DialogLayout = { width: '900px', height: '700px', backgroundClosable: true };
     const dialogRef = this.dialogService.open(HytIconPickerListComponent, { data: this.value, ...layout  });
-    dialogRef.afterClosed().subscribe(res => {
+    dialogRef.dialogRef.afterClosed().subscribe(res => {
       this.value = res;
       this.onChange(this.value);
     });

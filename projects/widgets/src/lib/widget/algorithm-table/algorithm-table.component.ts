@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, Injector, OnInit, ViewChild } from '@angular/core';
-import { AlgorithmOfflineDataService, LoggerService, PacketData } from 'core';
+import { AlgorithmOfflineDataService, HpacketsService, LoggerService, PacketData } from 'core';
 import * as moment_ from 'moment';
-import { Subject, Subscription } from 'rxjs';
+import { Subject, Subscription, lastValueFrom } from 'rxjs';
 import { BaseTableComponent } from '../../base/base-table/base-table.component';
 import { WidgetAction } from '../../base/base-widget/model/widget.model';
 
@@ -27,10 +27,13 @@ export class AlgorithmTableComponent extends BaseTableComponent implements After
 
   dataRequest: Subscription;
 
+  hPacketIdMap : Map<number, string> = new Map()
+
   constructor(
     private algorithmOfflineDataServices: AlgorithmOfflineDataService,
     injector: Injector,
-    protected loggerService: LoggerService
+    protected loggerService: LoggerService,
+    private packetService: HpacketsService,
   ) {
     super(injector, loggerService);
   }
@@ -57,20 +60,7 @@ export class AlgorithmTableComponent extends BaseTableComponent implements After
     }
 
     this.isConfigured = true;
-
-    // Set header
-    const fieldIds = Object.keys(this.widget.config?.packetFields) || [];
-    this.tableHeaders = fieldIds.map(hPacketFieldId => ({
-      value: this.widget.config.packetFields[hPacketFieldId],
-      label: this.widget.config.fieldAliases[hPacketFieldId] || this.widget.config.packetFields[hPacketFieldId],
-      type: this.widget.config.fieldTypes[hPacketFieldId],
-    }));
-    this.tableHeaders.push({
-      value: 'timestamp',
-      label: this.widget.config.timestampFieldName,
-      type: 'DATE'
-    });
-
+    this.hPacketIdMap.clear();
     // set data source
     this.setDatasource();
 
@@ -115,20 +105,92 @@ export class AlgorithmTableComponent extends BaseTableComponent implements After
       this.dataRequest.unsubscribe();
     }
     this.dataRequest = this.algorithmOfflineDataServices.getData(this.hProjectAlgorithmId).subscribe(
-      res => {
+      async res => {
+
         if (Object.keys(res.rows).length > 0) {
           const pageData = [];
           const rowKey = Object.keys(res.rows)[0];  // take only first value
           const value = res.rows[rowKey].value;
-          this.computePacketData([value]);
+
+          // TO DO: check conversion problem on output value
+          //this.computePacketData([value]);
+
+          // Compute timeStamp
           const millis = +value.timestamp * 1000;
-          value.timestamp = moment(millis).format('L') + ' ' + moment(millis).format('LTS');
-          pageData.push(value);
+          let valueTimestamp = moment(millis).format('L') + ' ' + moment(millis).format('LTS');
+
+          // Create HEADERS of tables based on results
+          let jsonObject = JSON.parse(value.output);
+          let keys = Object.keys(jsonObject.results[0].grouping); // Extract grouping keys
+          this.hPacketIdMap = await this.setHeadersTable(keys); 
+
+          // Add one row for each result rows
+          jsonObject.results.forEach((el) => {
+            this.addData(el, valueTimestamp, this.hPacketIdMap, pageData);
+          });
+
+          //Lastly, add results to page
           this.tableSource.next(pageData);
+
         } else {
           this.tableChild.resetTable();
         }
       }
     );
   }
+
+  async setHeadersTable(groupingKeys: any) {
+    try {
+        const fieldIds = Object.keys(this.widget.config?.packetFields) || [];
+        this.tableHeaders = fieldIds.map(hPacketFieldId => ({
+            value: this.widget.config.packetFields[hPacketFieldId],
+            label: this.widget.config.fieldAliases[hPacketFieldId] || this.widget.config.packetFields[hPacketFieldId],
+            type: this.widget.config.fieldTypes[hPacketFieldId],
+        }));
+
+        if (groupingKeys.length > 0 && this.hPacketIdMap.size == 0) {
+            const res = await lastValueFrom(this.packetService.getHPacketField(groupingKeys));
+            res.forEach(element => {
+                this.hPacketIdMap.set(element.id, element.name);
+            });
+
+            for (let i = 0; i < groupingKeys.length; i++) {
+              let key = Number(groupingKeys[i]);
+              let groupingName = this.hPacketIdMap.get(key);
+                this.tableHeaders.unshift({
+                    value: groupingName,
+                    label: groupingName,
+                    type: 'DOUBLE'
+                });
+            }
+        }
+
+        // Finally, add the timestamp column
+        this.tableHeaders.push({
+            value: 'timestamp',
+            label: this.widget.config.timestampFieldName,
+            type: 'DATE'
+        });
+
+        return this.hPacketIdMap;
+    } catch (error) {
+        this.logger.error('Si è verificato un errore:', error);
+        throw error;
+    }
+  }
+
+
+  addData(el, valueTimestamp, map, pageData) {
+    let obj: any = { "output": el.output, "timestamp": valueTimestamp };
+    if (el.grouping && Object.keys(el.grouping).length > 0) {
+
+      Object.keys(el.grouping).forEach((key) => {      
+        let k = map.get(Number(key));
+        let v = el.grouping[key];
+        obj[k] = v;
+      });
+    }
+    pageData.unshift(obj);
+  }
+
 }

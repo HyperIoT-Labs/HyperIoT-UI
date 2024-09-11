@@ -11,8 +11,8 @@ import { DictionaryStringObject } from './dictionaryStringObject';
 
 
 export interface ServiceReferenceObject { 
+    properties?: DictionaryStringObject;
     bundle?: Bundle;
     usingBundles?: Array<Bundle>;
     propertyKeys?: Array<string>;
-    properties?: DictionaryStringObject;
 }

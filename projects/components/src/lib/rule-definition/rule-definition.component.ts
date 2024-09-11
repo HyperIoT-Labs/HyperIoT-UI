@@ -1,17 +1,19 @@
 import { Component, Input, OnChanges, ViewEncapsulation, forwardRef } from '@angular/core';
 import { ControlValueAccessor, FormArray, FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
 import { CoreConfig, HPacket, HPacketFieldsHandlerService } from 'core';
-import { IRulePart } from './rule-part/rule-part.interface';
-import { SelectOption } from '../hyt-select/hyt-select.component';
+import {FieldType, IRulePart} from './rule-part/rule-part.interface';
+import {SelectOption, SelectOptionGroup} from '../hyt-select/hyt-select.component';
 import { Option } from '../hyt-radio-button/hyt-radio-button.component';
 import { DialogService } from '../hyt-dialog/dialog.service';
 import { RuleErrorModalComponent } from './rule-error/rule-error-modal.component';
 import { PacketRulePart } from './rule-part/packet-rule-part';
+import { parseRuleText } from './rule-part/operations.utils';
 
 interface RulePart {
   label: string;
-  fieldType: 'select' | 'text';
+  fieldType: FieldType;
   options?: SelectOption[];
+  optionsGroup?: SelectOptionGroup[];
   valueMap?: Map<string, IRulePart>;
   ruleify: (value: string) => string;
   prettify: (value: string) => string;
@@ -65,6 +67,7 @@ export class RuleDefinitionComponent implements ControlValueAccessor, OnChanges 
     if (!this.coreConfigService.ruleNodes) {
       this.ruleDefinitionError = true;
     }
+
   }
 
   ngOnChanges() {
@@ -88,12 +91,6 @@ export class RuleDefinitionComponent implements ControlValueAccessor, OnChanges 
 
     const rulePart = this.ruleRows[ruleRowIndex].ruleParts[rulePartIndex];
 
-    if (rulePart.fieldType === 'text' || !rulePart.valueMap.has(String(event))) { // exit if no new fields should be added
-      return;
-    }
-
-    const selectedIPart: IRulePart = rulePart.valueMap.get(String(event));
-
     // removing fields after modified field
     // this.ruleRows[ruleRowIndex].ruleParts.splice(rulePartIndex + 1);
     for (let i = this.ruleRows[ruleRowIndex].ruleParts.length - 1; i > rulePartIndex; i--) {
@@ -101,10 +98,17 @@ export class RuleDefinitionComponent implements ControlValueAccessor, OnChanges 
       this.getRowFormGroup(ruleRowIndex).removeControl('rule-part-' + i);
     }
 
+    if (rulePart.fieldType === 'text' || !rulePart.valueMap.has(String(event))) { // exit if no new fields should be added
+      return;
+    }
+
+    const selectedIPart: IRulePart = rulePart.valueMap.get(String(event));
+
     this.ruleRows[ruleRowIndex].ruleParts.push({
       label: selectedIPart.label,
       fieldType: selectedIPart.fieldType,
       options: selectedIPart.generateOptions?.() || [],
+      optionsGroup: selectedIPart.generateOptionsGroup?.() || [],
       valueMap:  selectedIPart.generateChildrenRuleParts?.() || new Map<string, IRulePart>(),
       ruleify: selectedIPart.ruleify,
       prettify: selectedIPart.prettify,
@@ -123,6 +127,7 @@ export class RuleDefinitionComponent implements ControlValueAccessor, OnChanges 
           label: packetRulePart.label,
           fieldType: packetRulePart.fieldType,
           options: packetRulePart.generateOptions(),
+          optionsGroup: packetRulePart.generateOptionsGroup(),
           valueMap: packetRulePart.generateChildrenRuleParts(),
           ruleify: packetRulePart.ruleify,
           prettify: packetRulePart.prettify,
@@ -167,37 +172,37 @@ export class RuleDefinitionComponent implements ControlValueAccessor, OnChanges 
 
       // remove all " occurrences and any leading or trailing white space
       ruleDefinition = ruleDefinition.replace(/"/g, '').trim();
-  
+
       const ruleArray: string[] = ruleDefinition.match(/[^AND|OR]+(AND|OR)?/g).map(x => x.trim());
-  
+
       for (let k = 0; k < ruleArray.length; k++) {
         // TODO the rule parts should be recognized by RulePart classes somehow
         const tempSplitted: string[] = ruleArray[k].split(' ').filter(i => i);
         const packetFieldPart = tempSplitted.shift();
         const splitted: string[] = packetFieldPart.split('.').concat(tempSplitted);
-  
+
         this.addCondition(k - 1);
-  
+
         splitted.forEach((part, i) => {
-  
+
           if (this.joinOptions.some(jo => jo.value === part)) {
-  
+
             // set operator on previous form row
             this.ruleRowsFormArray.at(k).get('ruleJoin').setValue(part);
-  
+
           } else {
-  
+
             // set form value
             this.ruleRowsFormArray.at(k).get('rule-part-' + i).setValue(part);
             // create new field based on set value
             this.onRulePartChanged(part, k, i);
-  
+
           }
-  
+
         });
-  
+
       }
-  
+
       this.originalValue = ruleDefinition;
 
     } catch (error) {
@@ -217,7 +222,8 @@ export class RuleDefinitionComponent implements ControlValueAccessor, OnChanges 
       for (let j = 0; j < ruleRow.ruleParts.length; j ++) {
 
         const rulePart  = ruleRow.ruleParts[j];
-        const value = ruleRowFormGroup.get('rule-part-' + j).value;
+        const value = parseRuleText(ruleRowFormGroup.get('rule-part-' + j).value, rulePart.fieldType);
+        
         rd = rd.concat(rulePart.ruleify(value));
         ptf = ptf.concat(rulePart.prettify(value));
 

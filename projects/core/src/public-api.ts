@@ -30,6 +30,8 @@ export { DashboardwidgetsService } from './lib/hyperiot-client/dashboard-widgets
 export { CompaniesService } from './lib/hyperiot-client/company-client/api-module/index';
 export { WidgetsService } from './lib/hyperiot-client/widgets-client/api-module/index';
 export { ServicesService } from './lib/hyperiot-client/services/api-module/index';
+export { SharedentityService } from "./lib/hyperiot-client/sharedentity/api-module/index";
+export { UiBrandingService } from "./lib/hyperiot-client/uibranding-client/api-module/index";
 
 export { ApiModule as AlarmsClientModule } from './lib/hyperiot-client/alarms-client/api-module/api.module';
 export { ApiModule as AlarmeventsClientModule } from './lib/hyperiot-client/alarmevents-client/api-module/api.module';
@@ -55,6 +57,8 @@ export { ApiModule as DashboardWidgetsClientModule } from './lib/hyperiot-client
 export { ApiModule as CompanyClient } from './lib/hyperiot-client/company-client/api-module/api.module';
 export { ApiModule as WidgetsClientModule } from './lib/hyperiot-client/widgets-client/api-module/api.module';
 export { ApiModule as ServicesClientModule } from './lib/hyperiot-client/services/api-module/api.module';
+export { ApiModule as SharedEntityClientModule } from "./lib/hyperiot-client/sharedentity/api-module/api.module";
+export { ApiModule as UiBrandingClientModule } from "./lib/hyperiot-client/uibranding-client/api-module/api.module";
 
 export { HyperiotClientModule } from './lib/hyperiot-client/hyperiot-client.module';
 
@@ -66,7 +70,8 @@ export * from './lib/hyperiot-service/hyperiot-logger/logger.service';
 
 export { FileHandlerService } from './lib/hyperiot-service/hyperiot-file-handler/file-handler.service';
 export { HPacketFieldsHandlerService } from './lib/hyperiot-service/hyperiot-h-packet-fields-handler/hpacket-fields-handler.service';
-
+export { AlarmWrapperService } from './lib/hyperiot-service/hyperiot-alarm-wrapper/hyperiot-alarm-wrapper.service'
+export { DateFormatterService } from './lib/hyperiot-service/date-formatter/date-formatter.service';
 export * from './lib/hyperiot-service/hyperiot-algorithm-offline-data/algorithm-offline-data.service';
 
 export { WsDataSenderService } from './lib/hyperiot-service/hyperiot-ws-data-sender/ws-data-sender.service';
@@ -80,5 +85,13 @@ export { RealtimeDataService } from './lib/hyperiot-base/realtime-data-service/r
 export { OfflineDataService } from './lib/hyperiot-base/offline-data-service/offline-data.service';
 export { DevDataService, DevDataSettings } from './lib/hyperiot-base/dev-data-service/dev-data.service';
 export { RealtimeDataChannelController } from './lib/hyperiot-base/realtime-data-service/realtimeDataChannelController';
-
+export { HytAlarm } from './lib/hyperiot-service/hyperiot-alarm-wrapper/hyperiot-alarm.model'
 export { CoreConfig } from './lib/config.service';
+
+export { NotificationManagerService } from './lib/hyperiot-service/notification-manager/notification-manager.service';
+export * from './lib/hyperiot-service/notification-manager/models/notification.model';
+
+export { GlobalErrorHandlerService } from './lib/hyperiot-service/error-handler/global-error-handler.service';
+export * from './lib/hyperiot-service/error-handler/models/error.model';
+
+export * from './lib/constants/http-context-tokens';

@@ -1,37 +1,47 @@
+@use "sass:math";
 $primary: #0956b6;
-$primaryDarker: #1c274c;
-@mixin size($notPills){
-    &.hyt-badge-{
+$primaryDarker: #00008B;
+
+@mixin size($notPills) {
+    &.hyt-badge- {
         &xs {
             @include sizeAttribute(20px, $notPills);
         }
+
         &sm {
-            @include sizeAttribute(28px, $notPills);
+            @include sizeAttribute(32px, $notPills);
         }
+
         &md {
-            @include sizeAttribute(36px, $notPills);
+            @include sizeAttribute(40px, $notPills);
         }
+
         &lg {
             @include sizeAttribute(64px, $notPills);
         }
     }
 }
-@mixin sizeAttribute($sz, $notPills){
+
+@mixin sizeAttribute($sz, $notPills) {
+
     //font-size reduced by 25% using badge's width
-    @if $notPills == true {
-        font-size: $sz - round($sz / 4); 
+    @if $notPills ==true {
+        font-size: $sz - round(math.div($sz, 4));
     }
+
     @else {
-        font-size: $sz - round($sz / 3); 
+        font-size: $sz - round(math.div($sz, 3));
     }
+
     height: $sz;
+
     // set width for all the badge that hasn't pills shape
-    @if $notPills == true {
+    @if $notPills ==true {
         width: $sz;
     }
 }
+
 .hyt-badge {
-    background: linear-gradient(180deg, $primary, $primaryDarker);
     font-weight: 600;
     color: #fff;
     margin: auto;
@@ -45,21 +55,44 @@ $primaryDarker: #1c274c;
         padding: .3rem 2rem;
         border-radius: 2rem;
         @include size(false);
+
+        &.hyt-badge-xs, &.hyt-badge-sm{
+            padding: .3rem 1rem;
+        }
     }
+
     &-square {
         border-radius: 0;
         @include size(true);
     }
+
     &-round {
         border-radius: .3rem;
         @include size(true);
     }
+
     &-circle {
         border-radius: 50%;
         @include size(true);
     }
 
-    span{
+    &-bottom{
+        background: linear-gradient(180deg, $primary, $primaryDarker);
+    }
+    
+    &-left{
+        background: linear-gradient(90deg, $primary, $primaryDarker);
+    }
+
+    &-right{
+        background: linear-gradient(270deg, $primary, $primaryDarker);
+    }
+
+    &-top{
+        background: linear-gradient(0deg, $primary, $primaryDarker);
+    }
+
+    span {
         display: block;
         white-space: nowrap;
         overflow: hidden;

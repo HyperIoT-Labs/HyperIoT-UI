@@ -51,8 +51,13 @@
                     <div class="col-4 center-tools">
 
                         <hyt-select
-                            *ngIf="!showAreas && pageStatus == 1 && enableProjectSelection" [label]="'Select a project'" name="project"
-                            [options]="hProjectListOptions" [selected]="idProjectSelected"
+                            *ngIf="!showAreas && pageStatus == 1 && enableProjectSelection"
+                            [label]="'Select a project'"
+                            name="project"
+                            [options]="hProjectListOptions"
+                            [selected]="idProjectSelected"
+                            [isSearchable]="true"
+                            [changePositionStrategy]="true"
                             (changeFn)="onSelectChange($event)"
                         >
                         </hyt-select>
@@ -142,17 +147,17 @@
                     <h2 i18n="@@HYT_data_recording_is_disabled" id="overlay-blurred-title">Data recording is disabled</h2>
                     <!--@I18N-->
                     <h3 i18n="@@HYT_data_recording_is_disabled_text" id="overlay-blurred-text">
-                        The online dashboard cannot be used in this state. You can activate data recording by pressing the "RUN" 
+                        The online dashboard cannot be used in this state. You can activate data recording by pressing the "RUN"
                         button or use the dashboard offline by selecting the "OFFLINE" button.
                     </h3>
                     <!--@I18N-->
                 </div>
 
-                <div *ngIf="dataRecordingStatus == 1" class="col-md-4">
+                <div *ngIf="dataRecordingStatus >= 1" class="col-md-4">
                     <h2 i18n="@@HYT_waiting_for_data" id="overlay-blurred-title">Waiting for data</h2>
                     <!--@I18N-->
                     <h3 i18n="@@HYT_waiting_for_data_text" id="overlay-blurred-text">
-                        Data recording is activated, but we are awaiting data. This operation might take a while (from 20 seconds up to 1 minute). 
+                        Data recording is activated, but we are awaiting data. This operation might take a while (from 20 seconds up to 1 minute).
                         If the loading state persists, click "Reload" or contact the administrator.
                     </h3>
                     <!--@I18N-->

@@ -1,9 +1,23 @@
+@import "src/assets/styles/abstracts/_variables.scss";
+
 #container-project-wizard {
 
   padding: 15px;
 
+  .box-info p{
+    display: flex;
+    font-family: "Exo";
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: $primary-color;
+    font-size: 1.2em;
+    height: 100%;
+    min-height: 200px;
+  }
+
   .header {
-    border-bottom: 1px solid #1e58a5;
+    border-bottom: 1px solid $primary-color;
     min-height: 50px;
 
     .breadcrumb {
@@ -35,6 +49,15 @@
     // min-height: 550px;
     min-height: 69vh;
 
+    .hide-element {
+      visibility: hidden;
+      height: 0;
+    }
+    .show-element {
+      visibility: visible;
+      height: auto;
+    }
+
     #container-steps {
 
       .container-form-title {
@@ -43,9 +66,9 @@
         align-items: center;
         justify-content: flex-start;
         flex: 0 0 100%;
-        margin-bottom: 30px; 
+        margin-bottom: 30px;
         flex-wrap: wrap;
-  
+
         #container-title {
           margin: auto;
           display: flex;
@@ -53,7 +76,7 @@
           align-items: center;
           justify-content: center;
           flex: 0 0 33.33%;
-  
+
           h2 {
             padding-left: 13px;
             padding-right: 13px;
@@ -64,11 +87,11 @@
             line-height: 35px;
           }
         }
-  
+
         hyt-button {
           font-size: 0.85em;
         }
-        
+
       }
 
       mat-step-header {
@@ -98,6 +121,8 @@
         right: 0px;
         left: 0px;
       }
+
+
 
     }
 
@@ -278,7 +303,7 @@
   img {
     cursor: pointer;
   }
-  
+
 }
 
 .info-message {

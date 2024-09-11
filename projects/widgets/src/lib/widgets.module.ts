@@ -1,12 +1,12 @@
 import { HttpClientModule } from '@angular/common/http';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { MomentModule } from 'ngx-moment';
 
 import { CommonToolbarComponent } from './widget/common-toolbar/common-toolbar.component';
-
+import {MatSelectModule} from '@angular/material/select';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 
@@ -42,6 +42,9 @@ import { DataSimulatorComponent } from './widget/data-simulator/data-simulator.c
 import { DefibrillatorComponent } from './widget/defibrillator/defibrillator.component';
 import { MultiStatusWidgetComponent } from './widget/multi-status-widget/multi-status-widget.component';
 import { DynamicLabelValueWidgetComponent } from './widget/dynamic-label-value-widget/dynamic-label-value-widget.component';
+import { ProductionTargetComponent } from './widget/production-target/production-target.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AlarmsWidgetComponent } from './widget/alarms-widget/alarms-widget.component';
 
 @NgModule({
   declarations: [
@@ -64,17 +67,23 @@ import { DynamicLabelValueWidgetComponent } from './widget/dynamic-label-value-w
     DefibrillatorComponent,
     MultiStatusWidgetComponent,
     DynamicLabelValueWidgetComponent,
+    ProductionTargetComponent,
+    AlarmsWidgetComponent
   ],
   imports: [
     MatButtonModule,
     BrowserModule,
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
+    MatSelectModule,
     PlotlyModule,
     ComponentsModule,
     MatTableModule,
     MatPaginatorModule,
     MatTooltipModule,
+    BrowserModule, 
+    BrowserAnimationsModule,
     MomentModule.forRoot({
       relativeTimeThresholdOptions: {
         m: 59
@@ -115,6 +124,8 @@ import { DynamicLabelValueWidgetComponent } from './widget/dynamic-label-value-w
     HistogramChartComponent,
     MultiStatusWidgetComponent,
     DynamicLabelValueWidgetComponent,
+    ProductionTargetComponent,
+    AlarmsWidgetComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

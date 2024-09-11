@@ -15,6 +15,7 @@
         <div class="form-group">
 
           <div class="rule-parts-container">
+
             <div *ngFor="let rulePart of ruleForm.ruleParts; let j = index" class="">
 
               <mat-form-field *ngIf="rulePart.fieldType === 'select'">
@@ -25,6 +26,23 @@
                     <span *ngIf="option.icon" class="hyt-icon {{ option.icon }}"></span>
                     {{ option.label }}
                   </mat-option>
+                </mat-select>
+                <mat-error *ngIf="getFormControl(i, j).invalid">
+                  <span *ngIf="getFormControl(i, j).errors.required" i18n="@@HYT_required_field">Field Required</span>
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field *ngIf="rulePart.fieldType === 'select-group'">
+                <mat-label>{{ rulePart.label }}</mat-label>
+                <mat-select formControlName="rule-part-{{j}}" (selectionChange)="onRuleValueChanged($event.value, i, j)">
+                  <mat-optgroup *ngFor="let group of rulePart.optionsGroup" [disabled]="group?.disabled">
+                      <span *ngIf="group.icon" class="hyt-icon {{ group.icon }}"></span>
+                      {{ group.name }}
+                      <mat-option *ngFor="let option of group.options" [value]="option.value">
+                        <span *ngIf="option.icon" class="hyt-icon {{ option.icon }}"></span>
+                        {{ option.label }}
+                      </mat-option>
+                  </mat-optgroup>
                 </mat-select>
                 <mat-error *ngIf="getFormControl(i, j).invalid">
                   <span *ngIf="getFormControl(i, j).errors.required" i18n="@@HYT_required_field">Field Required</span>

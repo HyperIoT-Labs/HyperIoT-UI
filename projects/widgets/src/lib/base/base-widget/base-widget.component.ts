@@ -6,6 +6,9 @@ import { TimeSeries } from '../../data/time-series';
 import { ServiceType } from '../../service/model/service-type';
 import { CommonToolbarComponent } from '../../widget/common-toolbar/common-toolbar.component';
 import { WidgetAction, WidgetConfig } from './model/widget.model';
+import {
+  DataSimulatorSettings
+} from "../../dashboard/widget-settings-dialog/data-simulator-settings/data-simulator.models";
 
 @Directive()
 export abstract class BaseWidgetComponent implements OnChanges, OnInit, OnDestroy {
@@ -137,6 +140,7 @@ export abstract class BaseWidgetComponent implements OnChanges, OnInit, OnDestro
           case 'INTEGER':
           case 'DOUBLE':
           case 'FLOAT': {
+            // TODO: inserire qui la conversione dei valori con expression
             const unitConversion = this.widget.config.fieldUnitConversions[fieldId];
             // temp fix. packet values shouldn't be forcibly converted
             if (!isNaN(parseFloat(pd[packetKey]))) {
@@ -157,11 +161,33 @@ export abstract class BaseWidgetComponent implements OnChanges, OnInit, OnDestro
               catch(error) {
                 this.logger.error(error);
               }
+              try {
+                if(this.widget.config.fieldCustomConversions
+                  && this.widget.config.fieldCustomConversions[fieldId]
+                  && this.widget.config.fieldCustomConversions[fieldId].expression
+                  && this.widget.config.fieldCustomConversions[fieldId].expression.trim() !== '') {
+                  let expression: string = this.widget.config.fieldCustomConversions[fieldId].expression;
+                  for (let operator of DataSimulatorSettings.Utils
+                    .expressionOperators) {
+                    expression = expression.replace(
+                      operator.regex,
+                      operator.function
+                    );
+                  }
+                  pd[packetKey] = eval(expression.replace(/\$val/g, pd[packetKey]));
+                }
+              } catch (error) {
+                this.logger.error(error);
+              }
             }
             break;
           }
           case 'TEXT': {
             pd[packetKey] = pd[packetKey].bytes ? atob(pd[packetKey].bytes) : pd[packetKey];
+            break;
+          }
+          case 'BOOLEAN': {
+            // no action needed
             break;
           }
           case 'OBJECT': {

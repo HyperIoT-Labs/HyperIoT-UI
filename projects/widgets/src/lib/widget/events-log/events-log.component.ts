@@ -1,7 +1,7 @@
-import { Component, Injector, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BaseGenericComponent } from '../../base/base-generic/base-generic.component';
 import { RealtimeDataService } from 'core';
-import { PartialObserver } from 'rxjs';
+import {filter, PartialObserver} from 'rxjs';
 import { WidgetAction } from '../../base/base-widget/model/widget.model';
 
 @Component({
@@ -19,9 +19,6 @@ export class EventsLogComponent extends BaseGenericComponent implements OnInit {
 
   eventLogObserver: PartialObserver<any> = {
     next: event => {
-      if (this.isPaused) {
-        return;
-      }
       const packet = JSON.stringify(event.data);
       // limit max log lines
       if (this.widget.config && this.widget.config.maxLogLines) {
@@ -43,7 +40,13 @@ export class EventsLogComponent extends BaseGenericComponent implements OnInit {
       this.logMessages = [...this.initData];
     }
     super.ngOnInit();
-    (this.dataService as RealtimeDataService).eventStream.subscribe(this.eventLogObserver);
+    (this.dataService as RealtimeDataService).eventStream
+      .pipe(
+        filter(() => this.isPaused === false),
+        filter(ev => ev.data.name === 'systemTick'),
+        filter(ev => ev.data.fields.hProjectId && ev.data.fields.hProjectId.value.long === this.widget.projectId),
+      )
+      .subscribe(this.eventLogObserver);
   }
 
   pause(): void {

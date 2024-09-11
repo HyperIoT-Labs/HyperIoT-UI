@@ -15,11 +15,10 @@ export interface Dashboard {
     entityVersion: number;
     readonly entityCreateDate?: Date;
     readonly entityModifyDate?: Date;
-    categoryIds?: Array<number>;
-    tagIds?: Array<number>;
     name?: string;
     dashboardType?: Dashboard.DashboardTypeEnum;
     readonly widgets?: Array<DashboardWidget>;
+    deviceId?: number;
     hproject?: HProject;
 }
 export namespace Dashboard {

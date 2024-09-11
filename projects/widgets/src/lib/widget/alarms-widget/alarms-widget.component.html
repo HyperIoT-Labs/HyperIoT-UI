@@ -1,0 +1,78 @@
+<hyperiot-base-widget-template>
+
+  <header-widget>
+    <hyperiot-common-toolbar
+      widgetName="{{widget.name}}"
+      (action)="onToolbarAction($event)"
+      [toolbarIsVisible]="isToolbarVisible"
+      [config]="{
+              showClose: true,
+              showSettings: false,
+              showPlay: false,
+              showRefresh: false,
+              showTable: false,
+              hideFullScreen: true
+        }">
+    </hyperiot-common-toolbar>
+  </header-widget>
+
+  <content-widget style="position: relative;">
+    <div class="alarm-list" *ngIf="alarmListArray.length; else noAlarm" [@containerAnim]="alarmListArray.length">
+      <div class="alarm-filter alarm-filter-resume">
+        <div class="description-filter" *ngIf="!showFilter && !filteringSev.length">
+          <strong i18n="@@HYT_alarm_no_filter">NO FILTER SELECTED.</strong>
+          <span class="truncate" i18n="@@HYT_alarm_click_to_filter">CLICK FILTER BUTTON TO FILTER ALARMS</span>
+        </div>
+        <div class="description-filter" *ngIf="!showFilter && filteringSev.length">
+          <strong class="text-primary" i18n="@@HYT_alarm_filter_from">FILTERING ALARMS FOR:</strong>
+          <ul>
+            <li>
+              <strong i18n="@@HYT_alarm_severity_severity">Severity:</strong>
+              {{ listSelectedSev }}
+            </li>
+          </ul>
+        </div>
+        <mat-form-field class="smaller-select" *ngIf="showFilter">
+          <mat-label i18n="@@HYT_alarm_severity_severity">Severity</mat-label>
+          <mat-select [(ngModel)]="filteringSev" multiple>
+            <mat-option *ngFor="let sev of severityList" [value]="sev.value">{{sev.label}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div class="counter-alarm">
+          <span i18n="@@HYT_alarm_showing_text">Showing </span>
+          <strong class="showing-counter">{{filteredList.length}}</strong>
+          <span i18n="@@HYT_alarm_showing_text_of"> of </span> 
+          <strong class="text-primary">{{alarmListArray.length}}</strong>
+        </div>
+        <div class="filter-button">
+          <hyt-button
+            color="hyt-square-btn"
+            (clickFn)="showFilter = !showFilter"
+          >
+            <svg width="26" height="26" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M41 1H1L17 22.0222V36.5556L25 41V22.0222L41 1Z" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>        
+          </hyt-button>
+        </div>
+      </div>
+      <div class="filtering-no-data" *ngIf="alarmListArray.length && filteredList.length == 0">
+        <span class="alarm-title" i18n="@@HYT_alarm_hidden_filter">There are alarms, but they're being hidden by the filter!</span>
+      </div>
+      <hyt-alarm 
+        *ngFor="let alarm of filteredList" 
+        [alarm]="alarm"
+      >
+      </hyt-alarm>
+    </div>
+
+      <ng-template #noAlarm>
+        <div class="no-alarms">
+          <hyt-no-data width="150" height="133"></hyt-no-data>
+          <h3 class="alarm-title" i18n="@@HYT_alarm_no_fired">No alarms fired</h3>  
+        </div>
+      </ng-template>
+
+
+  </content-widget>
+
+</hyperiot-base-widget-template>

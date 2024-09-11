@@ -1,4 +1,5 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import { HytAlarm } from 'core';
 
 @Component({
   selector: 'hyt-home',

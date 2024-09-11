@@ -1,3 +1,5 @@
+@import "src/assets/styles/abstracts/_variables.scss";
+
 #algorithms-page {
 
     font-family: 'Exo';
@@ -7,7 +9,7 @@
     padding-top: 15px;
   
     .header {
-      border-bottom: 1px solid #1e58a5;
+      border-bottom: 1px solid $primary-color;
       min-height: 50px;
   
       .breadcrumb {
@@ -73,7 +75,7 @@
               &#title-no-algorithm {
                 font-size: 2.2em;
                 text-transform: uppercase;
-                color: #0d416d;
+                color: $primary-color-dark-unsaturated;
                 margin-bottom: 0px;
               }
   
@@ -83,7 +85,7 @@
   
               &#subtitle-no-algorithm {
                 font-size: 1.1em;
-                color: #2d82cb;
+                color: $secondary-color-unsaturated;
                 margin-bottom: 60px;
                 font-style: italic;
               }
@@ -100,7 +102,7 @@
               margin-top: 2px;
               
               button.mat-raised-button {
-                background-color: #0d416d;
+                background-color: $primary-color-dark-unsaturated;
                 color: #fff;
                 font-family: "Exo";
                 font-size: 1.2em;
@@ -139,7 +141,7 @@
             h2 {
               &#title-algorithms {
                 font-size: 2.2em;
-                color: #0d416d;
+                color: $primary-color-dark-unsaturated;
               }
     
             }

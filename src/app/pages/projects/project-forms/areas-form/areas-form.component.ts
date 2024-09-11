@@ -732,7 +732,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
         projectId: this.projectId,
       },
     });
-    modalRef.afterClosed()
+    modalRef.dialogRef.afterClosed()
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(ad => {
       this.logger.debug('onMapDeviceAddClick onclose modal', ad);
@@ -819,7 +819,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
         areas: this.areaList,
       },
     });
-    modalRef.afterClosed()
+    modalRef.dialogRef.afterClosed()
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(a => {
       this.logger.debug('onMapAreaAddClick modal on close', a);
@@ -1358,7 +1358,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
       header: $localize`:@@HYT_area_confirm_title_change_type:Changing the area type`,
     })
 
-    dialogRef.afterClosed().subscribe((res) => {
+    dialogRef.dialogRef.afterClosed().subscribe((res) => {
       if(res.result === 'reject'){
         this.form.get('area-type').setValue(this.typeSelectPrevValue);
         // Reset previous value

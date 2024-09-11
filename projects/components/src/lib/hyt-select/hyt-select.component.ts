@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, forwardRef, ViewEncapsulation, Output, EventEmitter, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, forwardRef, ViewEncapsulation, Output, EventEmitter, OnChanges, ViewChild } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormControl, Validators, FormGroup } from '@angular/forms';
 
 /** Interface for select option element */
@@ -104,6 +104,10 @@ export class HytSelectComponent
   /** Specifies if it is a multiple select */
   @Input() isMultiple = false;
 
+  /** changePositionStrategy apply the positionSelect directive only if true */
+  @Input() changePositionStrategy = false;
+  
+
   @Input() chips = false;
 
   /**
@@ -122,6 +126,8 @@ export class HytSelectComponent
    * Callback functions for blur
    */
   @Input() onTouchedFn = () => {};
+
+  @ViewChild('select', { static: true }) select: any;
 
   /**
    * Callback functions for change
@@ -190,6 +196,18 @@ export class HytSelectComponent
    * ngOnInit
    */
   ngOnInit() {
+    // prevent space button to close select (fix select closing using space in filter)
+    this.select._handleKeydown = (event: KeyboardEvent) => {
+      if (event.key === ' ') {
+        return;
+      }
+      if (!this.select.disabled) {
+        this.select.panelOpen
+          ? this.select._handleOpenKeydown(event)
+          : this.select._handleClosedKeydown(event);
+      }
+    };
+
     const validators = [];
     if (this.isRequired) {
       validators.push(Validators.required);

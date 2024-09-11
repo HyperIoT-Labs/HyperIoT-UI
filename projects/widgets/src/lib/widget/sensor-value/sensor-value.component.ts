@@ -1,5 +1,5 @@
 import { Component, Injector } from '@angular/core';
-import { DataChannel, DataPacketFilter, Logger, LoggerService, PacketData } from 'core';
+import { DataChannel, DataPacketFilter, HPacketField, Logger, LoggerService, PacketData } from 'core';
 import { BaseWidgetComponent } from '../../base/base-widget/base-widget.component';
 import { WidgetAction } from '../../base/base-widget/model/widget.model';
 
@@ -59,6 +59,7 @@ export class SensorValueComponent extends BaseWidgetComponent {
       +this.widget.id,
       [dataPacketFilter]
     );
+    if(this.widget.config.fieldTypes[hPacketFieldId] == HPacketField.TypeEnum.TIMESTAMP) this.dataChannel.addTimestampFieldToFormat([this.sensorField])
     this.dataSubscription = this.dataChannel.subject.subscribe(res => {
       this.computePacketData(res.data);
     });
@@ -72,9 +73,14 @@ export class SensorValueComponent extends BaseWidgetComponent {
 
   renderData(datum: PacketData) {
     this.timestamp = datum.timestamp;
-    this.sensorRenderValue = datum[this.sensorField];
+    if(this.canRender(datum[this.sensorField]))
+      this.sensorRenderValue = datum[this.sensorField];
 
     this.blinkLed();
+  }
+
+  canRender(field: any){
+    return field || typeof field == "boolean"
   }
 
   blinkLed() {

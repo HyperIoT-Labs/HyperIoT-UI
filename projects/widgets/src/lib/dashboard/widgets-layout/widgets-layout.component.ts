@@ -11,6 +11,7 @@ import {
 } from 'angular-gridster2';
 
 import {
+  AlarmWrapperService,
   Dashboard,
   DashboardWidget,
   HPacket,
@@ -18,7 +19,7 @@ import {
   RealtimeDataService,
 } from 'core';
 
-import { ConfirmDialogService, DialogService, HytTopologyService } from 'components';
+import { ConfirmDialogService, DialogService } from 'components';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 import { WidgetAction, WidgetConfig } from '../../base/base-widget/model/widget.model';
@@ -119,19 +120,18 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
    * @param configService
    * @param activatedRoute
    * @param dialogService
-   * @param hytTopologyService
    * @param toastr
    */
   constructor(
     private realtimeDataService: RealtimeDataService,
     private configService: DashboardConfigService,
+    private alarmWrapper: AlarmWrapperService,
     private activatedRoute: ActivatedRoute,
     private dialogService: DialogService,
-    private hytTopologyService: HytTopologyService,
     private confirmDialogService: ConfirmDialogService,
   ) {
     this.eventNotificationIsOn = true;
-    this.configService.eventNotificationState.subscribe(res => {
+    this.alarmWrapper.eventNotificationState.subscribe(res => {
       this.eventNotificationIsOn = res;
     });
   }
@@ -354,7 +354,7 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
               text: $localize`:@@HYT_widget_delete_confirm:Attention, the widget and its configuration will be permanently deleted. Proceed?`,
               dismissable: $localize`:@@HYT_widget_delete_confirm_dismiss:Don't request confirmation for this dashboard anymore`,
             });
-            confirmDialog.afterClosed().subscribe(res => {
+            confirmDialog.dialogRef.afterClosed().subscribe(res => {
               if (res) {
                 if (res.dismissed) {
                   localStorage.setItem('confirm-delete-widget-dismissed-' + this.dashboardValue.id, JSON.stringify(true));
@@ -401,7 +401,7 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
         areaId,
       }
     });
-    modalRef.afterClosed().subscribe(
+    modalRef.dialogRef.afterClosed().subscribe(
       event => { this.onWidgetSettingClose(event) }
     );
   }
@@ -415,7 +415,7 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
         initData,
       }
     });
-    modalRef.afterClosed().subscribe(event => {
+    modalRef.dialogRef.afterClosed().subscribe(event => {
       this.onWidgetFullscreenClose(event);
     });
   }

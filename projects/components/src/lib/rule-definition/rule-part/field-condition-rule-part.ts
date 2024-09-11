@@ -1,13 +1,13 @@
-import { IRulePart, RuleOperator } from './rule-part.interface';
+import {FieldType, IRulePart, RuleOperator} from './rule-part.interface';
 import { HPacket, HPacketField, HPacketFieldsHandlerService, RuleNode } from 'core';
 import { ValueRulePart } from './value-rule-part';
 import { ConditionRulePart } from './condition-rule-part';
-import { SelectOption } from '../../hyt-select/hyt-select.component';
+import { SelectOption, SelectOptionGroup } from '../../hyt-select/hyt-select.component';
 import { Validators } from '@angular/forms';
 import { operationNameLabels } from './operations.utils';
 
 export class FieldConditionRulePart implements IRulePart {
-  fieldType: 'select' | 'text' = 'select';
+  fieldType: FieldType = 'select-group';
   label = $localize`:@@HYT_field_condition_rule_part_label:Field or Condition`;
   validators = [ Validators.required ];
 
@@ -45,6 +45,45 @@ export class FieldConditionRulePart implements IRulePart {
       rulePartsMap.set(tc.value + '(' + this.hPacket.timestampField + ')', new ConditionRulePart(this.operators, HPacketField.TypeEnum.TIMESTAMP));
     });
     return rulePartsMap;
+  }
+
+  generateOptionsGroup(): SelectOptionGroup[] {
+    const optGroup: SelectOptionGroup[] = [];
+
+    // add packet fields
+    let flatFieldList = this.hPacketFieldsHandlerService.flatPacketFieldsTree(this.hPacket);
+    // use single fields only
+    flatFieldList = flatFieldList.filter(ff => ff.field.multiplicity === HPacketField.MultiplicityEnum.SINGLE);
+    optGroup.push({
+      name: $localize`:@@HYT_fields:Fields`,
+      options: flatFieldList.map((f) => ({
+        value: String(f.field.id),
+        label: this.hPacketFieldsHandlerService.getStringifiedSequenceFromPacket(this.hPacket, f.field.id),
+        icon: 'icon-hyt_fields'
+      }))
+    });
+
+    // add packet conditions
+    optGroup.push({
+      name: $localize`:@@HYT_conditions:Conditions`,
+      options: this.packetConditions.map(x => ({
+        value: x.operator,
+        label: operationNameLabels.find(y => y.name === x.name).label,
+        icon:'icon-hyt_setting',
+      }))
+    });
+
+    // add packet timestamp conditions
+    optGroup.push({
+      name: $localize`:@@HYT_timestamp:Timestamp`,
+      options: this.timestampConditions.map(x => ({
+        value: x.value + '(' + this.hPacket.timestampField + ')',
+        label: this.hPacket.timestampField + x.label,
+        icon: 'icon-hyt_clock',
+      }))
+    });
+
+    return optGroup;
   }
 
   generateOptions(): SelectOption[] {

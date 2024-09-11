@@ -107,7 +107,7 @@ export class BodymapSettingsComponent implements OnInit, OnDestroy {
           header: 'Conferma modifica',
           text: 'Attenzione, cambiando la mappa saranno perse le assegnazioni precedemente inserite'
         });
-        dialogRef.afterClosed().subscribe(
+        dialogRef.dialogRef.afterClosed().subscribe(
           res => {
             if (res && res.result === 'accept') {
               this.musclesMap = [];
@@ -168,7 +168,7 @@ export class BodymapSettingsComponent implements OnInit, OnDestroy {
         }
       },
     );
-    dialogRef.afterClosed().subscribe(
+    dialogRef.dialogRef.afterClosed().subscribe(
       result => this.onAssociationSave(result)
     );
     }

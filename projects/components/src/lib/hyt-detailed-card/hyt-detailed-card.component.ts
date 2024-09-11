@@ -15,6 +15,20 @@ export interface CardDetailOnHover {
    */
   label: string;
 }
+/**
+ * @Description
+ * Format of emitted value from the output
+ */
+export interface CardEmittedValue {
+  /**
+   * @param {string} data - paramEmittedOnClick value passed in Input to the component
+   */
+  data: any;
+  /**
+   * @param {string} event - click event
+   */
+  event: any;
+}
 
 @Component({
   selector: "hyt-detailed-card",
@@ -56,6 +70,10 @@ export class HytDetailedCardComponent {
    */
   @Input() valRouterLink: string = "";
   /**
+   * @property {boolean} forceHover - Force the hover state on the card
+   */
+  @Input() forceHover: boolean = false;
+  /**
    * @property {string} secondaryButtonIcon - Render a second button on hover with an icon that can be use for extra actions
    */
   @Input() secondaryButtonIcon: string = "";
@@ -64,17 +82,17 @@ export class HytDetailedCardComponent {
    */
   @Input() paramEmittedOnClick: any = "";
   /**
-   * @property {new EventEmitter<any>} btnClick - Emit when the primary button is clicked if valRouterLink is not passed
+   * @property {EventEmitter<CardEmittedValue>} btnClick - Emit when the primary button is clicked if valRouterLink is not passed
    */
-  @Output() btnClick = new EventEmitter<any>();
+  @Output() btnClick = new EventEmitter<CardEmittedValue>();
   /**
-   * @property {new EventEmitter<any>} secondaryBtnClick - If secondaryButton is rendered, emit when clicked
+   * @property {EventEmitter<CardEmittedValue>} secondaryBtnClick - If secondaryButton is rendered, emit when clicked
    */
-  @Output() secondaryBtnClick = new EventEmitter<any>();
+  @Output() secondaryBtnClick = new EventEmitter<CardEmittedValue>();
   /**
-   * @property {new EventEmitter<any>} deleteClick - If secondaryButton is rendered, emit when clicked
+   * @property {EventEmitter<CardEmittedValue>} deleteClick - If secondaryButton is rendered, emit when clicked
    */
-  @Output() deleteClick = new EventEmitter<any>();
+  @Output() deleteClick = new EventEmitter<CardEmittedValue>();
 
   constructor(loggerService: LoggerService) {
     this.logger = new Logger(loggerService);
@@ -85,36 +103,48 @@ export class HytDetailedCardComponent {
    * Emit the event that the primary button has been clicked.
    * @public
    */
-  onClick() {
+  onClick(event: any) {
     this.logger.debug(
       "Primary button clicked, value emitted",
       this.paramEmittedOnClick
     );
-    this.btnClick.emit(this.paramEmittedOnClick);
+    this.btnClick.emit(this.formatDataToEmit(event));
   }
 
   /**
    * Emit the event that the secondary button has been clicked.
    * @public
    */
-  onSecondaryClick() {
+  onSecondaryClick(event: any) {
     this.logger.debug(
       "Secondary button clicked, value emitted",
       this.paramEmittedOnClick
     );
-    this.secondaryBtnClick.emit(this.paramEmittedOnClick);
+    this.secondaryBtnClick.emit(this.formatDataToEmit(event));
   }
 
   /**
    * Emit the event that the delete button has been clicked
    * @public
    */
-  emitDelete(){
+  emitDelete(event: any) {
     this.logger.debug(
       "Delete button clicked, value emitted",
       this.paramEmittedOnClick
     );
-    this.deleteClick.emit(this.paramEmittedOnClick);
+    this.deleteClick.emit(this.formatDataToEmit(event));
+  }
+
+  /**
+   * Create the object that every element emit on the click
+   * @param e click event object
+   * @returns
+   */
+  private formatDataToEmit(e: any): CardEmittedValue {
+    return {
+      event: e,
+      data: this.paramEmittedOnClick,
+    };
   }
 
   /**

@@ -3,7 +3,7 @@
     <div id="row-box-photo" class="row row-box">
         <div id="container-box-photo" class="col-12">
             
-            <div 
+            <!-- <div 
                 id="img-box" 
                 style="
                     background-image: url('./../../../../assets/images/account/user-default.svg');
@@ -22,7 +22,7 @@
             <div id="box-upload-photo">
                 <div id="upload-photo">
                 </div>
-            </div>
+            </div> -->
 
             <h3 id="name-profile">{{user.name}} {{user.lastname}}</h3>
             <h4 id="username-profile">{{user.username}}</h4>
@@ -73,7 +73,7 @@
                     id="icon-plan-section"
                     alt="Icon Personal Info Section"
                 >
-                <p i18n="@@HYT_plan_info">Plan Info</p>
+                <p i18n="@@HYT_general_info">General Info</p>
             </div>
 
             <div id="current-role">
@@ -82,16 +82,14 @@
                 <!--TODO-->
             </div>
 
-            <div id="current-plan">
+            <!-- <div id="current-plan">
                 <ng-container i18n="@@HYT_your_current_plan_is">Your current plan is:</ng-container>:
                 <span class="name-plan">Plan Exclusive</span>
-                <!--TODO-->
-            </div>
+            </div> -->
 
             <div id="title-summary-plan">
                 <span class="info-current-plan">i</span>
-                <ng-container i18n="@@HYT_this_plan_includes">This plan includes</ng-container>:
-                <!--TODO-->
+                <ng-container i18n="@@HYT_you_have_access_to">You have access to</ng-container>:
             </div>
 
             <div id="row-summary-plan" class="row">
@@ -104,9 +102,8 @@
                         <div class="col-6 txt-obj-plan">
                             <p i18n="@@HYT_projects">Projects</p> 
                             <span class="one-of">
-                                <span class="firstNumber">1</span><span class="slash">/</span><span class="secondNumber">2</span>
-                                <!--TODO-->
-                            </span>
+                                <span class="firstNumber">{{platformCounters.projects}}</span>
+                            </span> 
                         </div>
                     </div>
                 </div>
@@ -114,34 +111,34 @@
                 <div id="devices" class="col-4">
                     <div class="row">
                         <div class="col-6 icon-obj-plan">
-                            <img src="./../../../../assets/images/account/projects.svg" alt="Projects">
+                            <!-- <img src="./../../../../assets/images/account/projects.svg" alt="Projects"> -->
+                            <span class="hyt-icon icon-hyt_device"></span>
                         </div>
                         <div class="col-6 txt-obj-plan">
                             <p i18n="@@HYT_devices">Devices</p>
                             <span class="one-of">
-                                <span class="firstNumber">1</span><span class="slash">/</span><span class="secondNumber">2</span>
-                                <!--TODO-->
+                                <span class="firstNumber">{{platformCounters.devices}}</span>
                             </span>
                         </div>
                     </div>
                 </div>
 
-                <div id="statistics" class="col-4">
+                <div id="areas" class="col-4">
                     
                     <div class="row">
 
                         <div class="col-6 icon-obj-plan">
 
-                            <img src="./../../../../assets/images/account/projects.svg" alt="Projects">
+                            <!-- <img src="./../../../../assets/images/account/projects.svg" alt="Projects"> -->
+                            <span class="hyt-icon icon-hyt_map"></span>
 
                         </div>
 
                         <div class="col-6 txt-obj-plan">
 
-                            <p i18n="@@HYT_statistics">Statistics</p>
+                            <p i18n="@@HYT_areas">Areas</p>
                             <span class="one-of">
-                                <span class="firstNumber">1</span><span class="slash">/</span><span class="secondNumber">2</span>
-                                <!--TODO-->
+                                <span class="firstNumber">{{platformCounters.areas}}</span>
                             </span>
 
                         </div>
@@ -150,7 +147,8 @@
 
                 </div>
 
-            </div> <!-- End Row Summary Plan -->
+            </div>
+            <!-- End Row Summary Plan -->
 
             <!-- <div id="row-upgrade-plan" class="row">
 
@@ -168,6 +166,114 @@
         </div>
 
     </div> <!-- End Row Box Plan -->
+
+    <div id="row-box-branding" class="row row-box">
+        
+        <div id="container-box-branding" class="col-12">
+
+            <div class="title-box">
+                <img 
+                    src="./../../../../assets/images/account/personal-info-icon.svg"
+                    class="title-icon"
+                    id="icon-branding-section"
+                    alt="Icon Branding Section"
+                >
+                <p i18n="@@HYT_theme_customization">Theme customization</p>
+            </div>
+        
+            <div id="container-form-logo" class="col-12">
+
+                <form id="form-logo-branding" #pif="ngForm" [formGroup]="brandingForm">
+
+                    <div class="row row-field-branding">
+                        <div class="col-12">
+                            <h3 i18n="@@HYT_logo">Logo</h3>
+                            <p *ngIf="!isBrandedTheme && !fileToUpload" style="color: red; font-size:small;" i18n="@@HYT_logo_is_required_for_the_first_theme_customization">
+                                * Logo is required for the first theme customization
+                            </p>
+                        </div>
+                        <div class="container-form-field col-12">
+                            <span i18n="@@HYT_upload_your_logo" id="upload-logo-text">Upload your logo</span>
+                            <input #logoFileInput type="file" id="logo-file-input" name="logo" accept="image/png, image/jpeg" (change)="handleLogoInput($event.target.files)" hidden />
+                            <hyt-button (clickFn)="initUpload()">
+                                <ng-container i18n="@@HYT_upload">Upload</ng-container>
+                            </hyt-button>
+                            <ng-container *ngIf="fileToUpload != null">
+                                <button mat-icon-button aria-label="reset logo button" (click)="resetLogo(logoFileInput)">
+                                    <mat-icon>clear</mat-icon>
+                                </button>
+                            </ng-container>
+                        </div>
+                        <div *ngIf="fileToUpload != null" class="container-form-field col-12">
+                            <p i18n="@@HYT_preview">Preview</p>
+                            <hyt-topbar [preview-mode]="true" [logoPath]="logoPath" [logoMobilePath]="logoMobilePath"></hyt-topbar>
+                        </div>
+
+                        <div class="container-form-field col-12">
+                            <hr>
+                        </div>
+
+                        <div class="col-12">
+                            <h3 i18n="@@HYT_color_schema">Color Schema</h3>
+                        </div>
+                        <div class="container-form-field col-3">
+                            <mat-form-field>
+                                <mat-label i18n="@@HYT_primary_color">Primary Color</mat-label>
+                                <input matInput formControlName="primaryColor" type="color">
+                            </mat-form-field>
+                        </div>
+                        <div class="container-form-field col-3">
+                            <mat-form-field>
+                                <mat-label i18n="@@HYT_secondary_color">Secondary Color</mat-label>
+                                <input matInput formControlName="secondaryColor" type="color">
+                            </mat-form-field>
+                        </div>
+
+                        <ng-container *ngIf="this.brandingForm.dirty">
+                            <button mat-icon-button aria-label="reset logo button" (click)="resetColorSchema()">
+                                <mat-icon>clear</mat-icon>
+                            </button>
+                        </ng-container>
+    
+                        <div class="container-form-field col-12">
+                            <div class="btn-group">
+                                
+                                <!-- [isDisabled]="!fileToUpload" -->
+                                <hyt-button 
+                                    id ="save-logo-btn"
+                                    [isDisabled]="canNotSaveTheme"
+                                    (clickFn)="saveTheme()"
+                                    type="submit"
+                                >
+                                    <ng-container i18n="@@HYT_save">Save</ng-container>
+                                </hyt-button>
+    
+                                <hyt-button 
+                                    id ="reset-logo-btn" 
+                                    (clickFn)="restoreDefaultTheme(logoFileInput)"
+                                    [isDisabled]="!isBrandedTheme"
+                                    type="submit"
+                                >
+                                    <ng-container i18n="@@HYT_restore_default">Restore default</ng-container>
+                                </hyt-button>
+                            </div>
+      
+                        </div>
+
+                        <ng-container *ngIf="logoErrorMessage.showError">
+                            <div class="container-form-field col-12">
+                                <div id="logo-error-container">
+                                    {{logoErrorMessage.message}}
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
 
     <div *ngIf="wentWrong" class="row" (click)="updatePassword()">
         <p style="color:red;">{{errMsg}}</p>
