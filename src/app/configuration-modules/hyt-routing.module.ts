@@ -136,7 +136,7 @@ const hyperiotRoutes: Routes = [
   {
     path: 'login',
     redirectTo: '/auth/login',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: 'project-wizard',
