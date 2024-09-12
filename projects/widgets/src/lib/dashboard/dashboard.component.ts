@@ -446,7 +446,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private showDashboard() {
-    console.log('DeviceId/AreaId/ProjectId/SignalIsOn: ', this.hDeviceId, this.areaId, this.idProjectSelected, this.signalIsOn);
+    this.logger.debug('DeviceId/AreaId/ProjectId/SignalIsOn: ', this.hDeviceId, this.areaId, this.idProjectSelected, this.signalIsOn);
     if (!this.signalIsOn) {
       this.pageStatus = PageStatus.Loading;
       this.getOfflineDashboard();
@@ -466,7 +466,6 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private getOfflineDashboard() {
     const responseHandler = (res: Dashboard[]) => {
-      console.log('getOfflineDashboard', res);
       this.currentDashboard = res[0];
       this.currentDashboardId = this.currentDashboard?.id;
       this.widgetLayoutReady = false;
@@ -519,7 +518,6 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         .pipe(takeUntil(this.ngUnsubscribe))
         .subscribe(responseHandler, errorHandler);
     } else if (this.showHDevice) {
-      console.log('getRealtimeDashboardFromHDevice', this.hDeviceId, this.showHDevice);
       this.dashboardConfigService.getRealtimeDashboardFromHDevice(this.hDeviceId)
         .pipe(takeUntil(this.ngUnsubscribe))
         .subscribe(responseHandler, errorHandler);

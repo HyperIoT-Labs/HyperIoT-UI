@@ -271,9 +271,7 @@ export class PacketSelectComponent implements OnInit, OnChanges {
                 value: x.field.id,
                 label: x.label
               }));
-              console.log('packet fields: ', packet.fields, this.widget.config.packetFields);
               Object.entries(this.widget.config.packetFields).forEach((v,k) => {
-                console.log('values field: ', k, v);
                 if (!this.fieldRules[v[0]]) {
                   this.fieldRules[v[0]] = {type: 'expression', expression: ''};
                 }
@@ -383,16 +381,13 @@ export class PacketSelectComponent implements OnInit, OnChanges {
     Object.entries(this.fieldRules).forEach((v,k) => {
       if (!this.selectedFields.find(f => f.id === +v[0])) {
         delete this.fieldRules[+v[0]];
-        console.log('delete field: ', k, v);
       }
     });
-    console.log('field rules: ', this.fieldRules);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.hDeviceId) {
       this.hDeviceId = changes.hDeviceId.currentValue;
-      console.log('hDeviceId: ', this.hDeviceId);
     }
   }
 }

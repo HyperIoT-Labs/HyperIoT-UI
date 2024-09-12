@@ -49,6 +49,7 @@ export class DashboardEventService {
   public extractDataFromUrl(url: string|undefined = undefined): extractDataFromUrl {
     let splitUrl: string[] = [];
     // check if the url is provided or not, if not provided use the previous url
+    // url example: /areas/1/2
     if (url) {
       splitUrl = url.split('/') || [];
     } else {
