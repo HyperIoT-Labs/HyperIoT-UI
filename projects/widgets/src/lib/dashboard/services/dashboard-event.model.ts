@@ -11,4 +11,10 @@ export namespace DashboardEvent {
     STOP = "stop",
     RUN = "run",
   }
+
+  // Model for extractDataFromUrl function in DashboardEventService
+  export interface ExtractDataFromUrl {
+    type: string;
+    id: string;
+  }
 }

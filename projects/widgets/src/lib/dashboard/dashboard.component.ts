@@ -28,6 +28,8 @@ import { DashboardViewComponent } from './dashboard-view/dashboard-view.componen
 import { DashboardPreset, DashboardPresetModel } from './model/dashboard.model';
 import { DashboardEventService } from './services/dashboard-event.service';
 import { DashboardEvent } from './services/dashboard-event.model';
+import extractDataFromUrl = DashboardEvent.ExtractDataFromUrl;
+import ExtractDataFromUrl = DashboardEvent.ExtractDataFromUrl;
 
 enum PageStatus {
   Loading = 0,
@@ -112,6 +114,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   selectedHDeviceId: number;
   currentDevice: HDevice;
   currentDeviceTooltip: string;
+  deviceAreaId: number;
 
   @Input() debug = false;
 
@@ -213,6 +216,12 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     } else if (this.showHDevice) {
       this.idProjectSelected = +this.activatedRoute.snapshot.params.projectId;
+      // extract data from previous url
+      const  prevUrlParameterData: ExtractDataFromUrl = this.dashboardEvent.extractDataFromUrl();
+      /// if type is area, then set deviceAreaId, this is used to show the button to back to the area
+      if (prevUrlParameterData && prevUrlParameterData.type === 'area') {
+        this.deviceAreaId = +prevUrlParameterData.id;
+      }
       // load area realtime Dashboard
       if (!this.hDeviceId) {
         this.hDeviceId = +this.activatedRoute.snapshot.params.hDeviceId;
@@ -237,7 +246,6 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
       this.getProjectList();
     }
     this.applyPreset();
-
   }
 
   ngAfterViewInit(): void {
