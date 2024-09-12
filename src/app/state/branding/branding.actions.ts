@@ -16,13 +16,15 @@ const updateColorSchema = createAction(
     props<{ brandingTheme: BrandingTheme }>()
 );
 const reset = createAction('[Branding] Reset');
+const unset = createAction('[Branding] Unset after logout');
 
 export const BrandingActions = {
     load,
     updateAll,
     updateLogo,
     updateColorSchema,
-    reset
+    reset,
+    unset
 };
 
 const loadSuccess = createAction('[Branding API] Branding Load Success', props<{ payload: BrandingState }>());
