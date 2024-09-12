@@ -1,11 +1,21 @@
-import { Component, OnInit, Input, EventEmitter, Output, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  EventEmitter,
+  Output,
+  ViewEncapsulation,
+  OnChanges,
+  SimpleChanges
+} from '@angular/core';
 import {ControlContainer, NgForm} from '@angular/forms';
 import { SelectOption, SelectOptionGroup, UnitConversionService } from 'components';
 import { LoggerService, Logger, HPacketFieldsHandlerService } from 'core';
-import { HPacket, HPacketField, HpacketsService, AreasService, AreaDevice, HDevice } from 'core';
+import { HPacket, HPacketField, HpacketsService, AreasService, AreaDevice, HDevice, HdevicesService } from 'core';
 import { mimeTypeList } from './MIMETypes';
 import { FieldAliases, FieldFileMimeTypes, FieldTypes, FieldUnitConversion, FieldValuesMapList } from '../../../base/base-widget/model/widget.model';
 import {DataSimulatorSettings} from "../data-simulator-settings/data-simulator.models";
+import {$localize} from "@angular/localize/init";
 
 @Component({
   selector: 'hyperiot-packet-select',
@@ -14,7 +24,7 @@ import {DataSimulatorSettings} from "../data-simulator-settings/data-simulator.m
   encapsulation: ViewEncapsulation.None,
   viewProviders: [{ provide: ControlContainer, useExisting: NgForm }]
 })
-export class PacketSelectComponent implements OnInit {
+export class PacketSelectComponent implements OnInit, OnChanges {
   @Input() widget;
   @Input()
   selectedPacket: HPacket = null;
@@ -38,6 +48,7 @@ export class PacketSelectComponent implements OnInit {
   multiPacketSelect = false;
   @Input()
   areaId: number;
+  @Input() hDeviceId: number;
 
   fieldAliases: FieldAliases;
   fieldTypes: FieldTypes;
@@ -74,6 +85,7 @@ export class PacketSelectComponent implements OnInit {
     private packetService: HpacketsService,
     public settingsForm: NgForm,
     private areaService: AreasService,
+    private hDeviceService: HdevicesService,
     private unitConversionService: UnitConversionService,
     private loggerService: LoggerService,
     private hPacketFieldsHandlerService: HPacketFieldsHandlerService,
@@ -89,6 +101,10 @@ export class PacketSelectComponent implements OnInit {
       this.areaService.getAreaDeviceList(this.areaId).subscribe((areaDevices: AreaDevice[]) => {
         const devices = areaDevices.map((ad: AreaDevice) => ad.device);
         this.loadPackets(devices);
+      });
+    } else if (this.hDeviceId) {
+      this.hDeviceService.findHDevice(this.hDeviceId).subscribe((hDevice: HDevice) => {
+        this.loadPackets([hDevice]);
       });
     } else {
       this.loadPackets();
@@ -136,7 +152,7 @@ export class PacketSelectComponent implements OnInit {
 
   onPacketFieldChange($event) {
     this.selectedFields = [];
- 
+
     // multiple select
     const nullIndex = this.selectedFields.indexOf(null);
     if (nullIndex >= 0) {
@@ -147,7 +163,7 @@ export class PacketSelectComponent implements OnInit {
       // this.selectedFields.push(this.selectedPacket.fields.find(p => p.name === s))
       this.selectedFields.push(this.hPacketFieldsHandlerService.findFieldFromPacketFieldsTree(this.selectedPacket, s));
     })
-   
+
     // units conversion
     this.syncUnitsConversion();
     // field custom conversion
@@ -161,7 +177,7 @@ export class PacketSelectComponent implements OnInit {
       this.widget.config.packetId = this.selectedPacket.id;
       this.widget.config.timestampFieldName = this.selectedPacket.timestampField;
       this.widget.config.packetFields = {};
-      
+
       this.selectedFields.map((pf) => {
         this.widget.config.packetFields[pf.id] = this.hPacketFieldsHandlerService.getStringifiedSequenceFromPacket(this.selectedPacket, pf.id)
       });
@@ -176,11 +192,11 @@ export class PacketSelectComponent implements OnInit {
         field: this.dynamicLabelSelectedField,
         fieldOptions: this.dynamicLabelFields
       }
-      
+
       this.widget.config.fieldCustomConversions = this.fieldRules;
       this.widget.config.fitToTimeline = this.fitToTimelineCheckbox;
 
-    
+
       this.selectedFields.forEach(pf => {
         const field = this.hPacketFieldsHandlerService.findFieldFromPacketFieldsTree(this.selectedPacket, pf.id);
         this.widget.config.fieldTypes[field.id] = field.type;
@@ -255,9 +271,7 @@ export class PacketSelectComponent implements OnInit {
                 value: x.field.id,
                 label: x.label
               }));
-              console.log('packet fields: ', packet.fields, this.widget.config.packetFields);
               Object.entries(this.widget.config.packetFields).forEach((v,k) => {
-                console.log('values field: ', k, v);
                 if (!this.fieldRules[v[0]]) {
                   this.fieldRules[v[0]] = {type: 'expression', expression: ''};
                 }
@@ -367,9 +381,13 @@ export class PacketSelectComponent implements OnInit {
     Object.entries(this.fieldRules).forEach((v,k) => {
       if (!this.selectedFields.find(f => f.id === +v[0])) {
         delete this.fieldRules[+v[0]];
-        console.log('delete field: ', k, v);
       }
     });
-    console.log('field rules: ', this.fieldRules);
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.hDeviceId) {
+      this.hDeviceId = changes.hDeviceId.currentValue;
+    }
   }
 }
