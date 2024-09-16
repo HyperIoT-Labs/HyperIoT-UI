@@ -200,4 +200,6 @@
     </ng-container>
 
 </div>
-<mat-spinner *ngIf="pageStatus === 0" strokeWidth="5" diameter="42"></mat-spinner>
+<div class="loading-overlay">
+    <mat-spinner *ngIf="pageStatus === 0" strokeWidth="8" diameter="100"></mat-spinner>
+</div>
