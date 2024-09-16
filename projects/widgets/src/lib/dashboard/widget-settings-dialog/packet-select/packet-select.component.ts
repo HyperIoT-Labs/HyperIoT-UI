@@ -16,6 +16,7 @@ import { mimeTypeList } from './MIMETypes';
 import { FieldAliases, FieldFileMimeTypes, FieldTypes, FieldUnitConversion, FieldValuesMapList } from '../../../base/base-widget/model/widget.model';
 import {DataSimulatorSettings} from "../data-simulator-settings/data-simulator.models";
 import {$localize} from "@angular/localize/init";
+import { PageStatus } from './models/page-status';
 
 @Component({
   selector: 'hyperiot-packet-select',
@@ -29,6 +30,9 @@ export class PacketSelectComponent implements OnInit, OnChanges {
   @Input()
   selectedPacket: HPacket = null;
   selectedPacketOption: number = null;
+  
+  /** Represents the current page status (e.g., LOADING, READY, ERROR). */
+  pageStatus: PageStatus = PageStatus.Loading;
 
   dynamicLabelSelectedPacket: { [id: number]: HPacket } = {};
 
@@ -258,8 +262,10 @@ export class PacketSelectComponent implements OnInit, OnChanges {
         const w = this.widget;
         // load curent packet data and set selected fields
         if (w.config && w.config.packetId) {
+          this.pageStatus = PageStatus.Loading;
           this.packetService.findHPacket(w.config.packetId)
             .subscribe((packet: HPacket) => {
+              this.pageStatus = PageStatus.Ready;
               this.selectedPacket = packet;
               this.selectedPacketOption = this.selectedPacket.id;
               this.dynamicLabelSelectedPacket = this.widget.config.dynamicLabels.packet;

@@ -1,5 +1,5 @@
-<div id="packet-select-component" class="padding-6 d-flex flex-row justify-content-stretch">
 
+<div *ngIf="pageStatus === 1">
     <ng-container *ngIf="widget.config && !(widget.config.packetId && !selectedPacket)">
 
         <div id="packet-selection" class="d-flex flex-column">
@@ -200,3 +200,4 @@
     </ng-container>
 
 </div>
+<mat-spinner *ngIf="pageStatus === 0" strokeWidth="5" diameter="42"></mat-spinner>
