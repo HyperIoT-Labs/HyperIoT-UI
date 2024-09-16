@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 
 import { PacketSelectComponent } from '../packet-select/packet-select.component';
 import {ActivatedRoute} from "@angular/router";
+import { Rule, RulesService } from 'core';
 
 @Component({
     selector: 'hyperiot-time-chart-settings',
@@ -19,7 +20,13 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
     @Input() widget;
     @Input() areaId;
     @Input() hDeviceId;
+    @Input() checkbox: boolean;
     selectedFields = [];
+
+    thresholds: any = [];
+    thresholdActive: boolean = false;
+    selectedThresholdsIds: number[] = [];
+
     private defaultConfig = {
         timeAxisRange: 10,
         //no limits in data points
@@ -44,7 +51,7 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
         }
     };
 
-    constructor(public settingsForm: NgForm, private activatedRoute: ActivatedRoute) { }
+    constructor(public settingsForm: NgForm, private activatedRoute: ActivatedRoute, private ruleService: RulesService) { }
 
     ngOnInit() {
         if (this.widget.config == null) {
@@ -53,6 +60,10 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
 
         if (this.widget.config.seriesConfig == null || this.widget.config.seriesConfig.length === 0) {
             Object.assign(this.widget.config, this.defaultConfig);
+        }
+        if (this.widget.config.threshold) {
+            this.thresholdActive = this.widget.config.threshold.thresholdActive;
+            this.selectedThresholdsIds = this.widget.config.threshold.thresholdsIds;
         }
         this.subscription = this.modalApply.subscribe((event) => {
             if (event === 'apply') {
@@ -71,6 +82,33 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
     }
 
     apply() {
+        this.widget.config.threshold = {
+            thresholdActive: this.thresholdActive,
+            thresholds: this.selectedThresholdsIds
+        }
         this.packetSelect.apply();
+    }
+
+    isChecked() {
+        if (this.widget.config.threshold && this.widget.config.threshold.thresholdActive === this.thresholdActive) return
+        else {
+            this.widget.config.threshold = {
+                thresholdActive: this.thresholdActive,
+                thresholds: this.selectedThresholdsIds
+            }
+        }
+        // TODO: retrieve alarms, filter and add to alarmsArray
+        if (!this.widget.config.packetId) return
+        this.ruleService.findAllRuleByPacketId(this.widget.config.packetId).subscribe({
+            next: (rules) => {
+                this.thresholds = rules.filter((rule) => {
+                    debugger
+                    return rule.type === Rule.TypeEnum.ALARMEVENT;
+                });
+            },
+            error: (err) => {
+                console.error('Error retrieving thresholds', err);
+            }
+        })
     }
 }

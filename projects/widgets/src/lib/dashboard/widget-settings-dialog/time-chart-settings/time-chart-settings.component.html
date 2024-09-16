@@ -18,3 +18,14 @@
 <div class="padding-6 d-flex flex-column justify-content-stretch">
     <!-- not yet implemented -->
 </div>
+<div *ngIf="checkbox">
+    <mat-checkbox color="primary" [(ngModel)]="thresholdActive" [ngModelOptions]="{standalone: true}" [checked]="isChecked()">threshold</mat-checkbox>
+    <div *ngIf="thresholdActive">
+        <mat-label>Test</mat-label>
+        <mat-select multiple [ngModelOptions]="{standalone: true}" [(ngModel)]="selectedThresholdsIds">
+            <mat-option *ngFor="let rule of thresholds" [value]="rule.id">
+                {{rule.name}}
+            </mat-option>
+        </mat-select>
+    </div>
+</div>

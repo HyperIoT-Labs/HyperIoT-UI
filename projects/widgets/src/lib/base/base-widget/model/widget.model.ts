@@ -52,6 +52,10 @@ export interface ConfigModel {
     fieldValuesMapList?: FieldValuesMapList;
     dynamicLabels?: DynamicLabels;
     fitToTimeline?: boolean;
+    threshold?: {
+        thresholdActive: boolean;
+        thresholdsIds: number[];
+    }
 }
 
 export interface FieldUnitConversion {
