@@ -18,8 +18,8 @@
 <div class="padding-6 d-flex flex-column justify-content-stretch">
     <!-- not yet implemented -->
 </div>
-<div *ngIf="checkbox">
-    <mat-checkbox color="primary" [(ngModel)]="thresholdActive" [ngModelOptions]="{standalone: true}" [checked]="isChecked()">threshold</mat-checkbox>
+<div *ngIf="checkbox && (selectedFields.length > 0 || widget.config.packetId)">
+    <mat-checkbox color="primary" [(ngModel)]="thresholdActive" [ngModelOptions]="{standalone: true}" (ngModelChange)="isChecked()">threshold</mat-checkbox>
     <div *ngIf="thresholdActive">
         <mat-label>Test</mat-label>
         <mat-select multiple [ngModelOptions]="{standalone: true}" [(ngModel)]="selectedThresholdsIds">

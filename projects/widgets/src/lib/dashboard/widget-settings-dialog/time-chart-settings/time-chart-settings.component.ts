@@ -22,6 +22,7 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
     @Input() hDeviceId;
     @Input() checkbox: boolean;
     selectedFields = [];
+    selectedPackets = [];
 
     thresholds: any = [];
     thresholdActive: boolean = false;
@@ -63,7 +64,12 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
         }
         if (this.widget.config.threshold) {
             this.thresholdActive = this.widget.config.threshold.thresholdActive;
-            this.selectedThresholdsIds = this.widget.config.threshold.thresholdsIds;
+            this.selectedThresholdsIds = this.widget.config.threshold.thresholdsIds ? this.widget.config.threshold.thresholdsIds : [];
+        } else {
+            this.widget.config.threshold = {
+                thresholdActive: this.thresholdActive,
+                thresholdsIds: this.selectedThresholdsIds
+            }
         }
         this.subscription = this.modalApply.subscribe((event) => {
             if (event === 'apply') {
@@ -79,6 +85,7 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
 
     onSelectedFieldsChange(fields) {
         this.selectedFields = fields;
+        this.selectedPackets = [...new Set(this.selectedFields.map(field => field.packetId))];
     }
 
     apply() {
@@ -90,20 +97,39 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
     }
 
     isChecked() {
-        if (this.widget.config.threshold && this.widget.config.threshold.thresholdActive === this.thresholdActive) return
-        else {
-            this.widget.config.threshold = {
-                thresholdActive: this.thresholdActive,
-                thresholds: this.selectedThresholdsIds
-            }
+        this.widget.config.threshold = {
+            thresholdActive: this.thresholdActive,
+            thresholdsIds: this.selectedThresholdsIds
         }
-        // TODO: retrieve alarms, filter and add to alarmsArray
-        if (!this.widget.config.packetId) return
-        this.ruleService.findAllRuleByPacketId(this.widget.config.packetId).subscribe({
+        if (!this.thresholdActive) {
+            this.widget.config.threshold.thresholdsIds = [];
+            return;
+        }
+
+        this.ruleService.findAllRuleByProjectId(this.widget.projectId).subscribe({
             next: (rules) => {
                 this.thresholds = rules.filter((rule) => {
-                    debugger
-                    return rule.type === Rule.TypeEnum.ALARMEVENT;
+                    let ruleDefinition = rule.ruleDefinition;
+                    if (rule.type !== Rule.TypeEnum.ALARMEVENT) return false;
+                    ruleDefinition = ruleDefinition.replace(/"/g, '').trim();
+                    const ruleArray: string[] = ruleDefinition.match(/[^AND|OR]+(AND|OR)?/g).map(x => x.trim());
+
+                    for (let k = 0; k < ruleArray.length; k++) {
+                        const tempSplitted: string[] = ruleArray[k].split(' ').filter(i => i);
+                        const packetFieldPart = tempSplitted.shift();
+                        const splitted: string[] = packetFieldPart.split('.');
+                        const packets: number[] = this.widget.config.packetId ? this.widget.config.packetId : [...new Set(this.selectedFields.map(field => parseInt(field.packetId)))];
+                        const fields: number[] = Object.keys(this.widget.config.packetFields).length > 0 
+                            ? [...new Set(Object.keys(this.widget.config.packetFields))].map(field => parseInt(field))
+                            : [...new Set(this.selectedFields.map(field => parseInt(field.id)))];
+                        if (splitted.length === 1) {
+                            return typeof packets === 'number' ? packets === parseInt(splitted[0]) : packets.includes(parseInt(splitted[0]));
+                        }
+                        else if (splitted.length === 2) {
+                            return (typeof packets === 'number' ? packets === parseInt(splitted[0]) : packets.includes(parseInt(splitted[0]))) && fields.includes(parseInt(splitted[1]));
+                        }
+                    }
+                    return true;
                 });
             },
             error: (err) => {
