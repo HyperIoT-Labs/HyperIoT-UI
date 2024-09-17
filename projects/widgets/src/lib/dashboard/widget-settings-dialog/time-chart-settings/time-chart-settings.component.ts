@@ -65,6 +65,7 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
         if (this.widget.config.threshold) {
             this.thresholdActive = this.widget.config.threshold.thresholdActive;
             this.selectedThresholdsIds = this.widget.config.threshold.thresholdsIds ? this.widget.config.threshold.thresholdsIds : [];
+            this.isChecked();
         } else {
             this.widget.config.threshold = {
                 thresholdActive: this.thresholdActive,
@@ -91,7 +92,7 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
     apply() {
         this.widget.config.threshold = {
             thresholdActive: this.thresholdActive,
-            thresholds: this.selectedThresholdsIds
+            thresholdsIds: this.selectedThresholdsIds
         }
         this.packetSelect.apply();
     }
@@ -113,25 +114,32 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
                     if (rule.type !== Rule.TypeEnum.ALARMEVENT) return false;
                     ruleDefinition = ruleDefinition.replace(/"/g, '').trim();
                     const ruleArray: string[] = ruleDefinition.match(/[^AND|OR]+(AND|OR)?/g).map(x => x.trim());
-
+                    const packets: number[] = this.widget.config.packetId 
+                        ? this.widget.config.packetId 
+                        : [...new Set(this.selectedFields.map(field => parseInt(field.packetId)))];
+            
+                    const fields: number[] = Object.keys(this.widget.config.packetFields).length > 0 
+                        ? [...new Set(Object.keys(this.widget.config.packetFields))].map(field => parseInt(field))
+                        : [...new Set(this.selectedFields.map(field => parseInt(field.id)))];
+            
                     for (let k = 0; k < ruleArray.length; k++) {
                         const tempSplitted: string[] = ruleArray[k].split(' ').filter(i => i);
                         const packetFieldPart = tempSplitted.shift();
                         const splitted: string[] = packetFieldPart.split('.');
-                        const packets: number[] = this.widget.config.packetId ? this.widget.config.packetId : [...new Set(this.selectedFields.map(field => parseInt(field.packetId)))];
-                        const fields: number[] = Object.keys(this.widget.config.packetFields).length > 0 
-                            ? [...new Set(Object.keys(this.widget.config.packetFields))].map(field => parseInt(field))
-                            : [...new Set(this.selectedFields.map(field => parseInt(field.id)))];
+            
                         if (splitted.length === 1) {
-                            return typeof packets === 'number' ? packets === parseInt(splitted[0]) : packets.includes(parseInt(splitted[0]));
-                        }
-                        else if (splitted.length === 2) {
-                            return (typeof packets === 'number' ? packets === parseInt(splitted[0]) : packets.includes(parseInt(splitted[0]))) && fields.includes(parseInt(splitted[1]));
+                            if (!(packets && (typeof packets === 'number' ? packets === parseInt(splitted[0]) : packets.includes(parseInt(splitted[0]))))) {
+                                return false;
+                            }
+                        } else if (splitted.length === 2) {
+                            if (!(packets && (typeof packets === 'number' ? packets === parseInt(splitted[0]) : packets.includes(parseInt(splitted[0]))) && fields.includes(parseInt(splitted[1])))) {
+                                return false;
+                            }
                         }
                     }
                     return true;
                 });
-            },
+            },            
             error: (err) => {
                 console.error('Error retrieving thresholds', err);
             }
