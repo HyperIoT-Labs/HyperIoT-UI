@@ -285,13 +285,9 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
   }
   setTimeChartLayout() {
     this.logger.debug("setTimeChartLayout");
-    
-    // Iterate over chartData to set up the time series data
     this.chartData.forEach((timeSeries, i) => {
       const fieldName = timeSeries.name;
       const a = i + 1;
-      
-      // Set up the y-axis configuration for each time series
       if (a === 1) {
         this.graph.layout[`yaxis`] = {
           title: fieldName,
@@ -307,8 +303,6 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
           position: 1 - i * this.sideMarginGap,
         };
       }
-  
-      // Add time series data (empty x, y values for now)
       const tsd = {
         name: fieldName,
         x: [],
@@ -323,7 +317,6 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
     // Add the threshold line(s)
     const thresholdValue1 = 50;
     const thresholdValue2 = 80;
-  
     // Use layout.shapes to add horizontal lines at the threshold values
     this.graph.layout.shapes = [
       {

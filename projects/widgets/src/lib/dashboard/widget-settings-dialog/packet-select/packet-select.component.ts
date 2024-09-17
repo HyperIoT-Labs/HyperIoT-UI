@@ -42,6 +42,8 @@ export class PacketSelectComponent implements OnInit, OnChanges {
   dynamicLabelFieldsOption: SelectOption[] = [];
   @Output()
   selectedFieldsChange = new EventEmitter();
+  @Output()
+  selectedPacketChange = new EventEmitter();
   projectPackets: HPacket[] = [];
   groupedPacketOptions: SelectOptionGroup[] = [];
   @Input()
@@ -127,6 +129,7 @@ export class PacketSelectComponent implements OnInit, OnChanges {
     this.selectedFields = [];
     this.selectedFieldsOptions = [];
     this.selectedFieldsChange.emit(this.selectedFields);
+    this.selectedPacketChange.emit(this.selectedPacket);
   }
 
   onDynamicLabelPacketSelect(packetOption, fieldId) {

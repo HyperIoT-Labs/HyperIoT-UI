@@ -86,7 +86,11 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
 
     onSelectedFieldsChange(fields) {
         this.selectedFields = fields;
-        this.selectedPackets = [...new Set(this.selectedFields.map(field => field.packetId))];
+        this.isChecked();
+    }
+
+    onSelectedPacketChange(packet) {
+        this.selectedPackets = [packet.id];
     }
 
     apply() {
@@ -109,6 +113,7 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
 
         this.ruleService.findAllRuleByProjectId(this.widget.projectId).subscribe({
             next: (rules) => {
+                if (this.selectedFields.length === 0 && !this.widget.config.packetId) return
                 this.thresholds = rules.filter((rule) => {
                     let ruleDefinition = rule.ruleDefinition;
                     if (rule.type !== Rule.TypeEnum.ALARMEVENT) return false;
@@ -116,9 +121,10 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
                     const ruleArray: string[] = ruleDefinition.match(/[^AND|OR]+(AND|OR)?/g).map(x => x.trim());
                     const packets: number[] = this.widget.config.packetId 
                         ? this.widget.config.packetId 
-                        : [...new Set(this.selectedFields.map(field => parseInt(field.packetId)))];
+                        : this.selectedPackets;
             
-                    const fields: number[] = Object.keys(this.widget.config.packetFields).length > 0 
+                    const fields: number[] = this.widget.config.packetFields 
+                        && Object.keys(this.widget.config.packetFields).length > 0 
                         ? [...new Set(Object.keys(this.widget.config.packetFields))].map(field => parseInt(field))
                         : [...new Set(this.selectedFields.map(field => parseInt(field.id)))];
             
