@@ -22,7 +22,7 @@ import {
 } from "rxjs";
 
 import { BaseChartComponent } from "../../base/base-chart/base-chart.component";
-import {ConfigButtonWidget, WidgetAction} from "../../base/base-widget/model/widget.model";
+import { ConfigButtonWidget, WidgetAction } from "../../base/base-widget/model/widget.model";
 import { TimeSeries } from "../../data/time-series";
 import { ServiceType } from "../../service/model/service-type";
 import { DashboardEventService } from "../../dashboard/services/dashboard-event.service";
@@ -42,14 +42,14 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
   sideMarginGap = 0.12;
   totalLength = 0;
   fieldsName: any[] = [];
-   get initToolbarConfig() :ConfigButtonWidget  {
-     return {
-       showClose: true,
-       showSettings: true,
-       showPlay: this.serviceType === this.serviceTypeList.ONLINE,
-       showRefresh: false,
-       showTable: false
-     }
+  get initToolbarConfig(): ConfigButtonWidget {
+    return {
+      showClose: true,
+      showSettings: true,
+      showPlay: this.serviceType === this.serviceTypeList.ONLINE,
+      showRefresh: false,
+      showTable: false
+    }
   }
 
   dataChannel: DataChannel;
@@ -283,17 +283,19 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
       this.updateDataRequest();
     }
   }
-
   setTimeChartLayout() {
     this.logger.debug("setTimeChartLayout");
+    
+    // Iterate over chartData to set up the time series data
     this.chartData.forEach((timeSeries, i) => {
       const fieldName = timeSeries.name;
       const a = i + 1;
+      
+      // Set up the y-axis configuration for each time series
       if (a === 1) {
         this.graph.layout[`yaxis`] = {
           title: fieldName,
           domain: [0.15, 0.85],
-          // showline: true
         };
       } else {
         this.graph.layout[`yaxis${a}`] = {
@@ -303,10 +305,10 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
           overlaying: "y",
           side: "right",
           position: 1 - i * this.sideMarginGap,
-          // showline: true,
         };
       }
-
+  
+      // Add time series data (empty x, y values for now)
       const tsd = {
         name: fieldName,
         x: [],
@@ -317,6 +319,58 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
       Object.assign(tsd, this.defaultSeriesConfig);
       this.graph.data.push(tsd);
     });
+  
+    // Add the threshold line(s)
+    const thresholdValue1 = 50;
+    const thresholdValue2 = 80;
+  
+    // Use layout.shapes to add horizontal lines at the threshold values
+    this.graph.layout.shapes = [
+      {
+        type: "line",
+        xref: "paper",
+        x0: 0,
+        x1: 1,
+        yref: "y",
+        y0: thresholdValue1,
+        y1: thresholdValue1,
+        line: {
+          color: "red",
+          width: 2,
+          dash: "dashdot",
+        },
+      },
+      {
+        type: "line",
+        xref: "paper",
+        x0: 0,
+        x1: 1,
+        yref: "y",
+        y0: thresholdValue2,
+        y1: thresholdValue2,
+        line: {
+          color: "red",
+          width: 2,
+          dash: "dashdot",
+        },
+      },
+      {
+        type: "rect",
+        xref: "paper",
+        x0: 0,
+        x1: 1,
+        yref: "y",
+        y0: thresholdValue1,
+        y1: thresholdValue2,
+        fillcolor: "rgba(255, 0, 0, 0.2)",
+        opacity: 0.5,
+        line: {
+          width: 0,
+        },
+      }
+    ];
+  
+    // Set up legend and other layout settings
     this.graph.layout.showlegend = true;
     this.graph.layout.legend = {
       orientation: "h",
@@ -331,7 +385,7 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
       bgcolor: "#FFFFFF85",
       borderwidth: 0,
     };
-
+  
     this.graph.layout.font = {
       size: 9,
     };
@@ -352,6 +406,7 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
       range: [],
     };
   }
+  
 
   setTimeSeries(): void {
     this.logger.debug("setTimeSeries");
@@ -362,6 +417,7 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
       );
     });
   }
+
   async renderBufferedData() {
     this.logger.debug("renderBufferedData");
     const Plotly = await this.plotly.getPlotly();
