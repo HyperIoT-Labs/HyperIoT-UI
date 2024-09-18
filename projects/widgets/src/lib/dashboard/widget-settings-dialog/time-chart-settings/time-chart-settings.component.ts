@@ -4,7 +4,7 @@ import { ControlContainer, NgForm } from '@angular/forms';
 import { Observable } from 'rxjs';
 
 import { PacketSelectComponent } from '../packet-select/packet-select.component';
-import {ActivatedRoute} from "@angular/router";
+import { ActivatedRoute } from "@angular/router";
 import { Rule, RulesService } from 'core';
 
 @Component({
@@ -114,41 +114,68 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
         this.ruleService.findAllRuleByProjectId(this.widget.projectId).subscribe({
             next: (rules) => {
                 if (this.selectedFields.length === 0 && !this.widget.config.packetId) return
-                this.thresholds = rules.filter((rule) => {
-                    let ruleDefinition = rule.ruleDefinition;
-                    if (rule.type !== Rule.TypeEnum.ALARMEVENT) return false;
-                    ruleDefinition = ruleDefinition.replace(/"/g, '').trim();
-                    const ruleArray: string[] = ruleDefinition.match(/[^AND|OR]+(AND|OR)?/g).map(x => x.trim());
-                    const packets: number[] = this.widget.config.packetId 
-                        ? this.widget.config.packetId 
-                        : this.selectedPackets;
-            
-                    const fields: number[] = this.widget.config.packetFields 
-                        && Object.keys(this.widget.config.packetFields).length > 0 
-                        ? [...new Set(Object.keys(this.widget.config.packetFields))].map(field => parseInt(field))
-                        : [...new Set(this.selectedFields.map(field => parseInt(field.id)))];
-            
-                    for (let k = 0; k < ruleArray.length; k++) {
-                        const tempSplitted: string[] = ruleArray[k].split(' ').filter(i => i);
-                        const packetFieldPart = tempSplitted.shift();
-                        const splitted: string[] = packetFieldPart.split('.');
-            
-                        if (splitted.length === 1) {
-                            if (!(packets && (typeof packets === 'number' ? packets === parseInt(splitted[0]) : packets.includes(parseInt(splitted[0]))))) {
-                                return false;
-                            }
-                        } else if (splitted.length === 2) {
-                            if (!(packets && (typeof packets === 'number' ? packets === parseInt(splitted[0]) : packets.includes(parseInt(splitted[0]))) && fields.includes(parseInt(splitted[1])))) {
-                                return false;
+                this.thresholds = rules
+                    .filter((rule) => {
+                        let ruleDefinition = rule.ruleDefinition;
+                        if (rule.type !== Rule.TypeEnum.ALARMEVENT) return false;
+
+                        ruleDefinition = ruleDefinition.replace(/"/g, '').trim();
+                        const ruleArray: string[] = ruleDefinition.match(/[^AND|OR]+(AND|OR)?/g).map(x => x.trim());
+                        const packets: number[] = this.widget.config.packetId
+                            ? this.widget.config.packetId
+                            : this.selectedPackets;
+                        const fields: number[] = this.widget.config.packetFields && Object.keys(this.widget.config.packetFields).length > 0
+                            ? [...new Set(Object.keys(this.widget.config.packetFields))].map(field => parseInt(field))
+                            : [...new Set(this.selectedFields.map(field => parseInt(field.id)))];
+
+                        for (let k = 0; k < ruleArray.length; k++) {
+                            const tempSplitted: string[] = ruleArray[k].split(' ').filter(i => i);
+                            const packetFieldPart = tempSplitted.shift();
+                            const splitted: string[] = packetFieldPart.split('.');
+
+                            if (this.getOperator(ruleArray[k]) === "=") return false;
+
+                            if (splitted.length === 1) return false;
+                            else if (splitted.length === 2) {
+                                if (!(packets && (typeof packets === 'number' ? packets === parseInt(splitted[0]) : packets.includes(parseInt(splitted[0]))) && fields.includes(parseInt(splitted[1])))) {
+                                    return false;
+                                }
                             }
                         }
-                    }
-                    return true;
-                });
-            },            
+                        return true;
+                    })
+                    .reduce((groupedRules, rule) => {
+                        const alarmName = rule.actions[0].alarmName;
+                        if (!groupedRules[alarmName]) {
+                            groupedRules[alarmName] = [];
+                        }
+                        groupedRules[alarmName].push(rule);
+                        return groupedRules;
+                    }, {});
+            },
             error: (err) => {
                 console.error('Error retrieving thresholds', err);
             }
         })
+    }
+
+    /**
+     * Extract the operator from the rule part.
+     * @param rulePart - A portion of the ruleDefinition to analyze.
+     */
+    getOperator(rulePart: string): string {
+        const tempSplitted = rulePart.split(' ').filter(i => i);
+        return tempSplitted.length > 1 ? tempSplitted[1].toLowerCase() : "";
+    }
+
+    getSelectedNames(): string {
+        debugger
+        if (Object.keys(this.thresholds).length === 0) return;
+        return this.selectedThresholdsIds
+            .map(id => {
+                const threshold = this.thresholds[Object.keys(this.thresholds).find(key => this.thresholds[key].find(rule => rule.id === id))];
+                return threshold.find(th => th.id === id).name
+            })
+            .join(', ');
     }
 }
