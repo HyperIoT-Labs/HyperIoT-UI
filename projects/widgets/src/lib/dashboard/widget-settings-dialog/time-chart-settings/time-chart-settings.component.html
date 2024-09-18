@@ -20,13 +20,21 @@
     <!-- not yet implemented -->
 </div>
 <div *ngIf="checkbox && (selectedFields.length > 0 || widget.config.packetId)">
-    <mat-checkbox color="primary" [(ngModel)]="thresholdActive" [ngModelOptions]="{standalone: true}" (ngModelChange)="isChecked()">threshold</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="thresholdActive" [ngModelOptions]="{standalone: true}"
+        (ngModelChange)="isChecked()">threshold</mat-checkbox>
     <div *ngIf="thresholdActive">
         <mat-label>Test</mat-label>
-        <mat-select multiple [ngModelOptions]="{standalone: true}" [(ngModel)]="selectedThresholdsIds">
-            <mat-option *ngFor="let rule of thresholds" [value]="rule.id">
-                {{rule.name}}
-            </mat-option>
+        <mat-select multiple [ngModelOptions]="{ standalone: true }" [(ngModel)]="selectedThresholdsIds" disableRipple>
+            <mat-select-trigger>
+                {{ getSelectedNames() }}
+            </mat-select-trigger>
+            <mat-optgroup *ngFor="let group of thresholds | keyvalue" [label]="group.key">
+                <mat-option *ngFor="let rule of group.value" [value]="rule.id">
+                    <div>{{ rule.name }}</div>
+                    <div style="font-size: 12px; color: gray;">{{ rule.rulePrettyDefinition }}</div>
+                </mat-option>
+            </mat-optgroup>
         </mat-select>
     </div>
+
 </div>
