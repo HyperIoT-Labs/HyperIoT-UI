@@ -1845,6 +1845,9 @@
       <trans-unit id="HYT_back_to_area" datatype="html">
         <source>Back to area</source>
       </trans-unit>
+      <trans-unit id="HYT_select_threshold" datatype="html">
+        <source>Select threshold(s)</source>
+      </trans-unit>
     </body>
   </file>
 </xliff>

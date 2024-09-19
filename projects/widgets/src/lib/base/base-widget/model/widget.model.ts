@@ -54,8 +54,13 @@ export interface ConfigModel {
     fitToTimeline?: boolean;
     threshold?: {
         thresholdActive: boolean;
-        thresholdsIds?: number[];
+        thresholds?: Threshold[];
     }
+}
+
+export interface Threshold {
+    id: string;
+    color: string;
 }
 
 export interface FieldUnitConversion {

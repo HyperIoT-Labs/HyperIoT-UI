@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { PacketSelectComponent } from '../packet-select/packet-select.component';
 import { ActivatedRoute } from "@angular/router";
 import { Rule, RulesService } from 'core';
+import { Threshold } from '../../../base/base-widget/model/widget.model';
 
 @Component({
     selector: 'hyperiot-time-chart-settings',
@@ -25,8 +26,10 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
     selectedPackets = [];
 
     thresholds: any = [];
+    thresholdsIds: string[] = [];
     thresholdActive: boolean = false;
-    selectedThresholdsIds: number[] = [];
+    selectedThresholds: Threshold[] = [];
+    newThreshold: any = {};
 
     private defaultConfig = {
         timeAxisRange: 10,
@@ -64,12 +67,11 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
         }
         if (this.widget.config.threshold) {
             this.thresholdActive = this.widget.config.threshold.thresholdActive;
-            this.selectedThresholdsIds = this.widget.config.threshold.thresholdsIds ? this.widget.config.threshold.thresholdsIds : [];
+            this.selectedThresholds = this.widget.config.threshold.thresholds ? this.widget.config.threshold.thresholds : [];
             this.isChecked();
         } else {
             this.widget.config.threshold = {
-                thresholdActive: this.thresholdActive,
-                thresholdsIds: this.selectedThresholdsIds
+                thresholdActive: this.thresholdActive
             }
         }
         this.subscription = this.modalApply.subscribe((event) => {
@@ -96,21 +98,12 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
     apply() {
         this.widget.config.threshold = {
             thresholdActive: this.thresholdActive,
-            thresholdsIds: this.selectedThresholdsIds
+            thresholds: this.selectedThresholds
         }
         this.packetSelect.apply();
     }
 
     isChecked() {
-        this.widget.config.threshold = {
-            thresholdActive: this.thresholdActive,
-            thresholdsIds: this.selectedThresholdsIds
-        }
-        if (!this.thresholdActive) {
-            this.widget.config.threshold.thresholdsIds = [];
-            return;
-        }
-
         this.ruleService.findAllRuleByProjectId(this.widget.projectId).subscribe({
             next: (rules) => {
                 if (this.selectedFields.length === 0 && !this.widget.config.packetId) return
@@ -133,7 +126,7 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
                             const packetFieldPart = tempSplitted.shift();
                             const splitted: string[] = packetFieldPart.split('.');
 
-                            if (this.getOperator(ruleArray[k]) === "=") return false;
+                            if (this.getOperator(ruleArray[k]) === "=" || this.getOperator(ruleArray[k]) === "!=") return false;
 
                             if (splitted.length === 1) return false;
                             else if (splitted.length === 2) {
@@ -169,13 +162,62 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
     }
 
     getSelectedNames(): string {
-        debugger
         if (Object.keys(this.thresholds).length === 0) return;
-        return this.selectedThresholdsIds
-            .map(id => {
-                const threshold = this.thresholds[Object.keys(this.thresholds).find(key => this.thresholds[key].find(rule => rule.id === id))];
-                return threshold.find(th => th.id === id).name
+        const th = this.selectedThresholds
+            .map(selectedThreshold => {
+                const threshold = this.thresholds[Object.keys(this.thresholds).find(key => this.thresholds[key].find(rule => rule.id === selectedThreshold.id))];
+                return threshold.find(th => th.id === selectedThreshold.id).name
             })
             .join(', ');
+        this.selectedThresholds = this.widget.config.threshold.thresholds ? this.widget.config.threshold.thresholds : [];
+        console.log('this.thresholds', th)
+        return th;
+    }
+
+    getThresholdName(id: string): string {
+        for (const group of Object.keys(this.thresholds)) {
+            const rule = this.thresholds[group].find(rule => rule.id === id);
+            if (rule) return rule.name;
+        }
+        return '';
+    }
+
+    getThresholdColor(id: string): string {
+        const selected = this.selectedThresholds.find(t => t.id === id);
+        return selected ? selected.color : '#000000';
+    }
+
+    getThresholdIds(): string[] {
+        if (!this.thresholds) return [];
+        const ids = [];
+        Object.keys(this.thresholds).map(key => this.thresholds[key].map(value => ids.push(value.id)));
+        this.thresholdsIds = [...new Set(ids)];
+        return this.thresholdsIds.length > 0 ? this.thresholdsIds : [];
+    }
+
+    formatRulePrettyDefinition(rulePrettyDefinition: string) {
+        const parts = rulePrettyDefinition.split('.');
+        parts.shift();
+        return `${parts[0]}=>${parts.slice(1).join('.')}`;
+    }
+
+    onThresholdSelected(selectedId: string) {
+        const selectedThreshold = this.selectedThresholds.find(th => th.id === selectedId);
+        if (!selectedThreshold) {
+            this.selectedThresholds.push({ id: selectedId, color: '#0009' });
+            this.newThreshold = {};
+        }
+    }
+
+    findThresholdRule(id: string) {
+        for (const group of Object.keys(this.thresholds)) {
+            const rule = this.thresholds[group].find(rule => rule.id === id);
+            if (rule) return rule;
+        }
+        return null;
+    }
+
+    canAddMoreThresholds() {
+        return this.selectedThresholds.length < this.getThresholdIds().length;
     }
 }

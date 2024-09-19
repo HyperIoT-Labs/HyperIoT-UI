@@ -20,21 +20,63 @@
     <!-- not yet implemented -->
 </div>
 <div *ngIf="checkbox && (selectedFields.length > 0 || widget.config.packetId)">
-    <mat-checkbox color="primary" [(ngModel)]="thresholdActive" [ngModelOptions]="{standalone: true}"
-        (ngModelChange)="isChecked()">threshold</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="thresholdActive" [ngModelOptions]="{ standalone: true }" (ngModelChange)="isChecked()">threshold</mat-checkbox>
+    
     <div *ngIf="thresholdActive">
-        <mat-label>Test</mat-label>
-        <mat-select multiple [ngModelOptions]="{ standalone: true }" [(ngModel)]="selectedThresholdsIds" disableRipple>
-            <mat-select-trigger>
-                {{ getSelectedNames() }}
-            </mat-select-trigger>
-            <mat-optgroup *ngFor="let group of thresholds | keyvalue" [label]="group.key">
+      <ng-container *ngFor="let selected of selectedThresholds; let i = index">
+        <div class="threshold-row">
+          <mat-form-field>
+            <mat-label i18n="@@HYT_select_threshold">Select threshold</mat-label>
+            <mat-select
+              [ngModelOptions]="{ standalone: true }"
+              [(ngModel)]="selectedThresholds[i].id"
+              [disabled]="!thresholds || getThresholdIds().length === 0 || selected.id"
+              (selectionChange)="onThresholdSelected(selected.id)">
+              <mat-select-trigger>
+                {{ getThresholdName(selected.id) || 'No thresholds selected' }}
+              </mat-select-trigger>
+              <mat-optgroup *ngFor="let group of (thresholds | keyvalue)" [label]="group.key">
                 <mat-option *ngFor="let rule of group.value" [value]="rule.id">
-                    <div>{{ rule.name }}</div>
-                    <div style="font-size: 12px; color: gray;">{{ rule.rulePrettyDefinition }}</div>
+                    {{ rule }}
+                  <div>{{ rule.name }}</div>
+                  <div style="font-size: 12px; color: gray;">
+                    {{ formatRulePrettyDefinition(rule.rulePrettyDefinition) }}
+                  </div>
                 </mat-option>
-            </mat-optgroup>
-        </mat-select>
-    </div>
+              </mat-optgroup>
+            </mat-select>
 
-</div>
+          <div *ngIf="selected.id">
+            <input matInput type="color" [(ngModel)]="selected.color" [ngModelOptions]="{ standalone: true }" [value]="getThresholdColor(selected.id)" />
+          </div>
+          </mat-form-field>
+        </div>
+      </ng-container>
+  
+      <mat-form-field *ngIf="canAddMoreThresholds()">
+        <mat-label i18n="@@HYT_select_threshold">Select threshold</mat-label>
+        <mat-select
+          [ngModelOptions]="{ standalone: true }"
+          [(ngModel)]="newThreshold.id"
+          [disabled]="!thresholds || getThresholdIds().length === 0"
+          (selectionChange)="onThresholdSelected(newThreshold.id)">
+          <mat-select-trigger>
+            {{ newThreshold.name || 'No thresholds selected' }}
+          </mat-select-trigger>
+          <mat-optgroup *ngFor="let group of (thresholds | keyvalue)" [label]="group.key">
+            <mat-option *ngFor="let rule of group.value" [value]="rule.id">
+              <div>{{ rule.name }}</div>
+              <div style="font-size: 12px; color: gray;">
+                {{ formatRulePrettyDefinition(rule.rulePrettyDefinition) }}
+              </div>
+            </mat-option>
+          </mat-optgroup>
+        </mat-select>
+      </mat-form-field>
+  
+      <ng-container *ngIf="!thresholds || getThresholdIds().length < this.thresholds">
+        <mat-select-trigger disabled>No thresholds available</mat-select-trigger>
+      </ng-container>
+    </div>
+  </div>
+  

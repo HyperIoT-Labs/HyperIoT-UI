@@ -1,5 +1,17 @@
 ::ng-deep mat-option .mat-option-text {
     display: block;
     line-height: 1.5;
-    padding: 8px;
 }
+/* 
+::ng-deep mat-form-field {
+    width: 23em;
+
+    .mat-form-field-infix {
+        display: flex;
+        gap: 3em;
+
+        div {
+            width: 6em;
+        }
+    }
+} */
