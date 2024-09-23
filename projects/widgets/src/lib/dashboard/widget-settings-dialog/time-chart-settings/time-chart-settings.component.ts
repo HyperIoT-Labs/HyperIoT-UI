@@ -17,7 +17,7 @@ import { MatSelect } from '@angular/material/select';
 })
 export class TimeChartSettingsComponent implements OnInit, OnDestroy {
     @ViewChild(PacketSelectComponent, { static: true }) packetSelect: PacketSelectComponent;
-    
+
     subscription: any;
     @Input() modalApply: Observable<any>;
     @Input() widget;
@@ -83,7 +83,7 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
             }
         });
     }
-    
+
     ngOnDestroy() {
         if (this.subscription) {
             this.subscription.unsubscribe();
@@ -191,7 +191,7 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
     }
 
     deleteSelected(selectedIdToFilter: string): void {
-        this.selectedThresholds = this.selectedThresholds.filter(th => th.id!== selectedIdToFilter);
+        this.selectedThresholds = this.selectedThresholds.filter(th => th.id !== selectedIdToFilter);
         this.filterThresholds();
     }
 
@@ -215,7 +215,7 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
             this.selectedThresholds.push({ id: selectedId, color: '#0009' });
             this.newThreshold = {};
         }
-    
+
         this.filterThresholds();
     }
 
@@ -223,23 +223,23 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
         if (this.selectedThresholds.length === 0) this.filteredThresholds = { ...this.thresholds }
         else {
             this.filteredThresholds = Object.keys(this.thresholds)
-            .reduce((groupedRules, key) => {
-                if (typeof key !== 'string') {
-                    console.error('Unexpected key format:', key);
-                    return groupedRules;
-                }
-                let unselectedRules;
-                unselectedRules = this.thresholds[key].filter(rule => {
-                    return !this.selectedThresholds.find(th => th.id === rule.id);
-                });
-                if (Object.keys(unselectedRules).length > 0) {
-                    if (!groupedRules[key]) {
-                        groupedRules[key] = [];
+                .reduce((groupedRules, key) => {
+                    if (typeof key !== 'string') {
+                        console.error('Unexpected key format:', key);
+                        return groupedRules;
                     }
-                    groupedRules[key] = unselectedRules;
-                }
-                return groupedRules;
-            }, {});
+                    let unselectedRules;
+                    unselectedRules = this.thresholds[key].filter(rule => {
+                        return !this.selectedThresholds.find(th => th.id === rule.id);
+                    });
+                    if (Object.keys(unselectedRules).length > 0) {
+                        if (!groupedRules[key]) {
+                            groupedRules[key] = [];
+                        }
+                        groupedRules[key] = unselectedRules;
+                    }
+                    return groupedRules;
+                }, {});
         }
     }
 
