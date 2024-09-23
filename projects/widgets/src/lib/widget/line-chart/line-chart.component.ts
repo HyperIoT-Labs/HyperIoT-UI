@@ -63,6 +63,8 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
 
   allData: PacketData[] = [];
 
+  thresholds: Threshold[] = [];
+
   protected logger: Logger;
 
   private _chartConfig = {
@@ -83,8 +85,6 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
   get chartConfig() {
     return this._chartConfig;
   }
-
-  thresholds: Threshold[] = [];
 
   constructor(
     injector: Injector,
@@ -292,6 +292,9 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
     }
   }
 
+  /* 
+    Retrive each threshold and save the corresponding rule
+  */
   retrieveThresholds() {
     this.thresholds.forEach(threshold => {
       this.ruleService.findRule(parseInt(threshold.id)).subscribe({
@@ -430,7 +433,9 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
     }
   }
 
-  // Convert hex color to rgba
+  /* 
+    Convert hex color to rgba to edit opacity
+  */
   hexToRgba(hex: string, alpha: number): string {
     let r = 0, g = 0, b = 0;
     if (hex.length == 4) {
