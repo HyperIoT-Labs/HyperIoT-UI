@@ -61,6 +61,7 @@ export interface ConfigModel {
 export interface Threshold {
     id: string;
     color: string;
+    rule?: string;
 }
 
 export interface FieldUnitConversion {

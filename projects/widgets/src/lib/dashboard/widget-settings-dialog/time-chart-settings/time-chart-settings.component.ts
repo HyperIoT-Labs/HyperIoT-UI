@@ -7,6 +7,7 @@ import { PacketSelectComponent } from '../packet-select/packet-select.component'
 import { ActivatedRoute } from "@angular/router";
 import { Rule, RulesService } from 'core';
 import { Threshold } from '../../../base/base-widget/model/widget.model';
+import { MatSelect } from '@angular/material/select';
 
 @Component({
     selector: 'hyperiot-time-chart-settings',
@@ -16,6 +17,7 @@ import { Threshold } from '../../../base/base-widget/model/widget.model';
 })
 export class TimeChartSettingsComponent implements OnInit, OnDestroy {
     @ViewChild(PacketSelectComponent, { static: true }) packetSelect: PacketSelectComponent;
+    
     subscription: any;
     @Input() modalApply: Observable<any>;
     @Input() widget;
@@ -25,7 +27,8 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
     selectedFields = [];
     selectedPackets = [];
 
-    thresholds: any = [];
+    thresholds: any = {};
+    filteredThresholds: any = {};
     thresholdsIds: string[] = [];
     thresholdActive: boolean = false;
     selectedThresholds: Threshold[] = [];
@@ -80,6 +83,7 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
             }
         });
     }
+    
     ngOnDestroy() {
         if (this.subscription) {
             this.subscription.unsubscribe();
@@ -88,7 +92,6 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
 
     onSelectedFieldsChange(fields) {
         this.selectedFields = fields;
-        this.isChecked();
     }
 
     onSelectedPacketChange(packet) {
@@ -106,7 +109,7 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
     isChecked() {
         this.ruleService.findAllRuleByProjectId(this.widget.projectId).subscribe({
             next: (rules) => {
-                if (this.selectedFields.length === 0 && !this.widget.config.packetId) return
+                if (this.selectedFields.length === 0 && !this.widget.config.packetId && !this.thresholdActive) return
                 this.thresholds = rules
                     .filter((rule) => {
                         let ruleDefinition = rule.ruleDefinition;
@@ -129,7 +132,7 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
                             if (this.getOperator(ruleArray[k]) === "=" || this.getOperator(ruleArray[k]) === "!=") return false;
 
                             if (splitted.length === 1) return false;
-                            else if (splitted.length === 2) {
+                            else {
                                 if (!(packets && (typeof packets === 'number' ? packets === parseInt(splitted[0]) : packets.includes(parseInt(splitted[0]))) && fields.includes(parseInt(splitted[1])))) {
                                     return false;
                                 }
@@ -145,6 +148,7 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
                         groupedRules[alarmName].push(rule);
                         return groupedRules;
                     }, {});
+                this.filterThresholds();
             },
             error: (err) => {
                 console.error('Error retrieving thresholds', err);
@@ -162,10 +166,10 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
     }
 
     getSelectedNames(): string {
-        if (Object.keys(this.thresholds).length === 0) return;
+        if (Object.keys(this.filteredThresholds).length === 0) return;
         const th = this.selectedThresholds
             .map(selectedThreshold => {
-                const threshold = this.thresholds[Object.keys(this.thresholds).find(key => this.thresholds[key].find(rule => rule.id === selectedThreshold.id))];
+                const threshold = this.filteredThresholds[Object.keys(this.filteredThresholds).find(key => this.filteredThresholds[key].find(rule => rule.id === selectedThreshold.id))];
                 return threshold.find(th => th.id === selectedThreshold.id).name
             })
             .join(', ');
@@ -174,7 +178,7 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
         return th;
     }
 
-    getThresholdName(id: string): string {
+    getSelectedThresholdName(id: string): string {
         for (const group of Object.keys(this.thresholds)) {
             const rule = this.thresholds[group].find(rule => rule.id === id);
             if (rule) return rule.name;
@@ -187,10 +191,15 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
         return selected ? selected.color : '#000000';
     }
 
-    getThresholdIds(): string[] {
-        if (!this.thresholds) return [];
+    deleteSelected(selectedIdToFilter: string): void {
+        this.selectedThresholds = this.selectedThresholds.filter(th => th.id!== selectedIdToFilter);
+        this.filterThresholds();
+    }
+
+    getFilteredThresholdIds(): string[] {
+        if (!this.filteredThresholds) return [];
         const ids = [];
-        Object.keys(this.thresholds).map(key => this.thresholds[key].map(value => ids.push(value.id)));
+        Object.keys(this.filteredThresholds).map(key => this.filteredThresholds[key].map(value => ids.push(value.id)));
         this.thresholdsIds = [...new Set(ids)];
         return this.thresholdsIds.length > 0 ? this.thresholdsIds : [];
     }
@@ -202,11 +211,39 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
     }
 
     onThresholdSelected(selectedId: string) {
-        const selectedThreshold = this.selectedThresholds.find(th => th.id === selectedId);
-        if (!selectedThreshold) {
+        const selectedThresholdIndex = this.selectedThresholds.findIndex(th => th.id === selectedId);
+        if (selectedThresholdIndex === -1) {
             this.selectedThresholds.push({ id: selectedId, color: '#0009' });
             this.newThreshold = {};
         }
+    
+        this.filterThresholds();
+        console.log('Filtered Thresholds:', this.filteredThresholds);
+    }
+
+    filterThresholds() {
+        if (this.selectedThresholds.length === 0) this.filteredThresholds = { ...this.thresholds }
+        else {
+            this.filteredThresholds = Object.keys(this.thresholds)
+            .reduce((groupedRules, key) => {
+                if (typeof key !== 'string') {
+                    console.error('Unexpected key format:', key);
+                    return groupedRules;
+                }
+                let unselectedRules;
+                unselectedRules = this.thresholds[key].filter(rule => {
+                    return !this.selectedThresholds.find(th => th.id === rule.id);
+                });
+                if (Object.keys(unselectedRules).length > 0) {
+                    if (!groupedRules[key]) {
+                        groupedRules[key] = [];
+                    }
+                    groupedRules[key] = unselectedRules;
+                }
+                return groupedRules;
+            }, {});
+        }
+        console.log('this.filteredThresholds', this.filteredThresholds);
     }
 
     findThresholdRule(id: string) {
@@ -217,7 +254,7 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
         return null;
     }
 
-    canAddMoreThresholds() {
-        return this.selectedThresholds.length < this.getThresholdIds().length;
+    disabledThresholdOption(rule) {
+        return !this.getFilteredThresholdIds().includes(rule.id)
     }
 }

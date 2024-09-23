@@ -1,7 +1,27 @@
+.threshold-row {
+    display: flex;
+    flex-direction: column;
+
+    .input-button-row {
+        display: flex;
+        justify-content: space-between;
+
+        .input-row {
+            display: flex;
+            align-items: center;
+            gap: 2em;
+    
+            input {
+                width: 7em;
+            }
+        }
+    }
+}
 ::ng-deep mat-option .mat-option-text {
     display: block;
     line-height: 1.5;
 }
+
 /* 
 ::ng-deep mat-form-field {
     width: 23em;
