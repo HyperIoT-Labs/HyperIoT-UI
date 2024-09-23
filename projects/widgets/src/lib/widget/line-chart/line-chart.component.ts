@@ -11,6 +11,7 @@ import {
   Logger,
   LoggerService,
   PacketData,
+  RulesService,
 } from "core";
 import { PlotlyComponent, PlotlyService } from "angular-plotly.js";
 import {
@@ -22,7 +23,7 @@ import {
 } from "rxjs";
 
 import { BaseChartComponent } from "../../base/base-chart/base-chart.component";
-import { ConfigButtonWidget, WidgetAction } from "../../base/base-widget/model/widget.model";
+import { ConfigButtonWidget, Threshold, WidgetAction } from "../../base/base-widget/model/widget.model";
 import { TimeSeries } from "../../data/time-series";
 import { ServiceType } from "../../service/model/service-type";
 import { DashboardEventService } from "../../dashboard/services/dashboard-event.service";
@@ -83,11 +84,14 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
     return this._chartConfig;
   }
 
+  thresholds: Threshold[] = [];
+
   constructor(
     injector: Injector,
     private dashboardEvent: DashboardEventService,
     @Optional() public plotly: PlotlyService,
-    protected loggerService: LoggerService
+    protected loggerService: LoggerService,
+    private ruleService: RulesService
   ) {
     super(injector, plotly, loggerService);
     this.logger = new Logger(this.loggerService);
@@ -193,6 +197,10 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
     }
     this.isConfigured = true;
 
+    if (this.widget.config.threshold && this.widget.config.threshold.thresholdActive) {
+      this.thresholds = this.widget.config.threshold.thresholds;
+      this.retrieveThresholds();
+    }
     // scheduling chart initialization because of chart size
     asyncScheduler.schedule(() => {
       this.setTimeSeries();
@@ -283,6 +291,21 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
       this.updateDataRequest();
     }
   }
+
+  retrieveThresholds() {
+    this.thresholds.forEach(threshold => {
+      this.ruleService.findRule(parseInt(threshold.id)).subscribe({
+        next: (data) => {
+          this.thresholds.find(th => th.id === threshold.id).rule = data.ruleDefinition;
+          this.setTimeChartLayout()
+        },
+        error: (err) => {
+          console.error('Error retrieving thresholds', err);
+        }
+      })
+    });
+  }
+
   setTimeChartLayout() {
     this.logger.debug("setTimeChartLayout");
     this.chartData.forEach((timeSeries, i) => {
@@ -313,56 +336,7 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
       Object.assign(tsd, this.defaultSeriesConfig);
       this.graph.data.push(tsd);
     });
-  
-    // Add the threshold line(s)
-    const thresholdValue1 = 50;
-    const thresholdValue2 = 80;
-    // Use layout.shapes to add horizontal lines at the threshold values
-    this.graph.layout.shapes = [
-      {
-        type: "line",
-        xref: "paper",
-        x0: 0,
-        x1: 1,
-        yref: "y",
-        y0: thresholdValue1,
-        y1: thresholdValue1,
-        line: {
-          color: "red",
-          width: 2,
-          dash: "dashdot",
-        },
-      },
-      {
-        type: "line",
-        xref: "paper",
-        x0: 0,
-        x1: 1,
-        yref: "y",
-        y0: thresholdValue2,
-        y1: thresholdValue2,
-        line: {
-          color: "red",
-          width: 2,
-          dash: "dashdot",
-        },
-      },
-      {
-        type: "rect",
-        xref: "paper",
-        x0: 0,
-        x1: 1,
-        yref: "y",
-        y0: thresholdValue1,
-        y1: thresholdValue2,
-        fillcolor: "rgba(255, 0, 0, 0.2)",
-        opacity: 0.5,
-        line: {
-          width: 0,
-        },
-      }
-    ];
-  
+
     // Set up legend and other layout settings
     this.graph.layout.showlegend = true;
     this.graph.layout.legend = {
@@ -378,7 +352,7 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
       bgcolor: "#FFFFFF85",
       borderwidth: 0,
     };
-  
+
     this.graph.layout.font = {
       size: 9,
     };
@@ -398,8 +372,73 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
       showgrid: false,
       range: [],
     };
+
+    this.thresholds.forEach((threshold: Threshold) => {
+      if (!threshold.rule) return;
+      const ruleDefinition = threshold.rule.replace(/"/g, '').trim();
+      const ruleArray: string[] = ruleDefinition.match(/[^AND|OR]+(AND|OR)?/g).map(x => x.trim());
+      this.addThresholdToChart(threshold, ruleArray);
+    });
   }
-  
+
+  addThresholdToChart(threshold: Threshold, ruleArray: string[]) {
+    if (!this.graph.layout.shapes) this.graph.layout.shapes = [];
+    if (ruleArray.length === 1) {
+      const tempSplitted = ruleArray[0].split(' ').filter(i => i);
+      const value = tempSplitted.length > 1 ? tempSplitted[2].toLowerCase() : "";
+      if (value === "") return;
+      this.graph.layout.shapes.push(
+        {
+          type: "line",
+          xref: "paper",
+          x0: 0,
+          x1: 1,
+          yref: "y",
+          y0: value,
+          y1: value,
+          line: {
+            color: threshold.color,
+            width: 2,
+            dash: "dashdot",
+          },
+        }
+      );
+    } else {
+      let values = [];
+      ruleArray.forEach(rule => {
+        const tempSplitted = rule.split(' ').filter(i => i);
+        const value = tempSplitted.length > 1 ? tempSplitted[2].toLowerCase() : "";
+        if (value === "") return;
+        values.push(value);
+      })
+      
+      this.graph.layout.shapes.push(
+        {
+          type: "rect",
+          xref: "paper",
+          x0: 0,
+          x1: 1,
+          yref: "y",
+          y0: values[0],
+          y1: values[1],
+          fillcolor: threshold.color,
+          opacity: 0.5,
+          line: {
+            width: 0,
+          },
+        }
+      );
+    }
+  }
+
+  /**
+   * Extract the operator from the rule part.
+   * @param rulePart - A portion of the ruleDefinition to analyze.
+   */
+  getOperator(rulePart: string): string {
+    const tempSplitted = rulePart.split(' ').filter(i => i);
+    return tempSplitted.length > 1 ? tempSplitted[1].toLowerCase() : "";
+  }
 
   setTimeSeries(): void {
     this.logger.debug("setTimeSeries");

@@ -174,7 +174,6 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
             })
             .join(', ');
         this.selectedThresholds = this.widget.config.threshold.thresholds ? this.widget.config.threshold.thresholds : [];
-        console.log('this.thresholds', th)
         return th;
     }
 
@@ -218,7 +217,6 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
         }
     
         this.filterThresholds();
-        console.log('Filtered Thresholds:', this.filteredThresholds);
     }
 
     filterThresholds() {
@@ -243,7 +241,6 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
                 return groupedRules;
             }, {});
         }
-        console.log('this.filteredThresholds', this.filteredThresholds);
     }
 
     findThresholdRule(id: string) {
