@@ -64,7 +64,8 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
   allData: PacketData[] = [];
 
   thresholds: Threshold[] = [];
-
+  shapeIndices: number[] = [];
+  
   protected logger: Logger;
 
   private _chartConfig = {
@@ -296,11 +297,15 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
     Retrive each threshold and save the corresponding rule
   */
   retrieveThresholds() {
+    this.shapeIndices = [];
     this.thresholds.forEach(threshold => {
       this.ruleService.findRule(parseInt(threshold.id)).subscribe({
         next: (data) => {
-          this.thresholds.find(th => th.id === threshold.id).rule = data.ruleDefinition;
-          this.setTimeChartLayout()
+          threshold.rule = data.ruleDefinition;
+          if (!threshold.rule) return;
+          const ruleDefinition = threshold.rule.replace(/"/g, '').trim();
+          const ruleArray: string[] = ruleDefinition.match(/[^AND|OR]+(AND|OR)?/g).map(x => x.trim());
+          this.addThresholdToChart(threshold, ruleArray, data.name);
         },
         error: (err) => {
           console.error('Error retrieving thresholds', err);
@@ -375,38 +380,15 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
       showgrid: false,
       range: [],
     };
-
-    this.thresholds.forEach((threshold: Threshold) => {
-      if (!threshold.rule) return;
-      const ruleDefinition = threshold.rule.replace(/"/g, '').trim();
-      const ruleArray: string[] = ruleDefinition.match(/[^AND|OR]+(AND|OR)?/g).map(x => x.trim());
-      this.addThresholdToChart(threshold, ruleArray);
-    });
   }
 
-  addThresholdToChart(threshold: Threshold, ruleArray: string[]) {
+  addThresholdToChart(threshold: Threshold, ruleArray: string[], ruleName: string) {
     if (!this.graph.layout.shapes) this.graph.layout.shapes = [];
+    /* TODO atm we only handle  */
+    if (ruleArray.length > 2) return;
     if (ruleArray.length === 1) {
-      const tempSplitted = ruleArray[0].split(' ').filter(i => i);
-      const value = tempSplitted.length > 1 ? tempSplitted[2].toLowerCase() : "";
-      if (value === "") return;
-      this.graph.layout.shapes.push(
-        {
-          type: "line",
-          xref: "paper",
-          x0: 0,
-          x1: 1,
-          yref: "y",
-          y0: value,
-          y1: value,
-          line: {
-            color: threshold.color,
-            width: 2,
-            dash: "dashdot",
-          },
-        }
-      );
-    } else {
+      this.addSingleThreshold(ruleArray[0], threshold);
+    } else if (ruleArray.length === 2 && ruleArray[0].includes('AND')) {
       let values = [];
       ruleArray.forEach(rule => {
         const tempSplitted = rule.split(' ').filter(i => i);
@@ -424,41 +406,90 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
           yref: "y",
           y0: values[0],
           y1: values[1],
-          fillcolor: this.hexToRgba(threshold.color, 0.1),
+          fillcolor: threshold.color,
           line: {
             width: 0,
           },
         }
       );
+    } else {
+      for (let i = 0; i < ruleArray.length; i++) {
+        if (ruleArray[i].includes('OR') || !(ruleArray[i].includes('OR') && ruleArray[i].includes('AND'))) {
+          this.addSingleThreshold(ruleArray[i], threshold);
+        } else {
+          let values = [];
+          this.retrieveRuleValues(ruleArray[i], values);
+          this.retrieveRuleValues(ruleArray[i++], values);
+
+          this.graph.layout.shapes.push(
+            {
+              type: "rect",
+              xref: "paper",
+              x0: 0,
+              x1: 1,
+              yref: "y",
+              y0: values[0],
+              y1: values[1],
+              fillcolor: threshold.color,
+              line: {
+                width: 0,
+              },
+            }
+          );
+
+          const shapeIndex: number = this.graph.layout.shapes.length;
+          this.shapeIndices.push(shapeIndex);
+        }
+      }
     }
+    //this.addScatterTrace(threshold, ruleName);
   }
 
-  /* 
-    Convert hex color to rgba to edit opacity
-  */
-  hexToRgba(hex: string, alpha: number): string {
-    let r = 0, g = 0, b = 0;
-    if (hex.length == 4) {
-      r = parseInt(hex[1] + hex[1], 16);
-      g = parseInt(hex[2] + hex[2], 16);
-      b = parseInt(hex[3] + hex[3], 16);
-    }
-    else if (hex.length == 7) {
-      r = parseInt(hex[1] + hex[2], 16);
-      g = parseInt(hex[3] + hex[4], 16);
-      b = parseInt(hex[5] + hex[6], 16);
-    }
-
-    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+  addScatterTrace(threshold: Threshold, ruleName: string) {
+    this.graph.data.push({
+      x: [null],
+      y: [null],
+      mode: "markers",
+      marker: {
+        color: threshold.color,
+        size: 12
+      },
+      name: ruleName,
+      showlegend: true,
+      hoverinfo: 'skip',
+      shapeIndices: this.shapeIndices
+    });
   }
 
-  /**
-   * Extract the operator from the rule part.
-   * @param rulePart - A portion of the ruleDefinition to analyze.
-   */
-  getOperator(rulePart: string): string {
-    const tempSplitted = rulePart.split(' ').filter(i => i);
-    return tempSplitted.length > 1 ? tempSplitted[1].toLowerCase() : "";
+  retrieveRuleValues(rule, values) {
+    const tempSplitted = rule.split(' ').filter(i => i);
+    const value = tempSplitted.length > 1 ? tempSplitted[2].toLowerCase() : "";
+    if (value === "") return;
+    values.push(value);
+  }
+
+  addSingleThreshold(rule, threshold: Threshold) {
+    const tempSplitted = rule.split(' ').filter(i => i);
+    const value = tempSplitted.length > 1 ? tempSplitted[2].toLowerCase() : "";
+    if (value === "") return;
+    this.graph.layout.shapes.push(
+      {
+        type: "line",
+        xref: "paper",
+        x0: 0,
+        x1: 1,
+        yref: "y",
+        y0: value,
+        y1: value,
+        line: {
+          color: threshold.color,
+          width: 4,
+          dash: "dashdot",
+        },
+      }
+    );
+    const shapeIndex: number = this.graph.layout.shapes.length;
+    this.shapeIndices.push(shapeIndex);
   }
 
   setTimeSeries(): void {

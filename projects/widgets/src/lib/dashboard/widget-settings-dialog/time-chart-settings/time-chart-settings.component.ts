@@ -34,6 +34,9 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
     selectedThresholds: Threshold[] = [];
     newThreshold: any = {};
 
+    defaultOpacity: number = 0.55;
+    defaultColor: string = `rgba(5, 186, 0, ${ this.defaultOpacity })`;
+
     private defaultConfig = {
         timeAxisRange: 10,
         //no limits in data points
@@ -187,7 +190,7 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
 
     getThresholdColor(id: string): string {
         const selected = this.selectedThresholds.find(t => t.id === id);
-        return selected ? selected.color : '#000000';
+        return selected ? selected.color : this.defaultColor;
     }
 
     deleteSelected(selectedIdToFilter: string): void {
@@ -212,7 +215,7 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
     onThresholdSelected(selectedId: string) {
         const selectedThresholdIndex = this.selectedThresholds.findIndex(th => th.id === selectedId);
         if (selectedThresholdIndex === -1) {
-            this.selectedThresholds.push({ id: selectedId, color: '#0009' });
+            this.selectedThresholds.push({ id: selectedId, color: this.defaultColor });
             this.newThreshold = {};
         }
 

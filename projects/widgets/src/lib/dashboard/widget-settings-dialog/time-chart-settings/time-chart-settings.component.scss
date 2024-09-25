@@ -10,13 +10,16 @@
             display: flex;
             align-items: center;
             gap: 2em;
-    
+
             input {
                 width: 7em;
+                border-radius: .3em;
+                border: 1px solid grey;
             }
         }
     }
 }
+
 ::ng-deep mat-option .mat-option-text {
     display: block;
     line-height: 1.5;

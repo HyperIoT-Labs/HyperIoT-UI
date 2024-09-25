@@ -48,6 +48,7 @@ import { ProductionTargetSettingsComponent } from './widget-settings-dialog/prod
 import { WidgetValueMappingComponent } from './widget-settings-dialog/packet-select/widget-value-mapping/widget-value-mapping.component';
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { ColorPickerModule } from 'ngx-color-picker';
 
 @NgModule({
   declarations: [
@@ -102,6 +103,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatTabsModule,
     WidgetsModule,
     MatCheckboxModule,
+    ColorPickerModule
   ],
   providers: [
     DashboardConfigService,
