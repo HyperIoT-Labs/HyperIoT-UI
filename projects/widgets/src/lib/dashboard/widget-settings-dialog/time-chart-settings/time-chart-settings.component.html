@@ -1,98 +1,104 @@
 <div id="time-chart-settings">
-    <hyperiot-packet-select
-        [widget]="widget"
-        [hDeviceId]="hDeviceId"
-        [areaId]="areaId"
-        [multiPacketSelect]="true"
-        [selectedFields]="selectedFields"
-        (selectedFieldsChange)="onSelectedFieldsChange($event)"
+    <hyperiot-packet-select [widget]="widget" [hDeviceId]="hDeviceId" [areaId]="areaId" [multiPacketSelect]="true"
+        [selectedFields]="selectedFields" (selectedFieldsChange)="onSelectedFieldsChange($event)"
         (selectedPacketChange)="onSelectedPacketChange($event)"
-    ></hyperiot-packet-select>
+        (pageStatusChange)="updatePageStatus($event)"></hyperiot-packet-select>
 
-    <div *ngIf="checkbox && (selectedFields.length > 0 || widget.config.packetId)"
-        class="padding-6 d-flex flex-column justify-content-stretch">
-        <mat-checkbox color="primary" [(ngModel)]="thresholdActive" [ngModelOptions]="{ standalone: true }"
-            (ngModelChange)="isChecked()">threshold</mat-checkbox>
-    
-        <div *ngIf="thresholdActive && thresholds" class="setted-threshold">
-            <ng-container *ngFor="let selected of selectedThresholds; let i = index">
-                <div class="threshold-row">
-                    <div i18n="@@HYT_select_threshold">Set threshold</div>
-                    <div class="input-button-row">
-                        <div class="input-row">
-                            <mat-form-field *ngIf="thresholds && selectedThresholds[i]">
-                                <mat-select [ngModelOptions]="{ standalone: true }" [(ngModel)]="selected.id"
-                                    (selectionChange)="onThresholdSelected(selected.id)" placeholder="Select">
-                                    <mat-select-trigger>
-                                        {{ selected && getSelectedThresholdName(selected.id) != '' ?
-                                        getSelectedThresholdName(selected.id) : "Select threshold" }}
-                                    </mat-select-trigger>
-                                    <mat-optgroup *ngFor="let group of thresholds | keyvalue" [label]="group.key">
-                                        <mat-option *ngFor="let rule of group.value" [value]="rule.id"
-                                            [disabled]="disabledThresholdOption(rule)">
-                                            <div>{{ rule.name }}</div>
-                                            <div style="font-size: 12px; color: gray;">
-                                                {{ rule.rulePrettyDefinition ?
-                                                formatRulePrettyDefinition(rule.rulePrettyDefinition) : "" }}
-                                            </div>
-                                        </mat-option>
-                                    </mat-optgroup>
-                                </mat-select>
-                            </mat-form-field>
-                            <div *ngIf="selected && selected.id">
+    <div class="loading-overlay" *ngIf="pageStatus === 0">
+        <mat-spinner strokeWidth="8" diameter="100"></mat-spinner>
+    </div>
+
+    <div id="time-chart-settings" *ngIf="pageStatus === 1">
+        <div *ngIf="checkbox && (selectedFields.length > 0 || widget.config.packetId)"
+            class="padding-6 d-flex flex-column justify-content-stretch">
+            <mat-checkbox color="primary" [(ngModel)]="thresholdActive" [ngModelOptions]="{ standalone: true }"
+                (ngModelChange)="isChecked()">threshold</mat-checkbox>
+
+            <div *ngIf="thresholdActive && thresholds" class="setted-threshold">
+                <ng-container *ngFor="let selected of selectedThresholds; let i = index">
+                    <div class="threshold-row">
+                        <div i18n="@@HYT_select_threshold">Set threshold</div>
+                        <div class="input-button-row">
+                            <div class="input-row">
+                                <mat-form-field *ngIf="thresholds && selectedThresholds[i]">
+                                    <mat-select [ngModelOptions]="{ standalone: true }" [(ngModel)]="selected.id"
+                                        (selectionChange)="onThresholdSelected(selected.id)" placeholder="Select">
+                                        <mat-select-trigger>
+                                            {{ selected && getSelectedThresholdName(selected.id) != '' ?
+                                            getSelectedThresholdName(selected.id) : "Select threshold" }}
+                                        </mat-select-trigger>
+                                        <mat-optgroup *ngFor="let group of thresholds | keyvalue" [label]="group.key">
+                                            <mat-option *ngFor="let rule of group.value" [value]="rule.id"
+                                                [disabled]="disabledThresholdOption(rule)">
+                                                <div>{{ rule.name }}</div>
+                                                <div style="font-size: 12px; color: gray;">
+                                                    {{ rule.rulePrettyDefinition ?
+                                                    formatRulePrettyDefinition(rule.rulePrettyDefinition) : "" }}
+                                                </div>
+                                            </mat-option>
+                                        </mat-optgroup>
+                                    </mat-select>
+                                </mat-form-field>
                                 <div *ngIf="selected && selected.id">
-                                    <input class="colorPicker" [style.backgroundColor]="selected.color ? selected.color : defaultColor"
-                                        [cpAlphaChannel]="'disabled'" [cpOutputFormat]="'rgba'" [(colorPicker)]="selected.color" 
-                                        (colorPickerChange)="selected.color = $event" />
+                                    <div *ngIf="selected && selected.id">
+                                        <input class="colorPicker"
+                                            [style.backgroundColor]="selected.color ? selected.color : defaultColor"
+                                            [cpAlphaChannel]="'disabled'" [cpOutputFormat]="'rgba'"
+                                            [(colorPicker)]="selected.color"
+                                            (colorPickerChange)="selected.color = $event" />
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-    
-                        <div *ngIf="selected && selected.id">
-                            <button mat-icon-button class="hyt-base-btn" (click)="deleteSelected(selected.id)">
-                                <mat-icon>delete</mat-icon>
-                            </button>
+
+                            <div *ngIf="selected && selected.id">
+                                <button mat-icon-button class="hyt-base-btn" (click)="deleteSelected(selected.id)">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </ng-container>
-    
-            <div *ngIf="thresholdsIds.length > getSelectedNames.length" class="threshold-row setted-new-threshold">
-                <div i18n="@@HYT_select_threshold">Set threshold</div>
-                <mat-form-field class="input-button-row">
-                    <mat-select [ngModelOptions]="{ standalone: true }" [(ngModel)]="newThreshold.id"
-                        (selectionChange)="onThresholdSelected(newThreshold.id)" placeholder="Select">
-                        <mat-select-trigger>
-                            {{ newThreshold && newThreshold.id ? getSelectedThresholdName(newThreshold.id) : 
+                </ng-container>
+
+                <div *ngIf="thresholdsIds.length > getSelectedNames.length" class="threshold-row setted-new-threshold">
+                    <div i18n="@@HYT_select_threshold">Set threshold</div>
+                    <mat-form-field class="input-button-row">
+                        <mat-select [ngModelOptions]="{ standalone: true }" [(ngModel)]="newThreshold.id"
+                            (selectionChange)="onThresholdSelected(newThreshold.id)" placeholder="Select">
+                            <mat-select-trigger>
+                                {{ newThreshold && newThreshold.id ? getSelectedThresholdName(newThreshold.id) :
                                 "Select threshold" }}
-                        </mat-select-trigger>
-                        <mat-optgroup *ngFor="let group of thresholds | keyvalue" [label]="group.key">
-                            <mat-option *ngFor="let rule of group.value" [value]="rule.id"
-                                [disabled]="disabledThresholdOption(rule)">
-                                <div>{{ rule.name }}</div>
-                                <div style="font-size: 12px; color: gray;">
-                                    {{ rule.rulePrettyDefinition ? formatRulePrettyDefinition(rule.rulePrettyDefinition) :
-                                    '' }}
-                                </div>
-                            </mat-option>
-                        </mat-optgroup>
-                    </mat-select>
-                </mat-form-field>
+                            </mat-select-trigger>
+                            <mat-optgroup *ngFor="let group of thresholds | keyvalue" [label]="group.key">
+                                <mat-option *ngFor="let rule of group.value" [value]="rule.id"
+                                    [disabled]="disabledThresholdOption(rule)">
+                                    <div>{{ rule.name }}</div>
+                                    <div style="font-size: 12px; color: gray;">
+                                        {{ rule.rulePrettyDefinition ?
+                                        formatRulePrettyDefinition(rule.rulePrettyDefinition) :
+                                        '' }}
+                                    </div>
+                                </mat-option>
+                            </mat-optgroup>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <ng-container
+                    *ngIf="(!thresholds || getFilteredThresholdIds().length === 0) && selectedThresholds.length === 0">
+                    <mat-select-trigger disabled>No thresholds available</mat-select-trigger>
+                </ng-container>
             </div>
-    
-            <ng-container
-                *ngIf="(!thresholds || getFilteredThresholdIds().length === 0) && selectedThresholds.length === 0">
-                <mat-select-trigger disabled>No thresholds available</mat-select-trigger>
-            </ng-container>
         </div>
     </div>
-</div>
 
-<!--
+    <div class="loading-overlay error" *ngIf="pageStatus === -1" i18n="@@HYT_error_occurred">
+        An unexpected error has occurred
+    </div>
+    <!--
 <div *ngFor="let field of selectedFields">{{field.name}}</div>
 -->
-<!-- Plotly chart specific options -->
+    <!-- Plotly chart specific options -->
 
-<div class="padding-6 d-flex flex-column justify-content-stretch">
-    <!-- not yet implemented -->
-</div>
+    <div class="padding-6 d-flex flex-column justify-content-stretch">
+        <!-- not yet implemented -->
+    </div>

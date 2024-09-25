@@ -8,6 +8,7 @@ import { ActivatedRoute } from "@angular/router";
 import { Rule, RulesService } from 'core';
 import { Threshold } from '../../../base/base-widget/model/widget.model';
 import { MatSelect } from '@angular/material/select';
+import { PageStatus } from '../models/page-status';
 
 @Component({
     selector: 'hyperiot-time-chart-settings',
@@ -36,6 +37,7 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
 
     defaultOpacity: number = 0.55;
     defaultColor: string = `rgba(5, 186, 0, ${ this.defaultOpacity })`;
+    pageStatus: PageStatus = PageStatus.Loading;
 
     private defaultConfig = {
         timeAxisRange: 10,
@@ -99,6 +101,10 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
 
     onSelectedPacketChange(packet) {
         this.selectedPackets = [packet.id];
+    }
+
+    updatePageStatus(status) {
+        this.pageStatus = status;
     }
 
     apply() {
