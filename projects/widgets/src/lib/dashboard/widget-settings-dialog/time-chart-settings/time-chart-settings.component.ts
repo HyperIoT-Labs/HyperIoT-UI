@@ -4,7 +4,8 @@ import { ControlContainer, NgForm } from '@angular/forms';
 import { Observable } from 'rxjs';
 
 import { PacketSelectComponent } from '../packet-select/packet-select.component';
-import {ActivatedRoute} from "@angular/router";
+import { ActivatedRoute } from "@angular/router";
+import { PageStatus } from '../models/page-status';
 
 @Component({
     selector: 'hyperiot-time-chart-settings',
@@ -20,6 +21,8 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
     @Input() areaId;
     @Input() hDeviceId;
     selectedFields = [];
+    pageStatus: PageStatus = PageStatus.Loading;
+
     private defaultConfig = {
         timeAxisRange: 10,
         //no limits in data points
@@ -68,6 +71,10 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
 
     onSelectedFieldsChange(fields) {
         this.selectedFields = fields;
+    }
+
+    updatePageStatus(status) {
+        this.pageStatus = status;
     }
 
     apply() {
