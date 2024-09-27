@@ -60,8 +60,12 @@ export interface ConfigModel {
 
 export interface Threshold {
     id: string;
-    color: string;
     rule?: string;
+    line: {
+        color: string;
+        thickness: number;
+        type: string;
+    }
 }
 
 export interface FieldUnitConversion {

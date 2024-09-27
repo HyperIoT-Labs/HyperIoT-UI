@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, Input, OnDestroy } from '@angular/core';
-import { ControlContainer, NgForm } from '@angular/forms';
+import { ControlContainer, FormArray, FormBuilder, NgForm, Validators } from '@angular/forms';
 
 import { Observable } from 'rxjs';
 
@@ -9,6 +9,7 @@ import { Rule, RulesService } from 'core';
 import { Threshold } from '../../../base/base-widget/model/widget.model';
 import { MatSelect } from '@angular/material/select';
 import { PageStatus } from '../models/page-status';
+import { LineTypes } from '../../model/line.model';
 
 @Component({
     selector: 'hyperiot-time-chart-settings',
@@ -30,15 +31,17 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
 
     thresholds: any = {};
     filteredThresholds: any = {};
-    thresholdsIds: string[] = [];
+    thresholdsIds: number[] = [];
     thresholdActive: boolean = false;
-    selectedThresholds: Threshold[] = [];
+    thresholdsForm: FormArray = this.fb.array([]);
     newThreshold: any = {};
 
     defaultOpacity: number = 0.55;
-    defaultColor: string = `rgba(5, 186, 0, ${ this.defaultOpacity })`;
+    defaultColor: string = `rgba(5, 186, 0, ${this.defaultOpacity})`;
+    defaultLine = { color: this.defaultColor, thickness: 2, type: LineTypes.Linear };
     pageStatus: PageStatus = PageStatus.Loading;
 
+    lineTypes = LineTypes;
     private defaultConfig = {
         timeAxisRange: 10,
         //no limits in data points
@@ -63,7 +66,15 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
         }
     };
 
-    constructor(public settingsForm: NgForm, private activatedRoute: ActivatedRoute, private ruleService: RulesService) { }
+    get lineTypeOptions() {
+        return Object.values(LineTypes);
+    }
+
+    constructor(public settingsForm: NgForm,
+        private activatedRoute: ActivatedRoute,
+        private ruleService: RulesService,
+        private fb: FormBuilder
+    ) { }
 
     ngOnInit() {
         if (this.widget.config == null) {
@@ -75,11 +86,13 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
         }
         if (this.widget.config.threshold) {
             this.thresholdActive = this.widget.config.threshold.thresholdActive;
-            this.selectedThresholds = this.widget.config.threshold.thresholds ? this.widget.config.threshold.thresholds : [];
-            this.isChecked();
-        } else {
-            this.widget.config.threshold = {
-                thresholdActive: this.thresholdActive
+            if (this.thresholdActive) {
+                if (this.widget.config.threshold.thresholds.length > 0) {
+                    this.widget.config.threshold.thresholds.forEach(threshold => {
+                        this.addThresholdToForm(threshold);
+                    });
+                }
+                this.isChecked();
             }
         }
         this.subscription = this.modalApply.subscribe((event) => {
@@ -95,6 +108,19 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
         }
     }
 
+    addThresholdToForm(threshold) {
+        const thresholdGroup = this.fb.group({
+            id: [threshold.id, Validators.required],
+            line: this.fb.group({
+                color: [threshold.line?.color || this.defaultColor, Validators.required],
+                thickness: [threshold.line?.thickness || 2, [Validators.min(1), Validators.max(5)]],
+                type: [threshold.line?.type || LineTypes.Linear, Validators.required]
+            })
+        });
+
+        this.thresholdsForm.push(thresholdGroup);
+    }
+
     onSelectedFieldsChange(fields) {
         this.selectedFields = fields;
     }
@@ -108,11 +134,27 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
     }
 
     apply() {
+        this.assignThresholdsFormValuesToConfig();
+        this.packetSelect.apply();
+    }
+
+    assignThresholdsFormValuesToConfig() {
+        const thresholds: Threshold[] = this.thresholdsForm.controls.map(control => {
+            return {
+                id: control.get('id').value,
+                rule: control.get('rule')?.value,
+                line: {
+                    color: control.get('line.color').value,
+                    thickness: control.get('line.thickness').value,
+                    type: control.get('line.type').value
+                }
+            };
+        });
+
         this.widget.config.threshold = {
             thresholdActive: this.thresholdActive,
-            thresholds: this.selectedThresholds
-        }
-        this.packetSelect.apply();
+            thresholds: thresholds
+        };
     }
 
     isChecked() {
@@ -174,18 +216,6 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
         return tempSplitted.length > 1 ? tempSplitted[1].toLowerCase() : "";
     }
 
-    getSelectedNames(): string {
-        if (Object.keys(this.filteredThresholds).length === 0) return;
-        const th = this.selectedThresholds
-            .map(selectedThreshold => {
-                const threshold = this.filteredThresholds[Object.keys(this.filteredThresholds).find(key => this.filteredThresholds[key].find(rule => rule.id === selectedThreshold.id))];
-                return threshold.find(th => th.id === selectedThreshold.id).name
-            })
-            .join(', ');
-        this.selectedThresholds = this.widget.config.threshold.thresholds ? this.widget.config.threshold.thresholds : [];
-        return th;
-    }
-
     getSelectedThresholdName(id: string): string {
         for (const group of Object.keys(this.thresholds)) {
             const rule = this.thresholds[group].find(rule => rule.id === id);
@@ -194,22 +224,20 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
         return '';
     }
 
-    getThresholdColor(id: string): string {
-        const selected = this.selectedThresholds.find(t => t.id === id);
-        return selected ? selected.color : this.defaultColor;
-    }
-
-    deleteSelected(selectedIdToFilter: string): void {
-        this.selectedThresholds = this.selectedThresholds.filter(th => th.id !== selectedIdToFilter);
+    deleteSelected(index: number): void {
+        this.thresholdsForm.removeAt(index);
         this.filterThresholds();
     }
 
-    getFilteredThresholdIds(): string[] {
-        if (!this.filteredThresholds) return [];
+    getFilteredIds(thresholdsIds): string[] {
+        if (!thresholdsIds) return [];
         const ids = [];
-        Object.keys(this.filteredThresholds).map(key => this.filteredThresholds[key].map(value => ids.push(value.id)));
-        this.thresholdsIds = [...new Set(ids)];
-        return this.thresholdsIds.length > 0 ? this.thresholdsIds : [];
+        Object.keys(thresholdsIds).map(key => thresholdsIds[key].map(value => {
+            if (!value) debugger
+            else return ids.push(value.id)
+        }));
+        const filteredIds = [...new Set(ids)];
+        return filteredIds.length > 0 ? filteredIds : [];
     }
 
     formatRulePrettyDefinition(rulePrettyDefinition: string) {
@@ -217,41 +245,63 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
         parts.shift();
         return `${parts[0]}=>${parts.slice(1).join('.')}`;
     }
-
     onThresholdSelected(selectedId: string) {
-        const selectedThresholdIndex = this.selectedThresholds.findIndex(th => th.id === selectedId);
+        const selectedThresholdIndex = this.thresholdsForm.controls.findIndex(thresholdGroup => {
+            return thresholdGroup.get('id')?.value === selectedId;
+        });
+    
         if (selectedThresholdIndex === -1) {
-            this.selectedThresholds.push({ id: selectedId, color: this.defaultColor });
+            const thresholdGroup = this.fb.group({
+                id: [selectedId, Validators.required],
+                line: this.fb.group({
+                    color: [this.defaultColor, Validators.required],
+                    thickness: [2, [Validators.min(1), Validators.max(5)]],
+                    type: [LineTypes.Linear, Validators.required]
+                })
+            });
+            this.thresholdsForm.push(thresholdGroup);
             this.newThreshold = {};
+            this.filterThresholds();
+        } else {
+            const thresholdFormGroup = this.thresholdsForm.at(selectedThresholdIndex);
+            if (thresholdFormGroup) {
+                thresholdFormGroup.get('line.color')?.setValue(this.defaultColor);
+                thresholdFormGroup.get('line.thickness')?.setValue(2);
+                thresholdFormGroup.get('line.type')?.setValue(LineTypes.Linear);
+            }
         }
-
-        this.filterThresholds();
-    }
+    }   
 
     filterThresholds() {
-        if (this.selectedThresholds.length === 0) this.filteredThresholds = { ...this.thresholds }
-        else {
-            this.filteredThresholds = Object.keys(this.thresholds)
-                .reduce((groupedRules, key) => {
-                    if (typeof key !== 'string') {
-                        console.error('Unexpected key format:', key);
-                        return groupedRules;
-                    }
-                    let unselectedRules;
-                    unselectedRules = this.thresholds[key].filter(rule => {
-                        return !this.selectedThresholds.find(th => th.id === rule.id);
-                    });
-                    if (Object.keys(unselectedRules).length > 0) {
-                        if (!groupedRules[key]) {
-                            groupedRules[key] = [];
-                        }
-                        groupedRules[key] = unselectedRules;
-                    }
+        const selectedThresholdIds = this.thresholdsForm.controls
+            .map(thresholdGroup => thresholdGroup.get('id')?.value)
+            .filter((id): id is string => id !== undefined); // Ensure we only keep defined IDs
+    
+        if (selectedThresholdIds.length === 0) {
+            this.filteredThresholds = { ...this.thresholds };
+        } else {
+            this.filteredThresholds = Object.keys(this.thresholds).reduce((groupedRules, key) => {
+                if (typeof key !== 'string') {
+                    console.error('Unexpected key format:', key);
                     return groupedRules;
-                }, {});
+                }
+    
+                const unselectedRules = this.thresholds[key].filter(rule => {
+                    return !selectedThresholdIds.includes(rule.id);
+                });
+    
+                if (unselectedRules.length > 0) {
+                    if (!groupedRules[key]) {
+                        groupedRules[key] = [];
+                    }
+                    groupedRules[key] = unselectedRules;
+                }
+    
+                return groupedRules;
+            }, {} as { [key: string]: any[] });
         }
     }
-
+    
     findThresholdRule(id: string) {
         for (const group of Object.keys(this.thresholds)) {
             const rule = this.thresholds[group].find(rule => rule.id === id);
@@ -261,6 +311,10 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
     }
 
     disabledThresholdOption(rule) {
-        return !this.getFilteredThresholdIds().includes(rule.id)
+        return !this.getFilteredIds(this.filteredThresholds).includes(rule.id)
+    }
+
+    setThresholdColor(control, color) {
+        control.setValue(color)
     }
 }

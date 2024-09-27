@@ -406,7 +406,7 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
           yref: "y",
           y0: values[0],
           y1: values[1],
-          fillcolor: threshold.color,
+          fillcolor: threshold.line.color,
           line: {
             width: 0,
           },
@@ -430,7 +430,7 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
               yref: "y",
               y0: values[0],
               y1: values[1],
-              fillcolor: threshold.color,
+              fillcolor: threshold.line.color,
               line: {
                 width: 0,
               },
@@ -451,7 +451,7 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
       y: [null],
       mode: "markers",
       marker: {
-        color: threshold.color,
+        color: threshold.line.color,
         size: 12
       },
       name: ruleName,
@@ -482,7 +482,7 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
         y0: value,
         y1: value,
         line: {
-          color: threshold.color,
+          color: threshold.line.color,
           width: 2
         },
       }
