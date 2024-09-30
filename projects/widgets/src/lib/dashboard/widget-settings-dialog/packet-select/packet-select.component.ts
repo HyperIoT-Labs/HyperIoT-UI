@@ -32,7 +32,7 @@ export class PacketSelectComponent implements OnInit, OnChanges {
   selectedPacketOption: number = null;
 
   /** Represents the current page status (e.g., LOADING, READY, ERROR). */
-  pageStatus: PageStatus = PageStatus.Ready;
+  pageStatus: PageStatus = PageStatus.Loading;
   @Output()
   pageStatusChange: EventEmitter<number> | undefined = new EventEmitter<number>();
 
@@ -55,6 +55,8 @@ export class PacketSelectComponent implements OnInit, OnChanges {
   @Input()
   areaId: number;
   @Input() hDeviceId: number;
+  @Input() spinner: boolean = false;
+  @Input() chartStatus?: PageStatus;
 
   fieldAliases: FieldAliases;
   fieldTypes: FieldTypes;
@@ -232,80 +234,87 @@ export class PacketSelectComponent implements OnInit, OnChanges {
     // fetch all packets
     this.packetService
       .findAllHPacketByProjectIdAndType(this.widget.projectId, "INPUT,IO")
-      .subscribe((packetList) => {
-        // Filter out packets not belonging to the given `devices` list (if set)
-        if (devices) {
-          packetList = packetList.filter((p: HPacket) => {
-            if (p.device && devices.find(d => d.id === p.device.id)) {
-              return p;
-            }
-          });
-        }
-        this.projectPackets = packetList;
-        this.projectPackets.sort((a, b) => a.name < b.name ? -1 : 1);
-
-        const packetDevices = this.projectPackets.map((x) => x.device);
-        const groupDevices = [];
-        packetDevices.forEach((x) => {
-          if (!groupDevices.some((y) => y.id === x.id)) {
-            groupDevices.push(x);
-          }
-        });
-        this.groupedPacketOptions = groupDevices.map((x) => ({
-          name: x.deviceName,
-          options: this.projectPackets
-            .filter((y) => y.device.id === x.id)
-            .map((y) => ({
-              value: y.id,
-              label: y.name,
-              icon: 'icon-hyt_packets',
-            })),
-          icon: 'icon-hyt_device',
-        }));
-
-        const w = this.widget;
-        // load curent packet data and set selected fields
-        if (w.config && w.config.packetId) {
-          this.packetService.findHPacket(w.config.packetId)
-            .subscribe({
-              next: (packet: HPacket) => {
-                this.pageStatus = PageStatus.Ready;
-                this.pageStatusChange.emit(this.pageStatus);
-                this.selectedPacket = packet;
-                this.selectedPacketOption = this.selectedPacket.id;
-                this.dynamicLabelSelectedPacket = this.widget.config.dynamicLabels.packet;
-                this.dynamicLabelSelectedPacketOption = this.widget.config.dynamicLabels.packetOption;
-                this.dynamicLabelFields = this.widget.config.dynamicLabels.fieldOptions;
-                this.dynamicLabelSelectedField = this.widget.config.dynamicLabels.field;
-                const fieldsFlatList = this.hPacketFieldsHandlerService.flatPacketFieldsTree(this.selectedPacket);
-                this.fieldsOption = fieldsFlatList.map(x => ({
-                  value: x.field.id,
-                  label: x.label
-                }));
-                Object.entries(this.widget.config.packetFields).forEach((v, k) => {
-                  if (!this.fieldRules[v[0]]) {
-                    this.fieldRules[v[0]] = { type: 'expression', expression: '' };
-                  }
-                });
-                if (this.widget.config.packetFields) {
-                  this.selectedFields = [];
-                  Object.keys(this.widget.config.packetFields).forEach(x => {
-                    this.selectedFieldsOptions.push(+x);
-                    this.selectedFields.push(this.hPacketFieldsHandlerService.findFieldFromPacketFieldsTree(packet, +x));
-                  });
-                  packet.fields.sort((a, b) => a.name < b.name ? -1 : 1);
-                  this.syncUnitsConversion();
-                }
-              },
-              error: (error) => {
-                this.pageStatus = PageStatus.Error;
-                this.pageStatusChange.emit(this.pageStatus);
-                this.logger.error('Error loading packet:', error);
+      .subscribe({
+        next: (packetList) => {
+          // Filter out packets not belonging to the given `devices` list (if set)
+          if (devices) {
+            packetList = packetList.filter((p: HPacket) => {
+              if (p.device && devices.find(d => d.id === p.device.id)) {
+                return p;
               }
             });
-        } else {
-          this.pageStatus = PageStatus.Ready;
+          }
+          this.projectPackets = packetList;
+          this.projectPackets.sort((a, b) => a.name < b.name ? -1 : 1);
+
+          const packetDevices = this.projectPackets.map((x) => x.device);
+          const groupDevices = [];
+          packetDevices.forEach((x) => {
+            if (!groupDevices.some((y) => y.id === x.id)) {
+              groupDevices.push(x);
+            }
+          });
+          this.groupedPacketOptions = groupDevices.map((x) => ({
+            name: x.deviceName,
+            options: this.projectPackets
+              .filter((y) => y.device.id === x.id)
+              .map((y) => ({
+                value: y.id,
+                label: y.name,
+                icon: 'icon-hyt_packets',
+              })),
+            icon: 'icon-hyt_device',
+          }));
+
+          const w = this.widget;
+          // load curent packet data and set selected fields
+          if (w.config && w.config.packetId) {
+            this.packetService.findHPacket(w.config.packetId)
+              .subscribe({
+                next: (packet: HPacket) => {
+                  this.pageStatus = PageStatus.Ready;
+                  this.pageStatusChange.emit(this.pageStatus);
+                  this.selectedPacket = packet;
+                  this.selectedPacketOption = this.selectedPacket.id;
+                  this.dynamicLabelSelectedPacket = this.widget.config.dynamicLabels.packet;
+                  this.dynamicLabelSelectedPacketOption = this.widget.config.dynamicLabels.packetOption;
+                  this.dynamicLabelFields = this.widget.config.dynamicLabels.fieldOptions;
+                  this.dynamicLabelSelectedField = this.widget.config.dynamicLabels.field;
+                  const fieldsFlatList = this.hPacketFieldsHandlerService.flatPacketFieldsTree(this.selectedPacket);
+                  this.fieldsOption = fieldsFlatList.map(x => ({
+                    value: x.field.id,
+                    label: x.label
+                  }));
+                  Object.entries(this.widget.config.packetFields).forEach((v, k) => {
+                    if (!this.fieldRules[v[0]]) {
+                      this.fieldRules[v[0]] = { type: 'expression', expression: '' };
+                    }
+                  });
+                  if (this.widget.config.packetFields) {
+                    this.selectedFields = [];
+                    Object.keys(this.widget.config.packetFields).forEach(x => {
+                      this.selectedFieldsOptions.push(+x);
+                      this.selectedFields.push(this.hPacketFieldsHandlerService.findFieldFromPacketFieldsTree(packet, +x));
+                    });
+                    packet.fields.sort((a, b) => a.name < b.name ? -1 : 1);
+                    this.syncUnitsConversion();
+                  }
+                },
+                error: (error) => {
+                  this.pageStatus = PageStatus.Error;
+                  this.pageStatusChange.emit(this.pageStatus);
+                  this.logger.error('Error loading packet:', error);
+                }
+              });
+          } else {
+            this.pageStatus = PageStatus.Ready;
+            this.pageStatusChange.emit(this.pageStatus);
+          }
+        },
+        error: (error) => {
+          this.pageStatus = PageStatus.Error;
           this.pageStatusChange.emit(this.pageStatus);
+          this.logger.error('Error loading packet:', error);
         }
       });
   }

@@ -7,6 +7,8 @@
         [selectedFields]="selectedFields"
         (selectedFieldsChange)="onSelectedFieldsChange($event)"
         (pageStatusChange)="updatePageStatus($event)"
+        [spinner]="true"
+        [chartStatus]="pageStatus"
     ></hyperiot-packet-select>
 
 <div class="loading-overlay" *ngIf="pageStatus === 0">

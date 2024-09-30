@@ -22,6 +22,7 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
     @Input() hDeviceId;
     selectedFields = [];
     pageStatus: PageStatus = PageStatus.Loading;
+    packetPageStatus: PageStatus = PageStatus.Loading;
 
     private defaultConfig = {
         timeAxisRange: 10,
@@ -74,7 +75,7 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
     }
 
     updatePageStatus(status) {
-        this.pageStatus = status;
+        this.packetPageStatus = status;
     }
 
     apply() {
