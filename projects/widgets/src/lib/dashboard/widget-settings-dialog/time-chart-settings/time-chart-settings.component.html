@@ -4,7 +4,8 @@
         (selectedPacketChange)="onSelectedPacketChange($event)"
         (pageStatusChange)="updatePageStatus($event)"
         [spinner]="true"
-        [chartStatus]="pageStatus"></hyperiot-packet-select>
+        [chartStatus]="pageStatus"
+    ></hyperiot-packet-select>
 
     <div id="time-chart-settings" *ngIf="packetPageStatus === 1 && pageStatus === 1">
         <div *ngIf="checkbox && (selectedFields.length > 0 || widget.config.packetId)"
