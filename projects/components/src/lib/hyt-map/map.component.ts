@@ -1,7 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {MapTypeKey} from "./models/map-type-key";
-import {Logger, LoggerService} from "core";
-import {LeafletMap} from "./models/leaflet-map";
+import {Area, AreaDevice, Logger, LoggerService} from "core";
 
 @Component({
   selector: 'hyt-map',
@@ -9,6 +8,9 @@ import {LeafletMap} from "./models/leaflet-map";
   styleUrls: ['./map.component.scss']
 })
 export class MapComponent implements OnInit {
+
+  @ViewChild('map') mapComponent: any;
+
   /**
    * Indication of the type of third-party library used for map display
    */
@@ -17,10 +19,16 @@ export class MapComponent implements OnInit {
    * Variable used to understand when we are in the "EDIT" mode of the map
    */
   @Input() editMode: boolean = false;
+
   /**
-   * Variable used to understand when we are in the "EDIT" mode of the map
+   * Variable used to store map settings
    */
-  @Input() option: LeafletMap;
+  @Input() areaConfiguration: string;
+
+  @Output() itemOpen = new EventEmitter<any>();
+  itemRemove = new EventEmitter<any>();
+  itemUpdate = new EventEmitter<any>();
+
   /*
   * logger service
   */
@@ -34,6 +42,47 @@ export class MapComponent implements OnInit {
 
   ngOnInit(): void {
     this.logger.info('Created map! Map Type: ' + this.mapType + ' - Edit mode: ' + this.editMode);
+  }
+
+  ngAfterViewInit() {
+    this.mapComponent.itemOpen.subscribe(res => this.itemOpen.emit(res));
+    this.mapComponent.itemRemove.subscribe(res => this.itemRemove.emit(res));
+    this.mapComponent.itemUpdate.subscribe(res => this.itemUpdate.emit(res));
+  }
+
+  initArea(options: any) {
+    this.mapComponent.initDataMap(options);
+  }
+
+  getAreaConfiguration() {
+    return this.mapComponent.areaConfiguration;
+  }
+
+  getAreaCenter() {
+    return this.mapComponent.getAreaCenter();
+  }
+
+  addAreaItem(areaItem: AreaDevice | Area) {
+    this.logger.debug('addAreaItem function');
+    this.mapComponent.addAreaItem(areaItem);
+  }
+
+  setAreaItems(items: (AreaDevice | Area)[]) {
+    this.mapComponent.setAreaItems(items);
+  }
+
+  refresh() { }
+
+  toggleEditCenter(isEditCenterEnabled: boolean, moveCB: (areaConfiguration: string) => void, areaConfiguration?: string) {
+    this.mapComponent.toggleEditCenter(isEditCenterEnabled, moveCB, areaConfiguration);
+  }
+
+  setMapCenter(areaConfiguration: string) {
+    this.mapComponent.setMapCenter(areaConfiguration);
+  }
+
+  getAreaItemCount() {
+    return this.mapComponent?.areaItemsCount;
   }
 
 }

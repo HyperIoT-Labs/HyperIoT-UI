@@ -1,9 +1,15 @@
 <div id="container-leaflet-map"
    leaflet
    [leafletOptions]="mapOptions"
+   [(leafletZoom)]="mapOptions.zoom"
+   [(leafletCenter)]="mapOptions.center"
    (leafletMapReady)="onMapReady($event)"
+   (leafletMapMove)="mapMove($event)"
 >
-  <div *ngIf="editMode" class="container-user-config-map">
-    <hyt-dynamic-map-user-configurator></hyt-dynamic-map-user-configurator>
+  <div id="leaflet-user-overlay" class="container-user-config-map">
+    <ng-content></ng-content>
   </div>
+  <button mat-mini-fab (click)="recenter()" class="recenter-button">
+    <mat-icon>my_location</mat-icon>
+  </button>
 </div>

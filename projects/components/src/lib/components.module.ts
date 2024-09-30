@@ -62,11 +62,11 @@ import { HytChartModalComponent } from './hyt-modal/hyt-chart-modal/hyt-chart-mo
 import { MapComponent } from './hyt-map/map.component';
 import { LeafletMapComponent } from './hyt-map/components/leaflet-map/leaflet-map.component';
 import {LeafletModule} from "@asymmetrik/ngx-leaflet";
-import { DynamicMapUserConfiguratorComponent } from './hyt-map/components/dynamic-map-user-configurator/dynamic-map-user-configurator.component';
 
 import { HytAlarmComponent } from './hyt-alarm/hyt-alarm.component';
 import { HytNoData } from './hyt-no-data/hyt-no-data.component';
 import { CustomSelectPositionDirective } from './directives/positionSelect.directive';
+import { MapDeviceEditComponent } from './hyt-map/components/map-device-edit/map-device-edit.component';
 export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
 
 @NgModule({
@@ -130,10 +130,10 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     HytChartModalComponent,
     MapComponent,
     LeafletMapComponent,
-    DynamicMapUserConfiguratorComponent,
     HytAlarmComponent,
     HytNoData,
     CustomSelectPositionDirective,
+    MapDeviceEditComponent,
   ],
   imports: [
     CommonModule,
@@ -198,12 +198,14 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     HytChartModalComponent,
     MapComponent,
     LeafletMapComponent,
+    MapDeviceEditComponent,
     HytAlarmComponent,
     HytNoData
   ],
   entryComponents: [
     HytConfirmRecordingActionComponent,
     HytInfoRecordingActionComponent,
+    MapDeviceEditComponent,
   ]
 })
 export class ComponentsModule { }

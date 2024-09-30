@@ -271,4 +271,8 @@ export class AreaMapComponent implements OnDestroy {
     this.mapComponents.slice().forEach((c) => this.removeItem(c, true));
   }
 
+  getAreaCenter() {
+    return { x: 0.5, y: 0.5 };
+  }
+
 }

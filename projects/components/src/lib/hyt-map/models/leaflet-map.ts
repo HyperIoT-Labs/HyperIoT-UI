@@ -1,6 +1,6 @@
 import {GenericMap} from "./generic-map";
 
-export interface LeafletMap extends GenericMap {
+export interface LeafletMapConfig extends GenericMap {
   minZoom?: number;
   maxZoom?: number;
 }

@@ -1,0 +1,14 @@
+.map-device-edit-container {
+  display: flex;
+  flex-direction: column;
+
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .map-device-edit-actions {
+    display: flex;
+    justify-content: flex-end;
+  }
+}

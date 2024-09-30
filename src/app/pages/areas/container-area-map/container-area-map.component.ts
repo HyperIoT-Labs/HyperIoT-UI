@@ -5,7 +5,7 @@ import {PageStatus} from '../../../models/pageStatus';
 import {AreaMapComponent} from '../../projects/project-forms/areas-form/area-map/area-map.component';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
-import {HytTreeViewProjectComponent} from 'components';
+import {HytTreeViewProjectComponent, MapComponent} from 'components';
 import {takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
 import {MapTypeKey} from "../../../../../projects/components/src/lib/hyt-map/models/map-type-key";
@@ -20,7 +20,7 @@ export class ContainerAreaMapComponent implements OnInit, OnDestroy {
   /**
    * Hook to track the map element
    */
-  @ViewChild('map')  mapComponent: AreaMapComponent;
+  @ViewChild('map')  mapComponent: any; //AreaMapComponent;
   /**
    * Hook to track the treeview element
    */
@@ -263,7 +263,7 @@ export class ContainerAreaMapComponent implements OnInit, OnDestroy {
           .subscribe(
           {
             next: (areaDevices: AreaDevice[]) => {
-              if(area.areaViewType === 'IMAGE'){
+              if(area.areaViewType === 'IMAGE' || area.areaViewType === 'MAP'){
                 this.logger.debug('Found the devices present in this area', areaDevices);
                 this.areaDevices = areaDevices;
                 this.mapComponent.setAreaItems(areaDevices.concat(this.areaList.filter(a => a.mapInfo != null)));

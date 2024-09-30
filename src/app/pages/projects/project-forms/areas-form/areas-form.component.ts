@@ -19,7 +19,7 @@
 
 import {AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Injector, OnDestroy, OnInit, Output, ViewChild, ViewEncapsulation} from '@angular/core';
 import {ActivatedRoute, Event, NavigationStart, Router} from '@angular/router';
-import {ConfirmDialogService, DialogService, Option} from 'components';
+import {ConfirmDialogService, DialogService, GenericMap, Option} from 'components';
 import {LoadingStatusEnum, ProjectFormEntity} from '../project-form-entity';
 import {Area, AreaDevice, AreasService, HprojectsService, Logger, LoggerService} from 'core';
 import {AreaMapComponent} from './area-map/area-map.component';
@@ -40,7 +40,7 @@ import {
   Subject,
   switchMap
 } from 'rxjs';
-import {catchError, take, takeUntil} from 'rxjs/operators';
+import {catchError, finalize, take, takeUntil, tap} from 'rxjs/operators';
 import {AreaType} from '../../../../models/areaType';
 import {areAllEquivalent} from '@angular/compiler/src/output/output_ast';
 import {MatSelectChange} from "@angular/material/select";
@@ -58,7 +58,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
    * Listener on map area
    */
   @ViewChild('map')
-  mapComponent: AreaMapComponent;
+  mapComponent: any; // AreaMapComponent;
   /**
    * Listener Tab Group
    */
@@ -220,9 +220,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe( (event: Event) => {
       if (event instanceof NavigationStart) {
-          if (this.isDirty()) {
             this.currentSection = 0;
-          }
       }
     });
 
@@ -321,7 +319,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
         this.apiSuccess(list);
       }, (err) => {
           this.logger.error('oad - HProject area list by id Error', this.projectId, err);
-          this.apiError(err);
+          this.loadingStatus = LoadingStatusEnum.Ready;
         });
     }
   }
@@ -729,6 +727,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
     const modalRef = this.dialogService.open(AreaDeviceSelectDialogComponent, {
       data: {
         areaId: this.areaId,
+        areaType: this.entity.areaViewType,
         projectId: this.projectId,
       },
     });
@@ -742,8 +741,8 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
           device: ad.device,
           mapInfo: {
             icon: ad.icon,
-            x: 0.5,
-            y: 0.5
+            x: this.mapComponent.getAreaCenter().x,
+            y: this.mapComponent.getAreaCenter().y,
           }
         } as AreaDevice)
           .pipe(takeUntil(this.ngUnsubscribe))
@@ -825,9 +824,9 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
       this.logger.debug('onMapAreaAddClick modal on close', a);
       if (a) {
         a.mapInfo = {
-          icon: 'map.png',
-          x: 0.5,
-          y: 0.5
+          icon: this.entity.areaViewType === 'MAP' ? 'layer-svgrepo-com.png' : 'map.png',
+          x: this.mapComponent.getAreaCenter().x,
+          y: this.mapComponent.getAreaCenter().y,
         };
         this.loadingStatus = LoadingStatusEnum.Saving;
         this.areaService.updateArea(this.patchArea(a))
@@ -1275,7 +1274,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
         successCallback(res);
       }, (err) => {
         this.logger.error('saveArea save area Error', err);
-        this.setErrors(err);
+        this.apiError(err);
         errorCallback(err);
       });
     }
@@ -1346,6 +1345,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
         break;
       case AreaViewTypeEnum.MAP:
         console.log('loadMediaElements', areaViewType);
+        this.loadAreaMap();
         break;
     }
   }
@@ -1373,6 +1373,20 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
         this.handleSearchAndDeleteElementOnMap(this.entity.areaViewType, eventValue);
       }
     })
+  }
+
+  saveMapAreaConfiguration = (mapSettings: GenericMap) => {
+    this.loadingStatus = LoadingStatusEnum.Loading;
+    const parentAreaId = this.getParentAreaId();
+    const updatedArea = {
+      ...this.entity,
+      areaConfiguration: JSON.stringify(mapSettings),
+      project: { id: this.projectId },
+      parentArea: parentAreaId ? { id: parentAreaId, entityVersion: null } : null,
+    };
+    return this.areaService.updateArea(updatedArea).pipe(tap(res => {
+      this.entity = res;
+    }), finalize(() => this.loadingStatus = LoadingStatusEnum.Ready ));
   }
 
 }

@@ -6,12 +6,20 @@
   border-radius: 5px;
 
   .container-user-config-map {
+    cursor: default;
     position: relative;
     top: 10px;
-    left: 70px;
+    left: 10px;
     display: flex;
     width: fit-content;
     height: auto;
     z-index: 1001;
+  }
+
+  .recenter-button {
+    position: absolute;
+    z-index: 1000;
+    top: 10px;
+    right: 10px;
   }
 }

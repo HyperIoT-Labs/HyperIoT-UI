@@ -1,0 +1,45 @@
+<div class="map-device-edit-container">
+  <h2>{{ deviceInfo.device?.deviceName || deviceInfo.name || 'MISSING NAME' }}</h2>
+  <form [formGroup]="deviceInfoForm" (ngSubmit)="saveFormEdit()">
+    <mat-form-field appearance="fill">
+      <mat-label>Icon</mat-label>
+      <mat-select formControlName="deviceIcon" (selectionChange)="asd($event)">
+        <mat-option *ngFor="let icon of areaMapIconsOptions" [value]="icon.value">
+          {{icon.label}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Latitude</mat-label>
+      <input matInput formControlName="latitude">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Longitude</mat-label>
+      <input matInput formControlName="longitude">
+    </mat-form-field>
+
+    <!-- Device coord: {{ deviceInfo.mapInfo.x }} |  {{ deviceInfo.mapInfo.y }} -->
+    <div class="map-device-edit-actions">
+      <button type="submit" *ngIf="editMode" mat-icon-button aria-label="Enable Edit Form">
+        <mat-icon>check</mat-icon>
+      </button>
+      <button *ngIf="editMode" mat-icon-button (click)="cancelFormEdit()" aria-label="Enable Edit Form">
+        <mat-icon>close</mat-icon>
+      </button>
+      <button *ngIf="!editMode" mat-icon-button (click)="enableEdit()" aria-label="Enable Edit Form">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button *ngIf="!editMode" mat-icon-button (click)="toggleTrag()" aria-label="Drag Device Reference">
+        <mat-icon>pan_tool</mat-icon>
+      </button>
+      <button *ngIf="!editMode && !deviceInfo.device" mat-icon-button (click)="openSubArea()" aria-label="Visit sub area">
+        <mat-icon>map</mat-icon>
+      </button>
+      <button *ngIf="!editMode" mat-icon-button (click)="delete()" aria-label="Delete Device Reference">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </form>
+</div>

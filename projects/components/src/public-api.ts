@@ -30,6 +30,7 @@ export * from './lib/hyt-notification-box/notification-box.component'
 export * from './lib/hyt-bim/bim.component';
 export * from './lib/hyt-map/map.component';
 export * from './lib/hyt-map/components/leaflet-map/leaflet-map.component';
+export * from './lib/hyt-map/components/map-device-edit/map-device-edit.component';
 
 export { SelectOption, SelectOptionGroup } from './lib/hyt-select/hyt-select.component';
 export { TreeNode } from './lib/hyt-tree-view/hyt-tree-view.component';
@@ -108,5 +109,9 @@ export { InfoDialogConfig, InfoDialogResult } from './lib/hyt-dialog/info-dialog
 
 export { CronEditorComponent } from './lib/cron-editor/cron-editor.component';
 export { CronOptions } from './lib/cron-editor/CronOptions';
+export { CoordinatesType } from './lib/hyt-map/models/coordinates-type';
+export * from './lib/hyt-map/models/area-icons';
+export { GenericMap } from './lib/hyt-map/models/generic-map';
+export { MapDefaultConfiguration } from './lib/hyt-map/map-configuration';
 
 export { RuleDefinitionComponent } from './lib/rule-definition/rule-definition.component';

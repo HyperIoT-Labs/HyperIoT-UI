@@ -102,7 +102,7 @@
         </div>
 
         <div *ngIf="areaViewType === 'MAP'">
-          <hyt-map [mapType]="currentMapTypeKey"></hyt-map>
+          <hyt-map #map [mapType]="currentMapTypeKey" [areaConfiguration]="areaConfiguration" (itemOpen)="onItemMapClicked($event)"></hyt-map>
         </div>
 
       </div>
