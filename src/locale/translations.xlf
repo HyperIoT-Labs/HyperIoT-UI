@@ -1199,6 +1199,9 @@
       <trans-unit id="HYT_dashboard" datatype="html">
         <source>Dashboard</source>
       </trans-unit>
+      <trans-unit id="HYT_dashboard_device" datatype="html">
+        <source>Dashboard device</source>
+      </trans-unit>
       <trans-unit id="HYT_areas" datatype="html">
         <source>Areas</source>
       </trans-unit>

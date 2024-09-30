@@ -365,8 +365,8 @@ export class ContainerAreaMapComponent implements OnInit, OnDestroy {
         })
     } else {
       this.isEmptyBim = true;
-      console.log('%cBIM WARNING isEmptyBim', 'color:yellowgreen', this.isEmptyBim);
-      console.log('%cBIM WARNING isBimLoading', 'color:yellowgreen', this.isBimLoading);
+      this.logger.warn('%cBIM WARNING isEmptyBim', this.isEmptyBim);
+      this.logger.warn('%cBIM WARNING isBimLoading', this.isBimLoading);
       this.logger.warn('No configuration data for this area');
     }
   }
@@ -390,8 +390,12 @@ export class ContainerAreaMapComponent implements OnInit, OnDestroy {
     this.logger.debug('onItemMapClicked start', itemMap);
     if (itemMap.deviceAction) {
       if (itemMap.deviceAction === DeviceActions.DASHBOARD) {
-        // TODO implement navigation to device dashboard
-        this.logger.debug('navigation to device dashboard', itemMap);
+        this.logger.debug('navigation to device dashboard', itemMap.item);
+        if (itemMap.item.device) {
+          this.router.navigate(['hdevice', this.projectId, itemMap.item.device.id, 'dashboards'])
+        } else{
+          this.logger.error('Device not found', itemMap.item);
+        }
       } else if (itemMap.deviceAction === DeviceActions.ALARMMANAGER) {
         // TODO implement navigation to alarmmanager
         this.logger.debug('navigation to alarmmanager', itemMap);

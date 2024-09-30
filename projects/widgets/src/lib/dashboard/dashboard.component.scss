@@ -9,6 +9,13 @@
     padding-right: 15px;
     padding-top: 15px;
 
+    .tooltip-multiline {
+      height: auto;
+    }
+    .md-tooltip {
+      height: auto;
+    }
+
     .header {
       border-bottom: 1px solid $primary-color;
       min-height: 50px;
@@ -59,6 +66,11 @@
                         color: #008aff;
                     }
                 }
+            }
+
+            #device-header {
+              border-right: 2px solid #777;
+              text-align: right;
             }
 
             .left-tools {
@@ -300,7 +312,7 @@
         font-family: 'Exo', serif;
         font-size: 16px;
         min-width: unset;
-    }    
+    }
 
 }
 

@@ -48,7 +48,18 @@
                         </hyt-topology-toolbar>
                     </div>
 
-                    <div class="col-4 center-tools">
+                  <div *ngIf="showHDevice" class="col-4 center-tools">
+                    <div id="device-header" class="flex-column pr-2">
+                      <span style="font-size: 2em; padding-top: 0.2em; padding-left: 0.4em;" class="hyt-icon icon-hyt_device"></span>
+                      <h3 i18n="@HYT_dashboard_device">Dashboard device</h3>
+                    </div>
+                    <div class="flex-column pl-2">
+                      <h4 *ngIf="currentDevice && currentDevice?.deviceName" class="title-badge">{{currentDevice?.deviceName}}</h4>
+                      <small *ngIf="currentDevice && currentDevice?.description">{{currentDevice?.description}}</small>
+                    </div>
+                  </div>
+
+                    <div *ngIf="!showHDevice" class="col-4 center-tools">
 
                         <hyt-select
                             *ngIf="!showAreas && pageStatus == 1 && enableProjectSelection"
@@ -96,8 +107,7 @@
                             </span>
                         </div>
                         -->
-
-                        <button mat-button *ngIf="showAreas" [routerLink]="['/areas', idProjectSelected, areaId]">
+                        <button mat-button *ngIf="(showAreas || showHDevice) && (areaId || deviceAreaId)" [routerLink]="['/areas', idProjectSelected, areaId || deviceAreaId]">
                             <div id="area-widget-btn">
                                 <span class="hyt-icon icon-hyt_areaB16"></span>
                                 <span class="button-label">Areas</span>

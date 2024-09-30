@@ -136,7 +136,7 @@ const hyperiotRoutes: Routes = [
   {
     path: 'login',
     redirectTo: '/auth/login',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: 'project-wizard',
@@ -280,6 +280,14 @@ const hyperiotRoutes: Routes = [
   },
   {
     path: 'areas/:projectId/:areaId/dashboards',
+    component: DashComponent,
+    canActivate: [LoggedInGuard],
+    data: {
+      showToolBar: true,
+    }
+  },
+  {
+    path: 'hdevice/:projectId/:hDeviceId/dashboards',
     component: DashComponent,
     canActivate: [LoggedInGuard],
     data: {

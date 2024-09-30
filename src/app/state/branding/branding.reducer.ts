@@ -34,6 +34,10 @@ const _brandingReducer = createReducer(
     logger.debug('reset', state);
     return state;
   }),
+  on(BrandingActions.unset, (state) => { 
+    logger.debug('unset', state);
+    return initialBrandingState;
+  }),
   on(BrandingApiActions.loadFailure, (state) => {
     logger.debug('loadFailure', state);
     return state;

@@ -393,12 +393,14 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
 
   openModal(widget: GridsterItem) {
     const areaId = this.activatedRoute.snapshot.params.areaId;
+    const hDeviceId = this.activatedRoute.snapshot.params.hDeviceId;
     const modalRef = this.dialogService.open(WidgetSettingsDialogComponent, {
       width: '800px',
       data: {
         currentWidgetIdSetting: this.currentWidgetIdSetting,
         widget,
         areaId,
+        hDeviceId
       }
     });
     modalRef.dialogRef.afterClosed().subscribe(
