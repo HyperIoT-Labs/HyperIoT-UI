@@ -39,6 +39,7 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
     defaultOpacity: number = 0.55;
     defaultColor: string = `rgba(5, 186, 0, ${this.defaultOpacity})`;
     defaultLine = { color: this.defaultColor, thickness: 2, type: LineTypes.Linear };
+    packetPageStatus: PageStatus = PageStatus.Loading;
     pageStatus: PageStatus = PageStatus.Loading;
 
     lineTypes = LineTypes;
@@ -130,7 +131,7 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
     }
 
     updatePageStatus(status) {
-        this.pageStatus = status;
+        this.packetPageStatus = status;
     }
 
     apply() {
@@ -158,9 +159,11 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
     }
 
     isChecked() {
+        if (this.selectedFields.length === 0 && !this.widget.config.packetId && !this.thresholdActive) return
+        this.pageStatus = PageStatus.Loading;
         this.ruleService.findAllRuleByProjectId(this.widget.projectId).subscribe({
             next: (rules) => {
-                if (this.selectedFields.length === 0 && !this.widget.config.packetId && !this.thresholdActive) return
+                this.pageStatus = PageStatus.Ready;
                 this.thresholds = rules
                     .filter((rule) => {
                         let ruleDefinition = rule.ruleDefinition;
@@ -203,6 +206,7 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
             },
             error: (err) => {
                 console.error('Error retrieving thresholds', err);
+                this.pageStatus = PageStatus.Error;
             }
         })
     }
