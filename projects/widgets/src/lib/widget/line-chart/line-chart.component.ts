@@ -65,7 +65,7 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
 
   thresholds: Threshold[] = [];
   shapeIndices: number[] = [];
-  
+
   protected logger: Logger;
 
   private _chartConfig = {
@@ -483,12 +483,26 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
         y1: value,
         line: {
           color: threshold.line.color,
-          width: 2
+          width: threshold.line.thickness,
+          dash: this.getLineDash(threshold.line.type)
         },
       }
     );
     const shapeIndex: number = this.graph.layout.shapes.length;
     this.shapeIndices.push(shapeIndex);
+  }
+
+  getLineDash(lineType: string): string {
+    switch (lineType) {
+      case "linear":
+        return "solid";
+      case "dash":
+        return "dash";
+      case "dot":
+        return "dot";
+      default:
+        return "solid";
+    }
   }
 
   setTimeSeries(): void {
