@@ -2468,6 +2468,10 @@
         <source>Back to area</source>
         <target>Torna all'area</target>
       </trans-unit>
+      <trans-unit id="HYT_select_threshold" datatype="html">
+        <source>Select threshold(s)</source>
+        <target>Seleziona soglia/e</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

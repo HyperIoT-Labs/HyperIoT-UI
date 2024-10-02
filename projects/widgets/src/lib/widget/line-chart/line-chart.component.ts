@@ -11,6 +11,7 @@ import {
   Logger,
   LoggerService,
   PacketData,
+  RulesService,
 } from "core";
 import { PlotlyComponent, PlotlyService } from "angular-plotly.js";
 import {
@@ -22,7 +23,7 @@ import {
 } from "rxjs";
 
 import { BaseChartComponent } from "../../base/base-chart/base-chart.component";
-import {ConfigButtonWidget, WidgetAction} from "../../base/base-widget/model/widget.model";
+import { ConfigButtonWidget, Threshold, WidgetAction } from "../../base/base-widget/model/widget.model";
 import { TimeSeries } from "../../data/time-series";
 import { ServiceType } from "../../service/model/service-type";
 import { DashboardEventService } from "../../dashboard/services/dashboard-event.service";
@@ -42,14 +43,14 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
   sideMarginGap = 0.12;
   totalLength = 0;
   fieldsName: any[] = [];
-   get initToolbarConfig() :ConfigButtonWidget  {
-     return {
-       showClose: true,
-       showSettings: true,
-       showPlay: this.serviceType === this.serviceTypeList.ONLINE,
-       showRefresh: false,
-       showTable: false
-     }
+  get initToolbarConfig(): ConfigButtonWidget {
+    return {
+      showClose: true,
+      showSettings: true,
+      showPlay: this.serviceType === this.serviceTypeList.ONLINE,
+      showRefresh: false,
+      showTable: false
+    }
   }
 
   dataChannel: DataChannel;
@@ -61,6 +62,9 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
   loadingOfflineData = false;
 
   allData: PacketData[] = [];
+
+  thresholds: Threshold[] = [];
+  shapeIndices: number[] = [];
 
   protected logger: Logger;
 
@@ -87,7 +91,8 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
     injector: Injector,
     private dashboardEvent: DashboardEventService,
     @Optional() public plotly: PlotlyService,
-    protected loggerService: LoggerService
+    protected loggerService: LoggerService,
+    private ruleService: RulesService
   ) {
     super(injector, plotly, loggerService);
     this.logger = new Logger(this.loggerService);
@@ -193,6 +198,10 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
     }
     this.isConfigured = true;
 
+    if (this.widget.config.threshold && this.widget.config.threshold.thresholdActive) {
+      this.thresholds = this.widget.config.threshold.thresholds;
+      this.retrieveThresholds();
+    }
     // scheduling chart initialization because of chart size
     asyncScheduler.schedule(() => {
       this.setTimeSeries();
@@ -284,6 +293,27 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
     }
   }
 
+  /* 
+    Retrive each threshold and save the corresponding rule
+  */
+  retrieveThresholds() {
+    this.shapeIndices = [];
+    this.thresholds.forEach(threshold => {
+      this.ruleService.findRule(parseInt(threshold.id)).subscribe({
+        next: (data) => {
+          threshold.rule = data.ruleDefinition;
+          if (!threshold.rule) return;
+          const ruleDefinition = threshold.rule.replace(/"/g, '').trim();
+          const ruleArray: string[] = ruleDefinition.match(/[^AND|OR]+(AND|OR)?/g).map(x => x.trim());
+          this.addThresholdToChart(threshold, ruleArray, data.name);
+        },
+        error: (err) => {
+          console.error('Error retrieving thresholds', err);
+        }
+      })
+    });
+  }
+
   setTimeChartLayout() {
     this.logger.debug("setTimeChartLayout");
     this.chartData.forEach((timeSeries, i) => {
@@ -293,7 +323,6 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
         this.graph.layout[`yaxis`] = {
           title: fieldName,
           domain: [0.15, 0.85],
-          // showline: true
         };
       } else {
         this.graph.layout[`yaxis${a}`] = {
@@ -303,10 +332,8 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
           overlaying: "y",
           side: "right",
           position: 1 - i * this.sideMarginGap,
-          // showline: true,
         };
       }
-
       const tsd = {
         name: fieldName,
         x: [],
@@ -317,6 +344,8 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
       Object.assign(tsd, this.defaultSeriesConfig);
       this.graph.data.push(tsd);
     });
+
+    // Set up legend and other layout settings
     this.graph.layout.showlegend = true;
     this.graph.layout.legend = {
       orientation: "h",
@@ -353,6 +382,129 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
     };
   }
 
+  addThresholdToChart(threshold: Threshold, ruleArray: string[], ruleName: string) {
+    if (!this.graph.layout.shapes) this.graph.layout.shapes = [];
+    /* TODO atm we only handle  */
+    if (ruleArray.length > 2) return;
+    if (ruleArray.length === 1) {
+      this.addSingleThreshold(ruleArray[0], threshold);
+    } else if (ruleArray.length === 2 && ruleArray[0].includes('AND')) {
+      let values = [];
+      ruleArray.forEach(rule => {
+        const tempSplitted = rule.split(' ').filter(i => i);
+        const value = tempSplitted.length > 1 ? tempSplitted[2].toLowerCase() : "";
+        if (value === "") return;
+        values.push(value);
+      })
+
+      this.graph.layout.shapes.push(
+        {
+          type: "rect",
+          xref: "paper",
+          x0: 0,
+          x1: 1,
+          yref: "y",
+          y0: values[0],
+          y1: values[1],
+          fillcolor: threshold.line.color,
+          line: {
+            width: 0,
+          },
+        }
+      );
+    } else {
+      for (let i = 0; i < ruleArray.length; i++) {
+        if (ruleArray[i].includes('OR') || !(ruleArray[i].includes('OR') && ruleArray[i].includes('AND'))) {
+          this.addSingleThreshold(ruleArray[i], threshold);
+        } else {
+          let values = [];
+          this.retrieveRuleValues(ruleArray[i], values);
+          this.retrieveRuleValues(ruleArray[i++], values);
+
+          this.graph.layout.shapes.push(
+            {
+              type: "rect",
+              xref: "paper",
+              x0: 0,
+              x1: 1,
+              yref: "y",
+              y0: values[0],
+              y1: values[1],
+              fillcolor: threshold.line.color,
+              line: {
+                width: 0,
+              },
+            }
+          );
+
+          const shapeIndex: number = this.graph.layout.shapes.length;
+          this.shapeIndices.push(shapeIndex);
+        }
+      }
+    }
+    //this.addScatterTrace(threshold, ruleName);
+  }
+
+  addScatterTrace(threshold: Threshold, ruleName: string) {
+    this.graph.data.push({
+      x: [null],
+      y: [null],
+      mode: "markers",
+      marker: {
+        color: threshold.line.color,
+        size: 12
+      },
+      name: ruleName,
+      showlegend: true,
+      hoverinfo: 'skip',
+      shapeIndices: this.shapeIndices
+    });
+  }
+
+  retrieveRuleValues(rule, values) {
+    const tempSplitted = rule.split(' ').filter(i => i);
+    const value = tempSplitted.length > 1 ? tempSplitted[2].toLowerCase() : "";
+    if (value === "") return;
+    values.push(value);
+  }
+
+  addSingleThreshold(rule, threshold: Threshold) {
+    const tempSplitted = rule.split(' ').filter(i => i);
+    const value = tempSplitted.length > 1 ? tempSplitted[2].toLowerCase() : "";
+    if (value === "") return;
+    this.graph.layout.shapes.push(
+      {
+        type: "line",
+        xref: "paper",
+        x0: 0,
+        x1: 1,
+        yref: "y",
+        y0: value,
+        y1: value,
+        line: {
+          color: threshold.line.color,
+          width: threshold.line.thickness,
+          dash: this.getLineDash(threshold.line.type)
+        },
+      }
+    );
+    const shapeIndex: number = this.graph.layout.shapes.length;
+    this.shapeIndices.push(shapeIndex);
+  }
+
+  getLineDash(lineType: string): string {
+    switch (lineType) {
+      case "linear":
+        return "solid";
+      case "dash":
+        return "dash";
+      case "dot":
+        return "dot";
+      default:
+        return "solid";
+    }
+  }
+
   setTimeSeries(): void {
     this.logger.debug("setTimeSeries");
     this.chartData = [];
@@ -362,6 +514,7 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
       );
     });
   }
+
   async renderBufferedData() {
     this.logger.debug("renderBufferedData");
     const Plotly = await this.plotly.getPlotly();
