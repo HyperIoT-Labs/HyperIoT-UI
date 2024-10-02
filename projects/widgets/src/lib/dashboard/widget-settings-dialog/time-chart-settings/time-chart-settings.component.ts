@@ -39,8 +39,9 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
     defaultOpacity: number = 0.55;
     defaultColor: string = `rgba(5, 186, 0, ${this.defaultOpacity})`;
     defaultLine = { color: this.defaultColor, thickness: 2, type: LineTypes.Linear };
-    packetPageStatus: PageStatus = PageStatus.Loading;
-    pageStatus: PageStatus = PageStatus.Loading;
+    packetPageStatus: PageStatus = PageStatus.Ready;
+    pageStatus: PageStatus = PageStatus.Ready;
+    wholeSpinner: boolean = true;
 
     lineTypes = LineTypes;
     private defaultConfig = {
@@ -95,6 +96,9 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
                 }
                 this.isChecked();
             }
+        } else {
+            this.pageStatus = PageStatus.Ready;
+            this.wholeSpinner = false;
         }
         this.subscription = this.modalApply.subscribe((event) => {
             if (event === 'apply') {
@@ -115,7 +119,7 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
             line: this.fb.group({
                 color: [threshold.line?.color || this.defaultColor, Validators.required],
                 thickness: [threshold.line?.thickness || 2, [Validators.min(1), Validators.max(5)]],
-                type: [threshold.line?.type || LineTypes.Linear, Validators.required]
+                type: [threshold.line?.type || null]
             })
         });
 
@@ -159,10 +163,14 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
     }
 
     isChecked() {
-        if (this.selectedFields.length === 0 && !this.widget.config.packetId && !this.thresholdActive) return
+        if ((this.selectedFields.length === 0 && !this.widget.config.packetId) || !this.thresholdActive) {
+            this.wholeSpinner = false;
+            return this.pageStatus = PageStatus.Ready;
+        };
         this.pageStatus = PageStatus.Loading;
         this.ruleService.findAllRuleByProjectId(this.widget.projectId).subscribe({
             next: (rules) => {
+                this.wholeSpinner = false;
                 this.pageStatus = PageStatus.Ready;
                 this.thresholds = rules
                     .filter((rule) => {
@@ -237,7 +245,7 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
         if (!thresholdsIds) return [];
         const ids = [];
         Object.keys(thresholdsIds).map(key => thresholdsIds[key].map(value => {
-            if (!value) debugger
+            if (!value) return
             else return ids.push(value.id)
         }));
         const filteredIds = [...new Set(ids)];
@@ -250,6 +258,7 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
         return `${parts[0]}=>${parts.slice(1).join('.')}`;
     }
     onThresholdSelected(selectedId: string) {
+        const singleRule: boolean = this.findThresholdRule(selectedId)?.ruleDefinition.match(/[^AND|OR]+(AND|OR)?/g).map(x => x.trim()).length === 1;
         const selectedThresholdIndex = this.thresholdsForm.controls.findIndex(thresholdGroup => {
             return thresholdGroup.get('id')?.value === selectedId;
         });
@@ -260,7 +269,7 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
                 line: this.fb.group({
                     color: [this.defaultColor, Validators.required],
                     thickness: [2, [Validators.min(1), Validators.max(5)]],
-                    type: [LineTypes.Linear, Validators.required]
+                    type: [singleRule ? LineTypes.Linear : null]
                 })
             });
             this.thresholdsForm.push(thresholdGroup);
@@ -271,7 +280,7 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
             if (thresholdFormGroup) {
                 thresholdFormGroup.get('line.color')?.setValue(this.defaultColor);
                 thresholdFormGroup.get('line.thickness')?.setValue(2);
-                thresholdFormGroup.get('line.type')?.setValue(LineTypes.Linear);
+                thresholdFormGroup.get('line.type')?.setValue(singleRule ? LineTypes.Linear : null);
             }
         }
     }   

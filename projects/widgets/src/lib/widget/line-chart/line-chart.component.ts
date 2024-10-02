@@ -442,7 +442,7 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
         }
       }
     }
-    this.addScatterTrace(threshold, ruleName);
+    //this.addScatterTrace(threshold, ruleName);
   }
 
   addScatterTrace(threshold: Threshold, ruleName: string) {

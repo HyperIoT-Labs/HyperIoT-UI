@@ -32,9 +32,9 @@ export class PacketSelectComponent implements OnInit, OnChanges {
   selectedPacketOption: number = null;
 
   /** Represents the current page status (e.g., LOADING, READY, ERROR). */
-  pageStatus: PageStatus = PageStatus.Loading;
+  packetSelectStatus: PageStatus = PageStatus.Loading;
   @Output()
-  pageStatusChange: EventEmitter<number> | undefined = new EventEmitter<number>();
+  packetSelectStatusChange: EventEmitter<number> | undefined = new EventEmitter<number>();
 
   dynamicLabelSelectedPacket: { [id: number]: HPacket } = {};
 
@@ -57,8 +57,8 @@ export class PacketSelectComponent implements OnInit, OnChanges {
   @Input()
   areaId: number;
   @Input() hDeviceId: number;
-  @Input() spinner: boolean = false;
-  @Input() chartStatus?: PageStatus;
+  @Input() wholeSpinner: boolean = false;
+  @Input() customSettingsStatus?: PageStatus;
 
   fieldAliases: FieldAliases;
   fieldTypes: FieldTypes;
@@ -106,8 +106,8 @@ export class PacketSelectComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    this.pageStatus = PageStatus.Loading;
-    this.pageStatusChange.emit(this.pageStatus);
+    this.packetSelectStatus = PageStatus.Loading;
+    this.packetSelectStatusChange.emit(this.packetSelectStatus);
     // If `areaId` is set, then show only packets belonging to the given area devices
     if (this.areaId) {
       this.areaService.getAreaDeviceList(this.areaId).subscribe((areaDevices: AreaDevice[]) => {
@@ -275,8 +275,8 @@ export class PacketSelectComponent implements OnInit, OnChanges {
             this.packetService.findHPacket(w.config.packetId)
               .subscribe({
                 next: (packet: HPacket) => {
-                  this.pageStatus = PageStatus.Ready;
-                  this.pageStatusChange.emit(this.pageStatus);
+                  this.packetSelectStatus = PageStatus.Ready;
+                  this.packetSelectStatusChange.emit(this.packetSelectStatus);
                   this.selectedPacket = packet;
                   this.selectedPacketOption = this.selectedPacket.id;
                   this.dynamicLabelSelectedPacket = this.widget.config.dynamicLabels.packet;
@@ -304,19 +304,19 @@ export class PacketSelectComponent implements OnInit, OnChanges {
                   }
                 },
                 error: (error) => {
-                  this.pageStatus = PageStatus.Error;
-                  this.pageStatusChange.emit(this.pageStatus);
+                  this.packetSelectStatus = PageStatus.Error;
+                  this.packetSelectStatusChange.emit(this.packetSelectStatus);
                   this.logger.error('Error loading packet:', error);
                 }
               });
           } else {
-            this.pageStatus = PageStatus.Ready;
-            this.pageStatusChange.emit(this.pageStatus);
+            this.packetSelectStatus = PageStatus.Ready;
+            this.packetSelectStatusChange.emit(this.packetSelectStatus);
           }
         },
         error: (error) => {
-          this.pageStatus = PageStatus.Error;
-          this.pageStatusChange.emit(this.pageStatus);
+          this.packetSelectStatus = PageStatus.Error;
+          this.packetSelectStatusChange.emit(this.packetSelectStatus);
           this.logger.error('Error loading packet:', error);
         }
       });

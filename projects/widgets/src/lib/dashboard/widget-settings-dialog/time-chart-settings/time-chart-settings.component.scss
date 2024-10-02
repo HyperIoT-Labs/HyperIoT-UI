@@ -20,6 +20,20 @@
             .line-config {
                 display: flex;
                 gap: 2em;
+                width: 26em;
+                justify-content: space-between;
+
+                .thickness {
+                    width: 27em;
+                }
+
+                .no-thickness {
+                    width: 6.55em;
+                }
+
+                .type {
+                    width: 26em;
+                }
 
                 .line-option {
                     width: 100%;
@@ -72,4 +86,11 @@
 ::ng-deep mat-option .mat-option-text {
     display: block;
     line-height: 1.5;
+}
+
+.loading-overlay {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 23px;
 }
