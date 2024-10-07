@@ -1,12 +1,12 @@
 <div class="map-device-info-container">
   <h2>{{ deviceInfo.device?.deviceName || deviceInfo.name || 'MISSING NAME' }}</h2>
-  <button *ngIf="!!deviceInfo.device" mat-button (click)="redirectTo(deviceActions.DASHBOARD)">
+  <button *ngIf="!!deviceInfo.device" mat-button (click)="redirectTo(deviceActions.DASHBOARD)" i18n="@@HYT_device_dashboard">
     Device Dashbaord
   </button>
-  <button *ngIf="!!deviceInfo.device" mat-button [disabled]="true" (click)="redirectTo(deviceActions.ALARMMANAGER)">
+  <button *ngIf="!!deviceInfo.device" mat-button [disabled]="true" (click)="redirectTo(deviceActions.ALARMMANAGER)" i18n="@@HYT_alarm_managing">
     Alarm Managing
   </button>
-  <button *ngIf="!deviceInfo.device" mat-button (click)="redirectTo()">
+  <button *ngIf="!deviceInfo.device" mat-button (click)="redirectTo()" i18n="@@HYT_go_sub_area">
     Go To Sub Area
   </button>
 </div>

@@ -5,24 +5,24 @@
         <mat-panel-title>
           <mat-icon class="error" aria-hidden="false" aria-label="warning icon">warning</mat-icon>
         </mat-panel-title>
-        <mat-panel-description>Set the coordinates of the center of the map</mat-panel-description>
+        <mat-panel-description i18n="@@HYT_map_no_center">Set the coordinates of the center of the map</mat-panel-description>
       </ng-container>
       <ng-container *ngIf="getConfigrationStatus() === 'nodevice'">
         <mat-panel-title>
           <mat-icon class="warning" aria-hidden="false" aria-label="warning icon">warning</mat-icon>
         </mat-panel-title>
-        <mat-panel-description>No device or sub-area set</mat-panel-description>
+        <mat-panel-description i18n="@@HYT_map_no_items">No device or sub-area set</mat-panel-description>
       </ng-container>
       <ng-container *ngIf="getConfigrationStatus() === 'complete'">
         <mat-panel-title>
           <mat-icon class="success" aria-hidden="false" aria-label="check_circle icon">check_circle</mat-icon>
         </mat-panel-title>
-        <mat-panel-description>Map data are set correctly</mat-panel-description>
+        <mat-panel-description i18n="@@HYT_map_ok">Map data are set correctly</mat-panel-description>
       </ng-container>
     </mat-expansion-panel-header>
 
     <div id="coordinates-configuration">
-      <div class="title-configuration">
+      <div class="title-configuration" i18n="@@HYT_set_map_location">
         Set Map Location
       </div>
       <div class="container-toogle-btn">
@@ -32,8 +32,8 @@
           [value]="selectedCoordType"
           (change)="changeCoordType($event)"
         >
-          <mat-button-toggle value="LATLONG">Coordinates</mat-button-toggle>
-          <mat-button-toggle value="GEOCODING" disabled>Address</mat-button-toggle>
+          <mat-button-toggle value="LATLONG" i18n="@@HYT_coordinates">Coordinates</mat-button-toggle>
+          <mat-button-toggle value="GEOCODING" disabled i18n="@@HYT_address">Address</mat-button-toggle>
         </mat-button-toggle-group>
       </div>
     </div>
@@ -43,13 +43,13 @@
           <form [formGroup]="latLongForm" (ngSubmit)="saveMapCenterAndZoom()">
             <div class=" form-row container-lat-long">
               <mat-form-field appearance="fill">
-                <mat-label>Latitudine</mat-label>
+                <mat-label i18n="@@HYT_latitude">Latitude</mat-label>
                 <input matInput placeholder="Inserisci latitudine" type="text" formControlName="latitude" />
               </mat-form-field>
             </div>
             <div class=" form-row container-lat-long">
               <mat-form-field appearance="fill">
-                <mat-label>Longitudine</mat-label>
+                <mat-label i18n="@@HYT_longitude">Longitude</mat-label>
                 <input matInput placeholder="Inserisci Longitudine" type="text" formControlName="longitude" />
               </mat-form-field>
             </div>
@@ -65,7 +65,7 @@
                 <mat-label>Zoom Level</mat-label>
                 <input matInput [min]="mapConfiguration.minZoom" [max]="mapConfiguration.maxZoom" placeholder="Zoom" type="number" formControlName="zoom" />
               </mat-form-field> -->
-              <mat-label>Zoom Level</mat-label>
+              <mat-label i18n="@@HYT_zoom_level">Zoom Level</mat-label>
               <mat-slider 
                   [min]="mapConfiguration.minZoom"
                   [max]="mapConfiguration.maxZoom"
@@ -97,7 +97,7 @@
           <form [formGroup]="geoSearchForm">
             <div class=" form-row container-address">
               <mat-form-field class="example-full-width" appearance="fill">
-                <mat-label>Indirizzo</mat-label>
+                <mat-label i18n="@@HYT_address">Address</mat-label>
                 <input matInput placeholder="Inserisci un indirizzo valido" formControlName="address" [matAutocomplete]="auto">
                 
                 <mat-icon matSuffix>
