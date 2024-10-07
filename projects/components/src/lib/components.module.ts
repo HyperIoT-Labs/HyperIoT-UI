@@ -67,6 +67,7 @@ import { HytAlarmComponent } from './hyt-alarm/hyt-alarm.component';
 import { HytNoData } from './hyt-no-data/hyt-no-data.component';
 import { CustomSelectPositionDirective } from './directives/positionSelect.directive';
 import { MapDeviceEditComponent } from './hyt-map/components/map-device-edit/map-device-edit.component';
+import { MapDeviceInfoComponent } from './hyt-map/components/map-device-info/map-device-info.component';
 export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
 
 @NgModule({
@@ -134,6 +135,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     HytNoData,
     CustomSelectPositionDirective,
     MapDeviceEditComponent,
+    MapDeviceInfoComponent,
   ],
   imports: [
     CommonModule,
@@ -199,6 +201,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     MapComponent,
     LeafletMapComponent,
     MapDeviceEditComponent,
+    MapDeviceInfoComponent,
     HytAlarmComponent,
     HytNoData
   ],
@@ -206,6 +209,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     HytConfirmRecordingActionComponent,
     HytInfoRecordingActionComponent,
     MapDeviceEditComponent,
+    MapDeviceInfoComponent,
   ]
 })
 export class ComponentsModule { }

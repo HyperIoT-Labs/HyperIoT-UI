@@ -14,5 +14,14 @@ export const AREA_ICONS_OPTIONS = new Map<Area.AreaViewTypeEnum, SelectOption[]>
     { label: 'Thermometer', value: 'thermometer.png' },
   ]],
   [ 'MAP', [
+    { label: 'Motion Sensor', value: 'door_sensor_fancy.png' },
+    { label: 'Wind Sensor', value: 'door_sensor_fancy.png' },
+    { label: 'Body Scanner', value: 'door_sensor_fancy.png' },
+    { label: 'Door Sensor', value: 'door_sensor_fancy.png' },
+    { label: 'GPS Sensor', value: 'door_sensor_fancy.png' },
+    { label: 'Automated Light', value: 'door_sensor_fancy.png' },
+    { label: 'Rain Sensor', value: 'door_sensor_fancy.png' },
+    { label: 'RFID Sensor', value: 'door_sensor_fancy.png' },
+    { label: 'Thermometer', value: 'door_sensor_fancy.png' },
   ]],
 ]);

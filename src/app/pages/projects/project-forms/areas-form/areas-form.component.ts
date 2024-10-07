@@ -1046,7 +1046,6 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
         }
       });
     }
-    this.loadAreaImage();
   }
 
   /**
@@ -1339,6 +1338,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
     switch (areaViewType) {
       case AreaViewTypeEnum.IMAGE:
         this.loadAreaMap();
+        this.loadAreaImage();
         break;
       case AreaViewTypeEnum.BIMXKT:
         this.loadAreaBim();
@@ -1384,6 +1384,11 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
       project: { id: this.projectId },
       parentArea: parentAreaId ? { id: parentAreaId, entityVersion: null } : null,
     };
+    this.mapComponent.getImage().then((blob) => {
+      const formData = new FormData();
+      formData.append('image_file', blob, 'area-image.png');
+      this.httpClient.post(`/hyperiot/areas/${this.entity.id}/image`, formData).subscribe();
+    });
     return this.areaService.updateArea(updatedArea).pipe(tap(res => {
       this.entity = res;
     }), finalize(() => this.loadingStatus = LoadingStatusEnum.Ready ));

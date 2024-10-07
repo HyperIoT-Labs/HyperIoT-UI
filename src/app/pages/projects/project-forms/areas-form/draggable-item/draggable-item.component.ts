@@ -1,11 +1,7 @@
 import {Component, EventEmitter, HostListener, ViewEncapsulation} from '@angular/core';
 import {CdkDrag} from '@angular/cdk/drag-drop';
 import {AreaDevice} from 'core';
-
-export enum DeviceActions {
-  ALARMMANAGER,
-  DASHBOARD
-}
+import { DeviceActions } from 'components';
 
 @Component({
   selector: 'hyt-draggable-item',

@@ -1,17 +1,19 @@
-import {ChangeDetectorRef, Component, ComponentFactoryResolver, EventEmitter, Injector, Input, NgZone, OnChanges, OnDestroy, OnInit, Output, SimpleChanges} from '@angular/core';
-import {latLng, tileLayer} from "leaflet";
+import { ApplicationRef, Component, ComponentFactoryResolver, EventEmitter, Injector, Input, NgZone, OnDestroy, OnInit } from '@angular/core';
 import * as L from 'leaflet';
 import {Area, AreaDevice, Logger, LoggerService} from "core";
 import { LeafletMapConfig } from "../../models/leaflet-map";
 import { MapDefaultConfiguration } from '../../map-configuration';
 import { MapDeviceEditComponent } from '../map-device-edit/map-device-edit.component';
+import { MapDeviceInfoComponent } from '../map-device-info/map-device-info.component';
+import { DeviceActions } from '../../models/device-actions';
+import domtoimage from 'dom-to-image';
 
 @Component({
   selector: 'hyt-leaflet-map',
   templateUrl: './leaflet-map.component.html',
   styleUrls: ['./leaflet-map.component.scss']
 })
-export class LeafletMapComponent implements OnInit, OnDestroy, OnChanges {
+export class LeafletMapComponent implements OnInit, OnDestroy {
   /**
    * Variable used to understand when we are in the "EDIT" mode of the map
    */
@@ -52,14 +54,14 @@ export class LeafletMapComponent implements OnInit, OnDestroy, OnChanges {
     zoomAnimation: true, // setting zoom in setView not always working if zoomAnimation true
     center: L.latLng({
       lat: MapDefaultConfiguration.latitude,
-      lng: MapDefaultConfiguration.longitude
+      lng: MapDefaultConfiguration.longitude,
     }),
   };
 
   /*
   * logger service
   */
-  private logger: Logger
+  private logger: Logger;
   /**
    * Reference to map object
    * @private
@@ -74,15 +76,13 @@ export class LeafletMapComponent implements OnInit, OnDestroy, OnChanges {
   constructor(
     private ngZone: NgZone,
     private loggerService: LoggerService,
-    private cdr: ChangeDetectorRef,
     private resolver: ComponentFactoryResolver,
     private injector: Injector,
+    private appRef: ApplicationRef,
   ) {
     // Init Logger
     this.logger = new Logger(this.loggerService);
     this.logger.registerClass('LeafletMapComponent');
-    // Set First map option
-    //this.initDataMap(this.option);
   }
 
   ngOnInit(): void {
@@ -104,13 +104,6 @@ export class LeafletMapComponent implements OnInit, OnDestroy, OnChanges {
       lat: parsedOption.latitude,
       lng: parsedOption.longitude,
     });
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    //if (this.supportChange !== changes['areaConfiguration'].currentValue) {
-      //console.log('LEAFLET CHANGE', changes);
-      //this.resetDataMap();
-    //}
   }
 
   ngOnDestroy() {
@@ -146,6 +139,7 @@ export class LeafletMapComponent implements OnInit, OnDestroy, OnChanges {
         lat: parsedOption.latitude || MapDefaultConfiguration.latitude,
         lng: parsedOption.longitude || MapDefaultConfiguration.longitude,
       }), parsedOption.zoom || MapDefaultConfiguration.zoom);
+
     }
   }
 
@@ -184,13 +178,6 @@ export class LeafletMapComponent implements OnInit, OnDestroy, OnChanges {
 
     L.control.scale().addTo(map);
   }
-
-  ngAfterViewChecked() {
-    // fix ExpressionChangedAfterItHasBeenCheckedError after mapMove() called
-/*     if (this._areaConfiguration) {
-      this.cdr.detectChanges();
-    } */
-  }
   
   mapMove(event) { // move and zoom events
     if (this._editCenter) {
@@ -209,58 +196,77 @@ export class LeafletMapComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   areaItemsCount = 0;
+  markers: L.Marker<any>[] = [];
   addAreaItem(areaItem: AreaDevice | Area) {
     this.areaItemsCount++;
-    this.logger.debug('addAreaItem function');
+    this.logger.debug('addAreaItem function', areaItem);
     const icon = L.icon({ 
-      iconUrl: 'assets/icons/map/marker-icon.png', // + areaItem.mapInfo.icon,
-      shadowUrl: 'assets/icons/map/marker-shadow.png' 
+      iconUrl:  'assets/icons/map/door_sensor_fancy.png', // + areaItem.mapInfo.icon,
+      shadowUrl: 'assets/icons/map/shadow_custom_marker.png',
     });
     const marker = L.marker(L.latLng(areaItem.mapInfo.x, areaItem.mapInfo.y), { icon: icon });
-    /* var popup = L.popup()
-    .setContent('<p>Hello world!<br />This is a nice popup.</p>'); */
+    this.markers.push(marker);
 
     if (this.editMode) {
       const deviceEditComponent = this.resolver.resolveComponentFactory(MapDeviceEditComponent).create(this.injector);
-      deviceEditComponent.instance.deviceInfo = areaItem;
-      deviceEditComponent.instance.itemRemoveCB = (deviceInfo) => {
-        this.itemRemove.emit(deviceInfo);
+      this.appRef.attachView(deviceEditComponent.hostView);
+      deviceEditComponent.instance.itemInfo = areaItem;
+      deviceEditComponent.instance.itemRemoveCB = (itemInfo) => {
+        this.itemRemove.emit(itemInfo);
         marker.remove();
         this.areaItemsCount--;
       };
+      deviceEditComponent.instance.itemUpdateCB = (itemInfo) => {
+        this.itemUpdate.emit(itemInfo);
+        marker.setLatLng(L.latLng(itemInfo.mapInfo.x, itemInfo.mapInfo.y));
+      }
       deviceEditComponent.instance.dragToggleCB = (dragEnable) => {
         if (dragEnable) {
+          marker.getElement().style.cursor = 'move';
           marker.dragging.enable();
         } else {
+          marker.getElement().style.cursor = 'pointer';
           marker.dragging.disable();
         }
       };
-      deviceEditComponent.instance.subAreaOpenCB = (deviceInfo) => {
-        this.itemOpen.emit(deviceInfo);
+      deviceEditComponent.instance.subAreaOpenCB = (itemInfo) => {
+        this.itemOpen.emit(itemInfo);
       }
       deviceEditComponent.changeDetectorRef.detectChanges();
   
-      marker.bindPopup(deviceEditComponent.location.nativeElement).addTo(this.mapRef);
+      marker.bindPopup(deviceEditComponent.location.nativeElement);
       marker.on('dragend', event => {
         const latlng = marker.getLatLng();
         areaItem.mapInfo.x = latlng.lat;
         areaItem.mapInfo.y = latlng.lng;
         this.itemUpdate.emit(areaItem);
+        deviceEditComponent.instance.resetItem(areaItem);
       });
-  
-      L.DomEvent.disableClickPropagation(deviceEditComponent.location.nativeElement);
+      //L.DomEvent.disableClickPropagation(deviceEditComponent.location.nativeElement);
+    } else {
+      const deviceEditComponent = this.resolver.resolveComponentFactory(MapDeviceInfoComponent).create(this.injector);
+      deviceEditComponent.instance.deviceInfo = areaItem;
+      deviceEditComponent.instance.openClicked.subscribe((deviceAction: DeviceActions) => {
+        if (deviceAction) this.itemOpen.emit({item: areaItem, deviceAction});
+        else this.itemOpen.emit(areaItem);
+      });
+      deviceEditComponent.changeDetectorRef.detectChanges();
+      marker.bindPopup(deviceEditComponent.location.nativeElement);
+      //L.DomEvent.disableClickPropagation(deviceEditComponent.location.nativeElement);
     }
 
-    /* const divIcon = L.divIcon({ html: '<div style="color:red;font-size: 2rem">CIAO</div>' })
-    L.marker(L.latLng(areaItem.mapInfo.x, areaItem.mapInfo.y), { icon: divIcon }).addTo(this.mapRef); */
+    marker.addTo(this.mapRef);
   }
 
   setAreaItems(items: (AreaDevice | Area)[]) {
+    this.removeAreaItems();
     this.logger.debug('setAreaItems function');
-    // this.reset();
     items.forEach((d) => {
       this.addAreaItem(d);
     });
+  }
+  removeAreaItems() {
+    this.markers.forEach(marker => marker.remove());
   }
 
   refresh() { }
@@ -287,6 +293,26 @@ export class LeafletMapComponent implements OnInit, OnDestroy, OnChanges {
 
   recenter() {
     this.resetDataMap();
+  }
+
+  getImage() {
+    var node = document.getElementById('container-leaflet-map');
+    const filter = node => node.id !== 'leaflet-user-overlay' &&
+      node.tagName !== 'BUTTON' &&
+      !node.classList?.contains('leaflet-shadow-pane') &&
+      !node.classList?.contains('leaflet-marker-pane');
+    const scale = window.devicePixelRatio;
+    return domtoimage.toBlob(node, {
+      filter: filter,
+      height: node.offsetHeight * scale,
+      width: node.offsetWidth * scale,
+      style: {
+        transform: `scale(${scale})`,
+        transformOrigin: 'top left',
+        width: `${node.offsetWidth}px`,
+        height: `${node.offsetHeight}px`,
+      },
+    });
   }
 
 }

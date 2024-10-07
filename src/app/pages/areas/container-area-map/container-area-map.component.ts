@@ -5,11 +5,10 @@ import {PageStatus} from '../../../models/pageStatus';
 import {AreaMapComponent} from '../../projects/project-forms/areas-form/area-map/area-map.component';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
-import {HytTreeViewProjectComponent, MapComponent} from 'components';
+import {DeviceActions, HytTreeViewProjectComponent, MapComponent} from 'components';
 import {takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
 import {MapTypeKey} from "../../../../../projects/components/src/lib/hyt-map/models/map-type-key";
-import { DeviceActions } from '../../projects/project-forms/areas-form/draggable-item/draggable-item.component';
 
 @Component({
   selector: 'hyt-container-area-map',

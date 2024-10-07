@@ -10,18 +10,18 @@ import { AREA_ICONS_OPTIONS } from '../../models/area-icons';
 })
 export class MapDeviceEditComponent implements OnInit {
 
-  deviceInfo: any; //AreaDevice; //| Area;
-  private _dragEnabled = false;
+  itemInfo: any; //AreaDevice; //| Area;
+  _dragEnabled = false;
   areaMapIconsOptions = AREA_ICONS_OPTIONS.get('MAP');
-  itemRemoveCB: (deviceInfo: AreaDevice | Area) => void;
+  itemRemoveCB: (itemInfo: AreaDevice | Area) => void;
   iconChangeCB: (icon: string) => void;
-  itemUpdateCB: (deviceInfo: AreaDevice | Area) => void;
+  itemUpdateCB: (itemInfo: AreaDevice | Area) => void;
   dragToggleCB: (dragEnable: boolean) => void;
-  subAreaOpenCB: (deviceInfo: any) => void;
+  subAreaOpenCB: (itemInfo: any) => void;
 
   private _originalFormValue;
   editMode = false;
-  deviceInfoForm = new FormGroup({
+  itemInfoForm = new FormGroup({
     deviceIcon: new FormControl('', Validators.required),
     latitude: new FormControl('', Validators.required),
     longitude: new FormControl('', Validators.required),
@@ -33,56 +33,65 @@ export class MapDeviceEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.areaMapIconsOptions = AREA_ICONS_OPTIONS.get('MAP');
-    this.deviceInfoForm.disable();
-    this.deviceInfoForm.patchValue({
-      deviceIcon: this.deviceInfo.mapInfo.icon,
-      latitude: this.deviceInfo.mapInfo.x,
-      longitude: this.deviceInfo.mapInfo.y,
+    this.resetItem();
+  }
+
+  resetItem(itemInfo?) {
+    this.editMode = false;
+    this.itemInfoForm.disable();
+    if (itemInfo) {
+      this.itemInfo = itemInfo;
+    }
+    this.itemInfoForm.patchValue({
+      deviceIcon: this.itemInfo.mapInfo.icon,
+      latitude: this.itemInfo.mapInfo.x,
+      longitude: this.itemInfo.mapInfo.y,
     });
-    console.log(this.deviceInfo);
-    console.log(this.deviceInfo);
-    console.log(this.deviceInfo);
+    this.cdr.detectChanges();
   }
 
-  delete() {
-    this.itemRemoveCB(this.deviceInfo);
+  remove() {
+    this.itemRemoveCB(this.itemInfo);
   }
 
-  toggleTrag() {
+  toggleDrag(event) {
+    event.stopPropagation();
     this._dragEnabled = !this._dragEnabled;
     this.dragToggleCB(this._dragEnabled);
   }
 
-  enableEdit() {
-    this._originalFormValue = this.deviceInfoForm.value;
-    this.deviceInfoForm.enable();
+  enableEdit(event) {
+    event.stopPropagation();
+    this._originalFormValue = this.itemInfoForm.value;
+    this.itemInfoForm.enable();
     this.editMode = true;
+    if (this._dragEnabled) {
+      this._dragEnabled = false;
+      this.dragToggleCB(this._dragEnabled);
+    }
     this.cdr.detectChanges();
   }
-  cancelFormEdit() {
-    this.deviceInfoForm.patchValue(this._originalFormValue);
-    this.deviceInfoForm.disable();
+  cancelFormEdit(event) {
+    event.stopPropagation();
+    this.itemInfoForm.patchValue(this._originalFormValue);
+    this.itemInfoForm.disable();
     this.editMode = false;
     this.cdr.detectChanges();
   }
-  saveFormEdit() {
-    this.deviceInfo.mapInfo.icon = this.deviceInfoForm.value.deviceIcon;
-    this.deviceInfo.mapInfo.x = this.deviceInfoForm.value.latitude;
-    this.deviceInfo.mapInfo.y = this.deviceInfoForm.value.longitude;
-    this.deviceInfoForm.disable();
+  saveFormEdit(event) {
+    event.stopPropagation();
+    this.itemInfo.mapInfo.icon = this.itemInfoForm.value.deviceIcon;
+    this.itemInfo.mapInfo.x = this.itemInfoForm.value.latitude;
+    this.itemInfo.mapInfo.y = this.itemInfoForm.value.longitude;
+    this.itemInfoForm.disable();
     this.editMode = false;
-    this.itemUpdateCB(this.deviceInfo);
+    this.cdr.detectChanges();
+    this.itemUpdateCB(this.itemInfo);
   }
 
-  openSubArea() {
-    this.subAreaOpenCB(this.deviceInfo);
-  }
-  asd(ev) {
-    console.log(ev);
+  openSubArea(event) {
+    event.stopPropagation();
+    this.subAreaOpenCB(this.itemInfo);
   }
 
-  prevent($event) {
-    $event.preventDefault();
-    $event.stopPropagation();
-  }
 }

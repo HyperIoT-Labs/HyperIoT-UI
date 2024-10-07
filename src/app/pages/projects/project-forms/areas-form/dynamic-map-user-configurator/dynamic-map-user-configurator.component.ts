@@ -1,13 +1,12 @@
-import {AfterViewInit, Component, EventEmitter, Host, Input, OnChanges, OnInit, Optional, Output, SimpleChanges, SkipSelf} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, Host, Input, OnInit, Optional} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import {MatButtonToggleChange} from "@angular/material/button-toggle";
-import { CoordinatesType, GenericMap, LeafletMapComponent, MapComponent, MapDefaultConfiguration } from 'components';
-import {AreasService, Logger, LoggerService} from "core";
-import { from, map, Observable, switchMap } from 'rxjs';
+import { CoordinatesType, GenericMap, MapComponent, MapDefaultConfiguration } from 'components';
+import {Logger, LoggerService} from "core";
+import { Observable } from 'rxjs';
 // import { OpenStreetMapProvider } from 'leaflet-geosearch';
 // import { SearchResult } from 'leaflet-geosearch/dist/providers/provider';
 // import { RawResult } from 'leaflet-geosearch/dist/providers/openStreetMapProvider';
-import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'hyt-dynamic-map-user-configurator',
@@ -44,7 +43,7 @@ export class DynamicMapUserConfiguratorComponent implements OnInit, AfterViewIni
   });
   private _originalFormValue;
 
-  areaConfiguration: string
+  areaConfiguration: string;
 
   @Input() saveFunction: (areaConfig: GenericMap) => Observable<any>;
 
@@ -56,7 +55,11 @@ export class DynamicMapUserConfiguratorComponent implements OnInit, AfterViewIni
    */
   private logger: Logger;
 
-  constructor(private loggerService: LoggerService, private areasService: AreasService, private httpClinet: HttpClient,@Host() @Optional() private mapComponent: MapComponent) {
+  constructor(
+    private loggerService: LoggerService,
+    private cdr: ChangeDetectorRef,
+    @Host() @Optional() private mapComponent: MapComponent,
+  ) {
     this.mapComponentReference = mapComponent;
     // Init Logger
     this.logger = new Logger(this.loggerService);
@@ -66,6 +69,7 @@ export class DynamicMapUserConfiguratorComponent implements OnInit, AfterViewIni
   ngAfterViewInit() {
     this.areaConfiguration = this.mapComponentReference.getAreaConfiguration();
     this.resetFormValue();
+    this.cdr.detectChanges();
   }
 
   ngOnInit(): void {

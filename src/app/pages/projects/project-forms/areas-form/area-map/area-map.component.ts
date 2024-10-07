@@ -29,11 +29,12 @@ import {
   Input,
   Output, OnDestroy
 } from '@angular/core';
-import { DeviceActions, DraggableItemComponent } from '../draggable-item/draggable-item.component';
+import { DraggableItemComponent } from '../draggable-item/draggable-item.component';
 import { MapDirective } from '../map.directive';
 import {AreaDevice, Area, Logger, LoggerService} from 'core';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
+import { DeviceActions } from 'components';
 
 @Component({
   selector: 'hyt-area-map',

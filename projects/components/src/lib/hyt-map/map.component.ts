@@ -28,6 +28,7 @@ export class MapComponent implements OnInit {
   @Output() itemOpen = new EventEmitter<any>();
   itemRemove = new EventEmitter<any>();
   itemUpdate = new EventEmitter<any>();
+  renderDataRequest = new EventEmitter<any>();
 
   /*
   * logger service
@@ -83,6 +84,10 @@ export class MapComponent implements OnInit {
 
   getAreaItemCount() {
     return this.mapComponent?.areaItemsCount;
+  }
+
+  getImage() {
+    return this.mapComponent.getImage();
   }
 
 }

@@ -46,6 +46,7 @@
     "convert-units": "^2.3.4",
     "crypto-js": "^3.1.9-1",
     "d3": "^5.14.2",
+    "dom-to-image": "^2.6.0",
     "form-data": "^4.0.0",
     "isomorphic-ws": "^5.0.0",
     "leaflet": "^1.9.4",

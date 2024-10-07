@@ -1,9 +1,9 @@
 <div class="map-device-edit-container">
-  <h2>{{ deviceInfo.device?.deviceName || deviceInfo.name || 'MISSING NAME' }}</h2>
-  <form [formGroup]="deviceInfoForm" (ngSubmit)="saveFormEdit()">
+  <h2>{{ itemInfo.device?.deviceName || itemInfo.name || 'MISSING NAME' }}</h2>
+  <form [formGroup]="itemInfoForm" (ngSubmit)="saveFormEdit($event)">
     <mat-form-field appearance="fill">
       <mat-label>Icon</mat-label>
-      <mat-select formControlName="deviceIcon" (selectionChange)="asd($event)">
+      <mat-select formControlName="deviceIcon">
         <mat-option *ngFor="let icon of areaMapIconsOptions" [value]="icon.value">
           {{icon.label}}
         </mat-option>
@@ -20,26 +20,28 @@
       <input matInput formControlName="longitude">
     </mat-form-field>
 
-    <!-- Device coord: {{ deviceInfo.mapInfo.x }} |  {{ deviceInfo.mapInfo.y }} -->
+    <!-- Device coord: {{ itemInfo.mapInfo.x }} |  {{ itemInfo.mapInfo.y }} -->
     <div class="map-device-edit-actions">
       <button type="submit" *ngIf="editMode" mat-icon-button aria-label="Enable Edit Form">
         <mat-icon>check</mat-icon>
       </button>
-      <button *ngIf="editMode" mat-icon-button (click)="cancelFormEdit()" aria-label="Enable Edit Form">
+      <button type="button" *ngIf="editMode" mat-icon-button (click)="cancelFormEdit($event)" aria-label="Enable Edit Form">
         <mat-icon>close</mat-icon>
       </button>
-      <button *ngIf="!editMode" mat-icon-button (click)="enableEdit()" aria-label="Enable Edit Form">
+      <button type="button" *ngIf="!editMode" mat-icon-button title="Edit Item" (click)="enableEdit($event)" aria-label="Enable Edit Form">
         <mat-icon>edit</mat-icon>
       </button>
-      <button *ngIf="!editMode" mat-icon-button (click)="toggleTrag()" aria-label="Drag Device Reference">
-        <mat-icon>pan_tool</mat-icon>
+      <button type="button" *ngIf="!editMode" mat-icon-button title="Move/Lock Item" (click)="toggleDrag($event)" aria-label="Drag Device Reference">
+        <mat-icon *ngIf="!_dragEnabled">pan_tool</mat-icon>
+        <mat-icon *ngIf="_dragEnabled">do_not_touch</mat-icon>
       </button>
-      <button *ngIf="!editMode && !deviceInfo.device" mat-icon-button (click)="openSubArea()" aria-label="Visit sub area">
+      <button type="button" *ngIf="!editMode && !itemInfo.device" title="Enter Sub Area" mat-icon-button (click)="openSubArea($event)" aria-label="Visit sub area">
         <mat-icon>map</mat-icon>
       </button>
-      <button *ngIf="!editMode" mat-icon-button (click)="delete()" aria-label="Delete Device Reference">
+      <button type="button" *ngIf="!editMode" mat-icon-button title="Delete item" (click)="remove()" aria-label="Delete Device Reference">
         <mat-icon>delete</mat-icon>
       </button>
+      <!-- Using title instead of material tooltip because https://github.com/angular/components/issues/24278 -->
     </div>
   </form>
 </div>
