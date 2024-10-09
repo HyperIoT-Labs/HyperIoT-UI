@@ -27,6 +27,7 @@
   }
 
   mat-panel-description {
+    font-family: 'Exo';
     align-items: center;
     color: revert;
   }
@@ -73,6 +74,7 @@
   }
 
   #coordinates-configuration {
+    font-family: 'Exo';
     border-top: 1px solid #d4d4d4;
     width: 100%;
     padding-top: 10px;
@@ -82,9 +84,14 @@
       font-size: 1.4em;
       color: #2B7EE2;
     }
+
+    mat-button-toggle {
+      font-family: 'Exo';
+    }
   }
 
   #container-coord-forms {
+    font-family: 'Exo';
     margin-top: 20px;
 
     .container-geocoding-form,
@@ -99,6 +106,10 @@
           margin-bottom: 2px;
         }
       }
+    }
+
+    mat-form-field {
+      font-family: 'Exo';
     }
   }
 

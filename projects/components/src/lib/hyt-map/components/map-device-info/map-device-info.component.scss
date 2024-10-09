@@ -1,4 +1,9 @@
 .map-device-info-container {
+  font-family: "Exo";
   display: flex;
   flex-direction: column;
+
+  .mat-button {
+    font-family: "Exo";
+  }
 }

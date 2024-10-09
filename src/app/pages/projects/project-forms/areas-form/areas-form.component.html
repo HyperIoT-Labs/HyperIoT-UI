@@ -175,7 +175,7 @@
             <ng-template matTabContent>
               <div class="mt-4 mb-2 d-flex flex-row justify-content-center">
                 <hyt-button [color]="'hyt-base-default-white'" [isDisabled]="!entity.areaConfiguration" (clickFn)="onMapDeviceAddClick($event)" i18n="@@HYT_area_map_device_add">Add device</hyt-button>
-                <hyt-button [color]="'hyt-base-default-white'" [isDisabled]="areaList.length === 0" (clickFn)="onMapAreaAddClick($event)" i18n="@@HYT_area_map_area_add">Add sub-area</hyt-button>
+                <hyt-button [color]="'hyt-base-default-white'" [isDisabled]="!entity.areaConfiguration || areaList.length === 0" (clickFn)="onMapAreaAddClick($event)" i18n="@@HYT_area_map_area_add">Add sub-area</hyt-button>
               </div>
               <hyt-map #map mapType="'LEAFLETMAP'" [editMode]="editMode" [(areaConfiguration)]="entity.areaConfiguration">
                 <hyt-dynamic-map-user-configurator

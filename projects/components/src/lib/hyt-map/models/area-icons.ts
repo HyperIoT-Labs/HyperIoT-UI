@@ -3,7 +3,7 @@ import { SelectOption } from '../../hyt-select/hyt-select.component';
 
 export const AREA_ICONS_OPTIONS = new Map<Area.AreaViewTypeEnum, SelectOption[]>([
   [ 'IMAGE', [
-    { label: 'Default Sensor', value: 'generic_sensor_transparent.png' },
+    { label: 'Generic Sensor', value: 'generic_sensor_transparent.png' },
     { label: 'Motion Sensor', value: 'motion-sensor.png' },
     { label: 'Wind Sensor', value: 'wind-sensor.png' },
     { label: 'Body Scanner', value: 'body-scanner.png' },
@@ -15,7 +15,7 @@ export const AREA_ICONS_OPTIONS = new Map<Area.AreaViewTypeEnum, SelectOption[]>
     { label: 'Thermometer', value: 'thermometer.png' },
   ]],
   [ 'MAP', [
-    { label: 'Default Sensor', value: 'generic_sensor_gradient.png' },
+    { label: 'Generic Sensor', value: 'generic_sensor_gradient.png' },
     { label: 'Motion Sensor', value: 'motion_sensor_radial.png' },
     { label: 'Wind Sensor', value: 'wind_sensor_gradient.png' },
     { label: 'Body Scanner', value: 'body_scan_radial.png' },
