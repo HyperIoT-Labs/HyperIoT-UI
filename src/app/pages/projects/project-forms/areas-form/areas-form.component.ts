@@ -824,7 +824,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
       this.logger.debug('onMapAreaAddClick modal on close', a);
       if (a) {
         a.mapInfo = {
-          icon: this.entity.areaViewType === 'MAP' ? 'layer-svgrepo-com.png' : 'map.png',
+          icon: this.entity.areaViewType === 'MAP' ? 'sub_area_gradient.png' : 'map.png',
           x: this.mapComponent.getAreaCenter().x,
           y: this.mapComponent.getAreaCenter().y,
         };

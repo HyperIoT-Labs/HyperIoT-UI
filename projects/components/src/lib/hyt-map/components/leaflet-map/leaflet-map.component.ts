@@ -195,15 +195,24 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
     return { x: this.mapRef.getCenter().lat, y: this.mapRef.getCenter().lng };
   }
 
+  private _buildMarkerIcon(iconUrl: string): L.Icon {
+    return L.icon({ 
+      iconUrl:  'assets/icons/map/' + iconUrl,
+      shadowUrl: 'assets/icons/map/shadow_icon.png',
+      iconSize:     [51, 67],
+      shadowSize:   [54, 33],
+      iconAnchor:   [25.5, 67],
+      shadowAnchor: [5, 31],
+      popupAnchor:  [0, -70],
+    });
+  }
+
   areaItemsCount = 0;
   markers: L.Marker<any>[] = [];
   addAreaItem(areaItem: AreaDevice | Area) {
     this.areaItemsCount++;
     this.logger.debug('addAreaItem function', areaItem);
-    const icon = L.icon({ 
-      iconUrl:  'assets/icons/map/door_sensor_fancy.png', // + areaItem.mapInfo.icon,
-      shadowUrl: 'assets/icons/map/shadow_custom_marker.png',
-    });
+    const icon = this._buildMarkerIcon(areaItem.mapInfo.icon);
     const marker = L.marker(L.latLng(areaItem.mapInfo.x, areaItem.mapInfo.y), { icon: icon });
     this.markers.push(marker);
 
@@ -219,6 +228,8 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
       deviceEditComponent.instance.itemUpdateCB = (itemInfo) => {
         this.itemUpdate.emit(itemInfo);
         marker.setLatLng(L.latLng(itemInfo.mapInfo.x, itemInfo.mapInfo.y));
+        const updatedIcon = this._buildMarkerIcon(itemInfo.mapInfo.icon);
+        marker.setIcon(updatedIcon);
       }
       deviceEditComponent.instance.dragToggleCB = (dragEnable) => {
         if (dragEnable) {

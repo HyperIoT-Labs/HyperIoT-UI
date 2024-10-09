@@ -267,7 +267,9 @@ export class ContainerAreaMapComponent implements OnInit, OnDestroy {
                 this.areaDevices = areaDevices;
                 this.mapComponent.setAreaItems(areaDevices.concat(this.areaList.filter(a => a.mapInfo != null)));
                 this.mapComponent.refresh();
-                this.loadAreaImage(areaTree);
+                if (area.areaViewType === 'IMAGE') {
+                  this.loadAreaImage(areaTree);
+                }
               }
               if(area.areaViewType === 'BIM_XKT'){
                 this.logger.debug('Found the devices present in this area', areaDevices);
