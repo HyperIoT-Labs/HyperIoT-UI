@@ -73,6 +73,9 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatRippleModule} from '@angular/material/core';
 import {MatListModule} from '@angular/material/list';
+import { DynamicMapUserConfiguratorComponent } from './project-forms/areas-form/dynamic-map-user-configurator/dynamic-map-user-configurator.component';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatSliderModule } from '@angular/material/slider';
 
 @NgModule({
   declarations: [
@@ -109,6 +112,7 @@ import {MatListModule} from '@angular/material/list';
     DraggableItemComponent,
     MapDirective,
     AreaDeviceSelectDialogComponent,
+    DynamicMapUserConfiguratorComponent,
     AreaInnerareaSelectDialogComponent,
     AreasListComponent,
     FourierTransformComponent,
@@ -147,7 +151,10 @@ import {MatListModule} from '@angular/material/list';
     MatRadioModule,
     MatSelectModule,
     MatTooltipModule,
-    MatTableModule
+    MatTableModule,
+    MatButtonModule,
+    MatButtonToggleModule,
+    MatSliderModule,
   ],
   entryComponents: [
     AddTagModalComponent,
