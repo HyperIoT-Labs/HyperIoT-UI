@@ -59,9 +59,15 @@ import { RuleErrorModalComponent } from './rule-definition/rule-error/rule-error
 import { HytChatbotChartMessageComponent } from './hyt-chatbot-chart-message/hyt-chatbot-chart-message.component';
 import { PlotlyModule } from 'angular-plotly.js';
 import { HytChartModalComponent } from './hyt-modal/hyt-chart-modal/hyt-chart-modal.component';
+import { MapComponent } from './hyt-map/map.component';
+import { LeafletMapComponent } from './hyt-map/components/leaflet-map/leaflet-map.component';
+import {LeafletModule} from "@asymmetrik/ngx-leaflet";
+
 import { HytAlarmComponent } from './hyt-alarm/hyt-alarm.component';
 import { HytNoData } from './hyt-no-data/hyt-no-data.component';
 import { CustomSelectPositionDirective } from './directives/positionSelect.directive';
+import { MapDeviceEditComponent } from './hyt-map/components/map-device-edit/map-device-edit.component';
+import { MapDeviceInfoComponent } from './hyt-map/components/map-device-info/map-device-info.component';
 export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
 
 @NgModule({
@@ -123,9 +129,13 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     RuleErrorModalComponent,
     HytChatbotChartMessageComponent,
     HytChartModalComponent,
+    MapComponent,
+    LeafletMapComponent,
     HytAlarmComponent,
     HytNoData,
-    CustomSelectPositionDirective
+    CustomSelectPositionDirective,
+    MapDeviceEditComponent,
+    MapDeviceInfoComponent,
   ],
   imports: [
     CommonModule,
@@ -135,6 +145,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     NgxMaskModule.forRoot(options),
     RouterModule,
     PlotlyModule,
+    LeafletModule,
   ],
   exports: [
     CronEditorComponent,
@@ -187,12 +198,18 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     RuleDefinitionComponent,
     HytChatbotChartMessageComponent,
     HytChartModalComponent,
+    MapComponent,
+    LeafletMapComponent,
+    MapDeviceEditComponent,
+    MapDeviceInfoComponent,
     HytAlarmComponent,
     HytNoData
   ],
   entryComponents: [
     HytConfirmRecordingActionComponent,
     HytInfoRecordingActionComponent,
+    MapDeviceEditComponent,
+    MapDeviceInfoComponent,
   ]
 })
 export class ComponentsModule { }

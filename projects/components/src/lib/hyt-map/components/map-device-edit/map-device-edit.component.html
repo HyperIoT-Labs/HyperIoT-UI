@@ -1,0 +1,47 @@
+<div class="map-device-edit-container">
+  <h2>{{ itemInfo.device?.deviceName || itemInfo.name || 'MISSING NAME' }}</h2>
+  <form [formGroup]="itemInfoForm" (ngSubmit)="saveFormEdit($event)">
+    <mat-form-field appearance="fill" *ngIf="itemInfo.device">
+      <mat-label i18n="@@HYT_icon">Icon</mat-label>
+      <mat-select formControlName="deviceIcon">
+        <mat-option *ngFor="let icon of areaMapIconsOptions" [value]="icon.value">
+          {{icon.label}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label i18n="@@HYT_latitude">Latitude</mat-label>
+      <input matInput formControlName="latitude">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label i18n="@@HYT_longitude">Longitude</mat-label>
+      <input matInput formControlName="longitude">
+    </mat-form-field>
+
+    <!-- Device coord: {{ itemInfo.mapInfo.x }} |  {{ itemInfo.mapInfo.y }} -->
+    <div class="map-device-edit-actions">
+      <button type="submit" *ngIf="editMode" mat-icon-button aria-label="Enable Edit Form">
+        <mat-icon>check</mat-icon>
+      </button>
+      <button type="button" *ngIf="editMode" mat-icon-button (click)="cancelFormEdit($event)" aria-label="Enable Edit Form">
+        <mat-icon>close</mat-icon>
+      </button>
+      <button type="button" *ngIf="!editMode" mat-icon-button i18n-title="@@HYT_edit_item" title="Edit Item" (click)="enableEdit($event)" aria-label="Enable Edit Form">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button type="button" *ngIf="!editMode" mat-icon-button i18n-title="@@HYT_grab_item" title="Move/Lock Item" (click)="toggleDrag($event)" aria-label="Drag Device Reference">
+        <mat-icon *ngIf="!_dragEnabled">pan_tool</mat-icon>
+        <mat-icon *ngIf="_dragEnabled">do_not_touch</mat-icon>
+      </button>
+      <button type="button" *ngIf="!editMode && !itemInfo.device" i18n-title="@@HYT_enter_sub_area" title="Enter Sub Area" mat-icon-button (click)="openSubArea($event)" aria-label="Visit sub area">
+        <mat-icon>map</mat-icon>
+      </button>
+      <button type="button" *ngIf="!editMode" mat-icon-button i18n-title="@@HYT_delete_area_item" title="Delete item" (click)="remove()" aria-label="Delete Device Reference">
+        <mat-icon>delete</mat-icon>
+      </button>
+      <!-- Using title instead of material tooltip because https://github.com/angular/components/issues/24278 -->
+    </div>
+  </form>
+</div>

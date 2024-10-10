@@ -5,9 +5,9 @@ $chatBotAliceIconBGImage: #{var(--chatBotAliceIconBGImage)};
   position: fixed;
   bottom: 15px;
   right: 15px;
-  width: 350px; 
+  width: 350px;
   height: 550px;
-  z-index: 99;
+  z-index: 1001;
   box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
   display: flex;
   flex-direction: column;
@@ -607,7 +607,7 @@ $chatBotAliceIconBGImage: #{var(--chatBotAliceIconBGImage)};
             height: 35px;
             align-items: center;
             justify-content: center;
-  
+
             button {
               background-color: #ffffff;
               width: 35px;
@@ -617,16 +617,16 @@ $chatBotAliceIconBGImage: #{var(--chatBotAliceIconBGImage)};
               border: 3px solid #1e58a5;
               box-shadow: 0px 0px 3px 0px darkblue;
               opacity: 1;
-  
+
               &:disabled {
                 opacity: .4;
                 cursor: not-allowed;
               }
-  
+
               &:hover {
                 box-shadow: 0px 0px 0px 0px darkblue;
               }
-  
+
               img {
                 width: 17px;
                 margin: 0 auto;
@@ -675,7 +675,7 @@ $chatBotAliceIconBGImage: #{var(--chatBotAliceIconBGImage)};
     }
   }
 
-  .hyt-chatbot-collapsed-disconnected { 
+  .hyt-chatbot-collapsed-disconnected {
     position: absolute;
     top: -5px;
     width: 20px;

@@ -25,15 +25,15 @@
             bottom:0;
             height:100%;
             left:0;
-            z-index: 998;
+            z-index: 1001;
             background-color: $primary-color;
 
             -webkit-transition: left .15s ease-in-out;
             -moz-transition: left .15s ease-in-out;
             -o-transition: left .15s ease-in-out;
             transition: left .15s ease-in-out;
-            
-    
+
+
             ul {
                 display: flex;
                 flex-direction: column;
@@ -46,7 +46,7 @@
                 transition: width .1s ease-in-out;
                 border: #e5e5e5;
                 width: 59px;
-                
+
 
                 &:hover,
                 &.expanded {
@@ -71,14 +71,14 @@
                         }
                     }
                 }
-    
+
                 &.logout {
                     position:absolute;
                     left: 0;
                     bottom: 0;
                 }
             }
-    
+
             li {
                 position: relative;
                 display: block;
@@ -118,12 +118,12 @@
                     -moz-transition: width .1s linear;
                     -webkit-transition: width .1s linear;
                     transition: width .1s linear;
-    
+
                     &:hover,
                     &:focus {
                         text-decoration:none;
                     }
-                    
+
                     .fa {
                         position: relative;
                         display: table-cell;
@@ -143,7 +143,7 @@
                         font-size: 2em;
                         padding: 12px 15px;
                     }
-                  
+
                 }
 
             }
@@ -152,7 +152,7 @@
                 margin-top: auto;
                 cursor: pointer;
             }
-    
+
             .nav-icon {
                 position:relative;
                 display:table-cell;
@@ -162,7 +162,7 @@
                 vertical-align:middle;
                 font-size:18px;
             }
-    
+
             .nav-text {
                 position: relative;
                 display: table-cell;
@@ -181,7 +181,7 @@
         }
 
     }
-    
+
 }
 
 
@@ -206,7 +206,7 @@
                 left: 0px;
 
                 ul {
-                    
+
                     &.ul-mob-show {
 
                         width: 250px;
@@ -230,7 +230,7 @@
                                 }
 
                             }
-                        
+
                         }
 
                     }
@@ -243,7 +243,7 @@
 
         }
 
-    } 
+    }
 
 }
 

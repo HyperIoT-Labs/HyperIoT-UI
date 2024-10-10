@@ -18,7 +18,7 @@
             <mat-card-title>{{area.name}}</mat-card-title>
           </mat-card-header>
           <div
-            *ngIf="area.areaViewType === 'IMAGE' && area.areaConfiguration !== null"
+            *ngIf="(area.areaViewType === 'IMAGE' || area.areaViewType === 'MAP') && area.areaConfiguration !== null"
             class="map-image flex-grow-1"
             [ngStyle]="{ 'background-image': 'url(/hyperiot/areas/'+area.id+'/image)' }"
           ></div>

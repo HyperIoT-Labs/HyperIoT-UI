@@ -1,0 +1,23 @@
+.map-device-edit-container {
+  font-family: 'Exo';
+  display: flex;
+  flex-direction: column;
+
+  form {
+    display: flex;
+    flex-direction: column;
+
+    mat-form-field {
+      font-family: 'Exo';
+
+      mat-select {
+        font-family: "Exo";
+      }
+    }
+  }
+
+  .map-device-edit-actions {
+    display: flex;
+    justify-content: flex-end;
+  }
+}

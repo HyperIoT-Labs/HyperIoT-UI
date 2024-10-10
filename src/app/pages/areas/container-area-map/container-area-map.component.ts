@@ -5,11 +5,10 @@ import {PageStatus} from '../../../models/pageStatus';
 import {AreaMapComponent} from '../../projects/project-forms/areas-form/area-map/area-map.component';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
-import {HytTreeViewProjectComponent} from 'components';
+import {DeviceActions, HytTreeViewProjectComponent, MapComponent} from 'components';
 import {takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
-import {installTempPackage} from '@angular/cli/utilities/install-package';
-import { DeviceActions } from '../../projects/project-forms/areas-form/draggable-item/draggable-item.component';
+import {MapTypeKey} from "../../../../../projects/components/src/lib/hyt-map/models/map-type-key";
 
 @Component({
   selector: 'hyt-container-area-map',
@@ -20,7 +19,7 @@ export class ContainerAreaMapComponent implements OnInit, OnDestroy {
   /**
    * Hook to track the map element
    */
-  @ViewChild('map')  mapComponent: AreaMapComponent;
+  @ViewChild('map')  mapComponent: any; //AreaMapComponent;
   /**
    * Hook to track the treeview element
    */
@@ -104,6 +103,7 @@ export class ContainerAreaMapComponent implements OnInit, OnDestroy {
   isBimLoading: boolean = true;
   isEmptyBim: boolean = false;
   areaConfiguration: string;
+  currentMapTypeKey: MapTypeKey = MapTypeKey.LEAFLET;
   /*
    * logger service
    */
@@ -262,12 +262,14 @@ export class ContainerAreaMapComponent implements OnInit, OnDestroy {
           .subscribe(
           {
             next: (areaDevices: AreaDevice[]) => {
-              if(area.areaViewType === 'IMAGE'){
+              if(area.areaViewType === 'IMAGE' || area.areaViewType === 'MAP'){
                 this.logger.debug('Found the devices present in this area', areaDevices);
                 this.areaDevices = areaDevices;
                 this.mapComponent.setAreaItems(areaDevices.concat(this.areaList.filter(a => a.mapInfo != null)));
                 this.mapComponent.refresh();
-                this.loadAreaImage(areaTree);
+                if (area.areaViewType === 'IMAGE') {
+                  this.loadAreaImage(areaTree);
+                }
               }
               if(area.areaViewType === 'BIM_XKT'){
                 this.logger.debug('Found the devices present in this area', areaDevices);

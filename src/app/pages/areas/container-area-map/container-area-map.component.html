@@ -101,6 +101,10 @@
           </ng-template>
         </div>
 
+        <div *ngIf="areaViewType === 'MAP'">
+          <hyt-map #map [mapType]="currentMapTypeKey" [areaConfiguration]="areaConfiguration" (itemOpen)="onItemMapClicked($event)"></hyt-map>
+        </div>
+
       </div>
 
     </div>
