@@ -4,9 +4,6 @@ import {MatButtonToggleChange} from "@angular/material/button-toggle";
 import { CoordinatesType, GenericMap, MapComponent, MapDefaultConfiguration } from 'components';
 import {Logger, LoggerService} from "core";
 import { Observable } from 'rxjs';
-// import { OpenStreetMapProvider } from 'leaflet-geosearch';
-// import { SearchResult } from 'leaflet-geosearch/dist/providers/provider';
-// import { RawResult } from 'leaflet-geosearch/dist/providers/openStreetMapProvider';
 
 @Component({
   selector: 'hyt-dynamic-map-user-configurator',
