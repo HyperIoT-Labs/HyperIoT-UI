@@ -569,12 +569,16 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
   }
 
   handleSearchAndDeleteElementOnMap(oldViewType: string, newViewType: string){
+    this.loadingStatus = this.LoadingStatus.Loading;
     switch (oldViewType) {
       case 'IMAGE':
         this.searchAndDeleteElementOnImageMap(this.areaId, newViewType);
         break;
       case 'BIM_XKT':
         this.setImageTypeObj(newViewType)
+        break;
+      case 'MAP':
+        this.searchAndDeleteElementOnImageMap(this.areaId, newViewType)
         break;
     }
   }
@@ -593,7 +597,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
         area.areaConfiguration = null;
         area.areaViewType = newViewType as AreaViewTypeEnum;
         area['project'] = { id: this.projectId };
-        area.parentArea = { id: this.areaId, entityVersion: null };
+        area.parentArea = this.getParentAreaId() ? { id: this.getParentAreaId(), entityVersion: null } : null;
         delete area['innerCount'];
         delete area['deviceCount'];
         return this.areaService.updateArea(area).pipe(
@@ -638,7 +642,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
     const deleteMapElements = mapElements.pipe(
       switchMap((returnMapElements) => {
         // Manipulate return data
-        let containerRequest = [];
+        let containerRequest: Observable<any>[] = [];
         let devicesOnMaps = returnMapElements.totalDevices;
 
         let innerAreas = [];
@@ -655,18 +659,15 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
             containerRequest.push(this.areaService.updateArea(this.patchTheAreaToBeRemovedFromTheMap(singleArea)))
           }
         }
-        return forkJoin(containerRequest).pipe(defaultIfEmpty([]));
+        return forkJoin(containerRequest).pipe(defaultIfEmpty([]), catchError(_ => of(['Delete area items failed'])));
       })
     );
 
-    const getImage = deleteMapElements.pipe(
-      switchMap((deletedEl) => {
-        return this.httpClient.delete(`/hyperiot/areas/${this.areaId}/image`).pipe(
-          take(1),
-          catchError(_ => of(['no image found to delete']))
-        )
-      }),
-    )
+    const deleteImage = this.httpClient.delete(`/hyperiot/areas/${this.areaId}/image`).pipe(
+      take(1),
+      catchError(_ => of(['no image found to delete'])),
+    );
+
     const updateArea = this.areaService.findArea(this.areaId).pipe(
       take(1),
       catchError(_ => of(['error area not found'])),
@@ -675,18 +676,19 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
         area.areaConfiguration = null;
         area.areaViewType = newViewType as AreaViewTypeEnum;
         area['project'] = { id: this.projectId };
-        area.parentArea = { id: this.areaId, entityVersion: null };
+        area.parentArea = this.getParentAreaId() ? { id: this.getParentAreaId(), entityVersion: null } : null;
         delete area['innerCount'];
         delete area['deviceCount'];
         return this.areaService.updateArea(area).pipe(
           take(1),
           catchError(_ => of(['error area not updated']))
-        )
-      })
-    )
+        );
+      }),
+    );
 
-    combineLatest([getImage, updateArea]).subscribe({
-      next: ([imageObj, areaObj]) => {
+    forkJoin([deleteMapElements, deleteImage, updateArea]).subscribe({
+      next: ([itemsObj, imageObj, areaObj]) => {
+        this.logger.debug('Return of the Delete Items operation', itemsObj);
         this.logger.debug('Return of the Delete Image operation', imageObj);
         this.logger.debug('Return of the Update Area operation', areaObj);
         if(Array.isArray(areaObj) && areaObj.includes('error area not updated')){
