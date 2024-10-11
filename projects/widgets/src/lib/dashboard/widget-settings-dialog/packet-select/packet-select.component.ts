@@ -57,7 +57,7 @@ export class PacketSelectComponent implements OnInit, OnChanges {
   @Input()
   areaId: number;
   @Input() hDeviceId: number;
-  @Input() wholeSpinner: boolean = false;
+  @Input() useSpinner: boolean = false;
   @Input() customSettingsStatus?: PageStatus;
 
   fieldAliases: FieldAliases;
@@ -106,7 +106,6 @@ export class PacketSelectComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    this.packetSelectStatus = PageStatus.Loading;
     this.packetSelectStatusChange.emit(this.packetSelectStatus);
     // If `areaId` is set, then show only packets belonging to the given area devices
     if (this.areaId) {

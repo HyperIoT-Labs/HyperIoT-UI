@@ -102,7 +102,7 @@
                     </div>
 
                     <div *ngSwitchCase="'multi-status'">
-                        <hyperiot-time-chart-settings [widget]="widget" [areaId]="areaId" [hDeviceId]="hDeviceId" [modalApply]="modalApply.asObservable()"
+                        <hyperiot-time-chart-settings [widget]="widget" [areaId]="areaId" [hDeviceId]="hDeviceId" [modalApply]="modalApply"
                             [settingsForm]="settingsForm">
                         </hyperiot-time-chart-settings>
                     </div>
@@ -120,7 +120,7 @@
         </div>
 
         <div class="dialog-footer" hyt-dialog-footer>
-            <hyt-button class="button-confirm" [color]="'hyt-base-default-white'" (clickFn)="confirm()" [isDisabled]="settingsForm.invalid">
+            <hyt-button class="button-confirm" [color]="'hyt-base-default-white'" (clickFn)="confirm()" [isDisabled]="settingsForm.invalid || isLoading">
                 <mat-icon>check</mat-icon>
                 <span i18n="@@HYT_apply">Apply</span>
             </hyt-button>

@@ -1,16 +1,14 @@
-import { Component, OnInit, ViewChild, Input, OnDestroy } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { ControlContainer, FormArray, FormBuilder, NgForm, Validators } from '@angular/forms';
 
-import { Observable } from 'rxjs';
+import { Subject } from 'rxjs';
 
-import { PacketSelectComponent } from '../packet-select/packet-select.component';
 import { ActivatedRoute } from "@angular/router";
 import { Rule, RulesService } from 'core';
 import { Threshold } from '../../../base/base-widget/model/widget.model';
-import { MatSelect } from '@angular/material/select';
-import { PageStatus } from '../models/page-status';
 import { LineTypes } from '../../model/line.model';
-import { line } from 'd3';
+import { PageStatus } from '../models/page-status';
+import { PacketSelectComponent } from '../packet-select/packet-select.component';
 
 @Component({
     selector: 'hyperiot-time-chart-settings',
@@ -18,11 +16,11 @@ import { line } from 'd3';
     styleUrls: ['./time-chart-settings.component.scss'],
     viewProviders: [{ provide: ControlContainer, useExisting: NgForm }]
 })
-export class TimeChartSettingsComponent implements OnInit, OnDestroy {
+export class TimeChartSettingsComponent implements OnInit, OnDestroy, OnChanges {
     @ViewChild(PacketSelectComponent, { static: true }) packetSelect: PacketSelectComponent;
 
     subscription: any;
-    @Input() modalApply: Observable<any>;
+    @Input() modalApply: Subject<any>;
     @Input() widget;
     @Input() areaId;
     @Input() hDeviceId;
@@ -40,9 +38,9 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
     defaultOpacity: number = 0.55;
     defaultColor: string = `rgba(5, 186, 0, ${this.defaultOpacity})`;
     defaultLine = { color: this.defaultColor, thickness: 2, type: LineTypes.Linear };
-    packetPageStatus: PageStatus = PageStatus.Ready;
-    pageStatus: PageStatus = PageStatus.Ready;
-    wholeSpinner: boolean = true;
+    packetPageStatus: PageStatus = PageStatus.Loading;
+    pageStatus: PageStatus = PageStatus.Loading;
+    useSpinner: boolean = true;
 
     lineTypes = LineTypes;
     private defaultConfig = {
@@ -99,7 +97,6 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
             }
         } else {
             this.pageStatus = PageStatus.Ready;
-            this.wholeSpinner = false;
         }
         this.subscription = this.modalApply.subscribe((event) => {
             if (event === 'apply') {
@@ -112,6 +109,23 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
         if (this.subscription) {
             this.subscription.unsubscribe();
         }
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes.modalApply && changes.modalApply.currentValue) {
+            const dataToSend = { isLoading: this.checkLoadingStatus() };
+            changes.modalApply.currentValue.source.next(dataToSend);
+        }
+    }
+
+    checkLoadingStatus() {
+        return this.packetPageStatus === PageStatus.Loading || this.pageStatus === PageStatus.Loading
+            || this.pageStatus === PageStatus.Error && this.packetPageStatus === PageStatus.Error;
+    }
+    
+    updateModalApplyIsLoading(value: boolean) {
+        const dataToSend = { isLoading: value };
+        this.modalApply.next(dataToSend);
     }
 
     addThresholdToForm(threshold) {
@@ -165,13 +179,10 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
 
     isChecked() {
         if ((this.selectedFields.length === 0 && !this.widget.config.packetId) || !this.thresholdActive) {
-            this.wholeSpinner = false;
             return this.pageStatus = PageStatus.Ready;
         };
-        this.pageStatus = PageStatus.Loading;
         this.ruleService.findAllRuleByProjectId(this.widget.projectId).subscribe({
             next: (rules) => {
-                this.wholeSpinner = false;
                 this.pageStatus = PageStatus.Ready;
                 this.thresholds = rules
                     .filter((rule) => {
@@ -258,13 +269,13 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
         parts.shift();
         return `${parts[0]}=>${parts.slice(1).join('.')}`;
     }
-    
+
     onThresholdSelected(selectedId: string, replaceThreshold: boolean, i?: number) {
         const singleRule: boolean = this.findThresholdRule(selectedId)?.ruleDefinition.match(/[^AND|OR]+(AND|OR)?/g).map(x => x.trim()).length === 1;
         const selectedThresholdIndex = this.thresholdsForm.controls.findIndex(thresholdGroup => {
             return thresholdGroup.get('id')?.value === selectedId;
         });
-    
+
         if (selectedThresholdIndex === -1 && !replaceThreshold) {
             const thresholdGroup = this.fb.group({
                 id: [selectedId, Validators.required],
@@ -286,13 +297,13 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
             if (replaceThreshold) this.newThreshold.id = null;
         }
         this.filterThresholds();
-    }   
+    }
 
     filterThresholds() {
         const selectedThresholdIds = this.thresholdsForm.controls
             .map(thresholdGroup => thresholdGroup.get('id')?.value)
             .filter((id): id is string => id !== undefined); // Ensure we only keep defined IDs
-    
+
         if (selectedThresholdIds.length === 0) {
             this.filteredThresholds = { ...this.thresholds };
         } else {
@@ -301,23 +312,23 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
                     console.error('Unexpected key format:', key);
                     return groupedRules;
                 }
-    
+
                 const unselectedRules = this.thresholds[key].filter(rule => {
                     return !selectedThresholdIds.includes(rule.id);
                 });
-    
+
                 if (unselectedRules.length > 0) {
                     if (!groupedRules[key]) {
                         groupedRules[key] = [];
                     }
                     groupedRules[key] = unselectedRules;
                 }
-    
+
                 return groupedRules;
             }, {} as { [key: string]: any[] });
         }
     }
-    
+
     findThresholdRule(id: string) {
         for (const group of Object.keys(this.thresholds)) {
             const rule = this.thresholds[group].find(rule => rule.id === id);

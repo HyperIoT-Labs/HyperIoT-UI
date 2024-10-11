@@ -2,8 +2,8 @@
     <hyperiot-packet-select [widget]="widget" [hDeviceId]="hDeviceId" [areaId]="areaId" [multiPacketSelect]="true"
         [selectedFields]="selectedFields" (selectedFieldsChange)="onSelectedFieldsChange($event)"
         (selectedPacketChange)="onSelectedPacketChange($event)"
-        (packetPageStatus)="updatePageStatus($event)"
-        [wholeSpinner]="wholeSpinner"
+        (packetSelectStatusChange)="updatePageStatus($event)"
+        [useSpinner]="useSpinner"
         [customSettingsStatus]="pageStatus"
     ></hyperiot-packet-select>
 
@@ -107,7 +107,7 @@
 -->
     <!-- Plotly chart specific options -->
 
-    <div class="loading-overlay" *ngIf="!wholeSpinner && packetPageStatus === 1 && pageStatus === 0">
+    <div class="loading-overlay" *ngIf="!useSpinner && packetPageStatus === 1 && pageStatus === 0">
         <mat-spinner strokeWidth="8" diameter="100"></mat-spinner>
     </div>
 
