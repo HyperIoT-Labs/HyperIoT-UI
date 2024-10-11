@@ -5,6 +5,7 @@
     .input-button-row {
         display: flex;
         justify-content: space-between;
+        align-items: center;
 
         .input-row {
             display: flex;
@@ -19,16 +20,15 @@
 
             .line-config {
                 display: flex;
-                gap: 2em;
-                width: 26em;
+                gap: 3em;
+                width: 29em;
                 justify-content: space-between;
+                align-items: center;
 
-                .thickness {
-                    width: 27em;
-                }
-
-                .no-thickness {
-                    width: 6.55em;
+                .thickness, .no-thickness {
+                    width: 3em;
+                    padding-left: 10px;
+                    text-align: center;                
                 }
 
                 .type {

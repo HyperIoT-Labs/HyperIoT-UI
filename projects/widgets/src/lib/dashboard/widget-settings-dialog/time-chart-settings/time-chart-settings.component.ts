@@ -10,6 +10,7 @@ import { Threshold } from '../../../base/base-widget/model/widget.model';
 import { MatSelect } from '@angular/material/select';
 import { PageStatus } from '../models/page-status';
 import { LineTypes } from '../../model/line.model';
+import { line } from 'd3';
 
 @Component({
     selector: 'hyperiot-time-chart-settings',
@@ -25,7 +26,7 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
     @Input() widget;
     @Input() areaId;
     @Input() hDeviceId;
-    @Input() checkbox: boolean;
+    @Input() checkbox: boolean = false;
     selectedFields = [];
     selectedPackets = [];
 
@@ -257,13 +258,14 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
         parts.shift();
         return `${parts[0]}=>${parts.slice(1).join('.')}`;
     }
-    onThresholdSelected(selectedId: string) {
+    
+    onThresholdSelected(selectedId: string, replaceThreshold: boolean, i?: number) {
         const singleRule: boolean = this.findThresholdRule(selectedId)?.ruleDefinition.match(/[^AND|OR]+(AND|OR)?/g).map(x => x.trim()).length === 1;
         const selectedThresholdIndex = this.thresholdsForm.controls.findIndex(thresholdGroup => {
             return thresholdGroup.get('id')?.value === selectedId;
         });
     
-        if (selectedThresholdIndex === -1) {
+        if (selectedThresholdIndex === -1 && !replaceThreshold) {
             const thresholdGroup = this.fb.group({
                 id: [selectedId, Validators.required],
                 line: this.fb.group({
@@ -273,16 +275,17 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy {
                 })
             });
             this.thresholdsForm.push(thresholdGroup);
-            this.newThreshold = {};
-            this.filterThresholds();
+            this.newThreshold.id = null;
         } else {
-            const thresholdFormGroup = this.thresholdsForm.at(selectedThresholdIndex);
+            const thresholdFormGroup = replaceThreshold ? this.thresholdsForm.at(i) : this.thresholdsForm.at(selectedThresholdIndex);
             if (thresholdFormGroup) {
                 thresholdFormGroup.get('line.color')?.setValue(this.defaultColor);
                 thresholdFormGroup.get('line.thickness')?.setValue(2);
                 thresholdFormGroup.get('line.type')?.setValue(singleRule ? LineTypes.Linear : null);
             }
+            if (replaceThreshold) this.newThreshold.id = null;
         }
+        this.filterThresholds();
     }   
 
     filterThresholds() {
