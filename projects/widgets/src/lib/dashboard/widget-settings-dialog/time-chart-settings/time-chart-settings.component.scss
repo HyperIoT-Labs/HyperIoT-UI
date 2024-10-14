@@ -1,0 +1,96 @@
+.threshold-row {
+    display: flex;
+    flex-direction: column;
+
+    .input-button-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .input-row {
+            display: flex;
+            align-items: center;
+            gap: 2em;
+
+            input {
+                width: 7em;
+                border-radius: .3em;
+                border: 1px solid grey;
+            }
+
+            .line-config {
+                display: flex;
+                gap: 3em;
+                width: 29em;
+                justify-content: space-between;
+                align-items: center;
+
+                .thickness, .no-thickness {
+                    width: 3em;
+                    padding-left: 10px;
+                    text-align: center;                
+                }
+
+                .type {
+                    width: 26em;
+                }
+
+                .line-option {
+                    width: 100%;
+                    height: 2px;
+                    margin-right: 8px;
+                    display: inline-block;
+
+                    &.linear {
+                        background-color: black;
+                    }
+
+                    &.dash {
+                        background-image: linear-gradient(to right, black 50%, transparent 50%);
+                        background-size: 10px 2px;
+                    }
+
+                    &.dot {
+                        background-image: radial-gradient(circle, black 20%, transparent 20%);
+                        background-size: 10px 10px;
+                        height: 5px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+::ng-deep .mat-option .line-option {
+    width: 100%;
+    height: 2px;
+    margin-right: 8px;
+    display: inline-block;
+
+    &.linear {
+        background-color: black;
+    }
+
+    &.dash {
+        background-image: linear-gradient(to right, black 50%, transparent 50%);
+        background-size: 10px 2px;
+    }
+
+    &.dot {
+        background-image: radial-gradient(circle, black 20%, transparent 20%);
+        background-size: 10px 10px;
+        height: 5px;
+    }
+}
+
+::ng-deep mat-option .mat-option-text {
+    display: block;
+    line-height: 1.5;
+}
+
+.loading-overlay {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 23px;
+}

@@ -1,4 +1,4 @@
-<div *ngIf="(spinner && pageStatus === 1 && chartStatus === 1) || !spinner" id="packet-select-component" class="padding-6 d-flex flex-row justify-content-stretch">
+<div *ngIf="(useSpinner && packetSelectStatus === 1 && customSettingsStatus === 1) || !useSpinner" id="packet-select-component" class="padding-6 d-flex flex-row justify-content-stretch">
 
     <ng-container *ngIf="widget.config && !(widget.config.packetId && !selectedPacket)">
 
@@ -200,9 +200,9 @@
     </ng-container>
 
 </div>
-<div class="loading-overlay" *ngIf="(spinner && pageStatus === 0 || (pageStatus === 1 && chartStatus === 0)) || !spinner">
+<div class="loading-overlay" *ngIf="useSpinner && (packetSelectStatus === 0 || customSettingsStatus === 0)">
     <mat-spinner strokeWidth="8" diameter="100"></mat-spinner>
 </div>
-<div class="loading-overlay error" *ngIf="(spinner && pageStatus === -1 || (pageStatus === 1 && chartStatus === -1)) || !spinner" i18n="@@HYT_error_occurred">
+<div class="loading-overlay error" *ngIf="useSpinner && (packetSelectStatus === -1 || customSettingsStatus === -1)" i18n="@@HYT_error_occurred">
     An unexpected error has occurred
 </div>

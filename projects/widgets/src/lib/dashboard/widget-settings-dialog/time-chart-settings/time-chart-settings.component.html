@@ -1,31 +1,116 @@
 <div id="time-chart-settings">
-    <hyperiot-packet-select
-        [widget]="widget"
-        [hDeviceId]="hDeviceId"
-        [areaId]="areaId"
-        [multiPacketSelect]="true"
-        [selectedFields]="selectedFields"
-        (selectedFieldsChange)="onSelectedFieldsChange($event)"
-        (pageStatusChange)="updatePageStatus($event)"
-        [spinner]="true"
-        [chartStatus]="pageStatus"
+    <hyperiot-packet-select [widget]="widget" [hDeviceId]="hDeviceId" [areaId]="areaId" [multiPacketSelect]="true"
+        [selectedFields]="selectedFields" (selectedFieldsChange)="onSelectedFieldsChange($event)"
+        (selectedPacketChange)="onSelectedPacketChange($event)"
+        (packetSelectStatusChange)="updatePageStatus($event)"
+        [useSpinner]="useSpinner"
+        [customSettingsStatus]="pageStatus"
     ></hyperiot-packet-select>
 
-<div class="loading-overlay" *ngIf="pageStatus === 0">
-    <mat-spinner strokeWidth="8" diameter="100"></mat-spinner>
-</div>
+    <div id="time-chart-settings" *ngIf="packetPageStatus === 1 && pageStatus === 1">
+        <div *ngIf="checkbox && (selectedFields.length > 0 || widget.config.packetId)"
+            class="padding-6 d-flex flex-column justify-content-stretch">
+            <mat-checkbox color="primary" [(ngModel)]="thresholdActive" [ngModelOptions]="{ standalone: true }"
+                (ngModelChange)="isChecked()">threshold</mat-checkbox>
+            <div class="config-threshold">
 
-<div id="time-chart-settings" *ngIf="pageStatus === 1">
-</div>
-
-<div class="loading-overlay error" *ngIf="pageStatus === -1" i18n="@@HYT_error_occurred">
-    An unexpected error has occurred
-</div>
-<!--
+                <!-- New thresholds -->
+                <div *ngIf="getFilteredIds(filteredThresholds).length > 0" class="threshold-row setted-new-threshold">
+                    <div i18n="@@HYT_select_threshold">Set threshold</div>
+                    <mat-form-field class="input-button-row">
+                        <mat-select [ngModelOptions]="{ standalone: true }" [(ngModel)]="newThreshold.id"
+                            (selectionChange)="onThresholdSelected(newThreshold.id, false)" placeholder="Select threshold">
+                            <mat-select-trigger>Select threshold</mat-select-trigger>
+                            <mat-optgroup *ngFor="let group of thresholds | keyvalue" [label]="group.key">
+                                <mat-option *ngFor="let rule of group.value" [value]="rule.id"
+                                    [disabled]="disabledThresholdOption(rule)">
+                                    <div>{{ rule.name }}</div>
+                                    <div style="font-size: 12px; color: gray;">
+                                        {{ rule.rulePrettyDefinition ? formatRulePrettyDefinition(rule.rulePrettyDefinition) : '' }}
+                                    </div>
+                                </mat-option>
+                            </mat-optgroup>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            
+                <!-- Existing selected thresholds -->
+                <div *ngIf="getFilteredIds(filteredThresholds).length < getFilteredIds(thresholds).length">
+                    <ng-container [formGroup]="thresholdsForm">
+                        <div *ngFor="let thresholdControl of thresholdsForm.controls; let i = index" [formGroupName]="i" class="threshold-row">
+                            <div class="input-button-row">
+                                <div i18n="@@HYT_select_threshold">Set threshold</div>
+                                <div *ngIf="thresholdControl.get('id').value">
+                                    <button mat-icon-button class="hyt-base-btn" (click)="deleteSelected(i)">
+                                        <mat-icon>delete</mat-icon>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="input-button-row">
+                                <div class="input-row">
+                                    <mat-form-field *ngIf="thresholdControl">
+                                        <mat-select formControlName="id" placeholder="Select" (selectionChange)="onThresholdSelected(thresholdControl.get('id').value, true, i)">
+                                            <mat-select-trigger>
+                                                {{ getSelectedThresholdName(thresholdControl.get('id').value) || "Select threshold" }}
+                                            </mat-select-trigger>
+                                            <mat-optgroup *ngFor="let group of thresholds | keyvalue" [label]="group.key">
+                                                <mat-option *ngFor="let rule of group.value" [value]="rule.id"
+                                                    [disabled]="disabledThresholdOption(rule)">
+                                                    <div>{{ rule.name }}</div>
+                                                    <div style="font-size: 12px; color: gray;">
+                                                        {{ rule.rulePrettyDefinition ? formatRulePrettyDefinition(rule.rulePrettyDefinition) : '' }}
+                                                    </div>
+                                                </mat-option>
+                                            </mat-optgroup>
+                                        </mat-select>
+                                    </mat-form-field>
+                
+                                    <!-- Line settings (color, thickness, type) -->
+                                    <div *ngIf="thresholdControl.get('id').value" formGroupName="line" class="line-config">
+                                        <!-- Color Picker -->
+                                        <input class="colorPicker"
+                                            [style.backgroundColor]="thresholdControl.get('line.color').value || defaultColor"
+                                            [cpAlphaChannel]="'disabled'" [cpOutputFormat]="'rgba'"
+                                            [(colorPicker)]="thresholdControl.get('line.color').value"
+                                            (colorPickerChange)="setThresholdColor(thresholdControl.get('line.color'),$event)" />
+        
+                                        <!-- Type Input (e.g., linear, dashed) -->
+                                        <mat-form-field *ngIf="thresholdControl.get('line.type').value && thresholdControl.get('line.type').value !== null">
+                                            <mat-select formControlName="type" [ngClass]="!!thresholdControl.get('line.type').value">
+                                                <mat-select-trigger>
+                                                    <div class="line-option" [ngClass]="thresholdControl.get('line.type').value"></div>
+                                                </mat-select-trigger>
+                                            
+                                                <mat-option *ngFor="let lineType of lineTypeOptions" [value]="lineType">
+                                                    <div class="line-option" [ngClass]="lineType"></div>
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                        
+                                        <!-- Thickness Input -->
+                                        <input [ngClass]="{ 
+                                                'thickness': thresholdControl.get('line.type').value && thresholdControl.get('line.type').value !== null,
+                                                'no-thickness': !thresholdControl.get('line.type').value || thresholdControl.get('line.type').value === null
+                                            }"
+                                            matInput type="number" formControlName="thickness" min="1" max="5" placeholder="Thickness" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>                
+        </div>
+    </div>
+    <!--
 <div *ngFor="let field of selectedFields">{{field.name}}</div>
 -->
-<!-- Plotly chart specific options -->
+    <!-- Plotly chart specific options -->
 
-<div class="padding-6 d-flex flex-column justify-content-stretch">
-    <!-- not yet implemented -->
-</div>
+    <div class="loading-overlay" *ngIf="!useSpinner && packetPageStatus === 1 && pageStatus === 0">
+        <mat-spinner strokeWidth="8" diameter="100"></mat-spinner>
+    </div>
+
+    <div class="padding-6 d-flex flex-column justify-content-stretch">
+        <!-- not yet implemented -->
+    </div>

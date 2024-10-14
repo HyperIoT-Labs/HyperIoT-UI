@@ -12,12 +12,12 @@ import { AutoUpdateConfigStatus, ConfigModel } from '../../base/base-widget/mode
 export class WidgetSettingsDialogComponent implements OnInit {
 
   modalApply: Subject<any> = new Subject();
-  // TODO quale e' il modello di widget?
   widget;
   widgetName;
   widgetId: string;
   areaId: string;
   hDeviceId: string;
+  isLoading: boolean = false;
   @ViewChild('settingsForm', { static: false }) settingsForm: NgForm;
 
   dialogDataState = 0;
@@ -38,6 +38,13 @@ export class WidgetSettingsDialogComponent implements OnInit {
     this.hDeviceId = this.data.hDeviceId;
 
     this.autoUpdateConfig();
+
+    this.modalApply.subscribe(data => {
+      console.log('loading', data);
+      if (Object.keys(data).includes('isLoading')) {
+        this.isLoading = data.isLoading;
+      }
+    })
   }
 
   // close modal

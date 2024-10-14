@@ -2472,6 +2472,10 @@
         <source>Back to area</source>
         <target>Torna all'area</target>
       </trans-unit>
+      <trans-unit id="HYT_select_threshold" datatype="html">
+        <source>Select threshold(s)</source>
+        <target>Seleziona soglia/e</target>
+      </trns-unit>
       <trans-unit id="HYT_go_sub_area" datatype="html">
         <source>Go To Sub Area</source>
         <target>Vai Alla Sub Area</target>

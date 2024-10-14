@@ -52,6 +52,20 @@ export interface ConfigModel {
     fieldValuesMapList?: FieldValuesMapList;
     dynamicLabels?: DynamicLabels;
     fitToTimeline?: boolean;
+    threshold?: {
+        thresholdActive: boolean;
+        thresholds?: Threshold[];
+    }
+}
+
+export interface Threshold {
+    id: string;
+    rule?: string;
+    line: {
+        color: string;
+        thickness: number;
+        type: string;
+    }
     maxValue?: number;
 }
 

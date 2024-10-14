@@ -49,6 +49,7 @@ import { WidgetValueMappingComponent } from './widget-settings-dialog/packet-sel
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import { GaugeSettingsComponent } from './widget-settings-dialog/gauge-settings/gauge-settings.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { ColorPickerModule } from 'ngx-color-picker';
 
 @NgModule({
   declarations: [
@@ -104,6 +105,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatTabsModule,
     WidgetsModule,
     MatCheckboxModule,
+    ColorPickerModule
   ],
   providers: [
     DashboardConfigService,
