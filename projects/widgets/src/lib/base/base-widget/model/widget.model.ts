@@ -4,6 +4,7 @@ import { DefibrillatorSettings } from '../../../dashboard/widget-settings-dialog
 import { HPacket, HPacketField } from 'core';
 import { DataSimulatorSettings } from '../../../dashboard/widget-settings-dialog/data-simulator-settings/data-simulator.models';
 import { ProductionTargetSettings } from '../../../dashboard/widget-settings-dialog/production-target-settings/production-target.model';
+import FieldRules = DataSimulatorSettings.FieldRules;
 
 export interface WidgetConfig extends GridsterItem {
     projectId?: number;
@@ -29,6 +30,7 @@ export interface ConfigModel {
     fieldTypes?: FieldTypes;
     fieldFileMimeTypes?: FieldFileMimeTypes;
     fieldUnitConversions?: FieldUnitConversion;
+    fieldCustomConversions?: FieldRules;
     timeAxisRange?: number;
     maxDataPoints?: number;
     timeWindow?: number;

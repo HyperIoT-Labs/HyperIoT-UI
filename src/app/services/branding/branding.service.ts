@@ -2,8 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { UiBrandingService } from 'core';
-import { BehaviorSubject, catchError, map, Observable, of, Subject, tap } from 'rxjs';
-import { HyperiotLogoMobilePath, HyperiotLogoPath } from 'src/app/constants';
+import { lastValueFrom, Observable, tap } from 'rxjs';
+import { BrandingTheme } from './models/branding';
+import { Store } from '@ngrx/store';
+import { BrandingActions } from 'src/app/state/branding/branding.actions';
+import { BrandingSelectors } from 'src/app/state/branding/branding.selectors';
 
 @Injectable({
   providedIn: 'root'
@@ -16,51 +19,74 @@ export class BrandingService {
     return this._isBrandedTheme;
   }
 
-  private _logoPath$ = new BehaviorSubject<{
+  logoPath$: Observable<{
     standard: SafeResourceUrl,
     mobile: SafeResourceUrl
-  }>({
-    standard: '',
-    mobile: ''
-  });
-
-  get logoPath$(): Observable<{
-    standard: SafeResourceUrl,
-    mobile: SafeResourceUrl
-  }> {
-    return this._logoPath$.asObservable();
-  }
+  }> = this.store.select(BrandingSelectors.selectThemeLogoPath);
 
   constructor(
     private uiBrandingService: UiBrandingService,
     private _sanitizer: DomSanitizer,
     private httpClient: HttpClient,
-  ) {
-    this.loadBranding();
+    private store: Store
+  ) { }
+
+  loadThemeBranding() {
+    if (!this._isBrandedTheme) {
+      this.store.select(BrandingSelectors.selectThemeColorSchema).subscribe((colorSchema) => {
+        document.documentElement.style.setProperty('--primary-color', colorSchema.primaryColor);
+        document.documentElement.style.setProperty('--secondary-color', colorSchema.secondaryColor);
+      });
+      this.store.select(BrandingSelectors.selectIsBrandedTheme).subscribe((isBrandedTheme) => {
+        this._isBrandedTheme = isBrandedTheme;
+      });
+      this.store.dispatch(BrandingActions.load());
+      return lastValueFrom(this.store.select(BrandingSelectors.selectIsBrandedTheme));
+    }
   }
 
-  loadBranding() {
-    this.uiBrandingService.getUIBranding().subscribe({
-      next: ({logoBase64}) => {
-        this.updateLogo({
-          standard: this.getSanitizedLogo(logoBase64),
-          mobile: this.getSanitizedLogo(logoBase64)
-        });
-        this._isBrandedTheme  = true;
-      },
-      error: () => {
-        this.resetDefaultLogo();
-      }
-    }) 
+  updateBranding(theme: BrandingTheme) {
+    const formData = new FormData();
+    const colorSchemaString = JSON.stringify(theme.colorSchema);
+    formData.append('colorScheme', colorSchemaString);
+    if (theme.file) {
+      formData.append('name', '');
+      formData.append('logo', theme.file, theme.file.name);
+      formData.append('favicon', theme.file, theme.file.name);
+      return this.httpClient.put<any>(`/hyperiot/ui-branding`, formData)
+      .pipe(tap({
+        next: () => {
+          this._isBrandedTheme = true;
+        }
+      }));
+    } else {
+      return this.httpClient.patch<any>(`/hyperiot/ui-branding`, formData)
+      .pipe(tap({
+        next: () => {
+          this._isBrandedTheme = true;
+        }
+      }));
+    }
   }
 
-  updateBranding(file: File) {
+  updateLogo(theme: BrandingTheme) {
     const formData = new FormData();
     formData.append('name', '');
-    formData.append('colorScheme', '');
-    formData.append('logo', file, file.name);
-    formData.append('favicon', file, file.name);
-    return this.httpClient.put<any>(`/hyperiot/ui-branding`, formData)
+    formData.append('logo', theme.file, theme.file.name);
+    formData.append('favicon', theme.file, theme.file.name);
+    return this.httpClient.patch<any>(`/hyperiot/ui-branding`, formData)
+    .pipe(tap({
+      next: () => {
+        this._isBrandedTheme = true;
+      }
+    }));
+  }
+
+  updateColorScheme(theme: BrandingTheme) {
+    const formData = new FormData();
+    const colorSchemaString = JSON.stringify(theme.colorSchema);
+    formData.append('colorScheme', colorSchemaString);
+    return this.httpClient.patch<any>(`/hyperiot/ui-branding`, formData)
     .pipe(tap({
       next: () => {
         this._isBrandedTheme = true;
@@ -72,24 +98,9 @@ export class BrandingService {
     return this.httpClient.delete(`/hyperiot/ui-branding`)
     .pipe(tap({
       next: () => {
-        this.resetDefaultLogo();
         this._isBrandedTheme = false;
       },
     }));
-  }
-
-  updateLogo(value: {
-    standard: SafeResourceUrl,
-    mobile: SafeResourceUrl
-  }) {
-    this._logoPath$.next(value);
-  }
-
-  resetDefaultLogo() {
-    this._logoPath$.next({
-      standard: HyperiotLogoPath,
-      mobile: HyperiotLogoMobilePath
-    });
   }
 
   getSanitizedLogo(logoBase64: string) {

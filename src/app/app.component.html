@@ -33,4 +33,4 @@
 
 </div>
 
-<hyt-notification-box [notify-position]="'TOP_CENTER'"></hyt-notification-box>
+<hyt-notification-box *ngIf="isLogged()"  [notify-position]="'TOP_CENTER'"></hyt-notification-box>

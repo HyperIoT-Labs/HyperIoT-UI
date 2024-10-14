@@ -30,6 +30,8 @@ import { AlgorithmWizardComponent } from '../pages/algorithms/algorithm-wizard/a
 import { ProjectStatisticsFormComponent } from '../pages/projects/project-forms/project-statistics-form/project-statistics-form.component';
 import { ProjectAlarmsFormComponent } from '../pages/projects/project-forms/project-alarms-form/project-alarms-form.component';
 import {DashComponent} from '../pages/dash/dash.component';
+import { BrandingService } from '../services/branding/branding.service';
+import { PostLoginService } from '../services/postLogin/post-login.service';
 
 export enum HytRoutesDataFields {
   IGNORE_HTTP_ERROR_NOTIFY = 'ignoreHttpErrorNotify'
@@ -38,11 +40,12 @@ export enum HytRoutesDataFields {
 @Injectable()
 export class LoggedInGuard implements CanActivate {
 
-  constructor(private router: Router, private cookieService: CookieService) { }
+  constructor(private router: Router, private cookieService: CookieService, private postLoginService: PostLoginService) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):
     Observable<boolean> | Promise<boolean> | boolean {
     if (this.cookieService.check('HIT-AUTH') && localStorage.getItem('user') && localStorage.getItem('userInfo')) {
+      this.postLoginService.loadDataPostLogin();
       return true;
     }
     this.router.navigate(['/auth/login'], { state: { returnUrl: state.url } });
@@ -132,7 +135,7 @@ const hyperiotRoutes: Routes = [
   {
     path: 'login',
     redirectTo: '/auth/login',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: 'project-wizard',
@@ -276,6 +279,14 @@ const hyperiotRoutes: Routes = [
   },
   {
     path: 'areas/:projectId/:areaId/dashboards',
+    component: DashComponent,
+    canActivate: [LoggedInGuard],
+    data: {
+      showToolBar: true,
+    }
+  },
+  {
+    path: 'hdevice/:projectId/:hDeviceId/dashboards',
     component: DashComponent,
     canActivate: [LoggedInGuard],
     data: {

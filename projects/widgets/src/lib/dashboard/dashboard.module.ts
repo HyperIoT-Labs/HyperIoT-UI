@@ -48,6 +48,7 @@ import { ProductionTargetSettingsComponent } from './widget-settings-dialog/prod
 import { WidgetValueMappingComponent } from './widget-settings-dialog/packet-select/widget-value-mapping/widget-value-mapping.component';
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import { GaugeSettingsComponent } from './widget-settings-dialog/gauge-settings/gauge-settings.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -95,6 +96,7 @@ import { GaugeSettingsComponent } from './widget-settings-dialog/gauge-settings/
     MatInputModule,
     MatSelectModule,
     MatSliderModule,
+    MatProgressSpinnerModule,
     MatButtonToggleModule,
     MatProgressBarModule,
     MatTooltipModule,

@@ -1,4 +1,6 @@
 html {
+
+  @import "src/assets/styles/abstracts/_variables.scss";
   /**
   * commented to prevent the BIM navigation cube misalignment problem
   **/
@@ -15,10 +17,10 @@ html {
   }
 
   ::-webkit-scrollbar-thumb {
-    background: #5F87EF;
+    background: $primary-color-light;
 
     &:hover {
-      background: rgb(70, 104, 192);
+      background: $primary-color;
     }
 
   }

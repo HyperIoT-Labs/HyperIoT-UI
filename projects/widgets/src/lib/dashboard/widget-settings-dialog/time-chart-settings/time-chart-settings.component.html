@@ -1,15 +1,26 @@
 <div id="time-chart-settings">
-
     <hyperiot-packet-select
         [widget]="widget"
+        [hDeviceId]="hDeviceId"
         [areaId]="areaId"
         [multiPacketSelect]="true"
         [selectedFields]="selectedFields"
         (selectedFieldsChange)="onSelectedFieldsChange($event)"
+        (pageStatusChange)="updatePageStatus($event)"
+        [spinner]="true"
+        [chartStatus]="pageStatus"
     ></hyperiot-packet-select>
 
+<div class="loading-overlay" *ngIf="pageStatus === 0">
+    <mat-spinner strokeWidth="8" diameter="100"></mat-spinner>
 </div>
 
+<div id="time-chart-settings" *ngIf="pageStatus === 1">
+</div>
+
+<div class="loading-overlay error" *ngIf="pageStatus === -1" i18n="@@HYT_error_occurred">
+    An unexpected error has occurred
+</div>
 <!--
 <div *ngFor="let field of selectedFields">{{field.name}}</div>
 -->

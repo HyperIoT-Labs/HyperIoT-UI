@@ -1,3 +1,5 @@
+@import "src/assets/styles/abstracts/_variables.scss";
+
 #hyt-account-button {
     font-family: "Exo";
 
@@ -18,7 +20,7 @@
                     &.hyt-icon.icon-hyt_userCircle {
 
                         color: #ffffff;
-                        background-color: #0956b6;
+                        background-color: $primary-color;
 
                     }
 
@@ -29,7 +31,7 @@
     
         .dropbtn {
             background: none;
-            color: #1e58a5;
+            color: $primary-color;
             padding: 10px;
             border: none;
             cursor: pointer;
@@ -43,7 +45,7 @@
                 span {
                     &.hyt-icon.icon-hyt_userCircle {
                         color: #ffffff;
-                        background: #0956b6;
+                        background: $primary-color;
                     }
                 }
             }
@@ -89,7 +91,7 @@
 
                     &:hover {
                         color: white;
-                        background-color: #1e58a5;
+                        background-color: $primary-color;
                     }
 
                     span {

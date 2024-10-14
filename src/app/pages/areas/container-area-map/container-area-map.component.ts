@@ -5,10 +5,10 @@ import {PageStatus} from '../../../models/pageStatus';
 import {AreaMapComponent} from '../../projects/project-forms/areas-form/area-map/area-map.component';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
-import {HytTreeViewProjectComponent} from 'components';
+import {DeviceActions, HytTreeViewProjectComponent, MapComponent} from 'components';
 import {takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
-import {installTempPackage} from '@angular/cli/utilities/install-package';
+import {MapTypeKey} from "../../../../../projects/components/src/lib/hyt-map/models/map-type-key";
 
 @Component({
   selector: 'hyt-container-area-map',
@@ -19,7 +19,7 @@ export class ContainerAreaMapComponent implements OnInit, OnDestroy {
   /**
    * Hook to track the map element
    */
-  @ViewChild('map')  mapComponent: AreaMapComponent;
+  @ViewChild('map')  mapComponent: any; //AreaMapComponent;
   /**
    * Hook to track the treeview element
    */
@@ -103,6 +103,7 @@ export class ContainerAreaMapComponent implements OnInit, OnDestroy {
   isBimLoading: boolean = true;
   isEmptyBim: boolean = false;
   areaConfiguration: string;
+  currentMapTypeKey: MapTypeKey = MapTypeKey.LEAFLET;
   /*
    * logger service
    */
@@ -261,12 +262,14 @@ export class ContainerAreaMapComponent implements OnInit, OnDestroy {
           .subscribe(
           {
             next: (areaDevices: AreaDevice[]) => {
-              if(area.areaViewType === 'IMAGE'){
+              if(area.areaViewType === 'IMAGE' || area.areaViewType === 'MAP'){
                 this.logger.debug('Found the devices present in this area', areaDevices);
                 this.areaDevices = areaDevices;
                 this.mapComponent.setAreaItems(areaDevices.concat(this.areaList.filter(a => a.mapInfo != null)));
                 this.mapComponent.refresh();
-                this.loadAreaImage(areaTree);
+                if (area.areaViewType === 'IMAGE') {
+                  this.loadAreaImage(areaTree);
+                }
               }
               if(area.areaViewType === 'BIM_XKT'){
                 this.logger.debug('Found the devices present in this area', areaDevices);
@@ -363,8 +366,8 @@ export class ContainerAreaMapComponent implements OnInit, OnDestroy {
         })
     } else {
       this.isEmptyBim = true;
-      console.log('%cBIM WARNING isEmptyBim', 'color:yellowgreen', this.isEmptyBim);
-      console.log('%cBIM WARNING isBimLoading', 'color:yellowgreen', this.isBimLoading);
+      this.logger.warn('%cBIM WARNING isEmptyBim', this.isEmptyBim);
+      this.logger.warn('%cBIM WARNING isBimLoading', this.isBimLoading);
       this.logger.warn('No configuration data for this area');
     }
   }
@@ -386,7 +389,20 @@ export class ContainerAreaMapComponent implements OnInit, OnDestroy {
    */
   public onItemMapClicked(itemMap){
     this.logger.debug('onItemMapClicked start', itemMap);
-    if(itemMap.innerArea){
+    if (itemMap.deviceAction) {
+      if (itemMap.deviceAction === DeviceActions.DASHBOARD) {
+        this.logger.debug('navigation to device dashboard', itemMap.item);
+        if (itemMap.item.device) {
+          this.router.navigate(['hdevice', this.projectId, itemMap.item.device.id, 'dashboards'])
+        } else{
+          this.logger.error('Device not found', itemMap.item);
+        }
+      } else if (itemMap.deviceAction === DeviceActions.ALARMMANAGER) {
+        // TODO implement navigation to alarmmanager
+        this.logger.debug('navigation to alarmmanager', itemMap);
+      }
+    }
+    else if(itemMap.innerArea){
       this.router.navigate(['areas', this.projectId, itemMap.id])
         .then(() => {
           //TODO: Change method to navigate

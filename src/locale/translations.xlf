@@ -1057,6 +1057,12 @@
         <source>Proceeding with this action you will disable the registration of the data and they will not be stored until the rehabilitation of this property</source>
       </trans-unit>
       <trans-unit id="HYT_dashboard_event_fired" datatype="html">
+        <source>The event has been fired</source>
+      </trans-unit>
+      <trans-unit id="HYT_dashboard_alarm_fired" datatype="html">
+        <source>The alarm has been fired</source>
+      </trans-unit>
+      <trans-unit id="HYT_dashboard_alarm_cleared" datatype="html">
         <source>Alarm cleared</source>
       </trans-unit>
       <trans-unit id="HYT_reload" datatype="html">
@@ -1192,6 +1198,9 @@
       </trans-unit>
       <trans-unit id="HYT_dashboard" datatype="html">
         <source>Dashboard</source>
+      </trans-unit>
+      <trans-unit id="HYT_dashboard_device" datatype="html">
+        <source>Dashboard device</source>
       </trans-unit>
       <trans-unit id="HYT_areas" datatype="html">
         <source>Areas</source>
@@ -1773,11 +1782,41 @@
       <trans-unit id="HYT_no_notifications" datatype="html">
         <source>No notifications</source>
       </trans-unit>
-      <trans-unit id="HYT_reset_logo_error" datatype="html">
-        <source>Reset logo error</source>
+      <trans-unit id="HYT_branding" datatype="html">
+        <source>Branding</source>
       </trans-unit>
-      <trans-unit id="HYT_saving_logo_error" datatype="html">
-        <source>Saving logo error</source>
+      <trans-unit id="HYT_logo" datatype="html">
+        <source>Logo</source>
+      </trans-unit>
+      <trans-unit id="HYT_logo_is_required_for_the_first_theme_customization" datatype="html">
+        <source>* Logo is required for the first theme customization</source>
+      </trans-unit>
+      <trans-unit id="HYT_upload_your_logo" datatype="html">
+        <source>Upload your logo</source>
+      </trans-unit>
+      <trans-unit id="HYT_upload" datatype="html">
+        <source>Upload</source>
+      </trans-unit>
+      <trans-unit id="HYT_preview" datatype="html">
+        <source>Preview</source>
+      </trans-unit>
+      <trans-unit id="HYT_color_schema" datatype="html">
+        <source>Color Schema</source>
+      </trans-unit>
+      <trans-unit id="HYT_primary_color" datatype="html">
+        <source>Primary Color</source>
+      </trans-unit>
+      <trans-unit id="HYT_secondary_color" datatype="html">
+        <source>Secondary Color</source>
+      </trans-unit>
+      <trans-unit id="HYT_restore_default" datatype="html">
+        <source>Restore default</source>
+      </trans-unit>
+      <trans-unit id="HYT_saving_branding_theme_error" datatype="html">
+        <source>Saving branding theme error</source>
+      </trans-unit>
+      <trans-unit id="HYT_restoring_default_theme_error" datatype="html">
+        <source>Restoring default theme error</source>
       </trans-unit>
       <trans-unit id="HYT_you_have_access_to" datatype="html">
         <source>You have access to</source>
@@ -1796,6 +1835,69 @@
       </trans-unit>
       <trans-unit id="HYT_widget_settings_max_value" datatype="html">
         <source>Set max value:</source>
+      </trans-unit>
+      <trans-unit id="HYT_go_to_device_dashboard" datatype="html">
+        <source>Go to Device Dashboard</source>
+      </trans-unit>
+      <trans-unit id="HYT_go_to_alarm_manager" datatype="html">
+        <source>Go to Alarm Manager</source>
+      </trans-unit>
+      <trans-unit id="HYT_back_to_projects" datatype="html">
+        <source>Back to projects</source>
+      </trans-unit>
+      <trans-unit id="HYT_back_to_area" datatype="html">
+        <source>Back to area</source>
+      </trans-unit>
+      <trans-unit id="HYT_go_sub_area" datatype="html">
+        <source>Go To Sub Area</source>
+      </trans-unit>
+      <trans-unit id="HYT_device_dashboard" datatype="html">
+        <source>Device Dashbaord</source>
+      </trans-unit>
+      <trans-unit id="HYT_alarm_managing" datatype="html">
+        <source>Alarm Managing</source>
+      </trans-unit>
+      <trans-unit id="HYT_map_no_center" datatype="html">
+        <source>Set the coordinates of the center of the map</source>
+      </trans-unit>
+      <trans-unit id="HYT_map_no_items" datatype="html">
+        <source>No device or sub-area set</source>
+      </trans-unit>
+      <trans-unit id="HYT_map_ok" datatype="html">
+        <source>Map data are set correctly</source>
+      </trans-unit>
+      <trans-unit id="HYT_set_map_location" datatype="html">
+        <source>Set Map Location</source>
+      </trans-unit>
+      <trans-unit id="HYT_coordinates" datatype="html">
+        <source>Coordinates</source>
+      </trans-unit>
+      <trans-unit id="HYT_address" datatype="html">
+        <source>Address</source>
+      </trans-unit>
+      <trans-unit id="HYT_latitude" datatype="html">
+        <source>Latitude</source>
+      </trans-unit>
+      <trans-unit id="HYT_longitude" datatype="html">
+        <source>Longitude</source>
+      </trans-unit>
+      <trans-unit id="HYT_zoom_level" datatype="html">
+        <source>Zoom Level</source>
+      </trans-unit>
+      <trans-unit id="HYT_icon" datatype="html">
+        <source>Icon</source>
+      </trans-unit>
+      <trans-unit id="HYT_edit_item" datatype="html">
+        <source>Edit Item</source>
+      </trans-unit>
+      <trans-unit id="HYT_grab_item" datatype="html">
+        <source>Move/Lock Item</source>
+      </trans-unit>
+      <trans-unit id="HYT_enter_sub_area" datatype="html">
+        <source>Enter Sub Area</source>
+      </trans-unit>
+      <trans-unit id="HYT_delete_area_item" datatype="html">
+        <source>Delete item</source>
       </trans-unit>
     </body>
   </file>

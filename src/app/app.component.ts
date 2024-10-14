@@ -9,16 +9,17 @@ import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
 import {
   AlarmWrapperService,
   HProject,
-  HprojectsService,
+  HprojectsService, IGNORE_ERROR_NOTIFY,
   Logger,
   LoggerService,
   RealtimeDataService,
 } from "core";
 import { ToastrService } from "ngx-toastr";
 import {Subject, Subscription, filter, takeUntil, distinctUntilChanged, tap} from "rxjs";
-import { DashboardConfigService } from "widgets";
 import { environment } from "../environments/environment";
 import { BrandingService } from "./services/branding/branding.service";
+import {HttpContext} from "@angular/common/http";
+import {CookieService} from "ngx-cookie-service";
 
 @Component({
   selector: "hyt-root",
@@ -30,7 +31,10 @@ export class AppComponent implements OnInit, OnDestroy {
   public environment = environment;
   eventNotificationIsOn: boolean;
 
-  private toastMessage = $localize`:@@HYT_dashboard_event_fired:Alarm cleared`;
+  private toastMessage = $localize`:@@HYT_dashboard_event_fired:The event has been fired`;
+  private toastEventMessage = $localize`:@@HYT_dashboard_event_fired:The event has been fired`;
+  private toastMessageAlarmUp = $localize`:@@HYT_dashboard_alarm_fired:The alarm has been fired`;
+  private toastMessageAlarmDown = $localize`:@@HYT_dashboard_alarm_cleared:Alarm cleared`;
   projectIds: number[];
 
   /** Subject for manage the open subscriptions */
@@ -56,7 +60,8 @@ export class AppComponent implements OnInit, OnDestroy {
     private loggerService: LoggerService,
     private router: Router,
     private alarmWrapper: AlarmWrapperService,
-    private brandingService: BrandingService
+    private brandingService: BrandingService,
+    private cookieService: CookieService
   ) {
     // Init Logger
     this.logger = new Logger(this.loggerService);
@@ -82,12 +87,18 @@ export class AppComponent implements OnInit, OnDestroy {
       });
   }
 
+  isLogged(): boolean {
+    if (this.cookieService.check('HIT-AUTH') && localStorage.getItem('user') && localStorage.getItem('userInfo')) {
+      return true;
+    }
+  }
+
   /**
    * Retrive dashboard's data and connect to their data streams
    */
   subscribeToWebSockets() {
     this.hprojectsService
-      .findAllHProject()
+      .findAllHProject('body', undefined, new HttpContext().set(IGNORE_ERROR_NOTIFY, true))
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((projectsList: HProject[]) => {
         this.projectIds = projectsList.map((project) => project.id);
@@ -141,9 +152,12 @@ export class AppComponent implements OnInit, OnDestroy {
         let toastImage = "info";
         if (alarm.isEvent) {
           toastImage = "toastEvent";
+          this.toastMessage = this.toastEventMessage;
         } else if (alarm.isAlarm) {
           toastImage =
             alarm.event.alarmState === "UP" ? "toastAlarmUp" : "toastAlarmDown";
+          this.toastMessage =
+            alarm.event.alarmState === "UP" ? this.toastMessageAlarmUp : this.toastMessageAlarmDown;
           if (alarm.event.alarmState === 'DOWN')
             alarm.color.background = '#51a351'; // Green of resolved alarm BG (OFF state)
         }

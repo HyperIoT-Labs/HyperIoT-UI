@@ -34,6 +34,7 @@ import { MapDirective } from '../map.directive';
 import {AreaDevice, Area, Logger, LoggerService} from 'core';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
+import { DeviceActions } from 'components';
 
 @Component({
   selector: 'hyt-area-map',
@@ -186,8 +187,8 @@ export class AreaMapComponent implements OnDestroy {
     // handle click on component label (open button)
     component.instance.openClicked
       .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe(() => {
-      this.openItem(component);
+      .subscribe((deviceAction: DeviceActions) => {
+        this.openItem(component, deviceAction);
     });
     // handle component removal
     component.instance.removeClicked
@@ -216,8 +217,9 @@ export class AreaMapComponent implements OnDestroy {
    * @param component
    * @param disableEvent
    */
-  openItem(component: ComponentRef<DraggableItemComponent>, disableEvent?: boolean) {
-    this.itemOpen.emit(component.instance.itemData);
+  openItem(component: ComponentRef<DraggableItemComponent>, deviceAction?: DeviceActions) {
+    if (deviceAction) this.itemOpen.emit({item: component.instance.itemData, deviceAction});
+    else this.itemOpen.emit(component.instance.itemData);
   }
 
   /**
@@ -268,6 +270,10 @@ export class AreaMapComponent implements OnDestroy {
    */
   reset() {
     this.mapComponents.slice().forEach((c) => this.removeItem(c, true));
+  }
+
+  getAreaCenter() {
+    return { x: 0.5, y: 0.5 };
   }
 
 }

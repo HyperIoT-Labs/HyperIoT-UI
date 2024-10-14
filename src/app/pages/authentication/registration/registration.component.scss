@@ -1,3 +1,4 @@
+@import "src/assets/styles/abstracts/_variables.scss";
 @import '../../../../assets/styles/abstracts/mixins';
 
 #container-registration {
@@ -122,7 +123,7 @@
                   font-family: "Exo";
 
                   a {
-                    color: #0d416d;
+                    color: $primary-color-dark-unsaturated;
                     text-decoration: underline;
 
                     &:hover {

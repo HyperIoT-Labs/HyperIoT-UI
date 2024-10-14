@@ -17,6 +17,7 @@ export class WidgetSettingsDialogComponent implements OnInit {
   widgetName;
   widgetId: string;
   areaId: string;
+  hDeviceId: string;
   @ViewChild('settingsForm', { static: false }) settingsForm: NgForm;
 
   dialogDataState = 0;
@@ -34,6 +35,7 @@ export class WidgetSettingsDialogComponent implements OnInit {
     this.widgetId = this.data.currentWidgetIdSetting;
     this.dialogDataState = 1;
     this.areaId = this.data.areaId;
+    this.hDeviceId = this.data.hDeviceId;
 
     this.autoUpdateConfig();
   }

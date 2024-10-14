@@ -12,7 +12,7 @@ import { RootRuleNode } from './rootRuleNode';
 import { RuleAction } from './ruleAction';
 
 
-export interface Rule { 
+export interface Rule {
     id?: number;
     entityVersion: number;
     readonly entityCreateDate?: Date;

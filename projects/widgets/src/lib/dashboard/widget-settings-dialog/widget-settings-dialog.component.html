@@ -19,11 +19,11 @@
             <div *ngIf="autoUpdateConfigStatus === 'ERROR'" class="auto-update-config-error" i18n="@@HYT_auto_update_config_error">
                 Error! Unable to update the widget configuration automatically. The widget may not function correctly after the latest updates. It is recommended to delete the widget and set up a new one.
             </div>
-    
+
             <form class="content flex-grow-1" #settingsForm="ngForm">
-    
+
                 <div class="common-settings d-flex flex-row">
-    
+
                     <!-- <div class="d-flex flex-row"> -->
                         <div class="mt-4 mx-2 d-flex flex-column align-items-stretch flex-basis-dialog">
                             <hyt-input-template name="name" id="name" type="text"
@@ -31,16 +31,16 @@
                                 [(ngModel)]="widgetName" #name="ngModel" [isRequired]="true" required
                                 pattern="[A-Za-z0-9 -\.]*"></hyt-input-template>
                         </div>
-    
+
                         <div class="mt-4 mx-2 d-flex flex-column align-items-stretch flex-basis-dialog">
                             <hyt-input-template type="text" disabled [isDisabled]="true"
                                 i18n-placeholder="@@HYT_type" placeholder="Type"
                                 fieldValue="{{widget.type}}"></hyt-input-template>
                         </div>
                     <!-- </div> -->
-    
+
                 </div>
-    
+
                 <div class="custom-settings" [ngSwitch]="widget.type">
                     <div *ngSwitchCase="'sensor-value'">
                         <hyperiot-sensor-value-settings [widget]="widget" [areaId]="areaId" [modalApply]="modalApply.asObservable()"
@@ -48,7 +48,7 @@
                         </hyperiot-sensor-value-settings>
                     </div>
                     <div *ngSwitchCase="'offline-table'">
-                        <hyperiot-time-chart-settings [widget]="widget" [areaId]="areaId" [modalApply]="modalApply.asObservable()"
+                        <hyperiot-time-chart-settings [widget]="widget" [areaId]="areaId" [hDeviceId]="hDeviceId" [modalApply]="modalApply.asObservable()"
                             [settingsForm]="settingsForm">
                         </hyperiot-time-chart-settings>
                     </div>
@@ -58,7 +58,7 @@
                         </hyperiot-production-target-settings>
                     </div>
                     <div class="container-widget-type" *ngSwitchCase="'realtime-table'">
-                        <hyperiot-time-chart-settings [widget]="widget" [areaId]="areaId" [modalApply]="modalApply.asObservable()"
+                        <hyperiot-time-chart-settings [widget]="widget" [areaId]="areaId" [hDeviceId]="hDeviceId" [modalApply]="modalApply.asObservable()"
                             [settingsForm]="settingsForm">
                         </hyperiot-time-chart-settings>
                     </div>
@@ -68,12 +68,12 @@
                         </hyperiot-gauge-settings>
                     </div>
                     <div *ngSwitchCase="'histogram'">
-                        <hyperiot-time-chart-settings [widget]="widget" [areaId]="areaId" [modalApply]="modalApply.asObservable()"
+                        <hyperiot-time-chart-settings [widget]="widget" [areaId]="areaId" [hDeviceId]="hDeviceId" [modalApply]="modalApply.asObservable()"
                             [settingsForm]="settingsForm">
                         </hyperiot-time-chart-settings>
                     </div>
                     <div *ngSwitchCase="'time-chart'">
-                        <hyperiot-time-chart-settings [widget]="widget" [areaId]="areaId" [modalApply]="modalApply.asObservable()"
+                        <hyperiot-time-chart-settings [widget]="widget" [areaId]="areaId" [hDeviceId]="hDeviceId" [modalApply]="modalApply.asObservable()"
                             [settingsForm]="settingsForm">
                         </hyperiot-time-chart-settings>
                     </div>
@@ -102,19 +102,19 @@
                     </div>
 
                     <div *ngSwitchCase="'multi-status'">
-                        <hyperiot-time-chart-settings [widget]="widget" [areaId]="areaId" [modalApply]="modalApply.asObservable()"
+                        <hyperiot-time-chart-settings [widget]="widget" [areaId]="areaId" [hDeviceId]="hDeviceId" [modalApply]="modalApply.asObservable()"
                             [settingsForm]="settingsForm">
                         </hyperiot-time-chart-settings>
                     </div>
-                    
+
                     <div *ngSwitchCase="'dynamic-label-value'">
-                        <hyperiot-time-chart-settings [widget]="widget" [areaId]="areaId" [modalApply]="modalApply.asObservable()"
+                        <hyperiot-time-chart-settings [widget]="widget" [areaId]="areaId" [hDeviceId]="hDeviceId" [modalApply]="modalApply.asObservable()"
                             [settingsForm]="settingsForm">
                         </hyperiot-time-chart-settings>
                     </div>
                     <div *ngSwitchDefault></div>
                 </div>
-    
+
             </form>
 
         </div>

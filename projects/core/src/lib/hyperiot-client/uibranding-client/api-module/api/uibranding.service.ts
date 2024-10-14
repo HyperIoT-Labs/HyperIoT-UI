@@ -19,7 +19,6 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
 import { Observable }                                        from 'rxjs';
 
-import { Attachment } from '../../../models/attachment';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../../../models/configuration';
@@ -138,23 +137,15 @@ export class UiBrandingService {
     }
 
     /**
-     * /hyperiot/uibrandings
-     * Service for updating a uibranding entity
-     * @param name name the user want to visualize
-     * @param colorScheme chosen color scheme
-     * @param logoFile logo image 
-     * @param faviconFile favicon image
+     * /hyperiot/ui-branding
+     * Service for resetting a uibranding entity
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public updateUIBranding(name?: string, colorScheme?: string, logoFile?: Attachment, faviconFile?: Attachment, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
-    public updateUIBranding(name?: string, colorScheme?: string, logoFile?: Attachment, faviconFile?: Attachment, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
-    public updateUIBranding(name?: string, colorScheme?: string, logoFile?: Attachment, faviconFile?: Attachment, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
-    public updateUIBranding(name?: string, colorScheme?: string, logoFile?: Attachment, faviconFile?: Attachment, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
-
-
-
-
+    public updateUIBranding1(observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public updateUIBranding1(observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public updateUIBranding1(observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public updateUIBranding1(observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         let headers = this.defaultHeaders;
 
@@ -176,13 +167,9 @@ export class UiBrandingService {
         const consumes: string[] = [
             'application/json'
         ];
-        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-        if (httpContentTypeSelected != undefined) {
-            headers = headers.set('Content-Type', httpContentTypeSelected);
-        }
 
         return this.httpClient.put<any>(`${this.basePath}/`,
-            faviconFile,
+            null,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,

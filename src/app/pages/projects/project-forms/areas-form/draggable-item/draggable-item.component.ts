@@ -1,17 +1,22 @@
-import { Component, HostListener, EventEmitter } from '@angular/core';
-import { CdkDrag } from '@angular/cdk/drag-drop';
-import { AreaDevice } from 'core';
+import {Component, EventEmitter, HostListener, ViewEncapsulation} from '@angular/core';
+import {CdkDrag} from '@angular/cdk/drag-drop';
+import {AreaDevice} from 'core';
+import { DeviceActions } from 'components';
 
 @Component({
   selector: 'hyt-draggable-item',
   templateUrl: './draggable-item.component.html',
-  styleUrls: ['./draggable-item.component.scss']
+  styleUrls: ['./draggable-item.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class DraggableItemComponent {
   openClicked = new EventEmitter<any>();
   removeClicked = new EventEmitter<any>();
   positionChanged = new EventEmitter<any>();
   renderDataRequest = new EventEmitter<any>();
+
+  deviceActions = DeviceActions;
+
   editMode = false;
   itemData = {} as any;
   container;
@@ -42,8 +47,8 @@ export class DraggableItemComponent {
     this.positionChanged.emit();
   }
 
-  onOpenButtonClick(e) {
-    this.openClicked.emit();
+  onOpenButtonClick(e: any, deviceActionType?: DeviceActions) {
+    this.openClicked.emit(deviceActionType);
   }
   onRemoveButtonClick(e) {
     this.removeClicked.emit();
@@ -81,6 +86,13 @@ export class DraggableItemComponent {
     this.showName = false;
   }
 
+  redirectTo(device: any, deviceAction: DeviceActions) {
+    console.log("Redirect to", deviceAction);
+    console.log("Device", device);
+    this.onOpenButtonClick(device, deviceAction);
+    return;
+  }
+
   setTitleAttribute(itemData: any, editMode: boolean, action: string): string {
 
     const deviceName = itemData.device ? itemData.device.deviceName : itemData.name;
@@ -89,7 +101,7 @@ export class DraggableItemComponent {
       case 'move':
 
         if(!editMode){
-
+          if (itemData.device) return `Open ${deviceName} menu`;
           return deviceName;
 
         } else {

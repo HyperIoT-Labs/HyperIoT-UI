@@ -91,18 +91,18 @@ export class RuleDefinitionComponent implements ControlValueAccessor, OnChanges 
 
     const rulePart = this.ruleRows[ruleRowIndex].ruleParts[rulePartIndex];
 
-    if (rulePart.fieldType === 'text' || !rulePart.valueMap.has(String(event))) { // exit if no new fields should be added
-      return;
-    }
-
-    const selectedIPart: IRulePart = rulePart.valueMap.get(String(event));
-
     // removing fields after modified field
     // this.ruleRows[ruleRowIndex].ruleParts.splice(rulePartIndex + 1);
     for (let i = this.ruleRows[ruleRowIndex].ruleParts.length - 1; i > rulePartIndex; i--) {
       this.ruleRows[ruleRowIndex].ruleParts.pop();
       this.getRowFormGroup(ruleRowIndex).removeControl('rule-part-' + i);
     }
+
+    if (rulePart.fieldType === 'text' || !rulePart.valueMap.has(String(event))) { // exit if no new fields should be added
+      return;
+    }
+
+    const selectedIPart: IRulePart = rulePart.valueMap.get(String(event));
 
     this.ruleRows[ruleRowIndex].ruleParts.push({
       label: selectedIPart.label,

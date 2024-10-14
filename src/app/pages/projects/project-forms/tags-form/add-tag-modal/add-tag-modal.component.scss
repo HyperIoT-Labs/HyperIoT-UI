@@ -1,3 +1,5 @@
+@import "src/assets/styles/abstracts/_variables.scss";
+
 // #add-tag-modal {
 
 //   width: 600px;
@@ -194,7 +196,7 @@
 
         text-align: center;
         background-color: #ffffff;
-        color: #1e58a5;
+        color: $primary-color;
         font-size: 1.2em;
         font-weight: bold;
 

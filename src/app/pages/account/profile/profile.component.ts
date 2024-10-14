@@ -1,14 +1,17 @@
 import { Component, OnInit, ViewEncapsulation,ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { HusersService, HUser, UiBrandingService, HdevicesService, AreasService, HprojectsService } from 'core';
+import { HusersService, HUser, HdevicesService, AreasService, HprojectsService } from 'core';
 import { AuthenticationHttpErrorHandlerService } from '../../../services/errorHandler/authentication-http-error-handler.service';
 import { HYTError } from 'src/app/services/errorHandler/models/models';
 import { Router } from '@angular/router';
 import { HyperiotLogoMobilePath, HyperiotLogoPath } from 'src/app/constants';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, forkJoin, map, Observable, of, Subject } from 'rxjs';
+import { forkJoin, map, } from 'rxjs';
 import { BrandingService } from 'src/app/services/branding/branding.service';
-import { SafeResourceUrl } from '@angular/platform-browser';
+import { Store } from '@ngrx/store';
+import { BrandingActions, BrandingApiActions } from 'src/app/state/branding/branding.actions';
+import { Actions } from '@ngrx/effects';
+import { BrandingSelectors } from 'src/app/state/branding/branding.selectors';
 
 @Component({
   selector: 'hyt-profile',
@@ -32,6 +35,8 @@ export class ProfileComponent implements OnInit {
 
   personalInfoForm: FormGroup;
   changePasswordForm: FormGroup;
+  
+  initialBrandingForm: FormGroup;
   brandingForm: FormGroup;
 
   generalError = 0;
@@ -105,6 +110,8 @@ export class ProfileComponent implements OnInit {
     devices: '',
   };
 
+  initialLogoPath;
+  initialLogoMobilePath;
   logoPath;
   logoMobilePath;
 
@@ -115,6 +122,22 @@ export class ProfileComponent implements OnInit {
     message: ''
   };
 
+  get isBrandedTheme() {
+    return this.brandingService.isBrandedTheme;
+  }
+
+  get canNotSaveTheme() {
+    if (this.brandingService.isBrandedTheme) {
+      return !this.fileToUpload && !this.brandingForm.dirty;
+    } else {
+      return !this.fileToUpload;
+    }
+  }
+
+  get colorSchemaChanged() {
+    return JSON.stringify(this.initialBrandingForm.value) != JSON.stringify(this.brandingForm.value);
+  }
+
   /**
    * This is the constructor of the class.
    */
@@ -124,12 +147,13 @@ export class ProfileComponent implements OnInit {
     private httperrorHandler: AuthenticationHttpErrorHandlerService,
     private router: Router,
     private cd: ChangeDetectorRef,
-    private httpClient: HttpClient,
     private hDevicesService: HdevicesService,
     private areasService: AreasService,
     private hProjectService: HprojectsService,
-    private brandingService: BrandingService
-  ) { }
+    private brandingService: BrandingService,
+    private store: Store
+  ) {
+  }
 
   /**
    * This is an angular lifecycle hook that executes certain operations on initialization of the application.
@@ -137,7 +161,10 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     this.personalInfoForm = this.fb.group({});
     this.changePasswordForm = this.fb.group({});
-    this.brandingForm = this.fb.group({});
+    this.brandingForm = this.fb.group({
+      primaryColor: [''],
+      secondaryColor: [''],
+    });
     if (localStorage.getItem('user') !== null) {
       this.user = JSON.parse(localStorage.getItem('user'));
       this.userId = this.user.id;
@@ -265,51 +292,61 @@ export class ProfileComponent implements OnInit {
   }
 
   resetLogo(logoFileInput) {
+    this.logoPath = this.initialLogoPath;
+    this.logoMobilePath = this.initialLogoMobilePath;
+    this.fileToUpload = null;
+    logoFileInput.value = null;
+  }
+
+  resetColorSchema() {
+    this.brandingForm.patchValue(this.initialBrandingForm.value);
+    this.brandingForm.markAsUntouched();
+    this.brandingForm.markAsPristine();
+  }
+
+  restoreDefaultTheme(logoFileInput) {
     this.logoErrorMessage = {
       showError: false,
       message: ''
     };
     if (this.brandingService.isBrandedTheme) {
-      this.brandingService.resetBranding().subscribe({
-        next: () => {
-          this.fileToUpload = null;
-          logoFileInput.value = null;
-        },
-        error: () => {
-          this.logoErrorMessage = {
-            showError: true,
-            message: $localize`:@@HYT_reset_logo_error:Reset logo error`
-          };
-        }
-      });
+      this.store.dispatch(BrandingActions.reset());
     } else {
       this.logoPath = HyperiotLogoPath;
       this.logoMobilePath = HyperiotLogoMobilePath;
       this.fileToUpload = null;
       logoFileInput.value = null;
+      this.resetColorSchema();
     }
 
   }
 
-  saveLogo() {
+  saveTheme() {
     this.logoErrorMessage = {
       showError: false,
       message: ''
     };
-    this.brandingService.updateBranding(this.fileToUpload).subscribe({
-      next: () => {
-        this.brandingService.updateLogo({
-          standard: this.logoPath,
-          mobile: this.logoPath
-        })
-      },
-      error: () => {
-        this.logoErrorMessage = {
-          showError: true,
-          message: $localize`:@@HYT_saving_logo_error:Saving logo error`
-        };
-      }
-    });
+
+    const colorSchema = this.brandingForm.value;
+
+    if (this.fileToUpload) {
+      this.store.dispatch(BrandingActions.updateAll({
+        brandingTheme: {
+          file: this.fileToUpload,
+          fileBase64: this.logoPath,
+          colorSchema,
+        }
+      }));
+    } else {
+      this.store.dispatch(BrandingActions.updateAll({
+        brandingTheme: {
+          fileBase64: this.logoPath,
+          colorSchema,
+        }
+      }));
+
+    }
+
   }
  
   loadGeneralData() {
@@ -325,10 +362,43 @@ export class ProfileComponent implements OnInit {
 
     this.brandingService.logoPath$.subscribe({
       next: ({standard, mobile}) => {
+        this.initialLogoPath = standard;
+        this.initialLogoMobilePath = mobile;
         this.logoPath = standard;
         this.logoMobilePath = mobile;
+        this.fileToUpload = null;
+        (document.getElementById('logo-file-input') as HTMLInputElement).value = null;
       },
-    })
+    });
+
+    this.store.select(BrandingSelectors.selectThemeColorSchema).subscribe({
+      next: (colorSchema) => {
+        this.initialBrandingForm = this.fb.group({
+          primaryColor: [colorSchema.primaryColor],
+          secondaryColor: [colorSchema.secondaryColor],
+        });
+        this.resetColorSchema();
+      }
+    });
+
+    this.store.select(BrandingSelectors.selectError).subscribe({
+      next: (error) => {
+        switch (error?.action) {
+          case BrandingApiActions.updateFailure.type:
+            this.logoErrorMessage = {
+              showError: true,
+              message: $localize`:@@HYT_saving_branding_theme_error:Saving branding theme error`
+            };
+            break;
+          case BrandingApiActions.resetFailure.type:
+            this.logoErrorMessage = {
+              showError: true,
+              message: $localize`:@@HYT_restoring_default_theme_error:Restoring default theme error`
+            };
+            break;
+        }
+      }
+    });
   }
 
 }

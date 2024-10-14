@@ -1,3 +1,5 @@
+
+@import "src/assets/styles/abstracts/_variables.scss";
 @import url(//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css);
 
 #hyt-sidebar {
@@ -17,41 +19,41 @@
         user-select:none;
 
         &.main-menu {
-            border-right: 1px solid #074290;
+            border-right: 1px solid $primary-color-dark;
             position:fixed;
             top:0px;
             bottom:0;
             height:100%;
             left:0;
-            z-index: 998;
-            background-color: #1e58a5;
+            z-index: 1001;
+            background-color: $primary-color;
 
             -webkit-transition: left .15s ease-in-out;
             -moz-transition: left .15s ease-in-out;
             -o-transition: left .15s ease-in-out;
             transition: left .15s ease-in-out;
-            
-    
+
+
             ul {
                 display: flex;
                 flex-direction: column;
                 height: 100%;
                 padding-top: 65px;
                 overflow: hidden;
-                background: #1e58a5;
+                background: $primary-color;
                 -webkit-transition: width .1s ease-in-out;
                 -moz-transition: width .1s ease-in-out;
                 transition: width .1s ease-in-out;
                 border: #e5e5e5;
                 width: 59px;
-                
+
 
                 &:hover,
                 &.expanded {
                     width: 250px;
                     overflow: visible;
                     height: 100%;
-                    border-right: 1px solid #0b5594;
+                    /* border-right: 1px solid #0b5594; */
                     -moz-box-shadow: -7px 0px 24px -4px #000;
                     -webkit-box-shadow: -7px 0px 24px -4px #000;
                     box-shadow: -7px 0px 24px -4px #000;
@@ -69,14 +71,14 @@
                         }
                     }
                 }
-    
+
                 &.logout {
                     position:absolute;
                     left: 0;
                     bottom: 0;
                 }
             }
-    
+
             li {
                 position: relative;
                 display: block;
@@ -86,19 +88,20 @@
 
                 &.selected {
                     // border-bottom: solid 1px #ffffff;
-                    background-color: #003679;
+                    //background-color: #003679;
+                    background-color: $primary-color-dark;
                 }
 
                 &:hover:not(.selected) {
 
                     a {
                         color: #f9f9f9;
-                        background-color: #4371ab;
+                        background-color: $primary-color-light;
                     }
                 }
 
                 &:active {
-                    background-color: #5fa2db;
+                    background-color: $primary-color-light;
                 }
 
                 a {
@@ -115,12 +118,12 @@
                     -moz-transition: width .1s linear;
                     -webkit-transition: width .1s linear;
                     transition: width .1s linear;
-    
+
                     &:hover,
                     &:focus {
                         text-decoration:none;
                     }
-                    
+
                     .fa {
                         position: relative;
                         display: table-cell;
@@ -140,7 +143,7 @@
                         font-size: 2em;
                         padding: 12px 15px;
                     }
-                  
+
                 }
 
             }
@@ -149,7 +152,7 @@
                 margin-top: auto;
                 cursor: pointer;
             }
-    
+
             .nav-icon {
                 position:relative;
                 display:table-cell;
@@ -159,7 +162,7 @@
                 vertical-align:middle;
                 font-size:18px;
             }
-    
+
             .nav-text {
                 position: relative;
                 display: table-cell;
@@ -178,7 +181,7 @@
         }
 
     }
-    
+
 }
 
 
@@ -203,13 +206,13 @@
                 left: 0px;
 
                 ul {
-                    
+
                     &.ul-mob-show {
 
                         width: 250px;
                         overflow: visible;
                         height: 100%;
-                        border-right: 1px solid #0b5594;
+                        /* border-right: 1px solid #0b5594; */
                         box-shadow: -7px 0px 24px -4px #000;
 
                         li {
@@ -227,7 +230,7 @@
                                 }
 
                             }
-                        
+
                         }
 
                     }
@@ -240,7 +243,7 @@
 
         }
 
-    } 
+    }
 
 }
 

@@ -193,7 +193,7 @@ export class MultiStatusWidgetComponent extends BaseWidgetComponent implements O
       case 'DEFAULT':
       case 'INTEGER':
       case 'DOUBLE':
-      case 'FLOAT': 
+      case 'FLOAT':
         output = this.widget.config.fieldValuesMapList[fieldId].valuesMap.find(ele => parseInt(ele.value) === parseInt(element))?.output;
         break;
       case 'TIMESTAMP':
@@ -218,7 +218,7 @@ export class MultiStatusWidgetComponent extends BaseWidgetComponent implements O
   }
 
   retrieveAttachments(projectId: number, packetId: number, fieldId: number, timestamp: number) {
-    return this.hProjectsService.scanHProject(
+    return this.hProjectsService.scanHProject1(
       projectId,
       packetId,
       fieldId,
@@ -245,7 +245,7 @@ export class MultiStatusWidgetComponent extends BaseWidgetComponent implements O
 
   /**
    * Called when one of the toolbar options is pressed and emits the correct event
-   * @param action 
+   * @param action
    */
   onToolbarAction(action: string) {
     const widgetAction: WidgetAction = { widget: this.widget, action };

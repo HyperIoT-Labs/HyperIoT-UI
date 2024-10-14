@@ -186,24 +186,63 @@
                 <form id="form-logo-branding" #pif="ngForm" [formGroup]="brandingForm">
 
                     <div class="row row-field-branding">
+                        <div class="col-12">
+                            <h3 i18n="@@HYT_logo">Logo</h3>
+                            <p *ngIf="!isBrandedTheme && !fileToUpload" style="color: red; font-size:small;" i18n="@@HYT_logo_is_required_for_the_first_theme_customization">
+                                * Logo is required for the first theme customization
+                            </p>
+                        </div>
                         <div class="container-form-field col-12">
                             <span i18n="@@HYT_upload_your_logo" id="upload-logo-text">Upload your logo</span>
                             <input #logoFileInput type="file" id="logo-file-input" name="logo" accept="image/png, image/jpeg" (change)="handleLogoInput($event.target.files)" hidden />
                             <hyt-button (clickFn)="initUpload()">
                                 <ng-container i18n="@@HYT_upload">Upload</ng-container>
                             </hyt-button>
+                            <ng-container *ngIf="fileToUpload != null">
+                                <button mat-icon-button aria-label="reset logo button" (click)="resetLogo(logoFileInput)">
+                                    <mat-icon>clear</mat-icon>
+                                </button>
+                            </ng-container>
                         </div>
-                        <div class="container-form-field col-12">
+                        <div *ngIf="fileToUpload != null" class="container-form-field col-12">
                             <p i18n="@@HYT_preview">Preview</p>
                             <hyt-topbar [preview-mode]="true" [logoPath]="logoPath" [logoMobilePath]="logoMobilePath"></hyt-topbar>
                         </div>
+
+                        <div class="container-form-field col-12">
+                            <hr>
+                        </div>
+
+                        <div class="col-12">
+                            <h3 i18n="@@HYT_color_schema">Color Schema</h3>
+                        </div>
+                        <div class="container-form-field col-3">
+                            <mat-form-field>
+                                <mat-label i18n="@@HYT_primary_color">Primary Color</mat-label>
+                                <input matInput formControlName="primaryColor" type="color">
+                            </mat-form-field>
+                        </div>
+                        <div class="container-form-field col-3">
+                            <mat-form-field>
+                                <mat-label i18n="@@HYT_secondary_color">Secondary Color</mat-label>
+                                <input matInput formControlName="secondaryColor" type="color">
+                            </mat-form-field>
+                        </div>
+
+                        <ng-container *ngIf="this.brandingForm.dirty">
+                            <button mat-icon-button aria-label="reset logo button" (click)="resetColorSchema()">
+                                <mat-icon>clear</mat-icon>
+                            </button>
+                        </ng-container>
     
                         <div class="container-form-field col-12">
                             <div class="btn-group">
+                                
+                                <!-- [isDisabled]="!fileToUpload" -->
                                 <hyt-button 
-                                    id ="save-logo-btn" 
-                                    [isDisabled]="!fileToUpload"
-                                    (clickFn)="saveLogo()"
+                                    id ="save-logo-btn"
+                                    [isDisabled]="canNotSaveTheme"
+                                    (clickFn)="saveTheme()"
                                     type="submit"
                                 >
                                     <ng-container i18n="@@HYT_save">Save</ng-container>
@@ -211,10 +250,11 @@
     
                                 <hyt-button 
                                     id ="reset-logo-btn" 
-                                    (clickFn)="resetLogo(logoFileInput)"
+                                    (clickFn)="restoreDefaultTheme(logoFileInput)"
+                                    [isDisabled]="!isBrandedTheme"
                                     type="submit"
                                 >
-                                    <ng-container i18n="@@HYT_reset">Reset</ng-container>
+                                    <ng-container i18n="@@HYT_restore_default">Restore default</ng-container>
                                 </hyt-button>
                             </div>
       
