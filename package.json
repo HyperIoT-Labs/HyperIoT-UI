@@ -1,6 +1,6 @@
 {
   "name": "hyperiot",
-  "version": "2.9.4",
+  "version": "2.10.0",
   "scripts": {
     "ng": "node_modules/.bin/ng",
     "ng-high-memory": "node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng",
