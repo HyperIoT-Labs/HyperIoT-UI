@@ -30,9 +30,10 @@ export class AlarmWrapperService {
     private realtimeDataService: RealtimeDataService,
     private hprojectsService: HprojectsService,
     private alarmsService: AlarmsService,
-  ) {
-    const SUFFIX = HytAlarm.AlarmSuffixsEnum;
+  ) { }
 
+  loadAndCollectAlarms() {
+    const SUFFIX = HytAlarm.AlarmSuffixsEnum;
     this.hprojectsService.findAllHProject().pipe(
       mergeMap(res => this.alarmsService.findAlarmStatusByProjectId(res.map(p => p.id))),
     ).subscribe(res => {
