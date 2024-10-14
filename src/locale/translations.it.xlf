@@ -2452,6 +2452,10 @@
         <source>Reset</source>
         <target>Ripristina</target>
       </trans-unit>
+      <trans-unit id="HYT_widget_settings_max_value" datatype="html">
+        <source>Set max value:</source>
+        <target>Imposta il valore massimo:</target>
+      </trans-unit>
       <trans-unit id="HYT_go_to_device_dashboard" datatype="html">
         <source>Go to Device Dashboard</source>
         <target>Vai alla dashboard del device</target>
