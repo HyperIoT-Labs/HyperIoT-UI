@@ -47,6 +47,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { ProductionTargetSettingsComponent } from './widget-settings-dialog/production-target-settings/production-target-settings.component';
 import { WidgetValueMappingComponent } from './widget-settings-dialog/packet-select/widget-value-mapping/widget-value-mapping.component';
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -93,6 +94,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
     MatInputModule,
     MatSelectModule,
     MatSliderModule,
+    MatProgressSpinnerModule,
     MatButtonToggleModule,
     MatProgressBarModule,
     MatTooltipModule,
