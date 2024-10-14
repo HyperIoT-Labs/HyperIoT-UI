@@ -56,6 +56,7 @@ export interface ConfigModel {
         thresholdActive: boolean;
         thresholds?: Threshold[];
     }
+    maxValue?: number;
 }
 
 export interface Threshold {
@@ -66,7 +67,6 @@ export interface Threshold {
         thickness: number;
         type: string;
     }
-    maxValue?: number;
 }
 
 export interface FieldUnitConversion {
