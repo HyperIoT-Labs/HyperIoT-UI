@@ -1,0 +1,8 @@
+<div class="container-dynamic-map" [ngSwitch]="mapType">
+  <hyt-leaflet-map #map *ngSwitchCase="'LEAFLET'" [editMode]="editMode" [areaConfiguration]="areaConfiguration"></hyt-leaflet-map>
+  <!-- Alternatively, here we can provide an alternative type of map such as GOOGLE -->
+  <hyt-leaflet-map #map *ngSwitchDefault [editMode]="editMode" [areaConfiguration]="areaConfiguration">
+    <ng-content></ng-content>
+  </hyt-leaflet-map>
+</div>
+
