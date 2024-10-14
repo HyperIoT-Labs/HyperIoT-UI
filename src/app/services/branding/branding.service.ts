@@ -32,15 +32,17 @@ export class BrandingService {
   ) { }
 
   loadThemeBranding() {
-    this.store.select(BrandingSelectors.selectThemeColorSchema).subscribe((colorSchema) => {
-      document.documentElement.style.setProperty('--primary-color', colorSchema.primaryColor);
-      document.documentElement.style.setProperty('--secondary-color', colorSchema.secondaryColor);
-    });
-    this.store.select(BrandingSelectors.selectIsBrandedTheme).subscribe((isBrandedTheme) => {
-      this._isBrandedTheme = isBrandedTheme;
-    });
-    this.store.dispatch(BrandingActions.load());
-    return lastValueFrom(this.store.select(BrandingSelectors.selectIsBrandedTheme));
+    if (!this._isBrandedTheme) {
+      this.store.select(BrandingSelectors.selectThemeColorSchema).subscribe((colorSchema) => {
+        document.documentElement.style.setProperty('--primary-color', colorSchema.primaryColor);
+        document.documentElement.style.setProperty('--secondary-color', colorSchema.secondaryColor);
+      });
+      this.store.select(BrandingSelectors.selectIsBrandedTheme).subscribe((isBrandedTheme) => {
+        this._isBrandedTheme = isBrandedTheme;
+      });
+      this.store.dispatch(BrandingActions.load());
+      return lastValueFrom(this.store.select(BrandingSelectors.selectIsBrandedTheme));
+    }
   }
 
   updateBranding(theme: BrandingTheme) {
