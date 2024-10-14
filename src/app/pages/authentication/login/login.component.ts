@@ -9,6 +9,7 @@ import { HYTError } from 'src/app/services/errorHandler/models/models';
 import * as CryptoJS from 'crypto-js';
 import { SubmissionStatus } from '../models/pageStatus';
 import { environment } from 'src/environments/environment';
+import { PostLoginService } from 'src/app/services/postLogin/post-login.service';
 
 /**
  * LoginComponent is a component of AuthenticationModule.
@@ -79,7 +80,9 @@ export class LoginComponent implements OnInit {
     private cookieService: CookieService,
     private router: Router,
     private httperrorHandler: AuthenticationHttpErrorHandlerService,
-    private loggerService: LoggerService) {
+    private loggerService: LoggerService,
+    private postLoginService: PostLoginService
+  ) {
     this.logger = new Logger(this.loggerService);
     this.logger.registerClass('LoginComponent');
   }
@@ -136,6 +139,7 @@ export class LoginComponent implements OnInit {
 
         this.loginStatus = SubmissionStatus.Submitted;
 
+        this.postLoginService.loadDataPostLogin();
         this.router.navigate([this.returnUrl]);
       },
       err => {

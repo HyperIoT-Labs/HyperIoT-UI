@@ -47,6 +47,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { ProductionTargetSettingsComponent } from './widget-settings-dialog/production-target-settings/production-target-settings.component';
 import { WidgetValueMappingComponent } from './widget-settings-dialog/packet-select/widget-value-mapping/widget-value-mapping.component';
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import { GaugeSettingsComponent } from './widget-settings-dialog/gauge-settings/gauge-settings.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ColorPickerModule } from 'ngx-color-picker';
 
@@ -61,6 +62,7 @@ import { ColorPickerModule } from 'ngx-color-picker';
     PacketSelectComponent,
     SensorValueSettingsComponent,
     TimeChartSettingsComponent,
+    GaugeSettingsComponent,
     TimeAxisComponent,
     AlgorithmSelectComponent,
     AlgorithmSettingsComponent,

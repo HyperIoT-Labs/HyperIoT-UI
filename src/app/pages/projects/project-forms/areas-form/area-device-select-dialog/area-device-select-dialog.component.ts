@@ -2,6 +2,7 @@ import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { DIALOG_DATA, DialogRef } from 'components';
 import { AreasService, HprojectsService, HdevicesService, AreaDevice, HDevice, Area } from 'core';
 import { LoadingStatusEnum } from '../../project-form-entity';
+import { AREA_ICONS_OPTIONS } from 'projects/components/src/public-api';
 
 @Component({
   selector: 'hyt-area-device-select-dialog',
@@ -16,17 +17,7 @@ export class AreaDeviceSelectDialogComponent implements OnInit {
   LoadingStatus = LoadingStatusEnum;
 
    // @@I18N@@ (for all labels)
-  deviceIconOptions = [
-    { label: 'Motion Sensor', value: 'motion-sensor.png' },
-    { label: 'Wind Sensor', value: 'wind-sensor.png' },
-    { label: 'Body Scanner', value: 'body-scanner.png' },
-    { label: 'Door Sensor', value: 'door-sensor.png' },
-    { label: 'GPS Sensor', value: 'gps-sensor.png' },
-    { label: 'Automated Light', value: 'light.png' },
-    { label: 'Rain Sensor', value: 'rain-sensor.png' },
-    { label: 'RFID Sensor', value: 'rfid.png' },
-    { label: 'Thermometer', value: 'thermometer.png' }
-  ];
+  deviceIconOptions = [];
   selectedDeviceIcon: string;
 
   constructor(
@@ -38,6 +29,7 @@ export class AreaDeviceSelectDialogComponent implements OnInit {
 
   ngOnInit() {
     this.loadingStatus = LoadingStatusEnum.Loading;
+    this.deviceIconOptions = AREA_ICONS_OPTIONS.get(this.data.areaType);
     this.deviceService.findAllHDeviceByProjectId(this.data.projectId).subscribe((projectDevices: HDevice[]) => {
       this.projectDevices = projectDevices;
       this.areaService.getAreaDeviceDeepListFromRoot(this.data.areaId).subscribe((assignedDevices) => {

@@ -2452,6 +2452,10 @@
         <source>Reset</source>
         <target>Ripristina</target>
       </trans-unit>
+      <trans-unit id="HYT_widget_settings_max_value" datatype="html">
+        <source>Set max value:</source>
+        <target>Imposta il valore massimo:</target>
+      </trans-unit>
       <trans-unit id="HYT_go_to_device_dashboard" datatype="html">
         <source>Go to Device Dashboard</source>
         <target>Vai alla dashboard del device</target>
@@ -2471,6 +2475,74 @@
       <trans-unit id="HYT_select_threshold" datatype="html">
         <source>Select threshold(s)</source>
         <target>Seleziona soglia/e</target>
+      </trns-unit>
+      <trans-unit id="HYT_go_sub_area" datatype="html">
+        <source>Go To Sub Area</source>
+        <target>Vai Alla Sub Area</target>
+      </trans-unit>
+      <trans-unit id="HYT_device_dashboard" datatype="html">
+        <source>Device Dashbaord</source>
+        <target>Dashboard Device</target>
+      </trans-unit>
+      <trans-unit id="HYT_alarm_managing" datatype="html">
+        <source>Alarm Managing</source>
+        <target>Gestione Allarmi</target>
+      </trans-unit>
+      <trans-unit id="HYT_map_no_center" datatype="html">
+        <source>Set the coordinates of the center of the map</source>
+        <target>Inserisci le coordinate del centro della mappa</target>
+      </trans-unit>
+      <trans-unit id="HYT_map_no_items" datatype="html">
+        <source>No device or sub-area set</source>
+        <target>Nessun Device o Sub-Area inserito</target>
+      </trans-unit>
+      <trans-unit id="HYT_map_ok" datatype="html">
+        <source>Map data are set correctly</source>
+        <target>Mappa impostata correttamente</target>
+      </trans-unit>
+      <trans-unit id="HYT_set_map_location" datatype="html">
+        <source>Set Map Location</source>
+        <target>Imposta Zona Mappa</target>
+      </trans-unit>
+      <trans-unit id="HYT_coordinates" datatype="html">
+        <source>Coordinates</source>
+        <target>Coordinate</target>
+      </trans-unit>
+      <trans-unit id="HYT_address" datatype="html">
+        <source>Address</source>
+        <target>Indirizzo</target>
+      </trans-unit>
+      <trans-unit id="HYT_latitude" datatype="html">
+        <source>Latitude</source>
+        <target>Latitudine</target>
+      </trans-unit>
+      <trans-unit id="HYT_longitude" datatype="html">
+        <source>Longitude</source>
+        <target>Longitudine</target>
+      </trans-unit>
+      <trans-unit id="HYT_zoom_level" datatype="html">
+        <source>Zoom Level</source>
+        <target>Livello Zoom</target>
+      </trans-unit>
+      <trans-unit id="HYT_icon" datatype="html">
+        <source>Icon</source>
+        <target>Icona</target>
+      </trans-unit>
+      <trans-unit id="HYT_edit_item" datatype="html">
+        <source>Edit Item</source>
+        <target>Modifica Oggetto</target>
+      </trans-unit>
+      <trans-unit id="HYT_grab_item" datatype="html">
+        <source>Move/Lock Item</source>
+        <target>Sposta/Blocca Oggetto</target>
+      </trans-unit>
+      <trans-unit id="HYT_enter_sub_area" datatype="html">
+        <source>Enter Sub Area</source>
+        <target>Entra Nella Sub Area</target>
+      </trans-unit>
+      <trans-unit id="HYT_delete_area_item" datatype="html">
+        <source>Delete item</source>
+        <target>Elimina Oggetto</target>
       </trans-unit>
     </body>
   </file>

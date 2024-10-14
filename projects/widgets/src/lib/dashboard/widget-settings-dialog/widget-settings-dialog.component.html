@@ -63,9 +63,9 @@
                         </hyperiot-time-chart-settings>
                     </div>
                     <div *ngSwitchCase="'gauge'">
-                        <hyperiot-sensor-value-settings [widget]="widget" [areaId]="areaId" [modalApply]="modalApply.asObservable()"
+                        <hyperiot-gauge-settings [widget]="widget" [areaId]="areaId" [modalApply]="modalApply.asObservable()"
                             [settingsForm]="settingsForm">
-                        </hyperiot-sensor-value-settings>
+                        </hyperiot-gauge-settings>
                     </div>
                     <div *ngSwitchCase="'histogram'">
                         <hyperiot-time-chart-settings [widget]="widget" [areaId]="areaId" [hDeviceId]="hDeviceId" [modalApply]="modalApply.asObservable()"

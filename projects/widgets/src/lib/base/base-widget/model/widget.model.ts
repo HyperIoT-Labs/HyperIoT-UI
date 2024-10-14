@@ -66,6 +66,7 @@ export interface Threshold {
         thickness: number;
         type: string;
     }
+    maxValue?: number;
 }
 
 export interface FieldUnitConversion {
