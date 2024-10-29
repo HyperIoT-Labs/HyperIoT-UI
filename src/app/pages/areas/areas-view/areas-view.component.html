@@ -28,6 +28,8 @@
                     name="project"
                     [options]="userProjectsOptions"
                     [selected]="selectedProjectOption"
+                    [isSearchable]="true"
+                    [changePositionStrategy]="true"
                     (changeFn)="onSelectedProjectChange($event)"
                 >
                 </hyt-select>

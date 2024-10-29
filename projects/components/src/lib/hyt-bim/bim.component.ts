@@ -73,19 +73,51 @@ export class HytBimComponent implements OnInit, AfterViewInit, OnDestroy {
   checklistener: boolean = false;
   buildingsDummyData = [
     {
+      file: 'PonteTestPresentazione.xkt',
+      id: '',
+      objects: [
+        {
+          id: "genericSensorObject_1",
+          src: "/assets/sensors-obj/Sensore_Colored.obj",
+          position: [147.4566717295942, 14.427753634100707, 2.1091194968707754],
+          scale: [1, 1, 1],
+          rotation: [0, 330, 0],
+        },
+      ],
+      annotations: [
+        {
+          id: "annotation_sensor_1",
+          worldPos: [147.4966717295942, 14.427753634100707, 2.1091194968707754],
+          occludable: false,
+          markerShown: true,
+          labelShown: false,
+          values: {
+            glyph: "A1",
+            title: "Structural Accelerometer",
+            description: "Monitors bridge vibrations and movements",
+            markerBGColor: "transparent",
+            sensorImgUrl: '/assets/images/sensors/acc_ponte.jpg',
+            projectId: 0,
+            areaId: 0,
+            deviceId: 8037,
+          }
+        },
+      ],
+    },
+    {
       file: 'SanLazzaro_v3.new.xkt',
       id: '',
       objects: [
         {
           id: "genericSensorObject_1",
-          src: "/assets/sensors-obj/Sensori_HYOT.obj",
+          src: "/assets/sensors-obj/Sensore_Colored.obj",
           position: [-5.880494179184371, 2.2549079430681127, -16.612405162248685],
           scale: [1, 1, 1],
           rotation: [0, -90, 0],
         },
         {
           id: "genericSensorObject_2",
-          src: "/assets/sensors-obj/Sensori_HYOT.obj",
+          src: "/assets/sensors-obj/Sensore_Colored.obj",
           position: [-7.007360015156518, 4.499422857183059, 13.607612962438509],
           scale: [1, 1, 1],
           rotation: [0, -90, 0]
@@ -106,7 +138,8 @@ export class HytBimComponent implements OnInit, AfterViewInit, OnDestroy {
             markerBGColor: "transparent",
             sensorImgUrl: '/assets/images/sensors/potenziometro.png',
             projectId: 0,
-            areaId: 0
+            areaId: 0,
+            deviceId: 8075,
           }
         },
         {
@@ -123,7 +156,8 @@ export class HytBimComponent implements OnInit, AfterViewInit, OnDestroy {
             markerBGColor: "transparent",
             sensorImgUrl: "/assets/images/sensors/Estensimetro.png",
             projectId: 0,
-            areaId: 0
+            areaId: 0,
+            deviceId: 8078,
           }
         }
       ],
@@ -601,7 +635,7 @@ export class HytBimComponent implements OnInit, AfterViewInit, OnDestroy {
                 </div>\
                 <div class='container-annotation-data annotation-column'>\
                     <div class='annotation-data'>\
-                      <a class='goToDash'>Go to dashboard <span>&#x3e;</span></a>\
+                      <a class='goToDash' href='/hdevice/{{projectId}}/{{deviceId}}/dashboards'>Go to dashboard <span>&#x3e;</span></a>\
                     </div>\
                 </div>\
             </div>\
@@ -616,7 +650,8 @@ export class HytBimComponent implements OnInit, AfterViewInit, OnDestroy {
         description: "No description",
         sensorImgUrl: 'cc',
         projectId: 0,
-        areaId: 0
+        areaId: 0,
+        deviceId: 0,
       }
     });
   }
@@ -661,7 +696,8 @@ export class HytBimComponent implements OnInit, AfterViewInit, OnDestroy {
           markerBGColor: annotation.values.markerBGColor,
           sensorImgUrl: annotation.values.sensorImgUrl,
           projectId: this.projectId,
-          areaId: this.areaId
+          areaId: this.areaId,
+          deviceId: annotation.values.deviceId,
         }
       });
 
@@ -684,12 +720,13 @@ export class HytBimComponent implements OnInit, AfterViewInit, OnDestroy {
           const annotation = this.annotations.annotations[annotationName];
           if(!this.checklistener){
             this.checklistener = true;
-            const goToDashBoxes = document.querySelectorAll('.goToDash');
+            // Removed. Now link redirects to device dashboard
+            /* const goToDashBoxes = document.querySelectorAll('.goToDash');
             for (let i = 0; i < goToDashBoxes.length ; i++) {
               goToDashBoxes[i].addEventListener('click', () => {
                 this.goToAreaDashboard();
               })
-            }
+            } */
           }
           annotation.setLabelShown(!annotation.getLabelShown());
         } else {
