@@ -94,6 +94,8 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy, OnChanges 
                     });
                 }
                 this.isChecked();
+            } else {
+                this.pageStatus = PageStatus.Ready;
             }
         } else {
             this.pageStatus = PageStatus.Ready;
