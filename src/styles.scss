@@ -160,6 +160,12 @@ pre.hyt-code {
 .cdk-overlay-container {
     z-index: 1000000; // set it for be higher than toast z-index
 }
+.toast-container {
+  z-index: 9999999;
+}
+.leaflet-top, .leaflet-bottom {
+  z-index: 998 !important;
+}
 
 .hyt-overlay-container {
     padding: 0.4em 1em 0.75em;
