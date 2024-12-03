@@ -317,7 +317,7 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
   setTimeChartLayout() {
     this.logger.debug("setTimeChartLayout");
     this.chartData.forEach((timeSeries, i) => {
-      const fieldName = timeSeries.name;
+      const fieldName = timeSeries.label;
       const a = i + 1;
       if (a === 1) {
         this.graph.layout[`yaxis`] = {
@@ -510,7 +510,7 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
     this.chartData = [];
     Object.keys(this.widget.config.packetFields).forEach((fieldId) => {
       this.chartData.push(
-        new TimeSeries(this.widget.config.packetFields[fieldId])
+        new TimeSeries(this.widget.config.packetFields[fieldId], this.widget.config.fieldAliases[fieldId])
       );
     });
   }
