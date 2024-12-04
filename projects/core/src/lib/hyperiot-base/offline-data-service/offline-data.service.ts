@@ -32,6 +32,9 @@ export class OfflineDataService extends BaseDataService {
 
   isLoadAllRangeDataRunning = false;
 
+  private initDataSubject: Subject<any> = new Subject<any>();
+  private _initDataEmitted = false;
+
   constructor(
     private hprojectsService: HprojectsService,
     private dateFormatterService: DateFormatterService
@@ -139,6 +142,20 @@ export class OfflineDataService extends BaseDataService {
           .reduce((accumulator, currentValue) => accumulator + currentValue.totalCount, 0);
         dataChannel.controller.$totalCount.next(channelCount);
       });
+
+      // optimization: download init data for all packets
+      let allPacketsId = [];
+      Object.values(this.dataChannels).forEach(dataChannel => {
+        allPacketsId = [...new Set([...allPacketsId, ...dataChannel.getPacketIds()])];
+      });
+      this.hprojectsService.scanHProject(this.hProjectId, this.dashboardTimeBounds.lower, this.dashboardTimeBounds.upper, this.DEFAULT_CHUNK_LENGTH, allPacketsId.toString(), '', '').subscribe(
+        res => {
+          this.initDataSubject.next(res);
+          this.initDataSubject.complete();
+          this._initDataEmitted = true;
+        },
+      );
+
       this.countEventSubject.next(PageStatus.Standard);
     },
     err => {
@@ -160,6 +177,8 @@ export class OfflineDataService extends BaseDataService {
     if (this.countSubscription) {
       this.countSubscription.unsubscribe();
     }
+    this.initDataSubject = new Subject<any>();
+    this._initDataEmitted = false;
     Object.values(this.dataChannels).forEach(dataChannel => {
       if(dataChannel.controller.dataSubscription) {
         dataChannel.controller.dataSubscription.unsubscribe();
@@ -172,7 +191,13 @@ export class OfflineDataService extends BaseDataService {
   // get paginated data
   scanAndSaveHProject(dataChannel: DataChannel, deviceId, alarmState, chunkLength = this.DEFAULT_CHUNK_LENGTH, lowerBound: number = dataChannel.controller.channelLowerBound): Observable<PacketDataChunk[]> {
     const packetIds = dataChannel.packetFilterList.map(packetFilter => packetFilter.packetId);
-    return this.hprojectsService.scanHProject(this.hProjectId, lowerBound, this.dashboardTimeBounds.upper, chunkLength, packetIds.toString(), deviceId, alarmState).pipe(
+
+    // optimization. First time data is fetched in a single request for all packets
+    const packetDataObs = lowerBound === this.dashboardTimeBounds.lower && !this._initDataEmitted ? 
+      this.initDataSubject.pipe(map(res => res = res.filter(x => packetIds.some(y => y === x.hPacketId)))) :
+      this.hprojectsService.scanHProject(this.hProjectId, lowerBound, this.dashboardTimeBounds.upper, chunkLength, packetIds.toString(), deviceId, alarmState);
+
+    return packetDataObs.pipe(
       map(res => {
 
         // TODO fix BE. This request should always return an array
@@ -181,7 +206,7 @@ export class OfflineDataService extends BaseDataService {
         }
 
         // removing extra data that exceed min rowKeyUpperBound
-        const minRowKeyUpperBound = Math.min(res.map(packetData => packetData.rowKeyUpperBound));
+        const minRowKeyUpperBound = Math.min(...res.map(packetData => packetData.rowKeyUpperBound).filter(ub => ub !== 0));
 
         // applying data filtering only if multiple packet (prevent issue invalid date in Event data table)
         if (res.length > 1) {
