@@ -26,7 +26,10 @@ export class HpacketTableComponent extends BaseTableComponent implements AfterVi
   dataSubscription: Subscription;
   offControllerSubscription: Subscription;
 
+  loadingOfflineData = false;
+
   protected dataChannel: DataChannel;
+  channelId: number;
 
   allData: PacketData[] = [];
 
@@ -97,14 +100,24 @@ export class HpacketTableComponent extends BaseTableComponent implements AfterVi
     // TODO problema che dati che arrivano prima del render 
     setTimeout(() => {
       this.subscribeDataChannel();
-      this.computePacketData(this.initData);
+      if (this.serviceType === ServiceType.ONLINE) {
+        this.computePacketData(this.initData.reverse());
+      }
     }, 0);
 
   }
 
   subscribeDataChannel() {
     const dataPacketFilter = new DataPacketFilter(this.widget.config.packetId, this.widget.config.packetFields, true);
-    this.dataChannel = this.dataService.addDataChannel(+this.widget.id, [dataPacketFilter]);
+    this.channelId = +this.widget.id;
+    if (!this.isToolbarVisible && this.serviceType === ServiceType.OFFLINE) {
+      // setting negative id to fullscreen offline widget channel to prevent updating original widget
+      // TODO channelId should be a proper string
+      this.channelId = -this.channelId;
+      this.dataChannel = this.dataService.copyDataChannel(this.channelId, -this.channelId);
+    } else {
+      this.dataChannel = this.dataService.addDataChannel(this.channelId, [dataPacketFilter]);
+    }
     this.dataChannel.addTimestampFieldToFormat(
       this.tableHeaders.filter(el=> el.type === HPacketField.TypeEnum.TIMESTAMP).map(el=> el.value), 
     );
@@ -112,8 +125,13 @@ export class HpacketTableComponent extends BaseTableComponent implements AfterVi
     this.dataSubscription = this.dataChannel.subject.subscribe((eventData) => this.computePacketData(eventData.data));
     if (this.serviceType === ServiceType.OFFLINE) {
       this.offControllerSubscription = this.dataChannel.controller.$totalCount.subscribe(res => {
-        this.allData = [];
-        this.tableChild.resetTable(res, true);
+        if (!this.isToolbarVisible) { // if fullscreen
+          this.tableChild.totalRows = res;
+          this.computePacketData(this.initData);
+        } else {
+          this.allData = [];
+          this.tableChild.resetTable(res, true);
+        }
       });
     }
   }
@@ -132,14 +150,16 @@ export class HpacketTableComponent extends BaseTableComponent implements AfterVi
       tableData.push(el);
     });
     this.tableSource.next(tableData);
+    this.loadingOfflineData = false;
   }
 
   // OFFLINE
   dataRequest(lowerBound) {
+    this.loadingOfflineData = true;
     if (this.pRequest) {
       this.pRequest.unsubscribe();
     }
-    this.dataService.loadNextData(this.widget.id);
+    this.dataService.loadNextData(this.channelId);
   }
 
   play(): void {
@@ -165,6 +185,14 @@ export class HpacketTableComponent extends BaseTableComponent implements AfterVi
     }
     this.widgetAction.emit(widgetAction);
   }
+
+  removeSubscriptionsAndDataChannels() {
+    if (this.dataSubscription && this.dataService) {
+      this.dataSubscription.unsubscribe();
+      this.dataService.removeDataChannel(this.channelId);
+    }
+  }
+
 }
 
 export interface Result {

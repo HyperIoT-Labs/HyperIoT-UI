@@ -8,6 +8,10 @@ export class TimeSeries {
      */
     name: string;
     /**
+     * Serie label
+     */
+    label: string;
+    /**
      * X-Axis time values local buffer
      */
     x: Date[];
@@ -20,8 +24,9 @@ export class TimeSeries {
 
     lastBufferIndexUpdated: number;
 
-    constructor(name: string) {
+    constructor(name: string, label?: string) {
         this.name = name;
+        this.label = label || name;
         this.x = [];
         this.y = [];
         this.lastBufferIndexUpdated = 0;

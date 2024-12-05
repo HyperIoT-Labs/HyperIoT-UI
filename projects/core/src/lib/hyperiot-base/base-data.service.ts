@@ -17,6 +17,14 @@ export abstract class BaseDataService implements IDataService {
     return this.dataChannels[widgetId] = channelData;
   }
 
+  copyDataChannel(widgetId: number, originalChannelId: number): DataChannel {
+    if (this.dataChannels[widgetId]) {
+      return this.dataChannels[widgetId];
+    }
+    const channelData = new DataChannel(this.dataChannels[originalChannelId].packetFilterList);
+    return this.dataChannels[widgetId] = channelData;
+  }
+
   removeDataChannel(widgetId: number) {
     // TODO: maybe it should also clear any pending subscriptions
     // TODO use .observed if rxjs > 7
