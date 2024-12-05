@@ -148,9 +148,8 @@
                     [dashboardPackets]="packetsInDashboard" (dateOutput)="timeLineSelection($event)">
                 </hyperiot-timeline>
             </div>
-
             <!-- Standard -->
-            <div *ngIf="dataRecordingStatus < 2 && signalIsOn && !recordStateInLoading" id="dashboard-overlay-blurred"
+            <div *ngIf="dataRecordingStatus < 1 && signalIsOn && !recordStateInLoading" id="dashboard-overlay-blurred"
                 class="row no-gutters justify-content-center">
 
                 <div *ngIf="dataRecordingStatus <= 0" class="col-md-4">
@@ -163,7 +162,7 @@
                     <!--@I18N-->
                 </div>
 
-                <div *ngIf="dataRecordingStatus >= 1" class="col-md-4">
+                <div *ngIf="dataRecordingStatus === 1" class="col-md-4">
                     <h2 i18n="@@HYT_waiting_for_data" id="overlay-blurred-title">Waiting for data</h2>
                     <!--@I18N-->
                     <h3 i18n="@@HYT_waiting_for_data_text" id="overlay-blurred-text">
@@ -177,7 +176,7 @@
             </div>
 
             <div id="container-box-dashboard"
-                class="col-12 {{(dataRecordingStatus < 2 && signalIsOn) ? 'blurred-animation' : ''}}">
+                class="col-12 {{(dataRecordingStatus < 1 && signalIsOn) ? 'blurred-animation' : ''}}">
 
                 <div id="loadingOfflineData" *ngIf="offlineWidgetStatus === 0"
                     class="d-flex flex-column align-items-center">
