@@ -49,11 +49,13 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
       showSettings: true,
       showPlay: this.serviceType === this.serviceTypeList.ONLINE,
       showRefresh: false,
-      showTable: false
+      showTable: false,
+      hideFullScreen: this.isLoadingData(),
     }
   }
 
   dataChannel: DataChannel;
+  channelId: number;
   dataSubscription: Subscription;
   offControllerSubscription: Subscription;
 
@@ -121,6 +123,7 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
         }
 
         if (res == DashboardEvent.Timeline.NEW_RANGE) {
+          this.reset();
           this.newRange();
         }
 
@@ -144,7 +147,7 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
         "yaxis.autorange": true,
       });
       if (!this.dataChannel.controller.rangeLoaded) {
-        this.dataService.loadAllRangeData(this.widget.id);
+        this.dataService.loadAllRangeData(this.channelId);
       }
     } else {
       plotly.relayout(element, {
@@ -152,7 +155,7 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
         "yaxis.autorange": true,
       });
       if (!this.dataChannel.controller.rangeLoaded) {
-        this.dataService.loadAllRangeData(this.widget.id);
+        this.dataService.loadAllRangeData(this.channelId);
       }
     }
   }
@@ -168,7 +171,7 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
     const graph = this.plotly.getInstanceByDivId(
       `widget-${this.widget.id}${this.isToolbarVisible}`
     );
-    plotly.relayout(graph, {
+    plotly?.relayout(graph, {
       "xaxis.autorange": true,
       "yaxis.autorange": true,
     });
@@ -212,7 +215,9 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
   subscribeAndInit() {
     this.logger.debug("subscribeAndInit");
     this.subscribeDataChannel();
-    this.computePacketData(this.initData);
+    if (this.serviceType === ServiceType.ONLINE) {
+      this.computePacketData(this.initData);
+    }
 
     const resizeObserver = new ResizeObserver((entries) => {
       const graph = this.plotly.getInstanceByDivId(
@@ -236,9 +241,15 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
       this.widget.config.packetFields,
       true
     );
-    this.dataChannel = this.dataService.addDataChannel(+this.widget.id, [
-      dataPacketFilter,
-    ]);
+    this.channelId = +this.widget.id;
+    if (!this.isToolbarVisible && this.serviceType === ServiceType.OFFLINE) {
+      // setting negative id to fullscreen offline widget to prevent updating original widget
+      // TODO channelId should be a proper string
+      this.channelId = -this.channelId;
+      this.dataChannel = this.dataService.copyDataChannel(this.channelId, -this.channelId);
+    } else {
+      this.dataChannel = this.dataService.addDataChannel(this.channelId, [ dataPacketFilter ]);
+    }
     this.dataSubscription = this.dataChannel.subject
       .pipe(
         map((dataChunk) => dataChunk.data),
@@ -252,22 +263,26 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
       this.offControllerSubscription =
         this.dataChannel.controller.$totalCount.subscribe((res) => {
           this.totalLength = res;
-          this.allData = [];
-          this.graph.data.forEach((tsd) => {
-            (tsd.x = []), (tsd.y = []);
-          });
-          if (res !== 0) {
-            if (this.widget.config.fitToTimeline) {
-              this.fitToTimeline();
-            } else {
-              this.dataRequest();
+          if (!this.isToolbarVisible) { // if fullscreen
+            this.computePacketData(this.initData);
+          } else {
+            this.allData = [];
+            this.graph.data.forEach((tsd) => {
+              (tsd.x = []), (tsd.y = []);
+            });
+            if (res !== 0) {
+              if (this.widget.config.fitToTimeline) {
+                this.fitToTimeline();
+              } else {
+                this.dataRequest();
+              }
             }
           }
         });
     }
   }
 
-  computePacketData(packetData: PacketData[]) {
+  async computePacketData(packetData: PacketData[]) {
     this.logger.debug("computePacketData", packetData);
     super.computePacketData(packetData);
 
@@ -285,7 +300,7 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
       }
       this.convertAndBufferData(datum);
     });
-    this.renderBufferedData();
+    await this.renderBufferedData();
     this.loadingOfflineData = false;
     if (this.serviceType === ServiceType.OFFLINE) {
       this.lowerBound++;
@@ -558,7 +573,7 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
     this.logger.debug("dataRequest triggered");
     this.loadingOfflineData = true;
 
-    this.dataService.loadNextData(this.widget.id);
+    this.dataService.loadNextData(this.channelId);
   }
 
   isLoadingData() {
@@ -616,4 +631,12 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
 
     this.widgetAction.emit(widgetAction);
   }
+
+  removeSubscriptionsAndDataChannels() {
+    if (this.dataSubscription && this.dataService) {
+      this.dataSubscription.unsubscribe();
+      this.dataService.removeDataChannel(this.channelId);
+    }
+  }
+
 }

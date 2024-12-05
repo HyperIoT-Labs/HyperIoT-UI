@@ -70,6 +70,18 @@ export class OfflineDataService extends BaseDataService {
     return dataChannel;
   }
 
+  copyDataChannel(widgetId: number, originalChannelId: number) {
+    const originalChannel = this.dataChannels[originalChannelId];
+    if (!originalChannel) {
+      throw 'channel with id ' + originalChannelId + ' not found';
+    }
+    const dataChannel = super.copyDataChannel(widgetId, originalChannelId);
+    dataChannel.controller = new OfflineDataChannelController(originalChannel.controller.$totalCount.value);
+    dataChannel.controller.channelLowerBound = originalChannel.controller.channelLowerBound;
+
+    return dataChannel;
+  }
+
 
   removeDataChannel(widgetId: number) {
     super.removeDataChannel(widgetId);
@@ -181,6 +193,9 @@ export class OfflineDataService extends BaseDataService {
     this._initDataEmitted = false;
     Object.values(this.dataChannels).forEach(dataChannel => {
       if(dataChannel.controller.dataSubscription) {
+        if (dataChannel.controller.isLoadAllRangeDataRunning) {
+          dataChannel.controller.isLoadAllRangeDataRunning = false;
+        }
         dataChannel.controller.dataSubscription.unsubscribe();
       }
       dataChannel.controller.$totalCount.next(0);
@@ -206,7 +221,10 @@ export class OfflineDataService extends BaseDataService {
         }
 
         // removing extra data that exceed min rowKeyUpperBound
-        const minRowKeyUpperBound = Math.min(...res.map(packetData => packetData.rowKeyUpperBound).filter(ub => ub !== 0));
+        let minRowKeyUpperBound = Math.min(...res.map(packetData => packetData.rowKeyUpperBound).filter(ub => ub !== 0));
+        if (minRowKeyUpperBound === Infinity) { // empty response
+          minRowKeyUpperBound = lowerBound;
+        }
 
         // applying data filtering only if multiple packet (prevent issue invalid date in Event data table)
         if (res.length > 1) {
