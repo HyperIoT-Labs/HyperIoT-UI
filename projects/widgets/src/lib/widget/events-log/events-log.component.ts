@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { BaseGenericComponent } from '../../base/base-generic/base-generic.component';
-import { RealtimeDataService } from 'core';
-import {filter, PartialObserver} from 'rxjs';
+import {HpacketsService, RealtimeDataService} from 'core';
+import {filter, of, PartialObserver, Subject, switchMap, takeLast, takeUntil, tap} from 'rxjs';
 import { WidgetAction } from '../../base/base-widget/model/widget.model';
+import {catchError} from "rxjs/operators";
 
 @Component({
   selector: 'hyperiot-events-log',
@@ -11,27 +12,35 @@ import { WidgetAction } from '../../base/base-widget/model/widget.model';
 })
 export class EventsLogComponent extends BaseGenericComponent implements OnInit {
 
+
   maxLogLines = 100;
 
   logMessages: {timestamp: Date, message: string, extra: string}[] = [];
 
   isPaused = false;
 
+  private destroyEventStream$ = new Subject<void>(); // Segnale per l'unsubscribe
+
   eventLogObserver: PartialObserver<any> = {
     next: event => {
-      const packet = JSON.stringify(event.data);
-      // limit max log lines
-      if (this.widget.config && this.widget.config.maxLogLines) {
-        this.maxLogLines = +this.widget.config.maxLogLines;
+      if (event.data !== undefined) {
+        const packet = JSON.stringify(event.data);
+        // limit max log lines
+        if (this.widget.config && this.widget.config.maxLogLines) {
+          this.maxLogLines = +this.widget.config.maxLogLines;
+        }
+        this.logMessages.unshift({
+          timestamp: new Date(),
+          message: packet,
+          extra: '---'
+        });
+        if (this.logMessages.length > this.maxLogLines) {
+          this.logMessages.pop();
+        }
       }
-      this.logMessages.unshift({
-        timestamp: new Date(),
-        message: packet,
-        extra: '---'
-      });
-      if (this.logMessages.length > this.maxLogLines) {
-        this.logMessages.pop();
-      }
+    },
+    error: err => {
+      this.logger.error('Event stream error: ', err);
     }
   };
 
@@ -40,11 +49,21 @@ export class EventsLogComponent extends BaseGenericComponent implements OnInit {
       this.logMessages = [...this.initData];
     }
     super.ngOnInit();
-    (this.dataService as RealtimeDataService).eventStream
+    const hpService = this.injector.get(HpacketsService);
+    hpService.findAllHPacketByProjectId(this.widget.projectId)
       .pipe(
-        filter(() => this.isPaused === false),
-        filter(ev => ev.data.name === 'systemTick'),
-        filter(ev => ev.data.fields.hProjectId && ev.data.fields.hProjectId.value.long === this.widget.projectId),
+        // Passiamo al secondo stream, cioè l'eventStream
+        switchMap(hpackets =>
+          (this.dataService as RealtimeDataService).eventStream.pipe(
+            filter(() => this.isPaused === false),
+            filter(ev => hpackets.find(hp => hp.id === ev.data.id)),
+            catchError(err => {
+              this.logger.error('Error in event stream: ', err);
+              return of({});
+            })
+          )
+        ),
+        takeUntil(this.destroyEventStream$)
       )
       .subscribe(this.eventLogObserver);
   }
@@ -70,6 +89,11 @@ export class EventsLogComponent extends BaseGenericComponent implements OnInit {
         break;
     }
     this.widgetAction.emit(widgetAction);
+  }
+
+  ngOnDestroy(): void {
+    this.destroyEventStream$.next();
+    this.destroyEventStream$.complete();
   }
 
 }

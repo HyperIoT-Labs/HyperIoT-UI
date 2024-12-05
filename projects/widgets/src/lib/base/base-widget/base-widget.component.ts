@@ -33,7 +33,7 @@ export abstract class BaseWidgetComponent implements OnChanges, OnInit, OnDestro
   protected logger: Logger;
 
   constructor(
-    private injector: Injector,
+    protected injector: Injector,
     protected loggerService: LoggerService
   ) {
     this.logger = new Logger(this.loggerService);
