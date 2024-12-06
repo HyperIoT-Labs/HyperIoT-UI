@@ -51,9 +51,6 @@ testem.log
 .DS_Store
 Thumbs.db
 
-# Lock File
-package-lock.json
-
 # Self Sign Certificate
 cert.cnf
 localhost.crt
