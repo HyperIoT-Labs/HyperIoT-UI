@@ -21,9 +21,14 @@
             .line-config {
                 display: flex;
                 gap: 3em;
-                width: 29em;
+                width: 16.5em;
+                margin-left: 6em;
                 justify-content: space-between;
                 align-items: center;
+
+                &.thickness-only {
+                    width: 17.75em;
+                }
 
                 .thickness, .no-thickness {
                     width: 3em;
