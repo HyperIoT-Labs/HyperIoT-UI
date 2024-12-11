@@ -19,6 +19,7 @@ export class EcgSettingsComponent implements OnInit, OnDestroy {
     @Input() modalApply: Observable<any>;
     @Input() widget;
     @Input() areaId;
+    @Input() hDeviceId;
     selectedFields = [];
     private defaultConfig = {
       bgColor: 'bright',
@@ -46,7 +47,7 @@ export class EcgSettingsComponent implements OnInit, OnDestroy {
     };
     dataFrequency = 0.2;
     dataRange = 30;
-    
+
     bgColorOptions: SelectOption[] = [
       {
         value: 'bright',
