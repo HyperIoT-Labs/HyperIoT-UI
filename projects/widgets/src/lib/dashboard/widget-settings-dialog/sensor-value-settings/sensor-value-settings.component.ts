@@ -5,6 +5,7 @@ import { SelectOption } from 'components';
 import { Observable } from 'rxjs';
 
 import { PacketSelectComponent } from '../packet-select/packet-select.component';
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'hyperiot-sensor-value-settings',
@@ -17,6 +18,7 @@ export class SensorValueSettingsComponent implements OnInit, OnDestroy {
   @Input() modalApply: Observable<any>;
   @Input() widget;
   @Input() areaId;
+  @Input() hDeviceId;
   selectedFields = [];
   private defaultConfig = {
     textColor: '#275691',
@@ -34,7 +36,7 @@ export class SensorValueSettingsComponent implements OnInit, OnDestroy {
     }
   ];
 
-  constructor(public settingsForm: NgForm) { }
+  constructor(public settingsForm: NgForm, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     if (this.widget.config == null) {

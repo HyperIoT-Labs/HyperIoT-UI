@@ -30,6 +30,8 @@ export class DataSimulatorSettingsComponent implements OnInit {
 
   @Input() settingsForm: NgForm;
 
+  @Input() hDeviceId;
+
   projectPackets: HPacket[] = [];
   groupedPacketOptions: SelectOptionGroup[] = [];
 

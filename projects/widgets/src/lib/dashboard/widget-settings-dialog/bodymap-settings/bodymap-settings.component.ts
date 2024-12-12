@@ -19,6 +19,7 @@ export class BodymapSettingsComponent implements OnInit, OnDestroy {
     @Input() modalApply: Observable<any>;
     @Input() widget: WidgetConfig;
     @Input() areaId;
+    @Input() hDeviceId;
     selectedFields = [];
     private defaultConfig = {
         timeAxisRange: 10,

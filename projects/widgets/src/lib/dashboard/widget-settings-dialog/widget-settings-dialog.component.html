@@ -43,7 +43,7 @@
 
                 <div class="custom-settings" [ngSwitch]="widget.type">
                     <div *ngSwitchCase="'sensor-value'">
-                        <hyperiot-sensor-value-settings [widget]="widget" [areaId]="areaId" [modalApply]="modalApply.asObservable()"
+                        <hyperiot-sensor-value-settings [widget]="widget" [areaId]="areaId" [hDeviceId]="hDeviceId" [modalApply]="modalApply.asObservable()"
                             [settingsForm]="settingsForm">
                         </hyperiot-sensor-value-settings>
                     </div>
@@ -53,7 +53,7 @@
                         </hyperiot-time-chart-settings>
                     </div>
                     <div *ngSwitchCase="'production-target-widget'">
-                        <hyperiot-production-target-settings [widget]="widget" [areaId]="areaId" [modalApply]="modalApply.asObservable()"
+                        <hyperiot-production-target-settings [widget]="widget" [areaId]="areaId" [hDeviceId]="hDeviceId" [modalApply]="modalApply.asObservable()"
                             [settingsForm]="settingsForm">
                         </hyperiot-production-target-settings>
                     </div>
@@ -63,7 +63,7 @@
                         </hyperiot-time-chart-settings>
                     </div>
                     <div *ngSwitchCase="'gauge'">
-                        <hyperiot-gauge-settings [widget]="widget" [areaId]="areaId" [modalApply]="modalApply.asObservable()"
+                        <hyperiot-gauge-settings [widget]="widget" [areaId]="areaId" [hDeviceId]="hDeviceId" [modalApply]="modalApply.asObservable()"
                             [settingsForm]="settingsForm">
                         </hyperiot-gauge-settings>
                     </div>
@@ -73,26 +73,26 @@
                         </hyperiot-time-chart-settings>
                     </div>
                     <div *ngSwitchCase="'time-chart'">
-                        <hyperiot-time-chart-settings [checkbox]="true" [widget]="widget" [areaId]="areaId" [modalApply]="modalApply.asObservable()"
+                        <hyperiot-time-chart-settings [checkbox]="true" [widget]="widget" [areaId]="areaId" [hDeviceId]="hDeviceId" [modalApply]="modalApply.asObservable()"
                             [settingsForm]="settingsForm">
                         </hyperiot-time-chart-settings>
                     </div>
                     <div *ngSwitchCase="'bodymap'">
-                      <hyperiot-bodymap-settings [widget]="widget" [areaId]="areaId" [modalApply]="modalApply.asObservable()"
+                      <hyperiot-bodymap-settings [widget]="widget" [areaId]="areaId" [hDeviceId]="hDeviceId" [modalApply]="modalApply.asObservable()"
                                                [settingsForm]="settingsForm"></hyperiot-bodymap-settings>
                     </div>
                     <div *ngSwitchCase="'ecg'">
-                      <hyperiot-ecg-settings [widget]="widget" [areaId]="areaId" [modalApply]="modalApply.asObservable()"
+                      <hyperiot-ecg-settings [widget]="widget" [areaId]="areaId" [hDeviceId]="hDeviceId" [modalApply]="modalApply.asObservable()"
                                                     [settingsForm]="settingsForm">
                       </hyperiot-ecg-settings>
                     </div>
                     <div *ngSwitchCase="'defibrillator'">
-                        <hyperiot-defibrillator-settings [widget]="widget" [areaId]="areaId" [modalApply]="modalApply.asObservable()"
+                        <hyperiot-defibrillator-settings [widget]="widget" [areaId]="areaId" [hDeviceId]="hDeviceId" [modalApply]="modalApply.asObservable()"
                                                       [settingsForm]="settingsForm">
                         </hyperiot-defibrillator-settings>
                       </div>
                     <div *ngSwitchCase="'algorithm-offline-table'">
-                        <hyperiot-algorithm-settings [widget]="widget" [modalApply]="modalApply.asObservable()"
+                        <hyperiot-algorithm-settings [widget]="widget" [hDeviceId]="hDeviceId" [modalApply]="modalApply.asObservable()"
                             [settingsForm]="settingsForm">
                         </hyperiot-algorithm-settings>
                     </div>
