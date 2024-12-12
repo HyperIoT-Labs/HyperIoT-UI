@@ -1200,7 +1200,7 @@
         <source>Dashboard</source>
       </trans-unit>
       <trans-unit id="HYT_dashboard_device" datatype="html">
-        <source>Dashboard device</source>
+        <source>Device Dashboard</source>
       </trans-unit>
       <trans-unit id="HYT_areas" datatype="html">
         <source>Areas</source>
