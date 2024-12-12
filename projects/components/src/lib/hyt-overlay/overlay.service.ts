@@ -73,6 +73,11 @@ import {
           dialogOpen.overlayRef.addPanelClass("fixOverlayLeftPositioning");
         }
       }
+      dialogOpen.overlayRef.outsidePointerEvents().subscribe({
+        next: (value) => {
+          dialogOpen.dialogRef.close();
+        }
+      });
       return dialogOpen;
     }
   
