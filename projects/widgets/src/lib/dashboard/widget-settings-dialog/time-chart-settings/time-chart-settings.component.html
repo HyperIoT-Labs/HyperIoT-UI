@@ -6,25 +6,27 @@
 
     <div id="time-chart-settings" *ngIf="packetPageStatus === 1 && pageStatus === 1">
         <div *ngIf="checkbox && (selectedFields.length > 0 || widget.config.packetId)"
-            class="padding-6 d-flex flex-column justify-content-stretch">
+            class="padding-6 d-flex flex-column justify-content-stretch pt25">
+            <div class="box-fields-customization-title">
+                <h3 id="title-thresholds" i18n="@@HYT_thresholds">Thresholds</h3>
+            </div>
             <mat-checkbox color="primary" [(ngModel)]="thresholdActive" [ngModelOptions]="{ standalone: true }"
-                (ngModelChange)="isChecked()">Enable Thresholds</mat-checkbox>
+                (ngModelChange)="isChecked()">Show Thresholds</mat-checkbox>
             <div class="config-threshold">
                 <ng-container [formGroup]="thresholdsForm">
                     <div *ngFor="let thresholdControl of thresholdsForm.controls; let i = index" [formGroupName]="i"
                         class="threshold-row">
                         <!-- New thresholds -->
                         <div *ngIf="thresholdControl.get('id').value === null; else selectedThreshold" class="threshold-row setted-new-threshold">
-                            <div i18n="@@HYT_select_threshold">Set threshold</div>
                             <mat-form-field class="input-button-row">
-                                <mat-select formControlName="id" placeholder="Select" [defaultValue]="null" [required]="false"
+                                <mat-select formControlName="id" placeholder="Select Rule" [defaultValue]="null" [required]="false"
                                     (selectionChange)="onThresholdSelected(thresholdControl.get('id').value, true)">
                                     <mat-select-trigger>
                                         {{ getSelectedThresholdName(thresholdControl.get('id').value) || "Select threshold" }}
                                     </mat-select-trigger>
                                     <mat-optgroup *ngFor="let group of thresholds | keyvalue" [label]="group.key">
                                         <mat-option *ngFor="let rule of group.value" [value]="rule.id"
-                                            [disabled]="disabledThresholdOption(rule)">
+                                            [disabled]="disabledThresholdOption(rule)" style="white-space: normal; word-wrap: break-word;">
                                             <div>{{ rule.name }}</div>
                                             <div style="font-size: 12px; color: gray;">
                                                 {{ rule.rulePrettyDefinition ?
@@ -35,21 +37,14 @@
                                 </mat-select>
                             </mat-form-field>
                         </div>
-                        <!-- Existing selected thresholds -->
+
+                        <!-- List of existing thresholds -->
                         <ng-template #selectedThreshold>
                             <div *ngIf="thresholdControl.get('id').value !== null">
                                 <div class="input-button-row">
-                                    <div i18n="@@HYT_select_threshold">Set threshold</div>
-                                    <div *ngIf="thresholdControl.get('id').value">
-                                        <button mat-icon-button class="hyt-base-btn" (click)="deleteSelected(i)">
-                                            <mat-icon>delete</mat-icon>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="input-button-row">
                                     <div class="input-row">
                                         <mat-form-field *ngIf="thresholdControl">
-                                            <mat-select formControlName="id" placeholder="Select" [defaultValue]="null"
+                                            <mat-select formControlName="id" placeholder="Select rule" [defaultValue]="null"
                                                 (selectionChange)="onThresholdSelected(thresholdControl.get('id').value, true)">
                                                 <mat-select-trigger>
                                                     {{ getSelectedThresholdName(thresholdControl.get('id').value) ||
@@ -58,7 +53,7 @@
                                                 <mat-optgroup *ngFor="let group of thresholds | keyvalue"
                                                     [label]="group.key">
                                                     <mat-option *ngFor="let rule of group.value" [value]="rule.id"
-                                                        [disabled]="disabledThresholdOption(rule)">
+                                                        [disabled]="disabledThresholdOption(rule)" style="white-space: normal; word-wrap: break-word;">
                                                         <div>{{ rule.name }}</div>
                                                         <div style="font-size: 12px; color: gray;">
                                                             {{ rule.rulePrettyDefinition ?
@@ -70,6 +65,7 @@
                                             </mat-select>
                                         </mat-form-field>
 
+                                        <!-- Line settings (color, thickness, type) -->
                                         <div>
                                             <!-- Color Picker -->
                                             <input class="colorPicker"
@@ -78,11 +74,12 @@
                                             [(colorPicker)]="thresholdControl.get('line.color').value"
                                             (colorPickerChange)="setThresholdColor(thresholdControl.get('line.color'),$event)" />
                                         </div>
-                                        <!-- Line settings (color, thickness, type) -->
+                                        <hyt-info class="lh1" i18n-text="@@HYT_colorpicker_description" text="Choose the color that you want for the threshold line." style="color: #0856b6;"></hyt-info>
+
                                         <div *ngIf="thresholdControl.get('id').value" formGroupName="line" class="line-config"
                                             [ngClass]="{ 'thickness-only': thresholdControl.get('line.type').value === null }">
                                             <!-- Type Input (e.g., linear, dashed) -->
-                                            <mat-form-field
+                                            <mat-form-field style="width: 40% !important;"
                                                 *ngIf="thresholdControl.get('line.type').value && thresholdControl.get('line.type').value !== null; else empty">
                                                 <mat-select formControlName="type"
                                                     [ngClass]="!!thresholdControl.get('line.type').value">
@@ -109,6 +106,15 @@
                                                 }" matInput type="number" formControlName="thickness" min="1" max="5"
                                                 placeholder="Thickness" />
                                         </div>
+                                        <hyt-info class="lh1" i18n-text="@@HYT_line_description" text="Choose the type and thickness of the threshold line." style="color: #0856b6;"></hyt-info>
+
+                                        <!-- Delete button (Existing selected thresholds) -->
+                                        <div *ngIf="thresholdControl.get('id').value">
+                                            <button mat-icon-button class="hyt-base-btn red" (click)="deleteSelected(i)">
+                                                <mat-icon>delete</mat-icon>
+                                            </button>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
