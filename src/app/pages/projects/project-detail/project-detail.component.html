@@ -56,7 +56,7 @@
 
                     <div id="back-to-back-btn">
 
-                      <div *ngIf="areaId; else defaultBackBtn">
+                      <div *ngIf="areaId; else dashBackBtn">
                         <a class="box-back-btn" [routerLink]="['/areas', this.projectId, this.areaId]">
                           <span class="icon-hyt_caretDown hyt-icon-back"></span>
 
@@ -64,11 +64,20 @@
                         </a>
                       </div>
 
+                      <ng-template #dashBackBtn>
+                        <div *ngIf="dashBackButton; else defaultBackBtn">
+                          <a class="box-back-btn" [routerLink]="['/dashboards']">
+                            <span class="icon-hyt_caretDown hyt-icon-back"></span>
+                            <span id="title-back-btn" i18n="@@HYT_back_to_dashboard">Back to dashboard</span>
+                          </a>
+                        </div>
+                      </ng-template>
+
                       <ng-template #defaultBackBtn>
                         <a class="box-back-btn" [routerLink]="['/projects']">
                           <span class="icon-hyt_caretDown hyt-icon-back"></span>
 
-                          <span id="title-back-btn">Back to projects</span>
+                          <span id="title-back-btn" i18n="@@HYT_back_to_projects">Back to projects</span>
                         </a>
                       </ng-template>
                     </div>
