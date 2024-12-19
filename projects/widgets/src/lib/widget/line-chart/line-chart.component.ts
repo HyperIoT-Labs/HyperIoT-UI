@@ -216,7 +216,7 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
     this.logger.debug("subscribeAndInit");
     this.subscribeDataChannel();
     if (this.serviceType === ServiceType.ONLINE) {
-      this.computePacketData(this.initData);
+      this.computePacketData(this.initData, this.isToolbarVisible);
     }
 
     const resizeObserver = new ResizeObserver((entries) => {
@@ -241,15 +241,18 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
       this.widget.config.packetFields,
       true
     );
+
     this.channelId = +this.widget.id;
-    if (!this.isToolbarVisible && this.serviceType === ServiceType.OFFLINE) {
+
+    if (this.isToolbarVisible) {
+      this.dataChannel = this.dataService.addDataChannel(this.channelId, [dataPacketFilter]);
+    } else {
       // setting negative id to fullscreen offline widget to prevent updating original widget
       // TODO channelId should be a proper string
       this.channelId = -this.channelId;
       this.dataChannel = this.dataService.copyDataChannel(this.channelId, -this.channelId);
-    } else {
-      this.dataChannel = this.dataService.addDataChannel(this.channelId, [ dataPacketFilter ]);
     }
+
     this.dataSubscription = this.dataChannel.subject
       .pipe(
         map((dataChunk) => dataChunk.data),
@@ -263,9 +266,7 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
       this.offControllerSubscription =
         this.dataChannel.controller.$totalCount.subscribe((res) => {
           this.totalLength = res;
-          if (!this.isToolbarVisible) { // if fullscreen
-            this.computePacketData(this.initData);
-          } else {
+          if (this.isToolbarVisible) {
             this.allData = [];
             this.graph.data.forEach((tsd) => {
               (tsd.x = []), (tsd.y = []);
@@ -277,19 +278,23 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
                 this.dataRequest();
               }
             }
+          } else { // if fullscreen            
+            this.computePacketData(this.initData);
           }
         });
     }
   }
 
-  async computePacketData(packetData: PacketData[]) {
+  async computePacketData(packetData: PacketData[], convertOldValues = true) {
     this.logger.debug("computePacketData", packetData);
-    super.computePacketData(packetData);
 
     if (packetData.length === 0) {
       return;
     }
-    this.allData = this.allData.concat(packetData);
+
+    this.allData = this.allData.concat([...packetData]);
+
+    super.computePacketData(packetData, convertOldValues);
 
     packetData.forEach((datum) => {
       if (
@@ -300,6 +305,7 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
       }
       this.convertAndBufferData(datum);
     });
+
     await this.renderBufferedData();
     this.loadingOfflineData = false;
     if (this.serviceType === ServiceType.OFFLINE) {
@@ -625,7 +631,7 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
         this.pause();
         break;
       case "toolbar:fullscreen":
-        widgetAction.value = this.allData;
+        widgetAction.value = [...this.allData];
         break;
     }
 

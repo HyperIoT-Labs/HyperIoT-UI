@@ -122,6 +122,18 @@ export class RealtimeDataService extends BaseDataService implements IDataService
     return dataChannel;
   }
 
+  copyDataChannel(widgetId: number, originalChannelId: number) {
+    const originalChannel = this.dataChannels[originalChannelId];
+    if (!originalChannel) {
+      throw 'channel with id ' + originalChannelId + ' not found';
+    }
+    const dataChannel = super.copyDataChannel(widgetId, originalChannelId);
+    dataChannel.controller = new RealtimeDataChannelController();
+    (dataChannel.controller.dataStreamOutput$ as Observable<PacketDataChunk>).subscribe(dataChannel.subject);
+
+    return dataChannel;
+  }
+
   private onWsOpen() {
     this.isConnected = true;
   }
