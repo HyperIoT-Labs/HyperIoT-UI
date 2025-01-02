@@ -11,18 +11,18 @@
 export interface DataFlavor { 
     mimeType?: string;
     humanPresentableName?: string;
-    primaryType?: string;
+    subType?: string;
+    representationClassInputStream?: boolean;
+    representationClassByteBuffer?: boolean;
+    flavorTextType?: boolean;
+    representationClassReader?: boolean;
+    representationClassCharBuffer?: boolean;
     representationClassSerializable?: boolean;
     representationClassRemote?: boolean;
+    mimeTypeSerializedObject?: boolean;
+    defaultRepresentationClassAsString?: string;
     flavorSerializedObjectType?: boolean;
     flavorRemoteObjectType?: boolean;
     flavorJavaFileListType?: boolean;
-    flavorTextType?: boolean;
-    subType?: string;
-    mimeTypeSerializedObject?: boolean;
-    defaultRepresentationClassAsString?: string;
-    representationClassInputStream?: boolean;
-    representationClassReader?: boolean;
-    representationClassCharBuffer?: boolean;
-    representationClassByteBuffer?: boolean;
+    primaryType?: string;
 }
