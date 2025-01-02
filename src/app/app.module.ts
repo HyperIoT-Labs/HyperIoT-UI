@@ -72,6 +72,11 @@ import { EffectsModule } from '@ngrx/effects';
 import { BrandingEffects } from './state/branding/branding.effects';
 import { GlobalErrorHandlerService } from '../../projects/core/src/lib/hyperiot-service/error-handler/global-error-handler.service';
 import {BrandingService} from "./services/branding/branding.service";
+import { RulesEffects } from './state/rules/rules.effects';
+import { HProjectsEffects } from './state/hProjects/hProjects.effects';
+import { HDevicesEffects } from './state/hDevices/hDevices.effects';
+import { HPacketsEffects } from './state/hPackets/hPackets.effects';
+
 PlotlyModule.plotlyjs = PlotlyJS;
 
 export class MyUrlSerializer extends DefaultUrlSerializer implements UrlSerializer {
@@ -161,7 +166,11 @@ export function apiConfigFactory(): Configuration {
       autoPause: true, // Pauses recording actions and state changes when the extension window is not open
     }),
     EffectsModule.forRoot([ 
-      BrandingEffects
+      BrandingEffects,
+      RulesEffects,
+      HProjectsEffects,
+      HDevicesEffects,
+      HPacketsEffects,
     ]),
   ],
   providers: [
