@@ -15,14 +15,14 @@
     </div>
     
     <div id="notification-scroll-container">
-        <div id="notification-list" [@containerAnim]="alarmListArray.length">
-            <div id="no-notification" *ngIf="alarmListArray.length == 0; else notificationList">
+        <div id="notification-list" [@containerAnim]="(alarmListArray$ | async).length">
+            <div id="no-notification" *ngIf="(alarmListArray$ | async).length == 0; else notificationList">
                 <hyt-no-data width="150" height="150"></hyt-no-data>
                 <h3 class="alarm-title" i18n="@@HYT_no_notifications">No notifications</h3>
             </div>
             <ng-template #notificationList>
                 <hyt-alarm 
-                    *ngFor="let alarm of alarmListArray" 
+                    *ngFor="let alarm of (alarmListArray$ | async)" 
                     [alarm]="alarm"
                     [notificationMode]="true"
                 >

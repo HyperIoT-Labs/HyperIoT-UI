@@ -7,6 +7,9 @@ import { RulesActions } from 'src/app/state/rules/rules.actions';
 import { HProjectsActions, HProjectsApiActions } from 'src/app/state/hProjects/hProjects.actions';
 import { HDevicesActions, HDevicesApiActions } from 'src/app/state/hDevices/hDevices.actions';
 import { HPacketsActions, HPacketsApiActions } from 'src/app/state/hPackets/hPackets.actions';
+import { addLiveAlarm } from 'src/app/state/live-alarms/live-alarms.actions';
+import { selectAllLiveAlarms } from 'src/app/state/live-alarms/live-alarms.selectors';
+import * as LiveAlarmsActions from '../../state/live-alarms/live-alarms.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -25,8 +28,22 @@ export class PostLoginService {
   loadDataPostLogin() {
     if (!this._isLogged) {
       this.brandingService.loadThemeBranding();
+      //this.alarmWrapperService.loadAndCollectAlarms();
+      
+      /* this.alarmWrapperService.alarmSubject.subscribe(
+        liveAlarm => {
+          console.log(liveAlarm)
+          this.store.dispatch(addLiveAlarm({liveAlarm}));
+        }
+      ) */
 
       this.fetchProjectsDetails();
+        
+      this.store.select(selectAllLiveAlarms).subscribe(
+        res => {
+          console.log(res)
+        }
+      )
 
       this.store.dispatch(RulesActions.load());
       this._isLogged = true;
@@ -56,6 +73,9 @@ export class PostLoginService {
         });
         this.store.dispatch(HDevicesApiActions.loadSuccess({ payload: allDevices }));
         this.store.dispatch(HPacketsApiActions.loadSuccess({ payload: allPackets }));
+        
+        this.store.dispatch(LiveAlarmsActions.loadLiveAlarms());
+
       }
     )
   }

@@ -20,6 +20,9 @@ import { environment } from "../environments/environment";
 import { BrandingService } from "./services/branding/branding.service";
 import {HttpContext} from "@angular/common/http";
 import {CookieService} from "ngx-cookie-service";
+import { Store } from "@ngrx/store";
+import { NotificationSelectors } from "./state/notification/notification.selectors";
+import { NotificationActions } from "./state/notification/notification.actions";
 
 @Component({
   selector: "hyt-root",
@@ -61,7 +64,8 @@ export class AppComponent implements OnInit, OnDestroy {
     private router: Router,
     private alarmWrapper: AlarmWrapperService,
     private brandingService: BrandingService,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private store: Store,
   ) {
     // Init Logger
     this.logger = new Logger(this.loggerService);
@@ -112,7 +116,7 @@ export class AppComponent implements OnInit, OnDestroy {
         this.manageNotificationSubscription();
       });
 
-    this.manageNotificationSubscription();
+    //this.manageNotificationSubscription();
   }
 
   manageNotificationSubscription(){
@@ -141,7 +145,39 @@ export class AppComponent implements OnInit, OnDestroy {
 
   subscribeToNotification() {
     this.logger.info("Subscribe to notifications ON");
+
     if(this.alarmSubscription) this.alarmSubscription.unsubscribe();
+
+    this.alarmSubscription = this.store.select(NotificationSelectors.selectLastNotification).subscribe({
+      next: (notification) => {
+        console.log('----', notification)
+        if (!notification) {
+          return;
+        }
+        this.toastr
+        .show(
+          notification.message,
+          notification.title,
+          { toastClass: "ngx-toastr toast-" + notification.id },
+          notification.image
+        )
+        .onShown.subscribe({
+          complete: () => {
+            document
+              .querySelector(
+                ".overlay-container #toast-container .ngx-toastr.toast-" +
+                  notification.id
+              )
+              .setAttribute(
+                "style",
+                `background-color: ${notification.bgColor}; color: ${notification.color}; transform: translateY(64px);`
+              );
+          },
+        });
+      }
+    })
+
+    /* if(this.alarmSubscription) this.alarmSubscription.unsubscribe();
     this.alarmSubscription = this.alarmWrapper.alarmSubject
       .pipe(
         tap((alarm) => { this.logger.debug("Alarm received", alarm); }),
@@ -182,7 +218,7 @@ export class AppComponent implements OnInit, OnDestroy {
                 );
             },
           });
-      });
+      }); */
   }
 
   showToolBars(): boolean {

@@ -4,6 +4,7 @@ import { HytAlarm } from "./hyperiot-alarm.model";
 import { BehaviorSubject, Subject, mergeMap } from "rxjs";
 import { HprojectsService } from "../../hyperiot-client/h-project-client/api-module";
 import { AlarmsService } from "../../hyperiot-client/alarms-client/api-module";
+import { Store } from "@ngrx/store";
 
 @Injectable({
   providedIn: "root",
@@ -30,53 +31,11 @@ export class AlarmWrapperService {
     private realtimeDataService: RealtimeDataService,
     private hprojectsService: HprojectsService,
     private alarmsService: AlarmsService,
+    private store: Store
   ) { }
 
   loadAndCollectAlarms() {
     const SUFFIX = HytAlarm.AlarmSuffixsEnum;
-    this.hprojectsService.findAllHProject().pipe(
-      mergeMap(res => this.alarmsService.findAlarmStatusByProjectId(res.map(p => p.id))),
-    ).subscribe(res => {
-
-      res.projectsAlarmsStatus.forEach(project => {
-
-        const alarmsByProject = project.alarmsStatuses.filter(alarm => alarm.alarmEvents.some(ae => ae.fired));
-
-        alarmsByProject.forEach(alarm => {
-
-          const maxSeverityEvent = alarm.alarmEvents.reduce((maxSeverityEvt, evt) => {
-            return evt.severity > evt.severity ? evt : maxSeverityEvt;
-          }, alarm.alarmEvents[0]);
-
-          const liveAlarm: HytAlarm.LiveAlarm = {
-            alarmId: alarm.alarmId,
-            alarmName: alarm.alarmName,
-            event: {
-              alarmEventId: maxSeverityEvent.alarmEventId,
-              alarmEventName: maxSeverityEvent.alarmEventName,
-              severity: maxSeverityEvent.severity,
-              ruleDefinition: maxSeverityEvent.ruleDefinition,
-              lastFiredTimestamp: maxSeverityEvent.lastFiredTimestamp,
-              alarmState: 'UP',
-            },
-            projectId: project.projectId,
-            color: {
-              background: this.severityColors.get(maxSeverityEvent.severity) || this.DEFAULT_BACKGROUND_COLOUR,
-              text: '#fff',
-            },
-            isEvent: false,
-            isAlarm: true,
-          };
-          this.alarmsList.set(alarm.alarmId, liveAlarm);
-
-          // Uncomment to display alerts with toast messages
-          // this._alarmSubject.next(liveAlarm);
-
-        });
-
-      });
-
-    });
 
     this.realtimeDataService.eventStream.subscribe((p) => {
       const packet = p.data;

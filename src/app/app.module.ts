@@ -76,6 +76,9 @@ import { RulesEffects } from './state/rules/rules.effects';
 import { HProjectsEffects } from './state/hProjects/hProjects.effects';
 import { HDevicesEffects } from './state/hDevices/hDevices.effects';
 import { HPacketsEffects } from './state/hPackets/hPackets.effects';
+import { reducers } from './state';
+import { LiveAlarmsEffects } from './state/live-alarms/live-alarms.effects';
+import { NotificationEffects } from './state/notification/notification.effects';
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
@@ -159,7 +162,7 @@ export function apiConfigFactory(): Configuration {
     BrowserModule,
     BrowserAnimationsModule,
     MatInputModule,
-    StoreModule.forRoot(STORE),
+    StoreModule.forRoot(reducers),
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states
       logOnly: environment.production, // Restrict extension to log-only mode
@@ -171,6 +174,8 @@ export function apiConfigFactory(): Configuration {
       HProjectsEffects,
       HDevicesEffects,
       HPacketsEffects,
+      LiveAlarmsEffects,
+      NotificationEffects
     ]),
   ],
   providers: [

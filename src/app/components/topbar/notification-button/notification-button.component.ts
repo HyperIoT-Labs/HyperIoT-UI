@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { DialogRef, OverlayService } from 'components';
 import { AlarmWrapperService, Logger, LoggerService } from 'core';
 import { NotificationDialogComponent } from '../../dialogs/notification-dialog/notification-dialog.component';
+import { Store } from '@ngrx/store';
+import { selectLiveAlarmTotal } from 'src/app/state/live-alarms/live-alarms.selectors';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'hyt-notification-button',
@@ -15,10 +18,14 @@ export class NotificationButtonComponent implements OnInit{
   notificationPanel: DialogRef<any>;
   /** HYOT logger */
   private logger: Logger;
+
+  notificationCount$ = this.store.select(selectLiveAlarmTotal);
+  notificationCountLabel$ = this.notificationCount$.pipe(map(count => count > 99 ? "99+" : count));
   
   constructor(
     private alarmWrapper: AlarmWrapperService,
     private overlay: OverlayService,
+    private store: Store,
     loggerService: LoggerService
   ) {
     this.logger = new Logger(loggerService);
@@ -57,20 +64,5 @@ export class NotificationButtonComponent implements OnInit{
    */
   get tooltipStatus(){
     return this.eventNotificationIsOn ? $localize`:@@HYT_notification_active:Notification ACTIVE` : $localize`:@@HYT_notification_inactive:Notification INACTIVE`;
-  }
-
-  /**
-   * Display the number of notification active if the notificationIsOn
-   */
-  get notificationCount(){
-    return this.alarmWrapper.alarmListArray.length;
-  }
-
-  /**
-   * Display the number of notification active if the notificationIsOn, if higher than 99, it shows 99+
-   */
-  get notificationCountLabel(){
-    const count = this.notificationCount;
-    return count > 99 ? "99+" : count;
   }
 }

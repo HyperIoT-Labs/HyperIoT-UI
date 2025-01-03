@@ -1,7 +1,9 @@
 import { animate, animateChild, group, query, sequence, stagger, style, transition, trigger } from '@angular/animations';
 import { Component } from '@angular/core';
+import { Store } from '@ngrx/store';
 import {  DialogRef } from 'components';
 import { AlarmWrapperService, HytAlarm, Logger, LoggerService } from 'core';
+import { selectAllLiveAlarms } from 'src/app/state/live-alarms/live-alarms.selectors';
 
 @Component({
   selector: 'hyt-notification-dialog',
@@ -42,9 +44,12 @@ export class NotificationDialogComponent {
   /** HYOT logger */
   private logger: Logger
 
+  alarmListArray$ = this.store.select(selectAllLiveAlarms);
+
   constructor(
     private dialogRef: DialogRef<any>,
     private alarmWrapper: AlarmWrapperService,
+    private store: Store,
     loggerService: LoggerService
   ) {
     this.logger = new Logger(loggerService);
@@ -56,9 +61,9 @@ export class NotificationDialogComponent {
     this.dialogRef.close();
   }
 
-  get alarmListArray() : HytAlarm.LiveAlarm[]{
+  /* get alarmListArray() : HytAlarm.LiveAlarm[]{
     return this.alarmWrapper.alarmListArray;
-  }
+  } */
 
   /**
    * Set off the notification is active OR viceversa
