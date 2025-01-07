@@ -180,6 +180,8 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
   configure() {
     this.graph.layout = {};
     this.graph.data = [];
+    this.allData = [];
+    
     super.removeSubscriptionsAndDataChannels();
     if (!this.serviceType) {
       this.logger.error("TYPE SERVICE UNDEFINED");
