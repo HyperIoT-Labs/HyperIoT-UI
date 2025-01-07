@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit } from '@angular/core';
 import { DeviceActions } from '../../models/device-actions';
+import { DeviceDataSource } from '../../models/device-data-type';
 
 @Component({
   selector: 'hyt-map-device-info',
@@ -13,6 +14,7 @@ export class MapDeviceInfoComponent implements OnInit {
   openClicked = new EventEmitter<any>();
 
   deviceActions = DeviceActions;
+  deviceDataSource = DeviceDataSource;
 
   constructor() { }
 
@@ -21,6 +23,10 @@ export class MapDeviceInfoComponent implements OnInit {
 
   redirectTo(deviceAction?: DeviceActions) {
     this.openClicked.emit(deviceAction);
+  }
+
+  redirectByDataSource(action: DeviceActions, dataSource: DeviceDataSource) {
+    this.openClicked.emit({ action, dataSource });
   }
 
 }

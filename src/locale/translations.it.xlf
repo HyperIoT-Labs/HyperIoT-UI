@@ -2484,6 +2484,14 @@
         <source>Device Dashbaord</source>
         <target>Dashboard Device</target>
       </trans-unit>
+      <trans-unit id="HYT_go_realtime_device_dashboard" datatype="html">
+        <source>Go To Real-Time Device Dashboard</source>
+        <target>Vai Alla Dashboard Del Dispositivo In Tempo Reale</target>
+      </trans-unit>
+      <trans-unit id="HYT_go_offline_device_dashboard" datatype="html">
+        <source>Go To Offline Device Dashboard</source>
+        <target>Vai Alla Dashboard Del Dispositivo Offline/target>
+      </trans-unit>
       <trans-unit id="HYT_alarm_managing" datatype="html">
         <source>Alarm Managing</source>
         <target>Gestione Allarmi</target>

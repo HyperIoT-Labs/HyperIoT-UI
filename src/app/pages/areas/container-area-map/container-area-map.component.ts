@@ -390,16 +390,25 @@ export class ContainerAreaMapComponent implements OnInit, OnDestroy {
   public onItemMapClicked(itemMap){
     this.logger.debug('onItemMapClicked start', itemMap);
     if (itemMap.deviceAction) {
-      if (itemMap.deviceAction === DeviceActions.DASHBOARD) {
-        this.logger.debug('navigation to device dashboard', itemMap.item);
-        if (itemMap.item.device) {
-          this.router.navigate(['hdevice', this.projectId, itemMap.item.device.id, 'dashboards'])
-        } else{
-          this.logger.error('Device not found', itemMap.item);
-        }
-      } else if (itemMap.deviceAction === DeviceActions.ALARMMANAGER) {
-        // TODO implement navigation to alarmmanager
-        this.logger.debug('navigation to alarmmanager', itemMap);
+      const {action, dataSource} = itemMap.deviceAction;
+      switch (action) {
+        case  DeviceActions.DASHBOARD:
+          this.logger.debug('navigation to device dashboard', itemMap.item);
+          if (itemMap.item.device) {
+            if (dataSource) {
+              this.router.navigate(['hdevice', this.projectId, itemMap.item.device.id, 'dashboards', dataSource]);
+            } else {
+              this.router.navigate(['hdevice', this.projectId, itemMap.item.device.id, 'dashboards']);
+            }
+          } else{
+            this.logger.error('Device not found', itemMap.item);
+          }          
+          break;
+
+        case  DeviceActions.ALARMMANAGER:
+          // TODO implement navigation to alarmmanager
+          this.logger.debug('navigation to alarmmanager', itemMap);          
+          break;
       }
     }
     else if(itemMap.innerArea){
