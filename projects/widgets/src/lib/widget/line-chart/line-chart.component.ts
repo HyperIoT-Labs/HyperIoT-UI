@@ -181,7 +181,7 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
     this.graph.layout = {};
     this.graph.data = [];
     this.allData = [];
-    
+
     super.removeSubscriptionsAndDataChannels();
     if (!this.serviceType) {
       this.logger.error("TYPE SERVICE UNDEFINED");
@@ -281,7 +281,7 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
               }
             }
           } else { // if fullscreen            
-            this.computePacketData(this.initData);
+            this.computePacketData(this.initData, this.isToolbarVisible);
           }
         });
     }
