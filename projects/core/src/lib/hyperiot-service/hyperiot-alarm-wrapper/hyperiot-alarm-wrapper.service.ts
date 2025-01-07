@@ -61,7 +61,7 @@ export class AlarmWrapperService {
             alarmState: event.alarmState,
             lastFiredTimestamp: event.fireTimestamp,
           },
-          deviceId: event.deviceId,
+          deviceIds: [],
           packetIds: event.packetIds,
           color: {
             background: backgroundColor,

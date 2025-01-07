@@ -29,18 +29,6 @@ export class NotificationEffects {
             )
         )
     );
-
-    /* convertDeletedAlarm$ = createEffect(
-        () => this.actions$.pipe(
-            ofType(LiveAlarmsActions.deleteLiveAlarm),
-            mergeMap(
-                ([{id}, liveAlarms]) => {
-                    return this.converAlarm(liveAlarms[id])
-                }
-            )
-        )
-    ); */
-    
     
     constructor(
         private actions$: Actions,
@@ -72,7 +60,6 @@ export class NotificationEffects {
             bgColor: (alarm.isAlarm && alarm.event.alarmState === 'DOWN') ? '#51a351' : alarm.color.background,
             color: alarm.color.text,
         }
-        console.log('convertAlarm')
         return of(NotificationActions.setNotification({notification}))
     }
 }

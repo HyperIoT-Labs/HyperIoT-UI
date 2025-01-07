@@ -99,3 +99,5 @@ export const selectAllLiveAlarms = selectAll;
 
 // select the total liveAlarm count
 export const selectLiveAlarmTotal = selectTotal;
+
+export const liveAlarmReducerKey = 'liveAlarms';

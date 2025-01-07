@@ -66,19 +66,11 @@ import { HttpErrorInterceptor } from './interceptors/http-error.interceptor';
 import { NotificationButtonComponent } from './components/topbar/notification-button/notification-button.component';
 import { NotificationDialogComponent } from './components/dialogs/notification-dialog/notification-dialog.component';
 import { StoreModule } from '@ngrx/store';
-import { STORE } from './state/store/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
-import { BrandingEffects } from './state/branding/branding.effects';
 import { GlobalErrorHandlerService } from '../../projects/core/src/lib/hyperiot-service/error-handler/global-error-handler.service';
 import {BrandingService} from "./services/branding/branding.service";
-import { RulesEffects } from './state/rules/rules.effects';
-import { HProjectsEffects } from './state/hProjects/hProjects.effects';
-import { HDevicesEffects } from './state/hDevices/hDevices.effects';
-import { HPacketsEffects } from './state/hPackets/hPackets.effects';
-import { reducers } from './state';
-import { LiveAlarmsEffects } from './state/live-alarms/live-alarms.effects';
-import { NotificationEffects } from './state/notification/notification.effects';
+import { effects, reducers } from './state';
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
@@ -168,15 +160,7 @@ export function apiConfigFactory(): Configuration {
       logOnly: environment.production, // Restrict extension to log-only mode
       autoPause: true, // Pauses recording actions and state changes when the extension window is not open
     }),
-    EffectsModule.forRoot([ 
-      BrandingEffects,
-      RulesEffects,
-      HProjectsEffects,
-      HDevicesEffects,
-      HPacketsEffects,
-      LiveAlarmsEffects,
-      NotificationEffects
-    ]),
+    EffectsModule.forRoot(effects),
   ],
   providers: [
     // ActivatedRouteSnapshot,

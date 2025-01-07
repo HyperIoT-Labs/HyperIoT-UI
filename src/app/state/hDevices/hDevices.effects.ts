@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { HdevicesService, Logger, LoggerService } from 'core';
 import { of } from 'rxjs';
 import { map, mergeMap, catchError } from 'rxjs/operators';
-import { HDevicesActions, HDevicesApiActions } from './hDevices.actions';
+import { HDeviceActions } from './hDevices.actions';
  
 @Injectable()
 export class HDevicesEffects {
@@ -11,16 +11,16 @@ export class HDevicesEffects {
   private logger: Logger;
  
   load$ = createEffect(() => this.actions$.pipe(
-    ofType(HDevicesActions.load),
+    ofType(HDeviceActions.loadHDevices),
     mergeMap(() => this.hDevicesService.findAllHDevice()
       .pipe(
         map(hDevices => {
           this.logger.debug('laod$ findAllHDevice() response', hDevices);
-          return HDevicesApiActions.loadSuccess({ payload: hDevices });
+          return HDeviceActions.loadHDevicesSuccess({ hDevices });
         }),
         catchError((err) => {
           this.logger.debug('laod$ findAllHDevice() catchError', err);
-          return of(HDevicesApiActions.loadFailure({ payload: err }));
+          return of(HDeviceActions.loadHDevicesFailure({ error: err }));
         }),
       ))
     ) 

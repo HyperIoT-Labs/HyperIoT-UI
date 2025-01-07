@@ -17,7 +17,7 @@ export namespace HytAlarm{
             ruleDefinition?: string;
         };
         projectId?: number;
-        deviceId?: number;
+        deviceIds: number[];
         packetIds?: number[];
         color: {
             background: string;

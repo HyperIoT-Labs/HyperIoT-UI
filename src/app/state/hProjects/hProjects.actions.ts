@@ -1,17 +1,42 @@
+import { EntityMap, EntityMapOne, Predicate, Update } from "@ngrx/entity";
 import { createAction, props } from "@ngrx/store";
 import { HProject } from "core";
 
-const load = createAction('[HProjects] Load');
-const unset = createAction('[HProjects] Unset');
+export const loadHProjects = createAction('[HProject/API] Load HProjects');
+export const loadHProjectsSuccess = createAction('[HProject/API] Load HProjects Success', props<{ hProjects: HProject[] }>());
+export const loadHProjectsFailure = createAction('[HProject/API] Load HProjects Failure', props<{ error: any }>());
 
-export const HProjectsActions = {
-    load,
-    unset,
-};
+export const setHProjects = createAction('[HProject/API] Set HProjects', props<{ hProjects: HProject[] }>());
+export const addHProject = createAction('[HProject/API] Add HProject', props<{ hProject: HProject }>());
+export const setHProject = createAction('[HProject/API] Set HProject', props<{ hProject: HProject }>());
+export const upsertHProject = createAction('[HProject/API] Upsert HProject', props<{ hProject: HProject }>());
+export const addHProjects = createAction('[HProject/API] Add HProjects', props<{ hProjects: HProject[] }>());
+export const upsertHProjects = createAction('[HProject/API] Upsert HProjects', props<{ hProjects: HProject[] }>());
+export const updateHProject = createAction('[HProject/API] Update HProject', props<{ update: Update<HProject> }>());
+export const updateHProjects = createAction('[HProject/API] Update HProjects', props<{ updates: Update<HProject>[] }>());
+export const mapHProject = createAction('[HProject/API] Map HProject', props<{ entityMap: EntityMapOne<HProject> }>());
+export const mapHProjects = createAction('[HProject/API] Map HProjects', props<{ entityMap: EntityMap<HProject> }>());
+export const deleteHProject = createAction('[HProject/API] Delete HProject', props<{ id: number }>());
+export const deleteHProjects = createAction('[HProject/API] Delete HProjects', props<{ ids: number[] }>());
+export const deleteHProjectsByPredicate = createAction('[HProject/API] Delete HProjects By Predicate', props<{ predicate: Predicate<HProject> }>());
+export const clearHProjects = createAction('[HProject/API] Clear HProjects');
 
-const loadSuccess = createAction('[HProjects API] HProjects Load Success', props<{ payload: HProject[] }>());
-const loadFailure = createAction('[HProjects API] HProjects Load Error', props<{ payload: any }>());
-export const HProjectsApiActions = {
-    loadSuccess,
-    loadFailure,
+export const HProjectActions = {
+    loadHProjects,
+    loadHProjectsSuccess,
+    loadHProjectsFailure,
+    setHProjects,
+    addHProject,
+    setHProject,
+    upsertHProject,
+    addHProjects,
+    upsertHProjects,
+    updateHProject,
+    updateHProjects,
+    mapHProject,
+    mapHProjects,
+    deleteHProject,
+    deleteHProjects,
+    deleteHProjectsByPredicate,
+    clearHProjects,
 };

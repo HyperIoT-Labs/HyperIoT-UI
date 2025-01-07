@@ -4,7 +4,7 @@ import {
 } from '@ngrx/store';
 import * as fromLiveAlarm from './live-alarms.reducer';
 
-export const selectLiveAlarmState = createFeatureSelector<fromLiveAlarm.State>('liveAlarms');
+export const selectLiveAlarmState = createFeatureSelector<fromLiveAlarm.State>(fromLiveAlarm.liveAlarmReducerKey);
   
 export const selectLiveAlarmIds = createSelector(
   selectLiveAlarmState,
@@ -33,7 +33,18 @@ export const selectCurrentLiveAlarm = createSelector(
   (alarmEnetities, userId) => userId && alarmEnetities[userId]
 );
 
-export const selectLiveAlarmById = createSelector(
+export const selectLiveAlarmById = (props: {id: number}) => createSelector(
   selectLiveAlarmEntities,
-  (liveAlarmEnetities, props) => props.id && liveAlarmEnetities[props.id]
+  (liveAlarmEnetities) => props.id && liveAlarmEnetities[props.id]
 );
+
+export const LiveAlarmSelectors = {
+  selectLiveAlarmState,
+  selectLiveAlarmIds,
+  selectLiveAlarmEntities,
+  selectAllLiveAlarms,
+  selectLiveAlarmTotal,
+  selectCurrentLiveAlarmId,
+  selectCurrentLiveAlarm,
+  selectLiveAlarmById,
+};

@@ -46,3 +46,5 @@ export const selectAllNotifications = selectAll;
 
 // select the total notification count
 export const selectNotificationTotal = selectTotal;
+
+export const notificationReducerKey = 'notifications';

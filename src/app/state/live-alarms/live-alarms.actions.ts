@@ -20,3 +20,23 @@ export const deleteLiveAlarm = createAction('[LiveAlarm/API] Delete LiveAlarm', 
 export const deleteLiveAlarms = createAction('[LiveAlarm/API] Delete LiveAlarms', props<{ ids: number[] }>());
 export const deleteLiveAlarmsByPredicate = createAction('[LiveAlarm/API] Delete LiveAlarms By Predicate', props<{ predicate: Predicate<HytAlarm.LiveAlarm> }>());
 export const clearLiveAlarms = createAction('[LiveAlarm/API] Clear LiveAlarms');
+
+export const LiveAlarmActions = {
+    loadLiveAlarms,
+    loadLiveAlarmsSuccess,
+    loadLiveAlarmsFailure,
+    setLiveAlarms,
+    addLiveAlarm,
+    setLiveAlarm,
+    upsertLiveAlarm,
+    addLiveAlarms,
+    upsertLiveAlarms,
+    updateLiveAlarm,
+    updateLiveAlarms,
+    mapLiveAlarm,
+    mapLiveAlarms,
+    deleteLiveAlarm,
+    deleteLiveAlarms,
+    deleteLiveAlarmsByPredicate,
+    clearLiveAlarms,
+}

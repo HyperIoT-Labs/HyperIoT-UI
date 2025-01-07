@@ -6,7 +6,7 @@ export interface NotificationState {
     notifications: Notification[]
 }
 
-const selectNotificationState = createFeatureSelector<fromNotification.State>('notifications');
+const selectNotificationState = createFeatureSelector<fromNotification.State>(fromNotification.notificationReducerKey);
   
 const selectNotificationIds = createSelector(
     selectNotificationState,
