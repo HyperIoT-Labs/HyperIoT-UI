@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit } from '@angular/core';
 import { DeviceActions } from '../../models/device-actions';
-import { DeviceDataSource } from '../../models/device-data-type';
+import { DeviceDataSource } from '../../models/device-data-source';
 
 @Component({
   selector: 'hyt-map-device-info',

@@ -9,7 +9,7 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DialogService } from 'components';
+import { DeviceDataSource, DialogService } from 'components';
 import {
   AlgorithmOfflineDataService,
   Area,
@@ -217,7 +217,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     } else if (this.showHDevice) {
       this.idProjectSelected = +this.activatedRoute.snapshot.params.projectId;
       // extract data from previous url
-      const  prevUrlParameterData: ExtractDataFromUrl = this.dashboardEvent.extractDataFromUrl();
+      const prevUrlParameterData: ExtractDataFromUrl = this.dashboardEvent.extractDataFromUrl();
       /// if type is area, then set deviceAreaId, this is used to show the button to back to the area
       if (prevUrlParameterData && prevUrlParameterData.type === 'area') {
         this.deviceAreaId = +prevUrlParameterData.id;
@@ -231,13 +231,13 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
           if (hDevice) {
             this.currentDevice = hDevice;
             // TODO: terminate tooltip
-/*            this.currentDeviceTooltip = `
-            Brand: ${hDevice.brand}
-            Model: ${hDevice.model}
-            Firmware ver.: ${hDevice.firmwareVersion}
-            SW ver.: ${hDevice.softwareVersion}
-            Device id: ${hDevice.id}
-          `;*/
+            /*            this.currentDeviceTooltip = `
+                        Brand: ${hDevice.brand}
+                        Model: ${hDevice.model}
+                        Firmware ver.: ${hDevice.firmwareVersion}
+                        SW ver.: ${hDevice.softwareVersion}
+                        Device id: ${hDevice.id}
+                      `;*/
           }
           this.showDashboard();
         });
@@ -246,10 +246,19 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
       this.getProjectList();
     }
     this.applyPreset();
-  }
 
+    if (this.activatedRoute.snapshot.params.datasource === DeviceDataSource.Realtime) {
+      this.signalIsOn = true;
+      this.pageStatus = PageStatus.Loading;
+      this.getRealTimeDashboard();
+    } else if (this.activatedRoute.snapshot.params.datasource === DeviceDataSource.Offline) {
+      this.signalIsOn = false;
+      this.pageStatus = PageStatus.Loading;
+      this.getOfflineDashboard();
+    }
+  }
   ngAfterViewInit(): void {
-    if(localStorage.getItem('offline')) this.changeSignalState(null)
+    if (localStorage.getItem('offline')) this.changeSignalState(null)
     this.cd.detectChanges();
   }
 
@@ -308,11 +317,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     } else {
       this.signalIsOn = !this.signalIsOn;
       this.pageStatus = PageStatus.Loading;
-      if (this.showAreas) {
-        this.getRealTimeDashboard();
-      } else {
-        this.getRealTimeDashboard();
-      }
+      this.getRealTimeDashboard();
     }
   }
 
@@ -338,28 +343,28 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     this.subTopologyStatus = this.dashboardConfigService.getRecordingStatus(this.idProjectSelected)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(res => {
-          if (res !== null && res !== undefined && res.status.toLowerCase() === 'active') {
-            this.dataRecordingIsOn = true;
-            this.dataRecordingStatus = (this.dataRecordingStatus === 2) ? TopologyStatus.On : TopologyStatus.Activated;
-            if (res.uptimeSecs) {
-              let seconds = res.upTimeSec;
-              const days = Math.floor(seconds / (3600 * 24));
-              seconds -= days * 3600 * 24;
-              const hrs = Math.floor(seconds / 3600);
-              seconds -= hrs * 3600;
-              const mnts = Math.floor(seconds / 60);
-              seconds -= mnts * 60;
-              this.upTimeSec = days + 'd, ' + hrs + 'h, ' + mnts + 'm';
-            } else {
-              this.upTimeSec = undefined;
-            }
+        if (res !== null && res !== undefined && res.status.toLowerCase() === 'active') {
+          this.dataRecordingIsOn = true;
+          this.dataRecordingStatus = (this.dataRecordingStatus === 2) ? TopologyStatus.On : TopologyStatus.Activated;
+          if (res.uptimeSecs) {
+            let seconds = res.upTimeSec;
+            const days = Math.floor(seconds / (3600 * 24));
+            seconds -= days * 3600 * 24;
+            const hrs = Math.floor(seconds / 3600);
+            seconds -= hrs * 3600;
+            const mnts = Math.floor(seconds / 60);
+            seconds -= mnts * 60;
+            this.upTimeSec = days + 'd, ' + hrs + 'h, ' + mnts + 'm';
           } else {
-            this.dataRecordingIsOn = false;
-            this.dataRecordingStatus = TopologyStatus.Off;
             this.upTimeSec = undefined;
           }
-          this.recordStateInLoading = false;
-        },
+        } else {
+          this.dataRecordingIsOn = false;
+          this.dataRecordingStatus = TopologyStatus.Off;
+          this.upTimeSec = undefined;
+        }
+        this.recordStateInLoading = false;
+      },
         error => {
           this.dataRecordingIsOn = false;
           this.dataRecordingStatus = TopologyStatus.Off;
@@ -417,7 +422,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
               element.value = element.id;
             });
 
-            this.hProjectListOptions.sort((a: HytSelectOption  , b) => {
+            this.hProjectListOptions.sort((a: HytSelectOption, b) => {
               if (a.entityModifyDate > b.entityModifyDate) { return -1; }
               if (a.entityModifyDate < b.entityModifyDate) { return 1; }
               return 0;
@@ -535,7 +540,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  onDashboardViewEvent(event){
+  onDashboardViewEvent(event) {
     if (event === 'widgetsLayout:ready') {
       if (!this.widgetLayoutReady) {
         this.cd.detectChanges();

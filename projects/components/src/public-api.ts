@@ -117,3 +117,5 @@ export { MapDefaultConfiguration } from './lib/hyt-map/map-configuration';
 export { DeviceActions } from './lib/hyt-map/models/device-actions';
 
 export { RuleDefinitionComponent } from './lib/rule-definition/rule-definition.component';
+
+export { DeviceDataSource } from './lib/hyt-map/models/device-data-source'
