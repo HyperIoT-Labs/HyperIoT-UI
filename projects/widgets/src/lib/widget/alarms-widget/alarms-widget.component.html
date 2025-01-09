@@ -17,7 +17,7 @@
   </header-widget>
 
   <content-widget style="position: relative;">
-    <div class="alarm-list" *ngIf="alarmListArray.length; else noAlarm" [@containerAnim]="alarmListArray.length">
+    <div class="alarm-list" *ngIf="(alarmListArray$ | async).length; else noAlarm" [@containerAnim]="(alarmListArray$ | async).length">
       <div class="alarm-filter alarm-filter-resume">
         <div class="description-filter" *ngIf="!showFilter && !filteringSev.length">
           <strong i18n="@@HYT_alarm_no_filter">NO FILTER SELECTED.</strong>
@@ -34,15 +34,15 @@
         </div>
         <mat-form-field class="smaller-select" *ngIf="showFilter">
           <mat-label i18n="@@HYT_alarm_severity_severity">Severity</mat-label>
-          <mat-select [(ngModel)]="filteringSev" multiple>
+          <mat-select [(ngModel)]="filteringSev" (ngModelChange)="updateFilters()" multiple>
             <mat-option *ngFor="let sev of severityList" [value]="sev.value">{{sev.label}}</mat-option>
           </mat-select>
         </mat-form-field>
         <div class="counter-alarm">
           <span i18n="@@HYT_alarm_showing_text">Showing </span>
-          <strong class="showing-counter">{{filteredList.length}}</strong>
+          <strong class="showing-counter">{{(filteredList$ | async).length}}</strong>
           <span i18n="@@HYT_alarm_showing_text_of"> of </span> 
-          <strong class="text-primary">{{alarmListArray.length}}</strong>
+          <strong class="text-primary">{{(alarmListArray$ | async).length}}</strong>
         </div>
         <div class="filter-button">
           <hyt-button
@@ -55,11 +55,11 @@
           </hyt-button>
         </div>
       </div>
-      <div class="filtering-no-data" *ngIf="alarmListArray.length && filteredList.length == 0">
+      <div class="filtering-no-data" *ngIf="(alarmListArray$ | async).length && (filteredList$ | async).length == 0">
         <span class="alarm-title" i18n="@@HYT_alarm_hidden_filter">There are alarms, but they're being hidden by the filter!</span>
       </div>
       <hyt-alarm 
-        *ngFor="let alarm of filteredList" 
+        *ngFor="let alarm of (filteredList$ | async)" 
         [alarm]="alarm"
       >
       </hyt-alarm>

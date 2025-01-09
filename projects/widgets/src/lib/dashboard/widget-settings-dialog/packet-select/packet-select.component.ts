@@ -15,7 +15,6 @@ import { HPacket, HPacketField, HpacketsService, AreasService, AreaDevice, HDevi
 import { mimeTypeList } from './MIMETypes';
 import { FieldAliases, FieldFileMimeTypes, FieldTypes, FieldUnitConversion, FieldValuesMapList } from '../../../base/base-widget/model/widget.model';
 import { DataSimulatorSettings } from "../data-simulator-settings/data-simulator.models";
-import { $localize } from "@angular/localize/init";
 import { PageStatus } from '../models/page-status';
 
 @Component({
