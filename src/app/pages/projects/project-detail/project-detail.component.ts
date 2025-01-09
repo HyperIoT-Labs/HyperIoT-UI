@@ -21,6 +21,7 @@ import { ProjectAlarmsFormComponent } from '../project-forms/project-alarms-form
 import { SummaryList } from './generic-summary-list/generic-summary-list.component';
 import { DashboardConfigService } from 'widgets';
 import {AreasFormComponent} from "../project-forms/areas-form/areas-form.component";
+import { PreviousRouteService } from 'src/app/services/previous-route.service';
 
 enum TreeStatusEnum {
   Ready,
@@ -137,6 +138,8 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
   currentPacket: number = null;
   currentDeviceName = '';
 
+  dashBackButton: boolean;
+
   constructor(
     private hProjectService: HprojectsService,
     private hDeviceService: HdevicesService,
@@ -147,7 +150,8 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
     private dialog: DialogService,
     private cdRef:ChangeDetectorRef,
     private enrichmentsService: EnrichmentsService,
-    private loggerService: LoggerService
+    private loggerService: LoggerService,
+    private previousRouteService: PreviousRouteService
   ) {
     // Init Logger
     this.logger = new Logger(this.loggerService);
@@ -172,6 +176,9 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
       this.logger.debug('Current Packet ID', packetID);
       this.currentPacket = packetID;
     });
+
+    /* change button if you arrive to edit projecy page from dashboard */
+    if (this.previousRouteService.previousUrl === "/dashboards") this.dashBackButton = true;
 
   }
 
