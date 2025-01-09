@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {CdkDragEnd} from '@angular/cdk/drag-drop';
 import {Area, AreaDevice, AreasService, Logger, LoggerService} from 'core';
 import {PageStatus} from '../../../models/pageStatus';
@@ -15,7 +15,7 @@ import {MapTypeKey} from "../../../../../projects/components/src/lib/hyt-map/mod
   templateUrl: './container-area-map.component.html',
   styleUrls: ['./container-area-map.component.scss']
 })
-export class ContainerAreaMapComponent implements OnInit, OnDestroy {
+export class ContainerAreaMapComponent implements OnInit, OnChanges, OnDestroy {
   /**
    * Hook to track the map element
    */
@@ -126,19 +126,13 @@ export class ContainerAreaMapComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.areaService.findArea(this.areaId)
-      .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe({
-        next: (area: Area) => {
-          this.logger.debug('Found area corresponding to the searched ID: '+this.areaId, area);
-          this.loadArea(area);
-        },
-        error: (error) => {
-          this.logger.error('There is no area matching the ID you are looking for: '+this.areaId, error);
-          this.pageStatus = PageStatus.Error
-        }
-      }
-    );
+    this.findArea();
+  }
+  
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes?.areaId && !changes?.areaId?.firstChange) {
+      this.findArea();
+    }
   }
 
   ngOnDestroy() {
@@ -146,6 +140,22 @@ export class ContainerAreaMapComponent implements OnInit, OnDestroy {
       this.ngUnsubscribe.next();
       this.ngUnsubscribe.complete();
     }
+  }
+
+  findArea() {
+    this.areaService.findArea(this.areaId)
+    .pipe(takeUntil(this.ngUnsubscribe))
+    .subscribe({
+      next: (area: Area) => {
+        this.logger.debug('Found area corresponding to the searched ID: '+this.areaId, area);
+        this.loadArea(area);
+      },
+      error: (error) => {
+        this.logger.error('There is no area matching the ID you are looking for: '+this.areaId, error);
+        this.pageStatus = PageStatus.Error
+      }
+    }
+  );
   }
 
   /**
@@ -231,10 +241,6 @@ export class ContainerAreaMapComponent implements OnInit, OnDestroy {
     this.logger.debug('onTreeNodeClick start', node);
     if(node.data.item.id !== this.areaId){
       this.router.navigate(['areas', this.projectId, node.data.item.id])
-        .then(() => {
-          //TODO: Change method to navigate
-          this.loadArea(node.data.item);
-        })
     }
   }
 
