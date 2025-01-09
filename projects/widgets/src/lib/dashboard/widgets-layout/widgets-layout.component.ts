@@ -11,7 +11,6 @@ import {
 } from 'angular-gridster2';
 
 import {
-  AlarmWrapperService,
   Dashboard,
   DashboardWidget,
   HPacket,
@@ -111,8 +110,6 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
 
   lastWindowSize;
 
-  eventNotificationIsOn: boolean;
-
   /**
    * This is a demo dashboard for testing widgets
    *
@@ -125,16 +122,10 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
   constructor(
     private realtimeDataService: RealtimeDataService,
     private configService: DashboardConfigService,
-    private alarmWrapper: AlarmWrapperService,
     private activatedRoute: ActivatedRoute,
     private dialogService: DialogService,
     private confirmDialogService: ConfirmDialogService,
-  ) {
-    this.eventNotificationIsOn = true;
-    this.alarmWrapper.eventNotificationState.subscribe(res => {
-      this.eventNotificationIsOn = res;
-    });
-  }
+  ) { }
 
   ngOnInit() {
     this.loadDashboard();

@@ -30,7 +30,6 @@ import { AlgorithmWizardComponent } from '../pages/algorithms/algorithm-wizard/a
 import { ProjectStatisticsFormComponent } from '../pages/projects/project-forms/project-statistics-form/project-statistics-form.component';
 import { ProjectAlarmsFormComponent } from '../pages/projects/project-forms/project-alarms-form/project-alarms-form.component';
 import {DashComponent} from '../pages/dash/dash.component';
-import { BrandingService } from '../services/branding/branding.service';
 import { PostLoginService } from '../services/postLogin/post-login.service';
 
 export enum HytRoutesDataFields {

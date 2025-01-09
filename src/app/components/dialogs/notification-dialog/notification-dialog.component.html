@@ -32,14 +32,14 @@
     </div>
 
     <div id="notification-footer">
-        <span class="hyt-icon icon-hyt_notification" [class.off-notification]="!eventNotificationIsOn"></span>
+        <span class="hyt-icon icon-hyt_notification" [class.off-notification]="!(eventNotificationIsOn | async)"></span>
         <span i18n="@@HYT_notifications">NOTIFICATIONS</span>
         <div class="simulator-switch-container">
             <label class="simulator-switch">
                 <input 
                     type="checkbox"
                     (change)="changeEventNotificationState()"
-                    [checked]="eventNotificationIsOn"
+                    [checked]="eventNotificationIsOn | async"
                 >
                 <span class="slider round"></span>
             </label>

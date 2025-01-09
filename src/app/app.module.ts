@@ -25,7 +25,7 @@ import { AccountButtonComponent } from './components/topbar/account-button/accou
 import { MatIconModule } from '@angular/material/icon';
 
 // hyperiot
-import { Configuration, ConfigurationParameters, CoreModule, HyperiotClientModule, LoggerService } from 'core';
+import { Configuration, ConfigurationParameters, CoreModule, HyperiotClientModule, LoggerService, BrandingService, HyperiotStore} from 'core';
 import { ComponentsModule } from 'components';
 import { AddWidgetDialogComponent, DashboardModule, WidgetSettingsDialogComponent, WidgetsModule } from 'widgets';
 import { RouterModule, DefaultUrlSerializer, UrlSerializer, UrlTree } from '@angular/router';
@@ -69,8 +69,6 @@ import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { GlobalErrorHandlerService } from '../../projects/core/src/lib/hyperiot-service/error-handler/global-error-handler.service';
-import {BrandingService} from "./services/branding/branding.service";
-import { effects, reducers } from './state';
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
@@ -154,13 +152,13 @@ export function apiConfigFactory(): Configuration {
     BrowserModule,
     BrowserAnimationsModule,
     MatInputModule,
-    StoreModule.forRoot(reducers),
+    StoreModule.forRoot(HyperiotStore.Reducers),
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states
       logOnly: environment.production, // Restrict extension to log-only mode
       autoPause: true, // Pauses recording actions and state changes when the extension window is not open
     }),
-    EffectsModule.forRoot(effects),
+    EffectsModule.forRoot(HyperiotStore.Effects),
   ],
   providers: [
     // ActivatedRouteSnapshot,

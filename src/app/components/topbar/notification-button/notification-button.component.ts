@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { DialogRef, OverlayService } from 'components';
-import { AlarmWrapperService, Logger, LoggerService } from 'core';
+import { LiveAlarmSelectors, Logger, LoggerService, UserSiteSettingSelectors } from 'core';
 import { NotificationDialogComponent } from '../../dialogs/notification-dialog/notification-dialog.component';
 import { Store } from '@ngrx/store';
-import { selectLiveAlarmTotal } from 'src/app/state/live-alarms/live-alarms.selectors';
 import { map } from 'rxjs';
 
 @Component({
@@ -11,30 +10,26 @@ import { map } from 'rxjs';
   templateUrl: './notification-button.component.html',
   styleUrls: ['./notification-button.component.scss'],
 })
-export class NotificationButtonComponent implements OnInit{
+export class NotificationButtonComponent {
   /** Notification active get from alarmWrapperService */
-  eventNotificationIsOn : boolean;
+  eventNotificationIsOn = this.store.select(UserSiteSettingSelectors.selectNotificationActive);
   /** Overlay object valorized only when panel is open */
   notificationPanel: DialogRef<any>;
   /** HYOT logger */
   private logger: Logger;
 
-  notificationCount$ = this.store.select(selectLiveAlarmTotal);
+  notificationCount$ = this.store.select(LiveAlarmSelectors.selectLiveAlarmTotal);
   notificationCountLabel$ = this.notificationCount$.pipe(map(count => count > 99 ? "99+" : count));
+
+  tooltipStatus = (eventNotificationIsOn: boolean) => eventNotificationIsOn ? $localize`:@@HYT_notification_active:Notification ACTIVE` : $localize`:@@HYT_notification_inactive:Notification INACTIVE`;
   
   constructor(
-    private alarmWrapper: AlarmWrapperService,
     private overlay: OverlayService,
     private store: Store,
     loggerService: LoggerService
   ) {
     this.logger = new Logger(loggerService);
     this.logger.registerClass("NotificationButtonComponent");
-  }
-  
-  ngOnInit(): void {
-    this.eventNotificationIsOn = this.alarmWrapper.eventNotificationState.getValue();
-    this.alarmWrapper.eventNotificationState.subscribe((res)=> this.eventNotificationIsOn = res);
   }
 
   /**
@@ -59,10 +54,4 @@ export class NotificationButtonComponent implements OnInit{
     }
   }
 
-  /**
-   * Get text for tooltip based on notification active or not
-   */
-  get tooltipStatus(){
-    return this.eventNotificationIsOn ? $localize`:@@HYT_notification_active:Notification ACTIVE` : $localize`:@@HYT_notification_inactive:Notification INACTIVE`;
-  }
 }

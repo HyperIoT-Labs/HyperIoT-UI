@@ -1,8 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
-import { Store } from '@ngrx/store';
-import { BrandingActions } from 'src/app/state/branding/branding.actions';
 import { PostLoginService } from 'src/app/services/postLogin/post-login.service';
 
 @Component({

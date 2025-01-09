@@ -1,13 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { HProject, HprojectsService } from 'core';
-import { BrandingService } from '../branding/branding.service';
-import { BrandingActions } from 'src/app/state/branding/branding.actions';
-import { RuleActions } from 'src/app/state/rules/rules.actions';
-import { HProjectActions } from 'src/app/state/hProjects/hProjects.actions';
-import { HDeviceActions } from 'src/app/state/hDevices/hDevices.actions';
-import { HPacketActions } from 'src/app/state/hPackets/hPackets.actions';
-import { LiveAlarmActions } from 'src/app/state/live-alarms/live-alarms.actions';
+import { BrandingActions, BrandingService, HDeviceActions, HPacketActions, HProject, HProjectActions, HprojectsService, LiveAlarmActions, RuleActions, UserSiteSettingActions } from 'core';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +20,7 @@ export class PostLoginService {
       this.brandingService.loadThemeBranding();
 
       this.fetchProjectsDetails();
+      this.store.dispatch(UserSiteSettingActions.load());
 
       this.store.dispatch(RuleActions.loadRules());
       this._isLogged = true;
@@ -40,6 +34,7 @@ export class PostLoginService {
     this.store.dispatch(HPacketActions.clearHPackets());
     this.store.dispatch(RuleActions.clearRules());
     this.store.dispatch(LiveAlarmActions.clearLiveAlarms());
+    this.store.dispatch(UserSiteSettingActions.clear());
     this._isLogged = false;
   }
 

@@ -1,9 +1,8 @@
-import { animate, animateChild, group, query, sequence, stagger, style, transition, trigger } from '@angular/animations';
+import { animate, group, query, style, transition, trigger } from '@angular/animations';
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import {  DialogRef } from 'components';
-import { AlarmWrapperService, HytAlarm, Logger, LoggerService } from 'core';
-import { selectAllLiveAlarms } from 'src/app/state/live-alarms/live-alarms.selectors';
+import { LiveAlarmSelectors, Logger, LoggerService, UserSiteSettingActions, UserSiteSettingSelectors } from 'core';
 
 @Component({
   selector: 'hyt-notification-dialog',
@@ -40,38 +39,32 @@ import { selectAllLiveAlarms } from 'src/app/state/live-alarms/live-alarms.selec
 })
 export class NotificationDialogComponent {
   /** Notification active get from alarmWrapperService */
-  eventNotificationIsOn : boolean;
+  eventNotificationIsOn = this.store.select(UserSiteSettingSelectors.selectNotificationActive);
   /** HYOT logger */
   private logger: Logger
 
-  alarmListArray$ = this.store.select(selectAllLiveAlarms);
+  //TODO change source to notifications (store selectAllNotifications)
+  alarmListArray$ = this.store.select(LiveAlarmSelectors.selectAllLiveAlarms);
 
   constructor(
     private dialogRef: DialogRef<any>,
-    private alarmWrapper: AlarmWrapperService,
     private store: Store,
     loggerService: LoggerService
   ) {
     this.logger = new Logger(loggerService);
     this.logger.registerClass("NotificationDialogComponent");
-    this.eventNotificationIsOn = alarmWrapper.eventNotificationState.getValue();
   }
 
   close() {
     this.dialogRef.close();
   }
 
-  /* get alarmListArray() : HytAlarm.LiveAlarm[]{
-    return this.alarmWrapper.alarmListArray;
-  } */
-
   /**
    * Set off the notification is active OR viceversa
    */
   changeEventNotificationState() {
-    this.eventNotificationIsOn = !this.eventNotificationIsOn;
     this.logger.info("changeEventNotificationState - new status", this.eventNotificationIsOn);
-    this.alarmWrapper.eventNotificationState.next(this.eventNotificationIsOn);
+    this.store.dispatch(UserSiteSettingActions.toggleNotification());
   }
 
 }
