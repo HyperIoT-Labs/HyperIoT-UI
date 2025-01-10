@@ -436,7 +436,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
               project: { id: stringifyProjectId as string }
             }
             const parentAreaId = this.getParentAreaId();
-            newArea.parentArea = parentAreaId ? { id: parentAreaId, entityVersion: null } : null;
+            newArea.parentArea = parentAreaId ? { id: parentAreaId, entityVersion: null } as Area : null;
 
             const uploadImage = this.areaService.updateArea(newArea).pipe(
               mergeMap((imageRes) => this.httpClient.post(`/hyperiot/areas/${newArea.id}/image`, formData))
@@ -519,7 +519,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
             project: { id: stringifyProjectId as string }
           }
           const parentAreaId = this.getParentAreaId();
-          newArea.parentArea = parentAreaId ? { id: parentAreaId, entityVersion: null } : null;
+          newArea.parentArea = parentAreaId ? { id: parentAreaId, entityVersion: null } as Area : null;
 
           const uploadImage = this.areaService.updateArea(newArea).pipe(
             mergeMap((bimRes) => {
@@ -715,7 +715,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
   patchTheAreaToBeRemovedFromTheMap(singleArea: Area) :any {
     singleArea.mapInfo = null;
     singleArea['project'] = { id: this.projectId };
-    singleArea.parentArea = { id: this.areaId, entityVersion: null };
+    singleArea.parentArea = { id: this.areaId, entityVersion: null } as Area;
     delete singleArea['innerCount'];
     delete singleArea['deviceCount'];
     return singleArea;
@@ -995,7 +995,9 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((areaDevices: AreaDevice[]) => {
       this.logger.debug('loadAreaMap get area devices list', areaDevices);
-      this.mapComponent.setAreaItems(areaDevices.concat(this.areaList.filter(a => a.mapInfo != null)));
+      //! TODO casting error
+      // this.mapComponent.setAreaItems(areaDevices.concat(this.areaList.filter(a => a.mapInfo != null)));
+      this.mapComponent.setAreaItems([...areaDevices , ...this.areaList.filter(({mapInfo}) => mapInfo)]);
       this.mapComponent.refresh();
       this.loadingStatus = LoadingStatusEnum.Ready;
     });
@@ -1162,7 +1164,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
     // TODO: the field project should be exposed in model
     // TODO: if not passing this field the service will return validation error
     area['project'] = { id: this.projectId };
-    area.parentArea = { id: this.areaId, entityVersion: null };
+    area.parentArea = { id: this.areaId, entityVersion: null } as Area;
     delete area['innerCount'];
     delete area['deviceCount'];
     return area;
@@ -1231,7 +1233,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
     // TEST CONFIGURATION
     area = this.patchArea(area);
     const parentAreaId = this.getParentAreaId();
-    area.parentArea = parentAreaId ? { id: parentAreaId, entityVersion: null } : null;
+    area.parentArea = parentAreaId ? { id: parentAreaId, entityVersion: null } as Area : null;
     if (area.id) {
       // Update existing
       this.areaService.updateArea(area)
@@ -1380,11 +1382,12 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
   saveMapAreaConfiguration = (mapSettings: GenericMap) => {
     this.loadingStatus = LoadingStatusEnum.Loading;
     const parentAreaId = this.getParentAreaId();
-    const updatedArea = {
+    const updatedArea: Area = {
       ...this.entity,
       areaConfiguration: JSON.stringify(mapSettings),
-      project: { id: this.projectId },
-      parentArea: parentAreaId ? { id: parentAreaId, entityVersion: null } : null,
+      //! TODO project doesn't exist on Area type
+      // project: { id: this.projectId },
+      parentArea: parentAreaId ? { id: parentAreaId, entityVersion: null } as Area : null,
     };
     this.mapComponent.getImage().then((blob) => {
       const formData = new FormData();

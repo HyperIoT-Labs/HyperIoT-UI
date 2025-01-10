@@ -1,12 +1,12 @@
 import { ApplicationRef, Component, ComponentFactoryResolver, EventEmitter, Injector, Input, NgZone, OnDestroy, OnInit } from '@angular/core';
 import * as L from 'leaflet';
-import {Area, AreaDevice, Logger, LoggerService} from "core";
+import { Area, AreaDevice, Logger, LoggerService } from "core";
 import { LeafletMapConfig } from "../../models/leaflet-map";
 import { MapDefaultConfiguration } from '../../map-configuration';
 import { MapDeviceEditComponent } from '../map-device-edit/map-device-edit.component';
 import { MapDeviceInfoComponent } from '../map-device-info/map-device-info.component';
-import { DeviceActions } from '../../models/device-actions';
 import domtoimage from 'dom-to-image';
+import { MapItem } from '../../models/map-item';
 
 @Component({
   selector: 'hyt-leaflet-map',
@@ -25,7 +25,7 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
 
   private _mapMoveCB: (areaConfiguration: string) => void;
 
-  itemOpen = new EventEmitter<any>();
+  itemOpen = new EventEmitter<MapItem>();
   itemRemove = new EventEmitter<any>();
   itemUpdate = new EventEmitter<any>();
 
@@ -125,7 +125,7 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
       const parsedOption: LeafletMapConfig = JSON.parse(this.areaConfiguration);
 
       if (cb) {
-        if (this.mapRef.getCenter().equals(L.latLng(parsedOption.latitude, parsedOption.longitude ))) {
+        if (this.mapRef.getCenter().equals(L.latLng(parsedOption.latitude, parsedOption.longitude))) {
           cb();
         } else {
           this.mapRef.on('moveend', () => {
@@ -134,7 +134,7 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
           });
         }
       }
-      
+
       this.mapRef.setView(L.latLng({
         lat: parsedOption.latitude || MapDefaultConfiguration.latitude,
         lng: parsedOption.longitude || MapDefaultConfiguration.longitude,
@@ -178,7 +178,7 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
 
     L.control.scale().addTo(map);
   }
-  
+
   mapMove(event) { // move and zoom events
     if (this._editCenter) {
       this.areaConfiguration = JSON.stringify({ latitude: this.mapRef.getCenter().lat, longitude: this.mapRef.getCenter().lng, zoom: this.mapRef.getZoom() });
@@ -190,20 +190,20 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
       this._mapMoveCB(this.areaConfiguration);
     }
   }
-  
+
   getAreaCenter() {
     return { x: this.mapRef.getCenter().lat, y: this.mapRef.getCenter().lng };
   }
 
   private _buildMarkerIcon(iconUrl: string): L.Icon {
-    return L.icon({ 
-      iconUrl:  'assets/icons/map/' + iconUrl,
+    return L.icon({
+      iconUrl: 'assets/icons/map/' + iconUrl,
       shadowUrl: 'assets/icons/map/shadow_icon.png',
-      iconSize:     [51, 67],
-      shadowSize:   [54, 33],
-      iconAnchor:   [25.5, 67],
+      iconSize: [51, 67],
+      shadowSize: [54, 33],
+      iconAnchor: [25.5, 67],
       shadowAnchor: [5, 31],
-      popupAnchor:  [0, -70],
+      popupAnchor: [0, -70],
     });
   }
 
@@ -244,7 +244,7 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
         this.itemOpen.emit(itemInfo);
       }
       deviceEditComponent.changeDetectorRef.detectChanges();
-  
+
       marker.bindPopup(deviceEditComponent.location.nativeElement);
       marker.on('dragend', event => {
         const latlng = marker.getLatLng();
@@ -257,9 +257,8 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
     } else {
       const deviceEditComponent = this.resolver.resolveComponentFactory(MapDeviceInfoComponent).create(this.injector);
       deviceEditComponent.instance.deviceInfo = areaItem;
-      deviceEditComponent.instance.openClicked.subscribe((deviceAction: DeviceActions) => {
-        if (deviceAction) this.itemOpen.emit({item: areaItem, deviceAction});
-        else this.itemOpen.emit(areaItem);
+      deviceEditComponent.instance.openClicked.subscribe((action) => {
+          this.itemOpen.emit(action);
       });
       deviceEditComponent.changeDetectorRef.detectChanges();
       marker.bindPopup(deviceEditComponent.location.nativeElement);

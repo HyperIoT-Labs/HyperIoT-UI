@@ -9,7 +9,7 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DeviceDataSource, DialogService } from 'components';
+import { DialogService } from 'components';
 import {
   AlgorithmOfflineDataService,
   Area,
@@ -247,14 +247,18 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     this.applyPreset();
 
-    if (this.activatedRoute.snapshot.params.datasource === DeviceDataSource.Realtime) {
-      this.signalIsOn = true;
-      this.pageStatus = PageStatus.Loading;
-      this.getRealTimeDashboard();
-    } else if (this.activatedRoute.snapshot.params.datasource === DeviceDataSource.Offline) {
-      this.signalIsOn = false;
-      this.pageStatus = PageStatus.Loading;
-      this.getOfflineDashboard();
+    switch (this.activatedRoute.snapshot.params.datasource) {
+      case Dashboard.DashboardTypeEnum.REALTIME:
+        this.signalIsOn = true;
+        this.pageStatus = PageStatus.Loading;
+        this.getRealTimeDashboard();
+        break;
+
+      case Dashboard.DashboardTypeEnum.OFFLINE:
+        this.signalIsOn = false;
+        this.pageStatus = PageStatus.Loading;
+        this.getOfflineDashboard();
+        break;
     }
   }
   ngAfterViewInit(): void {

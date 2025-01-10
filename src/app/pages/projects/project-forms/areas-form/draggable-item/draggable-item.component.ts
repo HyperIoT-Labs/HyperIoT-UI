@@ -1,7 +1,8 @@
-import {Component, EventEmitter, HostListener, ViewEncapsulation} from '@angular/core';
-import {CdkDrag} from '@angular/cdk/drag-drop';
-import {AreaDevice} from 'core';
-import { DeviceActions } from 'components';
+import { Component, EventEmitter, HostListener, ViewEncapsulation } from '@angular/core';
+import { CdkDrag } from '@angular/cdk/drag-drop';
+import { Area, AreaDevice, Dashboard } from 'core';
+import { DeviceActions } from 'projects/components/src/lib/hyt-map/models/device-actions';
+import { MapItem } from 'components';
 
 @Component({
   selector: 'hyt-draggable-item',
@@ -10,12 +11,13 @@ import { DeviceActions } from 'components';
   encapsulation: ViewEncapsulation.None
 })
 export class DraggableItemComponent {
-  openClicked = new EventEmitter<any>();
+  openClicked = new EventEmitter<MapItem>();
   removeClicked = new EventEmitter<any>();
   positionChanged = new EventEmitter<any>();
   renderDataRequest = new EventEmitter<any>();
 
   deviceActions = DeviceActions;
+  dataSource = Dashboard.DashboardTypeEnum;
 
   editMode = false;
   itemData = {} as any;
@@ -47,14 +49,11 @@ export class DraggableItemComponent {
     this.positionChanged.emit();
   }
 
-  onOpenButtonClick(e: any, deviceActionType?: DeviceActions) {
-    this.openClicked.emit(deviceActionType);
-  }
   onRemoveButtonClick(e) {
     this.removeClicked.emit();
   }
 
-  setConfig(container: HTMLElement, itemData: AreaDevice) {
+  setConfig(container: HTMLElement, itemData: Area | AreaDevice) {
     this.container = container;
     this.itemData = itemData;
     this.style['background-image'] = `url(assets/icons/${itemData.mapInfo.icon})`;
@@ -78,19 +77,16 @@ export class DraggableItemComponent {
     this.renderDataRequest.emit();
   }
 
-  showNameLabel(){
+  showNameLabel() {
     this.showName = true;
   }
 
-  hideNameLabel(){
+  hideNameLabel() {
     this.showName = false;
   }
 
-  redirectTo(device: any, deviceAction: DeviceActions) {
-    console.log("Redirect to", deviceAction);
-    console.log("Device", device);
-    this.onOpenButtonClick(device, deviceAction);
-    return;
+  redirectByDataSource(mapItem: MapItem): void {
+    this.openClicked.emit(mapItem);
   }
 
   setTitleAttribute(itemData: any, editMode: boolean, action: string): string {
@@ -100,7 +96,7 @@ export class DraggableItemComponent {
     switch (action) {
       case 'move':
 
-        if(!editMode){
+        if (!editMode) {
           if (itemData.device) return `Open ${deviceName} menu`;
           return deviceName;
 
@@ -113,7 +109,7 @@ export class DraggableItemComponent {
 
       case 'remove':
 
-        if(!editMode){
+        if (!editMode) {
 
           return deviceName;
 

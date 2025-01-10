@@ -1,17 +1,69 @@
 <div class="map-device-info-container">
-  <h2>{{ deviceInfo.device?.deviceName || deviceInfo.name || 'MISSING NAME' }}</h2>
-  <ng-container *ngIf="!!deviceInfo.device">
-    <button mat-button (click)="redirectByDataSource(deviceActions.DASHBOARD, deviceDataSource.Realtime)" i18n="@@HYT_go_realtime_device_dashboard">
+  <h2>
+    {{
+      (isAreaDevice(deviceInfo)
+        ? deviceInfo.device.deviceName
+        : deviceInfo.name) || "MISSING NAME"
+    }}
+  </h2>
+
+  <ng-container *ngIf="isAreaDevice(deviceInfo)">
+    <button
+      mat-button
+      (click)="
+        redirectByMapItem({
+          action: deviceActions.DASHBOARD,
+          item: deviceInfo.device,
+          dataSource: dataSource.REALTIME
+        })
+      "
+      i18n="@@HYT_go_realtime_device_dashboard"
+    >
       Go To Real-Time Device Dashboard
     </button>
-    <button mat-button (click)="redirectByDataSource(deviceActions.DASHBOARD, deviceDataSource.Offline)" i18n="@@HYT_go_offline_device_dashboard">
+    <button
+      mat-button
+      (click)="
+        redirectByMapItem({
+          action: deviceActions.DASHBOARD,
+          item: deviceInfo.device,
+          dataSource: dataSource.OFFLINE
+        })
+      "
+      i18n="@@HYT_go_offline_device_dashboard"
+    >
       Go To Offline Device Dashboard
     </button>
-    <button mat-button [disabled]="true" (click)="redirectTo(deviceActions.ALARMMANAGER)" i18n="@@HYT_alarm_managing">
+    <button
+      mat-button
+      [disabled]="true"
+      (click)="
+        redirectByMapItem({
+          action: deviceActions.ALARMMANAGER,
+          item: deviceInfo,
+          dataSource: dataSource.REALTIME
+        })
+      "
+      i18n="@@HYT_alarm_managing"
+    >
       Alarm Managing
     </button>
   </ng-container>
-  <button *ngIf="!deviceInfo.device" mat-button (click)="redirectTo()" i18n="@@HYT_go_sub_area">
-    Go To Sub Area
-  </button>
+
+  <ng-container *ngIf="isArea(deviceInfo)">
+    <button
+      mat-button
+      (click)="
+        redirectByMapItem({
+          action: deviceActions.DASHBOARD,
+          item: deviceInfo
+        })
+      "
+      i18n="@@HYT_go_sub_area"
+    >
+      Go To Sub Area
+    </button>
+  </ng-container>
+
+  {{deviceInfo|json}}
 </div>

@@ -1,66 +1,110 @@
 <div
-    [matMenuTriggerFor]="!!itemData.device && !editMode ? menu : null"
-    class="draggable-item"
-    [ngClass]="{ 'menu-enabled': !!itemData.device && !editMode }"
-    [title]="setTitleAttribute(itemData, editMode, 'move')"
-    [ngStyle]="style"
-    cdkDrag
-    [cdkDragDisabled]="!editMode"
-    cdkDragBoundary=".map-container"
-    [cdkDragData]="itemData"
-    [cdkDragFreeDragPosition]="position"
-    (cdkDragMoved)="onDragMoved($event)"
-    (cdkDragEnded)="onDragEnded($event)"
-    (cdkDragReleased)="onDragReleased($event)"
-    (mouseover)="showNameLabel()"
-    (mouseout)="hideNameLabel()"
+  [matMenuTriggerFor]="!!itemData.device && !editMode ? menu : null"
+  class="draggable-item"
+  [ngClass]="{ 'menu-enabled': !!itemData.device && !editMode }"
+  [title]="setTitleAttribute(itemData, editMode, 'move')"
+  [ngStyle]="style"
+  cdkDrag
+  [cdkDragDisabled]="!editMode"
+  cdkDragBoundary=".map-container"
+  [cdkDragData]="itemData"
+  [cdkDragFreeDragPosition]="position"
+  (cdkDragMoved)="onDragMoved($event)"
+  (cdkDragEnded)="onDragEnded($event)"
+  (cdkDragReleased)="onDragReleased($event)"
+  (mouseover)="showNameLabel()"
+  (mouseout)="hideNameLabel()"
 >
-
-    <mat-menu #menu="matMenu">
-        <h3>Device menu</h3>
-        <button mat-menu-item class="menu-item-flex" (click)="redirectTo(itemData, deviceActions.DASHBOARD)">
-            <span i18n="@@HYT_go_to_device_dashboard">Go to Device Dashboard</span>
-            <span class="mat-icon hyt-icon icon-hyt_device"></span>
-        </button>
-        <button mat-menu-item class="menu-item-flex" [disabled]="true" (click)="redirectTo(itemData, deviceActions.ALARMMANAGER)">
-            <span i18n="@@HYT_go_to_alarm_manager">Go to Alarm Manager</span>
-            <span class="mat-icon hyt-icon icon-hyt_warnC"></span>
-        </button>
-    </mat-menu>
-
-
-<!-- i18n-title="@@HYT_area_draggable_title" -->
-
+  <mat-menu #menu="matMenu">
+    <h3>Device menu</h3>
     <button
-        class="remove-button"
-        [title]="setTitleAttribute(itemData, editMode, 'remove')"
-        i18n-title="@@HYT_area_draggable_remove"
-        (mousedown)="$event.stopPropagation()"
-        (click)="onRemoveButtonClick($event)"
-        [ngStyle]="{ display: editMode ? '' : 'none' }"
+      mat-menu-item
+      class="menu-item-flex"
+      (click)="
+        redirectByDataSource({
+          item: itemData,
+          action: deviceActions.DASHBOARD,
+          dataSource: dataSource.REALTIME
+        })
+      "
     >
-        X
+      <span i18n="@@HYT_go_to_device_dashboard">Go to Device Dashboard</span>
+      <span class="mat-icon hyt-icon icon-hyt_device"></span>
     </button>
-    <!--Remove {{itemData.device ? itemData.device.deviceName : itemData.name}}-->
-
-    <div
-        class="title" [ngClass]="{
-            'area-title': !itemData.device,
-            'menu-disabled': !!itemData.device && editMode,
-            'menu-enabled': !!itemData.device && !editMode
-        }"
-        title="Open {{itemData.device ? itemData.device.deviceName : itemData.name}}{{itemData.device && !editMode ? ' menu' : ''}}"
-        i18n-title="@@HYT_area_draggable_open"
-        (mousedown)="!!itemData.device && !editMode ? null : $event.stopPropagation()"
-        (click)="!!itemData.device && !editMode ? null : onOpenButtonClick($event)"
-        [ngStyle]="{ display: (showName || editMode || (!!itemData.device && !editMode)) ? '' : 'none' }"
+    <button
+      mat-menu-item
+      class="menu-item-flex"
+      (click)="
+        redirectByDataSource({
+          item: itemData,
+          action: deviceActions.DASHBOARD,
+          dataSource: dataSource.OFFLINE
+        })
+      "
     >
-        <div class="name">{{itemData.device ? itemData.device.deviceName : itemData.name}}</div>
-        <!-- BEGIN -- custom render data passed on component refresh event -->
-        <div class="stats" *ngIf="renderData.deviceCount">
-            (D: {{renderData.deviceCount}})
-        </div>
-        <!-- END -- custom render data passed on component refresh event -->
+      <span i18n="@@HYT_go_to_device_dashboard">Go to Device Dashboard</span>
+      <span class="mat-icon hyt-icon icon-hyt_device"></span>
+    </button>
+    <button
+      mat-menu-item
+      class="menu-item-flex"
+      [disabled]="true"
+      (click)="
+        redirectByDataSource({
+          item: itemData,
+          action: deviceActions.ALARMMANAGER
+        })
+      "
+    >
+      <span i18n="@@HYT_go_to_alarm_manager">Go to Alarm Manager</span>
+      <span class="mat-icon hyt-icon icon-hyt_warnC"></span>
+    </button>
+  </mat-menu>
+
+  <!-- i18n-title="@@HYT_area_draggable_title" -->
+
+  <button
+    class="remove-button"
+    [title]="setTitleAttribute(itemData, editMode, 'remove')"
+    i18n-title="@@HYT_area_draggable_remove"
+    (mousedown)="$event.stopPropagation()"
+    (click)="onRemoveButtonClick($event)"
+    [ngStyle]="{ display: editMode ? '' : 'none' }"
+  >
+    X
+  </button>
+  <!--Remove {{itemData.device ? itemData.device.deviceName : itemData.name}}-->
+
+  <div
+    class="title"
+    [ngClass]="{
+      'area-title': !itemData.device,
+      'menu-disabled': !!itemData.device && editMode,
+      'menu-enabled': !!itemData.device && !editMode
+    }"
+    title="Open {{
+      itemData.device ? itemData.device.deviceName : itemData.name
+    }}{{ itemData.device && !editMode ? ' menu' : '' }}"
+    i18n-title="@@HYT_area_draggable_open"
+    (mousedown)="
+      !!itemData.device && !editMode ? null : $event.stopPropagation()
+    "
+    [ngStyle]="{
+      display:
+        showName || editMode || (!!itemData.device && !editMode) ? '' : 'none'
+    }"
+  >
+    <div class="name">
+      {{ itemData.device ? itemData.device.deviceName : itemData.name }}
     </div>
-    <span class="status-circle status-circle-idle" [ngStyle]="{ display: editMode ? 'none' : '' }"></span>
+    <!-- BEGIN -- custom render data passed on component refresh event -->
+    <div class="stats" *ngIf="renderData.deviceCount">
+      (D: {{ renderData.deviceCount }})
+    </div>
+    <!-- END -- custom render data passed on component refresh event -->
+  </div>
+  <span
+    class="status-circle status-circle-idle"
+    [ngStyle]="{ display: editMode ? 'none' : '' }"
+  ></span>
 </div>

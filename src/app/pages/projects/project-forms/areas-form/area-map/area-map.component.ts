@@ -31,10 +31,10 @@ import {
 } from '@angular/core';
 import { DraggableItemComponent } from '../draggable-item/draggable-item.component';
 import { MapDirective } from '../map.directive';
-import {AreaDevice, Area, Logger, LoggerService} from 'core';
-import {Subject} from 'rxjs';
-import {takeUntil} from 'rxjs/operators';
-import { DeviceActions } from 'components';
+import { AreaDevice, Area, Logger, LoggerService } from 'core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { MapItem } from 'components';
 
 @Component({
   selector: 'hyt-area-map',
@@ -47,12 +47,12 @@ export class AreaMapComponent implements OnDestroy {
   /**
    * Listener on map area
    */
-  @ViewChild(MapDirective, {static: true})
+  @ViewChild(MapDirective, { static: true })
   mapContainer: MapDirective;
   /**
    * Listener on Container map area
    */
-  @ViewChild('mapBoundary', {static: true})
+  @ViewChild('mapBoundary', { static: true })
   mapBoundary: ElementRef;
   /**
    * Measurements of the map area
@@ -67,7 +67,7 @@ export class AreaMapComponent implements OnDestroy {
    * Output event group
    */
   @Output()
-  itemOpen = new EventEmitter<any>();
+  itemOpen = new EventEmitter<MapItem>();
   itemRemove = new EventEmitter<any>();
   itemUpdate = new EventEmitter<any>();
   renderDataRequest = new EventEmitter<DraggableItemComponent>();
@@ -187,27 +187,28 @@ export class AreaMapComponent implements OnDestroy {
     // handle click on component label (open button)
     component.instance.openClicked
       .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe((deviceAction: DeviceActions) => {
-        this.openItem(component, deviceAction);
-    });
+      .subscribe((mapItem) => {
+        this.openItem(mapItem);
+        // COMPONENT???
+      });
     // handle component removal
     component.instance.removeClicked
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(() => {
-      this.removeItem(component);
-    });
+        this.removeItem(component);
+      });
     // handle position change
     component.instance.positionChanged
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(() => {
-      this.updateItem(component);
-    });
+        this.updateItem(component);
+      });
     // handle render data request to render custom data
     component.instance.renderDataRequest
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(() => {
-      this.renderDataRequest.emit(component.instance);
-    });
+        this.renderDataRequest.emit(component.instance);
+      });
     this.mapComponents.push(component);
     return component;
   }
@@ -217,9 +218,12 @@ export class AreaMapComponent implements OnDestroy {
    * @param component
    * @param disableEvent
    */
-  openItem(component: ComponentRef<DraggableItemComponent>, deviceAction?: DeviceActions) {
-    if (deviceAction) this.itemOpen.emit({item: component.instance.itemData, deviceAction});
-    else this.itemOpen.emit(component.instance.itemData);
+  // openItem(component: ComponentRef<DraggableItemComponent>, deviceAction?: DeviceActions) {
+  //   if (deviceAction) this.itemOpen.emit({item: component.instance.itemData, deviceAction});
+  //   else this.itemOpen.emit(component.instance.itemData);
+  // }
+  openItem(mapItem: MapItem) {
+    this.itemOpen.emit(mapItem);
   }
 
   /**

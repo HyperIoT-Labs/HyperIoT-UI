@@ -1,4 +1,4 @@
 export enum DeviceActions {
-  ALARMMANAGER,
-  DASHBOARD,
+  ALARMMANAGER = 'alarm-manager',
+  DASHBOARD = 'dashboard',
 }

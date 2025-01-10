@@ -1857,6 +1857,12 @@
       <trans-unit id="HYT_device_dashboard" datatype="html">
         <source>Device Dashbaord</source>
       </trans-unit>
+      <trans-unit id="HYT_go_realtime_device_dashboard" datatype="html">
+        <source>Go To Real-Time Device Dashboard</source>
+      </trans-unit>
+      <trans-unit id="HYT_go_offline_device_dashboard" datatype="html">
+        <source>Go To Offline Device Dashboard</source>
+      </trans-unit>
       <trans-unit id="HYT_alarm_managing" datatype="html">
         <source>Alarm Managing</source>
       </trans-unit>

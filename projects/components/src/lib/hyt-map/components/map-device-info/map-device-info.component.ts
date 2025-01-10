@@ -1,32 +1,33 @@
-import { Component, EventEmitter, OnInit } from '@angular/core';
+import { Component, EventEmitter } from '@angular/core';
+import { Area, AreaDevice, Dashboard } from 'core';
+import { MapItem } from '../../models/map-item';
 import { DeviceActions } from '../../models/device-actions';
-import { DeviceDataSource } from '../../models/device-data-source';
 
 @Component({
   selector: 'hyt-map-device-info',
   templateUrl: './map-device-info.component.html',
   styleUrls: ['./map-device-info.component.scss']
 })
-export class MapDeviceInfoComponent implements OnInit {
+export class MapDeviceInfoComponent {
 
-  deviceInfo: any; //AreaDevice; //| Area;
+  deviceInfo: Area | AreaDevice;
 
-  openClicked = new EventEmitter<any>();
+  readonly deviceActions = DeviceActions;
+  readonly dataSource = Dashboard.DashboardTypeEnum;
 
-  deviceActions = DeviceActions;
-  deviceDataSource = DeviceDataSource;
+  readonly openClicked = new EventEmitter<MapItem>();
 
-  constructor() { }
-
-  ngOnInit(): void {
+  redirectByMapItem(mapItem: MapItem) {
+    this.openClicked.emit(mapItem);
   }
 
-  redirectTo(deviceAction?: DeviceActions) {
-    this.openClicked.emit(deviceAction);
+  isArea(obj: Area | AreaDevice): obj is Area {
+    return (obj as Area).name !== undefined;
   }
 
-  redirectByDataSource(action: DeviceActions, dataSource: DeviceDataSource) {
-    this.openClicked.emit({ action, dataSource });
+  isAreaDevice(obj: Area | AreaDevice): obj is AreaDevice {
+    const {area, device} = obj as AreaDevice;
+    return [area, device].some((attr) => attr !== undefined);
   }
 
 }
