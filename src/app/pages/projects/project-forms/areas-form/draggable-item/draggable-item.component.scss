@@ -2,6 +2,8 @@
   position: absolute;
 }
 
+$hyt-badge-color: var(--alarm-badge-color);
+
 .draggable-item {
   display: inline-flex;
   position: relative;
@@ -27,6 +29,10 @@
     border-radius: 12px;
     width: 24px;
     height: 24px;
+  }
+
+  .mat-badge-content {
+    background-color: $hyt-badge-color;
   }
 
   .title {

@@ -66,6 +66,7 @@ export class ContainerAreaMapComponent implements OnInit, OnChanges, OnDestroy {
    * List of the Area's devices
    */
   areaDevices: AreaDevice[] = [];
+  areaDevicesDeep: AreaDevice[] = [];
   /**
    * Array containing project area objects
    */
@@ -244,6 +245,16 @@ export class ContainerAreaMapComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
+  private getAreaDeepDevicesList(area) {
+    let devices = this.areaDevicesDeep.filter(areaDevice => areaDevice.area.id === area.id).map(areaDevice => areaDevice.device);
+    if (area.innerArea) {
+      for (let i = 0; i < area.innerArea.length; i++) {
+        devices = devices.concat(this.getAreaDeepDevicesList(area.innerArea[i]));
+      }
+    }
+    return devices;
+  }
+
   /**
    * Load the area with its related elements
    * @param area
@@ -263,15 +274,19 @@ export class ContainerAreaMapComponent implements OnInit, OnChanges, OnDestroy {
       .subscribe(areaTree => {
         this.logger.debug('loadArea find inner area', areaTree);
         this.areaList = areaTree.innerArea;
-        this.areaService.getAreaDeviceList(this.areaId)
+        this.areaService.getAreaDeviceDeepList(this.areaId)
           .pipe(takeUntil(this.ngUnsubscribe))
           .subscribe(
           {
             next: (areaDevices: AreaDevice[]) => {
               if(area.areaViewType === 'IMAGE' || area.areaViewType === 'MAP'){
-                this.logger.debug('Found the devices present in this area', areaDevices);
-                this.areaDevices = areaDevices;
-                this.mapComponent.setAreaItems(areaDevices.concat(this.areaList.filter(a => a.mapInfo != null)));
+                this.logger.debug('Found the devices present in this area and sub-areas', areaDevices);
+                this.areaDevicesDeep = areaDevices;
+                this.areaDevices = areaDevices = areaDevices.filter(x => x.area.id === this.areaId);
+                const areaList = this.areaList.filter(a => a.mapInfo != null) as any;
+                areaList.forEach(x => x.deepDevices = this.getAreaDeepDevicesList(x));
+                const areaItems: (AreaDevice | Area)[] = areaDevices.concat(areaList);
+                this.mapComponent.setAreaItems(areaItems);
                 this.mapComponent.refresh();
                 if (area.areaViewType === 'IMAGE') {
                   this.loadAreaImage(areaTree);
