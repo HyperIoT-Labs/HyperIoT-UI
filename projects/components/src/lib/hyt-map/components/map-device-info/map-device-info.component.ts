@@ -1,6 +1,6 @@
 import { Component, EventEmitter } from '@angular/core';
 import { Area, AreaDevice, Dashboard } from 'core';
-import { MapItem } from '../../models/map-item';
+import { MapItemAction } from '../../models/map-item-action';
 import { DeviceActions } from '../../models/device-actions';
 
 @Component({
@@ -15,10 +15,10 @@ export class MapDeviceInfoComponent {
   readonly deviceActions = DeviceActions;
   readonly dataSource = Dashboard.DashboardTypeEnum;
 
-  readonly openClicked = new EventEmitter<MapItem>();
+  readonly openClicked = new EventEmitter<MapItemAction>();
 
-  redirectByMapItem(mapItem: MapItem) {
-    this.openClicked.emit(mapItem);
+  redirectByMapItemAction(mapItemAction: MapItemAction) {
+    this.openClicked.emit(mapItemAction);
   }
 
   isArea(obj: Area | AreaDevice): obj is Area {

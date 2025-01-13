@@ -465,11 +465,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
       this.updateRecordingInterval = setInterval(() => {
         this.updateToplogyStatus();
       }, 60000);
-      if (this.showAreas) {
-        this.getRealTimeDashboard();
-      } else {
-        this.getRealTimeDashboard();
-      }
+      this.getRealTimeDashboard();
     }
   }
 

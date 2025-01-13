@@ -34,7 +34,7 @@ import { MapDirective } from '../map.directive';
 import { AreaDevice, Area, Logger, LoggerService } from 'core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { MapItem } from 'components';
+import { MapItemAction } from 'components';
 
 @Component({
   selector: 'hyt-area-map',
@@ -67,7 +67,7 @@ export class AreaMapComponent implements OnDestroy {
    * Output event group
    */
   @Output()
-  itemOpen = new EventEmitter<MapItem>();
+  itemOpen = new EventEmitter<MapItemAction>();
   itemRemove = new EventEmitter<any>();
   itemUpdate = new EventEmitter<any>();
   renderDataRequest = new EventEmitter<DraggableItemComponent>();
@@ -189,7 +189,6 @@ export class AreaMapComponent implements OnDestroy {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((mapItem) => {
         this.openItem(mapItem);
-        // COMPONENT???
       });
     // handle component removal
     component.instance.removeClicked
@@ -218,12 +217,8 @@ export class AreaMapComponent implements OnDestroy {
    * @param component
    * @param disableEvent
    */
-  // openItem(component: ComponentRef<DraggableItemComponent>, deviceAction?: DeviceActions) {
-  //   if (deviceAction) this.itemOpen.emit({item: component.instance.itemData, deviceAction});
-  //   else this.itemOpen.emit(component.instance.itemData);
-  // }
-  openItem(mapItem: MapItem) {
-    this.itemOpen.emit(mapItem);
+  openItem(mapItemAction: MapItemAction) {
+    this.itemOpen.emit(mapItemAction);
   }
 
   /**

@@ -6,7 +6,7 @@ import { MapDefaultConfiguration } from '../../map-configuration';
 import { MapDeviceEditComponent } from '../map-device-edit/map-device-edit.component';
 import { MapDeviceInfoComponent } from '../map-device-info/map-device-info.component';
 import domtoimage from 'dom-to-image';
-import { MapItem } from '../../models/map-item';
+import { MapItemAction } from '../../models/map-item-action';
 
 @Component({
   selector: 'hyt-leaflet-map',
@@ -25,7 +25,7 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
 
   private _mapMoveCB: (areaConfiguration: string) => void;
 
-  itemOpen = new EventEmitter<MapItem>();
+  itemOpen = new EventEmitter<MapItemAction>();
   itemRemove = new EventEmitter<any>();
   itemUpdate = new EventEmitter<any>();
 
@@ -257,8 +257,8 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
     } else {
       const deviceEditComponent = this.resolver.resolveComponentFactory(MapDeviceInfoComponent).create(this.injector);
       deviceEditComponent.instance.deviceInfo = areaItem;
-      deviceEditComponent.instance.openClicked.subscribe((action) => {
-          this.itemOpen.emit(action);
+      deviceEditComponent.instance.openClicked.subscribe((mapItem) => {
+          this.itemOpen.emit(mapItem);
       });
       deviceEditComponent.changeDetectorRef.detectChanges();
       marker.bindPopup(deviceEditComponent.location.nativeElement);

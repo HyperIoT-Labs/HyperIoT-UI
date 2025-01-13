@@ -2,7 +2,7 @@ import { Component, EventEmitter, HostListener, ViewEncapsulation } from '@angul
 import { CdkDrag } from '@angular/cdk/drag-drop';
 import { Area, AreaDevice, Dashboard } from 'core';
 import { DeviceActions } from 'projects/components/src/lib/hyt-map/models/device-actions';
-import { MapItem } from 'components';
+import { MapItemAction } from 'components';
 
 @Component({
   selector: 'hyt-draggable-item',
@@ -11,7 +11,7 @@ import { MapItem } from 'components';
   encapsulation: ViewEncapsulation.None
 })
 export class DraggableItemComponent {
-  openClicked = new EventEmitter<MapItem>();
+  openClicked = new EventEmitter<MapItemAction>();
   removeClicked = new EventEmitter<any>();
   positionChanged = new EventEmitter<any>();
   renderDataRequest = new EventEmitter<any>();
@@ -85,8 +85,8 @@ export class DraggableItemComponent {
     this.showName = false;
   }
 
-  redirectByDataSource(mapItem: MapItem): void {
-    this.openClicked.emit(mapItem);
+  redirectByMapItemAction(mapItemAction: MapItemAction): void {
+    this.openClicked.emit(mapItemAction);
   }
 
   setTitleAttribute(itemData: any, editMode: boolean, action: string): string {

@@ -11,8 +11,8 @@
     <button
       mat-button
       (click)="
-        redirectByMapItem({
-          action: deviceActions.DASHBOARD,
+        redirectByMapItemAction({
+          action: deviceActions.DASHBOARDS,
           item: deviceInfo.device,
           dataSource: dataSource.REALTIME
         })
@@ -24,8 +24,8 @@
     <button
       mat-button
       (click)="
-        redirectByMapItem({
-          action: deviceActions.DASHBOARD,
+        redirectByMapItemAction({
+          action: deviceActions.DASHBOARDS,
           item: deviceInfo.device,
           dataSource: dataSource.OFFLINE
         })
@@ -38,10 +38,9 @@
       mat-button
       [disabled]="true"
       (click)="
-        redirectByMapItem({
-          action: deviceActions.ALARMMANAGER,
-          item: deviceInfo,
-          dataSource: dataSource.REALTIME
+        redirectByMapItemAction({
+          action: deviceActions.ALARM_MANAGER,
+          item: deviceInfo
         })
       "
       i18n="@@HYT_alarm_managing"
@@ -54,8 +53,8 @@
     <button
       mat-button
       (click)="
-        redirectByMapItem({
-          action: deviceActions.DASHBOARD,
+        redirectByMapItemAction({
+          action: deviceActions.DASHBOARDS,
           item: deviceInfo
         })
       "
@@ -65,5 +64,4 @@
     </button>
   </ng-container>
 
-  {{deviceInfo|json}}
 </div>

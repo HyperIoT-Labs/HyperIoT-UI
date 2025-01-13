@@ -4,7 +4,7 @@ import { Area, AreaDevice, AreasService, Logger, LoggerService } from 'core';
 import { PageStatus } from '../../../models/pageStatus';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { HytTreeViewProjectComponent, MapItem } from 'components';
+import { HytTreeViewProjectComponent, MapItemAction } from 'components';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { MapTypeKey } from "../../../../../projects/components/src/lib/hyt-map/models/map-type-key";
@@ -264,10 +264,7 @@ export class ContainerAreaMapComponent implements OnInit, OnDestroy {
                 if (area.areaViewType === 'IMAGE' || area.areaViewType === 'MAP') {
                   this.logger.debug('Found the devices present in this area', areaDevices);
                   this.areaDevices = areaDevices;
-                  //! TODO check type for setAreaItems
-                  // this.mapComponent.setAreaItems(areaDevices.concat(this.areaList.filter(a => a.mapInfo != null)));
-
-                  this.mapComponent.setAreaItems([...areaDevices, ...this.areaList.filter(({ mapInfo }) => mapInfo)]);
+                  this.mapComponent.setAreaItems(areaDevices.concat(this.areaList.filter(a => a.mapInfo != null)));
                   this.mapComponent.refresh();
                   if (area.areaViewType === 'IMAGE') {
                     this.loadAreaImage(areaTree);
@@ -387,22 +384,33 @@ export class ContainerAreaMapComponent implements OnInit, OnDestroy {
 
   /**
    * Management of the click on the elements present in the area map
-   * @param mapItem
+   * @param mapItemAction
    */
-  public onMapItemClicked(mapItem: MapItem) {
-    this.logger.debug('onMapItemClicked start', mapItem);
+  public onMapItemClicked(mapItemAction: MapItemAction) {
+    this.logger.debug('onMapItemClicked start', mapItemAction);
 
-    const { action, item, dataSource } = mapItem;
+    const { action, item, dataSource } = mapItemAction;
+    if ('project' in item){
+      this.logger.debug(`navigation to ${action}`, mapItemAction);
 
-    this.logger.debug(`navigation to ${action}`, mapItem);
-    if ('device' in item) {
-      this.router.navigate(['hdevice', this.projectId, item.device.id, action, dataSource]);
+      const deviceId = item.id;
+      if (dataSource) {
+        this.router.navigate(['hdevice', this.projectId, deviceId, action, dataSource]);
+      } else {
+        this.router.navigate(['hdevice', this.projectId, deviceId, action]);
+      }
+    } else if ('device' in item) {
+      this.logger.debug(`navigation to ${action}`, mapItemAction);
+
+      const deviceId = item.device.id;
+      if (dataSource) {
+        this.router.navigate(['hdevice', this.projectId, deviceId, action, dataSource]);
+      } else {
+        this.router.navigate(['hdevice', this.projectId, deviceId, action]);
+      }
     } else if ('areaViewType' in item) {
       this.router.navigate(['areas', this.projectId, item.id])
-        .then(() => {
-          //TODO: Change method to navigate
-          this.loadArea(item);
-        })
+        .then(() => this.loadArea(item));
     }
   }
 

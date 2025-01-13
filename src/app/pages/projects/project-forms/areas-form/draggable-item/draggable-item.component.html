@@ -21,28 +21,28 @@
       mat-menu-item
       class="menu-item-flex"
       (click)="
-        redirectByDataSource({
+        redirectByMapItemAction({
           item: itemData,
-          action: deviceActions.DASHBOARD,
+          action: deviceActions.DASHBOARDS,
           dataSource: dataSource.REALTIME
         })
       "
     >
-      <span i18n="@@HYT_go_to_device_dashboard">Go to Device Dashboard</span>
+      <span i18n="@@HYT_go_to_device_dashboard">Go To Realtime Device Dashboard</span>
       <span class="mat-icon hyt-icon icon-hyt_device"></span>
     </button>
     <button
       mat-menu-item
       class="menu-item-flex"
       (click)="
-        redirectByDataSource({
+        redirectByMapItemAction({
           item: itemData,
-          action: deviceActions.DASHBOARD,
+          action: deviceActions.DASHBOARDS,
           dataSource: dataSource.OFFLINE
         })
       "
     >
-      <span i18n="@@HYT_go_to_device_dashboard">Go to Device Dashboard</span>
+      <span i18n="@@HYT_go_to_device_dashboard">Go To Offline Device Dashboard</span>
       <span class="mat-icon hyt-icon icon-hyt_device"></span>
     </button>
     <button
@@ -50,9 +50,9 @@
       class="menu-item-flex"
       [disabled]="true"
       (click)="
-        redirectByDataSource({
+        redirectByMapItemAction({
           item: itemData,
-          action: deviceActions.ALARMMANAGER
+          action: deviceActions.ALARM_MANAGER
         })
       "
     >
