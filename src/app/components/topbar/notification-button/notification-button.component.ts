@@ -45,7 +45,7 @@ export class NotificationButtonComponent {
       this.notificationPanel = this.overlay.open(NotificationDialogComponent, {
         attachTarget: event.target,
         hideBackdrop: true,
-        maxHeight: '480px',
+        maxHeight: '520px',
         width: "350px",
       }).dialogRef
       this.notificationPanel.afterClosed().subscribe(()=>{
