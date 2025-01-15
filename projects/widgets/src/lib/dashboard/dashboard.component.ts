@@ -167,6 +167,8 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private logger: Logger;
 
+  readonly dataSource: Dashboard.DashboardTypeEnum | undefined;
+
   constructor(
     private dashboardConfigService: DashboardConfigService,
     private offlineDataService: OfflineDataService,
@@ -183,6 +185,8 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     this.offlineWidgetStatus = PageStatus.Standard;
     this.logger = new Logger(this.loggerService);
     this.logger.registerClass(DashboardComponent.name);
+
+    this.dataSource = this.router.getCurrentNavigation().extras.state?.dataSource;
   }
 
   ngOnInit() {
@@ -247,7 +251,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     this.applyPreset();
 
-    switch (this.activatedRoute.snapshot.params.datasource) {
+    switch (this.dataSource) {
       case Dashboard.DashboardTypeEnum.REALTIME:
         this.signalIsOn = true;
         this.pageStatus = PageStatus.Loading;
@@ -261,6 +265,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         break;
     }
   }
+
   ngAfterViewInit(): void {
     if (localStorage.getItem('offline')) this.changeSignalState(null)
     this.cd.detectChanges();

@@ -390,12 +390,12 @@ export class ContainerAreaMapComponent implements OnInit, OnDestroy {
     this.logger.debug('onMapItemClicked start', mapItemAction);
 
     const { action, item, dataSource } = mapItemAction;
-    if ('project' in item){
+    if ('project' in item) {
       this.logger.debug(`navigation to ${action}`, mapItemAction);
 
       const deviceId = item.id;
       if (dataSource) {
-        this.router.navigate(['hdevice', this.projectId, deviceId, action, dataSource]);
+        this.router.navigate(['hdevice', this.projectId, deviceId, action], { state: { dataSource } });
       } else {
         this.router.navigate(['hdevice', this.projectId, deviceId, action]);
       }
@@ -404,7 +404,7 @@ export class ContainerAreaMapComponent implements OnInit, OnDestroy {
 
       const deviceId = item.device.id;
       if (dataSource) {
-        this.router.navigate(['hdevice', this.projectId, deviceId, action, dataSource]);
+        this.router.navigate(['hdevice', this.projectId, deviceId, action], { state: { dataSource } });
       } else {
         this.router.navigate(['hdevice', this.projectId, deviceId, action]);
       }
