@@ -19,7 +19,8 @@ import {
   HProject,
   Logger,
   LoggerService,
-  OfflineDataService
+  OfflineDataService,
+  UserSiteSettingActions
 } from 'core';
 import { debounceTime, Subject, Subscription, takeUntil } from 'rxjs';
 import { AddWidgetDialogComponent } from './add-widget-dialog/add-widget-dialog.component';
@@ -28,8 +29,8 @@ import { DashboardViewComponent } from './dashboard-view/dashboard-view.componen
 import { DashboardPreset, DashboardPresetModel } from './model/dashboard.model';
 import { DashboardEventService } from './services/dashboard-event.service';
 import { DashboardEvent } from './services/dashboard-event.model';
-import extractDataFromUrl = DashboardEvent.ExtractDataFromUrl;
 import ExtractDataFromUrl = DashboardEvent.ExtractDataFromUrl;
+import { Store } from '@ngrx/store';
 
 enum PageStatus {
   Loading = 0,
@@ -167,8 +168,6 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private logger: Logger;
 
-  readonly dataSource: Dashboard.DashboardTypeEnum | undefined;
-
   constructor(
     private dashboardConfigService: DashboardConfigService,
     private offlineDataService: OfflineDataService,
@@ -180,13 +179,17 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private cd: ChangeDetectorRef,
     private loggerService: LoggerService,
-    private dashboardEvent: DashboardEventService
+    private dashboardEvent: DashboardEventService,
+    private store: Store
   ) {
     this.offlineWidgetStatus = PageStatus.Standard;
     this.logger = new Logger(this.loggerService);
     this.logger.registerClass(DashboardComponent.name);
 
-    this.dataSource = this.router.getCurrentNavigation().extras.state?.dataSource;
+    const dataSource = this.router.getCurrentNavigation().extras.state?.dataSource as Dashboard.DashboardTypeEnum;
+    if (dataSource) {
+      this.store.dispatch(UserSiteSettingActions.updatePartialSettings({ userSiteSetting: { lastDashboardDataSource: dataSource } }));
+    }
   }
 
   ngOnInit() {
@@ -251,19 +254,22 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     this.applyPreset();
 
-    switch (this.dataSource) {
-      case Dashboard.DashboardTypeEnum.REALTIME:
-        this.signalIsOn = true;
-        this.pageStatus = PageStatus.Loading;
-        this.getRealTimeDashboard();
-        break;
+    this.store.select(UserSiteSettingActions.updatePartialSettings)
+      .subscribe(({ userSiteSetting }) => {
+        switch (userSiteSetting.lastDashboardDataSource) {
+          case Dashboard.DashboardTypeEnum.REALTIME:
+            this.signalIsOn = true;
+            this.pageStatus = PageStatus.Loading;
+            this.getRealTimeDashboard();
+            break;
 
-      case Dashboard.DashboardTypeEnum.OFFLINE:
-        this.signalIsOn = false;
-        this.pageStatus = PageStatus.Loading;
-        this.getOfflineDashboard();
-        break;
-    }
+          case Dashboard.DashboardTypeEnum.OFFLINE:
+            this.signalIsOn = false;
+            this.pageStatus = PageStatus.Loading;
+            this.getOfflineDashboard();
+            break;
+        }
+      });
   }
 
   ngAfterViewInit(): void {

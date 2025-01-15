@@ -1,8 +1,9 @@
 import { createReducer, on } from "@ngrx/store";
 import { UserSiteSettingActions } from "./user-site-setting.actions";
+import { Dashboard } from "../../hyperiot-client/models/dashboard";
 
 export namespace UserSiteSettingStore {
-    
+
     export const key = 'userSiteSetting';
 
     const getUserKey = () => {
@@ -13,7 +14,7 @@ export namespace UserSiteSettingStore {
             return '';
         }
     }
-    
+
     const getUserSiteSettingLocalStorage = (): State | null => {
         try {
             return JSON.parse(localStorage.getItem(getUserKey())) as State;
@@ -21,7 +22,7 @@ export namespace UserSiteSettingStore {
             return null;
         }
     }
-    
+
     const setUserSiteSettingLocalStorage = (value: State) => {
         localStorage.setItem(getUserKey(), JSON.stringify(value));
     }
@@ -30,12 +31,14 @@ export namespace UserSiteSettingStore {
         notificationActive?: boolean;
         defaultDashboardProjectId?: number;
         confirmDeleteWidgetIdsDismissed?: number[];
+        lastDashboardDataSource?: Dashboard.DashboardTypeEnum;
     }
-    
+
     export const initialState: State = {
         notificationActive: true,
+        lastDashboardDataSource: Dashboard.DashboardTypeEnum.REALTIME
     };
-    
+
     const _reducer = createReducer(
         initialState,
         on(UserSiteSettingActions.load, () => {
@@ -94,7 +97,7 @@ export namespace UserSiteSettingStore {
             return newValue;
         }),
     );
-    
+
     export function reducer(state, action) {
         return _reducer(state, action);
     }
