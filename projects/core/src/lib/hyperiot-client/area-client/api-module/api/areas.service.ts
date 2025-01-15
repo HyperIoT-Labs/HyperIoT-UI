@@ -765,6 +765,60 @@ export class AreasService {
     }
 
     /**
+     * /hyperiot/areas/{id}/resetType/{type}
+     * Service for updating a area entity
+     * @param id Area entity which must be updated 
+     * @param type New view type 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public resetAreaType(id: number, type: string, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public resetAreaType(id: number, type: string, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public resetAreaType(id: number, type: string, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public resetAreaType(id: number, type: string, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
+
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling resetAreaType.');
+        }
+
+        if (type === null || type === undefined) {
+            throw new Error('Required parameter type was null or undefined when calling resetAreaType.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (jwt-auth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["AUTHORIZATION"]) {
+            headers = headers.set('AUTHORIZATION', this.configuration.apiKeys["AUTHORIZATION"]);
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+
+        return this.httpClient.put<any>(`${this.basePath}/${encodeURIComponent(String(id))}/resetType/${encodeURIComponent(String(type))}`,
+            null,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                context: context,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
      * /hyperiot/areas
      * Service for adding a new area entity
      * @param body Area entity which must be saved 

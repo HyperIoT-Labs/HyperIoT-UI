@@ -1,20 +1,19 @@
-import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { CdkDragEnd } from '@angular/cdk/drag-drop';
 import { Area, AreaDevice, AreasService, Logger, LoggerService } from 'core';
 import { PageStatus } from '../../../models/pageStatus';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { HytTreeViewProjectComponent, MapItemAction } from 'components';
+import { HytTreeViewProjectComponent, MapItemAction, MapTypeKey } from 'components';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { MapTypeKey } from "../../../../../projects/components/src/lib/hyt-map/models/map-type-key";
 
 @Component({
   selector: 'hyt-container-area-map',
   templateUrl: './container-area-map.component.html',
   styleUrls: ['./container-area-map.component.scss']
 })
-export class ContainerAreaMapComponent implements OnInit, OnDestroy {
+export class ContainerAreaMapComponent implements OnInit, OnChanges, OnDestroy {
   /**
    * Hook to track the map element
    */
@@ -125,6 +124,23 @@ export class ContainerAreaMapComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.findArea();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes?.areaId && !changes?.areaId?.firstChange) {
+      this.findArea();
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.ngUnsubscribe) {
+      this.ngUnsubscribe.next();
+      this.ngUnsubscribe.complete();
+    }
+  }
+
+  findArea() {
     this.areaService.findArea(this.areaId)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe({
@@ -137,14 +153,7 @@ export class ContainerAreaMapComponent implements OnInit, OnDestroy {
           this.pageStatus = PageStatus.Error
         }
       }
-      );
-  }
-
-  ngOnDestroy() {
-    if (this.ngUnsubscribe) {
-      this.ngUnsubscribe.next();
-      this.ngUnsubscribe.complete();
-    }
+    );
   }
 
   /**
@@ -230,10 +239,6 @@ export class ContainerAreaMapComponent implements OnInit, OnDestroy {
     this.logger.debug('onTreeNodeClick start', node);
     if (node.data.item.id !== this.areaId) {
       this.router.navigate(['areas', this.projectId, node.data.item.id])
-        .then(() => {
-          //TODO: Change method to navigate
-          this.loadArea(node.data.item);
-        })
     }
   }
 

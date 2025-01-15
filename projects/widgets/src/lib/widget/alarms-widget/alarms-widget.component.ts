@@ -1,8 +1,10 @@
 import { Component, Injector } from '@angular/core';
-import { Logger, LoggerService, HytAlarm, AlarmWrapperService, HpacketsService } from 'core';
+import { Logger, LoggerService, HytAlarm, HpacketsService, LiveAlarmSelectors } from 'core';
 import { BaseWidgetComponent } from '../../base/base-widget/base-widget.component';
 import { Option } from 'components';
 import { animate, group, query, style, transition, trigger } from '@angular/animations';
+import { Store } from '@ngrx/store';
+import { BehaviorSubject, combineLatest, map, Observable } from 'rxjs';
 
 @Component({
   selector: 'hyperiot-alarms-widget',
@@ -53,15 +55,36 @@ export class AlarmsWidgetComponent extends BaseWidgetComponent {
    * Selected severity to filter, linked to template with ngModel
    */
   filteringSev : string[] = [];
+
+  alarmListArray$: Observable<HytAlarm.LiveAlarm[]> = new Observable();
+  filteredList$: Observable<HytAlarm.LiveAlarm[]> = new Observable();
+  filterChanges$: BehaviorSubject<string[]> = new BehaviorSubject(this.filteringSev);
+
   constructor(
     injector: Injector, 
-    protected loggerService: LoggerService, 
-    private alarmWrapper: AlarmWrapperService,
+    protected loggerService: LoggerService,
     private hPacketsService: HpacketsService,
+    private store: Store
   ) {
     super(injector, loggerService);
     this.logger = new Logger(this.loggerService);
     this.logger.registerClass(AlarmsWidgetComponent.name);
+  }
+
+  ngOnInit(): void {
+    this.alarmListArray$ = this.store.select(LiveAlarmSelectors.selectLiveAlarmsByProjectId({ projectId: this.widget.projectId }));
+    this.filteredList$ = combineLatest([
+      this.store.select(LiveAlarmSelectors.selectLiveAlarmsByProjectId({ projectId: this.widget.projectId })),
+      this.filterChanges$
+    ]).pipe(
+      map(([value, filter]) => {
+        if (filter.length){
+          return value.filter((alarm)=> filter.includes(alarm.event.severity.toString()))
+        } else {
+          return value;
+        }
+      })
+    )
   }
   
   ngAfterViewInit() {
@@ -75,24 +98,10 @@ export class AlarmsWidgetComponent extends BaseWidgetComponent {
     this.isConfigured = true;
   }
 
-  get alarmListArray() : HytAlarm.LiveAlarm[] {
-    return this.alarmWrapper.alarmListArray.filter(
-      alarm => alarm.projectId === this.widget.projectId ||
-      (alarm.packetIds?.some(packetId => this.hPacketIdList.includes(packetId)))
-    );
+  updateFilters() {
+    this.filterChanges$.next(this.filteringSev);
   }
 
-  /**
-   * If the user is filtering return the alarmList map as array filter, 
-   * if not call the get alarmListArray
-   */
-  get filteredList() : HytAlarm.LiveAlarm[]{
-    if(this.filteringSev.length){
-      return this.alarmListArray.filter((alarm)=> this.filteringSev.includes(alarm.event.severity.toString()))
-    }else{
-      return this.alarmListArray;
-    }
-  }
   /**
    * Used for display all the severity that we are filtering as a list(ES: low, medium)
    */

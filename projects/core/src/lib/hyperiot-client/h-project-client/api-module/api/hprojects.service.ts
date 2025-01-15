@@ -664,7 +664,7 @@ export class HprojectsService {
     }
 
     /**
-     * /hyperiot/hprojects/{id}
+     * /hyperiot/hprojects/{id}/details
      * Service for finding hproject with deeper details
      * @param id id from which project object will retrieve
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -700,6 +700,48 @@ export class HprojectsService {
         ];
 
         return this.httpClient.get<any>(`${this.basePath}/${encodeURIComponent(String(id))}/details`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                context: context,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * /hyperiot/hprojects/details
+     * Service for finding all user projects with deeper details
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public findHProjectsDetails(observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public findHProjectsDetails(observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public findHProjectsDetails(observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public findHProjectsDetails(observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
+
+        let headers = this.defaultHeaders;
+
+        // authentication (jwt-auth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["AUTHORIZATION"]) {
+            headers = headers.set('AUTHORIZATION', this.configuration.apiKeys["AUTHORIZATION"]);
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.get<any>(`${this.basePath}/details`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,

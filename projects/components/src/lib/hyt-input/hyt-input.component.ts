@@ -21,7 +21,6 @@ import {
 import { ErrorStateMatcher } from "@angular/material/core";
 
 import { Logger, LoggerService } from "core";
-import "@angular/localize/init";
 
 /**
  * Custom provider for NG_VALUE_ACCESSOR

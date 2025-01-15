@@ -1,17 +1,12 @@
 import { Component, OnInit, ViewEncapsulation,ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { HusersService, HUser, HdevicesService, AreasService, HprojectsService } from 'core';
+import { HusersService, HUser, HdevicesService, AreasService, HprojectsService, BrandingService, BrandingActions, BrandingSelectors } from 'core';
 import { AuthenticationHttpErrorHandlerService } from '../../../services/errorHandler/authentication-http-error-handler.service';
 import { HYTError } from 'src/app/services/errorHandler/models/models';
 import { Router } from '@angular/router';
 import { HyperiotLogoMobilePath, HyperiotLogoPath } from 'src/app/constants';
-import { HttpClient } from '@angular/common/http';
 import { forkJoin, map, } from 'rxjs';
-import { BrandingService } from 'src/app/services/branding/branding.service';
 import { Store } from '@ngrx/store';
-import { BrandingActions, BrandingApiActions } from 'src/app/state/branding/branding.actions';
-import { Actions } from '@ngrx/effects';
-import { BrandingSelectors } from 'src/app/state/branding/branding.selectors';
 
 @Component({
   selector: 'hyt-profile',
@@ -384,13 +379,13 @@ export class ProfileComponent implements OnInit {
     this.store.select(BrandingSelectors.selectError).subscribe({
       next: (error) => {
         switch (error?.action) {
-          case BrandingApiActions.updateFailure.type:
+          case BrandingActions.updateFailure.type:
             this.logoErrorMessage = {
               showError: true,
               message: $localize`:@@HYT_saving_branding_theme_error:Saving branding theme error`
             };
             break;
-          case BrandingApiActions.resetFailure.type:
+          case BrandingActions.resetFailure.type:
             this.logoErrorMessage = {
               showError: true,
               message: $localize`:@@HYT_restoring_default_theme_error:Restoring default theme error`

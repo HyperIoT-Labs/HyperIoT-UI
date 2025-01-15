@@ -36,6 +36,7 @@
     "@angular/service-worker": "12.2.16",
     "@asymmetrik/ngx-leaflet": "8.1.0",
     "@ngrx/effects": "^12.5.1",
+    "@ngrx/entity": "^12.5.1",
     "@ngrx/store": "^12.5.1",
     "@ngrx/store-devtools": "^12.5.1",
     "@types/jasmine": "^4.3.0",

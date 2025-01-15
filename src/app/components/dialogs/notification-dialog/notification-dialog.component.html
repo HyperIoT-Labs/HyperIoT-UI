@@ -15,14 +15,14 @@
     </div>
     
     <div id="notification-scroll-container">
-        <div id="notification-list" [@containerAnim]="alarmListArray.length">
-            <div id="no-notification" *ngIf="alarmListArray.length == 0; else notificationList">
+        <div id="notification-list" [@containerAnim]="(alarmListArray$ | async).length">
+            <div id="no-notification" *ngIf="(alarmListArray$ | async).length == 0; else notificationList">
                 <hyt-no-data width="150" height="150"></hyt-no-data>
                 <h3 class="alarm-title" i18n="@@HYT_no_notifications">No notifications</h3>
             </div>
             <ng-template #notificationList>
                 <hyt-alarm 
-                    *ngFor="let alarm of alarmListArray" 
+                    *ngFor="let alarm of (alarmListArray$ | async)" 
                     [alarm]="alarm"
                     [notificationMode]="true"
                 >
@@ -32,14 +32,14 @@
     </div>
 
     <div id="notification-footer">
-        <span class="hyt-icon icon-hyt_notification" [class.off-notification]="!eventNotificationIsOn"></span>
+        <span class="hyt-icon icon-hyt_notification" [class.off-notification]="!(eventNotificationIsOn | async)"></span>
         <span i18n="@@HYT_notifications">NOTIFICATIONS</span>
         <div class="simulator-switch-container">
             <label class="simulator-switch">
                 <input 
                     type="checkbox"
                     (change)="changeEventNotificationState()"
-                    [checked]="eventNotificationIsOn"
+                    [checked]="eventNotificationIsOn | async"
                 >
                 <span class="slider round"></span>
             </label>

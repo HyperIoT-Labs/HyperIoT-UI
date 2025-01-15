@@ -16,7 +16,6 @@ import {
   FormGroupDirective,
   NgForm,
 } from "@angular/forms";
-import "@angular/localize/init";
 
 /**
  * Class used to represent a select option.
