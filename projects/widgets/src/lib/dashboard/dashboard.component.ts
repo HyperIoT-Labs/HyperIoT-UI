@@ -337,7 +337,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   updateToplogyStatus() {
     this.subTopologyStatus = this.dashboardConfigService.getRecordingStatus(this.idProjectSelected)
       .pipe(
-        delay(15000),
+        delay(0),
         takeUntil(this.ngUnsubscribe)
       )
       .subscribe(res => {

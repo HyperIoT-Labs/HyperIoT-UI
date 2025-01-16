@@ -96,7 +96,7 @@
                         </hyt-select> -->
 
                         <h3 *ngIf="showAreas" style="float:left; margin-top: 18px; color: blue">
-                            {{ areaPath && areaPath[areaPath.length - 1].name }}
+                            {{ areaPath && areaPath[areaPath.length - 1]?.name }}
                         </h3>
                         <!--
                         <div *ngIf="showAreas" class="current-path">
