@@ -1,12 +1,15 @@
-import { Component, OnInit, ViewEncapsulation,ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { HusersService, HUser, HdevicesService, AreasService, HprojectsService, BrandingService, BrandingActions, BrandingSelectors } from 'core';
+import { HusersService, HUser, HdevicesService, AreasService, HprojectsService, BrandingService, BrandingActions, BrandingSelectors, Dashboard, UserSiteSettingActions, UserSiteSettingSelectors } from 'core';
 import { AuthenticationHttpErrorHandlerService } from '../../../services/errorHandler/authentication-http-error-handler.service';
 import { HYTError } from 'src/app/services/errorHandler/models/models';
 import { Router } from '@angular/router';
 import { HyperiotLogoMobilePath, HyperiotLogoPath } from 'src/app/constants';
-import { forkJoin, map, } from 'rxjs';
+import { forkJoin, map, take, } from 'rxjs';
 import { Store } from '@ngrx/store';
+import { MatCheckboxChange } from '@angular/material/checkbox';
+
+const { OFFLINE, REALTIME } = Dashboard.DashboardTypeEnum;
 
 @Component({
   selector: 'hyt-profile',
@@ -30,9 +33,11 @@ export class ProfileComponent implements OnInit {
 
   personalInfoForm: FormGroup;
   changePasswordForm: FormGroup;
-  
+
   initialBrandingForm: FormGroup;
   brandingForm: FormGroup;
+
+  defaultDashboardSettings: FormGroup;
 
   generalError = 0;
 
@@ -61,9 +66,9 @@ export class ProfileComponent implements OnInit {
    */
   errMsg = $localize`:@@HYT_generic_error:Something went wrong`;
 
- /**
-  * This variable contains the string to display when the personal information update is successful.
-  */
+  /**
+   * This variable contains the string to display when the personal information update is successful.
+   */
   successMsg = $localize`:@@HYT_user_updated:Personal information updated correctly`;
 
   /**
@@ -155,11 +160,54 @@ export class ProfileComponent implements OnInit {
    */
   ngOnInit(): void {
     this.personalInfoForm = this.fb.group({});
+
     this.changePasswordForm = this.fb.group({});
+
     this.brandingForm = this.fb.group({
       primaryColor: [''],
       secondaryColor: [''],
     });
+
+    this.store.select(UserSiteSettingSelectors.selectUserSiteSetting)
+      .pipe(
+        take(1)
+      )
+      .subscribe(({
+        defaultProjectsDashboardDataSource,
+        defaultAreasDashboardDataSource,
+      }) => {
+        const fromDataSource = (value: Dashboard.DashboardTypeEnum) => value === REALTIME;
+
+        this.defaultDashboardSettings = this.fb.group({
+          defaultProjectsDashboardDataSource: fromDataSource(defaultProjectsDashboardDataSource),
+          defaultAreasDashboardDataSource: fromDataSource(defaultAreasDashboardDataSource)
+        })
+      });
+
+    const toDataSource = (value: boolean) => value ? REALTIME : OFFLINE;
+
+    this.defaultDashboardSettings.controls.defaultProjectsDashboardDataSource.valueChanges
+      .subscribe((defaultProjectsDashboardDataSource) => {
+        this.store.dispatch(
+          UserSiteSettingActions.updatePartialSettings({
+            userSiteSetting: {
+              defaultProjectsDashboardDataSource: toDataSource(defaultProjectsDashboardDataSource),
+            }
+          })
+        );
+      });
+
+    this.defaultDashboardSettings.controls.defaultAreasDashboardDataSource.valueChanges
+      .subscribe((defaultAreasDashboardDataSource) => {
+        this.store.dispatch(
+          UserSiteSettingActions.updatePartialSettings({
+            userSiteSetting: {
+              defaultAreasDashboardDataSource: toDataSource(defaultAreasDashboardDataSource),
+            }
+          })
+        );
+      });
+
     if (localStorage.getItem('user') !== null) {
       this.user = JSON.parse(localStorage.getItem('user'));
       this.userId = this.user.id;
@@ -283,7 +331,7 @@ export class ProfileComponent implements OnInit {
       this.logoPath = event.target.result;
       this.logoMobilePath = event.target.result;
     }
-    reader.readAsDataURL(file); 
+    reader.readAsDataURL(file);
   }
 
   resetLogo(logoFileInput) {
@@ -343,7 +391,7 @@ export class ProfileComponent implements OnInit {
     }
 
   }
- 
+
   loadGeneralData() {
     forkJoin({
       projects: this.hProjectService.findAllHProjectPaginated(1).pipe(map(res => res.numPages)),
@@ -356,7 +404,7 @@ export class ProfileComponent implements OnInit {
     });
 
     this.brandingService.logoPath$.subscribe({
-      next: ({standard, mobile}) => {
+      next: ({ standard, mobile }) => {
         this.initialLogoPath = standard;
         this.initialLogoMobilePath = mobile;
         this.logoPath = standard;

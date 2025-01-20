@@ -2436,6 +2436,18 @@
         <source>Theme customization</source>
         <target>Personalizzazione del tema</target>
       </trans-unit>
+      <trans-unit id="HYT_default_dashboard_settings" datatype="html">
+        <source>Default Dashboard Settings</source>
+        <target>Configurazioni di default delle Dashboard</target>
+      </trans-unit>
+      <trans-unit id="HYT_default_projects_dashboard_settings" datatype="html">
+        <source>Launch Real-Time Projects Dashboard</source>
+        <target>Avvia la Dashboard dei Progetti in Real-Time</target>
+      </trans-unit>
+      <trans-unit id="HYT_default_areas_dashboard_settings" datatype="html">
+        <source>Launch Real-Time Area Dashboard</source>
+        <target>Avvia la Dashboard delle Aree in Real-Time</target>
+      </trans-unit>
       <trans-unit id="HYT_upload_your_logo" datatype="html">
         <source>Upload your logo</source>
         <target>Carica il tuo logo</target>

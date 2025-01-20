@@ -20,7 +20,8 @@ import {
   Logger,
   LoggerService,
   OfflineDataService,
-  UserSiteSettingActions
+  UserSiteSettingActions,
+  UserSiteSettingSelectors
 } from 'core';
 import { debounceTime, Subject, Subscription, takeUntil } from 'rxjs';
 import { AddWidgetDialogComponent } from './add-widget-dialog/add-widget-dialog.component';
@@ -52,13 +53,15 @@ interface HytSelectOption extends HProject {
   entityModifyDate?: any;
 }
 
+const { REALTIME, OFFLINE } = Dashboard.DashboardTypeEnum;
+
 @Component({
   selector: 'hyperiot-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
+export class DashboardComponent implements OnInit, OnDestroy {
   @ViewChild(DashboardViewComponent)
   dashboardView: DashboardViewComponent;
 
@@ -168,6 +171,8 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private logger: Logger;
 
+  private dataSourceByNavigationState: Dashboard.DashboardTypeEnum | undefined = this.router.getCurrentNavigation().extras.state?.dataSource;
+
   constructor(
     private dashboardConfigService: DashboardConfigService,
     private offlineDataService: OfflineDataService,
@@ -185,15 +190,9 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     this.offlineWidgetStatus = PageStatus.Standard;
     this.logger = new Logger(this.loggerService);
     this.logger.registerClass(DashboardComponent.name);
-
-    const dataSource = this.router.getCurrentNavigation().extras.state?.dataSource as Dashboard.DashboardTypeEnum;
-    if (dataSource) {
-      this.store.dispatch(UserSiteSettingActions.updatePartialSettings({ userSiteSetting: { lastDashboardDataSource: dataSource } }));
-    }
   }
 
   ngOnInit() {
-
     this.showAreas = this.activatedRoute.snapshot.routeConfig.path.startsWith('areas/');
     this.showHDevice = this.activatedRoute.snapshot.routeConfig.path.startsWith('hdevice/');
 
@@ -210,6 +209,11 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     });
 
     if (this.showAreas) {
+      this.store.select(UserSiteSettingSelectors.selectDefaultAreasDashboardDataSource)
+        .subscribe((defaultDatasource) => {
+          this.loadDashboardByDatasource(defaultDatasource)
+        });
+
       this.idProjectSelected = +this.activatedRoute.snapshot.params.projectId;
       // load area realtime Dashboard
       if (!this.areaId) {
@@ -249,32 +253,21 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
           this.showDashboard();
         });
       }
+
+      if (this.dataSourceByNavigationState) {
+        this.loadDashboardByDatasource(this.dataSourceByNavigationState);
+      }
     } else {
+      // projects dashboards
       this.getProjectList();
+
+      this.store.select(UserSiteSettingSelectors.selectLastHdDashboardDataSource)
+        .subscribe((lastHdDashboardDataSource) => {
+          this.loadDashboardByDatasource(lastHdDashboardDataSource);
+        });
     }
+
     this.applyPreset();
-
-    this.store.select(UserSiteSettingActions.updatePartialSettings)
-      .subscribe(({ userSiteSetting }) => {
-        switch (userSiteSetting.lastDashboardDataSource) {
-          case Dashboard.DashboardTypeEnum.REALTIME:
-            this.signalIsOn = true;
-            this.pageStatus = PageStatus.Loading;
-            this.getRealTimeDashboard();
-            break;
-
-          case Dashboard.DashboardTypeEnum.OFFLINE:
-            this.signalIsOn = false;
-            this.pageStatus = PageStatus.Loading;
-            this.getOfflineDashboard();
-            break;
-        }
-      });
-  }
-
-  ngAfterViewInit(): void {
-    if (localStorage.getItem('offline')) this.changeSignalState(null)
-    this.cd.detectChanges();
   }
 
   ngOnDestroy() {
@@ -284,6 +277,22 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
     if (this.ngUnsubscribe) {
       this.ngUnsubscribe.next();
+    }
+  }
+
+  private loadDashboardByDatasource(defaultDatasource: Dashboard.DashboardTypeEnum) {
+    switch (defaultDatasource) {
+      case REALTIME:
+        this.signalIsOn = true;
+        this.pageStatus = PageStatus.Loading;
+        this.getRealTimeDashboard();
+        break;
+
+      case OFFLINE:
+        this.signalIsOn = false;
+        this.pageStatus = PageStatus.Loading;
+        this.getOfflineDashboard();
+        break;
     }
   }
 
@@ -297,6 +306,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
       });
     }
   }
+
 
   /**
    * Fn called when the user selects a new dashboard from the list
@@ -510,6 +520,14 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
       this.dashboardConfigService.getOfflineDashboardFromProject(this.idProjectSelected)
         .pipe(takeUntil(this.ngUnsubscribe))
         .subscribe(responseHandler, errorHandler);
+
+      this.store.dispatch(
+        UserSiteSettingActions.updatePartialSettings({
+          userSiteSetting: {
+            lastHdDashboardDataSource: OFFLINE,
+          }
+        })
+      );
     }
   }
   private getRealTimeDashboard() {
@@ -542,6 +560,14 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
       this.dashboardConfigService.getRealtimeDashboardFromProject(this.idProjectSelected)
         .pipe(takeUntil(this.ngUnsubscribe))
         .subscribe(responseHandler, errorHandler);
+
+      this.store.dispatch(
+        UserSiteSettingActions.updatePartialSettings({
+          userSiteSetting: {
+            lastHdDashboardDataSource: REALTIME,
+          }
+        })
+      );
     }
   }
 
