@@ -60,7 +60,6 @@ export namespace UserSiteSettingStore {
       }
     }),
     on(UserSiteSettingActions.clear, () => {
-      setUserSiteSettingLocalStorage(initialState);
       return initialState;
     }),
     on(UserSiteSettingActions.setAllSettings, (state, { userSiteSetting }) => {
