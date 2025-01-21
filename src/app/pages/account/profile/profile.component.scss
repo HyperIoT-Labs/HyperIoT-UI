@@ -140,9 +140,9 @@
             }
 
         }
-        
+
         #container-box-plan {
-            
+
             #current-plan,
             #current-role {
                 font-size: 1.4em;
@@ -150,7 +150,7 @@
 
                 span {
 
-                    &.name-plan, 
+                    &.name-plan,
                     &.name-role {
                         margin-left: 15px;
                         font-style: italic;
@@ -253,10 +253,10 @@
                     margin-right: auto;
 
                     hyt-button {
-                        
+
                         &#upgrade-plane-btn {
                             margin-left: auto;
-                            
+
                             button {
                                 background-color: $primary-color-dark-unsaturated;
                                 color: #fff;
@@ -296,7 +296,7 @@
             }
 
         }
-        
+
         #container-box-branding {
             #logo-uplaod,
             #logo-preview {
@@ -323,7 +323,7 @@
                 &#icon-branding-section  {
                     width: 35px;
                 }
-    
+
                 &#icon-password-section {
                     height: 25px;
                 }
@@ -360,7 +360,7 @@
                             &:-webkit-autofill:focus {
                                 box-shadow: 0 0 0px 1000px #ffffff inset;
                             }
-                            
+
                         }
 
                         &.btn-form-account {
@@ -391,7 +391,7 @@
                         }
 
                         span {
-                            
+
                             &.mat-form-field-label-wrapper {
 
                                 label {
@@ -432,6 +432,19 @@
 
         }
 
+    }
+
+
+    .mat-button-toggle-checked {
+      background-color: $primary-color;
+
+      .mat-button-toggle-button {
+        color: white;
+      }
+    }
+
+    .mat-button-toggle-button {
+      color: gray;
     }
 
 }

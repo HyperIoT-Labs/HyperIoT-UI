@@ -293,6 +293,14 @@ const hyperiotRoutes: Routes = [
     }
   },
   {
+    path: 'hdevice/:projectId/:hDeviceId/dashboards/:datasource',
+    component: DashComponent,
+    canActivate: [LoggedInGuard],
+    data: {
+      showToolBar: true,
+    }
+  },
+  {
     path: 'algorithms',
     component: AlgorithmsComponent,
     canActivate: [LoggedInGuard, IsProtectedResourceGuard],

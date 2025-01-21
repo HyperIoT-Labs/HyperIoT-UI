@@ -2,7 +2,7 @@
   <ng-container *ngIf="pageStatus === 1">
     <div
       id="container-treeview-project"
-      [ngClass]="{'displayBlock': treeViewIsOpen, 'displayNone': !treeViewIsOpen}"
+      [ngClass]="{ displayBlock: treeViewIsOpen, displayNone: !treeViewIsOpen }"
       cdkDrag
       [cdkDragFreeDragPosition]="dragPosition"
       cdkDragBoundary="#hyt-container"
@@ -15,68 +15,63 @@
       <div id="treeViewHeader" cdkDragHandle></div>
 
       <div id="treeViewBody">
-        <div *ngIf="overlayTreeView" class="overlay-treeview">{{overlayTreeViewMsg}}</div>
-        <hyt-tree-view-project #treeView class="treeview" (nodeClick)="onTreeNodeClick($event)"></hyt-tree-view-project>
-
+        <div *ngIf="overlayTreeView" class="overlay-treeview">
+          {{ overlayTreeViewMsg }}
+        </div>
+        <hyt-tree-view-project
+          #treeView
+          class="treeview"
+          (nodeClick)="onTreeNodeClick($event)"
+        ></hyt-tree-view-project>
       </div>
-
     </div>
 
     <div id="container-map">
-
-      <div
-        id="area-title"
-        *ngIf="areaId && areaPath && areaPath.length > 0"
-      >
-
+      <div id="area-title" *ngIf="areaId && areaPath && areaPath.length > 0">
         <h2>
           Area: <span id="specific-area-name">{{ areaName }}</span>
         </h2>
-
       </div>
 
       <div id="map-header">
-
         <div id="head-left">
-
           <hyt-button
             [color]="'hyt-base-total-white'"
             (clickFn)="toggleTreeViewProject()"
           >
-
-          <span
-            [ngClass]="{'icon-hyt_eyeClose': treeViewIsOpen, 'icon-hyt_eyeOpen': !treeViewIsOpen}"
-          ></span>
-            {{ preTitleTreeView }} <span i18n="HYT_area_treeview">Area Treeview</span>
-
-          </hyt-button><!-- @I18N@ -->
-
+            <span
+              [ngClass]="{
+                'icon-hyt_eyeClose': treeViewIsOpen,
+                'icon-hyt_eyeOpen': !treeViewIsOpen
+              }"
+            ></span>
+            {{ preTitleTreeView }}
+            <span i18n="HYT_area_treeview">Area Treeview</span> </hyt-button
+          ><!-- @I18N@ -->
         </div>
 
         <div id="head-center">
-
-          <div>Sub-areas: {{areaList.length}} Devices: {{areaDevices.length}}</div>
-
+          <div>
+            Sub-areas: {{ areaList.length }} Devices: {{ areaDevices.length }}
+          </div>
         </div>
 
         <div id="head-right">
-
-          <hyt-button [color]="'hyt-base-total-white'" (clickFn)="onEditButtonClick()">
-
+          <hyt-button
+            [color]="'hyt-base-total-white'"
+            (clickFn)="onEditButtonClick()"
+          >
             <span class="icon-hyt_pencil"></span>
-            Edit
-
-          </hyt-button><!-- @I18N@ -->
-
+            Edit </hyt-button
+          ><!-- @I18N@ -->
         </div>
-
       </div>
 
       <div id="map-body">
         <hyt-area-map
           *ngIf="areaViewType === 'IMAGE'"
           #map
-          (itemOpen)="onItemMapClicked($event)"
+          (itemOpen)="onMapItemClicked($event)"
         ></hyt-area-map>
 
         <div *ngIf="areaViewType === 'BIM_XKT'" id="container-bim-viewer">
@@ -85,9 +80,7 @@
               <ng-container *ngIf="!isEmptyBim; else emptyBim">
                 BIM Model Loading...
               </ng-container>
-              <ng-template #emptyBim>
-                No Model
-              </ng-template>
+              <ng-template #emptyBim> No Model </ng-template>
             </div>
           </ng-container>
           <ng-template #bimLoaded>
@@ -102,11 +95,14 @@
         </div>
 
         <div *ngIf="areaViewType === 'MAP'">
-          <hyt-map #map [mapType]="currentMapTypeKey" [areaConfiguration]="areaConfiguration" (itemOpen)="onItemMapClicked($event)"></hyt-map>
+          <hyt-map
+            #map
+            [mapType]="currentMapTypeKey"
+            [areaConfiguration]="areaConfiguration"
+            (itemOpen)="onMapItemClicked($event)"
+          ></hyt-map>
         </div>
-
       </div>
-
     </div>
   </ng-container>
 
@@ -118,7 +114,9 @@
 
   <ng-container *ngIf="pageStatus === -1">
     <div class="area-map-error">
-      <h2 i18n="@@HYT_error_occurred_long">An error has occurred, contact the administrator!</h2>
+      <h2 i18n="@@HYT_error_occurred_long">
+        An error has occurred, contact the administrator!
+      </h2>
     </div>
   </ng-container>
 </div>

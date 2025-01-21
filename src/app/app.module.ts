@@ -69,6 +69,7 @@ import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { GlobalErrorHandlerService } from '../../projects/core/src/lib/hyperiot-service/error-handler/global-error-handler.service';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
@@ -133,6 +134,7 @@ export function apiConfigFactory(): Configuration {
     MatDialogModule,
     MatTabsModule,
     MatCardModule,
+    MatButtonToggleModule,
     MatProgressSpinnerModule,
     MatTooltipModule,
     CustomMaterialModule,

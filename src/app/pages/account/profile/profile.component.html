@@ -2,18 +2,18 @@
 
     <div id="row-box-photo" class="row row-box">
         <div id="container-box-photo" class="col-12">
-            
-            <!-- <div 
-                id="img-box" 
+
+            <!-- <div
+                id="img-box"
                 style="
                     background-image: url('./../../../../assets/images/account/user-default.svg');
                     background-size: cover;
                 "
             >
                 <div id="mod-photo">
-                    <img 
-                        id="edit-photo" 
-                        src="./../../../../assets/images/account/edit-icon.svg" 
+                    <img
+                        id="edit-photo"
+                        src="./../../../../assets/images/account/edit-icon.svg"
                         alt="Edit Photo Icon"
                     >
                 </div>
@@ -34,12 +34,12 @@
         <div id="container-box-company" class="col-12">
 
             <div class="title-box">
-                <img 
+                <img
                     src="./../../../../assets/images/account/personal-info-icon.svg"
                     class="title-icon"
                     id="icon-company-section"
                     alt="Icon Company Section"
-                > 
+                >
                 <p i18n="@@HYT_company_info">Company Info</p>
             </div>
 
@@ -60,14 +60,14 @@
             </div>
         </div>
     </ng-template>
-    
+
 
     <div id="row-box-plan" class="row row-box">
-        
+
         <div id="container-box-plan" class="col-12">
 
             <div class="title-box">
-                <img 
+                <img
                     src="./../../../../assets/images/account/personal-info-icon.svg"
                     class="title-icon"
                     id="icon-plan-section"
@@ -100,10 +100,10 @@
                             <img src="./../../../../assets/images/account/projects.svg" alt="Projects">
                         </div>
                         <div class="col-6 txt-obj-plan">
-                            <p i18n="@@HYT_projects">Projects</p> 
+                            <p i18n="@@HYT_projects">Projects</p>
                             <span class="one-of">
                                 <span class="firstNumber">{{platformCounters.projects}}</span>
-                            </span> 
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -124,7 +124,7 @@
                 </div>
 
                 <div id="areas" class="col-4">
-                    
+
                     <div class="row">
 
                         <div class="col-6 icon-obj-plan">
@@ -154,8 +154,8 @@
 
                 <div id="info-msg-upgrade" class="col-12">
                     You can upgrade your plan at any time
-                    <hyt-button 
-                        id="upgrade-plane-btn" 
+                    <hyt-button
+                        id="upgrade-plane-btn"
                     >
                     Upgrade Plan Now!
                     </hyt-button>
@@ -168,11 +168,11 @@
     </div> <!-- End Row Box Plan -->
 
     <div id="row-box-branding" class="row row-box">
-        
+
         <div id="container-box-branding" class="col-12">
 
             <div class="title-box">
-                <img 
+                <img
                     src="./../../../../assets/images/account/personal-info-icon.svg"
                     class="title-icon"
                     id="icon-branding-section"
@@ -180,7 +180,7 @@
                 >
                 <p i18n="@@HYT_theme_customization">Theme customization</p>
             </div>
-        
+
             <div id="container-form-logo" class="col-12">
 
                 <form id="form-logo-branding" #pif="ngForm" [formGroup]="brandingForm">
@@ -234,12 +234,12 @@
                                 <mat-icon>clear</mat-icon>
                             </button>
                         </ng-container>
-    
+
                         <div class="container-form-field col-12">
                             <div class="btn-group">
-                                
+
                                 <!-- [isDisabled]="!fileToUpload" -->
-                                <hyt-button 
+                                <hyt-button
                                     id ="save-logo-btn"
                                     [isDisabled]="canNotSaveTheme"
                                     (clickFn)="saveTheme()"
@@ -247,9 +247,9 @@
                                 >
                                     <ng-container i18n="@@HYT_save">Save</ng-container>
                                 </hyt-button>
-    
-                                <hyt-button 
-                                    id ="reset-logo-btn" 
+
+                                <hyt-button
+                                    id ="reset-logo-btn"
                                     (clickFn)="restoreDefaultTheme(logoFileInput)"
                                     [isDisabled]="!isBrandedTheme"
                                     type="submit"
@@ -257,7 +257,7 @@
                                     <ng-container i18n="@@HYT_restore_default">Restore default</ng-container>
                                 </hyt-button>
                             </div>
-      
+
                         </div>
 
                         <ng-container *ngIf="logoErrorMessage.showError">
@@ -271,6 +271,54 @@
 
                 </form>
 
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="defaultDashboardSettings" class="row row-box">
+        <div class="col-12 mt-2">
+            <div class="title-box">
+                <p i18n="@@HYT_default_dashboard_settings">
+                  Configurazioni di default delle Dashboard
+                </p>
+            </div>
+            <div class="col-12">
+              <section [formGroup]="defaultDashboardSettings" class="d-flex flex-column my-3">
+                <div class="row col-6 align-items-baseline justify-content-between">
+                  <label for="">Dashboard Progetto</label>
+                  <mat-button-toggle-group formControlName="defaultProjectsDashboardDataSource">
+                    <mat-button-toggle
+                      [value]="DashboardTypeEnum.REALTIME"
+                      i18n="@@HYT_default_realtime"
+                    >
+                      Real-Time
+                    </mat-button-toggle>
+                    <mat-button-toggle
+                      [value]="DashboardTypeEnum.OFFLINE"
+                      i18n="@@HYT_default_offline"
+                    >
+                      Offline
+                    </mat-button-toggle>
+                  </mat-button-toggle-group>
+                </div>
+                <div class="row col-6 align-items-baseline justify-content-between">
+                  <label for="">Dashboard Area</label>
+                  <mat-button-toggle-group formControlName="defaultAreasDashboardDataSource">
+                    <mat-button-toggle
+                      [value]="DashboardTypeEnum.REALTIME"
+                      i18n="@@HYT_default_realtime"
+                    >
+                      Real-Time
+                    </mat-button-toggle>
+                    <mat-button-toggle
+                      [value]="DashboardTypeEnum.OFFLINE"
+                      i18n="@@HYT_default_offline"
+                    >
+                      Offline
+                    </mat-button-toggle>
+                  </mat-button-toggle-group>
+                </div>
+              </section>
             </div>
         </div>
     </div>
@@ -292,12 +340,12 @@
         <div id="container-box-details" class="col-6">
 
             <div class="title-box">
-               <img 
+               <img
                 src="./../../../../assets/images/account/personal-info-icon.svg"
                 class="title-icon"
                 id="icon-details-section"
                 alt="Icon Personal Info Section"
-               > 
+               >
                <p i18n="@@HYT_personal_info">Personal Info</p>
             </div>
 
@@ -305,13 +353,13 @@
 
                 <div id="container-form-details" class="col-12">
 
-                    <form #pif="ngForm" id="form-details" [formGroup]="personalInfoForm" (ngSubmit)="updatePersonalInfo()" (keydown)="keyDownFunction($event)"> 
+                    <form #pif="ngForm" id="form-details" [formGroup]="personalInfoForm" (ngSubmit)="updatePersonalInfo()" (keydown)="keyDownFunction($event)">
 
                         <div class="row row-field-details">
 
                             <div class="container-form-field col-12">
 
-                                <hyt-input-text 
+                                <hyt-input-text
                                     [form]="personalInfoForm"
                                     formControlName="username"
                                     name="username"
@@ -327,7 +375,7 @@
 
                             <div class="container-form-field col-12">
 
-                                <hyt-input-text 
+                                <hyt-input-text
                                     [form]="personalInfoForm"
                                     formControlName="email"
                                     name="email"
@@ -343,13 +391,13 @@
 
                             <div class="container-form-field col-12">
 
-                                <hyt-input-text 
+                                <hyt-input-text
                                     [form]="personalInfoForm"
                                     formControlName="name"
                                     name="name"
                                     [isRequired]="true"
                                     placeholder="Name"
-                                    [fieldValue]="user.name"  
+                                    [fieldValue]="user.name"
                                 >
                                 </hyt-input-text>
                                 <!-- [injectedErrorMsg]="error" -->
@@ -358,7 +406,7 @@
 
                             <div class="container-form-field col-12">
 
-                                <hyt-input-text 
+                                <hyt-input-text
                                     [form]="personalInfoForm"
                                     formControlName="lastname"
                                     name="lastname"
@@ -372,8 +420,8 @@
                             </div> <!-- End Field Lastame -->
 
                             <div class="container-form-field col-12 btn-form-account">
-                                <hyt-button 
-                                    id="update-info-btn" 
+                                <hyt-button
+                                    id="update-info-btn"
                                     type="submit"
                                     [isDisabled]="notValidPif() || loading "
                                 >
@@ -394,12 +442,12 @@
         <div id="container-box-password" class="col-6">
 
             <div class="title-box">
-                <img 
+                <img
                     src="./../../../../assets/images/account/change-password-icon.svg"
                     class="title-icon"
                     id="icon-password-section"
                     alt="Icon Password Section"
-                > 
+                >
                 <p i18n="@@HYT_change_password">Change password</p>
             </div>
 
@@ -414,13 +462,13 @@
 
                             <div class="container-form-field col-12">
 
-                                <hyt-input-text 
+                                <hyt-input-text
                                     [form]="changePasswordForm"
-                                    formControlName="oldPassword" 
-                                    name="oldPassword" 
+                                    formControlName="oldPassword"
+                                    name="oldPassword"
                                     [isRequired]="true"
                                     placeholder="Old Password"
-                                    [injectedErrorMsg]="error" 
+                                    [injectedErrorMsg]="error"
                                     type="password"
                                     [isPassword]="true"
                                 >
@@ -430,13 +478,13 @@
 
                             <div class="container-form-field col-12">
 
-                                <hyt-input-text 
-                                    [form]="changePasswordForm" 
+                                <hyt-input-text
+                                    [form]="changePasswordForm"
                                     formControlName="newPassword"
                                     name="newPassword"
                                     [isPassword]="true"
                                     type="password"
-                                    [isRequired]="true" 
+                                    [isRequired]="true"
                                     placeholder="New Password"
                                     errorPosition="bottom"
                                 >
@@ -452,7 +500,7 @@
                                     name="confirmPassword"
                                     confirmPassword="newPassword"
                                     type="password"
-                                    [isRequired]="true" 
+                                    [isRequired]="true"
                                     placeholder="Confirm password"
                                 >
                                 </hyt-input-text>
@@ -460,8 +508,8 @@
                             </div> <!-- Field Confirm Password -->
 
                             <div class="container-form-field col-12 btn-form-account">
-                                <hyt-button 
-                                    id ="change-password-btn" 
+                                <hyt-button
+                                    id ="change-password-btn"
                                     type="submit"
                                     [isDisabled]="notValidCpf() || loading || passwordChanged"
                                 >

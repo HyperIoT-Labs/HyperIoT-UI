@@ -1,4 +1,6 @@
-import { Component, EventEmitter, OnInit } from '@angular/core';
+import { Component, EventEmitter } from '@angular/core';
+import { Area, AreaDevice, Dashboard } from 'core';
+import { MapItemAction } from '../../models/map-item-action';
 import { DeviceActions } from '../../models/device-actions';
 
 @Component({
@@ -6,21 +8,26 @@ import { DeviceActions } from '../../models/device-actions';
   templateUrl: './map-device-info.component.html',
   styleUrls: ['./map-device-info.component.scss']
 })
-export class MapDeviceInfoComponent implements OnInit {
+export class MapDeviceInfoComponent {
 
-  deviceInfo: any; //AreaDevice; //| Area;
+  deviceInfo: Area | AreaDevice;
 
-  openClicked = new EventEmitter<any>();
+  readonly deviceActions = DeviceActions;
+  readonly dataSource = Dashboard.DashboardTypeEnum;
 
-  deviceActions = DeviceActions;
+  readonly openClicked = new EventEmitter<MapItemAction>();
 
-  constructor() { }
-
-  ngOnInit(): void {
+  redirectByMapItemAction(mapItemAction: MapItemAction) {
+    this.openClicked.emit(mapItemAction);
   }
 
-  redirectTo(deviceAction?: DeviceActions) {
-    this.openClicked.emit(deviceAction);
+  isArea(obj: Area | AreaDevice): obj is Area {
+    return (obj as Area).name !== undefined;
+  }
+
+  isAreaDevice(obj: Area | AreaDevice): obj is AreaDevice {
+    const {area, device} = obj as AreaDevice;
+    return [area, device].some((attr) => attr !== undefined);
   }
 
 }

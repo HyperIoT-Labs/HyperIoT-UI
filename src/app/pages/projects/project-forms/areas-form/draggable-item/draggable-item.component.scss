@@ -112,6 +112,9 @@
   justify-content: space-between;
 
   span {
+    white-space: normal;
+    line-height: normal;
+
     &.mat-icon {
       margin-left: 16px;
       margin-right: 0;
