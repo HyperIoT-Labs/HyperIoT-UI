@@ -275,31 +275,50 @@
         </div>
     </div>
 
-    <div class="row row-box">
-        <div class="col-12">
+    <div *ngIf="defaultDashboardSettings" class="row row-box">
+        <div class="col-12 mt-2">
             <div class="title-box">
                 <p i18n="@@HYT_default_dashboard_settings">
                   Configurazioni di default delle Dashboard
                 </p>
             </div>
-
-            <div *ngIf="defaultDashboardSettings" class="col-12">
-              <form [formGroup]="defaultDashboardSettings">
-                <section class="d-flex flex-column my-3">
-                  <mat-slide-toggle
-                    formControlName="defaultProjectsDashboardDataSource"
-                    i18n="@@HYT_default_projects_dashboard_settings"
-                  >
-                    Avvia la Dashboard dei Progetti in Real-Time
-                  </mat-slide-toggle>
-                  <mat-slide-toggle
-                    formControlName="defaultAreasDashboardDataSource"
-                    i18n="@@HYT_default_areas_dashboard_settings"
-                  >
-                    Avvia la Dashboard delle Aree in Real-Time
-                  </mat-slide-toggle>
-                </section>
-              </form>
+            <div class="col-12">
+              <section [formGroup]="defaultDashboardSettings" class="d-flex flex-column my-3">
+                <div class="row col-6 align-items-baseline justify-content-between">
+                  <label for="">Dashboard Progetto</label>
+                  <mat-button-toggle-group formControlName="defaultProjectsDashboardDataSource">
+                    <mat-button-toggle
+                      [value]="DashboardTypeEnum.REALTIME"
+                      i18n="@@HYT_default_realtime"
+                    >
+                      Real-Time
+                    </mat-button-toggle>
+                    <mat-button-toggle
+                      [value]="DashboardTypeEnum.OFFLINE"
+                      i18n="@@HYT_default_offline"
+                    >
+                      Offline
+                    </mat-button-toggle>
+                  </mat-button-toggle-group>
+                </div>
+                <div class="row col-6 align-items-baseline justify-content-between">
+                  <label for="">Dashboard Area</label>
+                  <mat-button-toggle-group formControlName="defaultAreasDashboardDataSource">
+                    <mat-button-toggle
+                      [value]="DashboardTypeEnum.REALTIME"
+                      i18n="@@HYT_default_realtime"
+                    >
+                      Real-Time
+                    </mat-button-toggle>
+                    <mat-button-toggle
+                      [value]="DashboardTypeEnum.OFFLINE"
+                      i18n="@@HYT_default_offline"
+                    >
+                      Offline
+                    </mat-button-toggle>
+                  </mat-button-toggle-group>
+                </div>
+              </section>
             </div>
         </div>
     </div>

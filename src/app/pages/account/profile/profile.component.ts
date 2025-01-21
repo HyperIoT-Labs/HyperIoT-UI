@@ -7,9 +7,6 @@ import { Router } from '@angular/router';
 import { HyperiotLogoMobilePath, HyperiotLogoPath } from 'src/app/constants';
 import { forkJoin, map, take, } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { MatCheckboxChange } from '@angular/material/checkbox';
-
-const { OFFLINE, REALTIME } = Dashboard.DashboardTypeEnum;
 
 @Component({
   selector: 'hyt-profile',
@@ -18,6 +15,8 @@ const { OFFLINE, REALTIME } = Dashboard.DashboardTypeEnum;
   encapsulation: ViewEncapsulation.None
 })
 export class ProfileComponent implements OnInit {
+
+  DashboardTypeEnum = Dashboard.DashboardTypeEnum;
 
   errors: HYTError[] = [];
 
@@ -176,33 +175,31 @@ export class ProfileComponent implements OnInit {
         defaultProjectsDashboardDataSource,
         defaultAreasDashboardDataSource,
       }) => {
-        const fromDataSource = (value: Dashboard.DashboardTypeEnum) => value === REALTIME;
-
         this.defaultDashboardSettings = this.fb.group({
-          defaultProjectsDashboardDataSource: fromDataSource(defaultProjectsDashboardDataSource),
-          defaultAreasDashboardDataSource: fromDataSource(defaultAreasDashboardDataSource)
-        })
+          defaultProjectsDashboardDataSource,
+          defaultAreasDashboardDataSource
+        });
       });
 
-    const toDataSource = (value: boolean) => value ? REALTIME : OFFLINE;
-
-    this.defaultDashboardSettings.controls.defaultProjectsDashboardDataSource.valueChanges
+    this.defaultDashboardSettings.controls.defaultProjectsDashboardDataSource
+      .valueChanges
       .subscribe((defaultProjectsDashboardDataSource) => {
         this.store.dispatch(
           UserSiteSettingActions.updatePartialSettings({
             userSiteSetting: {
-              defaultProjectsDashboardDataSource: toDataSource(defaultProjectsDashboardDataSource),
+              defaultProjectsDashboardDataSource,
             }
           })
         );
       });
 
-    this.defaultDashboardSettings.controls.defaultAreasDashboardDataSource.valueChanges
+    this.defaultDashboardSettings.controls.defaultAreasDashboardDataSource
+      .valueChanges
       .subscribe((defaultAreasDashboardDataSource) => {
         this.store.dispatch(
           UserSiteSettingActions.updatePartialSettings({
             userSiteSetting: {
-              defaultAreasDashboardDataSource: toDataSource(defaultAreasDashboardDataSource),
+              defaultAreasDashboardDataSource,
             }
           })
         );

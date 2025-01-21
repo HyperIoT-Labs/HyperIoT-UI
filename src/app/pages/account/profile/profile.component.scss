@@ -434,4 +434,17 @@
 
     }
 
+
+    .mat-button-toggle-checked {
+      background-color: $primary-color;
+
+      .mat-button-toggle-button {
+        color: white;
+      }
+    }
+
+    .mat-button-toggle-button {
+      color: gray;
+    }
+
 }

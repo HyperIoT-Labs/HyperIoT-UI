@@ -1827,11 +1827,11 @@
        <trans-unit id="HYT_default_dashboard_settings" datatype="html">
         <source>Default Dashboard Settings</source>
       </trans-unit>
-      <trans-unit id="HYT_default_projects_dashboard_settings" datatype="html">
-        <source>Default Projects Dashboard Settings</source>
+      <trans-unit id="HYT_realtime" datatype="html">
+        <source>Real-Time</source>
       </trans-unit>
-      <trans-unit id="HYT_default_areas_dashboard_settings" datatype="html">
-        <source>Default Areas Dashboard Settings</source>
+      <trans-unit id="HYT_offline" datatype="html">
+        <source>Offline</source>
       </trans-unit>
       <trans-unit id="HYT_upload_your_logo" datatype="html">
         <source>Upload your logo</source>
