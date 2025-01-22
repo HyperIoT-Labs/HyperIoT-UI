@@ -1,5 +1,5 @@
 import { createReducer, on } from "@ngrx/store";
-import { HPacket } from "../../hyperiot-client/models/hPacket";
+import { HPacket } from "../../hyperiot-client/hyt-api/api-module";
 import { createEntityAdapter, EntityAdapter, EntityState } from "@ngrx/entity";
 import { HPacketActions } from "./hPackets.actions";
 

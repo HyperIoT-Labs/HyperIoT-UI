@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewInit, ViewEncapsulation, ChangeDetectorRef, Inject } from '@angular/core';
 import { DIALOG_DATA, DialogRef } from 'components';
 import { PageStatus } from 'src/app/pages/projects/models/pageStatus';
-import { AssetscategoriesService } from 'core';
+import { AssetCategoriesService } from 'core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { HttpErrorHandlerService } from 'src/app/services/errorHandler/http-error-handler.service';
 import { interval } from 'rxjs';
@@ -35,7 +35,7 @@ export class AddCetegoryModalComponent implements OnInit, AfterViewInit {
   };
 
   constructor(
-    private assetCategoryService: AssetscategoriesService,
+    private assetCategoryService: AssetCategoriesService,
     private formBuilder: FormBuilder,
     private errorHandler: HttpErrorHandlerService,
     private cd: ChangeDetectorRef,
@@ -53,16 +53,16 @@ export class AddCetegoryModalComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
 
     this.cd.detectChanges();
-    
+
     let el = document.querySelector("#add-category-modal .hyt-input.mat-input-element") as HTMLElement;
     interval(50).pipe(take(1)).subscribe((val) => {
       el.focus();
     })
-    
+
   }
 
   submitCategory() {
-    
+
     this.pageStatus = PageStatus.Loading;
     if (this.data.mode === 'edit') {
       this.assetCategoryService.updateAssetCategory({

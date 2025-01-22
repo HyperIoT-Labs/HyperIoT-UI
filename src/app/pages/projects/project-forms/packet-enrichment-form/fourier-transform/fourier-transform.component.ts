@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ChangeDetectorRef} from '@angular/core';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
-import { HPacket, HProject, HpacketsService, HPacketField } from 'core';
+import { HPacket, HProject, HPacketService, HPacketField } from 'core';
 
 @Component({
   selector: 'hyt-fourier-transform',
@@ -20,7 +20,7 @@ export class FourierTransformComponent implements OnInit {
   //   transformType: new FormControl(),
   //   inputField: new FormControl(),
   //   outputField: new FormControl(),
-  // }) ; 
+  // }) ;
 
   form: FormGroup = this.fb.group({});
 
@@ -55,7 +55,7 @@ export class FourierTransformComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private hpacketService: HpacketsService,
+    private hpacketService: HPacketService,
     private cd: ChangeDetectorRef
   ) { }
 
@@ -67,19 +67,19 @@ export class FourierTransformComponent implements OnInit {
         value: pf.id
       });
     });
-    
+
   }
 
   onTransformMethodChange(method) {
     if(method) {
-      
+
       this.config.transformMethod = method;
       this.cd.detectChanges();
       this.form.patchValue({ transformMethod: this.config.transformMethod });
       this.form.get('transformMethod').setValue(this.config.transformMethod);
-      
+
     }
-    
+
   }
 
   onTransformNormChange(norm) {
@@ -88,7 +88,7 @@ export class FourierTransformComponent implements OnInit {
       this.cd.detectChanges();
       this.form.get('transformNorm').setValue(this.config.fftNormalization);
     }
-    
+
   }
 
   onTransformTypeChange(type) {
@@ -97,7 +97,7 @@ export class FourierTransformComponent implements OnInit {
     this.cd.detectChanges();
     this.form.get('transformType').setValue(this.config.transformType);
     }
-    
+
   }
 
   onInputFieldChange(field) {
@@ -158,7 +158,7 @@ export class FourierTransformComponent implements OnInit {
         }
       });
     }
-    
+
     this.originalConfig = {};
     Object.assign(this.originalConfig, this._config);
   }

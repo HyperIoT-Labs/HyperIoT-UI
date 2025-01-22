@@ -1,5 +1,5 @@
 import { Component, Injector, OnDestroy, OnInit } from '@angular/core';
-import { DataChannel, DataPacketFilter, HprojectsService, Logger, LoggerService, PacketData, PacketDataChunk } from 'core';
+import { DataChannel, DataPacketFilter, HProjectService, Logger, LoggerService, PacketData, PacketDataChunk } from 'core';
 import { PartialObserver, Subject, takeUntil } from 'rxjs';
 import { BaseWidgetComponent } from '../../base/base-widget/base-widget.component';
 import { WidgetAction } from '../../base/base-widget/model/widget.model';
@@ -27,7 +27,7 @@ export class MultiStatusWidgetComponent extends BaseWidgetComponent implements O
 
   constructor(
     injector: Injector,
-    private hProjectsService: HprojectsService,
+    private hProjectsService: HProjectService,
     protected loggerService: LoggerService
   ) {
     super(injector, loggerService);
@@ -218,7 +218,7 @@ export class MultiStatusWidgetComponent extends BaseWidgetComponent implements O
   }
 
   retrieveAttachments(projectId: number, packetId: number, fieldId: number, timestamp: number) {
-    return this.hProjectsService.scanHProject1(
+    return this.hProjectsService.scanHProject(
       projectId,
       packetId,
       fieldId,

@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, Input, OnDestroy } from '@angular/core';
 import { ControlContainer, NgForm } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { PacketSelectComponent } from '../packet-select/packet-select.component';
-import { HPacket, HpacketsService } from 'core';
+import { HPacket, HPacketService } from 'core';
 import { DefibrillatorSettings } from './defibrillator-settings.model';
 import { KeyValue } from '@angular/common';
 
@@ -128,7 +128,7 @@ export class DefibrillatorSettingsComponent implements OnInit, OnDestroy {
     dataFrequency = 0.2;
     dataRange = 10;
 
-    constructor(private hPacketsService: HpacketsService) {
+    constructor(private hPacketsService: HPacketService) {
       for (const [, type] of Object.entries(DefibrillatorSettings.Type)) {
         this.fieldsTypeOptions.push({
           value: type,

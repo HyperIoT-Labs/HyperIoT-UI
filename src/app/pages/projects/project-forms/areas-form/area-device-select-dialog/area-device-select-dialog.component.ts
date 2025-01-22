@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { DIALOG_DATA, DialogRef } from 'components';
-import { AreasService, HprojectsService, HdevicesService, AreaDevice, HDevice, Area } from 'core';
+import { Area_Service, HDevicesService, AreaDevice, HDevice, Area } from 'core';
 import { LoadingStatusEnum } from '../../project-form-entity';
 import { AREA_ICONS_OPTIONS } from 'projects/components/src/public-api';
 
@@ -23,8 +23,8 @@ export class AreaDeviceSelectDialogComponent implements OnInit {
   constructor(
     private dialogRef: DialogRef<any>,
     @Inject(DIALOG_DATA) public data: any,
-    private areaService: AreasService,
-    private deviceService: HdevicesService
+    private areaService: Area_Service,
+    private deviceService: HDevicesService
   ) { }
 
   ngOnInit() {

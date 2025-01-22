@@ -1,6 +1,6 @@
 import {Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {CdkDragEnd} from '@angular/cdk/drag-drop';
-import {Area, AreaDevice, AreasService, Logger, LoggerService} from 'core';
+import {Area, AreaDevice, Area_Service, Logger, LoggerService} from 'core';
 import {PageStatus} from '../../../models/pageStatus';
 import {AreaMapComponent} from '../../projects/project-forms/areas-form/area-map/area-map.component';
 import {HttpClient} from '@angular/common/http';
@@ -115,7 +115,7 @@ export class ContainerAreaMapComponent implements OnInit, OnChanges, OnDestroy {
   protected ngUnsubscribe: Subject<void> = new Subject<void>();
 
   constructor(
-    private areaService: AreasService,
+    private areaService: Area_Service,
     private httpClient: HttpClient,
     private router: Router,
     private loggerService: LoggerService
@@ -128,7 +128,7 @@ export class ContainerAreaMapComponent implements OnInit, OnChanges, OnDestroy {
   ngOnInit(): void {
     this.findArea();
   }
-  
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes?.areaId && !changes?.areaId?.firstChange) {
       this.findArea();

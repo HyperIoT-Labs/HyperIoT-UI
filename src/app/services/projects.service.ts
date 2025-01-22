@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HprojectsService, HProject } from 'core';
+import { HProjectService, HProject } from 'core';
 import { Subject } from 'rxjs';
-import { multicast } from 'rxjs/operators';
 
 export interface ProjectsState {
   state: string;
@@ -23,7 +22,7 @@ export class ProjectsService {
   };
 
   constructor(
-    private hProjectService: HprojectsService
+    private hProjectService: HProjectService
   ) { }
 
   updateProjectList() {

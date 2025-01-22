@@ -1,6 +1,6 @@
 import { Component, Inject, OnDestroy, OnInit } from "@angular/core";
 import { DIALOG_DATA, DialogRef } from "components";
-import { HProject, HUser, SharedEntity, SharedentityService } from "core";
+import { HProject, HUser, SharedEntity, SharedEntityService } from "core";
 import { SharedPages } from "../project-wizard/model/shared.model";
 import {
   animate,
@@ -15,7 +15,7 @@ import { Subject, takeUntil } from "rxjs";
   selector: "hyt-share-projects",
   templateUrl: "./share-projects.component.html",
   styleUrls: ["./share-projects.component.scss"],
-  providers: [SharedentityService],
+  providers: [SharedEntityService],
   animations: [
     trigger("enterTrigger", [
       state(
@@ -71,7 +71,7 @@ export class ShareProjectsComponent implements OnInit, OnDestroy {
 
   constructor(
     private dialogRef: DialogRef<any>,
-    private sharedService: SharedentityService,
+    private sharedService: SharedEntityService,
     @Inject(DIALOG_DATA) public data: HProject
   ) {}
 

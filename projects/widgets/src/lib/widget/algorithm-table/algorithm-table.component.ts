@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, Injector, OnInit, ViewChild } from '@angular/core';
-import { AlgorithmOfflineDataService, HpacketsService, LoggerService, PacketData } from 'core';
+import { AlgorithmOfflineDataService, HPacketService, LoggerService, PacketData } from 'core';
 import * as moment_ from 'moment';
 import { Subject, Subscription, lastValueFrom } from 'rxjs';
 import { BaseTableComponent } from '../../base/base-table/base-table.component';
@@ -33,7 +33,7 @@ export class AlgorithmTableComponent extends BaseTableComponent implements After
     private algorithmOfflineDataServices: AlgorithmOfflineDataService,
     injector: Injector,
     protected loggerService: LoggerService,
-    private packetService: HpacketsService,
+    private packetService: HPacketService,
   ) {
     super(injector, loggerService);
   }
@@ -122,7 +122,7 @@ export class AlgorithmTableComponent extends BaseTableComponent implements After
           // Create HEADERS of tables based on results
           let jsonObject = JSON.parse(value.output);
           let keys = Object.keys(jsonObject.results[0].grouping); // Extract grouping keys
-          this.hPacketIdMap = await this.setHeadersTable(keys); 
+          this.hPacketIdMap = await this.setHeadersTable(keys);
 
           // Add one row for each result rows
           jsonObject.results.forEach((el) => {
@@ -184,7 +184,7 @@ export class AlgorithmTableComponent extends BaseTableComponent implements After
     let obj: any = { "output": el.output, "timestamp": valueTimestamp };
     if (el.grouping && Object.keys(el.grouping).length > 0) {
 
-      Object.keys(el.grouping).forEach((key) => {      
+      Object.keys(el.grouping).forEach((key) => {
         let k = map.get(Number(key));
         let v = el.grouping[key];
         obj[k] = v;

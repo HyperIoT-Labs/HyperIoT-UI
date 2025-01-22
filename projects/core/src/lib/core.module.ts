@@ -1,7 +1,7 @@
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { CoreComponent } from './core.component';
-import { HyperiotClientModule } from './hyperiot-client/hyperiot-client.module';
 import { CoreConfig } from './config.service';
+import {ApiModule} from "./hyperiot-client/hyt-api/api-module";
 
 
 
@@ -10,7 +10,7 @@ import { CoreConfig } from './config.service';
     CoreComponent,
   ],
   imports: [
-    HyperiotClientModule,
+    ApiModule,
   ],
   providers: [
     {

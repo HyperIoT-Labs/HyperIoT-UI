@@ -1,12 +1,12 @@
 import { Component, Input, OnInit, ViewEncapsulation } from "@angular/core";
 import {
   AreaDevice,
-  AreasService,
+  Area_Service,
   HDevice,
   HPacket,
   HPacketField,
   HPacketFieldsHandlerService,
-  HpacketsService,
+  HPacketService,
 } from "core";
 import { WidgetConfig } from "../../../base/base-widget/model/widget.model";
 import { SelectOption, SelectOptionGroup } from "components";
@@ -55,8 +55,8 @@ export class DataSimulatorSettingsComponent implements OnInit {
   fieldOutliers: DataSimulatorSettings.FieldOutliers = {};
 
   constructor(
-    private areaService: AreasService,
-    private packetService: HpacketsService,
+    private areaService: Area_Service,
+    private packetService: HPacketService,
     private hPacketFieldsHandlerService: HPacketFieldsHandlerService
   ) {}
 

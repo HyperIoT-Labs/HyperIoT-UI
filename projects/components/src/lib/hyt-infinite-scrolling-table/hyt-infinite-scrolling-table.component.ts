@@ -8,7 +8,7 @@ import {
   Component,
   ViewEncapsulation,
 } from '@angular/core';
-import { FileHandlerService, HPacketField, HprojectsService } from 'core';
+import { FileHandlerService, HPacketField, HProjectService } from 'core';
 import { Subject } from 'rxjs';
 import * as moment_ from 'moment';
 const moment = moment_;
@@ -58,7 +58,7 @@ export class HytInfiniteScrollingTableComponent implements OnInit {
   dataRequest: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(
-    private hProjectsService: HprojectsService,
+    private hProjectsService: HProjectService,
     private fileHandlerService: FileHandlerService,
   ) { }
 
@@ -83,7 +83,7 @@ export class HytInfiniteScrollingTableComponent implements OnInit {
   }
 
   retrieveFile(queryData) {
-    return this.hProjectsService.scanHProject1(
+    return this.hProjectsService.scanHProject(
       queryData.projectId,
       queryData.packetId,
       queryData.fieldId,

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
-import { FileHandlerService, HPacketField, HprojectsService } from 'core';
+import { FileHandlerService, HPacketField, HProjectService } from 'core';
 import { Observable, Subject } from 'rxjs';
 import { SelectOption } from '../hyt-select/hyt-select.component';
 import * as moment_ from 'moment';
@@ -54,7 +54,7 @@ export class HytLazyPaginationTableComponent implements OnInit {
   actualRowsIndexes: TableRowIndexes = [0, 0];
 
   constructor(
-    private hProjectsService: HprojectsService,
+    private hProjectsService: HProjectService,
     private fileHandlerService: FileHandlerService,
   ) { }
 
@@ -80,7 +80,7 @@ export class HytLazyPaginationTableComponent implements OnInit {
   }
 
   retrieveFile(queryData) {
-    return this.hProjectsService.scanHProject1(
+    return this.hProjectsService.scanHProject(
       queryData.projectId,
       queryData.packetId,
       queryData.fieldId,

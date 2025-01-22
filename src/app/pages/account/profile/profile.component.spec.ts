@@ -5,13 +5,13 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
-import { HusersService } from 'core';
+import { HUserService } from 'core';
 
 describe('ProfileComponent', () => {
   let component: ProfileComponent;
   let fixture: ComponentFixture<ProfileComponent>;
   const formBuilder: FormBuilder = new FormBuilder();
-  let hUserService: HusersService;
+  let hUserService: HUserService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -19,7 +19,7 @@ describe('ProfileComponent', () => {
       imports: [CommonModule, ReactiveFormsModule, MatFormFieldModule, FormsModule],
       providers: [
         { provide: FormBuilder, useValue: formBuilder },
-        { provide: HusersService, useValue: hUserService}
+        { provide: HUserService, useValue: hUserService}
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
     })

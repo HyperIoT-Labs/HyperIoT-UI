@@ -1,12 +1,12 @@
 import { EntityMap, EntityMapOne, Predicate, Update } from "@ngrx/entity";
 import { createAction, props } from "@ngrx/store";
-import { HPacket } from "../../hyperiot-client/models/hPacket";
+import { HPacket } from "../../hyperiot-client/hyt-api/api-module";
 
 export namespace HPacketActions {
     export const loadHPackets = createAction('[HPacket/API] Load HPackets');
     export const loadHPacketsSuccess = createAction('[HPacket/API] Load HPackets Success', props<{ hPackets: HPacket[] }>());
     export const loadHPacketsFailure = createAction('[HPacket/API] Load HPackets Failure', props<{ error: any }>());
-    
+
     export const setHPackets = createAction('[HPacket/API] Set HPackets', props<{ hPackets: HPacket[] }>());
     export const addHPacket = createAction('[HPacket/API] Add HPacket', props<{ hPacket: HPacket }>());
     export const setHPacket = createAction('[HPacket/API] Set HPacket', props<{ hPacket: HPacket }>());
@@ -20,5 +20,5 @@ export namespace HPacketActions {
     export const deleteHPacket = createAction('[HPacket/API] Delete HPacket', props<{ id: number }>());
     export const deleteHPackets = createAction('[HPacket/API] Delete HPackets', props<{ ids: number[] }>());
     export const deleteHPacketsByPredicate = createAction('[HPacket/API] Delete HPackets By Predicate', props<{ predicate: Predicate<HPacket> }>());
-    export const clearHPackets = createAction('[HPacket/API] Clear HPackets');        
+    export const clearHPackets = createAction('[HPacket/API] Clear HPackets');
 }

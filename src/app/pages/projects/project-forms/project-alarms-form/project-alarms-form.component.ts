@@ -4,7 +4,7 @@ import { MatAutocomplete, MatAutocompleteSelectedEvent, MatAutocompleteTrigger }
 import { MatChipInputEvent } from '@angular/material/chips';
 import { ActivatedRoute } from '@angular/router';
 import { DialogService, Option, RuleDefinitionComponent } from 'components';
-import { Alarm, AlarmEvent, AlarmeventsService, AlarmsService, AssetTag, AssetstagsService, HPacket, HProject, HpacketsService, Logger, LoggerService, Rule } from 'core';
+import { Alarm, AlarmEvent, AlarmsEventsService, AlarmsService, AssetTag, AssetTagsService, HPacket, HProject, HPacketService, Logger, LoggerService, Rule } from 'core';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, Subject, Subscription, forkJoin, of, switchMap, takeUntil, zip } from 'rxjs';
 import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
@@ -111,13 +111,13 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity implements OnI
 
   constructor(injector: Injector,
     private alarmsService: AlarmsService,
-    private alarmEventsService: AlarmeventsService,
+    private alarmEventsService: AlarmsEventsService,
     private activatedRoute: ActivatedRoute,
     private cdr: ChangeDetectorRef,
-    private assetsTagService: AssetstagsService,
+    private assetsTagService: AssetTagsService,
     private dialogService: DialogService,
     private toastr: ToastrService,
-    private hPacketsService: HpacketsService,
+    private hPacketsService: HPacketService,
     private loggerService: LoggerService
   ) {
 

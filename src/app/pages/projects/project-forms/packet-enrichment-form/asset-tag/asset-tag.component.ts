@@ -1,7 +1,7 @@
 import { Component, OnInit, ElementRef, ViewChild, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
-import { AssetTag, AssetstagsService, HProject } from 'core';
+import { AssetTag, AssetTagsService, HProject } from 'core';
 import { startWith, map } from 'rxjs/operators';
 import {MatChipInputEvent} from '@angular/material/chips';
 
@@ -40,7 +40,7 @@ export class AssetTagComponent implements OnInit {
   assetRequest: Subscription;
 
   constructor(
-    private assetsTagService: AssetstagsService,
+    private assetsTagService: AssetTagsService,
   ) { }
 
   ngOnInit() {

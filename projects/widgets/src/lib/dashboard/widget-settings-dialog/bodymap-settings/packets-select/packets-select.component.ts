@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { SelectOptionGroup } from 'components';
-import { HDevice, HdevicesService, HPacket, HpacketsService } from 'core';
+import { HDevice, HDevicesService, HPacket, HPacketService } from 'core';
 
 @Component({
   selector: 'hyperiot-packets-select',
@@ -23,8 +23,8 @@ export class PacketsSelectComponent implements OnInit {
   >();
 
   constructor(
-    // private hDevicesService: HdevicesService,
-    private hPacketsService: HpacketsService,
+    // private hDevicesService: HDevicesService,
+    private hPacketsService: HPacketService,
   ) {}
 
   ngOnInit(): void {

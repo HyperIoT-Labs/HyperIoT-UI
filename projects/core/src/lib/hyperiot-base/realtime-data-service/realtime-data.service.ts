@@ -6,8 +6,8 @@ import { DataPacketFilter } from '../models/data-packet-filter';
 import { IDataService } from '../data.interface';
 import { RealtimeDataChannelController } from './realtimeDataChannelController';
 import { PacketData, PacketDataChunk } from '../models/packet-data';
-import { HPacket } from '../../hyperiot-client/models/hPacket';
-import { HPacketField } from '../../hyperiot-client/models/hPacketField';
+import { HPacket } from '../../hyperiot-client/hyt-api/api-module';
+import { HPacketField } from '../../hyperiot-client/hyt-api/api-module';
 import { DateFormatterService } from '../../hyperiot-service/date-formatter/date-formatter.service';
 
 // HPacketData created on top op HPacket
@@ -152,7 +152,7 @@ export class RealtimeDataService extends BaseDataService implements IDataService
       throw Error(errorMessage);
     }
     // read AVRO-serialized HPacket from Kafka-Flux
-    const wsData = JSON.parse(event.data);  
+    const wsData = JSON.parse(event.data);
     // decode base-64 payload
     const decodedWsPayload = atob(wsData.payload);
     // TODO: add specific type 'SCHEMA' instead of using 'INFO'
@@ -209,7 +209,7 @@ export class RealtimeDataService extends BaseDataService implements IDataService
               };
               (channelData.controller as RealtimeDataChannelController).dataStreamInput$.next(packetDataChunk);
             });
-          
+
         }
       }
     } else if (wsData.type === 'ERROR') {
@@ -256,7 +256,7 @@ export class RealtimeDataService extends BaseDataService implements IDataService
   }
 
   pauseStream() {
-    
+
   }
 
 }

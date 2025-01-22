@@ -11,7 +11,7 @@ import {
 import { ControlContainer, NgForm } from '@angular/forms';
 import { SelectOption, SelectOptionGroup, UnitConversionService } from 'components';
 import { LoggerService, Logger, HPacketFieldsHandlerService } from 'core';
-import { HPacket, HPacketField, HpacketsService, AreasService, AreaDevice, HDevice, HdevicesService } from 'core';
+import { HPacket, HPacketField, HPacketService, Area_Service, AreaDevice, HDevice, HDevicesService } from 'core';
 import { mimeTypeList } from './MIMETypes';
 import { FieldAliases, FieldFileMimeTypes, FieldTypes, FieldUnitConversion, FieldValuesMapList } from '../../../base/base-widget/model/widget.model';
 import { DataSimulatorSettings } from "../data-simulator-settings/data-simulator.models";
@@ -91,10 +91,10 @@ export class PacketSelectComponent implements OnInit, OnChanges {
   expressionIsValid: boolean = true;
 
   constructor(
-    private packetService: HpacketsService,
+    private packetService: HPacketService,
     public settingsForm: NgForm,
-    private areaService: AreasService,
-    private hDeviceService: HdevicesService,
+    private areaService: Area_Service,
+    private hDeviceService: HDevicesService,
     private unitConversionService: UnitConversionService,
     private loggerService: LoggerService,
     private hPacketFieldsHandlerService: HPacketFieldsHandlerService,

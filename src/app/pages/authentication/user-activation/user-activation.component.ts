@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HusersService, Logger, LoggerService } from 'core';
+import { HUserService, Logger, LoggerService } from 'core';
 import { ActivatedRoute } from '@angular/router';
 import { SubmissionStatus } from '../models/pageStatus';
 
@@ -37,7 +37,7 @@ export class UserActivationComponent implements OnInit {
   /**
    * class constructor
    */
-  constructor(private route: ActivatedRoute, private hUserService: HusersService, private loggerService: LoggerService) {
+  constructor(private route: ActivatedRoute, private hUserService: HUserService, private loggerService: LoggerService) {
     this.logger = new Logger(this.loggerService);
     this.logger.registerClass('UserActivationComponent');
   }
