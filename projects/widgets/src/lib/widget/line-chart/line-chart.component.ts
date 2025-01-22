@@ -11,7 +11,7 @@ import {
   Logger,
   LoggerService,
   PacketData,
-  RulesService,
+  RuleEngineService,
 } from "core";
 import { PlotlyComponent, PlotlyService } from "angular-plotly.js";
 import {
@@ -94,7 +94,7 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
     private dashboardEvent: DashboardEventService,
     @Optional() public plotly: PlotlyService,
     protected loggerService: LoggerService,
-    private ruleService: RulesService
+    private ruleService: RuleEngineService
   ) {
     super(injector, plotly, loggerService);
     this.logger = new Logger(this.loggerService);
@@ -280,7 +280,7 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
                 this.dataRequest();
               }
             }
-          } else { // if fullscreen            
+          } else { // if fullscreen
             this.computePacketData(this.initData, this.isToolbarVisible);
           }
         });
@@ -316,7 +316,7 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
     }
   }
 
-  /* 
+  /*
     Retrive each threshold and save the corresponding rule
   */
   retrieveThresholds() {

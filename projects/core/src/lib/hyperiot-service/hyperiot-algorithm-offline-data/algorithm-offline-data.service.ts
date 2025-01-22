@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HprojectalgorithmsService } from '../../hyperiot-client/hproject-algorithms-client/api-module';
+import {HProjectAlgorithmsService} from '../../hyperiot-client/hyt-api/api-module';
 
 interface WidgetAlgorithm {
   hProjectAlgorithmId: number;
@@ -18,7 +18,7 @@ export class AlgorithmOfflineDataService {
   public totalDataCount = [];
 
   constructor(
-    private hprojectAlgorithmsService: HprojectalgorithmsService
+    private hprojectAlgorithmsService: HProjectAlgorithmsService
   ) { }
 
   public resetService(hProjectId: number): void {

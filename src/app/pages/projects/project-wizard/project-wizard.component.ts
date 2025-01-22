@@ -11,12 +11,10 @@ import { DialogService, Option } from "components";
 import { HytStepperComponent } from "components";
 import {
   HDevice,
-  HdevicesService,
+  HDevicesService,
   HPacket,
-  HpacketsService,
+  HPacketService,
   HProject,
-  HProjectAlgorithm,
-  HprojectalgorithmsService,
   Rule,
 } from "core";
 import { Observable, Observer } from "rxjs";
@@ -110,8 +108,8 @@ export class ProjectWizardComponent implements OnInit {
   protected ngUnsubscribe: Subject<void> = new Subject<void>();
 
   constructor(
-    private hDevicesService: HdevicesService,
-    private hPacketsService: HpacketsService,
+    private hDevicesService: HDevicesService,
+    private hPacketsService: HPacketService,
     public entitiesService: EntitiesService,
     private dialogService: DialogService,
     private router: Router,

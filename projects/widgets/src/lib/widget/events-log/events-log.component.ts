@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BaseGenericComponent } from '../../base/base-generic/base-generic.component';
-import {HpacketsService, RealtimeDataService} from 'core';
+import {HPacketService, RealtimeDataService} from 'core';
 import {filter, of, PartialObserver, Subject, switchMap, takeLast, takeUntil, tap} from 'rxjs';
 import { WidgetAction } from '../../base/base-widget/model/widget.model';
 import {catchError} from "rxjs/operators";
@@ -49,7 +49,7 @@ export class EventsLogComponent extends BaseGenericComponent implements OnInit {
       this.logMessages = [...this.initData];
     }
     super.ngOnInit();
-    const hpService = this.injector.get(HpacketsService);
+    const hpService = this.injector.get(HPacketService);
     hpService.findAllHPacketByProjectId(this.widget.projectId)
       .pipe(
         // Passiamo al secondo stream, cioè l'eventStream

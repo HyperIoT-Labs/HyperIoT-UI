@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { Subscription } from 'rxjs';
 
-import { HprojectsService, HProject } from 'core';
+import { HProjectService, HProject } from 'core';
 
 import { ProjectFormEntity, LoadingStatusEnum } from '../project-form-entity';
 
@@ -50,7 +50,7 @@ export class ProjectFormComponent extends ProjectFormEntity implements AfterView
 
   constructor(
     injector: Injector,
-    private hProjectService: HprojectsService,
+    private hProjectService: HProjectService,
     private activatedRoute: ActivatedRoute,
     private cdr: ChangeDetectorRef
   ) {

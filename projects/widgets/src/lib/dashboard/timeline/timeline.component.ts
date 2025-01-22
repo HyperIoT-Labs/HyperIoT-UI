@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild} from '@angular/core';
 import { TimeStep } from 'components';
-import { HprojectsService } from 'core';
+import { HProjectService } from 'core';
 import * as moment_ from 'moment';
 import 'moment-precise-range-plugin';
 import { TimeAxisComponent } from './time-axis/time-axis.component';
@@ -107,7 +107,7 @@ export class TimelineComponent implements OnChanges {
    * @param hprojectsService service to require data for the timeline
    */
   constructor(
-    private hprojectsService: HprojectsService
+    private hprojectsService: HProjectService
   ) {
     this.domainStart = moment(new Date()).startOf(this.mapToDomain[this.domainInterval]).toDate();
     this.domainStop = moment(this.domainStart).add(1, this.mapToDomain[this.domainInterval]).toDate();

@@ -4,7 +4,7 @@ import { ControlContainer, FormArray, FormBuilder, NgForm, Validators } from '@a
 import { Subject } from 'rxjs';
 
 import { ActivatedRoute } from "@angular/router";
-import { Rule, RulesService } from 'core';
+import { Rule, RuleEngineService } from 'core';
 import { Threshold } from '../../../base/base-widget/model/widget.model';
 import { LineTypes } from '../../model/line.model';
 import { PageStatus } from '../models/page-status';
@@ -73,7 +73,7 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy, OnChanges 
 
     constructor(public settingsForm: NgForm,
         private activatedRoute: ActivatedRoute,
-        private ruleService: RulesService,
+        private ruleService: RuleEngineService,
         private fb: FormBuilder
     ) { }
 
@@ -124,7 +124,7 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy, OnChanges 
         return this.packetPageStatus === PageStatus.Loading || this.pageStatus === PageStatus.Loading
             || this.pageStatus === PageStatus.Error && this.packetPageStatus === PageStatus.Error;
     }
-    
+
     updateModalApplyIsLoading(value: boolean) {
         const dataToSend = { isLoading: value };
         this.modalApply.next(dataToSend);

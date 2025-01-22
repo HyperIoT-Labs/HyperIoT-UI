@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core';
 import { ControlContainer, NgForm } from '@angular/forms';
-import { HprojectalgorithmsService, HProjectAlgorithm, HPacketField } from 'core';
+import { HProjectAlgorithmsService, HProjectAlgorithm, HPacketField } from 'core';
 import { FieldAliases, FieldTypes, FieldUnitConversion } from '../../../../base/base-widget/model/widget.model';
 import { UnitConversionService } from 'components';
 
@@ -33,7 +33,7 @@ export class AlgorithmSelectComponent implements OnInit {
   fieldUnitConversions: FieldUnitConversion;
 
   constructor(
-    private hProjectAlgorithmsService: HprojectalgorithmsService,
+    private hProjectAlgorithmsService: HProjectAlgorithmsService,
     private unitConversionService: UnitConversionService,
     public settingsForm: NgForm
   ) { }

@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewInit, ViewEncapsulation,ChangeDetectorRef, Inject } from '@angular/core';
 import { DIALOG_DATA, DialogRef } from 'components';
 import { PageStatus } from 'src/app/pages/projects/models/pageStatus';
-import { AssetstagsService } from 'core';
+import { AssetTagsService } from 'core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { HttpErrorHandlerService } from 'src/app/services/errorHandler/http-error-handler.service';
 
@@ -37,7 +37,7 @@ export class AddTagModalComponent implements OnInit,AfterViewInit {
   public color: string = this.DEFAULT_COLOR;
 
   constructor(
-    private assetTagService: AssetstagsService,
+    private assetTagService: AssetTagsService,
     private formBuilder: FormBuilder,
     private errorHandler: HttpErrorHandlerService,
     private cd : ChangeDetectorRef,

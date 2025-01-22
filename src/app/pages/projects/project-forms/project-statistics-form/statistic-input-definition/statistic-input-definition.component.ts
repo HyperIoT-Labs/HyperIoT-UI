@@ -1,7 +1,7 @@
 import { Component, OnInit, OnChanges, Input,ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DialogService, SelectOption } from 'components';
-import { Algorithm, HPacket, HPacketField, HpacketsService, HProject, HProjectAlgorithmConfig, HProjectAlgorithmInputField } from 'core';
+import { Algorithm, HPacket, HPacketField, HPacketService, HProject, HProjectAlgorithmConfig, HProjectAlgorithmInputField } from 'core';
 import { resolve } from 'dns';
 import { InputDefinitionModalComponent } from './input-definition-modal/input-definition-modal.component';
 import { StatisticInputErrorComponent } from './statistic-input-error/statistic-input-error.component';
@@ -46,7 +46,7 @@ export class StatisticInputDefinitionComponent implements OnInit {
   updating = false;
 
   constructor(
-    private hPacketsService: HpacketsService,
+    private hPacketsService: HPacketService,
     public fb: FormBuilder,
     private dialogService: DialogService,
     private scrollStrategyOptions: ScrollStrategyOptions,

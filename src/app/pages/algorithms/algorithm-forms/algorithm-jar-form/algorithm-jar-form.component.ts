@@ -2,7 +2,7 @@ import { Component, ViewChild, ElementRef, Injector, ChangeDetectorRef, ViewEnca
 
 import { Subject, PartialObserver } from 'rxjs';
 
-import { AlgorithmsService, Algorithm } from 'core';
+import { AlgorithmService, Algorithm } from 'core';
 
 import { AlgorithmFormEntity, LoadingStatusEnum } from '../algorithm-form-entity';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -43,9 +43,9 @@ export class AlgorithmJarFormComponent extends AlgorithmFormEntity implements On
   showPreloader: boolean;
 
   nameOfJarFile: string = '';
-  
+
   /**
-   * Variable used to prevent multiple click on choose file button 
+   * Variable used to prevent multiple click on choose file button
    */
   btnChooseIsDisabled: boolean = false;
 
@@ -54,7 +54,7 @@ export class AlgorithmJarFormComponent extends AlgorithmFormEntity implements On
   private overlayHeight: ElementRef;
 
   @ViewChild('overlayHeight') set content(content: ElementRef) {
-    
+
     if (!content) {
 
       this.showPreloader = false;
@@ -74,7 +74,7 @@ export class AlgorithmJarFormComponent extends AlgorithmFormEntity implements On
   });
 
   constructor(
-    private algorithmsService: AlgorithmsService,
+    private algorithmsService: AlgorithmService,
     injector: Injector,
     private cdr: ChangeDetectorRef
   ) {
@@ -126,7 +126,7 @@ export class AlgorithmJarFormComponent extends AlgorithmFormEntity implements On
   }
 
   handleFileInput(files: FileList) {
-    if(files.length > 0) { 
+    if(files.length > 0) {
       this.jarToUpload = files.item(0);
       this.form.value['algorithmFileName'] = files[0].name;
     }else{
@@ -195,7 +195,7 @@ export class AlgorithmJarFormComponent extends AlgorithmFormEntity implements On
   save(successCallback, errorCallback) {
     this.updateJar(successCallback, errorCallback);
   }
-  
+
   /**
    * Function used to simulate click on choose file
    */

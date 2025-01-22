@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { AlgorithmsService, Algorithm } from 'core';
+import { Algorithm } from 'core';
+import { AlgorithmService as AlgorithmsService } from 'core';
 import { Subject } from 'rxjs';
 
 export interface AlgorithmsState {

@@ -1,7 +1,7 @@
 import { Component, Input, OnInit,ChangeDetectorRef } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Option, SelectOption } from 'components';
-import { HPacket, HPacketField, HpacketsService } from 'core';
+import { HPacket, HPacketField, HPacketService } from 'core';
 import { environment } from 'src/environments/environment';
 import { EventComponent } from '../event-component';
 import { EventComponentType } from '../event-component-type.enum';
@@ -15,16 +15,16 @@ export class EventMqttCommandComponent implements OnInit,EventComponent {
 
   @Input()
   currentProjectId;
-  
+
   mqttFieldsFormGroup :FormGroup =  new FormGroup({
-    
+
   });
 
   private originalFormsValues = '';
-  
+
   currentOutputPacket: HPacket;
   currentOutputPacketId;
-  
+
   allPackets:HPacket[];
   fieldsOptions:Option[];
   packetOptions: SelectOption[] = [];
@@ -32,14 +32,14 @@ export class EventMqttCommandComponent implements OnInit,EventComponent {
 
   mqttUrl:string = environment.mqttUrl;
   mqttTopic:string;
-  
+
   activeOptions: Option[] = [
     { value: "true", label: $localize`:@@HYT_send_mqtt_command_active:ACTIVE`, checked: true },
     { value: "false", label: $localize`:@@HYT_send_mqtt_command_disabled:DISABLED`}
     // { value: '', label: $localize`:@@HYT_start_statistic:START STATISTIC` }
   ];
 
-  constructor(private hPacketsService: HpacketsService,private cd: ChangeDetectorRef) { 
+  constructor(private hPacketsService: HPacketService,private cd: ChangeDetectorRef) {
     this.originalFormsValues = this.getJsonForms();
   }
 
@@ -164,7 +164,7 @@ export class EventMqttCommandComponent implements OnInit,EventComponent {
             //extracting fields configuration from data
             let jsonValue = JSON.parse(data.message);
             this.mqttFieldsFormGroup.get(field.label).setValue(jsonValue[fieldName]);
-            
+
         }
       })
       if(data)

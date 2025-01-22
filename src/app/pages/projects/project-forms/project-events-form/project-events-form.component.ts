@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { Subscription, Observable } from 'rxjs';
 
-import { HpacketsService, HProject, RulesService, Rule, AssetstagsService, AssetTag, HPacket } from 'core';
+import { HPacketService, HProject, RuleEngineService, Rule, AssetTagsService, AssetTag, HPacket } from 'core';
 import { ProjectFormEntity, LoadingStatusEnum } from '../project-form-entity';
 import { Option, RuleDefinitionComponent } from 'components';
 import { SummaryListItem } from '../../project-detail/generic-summary-list/generic-summary-list.component';
@@ -64,11 +64,11 @@ export class ProjectEventsFormComponent extends ProjectFormEntity implements OnI
 
   constructor(
     injector: Injector,
-    private hPacketsService: HpacketsService,
-    private rulesService: RulesService,
+    private hPacketsService: HPacketService,
+    private rulesService: RuleEngineService,
     private activatedRoute: ActivatedRoute,
     private cdr: ChangeDetectorRef,
-    private assetsTagService: AssetstagsService
+    private assetsTagService: AssetTagsService
   ) {
     super(injector,cdr);
     this.formTemplateId = 'container-events';

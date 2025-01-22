@@ -1,6 +1,6 @@
 import {Component, OnDestroy, ViewEncapsulation} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import {AreasService, Area, HprojectsService, HProject, Logger, LoggerService} from 'core';
+import {Area_Service, Area, HProjectService, HProject, Logger, LoggerService} from 'core';
 import { HttpClient } from '@angular/common/http';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
@@ -45,8 +45,8 @@ export class AreasViewComponent implements OnDestroy {
   protected ngUnsubscribe: Subject<void> = new Subject<void>();
 
   constructor(
-    private projectService: HprojectsService,
-    private areaService: AreasService,
+    private projectService: HProjectService,
+    private areaService: Area_Service,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private httpClient: HttpClient,

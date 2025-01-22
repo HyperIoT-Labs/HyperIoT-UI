@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { BrandingActions, BrandingService, HDeviceActions, HPacketActions, HProject, HProjectActions, HprojectsService, LiveAlarmActions, RuleActions, UserSiteSettingActions } from 'core';
+import { BrandingActions, BrandingService, HDeviceActions, HPacketActions, HProject, HProjectActions, HProjectService, LiveAlarmActions, RuleActions, UserSiteSettingActions } from 'core';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,7 @@ export class PostLoginService {
 
   constructor(
     private brandingService: BrandingService,
-    private hProjectService: HprojectsService,
+    private hProjectService: HProjectService,
     private store: Store
   ) { }
 

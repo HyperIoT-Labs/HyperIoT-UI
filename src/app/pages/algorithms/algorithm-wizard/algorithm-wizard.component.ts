@@ -2,7 +2,7 @@ import { AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation,ChangeDe
 import { ActivatedRoute } from '@angular/router';
 import { DialogService } from 'components';
 import { HytStepperComponent } from 'components';
-import { Algorithm, AlgorithmIOField, AlgorithmsService } from 'core';
+import { Algorithm, AlgorithmIOField, AlgorithmService } from 'core';
 import { Subject } from 'rxjs';
 import { EntitiesService } from 'src/app/services/entities/entities.service';
 import { AlgorithmFormEntity, LoadingStatusEnum } from '../algorithm-forms/algorithm-form-entity';
@@ -51,7 +51,7 @@ export class AlgorithmWizardComponent implements OnInit {
   stepper: HytStepperComponent;
 
   constructor(
-      private algorithmsService: AlgorithmsService,
+      private algorithmsService: AlgorithmService,
       public entitiesService: EntitiesService,
       private dialogService: DialogService,
       private route: ActivatedRoute,

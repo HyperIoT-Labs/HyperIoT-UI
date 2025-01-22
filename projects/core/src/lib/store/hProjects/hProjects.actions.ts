@@ -1,6 +1,6 @@
 import { EntityMap, EntityMapOne, Predicate, Update } from "@ngrx/entity";
 import { createAction, props } from "@ngrx/store";
-import { HProject } from "../../hyperiot-client/models/hProject";
+import { HProject } from "../../hyperiot-client/hyt-api/api-module"
 
 export namespace HProjectActions {
 
@@ -22,5 +22,5 @@ export namespace HProjectActions {
     export const deleteHProjects = createAction('[HProject/API] Delete HProjects', props<{ ids: number[] }>());
     export const deleteHProjectsByPredicate = createAction('[HProject/API] Delete HProjects By Predicate', props<{ predicate: Predicate<HProject> }>());
     export const clearHProjects = createAction('[HProject/API] Clear HProjects');
-     
+
 }

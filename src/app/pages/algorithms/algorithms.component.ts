@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewEncapsulation, OnDestroy } from "@angular/core";
 import { Router } from "@angular/router";
 import { PageStatus } from "./models/pageStatus";
-import { Algorithm, AlgorithmsService } from "core";
+import { Algorithm, AlgorithmService } from "core";
 import { FormGroup, FormBuilder } from "@angular/forms";
 import { CardEmittedValue, DialogService, SelectOption } from "components";
-import { AlgorithmService } from "src/app/services/algorithms/algorithm.service";
+import { AlgorithmService as AlgorithmsService } from "src/app/services/algorithms/algorithm.service";
 import { DeleteConfirmDialogComponent } from "src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component";
 
 @Component({
@@ -37,10 +37,10 @@ export class AlgorithmsComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private algorithmsService: AlgorithmsService,
+    private algorithmsService: AlgorithmService,
     private fb: FormBuilder,
     private dialog: DialogService,
-    private algorithmService: AlgorithmService
+    private algorithmService: AlgorithmsService
   ) {}
 
   ngOnInit() {

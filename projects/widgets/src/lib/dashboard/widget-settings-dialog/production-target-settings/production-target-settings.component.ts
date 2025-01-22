@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ControlContainer, NgForm } from '@angular/forms';
 import { SelectOptionGroup } from 'components';
-import { HPacket, HPacketField, HpacketsService, Logger, LoggerService } from 'core';
+import { HPacket, HPacketField, HPacketService, Logger, LoggerService } from 'core';
 import { Observable } from 'rxjs';
 import { FieldAliases, WidgetConfig } from '../../../base/base-widget/model/widget.model';
 import { ProductionTargetSettings } from './production-target.model';
@@ -50,7 +50,7 @@ export class ProductionTargetSettingsComponent implements OnInit {
 
   constructor(
     loggerService: LoggerService,
-    private hPacketsService: HpacketsService
+    private hPacketsService: HPacketService
   ) {
     this.logger = new Logger(loggerService);
     this.logger.registerClass("ProductionTargetSettingsComponent");

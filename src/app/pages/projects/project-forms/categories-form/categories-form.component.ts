@@ -1,7 +1,7 @@
 import { Component, OnInit, Injector, ViewChild, ElementRef, ViewEncapsulation,ChangeDetectorRef } from '@angular/core';
 import { ProjectFormEntity } from '../project-form-entity';
 import { TreeNodeCategory, DialogService } from 'components';
-import { AssetscategoriesService, AssetCategory } from 'core';
+import { AssetCategoriesService, AssetCategory } from 'core';
 import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
 import { Router } from '@angular/router';
 import { LoadStatus } from 'src/app/models/loadStatus';
@@ -31,9 +31,9 @@ export class CategoriesFormComponent extends ProjectFormEntity implements OnInit
   constructor(
     injector: Injector,
     private router: Router,
-    private assetCategoriesService: AssetscategoriesService,
+    private assetCategoriesService: AssetCategoriesService,
     private dialogService: DialogService,
-    private cdr:ChangeDetectorRef 
+    private cdr:ChangeDetectorRef
   ) {
     super(injector,cdr);
     this.formTemplateId= 'container-category-form';

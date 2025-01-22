@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { UiBrandingService } from '../../hyperiot-client/uibranding-client/api-module';
+import { UIBrandingService } from '../../hyperiot-client/hyt-api/api-module';
 import { of } from 'rxjs';
 import { map, mergeMap, catchError, exhaustMap } from 'rxjs/operators';
 import { BrandingStore } from './branding.reducer';
 import { BrandingActions } from './branding.actions';
 import { BrandingService } from '../../services/branding/branding.service';
- 
+
 @Injectable()
 export class BrandingEffects {
- 
+
   load$ = createEffect(() => this.actions$.pipe(
     ofType(BrandingActions.load),
     mergeMap(() => this.uiBrandingService.getUIBranding()
@@ -19,7 +19,7 @@ export class BrandingEffects {
           const newBranding: BrandingStore.State = {
             colorSchema,
             logo: {
-              standard: this.brandingService.getSanitizedLogo(branding.logoBase64), 
+              standard: this.brandingService.getSanitizedLogo(branding.logoBase64),
               mobile: this.brandingService.getSanitizedLogo(branding.logoBase64),
             },
             isBrandedTheme: true
@@ -30,7 +30,7 @@ export class BrandingEffects {
           return of(BrandingActions.loadFailure({ payload: err }));
         })
       ))
-    ) 
+    )
   );
 
   updateAll$ = createEffect(() =>
@@ -43,7 +43,7 @@ export class BrandingEffects {
             const newBranding: BrandingStore.State = {
               colorSchema,
               logo: {
-                standard: res.logoBase64 ? this.brandingService.getSanitizedLogo(res.logoBase64) : action.brandingTheme.fileBase64, 
+                standard: res.logoBase64 ? this.brandingService.getSanitizedLogo(res.logoBase64) : action.brandingTheme.fileBase64,
                 mobile: res.logoBase64 ? this.brandingService.getSanitizedLogo(res.logoBase64) : action.brandingTheme.fileBase64,
               },
               isBrandedTheme: true
@@ -73,10 +73,10 @@ export class BrandingEffects {
       )
     )
   );
- 
+
   constructor(
     private actions$: Actions,
     private brandingService: BrandingService,
-    private uiBrandingService: UiBrandingService
+    private uiBrandingService: UIBrandingService
   ) { }
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HPacket } from '../../hyperiot-client/models/hPacket';
-import { HPacketField } from '../../hyperiot-client/models/hPacketField';
+import { HPacket } from '../../hyperiot-client/hyt-api/api-module';
+import { HPacketField } from '../../hyperiot-client/hyt-api/api-module';
 
 interface FieldList {
   field: HPacketField;

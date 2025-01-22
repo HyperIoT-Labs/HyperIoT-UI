@@ -25,7 +25,7 @@ import { AccountButtonComponent } from './components/topbar/account-button/accou
 import { MatIconModule } from '@angular/material/icon';
 
 // hyperiot
-import { Configuration, ConfigurationParameters, CoreModule, HyperiotClientModule, LoggerService, BrandingService, HyperiotStore} from 'core';
+import { Configuration, ConfigurationParameters, CoreModule, ApiModule, LoggerService, BrandingService, HyperiotStore} from 'core';
 import { ComponentsModule } from 'components';
 import { AddWidgetDialogComponent, DashboardModule, WidgetSettingsDialogComponent, WidgetsModule } from 'widgets';
 import { RouterModule, DefaultUrlSerializer, UrlSerializer, UrlTree } from '@angular/router';
@@ -84,7 +84,8 @@ export function apiConfigFactory(): Configuration {
     apiKeys: {},
     username: '',
     password: '',
-    accessToken: ''
+    accessToken: '',
+    basePath: '/hyperiot'
   };
   return new Configuration(params);
 }
@@ -144,7 +145,7 @@ export function apiConfigFactory(): Configuration {
     AlgorithmsModule,
     ProjectsModule,
     WidgetsModule,
-    HyperiotClientModule.forRoot(apiConfigFactory),
+    ApiModule.forRoot(apiConfigFactory),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production, registrationStrategy: 'registerImmediately' }),
     ToastrModule.forRoot(),
     ScrollingModule,

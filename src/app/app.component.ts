@@ -8,7 +8,7 @@ import {
 import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
 import {
   HProject,
-  HprojectsService, IGNORE_ERROR_NOTIFY,
+  HProjectService, IGNORE_ERROR_NOTIFY,
   Logger,
   LoggerService,
   RealtimeDataService,
@@ -52,7 +52,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private hprojectsService: HprojectsService,
+    private hprojectsService: HProjectService,
     private realtimeDataService: RealtimeDataService,
     private toastr: ToastrService,
     private loggerService: LoggerService,
@@ -82,7 +82,7 @@ export class AppComponent implements OnInit, OnDestroy {
           }
         }
       });
-    
+
     this.subscribeToNotification();
   }
 

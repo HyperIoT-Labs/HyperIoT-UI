@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { HdevicesService } from '../../hyperiot-client/h-device-client/api-module/api/hdevices.service';
+import { HDevicesService } from '../../hyperiot-client/hyt-api/api-module';
 import { of } from 'rxjs';
 import { map, mergeMap, catchError } from 'rxjs/operators';
 import { HDeviceActions } from './hDevices.actions';
- 
+
 @Injectable()
 export class HDevicesEffects {
 
@@ -19,11 +19,11 @@ export class HDevicesEffects {
           return of(HDeviceActions.loadHDevicesFailure({ error: err }));
         }),
       ))
-    ) 
+    )
   );
 
   constructor(
     private actions$: Actions,
-    private hDevicesService: HdevicesService
+    private hDevicesService: HDevicesService
   ) { }
 }

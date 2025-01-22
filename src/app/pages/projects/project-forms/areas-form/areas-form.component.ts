@@ -21,7 +21,7 @@ import {AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Injector, OnD
 import {ActivatedRoute, Event, NavigationStart, Router} from '@angular/router';
 import {ConfirmDialogService, DialogService, GenericMap, Option} from 'components';
 import {LoadingStatusEnum, ProjectFormEntity} from '../project-form-entity';
-import {Area, AreaDevice, AreasService, HprojectsService, Logger, LoggerService} from 'core';
+import {Area, AreaDevice, Area_Service, HProjectService, Logger, LoggerService} from 'core';
 import {AreaMapComponent} from './area-map/area-map.component';
 import {HttpClient} from '@angular/common/http';
 import {AreaDeviceSelectDialogComponent} from './area-device-select-dialog/area-device-select-dialog.component';
@@ -167,8 +167,8 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
     injector: Injector,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private areaService: AreasService,
-    private projectService: HprojectsService,
+    private areaService: Area_Service,
+    private projectService: HProjectService,
     private dialogService: DialogService,
     private httpClient: HttpClient,
     private cdr: ChangeDetectorRef,

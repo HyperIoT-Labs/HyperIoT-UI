@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
-import { AlarmsService } from '../../hyperiot-client/alarms-client/api-module';
+import { AlarmsService } from '../../hyperiot-client/hyt-api/api-module';
 import { HytAlarm } from '../../models/hyperiot-alarm.model';
 import { RealtimeDataService } from '../../hyperiot-base/realtime-data-service/realtime-data.service';
 import { from, of } from 'rxjs';
