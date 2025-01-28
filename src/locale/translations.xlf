@@ -1905,6 +1905,15 @@
       <trans-unit id="HYT_delete_area_item" datatype="html">
         <source>Delete item</source>
       </trans-unit>
+      <trans-unit id="HYT_thresholds" datatype="html">
+        <source>Thresholds</source>
+      </trans-unit>
+      <trans-unit id="HYT_colorpicker_description" datatype="html">
+        <source>Choose the color that you want for the threshold line.</source>
+      </trans-unit>
+      <trans-unit id="HYT_line_description" datatype="html">
+        <source>Choose the type and thickness of the threshold line.</source>
+      </trans-unit>
     </body>
   </file>
 </xliff>

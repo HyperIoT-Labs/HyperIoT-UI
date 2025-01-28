@@ -2548,6 +2548,18 @@
         <source>Delete item</source>
         <target>Elimina Oggetto</target>
       </trans-unit>
+      <trans-unit id="HYT_thresholds" datatype="html">
+        <source>Thresholds</source>
+        <target>Soglie</target>
+      </trans-unit>
+      <trans-unit id="HYT_colorpicker_description" datatype="html">
+        <source>Choose the color that you want for the threshold line.</source>
+        <target>Scegli il colore che vuoi per la linea di soglia.</target>
+      </trans-unit>
+      <trans-unit id="HYT_line_description" datatype="html">
+        <source>Choose the type and thickness of the threshold line.</source>
+        <target>Scegli il tipo e lo spessore della linea di soglia.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
