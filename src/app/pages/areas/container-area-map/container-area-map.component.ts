@@ -154,7 +154,7 @@ export class ContainerAreaMapComponent implements OnInit, OnChanges, OnDestroy {
           this.pageStatus = PageStatus.Error
         }
       }
-    );
+      );
   }
 
   /**
@@ -275,26 +275,26 @@ export class ContainerAreaMapComponent implements OnInit, OnChanges, OnDestroy {
         this.areaService.getAreaDeviceDeepList(this.areaId)
           .pipe(takeUntil(this.ngUnsubscribe))
           .subscribe(
-          {
-            next: (areaDevices: AreaDevice[]) => {
-              if (area.areaViewType === 'IMAGE' || area.areaViewType === 'MAP') {
-                this.logger.debug('Found the devices present in this area and sub-areas', areaDevices);
-                this.areaDevicesDeep = areaDevices;
-                this.areaDevices = areaDevices = areaDevices.filter(x => x.area.id === this.areaId);
-                const areaList = this.areaList.filter(a => a.mapInfo != null) as any;
-                areaList.forEach(x => x.deepDevices = this.getAreaDeepDevicesList(x));
-                const areaItems: (AreaDevice | Area)[] = areaDevices.concat(areaList);
-                this.mapComponent.setAreaItems(areaItems);
-                this.mapComponent.refresh();
-                if (area.areaViewType === 'IMAGE') {
-                  this.loadAreaImage(areaTree);
+            {
+              next: (areaDevices: AreaDevice[]) => {
+                if (area.areaViewType === 'IMAGE' || area.areaViewType === 'MAP') {
+                  this.logger.debug('Found the devices present in this area and sub-areas', areaDevices);
+                  this.areaDevicesDeep = areaDevices;
+                  this.areaDevices = areaDevices = areaDevices.filter(x => x.area.id === this.areaId);
+                  const areaList = this.areaList.filter(a => a.mapInfo != null) as any;
+                  areaList.forEach(x => x.deepDevices = this.getAreaDeepDevicesList(x));
+                  const areaItems: (AreaDevice | Area)[] = areaDevices.concat(areaList);
+                  this.mapComponent.setAreaItems(areaItems);
+                  this.mapComponent.refresh();
+                  if (area.areaViewType === 'IMAGE') {
+                    this.loadAreaImage(areaTree);
+                  }
                 }
-              }
-              if (area.areaViewType === 'BIM_XKT') {
-                this.logger.debug('Found the devices present in this area', areaDevices);
-                this.areaDevices = areaDevices;
-                this.loadAreaBim(areaTree);
-              }
+                if (area.areaViewType === 'BIM_XKT') {
+                  this.logger.debug('Found the devices present in this area', areaDevices);
+                  this.areaDevices = areaDevices;
+                  this.loadAreaBim(areaTree);
+                }
 
               },
               error: (error) => {

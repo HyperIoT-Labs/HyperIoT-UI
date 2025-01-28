@@ -1,14 +1,14 @@
 import { ApplicationRef, Component, ComponentFactoryResolver, EventEmitter, Injector, Input, NgZone, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import * as L from 'leaflet';
-import {Area, AreaDevice, HDevice, LiveAlarmSelectors, Logger, LoggerService} from "core";
+import { Area, AreaDevice, Logger, LoggerService, HDevice, LiveAlarmSelectors } from "core";
 import { LeafletMapConfig } from "../../models/leaflet-map";
 import { MapDefaultConfiguration } from '../../map-configuration';
 import { MapDeviceEditComponent } from '../map-device-edit/map-device-edit.component';
 import { MapDeviceInfoComponent } from '../map-device-info/map-device-info.component';
-import { MapItemAction } from '../../models/map-item-action';
 import domtoimage from 'dom-to-image';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject, combineLatest } from 'rxjs';
+import { MapItemAction } from '../../models/map-item-action';
 
 interface MapMarker {
   reference: L.Marker<any>;
@@ -238,15 +238,32 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
     return { x: this.mapRef.getCenter().lat, y: this.mapRef.getCenter().lng };
   }
 
-  private _buildMarkerIcon(iconUrl: string): L.Icon {
-    return L.icon({
-      iconUrl:  'assets/icons/map/' + iconUrl,
-      shadowUrl: 'assets/icons/map/shadow_icon.png',
+  private _buildMarkerDivIcon(iconUrl: string, badgeId: string): L.DivIcon {
+    const iconElement = this.renderer.createElement('div');
+
+    const shadowImage = this.renderer.createElement('img');
+    this.renderer.setAttribute(shadowImage, 'src', 'assets/icons/map/shadow_icon.png');
+    this.renderer.addClass(shadowImage, 'shadow-img');
+
+    const iconImage = this.renderer.createElement('img');
+    this.renderer.setAttribute(iconImage, 'src', 'assets/icons/map/' + iconUrl);
+
+    const badgeElement = this.renderer.createElement('span');
+    this.renderer.setAttribute(badgeElement, 'id', badgeId);
+    this.renderer.addClass(badgeElement, 'mat-badge-content');
+    this.renderer.addClass(badgeElement, 'mat-badge-active');
+    this.renderer.addClass(badgeElement, 'leaflet-badge');
+    this.renderer.setValue(badgeElement, '-');
+
+    this.renderer.appendChild(iconElement, shadowImage);
+    this.renderer.appendChild(iconElement, iconImage);
+    this.renderer.appendChild(iconElement, badgeElement);
+
+    return L.divIcon({
       iconSize:     [51, 67],
-      shadowSize:   [54, 33],
       iconAnchor:   [25.5, 67],
-      shadowAnchor: [5, 31],
       popupAnchor:  [0, -70],
+      html: iconElement,
     });
   }
 

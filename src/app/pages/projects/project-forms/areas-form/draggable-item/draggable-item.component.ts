@@ -1,6 +1,6 @@
-import {Component, EventEmitter, HostListener, ViewEncapsulation} from '@angular/core';
-import {CdkDrag} from '@angular/cdk/drag-drop';
-import {AreaDevice, HDevice, LiveAlarmSelectors, Area, Dashboard} from 'core';
+import { Component, ElementRef, EventEmitter, HostListener, ViewEncapsulation } from '@angular/core';
+import { CdkDrag } from '@angular/cdk/drag-drop';
+import { Area, AreaDevice, HDevice, LiveAlarmSelectors, Dashboard } from 'core';
 import { DeviceActions, MapItemAction } from 'components';
 import { Store } from '@ngrx/store';
 import { Observable, map, tap } from 'rxjs';
@@ -80,7 +80,7 @@ export class DraggableItemComponent {
   setConfig(container: HTMLElement, itemData: Area | AreaDevice) {
     this.container = container;
     this.itemData = itemData;
-    this.deepHDeviceList = this.itemData.device ? [ this.itemData.device ] : this.itemData.deepDevices;
+    this.deepHDeviceList = this.itemData.device ? [this.itemData.device] : this.itemData.deepDevices;
     this.style['background-image'] = `url(assets/icons/${itemData.mapInfo.icon})`;
     this.style['background-size'] = `contain`;
     this.style['background-repeat'] = `no-repeat`;
