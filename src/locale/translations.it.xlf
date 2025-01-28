@@ -2548,6 +2548,14 @@
         <source>Delete item</source>
         <target>Elimina Oggetto</target>
       </trans-unit>
+      <trans-unit id="HYT_data_recording_check_status" datatype="html">
+        <source>Check project status</source>
+        <target>Verifica dello stato del progetto</target>
+      </trans-unit>
+      <trans-unit id="HYT_data_recording_waiting_status" datatype="html">
+        <source>Recording status is being checked. Please wait...</source>
+        <target>Verifica delle fonti dati in corso. Attendere prego...</target>
+      </trans-unit>
       <trans-unit id="HYT_thresholds" datatype="html">
         <source>Thresholds</source>
         <target>Soglie</target>

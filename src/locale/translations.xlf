@@ -1905,6 +1905,12 @@
       <trans-unit id="HYT_delete_area_item" datatype="html">
         <source>Delete item</source>
       </trans-unit>
+      <trans-unit id="HYT_data_recording_check_status" datatype="html">
+        <source>Check project status</source>
+      </trans-unit>
+      <trans-unit id="HYT_data_recording_waiting_status" datatype="html">
+        <source>Recording status is being checked. Please wait...</source>
+      </trans-unit>
       <trans-unit id="HYT_thresholds" datatype="html">
         <source>Thresholds</source>
       </trans-unit>
