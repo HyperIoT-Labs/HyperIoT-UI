@@ -17,6 +17,7 @@ export class ProductionTargetSettingsComponent implements OnInit {
   @Input() areaId;
   @Input() modalApply: Observable<any>;
   @Input() settingsForm: NgForm;
+  @Input() hDeviceId;
 
   private logger: Logger;
 
@@ -26,7 +27,7 @@ export class ProductionTargetSettingsComponent implements OnInit {
   contentLoaded: boolean = false;
 
   /**
-   * Radio button options 
+   * Radio button options
    */
   isTargetManuallySetOptions = [
     { value: 'true', label: 'Set Manually', checked: true },
@@ -78,7 +79,7 @@ export class ProductionTargetSettingsComponent implements OnInit {
 
   /**
    * Saves target manually setted value
-   * @param inputValue 
+   * @param inputValue
    */
   updateTargetValue(inputValue: number) {
     this.targetValue = inputValue;
@@ -86,7 +87,7 @@ export class ProductionTargetSettingsComponent implements OnInit {
 
   /**
    * Called when radio button value is changed
-   * @param option 
+   * @param option
    */
   onTargetOptionChange(option: string): void {
     this.isTargetManuallySetOptions.forEach(target => {
@@ -182,10 +183,10 @@ export class ProductionTargetSettingsComponent implements OnInit {
 
   /**
    * Process configured widget's data
-   * @param packet 
-   * @param key 
-   * @param totalFields 
-   * @param processedFields 
+   * @param packet
+   * @param key
+   * @param totalFields
+   * @param processedFields
    */
   processPacketAndConfiguration(packet: HPacket, key: string, totalFields: number, processedFields: number) {
     this.selectedPackets[key] = packet;

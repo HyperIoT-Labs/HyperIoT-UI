@@ -33,8 +33,8 @@
               "src/manifest.webmanifest"
             ],
             "styles": [
-              "src/styles.scss",
-              "./node_modules/leaflet/dist/leaflet.css"
+              "./node_modules/leaflet/dist/leaflet.css",
+              "src/styles.scss"
             ],
             "scripts": [],
             "vendorChunk": true,
@@ -122,8 +122,8 @@
               "src/manifest.webmanifest"
             ],
             "styles": [
-              "src/styles.scss",
-              "./node_modules/leaflet/dist/leaflet.css"
+              "./node_modules/leaflet/dist/leaflet.css",
+              "src/styles.scss"
             ],
             "scripts": []
           }

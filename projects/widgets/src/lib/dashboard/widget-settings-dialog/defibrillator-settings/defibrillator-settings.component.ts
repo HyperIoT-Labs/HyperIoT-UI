@@ -20,6 +20,7 @@ export class DefibrillatorSettingsComponent implements OnInit, OnDestroy {
     @Input() modalApply: Observable<any>;
     @Input() widget;
     @Input() areaId;
+    @Input() hDeviceId;
     @Input() selectedPacket: HPacket = null;
 
     projectPackets: Array<HPacket> = [];
@@ -52,7 +53,7 @@ export class DefibrillatorSettingsComponent implements OnInit, OnDestroy {
         unit: null,
       };
     }
-    
+
     createDefaultDefibrillatorSettings(): DefibrillatorSettings.DefibrillatorSettings {
       return {
         standard: {

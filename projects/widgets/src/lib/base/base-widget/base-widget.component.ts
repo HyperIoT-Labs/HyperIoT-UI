@@ -119,7 +119,7 @@ export abstract class BaseWidgetComponent implements OnChanges, OnInit, OnDestro
     return +Object.keys(packetFields).find(key => packetFields[key] === fieldName);
   }
 
-  computePacketData(packetData: PacketData[]) {
+  computePacketData(packetData: PacketData[], convertOldValues = true) {
     if (!this.widget.config.fieldUnitConversions) {
       return;
     }
@@ -135,34 +135,37 @@ export abstract class BaseWidgetComponent implements OnChanges, OnInit, OnDestro
           // TODO all configs should contain information about field type
           fieldType = this.widget.config.fieldTypes[fieldId];
         } catch (error) { }
-        switch(fieldType) {
+        switch (fieldType) {
           case 'DEFAULT':
           case 'INTEGER':
           case 'DOUBLE':
           case 'FLOAT': {
             // TODO: inserire qui la conversione dei valori con expression
             const unitConversion = this.widget.config.fieldUnitConversions[fieldId];
-            // temp fix. packet values shouldn't be forcibly converted
+            // temp fix. packet values shouldn't be forcibly converted            
+
             if (!isNaN(parseFloat(pd[packetKey]))) {
               pd[packetKey] = parseFloat(pd[packetKey]);
             }
             if (unitConversion && typeof pd[packetKey] === 'number') {
               // applying unit conversion
               if (unitConversion.convertFrom !== unitConversion.convertTo) {
-                pd[packetKey] = convert(pd[packetKey])
-                  .from(unitConversion.convertFrom)
-                  .to(unitConversion.convertTo);
+                if (convertOldValues) {
+                  pd[packetKey] = convert(pd[packetKey])
+                    .from(unitConversion.convertFrom)
+                    .to(unitConversion.convertTo);
+                }
               }
               pd[packetKey] = +pd[packetKey];
               // applying approximation
               try {
                 pd[packetKey] = pd[packetKey].toFixed(unitConversion.decimals);
               }
-              catch(error) {
+              catch (error) {
                 this.logger.error(error);
               }
               try {
-                if(this.widget.config.fieldCustomConversions
+                if (this.widget.config.fieldCustomConversions
                   && this.widget.config.fieldCustomConversions[fieldId]
                   && this.widget.config.fieldCustomConversions[fieldId].expression
                   && this.widget.config.fieldCustomConversions[fieldId].expression.trim() !== '') {

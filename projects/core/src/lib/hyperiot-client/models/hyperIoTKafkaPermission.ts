@@ -23,7 +23,7 @@ export namespace HyperIoTKafkaPermission {
         LITERAL: 'LITERAL' as PatternTypeEnum,
         PREFIXED: 'PREFIXED' as PatternTypeEnum
     };
-    export type AclOperationEnum = 'UNKNOWN' | 'ANY' | 'ALL' | 'READ' | 'WRITE' | 'CREATE' | 'DELETE' | 'ALTER' | 'DESCRIBE' | 'CLUSTER_ACTION' | 'DESCRIBE_CONFIGS' | 'ALTER_CONFIGS' | 'IDEMPOTENT_WRITE';
+    export type AclOperationEnum = 'UNKNOWN' | 'ANY' | 'ALL' | 'READ' | 'WRITE' | 'CREATE' | 'DELETE' | 'ALTER' | 'DESCRIBE' | 'CLUSTER_ACTION' | 'DESCRIBE_CONFIGS' | 'ALTER_CONFIGS' | 'IDEMPOTENT_WRITE' | 'CREATE_TOKENS' | 'DESCRIBE_TOKENS';
     export const AclOperationEnum = {
         UNKNOWN: 'UNKNOWN' as AclOperationEnum,
         ANY: 'ANY' as AclOperationEnum,
@@ -37,7 +37,9 @@ export namespace HyperIoTKafkaPermission {
         CLUSTERACTION: 'CLUSTER_ACTION' as AclOperationEnum,
         DESCRIBECONFIGS: 'DESCRIBE_CONFIGS' as AclOperationEnum,
         ALTERCONFIGS: 'ALTER_CONFIGS' as AclOperationEnum,
-        IDEMPOTENTWRITE: 'IDEMPOTENT_WRITE' as AclOperationEnum
+        IDEMPOTENTWRITE: 'IDEMPOTENT_WRITE' as AclOperationEnum,
+        CREATETOKENS: 'CREATE_TOKENS' as AclOperationEnum,
+        DESCRIBETOKENS: 'DESCRIBE_TOKENS' as AclOperationEnum
     };
     export type AclPermissionTypeEnum = 'UNKNOWN' | 'ANY' | 'DENY' | 'ALLOW';
     export const AclPermissionTypeEnum = {

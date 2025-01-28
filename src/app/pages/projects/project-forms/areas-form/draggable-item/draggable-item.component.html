@@ -43,6 +43,8 @@
     </button>
     <!--Remove {{itemData.device ? itemData.device.deviceName : itemData.name}}-->
 
+    <span *ngIf="(alarmInfo$ | async)?.length" [matBadge]="(alarmInfo$ | async)?.length" matBadgeOverlap="false"></span>
+
     <div
         class="title" [ngClass]="{
             'area-title': !itemData.device,
@@ -62,5 +64,5 @@
         </div>
         <!-- END -- custom render data passed on component refresh event -->
     </div>
-    <span class="status-circle status-circle-idle" [ngStyle]="{ display: editMode ? 'none' : '' }"></span>
+    <!-- <span class="status-circle status-circle-idle" [ngStyle]="{ display: editMode ? 'none' : '' }"></span> -->
 </div>

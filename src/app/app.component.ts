@@ -7,19 +7,22 @@ import {
 } from "@angular/core";
 import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
 import {
-  AlarmWrapperService,
   HProject,
   HprojectsService, IGNORE_ERROR_NOTIFY,
   Logger,
   LoggerService,
   RealtimeDataService,
+  UserSiteSettingSelectors,
+  BrandingService,
+  NotificationSelectors,
 } from "core";
 import { ToastrService } from "ngx-toastr";
-import {Subject, Subscription, filter, takeUntil, distinctUntilChanged, tap} from "rxjs";
+import {Subject, Subscription, filter, takeUntil, map} from "rxjs";
 import { environment } from "../environments/environment";
-import { BrandingService } from "./services/branding/branding.service";
 import {HttpContext} from "@angular/common/http";
 import {CookieService} from "ngx-cookie-service";
+import { Store } from "@ngrx/store";
+import { concatLatestFrom } from "@ngrx/effects";
 
 @Component({
   selector: "hyt-root",
@@ -29,12 +32,7 @@ import {CookieService} from "ngx-cookie-service";
 })
 export class AppComponent implements OnInit, OnDestroy {
   public environment = environment;
-  eventNotificationIsOn: boolean;
 
-  private toastMessage = $localize`:@@HYT_dashboard_event_fired:The event has been fired`;
-  private toastEventMessage = $localize`:@@HYT_dashboard_event_fired:The event has been fired`;
-  private toastMessageAlarmUp = $localize`:@@HYT_dashboard_alarm_fired:The alarm has been fired`;
-  private toastMessageAlarmDown = $localize`:@@HYT_dashboard_alarm_cleared:Alarm cleared`;
   projectIds: number[];
 
   /** Subject for manage the open subscriptions */
@@ -59,14 +57,13 @@ export class AppComponent implements OnInit, OnDestroy {
     private toastr: ToastrService,
     private loggerService: LoggerService,
     private router: Router,
-    private alarmWrapper: AlarmWrapperService,
     private brandingService: BrandingService,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private store: Store,
   ) {
     // Init Logger
     this.logger = new Logger(this.loggerService);
     this.logger.registerClass("AppComponent");
-    this.eventNotificationIsOn = alarmWrapper.eventNotificationState.getValue();
   }
 
   ngOnInit() {
@@ -85,6 +82,8 @@ export class AppComponent implements OnInit, OnDestroy {
           }
         }
       });
+    
+    this.subscribeToNotification();
   }
 
   isLogged(): boolean {
@@ -104,25 +103,6 @@ export class AppComponent implements OnInit, OnDestroy {
         this.projectIds = projectsList.map((project) => project.id);
         this.realtimeDataService.connect(this.projectIds);
       });
-
-    this.alarmWrapper.eventNotificationState
-      .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe((res) => {
-        this.eventNotificationIsOn = res;
-        this.manageNotificationSubscription();
-      });
-
-    this.manageNotificationSubscription();
-  }
-
-  manageNotificationSubscription(){
-    if (this.eventNotificationIsOn) {
-      this.logger.info("Subscribe to notifications ON");
-      this.subscribeToNotification();
-    } else {
-      this.logger.info("Subscribe to notifications OFF");
-      if(this.alarmSubscription) this.alarmSubscription.unsubscribe();
-    }
   }
 
   @HostListener("wheel", ["$event"])
@@ -141,48 +121,47 @@ export class AppComponent implements OnInit, OnDestroy {
 
   subscribeToNotification() {
     this.logger.info("Subscribe to notifications ON");
+
     if(this.alarmSubscription) this.alarmSubscription.unsubscribe();
-    this.alarmSubscription = this.alarmWrapper.alarmSubject
-      .pipe(
-        tap((alarm) => { this.logger.debug("Alarm received", alarm); }),
-        takeUntil(this.ngUnsubscribe),
-        distinctUntilChanged()
-      )
-      .subscribe((alarm) => {
-        let toastImage = "info";
-        if (alarm.isEvent) {
-          toastImage = "toastEvent";
-          this.toastMessage = this.toastEventMessage;
-        } else if (alarm.isAlarm) {
-          toastImage =
-            alarm.event.alarmState === "UP" ? "toastAlarmUp" : "toastAlarmDown";
-          this.toastMessage =
-            alarm.event.alarmState === "UP" ? this.toastMessageAlarmUp : this.toastMessageAlarmDown;
-          if (alarm.event.alarmState === 'DOWN')
-            alarm.color.background = '#51a351'; // Green of resolved alarm BG (OFF state)
+
+    this.alarmSubscription = this.store.select(NotificationSelectors.selectLastNotification)
+    .pipe(
+      concatLatestFrom(
+        () => this.store.select(UserSiteSettingSelectors.selectNotificationActive)
+      ),
+      filter(
+        ([value, isNotificationEnabled]) => {
+          return !!(isNotificationEnabled && value);
         }
-        const toastId = this.toastr["index"];
+      ),
+      map(
+        ([value, isNotificationEnabled]) => value
+      )
+    )
+    .subscribe({
+      next: (notification) => {
         this.toastr
-          .show(
-            this.toastMessage,
-            alarm.event.alarmEventName,
-            { toastClass: "ngx-toastr toast-" + toastId },
-            toastImage
-          )
-          .onShown.subscribe({
-            complete: () => {
-              document
-                .querySelector(
-                  ".overlay-container #toast-container .ngx-toastr.toast-" +
-                    toastId
-                )
-                .setAttribute(
-                  "style",
-                  `background-color: ${alarm.color.background}; color: ${alarm.color.text}; transform: translateY(64px);`
-                );
-            },
-          });
-      });
+        .show(
+          notification.message,
+          notification.title,
+          { toastClass: "ngx-toastr toast-" + notification.id },
+          notification.image
+        )
+        .onShown.subscribe({
+          complete: () => {
+            document
+              .querySelector(
+                ".overlay-container #toast-container .ngx-toastr.toast-" +
+                  notification.id
+              )
+              .setAttribute(
+                "style",
+                `background-color: ${notification.bgColor}; color: ${notification.color}; transform: translateY(64px);`
+              );
+          },
+        });
+      }
+    });
   }
 
   showToolBars(): boolean {

@@ -17,9 +17,7 @@ import {
   FormGroup
 } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
-import { Observable } from 'rxjs';
 import { LoggerService, Logger } from 'core';
-import '@angular/localize/init';
 
 /**
  * Custom provider for NG_VALUE_ACCESSOR

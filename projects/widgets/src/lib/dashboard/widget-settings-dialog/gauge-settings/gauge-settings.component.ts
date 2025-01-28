@@ -17,7 +17,7 @@ export class GaugeSettingsComponent implements OnInit, OnDestroy {
   @Input() modalApply: Observable<any>;
   @Input() widget;
   @Input() areaId;
-
+  @Input() hDeviceId;
   maxValue: number;
   selectedFields = [];
   private defaultConfig = {
