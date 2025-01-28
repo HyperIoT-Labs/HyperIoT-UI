@@ -63,48 +63,38 @@
 
   <!-- i18n-title="@@HYT_area_draggable_title" -->
 
-  <button
-    class="remove-button"
-    [title]="setTitleAttribute(itemData, editMode, 'remove')"
-    i18n-title="@@HYT_area_draggable_remove"
-    (mousedown)="$event.stopPropagation()"
-    (click)="onRemoveButtonClick($event)"
-    [ngStyle]="{ display: editMode ? '' : 'none' }"
-  >
-    X
-  </button>
-  <!--Remove {{itemData.device ? itemData.device.deviceName : itemData.name}}-->
+    <button
+        class="remove-button"
+        [title]="setTitleAttribute(itemData, editMode, 'remove')"
+        i18n-title="@@HYT_area_draggable_remove"
+        (mousedown)="$event.stopPropagation()"
+        (click)="onRemoveButtonClick($event)"
+        [ngStyle]="{ display: editMode ? '' : 'none' }"
+    >
+        X
+    </button>
+    <!--Remove {{itemData.device ? itemData.device.deviceName : itemData.name}}-->
 
-  <div
-    class="title"
-    [ngClass]="{
-      'area-title': !itemData.device,
-      'menu-disabled': !!itemData.device && editMode,
-      'menu-enabled': !!itemData.device && !editMode
-    }"
-    title="Open {{
-      itemData.device ? itemData.device.deviceName : itemData.name
-    }}{{ itemData.device && !editMode ? ' menu' : '' }}"
-    i18n-title="@@HYT_area_draggable_open"
-    (mousedown)="
-      !!itemData.device && !editMode ? null : $event.stopPropagation()
-    "
-    [ngStyle]="{
-      display:
-        showName || editMode || (!!itemData.device && !editMode) ? '' : 'none'
-    }"
-  >
-    <div class="name">
-      {{ itemData.device ? itemData.device.deviceName : itemData.name }}
+    <span *ngIf="(alarmInfo$ | async)?.length" [matBadge]="(alarmInfo$ | async)?.length" matBadgeOverlap="false"></span>
+
+    <div
+        class="title" [ngClass]="{
+            'area-title': !itemData.device,
+            'menu-disabled': !!itemData.device && editMode,
+            'menu-enabled': !!itemData.device && !editMode
+        }"
+        title="Open {{itemData.device ? itemData.device.deviceName : itemData.name}}{{itemData.device && !editMode ? ' menu' : ''}}"
+        i18n-title="@@HYT_area_draggable_open"
+        (mousedown)="!!itemData.device && !editMode ? null : $event.stopPropagation()"
+        (click)="!!itemData.device && !editMode ? null : onOpenButtonClick($event)"
+        [ngStyle]="{ display: (showName || editMode || (!!itemData.device && !editMode)) ? '' : 'none' }"
+    >
+        <div class="name">{{itemData.device ? itemData.device.deviceName : itemData.name}}</div>
+        <!-- BEGIN -- custom render data passed on component refresh event -->
+        <div class="stats" *ngIf="renderData.deviceCount">
+            (D: {{renderData.deviceCount}})
+        </div>
+        <!-- END -- custom render data passed on component refresh event -->
     </div>
-    <!-- BEGIN -- custom render data passed on component refresh event -->
-    <div class="stats" *ngIf="renderData.deviceCount">
-      (D: {{ renderData.deviceCount }})
-    </div>
-    <!-- END -- custom render data passed on component refresh event -->
-  </div>
-  <span
-    class="status-circle status-circle-idle"
-    [ngStyle]="{ display: editMode ? 'none' : '' }"
-  ></span>
+    <!-- <span class="status-circle status-circle-idle" [ngStyle]="{ display: editMode ? 'none' : '' }"></span> -->
 </div>

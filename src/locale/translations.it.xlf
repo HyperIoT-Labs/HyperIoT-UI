@@ -2480,6 +2480,10 @@
         <source>Back to projects</source>
         <target>Torna ai progetti</target>
       </trans-unit>
+      <trans-unit id="HYT_back_to_dashboard" datatype="html">
+        <source>Back to dashboard</source>
+        <target>Torna alla dashboard</target>
+      </trans-unit>
       <trans-unit id="HYT_back_to_area" datatype="html">
         <source>Back to area</source>
         <target>Torna all'area</target>
@@ -2563,6 +2567,26 @@
       <trans-unit id="HYT_delete_area_item" datatype="html">
         <source>Delete item</source>
         <target>Elimina Oggetto</target>
+      </trans-unit>
+      <trans-unit id="HYT_data_recording_check_status" datatype="html">
+        <source>Check project status</source>
+        <target>Verifica dello stato del progetto</target>
+      </trans-unit>
+      <trans-unit id="HYT_data_recording_waiting_status" datatype="html">
+        <source>Recording status is being checked. Please wait...</source>
+        <target>Verifica delle fonti dati in corso. Attendere prego...</target>
+      </trans-unit>
+      <trans-unit id="HYT_thresholds" datatype="html">
+        <source>Thresholds</source>
+        <target>Soglie</target>
+      </trans-unit>
+      <trans-unit id="HYT_colorpicker_description" datatype="html">
+        <source>Choose the color that you want for the threshold line.</source>
+        <target>Scegli il colore che vuoi per la linea di soglia.</target>
+      </trans-unit>
+      <trans-unit id="HYT_line_description" datatype="html">
+        <source>Choose the type and thickness of the threshold line.</source>
+        <target>Scegli il tipo e lo spessore della linea di soglia.</target>
       </trans-unit>
     </body>
   </file>

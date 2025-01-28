@@ -320,3 +320,28 @@ pre.hyt-code {
     margin-right: 40px;
     margin-top: -12px;
 }
+
+.leaflet-div-icon {
+    border: none;
+    background: none;
+
+    img {
+        position: absolute;
+    }
+    .shadow-img {
+        left: 23px;
+        bottom: 0;
+        pointer-events: none;
+    }
+    .leaflet-badge {
+        top: -12px;
+        right: 40px;
+        width: 22px;
+        height: 22px;
+        line-height: 22px;
+        display: none;
+    }
+    .leaflet-badge-show {
+        display: block;
+    }
+}

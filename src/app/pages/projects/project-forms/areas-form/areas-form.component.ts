@@ -103,6 +103,10 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
    */
   areaList: Area[] = [];
   /**
+   * List of the Area's devices
+   */
+  areaDevicesDeep: AreaDevice[] = [];
+  /**
    * List of the area path
    */
   areaPath: Area[] = [];
@@ -985,19 +989,32 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
     });
   }
 
+  private getAreaDeepDevicesList(area) {
+    let devices = this.areaDevicesDeep.filter(areaDevice => areaDevice.area.id === area.id).map(areaDevice => areaDevice.device);
+    if (area.innerArea) {
+      for (let i = 0; i < area.innerArea.length; i++) {
+        devices = devices.concat(this.getAreaDeepDevicesList(area.innerArea[i]));
+      }
+    }
+    return devices;
+  }
+
   /**
    * Loading a map of the area with all its elements
    * @private
    */
   private loadAreaMap() {
     this.loadingStatus = LoadingStatusEnum.Loading;
-    this.areaService.getAreaDeviceList(this.areaId)
+    this.areaService.getAreaDeviceDeepList(this.areaId)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((areaDevices: AreaDevice[]) => {
-      this.logger.debug('loadAreaMap get area devices list', areaDevices);
-      //! TODO casting error
-      // this.mapComponent.setAreaItems(areaDevices.concat(this.areaList.filter(a => a.mapInfo != null)));
-      this.mapComponent.setAreaItems([...areaDevices , ...this.areaList.filter(({mapInfo}) => mapInfo)]);
+      this.logger.debug('loadAreaMap get area and sub-areas devices list', areaDevices);
+      this.areaDevicesDeep = areaDevices;
+      areaDevices = areaDevices.filter(x => x.area.id === this.areaId);
+      const areaList = this.areaList.filter(a => a.mapInfo != null) as any;
+      areaList.forEach(x => x.deepDevices = this.getAreaDeepDevicesList(x));
+      const areaItems: (AreaDevice | Area)[] = areaDevices.concat(areaList);
+      this.mapComponent.setAreaItems(areaItems);
       this.mapComponent.refresh();
       this.loadingStatus = LoadingStatusEnum.Ready;
     });
