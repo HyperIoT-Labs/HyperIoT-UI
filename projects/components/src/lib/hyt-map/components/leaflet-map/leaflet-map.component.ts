@@ -203,7 +203,7 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
     this.mapRef = map;
 
     // disable overlay input events
-    var userOverlay = L.DomUtil.get('leaflet-user-overlay');
+    const userOverlay = L.DomUtil.get('leaflet-user-overlay');
     L.DomEvent.disableClickPropagation(userOverlay);
     L.DomEvent.on(userOverlay, 'mousewheel', L.DomEvent.stopPropagation);
     L.DomEvent.on(userOverlay, 'click', L.DomEvent.stopPropagation);
