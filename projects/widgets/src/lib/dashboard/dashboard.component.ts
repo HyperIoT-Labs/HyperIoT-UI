@@ -23,7 +23,7 @@ import {
   UserSiteSettingActions,
   UserSiteSettingSelectors
 } from 'core';
-import { debounceTime, Subject, Subscription, takeUntil } from 'rxjs';
+import {debounceTime, delay, Subject, Subscription, takeUntil} from 'rxjs';
 import { AddWidgetDialogComponent } from './add-widget-dialog/add-widget-dialog.component';
 import { DashboardConfigService } from './dashboard-config.service';
 import { DashboardViewComponent } from './dashboard-view/dashboard-view.component';
@@ -387,7 +387,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   updateTopologyStatus() {
     this.subTopologyStatus = this.dashboardConfigService.getRecordingStatus(this.idProjectSelected)
-      .pipe(takeUntil(this.ngUnsubscribe))
+      .pipe(
+        delay(0),
+        takeUntil(this.ngUnsubscribe)
+      )
       .subscribe(res => {
         if (res !== null && res !== undefined && res.status.toLowerCase() === 'active') {
           this.dataRecordingIsOn = true;

@@ -1,12 +1,20 @@
-import { ApplicationRef, Component, ComponentFactoryResolver, EventEmitter, Injector, Input, NgZone, OnDestroy, OnInit } from '@angular/core';
+import { ApplicationRef, Component, ComponentFactoryResolver, EventEmitter, Injector, Input, NgZone, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import * as L from 'leaflet';
-import { Area, AreaDevice, Logger, LoggerService } from "core";
+import { Area, AreaDevice, HDevice, LiveAlarmSelectors, Logger, LoggerService } from "core";
 import { LeafletMapConfig } from "../../models/leaflet-map";
 import { MapDefaultConfiguration } from '../../map-configuration';
 import { MapDeviceEditComponent } from '../map-device-edit/map-device-edit.component';
 import { MapDeviceInfoComponent } from '../map-device-info/map-device-info.component';
 import domtoimage from 'dom-to-image';
+import { Store } from '@ngrx/store';
+import { BehaviorSubject, combineLatest } from 'rxjs';
 import { MapItemAction } from '../../models/map-item-action';
+
+interface MapMarker {
+  reference: L.Marker<any>;
+  badgeId: string;
+  deepHDeviceList: HDevice[];
+};
 
 @Component({
   selector: 'hyt-leaflet-map',
@@ -28,6 +36,10 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
   itemOpen = new EventEmitter<MapItemAction>();
   itemRemove = new EventEmitter<any>();
   itemUpdate = new EventEmitter<any>();
+
+  areaItemsCount = 0;
+  markers: MapMarker[] = [];
+  private markerChange$: BehaviorSubject<MapMarker[]> = new BehaviorSubject<MapMarker[]>(this.markers);
 
   centerMarker: L.Marker<any>;
 
@@ -79,6 +91,8 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
     private resolver: ComponentFactoryResolver,
     private injector: Injector,
     private appRef: ApplicationRef,
+    private store: Store,
+    private renderer: Renderer2,
   ) {
     // Init Logger
     this.logger = new Logger(this.loggerService);
@@ -103,6 +117,35 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
     this.mapOptions.center = L.latLng({
       lat: parsedOption.latitude,
       lng: parsedOption.longitude,
+    });
+
+    // subscribe to alarms and set alarm badge to devices and subareas markers
+    combineLatest([
+      this.store.select(LiveAlarmSelectors.selectAllLiveAlarms),
+      this.markerChange$,
+    ]).subscribe(([allAlarms, markers]) => {
+      this.markers.forEach(marker => {
+        const alarmListByDevices = allAlarms.filter(x => x.deviceIds.some(y => marker.deepHDeviceList.map(z => z.id).includes(y)));
+        const markerElement = document.getElementById(marker.badgeId);
+
+        if (!markerElement) {
+          return;
+        }
+
+        if (!alarmListByDevices.length) {
+          markerElement.classList.remove('leaflet-badge-show');
+          return;
+        }
+
+        const alarmByMaxSeverity = alarmListByDevices.reduce((maxSeverityAlarm, alarm) => {
+          return alarm.event.severity > maxSeverityAlarm.event.severity ? alarm : maxSeverityAlarm;
+        }, alarmListByDevices[0]);
+
+        markerElement.style.background = alarmByMaxSeverity.color.background;
+        markerElement.innerText = alarmListByDevices.length.toString();
+        markerElement.classList.add('leaflet-badge-show');
+
+      });
     });
   }
 
@@ -195,26 +238,43 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
     return { x: this.mapRef.getCenter().lat, y: this.mapRef.getCenter().lng };
   }
 
-  private _buildMarkerIcon(iconUrl: string): L.Icon {
-    return L.icon({
-      iconUrl: 'assets/icons/map/' + iconUrl,
-      shadowUrl: 'assets/icons/map/shadow_icon.png',
-      iconSize: [51, 67],
-      shadowSize: [54, 33],
-      iconAnchor: [25.5, 67],
-      shadowAnchor: [5, 31],
-      popupAnchor: [0, -70],
+  private _buildMarkerDivIcon(iconUrl: string, badgeId: string): L.DivIcon {
+    const iconElement = this.renderer.createElement('div');
+
+    const shadowImage = this.renderer.createElement('img');
+    this.renderer.setAttribute(shadowImage, 'src', 'assets/icons/map/shadow_icon.png');
+    this.renderer.addClass(shadowImage, 'shadow-img');
+
+    const iconImage = this.renderer.createElement('img');
+    this.renderer.setAttribute(iconImage, 'src', 'assets/icons/map/' + iconUrl);
+
+    const badgeElement = this.renderer.createElement('span');
+    this.renderer.setAttribute(badgeElement, 'id', badgeId);
+    this.renderer.addClass(badgeElement, 'mat-badge-content');
+    this.renderer.addClass(badgeElement, 'mat-badge-active');
+    this.renderer.addClass(badgeElement, 'leaflet-badge');
+    this.renderer.setValue(badgeElement, '-');
+
+    this.renderer.appendChild(iconElement, shadowImage);
+    this.renderer.appendChild(iconElement, iconImage);
+    this.renderer.appendChild(iconElement, badgeElement);
+
+    return L.divIcon({
+      iconSize:     [51, 67],
+      iconAnchor:   [25.5, 67],
+      popupAnchor:  [0, -70],
+      html: iconElement,
     });
   }
 
-  areaItemsCount = 0;
-  markers: L.Marker<any>[] = [];
   addAreaItem(areaItem: AreaDevice | Area) {
     this.areaItemsCount++;
     this.logger.debug('addAreaItem function', areaItem);
-    const icon = this._buildMarkerIcon(areaItem.mapInfo.icon);
+    const badgeId = 'leaflet-area-item-' + areaItem.id;
+    const deepHDeviceList = (areaItem as AreaDevice).device ? [ (areaItem as AreaDevice).device ] : (areaItem as any).deepDevices;
+    const icon = this._buildMarkerDivIcon(areaItem.mapInfo.icon, badgeId);
     const marker = L.marker(L.latLng(areaItem.mapInfo.x, areaItem.mapInfo.y), { icon: icon });
-    this.markers.push(marker);
+    this.markers.push({ reference: marker, badgeId, deepHDeviceList });
 
     if (this.editMode) {
       const deviceEditComponent = this.resolver.resolveComponentFactory(MapDeviceEditComponent).create(this.injector);
@@ -228,8 +288,9 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
       deviceEditComponent.instance.itemUpdateCB = (itemInfo) => {
         this.itemUpdate.emit(itemInfo);
         marker.setLatLng(L.latLng(itemInfo.mapInfo.x, itemInfo.mapInfo.y));
-        const updatedIcon = this._buildMarkerIcon(itemInfo.mapInfo.icon);
+        const updatedIcon = this._buildMarkerDivIcon(itemInfo.mapInfo.icon, badgeId);
         marker.setIcon(updatedIcon);
+        this.markerChange$.next(this.markers);
       }
       deviceEditComponent.instance.dragToggleCB = (dragEnable) => {
         if (dragEnable) {
@@ -266,6 +327,7 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
     }
 
     marker.addTo(this.mapRef);
+    this.markerChange$.next(this.markers);
   }
 
   setAreaItems(items: (AreaDevice | Area)[]) {
@@ -276,7 +338,8 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
     });
   }
   removeAreaItems() {
-    this.markers.forEach(marker => marker.remove());
+    this.markers.forEach(marker => marker.reference.remove());
+    this.markers = [];
   }
 
   refresh() { }

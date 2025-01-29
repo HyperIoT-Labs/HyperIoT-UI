@@ -116,20 +116,34 @@ export class AlgorithmTableComponent extends BaseTableComponent implements After
           //this.computePacketData([value]);
 
           // Compute timeStamp
-          const millis = +value.timestamp * 1000;
+          const millis = + value.timestamp * 1000;
           let valueTimestamp = moment(millis).format('L') + ' ' + moment(millis).format('LTS');
 
           // Create HEADERS of tables based on results
           let jsonObject = JSON.parse(value.output);
-          let keys = Object.keys(jsonObject.results[0].grouping); // Extract grouping keys
-          this.hPacketIdMap = await this.setHeadersTable(keys); 
 
-          // Add one row for each result rows
-          jsonObject.results.forEach((el) => {
-            this.addData(el, valueTimestamp, this.hPacketIdMap, pageData);
-          });
+          // custom behaviour
+          if (jsonObject.customSchema) {
+            // custom headers
+            let headers = jsonObject.headers
+            this.hPacketIdMap = await this.setHeadersTable(headers, true);
+            jsonObject.results.slice().reverse().forEach((el) => {
+              this.addDataCustom(el, valueTimestamp, headers, pageData);
+            });
+          }
 
-          //Lastly, add results to page
+          //default behaviour
+          else {
+            let keys = Object.keys(jsonObject.results[0].grouping); // Extract grouping keys
+            this.hPacketIdMap = await this.setHeadersTable(keys, false); 
+
+            // Add one row for each result rows
+            jsonObject.results.forEach((el) => {
+              this.addData(el, valueTimestamp, this.hPacketIdMap, pageData);
+            });
+          }
+
+          //Lastly, in both cases, add results to page 
           this.tableSource.next(pageData);
 
         } else {
@@ -139,15 +153,16 @@ export class AlgorithmTableComponent extends BaseTableComponent implements After
     );
   }
 
-  async setHeadersTable(groupingKeys: any) {
+  async setHeadersTable(groupingKeys: any, customSchema: boolean) {
     try {
-        const fieldIds = Object.keys(this.widget.config?.packetFields) || [];
-        this.tableHeaders = fieldIds.map(hPacketFieldId => ({
-            value: this.widget.config.packetFields[hPacketFieldId],
-            label: this.widget.config.fieldAliases[hPacketFieldId] || this.widget.config.packetFields[hPacketFieldId],
-            type: this.widget.config.fieldTypes[hPacketFieldId],
-        }));
+      const fieldIds = Object.keys(this.widget.config?.packetFields) || [];
+      this.tableHeaders = fieldIds.map(hPacketFieldId => ({
+          value: this.widget.config.packetFields[hPacketFieldId],
+          label: this.widget.config.fieldAliases[hPacketFieldId] || this.widget.config.packetFields[hPacketFieldId],
+          type: this.widget.config.fieldTypes[hPacketFieldId],
+      }));
 
+      if (!customSchema) {
         if (groupingKeys.length > 0 && this.hPacketIdMap.size == 0) {
             const res = await lastValueFrom(this.packetService.getHPacketField(groupingKeys));
             res.forEach(element => {
@@ -173,6 +188,29 @@ export class AlgorithmTableComponent extends BaseTableComponent implements After
         });
 
         return this.hPacketIdMap;
+      }
+
+      else if (customSchema) {
+        // List of NON-packet-belonging grouping field
+        groupingKeys.forEach(el => {
+            this.tableHeaders.unshift({
+                value: el,
+                label: el,
+                type: 'DOUBLE'
+            });
+            this.hPacketIdMap.set(this.stringToNumber(el), el);
+        });
+
+        // Finally, add the timestamp column
+        this.tableHeaders.push({
+          value: 'timestamp',
+          label: this.widget.config.timestampFieldName,
+          type: 'DATE'
+        });
+
+        return this.hPacketIdMap;
+      }
+
     } catch (error) {
         this.logger.error('Si è verificato un errore:', error);
         throw error;
@@ -193,4 +231,22 @@ export class AlgorithmTableComponent extends BaseTableComponent implements After
     pageData.unshift(obj);
   }
 
+  addDataCustom(el, valueTimestamp, headers, pageData) {
+    let obj: any = { "output": el.output, "timestamp": valueTimestamp };
+    headers.forEach( h => {
+      let k = h;
+      let v = el.grouping;
+      obj[k] = v;  
+    });
+    
+    pageData.unshift(obj);
+  }
+
+  stringToNumber(str) {
+    return str
+        .split("")
+        .map(char => char.charCodeAt(0))
+        .reduce((sum, code) => sum + code, 0);
+  }
+  
 }

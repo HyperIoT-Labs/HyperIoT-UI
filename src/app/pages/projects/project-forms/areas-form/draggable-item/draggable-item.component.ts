@@ -1,8 +1,9 @@
-import { Component, EventEmitter, HostListener, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, ViewEncapsulation } from '@angular/core';
 import { CdkDrag } from '@angular/cdk/drag-drop';
-import { Area, AreaDevice, Dashboard } from 'core';
-import { DeviceActions } from 'projects/components/src/lib/hyt-map/models/device-actions';
-import { MapItemAction } from 'components';
+import { Area, AreaDevice, Dashboard, HDevice, LiveAlarmSelectors } from 'core';
+import { DeviceActions, MapItemAction } from 'components';
+import { Store } from '@ngrx/store';
+import { Observable, map, tap } from 'rxjs';
 
 @Component({
   selector: 'hyt-draggable-item',
@@ -28,6 +29,29 @@ export class DraggableItemComponent {
   showName = false;
 
   titleToDisplay = '';
+
+  alarmInfo$: Observable<any> = this.store.select(LiveAlarmSelectors.selectAllLiveAlarms).pipe(
+    map(allLiveAlarms => allLiveAlarms.filter(x => x.deviceIds.some(y => this.deepHDeviceList.map(z => z.id).includes(y)))),
+    tap(allLiveAlarms => {
+      if (allLiveAlarms.length) {
+        const alarmByMaxSeverity = allLiveAlarms.reduce((maxSeverityAlarm, alarm) => {
+          return alarm.event.severity > maxSeverityAlarm.event.severity ? alarm : maxSeverityAlarm;
+        }, allLiveAlarms[0]);
+        const nativeElement = this.elRef.nativeElement;
+        nativeElement.style.setProperty('--alarm-badge-color', alarmByMaxSeverity.color.background);
+      }
+    }),
+  );
+
+  /**
+   * flat device list linked to this item used to filter alarms
+   */
+  deepHDeviceList: HDevice[] = [];
+
+  constructor(
+    private store: Store,
+    private elRef: ElementRef,
+  ) { }
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
@@ -56,6 +80,7 @@ export class DraggableItemComponent {
   setConfig(container: HTMLElement, itemData: Area | AreaDevice) {
     this.container = container;
     this.itemData = itemData;
+    this.deepHDeviceList = this.itemData.device ? [ this.itemData.device ] : this.itemData.deepDevices;
     this.style['background-image'] = `url(assets/icons/${itemData.mapInfo.icon})`;
     this.style['background-size'] = `contain`;
     this.style['background-repeat'] = `no-repeat`;
