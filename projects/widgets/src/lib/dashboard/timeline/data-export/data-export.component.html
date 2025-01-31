@@ -1,0 +1,45 @@
+<main hyt-dialog>
+  <section i18n="@@HYT_export_data" hyt-dialog-header>Export Data</section>
+
+  <section class="dialog-form-content" hyt-dialog-content>
+    <form [formGroup]="form" class="form">
+      <div class="d-flex flex-column">
+        <label for="startTime"> Start Time </label>
+        <input id="startTime" type="datetime" formControlName="startTime" />
+      </div>
+
+      <div class="d-flex flex-column">
+        <label for="endTime"> End Time </label>
+        <input id="endTime" type="datetime" formControlName="endTime" />
+      </div>
+    </form>
+
+    <button
+      class="hyt-base-btn mat-hyt-base-total-blue mat-raised-button"
+      type="reset"
+      (click)="resetForm()"
+    >
+      Reset
+    </button>
+  </section>
+
+  <section class="dialog-footer" hyt-dialog-footer>
+    <hyt-button
+      class="button-confirm"
+      [color]="'hyt-base-default-white'"
+      (clickFn)="export()"
+    >
+      <mat-icon>check</mat-icon>
+      <span i18n="@@HYT_export">Export</span>
+    </hyt-button>
+
+    <hyt-button
+      class="button-close"
+      [color]="'hyt-base-default-white'"
+      (clickFn)="closeModal($event)"
+    >
+      <mat-icon>close</mat-icon>
+      <span i18n="@@HYT_cancel">Cancel</span>
+    </hyt-button>
+  </section>
+</main>

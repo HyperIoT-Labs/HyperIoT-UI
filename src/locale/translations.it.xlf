@@ -1308,6 +1308,10 @@
         <source>Widget Settings</source>
         <target>Impostazioni Widget</target>
       </trans-unit>
+      <trans-unit id="HYT_export_data" datatype="html">
+        <source>Export Data</source>
+        <target>Esporta i dati</target>
+      </trans-unit>
       <trans-unit id="HYT_apply" datatype="html">
         <source>Apply</source>
         <target>Applica</target>
@@ -1327,6 +1331,10 @@
       <trans-unit id="HYT_toolbar_close" datatype="html">
         <source>Close</source>
         <target>Chiudi</target>
+      </trans-unit>
+      <trans-unit id="HYT_export" datatype="html">
+        <source>Export</source>
+        <target>Esporta</target>
       </trans-unit>
       <trans-unit id="HYT_common_not_configured" datatype="html">
         <source>Click 'Settings' button to configure.</source>

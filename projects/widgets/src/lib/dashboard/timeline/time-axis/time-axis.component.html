@@ -1,29 +1,22 @@
 <div #axis id="axis">
+  <button
+    class="hyt-base-btn mat-hyt-base-total-blue mat-raised-button"
+    (click)="exportData()"
+  >
+    TEST
+  </button>
 
-    <div
-        id="tineline-control-buttons"
-        #controlButtons
-    >
-
-        <div
-            id="refresh-data-btn"
-            (click)="emitCurrentSelection()"
-        >Refresh Data</div>
-
-        <div
-            id="reset-sel-btn"
-            (click)="resetSelectionByBtn()"
-        >Reset Selection</div>
-
+  <div id="tineline-control-buttons" #controlButtons>
+    <div id="refresh-data-btn" (click)="emitCurrentSelection()">
+      Refresh Data
     </div>
 
-    <div
-        id="selection-initial-tip"
-        #selectionInitialTip
-    >
-
-        Point and drag the cursor on the line above to select a time range
-
+    <div id="reset-sel-btn" (click)="resetSelectionByBtn()">
+      Reset Selection
     </div>
+  </div>
 
+  <div id="selection-initial-tip" #selectionInitialTip>
+    Point and drag the cursor on the line above to select a time range
+  </div>
 </div>

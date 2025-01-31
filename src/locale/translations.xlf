@@ -981,6 +981,9 @@
       <trans-unit id="HYT_widget_settings_title" datatype="html">
         <source>Widget Settings</source>
       </trans-unit>
+      <trans-unit id="HYT_export_data" datatype="html">
+        <source>Export Data</source>
+      </trans-unit>
       <trans-unit id="HYT_apply" datatype="html">
         <source>Apply</source>
       </trans-unit>
@@ -995,6 +998,9 @@
       </trans-unit>
       <trans-unit id="HYT_toolbar_close" datatype="html">
         <source>Close</source>
+      </trans-unit>
+      <trans-unit id="HYT_export" datatype="html">
+        <source>Export</source>
       </trans-unit>
       <trans-unit id="HYT_common_not_configured" datatype="html">
         <source>Click &apos;Settings&apos; button to configure.</source>

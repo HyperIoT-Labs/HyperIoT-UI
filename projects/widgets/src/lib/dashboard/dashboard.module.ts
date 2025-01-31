@@ -50,6 +50,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
 import { GaugeSettingsComponent } from './widget-settings-dialog/gauge-settings/gauge-settings.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ColorPickerModule } from 'ngx-color-picker';
+import { DataExportComponent } from './timeline/data-export/data-export.component';
 
 @NgModule({
   declarations: [
@@ -81,6 +82,7 @@ import { ColorPickerModule } from 'ngx-color-picker';
     FieldValueGeneratorSettingsComponent,
     ProductionTargetSettingsComponent,
     WidgetValueMappingComponent,
+    DataExportComponent,
   ],
   imports: [
     CommonModule,

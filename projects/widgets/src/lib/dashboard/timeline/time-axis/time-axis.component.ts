@@ -1,10 +1,13 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, Output, ViewChild, ViewEncapsulation } from '@angular/core';
-import { TimeStep } from 'components';
+import { ConfirmDialogService, TimeStep } from 'components';
 import * as d3 from 'd3';
 import * as moment_ from 'moment';
-import {HYTData} from "../models/timeline.model";
+import { HYTData } from "../models/timeline.model";
 import { DashboardEventService } from '../../services/dashboard-event.service';
 import { DashboardEvent } from '../../services/dashboard-event.model';
+import { DialogService } from 'components';
+import { DataExportComponent } from '../data-export/data-export.component';
+import { DataExport } from '../models/data-export,model';
 
 const moment = moment_;
 const animation = false;
@@ -23,7 +26,11 @@ const animation = false;
   encapsulation: ViewEncapsulation.None
 })
 export class TimeAxisComponent implements AfterViewInit {
-  constructor(private dashboardEvent: DashboardEventService){}
+  constructor(
+    private dashboardEvent: DashboardEventService,
+    private dialogService: DialogService,
+    private confirmDialogService: ConfirmDialogService,
+  ) { }
   /**
    * timeStepMap is used to convert a step to a d3 TimeInterval
    */
@@ -214,7 +221,7 @@ export class TimeAxisComponent implements AfterViewInit {
           this.setCubeIntensitiScale(d.value, this.maxValue)
       );
     } else {
-      this.rect?.attr('fill', d => this.setCubeIntensitiScale(d.value , this.maxValue));
+      this.rect?.attr('fill', d => this.setCubeIntensitiScale(d.value, this.maxValue));
     }
   }
 
@@ -240,11 +247,11 @@ export class TimeAxisComponent implements AfterViewInit {
    */
   buildAxis() {
     this.contentWidth = this.axis.nativeElement.offsetWidth - this.margin.left - this.margin.right;
-    if (this.contentWidth <= 0 ) {
-      this.contentWidth =  1024;
+    if (this.contentWidth <= 0) {
+      this.contentWidth = 1024;
     }
     this.contentHeight = this.axis.nativeElement.offsetHeight - this.margin.top - this.margin.bottom;
-    if (this.contentHeight <= 0 ) {
+    if (this.contentHeight <= 0) {
       this.contentHeight = 45;
     }
     this.axisScale = d3.scaleTime().domain(this.domain).range([0, this.contentWidth]);
@@ -355,7 +362,7 @@ export class TimeAxisComponent implements AfterViewInit {
     if (data) {
       for (let i = 0; i < data.length; i++) {
         // this.data[i].value = data[i]?.value;
-        this.data[i] = {value: data[i]?.value, timestamp: data[i]?.timestamp};
+        this.data[i] = { value: data[i]?.value, timestamp: data[i]?.timestamp };
       }
     }
     this.data.forEach(y => {
@@ -430,7 +437,7 @@ export class TimeAxisComponent implements AfterViewInit {
    * @param maxValue
    * @returns
    */
-  setCubeIntensitiScale(value, maxValue){
+  setCubeIntensitiScale(value, maxValue) {
     let ratio = value / maxValue;
 
     // avoiding filling with grey even if there's data
@@ -681,7 +688,7 @@ export class TimeAxisComponent implements AfterViewInit {
       .data(this.data)
       .join('g')
       .attr('fill', d => d.timestamp >= this.timeInterval[0] && d.timestamp < this.timeInterval[1]
-        ? '#35d443' : this.setCubeIntensitiScale(d.value , this.maxValue))
+        ? '#35d443' : this.setCubeIntensitiScale(d.value, this.maxValue))
       .attr('class', 'data-cube')
       .call(this.appendCube)
       .attr('cursor', 'pointer')
@@ -699,6 +706,18 @@ export class TimeAxisComponent implements AfterViewInit {
       .on('click', (d, i, n) => {
         this.domainSet.emit(d.timestamp);
       });
+  }
+
+  exportData() {
+    this.dialogService.open<DataExportComponent, DataExport>(DataExportComponent, {
+      data: {
+        domain: this.domain as Date[],
+        timeInterval: this.timeInterval
+      },
+      height: '600px',
+      width: '600px',
+      backgroundClosable: true,
+    });
   }
 
 }
