@@ -17,13 +17,14 @@ import {
   Dashboard, HDevice,
   HdevicesService,
   HProject,
+  HProjectActions,
   Logger,
   LoggerService,
   OfflineDataService,
   UserSiteSettingActions,
   UserSiteSettingSelectors
 } from 'core';
-import {debounceTime, delay, Subject, Subscription, takeUntil} from 'rxjs';
+import { debounceTime, delay, Subject, Subscription, takeUntil } from 'rxjs';
 import { AddWidgetDialogComponent } from './add-widget-dialog/add-widget-dialog.component';
 import { DashboardConfigService } from './dashboard-config.service';
 import { DashboardViewComponent } from './dashboard-view/dashboard-view.component';
@@ -274,6 +275,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.getProjectList();
     }
 
+    this.store.dispatch(HProjectActions.setSelectedHProjectId({ id: this.idProjectSelected }));
+
     this.logger.debug('DeviceId/AreaId/ProjectId/SignalIsOn: ', this.hDeviceId, this.areaId, this.idProjectSelected, this.signalIsOn);
 
     this.applyPreset();
@@ -287,6 +290,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
     if (this.ngUnsubscribe) {
       this.ngUnsubscribe.next();
     }
+
+    this.store.dispatch(HProjectActions.setSelectedHProjectId({ id: null }));
   }
 
   private loadDashboardByDatasource(defaultDatasource: Dashboard.DashboardTypeEnum) {
@@ -332,6 +337,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.idProjectSelected = event.value;
     this.recordStateInLoading = true;
     clearInterval(this.updateRecordingInterval);
+
+    this.store.dispatch(HProjectActions.setSelectedHProjectId({ id: this.idProjectSelected }));
 
     if (this.signalIsOn) {
       this.updateTopologyStatus();

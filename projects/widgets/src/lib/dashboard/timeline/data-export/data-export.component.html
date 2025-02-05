@@ -4,68 +4,66 @@
   <section class="dialog-form-content" hyt-dialog-content>
     <!-- <ngx-mat-timepicker ngDefaultControl [(ngModel)]="date"></ngx-mat-timepicker> -->
 
-
     <form [formGroup]="form" class="form">
-      <mat-label>Start Time</mat-label>
-      <mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Start Time</mat-label>
         <input
           matInput
           [ngxMatDatetimePicker]="startTimePicker"
           placeholder="Choose a date"
           formControlName="startTime"
+          readonly
+          (click)="startTimePicker.open()"
+          required
         />
         <mat-datepicker-toggle matSuffix [for]="startTimePicker">
         </mat-datepicker-toggle>
-        <ngx-mat-datetime-picker
-          #startTimePicker
-          [showSpinners]="true"
-          [showSeconds]="true"
-          [stepHour]="1"
-          [stepMinute]="1"
-          [stepSecond]="1"
-          [enableMeridian]="true"
-          [touchUi]="false"
-          [color]="color"
-        >
+        <ngx-mat-datetime-picker #startTimePicker [showSeconds]="true">
         </ngx-mat-datetime-picker>
       </mat-form-field>
 
-      <mat-label>End Time</mat-label>
-      <mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>End Time</mat-label>
         <input
           matInput
           [ngxMatDatetimePicker]="endTimePicker"
           placeholder="Choose a date"
           formControlName="endTime"
+          readonly
+          (click)="endTimePicker.open()"
+          required
         />
         <mat-datepicker-toggle matSuffix [for]="endTimePicker">
         </mat-datepicker-toggle>
-        <ngx-mat-datetime-picker
-          #endTimePicker
-          [showSpinners]="true"
-          [showSeconds]="true"
-          [stepHour]="1"
-          [stepMinute]="1"
-          [stepSecond]="1"
-          [enableMeridian]="true"
-          [touchUi]="false"
-          [color]="color"
-        >
+        <ngx-mat-datetime-picker #endTimePicker [showSeconds]="true">
         </ngx-mat-datetime-picker>
       </mat-form-field>
 
-      <!-- <div class="d-flex flex-column">
-        <label for="startTime"> Start Time </label>
-        <input id="startTime" type="datetime" formControlName="startTime" />
-      </div>
+      <mat-form-field appearance="fill">
+        <mat-label>Packet Format</mat-label>
+        <mat-select formControlName="hPacketFormat" required>
+          <mat-option
+            *ngFor="let hPacketFormat of hPacketFormatEnum | keyvalue"
+            [value]="hPacketFormat.value"
+          >
+            {{ hPacketFormat.value }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
 
-      <div class="d-flex flex-column">
-        <label for="endTime"> End Time </label>
-        <input id="endTime" type="datetime" formControlName="endTime" />
-      </div> -->
-
-      {{ devices | async | json }}
+      <mat-form-field appearance="fill">
+        <mat-label>Packet Format</mat-label>
+        <input
+          matInput
+          placeholder="Placeholder"
+          formControlName="exportName"
+          [maxlength]="maxLength"
+          required
+        />
+      </mat-form-field>
     </form>
+
+    {{ form.value | json }}
 
     <button
       class="hyt-base-btn mat-hyt-base-total-blue mat-raised-button"
@@ -81,6 +79,7 @@
       class="button-confirm"
       [color]="'hyt-base-default-white'"
       (clickFn)="export()"
+      [isDisabled]="form.invalid"
     >
       <mat-icon>check</mat-icon>
       <span i18n="@@HYT_export">Export</span>

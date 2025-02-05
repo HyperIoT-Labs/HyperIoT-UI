@@ -1,74 +1,24 @@
-import { Component, Inject, Injectable, LOCALE_ID, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { DialogRef, DIALOG_DATA } from 'components';
 import { DataExport } from '../models/data-export,model';
 import { Store } from '@ngrx/store';
-import { HDevice, HDeviceSelectors, HPacketSelectors, HProjectSelectors, HProjectStore, HprojectsService } from 'core';
-import { map, switchMap } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
-import { MAT_DATE_FORMATS, MAT_DATE_LOCALE, ThemePalette } from '@angular/material/core';
-import { NGX_MAT_DATE_FORMATS, NgxMatDateAdapter, NgxMatDateFormats } from '@angular-material-components/datetime-picker';
-import { NgxMatMomentAdapter, NGX_MAT_MOMENT_DATE_ADAPTER_OPTIONS, NgxMatMomentDateAdapterOptions, } from '@angular-material-components/moment-adapter';
+import { HDeviceSelectors, HPacket, HProjectSelectors, HprojectsService } from 'core';
+import { map } from 'rxjs';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { NgxMatDateAdapter } from '@angular-material-components/datetime-picker';
+import { NgxMatMomentAdapter } from '@angular-material-components/moment-adapter';
 import moment from 'moment';
-import 'moment/locale/it'
 
 type ExportHPacketData = {
-  processedRecords: number,
-  totalRecords: number,
-  exportId: string,
-  started: boolean,
-  completed: boolean,
-  fileName: string,
-  errorMessages: any[],
-  hasErrors: boolean
-}
-
-// const CUSTOM_DATE_FORMATS: NgxMatDateFormats = {
-//   parse: {
-//     dateInput: "l, LTS"
-//   },
-//   display: {
-//     dateInput: "l, LTS",
-//     monthYearLabel: "MMM YYYY",
-//     dateA11yLabel: "LL",
-//     monthYearA11yLabel: "MMMM YYYY"
-//   }
-// };
-
-// export const CUSTOM_DATE_FORMAT: NgxMatDateFormats = {
-//   parse: {
-//     dateInput: 'DD/MM/YYYY',
-//   },
-//   display: {
-//     dateInput: 'DD/MM/YYYY',
-//     monthYearLabel: 'MMMM YYYY',
-//     dateA11yLabel: 'DD/MM/YYYY',
-//     monthYearA11yLabel: 'MMMM YYYY',
-//   },
-// };
-
-// const MY_NGX_DATE_FORMATS: NgxMatDateFormats = {
-//   parse: {
-//     dateInput: "l, LTS"
-//   },
-//   display: {
-//     dateInput: MOMENT_DATETIME_WITH_SECONDS_FORMAT,
-//     monthYearLabel: "MMM YYYY",
-//     dateA11yLabel: "LL",
-//     monthYearA11yLabel: "MMMM YYYY"
-//   }
-// };
-
-export const CUSTOM_DATE_FORMAT: NgxMatDateFormats = {
-  parse: {
-    dateInput: 'DD/MM/YYYY',
-  },
-  display: {
-    dateInput: 'DD/MM/YYYY',
-    monthYearLabel: 'MMMM YYYY',
-    dateA11yLabel: 'DD/MM/YYYY',
-    monthYearA11yLabel: 'MMMM YYYY',
-  },
+  processedRecords: number;
+  totalRecords: number;
+  exportId: string;
+  started: boolean;
+  completed: boolean;
+  fileName: string;
+  errorMessages: any[];
+  hasErrors: boolean;
 };
 
 @Component({
@@ -76,88 +26,88 @@ export const CUSTOM_DATE_FORMAT: NgxMatDateFormats = {
   templateUrl: './data-export.component.html',
   styleUrls: ['./data-export.component.scss'],
   providers: [
-    // {provide: MAT_DATE_LOCALE, useValue: 'it-IT'},
-    // {provide: NGX_MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: {useUtc: true}},
-    {
-      provide: NgxMatDateAdapter,
-      useClass: NgxMatMomentAdapter,
-      deps: [MAT_DATE_LOCALE, NGX_MAT_MOMENT_DATE_ADAPTER_OPTIONS]
-    },
-    { provide: NGX_MAT_DATE_FORMATS, useValue: CUSTOM_DATE_FORMAT }
-
-
-    // { provide: MAT_DATE_LOCALE, useValue: 'it-IT' },
-    // { provide: MAT_DATE_FORMATS, useValue: CUSTOM_DATE_FORMAT },
-    // { provide: NgxMatDateAdapter, useClass: NgxMatMomentAdapter },
-    // {
-    //   provide: NGX_MAT_MOMENT_DATE_ADAPTER_OPTIONS,
-    //   useValue: { useUtc: true } as NgxMatMomentDateAdapterOptions
-    // },
-  ]
+    { provide: MAT_DATE_LOCALE, useValue: 'it-IT' },
+    { provide: NgxMatDateAdapter, useClass: NgxMatMomentAdapter },
+  ],
 })
 export class DataExportComponent implements OnInit {
 
-  date: moment.Moment;
-  // dateControl = this.fb.control(new Date(2021, 9, 4, 5, 6, 7));
-
-  color: ThemePalette = 'primary';
-
+  maxLength = 255;
+  
   form = this.fb.group({
-    startTime: '',
-    endTime: '',
-    // dateControl: ''
+    startTime: ['', Validators.required],
+    endTime: ['', Validators.required],
+    exportName: ['', [Validators.required, Validators.maxLength(this.maxLength)]],
+    hPacketFormat: ['', Validators.required]
   });
 
-  get startTime() {
-    return this.form.controls.startTime;
+  hPacketFormatEnum = HPacket.FormatEnum;
+
+  private get startTime(): FormControl {
+    return this.form.controls.startTime as FormControl;
   }
 
-  get endTime() {
-    return this.form.controls.endTime;
+  private get endTime(): FormControl {
+    return this.form.controls.endTime as FormControl;
+  }
+
+  private get hPacketFormat(): FormControl {
+    return this.form.controls.hPacketFormat as FormControl;
+  }
+
+  private get exportName(): FormControl {
+    return this.form.controls.exportName as FormControl;
   }
 
   private initialFormValue: Record<'startTime' | 'endTime', Date> = {
     startTime: undefined,
-    endTime: undefined
-  }
+    endTime: undefined,
+  };
 
-  devices = this.store.select(HDeviceSelectors.selectAllHDevices)
-    .pipe(
-      map((devices) => devices.filter(({ project }) => {
+  devices = this.store.select(HDeviceSelectors.selectAllHDevices).pipe(
+    map((devices) =>
+      devices.filter(({ project }) => {
         //TODO
         const selectedProjectId = 8451;
-        return project.id === selectedProjectId
-      })),
+        return project.id === selectedProjectId;
+      })
     )
+  );
+
+  private hProjectId: number;
 
   constructor(
     private fb: FormBuilder,
     private store: Store,
     private dialogRef: DialogRef<any>,
     @Inject(DIALOG_DATA) public data: DataExport,
-    private hprojectsService: HprojectsService,
+    private hProjectsService: HprojectsService
   ) {
-    moment.locale('it');
-    moment.localeData('it');
+    this.store
+      .select(HProjectSelectors.selectCurrentHProjectId)
+      .subscribe({
+        next: (id) => this.hProjectId = id
+      });
   }
 
   ngOnInit(): void {
-    console.log(this.data);
+    const { timeInterval, domain } = this.data;
 
-    const { domain, timeInterval } = this.data;
+    let interval: Date[] = [];
     if (timeInterval.length) {
-      this.initialFormValue = {
-        startTime: timeInterval[0],
-        endTime: timeInterval[1]
-      };
+      interval = timeInterval;
     } else if (domain.length) {
-      this.initialFormValue = {
-        startTime: domain[0],
-        endTime: domain[1]
-      };
+      interval = domain;
     }
 
-    this.form.patchValue({ ...this.initialFormValue });
+    if (interval.length) {
+      this.initialFormValue = {
+        startTime: interval[0],
+        endTime: interval[1],
+      };
+
+      this.form.patchValue({ ...this.initialFormValue });
+    }
   }
 
   closeModal(event?: any): void {
@@ -165,47 +115,43 @@ export class DataExportComponent implements OnInit {
   }
 
   export() {
-    const hProjectId = 8451;
     const hPacketId = 8457;
-    const hPacketFormat = 'JSON';
-    const exportName = ''
-    const rowKeyLowerBound = moment(this.startTime.value).unix();
-    const rowKeyUpperBound = moment(this.endTime.value).unix();
 
-    this.hprojectsService.exportHPacketData(
-      hProjectId,
-      hPacketId,
-      hPacketFormat,
-      exportName,
-      rowKeyLowerBound,
-      rowKeyUpperBound
-    ).subscribe({
-      next: (ret: ExportHPacketData) => {
-        console.log(ret);
+    this.hProjectsService
+      .exportHPacketData(
+        this.hProjectId,
+        hPacketId,
+        this.hPacketFormat.value,
+        this.exportName.value,
+        moment(this.startTime.value).unix(),
+        moment(this.endTime.value).unix()
+      )
+      .subscribe({
+        next: (ret: ExportHPacketData) => {
+          console.log(ret);
 
-        const interval = setInterval(() => {
-          if (ret.completed) {
-            clearInterval(interval)
-          }
+          const interval = setInterval(() => {
+            if (ret.completed) {
+              clearInterval(interval);
+            }
 
-          this.hprojectsService.getExportStatus(ret.exportId)
-            .subscribe({
-              next: (r) => {
-                console.log('status', r);
-              }
-            });
+            this.hProjectsService.getExportStatus(ret.exportId)
+              .subscribe({
+                next: (r) => {
+                  console.log('status', r);
+                },
+              });
 
-          this.hprojectsService.downloadHPacketDataExport(ret.exportId)
-            .subscribe({
-              next: (r) => {
-                console.log('download', r);
-              }
-            });
-        }, 1000);
-
-      }
-    })
-
+            this.hProjectsService
+              .downloadHPacketDataExport(ret.exportId)
+              .subscribe({
+                next: (r) => {
+                  console.log('download', r);
+                },
+              });
+          }, 1000);
+        },
+      });
 
     this.dialogRef.close('save');
   }
