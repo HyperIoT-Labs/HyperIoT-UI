@@ -1830,6 +1830,15 @@
       <trans-unit id="HYT_theme_customization" datatype="html">
         <source>Theme customization</source>
       </trans-unit>
+       <trans-unit id="HYT_default_dashboard_settings" datatype="html">
+        <source>Default Dashboard Settings</source>
+      </trans-unit>
+      <trans-unit id="HYT_realtime" datatype="html">
+        <source>Real-Time</source>
+      </trans-unit>
+      <trans-unit id="HYT_offline" datatype="html">
+        <source>Offline</source>
+      </trans-unit>
       <trans-unit id="HYT_upload_your_logo" datatype="html">
         <source>Upload your logo</source>
       </trans-unit>
@@ -1865,6 +1874,12 @@
       </trans-unit>
       <trans-unit id="HYT_device_dashboard" datatype="html">
         <source>Device Dashbaord</source>
+      </trans-unit>
+      <trans-unit id="HYT_go_realtime_device_dashboard" datatype="html">
+        <source>Go To Real-Time Device Dashboard</source>
+      </trans-unit>
+      <trans-unit id="HYT_go_offline_device_dashboard" datatype="html">
+        <source>Go To Offline Device Dashboard</source>
       </trans-unit>
       <trans-unit id="HYT_alarm_managing" datatype="html">
         <source>Alarm Managing</source>

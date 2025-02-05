@@ -28,10 +28,13 @@ export * from './lib/hyt-tri-checkbox/hyt-tri-checkbox.component';
 export * from './lib/hyt-infinite-scrolling-table/hyt-infinite-scrolling-table.component';
 export * from './lib/hyt-notification-box/notification-box.component'
 export * from './lib/hyt-bim/bim.component';
+
 export * from './lib/hyt-map/map.component';
 export * from './lib/hyt-map/components/leaflet-map/leaflet-map.component';
 export * from './lib/hyt-map/components/map-device-edit/map-device-edit.component';
 export * from './lib/hyt-map/components/map-device-info/map-device-info.component';
+export * from './lib/hyt-map/models/map-item-action';
+export * from './lib/hyt-map/models/map-type-key';
 
 export { SelectOption, SelectOptionGroup } from './lib/hyt-select/hyt-select.component';
 export { TreeNode } from './lib/hyt-tree-view/hyt-tree-view.component';
@@ -117,3 +120,4 @@ export { MapDefaultConfiguration } from './lib/hyt-map/map-configuration';
 export { DeviceActions } from './lib/hyt-map/models/device-actions';
 
 export { RuleDefinitionComponent } from './lib/rule-definition/rule-definition.component';
+

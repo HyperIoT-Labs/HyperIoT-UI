@@ -5,10 +5,10 @@ import { LeafletMapConfig } from "../../models/leaflet-map";
 import { MapDefaultConfiguration } from '../../map-configuration';
 import { MapDeviceEditComponent } from '../map-device-edit/map-device-edit.component';
 import { MapDeviceInfoComponent } from '../map-device-info/map-device-info.component';
-import { DeviceActions } from '../../models/device-actions';
 import domtoimage from 'dom-to-image';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject, combineLatest } from 'rxjs';
+import { MapItemAction } from '../../models/map-item-action';
 
 interface MapMarker {
   reference: L.Marker<any>;
@@ -33,7 +33,7 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
 
   private _mapMoveCB: (areaConfiguration: string) => void;
 
-  itemOpen = new EventEmitter<any>();
+  itemOpen = new EventEmitter<MapItemAction>();
   itemRemove = new EventEmitter<any>();
   itemUpdate = new EventEmitter<any>();
 
@@ -144,7 +144,7 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
         markerElement.style.background = alarmByMaxSeverity.color.background;
         markerElement.innerText = alarmListByDevices.length.toString();
         markerElement.classList.add('leaflet-badge-show');
-        
+
       });
     });
   }
@@ -168,7 +168,7 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
       const parsedOption: LeafletMapConfig = JSON.parse(this.areaConfiguration);
 
       if (cb) {
-        if (this.mapRef.getCenter().equals(L.latLng(parsedOption.latitude, parsedOption.longitude ))) {
+        if (this.mapRef.getCenter().equals(L.latLng(parsedOption.latitude, parsedOption.longitude))) {
           cb();
         } else {
           this.mapRef.on('moveend', () => {
@@ -177,7 +177,7 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
           });
         }
       }
-      
+
       this.mapRef.setView(L.latLng({
         lat: parsedOption.latitude || MapDefaultConfiguration.latitude,
         lng: parsedOption.longitude || MapDefaultConfiguration.longitude,
@@ -221,7 +221,7 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
 
     L.control.scale().addTo(map);
   }
-  
+
   mapMove(event) { // move and zoom events
     if (this._editCenter) {
       this.areaConfiguration = JSON.stringify({ latitude: this.mapRef.getCenter().lat, longitude: this.mapRef.getCenter().lng, zoom: this.mapRef.getZoom() });
@@ -233,7 +233,7 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
       this._mapMoveCB(this.areaConfiguration);
     }
   }
-  
+
   getAreaCenter() {
     return { x: this.mapRef.getCenter().lat, y: this.mapRef.getCenter().lng };
   }
@@ -259,7 +259,7 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
     this.renderer.appendChild(iconElement, iconImage);
     this.renderer.appendChild(iconElement, badgeElement);
 
-    return L.divIcon({ 
+    return L.divIcon({
       iconSize:     [51, 67],
       iconAnchor:   [25.5, 67],
       popupAnchor:  [0, -70],
@@ -305,7 +305,7 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
         this.itemOpen.emit(itemInfo);
       }
       deviceEditComponent.changeDetectorRef.detectChanges();
-  
+
       marker.bindPopup(deviceEditComponent.location.nativeElement);
       marker.on('dragend', event => {
         const latlng = marker.getLatLng();
@@ -318,9 +318,8 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
     } else {
       const deviceEditComponent = this.resolver.resolveComponentFactory(MapDeviceInfoComponent).create(this.injector);
       deviceEditComponent.instance.deviceInfo = areaItem;
-      deviceEditComponent.instance.openClicked.subscribe((deviceAction: DeviceActions) => {
-        if (deviceAction) this.itemOpen.emit({item: areaItem, deviceAction});
-        else this.itemOpen.emit(areaItem);
+      deviceEditComponent.instance.openClicked.subscribe((mapItem) => {
+          this.itemOpen.emit(mapItem);
       });
       deviceEditComponent.changeDetectorRef.detectChanges();
       marker.bindPopup(deviceEditComponent.location.nativeElement);
