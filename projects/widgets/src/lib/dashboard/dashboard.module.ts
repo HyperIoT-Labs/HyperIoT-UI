@@ -51,6 +51,10 @@ import { GaugeSettingsComponent } from './widget-settings-dialog/gauge-settings/
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { DataExportComponent } from './timeline/data-export/data-export.component';
+import { NgxMatDatetimePickerModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
+import { MatRadioModule } from '@angular/material/radio';
+import { NgxMatMomentModule } from '@angular-material-components/moment-adapter';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 @NgModule({
   declarations: [
@@ -107,7 +111,12 @@ import { DataExportComponent } from './timeline/data-export/data-export.componen
     MatTabsModule,
     WidgetsModule,
     MatCheckboxModule,
-    ColorPickerModule
+    ColorPickerModule,
+    NgxMatTimepickerModule,
+    MatDatepickerModule,
+    NgxMatDatetimePickerModule,
+    NgxMatMomentModule,
+    MatRadioModule,
   ],
   providers: [
     DashboardConfigService,

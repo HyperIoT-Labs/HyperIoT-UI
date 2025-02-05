@@ -2,8 +2,59 @@
   <section i18n="@@HYT_export_data" hyt-dialog-header>Export Data</section>
 
   <section class="dialog-form-content" hyt-dialog-content>
+    <!-- <ngx-mat-timepicker ngDefaultControl [(ngModel)]="date"></ngx-mat-timepicker> -->
+
+
     <form [formGroup]="form" class="form">
-      <div class="d-flex flex-column">
+      <mat-label>Start Time</mat-label>
+      <mat-form-field>
+        <input
+          matInput
+          [ngxMatDatetimePicker]="startTimePicker"
+          placeholder="Choose a date"
+          formControlName="startTime"
+        />
+        <mat-datepicker-toggle matSuffix [for]="startTimePicker">
+        </mat-datepicker-toggle>
+        <ngx-mat-datetime-picker
+          #startTimePicker
+          [showSpinners]="true"
+          [showSeconds]="true"
+          [stepHour]="1"
+          [stepMinute]="1"
+          [stepSecond]="1"
+          [enableMeridian]="true"
+          [touchUi]="false"
+          [color]="color"
+        >
+        </ngx-mat-datetime-picker>
+      </mat-form-field>
+
+      <mat-label>End Time</mat-label>
+      <mat-form-field>
+        <input
+          matInput
+          [ngxMatDatetimePicker]="endTimePicker"
+          placeholder="Choose a date"
+          formControlName="endTime"
+        />
+        <mat-datepicker-toggle matSuffix [for]="endTimePicker">
+        </mat-datepicker-toggle>
+        <ngx-mat-datetime-picker
+          #endTimePicker
+          [showSpinners]="true"
+          [showSeconds]="true"
+          [stepHour]="1"
+          [stepMinute]="1"
+          [stepSecond]="1"
+          [enableMeridian]="true"
+          [touchUi]="false"
+          [color]="color"
+        >
+        </ngx-mat-datetime-picker>
+      </mat-form-field>
+
+      <!-- <div class="d-flex flex-column">
         <label for="startTime"> Start Time </label>
         <input id="startTime" type="datetime" formControlName="startTime" />
       </div>
@@ -11,7 +62,9 @@
       <div class="d-flex flex-column">
         <label for="endTime"> End Time </label>
         <input id="endTime" type="datetime" formControlName="endTime" />
-      </div>
+      </div> -->
+
+      {{ devices | async | json }}
     </form>
 
     <button
