@@ -56,6 +56,8 @@ import { MatRadioModule } from '@angular/material/radio';
 import { NgxMatMomentModule } from '@angular-material-components/moment-adapter';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatCommonModule } from '@angular/material/core';
+import { MatChipsModule } from '@angular/material/chips';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -93,12 +95,14 @@ import { MatCommonModule } from '@angular/material/core';
     ColorPickerModule,
     CommonModule,
     ComponentsModule,
+    DragDropModule,
     FormsModule,
     GridsterModule,
     MatAutocompleteModule,
     MatButtonModule,
     MatButtonToggleModule,
     MatCheckboxModule,
+    MatChipsModule,
     MatDatepickerModule,
     MatDividerModule,
     MatExpansionModule,

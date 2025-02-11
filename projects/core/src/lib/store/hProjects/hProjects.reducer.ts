@@ -27,7 +27,7 @@ export namespace HProjectStore {
     on(HProjectActions.loadHProjectsSuccess, (state, { hProjects }) => {
       return adapter.setAll(hProjects, {
         ...state,
-        selectedHProjectId: null
+        // selectedHProjectId: null
       });
     }),
     on(HProjectActions.loadHProjectsFailure, (state, { error }) => {

@@ -3,12 +3,13 @@ import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { DialogRef, DIALOG_DATA } from 'components';
 import { DataExport } from '../models/data-export,model';
 import { Store } from '@ngrx/store';
-import { HDeviceSelectors, HPacket, HProjectSelectors, HprojectsService } from 'core';
-import { map } from 'rxjs';
+import { HDeviceSelectors, HPacket, HPacketSelectors, HProjectSelectors, HprojectsService } from 'core';
+import { forkJoin, map, switchMap, tap } from 'rxjs';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { NgxMatDateAdapter } from '@angular-material-components/datetime-picker';
 import { NgxMatMomentAdapter } from '@angular-material-components/moment-adapter';
 import moment from 'moment';
+import { CdkDrag, CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
 type ExportHPacketData = {
   processedRecords: number;
@@ -21,6 +22,10 @@ type ExportHPacketData = {
   hasErrors: boolean;
 };
 
+type Vegetable = {
+  name: string
+}
+
 @Component({
   selector: 'hyperiot-data-export',
   templateUrl: './data-export.component.html',
@@ -32,16 +37,17 @@ type ExportHPacketData = {
 })
 export class DataExportComponent implements OnInit {
 
-  maxLength = 255;
-  
+  readonly maxLength = 255;
+
   form = this.fb.group({
     startTime: ['', Validators.required],
     endTime: ['', Validators.required],
     exportName: ['', [Validators.required, Validators.maxLength(this.maxLength)]],
-    hPacketFormat: ['', Validators.required]
+    hPacketFormat: ['', Validators.required],
+    hPacketId: ['', Validators.required]
   });
 
-  hPacketFormatEnum = HPacket.FormatEnum;
+  readonly hPacketFormatEnum = HPacket.FormatEnum;
 
   private get startTime(): FormControl {
     return this.form.controls.startTime as FormControl;
@@ -64,15 +70,40 @@ export class DataExportComponent implements OnInit {
     endTime: undefined,
   };
 
-  devices = this.store.select(HDeviceSelectors.selectAllHDevices).pipe(
-    map((devices) =>
-      devices.filter(({ project }) => {
-        //TODO
-        const selectedProjectId = 8451;
-        return project.id === selectedProjectId;
-      })
-    )
-  );
+  private hDeviceList$ =
+    this.store.select(HProjectSelectors.selectCurrentHProjectId)
+      .pipe(
+        tap((hProjectId) => this.hProjectId = hProjectId),
+        switchMap((hProjectId) =>
+          this.store.select(HDeviceSelectors.selectAllHDevices)
+            .pipe(
+              map((hDeviceList) => hDeviceList.filter(({ project }) => project.id === hProjectId))
+            )
+        )
+      );
+
+  hPacketList$ = this.hDeviceList$
+    .pipe(
+      switchMap((hDeviceList) => this.store.select(HPacketSelectors.selectAllHPackets)
+        .pipe(
+          map((hPacketList) => {
+            const deviceIdList = hDeviceList.map(({ id }) => id);
+            return hPacketList.find(({ device }) => deviceIdList.includes(device.id));
+          })
+        ))
+    );
+
+  vegetables1: Vegetable[] = [
+    { name: 'apple' },
+    { name: 'banana' },
+    { name: 'strawberry' },
+    { name: 'orange' },
+    { name: 'kiwi' },
+    { name: 'cherry' },
+  ];
+
+  vegetables2: Vegetable[] = [
+  ];
 
   private hProjectId: number;
 
@@ -83,11 +114,7 @@ export class DataExportComponent implements OnInit {
     @Inject(DIALOG_DATA) public data: DataExport,
     private hProjectsService: HprojectsService
   ) {
-    this.store
-      .select(HProjectSelectors.selectCurrentHProjectId)
-      .subscribe({
-        next: (id) => this.hProjectId = id
-      });
+
   }
 
   ngOnInit(): void {
@@ -110,6 +137,33 @@ export class DataExportComponent implements OnInit {
     }
   }
 
+  moveElementToLeft(element: Vegetable) {
+    this.vegetables1 = this.vegetables1.filter(({ name }) => name !== element.name);
+    this.vegetables2.push(element);
+  }
+
+  moveElementToRight(element: Vegetable) {
+    this.vegetables2 = this.vegetables2.filter(({ name }) => name !== element.name);
+    this.vegetables1.push(element);
+  }
+
+  drop(event: CdkDragDrop<Vegetable[]>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+    } else {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+    }
+  }
+
   closeModal(event?: any): void {
     this.dialogRef.close(event);
   }
@@ -123,32 +177,40 @@ export class DataExportComponent implements OnInit {
         hPacketId,
         this.hPacketFormat.value,
         this.exportName.value,
-        moment(this.startTime.value).unix(),
-        moment(this.endTime.value).unix()
+        moment(this.startTime.value).valueOf(), //moment unix timestamp in milliseconds
+        moment(this.endTime.value).valueOf(),
+
+        // 6399,
+        // 6438,
+        // 'csv',
+        // '',
+        // 1733007600000,
+        // 1735599600000
       )
       .subscribe({
         next: (ret: ExportHPacketData) => {
           console.log(ret);
 
           const interval = setInterval(() => {
-            if (ret.completed) {
-              clearInterval(interval);
-            }
-
             this.hProjectsService.getExportStatus(ret.exportId)
               .subscribe({
-                next: (r) => {
-                  console.log('status', r);
+                next: (rStatus) => {
+                  console.log('status', rStatus);
+
+                  if (rStatus.completed) {
+                    clearInterval(interval);
+
+                    this.hProjectsService
+                      .downloadHPacketDataExport(rStatus.exportId)
+                      .subscribe({
+                        next: (r) => {
+                          console.log('download', r);
+                        },
+                      });
+                  }
                 },
               });
 
-            this.hProjectsService
-              .downloadHPacketDataExport(ret.exportId)
-              .subscribe({
-                next: (r) => {
-                  console.log('download', r);
-                },
-              });
           }, 1000);
         },
       });
