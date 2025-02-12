@@ -4,12 +4,12 @@ import { DialogRef, DIALOG_DATA } from 'components';
 import { DataExport } from '../models/data-export,model';
 import { Store } from '@ngrx/store';
 import { HDeviceSelectors, HPacket, HPacketSelectors, HProjectSelectors, HprojectsService } from 'core';
-import { forkJoin, map, switchMap, tap } from 'rxjs';
+import { map, switchMap, tap } from 'rxjs';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { NgxMatDateAdapter } from '@angular-material-components/datetime-picker';
 import { NgxMatMomentAdapter } from '@angular-material-components/moment-adapter';
 import moment from 'moment';
-import { CdkDrag, CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
 type ExportHPacketData = {
   processedRecords: number;
@@ -21,10 +21,6 @@ type ExportHPacketData = {
   errorMessages: any[];
   hasErrors: boolean;
 };
-
-type Vegetable = {
-  name: string
-}
 
 @Component({
   selector: 'hyperiot-data-export',
@@ -44,7 +40,6 @@ export class DataExportComponent implements OnInit {
     endTime: ['', Validators.required],
     exportName: ['', [Validators.required, Validators.maxLength(this.maxLength)]],
     hPacketFormat: ['', Validators.required],
-    hPacketId: ['', Validators.required]
   });
 
   readonly hPacketFormatEnum = HPacket.FormatEnum;
@@ -70,40 +65,9 @@ export class DataExportComponent implements OnInit {
     endTime: undefined,
   };
 
-  private hDeviceList$ =
-    this.store.select(HProjectSelectors.selectCurrentHProjectId)
-      .pipe(
-        tap((hProjectId) => this.hProjectId = hProjectId),
-        switchMap((hProjectId) =>
-          this.store.select(HDeviceSelectors.selectAllHDevices)
-            .pipe(
-              map((hDeviceList) => hDeviceList.filter(({ project }) => project.id === hProjectId))
-            )
-        )
-      );
+  hPacketList: HPacket[] = [];
 
-  hPacketList$ = this.hDeviceList$
-    .pipe(
-      switchMap((hDeviceList) => this.store.select(HPacketSelectors.selectAllHPackets)
-        .pipe(
-          map((hPacketList) => {
-            const deviceIdList = hDeviceList.map(({ id }) => id);
-            return hPacketList.find(({ device }) => deviceIdList.includes(device.id));
-          })
-        ))
-    );
-
-  vegetables1: Vegetable[] = [
-    { name: 'apple' },
-    { name: 'banana' },
-    { name: 'strawberry' },
-    { name: 'orange' },
-    { name: 'kiwi' },
-    { name: 'cherry' },
-  ];
-
-  vegetables2: Vegetable[] = [
-  ];
+  hPacketListSelected: HPacket[] = [];
 
   private hProjectId: number;
 
@@ -114,7 +78,28 @@ export class DataExportComponent implements OnInit {
     @Inject(DIALOG_DATA) public data: DataExport,
     private hProjectsService: HprojectsService
   ) {
-
+    this.store.select(HProjectSelectors.selectCurrentHProjectId)
+      .pipe(
+        tap((hProjectId) => this.hProjectId = hProjectId),
+        switchMap((hProjectId) =>
+          this.store.select(HDeviceSelectors.selectAllHDevices)
+            .pipe(
+              map((hDeviceList) => hDeviceList.filter(({ project }) => project.id === hProjectId))
+            )
+        ),
+        switchMap((hDeviceList) =>
+          this.store.select(HPacketSelectors.selectAllHPackets)
+            .pipe(
+              map((hPacketList) => {
+                const deviceIdList = hDeviceList.map(({ id }) => id);
+                return hPacketList.filter(({ device }) => deviceIdList.includes(device.id));
+              })
+            ))
+      ).subscribe({
+        next: (hPacketList) => {
+          this.hPacketList = hPacketList
+        }
+      })
   }
 
   ngOnInit(): void {
@@ -137,17 +122,17 @@ export class DataExportComponent implements OnInit {
     }
   }
 
-  moveElementToLeft(element: Vegetable) {
-    this.vegetables1 = this.vegetables1.filter(({ name }) => name !== element.name);
-    this.vegetables2.push(element);
+  moveElementToLeft(element: HPacket) {
+    this.hPacketList = this.hPacketList.filter(({ name }) => name !== element.name);
+    this.hPacketListSelected.push(element);
   }
 
-  moveElementToRight(element: Vegetable) {
-    this.vegetables2 = this.vegetables2.filter(({ name }) => name !== element.name);
-    this.vegetables1.push(element);
+  moveElementToRight(element: HPacket) {
+    this.hPacketListSelected = this.hPacketListSelected.filter(({ name }) => name !== element.name);
+    this.hPacketList.push(element);
   }
 
-  drop(event: CdkDragDrop<Vegetable[]>) {
+  drop(event: CdkDragDrop<HPacket[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(
         event.container.data,
@@ -169,16 +154,15 @@ export class DataExportComponent implements OnInit {
   }
 
   export() {
-    const hPacketId = 8457;
-
-    this.hProjectsService
+    for (const hPacket of this.hPacketListSelected) {
+      this.hProjectsService
       .exportHPacketData(
         this.hProjectId,
-        hPacketId,
+        hPacket.id,
         this.hPacketFormat.value,
         this.exportName.value,
         moment(this.startTime.value).valueOf(), //moment unix timestamp in milliseconds
-        moment(this.endTime.value).valueOf(),
+        moment(this.endTime.value).valueOf(), //moment unix timestamp in milliseconds
 
         // 6399,
         // 6438,
@@ -214,8 +198,11 @@ export class DataExportComponent implements OnInit {
           }, 1000);
         },
       });
+    }
 
-    this.dialogRef.close('save');
+
+
+    // this.dialogRef.close('save');
   }
 
   resetForm() {

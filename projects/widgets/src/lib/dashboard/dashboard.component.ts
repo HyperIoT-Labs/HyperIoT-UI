@@ -18,13 +18,14 @@ import {
   HdevicesService,
   HProject,
   HProjectActions,
+  HProjectSelectors,
   Logger,
   LoggerService,
   OfflineDataService,
   UserSiteSettingActions,
   UserSiteSettingSelectors
 } from 'core';
-import { debounceTime, delay, Subject, Subscription, takeUntil } from 'rxjs';
+import { debounceTime, delay, firstValueFrom, Subject, Subscription, takeUntil } from 'rxjs';
 import { AddWidgetDialogComponent } from './add-widget-dialog/add-widget-dialog.component';
 import { DashboardConfigService } from './dashboard-config.service';
 import { DashboardViewComponent } from './dashboard-view/dashboard-view.component';
@@ -193,15 +194,16 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.logger.registerClass(DashboardComponent.name);
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.showAreas = this.activatedRoute.snapshot.routeConfig.path.startsWith('areas/');
     this.showHDevice = this.activatedRoute.snapshot.routeConfig.path.startsWith('hdevice/');
 
     if (!this.showAreas) {
       if (this.activatedRoute.snapshot.queryParams.projectId) {
         this.idProjectSelected = +this.activatedRoute.snapshot.queryParams.projectId;
-      } else if (localStorage.getItem('last-dashboard-project')) {
-        this.idProjectSelected = +localStorage.getItem('last-dashboard-project');
+      } else {
+        const currentHProjectId = await firstValueFrom(this.store.select(HProjectSelectors.selectCurrentHProjectId));
+        this.idProjectSelected = currentHProjectId;
       }
     }
 
