@@ -1,12 +1,12 @@
-<button 
-    mat-button 
-    class="event-bell" 
+<button
+    mat-button
+    class="event-bell"
     (click)="showPanel($event)"
     [matTooltip]="tooltipStatus(eventNotificationIsOn | async)"
     matTooltipPosition="below"
 >
-    <div 
-        class="notification-count" 
+    <div
+        class="notification-count"
         [ngStyle]="{'font-size': (notificationCount$ | async) > 99 ? '.65em' : '.8em'}"
         *ngIf="eventNotificationIsOn | async"
     >{{ notificationCountLabel$ | async }}</div>

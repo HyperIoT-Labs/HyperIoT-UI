@@ -11,19 +11,19 @@
               matInput
               [ngxMatDatetimePicker]="startTimePicker"
               placeholder="Choose a date"
+              (click)="startTimePicker.open()"
               formControlName="startTime"
               readonly
-              (click)="startTimePicker.open()"
               required
             />
-            <mat-datepicker-toggle matSuffix [for]="startTimePicker">
+            <mat-datepicker-toggle matSuffix [for]="$any(startTimePicker)">
             </mat-datepicker-toggle>
             <ngx-mat-datetime-picker #startTimePicker [showSeconds]="true">
             </ngx-mat-datetime-picker>
           </mat-form-field>
 
           <mat-form-field appearance="fill">
-            <mat-label>Packet Format</mat-label>
+            <mat-label>Select Export Format</mat-label>
             <mat-select formControlName="hPacketFormat" required>
               <mat-option
                 *ngFor="let hPacketFormat of hPacketFormatEnum | keyvalue"
@@ -62,12 +62,12 @@
               matInput
               [ngxMatDatetimePicker]="endTimePicker"
               placeholder="Choose a date"
+              (click)="endTimePicker.open()"
               formControlName="endTime"
               readonly
-              (click)="endTimePicker.open()"
               required
             />
-            <mat-datepicker-toggle matSuffix [for]="endTimePicker">
+            <mat-datepicker-toggle matSuffix [for]="$any(endTimePicker)">
             </mat-datepicker-toggle>
             <ngx-mat-datetime-picker #endTimePicker [showSeconds]="true">
             </ngx-mat-datetime-picker>
@@ -106,24 +106,26 @@
       </div>
 
       <div class="d-flex flex-column">
-        <pre [innerHTML]="form.value | json"></pre>
+        <p *ngFor="let error of exportErrorList">
+          Si è verificato un errore durante il download del packet
+          {{ error.hPacketId }}
+        </p>
 
         <button
           class="hyt-base-btn mat-hyt-base-total-blue mat-raised-button"
-          type="reset"
+          type="button"
           (click)="resetForm()"
         >
           Reset
         </button>
       </div>
-
     </form>
   </section>
 
   <section class="dialog-footer" hyt-dialog-footer>
     <hyt-button
       class="button-confirm"
-      [isDisabled]="form.invalid || hPacketListSelected.length <= 0 "
+      [isDisabled]="form.invalid || hPacketListSelected.length <= 0"
       [color]="'hyt-base-default-white'"
       (clickFn)="export()"
     >

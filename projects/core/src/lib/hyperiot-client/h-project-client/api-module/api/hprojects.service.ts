@@ -354,8 +354,8 @@ export class HprojectsService {
         }
 
         // to determine the Accept header
-        const httpHeaderAccepts: string[] = [
-            'application/octet-stream'
+        let httpHeaderAccepts: string[] = [
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected != undefined) {

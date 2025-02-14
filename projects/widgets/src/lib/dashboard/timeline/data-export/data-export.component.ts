@@ -5,11 +5,13 @@ import { DataExport } from '../models/data-export,model';
 import { Store } from '@ngrx/store';
 import { HDeviceSelectors, HPacket, HPacketSelectors, HProjectSelectors, HprojectsService } from 'core';
 import { map, switchMap, tap } from 'rxjs';
-import { MAT_DATE_LOCALE } from '@angular/material/core';
-import { NgxMatDateAdapter } from '@angular-material-components/datetime-picker';
-import { NgxMatMomentAdapter } from '@angular-material-components/moment-adapter';
+import { MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { NgxMatDateAdapter, } from '@angular-material-components/datetime-picker';
+import { NgxMatMomentAdapter, NGX_MAT_MOMENT_DATE_ADAPTER_OPTIONS, NGX_MAT_MOMENT_FORMATS } from '@angular-material-components/moment-adapter';
 import moment from 'moment';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { HttpClient } from '@angular/common/http';
+import saveAs from 'file-saver';
 
 type ExportHPacketData = {
   processedRecords: number;
@@ -28,18 +30,22 @@ type ExportHPacketData = {
   styleUrls: ['./data-export.component.scss'],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'it-IT' },
-    { provide: NgxMatDateAdapter, useClass: NgxMatMomentAdapter },
+    { provide: NgxMatDateAdapter, useClass: NgxMatMomentAdapter, deps: [MAT_DATE_LOCALE] },
+    { provide: MAT_DATE_FORMATS, useValue: NGX_MAT_MOMENT_FORMATS },
+    { provide: NGX_MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } }
   ],
 })
 export class DataExportComponent implements OnInit {
 
   readonly maxLength = 255;
 
+  exportErrorList: { hPacketId: number }[] = [];
+
   form = this.fb.group({
-    startTime: ['', Validators.required],
-    endTime: ['', Validators.required],
-    exportName: ['', [Validators.required, Validators.maxLength(this.maxLength)]],
-    hPacketFormat: ['', Validators.required],
+    startTime: [null, Validators.required],
+    endTime: [null, Validators.required],
+    exportName: [null, [Validators.required, Validators.maxLength(this.maxLength)]],
+    hPacketFormat: [null, Validators.required],
   });
 
   readonly hPacketFormatEnum = HPacket.FormatEnum;
@@ -49,7 +55,7 @@ export class DataExportComponent implements OnInit {
   }
 
   private get endTime(): FormControl {
-    return this.form.controls.endTime as FormControl;
+    return this.form.get('endTime') as FormControl;
   }
 
   private get hPacketFormat(): FormControl {
@@ -65,6 +71,8 @@ export class DataExportComponent implements OnInit {
     endTime: undefined,
   };
 
+  readonly initialPacketList: HPacket[] = [];
+
   hPacketList: HPacket[] = [];
 
   hPacketListSelected: HPacket[] = [];
@@ -76,7 +84,8 @@ export class DataExportComponent implements OnInit {
     private store: Store,
     private dialogRef: DialogRef<any>,
     @Inject(DIALOG_DATA) public data: DataExport,
-    private hProjectsService: HprojectsService
+    private hProjectsService: HprojectsService,
+    private httpClient: HttpClient,
   ) {
     this.store.select(HProjectSelectors.selectCurrentHProjectId)
       .pipe(
@@ -90,6 +99,7 @@ export class DataExportComponent implements OnInit {
         switchMap((hDeviceList) =>
           this.store.select(HPacketSelectors.selectAllHPackets)
             .pipe(
+              tap((hPacketList) => this.initialPacketList.push(...hPacketList)),
               map((hPacketList) => {
                 const deviceIdList = hDeviceList.map(({ id }) => id);
                 return hPacketList.filter(({ device }) => deviceIdList.includes(device.id));
@@ -97,7 +107,7 @@ export class DataExportComponent implements OnInit {
             ))
       ).subscribe({
         next: (hPacketList) => {
-          this.hPacketList = hPacketList
+          this.hPacketList = hPacketList;
         }
       })
   }
@@ -154,58 +164,64 @@ export class DataExportComponent implements OnInit {
   }
 
   export() {
+    this.exportErrorList = [];
+    
+    const hProjectId = this.hProjectId;
+    const exportName = this.exportName.value;
+    const hPacketFormat = this.hPacketFormat.value;
+    const startTime = moment(this.startTime.value).valueOf(); //moment unix timestamp in milliseconds
+    const endTime = moment(this.endTime.value).valueOf(); //moment unix timestamp in milliseconds
+
     for (const hPacket of this.hPacketListSelected) {
+      const hPacketId = hPacket.id;
+
       this.hProjectsService
-      .exportHPacketData(
-        this.hProjectId,
-        hPacket.id,
-        this.hPacketFormat.value,
-        this.exportName.value,
-        moment(this.startTime.value).valueOf(), //moment unix timestamp in milliseconds
-        moment(this.endTime.value).valueOf(), //moment unix timestamp in milliseconds
+        .exportHPacketData(
+          hProjectId,
+          hPacket.id,
+          hPacketFormat,
+          exportName,
+          startTime,
+          endTime
+        )
+        .subscribe({
+          next: (ret: ExportHPacketData) => {
+            const interval = setInterval(() => {
+              this.hProjectsService.getExportStatus(ret.exportId)
+                .subscribe({
+                  next: (status) => {
+                    if (status.completed) {
+                      clearInterval(interval);
 
-        // 6399,
-        // 6438,
-        // 'csv',
-        // '',
-        // 1733007600000,
-        // 1735599600000
-      )
-      .subscribe({
-        next: (ret: ExportHPacketData) => {
-          console.log(ret);
-
-          const interval = setInterval(() => {
-            this.hProjectsService.getExportStatus(ret.exportId)
-              .subscribe({
-                next: (rStatus) => {
-                  console.log('status', rStatus);
-
-                  if (rStatus.completed) {
-                    clearInterval(interval);
-
-                    this.hProjectsService
-                      .downloadHPacketDataExport(rStatus.exportId)
-                      .subscribe({
-                        next: (r) => {
-                          console.log('download', r);
-                        },
+                      this.httpClient.get(
+                        `/hyperiot/hprojects/export/download/${encodeURIComponent(status.exportId)}`,
+                        {
+                          responseType: 'blob'
+                        }
+                      ).subscribe({
+                        next: (res) => saveAs(res, `${exportName}.${hPacketFormat}`),
+                        error: (err) => {
+                          this.exportErrorList.push({ hPacketId });
+                          console.error(err)
+                        }
                       });
-                  }
-                },
-              });
-
-          }, 1000);
-        },
-      });
+                    }
+                  },
+                });
+            }, 1000);
+          }
+        });
     }
-
-
 
     // this.dialogRef.close('save');
   }
 
   resetForm() {
+    this.hPacketList = [...this.initialPacketList];
+    this.hPacketListSelected.length = 0;
+
     this.form.reset({ ...this.initialFormValue });
+
+    this.exportErrorList = [];
   }
 }

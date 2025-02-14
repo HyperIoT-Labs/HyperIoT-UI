@@ -1,24 +1,24 @@
 import { Component } from '@angular/core';
-import { DialogRef, OverlayService } from 'components';
-import { LiveAlarmSelectors, Logger, LoggerService, UserSiteSettingSelectors } from 'core';
-import { NotificationDialogComponent } from '../../dialogs/notification-dialog/notification-dialog.component';
-import { Store } from '@ngrx/store';
 import { map } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { DialogRef, OverlayService } from 'components';
+import { UserSiteSettingSelectors, Logger, LoggerService, DataExportNotificationSelectors } from 'core';
+import { DataExportNotificationDialogComponent } from '../../dialogs/data-export-notification-notification-dialog/data-export-notification-dialog.component';
 
 @Component({
-  selector: 'hyt-notification-button',
-  templateUrl: './notification-button.component.html',
-  styleUrls: ['./notification-button.component.scss'],
+  selector: 'hyt-data-export-notification-button',
+  templateUrl: './data-export-notification-button.component.html',
+  styleUrls: ['./data-export-notification-button.component.scss']
 })
-export class NotificationButtonComponent {
+export class DataExportNotificationButtonComponent {
   /** Notification active get from alarmWrapperService */
-  eventNotificationIsOn = this.store.select(UserSiteSettingSelectors.selectNotificationActive);
+  eventNotificationIsOn$ = this.store.select(UserSiteSettingSelectors.selectNotificationActive);
   /** Overlay object valorized only when panel is open */
   notificationPanel: DialogRef<any>;
   /** HYOT logger */
   private logger: Logger;
 
-  notificationCount$ = this.store.select(LiveAlarmSelectors.selectLiveAlarmTotal);
+  notificationCount$ = this.store.select(DataExportNotificationSelectors.selectNotificationTotal);
   notificationCountLabel$ = this.notificationCount$.pipe(map(count => count > 99 ? "99+" : count));
 
   tooltipStatus = (eventNotificationIsOn: boolean) => eventNotificationIsOn ? $localize`:@@HYT_notification_active:Notification ACTIVE` : $localize`:@@HYT_notification_inactive:Notification INACTIVE`;
@@ -29,7 +29,7 @@ export class NotificationButtonComponent {
     loggerService: LoggerService
   ) {
     this.logger = new Logger(loggerService);
-    this.logger.registerClass("NotificationButtonComponent");
+    this.logger.registerClass(this.constructor.name);
   }
 
   /**
@@ -42,7 +42,7 @@ export class NotificationButtonComponent {
       this.notificationPanel.close();
     }else{
       // open notification panel
-      this.notificationPanel = this.overlay.open(NotificationDialogComponent, {
+      this.notificationPanel = this.overlay.open(DataExportNotificationDialogComponent, {
         attachTarget: event.target,
         hideBackdrop: true,
         maxHeight: '520px',
