@@ -108,7 +108,7 @@
       <div class="d-flex flex-column">
         <p *ngFor="let error of exportErrorList">
           Si è verificato un errore durante il download del packet
-          {{ error.hPacketId }}
+          {{ error.hPacketId }} con id {{ error.exportId }}
         </p>
 
         <button

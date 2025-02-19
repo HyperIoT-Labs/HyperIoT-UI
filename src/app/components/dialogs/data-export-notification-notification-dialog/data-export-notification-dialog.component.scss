@@ -35,35 +35,4 @@
     }
   }
 
-  #notification-footer {
-    display: flex;
-    align-items: center;
-    gap: 0 8px;
-    padding: .25em .5em;
-    border-top: 1px solid #E6E6E6;
-    background: #fff;
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-    color: #0956B6;
-    font-weight: 600;
-
-    .hyt-icon {
-      font-size: 1.5em;
-
-      &.off-notification {
-        position: relative;
-
-        &::after {
-          content: "";
-          height: 1px;
-          width: 100%;
-          transform: rotate(330deg);
-          position: absolute;
-          top: 50%;
-          left: 0;
-          background: #0956b6;
-        }
-      }
-    }
-  }
 }

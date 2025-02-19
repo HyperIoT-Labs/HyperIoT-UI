@@ -3,8 +3,8 @@ import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { DialogRef, DIALOG_DATA } from 'components';
 import { DataExport } from '../models/data-export,model';
 import { Store } from '@ngrx/store';
-import { HDeviceSelectors, HPacket, HPacketSelectors, HProjectSelectors, HprojectsService } from 'core';
-import { map, switchMap, tap } from 'rxjs';
+import { DataExportNotificationActions, DataExportNotificationStore, HDeviceSelectors, HPacket, HPacketSelectors, HProjectSelectors, HprojectsService, Logger, LoggerService } from 'core';
+import { catchError, concatMap, interval, map, of, switchMap, takeWhile, tap } from 'rxjs';
 import { MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { NgxMatDateAdapter, } from '@angular-material-components/datetime-picker';
 import { NgxMatMomentAdapter, NGX_MAT_MOMENT_DATE_ADAPTER_OPTIONS, NGX_MAT_MOMENT_FORMATS } from '@angular-material-components/moment-adapter';
@@ -39,7 +39,7 @@ export class DataExportComponent implements OnInit {
 
   readonly maxLength = 255;
 
-  exportErrorList: { hPacketId: number }[] = [];
+  exportErrorList: { hPacketId: number, exportId: string }[] = [];
 
   form = this.fb.group({
     startTime: [null, Validators.required],
@@ -79,6 +79,8 @@ export class DataExportComponent implements OnInit {
 
   private hProjectId: number;
 
+  private logger: Logger;
+
   constructor(
     private fb: FormBuilder,
     private store: Store,
@@ -86,7 +88,11 @@ export class DataExportComponent implements OnInit {
     @Inject(DIALOG_DATA) public data: DataExport,
     private hProjectsService: HprojectsService,
     private httpClient: HttpClient,
+    loggerService: LoggerService,
   ) {
+    this.logger = new Logger(loggerService);
+    this.logger.registerClass(this.constructor.name);
+
     this.store.select(HProjectSelectors.selectCurrentHProjectId)
       .pipe(
         tap((hProjectId) => this.hProjectId = hProjectId),
@@ -165,52 +171,99 @@ export class DataExportComponent implements OnInit {
 
   export() {
     this.exportErrorList = [];
-    
+
     const hProjectId = this.hProjectId;
     const exportName = this.exportName.value;
-    const hPacketFormat = this.hPacketFormat.value;
     const startTime = moment(this.startTime.value).valueOf(); //moment unix timestamp in milliseconds
     const endTime = moment(this.endTime.value).valueOf(); //moment unix timestamp in milliseconds
 
-    for (const hPacket of this.hPacketListSelected) {
+    const hPacketFormat = this.hPacketFormat.value as HPacket.FormatEnum;
+
+    const exportFormat = new Map<HPacket.FormatEnum, string>([
+      [HPacket.FormatEnum.CSV, '.csv'],
+      [HPacket.FormatEnum.JSON, '.json'],
+      [HPacket.FormatEnum.TEXT, '.txt'],
+      [HPacket.FormatEnum.XML, '.xml'],
+    ]);
+
+    for (let index = 0; index < this.hPacketListSelected.length; index++) {
+      const hPacket = this.hPacketListSelected[index];
+
       const hPacketId = hPacket.id;
 
-      this.hProjectsService
-        .exportHPacketData(
-          hProjectId,
-          hPacket.id,
-          hPacketFormat,
-          exportName,
-          startTime,
-          endTime
-        )
-        .subscribe({
-          next: (ret: ExportHPacketData) => {
-            const interval = setInterval(() => {
-              this.hProjectsService.getExportStatus(ret.exportId)
-                .subscribe({
-                  next: (status) => {
-                    if (status.completed) {
-                      clearInterval(interval);
+      const fullFileName = this.hPacketListSelected.length > 1
+        ? `${exportName}-${index}${exportFormat.get(hPacketFormat)}`
+        : `${exportName}${exportFormat.get(hPacketFormat)}`;
 
-                      this.httpClient.get(
-                        `/hyperiot/hprojects/export/download/${encodeURIComponent(status.exportId)}`,
-                        {
-                          responseType: 'blob'
-                        }
-                      ).subscribe({
-                        next: (res) => saveAs(res, `${exportName}.${hPacketFormat}`),
-                        error: (err) => {
-                          this.exportErrorList.push({ hPacketId });
-                          console.error(err)
-                        }
-                      });
+      this.hProjectsService.exportHPacketData(
+        hProjectId,
+        hPacketId,
+        hPacketFormat,
+        exportName,
+        startTime,
+        endTime
+      ).pipe(
+        tap(({ exportId, started }: ExportHPacketData) => {
+          if (started) {
+            this.store.dispatch(
+              DataExportNotificationActions.setNotification(
+                {
+                  notification: new Notification(
+                    'Download ' + hPacketId,
+                    {
+                      data: {
+                        exportId,
+                        fullFileName,
+                        exportName,
+                        hProjectId,
+                        hPacketId,
+                        hPacketFormat,
+                        startTime,
+                        endTime,
+                      }
                     }
-                  },
-                });
-            }, 1000);
+                  )
+                }
+              )
+            );
           }
-        });
+        }),
+        switchMap(({ exportId }: ExportHPacketData) =>
+          interval(1000)
+            .pipe(
+              switchMap(() => this.hProjectsService.getExportStatus(exportId)),
+              takeWhile(({ completed, hasErrors }: ExportHPacketData) => completed || hasErrors),
+              catchError((error) => {
+                this.logger.error('Errore:', error);
+                return of({ hasErrors: true });
+              })
+            )
+        ),
+        concatMap((res: ExportHPacketData) => {
+          if (res.hasErrors) {
+            this.logger.error(res.errorMessages);
+            return of('Error')
+          } else if (res.completed) {
+            return this.httpClient.get(
+              `/hyperiot/hprojects/export/download/${encodeURIComponent(res.exportId)}`,
+              {
+                responseType: 'blob'
+              }
+            )
+          }
+        })
+      ).subscribe({
+        next: (res) => {
+          if (res instanceof Blob) {
+            saveAs(res, fullFileName)
+          } else if (typeof res === 'string') {
+            this.logger.error('Errore:', res);
+          }
+        },
+        error: (err) => {
+          this.logger.error(err);
+        }
+      });
     }
 
     // this.dialogRef.close('save');

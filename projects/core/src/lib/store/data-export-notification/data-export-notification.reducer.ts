@@ -1,21 +1,33 @@
 import { createReducer, on } from "@ngrx/store";
 import { createEntityAdapter, EntityAdapter, EntityState } from "@ngrx/entity";
 import { DataExportNotificationActions } from "./data-export-notification.actions";
+import { HPacket } from "../../hyperiot-client/models/hPacket";
 
 export namespace DataExportNotificationStore {
 
   export const key = 'dataExportNotification';
 
-  export interface DataExportNotification {
-    id: string;
-    title: string;
-    message: string;
-    color: string;
-    bgColor: string;
-    image: string;
+  export interface DataExportNotification extends Notification {
+    data: {
+      exportId: string;
+      fullFileName: string;
+      exportName: string,
+      hProjectId: number;
+      hPacketId: number;
+      hPacketFormat: HPacket.FormatEnum,
+      startTime: number,
+      endTime: number,
+    }
+    //   title: string;
+    //   message: string;
+    //   color: string;
+    //   bgColor: string;
+    //   image: string;
   }
 
-  const adapter: EntityAdapter<DataExportNotification> = createEntityAdapter<DataExportNotification>();
+  const adapter: EntityAdapter<DataExportNotification> = createEntityAdapter<DataExportNotification>({
+    selectId: ({ data: { exportId } }) => exportId
+  });
 
   export interface State extends EntityState<DataExportNotification> {
     // additional entities state properties

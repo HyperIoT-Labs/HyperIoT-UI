@@ -3,7 +3,7 @@
     <div class="title-badge overlay-badge" i18n="@@HYT_notification_list">
       Notification list
     </div>
-    <div class="close-overlay overlay-badge" (click)="close()">
+    <div class="close-overlay overlay-badge" (click)="dialogRef.close()">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="32"
@@ -27,39 +27,69 @@
     >
       <div
         id="no-notification"
-        *ngIf="notificationList.length == 0; else notificationList"
+        *ngIf="
+          notificationList.length === 0;
+          else notificationListValueTemplate
+        "
       >
-        <hyt-no-data width="150" height="150"></hyt-no-data>
+        <hyt-no-data [width]="150" [height]="150"></hyt-no-data>
         <h3 class="alarm-title" i18n="@@HYT_no_notifications">
           No notifications
         </h3>
       </div>
-      <ng-template #notificationList>
-        <hyt-alarm
-          *ngFor="let notification of notificationList"
-          [alarm]="notification"
-          [notificationMode]="true"
-        >
-        </hyt-alarm>
-      </ng-template>
-    </div>
-  </div>
+      <ng-template #notificationListValueTemplate>
+        <div *ngFor="let notification of notificationList">
+          <div *ngIf="notification.data as data" class="d-flex flex-column">
+            <div class="d-flex flex-column">
+              <div class="d-flex justify-content-between">
+                <div class="d-flex" style="gap: 25px">
+                  <div>
+                    <div>From:</div>
+                    <div>To:</div>
+                    <div>File:</div>
+                  </div>
+                  <div>
+                    <div>
+                      {{ data.startTime | amFromUtc | amLocale : "it" }}
+                    </div>
+                    <div>{{ data.startTime }}</div>
+                    <div>{{ data.fullFileName }}</div>
+                  </div>
+                </div>
+                <div>
+                  <button type="button" (click)="retryDownload(notification)">
+                    RETRY
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="d-flex justify-content-end">
+              <small><span>Downloaded:</span></small>
+            </div>
+            <div>
+              <mat-progress-bar
+                mode="determinate"
+                value="40"
+              ></mat-progress-bar>
+            </div>
+          </div>
 
-  <div id="notification-footer">
-    <span
-      class="hyt-icon icon-hyt_notification"
-      [class.off-notification]="!(eventNotificationIsOn | async)"
-    ></span>
-    <span i18n="@@HYT_notifications">NOTIFICATIONS</span>
-    <div class="simulator-switch-container">
-      <label class="simulator-switch">
-        <input
-          type="checkbox"
-          (change)="changeEventNotificationState()"
-          [checked]="eventNotificationIsOn | async"
-        />
-        <span class="slider round"></span>
-      </label>
+          <!-- <div class="d-flex">
+            <div [ngSwitch]="notification.data.hPacketFormat">
+              <div *ngSwitchCase="HPacketFormat.CSV">TODO CSV</div>
+              <div *ngSwitchCase="HPacketFormat.JSON">TODO JSON</div>
+              <div *ngSwitchCase="HPacketFormat.TEXT">TODO TEXT</div>
+              <div *ngSwitchCase="HPacketFormat.XML">TODO XML</div>
+            </div>
+            <div>
+              {{ notification.data.fullFileName }}
+            </div>
+            <div>
+
+            </div>
+          </div> -->
+        </div>
+      </ng-template>
     </div>
   </div>
 </div>
