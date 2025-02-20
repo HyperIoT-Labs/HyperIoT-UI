@@ -1,10 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { DialogRef, DIALOG_DATA } from 'components';
+import { DialogRef, DIALOG_DATA, SelectOptionGroup } from 'components';
 import { DataExport } from '../models/data-export,model';
 import { Store } from '@ngrx/store';
 import { DataExportNotificationActions, DataExportNotificationStore, HDeviceSelectors, HPacket, HPacketSelectors, HProjectSelectors, HprojectsService, Logger, LoggerService } from 'core';
-import { catchError, concatMap, interval, map, of, switchMap, takeWhile, tap } from 'rxjs';
+import { catchError, concatMap, forkJoin, interval, map, of, switchMap, takeWhile, tap } from 'rxjs';
 import { MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { NgxMatDateAdapter, } from '@angular-material-components/datetime-picker';
 import { NgxMatMomentAdapter, NGX_MAT_MOMENT_DATE_ADAPTER_OPTIONS, NGX_MAT_MOMENT_FORMATS } from '@angular-material-components/moment-adapter';
@@ -12,6 +12,7 @@ import moment from 'moment';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { HttpClient } from '@angular/common/http';
 import saveAs from 'file-saver';
+import { MatSelectChange } from '@angular/material/select';
 
 type ExportHPacketData = {
   processedRecords: number;
@@ -71,11 +72,10 @@ export class DataExportComponent implements OnInit {
     endTime: undefined,
   };
 
-  readonly initialPacketList: HPacket[] = [];
-
-  hPacketList: HPacket[] = [];
+  hPacketList: SelectOptionGroup[] = [];
 
   hPacketListSelected: HPacket[] = [];
+  hPacketSelected: HPacket | undefined;
 
   private hProjectId: number;
 
@@ -105,7 +105,6 @@ export class DataExportComponent implements OnInit {
         switchMap((hDeviceList) =>
           this.store.select(HPacketSelectors.selectAllHPackets)
             .pipe(
-              tap((hPacketList) => this.initialPacketList.push(...hPacketList)),
               map((hPacketList) => {
                 const deviceIdList = hDeviceList.map(({ id }) => id);
                 return hPacketList.filter(({ device }) => deviceIdList.includes(device.id));
@@ -113,7 +112,20 @@ export class DataExportComponent implements OnInit {
             ))
       ).subscribe({
         next: (hPacketList) => {
-          this.hPacketList = hPacketList;
+          this.hPacketList = hPacketList.map((hPacket) => {
+            const options: SelectOptionGroup = {
+              name: 'Packets',
+              options: [
+                {
+                  value: hPacket,
+                  label: hPacket.name,
+                  icon: 'icon-hyt_packets'
+                }
+              ]
+            };
+
+            return options;
+          });
         }
       })
   }
@@ -144,8 +156,8 @@ export class DataExportComponent implements OnInit {
   }
 
   moveElementToRight(element: HPacket) {
-    this.hPacketListSelected = this.hPacketListSelected.filter(({ name }) => name !== element.name);
-    this.hPacketList.push(element);
+    // this.hPacketListSelected = this.hPacketListSelected.filter(({ name }) => name !== element.name);
+    // this.hPacketList.push(element);
   }
 
   drop(event: CdkDragDrop<HPacket[]>) {
@@ -205,59 +217,102 @@ export class DataExportComponent implements OnInit {
       ).pipe(
         tap(({ exportId, started }: ExportHPacketData) => {
           if (started) {
-            this.store.dispatch(
-              DataExportNotificationActions.setNotification(
-                {
-                  notification: new Notification(
-                    'Download ' + hPacketId,
-                    {
-                      data: {
-                        exportId,
-                        fullFileName,
-                        exportName,
-                        hProjectId,
-                        hPacketId,
-                        hPacketFormat,
-                        startTime,
-                        endTime,
-                      }
-                    }
-                  )
-                }
-              )
-            );
+            this.dialogRef.close('export');
+
+            const data: DataExportNotificationStore.DataExportNotification['data'] = {
+              exportParams: {
+                exportId,
+                hProjectId,
+                hPacketId,
+                hPacketFormat,
+                exportName,
+                startTime,
+                endTime
+              },
+              download: {
+                fullFileName,
+                progress: 0,
+                lastDownload: undefined
+              }
+            };
+
+            const notification = new Notification('Download ' + hPacketId, { data });
+
+            this.store.dispatch(DataExportNotificationActions.setNotification({ notification }));
           }
         }),
         switchMap(({ exportId }: ExportHPacketData) =>
-          interval(1000)
+          interval(500)
             .pipe(
               switchMap(() => this.hProjectsService.getExportStatus(exportId)),
-              takeWhile(({ completed, hasErrors }: ExportHPacketData) => completed || hasErrors),
+              takeWhile(({ completed, hasErrors }: ExportHPacketData) => !(completed || hasErrors), true),
               catchError((error) => {
-                this.logger.error('Errore:', error);
+                this.logger.error('Error:', error);
                 return of({ hasErrors: true });
               })
             )
         ),
-        concatMap((res: ExportHPacketData) => {
-          if (res.hasErrors) {
-            this.logger.error(res.errorMessages);
-            return of('Error')
-          } else if (res.completed) {
-            return this.httpClient.get(
-              `/hyperiot/hprojects/export/download/${encodeURIComponent(res.exportId)}`,
-              {
-                responseType: 'blob'
-              }
-            )
+        concatMap((status: ExportHPacketData) => {
+          if (status.completed) {
+            return forkJoin({
+              blob: this.httpClient.get(
+                `/hyperiot/hprojects/export/download/${encodeURIComponent(status.exportId)}`,
+                {
+                  responseType: 'blob'
+                }
+              ),
+              status: of(status)
+            })
+          } else {
+            return of(status);
           }
         })
       ).subscribe({
-        next: (res) => {
-          if (res instanceof Blob) {
-            saveAs(res, fullFileName)
-          } else if (typeof res === 'string') {
-            this.logger.error('Errore:', res);
+        next: (exportData: ExportHPacketData | { blob: Blob; status: ExportHPacketData; }) => {
+          const { processedRecords, totalRecords, exportId } = 'blob' in exportData ? exportData.status : exportData;
+          const progress = this.percentageRecordsProcessed(processedRecords, totalRecords);
+          this.logger.debug('Progress:', progress);
+
+          const data: DataExportNotificationStore.DataExportNotification['data'] = {
+            exportParams: {
+              exportId,
+              hProjectId,
+              hPacketId,
+              hPacketFormat,
+              exportName,
+              startTime,
+              endTime
+            },
+            download: {
+              fullFileName,
+              progress,
+              lastDownload: progress < 100 ? undefined : new Date()
+            }
+          };
+
+          this.store.dispatch(
+            DataExportNotificationActions.updateNotification({
+              update: {
+                id: exportId,
+                changes: {
+                  data
+                }
+              }
+            })
+          );
+
+          if ('blob' in exportData) {
+            try {
+              saveAs(exportData.blob, fullFileName);
+            } catch (error) {
+              this.logger.error('Download error');
+            }
+          } else {
+            if (exportData.hasErrors) {
+              this.logger.error('Error:', exportData.errorMessages);
+            } else {
+              this.logger.debug('Value:', exportData);
+            }
           }
         },
         error: (err) => {
@@ -265,13 +320,25 @@ export class DataExportComponent implements OnInit {
         }
       });
     }
+  }
 
-    // this.dialogRef.close('save');
+  private percentageRecordsProcessed(processedRecords: number, totalRecords: number) {
+    return processedRecords >= totalRecords
+      ? 100
+      : Math.round((processedRecords / totalRecords) * 100);
+  }
+
+  onPacketChange(option: MatSelectChange) {
+    console.log(option);
+    this.hPacketSelected = option.value as HPacket;
+
+    if (!this.hPacketListSelected.some((item) => item.id === this.hPacketSelected.id)) {
+      this.hPacketListSelected.push(this.hPacketSelected);
+    }
   }
 
   resetForm() {
-    this.hPacketList = [...this.initialPacketList];
-    this.hPacketListSelected.length = 0;
+    this.hPacketListSelected = [];
 
     this.form.reset({ ...this.initialFormValue });
 

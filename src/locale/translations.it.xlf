@@ -2380,6 +2380,10 @@
         <source>Notification list</source>
         <target>Lista notifiche</target>
       </trans-unit>
+      <trans-unit id="HYT_data_export_list" datatype="html">
+        <source>Data Download List</source>
+        <target>Lista Dei Download</target>
+      </trans-unit>
       <trans-unit id="HYT_notifications" datatype="html">
         <source>NOTIFICATIONS</source>
         <target>NOTIFICHE</target>

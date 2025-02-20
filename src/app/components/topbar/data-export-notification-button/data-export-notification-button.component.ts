@@ -21,8 +21,6 @@ export class DataExportNotificationButtonComponent {
   notificationCount$ = this.store.select(DataExportNotificationSelectors.selectNotificationTotal);
   notificationCountLabel$ = this.notificationCount$.pipe(map(count => count > 99 ? "99+" : count));
 
-  tooltipStatus = (eventNotificationIsOn: boolean) => eventNotificationIsOn ? $localize`:@@HYT_notification_active:Notification ACTIVE` : $localize`:@@HYT_notification_inactive:Notification INACTIVE`;
-
   constructor(
     private overlay: OverlayService,
     private store: Store,
@@ -35,12 +33,12 @@ export class DataExportNotificationButtonComponent {
   /**
    * Open overlay for display detail of the active notification
    */
-  showPanel(event: MouseEvent){
+  showPanel(event: MouseEvent) {
     this.logger.info("Notification overlay opening");
     if (this.notificationPanel) {
       // if already open, i close it
       this.notificationPanel.close();
-    }else{
+    } else {
       // open notification panel
       this.notificationPanel = this.overlay.open(DataExportNotificationDialogComponent, {
         attachTarget: event.target,
@@ -48,9 +46,10 @@ export class DataExportNotificationButtonComponent {
         maxHeight: '520px',
         width: "350px",
       }).dialogRef
-      this.notificationPanel.afterClosed().subscribe(()=>{
-        this.notificationPanel = null;
-      });
+      this.notificationPanel.afterClosed()
+        .subscribe(() => {
+          this.notificationPanel = null;
+        });
     }
   }
 

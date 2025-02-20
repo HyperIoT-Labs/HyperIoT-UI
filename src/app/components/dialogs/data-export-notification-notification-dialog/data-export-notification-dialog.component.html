@@ -1,7 +1,7 @@
 <div id="container-notification-list" class="hyt-overlay-container">
   <div class="header-overlay">
-    <div class="title-badge overlay-badge" i18n="@@HYT_notification_list">
-      Notification list
+    <div class="title-badge overlay-badge" i18n="@@HYT_data_export_list">
+      Data Download List
     </div>
     <div class="close-overlay overlay-badge" (click)="dialogRef.close()">
       <svg
@@ -20,11 +20,7 @@
   </div>
 
   <div id="notification-scroll-container">
-    <div
-      *ngIf="notificationList$ | async as notificationList"
-      id="notification-list"
-      [@containerAnim]="notificationList.length"
-    >
+    <div id="notification-list" [@containerAnim]="notificationList.length">
       <div
         id="no-notification"
         *ngIf="
@@ -50,10 +46,22 @@
                   </div>
                   <div>
                     <div>
-                      {{ data.startTime | amFromUtc | amLocale : "it" }}
+                      {{
+                        data.exportParams.startTime
+                          | amFromUtc
+                          | amLocal
+                          | amDateFormat : "YYYY-MM-DD HH:mm"
+                      }}
                     </div>
-                    <div>{{ data.startTime }}</div>
-                    <div>{{ data.fullFileName }}</div>
+                    <div>
+                      {{
+                        data.exportParams.startTime
+                          | amFromUtc
+                          | amLocal
+                          | amDateFormat : "YYYY-MM-DD HH:mm"
+                      }}
+                    </div>
+                    <div>{{ data.download.fullFileName }}</div>
                   </div>
                 </div>
                 <div>
@@ -63,15 +71,25 @@
                 </div>
               </div>
             </div>
-            <div class="d-flex justify-content-end">
-              <small><span>Downloaded:</span></small>
-            </div>
-            <div>
+
+            <ng-container
+              *ngIf="data.download.progress < 100; else lastDownloadTemplate"
+            >
               <mat-progress-bar
                 mode="determinate"
-                value="40"
+                [value]="data.download.progress"
               ></mat-progress-bar>
-            </div>
+            </ng-container>
+            <ng-template #lastDownloadTemplate>
+              <div class="d-flex justify-content-end">
+                <small>
+                  <span>Downloaded: </span>
+                  <time>
+                    {{ data.download.lastDownload | amTimeAgo }}
+                  </time>
+                </small>
+              </div>
+            </ng-template>
           </div>
 
           <!-- <div class="d-flex">

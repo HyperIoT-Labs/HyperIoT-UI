@@ -1779,8 +1779,8 @@
       <trans-unit id="HYT_notification_inactive" datatype="html">
         <source>Notification INACTIVE</source>
       </trans-unit>
-      <trans-unit id="HYT_notification_list" datatype="html">
-        <source>Notification list</source>
+      <trans-unit id="HYT_data_export_list" datatype="html">
+        <source>Data Download List</source>
       </trans-unit>
       <trans-unit id="HYT_notifications" datatype="html">
         <source>NOTIFICATIONS</source>
