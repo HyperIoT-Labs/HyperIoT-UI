@@ -4,7 +4,7 @@ import { DialogRef, DIALOG_DATA, SelectOptionGroup } from 'components';
 import { DataExport } from '../models/data-export,model';
 import { Store } from '@ngrx/store';
 import { DataExportNotificationActions, DataExportNotificationStore, HDeviceSelectors, HPacket, HPacketSelectors, HProjectSelectors, HprojectsService, Logger, LoggerService } from 'core';
-import { catchError, concatMap, forkJoin, interval, map, of, switchMap, takeWhile, tap } from 'rxjs';
+import { catchError, combineLatest, concatMap, first, forkJoin, interval, map, of, switchMap, take, takeWhile, tap } from 'rxjs';
 import { MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { NgxMatDateAdapter, } from '@angular-material-components/datetime-picker';
 import { NgxMatMomentAdapter, NGX_MAT_MOMENT_DATE_ADAPTER_OPTIONS, NGX_MAT_MOMENT_FORMATS } from '@angular-material-components/moment-adapter';
@@ -75,7 +75,6 @@ export class DataExportComponent implements OnInit {
   hPacketList: SelectOptionGroup[] = [];
 
   hPacketListSelected: HPacket[] = [];
-  hPacketSelected: HPacket | undefined;
 
   private hProjectId: number;
 
@@ -93,44 +92,102 @@ export class DataExportComponent implements OnInit {
     this.logger = new Logger(loggerService);
     this.logger.registerClass(this.constructor.name);
 
-    this.store.select(HProjectSelectors.selectCurrentHProjectId)
-      .pipe(
-        tap((hProjectId) => this.hProjectId = hProjectId),
-        switchMap((hProjectId) =>
-          this.store.select(HDeviceSelectors.selectAllHDevices)
-            .pipe(
-              map((hDeviceList) => hDeviceList.filter(({ project }) => project.id === hProjectId))
-            )
-        ),
-        switchMap((hDeviceList) =>
-          this.store.select(HPacketSelectors.selectAllHPackets)
-            .pipe(
-              map((hPacketList) => {
-                const deviceIdList = hDeviceList.map(({ id }) => id);
-                return hPacketList.filter(({ device }) => deviceIdList.includes(device.id));
-              })
-            ))
-      ).subscribe({
-        next: (hPacketList) => {
-          this.hPacketList = hPacketList.map((hPacket) => {
-            const options: SelectOptionGroup = {
-              name: 'Packets',
-              options: [
-                {
-                  value: hPacket,
-                  label: hPacket.name,
-                  icon: 'icon-hyt_packets'
-                }
-              ]
-            };
+    // this.hPacketsService
+    //   .findAllHPacketByProjectId(this.projectId)
+    //   .subscribe((res) => {
+    //     this.allPackets = res;
+    //     const devices = this.allPackets.map((x) => x.device);
+    //     const groupDevices = [];
+    //     devices.forEach((x) => {
+    //       if (!groupDevices.some((y) => y.id === x.id)) {
+    //         groupDevices.push(x);
+    //       }
+    //     });
 
-            return options;
-          });
-        }
-      })
+    //     this.groupedPacketOptions = groupDevices.map((x) => ({
+    //       name: x.deviceName,
+    //       options: res
+    //         .filter((y) => y.device.id === x.id)
+    //         .map((y) => ({
+    //           value: y.id,
+    //           label: y.name,
+    //           icon: 'icon-hyt_packets',
+    //         })),
+    //       icon: 'icon-hyt_device',
+    //     }));
+    //   });
+
+
+
+    // this.store.select(HProjectSelectors.selectCurrentHProjectId)
+    //   .pipe(
+    //     tap((hProjectId) => this.hProjectId = hProjectId),
+    //     switchMap((hProjectId) =>
+    //       this.store.select(HDeviceSelectors.selectAllHDevices)
+    //         .pipe(
+    //           map((hDeviceList) => hDeviceList.filter(({ project }) => project.id === hProjectId))
+    //         )
+    //     ),
+    //     switchMap((hDeviceList) =>
+    //       this.store.select(HPacketSelectors.selectAllHPackets)
+    //         .pipe(
+    //           map((hPacketList) => {
+    //             const deviceIdList = hDeviceList.map(({ id }) => id);
+    //             return hPacketList.filter(({ device }) => deviceIdList.includes(device.id));
+    //           })
+    //         ))
+    //   ).subscribe({
+    //     next: (hPacketList) => {
+    //       this.hPacketList = hPacketList.map((hPacket) => {
+    //         const options: SelectOptionGroup = {
+    //           name: 'Packets',
+    //           options: [
+    //             {
+    //               value: hPacket,
+    //               label: hPacket.name,
+    //               icon: 'icon-hyt_packets'
+    //             }
+    //           ]
+    //         };
+
+    //         return options;
+    //       });
+    //     }
+    //   });
   }
 
   ngOnInit(): void {
+
+    this.store.select(HProjectSelectors.selectCurrentHProjectId)
+      .pipe(
+        tap((hProjectId) => this.hProjectId = hProjectId),
+        switchMap((hProjectId) => combineLatest({
+          hDeviceList: this.store.select(HDeviceSelectors.selectAllHDevices)
+            .pipe(
+              map((res) => res.filter(({ project }) => project.id === hProjectId)),
+            )          ,
+          hPacketList: this.store.select(HPacketSelectors.selectAllHPackets)
+        })),
+        take(1)
+      ).subscribe({
+        next: ({ hDeviceList, hPacketList }) => {
+          this.hPacketList = hDeviceList.map((device) => ({
+            name: device.deviceName,
+            icon: 'icon-hyt_device',
+            options: hPacketList
+              .filter((hPacket) => hPacket.device.id === device.id)
+              .map((hPacket) => ({
+                value: hPacket,
+                label: hPacket.name,
+                icon: 'icon-hyt_packets',
+              })),
+          }));
+        },
+        error: (err) => {
+          console.error(err);
+        }
+      });
+
     const { timeInterval, domain } = this.data;
 
     let interval: Date[] = [];
@@ -147,33 +204,6 @@ export class DataExportComponent implements OnInit {
       };
 
       this.form.patchValue({ ...this.initialFormValue });
-    }
-  }
-
-  moveElementToLeft(element: HPacket) {
-    this.hPacketList = this.hPacketList.filter(({ name }) => name !== element.name);
-    this.hPacketListSelected.push(element);
-  }
-
-  moveElementToRight(element: HPacket) {
-    // this.hPacketListSelected = this.hPacketListSelected.filter(({ name }) => name !== element.name);
-    // this.hPacketList.push(element);
-  }
-
-  drop(event: CdkDragDrop<HPacket[]>) {
-    if (event.previousContainer === event.container) {
-      moveItemInArray(
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
-    } else {
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
     }
   }
 
@@ -219,7 +249,9 @@ export class DataExportComponent implements OnInit {
           if (started) {
             this.dialogRef.close('export');
 
-            const data: DataExportNotificationStore.DataExportNotification['data'] = {
+            new Notification('Download ' + hPacketId);
+
+            const dataExportNotification: DataExportNotificationStore.DataExportNotification = {
               exportParams: {
                 exportId,
                 hProjectId,
@@ -234,11 +266,10 @@ export class DataExportComponent implements OnInit {
                 progress: 0,
                 lastDownload: undefined
               }
+
             };
 
-            const notification = new Notification('Download ' + hPacketId, { data });
-
-            this.store.dispatch(DataExportNotificationActions.setNotification({ notification }));
+            this.store.dispatch(DataExportNotificationActions.setNotification({ notification: dataExportNotification }));
           }
         }),
         switchMap(({ exportId }: ExportHPacketData) =>
@@ -273,7 +304,7 @@ export class DataExportComponent implements OnInit {
           const progress = this.percentageRecordsProcessed(processedRecords, totalRecords);
           this.logger.debug('Progress:', progress);
 
-          const data: DataExportNotificationStore.DataExportNotification['data'] = {
+          const dataExportNotification: DataExportNotificationStore.DataExportNotification = {
             exportParams: {
               exportId,
               hProjectId,
@@ -294,9 +325,7 @@ export class DataExportComponent implements OnInit {
             DataExportNotificationActions.updateNotification({
               update: {
                 id: exportId,
-                changes: {
-                  data
-                }
+                changes: dataExportNotification
               }
             })
           );
@@ -328,12 +357,9 @@ export class DataExportComponent implements OnInit {
       : Math.round((processedRecords / totalRecords) * 100);
   }
 
-  onPacketChange(option: MatSelectChange) {
-    console.log(option);
-    this.hPacketSelected = option.value as HPacket;
-
-    if (!this.hPacketListSelected.some((item) => item.id === this.hPacketSelected.id)) {
-      this.hPacketListSelected.push(this.hPacketSelected);
+  onAddPacket(hPacket: HPacket) {
+    if (!this.hPacketListSelected.some((item) => item.id === hPacket.id)) {
+      this.hPacketListSelected.push(hPacket);
     }
   }
 
@@ -343,5 +369,13 @@ export class DataExportComponent implements OnInit {
     this.form.reset({ ...this.initialFormValue });
 
     this.exportErrorList = [];
+  }
+
+  removeHPacket(hPacket: HPacket): void {
+    const index = this.hPacketListSelected.indexOf(hPacket);
+
+    if (index >= 0) {
+      this.hPacketListSelected.splice(index, 1);
+    }
   }
 }

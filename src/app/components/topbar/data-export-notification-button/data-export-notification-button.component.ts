@@ -44,7 +44,7 @@ export class DataExportNotificationButtonComponent {
         attachTarget: event.target,
         hideBackdrop: true,
         maxHeight: '520px',
-        width: "350px",
+        width: "470px",
       }).dialogRef
       this.notificationPanel.afterClosed()
         .subscribe(() => {

@@ -19,7 +19,10 @@
     </div>
   </div>
 
-  <div id="notification-scroll-container">
+  <div
+    *ngIf="notificationList$ | async as notificationList"
+    id="notification-scroll-container"
+  >
     <div id="notification-list" [@containerAnim]="notificationList.length">
       <div
         id="no-notification"
@@ -35,7 +38,7 @@
       </div>
       <ng-template #notificationListValueTemplate>
         <div *ngFor="let notification of notificationList">
-          <div *ngIf="notification.data as data" class="d-flex flex-column">
+          <div *ngIf="notification as data" class="d-flex flex-column">
             <div class="d-flex flex-column">
               <div class="d-flex justify-content-between">
                 <div class="d-flex" style="gap: 25px">
@@ -50,7 +53,7 @@
                         data.exportParams.startTime
                           | amFromUtc
                           | amLocal
-                          | amDateFormat : "YYYY-MM-DD HH:mm"
+                          | amDateFormat : dateFormat
                       }}
                     </div>
                     <div>
@@ -58,7 +61,7 @@
                         data.exportParams.startTime
                           | amFromUtc
                           | amLocal
-                          | amDateFormat : "YYYY-MM-DD HH:mm"
+                          | amDateFormat : dateFormat
                       }}
                     </div>
                     <div>{{ data.download.fullFileName }}</div>
@@ -72,20 +75,26 @@
               </div>
             </div>
 
-            <ng-container
+            <div
               *ngIf="data.download.progress < 100; else lastDownloadTemplate"
+              class="py-2"
             >
               <mat-progress-bar
                 mode="determinate"
                 [value]="data.download.progress"
               ></mat-progress-bar>
-            </ng-container>
+            </div>
             <ng-template #lastDownloadTemplate>
               <div class="d-flex justify-content-end">
                 <small>
-                  <span>Downloaded: </span>
+                  <strong>Downloaded: </strong>
                   <time>
-                    {{ data.download.lastDownload | amTimeAgo }}
+                    {{
+                      data.download.lastDownload
+                        | amFromUtc
+                        | amLocal
+                        | amDateFormat : dateFormat
+                    }}
                   </time>
                 </small>
               </div>

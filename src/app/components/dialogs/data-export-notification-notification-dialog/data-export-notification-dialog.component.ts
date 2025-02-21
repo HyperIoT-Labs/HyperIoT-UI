@@ -50,13 +50,15 @@ type ExportHPacketData = {
     ]),
   ],
 })
-export class DataExportNotificationDialogComponent implements OnInit {
+export class DataExportNotificationDialogComponent {
   /** HYOT logger */
   private logger: Logger;
 
+  readonly dateFormat = 'DD/MM/YYYY HH:mm:ss.SSS';
+
   readonly HPacketFormat = HPacket.FormatEnum;
 
-  notificationList: DataExportNotificationStore.DataExportNotification[] = [];
+  readonly notificationList$ = this.store.select(DataExportNotificationSelectors.selectAllNotifications);
 
   constructor(
     public dialogRef: DialogRef<any>,
@@ -69,28 +71,19 @@ export class DataExportNotificationDialogComponent implements OnInit {
     this.logger.registerClass(this.constructor.name);
   }
 
-  ngOnInit(): void {
-    this.store.select(DataExportNotificationSelectors.selectAllNotifications)
-      .subscribe({
-        next: (notificationList) => this.notificationList = notificationList
-      });
-  }
-
   retryDownload(notification: DataExportNotificationStore.DataExportNotification) {
     const {
-      data: {
-        exportParams,
-        exportParams: {
-          hPacketId,
-          hProjectId,
-          hPacketFormat,
-          exportName,
-          startTime,
-          endTime,
-          exportId: oldExportId
-        },
-        download
-      }
+      exportParams,
+      exportParams: {
+        hPacketId,
+        hProjectId,
+        hPacketFormat,
+        exportName,
+        startTime,
+        endTime,
+        exportId: oldExportId
+      },
+      download
     } = notification;
 
     let isFirst = true;
@@ -143,7 +136,7 @@ export class DataExportNotificationDialogComponent implements OnInit {
 
         const progress = this.percentageRecordsProcessed(processedRecords, totalRecords);
 
-        const retryData: DataExportNotificationStore.DataExportNotification['data'] = {
+        const rataExportNotificationRetry: DataExportNotificationStore.DataExportNotification = {
           exportParams: {
             ...exportParams,
             exportId
@@ -159,9 +152,7 @@ export class DataExportNotificationDialogComponent implements OnInit {
           DataExportNotificationActions.updateNotification({
             update: {
               id: isFirst ? oldExportId : exportId,
-              changes: {
-                data: retryData
-              }
+              changes: rataExportNotificationRetry
             }
           })
         );

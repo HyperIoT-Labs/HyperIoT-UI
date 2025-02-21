@@ -106,7 +106,7 @@ export class HytSelectComponent
 
   /** changePositionStrategy apply the positionSelect directive only if true */
   @Input() changePositionStrategy = false;
-  
+
 
   @Input() chips = false;
 
@@ -133,6 +133,11 @@ export class HytSelectComponent
    * Callback functions for change
    */
   @Output() changeFn: EventEmitter<any> = new EventEmitter();
+
+  /**
+   * Callback functions for emit value
+   */
+  @Output() valueFn: EventEmitter<any> = new EventEmitter();
 
   /**
    * Constructor
@@ -257,6 +262,10 @@ export class HytSelectComponent
 
   change(event) {
     this.changeFn.emit(event);
+  }
+
+  emitOptionValue(value: any) {
+    this.valueFn.emit(value);
   }
 
   writeValue(value: any): void {

@@ -45,6 +45,7 @@
         *ngFor="let option of group.options"
         [ngStyle]="{'display': isGroupOptionVisibe(group, option) ? 'flex' : 'none'}"
         [value]="option.value"
+        (click)="emitOptionValue(option.value)"
       >
         <span *ngIf="option.icon" class="hyt-icon {{ option.icon }}"></span>
         {{ option.label }}

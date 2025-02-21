@@ -38,35 +38,14 @@
             [name]="'packetSelect'"
             [label]="'Select Packet'"
             [groups]="hPacketList"
-            [selected]="hPacketSelected"
             [isSearchable]="true"
-            (changeFn)="onPacketChange($event)"
+            (valueFn)="onAddPacket($event)"
             [isRequired]="true"
             [errorMsgRequired]="'Select one packet'"
             [hint]="'select one packet'"
             class="hyt-select-full-width"
           >
           </hyt-select>
-
-          <!-- <mat-chip-list
-            #first="cdkDropList"
-            cdkDropList
-            cdkDropListOrientation="horizontal"
-            [cdkDropListData]="hPacketList"
-            [cdkDropListConnectedTo]="[last]"
-            (cdkDropListDropped)="drop($event)"
-            cdkDropListSortingDisabled
-            class="wrapper"
-          >
-            <mat-chip
-              class="example-box"
-              cdkDrag
-              (click)="moveElementToLeft(hPacket)"
-              *ngFor="let hPacket of hPacketList"
-            >
-              {{ hPacket.name }}
-            </mat-chip>
-          </mat-chip-list> -->
         </div>
 
         <div class="d-flex flex-column p-2">
@@ -98,21 +77,17 @@
           </mat-form-field>
 
           <mat-chip-list
-            #last="cdkDropList"
-            cdkDropList
-            cdkDropListOrientation="horizontal"
-            [cdkDropListData]="hPacketListSelected"
-            (cdkDropListDropped)="drop($event)"
-            cdkDropListSortingDisabled
             class="wrapper"
           >
             <mat-chip
               class="example-box"
-              cdkDrag
-              (click)="moveElementToRight(hPacket)"
               *ngFor="let hPacket of hPacketListSelected"
+              (removed)="removeHPacket(hPacket)"
             >
               {{ hPacket.name }}
+              <button matChipRemove>
+                <mat-icon>cancel</mat-icon>
+              </button>
             </mat-chip>
           </mat-chip-list>
         </div>

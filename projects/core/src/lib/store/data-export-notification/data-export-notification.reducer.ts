@@ -8,26 +8,24 @@ export namespace DataExportNotificationStore {
   export const key = 'dataExportNotification';
 
   export interface DataExportNotification {
-    data: {
-      exportParams: {
-        exportId: string;
-        exportName: string,
-        hProjectId: number;
-        hPacketId: number;
-        hPacketFormat: HPacket.FormatEnum,
-        startTime: number,
-        endTime: number,
-      }
-      download: {
-        fullFileName: string;
-        progress: number,
-        lastDownload: Date | undefined
-      }
+    exportParams: {
+      exportId: string;
+      exportName: string,
+      hProjectId: number;
+      hPacketId: number;
+      hPacketFormat: HPacket.FormatEnum,
+      startTime: number,
+      endTime: number,
+    }
+    download: {
+      fullFileName: string;
+      progress: number,
+      lastDownload: Date | undefined
     }
   }
 
   const adapter: EntityAdapter<DataExportNotification> = createEntityAdapter<DataExportNotification>({
-    selectId: (notification) => notification.data.exportParams.exportId
+    selectId: (notification) => notification.exportParams.exportId
   });
 
   export interface State extends EntityState<DataExportNotification> {
@@ -53,7 +51,7 @@ export namespace DataExportNotificationStore {
     on(DataExportNotificationActions.updateNotification, (state, { update }) => {
       return adapter.updateOne(update, {
         ...state,
-        onProcess: update.changes.data.download.progress < 100
+        onProcess: update.changes.download.progress < 100
       });
     }),
   )
