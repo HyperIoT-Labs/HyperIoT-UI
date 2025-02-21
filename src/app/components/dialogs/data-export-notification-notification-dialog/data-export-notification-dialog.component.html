@@ -37,85 +37,100 @@
         </h3>
       </div>
       <ng-template #notificationListValueTemplate>
-        <div *ngFor="let notification of notificationList">
-          <div *ngIf="notification as data" class="d-flex flex-column">
-            <div class="d-flex flex-column">
-              <div class="d-flex justify-content-between">
-                <div class="d-flex" style="gap: 25px">
-                  <div>
-                    <div>From:</div>
-                    <div>To:</div>
-                    <div>File:</div>
-                  </div>
-                  <div>
-                    <div>
-                      {{
-                        data.exportParams.startTime
-                          | amFromUtc
-                          | amLocal
-                          | amDateFormat : dateFormat
-                      }}
+        <ng-container *ngFor="let notification of notificationList">
+          <mat-card
+            *ngIf="notification as data"
+            appearance="outlined"
+            [ngClass]="{ 'p-2': data.download.progress == 100 }"
+          >
+            <mat-card-content>
+              <div class="d-flex flex-column">
+                <div class="d-flex flex-column">
+                  <div class="d-flex justify-content-between">
+                    <div class="d-flex" style="gap: 25px">
+                      <div>
+                        <div>From:</div>
+                        <div>To:</div>
+                        <div>File:</div>
+                      </div>
+                      <div>
+                        <div>
+                          {{
+                            data.exportParams.startTime
+                              | amFromUtc
+                              | amLocal
+                              | amDateFormat : dateFormat
+                          }}
+                        </div>
+                        <div>
+                          {{
+                            data.exportParams.startTime
+                              | amFromUtc
+                              | amLocal
+                              | amDateFormat : dateFormat
+                          }}
+                        </div>
+                        <div>{{ data.download.fullFileName }}</div>
+                      </div>
                     </div>
                     <div>
-                      {{
-                        data.exportParams.startTime
-                          | amFromUtc
-                          | amLocal
-                          | amDateFormat : dateFormat
-                      }}
+                      <button
+                        type="button"
+                        (click)="retryDownload(notification)"
+                      >
+                        RETRY
+                      </button>
                     </div>
-                    <div>{{ data.download.fullFileName }}</div>
                   </div>
+                </div>
+
+                <ng-container
+                  *ngIf="
+                    data.download.progress < 100;
+                    else lastDownloadTemplate
+                  "
+                >
+                  <mat-card-footer class="mt-2">
+                    <mat-progress-bar
+                      mode="determinate"
+                      [value]="data.download.progress"
+                    ></mat-progress-bar>
+                  </mat-card-footer>
+                </ng-container>
+                <ng-template #lastDownloadTemplate>
+                  <mat-card-actions align="end" class="p-0 m-0">
+                    <small>
+                      <strong>Downloaded: </strong>
+                      <time>
+                        {{
+                          data.download.lastDownload
+                            | amFromUtc
+                            | amLocal
+                            | amDateFormat : dateFormat
+                        }}
+                      </time>
+                    </small>
+                  </mat-card-actions>
+                </ng-template>
+              </div>
+
+              <!-- <div class="d-flex">
+                <div [ngSwitch]="notification.data.hPacketFormat">
+                  <div *ngSwitchCase="HPacketFormat.CSV">TODO CSV</div>
+                  <div *ngSwitchCase="HPacketFormat.JSON">TODO JSON</div>
+                  <div *ngSwitchCase="HPacketFormat.TEXT">TODO TEXT</div>
+                  <div *ngSwitchCase="HPacketFormat.XML">TODO XML</div>
                 </div>
                 <div>
-                  <button type="button" (click)="retryDownload(notification)">
-                    RETRY
-                  </button>
+                  {{ notification.data.fullFileName }}
                 </div>
-              </div>
-            </div>
+                <div>
 
-            <div
-              *ngIf="data.download.progress < 100; else lastDownloadTemplate"
-              class="py-2"
-            >
-              <mat-progress-bar
-                mode="determinate"
-                [value]="data.download.progress"
-              ></mat-progress-bar>
-            </div>
-            <ng-template #lastDownloadTemplate>
-              <div class="d-flex justify-content-end">
-                <small>
-                  <strong>Downloaded: </strong>
-                  <time>
-                    {{
-                      data.download.lastDownload
-                        | amFromUtc
-                        | amLocal
-                        | amDateFormat : dateFormat
-                    }}
-                  </time>
-                </small>
-              </div>
-            </ng-template>
-          </div>
-
-          <!-- <div class="d-flex">
-            <div [ngSwitch]="notification.data.hPacketFormat">
-              <div *ngSwitchCase="HPacketFormat.CSV">TODO CSV</div>
-              <div *ngSwitchCase="HPacketFormat.JSON">TODO JSON</div>
-              <div *ngSwitchCase="HPacketFormat.TEXT">TODO TEXT</div>
-              <div *ngSwitchCase="HPacketFormat.XML">TODO XML</div>
-            </div>
-            <div>
-              {{ notification.data.fullFileName }}
-            </div>
-            <div>
-
-            </div>
-          </div> -->
-        </div>
+                </div>
+              </div> -->
+            </mat-card-content>
+          </mat-card>
+        </ng-container>
       </ng-template>
     </div>
   </div>
