@@ -33,7 +33,8 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy, OnChanges 
     thresholdsIds: number[] = [];
     thresholdActive: boolean = false;
     thresholdsForm: FormArray = this.fb.array([]);
-
+    collapseThresold: boolean = false;
+    
     defaultOpacity: number = 0.55;
     defaultColor: string = `rgba(5, 186, 0, ${this.defaultOpacity})`;
     defaultLine = { color: this.defaultColor, thickness: 2, type: LineTypes.Linear };
@@ -187,9 +188,21 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy, OnChanges 
     }
 
     isChecked() {
+        // collapse or not
+        this.collapseThresold = this.thresholdActive;
+
         if ((this.selectedFields.length === 0 && !this.widget.config.packetId) || !this.thresholdActive) {
             return this.pageStatus = PageStatus.Ready;
         };
+
+        // First show && nothing
+        if (this.thresholdActive && Object.keys(this.thresholdsForm.controls).length == 0) {
+            this.addThresholdToForm({
+                id: null,
+                line: this.defaultLine
+            })
+        }
+
         this.ruleService.findAllRuleByProjectId(this.widget.projectId).subscribe({
             next: (rules) => {
                 this.pageStatus = PageStatus.Ready;
