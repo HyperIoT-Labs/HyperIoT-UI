@@ -178,7 +178,8 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
     });
 
     /* change button if you arrive to edit projecy page from dashboard */
-    if (this.previousRouteService.previousUrl === "/dashboards") this.dashBackButton = true;
+    if (this.previousRouteService.previousUrl === "/dashboards" ||
+      this.previousRouteService.previousUrl === this.previousRouteService.currentUrl) this.dashBackButton = true;
 
   }
 
