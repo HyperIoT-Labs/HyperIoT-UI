@@ -25,25 +25,31 @@
           <mat-form-field appearance="fill">
             <mat-label>Select Export Format</mat-label>
             <mat-select formControlName="hPacketFormat" required>
-              <mat-option
-                *ngFor="let hPacketFormat of hPacketFormatEnum | keyvalue"
-                [value]="hPacketFormat.value"
-              >
-                {{ hPacketFormat.value }}
+              <mat-option [value]="hPacketFormatEnum.JSON">
+                {{ hPacketFormatEnum.JSON }}
+              </mat-option>
+              <mat-option [value]="hPacketFormatEnum.CSV">
+                {{ hPacketFormatEnum.CSV }}
+              </mat-option>
+              <mat-option [value]="hPacketFormatEnum.TEXT" disabled>
+                {{ hPacketFormatEnum.TEXT }}
+              </mat-option>
+              <mat-option [value]="hPacketFormatEnum.XML" disabled>
+                {{ hPacketFormatEnum.XML }}
               </mat-option>
             </mat-select>
           </mat-form-field>
 
           <hyt-select
+            #selectPackets
+            class="hyt-select-full-width"
             [name]="'packetSelect'"
-            [label]="'Select Packet'"
+            [label]="'Select one or more Packets'"
             [groups]="hPacketList"
             [isSearchable]="true"
             (valueFn)="onAddPacket($event)"
             [isRequired]="true"
-            [errorMsgRequired]="'Select one packet'"
-            [hint]="'select one packet'"
-            class="hyt-select-full-width"
+            [errorMsgRequired]="'Select one or more Packets'"
           >
           </hyt-select>
         </div>
@@ -57,8 +63,9 @@
               placeholder="Choose a date"
               (click)="endTimePicker.open()"
               formControlName="endTime"
-              readonly
               required
+              readonly
+              [min]="startTime.value"
             />
             <mat-datepicker-toggle matSuffix [for]="$any(endTimePicker)">
             </mat-datepicker-toggle>
@@ -76,24 +83,27 @@
             />
           </mat-form-field>
 
-          <mat-chip-list
-            class="wrapper"
-          >
-            <mat-chip
-              class="example-box"
-              *ngFor="let hPacket of hPacketListSelected"
-              (removed)="removeHPacket(hPacket)"
-            >
-              {{ hPacket.name }}
-              <button matChipRemove>
-                <mat-icon>cancel</mat-icon>
-              </button>
-            </mat-chip>
-          </mat-chip-list>
+          <mat-form-field appearance="fill">
+            <mat-label>
+              Selected {{ hPacketListSelected.length }} packages
+            </mat-label>
+            <mat-chip-list class="mat-chip-list-wrapper">
+              <mat-chip
+                *ngFor="let hPacket of hPacketListSelected"
+                class="mat-chip-custom"
+                (removed)="removeHPacket(hPacket)"
+              >
+                {{ hPacket.name }}
+                <button matChipRemove>
+                  <mat-icon>cancel</mat-icon>
+                </button>
+              </mat-chip>
+            </mat-chip-list>
+          </mat-form-field>
         </div>
       </div>
 
-      <div class="d-flex flex-column">
+      <div class="d-flex justify-content-end">
         <p *ngFor="let error of exportErrorList">
           Si è verificato un errore durante il download del packet
           {{ error.hPacketId }} con id {{ error.exportId }}

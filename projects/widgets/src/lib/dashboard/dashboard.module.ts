@@ -55,7 +55,6 @@ import { NgxMatDatetimePickerModule, NgxMatTimepickerModule } from '@angular-mat
 import { MatRadioModule } from '@angular/material/radio';
 import { NgxMatMomentModule } from '@angular-material-components/moment-adapter';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatCommonModule } from '@angular/material/core';
 import { MatChipsModule } from '@angular/material/chips';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 

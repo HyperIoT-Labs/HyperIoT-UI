@@ -122,7 +122,7 @@ export class DataExportNotificationDialogComponent {
               }
             ),
             status: of(status)
-          })
+          });
         } else {
           return of(status);
         }
@@ -148,20 +148,20 @@ export class DataExportNotificationDialogComponent {
           },
         };
 
-        this.store.dispatch(
-          DataExportNotificationActions.updateNotification({
-            update: {
-              id: isFirst ? oldExportId : exportId,
-              changes: rataExportNotificationRetry
-            }
-          })
-        );
-
         isFirst = false;
 
         if ('blob' in exportData) {
           try {
             saveAs(exportData.blob, download.fullFileName);
+
+            this.store.dispatch(
+              DataExportNotificationActions.updateNotification({
+                update: {
+                  id: isFirst ? oldExportId : exportId,
+                  changes: rataExportNotificationRetry
+                }
+              })
+            );
           } catch (error) {
             this.logger.error('Download Error');
           }

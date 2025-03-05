@@ -5,8 +5,37 @@
   margin-bottom: 1rem;
 }
 
-.wrapper{
-  border: 1px solid;
-  min-height: 20px;
-  min-width: 100%;
+.mat-chip-list-wrapper {
+  width: 100%;
+  min-height: 145px;
+  max-height: 145px;
+  align-items: start;
+  background: #f5f5f5;
+  overflow: auto;
+  margin: auto;
+}
+
+.mat-chip-custom {
+  background-color: var(--primary-color);
+  color: white;
+
+  .mat-icon {
+    color: white;
+  }
+}
+
+::ng-deep {
+  hyt-select {
+    >mat-form-field {
+      width: 100%;
+    }
+
+    .mat-form-field-appearance-legacy .mat-form-field-infix {
+      padding: 10px;
+
+      label {
+        padding: 3px 10px;
+      }
+    }
+  }
 }
