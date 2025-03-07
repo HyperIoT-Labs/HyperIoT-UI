@@ -13,5 +13,4 @@
     <span class="hyt-icon icon-hyt_tableBig"></span>
 </hyt-button>
 <hyt-button id="hyt-date-submit-button" class="right-btn" (clickFn)="submit()" [color]="color" [isDisabled]="dateInput.invalid || dateString == ''">Submit</hyt-button>
-<hyt-button id="export-data-button" class="right-btn" (clickFn)="submit()" [color]="color" [isDisabled]="dateInput.invalid || dateString == ''">Export Data</hyt-button>
 <hyt-picker-pop-up [lowView]="minStep" [show]="showPopup" [languageCode]="languageCode" (dateOutput)="setDate($event)" (popUpEvent)="showPopup = $event"></hyt-picker-pop-up>

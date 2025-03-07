@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, ValidatorFn, Validators } from '@angular/forms';
 import { DialogRef, DIALOG_DATA, SelectOptionGroup, HytSelectComponent } from 'components';
 import { DataExport } from '../models/data-export,model';
 import { Store } from '@ngrx/store';
@@ -43,9 +43,29 @@ export class DataExportComponent implements OnInit {
   form = this.fb.group({
     startTime: [null, Validators.required],
     endTime: [null, Validators.required],
-    exportName: [null, [Validators.required, Validators.maxLength(this.maxLength)]],
+    exportName: [null, [Validators.required, Validators.maxLength(this.maxLength), this.filenameValidator.bind(this)]],
     hPacketFormat: [null, Validators.required],
   });
+
+  private filenameValidator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const filename = control.value as string;
+
+      // Controlla se il nome del file contiene spazi
+      if (filename.includes(' ')) {
+        return { 'filenameSpace': true };
+      }
+
+      // Pattern per SQL injection (semplificato, potrebbe essere necessario adattarlo alle tue esigenze specifiche)
+      const sqlInjectionPattern = /[;<>=&`]|(--)|(\*|\/)/;
+      if (sqlInjectionPattern.test(filename)) {
+        return { 'sqlInjection': true };
+      }
+
+      // Se nessun problema è stato trovato, il nome del file è valido
+      return null;
+    };
+  }
 
   @ViewChild('selectPackets') selectPackets: HytSelectComponent;
 
