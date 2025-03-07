@@ -3,7 +3,7 @@ import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { DialogRef, DIALOG_DATA, SelectOptionGroup, HytSelectComponent } from 'components';
 import { DataExport } from '../models/data-export,model';
 import { Store } from '@ngrx/store';
-import { DataExportNotificationActions, DataExportNotificationStore, HDeviceSelectors, HPacket, HPacketSelectors, HProjectSelectors, HprojectsService, Logger, LoggerService, NotificationManagerService } from 'core';
+import { DataExportNotificationActions, DataExportNotificationStore, HDeviceSelectors, HPacket, HPacketSelectors, HProject, HProjectSelectors, HprojectsService, Logger, LoggerService, NotificationManagerService } from 'core';
 import { catchError, combineLatest, concatMap, forkJoin, interval, map, of, switchMap, take, takeWhile, tap } from 'rxjs';
 import { MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { NgxMatDateAdapter, } from '@angular-material-components/datetime-picker';
@@ -67,37 +67,45 @@ export class DataExportComponent implements OnInit {
     return this.form.controls.exportName as FormControl;
   }
 
-  private initialFormValue: Record<'startTime' | 'endTime', Date> = {
+  private initialFormValue = {
     startTime: undefined,
     endTime: undefined,
+    exportName: undefined,
+    hPacketFormat: undefined,
+    hPacket: undefined
   };
 
-  hPacketList: SelectOptionGroup[] = [];
+  hPacketListSelectOption: SelectOptionGroup[] = [];
 
+  hPacketList: HPacket[] = [];
   hPacketListSelected: HPacket[] = [];
 
-  private hProjectId: number;
+  private hProject: HProject;
 
   private logger: Logger;
+
+  private data: DataExport | DataExportNotificationStore.DataExportNotification;
 
   constructor(
     private fb: FormBuilder,
     private store: Store,
     private dialogRef: DialogRef<any>,
-    @Inject(DIALOG_DATA) public data: DataExport,
     private hProjectsService: HprojectsService,
     private httpClient: HttpClient,
     private notificationManagerService: NotificationManagerService,
+    @Inject(DIALOG_DATA) data: DataExport | DataExportNotificationStore.DataExportNotification,
     loggerService: LoggerService,
   ) {
     this.logger = new Logger(loggerService);
     this.logger.registerClass(this.constructor.name);
+
+    this.data = Object.freeze(data);
   }
 
   ngOnInit(): void {
     this.startTime.statusChanges.subscribe((status) => {
-      if(status === 'VALID') {
-        if(this.endTime.disabled){
+      if (status === 'VALID') {
+        if (this.endTime.disabled) {
           this.endTime.enable();
         }
       } else {
@@ -105,20 +113,22 @@ export class DataExportComponent implements OnInit {
       }
     });
 
-    this.store.select(HProjectSelectors.selectCurrentHProjectId)
+    this.store.select(HProjectSelectors.selectCurrentHProject)
       .pipe(
-        tap((hProjectId) => this.hProjectId = hProjectId),
-        switchMap((hProjectId) => combineLatest({
+        tap((hProject) => this.hProject = hProject),
+        switchMap((hProject) => combineLatest({
           hDeviceList: this.store.select(HDeviceSelectors.selectAllHDevices)
             .pipe(
-              map((res) => res.filter(({ project }) => project.id === hProjectId)),
+              map((res) => res.filter(({ project }) => project.id === hProject.id)),
             ),
           hPacketList: this.store.select(HPacketSelectors.selectAllHPackets)
         })),
         take(1)
       ).subscribe({
         next: ({ hDeviceList, hPacketList }) => {
-          this.hPacketList = hDeviceList.map((device) => ({
+          this.hPacketList = hPacketList;
+
+          this.hPacketListSelectOption = hDeviceList.map((device) => ({
             name: device.deviceName,
             icon: 'icon-hyt_device',
             options: hPacketList
@@ -135,20 +145,51 @@ export class DataExportComponent implements OnInit {
         }
       });
 
-    const { timeInterval, domain } = this.data;
+    const data = this.data;
+    if ('domain' in data) {
+      const {
+        timeInterval,
+        domain
+      } = data;
 
-    let interval: Date[] = [];
-    if (timeInterval.length) {
-      interval = timeInterval;
-    } else if (domain.length) {
-      interval = domain;
-    }
+      let interval: Date[] = [];
+      if (timeInterval.length) {
+        interval = timeInterval;
+      } else if (domain.length) {
+        interval = domain;
+      }
 
-    if (interval.length) {
+      if (interval.length) {
+        this.initialFormValue = {
+          ...this.initialFormValue,
+          startTime: interval[0],
+          endTime: interval[1],
+        };
+      }
+
+      this.form.patchValue({
+        ...this.initialFormValue,
+      });
+    } else if ('exportParams' in data) {
+      const {
+        exportParams: {
+          startTime,
+          endTime,
+          exportName,
+          hPacketFormat,
+          hPacket
+        }
+      } = data;
+
       this.initialFormValue = {
-        startTime: interval[0],
-        endTime: interval[1],
+        startTime: moment(startTime).toDate(),
+        endTime: moment(endTime).toDate(),
+        exportName,
+        hPacketFormat,
+        hPacket
       };
+
+      this.addPacketSelectedList(hPacket);
 
       this.form.patchValue({ ...this.initialFormValue });
     }
@@ -161,10 +202,15 @@ export class DataExportComponent implements OnInit {
   export() {
     this.exportErrorList = [];
 
-    const hProjectId = this.hProjectId;
+    const hProject = this.hProject;
+    const hProjectId = hProject.id;
     const exportName = this.exportName.value;
-    const startTime = moment(this.startTime.value).valueOf(); //moment unix timestamp in milliseconds
-    const endTime = moment(this.endTime.value).valueOf(); //moment unix timestamp in milliseconds
+
+    const startTime = this.startTime.value;
+    const startTimeInMills = moment(startTime).valueOf(); //moment unix timestamp in milliseconds
+
+    const endTime = this.endTime.value;
+    const endTimeInMills = moment(endTime).valueOf(); //moment unix timestamp in milliseconds
 
     const hPacketFormat = this.hPacketFormat.value as HPacket.FormatEnum;
 
@@ -189,16 +235,16 @@ export class DataExportComponent implements OnInit {
         hPacketId,
         hPacketFormat,
         exportName,
-        startTime,
-        endTime
+        startTimeInMills,
+        endTimeInMills
       ).pipe(
         tap(({ exportId, started }: ExportHPacketData) => {
           if (started) {
             const dataExportNotification: DataExportNotificationStore.DataExportNotification = {
               exportParams: {
                 exportId,
-                hProjectId,
-                hPacketId,
+                hProject,
+                hPacket,
                 hPacketFormat,
                 exportName,
                 startTime,
@@ -252,8 +298,8 @@ export class DataExportComponent implements OnInit {
           const dataExportNotification: DataExportNotificationStore.DataExportNotification = {
             exportParams: {
               exportId,
-              hProjectId,
-              hPacketId,
+              hProject,
+              hPacket,
               hPacketFormat,
               exportName,
               startTime,
@@ -302,22 +348,35 @@ export class DataExportComponent implements OnInit {
       : Math.round((processedRecords / totalRecords) * 100);
   }
 
-  onAddPacket(hPacket: HPacket) {
+  addPacketSelectedList(hPacket: HPacket) {
     if (!this.hPacketListSelected.some((item) => item.id === hPacket.id)) {
       this.hPacketListSelected.push(hPacket);
+
+      this.clearSelectPackets();
     }
   }
 
   resetForm() {
     this.hPacketListSelected = [];
 
-    if (this.selectPackets) {
-      this.selectPackets.formControl.reset();
+    this.clearSelectPackets();
+
+    if ('exportParams' in this.data) {
+      this.addPacketSelectedList(this.initialFormValue.hPacket);
     }
 
     this.form.reset({ ...this.initialFormValue });
 
     this.exportErrorList = [];
+  }
+
+  private clearSelectPackets() {
+    if (this.selectPackets) {
+      const { formControl } = this.selectPackets;
+      formControl.reset();
+      formControl.markAsUntouched();
+      formControl.setErrors(null);
+    }
   }
 
   removeHPacket(hPacket: HPacket): void {

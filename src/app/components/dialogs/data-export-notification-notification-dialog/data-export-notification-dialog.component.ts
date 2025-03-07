@@ -1,11 +1,12 @@
 import { animate, group, query, style, transition, trigger } from '@angular/animations';
 import { HttpClient } from '@angular/common/http';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { DialogRef } from 'components';
+import { DialogRef, DialogService } from 'components';
 import { DataExportNotificationActions, DataExportNotificationSelectors, DataExportNotificationStore, HPacket, HprojectsService, Logger, LoggerService } from 'core';
 import saveAs from 'file-saver';
 import { catchError, concatMap, interval, forkJoin, of, switchMap, takeWhile } from 'rxjs';
+import { DataExportComponent } from 'widgets';
 
 type ExportHPacketData = {
   processedRecords: number;
@@ -64,125 +65,138 @@ export class DataExportNotificationDialogComponent {
     public dialogRef: DialogRef<any>,
     private store: Store,
     loggerService: LoggerService,
-    private httpClient: HttpClient,
-    private hProjectsService: HprojectsService,
+    // private httpClient: HttpClient,
+    // private hProjectsService: HprojectsService,
+    private dialogService: DialogService
   ) {
     this.logger = new Logger(loggerService);
     this.logger.registerClass(this.constructor.name);
   }
 
-  retryDownload(notification: DataExportNotificationStore.DataExportNotification) {
-    const {
-      exportParams,
-      exportParams: {
-        hPacketId,
-        hProjectId,
-        hPacketFormat,
-        exportName,
-        startTime,
-        endTime,
-        exportId: oldExportId
-      },
-      download
-    } = notification;
-
-    let isFirst = true;
-
-    this.hProjectsService.exportHPacketData(
-      hProjectId,
-      hPacketId,
-      hPacketFormat,
-      exportName,
-      startTime,
-      endTime
-    ).pipe(
-      switchMap(({ exportId: retryExportId }: ExportHPacketData) =>
-        interval(500)
-          .pipe(
-            switchMap(() => this.hProjectsService.getExportStatus(retryExportId)),
-            takeWhile((status: ExportHPacketData) => !(status.completed || status.hasErrors), true),
-            catchError((error) => {
-              this.logger.error('Error:', error);
-              return of({ hasErrors: true });
-            })
-          ),
-      ),
-      concatMap((status: ExportHPacketData) => {
-        const {
-          exportId: retryExportId,
-          completed
-        } = status;
-
-        if (completed) {
-          return forkJoin({
-            blob: this.httpClient.get(
-              `/hyperiot/hprojects/export/download/${encodeURIComponent(retryExportId)}`,
-              {
-                responseType: 'blob'
-              }
-            ),
-            status: of(status)
-          });
-        } else {
-          return of(status);
-        }
-      })
-    ).subscribe({
-      next: (exportData: ExportHPacketData | { blob: Blob; status: ExportHPacketData; }) => {
-        const { processedRecords, totalRecords, exportId } =
-          'blob' in exportData
-            ? exportData.status
-            : exportData;
-
-        const progress = this.percentageRecordsProcessed(processedRecords, totalRecords);
-
-        const rataExportNotificationRetry: DataExportNotificationStore.DataExportNotification = {
-          exportParams: {
-            ...exportParams,
-            exportId
-          },
-          download: {
-            ...download,
-            progress,
-            lastDownload: progress < 100 ? undefined : new Date()
-          },
-        };
-
-        isFirst = false;
-
-        if ('blob' in exportData) {
-          try {
-            saveAs(exportData.blob, download.fullFileName);
-
-            this.store.dispatch(
-              DataExportNotificationActions.updateNotification({
-                update: {
-                  id: isFirst ? oldExportId : exportId,
-                  changes: rataExportNotificationRetry
-                }
-              })
-            );
-          } catch (error) {
-            this.logger.error('Download Error');
-          }
-        } else {
-          if (exportData.hasErrors) {
-            this.logger.error('Error:', exportData.errorMessages);
-          } else {
-            this.logger.debug('Value:', exportData);
-          }
-        }
-      },
-      error: (err) => {
-        this.logger.error(err);
+  retryDownloadOpenEditor(notification: DataExportNotificationStore.DataExportNotification) {
+    this.dialogService.open<DataExportComponent, DataExportNotificationStore.DataExportNotification>(
+      DataExportComponent,
+      {
+        data: notification,
+        height: '600px',
+        width: '600px',
+        backgroundClosable: true,
       }
-    });
+    );
   }
 
-  private percentageRecordsProcessed(processedRecords: number, totalRecords: number) {
-    return processedRecords >= totalRecords
-      ? 100
-      : Math.round((processedRecords / totalRecords) * 100);
-  }
+  // retryDownload(notification: DataExportNotificationStore.DataExportNotification) {
+  //   const {
+  //     exportParams,
+  //     exportParams: {
+  //       hPacket,
+  //       hProject,
+  //       hPacketFormat,
+  //       exportName,
+  //       startTime,
+  //       endTime,
+  //       exportId: oldExportId
+  //     },
+  //     download
+  //   } = notification;
+
+  //   let isFirst = true;
+
+  //   this.hProjectsService.exportHPacketData(
+  //     hProject.id,
+  //     hPacket.id,
+  //     hPacketFormat,
+  //     exportName,
+  //     startTime,
+  //     endTime
+  //   ).pipe(
+  //     switchMap(({ exportId: retryExportId }: ExportHPacketData) =>
+  //       interval(500)
+  //         .pipe(
+  //           switchMap(() => this.hProjectsService.getExportStatus(retryExportId)),
+  //           takeWhile((status: ExportHPacketData) => !(status.completed || status.hasErrors), true),
+  //           catchError((error) => {
+  //             this.logger.error('Error:', error);
+  //             return of({ hasErrors: true });
+  //           })
+  //         ),
+  //     ),
+  //     concatMap((status: ExportHPacketData) => {
+  //       const {
+  //         exportId: retryExportId,
+  //         completed
+  //       } = status;
+
+  //       if (completed) {
+  //         return forkJoin({
+  //           blob: this.httpClient.get(
+  //             `/hyperiot/hprojects/export/download/${encodeURIComponent(retryExportId)}`,
+  //             {
+  //               responseType: 'blob'
+  //             }
+  //           ),
+  //           status: of(status)
+  //         });
+  //       } else {
+  //         return of(status);
+  //       }
+  //     })
+  //   ).subscribe({
+  //     next: (exportData: ExportHPacketData | { blob: Blob; status: ExportHPacketData; }) => {
+  //       const { processedRecords, totalRecords, exportId } =
+  //         'blob' in exportData
+  //           ? exportData.status
+  //           : exportData;
+
+  //       const progress = this.percentageRecordsProcessed(processedRecords, totalRecords);
+
+  //       const rataExportNotificationRetry: DataExportNotificationStore.DataExportNotification = {
+  //         exportParams: {
+  //           ...exportParams,
+  //           exportId
+  //         },
+  //         download: {
+  //           ...download,
+  //           progress,
+  //           lastDownload: progress < 100 ? undefined : new Date()
+  //         },
+  //       };
+
+  //       isFirst = false;
+
+  //       if ('blob' in exportData) {
+  //         try {
+  //           saveAs(exportData.blob, download.fullFileName);
+
+  //           this.store.dispatch(
+  //             DataExportNotificationActions.updateNotification({
+  //               update: {
+  //                 id: isFirst ? oldExportId : exportId,
+  //                 changes: rataExportNotificationRetry
+  //               }
+  //             })
+  //           );
+  //         } catch (error) {
+  //           this.logger.error('Download Error');
+  //         }
+  //       } else {
+  //         if (exportData.hasErrors) {
+  //           this.logger.error('Error:', exportData.errorMessages);
+  //         } else {
+  //           this.logger.debug('Value:', exportData);
+  //         }
+  //       }
+  //     },
+  //     error: (err) => {
+  //       this.logger.error(err);
+  //     }
+  //   });
+  // }
+
+  // private percentageRecordsProcessed(processedRecords: number, totalRecords: number) {
+  //   return processedRecords >= totalRecords
+  //     ? 100
+  //     : Math.round((processedRecords / totalRecords) * 100);
+  // }
 
 }

@@ -2,6 +2,7 @@ import { createReducer, on } from "@ngrx/store";
 import { createEntityAdapter, EntityAdapter, EntityState } from "@ngrx/entity";
 import { DataExportNotificationActions } from "./data-export-notification.actions";
 import { HPacket } from "../../hyperiot-client/models/hPacket";
+import { HProject } from "../../hyperiot-client/models/hProject";
 
 export namespace DataExportNotificationStore {
 
@@ -11,11 +12,11 @@ export namespace DataExportNotificationStore {
     exportParams: {
       exportId: string;
       exportName: string,
-      hProjectId: number;
-      hPacketId: number;
+      hProject: HProject;
+      hPacket: HPacket;
       hPacketFormat: HPacket.FormatEnum,
-      startTime: number,
-      endTime: number,
+      startTime: Date,
+      endTime: Date,
     }
     download: {
       fullFileName: string;

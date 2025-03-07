@@ -1,13 +1,11 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, Output, ViewChild, ViewEncapsulation } from '@angular/core';
-import { ConfirmDialogService, TimeStep } from 'components';
+import { TimeStep } from 'components';
 import * as d3 from 'd3';
 import * as moment_ from 'moment';
 import { HYTData } from "../models/timeline.model";
 import { DashboardEventService } from '../../services/dashboard-event.service';
 import { DashboardEvent } from '../../services/dashboard-event.model';
 import { DialogService } from 'components';
-import { DataExportComponent } from '../data-export/data-export.component';
-import { DataExport } from '../models/data-export,model';
 
 const moment = moment_;
 const animation = false;
@@ -26,10 +24,9 @@ const animation = false;
   encapsulation: ViewEncapsulation.None
 })
 export class TimeAxisComponent implements AfterViewInit {
+
   constructor(
     private dashboardEvent: DashboardEventService,
-    private dialogService: DialogService,
-    private confirmDialogService: ConfirmDialogService,
   ) { }
   /**
    * timeStepMap is used to convert a step to a d3 TimeInterval
@@ -200,19 +197,27 @@ export class TimeAxisComponent implements AfterViewInit {
     this.buildAxis();
   }
 
+  private get defaultExportInterval() : Date[]{
+    const today = moment();
+    const yesterday = today.clone().subtract(1, 'days');
+    return [yesterday.toDate(), today.toDate()];
+  }
+
   /**
    * Defintion of brushed function
    */
   brushed = () => {
-
     const selection = d3.event.detail.selection;
     const mode = d3.event.detail.mode;
+
     if (selection) {
       if (mode !== 'code') {
         this.timeInterval = selection.map(d => this.axisInterval.round(this.axisScale.invert(d)));
+        this.dashboardEvent.selectedDateIntervalForExport.next(this.defaultExportInterval);
       }
       if (mode === 'code-released') {
         this.dashboardEvent.timelineEvent.next(DashboardEvent.Timeline.NEW_RANGE);
+        this.dashboardEvent.selectedDateIntervalForExport.next(this.defaultExportInterval);
         this.dataTimeSelectionChanged.emit(this.timeInterval);
       }
       this.rect?.attr('fill', (d) =>
@@ -232,6 +237,7 @@ export class TimeAxisComponent implements AfterViewInit {
     const selection = d3.event.detail.selection;
     this.timeInterval = selection.map(d => this.axisInterval.round(this.axisScale.invert(d)));
     if (this.timeInterval[1] > this.timeInterval[0]) {
+      this.dashboardEvent.selectedDateIntervalForExport.next(this.timeInterval);
       this.setSelection(
         this.timeInterval.map(this.axisScale),
         d3.select('#brush-group'),
@@ -481,6 +487,8 @@ export class TimeAxisComponent implements AfterViewInit {
    * resetSelection() is used to delete the time selection
    */
   resetSelection() {
+    this.dashboardEvent.selectedDateIntervalForExport.next(this.defaultExportInterval);
+
     this.selectionPx = [null, null];
     this.timeInterval = [null, null];
     this.dashboardEvent.timelineEvent.next(DashboardEvent.Timeline.RESET);
@@ -706,18 +714,6 @@ export class TimeAxisComponent implements AfterViewInit {
       .on('click', (d, i, n) => {
         this.domainSet.emit(d.timestamp);
       });
-  }
-
-  exportData() {
-    this.dialogService.open<DataExportComponent, DataExport>(DataExportComponent, {
-      data: {
-        domain: this.domain as Date[],
-        timeInterval: this.timeInterval
-      },
-      height: '600px',
-      width: '600px',
-      backgroundClosable: true,
-    });
   }
 
 }
