@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { DialogRef, DIALOG_DATA, SelectOptionGroup, HytSelectComponent } from 'components';
 import { DataExport } from '../models/data-export,model';
 import { Store } from '@ngrx/store';
@@ -40,32 +40,20 @@ export class DataExportComponent implements OnInit {
 
   exportErrorList: { hPacketId: number, exportId: string }[] = [];
 
+  exportInProgress = false;
+
   form = this.fb.group({
     startTime: [null, Validators.required],
     endTime: [null, Validators.required],
-    exportName: [null, [Validators.required, Validators.maxLength(this.maxLength), this.filenameValidator.bind(this)]],
+    exportName: [
+      null, [
+        Validators.required,
+        Validators.maxLength(this.maxLength),
+        this.exportNameValidator
+      ]
+    ],
     hPacketFormat: [null, Validators.required],
   });
-
-  private filenameValidator(): ValidatorFn {
-    return (control: AbstractControl): { [key: string]: any } | null => {
-      const filename = control.value as string;
-
-      // Controlla se il nome del file contiene spazi
-      if (filename.includes(' ')) {
-        return { 'filenameSpace': true };
-      }
-
-      // Pattern per SQL injection (semplificato, potrebbe essere necessario adattarlo alle tue esigenze specifiche)
-      const sqlInjectionPattern = /[;<>=&`]|(--)|(\*|\/)/;
-      if (sqlInjectionPattern.test(filename)) {
-        return { 'sqlInjection': true };
-      }
-
-      // Se nessun problema è stato trovato, il nome del file è valido
-      return null;
-    };
-  }
 
   @ViewChild('selectPackets') selectPackets: HytSelectComponent;
 
@@ -76,14 +64,14 @@ export class DataExportComponent implements OnInit {
   }
 
   private get endTime(): FormControl {
-    return this.form.get('endTime') as FormControl;
+    return this.form.controls.endTime as FormControl;
   }
 
   private get hPacketFormat(): FormControl {
     return this.form.controls.hPacketFormat as FormControl;
   }
 
-  private get exportName(): FormControl {
+  get exportName(): FormControl {
     return this.form.controls.exportName as FormControl;
   }
 
@@ -106,15 +94,19 @@ export class DataExportComponent implements OnInit {
 
   private data: DataExport | DataExportNotificationStore.DataExportNotification;
 
+  readonly selectPacketsLabel = $localize`:@@HYT_select_packets:Select one or more Packets`;
+  readonly countSelectedPackets = (hPacketCount: number) => $localize`:@@HYT_count_packets_selected:Selected ${hPacketCount} packets`;
+  readonly exportDownloadError = (hPacketId: number) => $localize`:@@HYT_export_download_error:An error occurred while downloading the packet ${hPacketId}`;
+
   constructor(
     private fb: FormBuilder,
     private store: Store,
-    private dialogRef: DialogRef<any>,
+    public dialogRef: DialogRef<any>,
     private hProjectsService: HprojectsService,
     private httpClient: HttpClient,
     private notificationManagerService: NotificationManagerService,
     @Inject(DIALOG_DATA) data: DataExport | DataExportNotificationStore.DataExportNotification,
-    loggerService: LoggerService,
+    loggerService: LoggerService
   ) {
     this.logger = new Logger(loggerService);
     this.logger.registerClass(this.constructor.name);
@@ -123,15 +115,23 @@ export class DataExportComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.startTime.statusChanges.subscribe((status) => {
-      if (status === 'VALID') {
-        if (this.endTime.disabled) {
-          this.endTime.enable();
+    this.startTime.statusChanges
+      .subscribe((status) => {
+        if (status === 'VALID') {
+          if (this.endTime.disabled) {
+            this.endTime.enable();
+          }
+        } else {
+          this.endTime.disable();
         }
-      } else {
-        this.endTime.disable();
-      }
-    });
+      });
+
+    this.startTime.valueChanges
+      .subscribe((value) => {
+        if (value > this.endTime.value) {
+          this.endTime.reset();
+        }
+      });
 
     this.store.select(HProjectSelectors.selectCurrentHProject)
       .pipe(
@@ -166,26 +166,14 @@ export class DataExportComponent implements OnInit {
       });
 
     const data = this.data;
-    if ('domain' in data) {
-      const {
-        timeInterval,
-        domain
-      } = data;
+    if ('timeInterval' in data) {
+      const { timeInterval } = data;
 
-      let interval: Date[] = [];
-      if (timeInterval.length) {
-        interval = timeInterval;
-      } else if (domain.length) {
-        interval = domain;
-      }
-
-      if (interval.length) {
-        this.initialFormValue = {
-          ...this.initialFormValue,
-          startTime: interval[0],
-          endTime: interval[1],
-        };
-      }
+      this.initialFormValue = {
+        ...this.initialFormValue,
+        startTime: timeInterval[0],
+        endTime: timeInterval[1],
+      };
 
       this.form.patchValue({
         ...this.initialFormValue,
@@ -215,11 +203,23 @@ export class DataExportComponent implements OnInit {
     }
   }
 
-  closeModal(event?: any): void {
-    this.dialogRef.close(event);
+  private exportNameValidator(control: AbstractControl): ValidationErrors | null {
+    if (control.value === null) {
+      return;
+    }
+
+    const exportName: string = control.value;
+    const notAllowedChars = /[?!.]|[;<>=&`'"()]|(--)|(\*|\/)/;
+
+    if (exportName && (exportName.includes(' ') || notAllowedChars.test(exportName))) {
+      return { charNotAllowed: true };
+    }
+
+    return null;
   }
 
   export() {
+    this.exportInProgress = true;
     this.exportErrorList = [];
 
     const hProject = this.hProject;
@@ -258,32 +258,6 @@ export class DataExportComponent implements OnInit {
         startTimeInMills,
         endTimeInMills
       ).pipe(
-        tap(({ exportId, started }: ExportHPacketData) => {
-          if (started) {
-            const dataExportNotification: DataExportNotificationStore.DataExportNotification = {
-              exportParams: {
-                exportId,
-                hProject,
-                hPacket,
-                hPacketFormat,
-                exportName,
-                startTime,
-                endTime
-              },
-              download: {
-                fullFileName,
-                progress: 0,
-                lastDownload: undefined
-              }
-            };
-
-            this.store.dispatch(DataExportNotificationActions.setNotification({ notification: dataExportNotification }));
-
-            this.dialogRef.close();
-
-            this.notificationManagerService.info('Data export', 'Data export process started');
-          }
-        }),
         switchMap(({ exportId }: ExportHPacketData) =>
           interval(500)
             .pipe(
@@ -305,58 +279,87 @@ export class DataExportComponent implements OnInit {
                 }
               ),
               status: of(status)
-            })
+            });
           } else {
             return of(status);
           }
         })
       ).subscribe({
         next: (exportData: ExportHPacketData | { blob: Blob; status: ExportHPacketData; }) => {
-          const { processedRecords, totalRecords, exportId } = 'blob' in exportData ? exportData.status : exportData;
+          const { processedRecords, totalRecords, exportId, started } = 'blob' in exportData ? exportData.status : exportData;
           const progress = this.percentageRecordsProcessed(processedRecords, totalRecords);
 
-          const dataExportNotification: DataExportNotificationStore.DataExportNotification = {
-            exportParams: {
-              exportId,
-              hProject,
-              hPacket,
-              hPacketFormat,
-              exportName,
-              startTime,
-              endTime
-            },
-            download: {
-              fullFileName,
-              progress,
-              lastDownload: progress < 100 ? undefined : new Date()
-            }
-          };
+          if (started) {
+            if (index === 0) {
+              const firstDataExportNotification: DataExportNotificationStore.DataExportNotification = {
+                exportParams: {
+                  exportId,
+                  hProject,
+                  hPacket,
+                  hPacketFormat,
+                  exportName,
+                  startTime,
+                  endTime
+                },
+                download: {
+                  fullFileName,
+                  progress: 0,
+                  lastDownload: undefined
+                }
+              };
 
-          this.store.dispatch(
-            DataExportNotificationActions.updateNotification({
-              update: {
-                id: exportId,
-                changes: dataExportNotification
-              }
-            })
-          );
+              this.store.dispatch(DataExportNotificationActions.setNotification({ notification: firstDataExportNotification }));
+            } else {
+              const updateStatusDataExportNotification: DataExportNotificationStore.DataExportNotification = {
+                exportParams: {
+                  exportId,
+                  hProject,
+                  hPacket,
+                  hPacketFormat,
+                  exportName,
+                  startTime,
+                  endTime
+                },
+                download: {
+                  fullFileName,
+                  progress,
+                  lastDownload: progress < 100 ? undefined : new Date()
+                }
+              };
+
+              this.store.dispatch(
+                DataExportNotificationActions.updateNotification({
+                  update: {
+                    id: exportId,
+                    changes: updateStatusDataExportNotification
+                  }
+                })
+              );
+            }
+
+          }
 
           if ('blob' in exportData) {
             try {
               saveAs(exportData.blob, fullFileName);
             } catch (error) {
+              this.exportInProgress = false;
+              this.exportErrorList.push({ hPacketId, exportId });
               this.logger.error('Download error');
             }
           } else {
             if (exportData.hasErrors) {
+              this.exportErrorList.push({ hPacketId, exportId });
               this.logger.error('Error:', exportData.errorMessages);
-            } else {
-              this.logger.debug('Value:', exportData);
             }
           }
         },
         error: (err) => {
+          this.exportErrorList.push({ hPacketId, exportId: null });
           this.logger.error(err);
+        },
+        complete: () => {
+          this.dialogRef.close();
         }
       });
     }
@@ -399,8 +402,8 @@ export class DataExportComponent implements OnInit {
     }
   }
 
-  removeHPacket(hPacket: HPacket): void {
-    const index = this.hPacketListSelected.indexOf(hPacket);
+  removeHPacket({ id }: HPacket): void {
+    const index = this.hPacketListSelected.findIndex((hPacket) => hPacket.id === id);
 
     if (index >= 0) {
       this.hPacketListSelected.splice(index, 1);

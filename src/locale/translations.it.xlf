@@ -2600,6 +2600,39 @@
         <source>Choose the type and thickness of the threshold line.</source>
         <target>Scegli il tipo e lo spessore della linea di soglia.</target>
       </trans-unit>
+
+      <trans-unit id="HYT_start_time" datatype="html">
+        <source>Start Time</source>
+        <target>Data Iniziale</target>
+      </trans-unit>
+      <trans-unit id="HYT_end_time" datatype="html">
+        <source>End Time</source>
+        <target>Data Finale</target>
+      </trans-unit>
+      <trans-unit id="HYT_select_export_format" datatype="html">
+        <source>Select Export Format</source>
+        <target>Seleziona il formato dell'export</target>
+      </trans-unit>
+      <trans-unit id="HYT_select_packets" datatype="html">
+        <source>Select one or more Packets</source>
+        <target>Seleziona uno o più pacchetti</target>
+      </trans-unit>
+      <trans-unit id="HYT_count_packets_selected" datatype="html">
+        <source>Selected {{ countPackets }} packets</source>
+        <target>{{ countPackets }} pacchetti selezionati</target>
+      </trans-unit>
+      <trans-unit id="HYT_invalid_characters" datatype="html">
+        <source>Invalid characters have been entered</source>
+        <target>Sono stati inseriti dei caratteri non permessi</target>
+      </trans-unit>
+      <trans-unit id="HYT_field_required" datatype="html">
+        <source>The field is required</source>
+        <target>Il campo non può essere vuoto</target>
+      </trans-unit>
+      <trans-unit id="HYT_export_download_error" datatype="html">
+        <source>An error occurred while downloading the packet {{hPacketId}}</source>
+        <target>Si è verificato un errore durante il download del packet {{hPacketId}}</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -175,28 +175,4 @@ export class HytDatePickerComponent implements OnInit, OnChanges {
     }
   }
 
-  openExportDataModal() {
-      // this.dialogService.open<DataExportComponent, DataExport>(
-      //   DataExportComponent,
-      //   {
-      //     data: {
-      //       domain: this.domain as Date[],
-      //       timeInterval: this.isDefaultSection
-      //         ? (() => {
-      //           const today = moment();
-      //           const yesterday = today.clone().subtract(1, 'days');
-      //           return [
-      //             yesterday.toDate(),
-      //             today.toDate(),
-      //           ]
-      //         })()
-      //         : this.timeInterval
-      //     },
-      //     height: '600px',
-      //     width: '600px',
-      //     backgroundClosable: true,
-      //   }
-      // );
-    }
-
 }

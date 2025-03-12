@@ -259,28 +259,11 @@ export class TimelineComponent implements OnChanges {
   }
 
   openDataExportModel() {
-    console.log(this.timeSelection);
-
     this.dialogService.open<DataExportComponent, DataExport>(
       DataExportComponent,
       {
         data: {
-          domain: [
-            this.domainStart,
-            this.domainStop
-          ],
-          timeInterval: (() => {
-            const today = moment();
-            const yesterday = today.clone().subtract(1, 'days');
-
-            return this.timeSelection[0] === null
-              ?
-              [
-                yesterday.toDate(),
-                today.toDate(),
-              ]
-              : this.timeSelection
-          })(),
+          timeInterval: this.timeSelection
         },
         height: '600px',
         width: '600px',
