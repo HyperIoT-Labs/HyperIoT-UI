@@ -1941,6 +1941,31 @@
       <trans-unit id="HYT_line_description" datatype="html">
         <source>Choose the type and thickness of the threshold line.</source>
       </trans-unit>
+
+      <trans-unit id="HYT_start_time" datatype="html">
+        <source>Start Time</source>
+      </trans-unit>
+      <trans-unit id="HYT_end_time" datatype="html">
+        <source>End Time</source>
+      </trans-unit>
+      <trans-unit id="HYT_select_export_format" datatype="html">
+        <source>Select Export Format</source>
+      </trans-unit>
+      <trans-unit id="HYT_select_packets" datatype="html">
+        <source>Select one or more Packets</source>
+      </trans-unit>
+      <trans-unit id="HYT_count_packets_selected" datatype="html">
+        <source>Selected {{ countPackets }} packets</source>
+      </trans-unit>
+      <trans-unit id="HYT_invalid_characters" datatype="html">
+        <source>Invalid characters have been entered</source>
+      </trans-unit>
+      <trans-unit id="HYT_field_required" datatype="html">
+        <source>The field is required</source>
+      </trans-unit>
+      <trans-unit id="HYT_export_download_error" datatype="html">
+        <source>An error occurred while downloading the packet {{hPacketId}}</source>
+      </trans-unit>
     </body>
   </file>
 </xliff>
