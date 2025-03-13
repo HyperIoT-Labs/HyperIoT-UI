@@ -220,6 +220,8 @@ export class DataExportComponent implements OnInit {
 
   export() {
     this.exportInProgress = true;
+    this.form.disable();
+
     this.exportErrorList = [];
 
     const hProject = this.hProject;
@@ -286,31 +288,16 @@ export class DataExportComponent implements OnInit {
         })
       ).subscribe({
         next: (exportData: ExportHPacketData | { blob: Blob; status: ExportHPacketData; }) => {
-          const { processedRecords, totalRecords, exportId, started } = 'blob' in exportData ? exportData.status : exportData;
-          const progress = this.percentageRecordsProcessed(processedRecords, totalRecords);
+          const { processedRecords, totalRecords, exportId, started, hasErrors, errorMessages } = 'blob' in exportData ? exportData.status : exportData;
 
           if (started) {
-            if (index === 0) {
-              const firstDataExportNotification: DataExportNotificationStore.DataExportNotification = {
-                exportParams: {
-                  exportId,
-                  hProject,
-                  hPacket,
-                  hPacketFormat,
-                  exportName,
-                  startTime,
-                  endTime
-                },
-                download: {
-                  fullFileName,
-                  progress: 0,
-                  lastDownload: undefined
-                }
-              };
-
-              this.store.dispatch(DataExportNotificationActions.setNotification({ notification: firstDataExportNotification }));
+            if (hasErrors) {
+                this.exportErrorList.push({ hPacketId, exportId });
+                this.logger.error('Error:', errorMessages);
             } else {
-              const updateStatusDataExportNotification: DataExportNotificationStore.DataExportNotification = {
+              const progress = this.percentageRecordsProcessed(processedRecords, totalRecords);
+
+              const notification: DataExportNotificationStore.DataExportNotification = {
                 exportParams: {
                   exportId,
                   hProject,
@@ -320,37 +307,25 @@ export class DataExportComponent implements OnInit {
                   startTime,
                   endTime
                 },
-                download: {
+                exportInfo: {
                   fullFileName,
                   progress,
-                  lastDownload: progress < 100 ? undefined : new Date()
+                  downloadDate: progress < 100 ? undefined : new Date()
                 }
               };
 
-              this.store.dispatch(
-                DataExportNotificationActions.updateNotification({
-                  update: {
-                    id: exportId,
-                    changes: updateStatusDataExportNotification
-                  }
-                })
-              );
-            }
+              this.store.dispatch(DataExportNotificationActions.addOrUpdateNotification({ notification }));
 
-          }
-
-          if ('blob' in exportData) {
-            try {
-              saveAs(exportData.blob, fullFileName);
-            } catch (error) {
-              this.exportInProgress = false;
-              this.exportErrorList.push({ hPacketId, exportId });
-              this.logger.error('Download error');
-            }
-          } else {
-            if (exportData.hasErrors) {
-              this.exportErrorList.push({ hPacketId, exportId });
-              this.logger.error('Error:', exportData.errorMessages);
+              if ('blob' in exportData) {
+                try {
+                  saveAs(exportData.blob, fullFileName);
+                } catch (error) {
+                  this.exportInProgress = false;
+                  this.form.enable();
+                  this.exportErrorList.push({ hPacketId, exportId });
+                  this.logger.error('Download error');
+                }
+              }
             }
           }
         },

@@ -41,7 +41,7 @@
           <mat-card
             *ngIf="notification as data"
             appearance="outlined"
-            [ngClass]="{ 'p-2': data.download.progress == 100 }"
+            [ngClass]="{ 'p-2': data.exportInfo.progress == 100 }"
           >
             <mat-card-content>
               <div class="d-flex flex-column">
@@ -49,8 +49,8 @@
                   <div class="d-flex justify-content-between">
                     <div class="d-flex" style="gap: 25px">
                       <div>
-                        <div>From:</div>
-                        <div>To:</div>
+                        <div><span i18n="@@HYT_from">From</span>:</div>
+                        <div><span i18n="@@HYT_to">To</span>:</div>
                         <div>File:</div>
                         <div>HPacket:</div>
                       </div>
@@ -71,41 +71,36 @@
                               | amDateFormat : dateFormat
                           }}
                         </div>
-                        <div>{{ data.download.fullFileName }}</div>
+                        <div>{{ data.exportInfo.fullFileName }}</div>
                         <div>{{ data.exportParams.hPacket.name }}</div>
                       </div>
                     </div>
-                    <div>
-                      <button
-                        type="button"
-                        (click)="retryDownloadOpenEditor(notification)"
+                    <div *ngIf="data.exportInfo.progress === 100">
+                      <mat-icon
+                        (click)="
+                          retryDownloadOpenEditor(notification);
+                          dialogRef.close()
+                        "
+                        title="Retry export"
                       >
-                        RETRY
-                      </button>
+                        undo
+                      </mat-icon>
                     </div>
                   </div>
                 </div>
 
                 <ng-container
                   *ngIf="
-                    data.download.progress < 100;
-                    else lastDownloadTemplate
+                    data.exportInfo.progress === 100;
+                    else exportInProgressTemplate
                   "
                 >
-                  <mat-card-footer class="mt-2">
-                    <mat-progress-bar
-                      mode="determinate"
-                      [value]="data.download.progress"
-                    ></mat-progress-bar>
-                  </mat-card-footer>
-                </ng-container>
-                <ng-template #lastDownloadTemplate>
                   <mat-card-actions align="end" class="p-0 m-0">
                     <small>
                       <strong>Downloaded: </strong>
                       <time>
                         {{
-                          data.download.lastDownload
+                          data.exportInfo.downloadDate
                             | amFromUtc
                             | amLocal
                             | amDateFormat : dateFormat
@@ -113,23 +108,16 @@
                       </time>
                     </small>
                   </mat-card-actions>
+                </ng-container>
+                <ng-template #exportInProgressTemplate>
+                  <mat-card-footer class="mt-2">
+                    <mat-progress-bar
+                      mode="determinate"
+                      [value]="data.exportInfo.progress"
+                    ></mat-progress-bar>
+                  </mat-card-footer>
                 </ng-template>
               </div>
-
-              <!-- <div class="d-flex">
-                <div [ngSwitch]="notification.data.hPacketFormat">
-                  <div *ngSwitchCase="HPacketFormat.CSV">TODO CSV</div>
-                  <div *ngSwitchCase="HPacketFormat.JSON">TODO JSON</div>
-                  <div *ngSwitchCase="HPacketFormat.TEXT">TODO TEXT</div>
-                  <div *ngSwitchCase="HPacketFormat.XML">TODO XML</div>
-                </div>
-                <div>
-                  {{ notification.data.fullFileName }}
-                </div>
-                <div>
-
-                </div>
-              </div> -->
             </mat-card-content>
           </mat-card>
         </ng-container>

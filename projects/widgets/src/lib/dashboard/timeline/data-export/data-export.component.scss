@@ -5,12 +5,19 @@
   margin-bottom: 1rem;
 }
 
+fieldset {
+  &:disabled {
+    opacity: 0.3;
+    pointer-events: none;
+  }
+}
+
 .mat-chip-list-wrapper {
   width: 100%;
   min-height: 145px;
   max-height: 145px;
   align-items: start;
-  background: #f5f5f5;
+  background-color: #f5f5f5;
   overflow: auto;
   margin: auto;
 }
@@ -37,5 +44,35 @@
         padding: 3px 10px;
       }
     }
+  }
+}
+
+.cursor-progress {
+  cursor: progress;
+}
+
+.rocket {
+  position: absolute;
+  height: 70px;
+  top: 50%;
+  left: 47.5%;
+
+  animation-duration: 1.2s;
+  animation-name: rocketAnimation;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes rocketAnimation {
+  0% {
+    transform: translateY(-13px);
+  }
+
+  50% {
+    transform: translateY(2px);
+  }
+
+  100% {
+    transform: translateY(-13px);
   }
 }

@@ -92,13 +92,7 @@ export class HytSelectComponent
   @Input() errorMsgRequired: string;
 
   /** Disable the select */
-  @Input() isDisabled = false;
-  get disabled(): boolean {
-    return this.isDisabled;
-  }
-  set disabled(d: boolean) {
-    this.isDisabled = d;
-  }
+  @Input() disabled = false;
 
   /** Specifies if it is a multiple select */
   @Input() isMultiple = false;

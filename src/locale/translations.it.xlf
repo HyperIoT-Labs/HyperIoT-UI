@@ -2633,6 +2633,14 @@
         <source>An error occurred while downloading the packet {{hPacketId}}</source>
         <target>Si è verificato un errore durante il download del packet {{hPacketId}}</target>
       </trans-unit>
+      <trans-unit id="HYT_from" datatype="html">
+        <source>From</source>
+        <target>Da</target>
+      </trans-unit>
+       <trans-unit id="HYT_to" datatype="html">
+        <source>To</source>
+        <target>A</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

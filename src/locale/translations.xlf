@@ -1966,6 +1966,12 @@
       <trans-unit id="HYT_export_download_error" datatype="html">
         <source>An error occurred while downloading the packet {{hPacketId}}</source>
       </trans-unit>
+      <trans-unit id="HYT_from" datatype="html">
+        <source>From</source>
+      </trans-unit>
+       <trans-unit id="HYT_to" datatype="html">
+        <source>To</source>
+      </trans-unit>
     </body>
   </file>
 </xliff>

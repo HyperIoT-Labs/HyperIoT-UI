@@ -18,10 +18,10 @@ export namespace DataExportNotificationStore {
       startTime: Date,
       endTime: Date,
     }
-    download: {
+    exportInfo: {
       fullFileName: string;
       progress: number,
-      lastDownload: Date | undefined
+      downloadDate: Date | undefined
     }
   }
 
@@ -52,8 +52,11 @@ export namespace DataExportNotificationStore {
     on(DataExportNotificationActions.updateNotification, (state, { update }) => {
       return adapter.updateOne(update, {
         ...state,
-        onProcess: update.changes.download.progress < 100
+        onProcess: update.changes.exportInfo.progress < 100
       });
+    }),
+    on(DataExportNotificationActions.addOrUpdateNotification, (state, { notification }) => {
+      return adapter.upsertOne(notification, state);
     }),
   )
 
