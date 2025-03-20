@@ -4,7 +4,7 @@ import { DialogRef, DIALOG_DATA, SelectOptionGroup, HytSelectComponent } from 'c
 import { DataExport } from '../models/data-export,model';
 import { Store } from '@ngrx/store';
 import { DataExportNotificationActions, DataExportNotificationStore, HDeviceSelectors, HPacket, HPacketSelectors, HProject, HProjectSelectors, HprojectsService, Logger, LoggerService, NotificationManagerService } from 'core';
-import { catchError, combineLatest, concatMap, forkJoin, interval, map, of, switchMap, take, takeWhile, tap } from 'rxjs';
+import { catchError, combineLatest, concatMap, forkJoin, interval, map, of, switchMap, take, takeWhile, tap, throwError } from 'rxjs';
 import { MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { NgxMatDateAdapter, } from '@angular-material-components/datetime-picker';
 import { NgxMatMomentAdapter, NGX_MAT_MOMENT_DATE_ADAPTER_OPTIONS, NGX_MAT_MOMENT_FORMATS } from '@angular-material-components/moment-adapter';
@@ -226,7 +226,7 @@ export class DataExportComponent implements OnInit {
 
     const hProject = this.hProject;
     const hProjectId = hProject.id;
-    const exportName = this.exportName.value;
+    const exportName: string = this.exportName.value;
 
     const startTime = this.startTime.value;
     const startTimeInMills = moment(startTime).valueOf(); //moment unix timestamp in milliseconds
@@ -263,12 +263,14 @@ export class DataExportComponent implements OnInit {
         switchMap(({ exportId }: ExportHPacketData) =>
           interval(500)
             .pipe(
-              switchMap(() => this.hProjectsService.getExportStatus(exportId)),
+              switchMap(() => this.hProjectsService.getExportStatus(exportId)
+                .pipe(
+                  catchError((error) => {
+                    this.logger.error('getExportStatus:', error);
+                    return throwError(() => error)
+                  }),
+                )),
               takeWhile(({ completed, hasErrors }: ExportHPacketData) => !(completed || hasErrors), true),
-              catchError((error) => {
-                this.logger.error('Error:', error);
-                return of({ hasErrors: true });
-              })
             )
         ),
         concatMap((status: ExportHPacketData) => {
@@ -282,18 +284,22 @@ export class DataExportComponent implements OnInit {
               ),
               status: of(status)
             });
+          } else if (status.hasErrors) {
+            return throwError(() => status);
           } else {
             return of(status);
           }
         })
       ).subscribe({
         next: (exportData: ExportHPacketData | { blob: Blob; status: ExportHPacketData; }) => {
-          const { processedRecords, totalRecords, exportId, started, hasErrors, errorMessages } = 'blob' in exportData ? exportData.status : exportData;
+          const { processedRecords, totalRecords, exportId, started, hasErrors, errorMessages } = 'blob' in exportData
+            ? exportData.status
+            : exportData;
 
           if (started) {
             if (hasErrors) {
-                this.exportErrorList.push({ hPacketId, exportId });
-                this.logger.error('Error:', errorMessages);
+              this.exportErrorList.push({ hPacketId, exportId });
+              this.logger.error('Error:', errorMessages);
             } else {
               const progress = this.percentageRecordsProcessed(processedRecords, totalRecords);
 
@@ -319,22 +325,22 @@ export class DataExportComponent implements OnInit {
               if ('blob' in exportData) {
                 try {
                   saveAs(exportData.blob, fullFileName);
+                  this.dialogRef.close();
                 } catch (error) {
                   this.exportInProgress = false;
                   this.form.enable();
                   this.exportErrorList.push({ hPacketId, exportId });
-                  this.logger.error('Download error');
+                  this.logger.error('Export download error', error);
                 }
               }
             }
           }
         },
         error: (err) => {
+          this.exportInProgress = false;
+          this.form.enable();
           this.exportErrorList.push({ hPacketId, exportId: null });
           this.logger.error(err);
-        },
-        complete: () => {
-          this.dialogRef.close();
         }
       });
     }
@@ -347,10 +353,9 @@ export class DataExportComponent implements OnInit {
   }
 
   addPacketSelectedList(hPacket: HPacket) {
+    this.clearSelectPackets();
     if (!this.hPacketListSelected.some((item) => item.id === hPacket.id)) {
       this.hPacketListSelected.push(hPacket);
-
-      this.clearSelectPackets();
     }
   }
 
