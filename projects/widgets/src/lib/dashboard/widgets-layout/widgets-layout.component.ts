@@ -43,7 +43,6 @@ enum PageStatus {
 export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
   widgetReadyCounter = 0;
 
-  @ViewChild(GridsterComponent, { static: true }) gridster: GridsterComponent;
   @ViewChild(WidgetSettingsDialogComponent, { static: true }) widgetSetting: WidgetSettingsDialogComponent;
   @Input() options: GridsterConfig;
   @Input() dashboardValue: Dashboard;
@@ -198,50 +197,53 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
   setOptions() {
     this.options = {
       gridSizeChangedCallback: this.onGridSizeChanged.bind(this),
-      itemChangeCallback: this.onItemChange.bind(this),
-      itemResizeCallback: this.onItemResize.bind(this),
-      gridType: GridType.Fixed,
+      itemChangeCallback: this.onItemChange.bind(this), // callback to call for each item when is changes x, y, rows, cols.
+      itemResizeCallback: this.onItemResize.bind(this), // callback to call for each item when width/height changes.
+      gridType: GridType.Fixed, //'fixed' will set the rows and columns dimensions based on fixedColWidth and fixedRowHeight options
       setGridSize: true,
-      compactType: CompactType.CompactUp,
-      displayGrid: DisplayGrid.None,
-      disableWindowResize: true,
+      compactType: CompactType.CompactUp, // compact items: 'none' | 'compactUp' | 'compactLeft' | 'compactUp&Left' | 'compactLeft&Up'
+      displayGrid: DisplayGrid.Always,
+      disableWindowResize: false, // disable the window on resize listener. This will stop grid to recalculate on window resize
       disableAutoPositionOnConflict: false,
       scrollToNewItems: true,
       disableWarnings: true,
       ignoreMarginInRow: false,
-      mobileBreakpoint: 400,
-      keepFixedHeightInMobile: true,
-      keepFixedWidthInMobile: false,
-      minCols: 1, maxCols: 10, maxCellsize: 280,
-      minItemRows: 2,
-      minRows: 1,
-      margin: 6,
+      mobileBreakpoint: 400, // if the screen is not wider that this, remove the grid layout and stack the items
+      keepFixedHeightInMobile: true, // keep the height from fixed gridType in mobile layout
+      keepFixedWidthInMobile: false, // keep the width from fixed gridType in mobile layout
+      minCols: 1, // minimum amount of columns in the grid
+      maxCols: 10, // maximum amount of columns in the grid
+      minRows: 1, // maximum amount of rows in the grid
+      minItemRows: 2, // min item number of rows
+      margin: 6, // margin between grid items
       draggable: {
         enabled: this.dragEnabled,
         dropOverItems: true,
-        dragHandleClass: 'toolbar-title',
-        start: (item, itemComponent) => {
+        dragHandleClass: 'toolbar-title', // drag event only from this class. If `ignoreContent` is true.
+        start: (item, itemComponent) => {  // callback when dragging an item starts.
           // adding class to set specific cursor and to prevent tooltip to show during drag
           const dragElement = itemComponent.el?.getElementsByClassName('toolbar-title')[0] as HTMLElement;
           dragElement?.classList?.add('dragging');
         },
-        stop: (item, itemComponent) => {
+        stop: (item, itemComponent) => { // callback when dragging an item stops.  Accepts Promise return to cancel/approve drag.
           const dragElement = itemComponent.el?.getElementsByClassName('toolbar-title')[0] as HTMLElement;
           dragElement?.classList?.remove('dragging');
         },
-        ignoreContent: true
+        ignoreContent: true // if true drag will start only from elements from `dragHandleClass`
       },
-      swap: false,
+      swap: false, // allow items to switch position if drop on top of another
       disableScrollHorizontal: true,
       disableScrollVertical: true,
-      pushItems: true,
+      pushItems: true, // push items when resizing and dragging
       resizable: {
-        enabled: true,
+        enabled: true, // enable/disable resizable items
       }
     };
 
-    this.options.maxCols = this.getResponsiveColumns();
-    this.options.maxCellSize = this.getResponsiveCellSize();
+    // maxCols is set to 6 (max value in responsiveBreakPoints) so that any configuration is accepted.
+    // This will be adjusted to window size after plotly is ready
+    // Use infinity as value if colSize need to be calculated based on window size
+    this.options.maxCols = 6;
 
     if (this.options.maxCols > 1) {
       this.options.mobileBreakpoint = 0;
@@ -417,18 +419,63 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
   onResize(event: any) {
     const columns = this.getResponsiveColumns();
     const cell = this.getResponsiveCellSize();
-    if (columns !== this.options.maxCols || cell !== this.options.maxCellSize) {
-
-      if (this.lastWindowSize) {
-        clearTimeout(this.lastWindowSize);
-      }
-
-      this.pageStatus = PageStatus.Loading;
-      this.lastWindowSize = setTimeout(() => {
-        this.loadDashboard();
-      }, 500);
-
+    if (columns !== this.options.maxCols || cell !== this.options.fixedColWidth) {
+      console.log('TEST');
     }
+    return
+    const colRemoved = columns < this.options.maxCols;
+    // this.itemChangeEventDisabled = true;
+    console.log("--------------------------")
+    console.log(columns)
+    console.log(cell);
+
+    this.options.maxCols = columns;
+    this.options.fixedColWidth = cell;
+    this.options.fixedRowHeight = cell / 2;
+    this.options.api.optionsChanged();
+
+    // if (!colRemoved) { // come ultima cosa ho messo il col removed. Cioè se vado a stringere va bene che continuo dall'ultima ma se allargo dovrei andare a ritroso, amnca questa parte. Provare a usare una struttura ricorsiva. ELmenti aggiunti o spostati non causano problemi perché si resetta lo starting position. Ma ne vale la pena? Tanto non risolve il problema dell'evento che viene chiamato male
+    //   this.dashboard.forEach((gi, i) => {
+    //     gi.x = this.startingPositions[i].x;
+    //     gi.y = this.startingPositions[i].y;
+    //   });
+    //   this.options.api.optionsChanged();
+    // }
+
+    // this.dashboard and this.gridster.grid (item.item) are the same
+    const itemsToMove = this.dashboard.filter(item => (item.x + item.cols) > columns && item.x !== 0);
+
+    // sort by size and position
+    itemsToMove.sort((a, b) => {
+      if (b.rows * b.cols === a.rows * a.cols) {
+        return (a.y * this.options.maxCols + a.x) - (b.y * this.options.maxCols + b.x)
+      }
+      return (b.rows * b.cols) - (a.rows * a.cols)
+    });
+    console.log(itemsToMove);
+
+    // sort by size
+    //itemsToMove.sort((a, b) => (b.rows * b.cols) - (a.rows * a.cols));
+
+    // sort by position
+    // itemsToMove.sort((a, b) => (a.y * this.options.maxCols + a.x) - (b.y * this.options.maxCols + b.x));
+
+    // temporarily removed excess items from the grid (prevent unexpected itemChangeCallback fired because of compactType: CompactType.CompactUp)
+    // TODO MANCA QUESTO DA CAPIRE SE SI PUÒ USARE INVECE DI  itemChangeEventDisabled
+    itemsToMove.forEach((item: any, i) => {
+      itemsToMove[i].x = -Infinity;
+      itemsToMove[i].y = -Infinity;
+      this.options.api.optionsChanged();
+    });
+    itemsToMove.forEach((item: any, i) => {
+      const firstPossiblePosition = this.options.api.getFirstPossiblePosition(item);
+      itemsToMove[i].x = firstPossiblePosition.x;
+      itemsToMove[i].y = firstPossiblePosition.y;
+      this.options.api.optionsChanged();
+    });
+    // this.itemChangeEventDisabled = false;
+
+    // }
   }
 
   // Gridster events/methods
@@ -438,6 +485,12 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
   }
 
   onItemChange(item, itemComponent) {
+    // if(this.itemChangeEventDisabled) {
+    //   console.error("----- NOT OVERRIDE --------------")
+    //   return;
+    // }
+    console.warn("----- CONFIGURATION OVERRIDE --------------")
+    // this.startingPositions = this.dashboard.map(x => ({ x: x.x, y: x.y  }));
     this.changes++;
     this.activeAutoSave();
     if (typeof item.change === 'function') {

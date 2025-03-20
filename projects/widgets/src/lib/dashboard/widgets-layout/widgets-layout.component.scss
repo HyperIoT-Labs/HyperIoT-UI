@@ -4,25 +4,25 @@
     align-items: center;
 }
 
-gridster {
+// gridster {
 
-  background: transparent!important;
+//   background: transparent!important;
 
-  &.fixed {
-    overflow: visible;
-  }
+//   &.fixed {
+//     overflow: visible;
+//   }
 
-  &.mobile {
-    overflow-y: hidden;
-  }
+//   &.mobile {
+//     overflow-y: hidden;tailwindCSS
+//   }
 
-  gridster-item {
-    background: transparent;
-    box-shadow: rgb(0, 0, 0) 0px 0px 11px -4px;
-    border-radius: 4px;
-  }
+//   gridster-item {
+//     background: transparent;
+//     box-shadow: rgb(0, 0, 0) 0px 0px 11px -4px;
+//     border-radius: 4px;
+//   }
 
-}
+// }
 
 label {
     padding: 4px;
