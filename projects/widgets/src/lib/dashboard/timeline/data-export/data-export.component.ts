@@ -1,10 +1,9 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, ValidationErrors, Validators } from '@angular/forms';
 import { DialogRef, DIALOG_DATA, SelectOptionGroup, HytSelectComponent } from 'components';
 import { DataExport } from '../models/data-export,model';
 import { Store } from '@ngrx/store';
 import { DataExportNotificationActions, DataExportNotificationStore, HDeviceSelectors, HPacket, HPacketSelectors, HProject, HProjectSelectors, HprojectsService, Logger, LoggerService, NotificationManagerService } from 'core';
-import { catchError, combineLatest, concatMap, forkJoin, interval, map, of, switchMap, take, takeWhile, tap, throwError } from 'rxjs';
 import { catchError, combineLatest, concatMap, forkJoin, interval, map, of, switchMap, take, takeWhile, tap, throwError } from 'rxjs';
 import { MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { NgxMatDateAdapter, } from '@angular-material-components/datetime-picker';
@@ -228,7 +227,6 @@ export class DataExportComponent implements OnInit {
     const hProject = this.hProject;
     const hProjectId = hProject.id;
     const exportName: string = this.exportName.value;
-    const exportName: string = this.exportName.value;
 
     const startTime = this.startTime.value;
     const startTimeInMills = moment(startTime).valueOf(); //moment unix timestamp in milliseconds
@@ -288,8 +286,6 @@ export class DataExportComponent implements OnInit {
             });
           } else if (status.hasErrors) {
             return throwError(() => status);
-          } else if (status.hasErrors) {
-            return throwError(() => status);
           } else {
             return of(status);
           }
@@ -332,12 +328,10 @@ export class DataExportComponent implements OnInit {
                 try {
                   saveAs(exportData.blob, fullFileName);
                   this.dialogRef.close();
-                  this.dialogRef.close();
                 } catch (error) {
                   this.exportInProgress = false;
                   this.form.enable();
                   this.exportErrorList.push({ hPacketId, exportId });
-                  this.logger.error('Export download error', error);
                   this.logger.error('Export download error', error);
                 }
               }
@@ -364,7 +358,7 @@ export class DataExportComponent implements OnInit {
 
   addPacketSelectedList(hPacket: HPacket) {
     this.clearSelectPackets();
-    this.clearSelectPackets();
+
     if (!this.hPacketListSelected.some((item) => item.id === hPacket.id)) {
       this.hPacketListSelected.push(hPacket);
     }
