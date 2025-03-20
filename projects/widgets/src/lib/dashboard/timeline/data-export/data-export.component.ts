@@ -299,9 +299,6 @@ export class DataExportComponent implements OnInit {
           const { processedRecords, totalRecords, exportId, started, hasErrors, errorMessages } = 'blob' in exportData
             ? exportData.status
             : exportData;
-          const { processedRecords, totalRecords, exportId, started, hasErrors, errorMessages } = 'blob' in exportData
-            ? exportData.status
-            : exportData;
 
           if (started) {
             if (hasErrors) {
