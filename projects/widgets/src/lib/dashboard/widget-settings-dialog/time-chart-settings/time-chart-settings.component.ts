@@ -35,6 +35,8 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy, OnChanges 
     thresholdsForm: FormArray = this.fb.array([]);
     collapseThresold: boolean = false;
     
+    collapsedThresholdValues: any = {};
+
     defaultOpacity: number = 0.55;
     defaultColor: string = `rgba(5, 186, 0, ${this.defaultOpacity})`;
     defaultLine = { color: this.defaultColor, thickness: 2, type: LineTypes.Linear };
@@ -181,13 +183,22 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy, OnChanges 
             };
         });
 
-        this.widget.config.threshold = {
-            thresholdActive: this.thresholdActive,
-            thresholds: thresholds
-        };
+        if (this.thresholdActive) {
+            this.widget.config.threshold = {
+                thresholdActive: this.thresholdActive,
+                thresholds: thresholds
+            };
+        }
+
+        //if collapsed, i have to assign previos values
+        else this.widget.config.threshold = this.collapsedThresholdValues;     
+
     }
 
     isChecked() {
+        // if collapsed save previous values
+        if (!this.thresholdActive) this.collapsedThresholdValues = this.widget.config.threshold;
+        
         // collapse or not
         this.collapseThresold = this.thresholdActive;
 
