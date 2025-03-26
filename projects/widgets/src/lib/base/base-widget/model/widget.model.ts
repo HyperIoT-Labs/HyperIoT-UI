@@ -5,8 +5,10 @@ import { HPacket, HPacketField } from 'core';
 import { DataSimulatorSettings } from '../../../dashboard/widget-settings-dialog/data-simulator-settings/data-simulator.models';
 import { ProductionTargetSettings } from '../../../dashboard/widget-settings-dialog/production-target-settings/production-target.model';
 import FieldRules = DataSimulatorSettings.FieldRules;
+import { ComponentRef } from '@angular/core';
 
 export interface WidgetConfig extends GridsterItem {
+    id?: number
     projectId?: number;
     name?: string;
     type?: string;
@@ -15,6 +17,7 @@ export interface WidgetConfig extends GridsterItem {
     packetId?: number;
     config?: ConfigModel;
     resizeCallback?: (gridsterItem, gridsterItemComponent) => void;
+    instance?: ComponentRef<any>
 }
 
 export interface InternalConfigModel {

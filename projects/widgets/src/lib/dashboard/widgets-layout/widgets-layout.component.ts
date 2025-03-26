@@ -7,7 +7,7 @@ import {
   GridType,
   GridsterComponent,
   GridsterConfig,
-  GridsterItem
+  GridsterItemComponentInterface
 } from 'angular-gridster2';
 
 import {
@@ -34,6 +34,7 @@ enum PageStatus {
   New = 2,
   Error = -1
 }
+
 @Component({
   selector: 'hyperiot-dashboard-widgets-layout',
   templateUrl: './widgets-layout.component.html',
@@ -55,62 +56,24 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
 
   @Output() topologyResTimeChange: EventEmitter<any> = new EventEmitter<any>();
 
-  dashboard: Array<GridsterItem>;
-  dashboardEntity: Dashboard;
+  dashboard: WidgetConfig[];
   dashboardType: Dashboard.DashboardTypeEnum;
-  dragEnabled = true;
-  private originalWidgetsPosition: { id: string, x: number, y: number }[] = [];
-
-  cellSize: number;
-  projectId: number;
-
-  currentWidgetIdSetting;
-
+  serviceType = ServiceType;
   pageStatus: PageStatus = PageStatus.Loading;
 
-  serviceType = ServiceType;
+  private dashboardEntity: Dashboard;
+  private dragEnabled = true;
+  private originalWidgetsPosition: { id: number, x: number, y: number }[] = [];
 
+  private cellSize: number;
+  private projectId: number;
+  private currentWidgetIdSetting: number;
   private removingWidget = false;
 
   /** Subject for manage the open subscriptions */
   protected ngUnsubscribe: Subject<void> = new Subject<void>();
-
-  /** Topology healt status monitor */
-  public TOPOLOGY_NOT_RESPONDING = -1;
   private streamSubscription: Subscription;
-  private topologyResponseTimeMs: number = this.TOPOLOGY_NOT_RESPONDING;
-
-  // private responsiveBreakPoints = [
-  //   { breakPoint: 1200, columns: 6, cell: 250},
-  //   { breakPoint: 1024, columns: 6, cell: 200},
-  //   { breakPoint: 880, columns: 5,cell: 160},
-  //   { breakPoint: 720, columns: 4,cell: 160},
-  //   { breakPoint: 640, columns: 3,cell: 160},
-  //   { breakPoint: 480, columns: 2,cell: 160},
-  //   { breakPoint: 0, columns: 1,cell: 160},
-  // ];
-
-  autoSaveTimeout;
-
-  changes = 0;
-
-  showSettingWidget = false;
-
-  private responsiveBreakPoints = [
-    { breakPoint: 1611, columns: 6, cell: 250 },
-    { breakPoint: 1610, columns: 6, cell: 200 },
-    { breakPoint: 1327, columns: 6, cell: 180 },
-    { breakPoint: 1200, columns: 6, cell: 180 },
-    { breakPoint: 1024, columns: 4, cell: 230 },
-    { breakPoint: 880, columns: 4, cell: 190 },
-    { breakPoint: 720, columns: 3, cell: 210 },
-    { breakPoint: 640, columns: 2, cell: 270 },
-    { breakPoint: 480, columns: 2, cell: 200 },
-    { breakPoint: 400, columns: 1, cell: 170 },
-    { breakPoint: 0, columns: 1, cell: 120 }
-  ];
-
-  lastWindowSize;
+  private autoSaveTimeout;
 
   /**
    * This is a demo dashboard for testing widgets
@@ -119,7 +82,6 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
    * @param configService
    * @param activatedRoute
    * @param dialogService
-   * @param toastr
    */
   constructor(
     private realtimeDataService: RealtimeDataService,
@@ -129,65 +91,11 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
     private confirmDialogService: ConfirmDialogService,
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.loadDashboard();
   }
 
-  loadDashboard() {
-    this.setOptions();
-
-    this.dashboard = [];
-
-    if (this.streamSubscription) {
-      this.streamSubscription.unsubscribe();
-      this.streamSubscription = null;
-    }
-
-    this.configService.getDashboard(+this.dashboardValue?.id)
-      .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe(
-        (d) => {
-          this.dashboardEntity = d;
-
-          this.dashboardType = this.dashboardEntity.dashboardType;
-          this.projectId = this.dashboardEntity.hproject.id;
-          this.streamSubscription = this.realtimeDataService.eventStream.subscribe((p) => {
-
-            const packet = p.data;
-            const remoteTimestamp: number = this.getTimestampFieldValue(packet);
-            this.topologyResTimeChange.emit({ timeMs: remoteTimestamp });
-          });
-          // get dashboard config
-          this.getWidgetsMapped(d.widgets)
-            .pipe(takeUntil(this.ngUnsubscribe))
-            .subscribe({
-              next: (dashboardConfig: any[]) => {
-                // dashboardConfig.sort((a, b) => a.y - b.y);
-
-                console.log(dashboardConfig);
-
-                this.dashboard = [...dashboardConfig];
-
-                this.originalWidgetsPosition = dashboardConfig.map(({ id, x, y }) => ({ id, x, y }));
-                console.log(this.originalWidgetsPosition );
-
-                this.pageStatus = PageStatus.Standard;
-              }
-            });
-        },
-        error => {
-          console.error(error);
-          this.pageStatus = PageStatus.Error;
-        }
-      );
-
-    window.addEventListener('beforeunload', (e) => {
-      this.saveDashboard();
-    });
-  }
-
-  ngOnDestroy() {
-
+  ngOnDestroy(): void {
     if (this.autoSaveTimeout) {
       clearTimeout(this.autoSaveTimeout);
     }
@@ -203,9 +111,107 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
     this.saveDashboard();
   }
 
-  setOptions() {
-    this.options = {
-      gridSizeChangedCallback: this.onGridSizeChanged.bind(this),
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event) {
+    const availableWidth = document.documentElement.clientWidth;
+    const offset = 100;
+    const minWidth = (this.options.fixedColWidth * this.options.maxCols) + this.options.maxCols;
+
+    this.options.resizable.enabled = availableWidth > minWidth + offset;
+    if (this.options.resizable.enabled) {
+      let applyOldPosition = false;
+      this.dashboard
+        .map((el) => {
+          const position = this.originalWidgetsPosition.find(({ id }) => id === el.id);
+          if (position && (el.x !== position.x || el.y !== position.y)) {
+            el.x = position.x;
+            el.y = position.y;
+
+            if (!applyOldPosition) {
+              applyOldPosition = true;
+            }
+          }
+          return el;
+        });
+
+      this.sortDashboardWidget();
+
+      if (applyOldPosition) {
+        this.options.api.optionsChanged();
+      }
+    } else {
+      this.dashboard
+        .map((el, index, arr) => {
+          el.x = 0;
+          if (index > 0) {
+            const previous = arr[index - 1];
+            el.y = previous.y + previous.rows + 1;
+          }
+
+          return el;
+        })
+
+      this.sortDashboardWidget();
+
+      this.options.api.optionsChanged();
+    }
+  }
+
+  private loadDashboard(): void {
+    this.setOptions();
+
+    this.dashboard = [];
+
+    if (this.streamSubscription) {
+      this.streamSubscription.unsubscribe();
+      this.streamSubscription = null;
+    }
+
+    this.configService.getDashboard(this.dashboardValue.id)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe({
+        next: (d: Dashboard) => {
+          this.dashboardEntity = d;
+
+          this.dashboardType = this.dashboardEntity.dashboardType;
+          this.projectId = this.dashboardEntity.hproject.id;
+          this.streamSubscription = this.realtimeDataService.eventStream
+            .subscribe((p) => {
+              const packet = p.data;
+              const remoteTimestamp = this.getTimestampFieldValue(packet);
+              this.topologyResTimeChange.emit({ timeMs: remoteTimestamp });
+            });
+          // get dashboard config
+          this.getWidgetsMapped(d.widgets)
+            .pipe(takeUntil(this.ngUnsubscribe))
+            .subscribe({
+              next: (dashboardConfig: any[]) => {
+                this.dashboard = [...dashboardConfig];
+
+                this.sortDashboardWidget();
+                this.updateOriginalWidgetsPosition();
+
+                this.pageStatus = PageStatus.Standard;
+              }
+            });
+        },
+        error: (err) => {
+          console.error(err);
+          this.pageStatus = PageStatus.Error;
+        }
+      });
+  }
+
+  private sortDashboardWidget() {
+    this.dashboard.sort((a, b) => a.y !== b.y ? a.y - b.y : a.x - b.x);
+  }
+
+  private updateOriginalWidgetsPosition(): void {
+    this.originalWidgetsPosition = this.dashboard.map(({ id, x, y }) => ({ id, x, y }));
+  }
+
+  private setOptions(): void {
+    this.options = { // callback to call for each item when is changes x, y, rows, cols.
       itemChangeCallback: this.onItemChange.bind(this), // callback to call for each item when is changes x, y, rows, cols.
       itemResizeCallback: this.onItemResize.bind(this), // callback to call for each item when width/height changes.
       gridType: GridType.Fixed, //'fixed' will set the rows and columns dimensions based on fixedColWidth and fixedRowHeight options
@@ -242,6 +248,10 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
         stop: (item, itemComponent) => { // callback when dragging an item stops.  Accepts Promise return to cancel/approve drag.
           const dragElement = itemComponent.el?.getElementsByClassName('toolbar-title')[0] as HTMLElement;
           dragElement?.classList?.remove('dragging');
+
+          setTimeout(() => {
+            this.updateOriginalWidgetsPosition();
+          }, 500);
         },
         ignoreContent: true // if true drag will start only from elements from `dragHandleClass`
       },
@@ -259,7 +269,7 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
     this.options.fixedRowHeight = this.cellSize / 2;
   }
 
-  getWidgetsMapped(widgets: any): Observable<any> {
+  private getWidgetsMapped(widgets: any): Observable<any> {
     const obs: Observable<any> = new Observable(subscriber => {
       subscriber.next(widgets);
     });
@@ -277,11 +287,11 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
         });
         return config;
       },
-      error => console.error(error)
+      (error: any) => console.error(error)
     ));
   }
 
-  activeAutoSave() {
+  private activeAutoSave() {
     // TODO dashboard should be saved immediatly when a widget config is updated
     if (this.autoSaveTimeout) {
       clearTimeout(this.autoSaveTimeout);
@@ -291,40 +301,17 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
     }, 2000);
   }
 
-  onToggleDragging() {
-    this.dragEnabled = !this.dragEnabled;
-    this.options.draggable.enabled = this.dragEnabled;
-    this.options.api.optionsChanged();
-  }
-
-  isDirty() {
-    return false;
-    // TODO: fix this
-    // return this.originalDashboard && JSON.stringify(this.dashboard) !== JSON.stringify(this.originalDashboard);
-  }
-
   // Widget events
-
-  onWidgetSettingClose(event) {
-    this.showSettingWidget = false;
-    this.changes++;
+  onWidgetSettingClose(event: any) {
     this.activeAutoSave();
     // The operation is being done exclusively for the ECG because the widget uses a new functionality that allows it to
     // change size based on the configuration. Later we will have to handle it in a more general way
-    const configuredWidget = this.dashboard.filter(widget => widget['id'] === this.currentWidgetIdSetting)[0];
-    if (configuredWidget.type === 'ecg') {
+    const configuredWidget = this.dashboard.find(widget => widget.id === this.currentWidgetIdSetting);
+    if (configuredWidget?.type === 'ecg') {
       this.dashboard[this.dashboard.indexOf(configuredWidget)] = { ...configuredWidget };
     }
     this.pageStatus = PageStatus.Standard;
     this.widgetLayoutEvent.emit();
-  }
-
-  onWidgetFullscreenClose(data: any) {
-    if (data && data?.action == 'widget:setting') {
-      setTimeout(() => {
-        this.openModal(data.widget)
-      }, 100);
-    }
   }
 
   onWidgetAction(data: WidgetAction) {
@@ -362,16 +349,12 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
 
       case 'toolbar:settings':
         this.currentWidgetIdSetting = data.widget.id;
-        this.showSettingWidget = true;
-
-        const widget = this.getItemById(data.widget.id);
-
-        this.openModal(widget);
+        this.openModal(data.widget);
         break;
 
       case 'toolbar:fullscreen':
-        const currentWidget = this.getItemById(data.widget.id);
-        this.openFullScreenModal(currentWidget, data.value);
+        this.currentWidgetIdSetting = data.widget.id;
+        this.openFullScreenModal(data.widget, data.value);
         break;
 
       case 'widget:ready':
@@ -387,9 +370,8 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
     }
   }
 
-  openModal(widget: GridsterItem) {
-    const areaId = this.activatedRoute.snapshot.params.areaId;
-    const hDeviceId = this.activatedRoute.snapshot.params.hDeviceId;
+  private openModal(widget: WidgetConfig) {
+    const { areaId, hDeviceId } = this.activatedRoute.snapshot.params;
     const modalRef = this.dialogService.open(WidgetSettingsDialogComponent, {
       width: '800px',
       data: {
@@ -399,12 +381,17 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
         hDeviceId
       }
     });
-    modalRef.dialogRef.afterClosed().subscribe(
-      event => { this.onWidgetSettingClose(event) }
-    );
+
+    modalRef.dialogRef
+      .afterClosed()
+      .subscribe({
+        next: (event) => {
+          this.onWidgetSettingClose(event);
+        }
+      });
   }
 
-  openFullScreenModal(widget: any, initData: PacketData[] = []) {
+  private openFullScreenModal(widget: any, initData: PacketData[] = []) {
     const modalRef = this.dialogService.open(WidgetFullscreenDialogComponent, {
       backgroundClosable: true,
       data: {
@@ -413,155 +400,59 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
         initData,
       }
     });
-    modalRef.dialogRef.afterClosed().subscribe(event => {
-      this.onWidgetFullscreenClose(event);
-    });
+
+    modalRef.dialogRef.afterClosed()
+      .subscribe(data => {
+        if (data && data?.action == 'widget:setting') {
+          setTimeout(() => {
+            this.openModal(data.widget)
+          }, 100);
+        }
+      });
   }
 
-  @HostListener('window:resize', ['$event'])
-  onResize(event: any) {
-    const availableWidth = document.documentElement.clientWidth;
-    const offset = 100;
-    const minWidth = (this.options.fixedColWidth * this.options.maxCols) + this.options.maxCols;
-
-    this.options.resizable.enabled = availableWidth > minWidth + offset;
-    if (this.options.resizable.enabled) {
-      let applyOldPosition = false;
-      this.dashboard
-        .sort((a, b) => a.y - b.y)
-        .map((el) => {
-          const position = this.originalWidgetsPosition.find(({ id }) => id === el.id);
-          if (position && (el.x !== position.x || el.y !== position.y)) {
-            el.x = position.x;
-            el.y = position.y;
-
-            if (!applyOldPosition) {
-              applyOldPosition = true;
-            }
-          }
-          return el;
-        });
-
-      if (applyOldPosition) {
-        this.options.api.optionsChanged();
-      }
-    } else {
-      this.dashboard
-        .map((el, index, arr) => {
-          el.x = 0;
-          if (index > 0) {
-            el.y = arr[index - 1].rows + 1;
-          }
-          return el;
-        })
-        .sort((a, b) => a.y - b.y);
-
-      this.options.api.optionsChanged();
-    }
-
-    return
-    `const colRemoved = columns < this.options.maxCols;
-    // this.itemChangeEventDisabled = true;
-    console.log("--------------------------")
-    console.log(columns)
-    console.log(cell);
-
-    this.options.maxCols = columns;
-    this.options.fixedColWidth = cell;
-    this.options.fixedRowHeight = cell / 2;
-    this.options.api.optionsChanged();
-
-    // if (!colRemoved) { // come ultima cosa ho messo il col removed. Cioè se vado a stringere va bene che continuo dall'ultima ma se allargo dovrei andare a ritroso, amnca questa parte. Provare a usare una struttura ricorsiva. ELmenti aggiunti o spostati non causano problemi perché si resetta lo starting position. Ma ne vale la pena? Tanto non risolve il problema dell'evento che viene chiamato male
-    //   this.dashboard.forEach((gi, i) => {
-    //     gi.x = this.startingPositions[i].x;
-    //     gi.y = this.startingPositions[i].y;
-    //   });
-    //   this.options.api.optionsChanged();
-    // }
-
-    // this.dashboard and this.gridster.grid (item.item) are the same
-    const itemsToMove = this.dashboard.filter(item => (item.x + item.cols) > columns && item.x !== 0);
-
-    // sort by size and position
-    itemsToMove.sort((a, b) => {
-      if (b.rows * b.cols === a.rows * a.cols) {
-        return (a.y * this.options.maxCols + a.x) - (b.y * this.options.maxCols + b.x)
-      }
-      return (b.rows * b.cols) - (a.rows * a.cols)
-    });
-    console.log(itemsToMove);
-
-    // sort by size
-    //itemsToMove.sort((a, b) => (b.rows * b.cols) - (a.rows * a.cols));
-
-    // sort by position
-    // itemsToMove.sort((a, b) => (a.y * this.options.maxCols + a.x) - (b.y * this.options.maxCols + b.x));
-
-    // temporarily removed excess items from the grid (prevent unexpected itemChangeCallback fired because of compactType: CompactType.CompactUp)
-    // TODO MANCA QUESTO DA CAPIRE SE SI PUÒ USARE INVECE DI  itemChangeEventDisabled
-    itemsToMove.forEach((item: any, i) => {
-      itemsToMove[i].x = -Infinity;
-      itemsToMove[i].y = -Infinity;
-      this.options.api.optionsChanged();
-    });
-    itemsToMove.forEach((item: any, i) => {
-      const firstPossiblePosition = this.options.api.getFirstPossiblePosition(item);
-      itemsToMove[i].x = firstPossiblePosition.x;
-      itemsToMove[i].y = firstPossiblePosition.y;
-      this.options.api.optionsChanged();
-    });
-    // this.itemChangeEventDisabled = false;
-
-    // }`
-  }
-
-  // Gridster events/methods
-
-  onGridSizeChanged(gridster, a, b, c) {
-    // TODO: ... this event seems not to be working as expected
-  }
-
-  onItemChange(item, itemComponent) {
-    // if(this.itemChangeEventDisabled) {
-    //   console.error("----- NOT OVERRIDE --------------")
-    //   return;
-    // }
-    console.warn("----- CONFIGURATION OVERRIDE --------------")
-    // this.startingPositions = this.dashboard.map(x => ({ x: x.x, y: x.y  }));
-    this.changes++;
+  onItemChange(item: WidgetConfig, itemComponent: GridsterItemComponentInterface): void {
     this.activeAutoSave();
     if (typeof item.change === 'function') {
       item.change();
     }
+
+    // const position = this.originalWidgetsPosition.find(({ id }) => id === item.id);
+    // if (position) {
+    //   position.x = item.x;
+    //   position.y = item.y;
+    // }
   }
 
-  onItemResize(item, itemComponent) {
+  onItemResize(item: WidgetConfig, itemComponent: GridsterItemComponentInterface): void {
     if (typeof item.resize === 'function') {
       item.resize();
     }
+
     if (item.resizeCallback) {
       item.resizeCallback(item, itemComponent);
     }
   }
 
-  changedOptions() {
-    this.options.api.optionsChanged();
-  }
-
-  getItemById(id: string) {
-    return this.dashboard.find((w) => w.id === +id);
-  }
-
-  removeItem(item, callback) {
-    if (item.id > 0) {
+  private removeItem(widget: WidgetConfig, callback: any): void {
+    if (widget.id > 0) {
       this.configService
-        .removeDashboardWidget(item.id)
+        .removeDashboardWidget(widget.id)
         .pipe(takeUntil(this.ngUnsubscribe))
-        .subscribe(() => {
-          // TODO: handle errors
-          this.dashboard.splice(this.dashboard.indexOf(item), 1);
-          if (callback) {
-            callback();
+        .subscribe({
+          next: () => {
+            this.dashboard
+              .splice(this.dashboard.indexOf(widget), 1);
+
+            this.sortDashboardWidget();
+            this.updateOriginalWidgetsPosition();
+
+            if (callback) {
+              callback();
+            }
+          },
+          error: (err) => {
+            console.error(err);
           }
         });
     } else if (callback) {
@@ -569,7 +460,7 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
     }
   }
 
-  addItem(widgetTemplate: WidgetSelection) {
+  addItem(widgetTemplate: WidgetSelection): void {
     for (let c = 0; c < widgetTemplate.count; c++) {
       // converting widget to dashboardWidget config
       const widget: WidgetConfig = {
@@ -581,62 +472,67 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
         cols: widgetTemplate.cols,
         rows: widgetTemplate.rows,
         dataUrl: '',
-        dataTableUrl: '',
+        dataTableUrl: ''
       };
+
       this.configService
-        .addDashboardWidget(+this.dashboardValue.id, widget)
+        .addDashboardWidget(this.dashboardValue.id, widget)
         .pipe(takeUntil(this.ngUnsubscribe))
-        .subscribe((w) => {
-          // TODO: handle errors
-          // widget saved (should have a new id)
-          this.dashboard.push(widget);
+        .subscribe({
+          next: (newWidget: WidgetConfig) => {
+            this.dashboard.push(newWidget);
+
+            this.sortDashboardWidget();
+            this.updateOriginalWidgetsPosition();
+          },
+          error: (err) => {
+            console.error(err);
+          }
         });
     }
   }
 
-  saveDashboard() {
-    // this.configService.putConfig(+this.dashboardValue.id, this.dashboard)
-    //   .pipe(takeUntil(this.ngUnsubscribe))
-    //   .subscribe((res) => {
-    //     if (res && res.status_code === 200) {
-    //       this.originalDashboard = [...this.dashboard];
-    //     }
-    //   });
+  private saveDashboard(): void {
+    this.configService.putConfig(this.dashboardValue.id, this.dashboard)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((res: any) => {
+        if (res && res.status_code === 200) {
+          console.log('New widget added');
+        }
+      });
   }
 
-  getResponsiveColumns(): number {
-    let columns = this.options.ma;
+  private getResponsiveCellSize(): number {
     const availableWidth = document.documentElement.clientWidth;
     if (availableWidth <= this.options.mobileBreakpoint) {
-      columns = 1;
-    } else {
-      const bp = this.responsiveBreakPoints.find((p) => p.breakPoint <= availableWidth);
-      if (bp) {
-        columns = bp.columns;
-      }
-    }
-    return columns;
-  }
+      const responsiveBreakPoints = [
+        { breakPoint: 1611, columns: 6, cell: 250 },
+        { breakPoint: 1610, columns: 6, cell: 200 },
+        { breakPoint: 1327, columns: 6, cell: 180 },
+        { breakPoint: 1200, columns: 6, cell: 180 },
+        { breakPoint: 1024, columns: 4, cell: 230 },
+        { breakPoint: 880, columns: 4, cell: 190 },
+        { breakPoint: 720, columns: 3, cell: 210 },
+        { breakPoint: 640, columns: 2, cell: 270 },
+        { breakPoint: 480, columns: 2, cell: 200 },
+        { breakPoint: 400, columns: 1, cell: 170 },
+        { breakPoint: 0, columns: 1, cell: 120 }
+      ];
 
-  getResponsiveCellSize(): number {
-    let singleCell = 160;
-
-    const availableWidth = document.documentElement.clientWidth;
-    if (availableWidth > this.options.mobileBreakpoint) {
-      singleCell = singleCell;
-    } else {
-      const bp = this.responsiveBreakPoints.find((p) => p.breakPoint <= availableWidth);
+      const bp = responsiveBreakPoints.find((p) => p.breakPoint <= availableWidth);
       if (bp) {
-        singleCell = bp.cell;
+        return bp.cell;
       }
     }
 
-    return singleCell;
+    return 160;
   }
 
-  private getTimestampFieldValue(packet: HPacket) {
+  private getTimestampFieldValue(packet: HPacket): number {
     const timestampFieldName = packet.timestampField;
-    return (packet.fields[timestampFieldName]) ? packet.fields[timestampFieldName].value.long : packet.fields['timestamp-default'].value.long;
+    return packet.fields[timestampFieldName]
+      ? packet.fields[timestampFieldName].value.long
+      : packet.fields['timestamp-default'].value.long;
   }
 
 }
