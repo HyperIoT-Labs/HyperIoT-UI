@@ -62,7 +62,7 @@ export class HprojectsService {
     /**
      * /hyperiot/hprojects/register
      * Service for adding a new empty hproject entity for register devices with gateway
-     * @param body HProject entity which must be saved 
+     * @param body HProject entity which must be saved
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -188,7 +188,7 @@ export class HprojectsService {
 
     /**
      * /hyperiot/hprojects/{id}/hadoopData
-     * Delete Hadoop data of this project, i.e. data on HDFS and HBase 
+     * Delete Hadoop data of this project, i.e. data on HDFS and HBase
      * @param id id of the project
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -236,7 +236,7 @@ export class HprojectsService {
     /**
      * /hyperiot/hprojects/auto-register-project/challenge/{projectId}
      * Service for adding a new empty hproject entity for autoregister devices with gateway
-     * @param projectId HProject id which must be used forgenerating the challenge 
+     * @param projectId HProject id which must be used forgenerating the challenge
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -333,7 +333,7 @@ export class HprojectsService {
     /**
      * /hyperiot/hprojects/export/download/{exportId}
      * Service for downloading HPacket export
-     * @param exportId Export ID 
+     * @param exportId Export ID
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -382,7 +382,7 @@ export class HprojectsService {
      * Service for exporting HPacket data
      * @param hProjectId HProject ID from retrieve HPacket data
      * @param hPacketId HPacket ID related to the packet the user wants to exports
-     * @param hPacketFormat HPacket Format 
+     * @param hPacketFormat HPacket Format
      * @param exportName Export name
      * @param rowKeyLowerBound HBase row key lower bound
      * @param rowKeyUpperBound HBase row key upper bound
@@ -564,8 +564,8 @@ export class HprojectsService {
     /**
      * /hyperiot/hprojects
      * Service for finding all hproject entities
-     * @param delta 
-     * @param page 
+     * @param delta
+     * @param page
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -755,7 +755,7 @@ export class HprojectsService {
     /**
      * /hyperiot/hprojects/export/{exportId}
      * Service for getting the status of HPacket export
-     * @param exportId Export ID 
+     * @param exportId Export ID
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -896,7 +896,7 @@ export class HprojectsService {
     /**
      * /hyperiot/hprojects/auto-register-project
      * Service for adding a new empty hproject entity for autoregister devices with gateway
-     * @param body HProject entity which must be saved 
+     * @param body HProject entity which must be saved
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -949,7 +949,7 @@ export class HprojectsService {
     /**
      * /hyperiot/hprojects
      * Service for adding a new hproject entity
-     * @param body HProject entity which must be saved 
+     * @param body HProject entity which must be saved
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -1161,7 +1161,7 @@ export class HprojectsService {
     /**
      * /hyperiot/hprojects/export/{exportId}/stop
      * Service for stopping HPacket export
-     * @param exportId Export ID 
+     * @param exportId Export ID
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -1371,7 +1371,7 @@ export class HprojectsService {
     /**
      * /hyperiot/hprojects
      * Service for updating a hproject entity
-     * @param body HProject entity which must be updated 
+     * @param body HProject entity which must be updated
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -1478,7 +1478,7 @@ export class HprojectsService {
     /**
      * /hyperiot/hprojects/imports
      * Service for import a new HProject from a jsonFile
-     * @param body 
+     * @param body
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */

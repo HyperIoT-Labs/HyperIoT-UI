@@ -11,7 +11,7 @@
 
 # dependencies
 /node_modules
-.npmrc
+#.npmrc
 
 # proxy
 ignored-proxy.config.json

@@ -33,13 +33,23 @@
                 id="time-button-toggle"
             ></hyt-button-toggle>
 
-            <hyt-date-picker
-                id="timeline-picker"
-                [date]="domainStart"
-                [minStep]="mapToDomain[domainInterval]"
-                (selectedDate)="selectedDateChanged($event)"
-                [color]="'hyt-base-total-blue'"
-            ></hyt-date-picker>
+            <div class="date-picker-export-data-container">
+              <hyt-date-picker
+                  id="timeline-picker"
+                  [date]="domainStart"
+                  [minStep]="mapToDomain[domainInterval]"
+                  (selectedDate)="selectedDateChanged($event)"
+                  [color]="'hyt-base-total-blue'"
+              ></hyt-date-picker>
+
+              <button
+                id="export-data-button"
+                class="mat-button-base mat-raised-button mat-hyt-base-total-blue hyt-base-btn"
+                (click)="openDataExportModel()"
+              >
+                Export Data
+              </button>
+            </div>
 
         </div>
 
