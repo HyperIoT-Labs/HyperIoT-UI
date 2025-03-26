@@ -1,6 +1,6 @@
 <div class="loader" *ngIf="pageStatus == 0"></div>
 
-<gridster *ngIf="dashboard.length > 0 && pageStatus == 1" [options]="options">
+<gridster #gridster *ngIf="pageStatus == 1" [options]="options">
 
   <gridster-item [item]="item" *ngFor="let item of dashboard">
 

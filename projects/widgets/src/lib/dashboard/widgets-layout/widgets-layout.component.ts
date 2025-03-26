@@ -43,6 +43,8 @@ enum PageStatus {
 export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
   widgetReadyCounter = 0;
 
+  @ViewChild('gridster') gridster: GridsterComponent;
+
   @ViewChild(WidgetSettingsDialogComponent, { static: true }) widgetSetting: WidgetSettingsDialogComponent;
   @Input() options: GridsterConfig;
   @Input() dashboardValue: Dashboard;
@@ -57,7 +59,8 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
   dashboardEntity: Dashboard;
   dashboardType: Dashboard.DashboardTypeEnum;
   dragEnabled = true;
-  private originalDashboard: Array<GridsterItem>;
+  private originalWidgetsPosition: { id: string, x: number, y: number }[] = [];
+
   cellSize: number;
   projectId: number;
 
@@ -157,14 +160,20 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
           // get dashboard config
           this.getWidgetsMapped(d.widgets)
             .pipe(takeUntil(this.ngUnsubscribe))
-            .subscribe(
-              (dashboardConfig: Array<GridsterItem>) => {
-                this.dashboard = dashboardConfig;
-                this.originalDashboard = JSON.parse(JSON.stringify(dashboardConfig));
+            .subscribe({
+              next: (dashboardConfig: any[]) => {
+                // dashboardConfig.sort((a, b) => a.y - b.y);
+
+                console.log(dashboardConfig);
+
+                this.dashboard = [...dashboardConfig];
+
+                this.originalWidgetsPosition = dashboardConfig.map(({ id, x, y }) => ({ id, x, y }));
+                console.log(this.originalWidgetsPosition );
+
                 this.pageStatus = PageStatus.Standard;
               }
-            );
-
+            });
         },
         error => {
           console.error(error);
@@ -172,9 +181,9 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
         }
       );
 
-    // window.addEventListener('beforeunload', (e) => {
-    //   this.saveDashboard();
-    // });
+    window.addEventListener('beforeunload', (e) => {
+      this.saveDashboard();
+    });
   }
 
   ngOnDestroy() {
@@ -208,11 +217,16 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
       scrollToNewItems: true,
       disableWarnings: true,
       ignoreMarginInRow: false,
-      mobileBreakpoint: 400, // if the screen is not wider that this, remove the grid layout and stack the items
+      mobileBreakpoint: 0, // if the screen is not wider that this, remove the grid layout and stack the items
       keepFixedHeightInMobile: true, // keep the height from fixed gridType in mobile layout
       keepFixedWidthInMobile: false, // keep the width from fixed gridType in mobile layout
       minCols: 1, // minimum amount of columns in the grid
-      maxCols: 10, // maximum amount of columns in the grid
+
+      // maxCols is set to 6 (max value in responsiveBreakPoints) so that any configuration is accepted.
+      // This will be adjusted to window size after plotly is ready
+      // Use infinity as value if colSize need to be calculated based on window size
+      maxCols: 6,
+
       minRows: 1, // maximum amount of rows in the grid
       minItemRows: 2, // min item number of rows
       margin: 6, // margin between grid items
@@ -239,18 +253,6 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
         enabled: true, // enable/disable resizable items
       }
     };
-
-    // maxCols is set to 6 (max value in responsiveBreakPoints) so that any configuration is accepted.
-    // This will be adjusted to window size after plotly is ready
-    // Use infinity as value if colSize need to be calculated based on window size
-    this.options.maxCols = 6;
-
-    if (this.options.maxCols > 1) {
-      this.options.mobileBreakpoint = 0;
-    }
-
-    // const cellSize = (availableWidth - (this.options.margin * this.options.maxCols)) / this.options.maxCols;
-    // const cellSize = 250;
 
     this.cellSize = this.getResponsiveCellSize(); /* 160 misura base */
     this.options.fixedColWidth = this.cellSize;
@@ -318,14 +320,11 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
   }
 
   onWidgetFullscreenClose(data: any) {
-
     if (data && data?.action == 'widget:setting') {
       setTimeout(() => {
         this.openModal(data.widget)
       }, 100);
-
     }
-
   }
 
   onWidgetAction(data: WidgetAction) {
@@ -360,6 +359,7 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
           }
         }
         break;
+
       case 'toolbar:settings':
         this.currentWidgetIdSetting = data.widget.id;
         this.showSettingWidget = true;
@@ -368,16 +368,19 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
 
         this.openModal(widget);
         break;
+
       case 'toolbar:fullscreen':
         const currentWidget = this.getItemById(data.widget.id);
         this.openFullScreenModal(currentWidget, data.value);
         break;
+
       case 'widget:ready':
         this.widgetReadyCounter++;
         if (this.widgetReadyCounter === this.widgets.length) {
           this.widgetLayoutEvent.emit('widgetsLayout:ready');
         }
         break;
+
       case 'widget:auto-save':
         this.onWidgetSettingClose(data);
         break;
@@ -417,13 +420,47 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
 
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
-    const columns = this.getResponsiveColumns();
-    const cell = this.getResponsiveCellSize();
-    if (columns !== this.options.maxCols || cell !== this.options.fixedColWidth) {
-      console.log('TEST');
+    const availableWidth = document.documentElement.clientWidth;
+    const offset = 100;
+    const minWidth = (this.options.fixedColWidth * this.options.maxCols) + this.options.maxCols;
+
+    this.options.resizable.enabled = availableWidth > minWidth + offset;
+    if (this.options.resizable.enabled) {
+      let applyOldPosition = false;
+      this.dashboard
+        .sort((a, b) => a.y - b.y)
+        .map((el) => {
+          const position = this.originalWidgetsPosition.find(({ id }) => id === el.id);
+          if (position && (el.x !== position.x || el.y !== position.y)) {
+            el.x = position.x;
+            el.y = position.y;
+
+            if (!applyOldPosition) {
+              applyOldPosition = true;
+            }
+          }
+          return el;
+        });
+
+      if (applyOldPosition) {
+        this.options.api.optionsChanged();
+      }
+    } else {
+      this.dashboard
+        .map((el, index, arr) => {
+          el.x = 0;
+          if (index > 0) {
+            el.y = arr[index - 1].rows + 1;
+          }
+          return el;
+        })
+        .sort((a, b) => a.y - b.y);
+
+      this.options.api.optionsChanged();
     }
+
     return
-    const colRemoved = columns < this.options.maxCols;
+    `const colRemoved = columns < this.options.maxCols;
     // this.itemChangeEventDisabled = true;
     console.log("--------------------------")
     console.log(columns)
@@ -475,7 +512,7 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
     });
     // this.itemChangeEventDisabled = false;
 
-    // }
+    // }`
   }
 
   // Gridster events/methods
@@ -558,22 +595,21 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
   }
 
   saveDashboard() {
-    this.configService.putConfig(+this.dashboardValue.id, this.dashboard)
-      .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe((res) => {
-        if (res && res.status_code === 200) {
-          this.originalDashboard = this.dashboard;
-        }
-      });
+    // this.configService.putConfig(+this.dashboardValue.id, this.dashboard)
+    //   .pipe(takeUntil(this.ngUnsubscribe))
+    //   .subscribe((res) => {
+    //     if (res && res.status_code === 200) {
+    //       this.originalDashboard = [...this.dashboard];
+    //     }
+    //   });
   }
 
   getResponsiveColumns(): number {
-    let columns = 8;
+    let columns = this.options.ma;
     const availableWidth = document.documentElement.clientWidth;
     if (availableWidth <= this.options.mobileBreakpoint) {
       columns = 1;
     } else {
-      const b = 0;
       const bp = this.responsiveBreakPoints.find((p) => p.breakPoint <= availableWidth);
       if (bp) {
         columns = bp.columns;
@@ -586,7 +622,7 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
     let singleCell = 160;
 
     const availableWidth = document.documentElement.clientWidth;
-    if (availableWidth <= this.options.mobileBreakpoint) {
+    if (availableWidth > this.options.mobileBreakpoint) {
       singleCell = singleCell;
     } else {
       const bp = this.responsiveBreakPoints.find((p) => p.breakPoint <= availableWidth);
