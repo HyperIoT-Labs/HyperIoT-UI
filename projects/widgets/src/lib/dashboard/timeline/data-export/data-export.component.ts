@@ -267,7 +267,7 @@ export class DataExportComponent implements OnInit {
                 .pipe(
                   catchError((error) => {
                     this.logger.error('getExportStatus:', error);
-                    return throwError(() => error)
+                    return throwError(() => error);
                   }),
                 )),
               takeWhile(({ completed, hasErrors }: ExportHPacketData) => !(completed || hasErrors), true),
@@ -341,10 +341,8 @@ export class DataExportComponent implements OnInit {
         error: (err) => {
           this.exportInProgress = false;
           this.form.enable();
-          this.exportInProgress = false;
-          this.form.enable();
           this.exportErrorList.push({ hPacketId, exportId: null });
-          this.logger.error(err);
+          this.logger.error('Export error', err);
         }
       });
     }
