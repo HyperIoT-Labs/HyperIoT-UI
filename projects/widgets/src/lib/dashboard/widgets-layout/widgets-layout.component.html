@@ -1,6 +1,6 @@
 <div class="loader" *ngIf="pageStatus == 0"></div>
 
-<gridster *ngIf="pageStatus == 1" #gridster [options]="options">
+<gridster *ngIf="pageStatus == 1" [options]="options">
   <gridster-item [item]="item" *ngFor="let item of dashboard">
     <hyperiot-dynamic-widget
       [serviceType]="

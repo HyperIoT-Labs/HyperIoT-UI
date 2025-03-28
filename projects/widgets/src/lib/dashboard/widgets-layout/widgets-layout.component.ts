@@ -5,7 +5,6 @@ import {
   CompactType,
   DisplayGrid,
   GridType,
-  GridsterComponent,
   GridsterConfig,
   GridsterItemComponentInterface
 } from 'angular-gridster2';
@@ -19,8 +18,8 @@ import {
 } from 'core';
 
 import { ConfirmDialogService, DialogService } from 'components';
-import { fromEvent, Observable, Subject, Subscription } from 'rxjs';
-import { debounceTime, filter, map, takeUntil } from 'rxjs/operators';
+import { Observable, Subject, Subscription } from 'rxjs';
+import { map, takeUntil } from 'rxjs/operators';
 import { WidgetAction, WidgetConfig } from '../../base/base-widget/model/widget.model';
 import { ServiceType } from '../../service/model/service-type';
 import { DashboardConfigService } from '../dashboard-config.service';
@@ -35,6 +34,8 @@ enum PageStatus {
   Error = -1
 }
 
+type WidgetPosition = Pick<WidgetConfig, 'id' | 'x' | 'y' | 'rows' | 'cols'>;
+
 @Component({
   selector: 'hyperiot-dashboard-widgets-layout',
   templateUrl: './widgets-layout.component.html',
@@ -44,28 +45,27 @@ enum PageStatus {
 export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
   widgetReadyCounter = 0;
 
-  @ViewChild('gridster') gridster: GridsterComponent;
-
   @ViewChild(WidgetSettingsDialogComponent, { static: true }) widgetSetting: WidgetSettingsDialogComponent;
   @Input() options: GridsterConfig;
   @Input() dashboardValue: Dashboard;
 
   @Input() widgets: string | any[];
 
-  @Output() widgetLayoutEvent: EventEmitter<any> = new EventEmitter<any>();
+  @Output() widgetLayoutEvent = new EventEmitter<any>();
 
-  @Output() topologyResTimeChange: EventEmitter<any> = new EventEmitter<any>();
+  @Output() topologyResTimeChange = new EventEmitter<any>();
 
   private isResizeWindow: boolean = false;
 
-  dashboard: WidgetConfig[];
+  dashboard: WidgetConfig[] = [];
+  lastDashboardValue: WidgetConfig[] = [];
   dashboardType: Dashboard.DashboardTypeEnum;
   serviceType = ServiceType;
   pageStatus: PageStatus = PageStatus.Loading;
 
   private dashboardEntity: Dashboard;
   private dragEnabled = true;
-  private originalWidgetsPosition: { id: number, x: number, y: number, cols: number, rows: number }[] = [];
+  private originalWidgetsPosition: WidgetPosition[] = [];
 
   private cellSize: number;
   private projectId: number;
@@ -73,21 +73,20 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
   private removingWidget = false;
 
   /** Subject for manage the open subscriptions */
-  protected ngUnsubscribe: Subject<void> = new Subject<void>();
+  protected ngUnsubscribe = new Subject<void>();
   private streamSubscription: Subscription;
-  private autoSaveTimeout;
 
   private readonly responsiveBreakPoints: { breakPoint: number, columns: number, cellSize: number }[] = [
     { breakPoint: 1611, columns: 6, cellSize: 250 },
     { breakPoint: 1610, columns: 6, cellSize: 200 },
     { breakPoint: 1327, columns: 6, cellSize: 180 },
-    { breakPoint: 1200, columns: 6, cellSize: 180 },
+    { breakPoint: 1200, columns: 4, cellSize: 180 },
     { breakPoint: 1024, columns: 4, cellSize: 230 },
     { breakPoint: 880, columns: 4, cellSize: 190 },
-    { breakPoint: 720, columns: 3, cellSize: 210 },
-    { breakPoint: 640, columns: 2, cellSize: 270 },
-    { breakPoint: 480, columns: 2, cellSize: 200 },
-    { breakPoint: 400, columns: 1, cellSize: 170 },
+    { breakPoint: 720, columns: 4, cellSize: 210 },
+    { breakPoint: 640, columns: 4, cellSize: 270 },
+    { breakPoint: 480, columns: 3, cellSize: 200 },
+    { breakPoint: 400, columns: 2, cellSize: 170 },
     { breakPoint: 0, columns: 1, cellSize: 120 }
   ];
 
@@ -113,22 +112,10 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.resizeSubscription = fromEvent(window, 'resize')
-      .pipe(
-        debounceTime(500)
-      )
-      .subscribe(() => {
-        this.handleResize();
-      });
-
     this.loadDashboard();
   }
 
   ngOnDestroy(): void {
-    if (this.autoSaveTimeout) {
-      clearTimeout(this.autoSaveTimeout);
-    }
-
     if (this.ngUnsubscribe) {
       this.ngUnsubscribe.next();
     }
@@ -146,21 +133,19 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
 
   @HostListener('window:resize', ['$event'])
   onWindowResize() {
-    this.isResizeWindow = true;
+    this.handleResize();
   }
 
   private handleResize() {
-    // Esegui il tuo metodo qui
+    this.isResizeWindow = true;
+
     this.options.maxCols = this.getResponsiveBreakPoint().columns;
     this.options.api.optionsChanged();
 
     const availableWidth = document.documentElement.clientWidth;
 
-    const offset = 100;
-
-    // const minWidth = this.DEFAULT_MAX_COLS * this.options.fixedColWidth;
-    const minWidth = this.gridster.el.clientWidth;
-    // const minWidth = this.gridster.curWidth;
+    const offset = this.options.fixedColWidth * 2;
+    const minWidth = (this.options.maxCols * this.options.fixedColWidth);
     const checkAvailableSpace = availableWidth > minWidth + offset;
     if (checkAvailableSpace) {
       let applyOldPosition = false;
@@ -201,9 +186,7 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
           widget.y = previous.y + previous.rows + 1;
         }
 
-        if (this.options.maxCols <= 4) {
-          widget.cols = this.options.maxCols;
-        }
+        widget.cols = this.options.maxCols - 1 || 1;
 
         return widget;
       });
@@ -247,7 +230,8 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
               const remoteTimestamp = this.getTimestampFieldValue(packet);
               this.topologyResTimeChange.emit({ timeMs: remoteTimestamp });
             });
-          // get dashboard config
+
+            // get dashboard config
           this.getWidgetsMapped(d.widgets)
             .pipe(takeUntil(this.ngUnsubscribe))
             .subscribe({
@@ -349,25 +333,16 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
     ));
   }
 
-  private activeAutoSave() {
-    // TODO dashboard should be saved immediatly when a widget config is updated
-    if (this.autoSaveTimeout) {
-      clearTimeout(this.autoSaveTimeout);
-    }
-    this.autoSaveTimeout = setTimeout(() => {
-      this.saveDashboard();
-    }, 2000);
-  }
-
   // Widget events
   onWidgetSettingClose(event: any) {
-    this.activeAutoSave();
     // The operation is being done exclusively for the ECG because the widget uses a new functionality that allows it to
     // change size based on the configuration. Later we will have to handle it in a more general way
     const configuredWidget = this.dashboard.find(widget => widget.id === this.currentWidgetIdSetting);
     if (configuredWidget?.type === 'ecg') {
       this.dashboard[this.dashboard.indexOf(configuredWidget)] = { ...configuredWidget };
     }
+    this.saveDashboard();
+
     this.pageStatus = PageStatus.Standard;
     this.widgetLayoutEvent.emit();
   }
@@ -381,6 +356,8 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
             this.removeItem(data.widget, () => {
               this.widgetLayoutEvent.emit();
               this.removingWidget = false;
+
+              this.saveDashboard();
             });
           }
 
@@ -470,10 +447,11 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
   }
 
   onItemChange(item: WidgetConfig, itemComponent: GridsterItemComponentInterface): void {
-    this.activeAutoSave();
     if (typeof item.change === 'function') {
       item.change();
     }
+
+    this.saveDashboard();
   }
 
   onItemResize(item: WidgetConfig, itemComponent: GridsterItemComponentInterface): void {
@@ -543,6 +521,8 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
 
             this.sortDashboardWidget();
             this.updateOriginalWidgetsPosition();
+
+            this.saveDashboard();
           },
           error: (err) => {
             console.error(err);
@@ -552,13 +532,37 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
   }
 
   private saveDashboard(): void {
-    this.configService.putConfig(this.dashboardValue.id, this.dashboard)
-      .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe((res: any) => {
-        if (res && res.status_code === 200) {
-          console.log('New widget added');
+    let updateConfig = true;
+
+    if (this.lastDashboardValue.length) {
+      updateConfig = false;
+      for (let index = 0; index < this.dashboard.length; index++) {
+        const element = this.dashboard[index];
+        const element2 = this.lastDashboardValue[index];
+
+        if (element.x !== element2.x
+          || element.y !== element2.y
+          || element.cols !== element2.cols
+          || element.rows !== element2.rows
+        ) {
+          updateConfig = true;
+          break;
         }
-      });
+      }
+    }
+
+    if (updateConfig) {
+      this.lastDashboardValue = [...this.dashboard];
+      this.configService.putConfig(this.dashboardValue.id, this.dashboard)
+        .pipe(
+          takeUntil(this.ngUnsubscribe),
+        )
+        .subscribe((res: any) => {
+          if (res && res.status_code === 200) {
+            console.log('New widget added');
+          }
+        });
+    }
   }
 
   private getTimestampFieldValue(packet: HPacket): number {
