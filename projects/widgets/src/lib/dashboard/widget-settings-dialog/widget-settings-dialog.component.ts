@@ -40,7 +40,6 @@ export class WidgetSettingsDialogComponent implements OnInit {
     this.autoUpdateConfig();
 
     this.modalApply.subscribe(data => {
-      console.log('loading', data);
       if (Object.keys(data).includes('isLoading')) {
         this.isLoading = data.isLoading;
       }

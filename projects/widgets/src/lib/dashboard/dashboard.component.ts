@@ -23,7 +23,7 @@ import {
   UserSiteSettingActions,
   UserSiteSettingSelectors
 } from 'core';
-import {debounceTime, delay, Subject, Subscription, takeUntil} from 'rxjs';
+import { debounceTime, delay, Subject, Subscription, takeUntil } from 'rxjs';
 import { AddWidgetDialogComponent } from './add-widget-dialog/add-widget-dialog.component';
 import { DashboardConfigService } from './dashboard-config.service';
 import { DashboardViewComponent } from './dashboard-view/dashboard-view.component';
@@ -337,13 +337,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.updateTopologyStatus();
       this.updateRecordingInterval = setInterval(() => {
         this.updateTopologyStatus();
-      }, 60000);
+      }, 60_000);
     }
 
-    if (this.showAreas) {
-      // TODO: select change still not implemented for Areas Dashboard
-    } else {
-      this.getRealTimeDashboard();
+    if (!this.showAreas) {
+      this.store.select(UserSiteSettingSelectors.selectDefaultProjectsDashboardDataSource)
+        .subscribe((defaultDatasource) => {
+          this.loadDashboardByDatasource(defaultDatasource);
+        });
     }
   }
 
@@ -370,7 +371,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   changeStreamState(event) {
     this.streamIsOn = !this.streamIsOn;
     this.dashboardEvent.commandEvent.next(this.streamIsOn ? DashboardEvent.Command.PLAY : DashboardEvent.Command.PAUSE);
-    this.dashboardView.dashboardLayout.dashboard.forEach(widget => {
+    this.dashboardView.dashboardLayout.dashboard.forEach((widget) => {
       if (widget?.instance?.toolbar?.config?.showPlay) {
         // handle only with widgets which have play/pause button on their toolbar
         widget.instance.toolbar.play(this.streamIsOn);
