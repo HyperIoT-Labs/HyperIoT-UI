@@ -11,8 +11,8 @@
                 <h3 id="title-thresholds" i18n="@@HYT_thresholds">Thresholds</h3>
             </div>
             <mat-checkbox color="primary" [(ngModel)]="thresholdActive" [ngModelOptions]="{ standalone: true }"
-                (ngModelChange)="isChecked()">Show Thresholds</mat-checkbox>
-            <div class="config-threshold">
+                (ngModelChange)="isChecked()">Show/Collapse Thresholds</mat-checkbox>
+            <div class="config-threshold" *ngIf="collapseThresold">
                 <ng-container [formGroup]="thresholdsForm">
                     <div *ngFor="let thresholdControl of thresholdsForm.controls; let i = index" [formGroupName]="i"
                         class="threshold-row">
