@@ -35,6 +35,7 @@ export * from './lib/hyt-map/components/map-device-edit/map-device-edit.componen
 export * from './lib/hyt-map/components/map-device-info/map-device-info.component';
 export * from './lib/hyt-map/models/map-item-action';
 export * from './lib/hyt-map/models/map-type-key';
+export * from './lib/hyt-map/services/utils.service';
 
 export { SelectOption, SelectOptionGroup } from './lib/hyt-select/hyt-select.component';
 export { TreeNode } from './lib/hyt-tree-view/hyt-tree-view.component';

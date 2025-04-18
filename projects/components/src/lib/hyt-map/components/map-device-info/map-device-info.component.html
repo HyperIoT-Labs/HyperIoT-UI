@@ -1,19 +1,19 @@
 <div class="map-device-info-container">
   <h2>
     {{
-      (isAreaDevice(deviceInfo)
-        ? deviceInfo.device.deviceName
-        : deviceInfo.name) || "MISSING NAME"
+      (utilsService.isAreaDevice(itemData)
+        ? itemData.device.deviceName
+        : itemData.name) || "MISSING NAME"
     }}
   </h2>
 
-  <ng-container *ngIf="isAreaDevice(deviceInfo)">
+  <ng-container *ngIf="utilsService.isAreaDevice(itemData)">
     <button
       mat-button
       (click)="
         redirectByMapItemAction({
           action: deviceActions.DASHBOARDS,
-          item: deviceInfo.device,
+          item: itemData.device,
           dataSource: dataSource.REALTIME
         })
       "
@@ -26,7 +26,7 @@
       (click)="
         redirectByMapItemAction({
           action: deviceActions.DASHBOARDS,
-          item: deviceInfo.device,
+          item: itemData.device,
           dataSource: dataSource.OFFLINE
         })
       "
@@ -40,7 +40,7 @@
       (click)="
         redirectByMapItemAction({
           action: deviceActions.ALARM_MANAGER,
-          item: deviceInfo
+          item: itemData
         })
       "
       i18n="@@HYT_alarm_managing"
@@ -49,13 +49,13 @@
     </button>
   </ng-container>
 
-  <ng-container *ngIf="isArea(deviceInfo)">
+  <ng-container *ngIf="utilsService.isArea(itemData)">
     <button
       mat-button
       (click)="
         redirectByMapItemAction({
           action: deviceActions.DASHBOARDS,
-          item: deviceInfo
+          item: itemData
         })
       "
       i18n="@@HYT_go_sub_area"
@@ -63,5 +63,4 @@
       Go To Sub Area
     </button>
   </ng-container>
-
 </div>

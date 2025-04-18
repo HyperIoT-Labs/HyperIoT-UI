@@ -2,6 +2,7 @@ import { Component, EventEmitter } from '@angular/core';
 import { Area, AreaDevice, Dashboard } from 'core';
 import { MapItemAction } from '../../models/map-item-action';
 import { DeviceActions } from '../../models/device-actions';
+import { UtilsService } from '../../services/utils.service';
 
 @Component({
   selector: 'hyt-map-device-info',
@@ -10,7 +11,9 @@ import { DeviceActions } from '../../models/device-actions';
 })
 export class MapDeviceInfoComponent {
 
-  deviceInfo: Area | AreaDevice;
+  constructor(public utilsService: UtilsService) { }
+
+  itemData: Area | AreaDevice;
 
   readonly deviceActions = DeviceActions;
   readonly dataSource = Dashboard.DashboardTypeEnum;
@@ -19,15 +22,6 @@ export class MapDeviceInfoComponent {
 
   redirectByMapItemAction(mapItemAction: MapItemAction) {
     this.openClicked.emit(mapItemAction);
-  }
-
-  isArea(obj: Area | AreaDevice): obj is Area {
-    return (obj as Area).name !== undefined;
-  }
-
-  isAreaDevice(obj: Area | AreaDevice): obj is AreaDevice {
-    const {area, device} = obj as AreaDevice;
-    return [area, device].some((attr) => attr !== undefined);
   }
 
 }

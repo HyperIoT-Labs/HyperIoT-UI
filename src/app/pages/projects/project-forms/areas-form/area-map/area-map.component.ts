@@ -149,7 +149,8 @@ export class AreaMapComponent implements OnDestroy {
     this.reset();
     const container = this.mapContainer.viewContainerRef.element.nativeElement.parentElement;
     items.forEach((d) => {
-      this.addItem().instance.setConfig(container, d);
+      const component = this.addItem();
+      component.instance.setConfig(container, d);
     });
   }
 
@@ -178,36 +179,43 @@ export class AreaMapComponent implements OnDestroy {
    * Add single item on the Area map
    */
   addItem(): ComponentRef<DraggableItemComponent> {
-    const componentFactory = this.componentFactoryResolver
-      .resolveComponentFactory(DraggableItemComponent);
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(DraggableItemComponent);
     const viewContainerRef = this.mapContainer.viewContainerRef;
     const component = viewContainerRef.createComponent(componentFactory);
+
+    
+
     // enable/disable editMode
     component.instance.editMode = this.editMode;
+
     // handle click on component label (open button)
     component.instance.openClicked
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((mapItem) => {
         this.openItem(mapItem);
       });
+
     // handle component removal
     component.instance.removeClicked
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(() => {
         this.removeItem(component);
       });
+
     // handle position change
     component.instance.positionChanged
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(() => {
         this.updateItem(component);
       });
+
     // handle render data request to render custom data
     component.instance.renderDataRequest
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(() => {
         this.renderDataRequest.emit(component.instance);
       });
+
     this.mapComponents.push(component);
     return component;
   }
@@ -248,20 +256,16 @@ export class AreaMapComponent implements OnDestroy {
    * Update map bounduary element
    */
   refresh() {
-
     const boundary: HTMLElement = this.mapBoundary.nativeElement;
     const mapHost = boundary.parentElement.parentElement;
 
     if (mapHost) {
-
       boundary.style.maxWidth = mapHost.clientWidth + 'px'; /* modified from 'boundary.style.width' */
       const h = boundary.clientWidth / this.mapImageSize.width * this.mapImageSize.height;
       boundary.style.height = h + 'px';
-
     }
 
     this.mapComponents.forEach((c) => c.instance.refresh());
-
   }
 
   /**

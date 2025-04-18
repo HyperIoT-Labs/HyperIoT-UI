@@ -1,99 +1,120 @@
 <div
-  [matMenuTriggerFor]="!!itemData.device && !editMode ? menu : null"
+  [matMenuTriggerFor]="menu"
   class="draggable-item"
-  [ngClass]="{ 'menu-enabled': !!itemData.device && !editMode }"
+  [ngClass]="{ 'menu-enabled': !editMode }"
   [title]="setTitleAttribute(itemData, editMode, 'move')"
   [ngStyle]="style"
   cdkDrag
-  [cdkDragDisabled]="!editMode"
   cdkDragBoundary=".map-container"
+  [cdkDragDisabled]="!editMode"
   [cdkDragData]="itemData"
   [cdkDragFreeDragPosition]="position"
-  (cdkDragMoved)="onDragMoved($event)"
   (cdkDragEnded)="onDragEnded($event)"
-  (cdkDragReleased)="onDragReleased($event)"
   (mouseover)="showNameLabel()"
   (mouseout)="hideNameLabel()"
 >
   <mat-menu #menu="matMenu">
-    <h3>Device menu</h3>
-    <button
-      mat-menu-item
-      class="menu-item-flex"
-      (click)="
-        redirectByMapItemAction({
-          item: itemData,
-          action: deviceActions.DASHBOARDS,
-          dataSource: dataSource.REALTIME
-        })
+    <div
+      style="
+        display: flex;
+        justify-content: flex-end;
+        margin-top: -10px;
+        margin-bottom: -22px;
       "
     >
-      <span i18n="@@HYT_go_to_device_dashboard">Go To Realtime Device Dashboard</span>
-      <span class="mat-icon hyt-icon icon-hyt_device"></span>
-    </button>
-    <button
-      mat-menu-item
-      class="menu-item-flex"
-      (click)="
-        redirectByMapItemAction({
-          item: itemData,
-          action: deviceActions.DASHBOARDS,
-          dataSource: dataSource.OFFLINE
-        })
-      "
-    >
-      <span i18n="@@HYT_go_to_device_dashboard">Go To Offline Device Dashboard</span>
-      <span class="mat-icon hyt-icon icon-hyt_device"></span>
-    </button>
-    <button
-      mat-menu-item
-      class="menu-item-flex"
-      [disabled]="true"
-      (click)="
-        redirectByMapItemAction({
-          item: itemData,
-          action: deviceActions.ALARM_MANAGER
-        })
-      "
-    >
-      <span i18n="@@HYT_go_to_alarm_manager">Go to Alarm Manager</span>
-      <span class="mat-icon hyt-icon icon-hyt_warnC"></span>
-    </button>
+      <button mat-icon-button>
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+    <div class="popup-content">
+      <h2 class="title">
+        {{
+          utilsService.isAreaDevice(itemData)
+            ? itemData.device.deviceName
+            : itemData.name
+        }}
+      </h2>
+
+      <ng-container *ngIf="utilsService.isAreaDevice(itemData)">
+        <button
+          mat-menu-item
+          class="menu-item-flex"
+          (click)="
+            redirectByMapItemAction({
+              item: itemData,
+              action: deviceActions.DASHBOARDS,
+              dataSource: dataSource.REALTIME
+            })
+          "
+        >
+          <span i18n="@@HYT_go_to_device_dashboard">
+            Go To Realtime Device Dashboard
+          </span>
+          <span class="mat-icon hyt-icon icon-hyt_device"></span>
+        </button>
+        <button
+          mat-menu-item
+          class="menu-item-flex"
+          (click)="
+            redirectByMapItemAction({
+              item: itemData,
+              action: deviceActions.DASHBOARDS,
+              dataSource: dataSource.OFFLINE
+            })
+          "
+        >
+          <span i18n="@@HYT_go_to_device_dashboard"
+            >Go To Offline Device Dashboard</span
+          >
+          <span class="mat-icon hyt-icon icon-hyt_device"></span>
+        </button>
+        <button
+          mat-menu-item
+          class="menu-item-flex"
+          [disabled]="true"
+          (click)="
+            redirectByMapItemAction({
+              item: itemData,
+              action: deviceActions.ALARM_MANAGER
+            })
+          "
+        >
+          <span i18n="@@HYT_go_to_alarm_manager"> Go to Alarm Manager </span>
+          <span class="mat-icon hyt-icon icon-hyt_warnC"></span>
+        </button>
+      </ng-container>
+
+      <ng-container *ngIf="utilsService.isArea(itemData)">
+        <button
+          mat-button
+          (click)="
+            redirectByMapItemAction({
+              action: deviceActions.DASHBOARDS,
+              item: itemData
+            })
+          "
+          i18n="@@HYT_go_sub_area"
+        >
+          Go To Sub Area
+        </button>
+      </ng-container>
+    </div>
   </mat-menu>
 
-  <!-- i18n-title="@@HYT_area_draggable_title" -->
+  <button
+    class="remove-button"
+    [title]="setTitleAttribute(itemData, editMode, 'remove')"
+    i18n-title="@@HYT_area_draggable_remove"
+    (mousedown)="$event.stopPropagation()"
+    (click)="onRemoveButtonClick($event)"
+    [ngStyle]="{ display: editMode ? '' : 'none' }"
+  >
+    X
+  </button>
 
-    <button
-        class="remove-button"
-        [title]="setTitleAttribute(itemData, editMode, 'remove')"
-        i18n-title="@@HYT_area_draggable_remove"
-        (mousedown)="$event.stopPropagation()"
-        (click)="onRemoveButtonClick($event)"
-        [ngStyle]="{ display: editMode ? '' : 'none' }"
-    >
-        X
-    </button>
-    <!--Remove {{itemData.device ? itemData.device.deviceName : itemData.name}}-->
-
-    <span *ngIf="(alarmInfo$ | async)?.length" [matBadge]="(alarmInfo$ | async)?.length" matBadgeOverlap="false"></span>
-
-    <div
-        class="title" [ngClass]="{
-            'area-title': !itemData.device,
-            'menu-disabled': !!itemData.device && editMode,
-            'menu-enabled': !!itemData.device && !editMode
-        }"
-        title="Open {{itemData.device ? itemData.device.deviceName : itemData.name}}{{itemData.device && !editMode ? ' menu' : ''}}"
-        i18n-title="@@HYT_area_draggable_open"
-        (mousedown)="!!itemData.device && !editMode ? null : $event.stopPropagation()"
-        [ngStyle]="{ display: (showName || editMode || (!!itemData.device && !editMode)) ? '' : 'none' }"
-    >
-        <div class="name">{{itemData.device ? itemData.device.deviceName : itemData.name}}</div>
-        <!-- BEGIN -- custom render data passed on component refresh event -->
-        <div class="stats" *ngIf="renderData.deviceCount">
-            (D: {{renderData.deviceCount}})
-        </div>
-        <!-- END -- custom render data passed on component refresh event -->
-    </div>
-    <!-- <span class="status-circle status-circle-idle" [ngStyle]="{ display: editMode ? 'none' : '' }"></span> -->
+  <span
+    *ngIf="(alarmInfo$ | async)?.length"
+    [matBadge]="(alarmInfo$ | async)?.length"
+    matBadgeOverlap="false"
+  ></span>
 </div>
