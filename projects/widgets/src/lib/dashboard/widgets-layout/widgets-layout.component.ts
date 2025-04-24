@@ -5,6 +5,7 @@ import {
   CompactType,
   DisplayGrid,
   GridType,
+  GridsterComponent,
   GridsterConfig,
   GridsterItemComponentInterface
 } from 'angular-gridster2';
@@ -46,6 +47,9 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
   widgetReadyCounter = 0;
 
   @ViewChild(WidgetSettingsDialogComponent, { static: true }) widgetSetting: WidgetSettingsDialogComponent;
+
+  @ViewChild(GridsterComponent, { static: false }) gridsterComponent: GridsterComponent;
+
   @Input() options: GridsterConfig;
   @Input() dashboardValue: Dashboard;
 
@@ -55,7 +59,8 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
 
   @Output() topologyResTimeChange = new EventEmitter<any>();
 
-  private isResizeWindow: boolean = false;
+  private isResizeWindow = false;
+  private skip = false;
 
   dashboard: WidgetConfig[] = [];
   lastDashboardValue: WidgetConfig[] = [];
@@ -67,7 +72,6 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
   private dragEnabled = true;
   private originalWidgetsPosition: WidgetPosition[] = [];
 
-  private cellSize: number;
   private projectId: number;
   private currentWidgetIdSetting: number;
   private removingWidget = false;
@@ -76,22 +80,22 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
   protected ngUnsubscribe = new Subject<void>();
   private streamSubscription: Subscription;
 
-  private readonly responsiveBreakPoints: { breakPoint: number, columns: number, cellSize: number }[] = [
-    { breakPoint: 1611, columns: 6, cellSize: 250 },
-    { breakPoint: 1610, columns: 6, cellSize: 200 },
-    { breakPoint: 1327, columns: 6, cellSize: 180 },
-    { breakPoint: 1200, columns: 4, cellSize: 180 },
-    { breakPoint: 1024, columns: 4, cellSize: 230 },
-    { breakPoint: 880, columns: 4, cellSize: 190 },
-    { breakPoint: 720, columns: 4, cellSize: 210 },
-    { breakPoint: 640, columns: 4, cellSize: 270 },
-    { breakPoint: 480, columns: 3, cellSize: 200 },
-    { breakPoint: 400, columns: 2, cellSize: 170 },
-    { breakPoint: 0, columns: 1, cellSize: 120 }
+  private readonly DEFAULT_MAX_COLS = 10;
+  private readonly DEFAULT_MARGIN_ITEMS = 6;
+  private readonly DEFAULT_CELL_SIZE = 160;
+
+  private readonly responsiveBreakPoints: { breakPoint: number, columns: number }[] = [
+    { breakPoint: 1700, columns: this.DEFAULT_MAX_COLS },
+    { breakPoint: 1610, columns: 8 },
+    { breakPoint: 1281, columns: 7 },
+    { breakPoint: 1024, columns: 4 },
+    { breakPoint: 640, columns: 4 },
+    { breakPoint: 480, columns: 3 },
+    { breakPoint: 400, columns: 2 },
+    { breakPoint: 0, columns: 1 }
   ];
 
-  private readonly DEFAULT_MAX_COLS = 8;
-  private readonly DEFAULT_CELL_SIZE = 160;
+  private oldBreakPoint: number;
 
   private resizeSubscription: Subscription;
 
@@ -139,15 +143,115 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
   private handleResize() {
     this.isResizeWindow = true;
 
-    this.options.maxCols = this.getResponsiveBreakPoint().columns;
+    const { columns, breakPoint } = this.getResponsiveBreakPoint();
+    if (this.oldBreakPoint !== breakPoint) {
+      this.oldBreakPoint = breakPoint;
+
+      const isMaxList = this.dashboard.some(({ cols, x }) => x + cols > columns);
+      if (isMaxList) {
+        this.dashboard.forEach((widget, index, array) => {
+          if (columns < 6) {
+            widget.x = 0;
+            widget.cols = columns;
+          } else {
+            widget.x = widget.x - 1 < 0 ? 0 : widget.x - 1;
+            if (index > 0) {
+              const previous = array[index - 1];
+              widget.y = previous.y + previous.rows + 1;
+            }
+          }
+        });
+
+        this.sortDashboardWidget();
+      } else {
+        const isMaxOriginalWidgetsPositionList = this.originalWidgetsPosition.some(({ cols, x }) => x + cols > columns);
+        if (isMaxOriginalWidgetsPositionList) {
+          return
+        }
+
+        let sortWidgets = false;
+
+        this.dashboard.forEach((widget) => {
+          const position = this.originalWidgetsPosition.find(({ id }) => id === widget.id);
+
+          if (position) {
+            const { x, y, cols, rows } = position;
+            if (
+              widget.x !== x
+              || widget.y !== y
+              || widget.cols !== cols
+              || widget.rows !== rows
+            ) {
+              widget.x = x;
+              widget.y = y;
+              widget.cols = cols;
+              widget.rows = rows;
+
+              if (!sortWidgets) {
+                sortWidgets = true;
+              }
+            }
+          }
+        });
+
+        if (sortWidgets) {
+          this.sortDashboardWidget();
+        }
+      }
+    }
+
+    this.options.maxCols = columns;
     this.options.api.optionsChanged();
+
+    this.isResizeWindow = false;
+  }
+
+  private handleResizeX() {
+    this.isResizeWindow = true;
+
+    const { columns, breakPoint } = this.getResponsiveBreakPoint();
+
+    this.options.maxCols = columns;
+    // this.options.api.optionsChanged();
+
+    // console.log(
+    //   x
+    // );
+
+    // this.gridsterComponent.options.maxCols = columns;
+
+    // this.gridsterComponent.$options.maxCols = columns;
+    // this.gridsterComponent.setOptions()
+    // let widgetsIndex = this.gridsterComponent.grid.length - 1;
+
+    // this.skip = true
+    // for (; widgetsIndex >= 0; widgetsIndex--) {
+    //   const widget = this.gridsterComponent.grid[widgetsIndex];
+    //   console.log('skip', this.skip);
+
+    //   // widget.updateOptions();
+    // }
+    // this.skip = false
+
 
     const availableWidth = document.documentElement.clientWidth;
 
-    const offset = this.options.fixedColWidth * 2;
-    const minWidth = (this.options.maxCols * this.options.fixedColWidth);
+    // const minWidth = (this.options.maxCols * this.options.fixedColWidth) + (this.options.maxCols * this.options.margin) + this.options.margin;
+    // const minWidth = (columns * this.options.fixedColWidth) + (columns * this.options.margin) + this.options.margin;
+    const minWidth = (this.gridsterComponent.columns * this.options.fixedColWidth) + (this.gridsterComponent.columns * this.options.margin) + this.options.margin;
+    // const minWidth = this.gridsterComponent.curWidth;
+
+    // const minWidth = x.curWidth;
+    const offset = this.options.margin;
     const checkAvailableSpace = availableWidth > minWidth + offset;
+    console.log('availableWidth', availableWidth);
+    // console.log('minWidth', minWidth);
+    console.log('tot', minWidth + offset);
+    console.log('curWidth', this.gridsterComponent.curWidth);
+    console.log('checkAvailableSpace', checkAvailableSpace);
+
     if (checkAvailableSpace) {
+
       let applyOldPosition = false;
       this.dashboard.map((widget) => {
         const position = this.originalWidgetsPosition.find(({ id }) => id === widget.id);
@@ -186,7 +290,10 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
           widget.y = previous.y + previous.rows + 1;
         }
 
-        widget.cols = this.options.maxCols - 1 || 1;
+        // widget.cols = this.options.maxCols || 1;
+        // widget.cols = this.gridsterComponent.columns || 1;
+        widget.cols = columns || 1;
+        console.log('cols', widget.cols);
 
         return widget;
       });
@@ -194,16 +301,20 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
       this.sortDashboardWidget();
     }
 
-    this.options.api.optionsChanged();
+    // this.gridsterComponent.optionsChanged()
 
     this.isResizeWindow = false;
 
-    console.log(availableWidth, 'Fine del resize');
+    // this.gridsterComponent.optionsChanged()
+    this.options.api.optionsChanged();
   }
 
   private getResponsiveBreakPoint() {
     const availableWidth = document.documentElement.clientWidth;
-    return this.responsiveBreakPoints.find(({ breakPoint }) => breakPoint <= availableWidth);
+    const responsiveBreakPoint = this.responsiveBreakPoints.find(({ breakPoint }) => breakPoint <= availableWidth);
+    // console.log(responsiveBreakPoint.breakPoint, responsiveBreakPoint.columns);
+
+    return responsiveBreakPoint;
   }
 
   private loadDashboard(): void {
@@ -231,7 +342,7 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
               this.topologyResTimeChange.emit({ timeMs: remoteTimestamp });
             });
 
-            // get dashboard config
+          // get dashboard config
           this.getWidgetsMapped(d.widgets)
             .pipe(takeUntil(this.ngUnsubscribe))
             .subscribe({
@@ -253,9 +364,20 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
       });
   }
 
-  private sortDashboardWidget = () => this.dashboard.sort((a, b) => a.y !== b.y ? a.y - b.y : a.x - b.x);
+  private sortDashboardWidget() {
+    this.dashboard.sort((a, b) => a.y === b.y ? a.x - b.x : a.y - b.y);
+    this.dashboard.forEach((widget, index, array) => {
+      if (index > 0) {
+        const previous = array[index - 1];
+        widget.y = previous.y + previous.rows + 1;
+      }
+    });
+  }
 
-  private updateOriginalWidgetsPosition = () => this.originalWidgetsPosition = this.dashboard.map(({ id, x, y, cols, rows }) => ({ id, x, y, cols, rows }));
+  private updateOriginalWidgetsPosition = () => {
+    this.originalWidgetsPosition = this.dashboard.map(({ id, x, y, cols, rows }) => ({ id, x, y, cols, rows }));
+    console.log('call updateOriginalWidgetsPosition');
+  }
 
   private setOptions(): void {
     this.options = { // callback to call for each item when is changes x, y, rows, cols.
@@ -277,7 +399,7 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
       maxCols: this.DEFAULT_MAX_COLS, // maximum amount of columns in the grid
       minRows: 1, // maximum amount of rows in the grid
       minItemRows: 2, // min item number of rows
-      margin: 6, // margin between grid items
+      margin: this.DEFAULT_MARGIN_ITEMS, // margin between grid items
       draggable: {
         enabled: this.dragEnabled,
         dropOverItems: true,
@@ -306,9 +428,8 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
       }
     };
 
-    this.cellSize = this.DEFAULT_CELL_SIZE;
-    this.options.fixedColWidth = this.cellSize;
-    this.options.fixedRowHeight = this.cellSize / 2;
+    this.options.fixedColWidth = this.DEFAULT_CELL_SIZE;
+    this.options.fixedRowHeight = this.DEFAULT_CELL_SIZE / 2;
   }
 
   private getWidgetsMapped(widgets: any): Observable<any> {
@@ -368,16 +489,18 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
               text: $localize`:@@HYT_widget_delete_confirm:Attention, the widget and its configuration will be permanently deleted. Proceed?`,
               dismissable: $localize`:@@HYT_widget_delete_confirm_dismiss:Don't request confirmation for this dashboard anymore`,
             });
-            confirmDialog.dialogRef.afterClosed().subscribe(res => {
-              if (res) {
-                if (res.dismissed) {
-                  localStorage.setItem('confirm-delete-widget-dismissed-' + this.dashboardValue.id, JSON.stringify(true));
+            confirmDialog.dialogRef
+              .afterClosed()
+              .subscribe(res => {
+                if (res) {
+                  if (res.dismissed) {
+                    localStorage.setItem('confirm-delete-widget-dismissed-' + this.dashboardValue.id, JSON.stringify(true));
+                  }
+                  if (res.result === 'accept') {
+                    removeWidget();
+                  }
                 }
-                if (res.result === 'accept') {
-                  removeWidget();
-                }
-              }
-            });
+              });
           }
         }
         break;
@@ -451,11 +574,13 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
       item.change();
     }
 
+    // this.updateOriginalWidgetsPosition();
+
     this.saveDashboard();
   }
 
   onItemResize(item: WidgetConfig, itemComponent: GridsterItemComponentInterface): void {
-    if (!this.isResizeWindow) {
+    if (!this.skip && !this.isResizeWindow) {
       const widget = this.dashboard.find(({ id }) => id === item.id);
       if (widget) {
         const { x, y, cols, rows } = itemComponent.$item;
@@ -467,7 +592,7 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
         this.sortDashboardWidget();
         this.updateOriginalWidgetsPosition();
 
-        this.options.api.optionsChanged();
+        // this.options.api.optionsChanged();
       }
     }
   }
