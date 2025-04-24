@@ -20,7 +20,7 @@ import {
 
 import { ConfirmDialogService, DialogService } from 'components';
 import { Observable, Subject, Subscription } from 'rxjs';
-import { map, takeUntil } from 'rxjs/operators';
+import { distinctUntilChanged, map, takeUntil } from 'rxjs/operators';
 import { WidgetAction, WidgetConfig } from '../../base/base-widget/model/widget.model';
 import { ServiceType } from '../../service/model/service-type';
 import { DashboardConfigService } from '../dashboard-config.service';
@@ -60,7 +60,6 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
   @Output() topologyResTimeChange = new EventEmitter<any>();
 
   private isResizeWindow = false;
-  private skip = false;
 
   dashboard: WidgetConfig[] = [];
   lastDashboardValue: WidgetConfig[] = [];
@@ -87,7 +86,7 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
   private readonly responsiveBreakPoints: { breakPoint: number, columns: number }[] = [
     { breakPoint: 1700, columns: this.DEFAULT_MAX_COLS },
     { breakPoint: 1610, columns: 8 },
-    { breakPoint: 1281, columns: 7 },
+    { breakPoint: 1281, columns: 6 },
     { breakPoint: 1024, columns: 4 },
     { breakPoint: 640, columns: 4 },
     { breakPoint: 480, columns: 3 },
@@ -131,16 +130,10 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
     if (this.resizeSubscription) {
       this.resizeSubscription.unsubscribe();
     }
-
-    this.saveDashboard();
   }
 
   @HostListener('window:resize', ['$event'])
   onWindowResize() {
-    this.handleResize();
-  }
-
-  private handleResize() {
     this.isResizeWindow = true;
 
     const { columns, breakPoint } = this.getResponsiveBreakPoint();
@@ -148,23 +141,34 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
       this.oldBreakPoint = breakPoint;
 
       const isMaxList = this.dashboard.some(({ cols, x }) => x + cols > columns);
-      if (isMaxList) {
+      const isMaxOriginalWidgetsPositionList = this.originalWidgetsPosition.some(({ cols, x }) => x + cols > columns);
+
+      if (isMaxOriginalWidgetsPositionList) {
         this.dashboard.forEach((widget, index, array) => {
-          if (columns < 6) {
+          if (columns <= 6) {
             widget.x = 0;
             widget.cols = columns;
           } else {
             widget.x = widget.x - 1 < 0 ? 0 : widget.x - 1;
-            if (index > 0) {
-              const previous = array[index - 1];
-              widget.y = previous.y + previous.rows + 1;
-            }
+          }
+        });
+
+        this.sortDashboardWidget();
+      }
+
+
+      if (isMaxList) {
+        this.dashboard.forEach((widget, index, array) => {
+          if (columns <= 6) {
+            widget.x = 0;
+            widget.cols = columns;
+          } else {
+            widget.x = widget.x - 1 < 0 ? 0 : widget.x - 1;
           }
         });
 
         this.sortDashboardWidget();
       } else {
-        const isMaxOriginalWidgetsPositionList = this.originalWidgetsPosition.some(({ cols, x }) => x + cols > columns);
         if (isMaxOriginalWidgetsPositionList) {
           return
         }
@@ -206,115 +210,10 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
     this.isResizeWindow = false;
   }
 
-  private handleResizeX() {
-    this.isResizeWindow = true;
-
-    const { columns, breakPoint } = this.getResponsiveBreakPoint();
-
-    this.options.maxCols = columns;
-    // this.options.api.optionsChanged();
-
-    // console.log(
-    //   x
-    // );
-
-    // this.gridsterComponent.options.maxCols = columns;
-
-    // this.gridsterComponent.$options.maxCols = columns;
-    // this.gridsterComponent.setOptions()
-    // let widgetsIndex = this.gridsterComponent.grid.length - 1;
-
-    // this.skip = true
-    // for (; widgetsIndex >= 0; widgetsIndex--) {
-    //   const widget = this.gridsterComponent.grid[widgetsIndex];
-    //   console.log('skip', this.skip);
-
-    //   // widget.updateOptions();
-    // }
-    // this.skip = false
-
-
-    const availableWidth = document.documentElement.clientWidth;
-
-    // const minWidth = (this.options.maxCols * this.options.fixedColWidth) + (this.options.maxCols * this.options.margin) + this.options.margin;
-    // const minWidth = (columns * this.options.fixedColWidth) + (columns * this.options.margin) + this.options.margin;
-    const minWidth = (this.gridsterComponent.columns * this.options.fixedColWidth) + (this.gridsterComponent.columns * this.options.margin) + this.options.margin;
-    // const minWidth = this.gridsterComponent.curWidth;
-
-    // const minWidth = x.curWidth;
-    const offset = this.options.margin;
-    const checkAvailableSpace = availableWidth > minWidth + offset;
-    console.log('availableWidth', availableWidth);
-    // console.log('minWidth', minWidth);
-    console.log('tot', minWidth + offset);
-    console.log('curWidth', this.gridsterComponent.curWidth);
-    console.log('checkAvailableSpace', checkAvailableSpace);
-
-    if (checkAvailableSpace) {
-
-      let applyOldPosition = false;
-      this.dashboard.map((widget) => {
-        const position = this.originalWidgetsPosition.find(({ id }) => id === widget.id);
-
-        if (position) {
-          const { x, y, cols, rows } = position;
-          if (
-            widget.x !== x
-            || widget.y !== y
-            || widget.cols !== cols
-            || widget.rows !== rows
-          ) {
-            widget.x = x;
-            widget.y = y;
-            widget.cols = cols;
-            widget.rows = rows;
-
-            if (!applyOldPosition) {
-              applyOldPosition = true;
-            }
-          }
-        }
-
-        return widget;
-      });
-
-      if (applyOldPosition) {
-        this.sortDashboardWidget();
-      }
-    } else {
-      this.dashboard.map((widget, index, arr) => {
-        widget.x = 0;
-
-        if (index > 0) {
-          const previous = arr[index - 1];
-          widget.y = previous.y + previous.rows + 1;
-        }
-
-        // widget.cols = this.options.maxCols || 1;
-        // widget.cols = this.gridsterComponent.columns || 1;
-        widget.cols = columns || 1;
-        console.log('cols', widget.cols);
-
-        return widget;
-      });
-
-      this.sortDashboardWidget();
-    }
-
-    // this.gridsterComponent.optionsChanged()
-
-    this.isResizeWindow = false;
-
-    // this.gridsterComponent.optionsChanged()
-    this.options.api.optionsChanged();
-  }
-
   private getResponsiveBreakPoint() {
     const availableWidth = document.documentElement.clientWidth;
-    const responsiveBreakPoint = this.responsiveBreakPoints.find(({ breakPoint }) => breakPoint <= availableWidth);
-    // console.log(responsiveBreakPoint.breakPoint, responsiveBreakPoint.columns);
 
-    return responsiveBreakPoint;
+    return this.responsiveBreakPoints.find(({ breakPoint }) => breakPoint <= availableWidth);
   }
 
   private loadDashboard(): void {
@@ -351,9 +250,12 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
 
                 this.sortDashboardWidget();
                 this.updateOriginalWidgetsPosition();
-                // this.onWindowResize();
 
                 this.pageStatus = PageStatus.Standard;
+
+                setTimeout(() => {
+                  this.onWindowResize();
+                }, 200);
               }
             });
         },
@@ -409,13 +311,19 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
           const dragElement = itemComponent.el?.getElementsByClassName('toolbar-title')[0] as HTMLElement;
           dragElement?.classList?.add('dragging');
         },
-        stop: (item, itemComponent) => { // callback when dragging an item stops.  Accepts Promise return to cancel/approve drag.
-          const dragElement = itemComponent.el?.getElementsByClassName('toolbar-title')[0] as HTMLElement;
+        stop: (item, { $item, el }) => { // callback when dragging an item stops. Accepts Promise return to cancel/approve drag.
+          const dragElement = el?.getElementsByClassName('toolbar-title')[0] as HTMLElement;
           dragElement?.classList?.remove('dragging');
-
-          setTimeout(() => {
-            this.updateOriginalWidgetsPosition();
-          }, 500);
+          if (
+              item.x !== $item.x ||
+              item.y !== $item.y ||
+              item.cols !== $item.cols ||
+              item.rows !== $item.rows
+          ) {
+            setTimeout(() => {
+              this.updateOriginalWidgetsPosition();
+            }, 500);
+          }
         },
         ignoreContent: true // if true drag will start only from elements from `dragHandleClass`
       },
@@ -574,13 +482,15 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
       item.change();
     }
 
-    // this.updateOriginalWidgetsPosition();
-
-    this.saveDashboard();
+    if (!this.isResizeWindow) {
+      setTimeout(() => {
+        this.saveDashboard();
+      }, 500);
+    }
   }
 
   onItemResize(item: WidgetConfig, itemComponent: GridsterItemComponentInterface): void {
-    if (!this.skip && !this.isResizeWindow) {
+    if (!this.isResizeWindow) {
       const widget = this.dashboard.find(({ id }) => id === item.id);
       if (widget) {
         const { x, y, cols, rows } = itemComponent.$item;
@@ -591,8 +501,7 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
 
         this.sortDashboardWidget();
         this.updateOriginalWidgetsPosition();
-
-        // this.options.api.optionsChanged();
+        this.saveDashboard();
       }
     }
   }
@@ -657,10 +566,13 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
   }
 
   private saveDashboard(): void {
-    let updateConfig = true;
+    if (this.isResizeWindow) {
+      return;
+    }
+
+    let updateConfig = false;
 
     if (this.lastDashboardValue.length) {
-      updateConfig = false;
       for (let index = 0; index < this.dashboard.length; index++) {
         const element = this.dashboard[index];
         const element2 = this.lastDashboardValue[index];
@@ -674,13 +586,15 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
           break;
         }
       }
+    } else {
+      this.lastDashboardValue = this.dashboard.map((widget) => ({ ...widget }));
     }
 
     if (updateConfig) {
-      this.lastDashboardValue = [...this.dashboard];
+      this.lastDashboardValue = this.dashboard.map((widget) => ({ ...widget }));
       this.configService.putConfig(this.dashboardValue.id, this.dashboard)
         .pipe(
-          takeUntil(this.ngUnsubscribe),
+          takeUntil(this.ngUnsubscribe)
         )
         .subscribe((res: any) => {
           if (res && res.status_code === 200) {
