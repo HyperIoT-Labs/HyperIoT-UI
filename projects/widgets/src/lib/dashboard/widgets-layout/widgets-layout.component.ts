@@ -20,7 +20,7 @@ import {
 
 import { ConfirmDialogService, DialogService } from 'components';
 import { Observable, Subject, Subscription } from 'rxjs';
-import { distinctUntilChanged, map, takeUntil } from 'rxjs/operators';
+import { map, takeUntil } from 'rxjs/operators';
 import { WidgetAction, WidgetConfig } from '../../base/base-widget/model/widget.model';
 import { ServiceType } from '../../service/model/service-type';
 import { DashboardConfigService } from '../dashboard-config.service';
@@ -81,18 +81,7 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
 
   private readonly DEFAULT_MAX_COLS = 10;
   private readonly DEFAULT_MARGIN_ITEMS = 6;
-  private readonly DEFAULT_CELL_SIZE = 160;
-
-  private readonly responsiveBreakPoints: { breakPoint: number, columns: number }[] = [
-    { breakPoint: 1700, columns: this.DEFAULT_MAX_COLS },
-    { breakPoint: 1610, columns: 8 },
-    { breakPoint: 1281, columns: 6 },
-    { breakPoint: 1024, columns: 4 },
-    { breakPoint: 640, columns: 4 },
-    { breakPoint: 480, columns: 3 },
-    { breakPoint: 400, columns: 2 },
-    { breakPoint: 0, columns: 1 }
-  ];
+  private readonly DEFAULT_COL_WIDTH = 160;
 
   private oldBreakPoint: number;
 
@@ -115,6 +104,7 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    this.setOptions();
     this.loadDashboard();
   }
 
@@ -213,12 +203,48 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
   private getResponsiveBreakPoint() {
     const availableWidth = document.documentElement.clientWidth;
 
-    return this.responsiveBreakPoints.find(({ breakPoint }) => breakPoint <= availableWidth);
+    const responsiveBreakPoints: {
+      breakPoint: number;
+      columns: number;
+      colWidth: number;
+    }[] = [{
+      breakPoint: 1700,
+      columns: this.DEFAULT_MAX_COLS,
+      colWidth: this.DEFAULT_COL_WIDTH
+    }, {
+      breakPoint: 1610,
+      columns: 8,
+      colWidth: this.DEFAULT_COL_WIDTH
+    }, {
+      breakPoint: 1281,
+      columns: 6,
+      colWidth: this.DEFAULT_COL_WIDTH
+    }, {
+      breakPoint: 1024,
+      columns: 4,
+      colWidth: this.DEFAULT_COL_WIDTH
+    }, {
+      breakPoint: 640,
+      columns: 4,
+      colWidth: this.DEFAULT_COL_WIDTH
+    }, {
+      breakPoint: 480,
+      columns: 3,
+      colWidth: this.DEFAULT_COL_WIDTH
+    }, {
+      breakPoint: 400,
+      columns: 2,
+      colWidth: this.DEFAULT_COL_WIDTH
+    }, {
+      breakPoint: 0,
+      columns: 1,
+      colWidth: this.DEFAULT_COL_WIDTH
+    }];
+
+    return responsiveBreakPoints.find(({ breakPoint }) => breakPoint <= availableWidth);
   }
 
   private loadDashboard(): void {
-    this.setOptions();
-
     this.dashboard = [];
 
     if (this.streamSubscription) {
@@ -276,9 +302,8 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
     });
   }
 
-  private updateOriginalWidgetsPosition = () => {
+  private updateOriginalWidgetsPosition(): void {
     this.originalWidgetsPosition = this.dashboard.map(({ id, x, y, cols, rows }) => ({ id, x, y, cols, rows }));
-    console.log('call updateOriginalWidgetsPosition');
   }
 
   private setOptions(): void {
@@ -288,7 +313,7 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
       gridType: GridType.Fixed, //'fixed' will set the rows and columns dimensions based on fixedColWidth and fixedRowHeight options
       setGridSize: true,
       compactType: CompactType.CompactUp, // compact items: 'none' | 'compactUp' | 'compactLeft' | 'compactUp&Left' | 'compactLeft&Up'
-      displayGrid: DisplayGrid.Always,
+      displayGrid: DisplayGrid.None,
       disableWindowResize: false, // disable the window on resize listener. This will stop grid to recalculate on window resize
       disableAutoPositionOnConflict: false,
       scrollToNewItems: true,
@@ -297,10 +322,12 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
       mobileBreakpoint: 0, // if the screen is not wider that this, remove the grid layout and stack the items
       keepFixedHeightInMobile: true, // keep the height from fixed gridType in mobile layout
       keepFixedWidthInMobile: false, // keep the width from fixed gridType in mobile layout
+      fixedColWidth: this.DEFAULT_COL_WIDTH,
+      fixedRowHeight: this.DEFAULT_COL_WIDTH / 2,
       minCols: 1, // minimum amount of columns in the grid
       maxCols: this.DEFAULT_MAX_COLS, // maximum amount of columns in the grid
-      minRows: 1, // maximum amount of rows in the grid
-      minItemRows: 2, // min item number of rows
+      minRows: 1, // minimum amount of rows in the grid
+      minItemRows: 2, // minimum item number of rows
       margin: this.DEFAULT_MARGIN_ITEMS, // margin between grid items
       draggable: {
         enabled: this.dragEnabled,
@@ -315,10 +342,10 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
           const dragElement = el?.getElementsByClassName('toolbar-title')[0] as HTMLElement;
           dragElement?.classList?.remove('dragging');
           if (
-              item.x !== $item.x ||
-              item.y !== $item.y ||
-              item.cols !== $item.cols ||
-              item.rows !== $item.rows
+            item.x !== $item.x ||
+            item.y !== $item.y ||
+            item.cols !== $item.cols ||
+            item.rows !== $item.rows
           ) {
             setTimeout(() => {
               this.updateOriginalWidgetsPosition();
@@ -335,9 +362,6 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
         enabled: true, // enable/disable resizable items
       }
     };
-
-    this.options.fixedColWidth = this.DEFAULT_CELL_SIZE;
-    this.options.fixedRowHeight = this.DEFAULT_CELL_SIZE / 2;
   }
 
   private getWidgetsMapped(widgets: any): Observable<any> {
@@ -577,10 +601,11 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
         const element = this.dashboard[index];
         const element2 = this.lastDashboardValue[index];
 
-        if (element.x !== element2.x
-          || element.y !== element2.y
-          || element.cols !== element2.cols
-          || element.rows !== element2.rows
+        if (
+          element.x !== element2.x ||
+          element.y !== element2.y ||
+          element.cols !== element2.cols ||
+          element.rows !== element2.rows
         ) {
           updateConfig = true;
           break;
