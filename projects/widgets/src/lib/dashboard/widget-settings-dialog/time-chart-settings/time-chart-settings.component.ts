@@ -33,6 +33,9 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy, OnChanges 
     thresholdsIds: number[] = [];
     thresholdActive: boolean = false;
     thresholdsForm: FormArray = this.fb.array([]);
+    collapseThresold: boolean = false;
+    
+    collapsedThresholdValues: any = {};
 
     defaultOpacity: number = 0.55;
     defaultColor: string = `rgba(5, 186, 0, ${this.defaultOpacity})`;
@@ -180,16 +183,37 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy, OnChanges 
             };
         });
 
-        this.widget.config.threshold = {
-            thresholdActive: this.thresholdActive,
-            thresholds: thresholds
-        };
+        if (this.thresholdActive) {
+            this.widget.config.threshold = {
+                thresholdActive: this.thresholdActive,
+                thresholds: thresholds
+            };
+        }
+
+        //if collapsed, i have to assign previos values
+        else this.widget.config.threshold = this.collapsedThresholdValues;     
+
     }
 
     isChecked() {
+        // if collapsed save previous values
+        if (!this.thresholdActive) this.collapsedThresholdValues = this.widget.config.threshold;
+        
+        // collapse or not
+        this.collapseThresold = this.thresholdActive;
+
         if ((this.selectedFields.length === 0 && !this.widget.config.packetId) || !this.thresholdActive) {
             return this.pageStatus = PageStatus.Ready;
         };
+
+        // First show && nothing
+        if (this.thresholdActive && Object.keys(this.thresholdsForm.controls).length == 0) {
+            this.addThresholdToForm({
+                id: null,
+                line: this.defaultLine
+            })
+        }
+
         this.ruleService.findAllRuleByProjectId(this.widget.projectId).subscribe({
             next: (rules) => {
                 this.pageStatus = PageStatus.Ready;
