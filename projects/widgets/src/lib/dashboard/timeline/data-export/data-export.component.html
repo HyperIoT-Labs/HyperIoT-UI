@@ -10,11 +10,12 @@
       <fieldset [disabled]="exportInProgress">
         <div class="row row-cols-2">
           <div class="d-flex flex-column p-2">
-            <mat-form-field appearance="fill">
+            <mat-form-field id="startTimePicker" appearance="fill">
               <mat-label i18n="@@HYT_start_time">Start Time</mat-label>
               <input
                 matInput
                 [ngxMatDatetimePicker]="startTimePicker"
+                [max]="maxValue$ | async"
                 placeholder="Choose a date"
                 (click)="startTimePicker.open()"
                 formControlName="startTime"
@@ -63,7 +64,7 @@
           </div>
 
           <div class="d-flex flex-column p-2">
-            <mat-form-field appearance="fill">
+            <mat-form-field id="endTimePicker" appearance="fill">
               <mat-label i18n="@@HYT_end_time">End Time</mat-label>
               <input
                 matInput
@@ -74,6 +75,7 @@
                 required
                 readonly
                 [min]="startTime.value"
+                [max]="maxValue$ | async"
               />
               <mat-datepicker-toggle matSuffix [for]="$any(endTimePicker)">
               </mat-datepicker-toggle>

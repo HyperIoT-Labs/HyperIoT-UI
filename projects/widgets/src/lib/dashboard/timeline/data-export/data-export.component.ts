@@ -1,14 +1,14 @@
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, ValidationErrors, Validators } from '@angular/forms';
 import { DialogRef, DIALOG_DATA, SelectOptionGroup, HytSelectComponent } from 'components';
 import { DataExport } from '../models/data-export,model';
 import { Store } from '@ngrx/store';
 import { DataExportNotificationActions, DataExportNotificationStore, HDeviceSelectors, HPacket, HPacketSelectors, HProject, HProjectSelectors, HprojectsService, Logger, LoggerService, NotificationManagerService } from 'core';
-import { catchError, combineLatest, concatMap, forkJoin, interval, map, of, switchMap, take, takeWhile, tap, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, combineLatest, concatMap, filter, forkJoin, interval, map, Observable, of, Subject, Subscription, switchMap, take, takeWhile, tap, throwError } from 'rxjs';
 import { MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
-import { NgxMatDateAdapter, } from '@angular-material-components/datetime-picker';
+import { NgxMatDateAdapter, NgxMatDatetimePicker, } from '@angular-material-components/datetime-picker';
 import { NgxMatMomentAdapter, NGX_MAT_MOMENT_DATE_ADAPTER_OPTIONS, NGX_MAT_MOMENT_FORMATS } from '@angular-material-components/moment-adapter';
-import moment from 'moment';
+import moment, { Moment } from 'moment';
 import { HttpClient } from '@angular/common/http';
 import saveAs from 'file-saver';
 
@@ -34,9 +34,12 @@ type ExportHPacketData = {
     { provide: NGX_MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } }
   ],
 })
-export class DataExportComponent implements OnInit {
+export class DataExportComponent implements OnInit, AfterViewInit, OnDestroy {
 
   readonly maxLength = 255;
+
+  maxValuesSubscription$: Subscription;
+  maxValue$ = new BehaviorSubject<Moment>(moment());
 
   exportErrorList: { hPacketId: number, exportId: string }[] = [];
 
@@ -56,6 +59,9 @@ export class DataExportComponent implements OnInit {
   });
 
   @ViewChild('selectPackets') selectPackets: HytSelectComponent;
+
+  @ViewChild('startTimePicker') startTimePicker: NgxMatDatetimePicker<any>;
+  @ViewChild('endTimePicker') endTimePicker: NgxMatDatetimePicker<any>;
 
   readonly hPacketFormatEnum = HPacket.FormatEnum;
 
@@ -202,6 +208,57 @@ export class DataExportComponent implements OnInit {
       this.form.patchValue({ ...this.initialFormValue });
     }
   }
+
+  ngAfterViewInit(): void {
+    this.maxValuesSubscription$ = interval(100)
+      .pipe(
+        filter(() => this.startTimePicker.opened || this.endTimePicker.opened),
+        tap(() => this.maxValue$.next(moment())),
+        tap(() => {
+          const timeContainer: HTMLDivElement = document.querySelector('ngx-mat-datetime-content > div.time-container');
+          if (timeContainer) {
+            const errorDateContainer = document.getElementById('errorDateContainer')
+            const setDateButton: HTMLButtonElement = document.querySelector("ngx-mat-datetime-content > div.actions > button");
+            if (!this.startTimePicker.valid || !this.endTimePicker.valid) {
+              if (!errorDateContainer) {
+                const errorLabel: HTMLLabelElement = document.createElement('label');
+                errorLabel.id = 'errorLabel';
+                errorLabel.style.fontSize = '14px';
+                errorLabel.textContent = 'Error: The specified date is not applicable.';
+
+                const errorDateContainer: HTMLDivElement = document.createElement('div');
+                errorDateContainer.id = 'errorDateContainer';
+                errorDateContainer.style.display = 'block';
+                errorDateContainer.style.color = 'red';
+                errorDateContainer.append(errorLabel);
+
+                timeContainer.appendChild(errorDateContainer);
+                timeContainer.style.flexDirection = 'column';
+                timeContainer.style.alignItems = 'center';
+
+                setDateButton.disabled = true;
+                setDateButton.classList.add('mat-button-disabled');
+              }
+            } else {
+              if (errorDateContainer) {
+                errorDateContainer.remove();
+              }
+
+              if (setDateButton) {
+                setDateButton.disabled = false;
+                setDateButton.classList.remove('mat-button-disabled');
+              }
+            }
+          }
+        })
+      ).subscribe();
+  }
+
+  ngOnDestroy(): void {
+    this.maxValuesSubscription$.unsubscribe();
+    this.maxValue$.unsubscribe();
+  }
+
 
   private exportNameValidator(control: AbstractControl): ValidationErrors | null {
     if (control.value === null) {
