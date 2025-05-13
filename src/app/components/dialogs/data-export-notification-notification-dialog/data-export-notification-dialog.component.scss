@@ -4,7 +4,7 @@
   flex-direction: column;
 
   #notification-scroll-container {
-    padding: .4em 1em;
+    padding: 0.4em 1em;
     height: 100%;
     width: 100%;
     overflow-y: auto;
@@ -13,8 +13,7 @@
       display: flex;
       flex-direction: column;
       gap: 0.5em;
-      padding-bottom: .25em;
-
+      padding-bottom: 0.25em;
 
       #no-notification {
         display: flex;
@@ -23,16 +22,22 @@
         gap: 1em 0;
         width: 100%;
 
-
         h3 {
           text-transform: uppercase;
           color: rgba(30, 88, 165, 0.75);
           margin-bottom: 0;
           font-size: 1.4em;
         }
+      }
 
+      .card-content {
+        display: flex;
+        gap: 25px;
+      }
+
+      .cursor-pointer {
+        cursor: pointer;
       }
     }
   }
-
 }

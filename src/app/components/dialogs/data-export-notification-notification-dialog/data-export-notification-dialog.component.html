@@ -47,7 +47,7 @@
               <div class="d-flex flex-column">
                 <div class="d-flex flex-column">
                   <div class="d-flex justify-content-between">
-                    <div class="d-flex" style="gap: 25px">
+                    <div class="card-content">
                       <div>
                         <div><span i18n="@@HYT_from">From</span>:</div>
                         <div><span i18n="@@HYT_to">To</span>:</div>
@@ -77,6 +77,7 @@
                     </div>
                     <div *ngIf="data.exportInfo.progress === 100">
                       <mat-icon
+                        class="cursor-pointer"
                         (click)="
                           retryDownloadOpenEditor(notification);
                           dialogRef.close()
