@@ -19,6 +19,7 @@ import { HDevicesEffects } from './hDevices';
 import { HPacketsEffects } from './hPackets';
 import { LiveAlarmsEffects } from './live-alarms';
 import { NotificationEffects } from './notification';
+import { DataExportNotificationStore } from './data-export-notification';
 
 export * from './branding';
 export * from './hDevices';
@@ -28,6 +29,7 @@ export * from './live-alarms';
 export * from './notification';
 export * from './rules';
 export * from './user-site-setting';
+export * from './data-export-notification';
 
 export namespace HyperiotStore {
     export interface State {
@@ -39,8 +41,9 @@ export namespace HyperiotStore {
         hPackets: HPacketStore.State,
         notifications: NotificationStore.State,
         userSiteSetting: UserSiteSettingStore.State,
+        dataExportNotification: DataExportNotificationStore.State
     };
-      
+
     export const Reducers: ActionReducerMap<State> = {
         branding: BrandingStore.reducer,
         liveAlarms: LiveAlarmStore.reducer,
@@ -50,8 +53,9 @@ export namespace HyperiotStore {
         hPackets: HPacketStore.reducer,
         notifications: NotificationStore.reducer,
         userSiteSetting: UserSiteSettingStore.reducer,
+        dataExportNotification: DataExportNotificationStore.reducer
     };
-    
+
     export const Effects = [
         BrandingEffects,
         RulesEffects,

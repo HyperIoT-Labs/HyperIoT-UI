@@ -2,9 +2,10 @@ import { AfterViewInit, Component, ElementRef, EventEmitter, Output, ViewChild, 
 import { TimeStep } from 'components';
 import * as d3 from 'd3';
 import * as moment_ from 'moment';
-import {HYTData} from "../models/timeline.model";
+import { HYTData } from "../models/timeline.model";
 import { DashboardEventService } from '../../services/dashboard-event.service';
 import { DashboardEvent } from '../../services/dashboard-event.model';
+import { DialogService } from 'components';
 
 const moment = moment_;
 const animation = false;
@@ -23,7 +24,10 @@ const animation = false;
   encapsulation: ViewEncapsulation.None
 })
 export class TimeAxisComponent implements AfterViewInit {
-  constructor(private dashboardEvent: DashboardEventService){}
+
+  constructor(
+    private dashboardEvent: DashboardEventService,
+  ) { }
   /**
    * timeStepMap is used to convert a step to a d3 TimeInterval
    */
@@ -193,19 +197,27 @@ export class TimeAxisComponent implements AfterViewInit {
     this.buildAxis();
   }
 
+  private get defaultExportInterval() : Date[]{
+    const today = moment();
+    const yesterday = today.clone().subtract(1, 'days');
+    return [yesterday.toDate(), today.toDate()];
+  }
+
   /**
    * Defintion of brushed function
    */
   brushed = () => {
-
     const selection = d3.event.detail.selection;
     const mode = d3.event.detail.mode;
+
     if (selection) {
       if (mode !== 'code') {
         this.timeInterval = selection.map(d => this.axisInterval.round(this.axisScale.invert(d)));
+        this.dashboardEvent.selectedDateIntervalForExport.next(this.defaultExportInterval);
       }
       if (mode === 'code-released') {
         this.dashboardEvent.timelineEvent.next(DashboardEvent.Timeline.NEW_RANGE);
+        this.dashboardEvent.selectedDateIntervalForExport.next(this.defaultExportInterval);
         this.dataTimeSelectionChanged.emit(this.timeInterval);
       }
       this.rect?.attr('fill', (d) =>
@@ -214,7 +226,7 @@ export class TimeAxisComponent implements AfterViewInit {
           this.setCubeIntensitiScale(d.value, this.maxValue)
       );
     } else {
-      this.rect?.attr('fill', d => this.setCubeIntensitiScale(d.value , this.maxValue));
+      this.rect?.attr('fill', d => this.setCubeIntensitiScale(d.value, this.maxValue));
     }
   }
 
@@ -225,6 +237,7 @@ export class TimeAxisComponent implements AfterViewInit {
     const selection = d3.event.detail.selection;
     this.timeInterval = selection.map(d => this.axisInterval.round(this.axisScale.invert(d)));
     if (this.timeInterval[1] > this.timeInterval[0]) {
+      this.dashboardEvent.selectedDateIntervalForExport.next(this.timeInterval);
       this.setSelection(
         this.timeInterval.map(this.axisScale),
         d3.select('#brush-group'),
@@ -240,11 +253,11 @@ export class TimeAxisComponent implements AfterViewInit {
    */
   buildAxis() {
     this.contentWidth = this.axis.nativeElement.offsetWidth - this.margin.left - this.margin.right;
-    if (this.contentWidth <= 0 ) {
-      this.contentWidth =  1024;
+    if (this.contentWidth <= 0) {
+      this.contentWidth = 1024;
     }
     this.contentHeight = this.axis.nativeElement.offsetHeight - this.margin.top - this.margin.bottom;
-    if (this.contentHeight <= 0 ) {
+    if (this.contentHeight <= 0) {
       this.contentHeight = 45;
     }
     this.axisScale = d3.scaleTime().domain(this.domain).range([0, this.contentWidth]);
@@ -355,7 +368,7 @@ export class TimeAxisComponent implements AfterViewInit {
     if (data) {
       for (let i = 0; i < data.length; i++) {
         // this.data[i].value = data[i]?.value;
-        this.data[i] = {value: data[i]?.value, timestamp: data[i]?.timestamp};
+        this.data[i] = { value: data[i]?.value, timestamp: data[i]?.timestamp };
       }
     }
     this.data.forEach(y => {
@@ -430,7 +443,7 @@ export class TimeAxisComponent implements AfterViewInit {
    * @param maxValue
    * @returns
    */
-  setCubeIntensitiScale(value, maxValue){
+  setCubeIntensitiScale(value, maxValue) {
     let ratio = value / maxValue;
 
     // avoiding filling with grey even if there's data
@@ -474,6 +487,8 @@ export class TimeAxisComponent implements AfterViewInit {
    * resetSelection() is used to delete the time selection
    */
   resetSelection() {
+    this.dashboardEvent.selectedDateIntervalForExport.next(this.defaultExportInterval);
+
     this.selectionPx = [null, null];
     this.timeInterval = [null, null];
     this.dashboardEvent.timelineEvent.next(DashboardEvent.Timeline.RESET);
@@ -681,7 +696,7 @@ export class TimeAxisComponent implements AfterViewInit {
       .data(this.data)
       .join('g')
       .attr('fill', d => d.timestamp >= this.timeInterval[0] && d.timestamp < this.timeInterval[1]
-        ? '#35d443' : this.setCubeIntensitiScale(d.value , this.maxValue))
+        ? '#35d443' : this.setCubeIntensitiScale(d.value, this.maxValue))
       .attr('class', 'data-cube')
       .call(this.appendCube)
       .attr('cursor', 'pointer')

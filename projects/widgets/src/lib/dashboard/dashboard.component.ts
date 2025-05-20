@@ -17,13 +17,15 @@ import {
   Dashboard, HDevice,
   HdevicesService,
   HProject,
+  HProjectActions,
+  HProjectSelectors,
   Logger,
   LoggerService,
   OfflineDataService,
   UserSiteSettingActions,
   UserSiteSettingSelectors
 } from 'core';
-import { debounceTime, delay, Subject, Subscription, takeUntil } from 'rxjs';
+import { debounceTime, delay, firstValueFrom, Subject, Subscription, takeUntil } from 'rxjs';
 import { AddWidgetDialogComponent } from './add-widget-dialog/add-widget-dialog.component';
 import { DashboardConfigService } from './dashboard-config.service';
 import { DashboardViewComponent } from './dashboard-view/dashboard-view.component';
@@ -192,24 +194,17 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.logger.registerClass(DashboardComponent.name);
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.showAreas = this.activatedRoute.snapshot.routeConfig.path.startsWith('areas/');
     this.showHDevice = this.activatedRoute.snapshot.routeConfig.path.startsWith('hdevice/');
 
-    if (!this.showAreas) {
-      if (this.activatedRoute.snapshot.queryParams.projectId) {
-        this.idProjectSelected = +this.activatedRoute.snapshot.queryParams.projectId;
-      } else if (localStorage.getItem('last-dashboard-project')) {
-        this.idProjectSelected = +localStorage.getItem('last-dashboard-project');
-      }
-    }
+    await this.initIdProjectSelected();
 
     this.offlineDataService.countEventSubject.subscribe(res => {
       this.offlineWidgetStatus = res;
     });
 
     if (this.showAreas) {
-      this.idProjectSelected = +this.activatedRoute.snapshot.params.projectId;
       // load area realtime Dashboard
       if (!this.areaId) {
         this.areaId = +this.activatedRoute.snapshot.params.areaId;
@@ -225,7 +220,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
         });
       }
     } else if (this.showHDevice) {
-      this.idProjectSelected = +this.activatedRoute.snapshot.params.projectId;
       // extract data from previous url
       const prevUrlParameterData: ExtractDataFromUrl = this.dashboardEvent.extractDataFromUrl();
       /// if type is area, then set deviceAreaId, this is used to show the button to back to the area
@@ -274,8 +268,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.getProjectList();
     }
 
-    this.logger.debug('DeviceId/AreaId/ProjectId/SignalIsOn: ', this.hDeviceId, this.areaId, this.idProjectSelected, this.signalIsOn);
-
     this.applyPreset();
   }
 
@@ -287,6 +279,27 @@ export class DashboardComponent implements OnInit, OnDestroy {
     if (this.ngUnsubscribe) {
       this.ngUnsubscribe.next();
     }
+
+    this.store.dispatch(HProjectActions.setSelectedHProjectId({ id: null }));
+  }
+
+  private async initIdProjectSelected() {
+    const projectId = +this.activatedRoute.snapshot.params.projectId;
+
+    if (this.showAreas || this.showHDevice) {
+      this.idProjectSelected = projectId;
+    } else {
+      this.idProjectSelected = projectId || await firstValueFrom(this.store.select(HProjectSelectors.selectCurrentHProjectId));
+
+      if (!this.idProjectSelected) {
+        this.hProjectListOptions = await firstValueFrom(this.dashboardConfigService.getProjectsList());
+        if (this.hProjectListOptions.length > 0) {
+          this.idProjectSelected = this.hProjectListOptions[0].id;
+        }
+      }
+    }
+
+    this.store.dispatch(HProjectActions.setSelectedHProjectId({ id: this.idProjectSelected }));
   }
 
   private loadDashboardByDatasource(defaultDatasource: Dashboard.DashboardTypeEnum) {
@@ -332,6 +345,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.idProjectSelected = event.value;
     this.recordStateInLoading = true;
     clearInterval(this.updateRecordingInterval);
+
+    this.store.dispatch(HProjectActions.setSelectedHProjectId({ id: this.idProjectSelected }));
 
     if (this.signalIsOn) {
       this.updateTopologyStatus();
@@ -479,10 +494,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
             });
 
             if (this.hProjectListOptions.length > 0) {
-              if (!this.idProjectSelected || !this.hProjectList.some(hProject => hProject.id === this.idProjectSelected)) {
-                this.idProjectSelected = this.hProjectListOptions[0].id;
-              }
-
               this.store.select(UserSiteSettingSelectors.selectDefaultProjectsDashboardDataSource)
                 .subscribe((defaultDatasource) => {
                   this.loadDashboardByDatasource(defaultDatasource);
@@ -519,9 +530,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.algorithmOfflineDataService.resetService(this.idProjectSelected);
       this.pageStatus = PageStatus.Standard;
     };
+
     const errorHandler = error => {
       this.pageStatus = PageStatus.Error;
     };
+
     if (this.showAreas) {
       this.dashboardConfigService.getOfflineDashboardFromArea(this.areaId)
         .pipe(takeUntil(this.ngUnsubscribe))
@@ -542,18 +555,17 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.logger.error(error);
       this.pageStatus = PageStatus.Error;
     };
+
     const responseHandler = (dashboardRes: Dashboard[]) => {
       try {
         this.currentDashboard = dashboardRes[0];
         this.currentDashboardId = this.currentDashboard.id;
-        if (!this.showAreas) {
-          localStorage.setItem('last-dashboard-project', String(this.idProjectSelected));
-        }
         this.pageStatus = PageStatus.Standard;
       } catch (error) {
         errorHandler(error);
       }
     };
+
     if (this.showAreas) {
       this.dashboardConfigService.getRealtimeDashboardFromArea(this.areaId)
         .pipe(takeUntil(this.ngUnsubscribe))

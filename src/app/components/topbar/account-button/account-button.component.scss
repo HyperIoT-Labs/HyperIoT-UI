@@ -12,7 +12,7 @@
             .dropdown-content{
                 display: block;
             }
-            
+
             .dropbtn {
 
                 span {
@@ -26,16 +26,16 @@
 
                 }
             }
-            
+
         }
-    
+
         .dropbtn {
             background: none;
             color: $primary-color;
             padding: 10px;
             border: none;
             cursor: pointer;
-    
+
             &:focus {
                 outline: none;
             }
@@ -51,7 +51,7 @@
             }
 
             span {
-                
+
                 &.hyt-icon.icon-hyt_userCircle {
                     font-size: 2.5em;
                     border-radius: 50%;
@@ -118,24 +118,6 @@
 
         }
 
-        
-    }
-
-}
-
-/* RESPONSIVE */
-
-@media (max-width: 991px) {
-
-    #hyt-account-button {
-
-        &.dropdown {
-
-            position: absolute;
-            top: 0px;
-            right: 10px;
-
-        }
 
     }
 

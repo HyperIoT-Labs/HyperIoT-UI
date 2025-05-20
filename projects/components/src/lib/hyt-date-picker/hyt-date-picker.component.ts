@@ -151,7 +151,7 @@ export class HytDatePickerComponent implements OnInit, OnChanges {
 
   /**
    * Close the pop up and set the date value
-   * @param event 
+   * @param event
    */
   setDate(event: moment_.Moment) {
     this.showPopup = false;

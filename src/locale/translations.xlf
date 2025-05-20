@@ -981,6 +981,9 @@
       <trans-unit id="HYT_widget_settings_title" datatype="html">
         <source>Widget Settings</source>
       </trans-unit>
+      <trans-unit id="HYT_export_data" datatype="html">
+        <source>Export Data</source>
+      </trans-unit>
       <trans-unit id="HYT_apply" datatype="html">
         <source>Apply</source>
       </trans-unit>
@@ -995,6 +998,9 @@
       </trans-unit>
       <trans-unit id="HYT_toolbar_close" datatype="html">
         <source>Close</source>
+      </trans-unit>
+      <trans-unit id="HYT_export" datatype="html">
+        <source>Export</source>
       </trans-unit>
       <trans-unit id="HYT_common_not_configured" datatype="html">
         <source>Click &apos;Settings&apos; button to configure.</source>
@@ -1773,8 +1779,8 @@
       <trans-unit id="HYT_notification_inactive" datatype="html">
         <source>Notification INACTIVE</source>
       </trans-unit>
-      <trans-unit id="HYT_notification_list" datatype="html">
-        <source>Notification list</source>
+      <trans-unit id="HYT_data_export_list" datatype="html">
+        <source>Data Download List</source>
       </trans-unit>
       <trans-unit id="HYT_notifications" datatype="html">
         <source>NOTIFICATIONS</source>
@@ -1934,6 +1940,37 @@
       </trans-unit>
       <trans-unit id="HYT_line_description" datatype="html">
         <source>Choose the type and thickness of the threshold line.</source>
+      </trans-unit>
+
+      <trans-unit id="HYT_start_time" datatype="html">
+        <source>Start Time</source>
+      </trans-unit>
+      <trans-unit id="HYT_end_time" datatype="html">
+        <source>End Time</source>
+      </trans-unit>
+      <trans-unit id="HYT_select_export_format" datatype="html">
+        <source>Select Export Format</source>
+      </trans-unit>
+      <trans-unit id="HYT_select_packets" datatype="html">
+        <source>Select one or more Packets</source>
+      </trans-unit>
+      <trans-unit id="HYT_count_packets_selected" datatype="html">
+        <source>Selected {{ countPackets }} packets</source>
+      </trans-unit>
+      <trans-unit id="HYT_invalid_characters" datatype="html">
+        <source>Invalid characters have been entered</source>
+      </trans-unit>
+      <trans-unit id="HYT_field_required" datatype="html">
+        <source>The field is required</source>
+      </trans-unit>
+      <trans-unit id="HYT_export_download_error" datatype="html">
+        <source>An error occurred while downloading the packet {{hPacketId}}</source>
+      </trans-unit>
+      <trans-unit id="HYT_from" datatype="html">
+        <source>From</source>
+      </trans-unit>
+       <trans-unit id="HYT_to" datatype="html">
+        <source>To</source>
       </trans-unit>
     </body>
   </file>
