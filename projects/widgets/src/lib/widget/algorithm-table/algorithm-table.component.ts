@@ -233,12 +233,13 @@ export class AlgorithmTableComponent extends BaseTableComponent implements After
 
   addDataCustom(el, valueTimestamp, headers, pageData) {
     let obj: any = { "output": el.output, "timestamp": valueTimestamp };
-    headers.forEach( h => {
-      let k = h;
-      let v = el.grouping;
+    let values = Object.values(el.grouping); // Label and values have same order
+    
+    headers.forEach((label, index) => {
+      let k = label;
+      let v = values[index] ?? null;
       obj[k] = v;  
     });
-    
     pageData.unshift(obj);
   }
 

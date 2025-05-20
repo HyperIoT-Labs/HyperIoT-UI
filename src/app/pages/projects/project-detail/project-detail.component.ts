@@ -178,7 +178,8 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
     });
 
     /* change button if you arrive to edit projecy page from dashboard */
-    if (this.previousRouteService.previousUrl === "/dashboards") this.dashBackButton = true;
+    if (this.previousRouteService.previousUrl === "/dashboards" ||
+      this.previousRouteService.previousUrl === this.previousRouteService.currentUrl) this.dashBackButton = true;
 
   }
 
@@ -727,8 +728,7 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
   /*
   / Method to verify if you can save or not the alarm
   */
-  isDisableProjectAlarmsFormComponent(e: any){
-    this.logger.debug('isDisableProjectAlarmsFormComponent', e);
+  isDisableProjectAlarmsFormComponent(e: any) {
     if ((e instanceof ProjectAlarmsFormComponent) === false) return true;
     else if (e.form.touched == false) return true;
     else if (e.form.status == 'VALID') return false;

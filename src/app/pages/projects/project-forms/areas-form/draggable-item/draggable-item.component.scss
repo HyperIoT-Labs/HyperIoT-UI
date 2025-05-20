@@ -17,6 +17,43 @@ $hyt-badge-color: var(--alarm-badge-color);
     cursor: pointer;
   }
 
+  .mat-badge-content {
+    background-color: $hyt-badge-color;
+  }
+}
+
+.status-circle {
+  position: absolute;
+  height: 8px;
+  width: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  background-color: grey;
+}
+
+.status-circle-incoming-data {
+  background-color: yellowgreen;
+}
+
+.mat-menu-content {
+  .material-icons {
+    font-size: 16px;
+  }
+
+  .title {
+    text-align: center;
+  }
+
+  .popup-content {
+    display: flex;
+    flex-direction: column;
+    padding: 8px 15px;
+    line-height: 1.3;
+    font-size: 13px;
+    font-size: 1.08333em;
+    min-height: 1px;
+  }
+
   .remove-button {
     outline: none;
     position: absolute;
@@ -30,78 +67,11 @@ $hyt-badge-color: var(--alarm-badge-color);
     width: 24px;
     height: 24px;
   }
-
-  .mat-badge-content {
-    background-color: $hyt-badge-color;
-  }
-
-  .title {
-    position: absolute;
-    height: auto;
-    bottom: -27px;
-    width: 128px;
-    left: -32px;
-    right: 96px;
-    padding-left: 8px;
-    padding-right: 8px;
-    border: solid 1px gray;
-    border-radius: 12px;
-    background-color: rgba($color: white, $alpha: 0.65);
-    font-weight: bold;
-    text-align: center;
-    cursor: pointer;
-
-    &.area-title {
-      background-color: rgba($color: yellow, $alpha: 0.65);
-    }
-
-    &.menu-disabled {
-      cursor: default;
-      /* bottom: -17px; */
-    }
-
-    &.menu-enabled {
-      border-radius: 0.3em;
-      border: none;
-      padding: 0;
-      bottom: -17px;
-      font-size: .96em;
-      background-color: rgba($color: yellow, $alpha: 0.65);
-    }
-
-    .name {
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      text-align: center;
-    }
-
-    .stats {
-      font-weight: bolder;
-      font-size: smaller;
-      text-align: center;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-  }
-
-  .status-circle {
-    position: absolute;
-    height: 8px;
-    width: 8px;
-    border-radius: 50%;
-    display: inline-block;
-    background-color: grey;
-  }
-
-  .status-circle-incoming-data {
-    background-color: yellowgreen;
-  }
 }
 
 .mat-menu-panel {
   border-radius: 0.8em !important;
+
   h3 {
     font-size: 1.2em;
     font-weight: bold;
@@ -133,12 +103,15 @@ $hyt-badge-color: var(--alarm-badge-color);
   0% {
     opacity: 0.1;
   }
+
   40% {
     opacity: 1;
   }
+
   60% {
     opacity: 1;
   }
+
   100% {
     opacity: 0.1;
   }
@@ -148,12 +121,15 @@ $hyt-badge-color: var(--alarm-badge-color);
   0% {
     opacity: 0.1;
   }
+
   40% {
     opacity: 1;
   }
+
   60% {
     opacity: 1;
   }
+
   100% {
     opacity: 0.1;
   }
@@ -163,12 +139,15 @@ $hyt-badge-color: var(--alarm-badge-color);
   0% {
     opacity: 0.1;
   }
+
   40% {
     opacity: 1;
   }
+
   60% {
     opacity: 1;
   }
+
   100% {
     opacity: 0.1;
   }
