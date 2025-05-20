@@ -317,7 +317,7 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
       //L.DomEvent.disableClickPropagation(deviceEditComponent.location.nativeElement);
     } else {
       const deviceEditComponent = this.resolver.resolveComponentFactory(MapDeviceInfoComponent).create(this.injector);
-      deviceEditComponent.instance.deviceInfo = areaItem;
+      deviceEditComponent.instance.itemData = areaItem;
       deviceEditComponent.instance.openClicked.subscribe((mapItem) => {
           this.itemOpen.emit(mapItem);
       });
