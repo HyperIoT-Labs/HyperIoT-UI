@@ -632,6 +632,10 @@
         <source>FourierTransform</source>
         <target>Trasformata di Fourier</target>
       </trans-unit>
+      <trans-unit id="HYT_virtual_sensor" datatype="html">
+        <source>VirtualSensor</source>
+        <target>Sensore virtuale</target>
+      </trans-unit>
       <trans-unit id="HYT_unavailable_rule_name" datatype="html">
         <source>Unavailable rule name</source>
         <target>Nome regola non disponibile</target>

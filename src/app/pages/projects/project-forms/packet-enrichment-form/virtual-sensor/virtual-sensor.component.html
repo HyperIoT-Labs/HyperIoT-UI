@@ -1,0 +1,90 @@
+<div>
+  <div *ngFor="let item of testArrayForm.controls; let i = index">
+    <div [formGroup]="$any(item)">
+      <div class="d-flex flex-row">
+        <mat-form-field class="m-4">
+          <input
+            matInput
+            required
+            class="hyt-input form-control"
+            type="text"
+            placeholder="Placeholder alias"
+            formControlName="placeHolder"
+            readonly
+          />
+        </mat-form-field>
+
+        <mat-form-field class="m-4">
+          <mat-label>Select one field</mat-label>
+          <mat-select formControlName="field">
+            <ng-container *ngFor="let option of fieldOptions">
+              <mat-option  [value]="option.value" [disabled]="option.disabled">
+                {{ option.label }}
+              </mat-option>
+            </ng-container>
+          </mat-select>
+        </mat-form-field>
+
+        <button
+          matButton
+          class="mat-button"
+          type="button"
+          (click)="deleteRow(i)"
+        >
+          <span class="mat-button-wrapper">
+            <span class="hyt-icon icon-hyt_trash"></span>
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="addButton">
+    <hyt-button (clickFn)="add()" [color]="'hyt-base-total-white'">
+      <span> ADD </span>
+      <span class="hyt-icon icon-hyt_plusC"></span>
+    </hyt-button>
+  </div>
+
+  <div class="customization-container-section section-custom-expression">
+    <div class="section-title">
+      <span i18n="@@HYT_expressions_title">Expressions</span>
+    </div>
+    <div class="section-input">
+      <div class="rule-info">
+        Emit a value computed through an expression.
+        <ul>
+          <li>Placeholder: <b>$val</b>: the current selected filed value</li>
+          <li>
+            Supported operators: <b>abs</b>, <b>sin</b>, <b>cos</b>, <b>tan</b>,
+            <b>sqrt</b>, <b>pow</b>, <b>log</b>, <b>random</b>,
+            <b>PI</b>
+          </li>
+          <li>Expression example: <b>2*(sin(PI*$val/100))</b></li>
+        </ul>
+      </div>
+      <div class="rule-input">
+        <mat-form-field>
+          <mat-label>Expression</mat-label>
+          <!-- <input
+              [(ngModel)]="fieldRules[field.id].expression"
+              matInput
+              [name]="'expression' + field.id"
+              type="text"
+              (keyup)="updateExpression($event, field.id)"
+              [value]="fieldRules[field.id]?.expression"
+            /> -->
+
+          <input type="text" matInput />
+
+          <ng-container *ngIf="expressionIsValid; else expressionNotValid">
+            <mat-icon color="primary" matSuffix> done_outline </mat-icon>
+          </ng-container>
+          <ng-template #expressionNotValid>
+            <mat-icon color="warn" matSuffix> highlight_off </mat-icon>
+            <mat-hint class="mat-error"> Invalid expression! </mat-hint>
+          </ng-template>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+</div>
