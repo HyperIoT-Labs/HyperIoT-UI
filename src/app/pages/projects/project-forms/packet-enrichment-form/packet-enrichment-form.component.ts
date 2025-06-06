@@ -138,9 +138,6 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
         const typeJSON = JSON.parse(type) ? JSON.parse(type) : null;
         this.enrichmentType = typeJSON ? typeJSON.actionName : null;
 
-        console.log('this.enrichmentType', this.enrichmentType);
-        
-
         switch (this.enrichmentType) {
           case EnrichmentType.ADD_CATEGORY_ENRICHMENT:
             if (this.assetCategoryComponent) {
@@ -166,7 +163,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
 
           case EnrichmentType.VIRTUAL_SENSOR_ENRICHMENT:
             console.log('VIRTUAL_SENSOR_ENRICHMENT', 'x');
-            
+
             this.ruleConfig = JSON.parse(type);
             break;
         }
@@ -254,7 +251,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
 
       case EnrichmentType.VIRTUAL_SENSOR_ENRICHMENT:
         console.log('VIRTUAL_SENSOR_ENRICHMENT');
-        
+
         this.ruleConfig['active'] = this.form.get("active").value;
         jac = JSON.stringify(this.ruleConfig);
         break;
@@ -357,11 +354,21 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
   }
 
   virtualSensorDirty() {
-    return this.virtualSensorComponent ? this.virtualSensorComponent.isDirty() : false;
+    return this.virtualSensorComponent?.isDirty() || false;
   }
 
   isValid() {
-    return super.isValid() && !this.invalidRules() && (!this.fourierTransformComponent || this.fourierTransformComponent.isValid());
+    console.log('test valid', super.isValid() && !this.invalidRules()
+      && (
+        this.fourierTransformComponent?.isValid() ||
+        this.virtualSensorComponent?.isValid()
+      ));
+
+    return super.isValid() && !this.invalidRules()
+      && (
+        this.fourierTransformComponent?.isValid() ||
+        this.virtualSensorComponent?.isValid()
+      );
   }
 
   isDirty() {

@@ -147,6 +147,7 @@ export abstract class ProjectFormEntity implements OnInit, AfterViewInit {
         });
         return !invalid;
     }
+    
     isDirty(): boolean {
         return (this.originalValue === '{}') ? false : this.serialize() !== this.originalValue;
     }
