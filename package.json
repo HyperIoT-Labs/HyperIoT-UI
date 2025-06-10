@@ -7,6 +7,7 @@
     "build-memory": "npm run ng-high-memory && ng build",
     "start": "ng serve --proxy-config proxy-local.config.json",
     "start-proxy-test": "ng serve --proxy-config proxy-config.json",
+    "start-proxy-coll-test": "ng serve --proxy-config proxy-coll.config.json",
     "start-proxy": "ng serve --proxy-config ignored-proxy.config.json",
     "build": "ng build",
     "build-libs": "ng build core && ng build components && ng build widgets",

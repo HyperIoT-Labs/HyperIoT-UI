@@ -1,77 +1,172 @@
-<div *ngFor="let item of arrayForm.controls; let i = index">
-  <div [formGroup]="$any(item)">
-    <div class="d-flex flex-row">
-      <mat-form-field class="m-4">
-        <input
-          matInput
-          required
-          class="hyt-input form-control"
-          type="text"
-          placeholder="Placeholder alias"
-          formControlName="placeHolder"
-          readonly
-        />
-      </mat-form-field>
+<div>
+  <div class="input-container">
+    <div class="form-group">
+      <p class="title">Input</p>
+      <div class="box">
+        <div
+          *ngFor="
+            let item of placeholderAliasFormArray.controls;
+            let i = index;
+            let count = count
+          "
+        >
+          <div [formGroup]="$any(item)">
+            <div class="input-field-container">
+              <mat-form-field>
+                <input
+                  matInput
+                  class="hyt-input form-control"
+                  type="text"
+                  placeholder="Placeholder alias"
+                  formControlName="placeHolder"
+                  readonly
+                />
+              </mat-form-field>
 
-      <mat-form-field class="m-4">
-        <mat-label>Select one field</mat-label>
-        <mat-select formControlName="field">
-          <ng-container *ngFor="let option of fieldOptions">
-            <mat-option [value]="option.value" [disabled]="option.disabled">
-              {{ option.label }}
-            </mat-option>
-          </ng-container>
-        </mat-select>
-      </mat-form-field>
+              <mat-form-field>
+                <mat-label>Select one field</mat-label>
+                <mat-select formControlName="field" required>
+                  <ng-container *ngFor="let option of fieldOptions">
+                    <mat-option
+                      [value]="option.field"
+                      [disabled]="option.disabled"
+                    >
+                      {{ option.label }}
+                    </mat-option>
+                  </ng-container>
+                </mat-select>
+              </mat-form-field>
 
-      <button matButton class="mat-button" type="button" (click)="deleteRow(i)">
-        <span class="mat-button-wrapper">
-          <span class="hyt-icon icon-hyt_trash"></span>
-        </span>
-      </button>
-    </div>
-  </div>
-</div>
-<div class="addButton">
-  <hyt-button (clickFn)="add()" [color]="'hyt-base-total-white'">
-    <span> ADD </span>
-    <span class="hyt-icon icon-hyt_plusC"></span>
-  </hyt-button>
-</div>
-
-<div class="customization-container-section section-custom-expression">
-  <div class="section-title">
-    <span i18n="@@HYT_expressions_title">Expressions</span>
-  </div>
-  <div class="section-input">
-    <div class="rule-info">
-      Emit a value computed through an expression.
-      <ul>
-        <li>Placeholder: <b>$val</b>: the current selected filed value</li>
-        <li>
-          Supported operators: <b>abs</b>, <b>sin</b>, <b>cos</b>, <b>tan</b>,
-          <b>sqrt</b>, <b>pow</b>, <b>log</b>, <b>random</b>,
-          <b>PI</b>
-        </li>
-        <li>Expression example: <b>2*(sin(PI*$val/100))</b></li>
-      </ul>
-    </div>
-    <div class="m-4">
-      <div class="rule-input">
-        <mat-form-field>
-          <mat-label>Expression</mat-label>
-          <input [formControl]="fieldRules" matInput type="text" />
-        </mat-form-field>
-        <ng-container *ngIf="fieldRules.valid; else expressionNotValid">
-          <mat-icon color="primary" matSuffix> done_outline </mat-icon>
-        </ng-container>
-        <ng-template #expressionNotValid>
-          <mat-icon color="warn" matSuffix> highlight_off </mat-icon>
-        </ng-template>
+              <button
+                *ngIf="count > 1"
+                matButton
+                class="mat-button"
+                type="button"
+                (click)="deleteField(i)"
+              >
+                <span class="mat-button-wrapper">
+                  <span class="hyt-icon icon-hyt_trash"></span>
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="addButton">
+          <hyt-button
+            (clickFn)="addField()"
+            [color]="'hyt-base-total-white'"
+            [isDisabled]="disableAdd()"
+          >
+            <span>ADD</span>
+            <span class="hyt-icon icon-hyt_plusC"></span>
+          </hyt-button>
+        </div>
       </div>
-      <mat-hint *ngIf="fieldRules.invalid" class="mat-error">
-        Invalid expression!
-      </mat-hint>
+    </div>
+
+    <div class="form-group">
+      <p class="title">Constants</p>
+      <div class="box">
+        <div
+          *ngFor="
+            let constant of constants.controls;
+            let i = index;
+            let count = count
+          "
+        >
+          <div [formGroup]="$any(constant)" class="input-field-container">
+            <mat-form-field>
+              <mat-label>Constant Name</mat-label>
+              <input matInput formControlName="name" name="constantName" type="text" />
+            </mat-form-field>
+
+            <mat-form-field [ngClass]="{ disabled: !constant.value.name }">
+              <mat-label>Constant Value</mat-label>
+              <input matInput formControlName="value" name="constantValue" type="number" step="0.1" />
+            </mat-form-field>
+
+            <button
+              *ngIf="count > 1"
+              matButton
+              class="mat-button"
+              type="button"
+              (click)="deleteConstant(i)"
+            >
+              <span class="mat-button-wrapper">
+                <span class="hyt-icon icon-hyt_trash"></span>
+              </span>
+            </button>
+          </div>
+        </div>
+
+        <div class="addButton">
+          <hyt-button
+            [isDisabled]="constants.invalid"
+            (clickFn)="addConstant()"
+            [color]="'hyt-base-total-white'"
+          >
+            <span>ADD</span>
+            <span class="hyt-icon icon-hyt_plusC"></span>
+          </hyt-button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <p class="title">Output</p>
+    <div class="box" [formGroup]="output">
+      <div class="section-output">
+        <div class="rule-container">
+          <mat-form-field>
+            <mat-label>Output Field Name</mat-label>
+            <input
+              matInput
+              formControlName="outputFieldName"
+              name="outputFieldName"
+              required
+              type="text"
+            />
+          </mat-form-field>
+
+          <div class="rule-input">
+            <mat-form-field>
+              <mat-label>Expression</mat-label>
+              <input matInput [formControl]="fieldRule" name="fieldRule" required type="text" />
+            </mat-form-field>
+            <ng-container
+              *ngIf="
+                fieldRule.invalid && fieldRule.dirty;
+                else expressionValid
+              "
+            >
+              <mat-icon color="warn" matSuffix> highlight_off </mat-icon>
+            </ng-container>
+            <ng-template #expressionValid>
+              <mat-icon color="primary" matSuffix> done_outline </mat-icon>
+            </ng-template>
+          </div>
+          <mat-hint
+            *ngIf="fieldRule.invalid && fieldRule.dirty"
+            class="mat-error"
+          >
+            Invalid expression!
+          </mat-hint>
+        </div>
+
+        <div class="rule-info">
+          Emit a value computed through an expression.
+          <ul>
+            <li>Placeholder: <b>$val</b>: the current selected filed value</li>
+            <li>
+              Supported operators: <b>abs</b>, <b>sin</b>, <b>cos</b>,
+              <b>tan</b>, <b>sqrt</b>, <b>pow</b>, <b>log</b>, <b>random</b>,
+              <b>PI</b>
+            </li>
+            <li>Expression example: <b>2*(sin(PI*$val/100))</b></li>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 </div>

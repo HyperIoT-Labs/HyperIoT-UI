@@ -69,7 +69,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
     // { value: '', label: $localize`:@@HYT_start_statistic:START STATISTIC` }
   ];
 
-  enrichmentType = '';
+  selectedEnrichmentType: EnrichmentType | undefined;
 
   ruleConfig = {};
 
@@ -136,9 +136,9 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
       super.edit(rule, () => {
         const type = JSON.parse(this.entity.jsonActions)[0] || null;
         const typeJSON = JSON.parse(type) ? JSON.parse(type) : null;
-        this.enrichmentType = typeJSON ? typeJSON.actionName : null;
+        this.selectedEnrichmentType = typeJSON ? typeJSON.actionName : null;
 
-        switch (this.enrichmentType) {
+        switch (this.selectedEnrichmentType) {
           case EnrichmentType.ADD_CATEGORY_ENRICHMENT:
             if (this.assetCategoryComponent) {
               this.assetCategoryComponent.selectedCategories = JSON.parse(type) ? JSON.parse(type).categoryIds : null;
@@ -168,7 +168,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
             break;
         }
 
-        this.form.get('rule-type').setValue(this.enrichmentType);
+        this.form.get('rule-type').setValue(this.selectedEnrichmentType);
         this.form.get('active').setValue(typeJSON.active);
         this.form.get('ruleDefinition').setValue({
           ruleDefinition: this.entity.ruleDefinition,
@@ -233,15 +233,26 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
     let jac = '';
     switch (this.form.get('rule-type').value) {
       case EnrichmentType.ADD_CATEGORY_ENRICHMENT:
-        jac = JSON.stringify({ actionName: EnrichmentType.ADD_CATEGORY_ENRICHMENT, categoryIds: this.assetCategoryComponent.selectedCategories, active: this.form.get("active").value });
+        jac = JSON.stringify({
+          actionName: EnrichmentType.ADD_CATEGORY_ENRICHMENT,
+          categoryIds: this.assetCategoryComponent.selectedCategories,
+          active: this.form.get("active").value
+        });
         break;
 
       case EnrichmentType.ADD_TAG_ENRICHMENT:
-        jac = JSON.stringify({ actionName: EnrichmentType.ADD_TAG_ENRICHMENT, tagIds: this.assetTagComponent.selectedTags, active: this.form.get("active").value });
+        jac = JSON.stringify({
+           actionName: EnrichmentType.ADD_TAG_ENRICHMENT, 
+           tagIds: this.assetTagComponent.selectedTags, 
+           active: this.form.get("active").value 
+          });
         break;
 
       case EnrichmentType.VALIDATION_ENRICHMENT:
-        jac = JSON.stringify({ actionName: EnrichmentType.VALIDATION_ENRICHMENT, active: this.form.get("active").value });
+        jac = JSON.stringify({ 
+          actionName: EnrichmentType.VALIDATION_ENRICHMENT, 
+          active: this.form.get("active").value 
+        });
         break;
 
       case EnrichmentType.FOURIER_TRANSFORM_ENRICHMENT:
@@ -308,7 +319,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
 
   loadEmpty() {
     this.form.reset();
-    this.enrichmentType = null;
+    this.selectedEnrichmentType = null;
     this.assetTags = [];
     this.assetCategories = [];
     this.cdr.detectChanges();
@@ -331,7 +342,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
 
   enrichmentTypeChanged(event) {
     if (event.value) {
-      this.enrichmentType = event.value;
+      this.selectedEnrichmentType = event.value;
     }
   }
 
@@ -358,12 +369,6 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
   }
 
   isValid() {
-    console.log('test valid', super.isValid() && !this.invalidRules()
-      && (
-        this.fourierTransformComponent?.isValid() ||
-        this.virtualSensorComponent?.isValid()
-      ));
-
     return super.isValid() && !this.invalidRules()
       && (
         this.fourierTransformComponent?.isValid() ||

@@ -57,13 +57,13 @@
       </div>
 
       <div
-        *ngIf="enrichmentType !== enrichmentTypes.VALIDATION_ENRICHMENT"
+        *ngIf="selectedEnrichmentType !== enrichmentTypes.VALIDATION_ENRICHMENT"
         id="ffield-col-enrich-tag-cat"
         class="col-8 offset-2 col-tag-cat"
       >
         <hyt-asset-tag
           #assetTag
-          *ngIf="enrichmentType === enrichmentTypes.ADD_TAG_ENRICHMENT"
+          *ngIf="selectedEnrichmentType === enrichmentTypes.ADD_TAG_ENRICHMENT"
           [project]="project"
           [packet]="packet"
           [selectedTags]="assetTags"
@@ -72,7 +72,9 @@
 
         <hyt-asset-category
           #assetCategory
-          *ngIf="enrichmentType === enrichmentTypes.ADD_CATEGORY_ENRICHMENT"
+          *ngIf="
+            selectedEnrichmentType === enrichmentTypes.ADD_CATEGORY_ENRICHMENT
+          "
           [project]="project"
           [packet]="packet"
           [selectedCategories]="assetCategories"
@@ -82,7 +84,8 @@
         <hyt-fourier-transform
           #fourierTransform
           *ngIf="
-            enrichmentType === enrichmentTypes.FOURIER_TRANSFORM_ENRICHMENT
+            selectedEnrichmentType ===
+            enrichmentTypes.FOURIER_TRANSFORM_ENRICHMENT
           "
           [project]="project"
           [packet]="packet"
@@ -91,7 +94,9 @@
         </hyt-fourier-transform>
 
         <hyt-virtual-sensor
-          *ngIf="enrichmentType === enrichmentTypes.VIRTUAL_SENSOR_ENRICHMENT"
+          *ngIf="
+            selectedEnrichmentType === enrichmentTypes.VIRTUAL_SENSOR_ENRICHMENT
+          "
           #virtualSensor
           [project]="project"
           [packet]="packet"
@@ -138,7 +143,7 @@
 
     <div
       *ngIf="
-        enrichmentType !==
+        selectedEnrichmentType !==
         'it.acsoftware.hyperiot.rule.service.actions.FourierTransformRuleAction'
       "
       class="form-group row"
