@@ -93,16 +93,16 @@
         >
         </hyt-fourier-transform>
 
-        <hyt-virtual-sensor
+        <hyt-compute-field-rule
           *ngIf="
-            selectedEnrichmentType === enrichmentTypes.VIRTUAL_SENSOR_ENRICHMENT
+            selectedEnrichmentType === enrichmentTypes.COMPUTE_FIELD_RULE_ACTION
           "
           #virtualSensor
           [project]="project"
           [packet]="packet"
           [config]="ruleConfig"
         >
-        </hyt-virtual-sensor>
+        </hyt-compute-field-rule>
       </div>
     </div>
     <!-- END FIRST FORM ROW -->

@@ -78,7 +78,7 @@ import {MatListModule} from '@angular/material/list';
 import { DynamicMapUserConfiguratorComponent } from './project-forms/areas-form/dynamic-map-user-configurator/dynamic-map-user-configurator.component';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatSliderModule } from '@angular/material/slider';
-import { VirtualSensorComponent } from './project-forms/packet-enrichment-form/virtual-sensor/virtual-sensor.component';
+import { ComputeFieldRuleComponent } from './project-forms/packet-enrichment-form/compute-field-rule/compute-field-rule.component';
 
 @NgModule({
   declarations: [
@@ -128,7 +128,7 @@ import { VirtualSensorComponent } from './project-forms/packet-enrichment-form/v
     EventComponentContainerComponent,
     EventMqttCommandComponent ,
     AlarmEventsTableComponent,
-    VirtualSensorComponent,
+    ComputeFieldRuleComponent,
   ],
   imports: [
     ColorPickerModule,

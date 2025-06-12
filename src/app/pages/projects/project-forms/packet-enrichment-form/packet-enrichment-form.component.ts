@@ -13,7 +13,7 @@ import { AssetTagComponent } from './asset-tag/asset-tag.component';
 import { EnrichmentType } from './enrichment-type.enum';
 import { FourierTransformComponent } from './fourier-transform/fourier-transform.component';
 import { FormControl } from '@angular/forms';
-import { VirtualSensorComponent } from './virtual-sensor/virtual-sensor.component';
+import { ComputeFieldRuleComponent } from './compute-field-rule/compute-field-rule.component';
 
 @Component({
   selector: 'hyt-packet-enrichment-form',
@@ -45,7 +45,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
   fourierTransformComponent: FourierTransformComponent;
 
   @ViewChild('virtualSensor')
-  virtualSensorComponent: VirtualSensorComponent;
+  virtualSensorComponent: ComputeFieldRuleComponent;
 
   enrichmentTypes = EnrichmentType;
 
@@ -60,7 +60,8 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
     { value: EnrichmentType.ADD_TAG_ENRICHMENT, label: $localize`:@@HYT_tags:Tags` },
     { value: EnrichmentType.VALIDATION_ENRICHMENT, label: $localize`:@@HYT_validation:Validation` },
     { value: EnrichmentType.FOURIER_TRANSFORM_ENRICHMENT, label: $localize`:@@HYT_fourier_transform:FourierTransform` },
-    { value: EnrichmentType.VIRTUAL_SENSOR_ENRICHMENT, label: $localize`:@@HYT_virtual_sensor:VirtualSensor` }
+    // { value: EnrichmentType.VIRTUAL_SENSOR_ENRICHMENT, label: $localize`:@@HYT_virtual_sensor:VirtualSensor` }
+    { value: EnrichmentType.COMPUTE_FIELD_RULE_ACTION, label: $localize`:@@HYT_virtual_sensor:VirtualSensor` }
   ];
 
   activeOptions: Option[] = [
@@ -135,7 +136,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
       this.editMode = true;
       super.edit(rule, () => {
         const type = JSON.parse(this.entity.jsonActions)[0] || null;
-        const typeJSON = JSON.parse(type) ? JSON.parse(type) : null;
+        const typeJSON = JSON.parse(type) || null;
         this.selectedEnrichmentType = typeJSON ? typeJSON.actionName : null;
 
         switch (this.selectedEnrichmentType) {
@@ -161,9 +162,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
             this.ruleConfig = JSON.parse(type);
             break;
 
-          case EnrichmentType.VIRTUAL_SENSOR_ENRICHMENT:
-            console.log('VIRTUAL_SENSOR_ENRICHMENT', 'x');
-
+          case EnrichmentType.COMPUTE_FIELD_RULE_ACTION:
             this.ruleConfig = JSON.parse(type);
             break;
         }
@@ -260,7 +259,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
         jac = JSON.stringify(this.ruleConfig);
         break;
 
-      case EnrichmentType.VIRTUAL_SENSOR_ENRICHMENT:
+      case EnrichmentType.COMPUTE_FIELD_RULE_ACTION:
         console.log('VIRTUAL_SENSOR_ENRICHMENT');
 
         this.ruleConfig['active'] = this.form.get("active").value;

@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, Validators } from '@angular/forms';
-import { HPacket, HProject, Logger, LoggerService } from 'core';
+import { HPacket, HpacketsService, HProject, Logger, LoggerService } from 'core';
 import { EnrichmentType } from '../enrichment-type.enum';
 import { DataSimulatorSettings } from 'widgets'
 
@@ -14,43 +14,36 @@ type RuleConfiguration = {
   actionName: string,
   outputFieldId: number,
   outputFieldName: string,
-  formula: string,
-
-  /*
-  {
-  "actionName": "it.acsoftware.hyperiot.rule.service.actions.ComputeFieldRuleAction",
-  "outputFieldId": 79,
-  "outputFieldName": "temperatureDoubled",
-  "formula": "temperature*2",
-}
-   */
-
-  /**
-   {
-    "ruleDefinition": {
-        "ruleDefinition": "\"77.78\" == \"1\"",
-        "rulePrettyDefinition": "TempMonitor.temperature_data.temperature is equal to \"1\""
-    },
-    "rule-name": "TestVirtualSensor1",
-    "rule-type": "it.acsoftware.hyperiot.rule.service.actions.VirtualSensorRuleAction",
-    "active": "true",
-    "rule-description": ""
-    }
-   */
+  formula: string
 }
 
 @Component({
-  selector: 'hyt-virtual-sensor',
-  templateUrl: './virtual-sensor.component.html',
-  styleUrls: ['./virtual-sensor.component.scss']
+  selector: 'hyt-compute-field-rule',
+  templateUrl: './compute-field-rule.component.html',
+  styleUrls: ['./compute-field-rule.component.scss']
 })
-export class VirtualSensorComponent implements OnInit {
+export class ComputeFieldRuleComponent implements OnInit {
 
   @Input()
   packet: HPacket;
 
   @Input()
   project: HProject;
+
+  _config: RuleConfiguration = {
+    actionName: EnrichmentType.COMPUTE_FIELD_RULE_ACTION,
+    formula: undefined,
+    outputFieldId: undefined,
+    outputFieldName: undefined
+  };
+
+  @Input()
+  set config(cfg: any) {
+    this._config = cfg;
+    cfg.actionName = EnrichmentType.COMPUTE_FIELD_RULE_ACTION;
+  }
+
+  get config() { return this._config };
 
   output = this.fb.group({
     outputFieldName: ['', Validators.required],
@@ -74,17 +67,11 @@ export class VirtualSensorComponent implements OnInit {
 
   fieldOptions: Field[] = [];
 
-  config: RuleConfiguration = {
-    actionName: EnrichmentType.VIRTUAL_SENSOR_ENRICHMENT,
-    formula: undefined,
-    outputFieldId: undefined,
-    outputFieldName: undefined
-  };
-
   private logger: Logger;
 
   constructor(
     private fb: FormBuilder,
+    private hpacketService: HpacketsService,
     private loggerService: LoggerService,
   ) {
     this.logger = new Logger(this.loggerService);
@@ -223,5 +210,20 @@ export class VirtualSensorComponent implements OnInit {
   isValid(): boolean {
     return this.fieldRule.valid;
   }
+
+  // addOutputField(outputFieldName, multiplicity, type, successCallback, errorCallback) {
+  //   if (!this.config.outputFieldId) {
+  //     this.hpacketService.addHPacketField(this.packet.id, {
+  //       name: outputFieldName,
+  //       description: 'Fourier Transform output field',
+  //       multiplicity,
+  //       type
+  //     } as HPacketField).subscribe((res) => {
+  //       successCallback(res);
+  //     }, (error) => {
+  //       errorCallback();
+  //     });
+  //   }
+  // }
 
 }
