@@ -44,8 +44,8 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
   @ViewChild('fourierTransform')
   fourierTransformComponent: FourierTransformComponent;
 
-  @ViewChild('virtualSensor')
-  virtualSensorComponent: ComputeFieldRuleComponent;
+  @ViewChild('computeFieldRule')
+  computeFieldRuleComponent: ComputeFieldRuleComponent;
 
   enrichmentTypes = EnrichmentType;
 
@@ -60,8 +60,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
     { value: EnrichmentType.ADD_TAG_ENRICHMENT, label: $localize`:@@HYT_tags:Tags` },
     { value: EnrichmentType.VALIDATION_ENRICHMENT, label: $localize`:@@HYT_validation:Validation` },
     { value: EnrichmentType.FOURIER_TRANSFORM_ENRICHMENT, label: $localize`:@@HYT_fourier_transform:FourierTransform` },
-    // { value: EnrichmentType.VIRTUAL_SENSOR_ENRICHMENT, label: $localize`:@@HYT_virtual_sensor:VirtualSensor` }
-    { value: EnrichmentType.COMPUTE_FIELD_RULE_ACTION, label: $localize`:@@HYT_virtual_sensor:VirtualSensor` }
+    { value: EnrichmentType.COMPUTE_FIELD_RULE_ACTION, label: $localize`:@@HYT_compute_field_rule_action:Compute Field Rule Action` }
   ];
 
   activeOptions: Option[] = [
@@ -363,15 +362,15 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
     return this.fourierTransformComponent ? this.fourierTransformComponent.isDirty() : false;
   }
 
-  virtualSensorDirty() {
-    return this.virtualSensorComponent?.isDirty() || false;
+  computeFieldRuleActionDirty() {
+    return this.computeFieldRuleComponent?.isDirty() || false;
   }
 
   isValid() {
     return super.isValid() && !this.invalidRules()
       && (
         this.fourierTransformComponent?.isValid() ||
-        this.virtualSensorComponent?.isValid()
+        this.computeFieldRuleComponent?.isValid()
       );
   }
 
@@ -383,7 +382,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
         this.categoryDirty() ||
         this.tagDirty() ||
         this.fftDirty() ||
-        this.virtualSensorDirty()
+        this.computeFieldRuleActionDirty()
       );
   }
 
