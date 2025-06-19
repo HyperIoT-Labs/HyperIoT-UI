@@ -25,25 +25,39 @@ type RuleConfiguration = {
 })
 export class ComputeFieldRuleComponent implements OnInit {
 
-
-
   @Input()
   packet: HPacket;
 
   @Input()
   project: HProject;
 
-  _config: RuleConfiguration = {
-    actionName: EnrichmentType.COMPUTE_FIELD_RULE_ACTION,
-    formula: undefined,
-    outputFieldId: undefined,
-    outputFieldName: undefined
-  };
+  _config: RuleConfiguration | undefined;
 
   @Input()
-  set config(cfg: RuleConfiguration) {
-    this._config = cfg;
-    cfg.actionName = EnrichmentType.COMPUTE_FIELD_RULE_ACTION;
+  set config(cfg: RuleConfiguration | undefined) {
+    if (cfg) {
+      this._config = { ...cfg };
+      this.formulaFormControl.patchValue(this._config.formula);
+
+      this.hPacketService.getHPacketField([this._config.outputFieldId])
+        .subscribe({
+          next: (res) => {
+            if (res && res.length > 0) {
+              this.outputPacketFieldGroup.patchValue(res[0]);
+            }
+          },
+          error: (err) => {
+
+          }
+        });
+    } else {
+      this._config = {
+        actionName: EnrichmentType.COMPUTE_FIELD_RULE_ACTION,
+        formula: undefined,
+        outputFieldId: undefined,
+        outputFieldName: undefined
+      };
+    }
   }
 
   get config() {
@@ -52,8 +66,7 @@ export class ComputeFieldRuleComponent implements OnInit {
 
   readonly output = this.fb.group({
     formula: ['', Validators.required],
-    constants: this.fb.array([]),
-    // outputPacketField: ['', Validators.required]
+    constants: this.fb.array([])
   });
 
   readonly outputPacketFieldGroup = this.fb.group({
@@ -81,9 +94,6 @@ export class ComputeFieldRuleComponent implements OnInit {
     multiplicity: HPacketField.MultiplicityEnum,
     type: HPacketField.TypeEnum,
   } as const;
-
-  // @ViewChild('tab') tab: MatTabGroup;
-  // @ViewChild('selectPacketField') selectPacketField: MatSelect;
 
   newHPackedField: Pick<HPacketField, 'name' | 'multiplicity' | 'type'>;
 
@@ -159,6 +169,11 @@ export class ComputeFieldRuleComponent implements OnInit {
   private evaluateFormula(formula: string) {
     this.config.formula = undefined;
 
+    if (!formula) {
+      this.logger.debug('formula is empty');
+      return;
+    }
+
     if (this.placeholderAliasFormArray.length === 0) {
       this.formulaFormControl.setErrors({ 'incorrect': true });
       this.logger.debug('no placeholder was used');
@@ -166,27 +181,33 @@ export class ComputeFieldRuleComponent implements OnInit {
     }
 
     formula = formula.replace(',', '.');
+
     try {
-      for (const { name, value } of this.constantList.value) {
-        formula = formula.replace(new RegExp(name, 'gi'), value);
-      }
+      let feedbackFormula = formula;
 
       for (const { placeHolder, field } of this.placeholderAliasFormArray.value) {
         const escapePlaceholder = placeHolder.replace('$', '\\$');
         formula = formula.replace(new RegExp(escapePlaceholder, 'gi'), field);
+        feedbackFormula = feedbackFormula.replace(new RegExp(escapePlaceholder, 'gi'), '1'); //custom value used only for validation
+      }
+
+      for (const { name, value } of this.constantList.value) {
+        formula = formula.replace(new RegExp(name, 'gi'), value);
+        feedbackFormula = feedbackFormula.replace(new RegExp(name, 'gi'), value);
       }
 
       for (const operator of DataSimulatorSettings.Utils.expressionOperators) {
-        formula = formula.replace(operator.regex, operator.function);
+        formula = formula.replace(new RegExp(operator.regex, 'gi'), operator.function);
+        feedbackFormula = feedbackFormula.replace(new RegExp(operator.regex, 'gi'), operator.function);
       }
 
       if (formula) {
-        new Function(`return ${formula}`)();
+        new Function(`return ${feedbackFormula}`)();        
 
         this.logger.debug('formula is valid', formula);
         this.formulaFormControl.setErrors(null);
 
-        this.config.formula = formula;
+        this.config.formula = feedbackFormula;
       } else {
         this.logger.debug('formula is empty');
         this.formulaFormControl.setErrors({ 'incorrect': true });
@@ -280,21 +301,7 @@ export class ComputeFieldRuleComponent implements OnInit {
       next: (res: HPacketField) => {
         this.outputPacketFieldGroup.patchValue(res);
 
-        // this.tab.selectedIndex = 0;
-
-        // this.hPacketService.findTreeFields(this.packet.id)
-        //   .subscribe({
-        //     next: (hPacketFieldList) => {
-        //       this.packet.fields = hPacketFieldList;
-
-        //       this.initInputOutputFieldsSelection();
-
-        //       this.output.controls.outputPacketField.setValue(res);
-        //     },
-        //     error: () => {
-
-        //     }
-        //   });
+        this.config.outputFieldId = res.id;
       },
       error: (err: HttpErrorResponse) => {
         if (err.status === HttpStatusCode.Conflict) {

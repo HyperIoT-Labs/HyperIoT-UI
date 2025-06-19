@@ -71,7 +71,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
 
   selectedEnrichmentType: EnrichmentType | undefined;
 
-  ruleConfig = {};
+  ruleConfig: any;
 
   assetTags: number[] = [];
   assetCategories: number[] = [];

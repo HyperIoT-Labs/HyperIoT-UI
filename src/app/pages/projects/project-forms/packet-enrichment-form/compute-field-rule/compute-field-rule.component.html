@@ -28,7 +28,7 @@
                 <mat-select formControlName="field" required>
                   <ng-container *ngFor="let option of fieldOptions">
                     <mat-option
-                      [value]="option.field"
+                      [value]="option.label"
                       [disabled]="option.disabled"
                     >
                       {{ option.label }}
@@ -64,7 +64,7 @@
       </div>
     </div>
 
-    <div class="form-group">
+    <!-- <div class="form-group">
       <p class="title">Constants</p>
       <div class="box">
         <div
@@ -121,7 +121,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 
   <div class="form-group">
@@ -221,14 +221,14 @@
           [formGroup]="outputPacketFieldGroup"
           class="output-field-container m-2"
         >
-          <ng-container
-            *ngIf="
-              !outputPacketFieldGroup.value?.id || enableEditPackedField;
-              else multiplicityTemplate
-            "
-          >
-            <mat-form-field>
-              <mat-label>Multiplicity</mat-label>
+          <mat-form-field>
+            <mat-label>Multiplicity</mat-label>
+            <ng-container
+              *ngIf="
+                !outputPacketFieldGroup.value?.id || enableEditPackedField;
+                else multiplicityTemplate
+              "
+            >
               <mat-select formControlName="multiplicity" required>
                 <ng-container
                   *ngFor="
@@ -241,20 +241,17 @@
                   </mat-option>
                 </ng-container>
               </mat-select>
-            </mat-form-field>
-          </ng-container>
-          <ng-template #multiplicityTemplate>
-            <mat-form-field>
+            </ng-container>
+            <ng-template #multiplicityTemplate>
               <input
                 matInput
                 formControlName="multiplicity"
                 name="multiplicity"
                 required
                 type="text"
-                readonly
               />
-            </mat-form-field>
-          </ng-template>
+            </ng-template>
+          </mat-form-field>
 
           <mat-form-field>
             <mat-label>Type</mat-label>
@@ -301,10 +298,12 @@
           </mat-form-field>
 
           <div
-            *ngIf="outputPacketFieldGroup.value?.id; else aaa"
+            *ngIf="outputPacketFieldGroup.value?.id; else createPacketTemplate"
             class="addButton"
           >
-            <ng-container *ngIf="enableEditPackedField; else xxx">
+            <ng-container
+              *ngIf="enableEditPackedField; else editPacketTemplate"
+            >
               <div class="addButton">
                 <hyt-button
                   (clickFn)="updatePacketField()"
@@ -315,7 +314,7 @@
                 </hyt-button>
               </div>
             </ng-container>
-            <ng-template #xxx>
+            <ng-template #editPacketTemplate>
               <hyt-button
                 *ngIf="!enableEditPackedField"
                 (clickFn)="enableEditPackedField = true"
@@ -325,7 +324,7 @@
               </hyt-button>
             </ng-template>
           </div>
-          <ng-template #aaa>
+          <ng-template #createPacketTemplate>
             <div class="addButton">
               <hyt-button
                 (clickFn)="createPacketField()"
@@ -356,7 +355,10 @@
               />
             </mat-form-field>
             <ng-container
-              *ngIf="formulaFormControl.invalid && formulaFormControl.dirty; else expressionValid"
+              *ngIf="
+                formulaFormControl.invalid && formulaFormControl.dirty;
+                else expressionValid
+              "
             >
               <mat-icon color="warn" matSuffix> highlight_off </mat-icon>
             </ng-container>
@@ -364,7 +366,10 @@
               <mat-icon color="primary" matSuffix> done_outline </mat-icon>
             </ng-template>
           </div>
-          <mat-hint *ngIf="formulaFormControl.invalid && formulaFormControl.dirty" class="mat-error">
+          <mat-hint
+            *ngIf="formulaFormControl.invalid && formulaFormControl.dirty"
+            class="mat-error"
+          >
             Invalid expression!
           </mat-hint>
         </div>
