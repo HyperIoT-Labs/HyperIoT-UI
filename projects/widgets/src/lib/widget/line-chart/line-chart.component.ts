@@ -29,6 +29,8 @@ import { ServiceType } from "../../service/model/service-type";
 import { DashboardEventService } from "../../dashboard/services/dashboard-event.service";
 import { DashboardEvent } from "../../dashboard/services/dashboard-event.model";
 
+import { linearRegression, linearRegressionLine } from 'simple-statistics';
+
 @Component({
   selector: "hyperiot-line-chart",
   templateUrl: "./line-chart.component.html",
@@ -489,6 +491,25 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
     const value = tempSplitted.length > 1 ? tempSplitted[2].toLowerCase() : "";
     if (value === "") return;
     values.push(value);
+  }
+
+  // TREND LINE
+  addTrend(data) {
+    this.graph.layout.shapes.push(
+      {
+        type: "line",
+        xref: "paper",
+        x0: 0,
+        x1: 1,
+        yref: "y",
+        y0: 1,
+        y1: 2,
+        line: {
+          color: "red",
+          width: 1
+        },
+      }
+    );
   }
 
   addSingleThreshold(rule, threshold: Threshold) {

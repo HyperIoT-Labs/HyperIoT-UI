@@ -37,6 +37,11 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy, OnChanges 
     
     collapsedThresholdValues: any = {};
 
+    trendActive: boolean = false;
+    trendForm: FormArray = this.fb.array([]);
+    trendFields = [];
+    trendSelectedFields = [];
+
     defaultOpacity: number = 0.55;
     defaultColor: string = `rgba(5, 186, 0, ${this.defaultOpacity})`;
     defaultLine = { color: this.defaultColor, thickness: 2, type: LineTypes.Linear };
@@ -87,6 +92,12 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy, OnChanges 
         if (this.widget.config.seriesConfig == null || this.widget.config.seriesConfig.length === 0) {
             Object.assign(this.widget.config, this.defaultConfig);
         }
+
+        // Add trend to form
+        if (1==1){
+            this.addTrendToForm(null);
+        }
+
         if (this.widget.config.threshold) {
             this.thresholdActive = this.widget.config.threshold.thresholdActive;
             if (this.thresholdActive) {
@@ -153,12 +164,30 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy, OnChanges 
         else this.thresholdsForm.push(thresholdGroup);
     }
 
+    addTrendToForm(trend) {
+        const trendGroup = this.fb.group({
+            id: [null, Validators.required],
+            line: this.fb.group({
+                color: [this.defaultColor, Validators.required],
+                thickness: [2, [Validators.min(1), Validators.max(5)]],
+                type: [null]
+            })
+        });
+
+        this.trendForm.insert(0, trendGroup);
+    }
+
     onSelectedFieldsChange(fields) {
         this.selectedFields = fields;
+        this.trendFields = fields;
     }
 
     onSelectedPacketChange(packet) {
         this.selectedPackets = [packet.id];
+    }
+
+    onPacketFieldTrendChange(event) {
+
     }
 
     updatePageStatus(status) {
@@ -262,6 +291,9 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy, OnChanges 
                 this.pageStatus = PageStatus.Error;
             }
         })
+    }
+
+    isTrendChecked() {
     }
 
     /**
