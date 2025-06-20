@@ -370,7 +370,21 @@
             *ngIf="formulaFormControl.invalid && formulaFormControl.dirty"
             class="mat-error"
           >
-            Invalid expression!
+            <ng-container
+              *ngIf="formulaFormControl.getError('placeholderUnset')"
+            >
+              Some placeholder is not set
+            </ng-container>
+            <ng-container
+              *ngIf="formulaFormControl.getError('placeholderNotUsed')"
+            >
+              Some placeholder is not used
+            </ng-container>
+            <ng-container
+              *ngIf="formulaFormControl.getError('invalid')"
+            >
+              Invalid expression!
+            </ng-container>
           </mat-hint>
         </div>
 

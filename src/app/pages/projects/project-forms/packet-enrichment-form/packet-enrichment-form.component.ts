@@ -71,7 +71,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
 
   selectedEnrichmentType: EnrichmentType | undefined;
 
-  ruleConfig: any;
+  ruleConfig = {};
 
   assetTags: number[] = [];
   assetCategories: number[] = [];
@@ -259,8 +259,6 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
         break;
 
       case EnrichmentType.COMPUTE_FIELD_RULE_ACTION:
-        console.log('VIRTUAL_SENSOR_ENRICHMENT');
-
         this.ruleConfig['active'] = this.form.get("active").value;
         jac = JSON.stringify(this.ruleConfig);
         break;

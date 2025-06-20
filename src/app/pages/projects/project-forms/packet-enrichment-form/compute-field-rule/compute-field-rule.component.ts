@@ -18,6 +18,11 @@ type RuleConfiguration = {
   formula: string
 }
 
+type Placeholder = {
+  placeHolder: string,
+  field: string
+}
+
 @Component({
   selector: 'hyt-compute-field-rule',
   templateUrl: './compute-field-rule.component.html',
@@ -35,8 +40,8 @@ export class ComputeFieldRuleComponent implements OnInit {
 
   @Input()
   set config(cfg: RuleConfiguration | undefined) {
-    if (cfg) {
-      this._config = { ...cfg };
+    this._config = cfg;
+    if (this._config?.actionName) {
       this.formulaFormControl.patchValue(this._config.formula);
 
       this.hPacketService.getHPacketField([this._config.outputFieldId])
@@ -51,12 +56,10 @@ export class ComputeFieldRuleComponent implements OnInit {
           }
         });
     } else {
-      this._config = {
-        actionName: EnrichmentType.COMPUTE_FIELD_RULE_ACTION,
-        formula: undefined,
-        outputFieldId: undefined,
-        outputFieldName: undefined
-      };
+      this._config.actionName = EnrichmentType.COMPUTE_FIELD_RULE_ACTION,
+        this._config.formula = undefined,
+        this._config.outputFieldId = undefined,
+        this._config.outputFieldName = undefined
     }
   }
 
@@ -75,7 +78,7 @@ export class ComputeFieldRuleComponent implements OnInit {
     description: ['output', Validators.required],
     multiplicity: ['', Validators.required],
     type: ['', Validators.required]
-  })
+  });
 
   get formulaFormControl(): FormControl {
     return this.output.get('formula') as FormControl;
@@ -118,14 +121,7 @@ export class ComputeFieldRuleComponent implements OnInit {
     this.addField();
     this.addConstant();
 
-    //TEST
-    this.output.valueChanges.subscribe((value) => {
-      console.log(value);
-    })
-
     this.outputPacketFieldGroup.valueChanges.subscribe((value) => {
-      console.log(value);
-
       if (value.id) {
         this.config.outputFieldId = value.id;
       }
@@ -133,7 +129,7 @@ export class ComputeFieldRuleComponent implements OnInit {
       this.config.outputFieldName = value.name;
     })
 
-    this.placeholderAliasFormArray.valueChanges.subscribe((value) => {
+    this.placeholderAliasFormArray.valueChanges.subscribe((value: Placeholder[]) => {
       const selectedFieldList = value.filter(({ field }) => field);
 
       for (const element of this.fieldOptions) {
@@ -174,8 +170,8 @@ export class ComputeFieldRuleComponent implements OnInit {
       return;
     }
 
-    if (this.placeholderAliasFormArray.length === 0) {
-      this.formulaFormControl.setErrors({ 'incorrect': true });
+    if (this.placeholderAliasFormArray.length === 0 || (this.placeholderAliasFormArray.value as Placeholder[]).some(({ field }) => !field)) {
+      this.formulaFormControl.setErrors({ 'placeholderUnset': true });
       this.logger.debug('no placeholder was used');
       return;
     }
@@ -191,6 +187,13 @@ export class ComputeFieldRuleComponent implements OnInit {
         feedbackFormula = feedbackFormula.replace(new RegExp(escapePlaceholder, 'gi'), '1'); //custom value used only for validation
       }
 
+      for (const { field } of this.placeholderAliasFormArray.value) {
+        if (!formula.includes(field)) {
+          this.formulaFormControl.setErrors({ 'placeholderNotUsed': true });
+          return
+        }
+      }
+
       for (const { name, value } of this.constantList.value) {
         formula = formula.replace(new RegExp(name, 'gi'), value);
         feedbackFormula = feedbackFormula.replace(new RegExp(name, 'gi'), value);
@@ -202,19 +205,19 @@ export class ComputeFieldRuleComponent implements OnInit {
       }
 
       if (formula) {
-        new Function(`return ${feedbackFormula}`)();        
+        new Function(`return ${feedbackFormula}`)();
 
         this.logger.debug('formula is valid', formula);
         this.formulaFormControl.setErrors(null);
 
-        this.config.formula = feedbackFormula;
+        this.config.formula = formula;
       } else {
         this.logger.debug('formula is empty');
-        this.formulaFormControl.setErrors({ 'incorrect': true });
+        this.formulaFormControl.setErrors({ 'invalid': true });
       }
     } catch (error) {
       this.logger.debug('formula is not valid', formula);
-      this.formulaFormControl.setErrors({ 'incorrect': true });
+      this.formulaFormControl.setErrors({ 'invalid': true });
     }
   }
 
@@ -228,12 +231,12 @@ export class ComputeFieldRuleComponent implements OnInit {
       ? 1
       : this.placeholderAliasFormArray.controls.length + 1;
 
-    const row = this.fb.group({
-      placeHolder: this.fb.control(`$val${counter}`, Validators.required),
-      field: this.fb.control('', Validators.required)
-    })
-
-    this.placeholderAliasFormArray.push(row);
+    this.placeholderAliasFormArray.push(
+      this.fb.group({
+        placeHolder: this.fb.control(`$val${counter}`, Validators.required),
+        field: this.fb.control('', Validators.required)
+      })
+    );
   }
 
   deleteField(index: number): void {
@@ -261,11 +264,15 @@ export class ComputeFieldRuleComponent implements OnInit {
   }
 
   isDirty(): boolean {
-    return this.formulaFormControl.dirty;
+    return this.formulaFormControl.dirty
+      && this.placeholderAliasFormArray.dirty
+      && this.outputPacketFieldGroup.dirty;
   }
 
   isValid(): boolean {
-    return this.formulaFormControl.valid;
+    return this.formulaFormControl.valid
+      && this.placeholderAliasFormArray.valid
+      && this.outputPacketFieldGroup.valid;
   }
 
   updatePacketField() {
