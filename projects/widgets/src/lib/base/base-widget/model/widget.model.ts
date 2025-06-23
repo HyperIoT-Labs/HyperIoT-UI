@@ -59,12 +59,25 @@ export interface ConfigModel {
         thresholdActive: boolean;
         thresholds?: Threshold[];
     }
+    trend?: {
+        trendActive : boolean;
+        trend?: Trend;
+    }
     maxValue?: number;
 }
 
 export interface Threshold {
     id: string;
     rule?: string;
+    line: {
+        color: string;
+        thickness: number;
+        type: string;
+    }
+}
+
+export interface Trend {
+    fieldId: number;
     line: {
         color: string;
         thickness: number;
