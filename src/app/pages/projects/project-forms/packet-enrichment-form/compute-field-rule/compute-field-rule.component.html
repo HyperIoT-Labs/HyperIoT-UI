@@ -28,10 +28,10 @@
                 <mat-select formControlName="field" required>
                   <ng-container *ngFor="let option of fieldOptions">
                     <mat-option
-                      [value]="option.label"
+                      [value]="option.field"
                       [disabled]="option.disabled"
                     >
-                      {{ option.label }}
+                      {{ option.field.name }}
                     </mat-option>
                   </ng-container>
                 </mat-select>
@@ -42,7 +42,7 @@
                 matButton
                 class="mat-button"
                 type="button"
-                (click)="deleteField(i)"
+                (click)="deleteVariable(i)"
               >
                 <span class="mat-button-wrapper">
                   <span class="hyt-icon icon-hyt_trash"></span>
@@ -52,7 +52,7 @@
           </div>
           <div class="addButton">
             <hyt-button
-              (clickFn)="addField()"
+              (clickFn)="addVariable()"
               [color]="'hyt-base-total-white'"
               [isDisabled]="placeholderFormGroup.invalid || disableAdd()"
             >
@@ -64,7 +64,7 @@
       </div>
     </div>
 
-    <!-- <div class="form-group">
+    <div class="form-group">
       <p class="title">Constants</p>
       <div class="box">
         <div
@@ -121,7 +121,7 @@
           </div>
         </div>
       </div>
-    </div> -->
+    </div>
   </div>
 
   <div class="form-group">
