@@ -31,6 +31,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -160,6 +161,7 @@ import { ComputeFieldRuleComponent } from './project-forms/packet-enrichment-for
     MatButtonToggleModule,
     MatSliderModule,
     MatBadgeModule,
+    MatFormFieldModule
   ],
   entryComponents: [
     AddTagModalComponent,

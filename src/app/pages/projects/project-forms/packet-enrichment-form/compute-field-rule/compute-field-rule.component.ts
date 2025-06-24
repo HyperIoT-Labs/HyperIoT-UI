@@ -1,9 +1,10 @@
-import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild, ViewChildren } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { HPacket, HPacketField, HpacketsService, HProject, Logger, LoggerService } from 'core';
 import { EnrichmentType } from '../enrichment-type.enum';
 import { DataSimulatorSettings } from 'widgets'
 import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
+import { MatSelect } from '@angular/material/select';
 
 type Field = {
   field: Pick<HPacketField, 'id' | 'name'>;
@@ -35,7 +36,7 @@ type RuleConfiguration = {
   templateUrl: './compute-field-rule.component.html',
   styleUrls: ['./compute-field-rule.component.scss']
 })
-export class ComputeFieldRuleComponent implements OnInit, AfterViewInit {
+export class ComputeFieldRuleComponent implements OnInit {
 
   @Input()
   packet: HPacket;
@@ -43,7 +44,59 @@ export class ComputeFieldRuleComponent implements OnInit, AfterViewInit {
   @Input()
   project: HProject;
 
-  @Input() config: RuleConfiguration | undefined;
+  _config: RuleConfiguration | undefined;
+
+  @Input()
+  set config(cfg: RuleConfiguration | undefined) {
+    this._config = cfg;
+    const { actionName, constants, formulaRow, variables, outputFieldId } = this._config;
+    if (actionName) {
+      this.formulaFormControl.patchValue(formulaRow);
+
+      for (const { field, placeHolder } of variables) {
+        this.variablesFormArray.push(
+          this.fb.group({
+            placeHolder: this.fb.control(placeHolder, Validators.required),
+            field: this.fb.control(field, Validators.required)
+          })
+        );
+      }
+
+      if (constants.length > 0) {
+        for (const constant of constants) {
+          this.addConstant(constant);
+        }
+      } else {
+        this.addConstant();
+      }
+
+      this.hPacketService.getHPacketField([outputFieldId])
+        .subscribe({
+          next: (res) => {
+            if (res && res.length > 0) {
+              this.outputPacketFieldGroup.patchValue(res[0]);
+            }
+          },
+          error: (err) => {
+
+          }
+        });
+    } else {
+      this._config.actionName = EnrichmentType.COMPUTE_FIELD_RULE_ACTION;
+      this._config.formula = undefined;
+      this._config.outputFieldId = undefined;
+      this._config.outputFieldName = undefined;
+      this._config.variables = [];
+      this._config.constants = [];
+
+      this.addVariable();
+      this.addConstant();
+    }
+  };
+
+  get config(): RuleConfiguration | undefined {
+    return this._config;
+  }
 
   readonly output = this.fb.group({
     formula: ['', Validators.required],
@@ -66,7 +119,7 @@ export class ComputeFieldRuleComponent implements OnInit, AfterViewInit {
     return this.output.get('constants') as FormArray;
   }
 
-  readonly placeholderAliasFormArray = this.fb.array([]);
+  readonly variablesFormArray = this.fb.array([]);
 
   fieldOptions: Field[] = [];
   outputPacketFieldList: HPacketField[] = [];
@@ -107,12 +160,12 @@ export class ComputeFieldRuleComponent implements OnInit, AfterViewInit {
         }
       })
 
-    this.placeholderAliasFormArray.valueChanges
+    this.variablesFormArray.valueChanges
       .subscribe((variableList: Variable[]) => {
-        const selectedFieldList = variableList.filter(({ field }) => field?.name);
+        const selectedFieldList = variableList.filter(({ field }) => field?.id);
 
         this.fieldOptions.forEach((fieldOption) => {
-          fieldOption.disabled = selectedFieldList.some(({ field }) => field.name === fieldOption.field.name);
+          fieldOption.disabled = selectedFieldList.some(({ field }) => field.id === fieldOption.field.id);
         });
 
         this.config.variables = variableList.map(({ field, placeHolder }) => {
@@ -136,51 +189,6 @@ export class ComputeFieldRuleComponent implements OnInit, AfterViewInit {
       });
   }
 
-  ngAfterViewInit(): void {
-    if (this.config?.actionName) {
-      this.formulaFormControl.patchValue(this.config.formula);
-
-      for (const { field, placeHolder } of this.config.variables) {
-        this.placeholderAliasFormArray.push(
-          this.fb.group({
-            placeHolder: this.fb.control(placeHolder, Validators.required),
-            field: this.fb.control(field, Validators.required)
-          })
-        );
-      }
-
-      if (this.config.constants.length > 0) {
-        for (const constant of this.config.constants) {
-          this.addConstant(constant);
-        }
-      } else {
-        this.addConstant();
-      }
-
-      this.hPacketService.getHPacketField([this.config.outputFieldId])
-        .subscribe({
-          next: (res) => {
-            if (res && res.length > 0) {
-              this.outputPacketFieldGroup.patchValue(res[0]);
-            }
-          },
-          error: (err) => {
-
-          }
-        });
-    } else {
-      this.config.actionName = EnrichmentType.COMPUTE_FIELD_RULE_ACTION;
-      this.config.formula = undefined;
-      this.config.outputFieldId = undefined;
-      this.config.outputFieldName = undefined;
-      this.config.variables = [];
-      this.config.constants = [];
-
-      this.addVariable();
-      this.addConstant();
-    }
-  }
-
   private initInputOutputFieldsSelection() {
     this.fieldOptions = this.packet.fields
       .filter(({ description }) => description !== 'output')
@@ -188,8 +196,7 @@ export class ComputeFieldRuleComponent implements OnInit, AfterViewInit {
         return {
           field: {
             id: field.id,
-            name: field.name,
-
+            name: field.name
           },
           disabled: false
         };
@@ -206,11 +213,12 @@ export class ComputeFieldRuleComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    const placeholderArray: Variable[] = this.placeholderAliasFormArray.value;
+    const variableList: Variable[] = this.variablesFormArray.value;
+    const constantList: Constant[] = this.constantList.value;
 
     if (
-      this.placeholderAliasFormArray.length === 0
-      || placeholderArray.some(({ field }) => !field?.id)
+      this.variablesFormArray.length === 0
+      || variableList.some(({ field }) => !field?.id)
     ) {
       this.formulaFormControl.setErrors({ 'placeholderUnset': true });
       this.logger.debug('no placeholder was used');
@@ -222,22 +230,17 @@ export class ComputeFieldRuleComponent implements OnInit, AfterViewInit {
     try {
       let feedbackFormula = formula;
 
-      for (const { placeHolder, field } of placeholderArray) {
+      for (const { placeHolder, field } of variableList) {
         const escapePlaceholder = placeHolder.replace('$', '\\$');
-        formula = formula.replace(new RegExp(escapePlaceholder, 'gi') + ' ', field.name);
+        formula = formula.replace(new RegExp(escapePlaceholder, 'gi'), field.name);
         feedbackFormula = feedbackFormula.replace(new RegExp(escapePlaceholder, 'gi'), '1'); //custom value used only for validation
       }
 
-      for (const { placeHolder } of placeholderArray) {
-        if (!formula.includes(placeHolder)) {
+      for (const { field } of variableList) {
+        if (!formula.includes(field.name)) {
           this.formulaFormControl.setErrors({ 'placeholderNotUsed': true });
           return
         }
-      }
-
-      for (const { name, value } of this.constantList.value) {
-        formula = formula.replace(new RegExp(name, 'gi'), value);
-        feedbackFormula = feedbackFormula.replace(new RegExp(name, 'gi'), value);
       }
 
       for (const operator of DataSimulatorSettings.Utils.expressionOperators) {
@@ -251,15 +254,13 @@ export class ComputeFieldRuleComponent implements OnInit, AfterViewInit {
         this.logger.debug('formula is valid', formula);
         this.formulaFormControl.setErrors(null);
 
-        let formulaRow = formula
-        for (const { placeHolder, field } of placeholderArray) {
+        let formulaRow = formula;
+        for (const { placeHolder, field } of variableList) {
           formulaRow = formulaRow.replace(new RegExp(field.name, 'gi'), placeHolder);
         }
 
         this.config.formula = formula;
         this.config.formulaRow = formulaRow;
-
-        console.log('formulaRow', formulaRow);
       } else {
         this.logger.debug('formula is empty');
         this.formulaFormControl.setErrors({ 'invalid': true });
@@ -271,22 +272,22 @@ export class ComputeFieldRuleComponent implements OnInit, AfterViewInit {
   }
 
   disableAdd(): boolean {
-    return this.placeholderAliasFormArray.controls.length === this.fieldOptions.length
+    return this.variablesFormArray.controls.length === this.fieldOptions.length
       || this.fieldOptions.every(({ disabled }) => disabled);
   }
 
   addVariable(variable?: Variable): void {
     if (variable) {
-      this.placeholderAliasFormArray.push(
+      this.variablesFormArray.push(
         this.fb.group({
           placeHolder: this.fb.control(variable.placeHolder, Validators.required),
           field: this.fb.control(variable.field, Validators.required),
         })
       );
     } else {
-      const placeHolder = `$val${this.placeholderAliasFormArray.controls.length + 1}`;
+      const placeHolder = `$val${this.variablesFormArray.controls.length + 1}`;
 
-      this.placeholderAliasFormArray.push(
+      this.variablesFormArray.push(
         this.fb.group({
           placeHolder: this.fb.control(placeHolder, Validators.required),
           field: this.fb.control(null, Validators.required),
@@ -296,11 +297,11 @@ export class ComputeFieldRuleComponent implements OnInit, AfterViewInit {
   }
 
   deleteVariable(index: number): void {
-    this.placeholderAliasFormArray.removeAt(index);
+    this.variablesFormArray.removeAt(index);
 
-    if (this.placeholderAliasFormArray.controls.length > 0) {
-      for (let counter = 0; counter < this.placeholderAliasFormArray.controls.length; counter++) {
-        const element = this.placeholderAliasFormArray.controls[counter];
+    if (this.variablesFormArray.controls.length > 0) {
+      for (let counter = 0; counter < this.variablesFormArray.controls.length; counter++) {
+        const element = this.variablesFormArray.controls[counter];
         element.get('placeHolder').setValue(`$val${counter + 1}`);
       }
     }
@@ -328,14 +329,16 @@ export class ComputeFieldRuleComponent implements OnInit, AfterViewInit {
 
   isDirty(): boolean {
     return this.formulaFormControl.dirty
-      && this.placeholderAliasFormArray.dirty
+      && this.variablesFormArray.dirty
       && this.outputPacketFieldGroup.dirty;
   }
 
   isValid(): boolean {
     return this.formulaFormControl.valid
-      && this.placeholderAliasFormArray.valid
-      && this.outputPacketFieldGroup.valid;
+      && this.variablesFormArray.valid
+      && this.outputPacketFieldGroup.valid
+      && Boolean(this.config.formula)
+      && Boolean(this.config.outputFieldId);
   }
 
   updatePacketField() {
