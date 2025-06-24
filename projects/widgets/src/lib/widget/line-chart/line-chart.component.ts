@@ -23,7 +23,7 @@ import {
 } from "rxjs";
 
 import { BaseChartComponent } from "../../base/base-chart/base-chart.component";
-import { ConfigButtonWidget, Threshold, WidgetAction } from "../../base/base-widget/model/widget.model";
+import { ConfigButtonWidget, Threshold, Trend, WidgetAction } from "../../base/base-widget/model/widget.model";
 import { TimeSeries } from "../../data/time-series";
 import { ServiceType } from "../../service/model/service-type";
 import { DashboardEventService } from "../../dashboard/services/dashboard-event.service";
@@ -68,6 +68,8 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
   allData: PacketData[] = [];
 
   thresholds: Threshold[] = [];
+  trend: Trend = null;
+
   shapeIndices: number[] = [];
 
   protected logger: Logger;
@@ -209,11 +211,12 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
       this.thresholds = this.widget.config.threshold.thresholds;
       this.retrieveThresholds();
     }
+
     // scheduling chart initialization because of chart size
     asyncScheduler.schedule(() => {
       this.setTimeSeries();
       this.setTimeChartLayout();
-    });
+    });  
   }
 
   subscribeAndInit() {
@@ -300,6 +303,11 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
 
     super.computePacketData(packetData, convertOldValues);
 
+    if (this.widget.config.trend && this.widget.config.trend.trendActive) {
+      this.trend = this.widget.config.trend.trend;
+      this.addTrendToChart(this.trend, this.allData);
+    }
+
     packetData.forEach((datum) => {
       if (
         new Date(datum.timestamp) > this.lastOfflineDate ||
@@ -317,6 +325,7 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
       this.updateDataRequest();
     }
   }
+
 
   /* 
     Retrive each threshold and save the corresponding rule
@@ -407,6 +416,52 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
     };
   }
 
+  // lr.m => pendenza
+  regressionLine(data: any) {
+    const regressionData: [number, number][] = data.map(d => [
+          d.timestamp.getTime(),          
+          parseFloat(d.temperature) // TODO: mappare il campo
+        ]);
+
+    const lr = linearRegression(regressionData); // { m, b }
+    const line = linearRegressionLine(lr);
+    const regressionLinePoints: [number, number][] = regressionData.map(([x]) => [x, line(x)]);
+    const readableLine = regressionLinePoints.map(([x, y]) => ({
+      timestamp: new Date(x),
+      predictedTemperature: y
+    }));
+
+    return readableLine
+  }
+
+  addTrendToChart(trend: Trend, data: any) {
+    if (!this.graph.layout.shapes) this.graph.layout.shapes = [];
+    this.shapeIndices = []
+
+    let values = this.regressionLine(data)
+
+    this.graph.layout.shapes.push(
+      {
+        type: "rect",
+        xref: "paper",
+        x0: 0,
+        x1: 1,
+        yref: "y",
+        y0: values[1],
+        y1: values[0],
+        fillcolor: trend.line.color,
+        line: {
+          color: trend.line.color,
+          width: trend.line.thickness,
+          dash: this.getLineDash(trend.line.type)              
+        }
+      }
+    );
+
+    const shapeIndex: number = this.graph.layout.shapes.length;
+    this.shapeIndices.push(shapeIndex);
+  }
+
   addThresholdToChart(threshold: Threshold, ruleArray: string[], ruleName: string) {
     if (!this.graph.layout.shapes) this.graph.layout.shapes = [];
     /* TODO atm we only handle  */
@@ -493,24 +548,6 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
     values.push(value);
   }
 
-  // TREND LINE
-  addTrend(data) {
-    this.graph.layout.shapes.push(
-      {
-        type: "line",
-        xref: "paper",
-        x0: 0,
-        x1: 1,
-        yref: "y",
-        y0: 1,
-        y1: 2,
-        line: {
-          color: "red",
-          width: 1
-        },
-      }
-    );
-  }
 
   addSingleThreshold(rule, threshold: Threshold) {
     const tempSplitted = rule.split(' ').filter(i => i);
