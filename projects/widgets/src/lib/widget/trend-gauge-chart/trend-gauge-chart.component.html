@@ -25,7 +25,7 @@
     <ng-template #configured (resized)="onResized($event)">
       <hyperiot-loader
         *ngIf="
-          !graph || !graph?.data || graph?.data.length === 0;
+          !graph || !graph?.data || graph.data.length === 0;
           else loadingFinished
         "
       >

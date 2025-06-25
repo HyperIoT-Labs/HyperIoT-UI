@@ -75,7 +75,9 @@
 
                     <!-- TODO -->
                     <div *ngSwitchCase="'gauge'">
-                        <hyperiot-trend-gauge-chart-settings [widget]="widget" [areaId]="areaId" [hDeviceId]="hDeviceId" [modalApply]="modalApply.asObservable()"
+                        <hyperiot-trend-gauge-chart-settings 
+                            [widget]="widget" 
+                            [modalApply]="modalApply.asObservable()"
                             [settingsForm]="settingsForm">
                         </hyperiot-trend-gauge-chart-settings>
                     </div>

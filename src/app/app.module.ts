@@ -183,7 +183,7 @@ export function apiConfigFactory(): Configuration {
     CookieService,
     { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: true } },
     { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
-    // { provide: ErrorHandler, useClass: GlobalErrorHandlerService },
+    { provide: ErrorHandler, useClass: GlobalErrorHandlerService },
     BrandingService,
 
   ],

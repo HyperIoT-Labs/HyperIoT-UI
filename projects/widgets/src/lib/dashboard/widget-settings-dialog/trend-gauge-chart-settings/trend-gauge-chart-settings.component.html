@@ -1,18 +1,26 @@
 <hyperiot-packet-select
-    [widget]="widget"
-    [multiPacketSelect]="false"
-    [selectedFields]="selectedFields"
-    [areaId]="areaId"
-    [hDeviceId]="hDeviceId"
-    (selectedFieldsChange)="onSelectedFieldsChange($event)"></hyperiot-packet-select>
-<hr>
+  [widget]="widget"
+  [multiPacketSelect]="false"
+  [selectedFields]="selectedFields"
+  (selectedFieldsChange)="onSelectedFieldsChange($event)"
+></hyperiot-packet-select>
+<hr />
 <div class="text-color">
-    <label for="color" i18n="@@HYT_widget_settings_text_color">Text color:</label>
-    <input id="color" matInput type="color" [(ngModel)]="widget.config.textColor">
+  <label for="color" i18n="@@HYT_widget_settings_text_color">Text color:</label>
+  <input
+    id="color"
+    matInput
+    type="color"
+    [(ngModel)]="widget.config.textColor"
+  />
 </div>
-<div class="max-value">
-    <mat-form-field>
-        <mat-label i18n="@@HYT_widget_settings_max_value">Set max value:</mat-label>
-        <input id="max-value" matInput type="number" [(ngModel)]="widget.config.maxValue">
-    </mat-form-field>
+<div>
+  <form [formGroup]="formGroup">
+    <ng-container formGroupName="range">
+      <input type="number" [min]="-1" formControlName="start" />
+      <input type="number" [max]="1" formControlName="stop" />
+    </ng-container>
+    <input type="color" formControlName="color" />
+    <button type="button" (click)="addStep(formGroup)">ADD</button>
+  </form>
 </div>
