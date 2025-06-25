@@ -240,16 +240,16 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
 
       case EnrichmentType.ADD_TAG_ENRICHMENT:
         jac = JSON.stringify({
-           actionName: EnrichmentType.ADD_TAG_ENRICHMENT, 
-           tagIds: this.assetTagComponent.selectedTags, 
-           active: this.form.get("active").value 
-          });
+          actionName: EnrichmentType.ADD_TAG_ENRICHMENT,
+          tagIds: this.assetTagComponent.selectedTags,
+          active: this.form.get("active").value
+        });
         break;
 
       case EnrichmentType.VALIDATION_ENRICHMENT:
-        jac = JSON.stringify({ 
-          actionName: EnrichmentType.VALIDATION_ENRICHMENT, 
-          active: this.form.get("active").value 
+        jac = JSON.stringify({
+          actionName: EnrichmentType.VALIDATION_ENRICHMENT,
+          active: this.form.get("active").value
         });
         break;
 
@@ -348,23 +348,23 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
     }
   }
 
-  categoryDirty() {
+  categoryDirty(): boolean {
     return this.assetTagComponent ? this.assetTagComponent.isDirty() : false;
   }
 
-  tagDirty() {
+  tagDirty(): boolean {
     return this.assetCategoryComponent ? this.assetCategoryComponent.isDirty() : false;
   }
 
-  fftDirty() {
+  fftDirty(): boolean {
     return this.fourierTransformComponent ? this.fourierTransformComponent.isDirty() : false;
   }
 
-  computeFieldRuleActionDirty() {
-    return this.computeFieldRuleComponent?.isDirty() || false;
+  computeFieldRuleActionDirty(): boolean {
+    return this.computeFieldRuleComponent?.isDirty();
   }
 
-  isValid() {
+  isValid(): boolean {
     return super.isValid() && !this.invalidRules()
       && (
         this.fourierTransformComponent?.isValid() ||
@@ -372,7 +372,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
       );
   }
 
-  isDirty() {
+  isDirty(): boolean {
     return this.editMode &&
       (
         super.isDirty() ||

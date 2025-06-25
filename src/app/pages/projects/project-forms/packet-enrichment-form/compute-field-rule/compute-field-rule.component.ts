@@ -1,10 +1,9 @@
-import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild, ViewChildren } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormArray, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { HPacket, HPacketField, HpacketsService, HProject, Logger, LoggerService } from 'core';
 import { EnrichmentType } from '../enrichment-type.enum';
 import { DataSimulatorSettings } from 'widgets'
 import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
-import { MatSelect } from '@angular/material/select';
 
 type Field = {
   field: Pick<HPacketField, 'id' | 'name'>;
@@ -48,16 +47,22 @@ export class ComputeFieldRuleComponent implements OnInit {
 
   @Input()
   set config(cfg: RuleConfiguration | undefined) {
+    this.initInputOutputFieldsSelection();
+
     this._config = cfg;
     const { actionName, constants, formulaRow, variables, outputFieldId } = this._config;
     if (actionName) {
       this.formulaFormControl.patchValue(formulaRow);
 
+      this.variablesFormArray.clear();
+
       for (const { field, placeHolder } of variables) {
+        const selectFieldValue = this.fieldOptions.find(({ field: { id } }) => field.id === id).field;
+
         this.variablesFormArray.push(
           this.fb.group({
-            placeHolder: this.fb.control(placeHolder, Validators.required),
-            field: this.fb.control(field, Validators.required)
+            placeHolder: [placeHolder, Validators.required],
+            field: [selectFieldValue, Validators.required]
           })
         );
       }
@@ -147,8 +152,6 @@ export class ComputeFieldRuleComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.initInputOutputFieldsSelection();
-
     this.outputPacketFieldGroup.valueChanges
       .subscribe(({ id, name }) => {
         if (id) {
@@ -198,7 +201,7 @@ export class ComputeFieldRuleComponent implements OnInit {
             id: field.id,
             name: field.name
           },
-          disabled: false
+          disabled: false,
         };
       });
 
@@ -209,6 +212,7 @@ export class ComputeFieldRuleComponent implements OnInit {
     this.config.formula = undefined;
 
     if (!formula) {
+      this.formulaFormControl.setErrors({ 'formulaIsEmpty': true });
       this.logger.debug('formula is empty');
       return;
     }
@@ -221,7 +225,7 @@ export class ComputeFieldRuleComponent implements OnInit {
       || variableList.some(({ field }) => !field?.id)
     ) {
       this.formulaFormControl.setErrors({ 'placeholderUnset': true });
-      this.logger.debug('no placeholder was used');
+      this.logger.debug('placeholder unset');
       return;
     }
 
@@ -239,7 +243,8 @@ export class ComputeFieldRuleComponent implements OnInit {
       for (const { field } of variableList) {
         if (!formula.includes(field.name)) {
           this.formulaFormControl.setErrors({ 'placeholderNotUsed': true });
-          return
+          this.logger.debug(`placeholder ${field.name} not used`);
+          return;
         }
       }
 
@@ -329,8 +334,8 @@ export class ComputeFieldRuleComponent implements OnInit {
 
   isDirty(): boolean {
     return this.formulaFormControl.dirty
-      && this.variablesFormArray.dirty
-      && this.outputPacketFieldGroup.dirty;
+      || this.variablesFormArray.dirty
+      || this.outputPacketFieldGroup.dirty;
   }
 
   isValid(): boolean {

@@ -25,10 +25,7 @@
 
               <mat-form-field>
                 <mat-label>Select one field</mat-label>
-                <mat-select
-                  formControlName="field"
-                  required
-                >
+                <mat-select formControlName="field" required>
                   <mat-option
                     *ngFor="let option of fieldOptions"
                     [value]="option.field"
@@ -372,6 +369,9 @@
             *ngIf="formulaFormControl.invalid && formulaFormControl.dirty"
             class="mat-error"
           >
+            <ng-container *ngIf="formulaFormControl.getError('formulaIsEmpty')">
+              Formula is empty
+            </ng-container>
             <ng-container
               *ngIf="formulaFormControl.getError('placeholderUnset')"
             >
