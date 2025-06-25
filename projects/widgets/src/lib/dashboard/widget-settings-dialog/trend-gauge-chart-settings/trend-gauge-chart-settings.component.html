@@ -4,23 +4,61 @@
   [selectedFields]="selectedFields"
   (selectedFieldsChange)="onSelectedFieldsChange($event)"
 ></hyperiot-packet-select>
+
 <hr />
-<div class="text-color">
-  <label for="color" i18n="@@HYT_widget_settings_text_color">Text color:</label>
-  <input
-    id="color"
-    matInput
-    type="color"
-    [(ngModel)]="widget.config.textColor"
-  />
-</div>
-<div>
-  <form [formGroup]="formGroup">
-    <ng-container formGroupName="range">
-      <input type="number" [min]="-1" formControlName="start" />
-      <input type="number" [max]="1" formControlName="stop" />
+
+<form [formGroup]="stepForm" class="step-form">
+  <div>
+    <ng-container formArrayName="step">
+      <fieldset
+        *ngFor="let step of stepList.controls; let i = index; let last = last"
+        [formGroupName]="i"
+        [disabled]="!last"
+        class="step-box"
+      >
+        <mat-form-field>
+          <mat-label>Start</mat-label>
+          <input
+            matInput
+            type="number"
+            formControlName="start"
+            [min]="stepList.at(i - 1)?.get('stop')?.value || -1"
+            [max]="step.get('stop').value || 1"
+            [step]="0.1"
+          />
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Stop</mat-label>
+          <input
+            matInput
+            type="number"
+            formControlName="stop"
+            [min]="step.get('start').value || -1"
+            [max]="1"
+            [step]="0.1"
+          />
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput type="color" formControlName="color" />
+        </mat-form-field>
+
+        <button
+          mat-icon-button
+          type="button"
+          title="Delete step"
+          (click)="deleteStep(i)"
+          [disabled]="!(i > 0 && last)"
+        >
+          <span class="hyt-icon icon-hyt_trash"></span>
+        </button>
+      </fieldset>
     </ng-container>
-    <input type="color" formControlName="color" />
-    <button type="button" (click)="addStep(formGroup)">ADD</button>
-  </form>
-</div>
+  </div>
+  <div>
+    <button class="add-step" mat-button type="button" (click)="addStep()">
+      ADD
+    </button>
+  </div>
+</form>

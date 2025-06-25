@@ -110,6 +110,7 @@ export class TrendGaugeChartComponent extends BaseGenericComponent implements On
   
       //!TEST
       setInterval(() => {
+      // setTimeout(() => {
         this.renderData(Math.random() * 2 - 1);
       }, 2000)
   

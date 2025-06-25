@@ -27,33 +27,11 @@ export class TrendGaugeChartSettingsComponent implements OnInit, OnDestroy {
   subscription: any;
   selectedFields = [];
 
-  // stepList: Step[] = []
+  stepForm: FormGroup;
 
-  // formGroup = this.fb.group({
-  //   step: this.fb.group({
-  //     range: this.fb.group({
-  //       start: [null, Validators.required],
-  //       stop: [null, Validators.required]
-  //     }),
-  //     color: [null, Validators.required]
-  //   }),
-  //   // stepsList: this.fb.array([])
-  // });
-
-  formGroup = this.fb.group({
-    range: this.fb.group({
-      start: [null, Validators.required],
-      stop: [null, Validators.required]
-    }),
-    color: [null, Validators.required]
+  get stepList(): FormArray {
+    return this.stepForm.get('step') as FormArray;
   }
-  );
-
-  stepsList = this.fb.array([])
-
-  // get stepList(): FormArray {
-  //   return this.formGroup.get('stepList') as FormArray;
-  // }
 
   private defaultConfig = {
     textColor: '#275691',
@@ -71,7 +49,11 @@ export class TrendGaugeChartSettingsComponent implements OnInit, OnDestroy {
     }
   ];
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder) {
+    this.stepForm = this.fb.group({
+      step: this.fb.array([]),
+    });
+  }
 
   ngOnInit() {
     if (this.widget.config === null) {
@@ -85,10 +67,11 @@ export class TrendGaugeChartSettingsComponent implements OnInit, OnDestroy {
       }
     });
 
+    this.stepForm.valueChanges.subscribe((value) => {
+      console.log(value);
+    });
 
-    this.formGroup.valueChanges.subscribe((value) => {
-      console.log(value);      
-    })
+    this.addStep();
   }
 
   ngOnDestroy() {
@@ -105,30 +88,30 @@ export class TrendGaugeChartSettingsComponent implements OnInit, OnDestroy {
     this.selectedFields = fields;
   }
 
-  addStep(step: FormGroup) {
-    this.stepsList.push(step);
-  }
-
-  // addStep(step: Step) {
-  // this.stepList.push(step);
-
-  // this.stepList.push(
-  //   this.fb.group({
-  //     range: this.fb.group({
-  //       start: [null, Validators.required],
-  //       stop: [null, Validators.required]
-  //     }),
-  //     color: [null, Validators.required]
-  //   }),
-  // )
-  // }
-
   canAddStep(step: Step) {
     // return this.stepList.length === 0 || this.stepList[this.stepList.length - 1].range[1] < step.range[0];
   }
 
-  deleteStep() {
+  addStep() {
+    const stepCount = this.stepList.length;
+    const start = stepCount === 0
+      ? -1
+      : +this.stepList.at(stepCount - 1).get('stop')?.value;
 
+    if (start >= 1) {
+      // alert('Le step non possono superare il range di -1 a 1.');
+      return;
+    }
+
+    this.stepList.push(this.fb.group({
+      start: [start, Validators.required],
+      stop: [(start + 0.1).toFixed(1), Validators.required],
+      color: [null, Validators.required]
+    }));
+  }
+
+  deleteStep(index: number) {
+    this.stepList.removeAt(index);
   }
 
 }
