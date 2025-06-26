@@ -5,15 +5,10 @@ import { PacketSelectComponent } from '../packet-select/packet-select.component'
 import { WidgetConfig } from '../../../base/base-widget/model/widget.model';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-type Step = {
-  range: [number, number],
-  color: string
-}
-
 @Component({
   selector: 'hyperiot-trend-gauge-chart-settings',
   templateUrl: './trend-gauge-chart-settings.component.html',
-  styleUrls: ['./trend-gauge-chart-settings.component.css']
+  styleUrls: ['./trend-gauge-chart-settings.component.scss']
 })
 export class TrendGaugeChartSettingsComponent implements OnInit, OnDestroy {
 
@@ -22,7 +17,11 @@ export class TrendGaugeChartSettingsComponent implements OnInit, OnDestroy {
   @Input() modalApply: Observable<any>;
   @Input() widget: WidgetConfig;
 
-  newStep: Step | undefined;
+  readonly range = {
+    min: -1,
+    max: 1,
+    step: 0.1
+  } as const;
 
   subscription: any;
   selectedFields = [];
@@ -30,7 +29,7 @@ export class TrendGaugeChartSettingsComponent implements OnInit, OnDestroy {
   stepForm: FormGroup;
 
   get stepList(): FormArray {
-    return this.stepForm.get('step') as FormArray;
+    return this.stepForm.get('stepList') as FormArray;
   }
 
   private defaultConfig = {
@@ -49,16 +48,49 @@ export class TrendGaugeChartSettingsComponent implements OnInit, OnDestroy {
     }
   ];
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder
+  ) {
     this.stepForm = this.fb.group({
-      step: this.fb.array([]),
+      stepList: this.fb.array([]),
     });
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     if (this.widget.config === null) {
       this.widget.config = {};
       Object.assign(this.widget.config, this.defaultConfig);
+    }
+
+    if (true) {
+      [
+        {
+          "start": -1,
+          "stop": -0.9,
+          "color": "#701515"
+        },
+        {
+          "start": -0.9,
+          "stop": -0.8,
+          "color": "#3a9613"
+        },
+        {
+          "start": -0.8,
+          "stop": -0.7,
+          "color": "#7d6789"
+        },
+        {
+          "start": -0.7,
+          "stop": 0.7,
+          "color": "#64d10a"
+        }
+      ].forEach(({ start, stop, color }) => {
+        this.stepList.push(this.fb.group({
+          start: [start, Validators.required],
+          stop: [stop, Validators.required],
+          color: [color, Validators.required]
+        }))
+      })
     }
 
     this.subscription = this.modalApply.subscribe((event) => {
@@ -74,43 +106,40 @@ export class TrendGaugeChartSettingsComponent implements OnInit, OnDestroy {
     this.addStep();
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
   }
 
-  apply() {
+  apply(): void {
     this.packetSelect.apply();
   }
 
-  onSelectedFieldsChange(fields: any) {
+  onSelectedFieldsChange(fields: any): void {
     this.selectedFields = fields;
   }
 
-  canAddStep(step: Step) {
-    // return this.stepList.length === 0 || this.stepList[this.stepList.length - 1].range[1] < step.range[0];
-  }
-
-  addStep() {
+  addStep(): void {
     const stepCount = this.stepList.length;
     const start = stepCount === 0
-      ? -1
-      : +this.stepList.at(stepCount - 1).get('stop')?.value;
+      ? this.range.min
+      : Number(this.stepList.at(stepCount - 1).get('stop')?.value);
 
     if (start >= 1) {
-      // alert('Le step non possono superare il range di -1 a 1.');
       return;
     }
 
+    const stop = Number((start + this.range.step).toFixed(1));
+
     this.stepList.push(this.fb.group({
       start: [start, Validators.required],
-      stop: [(start + 0.1).toFixed(1), Validators.required],
+      stop: [stop, Validators.required],
       color: [null, Validators.required]
     }));
   }
 
-  deleteStep(index: number) {
+  deleteStep(index: number): void {
     this.stepList.removeAt(index);
   }
 
