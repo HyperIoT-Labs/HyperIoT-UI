@@ -21,7 +21,7 @@ export interface WidgetConfig extends GridsterItem {
 }
 
 export interface InternalConfigModel {
-  [key: string]: any;
+    [key: string]: any;
 }
 
 export interface ConfigModel {
@@ -60,6 +60,16 @@ export interface ConfigModel {
         thresholds?: Threshold[];
     }
     maxValue?: number;
+    steps?: Step[];
+    title?: {
+        text: string;
+        fontSize: number;
+    }
+}
+
+export interface Step {
+    range: [number, number],
+    color: string;
 }
 
 export interface Threshold {
@@ -123,7 +133,7 @@ export class FieldValueMap {
 export interface SeriesConfigModel {
     series?: string;
     seriesConfig?: {
-      [n: string]: {series: string};
+        [n: string]: { series: string };
     };
     config?: {
         fill?: string;
@@ -150,7 +160,7 @@ export interface SeriesConfigModel {
     };
 }
 
-export interface WidgetAction{
+export interface WidgetAction {
     widget: WidgetConfig;
     action: string;
     value?: any;
@@ -162,11 +172,11 @@ export enum AutoUpdateConfigStatus {
     ERROR = 'ERROR',
 }
 
-export interface ConfigButtonWidget{
-  showClose?: boolean,
-  showSettings?: boolean,
-  showPlay?: boolean,
-  showRefresh?: boolean,
-  showTable?: boolean,
-  hideFullScreen?: boolean
+export interface ConfigButtonWidget {
+    showClose?: boolean,
+    showSettings?: boolean,
+    showPlay?: boolean,
+    showRefresh?: boolean,
+    showTable?: boolean,
+    hideFullScreen?: boolean
 }

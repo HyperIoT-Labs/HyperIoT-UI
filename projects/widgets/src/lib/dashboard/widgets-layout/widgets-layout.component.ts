@@ -594,6 +594,13 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
       return;
     }
 
+    const setLastDashboardValue = () => {
+      this.lastDashboardValue = this.dashboard.map((widget) => ({
+        ...widget,
+        oldConfig: { ...widget.config }
+      }));
+    }
+
     let updateConfig = false;
 
     if (this.lastDashboardValue.length) {
@@ -605,25 +612,27 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
           element.x !== element2.x ||
           element.y !== element2.y ||
           element.cols !== element2.cols ||
-          element.rows !== element2.rows
+          element.rows !== element2.rows ||
+          JSON.stringify(element.config) !== JSON.stringify(element2.oldConfig)
         ) {
           updateConfig = true;
           break;
         }
       }
     } else {
-      this.lastDashboardValue = this.dashboard.map((widget) => ({ ...widget }));
+      setLastDashboardValue();
     }
 
     if (updateConfig) {
-      this.lastDashboardValue = this.dashboard.map((widget) => ({ ...widget }));
+      setLastDashboardValue();
+
       this.configService.putConfig(this.dashboardValue.id, this.dashboard)
         .pipe(
           takeUntil(this.ngUnsubscribe)
         )
         .subscribe((res: any) => {
           if (res && res.status_code === 200) {
-            console.log('New widget added');
+            console.log('Dashboard updated');
           }
         });
     }
