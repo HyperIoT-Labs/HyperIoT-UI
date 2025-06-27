@@ -174,7 +174,7 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy, OnChanges 
                 line: this.fb.group({
                     color: [this.defaultColor, Validators.required],
                     thickness: [2, [Validators.min(1), Validators.max(5)]],
-                    type: [null]
+                    type: ["linear"]
                 })
             });
             this.trendForm.insert(0, trendGroup);
