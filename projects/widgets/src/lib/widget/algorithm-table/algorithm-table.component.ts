@@ -29,6 +29,8 @@ export class AlgorithmTableComponent extends BaseTableComponent implements After
 
   hPacketIdMap : Map<number, string> = new Map()
 
+  trueArray : boolean = false;
+
   constructor(
     private algorithmOfflineDataServices: AlgorithmOfflineDataService,
     injector: Injector,
@@ -235,9 +237,29 @@ export class AlgorithmTableComponent extends BaseTableComponent implements After
     let obj: any = { "output": el.output, "timestamp": valueTimestamp };
     let values = Object.values(el.grouping); // Label and values have same order
     
+    // Add inside headers
+    if (el.outputArray && !this.trueArray) {
+      if (!this.trueArray) {
+      for (const key in el.outputArray) {
+          this.tableHeaders.splice(this.tableHeaders.length - 1, 0, {
+            value: key,
+            label: key,
+            type: 'DOUBLE'
+          });
+        }
+        // remove output column
+        this.tableHeaders = this.tableHeaders.filter(header => header.label !== 'output');
+        this.trueArray = true;
+      }
+    }
+
     headers.forEach((label, index) => {
       let k = label;
       let v = values[index] ?? null;
+
+      // inside header values
+      if (el.outputArray) for (const key in el.outputArray) obj[key] = el.outputArray[key]
+
       obj[k] = v;  
     });
     pageData.unshift(obj);

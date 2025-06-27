@@ -85,6 +85,8 @@ export class HytInnerFieldSelectComponent implements OnChanges, OnInit {
 
   ngOnInit(): void { }
 
+  ngAfterViewInit(): void { this.fieldSelectionChanged.emit(this.selectedFieldsIds); }
+
   isObjectField = (_: number, field: HPacketField) => field.type === HPacketField.TypeEnum.OBJECT;
   isChecked = (field: HPacketField) => this.selectedFieldsIds.some(fId => fId === field.id);
   isDisabled = (field: HPacketField) => {
