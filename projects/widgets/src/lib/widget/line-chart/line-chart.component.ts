@@ -69,6 +69,8 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
 
   thresholds: Threshold[] = [];
   trend: Trend = null;
+  trendValues: any;
+  trendIndex: number;
 
   shapeIndices: number[] = [];
 
@@ -303,9 +305,10 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
 
     super.computePacketData(packetData, convertOldValues);
 
+    // Here you ONLY CALCULATE the trend values
     if (this.widget.config.trend && this.widget.config.trend.trendActive) {
       this.trend = this.widget.config.trend.trend;
-      this.addTrendToChart(this.trend, this.allData);
+      this.calculateTrend(this.allData);
     }
 
     packetData.forEach((datum) => {
@@ -325,7 +328,6 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
       this.updateDataRequest();
     }
   }
-
 
   /* 
     Retrive each threshold and save the corresponding rule
@@ -416,11 +418,10 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
     };
   }
 
-  // lr.m => pendenza
-  regressionLine(data: any) {
+  regressionLine(data: any, fieldName: string) {
     const regressionData: [number, number][] = data.map(d => [
           d.timestamp.getTime(),          
-          parseFloat(d.temperature) // TODO: mappare il campo
+          parseFloat(d[fieldName])
         ]);
 
     const lr = linearRegression(regressionData); // { m, b }
@@ -428,38 +429,45 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
     const regressionLinePoints: [number, number][] = regressionData.map(([x]) => [x, line(x)]);
     const readableLine = regressionLinePoints.map(([x, y]) => ({
       timestamp: new Date(x),
-      predictedTemperature: y
+      trendValue: y
     }));
 
     return readableLine
   }
 
-  addTrendToChart(trend: Trend, data: any) {
-    if (!this.graph.layout.shapes) this.graph.layout.shapes = [];
-    this.shapeIndices = []
+  calculateTrend(data: any) {
+    this.trendValues = this.regressionLine(data, this.trend.fieldName);
+  }
 
-    let values = this.regressionLine(data)
+  addTrendToChart(trend: Trend, trendData: any) {
+    // Through any two points, there is exactly one straight line
+    let y0 = trendData[0].trendValue;
+    let y1 = trendData[1].trendValue;
+
+    if (!this.graph.layout.shapes) this.graph.layout.shapes = [];
+
+    //rimuovo vecchio trend
+    this.graph.layout.shapes.splice(this.trendIndex, 1);
 
     this.graph.layout.shapes.push(
-      {
-        type: "rect",
-        xref: "paper",
-        x0: 0,
-        x1: 1,
-        yref: "y",
-        y0: values[1],
-        y1: values[0],
-        fillcolor: trend.line.color,
-        line: {
-          color: trend.line.color,
-          width: trend.line.thickness,
-          dash: this.getLineDash(trend.line.type)              
-        }
-      }
-    );
+          {
+            type: "line",
+            xref: "paper",
+            x0: 0,
+            x1: 1,
+            yref: "y",
+            y0: y0,
+            y1: y1,
+            line: {
+              color: trend.line.color,
+              width: trend.line.thickness,
+              dash: this.getLineDash(trend.line.type)
+            },
+          }
+        );
 
-    const shapeIndex: number = this.graph.layout.shapes.length;
-    this.shapeIndices.push(shapeIndex);
+    // update current index
+    this.trendIndex = this.graph.layout.shapes.length - 1;
   }
 
   addThresholdToChart(threshold: Threshold, ruleArray: string[], ruleName: string) {
@@ -661,6 +669,13 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
 
   updateDataRequest() {
     this.logger.debug("updateDataRequest");
+
+    // Here you ONLY DRAW the trend values into chart
+    if (this.widget.config.trend && this.widget.config.trend.trendActive) {
+      this.logger.debug("addTrendToChart");    
+      this.addTrendToChart(this.trend, this.trendValues);
+    }
+
     if (
       !this.lastRequestedDate ||
       !this.lastOfflineDate ||
@@ -668,6 +683,7 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
     ) {
       return;
     }
+
     this.dataRequest();
   }
 

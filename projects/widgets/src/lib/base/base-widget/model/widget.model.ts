@@ -78,6 +78,7 @@ export interface Threshold {
 
 export interface Trend {
     fieldId: number;
+    fieldName: string;
     line: {
         color: string;
         thickness: number;

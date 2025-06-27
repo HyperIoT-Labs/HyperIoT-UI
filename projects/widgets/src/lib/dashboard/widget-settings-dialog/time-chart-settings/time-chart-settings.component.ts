@@ -181,8 +181,8 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy, OnChanges 
         }
         else {
 
-            this.trendSelectedFields = [trend.fieldId]
-            console.log("TREND", trend);
+            if (trend.fieldId) this.trendSelectedFields = [trend.fieldId]
+            else this.trendSelectedFields = [];
 
             const trendGroup = this.fb.group({
                 id: [null, Validators.required],
@@ -220,9 +220,11 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy, OnChanges 
     }
 
     assignTrendToConfig() {
+        const name = this.packetSelect.selectedPacket.fields.find(el => el.id === this.trendSelectedFields[0])?.name ?? null;
         const trend = this.trendForm.controls.map(control => {
             return {
                 fieldId : this.trendSelectedFields[0],
+                fieldName: name,
                 line: {
                     color: control.get('line.color').value,
                     thickness: control.get('line.thickness').value,
