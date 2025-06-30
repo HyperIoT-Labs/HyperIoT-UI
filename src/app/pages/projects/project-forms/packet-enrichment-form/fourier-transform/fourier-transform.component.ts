@@ -1,6 +1,7 @@
-import { Component, OnInit, Input, ChangeDetectorRef} from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { HPacket, HProject, HpacketsService, HPacketField } from 'core';
+import { EnrichmentType } from '../enrichment-type.enum';
 
 @Component({
   selector: 'hyt-fourier-transform',
@@ -8,6 +9,7 @@ import { HPacket, HProject, HpacketsService, HPacketField } from 'core';
   styleUrls: ['./fourier-transform.component.scss']
 })
 export class FourierTransformComponent implements OnInit {
+
   @Input()
   packet: HPacket;
 
@@ -46,7 +48,7 @@ export class FourierTransformComponent implements OnInit {
   @Input()
   set config(cfg: any) {
     this._config = cfg;
-    cfg.actionName = 'it.acsoftware.hyperiot.rule.service.actions.FourierTransformRuleAction';
+    cfg.actionName = EnrichmentType.FOURIER_TRANSFORM_ENRICHMENT;
     this.update();
   }
 
@@ -60,44 +62,37 @@ export class FourierTransformComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-
     this.packet.fields.forEach((pf) => {
       this.inputFieldOptions.push({
         label: pf.name,
         value: pf.id
       });
     });
-    
   }
 
   onTransformMethodChange(method) {
-    if(method) {
-      
+    if (method) {
       this.config.transformMethod = method;
       this.cd.detectChanges();
       this.form.patchValue({ transformMethod: this.config.transformMethod });
       this.form.get('transformMethod').setValue(this.config.transformMethod);
-      
     }
-    
   }
 
   onTransformNormChange(norm) {
-    if(norm) {
+    if (norm) {
       this.config.fftNormalization = norm;
       this.cd.detectChanges();
       this.form.get('transformNorm').setValue(this.config.fftNormalization);
     }
-    
   }
 
   onTransformTypeChange(type) {
-    if(type) {
+    if (type) {
       this.config.transformType = type;
-    this.cd.detectChanges();
-    this.form.get('transformType').setValue(this.config.transformType);
+      this.cd.detectChanges();
+      this.form.get('transformType').setValue(this.config.transformType);
     }
-    
   }
 
   onInputFieldChange(field) {
@@ -119,6 +114,7 @@ export class FourierTransformComponent implements OnInit {
       });
     }
   }
+
   onOutputFieldResetClick() {
     this.hpacketService.deleteHPacketField(this.config.outputFieldId).subscribe((res) => {
       this.config.outputFieldId = 0;
@@ -130,7 +126,7 @@ export class FourierTransformComponent implements OnInit {
 
   new() {
     return {
-      actionName: 'it.acsoftware.hyperiot.rule.service.actions.FourierTransformRuleAction',
+      actionName: EnrichmentType.FOURIER_TRANSFORM_ENRICHMENT,
       transformMethod: 'FAST',
       fftNormalization: 'STANDARD',
       transformType: 'FORWARD',
@@ -139,6 +135,7 @@ export class FourierTransformComponent implements OnInit {
       outputFieldName: ''
     };
   }
+
   update() {
     this.config.outputFieldName = '';
     this.onTransformMethodChange(this.config.transformMethod);
@@ -158,10 +155,11 @@ export class FourierTransformComponent implements OnInit {
         }
       });
     }
-    
+
     this.originalConfig = {};
     Object.assign(this.originalConfig, this._config);
   }
+
   addOutputField(outputFieldName, successCallback, errorCallback) {
     if (!this.config.outputFieldId) {
       this.hpacketService.addHPacketField(this.packet.id, {
@@ -180,6 +178,7 @@ export class FourierTransformComponent implements OnInit {
   isDirty() {
     return JSON.stringify(this.originalConfig) !== JSON.stringify(this._config);
   }
+
   isValid() {
     return this._config && this._config.inputFieldId > 0 && this._config.outputFieldId > 0;
   }

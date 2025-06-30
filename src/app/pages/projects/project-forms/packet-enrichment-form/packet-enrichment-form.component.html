@@ -1,140 +1,165 @@
 <div id="container-enrichment-form" class="container">
-
-  <p class="subtitle-section"> 
-    <!--@I18N@-->  
-  </p> 
+  <p class="subtitle-section">
+    <!--@I18N@-->
+  </p>
 
   <div *ngIf="showCover && !editMode" class="row">
-
     <div id="container-add-enrich" class="col-12">
-
-      <hyt-button 
-        [color] = "'hyt-base-default-white'"
-        (clickFn)="loadEmpty()"
-      >
+      <hyt-button [color]="'hyt-base-default-white'" (clickFn)="loadEmpty()">
         <span class="hyt-icon icon-hyt_plus"></span>
         Add enrichment
       </hyt-button>
-
     </div>
+  </div>
+  <!-- END FIRST ROW -->
 
-  </div> <!-- END FIRST ROW -->
-
-  <form [ngClass]="{ hidden: !editMode, 'blurred': loadingStatus !== LoadingStatus.Ready }" class="enrichment-form" [formGroup]="form" autocomplete="on">
-    
+  <form
+    [ngClass]="{
+      hidden: !editMode,
+      blurred: loadingStatus !== LoadingStatus.Ready
+    }"
+    class="enrichment-form"
+    [formGroup]="form"
+    autocomplete="on"
+  >
     <div class="form-group row">
-      
-      <div 
-        id="ffield-col-enrich-name" 
-        class="col-tag-cat col-6"
-      ><!-- col-4 -->
+      <div id="ffield-col-enrich-name" class="col-tag-cat col-6">
+        <!-- col-4 -->
 
-        <hyt-input-text 
-          [form]="form" formControlName="rule-name" name="rule-name" [isRequired]="true"
-          i18n-placeholder="@@HYT_name" placeholder="Name" [injectedErrorMsg]="getError('rule-name')"
+        <hyt-input-text
+          [form]="form"
+          formControlName="rule-name"
+          name="rule-name"
+          [isRequired]="true"
+          i18n-placeholder="@@HYT_name"
+          placeholder="Name"
+          [injectedErrorMsg]="getError('rule-name')"
           i18n-hintMessage="@@HYT_hint_rule_name"
           hintMessage="Enter the rule name"
         >
         </hyt-input-text>
-
       </div>
-      
-      <div 
-        id="ffield-col-enrich-rules" 
-        class="col-tag-cat col-6"
-      > <!-- col-4 -->
 
-        <hyt-select 
-          [form]="form" [options]="enrichmentRules" (changeFn)="enrichmentTypeChanged($event)"
-          formControlName="rule-type" name="rule-type" [isRequired]="true" i18n-label="@@HYT_rule_type"
-          label="Rule type">
+      <div id="ffield-col-enrich-rules" class="col-tag-cat col-6">
+        <!-- col-4 -->
+
+        <hyt-select
+          [form]="form"
+          [options]="enrichmentRules"
+          (changeFn)="enrichmentTypeChanged($event)"
+          formControlName="rule-type"
+          name="rule-type"
+          [isRequired]="true"
+          i18n-label="@@HYT_rule_type"
+          label="Rule type"
+        >
         </hyt-select>
-        
       </div>
 
-      <div 
-        *ngIf="enrichmentType !== enrichmentTypes.VALIDATION_ENRICHMENT"
-        id="ffield-col-enrich-tag-cat" 
-        class="col-8 offset-2 col-tag-cat" 
+      <div
+        *ngIf="selectedEnrichmentType !== enrichmentTypes.VALIDATION_ENRICHMENT"
+        id="ffield-col-enrich-tag-cat"
+        class="col-8 offset-2 col-tag-cat"
       >
-
-        <hyt-asset-tag 
+        <hyt-asset-tag
           #assetTag
-          *ngIf="enrichmentType === enrichmentTypes.ADD_TAG_ENRICHMENT" 
-          [project]="project" 
+          *ngIf="selectedEnrichmentType === enrichmentTypes.ADD_TAG_ENRICHMENT"
+          [project]="project"
           [packet]="packet"
-          [selectedTags]="assetTags">
+          [selectedTags]="assetTags"
+        >
         </hyt-asset-tag>
 
         <hyt-asset-category
           #assetCategory
-          *ngIf="enrichmentType === enrichmentTypes.ADD_CATEGORY_ENRICHMENT"
-          [project]="project" 
+          *ngIf="
+            selectedEnrichmentType === enrichmentTypes.ADD_CATEGORY_ENRICHMENT
+          "
+          [project]="project"
           [packet]="packet"
-          [selectedCategories]="assetCategories">
+          [selectedCategories]="assetCategories"
+        >
         </hyt-asset-category>
-        
+
         <hyt-fourier-transform
-         #fourierTransform
-         *ngIf="enrichmentType === enrichmentTypes.FOURIER_TRANSFORM_ENRICHMENT"
-         [project]="project" 
-         [packet]="packet"
-         [config]="ruleConfig">
+          #fourierTransform
+          *ngIf="
+            selectedEnrichmentType ===
+            enrichmentTypes.FOURIER_TRANSFORM_ENRICHMENT
+          "
+          [project]="project"
+          [packet]="packet"
+          [config]="ruleConfig"
+        >
         </hyt-fourier-transform>
 
+        <hyt-compute-field-rule
+          *ngIf="
+            selectedEnrichmentType === enrichmentTypes.COMPUTE_FIELD_RULE_ACTION
+          "
+          #computeFieldRule
+          [project]="project"
+          [packet]="packet"
+          [config]="ruleConfig"
+        >
+        </hyt-compute-field-rule>
       </div>
-
-    </div> <!-- END FIRST FORM ROW -->
+    </div>
+    <!-- END FIRST FORM ROW -->
 
     <div class="form-group row">
-
       <div id="fenrichment-col-active" class="col-6">
-
         <p id="label-enrichment-active" i18n="@@HYT_active">Active</p>
-        
+
         <div id="container-radio-enrichment-active">
-
-          <hyt-radio-button 
-            [form]="form" 
-            [options]="activeOptions" 
+          <hyt-radio-button
+            [form]="form"
+            [options]="activeOptions"
             name="active"
-            (changeFn)="changeEventActive($event)">
+            (changeFn)="changeEventActive($event)"
+          >
           </hyt-radio-button>
-
         </div>
-
-      </div> <!-- Field Oputput -->
-
-
-    </div> <!-- END SECOND ROW -->
+      </div>
+      <!-- Field Oputput -->
+    </div>
+    <!-- END SECOND ROW -->
 
     <div class="form-group row">
-
       <div class="col-12">
-
-        <hyt-text-area 
-          [form]="form" formControlName="rule-description" name="rule-description"
-          i18n-placeholder="@@HYT_description" placeholder="Description"
+        <hyt-text-area
+          [form]="form"
+          formControlName="rule-description"
+          name="rule-description"
+          i18n-placeholder="@@HYT_description"
+          placeholder="Description"
           i18n-hintMessage="@@HYT_hint_rule_description"
-          hintMessage="Enter the rule description.">
+          hintMessage="Enter the rule description."
+        >
         </hyt-text-area>
-
       </div>
+    </div>
+    <!-- END THIRD FORM ROW -->
 
-    </div> <!-- END THIRD FORM ROW -->
-
-    <div *ngIf="enrichmentType !== 'it.acsoftware.hyperiot.rule.service.actions.FourierTransformRuleAction'" class="form-group row">
-
+    <div
+      *ngIf="
+        selectedEnrichmentType !==
+        'it.acsoftware.hyperiot.rule.service.actions.FourierTransformRuleAction'
+      "
+      class="form-group row"
+    >
       <div class="col-12">
-
-        <hyt-rule-definition *ngIf="allPackets" [currentPacket]="packet"
-          #ruleDef formControlName="ruleDefinition" [allPackets]="allPackets"
+        <hyt-rule-definition
+          *ngIf="allPackets"
+          [currentPacket]="packet"
+          #ruleDef
+          formControlName="ruleDefinition"
+          [allPackets]="allPackets"
         >
         </hyt-rule-definition>
-
       </div>
-
-    </div> <!-- END FOURTH FORM ROW -->
+    </div>
+    <!-- END FOURTH FORM ROW -->
 
     <!-- 
       TODO: This HTML block is repeated
@@ -142,37 +167,45 @@
       consider making a component out of it 
     -->
 
-    <div *ngIf="loadingStatus !== LoadingStatus.Ready" class="overlay d-flex flex-column align-items-center justify-content-center">
+    <div
+      *ngIf="loadingStatus !== LoadingStatus.Ready"
+      class="overlay d-flex flex-column align-items-center justify-content-center"
+    >
+      <div *ngIf="loadingStatus === LoadingStatus.Loading">
+        <h4 i18n="@@HYT_loading_data">Loading data...</h4>
+      </div>
 
-      <div 
-        *ngIf="loadingStatus === LoadingStatus.Loading" 
+      <div
+        *ngIf="loadingStatus === LoadingStatus.Error"
+        class="error-overlay d-flex flex-column justify-content-center"
       >
+        <h4 i18n="@@HYT_error_occurred">An unexpected error has occurred</h4>
 
-          <h4 i18n="@@HYT_loading_data">Loading data...</h4>
+        <hyt-button
+          [color]="'hyt-base-default-white'"
+          (click)="loadingStatus = LoadingStatus.Ready"
+        >
+          <span i18n="@@HYT_close">Close</span>
+          <span class="icon-hyt_cancelC"></span>
+        </hyt-button>
+      </div>
 
-      </div> 
-      
-      <div *ngIf="loadingStatus === LoadingStatus.Error" class="error-overlay d-flex flex-column justify-content-center">
-          <h4 i18n="@@HYT_error_occurred">An unexpected error has occurred</h4>
+      <h4
+        *ngIf="loadingStatus === LoadingStatus.Saving"
+        i18n="@@HYT_saving_data"
+      >
+        Saving data...
+      </h4>
 
-          <hyt-button 
-              [color]="'hyt-base-default-white'" 
-              (click)="loadingStatus = LoadingStatus.Ready"
-          >
-              <span i18n="@@HYT_close">Close</span> <span class="icon-hyt_cancelC"></span> 
-          </hyt-button>
-      </div> 
-
-      <h4 *ngIf="loadingStatus === LoadingStatus.Saving" i18n="@@HYT_saving_data">Saving data...</h4>
-
-      <mat-progress-bar 
-          *ngIf="loadingStatus === LoadingStatus.Loading || loadingStatus === LoadingStatus.Saving"
-          mode="indeterminate"
-      ></mat-progress-bar> 
-
+      <mat-progress-bar
+        *ngIf="
+          loadingStatus === LoadingStatus.Loading ||
+          loadingStatus === LoadingStatus.Saving
+        "
+        mode="indeterminate"
+      ></mat-progress-bar>
     </div>
-
-  </form> <!-- END FORM -->
-
-</div> <!-- END GENERAL CONTAINER -->
-
+  </form>
+  <!-- END FORM -->
+</div>
+<!-- END GENERAL CONTAINER -->

@@ -13,6 +13,7 @@ import { AssetTagComponent } from './asset-tag/asset-tag.component';
 import { EnrichmentType } from './enrichment-type.enum';
 import { FourierTransformComponent } from './fourier-transform/fourier-transform.component';
 import { FormControl } from '@angular/forms';
+import { ComputeFieldRuleComponent } from './compute-field-rule/compute-field-rule.component';
 
 @Component({
   selector: 'hyt-packet-enrichment-form',
@@ -43,6 +44,9 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
   @ViewChild('fourierTransform')
   fourierTransformComponent: FourierTransformComponent;
 
+  @ViewChild('computeFieldRule')
+  computeFieldRuleComponent: ComputeFieldRuleComponent;
+
   enrichmentTypes = EnrichmentType;
 
   packet: HPacket;
@@ -55,16 +59,17 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
     { value: EnrichmentType.ADD_CATEGORY_ENRICHMENT, label: $localize`:@@HYT_categories:Categories` },
     { value: EnrichmentType.ADD_TAG_ENRICHMENT, label: $localize`:@@HYT_tags:Tags` },
     { value: EnrichmentType.VALIDATION_ENRICHMENT, label: $localize`:@@HYT_validation:Validation` },
-    { value: EnrichmentType.FOURIER_TRANSFORM_ENRICHMENT, label: $localize`:@@HYT_fourier_transform:FourierTransform` }
+    { value: EnrichmentType.FOURIER_TRANSFORM_ENRICHMENT, label: $localize`:@@HYT_fourier_transform:FourierTransform` },
+    { value: EnrichmentType.COMPUTE_FIELD_RULE_ACTION, label: $localize`:@@HYT_compute_field_rule_action:Compute Field Rule Action` }
   ];
 
   activeOptions: Option[] = [
     { value: "true", label: $localize`:@@HYT_enrichment_active:ACTIVE`, checked: true },
-    { value: "false", label: $localize`:@@HYT_enrichment_disabled:DISABLED`}
+    { value: "false", label: $localize`:@@HYT_enrichment_disabled:DISABLED` }
     // { value: '', label: $localize`:@@HYT_start_statistic:START STATISTIC` }
   ];
 
-  enrichmentType = '';
+  selectedEnrichmentType: EnrichmentType | undefined;
 
   ruleConfig = {};
 
@@ -88,7 +93,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
     private cdr: ChangeDetectorRef,
     private enrichmentService: EnrichmentsService
   ) {
-    super(injector,cdr);
+    super(injector, cdr);
     this.formTemplateId = 'container-enrichment-form';
     this.longDefinition = this.entitiesService.enrichment.longDefinition;
     this.formTitle = this.entitiesService.enrichment.formTitle;
@@ -101,7 +106,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
     this.activatedRouteSubscription = this.activatedRoute.params.subscribe(routeParams => {
       this.packetId = +(this.activatedRoute.snapshot.params.packetId);
       if (this.packetId) {
-        this.loadData().subscribe(res => {});
+        this.loadData().subscribe(res => { });
       }
     });
 
@@ -114,7 +119,6 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
       this.enrichmentService.emitDeviceName(el.device.deviceName);
       this.enrichmentService.emitPacket(this.packetId);
     })
-
   }
 
   ngOnDestroy() {
@@ -131,27 +135,38 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
       this.editMode = true;
       super.edit(rule, () => {
         const type = JSON.parse(this.entity.jsonActions)[0] || null;
-        let typeJSON = JSON.parse(type) ? JSON.parse(type) : null;
-        this.enrichmentType = typeJSON ? typeJSON.actionName : null;
-        if (this.enrichmentType === EnrichmentType.ADD_CATEGORY_ENRICHMENT) {
-          if (this.assetCategoryComponent) {
-            this.assetCategoryComponent.selectedCategories = JSON.parse(type) ? JSON.parse(type).categoryIds : null;
-            this.assetCategoryComponent.getAssetCategories();
-          } else {
-            this.assetCategories = JSON.parse(type) ? JSON.parse(type).categoryIds : null;
-          }
-        } else if (this.enrichmentType === EnrichmentType.ADD_TAG_ENRICHMENT) {
-          if (this.assetTagComponent) {
-            this.assetTagComponent.selectedTags = JSON.parse(type) ? JSON.parse(type).tagIds : null;
-            this.assetTagComponent.getAssetTags();
-          } else {
-            this.assetTags = JSON.parse(type) ? JSON.parse(type).tagIds : null;
-          }
-        } else if (this.enrichmentType === EnrichmentType.FOURIER_TRANSFORM_ENRICHMENT) {
-          this.ruleConfig = JSON.parse(type);
+        const typeJSON = JSON.parse(type) || null;
+        this.selectedEnrichmentType = typeJSON ? typeJSON.actionName : null;
 
+        switch (this.selectedEnrichmentType) {
+          case EnrichmentType.ADD_CATEGORY_ENRICHMENT:
+            if (this.assetCategoryComponent) {
+              this.assetCategoryComponent.selectedCategories = JSON.parse(type) ? JSON.parse(type).categoryIds : null;
+              this.assetCategoryComponent.getAssetCategories();
+            } else {
+              this.assetCategories = JSON.parse(type) ? JSON.parse(type).categoryIds : null;
+            }
+            break;
+
+          case EnrichmentType.ADD_TAG_ENRICHMENT:
+            if (this.assetTagComponent) {
+              this.assetTagComponent.selectedTags = JSON.parse(type) ? JSON.parse(type).tagIds : null;
+              this.assetTagComponent.getAssetTags();
+            } else {
+              this.assetTags = JSON.parse(type) ? JSON.parse(type).tagIds : null;
+            }
+            break;
+
+          case EnrichmentType.FOURIER_TRANSFORM_ENRICHMENT:
+            this.ruleConfig = JSON.parse(type);
+            break;
+
+          case EnrichmentType.COMPUTE_FIELD_RULE_ACTION:
+            this.ruleConfig = JSON.parse(type);
+            break;
         }
-        this.form.get('rule-type').setValue(this.enrichmentType);
+
+        this.form.get('rule-type').setValue(this.selectedEnrichmentType);
         this.form.get('active').setValue(typeJSON.active);
         this.form.get('ruleDefinition').setValue({
           ruleDefinition: this.entity.ruleDefinition,
@@ -194,7 +209,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
     });
   }
 
-  loadData(packetId?: number){
+  loadData(packetId?: number) {
     if (packetId) { this.packetId = packetId; }
     return this.packetService.findHPacket(this.packetId).pipe(map((p => {
       this.project = p.device.project;
@@ -216,15 +231,34 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
     let jac = '';
     switch (this.form.get('rule-type').value) {
       case EnrichmentType.ADD_CATEGORY_ENRICHMENT:
-        jac = JSON.stringify({ actionName: EnrichmentType.ADD_CATEGORY_ENRICHMENT, categoryIds: this.assetCategoryComponent.selectedCategories, active: this.form.get("active").value });
+        jac = JSON.stringify({
+          actionName: EnrichmentType.ADD_CATEGORY_ENRICHMENT,
+          categoryIds: this.assetCategoryComponent.selectedCategories,
+          active: this.form.get("active").value
+        });
         break;
+
       case EnrichmentType.ADD_TAG_ENRICHMENT:
-        jac = JSON.stringify({ actionName: EnrichmentType.ADD_TAG_ENRICHMENT, tagIds: this.assetTagComponent.selectedTags, active: this.form.get("active").value });
+        jac = JSON.stringify({
+          actionName: EnrichmentType.ADD_TAG_ENRICHMENT,
+          tagIds: this.assetTagComponent.selectedTags,
+          active: this.form.get("active").value
+        });
         break;
+
       case EnrichmentType.VALIDATION_ENRICHMENT:
-        jac = JSON.stringify({ actionName: EnrichmentType.VALIDATION_ENRICHMENT, active: this.form.get("active").value});
+        jac = JSON.stringify({
+          actionName: EnrichmentType.VALIDATION_ENRICHMENT,
+          active: this.form.get("active").value
+        });
         break;
+
       case EnrichmentType.FOURIER_TRANSFORM_ENRICHMENT:
+        this.ruleConfig['active'] = this.form.get("active").value;
+        jac = JSON.stringify(this.ruleConfig);
+        break;
+
+      case EnrichmentType.COMPUTE_FIELD_RULE_ACTION:
         this.ruleConfig['active'] = this.form.get("active").value;
         jac = JSON.stringify(this.ruleConfig);
         break;
@@ -281,7 +315,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
 
   loadEmpty() {
     this.form.reset();
-    this.enrichmentType = null;
+    this.selectedEnrichmentType = null;
     this.assetTags = [];
     this.assetCategories = [];
     this.cdr.detectChanges();
@@ -304,48 +338,57 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
 
   enrichmentTypeChanged(event) {
     if (event.value) {
-      this.enrichmentType = event.value;
+      this.selectedEnrichmentType = event.value;
     }
   }
 
-  changeEventActive(event){
-    if(event){
+  changeEventActive(event) {
+    if (event) {
       this.form.get('active').setValue(event);
     }
   }
 
-  categoryDirty() {
+  categoryDirty(): boolean {
     return this.assetTagComponent ? this.assetTagComponent.isDirty() : false;
   }
 
-  tagDirty() {
+  tagDirty(): boolean {
     return this.assetCategoryComponent ? this.assetCategoryComponent.isDirty() : false;
   }
-  fftDirty() {
+
+  fftDirty(): boolean {
     return this.fourierTransformComponent ? this.fourierTransformComponent.isDirty() : false;
   }
-  isValid() {
-    return super.isValid() && !this.invalidRules() && (!this.fourierTransformComponent || this.fourierTransformComponent.isValid());
+
+  computeFieldRuleActionDirty(): boolean {
+    return this.computeFieldRuleComponent?.isDirty();
   }
-  isDirty() {
+
+  isValid(): boolean {
+    return super.isValid() && !this.invalidRules()
+      && (
+        this.fourierTransformComponent?.isValid() ||
+        this.computeFieldRuleComponent?.isValid()
+      );
+  }
+
+  isDirty(): boolean {
     return this.editMode &&
       (
         super.isDirty() ||
-        (this.ruleDefinitionComponent && this.ruleDefinitionComponent.isDirty()) ||
+        this.ruleDefinitionComponent?.isDirty() ||
         this.categoryDirty() ||
         this.tagDirty() ||
-        this.fftDirty()
+        this.fftDirty() ||
+        this.computeFieldRuleActionDirty()
       );
   }
 
   private invalidRules(): boolean {
-    return (
-      ((this.ruleDefinitionComponent) ? this.ruleDefinitionComponent.isInvalid() : false)
-    );
+    return this.ruleDefinitionComponent ? this.ruleDefinitionComponent.isInvalid() : false;
   }
 
   setErrors(err) {
-
     if (err.error && err.error.type) {
       switch (err.error.type) {
         case 'it.acsoftware.hyperiot.base.exception.HyperIoTDuplicateEntityException': {
@@ -358,10 +401,12 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
           this.loadingStatus = LoadingStatusEnum.Ready;
           break;
         }
+
         case 'it.acsoftware.hyperiot.base.exception.HyperIoTValidationException': {
           super.setErrors(err);
           break;
         }
+
         default: {
           this.loadingStatus = LoadingStatusEnum.Error;
         }
@@ -369,7 +414,6 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
     } else {
       this.loadingStatus = LoadingStatusEnum.Error;
     }
-
   }
 
 }

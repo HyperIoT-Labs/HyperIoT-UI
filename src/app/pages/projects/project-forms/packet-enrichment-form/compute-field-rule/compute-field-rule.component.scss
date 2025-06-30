@@ -1,0 +1,91 @@
+@import "../../../../../../assets/styles/abstracts/variables";
+
+.input-container {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+
+  .input-field-container {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+  }
+}
+
+.output-field-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 25px;
+}
+
+.error {
+  color: red;
+}
+
+.box {
+  border: lightgray solid 1px;
+  border-radius: 0.25rem;
+  padding-bottom: 0.0625rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-top: 1.5rem;
+}
+
+.form-group {
+  margin-bottom: 2rem;
+}
+
+.addButton {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.title {
+  color: $primary-color;
+  font-weight: bold;
+}
+
+.section-output {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+
+  .rule-container {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+
+    .rule-input {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+  }
+
+  .rule-info {
+    background-color: #0096ff33;
+    padding: 1em;
+    margin: 0.5em 0;
+    border-radius: 0.4em;
+
+    ul {
+      margin-bottom: 0px;
+    }
+  }
+
+  mat-form-field {
+    width: 280px;
+  }
+}
+
+@media (max-width: 1400px) {
+  .input-container {
+    flex-direction: column;
+  }
+
+  .output-field-container {
+    flex-direction: column;
+    align-items: center;
+  }
+}

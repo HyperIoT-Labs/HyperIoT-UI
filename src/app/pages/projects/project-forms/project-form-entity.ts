@@ -2,13 +2,13 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 
 import { Observable } from 'rxjs';
 
-import { OnInit, Output, EventEmitter, Injector, AfterViewInit,ChangeDetectorRef, Component } from '@angular/core';
+import { OnInit, Output, EventEmitter, Injector, AfterViewInit, ChangeDetectorRef, Component } from '@angular/core';
 import { SummaryList } from '../project-detail/generic-summary-list/generic-summary-list.component';
 import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
 import { EntitiesService } from 'src/app/services/entities/entities.service';
 import { DialogService } from 'components';
 import { ProjectsService } from 'src/app/services/projects.service';
-import {MatRadioChange} from '@angular/material/radio';
+import { MatRadioChange } from '@angular/material/radio';
 
 export enum LoadingStatusEnum {
     Ready,
@@ -55,25 +55,25 @@ export abstract class ProjectFormEntity implements OnInit, AfterViewInit {
     protected formBuilder: FormBuilder;
     protected dialog: DialogService;
     protected entitiesService: EntitiesService;
-	protected projectsService: ProjectsService;
+    protected projectsService: ProjectsService;
 
     constructor(
         injector: Injector,
-        private cd:ChangeDetectorRef
+        private cd: ChangeDetectorRef
     ) {
         this.formBuilder = injector.get(FormBuilder);
         this.entitiesService = injector.get(EntitiesService);
         this.dialog = injector.get(DialogService);
         this.form = this.formBuilder.group({});
         //this.formAlarm = this.formBuilder.group({});
-		    this.projectsService = injector.get(ProjectsService);
+        this.projectsService = injector.get(ProjectsService);
     }
 
     ngOnInit() {
         this.entity = { ...this.newEntity() };
     }
 
-    ngAfterViewInit(){
+    ngAfterViewInit() {
         this.cd.detectChanges();
         this.buildHintMessages();
     }
@@ -95,7 +95,7 @@ export abstract class ProjectFormEntity implements OnInit, AfterViewInit {
     }
 
     edit(entity?: any, readyCallback?) {
-      console.log('EDIT', entity)
+        console.log('EDIT', entity)
         if (entity) {
             this.entity = { ...entity };
         }
@@ -105,7 +105,7 @@ export abstract class ProjectFormEntity implements OnInit, AfterViewInit {
                 // TODO: check why form control value inside the form control must be a string
                 // it should accept other values
                 const value = (this.entity[this.entityFormMap[key].field] != null && this.entity[this.entityFormMap[key].field] !== undefined)
-                              ? (''+this.entity[this.entityFormMap[key].field]) : null;
+                    ? ('' + this.entity[this.entityFormMap[key].field]) : null;
                 this.form.get(key).setValue(value);
             }
         });
@@ -147,6 +147,7 @@ export abstract class ProjectFormEntity implements OnInit, AfterViewInit {
         });
         return !invalid;
     }
+
     isDirty(): boolean {
         return (this.originalValue === '{}') ? false : this.serialize() !== this.originalValue;
     }
@@ -187,19 +188,19 @@ export abstract class ProjectFormEntity implements OnInit, AfterViewInit {
     }
 
     resetForm() {
-      this.originalValue = this.serialize();
+        this.originalValue = this.serialize();
     }
 
     private serialize() {
-      const keys = Object.keys(this.form.value);
-      keys.sort((a, b) => {
-          return a > b ? 1 : (a === b ? 0 : -1);
-      });
-      const copy = {};
-      keys.forEach((k) => {
-          copy[k] = this.form.value[k];
-      });
-      return JSON.stringify(copy, this.circularFix);
+        const keys = Object.keys(this.form.value);
+        keys.sort((a, b) => {
+            return a > b ? 1 : (a === b ? 0 : -1);
+        });
+        const copy = {};
+        keys.forEach((k) => {
+            copy[k] = this.form.value[k];
+        });
+        return JSON.stringify(copy, this.circularFix);
     }
 
     private buildHintMessages() {
@@ -251,9 +252,9 @@ export abstract class ProjectFormEntity implements OnInit, AfterViewInit {
 
         let textDialog: { title: string; message: string; };
         // Packet case
-        if (this.entity.trafficPlan && this.entity.type) textDialog = { title: $localize`:@@HYT_packet_delete_packet_question:Do you really want to delete this packet?`, message: $localize`:@@HYT_packet_operation_cannot_be_undone:If you delete the packet, any configurations inside the widgets will be reset and will have to be set again.`}
+        if (this.entity.trafficPlan && this.entity.type) textDialog = { title: $localize`:@@HYT_packet_delete_packet_question:Do you really want to delete this packet?`, message: $localize`:@@HYT_packet_operation_cannot_be_undone:If you delete the packet, any configurations inside the widgets will be reset and will have to be set again.` }
         // All other cases
-        else textDialog = { title: $localize`:@@HYT_delete_item_question:Do you really want to delete this item?`, message: $localize`:@@HYT_operation_cannot_be_undone:This operation cannot be undone`}
+        else textDialog = { title: $localize`:@@HYT_delete_item_question:Do you really want to delete this item?`, message: $localize`:@@HYT_operation_cannot_be_undone:This operation cannot be undone` }
 
         const dialogRef = this.dialog.open(DeleteConfirmDialogComponent, {
             data: textDialog
