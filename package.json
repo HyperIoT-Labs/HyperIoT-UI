@@ -1,6 +1,6 @@
 {
   "name": "hyperiot",
-  "version": "2.10.7",
+  "version": "2.10.12",
   "scripts": {
     "ng": "node_modules/.bin/ng",
     "ng-high-memory": "node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng",
@@ -19,8 +19,8 @@
   },
   "private": true,
   "dependencies": {
-    "@angular-material-components/datetime-picker": "^16.0.1",
-    "@angular-material-components/moment-adapter": "^16.0.1",
+    "@angular-material-components/datetime-picker": "^6.0.3",
+    "@angular-material-components/moment-adapter": "^6.0.0",
     "@angular/animations": "12.2.16",
     "@angular/cdk": "12.2.13",
     "@angular/common": "12.2.16",
@@ -50,6 +50,7 @@
     "crypto-js": "^3.1.9-1",
     "d3": "^5.14.2",
     "dom-to-image": "^2.6.0",
+    "file-saver": "^2.0.5",
     "form-data": "^4.0.0",
     "isomorphic-ws": "^5.0.0",
     "leaflet": "1.9.4",
@@ -75,6 +76,7 @@
     "@changesets/cli": "^2.27.1",
     "@compodoc/compodoc": "~1.1.11",
     "@types/d3": "^5.7.2",
+    "@types/file-saver": "^2.0.7",
     "@types/google.maps": "^3.58.0",
     "@types/jasmine": "~3.8.0",
     "@types/leaflet": "1.9.12",

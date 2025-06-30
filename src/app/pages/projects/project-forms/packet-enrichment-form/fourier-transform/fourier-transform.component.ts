@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, ChangeDetectorRef} from '@angular/core';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
-import { HPacket, HProject, HPacketService, HPacketField } from 'core';
+import { HPacket, HProject, HProjectService, HPacketField } from 'core';
+import { EnrichmentType } from '../enrichment-type.enum';
+import {HPacketService} from "../../../../../../../projects/core/src/lib/hyperiot-client/hyt-api/api-module";
 
 @Component({
   selector: 'hyt-fourier-transform',
@@ -71,8 +73,7 @@ export class FourierTransformComponent implements OnInit {
   }
 
   onTransformMethodChange(method) {
-    if(method) {
-
+    if (method) {
       this.config.transformMethod = method;
       this.cd.detectChanges();
       this.form.patchValue({ transformMethod: this.config.transformMethod });

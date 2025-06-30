@@ -1,0 +1,406 @@
+<div>
+  <div class="input-container">
+    <div class="form-group">
+      <p class="title">Input</p>
+      <div class="box">
+        <div
+          *ngFor="
+            let variableFormGroup of variablesFormArray.controls;
+            let i = index;
+            let count = count
+          "
+        >
+          <div [formGroup]="$any(variableFormGroup)">
+            <div class="input-field-container">
+              <mat-form-field>
+                <input
+                  matInput
+                  formControlName="placeHolder"
+                  class="hyt-input form-control"
+                  placeholder="Placeholder alias"
+                  type="text"
+                  readonly
+                />
+              </mat-form-field>
+
+              <mat-form-field>
+                <mat-label>Select one field</mat-label>
+                <mat-select formControlName="field" required>
+                  <mat-option
+                    *ngFor="let option of fieldOptions"
+                    [value]="option.field"
+                    [disabled]="option.disabled"
+                  >
+                    {{ option.field.name }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <button
+                *ngIf="count > 1"
+                matButton
+                class="mat-button"
+                type="button"
+                (click)="deleteVariable(i)"
+              >
+                <span class="mat-button-wrapper">
+                  <span class="hyt-icon icon-hyt_trash"></span>
+                </span>
+              </button>
+            </div>
+          </div>
+          <div class="addButton">
+            <hyt-button
+              (clickFn)="addVariable()"
+              [color]="'hyt-base-total-white'"
+              [isDisabled]="variableFormGroup.invalid || disableAdd()"
+            >
+              <span>ADD</span>
+              <span class="hyt-icon icon-hyt_plusC"></span>
+            </hyt-button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="form-group">
+      <p class="title">Constants</p>
+      <div class="box">
+        <div
+          *ngFor="
+            let constant of constantList.controls;
+            let i = index;
+            let count = count
+          "
+        >
+          <div [formGroup]="$any(constant)" class="input-field-container">
+            <mat-form-field>
+              <mat-label>Constant Name</mat-label>
+              <input
+                matInput
+                formControlName="name"
+                name="constantName"
+                type="text"
+              />
+            </mat-form-field>
+
+            <mat-form-field [ngClass]="{ disabled: !constant.value.name }">
+              <mat-label>Constant Value</mat-label>
+              <input
+                matInput
+                formControlName="value"
+                name="constantValue"
+                type="number"
+                step="0.1"
+              />
+            </mat-form-field>
+
+            <button
+              *ngIf="count > 1"
+              matButton
+              class="mat-button"
+              type="button"
+              (click)="deleteConstant(i)"
+            >
+              <span class="mat-button-wrapper">
+                <span class="hyt-icon icon-hyt_trash"></span>
+              </span>
+            </button>
+          </div>
+
+          <div class="addButton">
+            <hyt-button
+              [isDisabled]="constantList.invalid"
+              (clickFn)="addConstant()"
+              [color]="'hyt-base-total-white'"
+            >
+              <span>ADD</span>
+              <span class="hyt-icon icon-hyt_plusC"></span>
+            </hyt-button>
+          </div>
+        </div>
+      </div>
+    </div> -->
+  </div>
+
+  <div class="form-group">
+    <p class="title">Output</p>
+
+    <div class="box" [formGroup]="output">
+      <div class="section-output">
+        <!-- <mat-tab-group
+        #tab
+        mat-align-tabs="center"
+        class="mat-elevation-z1 m-2"
+        (selectedTabChange)="
+          outputPacketFieldGroup.reset({ description: 'output' });
+          selectPacketField.value = undefined
+        "
+      >
+        <mat-tab label="Use an existing Output Field">
+          <div class="d-flex justify-content-center">
+            <mat-form-field>
+              <mat-label>Output Field</mat-label>
+              <mat-select
+                formControlName="outputPacketField"
+                #selectPacketField
+                required
+              >
+                <ng-container
+                  *ngFor="let outputPacketField of outputPacketFieldList"
+                >
+                  <mat-option [value]="outputPacketField">
+                    {{ outputPacketField.name }}
+                  </mat-option>
+                </ng-container>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </mat-tab>
+        <mat-tab label="Add new Output Field">
+          <div
+            [formGroup]="outputPacketFieldGroup"
+            class="output-field-container m-2"
+          >
+            <mat-form-field>
+              <mat-label>Multiplicity</mat-label>
+              <mat-select formControlName="multiplicity" required>
+                <ng-container
+                  *ngFor="
+                    let multiplicity of packetFieldDetail.multiplicity
+                      | keyvalue
+                  "
+                >
+                  <mat-option [value]="multiplicity.key">
+                    {{ multiplicity.value }}
+                  </mat-option>
+                </ng-container>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Type</mat-label>
+              <mat-select formControlName="type" required>
+                <ng-container
+                  *ngFor="let type of packetFieldDetail.type | keyvalue"
+                >
+                  <mat-option [value]="type.key">
+                    {{ type.value }}
+                  </mat-option>
+                </ng-container>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Output Field Name</mat-label>
+              <input
+                matInput
+                formControlName="name"
+                name="name"
+                required
+                type="text"
+              />
+            </mat-form-field>
+
+            <div class="addButton">
+              <hyt-button
+                (clickFn)="addPacketField()"
+                [color]="'hyt-base-total-white'"
+                [isDisabled]="outputPacketFieldGroup.invalid"
+              >
+                <span>CREATE</span>
+                <span class="hyt-icon icon-hyt_plusC"></span>
+              </hyt-button>
+            </div>
+          </div>
+        </mat-tab>
+      </mat-tab-group> -->
+
+        <div
+          [formGroup]="outputPacketFieldGroup"
+          class="output-field-container m-2"
+        >
+          <mat-form-field>
+            <mat-label>Multiplicity</mat-label>
+            <ng-container
+              *ngIf="
+                !outputPacketFieldGroup.value?.id || enableEditPackedField;
+                else multiplicityTemplate
+              "
+            >
+              <mat-select formControlName="multiplicity" required>
+                <ng-container
+                  *ngFor="
+                    let multiplicity of packetFieldDetail.multiplicity
+                      | keyvalue
+                  "
+                >
+                  <mat-option [value]="multiplicity.key">
+                    {{ multiplicity.value }}
+                  </mat-option>
+                </ng-container>
+              </mat-select>
+            </ng-container>
+            <ng-template #multiplicityTemplate>
+              <input
+                matInput
+                formControlName="multiplicity"
+                name="multiplicity"
+                required
+                type="text"
+              />
+            </ng-template>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Type</mat-label>
+            <ng-container
+              *ngIf="
+                !outputPacketFieldGroup.value?.id || enableEditPackedField;
+                else typeTemplate
+              "
+            >
+              <mat-select formControlName="type" required>
+                <ng-container
+                  *ngFor="let type of packetFieldDetail.type | keyvalue"
+                >
+                  <mat-option [value]="type.key">
+                    {{ type.value }}
+                  </mat-option>
+                </ng-container>
+              </mat-select>
+            </ng-container>
+            <ng-template #typeTemplate>
+              <input
+                matInput
+                formControlName="type"
+                name="type"
+                required
+                type="text"
+                [readonly]="!enableEditPackedField"
+              />
+            </ng-template>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Output Field Name</mat-label>
+            <input
+              matInput
+              formControlName="name"
+              name="name"
+              required
+              type="text"
+              [readonly]="
+                !(!outputPacketFieldGroup.value?.id || enableEditPackedField)
+              "
+            />
+          </mat-form-field>
+
+          <div
+            *ngIf="outputPacketFieldGroup.value?.id; else createPacketTemplate"
+            class="addButton"
+          >
+            <ng-container
+              *ngIf="enableEditPackedField; else editPacketTemplate"
+            >
+              <div class="addButton">
+                <hyt-button
+                  (clickFn)="updatePacketField()"
+                  [color]="'hyt-base-total-white'"
+                  [isDisabled]="outputPacketFieldGroup.invalid"
+                >
+                  <span>UPDATE</span>
+                </hyt-button>
+              </div>
+            </ng-container>
+            <ng-template #editPacketTemplate>
+              <hyt-button
+                *ngIf="!enableEditPackedField"
+                (clickFn)="enableEditPackedField = true"
+                [color]="'hyt-base-total-white'"
+              >
+                <span>EDIT</span>
+              </hyt-button>
+            </ng-template>
+          </div>
+          <ng-template #createPacketTemplate>
+            <div class="addButton">
+              <hyt-button
+                (clickFn)="createPacketField()"
+                [color]="'hyt-base-total-white'"
+                [isDisabled]="outputPacketFieldGroup.invalid"
+              >
+                <span>CREATE</span>
+                <span class="hyt-icon icon-hyt_plusC"></span>
+              </hyt-button>
+            </div>
+          </ng-template>
+
+          <div *ngIf="errorCreationOutputField">
+            <p class="error">{{ errorCreationOutputField }}</p>
+          </div>
+        </div>
+
+        <div class="rule-container">
+          <div class="rule-input">
+            <mat-form-field>
+              <mat-label>Expression</mat-label>
+              <input
+                matInput
+                [formControl]="formulaFormControl"
+                name="formula"
+                required
+                type="text"
+              />
+            </mat-form-field>
+            <ng-container
+              *ngIf="
+                formulaFormControl.invalid && formulaFormControl.dirty;
+                else expressionValid
+              "
+            >
+              <mat-icon color="warn" matSuffix> highlight_off </mat-icon>
+            </ng-container>
+            <ng-template #expressionValid>
+              <mat-icon color="primary" matSuffix> done_outline </mat-icon>
+            </ng-template>
+          </div>
+          <mat-hint
+            *ngIf="formulaFormControl.invalid && formulaFormControl.dirty"
+            class="mat-error"
+          >
+            <ng-container *ngIf="formulaFormControl.getError('formulaIsEmpty')">
+              Formula is empty
+            </ng-container>
+            <ng-container
+              *ngIf="formulaFormControl.getError('placeholderUnset')"
+            >
+              Some placeholder is not set
+            </ng-container>
+            <ng-container
+              *ngIf="formulaFormControl.getError('placeholderNotUsed')"
+            >
+              Some placeholder is not used
+            </ng-container>
+            <ng-container *ngIf="formulaFormControl.getError('invalid')">
+              Invalid expression!
+            </ng-container>
+          </mat-hint>
+        </div>
+
+        <div class="rule-info">
+          Emit a value computed through an expression.
+          <ul>
+            <li>Placeholder: <b>$val</b>: the current selected filed value</li>
+            <li>
+              Supported operators: <b>abs</b>, <b>sin</b>, <b>cos</b>,
+              <b>tan</b>, <b>sqrt</b>, <b>pow</b>, <b>log</b>, <b>random</b>,
+              <b>PI</b>
+            </li>
+            <li>Expression example: <b>2*(sin(PI*$val/100))</b></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

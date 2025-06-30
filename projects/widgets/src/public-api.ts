@@ -42,3 +42,7 @@ export * from './lib/dashboard/timeline/time-axis/time-axis.component'
 export * from './lib/dashboard/widget-settings-dialog/widget-settings-dialog.component'
 export * from './lib/dashboard/dynamic-widget/dynamic-widget.component'
 export * from './lib/dashboard/dashboard-debug/dashboard-debug.component'
+
+export { DataExportComponent } from './lib/dashboard/timeline/data-export/data-export.component';
+
+export { DataSimulatorSettings } from './lib/dashboard/widget-settings-dialog/data-simulator-settings/data-simulator.models'
