@@ -57,6 +57,7 @@ import { NgxMatMomentModule } from '@angular-material-components/moment-adapter'
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatChipsModule } from '@angular/material/chips';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { TrendGaugeChartSettingsComponent } from './widget-settings-dialog/trend-gauge-chart-settings/trend-gauge-chart-settings.component';
 
 @NgModule({
   declarations: [
@@ -77,6 +78,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     EventsLogSettingsComponent,
     FieldValueGeneratorSettingsComponent,
     GaugeSettingsComponent,
+    TrendGaugeChartSettingsComponent,
     PacketFieldsSelectComponent,
     PacketSelectComponent,
     PacketsSelectComponent,

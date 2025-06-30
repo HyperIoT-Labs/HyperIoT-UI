@@ -1,0 +1,115 @@
+<hyperiot-packet-select
+  [widget]="widget"
+  [multiPacketSelect]="false"
+  [selectedFields]="selectedFields"
+  (selectedFieldsChange)="onSelectedFieldsChange($event)"
+></hyperiot-packet-select>
+
+<hr />
+
+<form [formGroup]="gaugeForm">
+   <div class="box-fields-customization-title">
+    <h3>
+      Title Customization
+    </h3>
+  </div>
+
+  <div>
+    <div formGroupName="title">
+      <mat-form-field>
+        <mat-label>Title text</mat-label>
+        <input matInput type="text" formControlName="text" />
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Title font size</mat-label>
+        <input
+          matInput
+          type="number"
+          [min]="10"
+          [max]="25"
+          formControlName="fontSize"
+        />
+      </mat-form-field>
+    </div>
+  </div>
+
+  <hr />
+
+  <div class="box-fields-customization-title">
+    <h3>
+      Steps Customization
+    </h3>
+  </div>
+
+  <div formArrayName="stepList">
+    <div
+      *ngFor="let step of stepList.controls; let i = index; let last = last"
+      [formGroupName]="i"
+      class="step-box"
+    >
+      <div class="step-row">
+        <fieldset class="step-row" [disabled]="!last">
+          <mat-form-field>
+            <mat-label>Start</mat-label>
+            <input
+              matInput
+              type="number"
+              formControlName="start"
+              [min]="stepList.at(i - 1)?.value.stop || range.min"
+              [max]="step.value.stop || range.max"
+              [step]="range.step"
+            />
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Stop</mat-label>
+            <input
+              matInput
+              type="number"
+              formControlName="stop"
+              [min]="step.value.start || range.min"
+              [max]="range.max"
+              [step]="range.step"
+            />
+          </mat-form-field>
+        </fieldset>
+
+        <div>
+          <mat-form-field>
+            <input matInput type="color" formControlName="color" />
+          </mat-form-field>
+
+          <button
+            mat-icon-button
+            type="button"
+            title="Delete step"
+            (click)="deleteStep(i)"
+            [disabled]="!(i > 0 && last)"
+          >
+            <span class="hyt-icon icon-hyt_trash"></span>
+          </button>
+        </div>
+      </div>
+      <div class="add-button">
+        <button
+          *ngIf="last"
+          mat-button
+          type="button"
+          [disabled]="
+            step.value.start === step.value.stop ||
+            step.value.start > step.value.stop ||
+            step.value.stop < step.value.start ||
+            step.value.start < range.min ||
+            step.value.start >= range.max ||
+            step.value.stop < range.min ||
+            step.value.stop >= range.max
+          "
+          (click)="addStep()"
+        >
+          ADD
+        </button>
+      </div>
+    </div>
+  </div>
+</form>

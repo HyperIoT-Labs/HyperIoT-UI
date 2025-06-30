@@ -1,0 +1,39 @@
+:host {
+  .box-fields-customization-title {
+    display: flex;
+    color: #0856b6;
+    align-items: center;
+    gap: 4px;
+    text-transform: uppercase;
+  }
+
+  mat-form-field {
+    margin-left: 20px;
+  }
+
+  .step-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .step-row {
+    display: flex;
+    align-items: baseline;
+  }
+
+  .add-button {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  @media (max-width: 767px) {
+    .step-box {
+      gap: 20px;
+    }
+
+    .step-row {
+      flex-direction: column;
+    }
+  }
+}
