@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, Injector, OnInit, ViewChild } from '@angular/core';
-import { AlgorithmOfflineDataService, HpacketsService, LoggerService, PacketData } from 'core';
+import { AlgorithmOfflineDataService, HPacketService, LoggerService, PacketData } from 'core';
 import * as moment_ from 'moment';
 import { Subject, Subscription, lastValueFrom } from 'rxjs';
 import { BaseTableComponent } from '../../base/base-table/base-table.component';
@@ -33,7 +33,7 @@ export class AlgorithmTableComponent extends BaseTableComponent implements After
     private algorithmOfflineDataServices: AlgorithmOfflineDataService,
     injector: Injector,
     protected loggerService: LoggerService,
-    private packetService: HpacketsService,
+    private packetService: HPacketService,
   ) {
     super(injector, loggerService);
   }
