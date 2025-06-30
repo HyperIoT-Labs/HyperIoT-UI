@@ -1,9 +1,12 @@
-import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild} from '@angular/core';
-import { TimeStep } from 'components';
-import { HProjectService } from 'core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { DialogService, TimeStep } from 'components';
+import {HProjectService } from 'core';
 import * as moment_ from 'moment';
 import 'moment-precise-range-plugin';
 import { TimeAxisComponent } from './time-axis/time-axis.component';
+import { DashboardEventService } from '../services/dashboard-event.service';
+import { DataExport } from './models/data-export.model';
+import { DataExportComponent } from './data-export/data-export.component';
 
 const moment = moment_;
 
@@ -107,7 +110,9 @@ export class TimelineComponent implements OnChanges {
    * @param hprojectsService service to require data for the timeline
    */
   constructor(
-    private hprojectsService: HProjectService
+    private hprojectsService: HProjectService,
+    private dashboardEvent: DashboardEventService,
+    private dialogService: DialogService
   ) {
     this.domainStart = moment(new Date()).startOf(this.mapToDomain[this.domainInterval]).toDate();
     this.domainStop = moment(this.domainStart).add(1, this.mapToDomain[this.domainInterval]).toDate();
@@ -117,8 +122,7 @@ export class TimelineComponent implements OnChanges {
    * ngOnChanges() is called after the input has changed. It updates the timeline data.
    */
   ngOnChanges(changes: SimpleChanges): void {
-    // this.dashboardPackets, this.projectId
-      this.updateTimeline();
+    this.updateTimeline();
   }
 
   ngAfterViewInit() {
@@ -246,6 +250,20 @@ export class TimelineComponent implements OnChanges {
     this.domainStop = moment(this.domainStart).add(1, this.mapToDomain[this.domainInterval]).toDate();
     this.timelineDataRequest();
     this.timeAxis.updateAxis(this.timeLineData, [this.domainStart, this.domainStop], this.domainInterval);
+  }
+
+  openDataExportModel() {
+    this.dialogService.open<DataExportComponent, DataExport>(
+      DataExportComponent,
+      {
+        data: {
+          timeInterval: this.timeSelection
+        },
+        height: '600px',
+        width: '600px',
+        backgroundClosable: true,
+      }
+    );
   }
 
 }

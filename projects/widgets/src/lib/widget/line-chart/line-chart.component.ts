@@ -23,11 +23,13 @@ import {
 } from "rxjs";
 
 import { BaseChartComponent } from "../../base/base-chart/base-chart.component";
-import { ConfigButtonWidget, Threshold, WidgetAction } from "../../base/base-widget/model/widget.model";
+import { ConfigButtonWidget, Threshold, Trend, WidgetAction } from "../../base/base-widget/model/widget.model";
 import { TimeSeries } from "../../data/time-series";
 import { ServiceType } from "../../service/model/service-type";
 import { DashboardEventService } from "../../dashboard/services/dashboard-event.service";
 import { DashboardEvent } from "../../dashboard/services/dashboard-event.model";
+
+import { linearRegression, linearRegressionLine } from 'simple-statistics';
 
 @Component({
   selector: "hyperiot-line-chart",
@@ -66,6 +68,10 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
   allData: PacketData[] = [];
 
   thresholds: Threshold[] = [];
+  trend: Trend = null;
+  trendValues: any;
+  trendIndex: number;
+
   shapeIndices: number[] = [];
 
   protected logger: Logger;
@@ -207,6 +213,7 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
       this.thresholds = this.widget.config.threshold.thresholds;
       this.retrieveThresholds();
     }
+
     // scheduling chart initialization because of chart size
     asyncScheduler.schedule(() => {
       this.setTimeSeries();
@@ -262,7 +269,10 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
         filter((data) => data.length !== 0),
         map((data) => [].concat.apply([], data))
       )
-      .subscribe((eventData) => this.computePacketData(eventData));
+      .subscribe((eventData) => {
+        this.computePacketData(eventData);
+      });
+
     if (this.serviceType === ServiceType.OFFLINE) {
       this.logger.debug("subscribeAndInit - OFFLINE Service");
       this.offControllerSubscription =
@@ -297,6 +307,12 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
     this.allData = this.allData.concat([...packetData]);
 
     super.computePacketData(packetData, convertOldValues);
+
+    // Here you ONLY CALCULATE the trend values
+    if (this.widget.config.trend && this.widget.config.trend.trendActive) {
+      this.trend = this.widget.config.trend.trend;
+      this.calculateTrend(this.allData);
+    }
 
     packetData.forEach((datum) => {
       if (
@@ -405,6 +421,58 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
     };
   }
 
+  regressionLine(data: any, fieldName: string) {
+    const regressionData: [number, number][] = data.map(d => [
+          d.timestamp.getTime(),
+          parseFloat(d[fieldName])
+        ]);
+
+    const lr = linearRegression(regressionData); // { m, b }
+    const line = linearRegressionLine(lr);
+    const regressionLinePoints: [number, number][] = regressionData.map(([x]) => [x, line(x)]);
+    const readableLine = regressionLinePoints.map(([x, y]) => ({
+      timestamp: new Date(x),
+      trendValue: y
+    }));
+
+    return readableLine
+  }
+
+  calculateTrend(data: any) {
+    this.trendValues = this.regressionLine(data, this.trend.fieldName);
+  }
+
+  addTrendToChart(trend: Trend, trendData: any) {
+    // Through any two points, there is exactly one straight line
+    let y0 = trendData[0].trendValue;
+    let y1 = trendData[1].trendValue;
+
+    if (!this.graph.layout.shapes) this.graph.layout.shapes = [];
+
+    //rimuovo vecchio trend
+    this.graph.layout.shapes.splice(this.trendIndex, 1);
+
+    this.graph.layout.shapes.push(
+          {
+            type: "line",
+            xref: "paper",
+            x0: 0,
+            x1: 1,
+            yref: "y",
+            y0: y0,
+            y1: y1,
+            line: {
+              color: trend.line.color,
+              width: trend.line.thickness,
+              dash: this.getLineDash(trend.line.type)
+            },
+          }
+        );
+
+    // update current index
+    this.trendIndex = this.graph.layout.shapes.length - 1;
+  }
+
   addThresholdToChart(threshold: Threshold, ruleArray: string[], ruleName: string) {
     if (!this.graph.layout.shapes) this.graph.layout.shapes = [];
     /* TODO atm we only handle  */
@@ -490,6 +558,7 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
     if (value === "") return;
     values.push(value);
   }
+
 
   addSingleThreshold(rule, threshold: Threshold) {
     const tempSplitted = rule.split(' ').filter(i => i);
@@ -603,6 +672,13 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
 
   updateDataRequest() {
     this.logger.debug("updateDataRequest");
+
+    // Here you ONLY DRAW the trend values into chart
+    if (this.widget.config.trend && this.widget.config.trend.trendActive) {
+      this.logger.debug("addTrendToChart");
+      this.addTrendToChart(this.trend, this.trendValues);
+    }
+
     if (
       !this.lastRequestedDate ||
       !this.lastOfflineDate ||
@@ -610,6 +686,7 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
     ) {
       return;
     }
+
     this.dataRequest();
   }
 

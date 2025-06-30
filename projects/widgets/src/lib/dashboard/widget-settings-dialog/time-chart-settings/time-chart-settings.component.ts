@@ -35,6 +35,11 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy, OnChanges 
     thresholdsForm: FormArray = this.fb.array([]);
     newThreshold: any = {};
 
+    trendActive: boolean = false;
+    trendForm: FormArray = this.fb.array([]);
+    trendFields = [];
+    trendSelectedFields = [];
+
     defaultOpacity: number = 0.55;
     defaultColor: string = `rgba(5, 186, 0, ${this.defaultOpacity})`;
     defaultLine = { color: this.defaultColor, thickness: 2, type: LineTypes.Linear };
@@ -85,6 +90,15 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy, OnChanges 
         if (this.widget.config.seriesConfig == null || this.widget.config.seriesConfig.length === 0) {
             Object.assign(this.widget.config, this.defaultConfig);
         }
+
+        // Add trend to form
+        if (this.widget.config.trend) {
+            this.addTrendToForm(this.widget.config.trend.trend);
+            this.trendActive = this.widget.config.trend.trendActive;
+        }
+
+        else this.addTrendToForm(null);
+
         if (this.widget.config.threshold) {
             this.thresholdActive = this.widget.config.threshold.thresholdActive;
             if (this.thresholdActive) {
@@ -143,12 +157,46 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy, OnChanges 
         this.thresholdsForm.push(thresholdGroup);
     }
 
+    addTrendToForm(trend) {
+        if (!trend) {
+            const trendGroup = this.fb.group({
+                id: [null, Validators.required],
+                line: this.fb.group({
+                    color: [this.defaultColor, Validators.required],
+                    thickness: [2, [Validators.min(1), Validators.max(5)]],
+                    type: ["linear"]
+                })
+            });
+            this.trendForm.insert(0, trendGroup);
+        }
+        else {
+
+            if (trend.fieldId) this.trendSelectedFields = [trend.fieldId]
+            else this.trendSelectedFields = [];
+
+            const trendGroup = this.fb.group({
+                id: [null, Validators.required],
+                line: this.fb.group({
+                    color: [trend.line?.color, Validators.required],
+                    thickness: [trend.line?.thickness, [Validators.min(1), Validators.max(5)]],
+                    type: [trend.line?.type]
+                })
+            });
+            this.trendForm.insert(0, trendGroup);
+        }
+    }
+
     onSelectedFieldsChange(fields) {
         this.selectedFields = fields;
+        this.trendFields = fields;
     }
 
     onSelectedPacketChange(packet) {
         this.selectedPackets = [packet.id];
+    }
+
+    onPacketFieldTrendChange(event) {
+        this.trendSelectedFields = event;
     }
 
     updatePageStatus(status) {
@@ -156,8 +204,29 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy, OnChanges 
     }
 
     apply() {
+        this.assignTrendToConfig();
         this.assignThresholdsFormValuesToConfig();
         this.packetSelect.apply();
+    }
+
+    assignTrendToConfig() {
+        const name = this.packetSelect.selectedPacket.fields.find(el => el.id === this.trendSelectedFields[0])?.name ?? null;
+        const trend = this.trendForm.controls.map(control => {
+            return {
+                fieldId : this.trendSelectedFields[0],
+                fieldName: name,
+                line: {
+                    color: control.get('line.color').value,
+                    thickness: control.get('line.thickness').value,
+                    type: control.get('line.type').value
+                }
+            }
+        });
+
+        this.widget.config.trend = {
+            trendActive: this.trendActive,
+            trend: trend[0]
+        };
     }
 
     assignThresholdsFormValuesToConfig() {
@@ -231,6 +300,9 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy, OnChanges 
                 this.pageStatus = PageStatus.Error;
             }
         })
+    }
+
+    isTrendChecked() {
     }
 
     /**

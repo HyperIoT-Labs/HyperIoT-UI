@@ -45,6 +45,7 @@ import { DynamicLabelValueWidgetComponent } from './widget/dynamic-label-value-w
 import { ProductionTargetComponent } from './widget/production-target/production-target.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AlarmsWidgetComponent } from './widget/alarms-widget/alarms-widget.component';
+import { TrendGaugeChartComponent } from './widget/trend-gauge-chart/trend-gauge-chart.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { AlarmsWidgetComponent } from './widget/alarms-widget/alarms-widget.comp
     EventTableComponent,
     AlgorithmTableComponent,
     GaugeChartComponent,
+    TrendGaugeChartComponent,
     HistogramChartComponent,
     BaseWidgetTemplateComponent,
     DataSimulatorComponent,
@@ -68,7 +70,7 @@ import { AlarmsWidgetComponent } from './widget/alarms-widget/alarms-widget.comp
     MultiStatusWidgetComponent,
     DynamicLabelValueWidgetComponent,
     ProductionTargetComponent,
-    AlarmsWidgetComponent
+    AlarmsWidgetComponent,
   ],
   imports: [
     MatButtonModule,
@@ -82,7 +84,7 @@ import { AlarmsWidgetComponent } from './widget/alarms-widget/alarms-widget.comp
     MatTableModule,
     MatPaginatorModule,
     MatTooltipModule,
-    BrowserModule, 
+    BrowserModule,
     BrowserAnimationsModule,
     MomentModule.forRoot({
       relativeTimeThresholdOptions: {
@@ -121,6 +123,7 @@ import { AlarmsWidgetComponent } from './widget/alarms-widget/alarms-widget.comp
     HpacketTableComponent,
     DefaultWidgetComponent,
     GaugeChartComponent,
+    TrendGaugeChartComponent,
     HistogramChartComponent,
     MultiStatusWidgetComponent,
     DynamicLabelValueWidgetComponent,

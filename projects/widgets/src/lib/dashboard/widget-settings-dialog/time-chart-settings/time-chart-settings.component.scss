@@ -28,7 +28,7 @@
                 .thickness, .no-thickness {
                     width: 3em;
                     padding-left: 10px;
-                    text-align: center;                
+                    text-align: center;
                 }
 
                 .type {
@@ -59,6 +59,10 @@
             }
         }
     }
+}
+
+.pt-10 {
+    padding-top: 10px;
 }
 
 ::ng-deep .mat-option .line-option {

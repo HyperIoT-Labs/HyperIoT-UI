@@ -62,11 +62,19 @@
                             [settingsForm]="settingsForm">
                         </hyperiot-time-chart-settings>
                     </div>
+
                     <div *ngSwitchCase="'gauge'">
                         <hyperiot-gauge-settings [widget]="widget" [areaId]="areaId" [hDeviceId]="hDeviceId" [modalApply]="modalApply.asObservable()"
                             [settingsForm]="settingsForm">
                         </hyperiot-gauge-settings>
                     </div>
+
+                    <div *ngSwitchCase="'trend-gauge'">
+                        <hyperiot-trend-gauge-chart-settings [widget]="widget" [areaId]="areaId" [hDeviceId]="hDeviceId" [modalApply]="modalApply.asObservable()"
+                            [settingsForm]="settingsForm">
+                        </hyperiot-trend-gauge-chart-settings>
+                    </div>
+
                     <div *ngSwitchCase="'histogram'">
                         <hyperiot-time-chart-settings [widget]="widget" [areaId]="areaId" [hDeviceId]="hDeviceId" [modalApply]="modalApply.asObservable()"
                             [settingsForm]="settingsForm">

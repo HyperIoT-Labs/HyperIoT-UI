@@ -17,6 +17,7 @@ export { ErrorTableComponent } from './lib/widget/error-table/error-table.compon
 export { EventTableComponent } from './lib/widget/event-table/event-table.component';
 export { DefaultWidgetComponent } from './lib/default-widget/default-widget.component';
 export { GaugeChartComponent } from './lib/widget/gauge-chart/gauge-chart.component';
+export { TrendGaugeChartComponent } from './lib/widget/trend-gauge-chart/trend-gauge-chart.component';
 export { HistogramChartComponent } from './lib/widget/histogram-chart/histogram-chart.component';
 export { EcgComponent } from './lib/widget/ecg/ecg.component';
 export { DataSimulatorComponent } from './lib/widget/data-simulator/data-simulator.component';
