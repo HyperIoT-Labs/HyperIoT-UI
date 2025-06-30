@@ -1,10 +1,13 @@
-import { Component, Injector, OnInit, Optional } from '@angular/core';
+import { Component, Injector, OnDestroy, OnInit, Optional } from '@angular/core';
 import { BaseGenericComponent } from '../../base/base-generic/base-generic.component';
 import { PlotlyService } from 'angular-plotly.js';
 import { LoggerService, Logger, DataChannel, DataPacketFilter, PacketData } from 'core';
-import { asyncScheduler } from 'rxjs';
-import { Step, WidgetAction } from '../../base/base-widget/model/widget.model';
+import { asyncScheduler, bufferTime, filter, map, Subscription } from 'rxjs';
+import { WidgetAction } from '../../base/base-widget/model/widget.model';
 import { linearRegression } from 'simple-statistics';
+import { DashboardEventService } from '../../dashboard/services/dashboard-event.service';
+import { ServiceType } from "../../service/model/service-type";
+import { DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'hyperiot-trend-gauge-chart',
@@ -12,14 +15,17 @@ import { linearRegression } from 'simple-statistics';
   styleUrls: [
     '../../../../../../src/assets/widgets/styles/widget-commons.css',
     './trend-gauge-chart.component.css'
+  ],
+  providers: [
+    DecimalPipe
   ]
 })
-export class TrendGaugeChartComponent extends BaseGenericComponent implements OnInit {
+export class TrendGaugeChartComponent extends BaseGenericComponent implements OnInit, OnDestroy {
 
   /**
    * DataChannel to subscribe to retrieve data
    */
-  dataChannel: DataChannel;
+  private dataChannel: DataChannel;
 
   /**
    * Container for the graph specifics
@@ -27,18 +33,15 @@ export class TrendGaugeChartComponent extends BaseGenericComponent implements On
   graph: any = {};
 
   /**
-   * Var updated based on the toolbar action selected
-   */
-  action: string = '';
-
-  /**
    * Field selected in configuration
    */
-  field: string;
+  private field: string;
 
-  labelField: string;
+  private labelField: string;
 
-  steps: Step[];
+  private channelId: number;
+
+  private offControllerSubscription: Subscription;
 
   readonly gauge = {
     axis: {
@@ -62,11 +65,17 @@ export class TrendGaugeChartComponent extends BaseGenericComponent implements On
     }
   };
 
+  private lastValue: string;
+
   protected logger: Logger;
+
+  loadingOfflineData = false;
 
   constructor(
     injector: Injector,
     @Optional() public plotly: PlotlyService,
+    private dashboardEvent: DashboardEventService,
+    private decimalPipe: DecimalPipe,
     protected loggerService: LoggerService
   ) {
     super(injector, loggerService);
@@ -76,14 +85,34 @@ export class TrendGaugeChartComponent extends BaseGenericComponent implements On
 
   ngOnInit(): void {
     super.ngOnInit();
+
     this.configure();
+
+    this.dashboardEvent.timelineEvent.subscribe(async (res) => {
+      this.loadingOfflineData = false;
+      this.reset();
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.offControllerSubscription?.unsubscribe();
+  }
+
+  private reset() {
+    this.lastValue = undefined;
+    this.renderData(this.lastValue);
   }
 
   /**
    * Configures the initial vars and fns necessary to init the data
    */
   configure(): void {
+    this.graph.layout = {};
+    this.graph.data = [];
+    this.graph.config = {};
+
     super.removeSubscriptionsAndDataChannels();
+
     if (
       !(
         this.widget.config != null &&
@@ -98,42 +127,15 @@ export class TrendGaugeChartComponent extends BaseGenericComponent implements On
 
     this.isConfigured = true;
 
-    if (this.widget.config.steps) {
-      this.steps = this.widget.config.steps;
-    }
+    super.configure();
 
-    this.graph.layout = {};
-    this.graph.data = [];
-    this.graph.config = {};
+    asyncScheduler.schedule(() => {
+      this.setChartLayout();
+    });
 
     const hPacketFieldId = Object.keys(this.widget.config.packetFields)[0];
     this.field = this.widget.config.packetFields[hPacketFieldId];
     this.labelField = this.widget.config.fieldAliases[hPacketFieldId] || this.widget.config.packetFields[hPacketFieldId];
-
-    const dataPacketFilter = new DataPacketFilter(
-      this.widget.config.packetId,
-      [this.field],
-      true
-    );
-
-    this.dataChannel = this.dataService.addDataChannel(
-      +this.widget.id,
-      [dataPacketFilter]
-    );
-
-    this.dataSubscription = this.dataChannel.subject.subscribe(res => {
-      this.computePacketData(res.data);
-    });
-
-    //!TEST
-    setInterval(() => {
-      // setTimeout(() => {
-      this.renderData(Math.random() * 2 - 1);
-    }, 2000)
-
-    asyncScheduler.schedule(() => {
-      this.setChartLayout();
-    })
   }
 
   /**
@@ -141,9 +143,34 @@ export class TrendGaugeChartComponent extends BaseGenericComponent implements On
    * @param packetData
    */
   computePacketData(packetData: PacketData[]) {
-    super.computePacketData(packetData);
     this.logger.debug('computePacketData -> packetData: ', packetData);
-    packetData.forEach(datum => this.renderData(datum[this.field]));
+
+    const value = this.slope([...packetData]);
+
+    let currentValue = value;
+    if (value === Infinity) {
+      currentValue = 1;
+    } else if (value === -Infinity) {
+      currentValue = -1;
+    } else if (value > 1 || value < -1) {
+      currentValue = undefined;
+    }
+
+    this.lastValue = this.decimalPipe.transform(currentValue, '1.1-1');
+    this.renderData(this.lastValue);
+  }
+
+  /**
+   * Slope in mathematics refers to the measure of the steepness or incline of a line
+   */
+  private slope(packetData: PacketData[]) {
+    const regressionData = packetData.map((datum, index) => [
+      index,
+      parseFloat(datum[this.field])
+    ]);
+
+    const lr = linearRegression(regressionData);
+    return lr.m;
   }
 
   /**
@@ -151,11 +178,11 @@ export class TrendGaugeChartComponent extends BaseGenericComponent implements On
    * The commented part is left there in case we'll want to add the arrow indicator
    * @param packetData
    */
-  async renderData(value: number) {
-    const Plotly = await this.plotly.getPlotly();
-
+  private async renderData(value: string): Promise<void> {
     const graph = this.plotly.getInstanceByDivId(`widget-${this.widget.id}${this.isToolbarVisible}`);
     if (graph) {
+      const Plotly = await this.plotly.getPlotly();
+
       const gauge = this.gauge;
       gauge.threshold.value = value;
 
@@ -173,7 +200,7 @@ export class TrendGaugeChartComponent extends BaseGenericComponent implements On
   /**
    * Init the chart structure and data
    */
-  setChartLayout() {
+  private setChartLayout(): void {
     this.graph.data.push({
       type: 'indicator',
       mode: 'gauge+number',
@@ -224,59 +251,17 @@ export class TrendGaugeChartComponent extends BaseGenericComponent implements On
         r: 35
       }
     };
+
     this.graph.config = {
       responsive: true
     };
-    this.isConfigured = true;
   }
-
-  /**
-   * Function that calculates the necessary measures to insert the Arrow Indicator
-   * @param height 
-   * @param width 
-   */
-  // calculateIndicatorAndLayout(height: number, width: number) {
-  //   let rx = 0.72;
-  //   let ry = 0.72;
-  //   if (width > 450) {
-  //     rx = width / 100 * 3.3 / 100;
-  //   }
-
-  //   function degToRad(deg: number) {
-  //     return deg * (Math.PI / 180);
-  //   }
-
-  //   const xHead = Math.cos(degToRad(180 - this.value * (180 / this.maxValue))) * rx;
-  //   const yHead = Math.sin(degToRad(180 - this.value * (180 / this.maxValue))) * ry;
-
-  //   this.graph.layout = {
-  //     margin: { t: 75, r: 35, l: 35, b: 35 },
-  //     font: { color: this.widget.config.textColor, family: 'Exo' },
-  //     xaxis: { range: [-1, 1], showgrid: false, 'zeroline': false, 'visible': false },
-  //     yaxis: { range: [0, 1], showgrid: false, 'zeroline': false, 'visible': false },
-  //     showlegend: false,
-  //     annotations: [
-  //       {
-  //         ax: 0,
-  //         ay: 0,
-  //         axref: 'x',
-  //         ayref: 'y',
-  //         x: xHead,
-  //         y: yHead,
-  //         xref: 'x',
-  //         yref: 'y',
-  //         showarrow: true,
-  //         arrowhead: 9,
-  //       }
-  //     ]
-  //   };
-  // }
 
   /**
    * Called when the play button from the toolbar is pressed
    * Unpauses the data channel stream
    */
-  play(): void {
+  private play(): void {
     this.dataChannel.controller.play();
   }
 
@@ -284,26 +269,97 @@ export class TrendGaugeChartComponent extends BaseGenericComponent implements On
    * Called when the pause button from the toolbar is pressed
    * Pauses the data channel stream
    */
-  pause(): void {
+  private pause(): void {
     this.dataChannel.controller.pause();
   }
 
-  onChartInitialized() {
+  onChartInitialized(): void {
+    this.subscribeDataChannel();
+
     const resizeObserver = new ResizeObserver((entries) => {
-      const graph = this.plotly.getInstanceByDivId(`widget-${this.widget.id}${this.isToolbarVisible}`);
+      const graph = this.plotly.getInstanceByDivId(
+        `widget-${this.widget.id}${this.isToolbarVisible}`
+      );
+
       if (graph) {
         this.plotly.resize(graph);
       }
     });
-    resizeObserver.observe(document.querySelector(`#widget-${this.widget.id}${this.isToolbarVisible}`));
+
+    resizeObserver.observe(
+      document.querySelector(`#widget-${this.widget.id}${this.isToolbarVisible}`)
+    );
+  }
+
+  private subscribeDataChannel(): void {
+    this.logger.debug("subscribeDataChannel");
+
+    const dataPacketFilter = new DataPacketFilter(
+      this.widget.config.packetId,
+      this.widget.config.packetFields,
+      true
+    );
+
+    this.channelId = +this.widget.id;
+
+    if (!this.isToolbarVisible && this.serviceType === ServiceType.OFFLINE) {
+      // setting negative id to fullscreen offline widget channel to prevent updating original widget
+      // TODO channelId should be a proper string
+      this.channelId = -this.channelId;
+      this.dataChannel = this.dataService.copyDataChannel(this.channelId, -this.channelId);
+    } else {
+      this.dataChannel = this.dataService.addDataChannel(this.channelId, [dataPacketFilter]);
+    }
+
+    this.dataSubscription = this.dataChannel.subject
+      .pipe(
+        map((dataChunk) => dataChunk.data),
+        bufferTime(this.widget.config.refreshIntervalMillis || 0),
+        filter((data) => data.length !== 0),
+        map((data) => [].concat.apply([], data))
+      )
+      .subscribe((eventData) => {
+        this.loadingOfflineData = false;
+        this.computePacketData(eventData);
+      });
+
+    if (this.serviceType === ServiceType.OFFLINE) {
+      this.logger.debug("subscribeAndInit - OFFLINE Service");
+      this.offControllerSubscription =
+        this.dataChannel.controller.$totalCount.subscribe((res) => {
+          if (this.isToolbarVisible) {
+            this.graph.data.forEach((tsd) => {
+              (tsd.x = []), (tsd.y = []);
+            });
+
+            if (res !== 0) {
+              this.dataRequest();
+            }
+          } else { // if fullscreen   
+            this.lastValue = this.initData;         
+            this.renderData(this.lastValue);
+          }
+        });
+    }
+  }
+
+  // OFFLINE
+  private dataRequest(): void {
+    this.logger.debug("dataRequest");
+    if (this.loadingOfflineData || this.dataChannel?.controller.rangeLoaded) {
+      return;
+    }
+    this.logger.debug("dataRequest triggered");
+    this.loadingOfflineData = true;
+
+    this.dataService.loadNextData(this.channelId);
   }
 
   /**
    * Called when one of the toolbar options is pressed and emits the correct event
    * @param action 
    */
-  onToolbarAction(action: string) {
-    this.action = action;
+  onToolbarAction(action: string): void {
     const widgetAction: WidgetAction = { widget: this.widget, action };
     switch (action) {
       case 'toolbar:play':
@@ -315,22 +371,18 @@ export class TrendGaugeChartComponent extends BaseGenericComponent implements On
         break;
 
       case 'toolbar:fullscreen':
-        // widgetAction.value = this.value;
+        widgetAction.value = this.lastValue;
         break;
     }
 
     this.widgetAction.emit(widgetAction);
   }
 
-  /**
-   * Slope in mathematics refers to the measure of the steepness or incline of a line
-   */
-  private slope(data: { timestamp: Date, temperature: string }[]) {
-    const regressionData: [number, number][] = data.map(d => [
-      d.timestamp.getTime(),
-      parseFloat(d.temperature) // TODO: mappare il campo
-    ]);
-
-    return linearRegression(regressionData).m;
+  noRangeSelected() {
+    return (
+      this.serviceType === ServiceType.OFFLINE &&
+      !this.dataService["isRangeSelected"]
+    );
   }
+
 }

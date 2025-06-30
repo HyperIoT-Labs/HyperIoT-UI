@@ -262,7 +262,10 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
         filter((data) => data.length !== 0),
         map((data) => [].concat.apply([], data))
       )
-      .subscribe((eventData) => this.computePacketData(eventData));
+      .subscribe((eventData) => {
+        this.computePacketData(eventData);
+      });
+
     if (this.serviceType === ServiceType.OFFLINE) {
       this.logger.debug("subscribeAndInit - OFFLINE Service");
       this.offControllerSubscription =

@@ -3,8 +3,7 @@ import { SelectOption } from 'components';
 import { Observable } from 'rxjs';
 import { PacketSelectComponent } from '../packet-select/packet-select.component';
 import { ConfigModel, Step, WidgetConfig } from '../../../base/base-widget/model/widget.model';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { title } from 'process';
+import { FormArray, FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 
 @Component({
   selector: 'hyperiot-trend-gauge-chart-settings',
@@ -38,9 +37,13 @@ export class TrendGaugeChartSettingsComponent implements OnInit, OnDestroy {
     return this.gaugeForm.get('title') as FormGroup;
   }
 
-  private defaultConfig: Pick<ConfigModel, 'textColor' | 'bgColor' | 'steps'> = {
+  private defaultConfig: Pick<ConfigModel, 'textColor' | 'bgColor' | 'title' | 'steps'> = {
     textColor: '#275691',
     bgColor: 'bright',
+    title: {
+      text: 'Trend Gauge Chart',
+      fontSize: 16,
+    },
     steps: [
       {
         color: '#fe2739',
@@ -79,13 +82,7 @@ export class TrendGaugeChartSettingsComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder
   ) {
-    this.gaugeForm = this.fb.group({
-      title: this.fb.group({
-        text: ['Trend Gauge', Validators.required],
-        fontSize: [16]
-      }),
-      stepList: this.fb.array([]),
-    });
+
   }
 
   ngOnInit(): void {
@@ -94,8 +91,19 @@ export class TrendGaugeChartSettingsComponent implements OnInit, OnDestroy {
       Object.assign(this.widget.config, this.defaultConfig);
     }
 
-    this.gaugeForm.valueChanges.subscribe((value) => {
-      console.log(value);
+    const { text, fontSize } = this.widget.config.title;
+    this.gaugeForm = this.fb.group({
+      title: this.fb.group({
+        text: [text, Validators.required],
+        fontSize: [
+          fontSize, [
+            Validators.required,
+            Validators.min(10),
+            Validators.max(25)
+          ]
+        ]
+      }),
+      stepList: this.fb.array([]),
     });
 
     this.widget.config.steps.forEach(({ range: [start, stop], color }) => {

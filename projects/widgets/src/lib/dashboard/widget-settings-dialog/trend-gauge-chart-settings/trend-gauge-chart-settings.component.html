@@ -8,6 +8,12 @@
 <hr />
 
 <form [formGroup]="gaugeForm">
+   <div class="box-fields-customization-title">
+    <h3>
+      Title Customization
+    </h3>
+  </div>
+
   <div>
     <div formGroupName="title">
       <mat-form-field>
@@ -17,12 +23,24 @@
 
       <mat-form-field>
         <mat-label>Title font size</mat-label>
-        <input matInput type="number" [min]="10" formControlName="fontSize" />
+        <input
+          matInput
+          type="number"
+          [min]="10"
+          [max]="25"
+          formControlName="fontSize"
+        />
       </mat-form-field>
     </div>
   </div>
 
   <hr />
+
+  <div class="box-fields-customization-title">
+    <h3>
+      Steps Customization
+    </h3>
+  </div>
 
   <div formArrayName="stepList">
     <div

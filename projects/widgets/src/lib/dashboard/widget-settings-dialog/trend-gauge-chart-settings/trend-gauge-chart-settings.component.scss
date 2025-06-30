@@ -1,4 +1,12 @@
 :host {
+  .box-fields-customization-title {
+    display: flex;
+    color: #0856b6;
+    align-items: center;
+    gap: 4px;
+    text-transform: uppercase;
+  }
+
   mat-form-field {
     margin-left: 20px;
   }
