@@ -1,9 +1,9 @@
 import { AfterViewInit, Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, ValidationErrors, Validators } from '@angular/forms';
 import { DialogRef, DIALOG_DATA, SelectOptionGroup, HytSelectComponent } from 'components';
-import { DataExport } from '../models/data-export,model';
+import { DataExport } from '../models/data-export.model';
 import { Store } from '@ngrx/store';
-import { DataExportNotificationActions, DataExportNotificationStore, HDeviceSelectors, HPacket, HPacketSelectors, HProject, HProjectSelectors, HprojectsService, Logger, LoggerService, NotificationManagerService } from 'core';
+import { DataExportNotificationActions, DataExportNotificationStore, HDeviceSelectors, HPacket, HPacketSelectors, HProject, HProjectSelectors, HProjectService, Logger, LoggerService, NotificationManagerService } from 'core';
 import { BehaviorSubject, catchError, combineLatest, concatMap, filter, forkJoin, interval, map, Observable, of, Subject, Subscription, switchMap, take, takeWhile, tap, throwError } from 'rxjs';
 import { MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { NgxMatDateAdapter, NgxMatDatetimePicker, } from '@angular-material-components/datetime-picker';
@@ -108,7 +108,7 @@ export class DataExportComponent implements OnInit, AfterViewInit, OnDestroy {
     private fb: FormBuilder,
     private store: Store,
     public dialogRef: DialogRef<any>,
-    private hProjectsService: HprojectsService,
+    private hProjectsService: HProjectService,
     private httpClient: HttpClient,
     private notificationManagerService: NotificationManagerService,
     @Inject(DIALOG_DATA) data: DataExport | DataExportNotificationStore.DataExportNotification,

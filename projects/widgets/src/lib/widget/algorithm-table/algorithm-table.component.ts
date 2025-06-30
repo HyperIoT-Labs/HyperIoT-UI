@@ -24,6 +24,7 @@ export class AlgorithmTableComponent extends BaseTableComponent implements After
 
   tableHeaders = [];
   tableSource: Subject<any[]> = new Subject<any[]>();
+  trueArray : boolean = false;
 
   dataRequest: Subscription;
 
