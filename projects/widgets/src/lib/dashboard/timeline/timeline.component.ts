@@ -122,13 +122,7 @@ export class TimelineComponent implements OnChanges {
    * ngOnChanges() is called after the input has changed. It updates the timeline data.
    */
   ngOnChanges(changes: SimpleChanges): void {
-    // this.dashboardPackets, this.projectId
     this.updateTimeline();
-
-    this.dashboardEvent.selectedDateIntervalForExport.asObservable().subscribe((timeInterval) => {
-      console.log(timeInterval);
-
-    })
   }
 
   ngAfterViewInit() {

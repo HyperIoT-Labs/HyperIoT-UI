@@ -4,6 +4,76 @@
         (selectedPacketChange)="onSelectedPacketChange($event)" (packetSelectStatusChange)="updatePageStatus($event)"
         [useSpinner]="useSpinner" [customSettingsStatus]="pageStatus"></hyperiot-packet-select>
 
+    <!-- TREND Settings -->
+     <div id="time-chart-settings" class="pt-10" *ngIf="packetPageStatus === 1 && pageStatus === 1">
+            <div class="box-fields-customization-title">
+                <h3 id="title-thresholds">Trend</h3>
+            </div>
+            <mat-checkbox color="primary" [(ngModel)]="trendActive" [ngModelOptions]="{ standalone: true }"
+            (ngModelChange)="isTrendChecked()">Show Trend</mat-checkbox>
+
+            <div class="config-threshold">
+                <ng-container [formGroup]="trendForm">
+                    <div *ngFor="let trendControl of trendForm.controls; let i = index" [formGroupName]="i"
+                        class="threshold-row">
+                                <div class="input-button-row">
+                                    <div class="input-row">
+
+                                        <!-- Select dell'input -->
+                                        <hyt-inner-field-select
+                                            [fields]="trendFields"
+                                            [selectedFieldsIds]="trendSelectedFields"
+                                            [isMultiSelect]="false"
+                                            (fieldSelectionChanged)="onPacketFieldTrendChange($event)"
+                                            >
+                                        </hyt-inner-field-select>
+
+                                        <!-- Line settings (color, thickness, type) -->
+                                        <div>
+                                            <!-- Color Picker -->
+                                            <input class="colorPicker"
+                                            [style.backgroundColor]="trendControl.get('line.color').value || defaultColor"
+                                            [cpAlphaChannel]="'disabled'" [cpOutputFormat]="'rgba'"
+                                            [(colorPicker)]="trendControl.get('line.color').value"
+                                            (colorPickerChange)="setThresholdColor(trendControl.get('line.color'),$event)" />
+                                        </div>
+                                        <hyt-info class="lh1" i18n-text="@@HYT_colorpicker_description" text="Choose the color that you want for the threshold line." style="color: #0856b6;"></hyt-info>
+
+                                        <div formGroupName="line" class="line-config"
+                                            [ngClass]="{ 'thickness-only': trendControl.get('line.type').value === null }">
+                                            <!-- Type Input (e.g., linear, dashed) -->
+                                            <mat-form-field style="width: 40% !important;"
+                                                >
+                                                <mat-select formControlName="type"
+                                                    [ngClass]="!!trendControl.get('line.type').value">
+                                                    <mat-select-trigger>
+                                                        <div class="line-option"
+                                                            [ngClass]="trendControl.get('line.type').value"></div>
+                                                    </mat-select-trigger>
+    
+                                                    <mat-option *ngFor="let lineType of lineTypeOptions"
+                                                        [value]="lineType">
+                                                        <div class="line-option" [ngClass]="lineType"></div>
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+    
+                                            <!-- Thickness Input -->
+                                            <ng-template #empty>
+                                                <div></div>
+                                            </ng-template>
+                                            
+                                            <input class="thickness" matInput type="number" formControlName="thickness" min="1" max="5"
+                                                placeholder="Thickness" />
+                                        </div>
+                                        <hyt-info class="lh1" i18n-text="@@HYT_line_description" text="Choose the type and thickness of the threshold line." style="color: #0856b6;"></hyt-info>
+                                    </div>
+                                </div>
+                            </div>
+                </ng-container>
+            </div>
+     </div>
+
     <div id="time-chart-settings" *ngIf="packetPageStatus === 1 && pageStatus === 1">
         <div *ngIf="checkbox && (selectedFields.length > 0 || widget.config.packetId)"
             class="padding-6 d-flex flex-column justify-content-stretch pt25">
