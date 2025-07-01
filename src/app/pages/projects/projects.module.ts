@@ -1,5 +1,5 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {CommonModule, KeyValuePipe} from '@angular/common';
 import { ProjectsComponent } from './projects.component';
 import { ComponentsModule } from 'components';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -79,6 +79,9 @@ import { DynamicMapUserConfiguratorComponent } from './project-forms/areas-form/
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatSliderModule } from '@angular/material/slider';
 import {MatFormFieldModule} from "@angular/material/form-field";
+import {
+  ComputeFieldRuleComponent
+} from "./project-forms/packet-enrichment-form/compute-field-rule/compute-field-rule.component";
 
 @NgModule({
   declarations: [
@@ -128,6 +131,7 @@ import {MatFormFieldModule} from "@angular/material/form-field";
     EventComponentContainerComponent,
     EventMqttCommandComponent ,
     AlarmEventsTableComponent,
+    ComputeFieldRuleComponent
   ],
   imports: [
     ColorPickerModule,
@@ -159,7 +163,7 @@ import {MatFormFieldModule} from "@angular/material/form-field";
     MatButtonToggleModule,
     MatSliderModule,
     MatBadgeModule,
-    MatFormFieldModule
+    MatFormFieldModule,
   ],
   entryComponents: [
     AddTagModalComponent,
