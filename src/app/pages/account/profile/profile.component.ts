@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { HusersService, HUser, HdevicesService, AreasService, HprojectsService, BrandingService, BrandingActions, BrandingSelectors, Dashboard, UserSiteSettingActions, UserSiteSettingSelectors } from 'core';
+import { HUserService, HUser, HDevicesService, Area_Service, HProjectService, BrandingService, BrandingActions, BrandingSelectors, Dashboard, UserSiteSettingActions, UserSiteSettingSelectors } from 'core';
 import { AuthenticationHttpErrorHandlerService } from '../../../services/errorHandler/authentication-http-error-handler.service';
 import { HYTError } from 'src/app/services/errorHandler/models/models';
 import { Router } from '@angular/router';
@@ -141,14 +141,14 @@ export class ProfileComponent implements OnInit {
    * This is the constructor of the class.
    */
   constructor(
-    private hUserService: HusersService,
+    private hUserService: HUserService,
     private fb: FormBuilder,
     private httperrorHandler: AuthenticationHttpErrorHandlerService,
     private router: Router,
     private cd: ChangeDetectorRef,
-    private hDevicesService: HdevicesService,
-    private areasService: AreasService,
-    private hProjectService: HprojectsService,
+    private hDevicesService: HDevicesService,
+    private areasService: Area_Service,
+    private hProjectService: HProjectService,
     private brandingService: BrandingService,
     private store: Store
   ) {

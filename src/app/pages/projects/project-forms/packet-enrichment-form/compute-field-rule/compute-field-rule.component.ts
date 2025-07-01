@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, Validators } from '@angular/forms';
-import { HPacket, HPacketField, HpacketsService, HProject, Logger, LoggerService } from 'core';
+import { HPacket, HPacketField, HPacketService, HProject, Logger, LoggerService } from 'core';
 import { EnrichmentType } from '../enrichment-type.enum';
 import { DataSimulatorSettings } from 'widgets'
 import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
@@ -144,7 +144,7 @@ export class ComputeFieldRuleComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private hPacketService: HpacketsService,
+    private hPacketService: HPacketService,
     private loggerService: LoggerService,
   ) {
     this.logger = new Logger(this.loggerService);
