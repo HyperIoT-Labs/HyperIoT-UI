@@ -9,7 +9,7 @@ export namespace HProjectStore {
 
   export interface State extends EntityState<HProject> {
     // additional entities state properties
-    selectedHProjectId: number | null;
+    selectedHProjectId: string | null;
   }
 
   export const adapter: EntityAdapter<HProject> = createEntityAdapter<HProject>();
@@ -25,10 +25,7 @@ export namespace HProjectStore {
       return { ...state };
     }),
     on(HProjectActions.loadHProjectsSuccess, (state, { hProjects }) => {
-      return adapter.setAll(hProjects, {
-        ...state,
-        // selectedHProjectId: null
-      });
+      return adapter.setAll(hProjects, state);
     }),
     on(HProjectActions.loadHProjectsFailure, (state, { error }) => {
       return { ...state };
@@ -71,12 +68,6 @@ export namespace HProjectStore {
     }),
     on(HProjectActions.setHProjects, (state, { hProjects }) => {
       return adapter.setMany(hProjects, state);
-    }),
-    on(HProjectActions.setSelectedHProjectId, (state, { id }) => {
-      return {
-        ...state,
-        selectedHProjectId: id
-      };
     }),
     on(HProjectActions.clearHProjects, state => {
       return adapter.removeAll({ ...state, selectedHProjectId: null });

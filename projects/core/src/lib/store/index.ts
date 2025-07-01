@@ -1,6 +1,6 @@
 
 import {
-    ActionReducerMap,
+  ActionReducerMap,
 } from '@ngrx/store';
 
 import { BrandingStore } from "./branding/branding.reducer";
@@ -32,37 +32,37 @@ export * from './user-site-setting';
 export * from './data-export-notification';
 
 export namespace HyperiotStore {
-    export interface State {
-        branding: BrandingStore.State,
-        liveAlarms: LiveAlarmStore.State;
-        rules: RuleStore.State,
-        hProjects: HProjectStore.State,
-        hDevices: HDeviceStore.State,
-        hPackets: HPacketStore.State,
-        notifications: NotificationStore.State,
-        userSiteSetting: UserSiteSettingStore.State,
-        dataExportNotification: DataExportNotificationStore.State
-    };
+  export interface State {
+    branding: BrandingStore.State,
+    liveAlarms: LiveAlarmStore.State;
+    rules: RuleStore.State,
+    hProjects: HProjectStore.State,
+    hDevices: HDeviceStore.State,
+    hPackets: HPacketStore.State,
+    notifications: NotificationStore.State,
+    userSiteSetting: UserSiteSettingStore.State,
+    dataExportNotification: DataExportNotificationStore.State
+  };
 
-    export const Reducers: ActionReducerMap<State> = {
-        branding: BrandingStore.reducer,
-        liveAlarms: LiveAlarmStore.reducer,
-        rules: RuleStore.reducer,
-        hProjects: HProjectStore.reducer,
-        hDevices: HDeviceStore.reducer,
-        hPackets: HPacketStore.reducer,
-        notifications: NotificationStore.reducer,
-        userSiteSetting: UserSiteSettingStore.reducer,
-        dataExportNotification: DataExportNotificationStore.reducer
-    };
+  export const Reducers: ActionReducerMap<State> = {
+    branding: BrandingStore.reducer,
+    liveAlarms: LiveAlarmStore.reducer,
+    rules: RuleStore.reducer,
+    hProjects: HProjectStore.reducer,
+    hDevices: HDeviceStore.reducer,
+    hPackets: HPacketStore.reducer,
+    notifications: NotificationStore.reducer,
+    userSiteSetting: UserSiteSettingStore.reducer,
+    dataExportNotification: DataExportNotificationStore.reducer
+  };
 
-    export const Effects = [
-        BrandingEffects,
-        RulesEffects,
-        HProjectsEffects,
-        HDevicesEffects,
-        HPacketsEffects,
-        LiveAlarmsEffects,
-        NotificationEffects
-    ];
+  export const Effects = [
+    BrandingEffects,
+    RulesEffects,
+    HProjectsEffects,
+    HDevicesEffects,
+    HPacketsEffects,
+    LiveAlarmsEffects,
+    NotificationEffects
+  ];
 }

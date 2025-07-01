@@ -1,6 +1,6 @@
 /**
- * HyperIoT HProject
- * HyperIoT HProject API
+ * hyperiot ZookeeperConnector
+ * HyperIoT ZookeeperConnector API
  *
  * OpenAPI spec version: 2.0.0
  * Contact: users@acsoftware.it
@@ -19,18 +19,18 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
 import { Observable }                                        from 'rxjs';
 
-import { AutoRegisterProjectRequest } from '../../../models/autoRegisterProjectRequest';
-import { HProject } from '../../../models/hProject';
-import { InputStream } from '../../../models/inputStream';
+import { AutoRegisterProjectRequest } from '../model/autoRegisterProjectRequest';
+import { HProject } from '../model/hProject';
+import { InputStream } from '../model/inputStream';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
-import { Configuration }                                     from '../../../models/configuration';
+import { Configuration }                                     from '../configuration';
 
 
 @Injectable()
-export class HprojectsService {
+export class HProjectService {
 
-    protected basePath = '/hyperiot/hprojects';
+    protected basePath = 'https://localhost/hyperiot';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 
@@ -62,7 +62,7 @@ export class HprojectsService {
     /**
      * /hyperiot/hprojects/register
      * Service for adding a new empty hproject entity for register devices with gateway
-     * @param body HProject entity which must be saved
+     * @param body HProject entity which must be saved 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -95,7 +95,7 @@ export class HprojectsService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.post<any>(`${this.basePath}/register`,
+        return this.httpClient.post<any>(`${this.basePath}/hprojects/register`,
             body,
             {
                 withCredentials: this.configuration.withCredentials,
@@ -138,7 +138,7 @@ export class HprojectsService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.get<any>(`${this.basePath}/all/cards`,
+        return this.httpClient.get<any>(`${this.basePath}/hprojects/all/cards`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -155,10 +155,10 @@ export class HprojectsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public checkModuleWorking(observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
-    public checkModuleWorking(observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
-    public checkModuleWorking(observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
-    public checkModuleWorking(observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
+    public checkModuleWorking14(observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public checkModuleWorking14(observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public checkModuleWorking14(observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public checkModuleWorking14(observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         let headers = this.defaultHeaders;
 
@@ -175,7 +175,7 @@ export class HprojectsService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.get<any>(`${this.basePath}/module/status`,
+        return this.httpClient.get<any>(`${this.basePath}/hprojects/module/status`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -188,7 +188,7 @@ export class HprojectsService {
 
     /**
      * /hyperiot/hprojects/{id}/hadoopData
-     * Delete Hadoop data of this project, i.e. data on HDFS and HBase
+     * Delete Hadoop data of this project, i.e. data on HDFS and HBase 
      * @param id id of the project
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -222,7 +222,7 @@ export class HprojectsService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.delete<any>(`${this.basePath}/${encodeURIComponent(String(id))}/hadoopData`,
+        return this.httpClient.delete<any>(`${this.basePath}/hprojects/${encodeURIComponent(String(id))}/hadoopData`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -236,7 +236,7 @@ export class HprojectsService {
     /**
      * /hyperiot/hprojects/auto-register-project/challenge/{projectId}
      * Service for adding a new empty hproject entity for autoregister devices with gateway
-     * @param projectId HProject id which must be used forgenerating the challenge
+     * @param projectId HProject id which must be used forgenerating the challenge 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -270,7 +270,7 @@ export class HprojectsService {
             'application/json'
         ];
 
-        return this.httpClient.post<any>(`${this.basePath}/auto-register-project/challenge/${encodeURIComponent(String(projectId))}`,
+        return this.httpClient.post<any>(`${this.basePath}/hprojects/auto-register-project/challenge/${encodeURIComponent(String(projectId))}`,
             null,
             {
                 withCredentials: this.configuration.withCredentials,
@@ -319,7 +319,7 @@ export class HprojectsService {
             'application/json'
         ];
 
-        return this.httpClient.delete<any>(`${this.basePath}/${encodeURIComponent(String(id))}`,
+        return this.httpClient.delete<any>(`${this.basePath}/hprojects/${encodeURIComponent(String(id))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -333,7 +333,7 @@ export class HprojectsService {
     /**
      * /hyperiot/hprojects/export/download/{exportId}
      * Service for downloading HPacket export
-     * @param exportId Export ID
+     * @param exportId Export ID 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -366,7 +366,7 @@ export class HprojectsService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.get<any>(`${this.basePath}/export/download/${encodeURIComponent(String(exportId))}`,
+        return this.httpClient.get<any>(`${this.basePath}/hprojects/export/download/${encodeURIComponent(String(exportId))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -382,7 +382,7 @@ export class HprojectsService {
      * Service for exporting HPacket data
      * @param hProjectId HProject ID from retrieve HPacket data
      * @param hPacketId HPacket ID related to the packet the user wants to exports
-     * @param hPacketFormat HPacket Format
+     * @param hPacketFormat HPacket Format 
      * @param exportName Export name
      * @param rowKeyLowerBound HBase row key lower bound
      * @param rowKeyUpperBound HBase row key upper bound
@@ -459,7 +459,7 @@ export class HprojectsService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.post<any>(`${this.basePath}/${encodeURIComponent(String(hProjectId))}/hpacket/${encodeURIComponent(String(hPacketId))}/export/${encodeURIComponent(String(hPacketFormat))}`,
+        return this.httpClient.post<any>(`${this.basePath}/hprojects/${encodeURIComponent(String(hProjectId))}/hpacket/${encodeURIComponent(String(hPacketId))}/export/${encodeURIComponent(String(hPacketFormat))}`,
             null,
             {
                 params: queryParameters,
@@ -508,7 +508,7 @@ export class HprojectsService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.get<any>(`${this.basePath}/${encodeURIComponent(String(id))}/exports`,
+        return this.httpClient.get<any>(`${this.basePath}/hprojects/${encodeURIComponent(String(id))}/exports`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -550,7 +550,7 @@ export class HprojectsService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.get<any>(`${this.basePath}/all`,
+        return this.httpClient.get<any>(`${this.basePath}/hprojects/all`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -564,8 +564,8 @@ export class HprojectsService {
     /**
      * /hyperiot/hprojects
      * Service for finding all hproject entities
-     * @param delta
-     * @param page
+     * @param delta 
+     * @param page 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -604,7 +604,7 @@ export class HprojectsService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.get<any>(`${this.basePath}/`,
+        return this.httpClient.get<any>(`${this.basePath}/hprojects`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -652,7 +652,7 @@ export class HprojectsService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.get<any>(`${this.basePath}/${encodeURIComponent(String(id))}`,
+        return this.httpClient.get<any>(`${this.basePath}/hprojects/${encodeURIComponent(String(id))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -699,7 +699,7 @@ export class HprojectsService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.get<any>(`${this.basePath}/${encodeURIComponent(String(id))}/details`,
+        return this.httpClient.get<any>(`${this.basePath}/hprojects/${encodeURIComponent(String(id))}/details`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -741,7 +741,7 @@ export class HprojectsService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.get<any>(`${this.basePath}/details`,
+        return this.httpClient.get<any>(`${this.basePath}/hprojects/details`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -755,7 +755,7 @@ export class HprojectsService {
     /**
      * /hyperiot/hprojects/export/{exportId}
      * Service for getting the status of HPacket export
-     * @param exportId Export ID
+     * @param exportId Export ID 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -788,7 +788,7 @@ export class HprojectsService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.get<any>(`${this.basePath}/export/${encodeURIComponent(String(exportId))}`,
+        return this.httpClient.get<any>(`${this.basePath}/hprojects/export/${encodeURIComponent(String(exportId))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -835,7 +835,7 @@ export class HprojectsService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.get<any>(`${this.basePath}/${encodeURIComponent(String(id))}/areas`,
+        return this.httpClient.get<any>(`${this.basePath}/hprojects/${encodeURIComponent(String(id))}/areas`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -882,7 +882,7 @@ export class HprojectsService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.get<any>(`${this.basePath}/${encodeURIComponent(String(id))}/tree`,
+        return this.httpClient.get<any>(`${this.basePath}/hprojects/${encodeURIComponent(String(id))}/tree`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -896,7 +896,7 @@ export class HprojectsService {
     /**
      * /hyperiot/hprojects/auto-register-project
      * Service for adding a new empty hproject entity for autoregister devices with gateway
-     * @param body HProject entity which must be saved
+     * @param body HProject entity which must be saved 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -934,7 +934,7 @@ export class HprojectsService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.post<any>(`${this.basePath}/auto-register-project`,
+        return this.httpClient.post<any>(`${this.basePath}/hprojects/auto-register-project`,
             body,
             {
                 withCredentials: this.configuration.withCredentials,
@@ -949,7 +949,7 @@ export class HprojectsService {
     /**
      * /hyperiot/hprojects
      * Service for adding a new hproject entity
-     * @param body HProject entity which must be saved
+     * @param body HProject entity which must be saved 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -987,8 +987,75 @@ export class HprojectsService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.post<any>(`${this.basePath}/`,
+        return this.httpClient.post<any>(`${this.basePath}/hprojects`,
             body,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                context: context,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * /hyperiot/hprojects/{hProjectId}/hpacket/{hPacketId}/attachments/{fieldId}/{timestamp}
+     * Service for retrieving HProject attachments
+     * @param hProjectId HProject ID from retrieve HPackets in Avro format and events
+     * @param hPacketId HPacket ID
+     * @param fieldId Attachment field id
+     * @param rowKeyLowerBound Attachment Timestamp identifier
+     * @param rowKeyUpperBound Attachment Timestamp identifier
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public scanHProject(hProjectId: number, hPacketId: number, fieldId: number, rowKeyLowerBound: number, rowKeyUpperBound: number, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public scanHProject(hProjectId: number, hPacketId: number, fieldId: number, rowKeyLowerBound: number, rowKeyUpperBound: number, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public scanHProject(hProjectId: number, hPacketId: number, fieldId: number, rowKeyLowerBound: number, rowKeyUpperBound: number, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public scanHProject(hProjectId: number, hPacketId: number, fieldId: number, rowKeyLowerBound: number, rowKeyUpperBound: number, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
+
+        if (hProjectId === null || hProjectId === undefined) {
+            throw new Error('Required parameter hProjectId was null or undefined when calling scanHProject.');
+        }
+
+        if (hPacketId === null || hPacketId === undefined) {
+            throw new Error('Required parameter hPacketId was null or undefined when calling scanHProject.');
+        }
+
+        if (fieldId === null || fieldId === undefined) {
+            throw new Error('Required parameter fieldId was null or undefined when calling scanHProject.');
+        }
+
+        if (rowKeyLowerBound === null || rowKeyLowerBound === undefined) {
+            throw new Error('Required parameter rowKeyLowerBound was null or undefined when calling scanHProject.');
+        }
+
+        if (rowKeyUpperBound === null || rowKeyUpperBound === undefined) {
+            throw new Error('Required parameter rowKeyUpperBound was null or undefined when calling scanHProject.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (jwt-auth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["AUTHORIZATION"]) {
+            headers = headers.set('AUTHORIZATION', this.configuration.apiKeys["AUTHORIZATION"]);
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.get<any>(`${this.basePath}/hprojects/${encodeURIComponent(String(hProjectId))}/hpacket/${encodeURIComponent(String(hPacketId))}/attachments/${encodeURIComponent(String(fieldId))}/${encodeURIComponent(String(rowKeyLowerBound))}/${encodeURIComponent(String(rowKeyUpperBound))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -1012,37 +1079,37 @@ export class HprojectsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public scanHProject(hProjectId: number, rowKeyLowerBound: number, rowKeyUpperBound: number, maxResults: number, packetIds: string, deviceIds: string, alarmState: string, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
-    public scanHProject(hProjectId: number, rowKeyLowerBound: number, rowKeyUpperBound: number, maxResults: number, packetIds: string, deviceIds: string, alarmState: string, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
-    public scanHProject(hProjectId: number, rowKeyLowerBound: number, rowKeyUpperBound: number, maxResults: number, packetIds: string, deviceIds: string, alarmState: string, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
-    public scanHProject(hProjectId: number, rowKeyLowerBound: number, rowKeyUpperBound: number, maxResults: number, packetIds: string, deviceIds: string, alarmState: string, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
+    public scanHProject1(hProjectId: number, rowKeyLowerBound: number, rowKeyUpperBound: number, maxResults: number, packetIds: string, deviceIds: string, alarmState: string, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public scanHProject1(hProjectId: number, rowKeyLowerBound: number, rowKeyUpperBound: number, maxResults: number, packetIds: string, deviceIds: string, alarmState: string, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public scanHProject1(hProjectId: number, rowKeyLowerBound: number, rowKeyUpperBound: number, maxResults: number, packetIds: string, deviceIds: string, alarmState: string, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public scanHProject1(hProjectId: number, rowKeyLowerBound: number, rowKeyUpperBound: number, maxResults: number, packetIds: string, deviceIds: string, alarmState: string, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (hProjectId === null || hProjectId === undefined) {
-            throw new Error('Required parameter hProjectId was null or undefined when calling scanHProject.');
+            throw new Error('Required parameter hProjectId was null or undefined when calling scanHProject1.');
         }
 
         if (rowKeyLowerBound === null || rowKeyLowerBound === undefined) {
-            throw new Error('Required parameter rowKeyLowerBound was null or undefined when calling scanHProject.');
+            throw new Error('Required parameter rowKeyLowerBound was null or undefined when calling scanHProject1.');
         }
 
         if (rowKeyUpperBound === null || rowKeyUpperBound === undefined) {
-            throw new Error('Required parameter rowKeyUpperBound was null or undefined when calling scanHProject.');
+            throw new Error('Required parameter rowKeyUpperBound was null or undefined when calling scanHProject1.');
         }
 
         if (maxResults === null || maxResults === undefined) {
-            throw new Error('Required parameter maxResults was null or undefined when calling scanHProject.');
+            throw new Error('Required parameter maxResults was null or undefined when calling scanHProject1.');
         }
 
         if (packetIds === null || packetIds === undefined) {
-            throw new Error('Required parameter packetIds was null or undefined when calling scanHProject.');
+            throw new Error('Required parameter packetIds was null or undefined when calling scanHProject1.');
         }
 
         if (deviceIds === null || deviceIds === undefined) {
-            throw new Error('Required parameter deviceIds was null or undefined when calling scanHProject.');
+            throw new Error('Required parameter deviceIds was null or undefined when calling scanHProject1.');
         }
 
         if (alarmState === null || alarmState === undefined) {
-            throw new Error('Required parameter alarmState was null or undefined when calling scanHProject.');
+            throw new Error('Required parameter alarmState was null or undefined when calling scanHProject1.');
         }
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
@@ -1079,7 +1146,7 @@ export class HprojectsService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.get<any>(`${this.basePath}/${encodeURIComponent(String(hProjectId))}/hpackets/${encodeURIComponent(String(rowKeyLowerBound))}/${encodeURIComponent(String(rowKeyUpperBound))}`,
+        return this.httpClient.get<any>(`${this.basePath}/hprojects/${encodeURIComponent(String(hProjectId))}/hpackets/${encodeURIComponent(String(rowKeyLowerBound))}/${encodeURIComponent(String(rowKeyUpperBound))}`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -1092,76 +1159,9 @@ export class HprojectsService {
     }
 
     /**
-     * /hyperiot/hprojects/{hProjectId}/hpacket/{hPacketId}/attachments/{fieldId}/{timestamp}
-     * Service for retrieving HProject attachments
-     * @param hProjectId HProject ID from retrieve HPackets in Avro format and events
-     * @param hPacketId HPacket ID
-     * @param fieldId Attachment field id
-     * @param rowKeyLowerBound Attachment Timestamp identifier
-     * @param rowKeyUpperBound Attachment Timestamp identifier
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public scanHProject1(hProjectId: number, hPacketId: number, fieldId: number, rowKeyLowerBound: number, rowKeyUpperBound: number, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
-    public scanHProject1(hProjectId: number, hPacketId: number, fieldId: number, rowKeyLowerBound: number, rowKeyUpperBound: number, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
-    public scanHProject1(hProjectId: number, hPacketId: number, fieldId: number, rowKeyLowerBound: number, rowKeyUpperBound: number, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
-    public scanHProject1(hProjectId: number, hPacketId: number, fieldId: number, rowKeyLowerBound: number, rowKeyUpperBound: number, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
-
-        if (hProjectId === null || hProjectId === undefined) {
-            throw new Error('Required parameter hProjectId was null or undefined when calling scanHProject1.');
-        }
-
-        if (hPacketId === null || hPacketId === undefined) {
-            throw new Error('Required parameter hPacketId was null or undefined when calling scanHProject1.');
-        }
-
-        if (fieldId === null || fieldId === undefined) {
-            throw new Error('Required parameter fieldId was null or undefined when calling scanHProject1.');
-        }
-
-        if (rowKeyLowerBound === null || rowKeyLowerBound === undefined) {
-            throw new Error('Required parameter rowKeyLowerBound was null or undefined when calling scanHProject1.');
-        }
-
-        if (rowKeyUpperBound === null || rowKeyUpperBound === undefined) {
-            throw new Error('Required parameter rowKeyUpperBound was null or undefined when calling scanHProject1.');
-        }
-
-        let headers = this.defaultHeaders;
-
-        // authentication (jwt-auth) required
-        if (this.configuration.apiKeys && this.configuration.apiKeys["AUTHORIZATION"]) {
-            headers = headers.set('AUTHORIZATION', this.configuration.apiKeys["AUTHORIZATION"]);
-        }
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-        ];
-
-        return this.httpClient.get<any>(`${this.basePath}/${encodeURIComponent(String(hProjectId))}/hpacket/${encodeURIComponent(String(hPacketId))}/attachments/${encodeURIComponent(String(fieldId))}/${encodeURIComponent(String(rowKeyLowerBound))}/${encodeURIComponent(String(rowKeyUpperBound))}`,
-            {
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                context: context,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
      * /hyperiot/hprojects/export/{exportId}/stop
      * Service for stopping HPacket export
-     * @param exportId Export ID
+     * @param exportId Export ID 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -1194,7 +1194,7 @@ export class HprojectsService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.post<any>(`${this.basePath}/export/stop/${encodeURIComponent(String(exportId))}`,
+        return this.httpClient.post<any>(`${this.basePath}/hprojects/export/stop/${encodeURIComponent(String(exportId))}`,
             null,
             {
                 withCredentials: this.configuration.withCredentials,
@@ -1270,7 +1270,7 @@ export class HprojectsService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.get<any>(`${this.basePath}/timeline/events/count/${encodeURIComponent(String(projectId))}/${encodeURIComponent(String(startTime))}/${encodeURIComponent(String(endTime))}`,
+        return this.httpClient.get<any>(`${this.basePath}/hprojects/timeline/events/count/${encodeURIComponent(String(projectId))}/${encodeURIComponent(String(startTime))}/${encodeURIComponent(String(endTime))}`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -1356,7 +1356,7 @@ export class HprojectsService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.get<any>(`${this.basePath}/timeline/events/${encodeURIComponent(String(tableName))}/${encodeURIComponent(String(step))}/${encodeURIComponent(String(startTime))}/${encodeURIComponent(String(endTime))}/${encodeURIComponent(String(timezone))}`,
+        return this.httpClient.get<any>(`${this.basePath}/hprojects/timeline/events/${encodeURIComponent(String(tableName))}/${encodeURIComponent(String(step))}/${encodeURIComponent(String(startTime))}/${encodeURIComponent(String(endTime))}/${encodeURIComponent(String(timezone))}`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -1371,7 +1371,7 @@ export class HprojectsService {
     /**
      * /hyperiot/hprojects
      * Service for updating a hproject entity
-     * @param body HProject entity which must be updated
+     * @param body HProject entity which must be updated 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -1409,7 +1409,7 @@ export class HprojectsService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.put<any>(`${this.basePath}/`,
+        return this.httpClient.put<any>(`${this.basePath}/hprojects`,
             body,
             {
                 withCredentials: this.configuration.withCredentials,
@@ -1463,7 +1463,7 @@ export class HprojectsService {
             'application/json'
         ];
 
-        return this.httpClient.put<any>(`${this.basePath}/${encodeURIComponent(String(projectId))}/owner/${encodeURIComponent(String(ownerId))}`,
+        return this.httpClient.put<any>(`${this.basePath}/hprojects/${encodeURIComponent(String(projectId))}/owner/${encodeURIComponent(String(ownerId))}`,
             null,
             {
                 withCredentials: this.configuration.withCredentials,
@@ -1478,7 +1478,7 @@ export class HprojectsService {
     /**
      * /hyperiot/hprojects/imports
      * Service for import a new HProject from a jsonFile
-     * @param body
+     * @param body 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -1513,7 +1513,7 @@ export class HprojectsService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.post<any>(`${this.basePath}/imports`,
+        return this.httpClient.post<any>(`${this.basePath}/hprojects/imports`,
             body,
             {
                 withCredentials: this.configuration.withCredentials,
