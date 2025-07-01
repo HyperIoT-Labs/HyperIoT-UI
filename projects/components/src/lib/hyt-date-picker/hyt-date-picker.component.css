@@ -2,6 +2,10 @@
   display: inline-block;
 }
 
+#hyt-date-picker-input .mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+  display: none !important;
+}
+
 #hyt-date-picker-button,
 #hyt-date-submit-button {
   margin-left: 10px;
@@ -12,8 +16,4 @@
   font-size: 0.7em;
   min-height: 10px;
   height: 35px;
-}
-
-.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
-  display: none !important;
 }

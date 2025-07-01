@@ -22,7 +22,7 @@ export class NotificationButtonComponent {
   notificationCountLabel$ = this.notificationCount$.pipe(map(count => count > 99 ? "99+" : count));
 
   tooltipStatus = (eventNotificationIsOn: boolean) => eventNotificationIsOn ? $localize`:@@HYT_notification_active:Notification ACTIVE` : $localize`:@@HYT_notification_inactive:Notification INACTIVE`;
-  
+
   constructor(
     private overlay: OverlayService,
     private store: Store,
@@ -45,7 +45,7 @@ export class NotificationButtonComponent {
       this.notificationPanel = this.overlay.open(NotificationDialogComponent, {
         attachTarget: event.target,
         hideBackdrop: true,
-        maxHeight: '480px',
+        maxHeight: '520px',
         width: "350px",
       }).dialogRef
       this.notificationPanel.afterClosed().subscribe(()=>{

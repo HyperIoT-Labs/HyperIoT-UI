@@ -1,0 +1,128 @@
+<div id="container-notification-list" class="hyt-overlay-container">
+  <div class="header-overlay">
+    <div class="title-badge overlay-badge" i18n="@@HYT_data_export_list">
+      Data Download List
+    </div>
+    <div class="close-overlay overlay-badge" (click)="dialogRef.close()">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="32"
+        height="32"
+        fill="currentColor"
+        class="bi bi-x"
+        viewBox="0 0 16 16"
+      >
+        <path
+          d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"
+        />
+      </svg>
+    </div>
+  </div>
+
+  <div
+    *ngIf="notificationList$ | async as notificationList"
+    id="notification-scroll-container"
+  >
+    <div id="notification-list" [@containerAnim]="notificationList.length">
+      <div
+        id="no-notification"
+        *ngIf="
+          notificationList.length === 0;
+          else notificationListValueTemplate
+        "
+      >
+        <hyt-no-data [width]="150" [height]="150"></hyt-no-data>
+        <h3 class="alarm-title" i18n="@@HYT_no_notifications">
+          No notifications
+        </h3>
+      </div>
+      <ng-template #notificationListValueTemplate>
+        <ng-container *ngFor="let notification of notificationList">
+          <mat-card
+            *ngIf="notification as data"
+            appearance="outlined"
+            [ngClass]="{ 'p-2': data.exportInfo.progress == 100 }"
+          >
+            <mat-card-content>
+              <div class="d-flex flex-column">
+                <div class="d-flex flex-column">
+                  <div class="d-flex justify-content-between">
+                    <div class="card-content">
+                      <div>
+                        <div><span i18n="@@HYT_from">From</span>:</div>
+                        <div><span i18n="@@HYT_to">To</span>:</div>
+                        <div>File:</div>
+                        <div>HPacket:</div>
+                      </div>
+                      <div>
+                        <div>
+                          {{
+                            data.exportParams.startTime
+                              | amFromUtc
+                              | amLocal
+                              | amDateFormat : dateFormat
+                          }}
+                        </div>
+                        <div>
+                          {{
+                            data.exportParams.endTime
+                              | amFromUtc
+                              | amLocal
+                              | amDateFormat : dateFormat
+                          }}
+                        </div>
+                        <div>{{ data.exportInfo.fullFileName }}</div>
+                        <div>{{ data.exportParams.hPacket.name }}</div>
+                      </div>
+                    </div>
+                    <div *ngIf="data.exportInfo.progress === 100">
+                      <mat-icon
+                        class="cursor-pointer"
+                        (click)="
+                          retryDownloadOpenEditor(notification);
+                          dialogRef.close()
+                        "
+                        title="Retry export"
+                      >
+                        undo
+                      </mat-icon>
+                    </div>
+                  </div>
+                </div>
+
+                <ng-container
+                  *ngIf="
+                    data.exportInfo.progress === 100;
+                    else exportInProgressTemplate
+                  "
+                >
+                  <mat-card-actions align="end" class="p-0 m-0">
+                    <small>
+                      <strong>Downloaded: </strong>
+                      <time>
+                        {{
+                          data.exportInfo.downloadDate
+                            | amFromUtc
+                            | amLocal
+                            | amDateFormat : dateFormat
+                        }}
+                      </time>
+                    </small>
+                  </mat-card-actions>
+                </ng-container>
+                <ng-template #exportInProgressTemplate>
+                  <mat-card-footer class="mt-2">
+                    <mat-progress-bar
+                      mode="determinate"
+                      [value]="data.exportInfo.progress"
+                    ></mat-progress-bar>
+                  </mat-card-footer>
+                </ng-template>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </ng-container>
+      </ng-template>
+    </div>
+  </div>
+</div>

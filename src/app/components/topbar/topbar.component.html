@@ -1,36 +1,36 @@
 <div id="hyt-topbar" class="container-fluid" [ngClass]="{'topbarMob': winInnerWidth <= mobileBreakPoints.md, 'previewMode': previewMode}">
-    
+
     <div id="logo-container">
-        
+
         <a routerLink="/" [ngStyle]="{'pointer-events': previewMode ? 'none' : 'auto' }">
 
-            <img 
-                id="img-logo-hyt" 
-                [src]="logoPath" 
+            <img
+                id="img-logo-hyt"
+                [src]="logoPath"
                 alt="HyperIoT Logo Extended"
                 *ngIf="winInnerWidth > mobileBreakPoints.xs"
             > <!--@I18N@-->
 
-            <img 
-                id="img-logo-mob-hyt" 
-                [src]="logoMobilePath" 
+            <img
+                id="img-logo-mob-hyt"
+                [src]="logoMobilePath"
                 alt="HyperIoT Logo Single Char"
                 *ngIf="winInnerWidth <= mobileBreakPoints.xs"
             > <!--@I18N@-->
-            
+
         </a>
-        
+
         <span class="fe-version">v{{ feVersion }}</span>
-    
+
     </div>
 
     <div id="main-container">
-        <div 
-            *ngIf="winInnerWidth <= mobileBreakPoints.md" 
-            id="hamburger-btn" 
-            class="menu-mobile" 
+        <div
+            *ngIf="winInnerWidth <= mobileBreakPoints.md"
+            id="hamburger-btn"
+            class="menu-mobile"
             (click)="toggleMenu()">
-            
+
             <!-- INIZIO -->
 
             <div class="icon nav-icon-mob" [ngClass]="{'open': isShow}">
@@ -42,10 +42,11 @@
             <!-- FINE -->
 
         </div>
-        <ng-container *ngIf="!previewMode">
+        <div *ngIf="!previewMode" class="d-flex">
+            <hyt-data-export-notification-button></hyt-data-export-notification-button>
             <hyt-notification-button></hyt-notification-button>
             <hyt-account-button></hyt-account-button>
-        </ng-container>
+        </div>
     </div>
-    
+
 </div>

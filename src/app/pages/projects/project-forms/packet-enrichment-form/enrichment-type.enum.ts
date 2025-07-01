@@ -3,4 +3,5 @@ export enum EnrichmentType {
     ADD_TAG_ENRICHMENT = "it.acsoftware.hyperiot.rule.service.actions.AddTagRuleAction",
     FOURIER_TRANSFORM_ENRICHMENT = "it.acsoftware.hyperiot.rule.service.actions.FourierTransformRuleAction",
     VALIDATION_ENRICHMENT = "it.acsoftware.hyperiot.rule.service.actions.ValidateHPacketRuleAction",
+    COMPUTE_FIELD_RULE_ACTION = 'it.acsoftware.hyperiot.rule.service.actions.ComputeFieldRuleAction'
 }

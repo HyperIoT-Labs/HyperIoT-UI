@@ -11,7 +11,7 @@
 
 # dependencies
 /node_modules
-.npmrc
+#.npmrc
 
 # proxy
 ignored-proxy.config.json
@@ -55,3 +55,4 @@ localhost.key
 # Docker
 compose/data/
 proxy-config.json
+proxy-coll.config.json

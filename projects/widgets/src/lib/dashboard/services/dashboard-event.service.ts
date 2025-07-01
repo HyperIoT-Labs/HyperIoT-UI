@@ -11,6 +11,7 @@ import extractDataFromUrl = DashboardEvent.ExtractDataFromUrl;
 export class DashboardEventService {
   /** Emit value when the user interact with the timeline */
   timelineEvent = new Subject<DashboardEvent.Timeline>();
+  selectedDateIntervalForExport = new Subject<Date[]>();
 
   /** Emit value when user click on dashboard command (play,pause...)*/
   commandEvent = new Subject<DashboardEvent.Command>();
@@ -21,8 +22,9 @@ export class DashboardEventService {
   constructor(loggerService: LoggerService, private router: Router){
     const logger = new Logger(loggerService);
     logger.registerClass("DashboardEventService");
-    this.timelineEvent.subscribe((res)=> logger.info("emit timelineEvent", res))
-    this.commandEvent.subscribe((res)=> logger.info("emit commandEvent", res))
+    this.timelineEvent.subscribe((res)=> logger.info("emit timelineEvent", res));
+    this.selectedDateIntervalForExport.subscribe((res)=> logger.info("emit selectedDateIntervalForExport", res));
+    this.commandEvent.subscribe((res)=> logger.info("emit commandEvent", res));
 
     // Get the previous and current url
     this.currentUrl = this.router.url;

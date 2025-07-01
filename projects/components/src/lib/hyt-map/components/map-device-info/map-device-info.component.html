@@ -1,12 +1,66 @@
 <div class="map-device-info-container">
-  <h2>{{ deviceInfo.device?.deviceName || deviceInfo.name || 'MISSING NAME' }}</h2>
-  <button *ngIf="!!deviceInfo.device" mat-button (click)="redirectTo(deviceActions.DASHBOARD)" i18n="@@HYT_device_dashboard">
-    Device Dashbaord
-  </button>
-  <button *ngIf="!!deviceInfo.device" mat-button [disabled]="true" (click)="redirectTo(deviceActions.ALARMMANAGER)" i18n="@@HYT_alarm_managing">
-    Alarm Managing
-  </button>
-  <button *ngIf="!deviceInfo.device" mat-button (click)="redirectTo()" i18n="@@HYT_go_sub_area">
-    Go To Sub Area
-  </button>
+  <h2>
+    {{
+      (utilsService.isAreaDevice(itemData)
+        ? itemData.device.deviceName
+        : itemData.name) || "MISSING NAME"
+    }}
+  </h2>
+
+  <ng-container *ngIf="utilsService.isAreaDevice(itemData)">
+    <button
+      mat-button
+      (click)="
+        redirectByMapItemAction({
+          action: deviceActions.DASHBOARDS,
+          item: itemData.device,
+          dataSource: dataSource.REALTIME
+        })
+      "
+      i18n="@@HYT_go_realtime_device_dashboard"
+    >
+      Go To Real-Time Device Dashboard
+    </button>
+    <button
+      mat-button
+      (click)="
+        redirectByMapItemAction({
+          action: deviceActions.DASHBOARDS,
+          item: itemData.device,
+          dataSource: dataSource.OFFLINE
+        })
+      "
+      i18n="@@HYT_go_offline_device_dashboard"
+    >
+      Go To Offline Device Dashboard
+    </button>
+    <button
+      mat-button
+      [disabled]="true"
+      (click)="
+        redirectByMapItemAction({
+          action: deviceActions.ALARM_MANAGER,
+          item: itemData
+        })
+      "
+      i18n="@@HYT_alarm_managing"
+    >
+      Alarm Managing
+    </button>
+  </ng-container>
+
+  <ng-container *ngIf="utilsService.isArea(itemData)">
+    <button
+      mat-button
+      (click)="
+        redirectByMapItemAction({
+          action: deviceActions.DASHBOARDS,
+          item: itemData
+        })
+      "
+      i18n="@@HYT_go_sub_area"
+    >
+      Go To Sub Area
+    </button>
+  </ng-container>
 </div>

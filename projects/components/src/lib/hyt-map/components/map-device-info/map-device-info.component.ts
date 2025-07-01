@@ -1,26 +1,27 @@
-import { Component, EventEmitter, OnInit } from '@angular/core';
+import { Component, EventEmitter } from '@angular/core';
+import { Area, AreaDevice, Dashboard } from 'core';
+import { MapItemAction } from '../../models/map-item-action';
 import { DeviceActions } from '../../models/device-actions';
+import { UtilsService } from '../../services/utils.service';
 
 @Component({
   selector: 'hyt-map-device-info',
   templateUrl: './map-device-info.component.html',
   styleUrls: ['./map-device-info.component.scss']
 })
-export class MapDeviceInfoComponent implements OnInit {
+export class MapDeviceInfoComponent {
 
-  deviceInfo: any; //AreaDevice; //| Area;
+  constructor(public utilsService: UtilsService) { }
 
-  openClicked = new EventEmitter<any>();
+  itemData: Area | AreaDevice;
 
-  deviceActions = DeviceActions;
+  readonly deviceActions = DeviceActions;
+  readonly dataSource = Dashboard.DashboardTypeEnum;
 
-  constructor() { }
+  readonly openClicked = new EventEmitter<MapItemAction>();
 
-  ngOnInit(): void {
-  }
-
-  redirectTo(deviceAction?: DeviceActions) {
-    this.openClicked.emit(deviceAction);
+  redirectByMapItemAction(mapItemAction: MapItemAction) {
+    this.openClicked.emit(mapItemAction);
   }
 
 }

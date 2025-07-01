@@ -17,17 +17,17 @@
  *
  */
 
-import {AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Injector, OnDestroy, OnInit, Output, ViewChild, ViewEncapsulation} from '@angular/core';
-import {ActivatedRoute, Event, NavigationStart, Router} from '@angular/router';
-import {ConfirmDialogService, DialogService, GenericMap, Option} from 'components';
-import {LoadingStatusEnum, ProjectFormEntity} from '../project-form-entity';
-import {Area, AreaDevice, Area_Service, HProjectService, Logger, LoggerService} from 'core';
-import {AreaMapComponent} from './area-map/area-map.component';
-import {HttpClient} from '@angular/common/http';
-import {AreaDeviceSelectDialogComponent} from './area-device-select-dialog/area-device-select-dialog.component';
-import {AreaInnerareaSelectDialogComponent} from './area-innerarea-select-dialog/area-innerarea-select-dialog.component';
-import {DraggableItemComponent} from './draggable-item/draggable-item.component';
-import {GenericMessageDialogComponent} from 'src/app/components/modals/generic-message-dialog/generic-message-dialog.component';
+import { AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Injector, OnDestroy, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
+import { ActivatedRoute, Event, NavigationStart, Router } from '@angular/router';
+import { ConfirmDialogService, DialogService, GenericMap, Option, UtilsService } from 'components';
+import { LoadingStatusEnum, ProjectFormEntity } from '../project-form-entity';
+import { Area, AreaDevice, AreasService, HprojectsService, Logger, LoggerService } from 'core';
+import { AreaMapComponent } from './area-map/area-map.component';
+import { HttpClient } from '@angular/common/http';
+import { AreaDeviceSelectDialogComponent } from './area-device-select-dialog/area-device-select-dialog.component';
+import { AreaInnerareaSelectDialogComponent } from './area-innerarea-select-dialog/area-innerarea-select-dialog.component';
+import { DraggableItemComponent } from './draggable-item/draggable-item.component';
+import { GenericMessageDialogComponent } from 'src/app/components/modals/generic-message-dialog/generic-message-dialog.component';
 import {
   combineLatest,
   defaultIfEmpty,
@@ -40,12 +40,10 @@ import {
   Subject,
   switchMap
 } from 'rxjs';
-import {catchError, finalize, take, takeUntil, tap} from 'rxjs/operators';
-import {AreaType} from '../../../../models/areaType';
-import {areAllEquivalent} from '@angular/compiler/src/output/output_ast';
-import {MatSelectChange} from "@angular/material/select";
+import { catchError, finalize, take, takeUntil, tap } from 'rxjs/operators';
+import { MatSelectChange } from "@angular/material/select";
 import AreaViewTypeEnum = Area.AreaViewTypeEnum;
-import {MatTab, MatTabChangeEvent, MatTabGroup} from "@angular/material/tabs";
+import { MatTab, MatTabChangeEvent, MatTabGroup } from "@angular/material/tabs";
 
 @Component({
   selector: 'hyt-areas-form',
@@ -103,15 +101,19 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
    */
   areaList: Area[] = [];
   /**
+   * List of the Area's devices
+   */
+  areaDevicesDeep: AreaDevice[] = [];
+  /**
    * List of the area path
    */
   areaPath: Area[] = [];
   /**
    * Allowed extensions type for area image
    */
-  allowedImageTypes = ['.jpg','.jpeg','.png','.svg','.webp'];
+  allowedImageTypes = ['.jpg', '.jpeg', '.png', '.svg', '.webp'];
   allowedBimTypes = ['.xkt'];
-  acceptFiles = this.allowedImageTypes.join(',').replace(/\./,'image/');
+  acceptFiles = this.allowedImageTypes.join(',').replace(/\./, 'image/');
   maxFileSize = 1000000;
   /**
    *  Overlay Media string
@@ -153,13 +155,13 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
     .map((k, v) => {
       switch (k) {
         case 'IMAGE':
-          return {label: $localize`:@@HYT_project_areas_static_image:STATIC IMAGE`, value: Area.AreaViewTypeEnum[k]}
+          return { label: $localize`:@@HYT_project_areas_static_image:STATIC IMAGE`, value: Area.AreaViewTypeEnum[k] }
         case 'MAP':
-          return {label: $localize`:@@HYT_project_areas_dynamic_map:DYNAMIC MAP`, value: Area.AreaViewTypeEnum[k]}
+          return { label: $localize`:@@HYT_project_areas_dynamic_map:DYNAMIC MAP`, value: Area.AreaViewTypeEnum[k] }
         case 'BIMXKT':
-          return {label: $localize`:@@HYT_project_areas_bim_xkt_format:BIM IN XKT FORMAT`, value: Area.AreaViewTypeEnum[k]}
+          return { label: $localize`:@@HYT_project_areas_bim_xkt_format:BIM IN XKT FORMAT`, value: Area.AreaViewTypeEnum[k] }
         case 'BIMIFC':
-          return {label: $localize`:@@HYT_project_areas_bim_ifc_format:BIM IN IFC FORMAT`, value: Area.AreaViewTypeEnum[k], disabled: true}
+          return { label: $localize`:@@HYT_project_areas_bim_ifc_format:BIM IN IFC FORMAT`, value: Area.AreaViewTypeEnum[k], disabled: true }
       }
     });
 
@@ -167,15 +169,16 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
     injector: Injector,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private areaService: Area_Service,
-    private projectService: HProjectService,
+    private areaService: AreasService,
+    private projectService: HprojectsService,
     private dialogService: DialogService,
     private httpClient: HttpClient,
     private cdr: ChangeDetectorRef,
     private loggerService: LoggerService,
-    private confirmDialogService: ConfirmDialogService
+    private confirmDialogService: ConfirmDialogService,
+    private utilsService: UtilsService
   ) {
-    super(injector,cdr);
+    super(injector, cdr);
     this.formTemplateId = 'container-areas-form';
     this.formTitle = $localize`:@@HYT_project_areas:Project Areas`;
     this.projectId = this.activatedRoute.snapshot.parent.params.projectId;
@@ -193,20 +196,20 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
         } else {
           this.logger.warn('GETCONFIG - The configuration does not contain the maximum size parameter of the file to upload', conf);
         }
-    });
+      });
   }
 
   ngOnInit() {
 
     this.activatedRoute.queryParams
-    .pipe(takeUntil(this.ngUnsubscribe))
-    .subscribe(params => {
-      this.parentAreaId = params.parent;
-      if (this.parentAreaId) {
-        this.entity = { ...this.newEntity() } as Area;
-        this.form.reset();
-      }
-    });
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(params => {
+        this.parentAreaId = params.parent;
+        if (this.parentAreaId) {
+          this.entity = { ...this.newEntity() } as Area;
+          this.form.reset();
+        }
+      });
 
     this.activatedRoute.params
       .pipe(takeUntil(this.ngUnsubscribe))
@@ -214,15 +217,15 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
         this.areaId = +params.areaId;
         this.load();
       }
-    );
+      );
 
     this.router.events
       .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe( (event: Event) => {
-      if (event instanceof NavigationStart) {
-            this.currentSection = 0;
-      }
-    });
+      .subscribe((event: Event) => {
+        if (event instanceof NavigationStart) {
+          this.currentSection = 0;
+        }
+      });
 
   }
 
@@ -233,11 +236,11 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
      * We subscribe to the change of the specific variable to keep the old value in memory
      */
     this.form.get('area-type').valueChanges
-    .pipe(pairwise())
-    .subscribe(([previousValue, nextValue]: [string, string]) => {
-      this.logger.debug('Change of area type - [old value, new value]', [previousValue, nextValue] );
-      this.typeSelectPrevValue = previousValue;
-    });
+      .pipe(pairwise())
+      .subscribe(([previousValue, nextValue]: [string, string]) => {
+        this.logger.debug('Change of area type - [old value, new value]', [previousValue, nextValue]);
+        this.typeSelectPrevValue = previousValue;
+      });
   }
 
   ngOnDestroy() {
@@ -265,7 +268,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
 
     if (this.areaId === 0) {
       // Add New Area
-      this.areaPath.push({ name: 'New', id: 0} as Area);
+      this.areaPath.push({ name: 'New', id: 0 } as Area);
       this.cdr.detectChanges();
 
       this.resetForm();
@@ -280,25 +283,25 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
       this.areaService.findArea(this.areaId)
         .pipe(takeUntil(this.ngUnsubscribe))
         .subscribe((area) => {
-        this.logger.debug('load - find area by id', this.areaId, area);
-        this.edit(area);
-        this.areaService.getAreaPath(this.areaId)
-          .pipe(takeUntil(this.ngUnsubscribe))
-          .subscribe((path) => {
-          this.logger.debug('load - get area path by id', this.areaId, path);
-          this.areaPath = path;
-          this.apiSuccess(path);
-          this.loadAreaData();
+          this.logger.debug('load - find area by id', this.areaId, area);
+          this.edit(area);
+          this.areaService.getAreaPath(this.areaId)
+            .pipe(takeUntil(this.ngUnsubscribe))
+            .subscribe((path) => {
+              this.logger.debug('load - get area path by id', this.areaId, path);
+              this.areaPath = path;
+              this.apiSuccess(path);
+              this.loadAreaData();
+            },
+              (err) => {
+                this.logger.error('load - When loading the area, the search for the path failed', err);
+                this.apiError(err);
+              });
         },
-  (err) => {
-          this.logger.error('load - When loading the area, the search for the path failed', err);
-          this.apiError(err);
-        });
-      },
-      (err) => {
-          this.logger.error('Area search by ID failed', err);
-          this.apiError(err);
-      });
+          (err) => {
+            this.logger.error('Area search by ID failed', err);
+            this.apiError(err);
+          });
 
       this.editMode = true;
       this.showSave = true;
@@ -311,13 +314,13 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
       this.projectService.getHProjectAreaList(this.projectId)
         .pipe(takeUntil(this.ngUnsubscribe))
         .subscribe((list: Area[]) => {
-        this.logger.debug('load - HProject area list by id', this.projectId, list);
-        this.areaList = list;
-        list.forEach((a) => {
-          this.countAreaItems(a);
-        });
-        this.apiSuccess(list);
-      }, (err) => {
+          this.logger.debug('load - HProject area list by id', this.projectId, list);
+          this.areaList = list;
+          list.forEach((a) => {
+            this.countAreaItems(a);
+          });
+          this.apiSuccess(list);
+        }, (err) => {
           this.logger.error('oad - HProject area list by id Error', this.projectId, err);
           this.loadingStatus = LoadingStatusEnum.Ready;
         });
@@ -353,11 +356,11 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
     if (this.parentAreaId) {
       this.currentSection = 1; // parent inner area list
       this.router.navigate(
-        [ '/projects/', this.projectId, {outlets: { projectDetails: ['areas', this.parentAreaId] } } ]
+        ['/projects/', this.projectId, { outlets: { projectDetails: ['areas', this.parentAreaId] } }]
       );
     } else {
       this.router.navigate(
-        [ '/projects/', this.projectId, {outlets: { projectDetails: ['areas'] } } ]
+        ['/projects/', this.projectId, { outlets: { projectDetails: ['areas'] } }]
       );
     }
   }
@@ -365,7 +368,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
   returnToAreaProjectDetails(): void {
     this.logger.debug('returnToAreaProjectDetails start');
     this.router.navigate(
-      [ '/projects/', this.projectId, {outlets: { projectDetails: ['areas'] } } ]
+      ['/projects/', this.projectId, { outlets: { projectDetails: ['areas'] } }]
     );
   }
 
@@ -436,7 +439,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
               project: { id: stringifyProjectId as string }
             }
             const parentAreaId = this.getParentAreaId();
-            newArea.parentArea = parentAreaId ? { id: parentAreaId, entityVersion: null } : null;
+            newArea.parentArea = parentAreaId ? { id: parentAreaId, entityVersion: null } as Area : null;
 
             const uploadImage = this.areaService.updateArea(newArea).pipe(
               mergeMap((imageRes) => this.httpClient.post(`/hyperiot/areas/${newArea.id}/image`, formData))
@@ -445,27 +448,27 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
             uploadImage
               .pipe(takeUntil(this.ngUnsubscribe))
               .subscribe({
-              next: (res) => {
-                this.logger.debug('Upload image response', res);
-                this.entity = res as Area;
-                this.apiSuccess(res);
-                this.loadAreaImage();
-              },
-              error: (err) => {
-                this.logger.error('Upload image Error', err);
-                if (err.error && err.error.errorMessages) {
-                  this.dialogService.open(GenericMessageDialogComponent, {
-                    backgroundClosable: true,
-                    data: {
-                      message: err.error.errorMessages[0],
-                    },
-                  });
-                  this.loadingStatus = LoadingStatusEnum.Ready;
-                } else {
-                  this.apiError(err);
+                next: (res) => {
+                  this.logger.debug('Upload image response', res);
+                  this.entity = res as Area;
+                  this.apiSuccess(res);
+                  this.loadAreaImage();
+                },
+                error: (err) => {
+                  this.logger.error('Upload image Error', err);
+                  if (err.error && err.error.errorMessages) {
+                    this.dialogService.open(GenericMessageDialogComponent, {
+                      backgroundClosable: true,
+                      data: {
+                        message: err.error.errorMessages[0],
+                      },
+                    });
+                    this.loadingStatus = LoadingStatusEnum.Ready;
+                  } else {
+                    this.apiError(err);
+                  }
                 }
-              }
-            });
+              });
           } else {
             this.dialogService.open(GenericMessageDialogComponent, {
               backgroundClosable: true,
@@ -489,7 +492,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
     }
   }
 
-  onFileChangeBim(event){
+  onFileChangeBim(event) {
     if (event.target.files && event.target.files.length) {
       const [file] = event.target.files;
       const fileName = (file.name as string);
@@ -519,7 +522,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
             project: { id: stringifyProjectId as string }
           }
           const parentAreaId = this.getParentAreaId();
-          newArea.parentArea = parentAreaId ? { id: parentAreaId, entityVersion: null } : null;
+          newArea.parentArea = parentAreaId ? { id: parentAreaId, entityVersion: null } as Area : null;
 
           const uploadImage = this.areaService.updateArea(newArea).pipe(
             mergeMap((bimRes) => {
@@ -528,29 +531,29 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
           );
 
           uploadImage
-          .pipe(takeUntil(this.ngUnsubscribe))
-          .subscribe({
-            next: (res) => {
-              this.logger.debug('Upload bim_xkt response', res);
-              this.entity = res as Area;
-              this.apiSuccess(res);
-              this.loadAreaBim();
-            },
-            error: (err) => {
-              this.logger.error('Upload bim_xkt Error', err);
-              if (err.error && err.error.errorMessages) {
-                this.dialogService.open(GenericMessageDialogComponent, {
-                  backgroundClosable: true,
-                  data: {
-                    message: err.error.errorMessages[0],
-                  },
-                });
-                this.loadingStatus = LoadingStatusEnum.Ready;
-              } else {
-                this.apiError(err);
+            .pipe(takeUntil(this.ngUnsubscribe))
+            .subscribe({
+              next: (res) => {
+                this.logger.debug('Upload bim_xkt response', res);
+                this.entity = res as Area;
+                this.apiSuccess(res);
+                this.loadAreaBim();
+              },
+              error: (err) => {
+                this.logger.error('Upload bim_xkt Error', err);
+                if (err.error && err.error.errorMessages) {
+                  this.dialogService.open(GenericMessageDialogComponent, {
+                    backgroundClosable: true,
+                    data: {
+                      message: err.error.errorMessages[0],
+                    },
+                  });
+                  this.loadingStatus = LoadingStatusEnum.Ready;
+                } else {
+                  this.apiError(err);
+                }
               }
-            }
-          });
+            });
         }
         reader.readAsDataURL(file);
 
@@ -559,8 +562,8 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
     }
   }
 
-  onInfoTypeChange(event: MatSelectChange){
-    if(event.value && this.entity.areaViewType !== undefined && event.value !== this.entity.areaViewType){
+  onInfoTypeChange(event: MatSelectChange) {
+    if (event.value && this.entity.areaViewType !== undefined && event.value !== this.entity.areaViewType) {
       this.openModalChangeType(event.value);
     } else {
       this.logger.info('onInfoTypeChange function, no type changed: ' + event.value + ' - ' + this.entity.areaViewType);
@@ -568,7 +571,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
 
   }
 
-  handleSearchAndDeleteElementOnMap(oldViewType: string, newViewType: string){
+  handleSearchAndDeleteElementOnMap(oldViewType: string, newViewType: string) {
     this.loadingStatus = this.LoadingStatus.Loading;
     switch (oldViewType) {
       case 'IMAGE':
@@ -583,16 +586,16 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
     }
   }
 
-  setImageTypeObj(newViewType: string){
+  setImageTypeObj(newViewType: string) {
     const getImage = this.httpClient.delete(`/hyperiot/areas/${this.areaId}/image`)
-    .pipe(
+      .pipe(
         take(1),
         catchError(_ => of(['no XKT found to delete']))
-    )
+      )
     const updateArea = this.areaService.findArea(this.areaId).pipe(
       take(1),
       catchError(_ => of(['error area not found'])),
-      switchMap((area) => {
+      switchMap((area: Area) => {
         // Set new Area Object
         area.areaConfiguration = null;
         area.areaViewType = newViewType as AreaViewTypeEnum;
@@ -611,7 +614,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
       next: ([imageObj, areaObj]) => {
         this.logger.debug('Return of the Delete Image operation', imageObj);
         this.logger.debug('Return of the Update Area operation', areaObj);
-        if(Array.isArray(areaObj) && areaObj.includes('error area not updated')){
+        if (Array.isArray(areaObj) && areaObj.includes('error area not updated')) {
           this.logger.error('INFO TYPE setImageTypeObj ERROR', areaObj);
         } else {
           // Update local values of the current Area
@@ -631,7 +634,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
       }
     })
   }
-  searchAndDeleteElementOnImageMap(areaID: number, newViewType: string){
+  searchAndDeleteElementOnImageMap(areaID: number, newViewType: string) {
     // Get Sub Areas and Devices list for current area
     const mapElements = forkJoin({
       totalDevices: this.areaService.getAreaDeviceList(areaID),
@@ -646,16 +649,16 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
         let devicesOnMaps = returnMapElements.totalDevices;
 
         let innerAreas = [];
-        for(const key of returnMapElements.totalSubAreas.innerArea) {
-          if(key.mapInfo) { innerAreas.push(key) }
+        for (const key of returnMapElements.totalSubAreas.innerArea) {
+          if (key.mapInfo) { innerAreas.push(key) }
         }
 
         // Handle request
         const concatArray = devicesOnMaps.concat(innerAreas);
-        for(const singleArea of concatArray){
-          if(singleArea.device){
+        for (const singleArea of concatArray) {
+          if (singleArea.device) {
             containerRequest.push(this.areaService.removeAreaDevice(this.areaId, singleArea.id))
-          }else{
+          } else {
             containerRequest.push(this.areaService.updateArea(this.patchTheAreaToBeRemovedFromTheMap(singleArea)))
           }
         }
@@ -691,7 +694,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
         this.logger.debug('Return of the Delete Items operation', itemsObj);
         this.logger.debug('Return of the Delete Image operation', imageObj);
         this.logger.debug('Return of the Update Area operation', areaObj);
-        if(Array.isArray(areaObj) && areaObj.includes('error area not updated')){
+        if (Array.isArray(areaObj) && areaObj.includes('error area not updated')) {
           this.logger.error('INFO TYPE searchAndDeleteElementOnImageMap ERROR', areaObj);
         } else {
           // Update local values of the current Area
@@ -712,10 +715,10 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
     })
   }
 
-  patchTheAreaToBeRemovedFromTheMap(singleArea: Area) :any {
+  patchTheAreaToBeRemovedFromTheMap(singleArea: Area): any {
     singleArea.mapInfo = null;
     singleArea['project'] = { id: this.projectId };
-    singleArea.parentArea = { id: this.areaId, entityVersion: null };
+    singleArea.parentArea = { id: this.areaId, entityVersion: null } as Area;
     delete singleArea['innerCount'];
     delete singleArea['deviceCount'];
     return singleArea;
@@ -736,28 +739,28 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
     modalRef.dialogRef.afterClosed()
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(ad => {
-      this.logger.debug('onMapDeviceAddClick onclose modal', ad);
-      if (ad) {
-        this.loadingStatus = LoadingStatusEnum.Saving;
-        this.areaService.addAreaDevice(this.areaId, {
-          device: ad.device,
-          mapInfo: {
-            icon: ad.icon,
-            x: this.mapComponent.getAreaCenter().x,
-            y: this.mapComponent.getAreaCenter().y,
-          }
-        } as AreaDevice)
-          .pipe(takeUntil(this.ngUnsubscribe))
-          .subscribe((areaDevice: AreaDevice) => {
-          this.logger.debug('onMapDeviceAddClick add area device', areaDevice);
-          this.apiSuccess(areaDevice);
-          this.mapComponent.addAreaItem(areaDevice);
-        }, (err) => {
-          this.logger.error('onMapDeviceAddClick add area device Error', err)
-          this.apiError(err);
-        });
-      }
-    });
+        this.logger.debug('onMapDeviceAddClick onclose modal', ad);
+        if (ad) {
+          this.loadingStatus = LoadingStatusEnum.Saving;
+          this.areaService.addAreaDevice(this.areaId, {
+            device: ad.device,
+            mapInfo: {
+              icon: ad.icon,
+              x: this.mapComponent.getAreaCenter().x,
+              y: this.mapComponent.getAreaCenter().y,
+            }
+          } as AreaDevice)
+            .pipe(takeUntil(this.ngUnsubscribe))
+            .subscribe((areaDevice: AreaDevice) => {
+              this.logger.debug('onMapDeviceAddClick add area device', areaDevice);
+              this.apiSuccess(areaDevice);
+              this.mapComponent.addAreaItem(areaDevice);
+            }, (err) => {
+              this.logger.error('onMapDeviceAddClick add area device Error', err)
+              this.apiError(err);
+            });
+        }
+      });
   }
 
   /**
@@ -786,26 +789,26 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
     this.areaService.removeAreaDevice(this.areaId, areaDevice.id)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((res) => {
-      this.logger.debug('onMapDeviceUpdated remove area device', res);
-      areaDevice.id = 0;
-      // NOTE: 'areaDevice.device.project.user.screenName' property
-      //       causes error on the microservices side, so the property
-      //       is deleted before updating
-      delete areaDevice.device.project.user;
-      this.areaService.addAreaDevice(this.areaId, areaDevice)
-        .pipe(takeUntil(this.ngUnsubscribe))
-        .subscribe((ad) => {
-        this.logger.debug('onMapDeviceUpdated add area device', ad);
-        Object.assign(areaDevice, ad);
-        this.apiSuccess(ad);
+        this.logger.debug('onMapDeviceUpdated remove area device', res);
+        areaDevice.id = 0;
+        // NOTE: 'areaDevice.device.project.user.screenName' property
+        //       causes error on the microservices side, so the property
+        //       is deleted before updating
+        delete areaDevice.device.project.user;
+        this.areaService.addAreaDevice(this.areaId, areaDevice)
+          .pipe(takeUntil(this.ngUnsubscribe))
+          .subscribe((ad) => {
+            this.logger.debug('onMapDeviceUpdated add area device', ad);
+            Object.assign(areaDevice, ad);
+            this.apiSuccess(ad);
+          }, (err) => {
+            this.logger.error('onMapDeviceUpdated add area device Error', err);
+            this.apiError(err);
+          });
       }, (err) => {
-        this.logger.error('onMapDeviceUpdated add area device Error', err);
+        this.logger.error('onMapDeviceUpdated remove area device Error', err);
         this.apiError(err);
       });
-    }, (err) => {
-      this.logger.error('onMapDeviceUpdated remove area device Error', err);
-      this.apiError(err);
-    });
   }
 
   /**
@@ -823,27 +826,27 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
     modalRef.dialogRef.afterClosed()
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(a => {
-      this.logger.debug('onMapAreaAddClick modal on close', a);
-      if (a) {
-        a.mapInfo = {
-          icon: this.entity.areaViewType === 'MAP' ? 'sub_area_gradient.png' : 'map.png',
-          x: this.mapComponent.getAreaCenter().x,
-          y: this.mapComponent.getAreaCenter().y,
-        };
-        this.loadingStatus = LoadingStatusEnum.Saving;
-        this.areaService.updateArea(this.patchArea(a))
-          .pipe(takeUntil(this.ngUnsubscribe))
-          .subscribe(area => {
-          this.logger.debug('onMapAreaAddClick update area', area);
-          Object.assign(a, area);
-          this.mapComponent.addAreaItem(a);
-          this.apiSuccess(area);
-        }, (err) => {
-          this.logger.error('onMapAreaAddClick update area Error', err);
-          this.apiError(err)
-        });
-      }
-    });
+        this.logger.debug('onMapAreaAddClick modal on close', a);
+        if (a) {
+          a.mapInfo = {
+            icon: this.entity.areaViewType === 'MAP' ? 'sub_area_gradient.png' : 'map.png',
+            x: this.mapComponent.getAreaCenter().x,
+            y: this.mapComponent.getAreaCenter().y,
+          };
+          this.loadingStatus = LoadingStatusEnum.Saving;
+          this.areaService.updateArea(this.patchArea(a))
+            .pipe(takeUntil(this.ngUnsubscribe))
+            .subscribe(area => {
+              this.logger.debug('onMapAreaAddClick update area', area);
+              Object.assign(a, area);
+              this.mapComponent.addAreaItem(a);
+              this.apiSuccess(area);
+            }, (err) => {
+              this.logger.error('onMapAreaAddClick update area Error', err);
+              this.apiError(err)
+            });
+        }
+      });
   }
 
   /**
@@ -894,7 +897,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
     this.logger.debug('onEditAreaClick start', area);
     this.currentSection = 0; // show the info tab
     this.router.navigate(
-      [ '/projects/', this.projectId, {outlets: { projectDetails: ['areas', area.id ] } } ]
+      ['/projects/', this.projectId, { outlets: { projectDetails: ['areas', area.id] } }]
     );
   }
 
@@ -906,7 +909,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
     this.logger.debug('onEditInnerAreaClick start', area);
     this.currentSection = 0; // show the info tab
     this.router.navigate(
-      [ '/projects/', this.projectId, {outlets: { projectDetails: ['areas', area.id ] } } ]
+      ['/projects/', this.projectId, { outlets: { projectDetails: ['areas', area.id] } }]
     );
   }
 
@@ -917,7 +920,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
   onAddInnerAreaClick(e) {
     this.logger.debug('onAddInnerAreaClick start', e);
     this.router.navigate(
-      [ '/projects/', this.projectId, {outlets: { projectDetails: ['areas', 0] } } ],
+      ['/projects/', this.projectId, { outlets: { projectDetails: ['areas', 0] } }],
       { queryParams: { parent: this.areaId } }
     );
   }
@@ -936,7 +939,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
       this.hideDelete = true;
     }
 
-    switch(e.tab.ariaLabel){
+    switch (e.tab.ariaLabel) {
       case 'INFO':
         this.clickedTab.emit('Tab-Info');
         this.logger.debug('onTabChange Tab-Info', e);
@@ -949,12 +952,12 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
       case 'BIM_XKT':
         const ariaLabelValue = e.tab.ariaLabel.toLowerCase();
         this.loadAreaData();
-        this.clickedTab.emit('Tab-Map-'+ariaLabelValue.toUpperCase());
+        this.clickedTab.emit('Tab-Map-' + ariaLabelValue.toUpperCase());
         this.logger.debug('onTabChange Tab-Map', e);
         break;
       case 'MAP':
         this.loadAreaData();
-        this.clickedTab.emit('Dynamic-'+ e.tab.ariaLabel.toUpperCase());
+        this.clickedTab.emit('Dynamic-' + e.tab.ariaLabel.toUpperCase());
         this.logger.debug('onTabChange Dynamic-Map', e);
     }
 
@@ -969,20 +972,30 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
     this.areaService.findInnerAreas(area.id)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((areaTree) => {
-      this.logger.debug('countAreaItems find inner areas', areaTree);
-      const count = (list: Area[]): number => {
-        let sum = list.length;
-        list.forEach((a) => { sum += count(a.innerArea); });
-        return sum;
-      };
-      area['innerCount'] = count(areaTree.innerArea);
-      // get all devices (including inner areas ones)
-      this.areaService.getAreaDeviceDeepList(area.id)
-        .pipe(takeUntil(this.ngUnsubscribe))
-        .subscribe((deviceList) => {
-        area['deviceCount'] = deviceList.length;
+        this.logger.debug('countAreaItems find inner areas', areaTree);
+        const count = (list: Area[]): number => {
+          let sum = list.length;
+          list.forEach((a) => { sum += count(a.innerArea); });
+          return sum;
+        };
+        area['innerCount'] = count(areaTree.innerArea);
+        // get all devices (including inner areas ones)
+        this.areaService.getAreaDeviceDeepList(area.id)
+          .pipe(takeUntil(this.ngUnsubscribe))
+          .subscribe((deviceList) => {
+            area['deviceCount'] = deviceList.length;
+          });
       });
-    });
+  }
+
+  private getAreaDeepDevicesList(area) {
+    let devices = this.areaDevicesDeep.filter(areaDevice => areaDevice.area.id === area.id).map(areaDevice => areaDevice.device);
+    if (area.innerArea) {
+      for (let i = 0; i < area.innerArea.length; i++) {
+        devices = devices.concat(this.getAreaDeepDevicesList(area.innerArea[i]));
+      }
+    }
+    return devices;
   }
 
   /**
@@ -991,62 +1004,68 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
    */
   private loadAreaMap() {
     this.loadingStatus = LoadingStatusEnum.Loading;
-    this.areaService.getAreaDeviceList(this.areaId)
+    this.areaService.getAreaDeviceDeepList(this.areaId)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((areaDevices: AreaDevice[]) => {
-      this.logger.debug('loadAreaMap get area devices list', areaDevices);
-      this.mapComponent.setAreaItems(areaDevices.concat(this.areaList.filter(a => a.mapInfo != null)));
-      this.mapComponent.refresh();
-      this.loadingStatus = LoadingStatusEnum.Ready;
-    });
+        this.logger.debug('loadAreaMap get area and sub-areas devices list', areaDevices);
+        this.areaDevicesDeep = areaDevices;
+        areaDevices = areaDevices.filter(x => x.area.id === this.areaId);
+        const areaList = this.areaList.filter(a => a.mapInfo != null) as any;
+        areaList.forEach(x => x.deepDevices = this.getAreaDeepDevicesList(x));
+        const areaItems: (AreaDevice | Area)[] = areaDevices.concat(areaList);
+        this.mapComponent.setAreaItems(areaItems);
+        this.mapComponent.refresh();
+        this.loadingStatus = LoadingStatusEnum.Ready;
+      });
     if (this.mapComponent.itemOpen.observers.length === 0) {
       this.mapComponent.itemOpen
         .pipe(takeUntil(this.ngUnsubscribe))
         .subscribe((openItem) => {
-        this.logger.debug('loadAreaMap item open', openItem);
-        if (openItem.device) { // item is a device
-          // TODO: handle device open
-        } else { // item is an area
-          this.router.navigate(
-            [ '/projects/', this.projectId, {outlets: { projectDetails: ['areas', openItem.id ] } } ]
-          );
-        }
-      });
+          this.logger.debug('loadAreaMap item open', openItem);
+          if (openItem.device) { // item is a device
+            // TODO: handle device open
+          } else { // item is an area
+            this.router.navigate(
+              ['/projects/', this.projectId, { outlets: { projectDetails: ['areas', openItem.id] } }]
+            );
+          }
+        });
     }
     if (this.mapComponent.itemRemove.observers.length === 0) {
       this.mapComponent.itemRemove
         .pipe(takeUntil(this.ngUnsubscribe))
         .subscribe((removedItem) => {
-        this.logger.debug('loadAreaMap item removed', removedItem);
-        if (removedItem.device) { // item is a device
-          this.onMapDeviceRemoved(removedItem);
-        } else { // item is an area
-          this.onMapAreaRemoved(removedItem);
-        }
-      });
+          this.logger.debug('loadAreaMap item removed', removedItem);
+          if (removedItem.device) { // item is a device
+            this.onMapDeviceRemoved(removedItem);
+          } else { // item is an area
+            this.onMapAreaRemoved(removedItem);
+          }
+        });
     }
     if (this.mapComponent.itemUpdate.observers.length === 0) {
       this.mapComponent.itemUpdate
         .pipe(takeUntil(this.ngUnsubscribe))
         .subscribe((updatedItem) => {
-        this.logger.debug('loadAreaMap item updated', updatedItem);
-        if (updatedItem.device) { // item is a device
-          this.onMapDeviceUpdated(updatedItem);
-        } else { // item is an area
-          this.onMapAreaUpdated(updatedItem);
-        }
-      });
+          this.logger.debug('loadAreaMap item updated', updatedItem);
+          if (updatedItem.device) { // item is a device
+            this.onMapDeviceUpdated(updatedItem);
+          } else { // item is an area
+            this.onMapAreaUpdated(updatedItem);
+          }
+        });
     }
     if (this.mapComponent.renderDataRequest.observers.length === 0) {
       this.mapComponent.renderDataRequest
         .pipe(takeUntil(this.ngUnsubscribe))
         .subscribe((draggableItem: DraggableItemComponent) => {
-        this.logger.debug('loadAreaMap render data request', draggableItem);
-        if (!draggableItem.itemData.device) { // item is an Area
-          const a = this.areaList.find((area) => area === draggableItem.itemData) as any;
-          draggableItem.renderData.deviceCount = a.deviceCount;
-        }
-      });
+          this.logger.debug('loadAreaMap render data request', draggableItem);
+
+          if (this.utilsService.isArea(draggableItem.itemData)) {
+            const a = this.areaList.find((area) => area.id === draggableItem.itemData.id);
+            draggableItem.renderData.deviceCount = a['deviceCount'];
+          }
+        });
     }
   }
 
@@ -1085,10 +1104,10 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
             this.mapComponent.setOverlayLevel(false, '');
           }
           reader.readAsDataURL(res);
-      }, (err) => {
+        }, (err) => {
           this.logger.error('Error loading area media present in configuration', err);
           this.mapComponent.setOverlayLevel(true, this.ovelayErrorString);
-      });
+        });
     } else {
       this.logger.warn('No Media for this Area');
       this.mapComponent.setOverlayLevel(true, this.overlayEmptyString);
@@ -1109,18 +1128,18 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
       this.httpClient.get(`/hyperiot/areas/${this.areaId}/image`, {
         responseType: 'blob'
       })
-      .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe({
-        next: (res: Blob) => {
-          this.logger.debug('Get Area Bim File', res);
-          this.pathBim = `/hyperiot/areas/${this.areaId}/image`;
-          this.isBimLoading = false;
-        },
-        error: (error) => {
-          this.logger.error('Get Area Bim File ERROR', error);
-          this.isBimLoading = false;
-        }
-      })
+        .pipe(takeUntil(this.ngUnsubscribe))
+        .subscribe({
+          next: (res: Blob) => {
+            this.logger.debug('Get Area Bim File', res);
+            this.pathBim = `/hyperiot/areas/${this.areaId}/image`;
+            this.isBimLoading = false;
+          },
+          error: (error) => {
+            this.logger.error('Get Area Bim File ERROR', error);
+            this.isBimLoading = false;
+          }
+        })
     } else {
       this.isEmptyBim = true;
       console.log('%cBIM WARNING isEmptyBim', 'color:yellowgreen', this.isEmptyBim);
@@ -1162,7 +1181,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
     // TODO: the field project should be exposed in model
     // TODO: if not passing this field the service will return validation error
     area['project'] = { id: this.projectId };
-    area.parentArea = { id: this.areaId, entityVersion: null };
+    area.parentArea = { id: this.areaId, entityVersion: null } as Area;
     delete area['innerCount'];
     delete area['deviceCount'];
     return area;
@@ -1186,17 +1205,17 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
         this.apiSuccess(areaTree);
         const currentTabAriaLabel = this.getTabAriaLabel(this.tabGroup);
         this.loadMediaDataBySelectedTab(currentTabAriaLabel);
-    },
-(err) => {
-        this.logger.error('loadAreaData Finding child areas failed', err);
-        this.apiError(err);
-      });
+      },
+        (err) => {
+          this.logger.error('loadAreaData Finding child areas failed', err);
+          this.apiError(err);
+        });
   }
 
-  loadMediaDataBySelectedTab(ariaLabelValue: string){
-    if (ariaLabelValue === 'IMAGE' || ariaLabelValue === 'BIM_XKT' || ariaLabelValue === 'MAP'){
+  loadMediaDataBySelectedTab(ariaLabelValue: string) {
+    if (ariaLabelValue === 'IMAGE' || ariaLabelValue === 'BIM_XKT' || ariaLabelValue === 'MAP') {
       this.loadMediaElements(this.entity.areaViewType);
-    } else if(ariaLabelValue === '') {
+    } else if (ariaLabelValue === '') {
       // @@TODO: remember to display a modal with error message
       this.logger.error('loadMediaDataBySelectedTab Aria Label not expected', ariaLabelValue);
     }
@@ -1205,10 +1224,10 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
    * Get aria label value for current tab
    * @param tabGroup
    */
-  getTabAriaLabel(tabGroup: MatTabGroup): string{
+  getTabAriaLabel(tabGroup: MatTabGroup): string {
     const tabsArray: MatTab[] = tabGroup._tabs['_results'];
     const activeTabElement = tabsArray.find((tab) => tab.isActive === true);
-    if (activeTabElement !== undefined){
+    if (activeTabElement !== undefined) {
       return activeTabElement.ariaLabel;
     } else {
       return '';
@@ -1231,53 +1250,53 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
     // TEST CONFIGURATION
     area = this.patchArea(area);
     const parentAreaId = this.getParentAreaId();
-    area.parentArea = parentAreaId ? { id: parentAreaId, entityVersion: null } : null;
+    area.parentArea = parentAreaId ? { id: parentAreaId, entityVersion: null } as Area : null;
     if (area.id) {
       // Update existing
       this.areaService.updateArea(area)
         .pipe(takeUntil(this.ngUnsubscribe))
         .subscribe((res) => {
 
-        this.logger.debug('saveArea update area', res);
-        this.entity = res;
-        this.resetForm();
-        this.areaService.getAreaPath(res.id)
-          .pipe(takeUntil(this.ngUnsubscribe))
-          .subscribe((path) => {
-          this.logger.debug('saveArea get area path', path);
-          this.areaPath = path;
+          this.logger.debug('saveArea update area', res);
+          this.entity = res;
+          this.resetForm();
+          this.areaService.getAreaPath(res.id)
+            .pipe(takeUntil(this.ngUnsubscribe))
+            .subscribe((path) => {
+              this.logger.debug('saveArea get area path', path);
+              this.areaPath = path;
+            });
+          this.apiSuccess(res);
+          successCallback(res);
+        }, (err) => {
+          this.logger.error('saveArea update area', err);
+          this.setErrors(err);
+          errorCallback(err);
         });
-        this.apiSuccess(res);
-        successCallback(res);
-      }, (err) => {
-        this.logger.error('saveArea update area', err);
-        this.setErrors(err);
-        errorCallback(err);
-      });
     } else {
       // Add new
       this.areaService.saveArea(area)
         .pipe(takeUntil(this.ngUnsubscribe))
         .subscribe((res) => {
-        this.logger.debug('saveArea saveArea', res);
-        this.resetForm();
-        this.apiSuccess(res);
-        if (this.parentAreaId) {
-          this.currentSection = 1; // show parent inner area list
-          this.router.navigate(
-            [ '/projects/', this.projectId, {outlets: { projectDetails: ['areas', this.parentAreaId] } } ]
-          );
-        } else {
-          this.router.navigate(
-            [ '/projects/', this.projectId, {outlets: { projectDetails: ['areas', res.id ] } } ]
-          );
-        }
-        successCallback(res);
-      }, (err) => {
-        this.logger.error('saveArea save area Error', err);
-        this.apiError(err);
-        errorCallback(err);
-      });
+          this.logger.debug('saveArea saveArea', res);
+          this.resetForm();
+          this.apiSuccess(res);
+          if (this.parentAreaId) {
+            this.currentSection = 1; // show parent inner area list
+            this.router.navigate(
+              ['/projects/', this.projectId, { outlets: { projectDetails: ['areas', this.parentAreaId] } }]
+            );
+          } else {
+            this.router.navigate(
+              ['/projects/', this.projectId, { outlets: { projectDetails: ['areas', res.id] } }]
+            );
+          }
+          successCallback(res);
+        }, (err) => {
+          this.logger.error('saveArea save area Error', err);
+          this.apiError(err);
+          errorCallback(err);
+        });
     }
   }
 
@@ -1293,27 +1312,27 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
     this.areaService.deleteArea(this.areaId)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((res) => {
-      this.logger.debug('deleteArea delete area', res);
-      this.apiSuccess(res);
-      successCallback(res);
-      if (parentAreaId) {
-        // navigate back to parent showing inner areas list
-        this.currentSection = 1;
-        this.router.navigate(
-          [ '/projects/', this.projectId, {outlets: { projectDetails: ['areas', parentAreaId ] } } ]
-        );
-      } else {
-        // navigate back to main
-        this.currentSection = 0;
-        this.router.navigate(
-          [ '/projects/', this.projectId, {outlets: { projectDetails: ['areas' ] } } ]
-        );
-      }
-    }, (err) => {
-      this.logger.error('deleteArea delete area Error', err);
-      this.apiError(err);
-      errorCallback(err);
-    });
+        this.logger.debug('deleteArea delete area', res);
+        this.apiSuccess(res);
+        successCallback(res);
+        if (parentAreaId) {
+          // navigate back to parent showing inner areas list
+          this.currentSection = 1;
+          this.router.navigate(
+            ['/projects/', this.projectId, { outlets: { projectDetails: ['areas', parentAreaId] } }]
+          );
+        } else {
+          // navigate back to main
+          this.currentSection = 0;
+          this.router.navigate(
+            ['/projects/', this.projectId, { outlets: { projectDetails: ['areas'] } }]
+          );
+        }
+      }, (err) => {
+        this.logger.error('deleteArea delete area Error', err);
+        this.apiError(err);
+        errorCallback(err);
+      });
   }
 
   /**
@@ -1336,7 +1355,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
     this.loadingStatus = LoadingStatusEnum.Error;
   }
 
-  loadMediaElements(areaViewType: string){
+  loadMediaElements(areaViewType: string) {
     switch (areaViewType) {
       case AreaViewTypeEnum.IMAGE:
         this.loadAreaMap();
@@ -1352,7 +1371,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
     }
   }
 
-  openModalChangeType(eventValue: string){
+  openModalChangeType(eventValue: string) {
     const dialogRef = this.confirmDialogService.open({
       text: $localize`:@@HYT_area_confirm_body_change_type:Changing this setting will erase all previous settings`,
       confirmLabel: $localize`:@@HYT_area_confirm_btn_confirm:Confirm`,
@@ -1361,13 +1380,13 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
     })
 
     dialogRef.dialogRef.afterClosed().subscribe((res) => {
-      if(res.result === 'reject'){
+      if (res.result === 'reject') {
         this.form.get('area-type').setValue(this.typeSelectPrevValue);
         // Reset previous value
         this.typeSelectPrevValue = '';
         this.logger.info('No change in the area type field');
       }
-      if(res.result === 'accept'){
+      if (res.result === 'accept') {
         // Reset previous value
         this.typeSelectPrevValue = '';
         this.logger.info('We changed the area type and reset the previous data');
@@ -1380,11 +1399,12 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
   saveMapAreaConfiguration = (mapSettings: GenericMap) => {
     this.loadingStatus = LoadingStatusEnum.Loading;
     const parentAreaId = this.getParentAreaId();
-    const updatedArea = {
+    const updatedArea: Area = {
       ...this.entity,
       areaConfiguration: JSON.stringify(mapSettings),
-      project: { id: this.projectId },
-      parentArea: parentAreaId ? { id: parentAreaId, entityVersion: null } : null,
+      //! TODO project doesn't exist on Area type
+      // project: { id: this.projectId },
+      parentArea: parentAreaId ? { id: parentAreaId, entityVersion: null } as Area : null,
     };
     this.mapComponent.getImage().then((blob) => {
       const formData = new FormData();
@@ -1393,7 +1413,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
     });
     return this.areaService.updateArea(updatedArea).pipe(tap(res => {
       this.entity = res;
-    }), finalize(() => this.loadingStatus = LoadingStatusEnum.Ready ));
+    }), finalize(() => this.loadingStatus = LoadingStatusEnum.Ready));
   }
 
 }

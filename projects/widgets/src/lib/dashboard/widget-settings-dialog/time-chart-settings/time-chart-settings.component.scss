@@ -10,10 +10,10 @@
         .input-row {
             display: flex;
             align-items: center;
-            gap: 2em;
+            gap: 1em;
 
             input {
-                width: 7em;
+                width: 2em;
                 border-radius: .3em;
                 border: 1px solid grey;
             }
@@ -21,12 +21,17 @@
             .line-config {
                 display: flex;
                 gap: 3em;
-                width: 29em;
+                width: 16.5em;
+                margin-left: 6em;
                 justify-content: space-between;
                 align-items: center;
 
+                &.thickness-only {
+                    width: 17.75em;
+                }
+
                 .thickness, .no-thickness {
-                    width: 3em;
+                    width: 2em;
                     padding-left: 10px;
                     text-align: center;                
                 }
@@ -61,6 +66,30 @@
     }
 }
 
+.box-fields-customization-title {
+    display: flex;
+    color: #0856b6;
+    align-items: center;
+    gap: 4px;
+    text-transform: uppercase;
+}
+
+.pt25 {
+    padding-top: 25px;
+}
+
+.red {
+    color: red;
+}
+
+.lh1 {
+    line-height: 1 !important;
+}
+
+.pt-10 {
+    padding-top: 10px;
+}
+
 ::ng-deep .mat-option .line-option {
     width: 100%;
     height: 2px;
@@ -86,6 +115,18 @@
 ::ng-deep mat-option .mat-option-text {
     display: block;
     line-height: 1.5;
+}
+
+::ng-deep .mat-option:hover {
+    background-color: #c9d8ff !important; /* Colore personalizzato */
+}
+
+::ng-deep .mat-option.mat-option-disabled:hover {
+    background-color: #E0E0E0 !important;
+}
+
+::ng-deep .mat-select-panel {
+    max-width: 330px !important;
 }
 
 .loading-overlay {

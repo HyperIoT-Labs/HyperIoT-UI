@@ -1,0 +1,176 @@
+<main hyt-dialog>
+  <section i18n="@@HYT_export_data" hyt-dialog-header>Export Data</section>
+
+  <section
+    hyt-dialog-content
+    class="dialog-form-content"
+    [ngClass]="{ 'cursor-progress': exportInProgress }"
+  >
+    <form [formGroup]="form">
+      <fieldset [disabled]="exportInProgress">
+        <div class="row row-cols-2">
+          <div class="d-flex flex-column p-2">
+            <mat-form-field id="startTimePicker" appearance="fill">
+              <mat-label i18n="@@HYT_start_time">Start Time</mat-label>
+              <input
+                matInput
+                [ngxMatDatetimePicker]="startTimePicker"
+                [max]="maxValue$ | async"
+                placeholder="Choose a date"
+                (click)="startTimePicker.open()"
+                formControlName="startTime"
+                readonly
+                required
+              />
+              <mat-datepicker-toggle matSuffix [for]="$any(startTimePicker)">
+              </mat-datepicker-toggle>
+              <ngx-mat-datetime-picker #startTimePicker [showSeconds]="true">
+              </ngx-mat-datetime-picker>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+              <mat-label i18n="@@HYT_select_export_format"
+                >Select Export Format</mat-label
+              >
+              <mat-select formControlName="hPacketFormat">
+                <mat-option [value]="hPacketFormatEnum.JSON">
+                  {{ hPacketFormatEnum.JSON }}
+                </mat-option>
+                <mat-option [value]="hPacketFormatEnum.CSV">
+                  {{ hPacketFormatEnum.CSV }}
+                </mat-option>
+                <mat-option [value]="hPacketFormatEnum.TEXT" disabled>
+                  {{ hPacketFormatEnum.TEXT }}
+                </mat-option>
+                <mat-option [value]="hPacketFormatEnum.XML" disabled>
+                  {{ hPacketFormatEnum.XML }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <hyt-select
+              #selectPackets
+              class="hyt-select-full-width"
+              [name]="'packetSelect'"
+              [label]="selectPacketsLabel"
+              [groups]="hPacketListSelectOption"
+              [isSearchable]="true"
+              (valueFn)="
+                exportInProgress ? null : addPacketSelectedList($event)
+              "
+              [errorMsgRequired]="selectPacketsLabel"
+            >
+            </hyt-select>
+          </div>
+
+          <div class="d-flex flex-column p-2">
+            <mat-form-field id="endTimePicker" appearance="fill">
+              <mat-label i18n="@@HYT_end_time">End Time</mat-label>
+              <input
+                matInput
+                [ngxMatDatetimePicker]="endTimePicker"
+                placeholder="Choose a date"
+                (click)="endTimePicker.open()"
+                formControlName="endTime"
+                required
+                readonly
+                [min]="startTime.value"
+                [max]="maxValue$ | async"
+              />
+              <mat-datepicker-toggle matSuffix [for]="$any(endTimePicker)">
+              </mat-datepicker-toggle>
+              <ngx-mat-datetime-picker #endTimePicker [showSeconds]="true">
+              </ngx-mat-datetime-picker>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+              <mat-label>Export Name</mat-label>
+              <input
+                matInput
+                formControlName="exportName"
+                name="exportName"
+                [maxlength]="maxLength"
+                required
+              />
+              <mat-error
+                *ngIf="exportName.hasError('charNotAllowed')"
+                i18="@@HYT_invalid_characters"
+              >
+                Invalid characters have been entered
+              </mat-error>
+              <mat-error
+                *ngIf="exportName.dirty && exportName.hasError('required')"
+                i18n="@@HYT_field_required"
+              >
+                The field is required
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+              <mat-label>
+                {{ countSelectedPackets(hPacketListSelected.length) }}
+              </mat-label>
+              <mat-chip-list class="mat-chip-list-wrapper">
+                <mat-chip
+                  *ngFor="let hPacket of hPacketListSelected"
+                  class="mat-chip-custom"
+                  (removed)="removeHPacket(hPacket)"
+                >
+                  {{ hPacket.name }}
+                  <button matChipRemove>
+                    <mat-icon>cancel</mat-icon>
+                  </button>
+                </mat-chip>
+              </mat-chip-list>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-end">
+          <button
+            class="hyt-base-btn mat-hyt-base-total-blue mat-raised-button"
+            type="button"
+            (click)="resetForm()"
+          >
+            Reset
+          </button>
+        </div>
+      </fieldset>
+
+      <div *ngIf="exportErrorList.length" class="py-2">
+        <mat-error *ngFor="let error of exportErrorList">
+          {{ exportDownloadError(error.hPacketId) }}
+        </mat-error>
+      </div>
+    </form>
+  </section>
+
+  <section class="dialog-footer" hyt-dialog-footer>
+    <hyt-button
+      class="button-confirm"
+      [isDisabled]="
+        form.invalid || hPacketListSelected.length <= 0 || exportInProgress
+      "
+      [color]="'hyt-base-default-white'"
+      (clickFn)="export()"
+    >
+      <mat-icon>check</mat-icon>
+      <span i18n="@@HYT_export">Export</span>
+    </hyt-button>
+
+    <hyt-button
+      class="button-close"
+      [color]="'hyt-base-default-white'"
+      (clickFn)="dialogRef.close()"
+    >
+      <mat-icon>close</mat-icon>
+      <span i18n="@@HYT_cancel">Cancel</span>
+    </hyt-button>
+  </section>
+
+  <img
+    *ngIf="exportInProgress"
+    class="rocket cursor-progress"
+    src="assets/images/rocket.svg"
+  />
+</main>

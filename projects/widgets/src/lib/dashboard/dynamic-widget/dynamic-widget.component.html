@@ -138,6 +138,15 @@
     [serviceType]="serviceType"
   ></hyperiot-gauge-chart>
 
+  <hyperiot-trend-gauge-chart
+    *ngSwitchCase="'trend-gauge'"
+    [widget]="widget"
+    [initData]="initData"
+    [isToolbarVisible]="isToolbarVisible"
+    (widgetAction)="onWidgetAction($event)"
+    [serviceType]="serviceType"
+  ></hyperiot-trend-gauge-chart>
+
   <hyperiot-histogram-chart
     *ngSwitchCase="'histogram'"
     [widget]="widget"

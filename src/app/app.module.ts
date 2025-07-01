@@ -69,6 +69,12 @@ import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { GlobalErrorHandlerService } from '../../projects/core/src/lib/hyperiot-service/error-handler/global-error-handler.service';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { DataExportNotificationButtonComponent } from './components/topbar/data-export-notification-button/data-export-notification-button.component';
+import { DataExportNotificationDialogComponent } from './components/dialogs/data-export-notification-notification-dialog/data-export-notification-dialog.component';
+import { MomentModule } from 'ngx-moment';
+
+import 'moment/locale/it';
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
@@ -110,6 +116,8 @@ export function apiConfigFactory(): Configuration {
     DashComponent,
     InfoComponent,
     ContainerAreaMapComponent,
+    DataExportNotificationButtonComponent,
+    DataExportNotificationDialogComponent
   ],
   // dynamically created components
   entryComponents: [
@@ -134,6 +142,7 @@ export function apiConfigFactory(): Configuration {
     MatDialogModule,
     MatTabsModule,
     MatCardModule,
+    MatButtonToggleModule,
     MatProgressSpinnerModule,
     MatTooltipModule,
     CustomMaterialModule,
@@ -160,6 +169,7 @@ export function apiConfigFactory(): Configuration {
       autoPause: true, // Pauses recording actions and state changes when the extension window is not open
     }),
     EffectsModule.forRoot(HyperiotStore.Effects),
+    MomentModule
   ],
   providers: [
     // ActivatedRouteSnapshot,

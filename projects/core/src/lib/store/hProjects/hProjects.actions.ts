@@ -21,6 +21,7 @@ export namespace HProjectActions {
     export const deleteHProject = createAction('[HProject/API] Delete HProject', props<{ id: number }>());
     export const deleteHProjects = createAction('[HProject/API] Delete HProjects', props<{ ids: number[] }>());
     export const deleteHProjectsByPredicate = createAction('[HProject/API] Delete HProjects By Predicate', props<{ predicate: Predicate<HProject> }>());
+    export const setSelectedHProjectId = createAction('[HProject/API] Set SelectedHProjectId', props<{ id: number }>());
     export const clearHProjects = createAction('[HProject/API] Clear HProjects');
 
 }

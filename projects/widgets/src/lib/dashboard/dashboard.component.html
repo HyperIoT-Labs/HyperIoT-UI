@@ -96,7 +96,7 @@
                         </hyt-select> -->
 
                         <h3 *ngIf="showAreas" style="float:left; margin-top: 18px; color: blue">
-                            {{ areaPath && areaPath[areaPath.length - 1].name }}
+                            {{ areaPath && areaPath[areaPath.length - 1]?.name }}
                         </h3>
                         <!--
                         <div *ngIf="showAreas" class="current-path">
@@ -149,10 +149,19 @@
                 </hyperiot-timeline>
             </div>
             <!-- Standard -->
-            <div *ngIf="dataRecordingStatus < 1 && signalIsOn && !recordStateInLoading" id="dashboard-overlay-blurred"
+            <div *ngIf="dataRecordingStatus < 1 && signalIsOn" id="dashboard-overlay-blurred"
                 class="row no-gutters justify-content-center">
 
-                <div *ngIf="dataRecordingStatus <= 0" class="col-md-4">
+                <div *ngIf="dataRecordingStatus <= 0 && recordStateInLoading" class="col-md-4">
+                  <h2 i18n="@@HYT_data_recording_check_status" id="overlay-blurred-title">Check project status</h2>
+                  <!--@I18N-->
+                  <h3 i18n="@@HYT_data_recording_waiting_status" id="overlay-blurred-text">
+                    Recording status is being checked. Please wait...
+                  </h3>
+                  <!--@I18N-->
+                </div>
+
+                <div *ngIf="dataRecordingStatus <= 0 && !recordStateInLoading" class="col-md-4">
                     <h2 i18n="@@HYT_data_recording_is_disabled" id="overlay-blurred-title">Data recording is disabled</h2>
                     <!--@I18N-->
                     <h3 i18n="@@HYT_data_recording_is_disabled_text" id="overlay-blurred-text">
@@ -160,17 +169,6 @@
                         button or use the dashboard offline by selecting the "OFFLINE" button.
                     </h3>
                     <!--@I18N-->
-                </div>
-
-                <div *ngIf="dataRecordingStatus === 1" class="col-md-4">
-                    <h2 i18n="@@HYT_waiting_for_data" id="overlay-blurred-title">Waiting for data</h2>
-                    <!--@I18N-->
-                    <h3 i18n="@@HYT_waiting_for_data_text" id="overlay-blurred-text">
-                        Data recording is activated, but we are awaiting data. This operation might take a while (from 20 seconds up to 1 minute).
-                        If the loading state persists, click "Reload" or contact the administrator.
-                    </h3>
-                    <!--@I18N-->
-                    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
                 </div>
 
             </div>

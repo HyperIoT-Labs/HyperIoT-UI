@@ -31,10 +31,13 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatExpansionModule } from '@angular/material/expansion';
 import {MatTableModule} from '@angular/material/table';
+import { MatBadgeModule } from '@angular/material/badge';
+
 import { StatisticsStepComponent } from './project-wizard/statistics-step/statistics-step.component';
 import { WizardReportModalComponent } from './project-wizard/wizard-report-modal/wizard-report-modal.component';
 import { WizardOptionsModalComponent } from './project-wizard/wizard-options-modal/wizard-options-modal.component';
@@ -76,6 +79,7 @@ import {MatListModule} from '@angular/material/list';
 import { DynamicMapUserConfiguratorComponent } from './project-forms/areas-form/dynamic-map-user-configurator/dynamic-map-user-configurator.component';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatSliderModule } from '@angular/material/slider';
+import { ComputeFieldRuleComponent } from './project-forms/packet-enrichment-form/compute-field-rule/compute-field-rule.component';
 
 @NgModule({
   declarations: [
@@ -125,6 +129,7 @@ import { MatSliderModule } from '@angular/material/slider';
     EventComponentContainerComponent,
     EventMqttCommandComponent ,
     AlarmEventsTableComponent,
+    ComputeFieldRuleComponent,
   ],
   imports: [
     ColorPickerModule,
@@ -155,6 +160,8 @@ import { MatSliderModule } from '@angular/material/slider';
     MatButtonModule,
     MatButtonToggleModule,
     MatSliderModule,
+    MatBadgeModule,
+    MatFormFieldModule
   ],
   entryComponents: [
     AddTagModalComponent,

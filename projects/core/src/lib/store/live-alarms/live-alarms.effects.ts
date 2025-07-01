@@ -46,16 +46,18 @@ export class LiveAlarmsEffects {
             alarms => from(alarms).pipe(
                 concatLatestFrom(
                     (alarm: any) => {
-                        const maxSeverityEvent = alarm.alarmEvents.reduce((maxSeverityEvt, evt) => {
+                        const firedEvents = alarm.alarmEvents.filter(x => x.fired);
+                        const maxSeverityEvent = firedEvents.reduce((maxSeverityEvt, evt) => {
                             return evt.severity > maxSeverityEvt.severity ? evt : maxSeverityEvt;
-                        }, alarm.alarmEvents[0]);
+                        }, firedEvents[0]);
                         return this.store.select(HDeviceSelectors.selectHDevcicesByRuleId({ ruleId: maxSeverityEvent.ruleId }));
                     }
                 ),
                 map(([alarm, devices]) => {
-                    const maxSeverityEvent = alarm.alarmEvents.reduce((maxSeverityEvt, evt) => {
+                    const firedEvents = alarm.alarmEvents.filter(x => x.fired);
+                    const maxSeverityEvent = firedEvents.reduce((maxSeverityEvt, evt) => {
                         return evt.severity > maxSeverityEvt.severity ? evt : maxSeverityEvt;
-                    }, alarm.alarmEvents[0]);
+                    }, firedEvents[0]);
                     const liveAlarm: HytAlarm.LiveAlarm = {
                         alarmId: alarm.alarmId,
                         alarmName: alarm.alarmName,
