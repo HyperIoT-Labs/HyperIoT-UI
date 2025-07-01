@@ -43,6 +43,10 @@ export class TrendGaugeChartComponent extends BaseGenericComponent implements On
 
   private offControllerSubscription: Subscription;
 
+  get plotyGraph() {
+    return this.plotly.getInstanceByDivId(`widget-${this.widget.id}${this.isToolbarVisible}`);
+  }
+
   readonly gauge = {
     axis: {
       range: [-1, 1],
@@ -148,15 +152,20 @@ export class TrendGaugeChartComponent extends BaseGenericComponent implements On
     const value = this.slope([...packetData]);
 
     let currentValue = value;
-    if (value === Infinity) {
+    let symbol = '';
+    if (value === Infinity || value > 1) {
       currentValue = 1;
-    } else if (value === -Infinity) {
+      symbol = '> ';
+    } else if (value === -Infinity || value < -1) {
       currentValue = -1;
-    } else if (value > 1 || value < -1) {
-      currentValue = undefined;
+      symbol = '< ';
     }
 
-    this.lastValue = this.decimalPipe.transform(currentValue, '1.1-1');
+    this.lastValue = symbol + this.decimalPipe.transform(currentValue, '1.1-1');
+    if (this.lastValue === 'null') {
+      this.lastValue = 'ND';
+    }
+
     this.renderData(this.lastValue);
   }
 
@@ -179,7 +188,7 @@ export class TrendGaugeChartComponent extends BaseGenericComponent implements On
    * @param packetData
    */
   private async renderData(value: string): Promise<void> {
-    const graph = this.plotly.getInstanceByDivId(`widget-${this.widget.id}${this.isToolbarVisible}`);
+    const graph = this.plotyGraph;
     if (graph) {
       const Plotly = await this.plotly.getPlotly();
 
@@ -189,11 +198,15 @@ export class TrendGaugeChartComponent extends BaseGenericComponent implements On
       Plotly.update(
         graph,
         {
-          value,
           gauge
         },
         this.graph.layout
       );
+
+      const oldValueOnlyNumber = graph.querySelector(".indicatorlayer .numbers text");
+      if (oldValueOnlyNumber) {
+        oldValueOnlyNumber.textContent = value;
+      }
     }
   }
 
@@ -228,18 +241,6 @@ export class TrendGaugeChartComponent extends BaseGenericComponent implements On
       font: {
         color: this.widget.config.textColor,
         family: 'Exo'
-      },
-      xaxis: {
-        showgrid: false,
-        automargin: true,
-        zeroline: false,
-        visible: false
-      },
-      yaxis: {
-        showgrid: false,
-        automargin: true,
-        zeroline: false,
-        visible: false
       },
       showlegend: false,
       autosize: true,
@@ -277,18 +278,20 @@ export class TrendGaugeChartComponent extends BaseGenericComponent implements On
     this.subscribeDataChannel();
 
     const resizeObserver = new ResizeObserver((entries) => {
-      const graph = this.plotly.getInstanceByDivId(
-        `widget-${this.widget.id}${this.isToolbarVisible}`
-      );
-
+      const graph = this.plotyGraph;
       if (graph) {
         this.plotly.resize(graph);
+
+        setTimeout(() => {
+          const oldValueOnlyNumber = graph.querySelector(".indicatorlayer .numbers text");
+          if (oldValueOnlyNumber) {
+            oldValueOnlyNumber.textContent = this.lastValue;
+          }
+        }, 100);
       }
     });
 
-    resizeObserver.observe(
-      document.querySelector(`#widget-${this.widget.id}${this.isToolbarVisible}`)
-    );
+    resizeObserver.observe(this.plotyGraph);
   }
 
   private subscribeDataChannel(): void {
