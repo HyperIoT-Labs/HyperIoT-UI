@@ -189,6 +189,9 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy, OnChanges 
     onSelectedFieldsChange(fields) {
         this.selectedFields = fields;
         this.trendFields = fields;
+
+            // check content of the 2 selectsAdd commentMore actions
+        if (!this.trendSelectedFields.some(itemId => this.selectedFields.some(field => field.id === itemId))) this.trendSelectedFields = [];
     }
 
     onSelectedPacketChange(packet) {
@@ -224,7 +227,7 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy, OnChanges 
         });
 
         this.widget.config.trend = {
-            trendActive: this.trendActive,
+            trendActive: this.trendSelectedFields.length !== 0 ? this.trendActive : false,
             trend: trend[0]
         };
     }
