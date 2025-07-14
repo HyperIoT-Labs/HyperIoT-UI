@@ -33,7 +33,9 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy, OnChanges 
     thresholdsIds: number[] = [];
     thresholdActive: boolean = false;
     thresholdsForm: FormArray = this.fb.array([]);
-    newThreshold: any = {};
+    collapseThresold: boolean = false;
+    
+    collapsedThresholdValues: any = {};
 
     trendActive: boolean = false;
     trendForm: FormArray = this.fb.array([]);
@@ -111,7 +113,14 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy, OnChanges 
             } else {
                 this.pageStatus = PageStatus.Ready;
             }
-        } else {
+        }
+        if (this.thresholdActive && this.widget.config.threshold.thresholds.length === 0 && !this.emptyControlFound()) {
+            this.addThresholdToForm({
+                id: null,
+                line: this.defaultLine
+            })
+        }
+        if (!this.thresholdActive) {
             this.pageStatus = PageStatus.Ready;
         }
         this.subscription = this.modalApply.subscribe((event) => {
@@ -146,7 +155,7 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy, OnChanges 
 
     addThresholdToForm(threshold) {
         const thresholdGroup = this.fb.group({
-            id: [threshold.id, Validators.required],
+            id: [threshold.id ? threshold.id : null, Validators.required],
             line: this.fb.group({
                 color: [threshold.line?.color || this.defaultColor, Validators.required],
                 thickness: [threshold.line?.thickness || 2, [Validators.min(1), Validators.max(5)]],
@@ -154,7 +163,8 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy, OnChanges 
             })
         });
 
-        this.thresholdsForm.push(thresholdGroup);
+        if (threshold.id === null) this.thresholdsForm.insert(0, thresholdGroup);
+        else this.thresholdsForm.push(thresholdGroup);
     }
 
     addTrendToForm(trend) {
@@ -222,7 +232,7 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy, OnChanges 
                     color: control.get('line.color').value,
                     thickness: control.get('line.thickness').value,
                     type: control.get('line.type').value
-                }
+                } 
             }
         });
 
@@ -245,16 +255,37 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy, OnChanges 
             };
         });
 
-        this.widget.config.threshold = {
-            thresholdActive: this.thresholdActive,
-            thresholds: thresholds
-        };
+        if (this.thresholdActive) {
+            this.widget.config.threshold = {
+                thresholdActive: this.thresholdActive,
+                thresholds: thresholds
+            };
+        }
+
+        //if collapsed, i have to assign previos values
+        else this.widget.config.threshold = this.collapsedThresholdValues;     
+
     }
 
     isChecked() {
+        // if collapsed save previous values
+        if (!this.thresholdActive) this.collapsedThresholdValues = this.widget.config.threshold;
+        
+        // collapse or not
+        this.collapseThresold = this.thresholdActive;
+
         if ((this.selectedFields.length === 0 && !this.widget.config.packetId) || !this.thresholdActive) {
             return this.pageStatus = PageStatus.Ready;
         };
+
+        // First show && nothing
+        if (this.thresholdActive && Object.keys(this.thresholdsForm.controls).length == 0) {
+            this.addThresholdToForm({
+                id: null,
+                line: this.defaultLine
+            })
+        }
+
         this.ruleService.findAllRuleByProjectId(this.widget.projectId).subscribe({
             next: (rules) => {
                 this.pageStatus = PageStatus.Ready;
@@ -328,6 +359,12 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy, OnChanges 
     deleteSelected(index: number): void {
         this.thresholdsForm.removeAt(index);
         this.filterThresholds();
+        if (Object.keys(this.filteredThresholds).length > 0 && !this.emptyControlFound()) {
+            this.addThresholdToForm({
+                id: null,
+                line: this.defaultLine
+            });
+        }
     }
 
     getFilteredIds(thresholdsIds): string[] {
@@ -347,7 +384,7 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy, OnChanges 
         return `${parts[0]}=>${parts.slice(1).join('.')}`;
     }
 
-    onThresholdSelected(selectedId: string, replaceThreshold: boolean, i?: number) {
+    onThresholdSelected(selectedId: string, replaceThreshold: boolean) {
         const singleRule: boolean = this.findThresholdRule(selectedId)?.ruleDefinition.match(/[^AND|OR]+(AND|OR)?/g).map(x => x.trim()).length === 1;
         const selectedThresholdIndex = this.thresholdsForm.controls.findIndex(thresholdGroup => {
             return thresholdGroup.get('id')?.value === selectedId;
@@ -363,17 +400,27 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy, OnChanges 
                 })
             });
             this.thresholdsForm.push(thresholdGroup);
-            this.newThreshold.id = null;
         } else {
-            const thresholdFormGroup = replaceThreshold ? this.thresholdsForm.at(i) : this.thresholdsForm.at(selectedThresholdIndex);
+            const thresholdFormGroup = this.thresholdsForm.at(selectedThresholdIndex);
             if (thresholdFormGroup) {
                 thresholdFormGroup.get('line.color')?.setValue(this.defaultColor);
                 thresholdFormGroup.get('line.thickness')?.setValue(2);
                 thresholdFormGroup.get('line.type')?.setValue(singleRule ? LineTypes.Linear : null);
             }
-            if (replaceThreshold) this.newThreshold.id = null;
         }
+        
         this.filterThresholds();
+        if (Object.keys(this.filteredThresholds).length > 0 && !this.emptyControlFound()) {
+            this.addThresholdToForm({
+                id: null,
+                line: this.defaultLine
+            });
+        }
+    }
+
+    emptyControlFound() {
+        const emptyControl = this.thresholdsForm.controls.filter(control => control.get('id').value === null);
+        return emptyControl.length > 0;
     }
 
     filterThresholds() {

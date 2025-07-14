@@ -24,11 +24,12 @@ export class AlgorithmTableComponent extends BaseTableComponent implements After
 
   tableHeaders = [];
   tableSource: Subject<any[]> = new Subject<any[]>();
-  trueArray : boolean = false;
 
   dataRequest: Subscription;
 
   hPacketIdMap : Map<number, string> = new Map()
+
+  trueArray : boolean = false;
 
   constructor(
     private algorithmOfflineDataServices: AlgorithmOfflineDataService,

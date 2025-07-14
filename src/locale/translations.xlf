@@ -984,6 +984,9 @@
       <trans-unit id="HYT_widget_settings_title" datatype="html">
         <source>Widget Settings</source>
       </trans-unit>
+      <trans-unit id="HYT_export_data" datatype="html">
+        <source>Export Data</source>
+      </trans-unit>
       <trans-unit id="HYT_apply" datatype="html">
         <source>Apply</source>
       </trans-unit>
@@ -998,6 +1001,9 @@
       </trans-unit>
       <trans-unit id="HYT_toolbar_close" datatype="html">
         <source>Close</source>
+      </trans-unit>
+      <trans-unit id="HYT_export" datatype="html">
+        <source>Export</source>
       </trans-unit>
       <trans-unit id="HYT_common_not_configured" datatype="html">
         <source>Click &apos;Settings&apos; button to configure.</source>
@@ -1776,8 +1782,8 @@
       <trans-unit id="HYT_notification_inactive" datatype="html">
         <source>Notification INACTIVE</source>
       </trans-unit>
-      <trans-unit id="HYT_notification_list" datatype="html">
-        <source>Notification list</source>
+      <trans-unit id="HYT_data_export_list" datatype="html">
+        <source>Data Download List</source>
       </trans-unit>
       <trans-unit id="HYT_notifications" datatype="html">
         <source>NOTIFICATIONS</source>
@@ -1827,6 +1833,15 @@
       <trans-unit id="HYT_theme_customization" datatype="html">
         <source>Theme customization</source>
       </trans-unit>
+       <trans-unit id="HYT_default_dashboard_settings" datatype="html">
+        <source>Default Dashboard Settings</source>
+      </trans-unit>
+      <trans-unit id="HYT_realtime" datatype="html">
+        <source>Real-Time</source>
+      </trans-unit>
+      <trans-unit id="HYT_offline" datatype="html">
+        <source>Offline</source>
+      </trans-unit>
       <trans-unit id="HYT_upload_your_logo" datatype="html">
         <source>Upload your logo</source>
       </trans-unit>
@@ -1848,6 +1863,9 @@
       <trans-unit id="HYT_back_to_projects" datatype="html">
         <source>Back to projects</source>
       </trans-unit>
+      <trans-unit id="HYT_back_to_dashboard" datatype="html">
+        <source>Back to dashboard</source>
+      </trans-unit>
       <trans-unit id="HYT_back_to_area" datatype="html">
         <source>Back to area</source>
       </trans-unit>
@@ -1859,6 +1877,12 @@
       </trans-unit>
       <trans-unit id="HYT_device_dashboard" datatype="html">
         <source>Device Dashbaord</source>
+      </trans-unit>
+      <trans-unit id="HYT_go_realtime_device_dashboard" datatype="html">
+        <source>Go To Real-Time Device Dashboard</source>
+      </trans-unit>
+      <trans-unit id="HYT_go_offline_device_dashboard" datatype="html">
+        <source>Go To Offline Device Dashboard</source>
       </trans-unit>
       <trans-unit id="HYT_alarm_managing" datatype="html">
         <source>Alarm Managing</source>
@@ -1904,6 +1928,52 @@
       </trans-unit>
       <trans-unit id="HYT_delete_area_item" datatype="html">
         <source>Delete item</source>
+      </trans-unit>
+      <trans-unit id="HYT_data_recording_check_status" datatype="html">
+        <source>Check project status</source>
+      </trans-unit>
+      <trans-unit id="HYT_data_recording_waiting_status" datatype="html">
+        <source>Recording status is being checked. Please wait...</source>
+      </trans-unit>
+      <trans-unit id="HYT_thresholds" datatype="html">
+        <source>Thresholds</source>
+      </trans-unit>
+      <trans-unit id="HYT_colorpicker_description" datatype="html">
+        <source>Choose the color that you want for the threshold line.</source>
+      </trans-unit>
+      <trans-unit id="HYT_line_description" datatype="html">
+        <source>Choose the type and thickness of the threshold line.</source>
+      </trans-unit>
+
+      <trans-unit id="HYT_start_time" datatype="html">
+        <source>Start Time</source>
+      </trans-unit>
+      <trans-unit id="HYT_end_time" datatype="html">
+        <source>End Time</source>
+      </trans-unit>
+      <trans-unit id="HYT_select_export_format" datatype="html">
+        <source>Select Export Format</source>
+      </trans-unit>
+      <trans-unit id="HYT_select_packets" datatype="html">
+        <source>Select one or more Packets</source>
+      </trans-unit>
+      <trans-unit id="HYT_count_packets_selected" datatype="html">
+        <source>Selected {{ countPackets }} packets</source>
+      </trans-unit>
+      <trans-unit id="HYT_invalid_characters" datatype="html">
+        <source>Invalid characters have been entered</source>
+      </trans-unit>
+      <trans-unit id="HYT_field_required" datatype="html">
+        <source>The field is required</source>
+      </trans-unit>
+      <trans-unit id="HYT_export_download_error" datatype="html">
+        <source>An error occurred while downloading the packet {{hPacketId}}</source>
+      </trans-unit>
+      <trans-unit id="HYT_from" datatype="html">
+        <source>From</source>
+      </trans-unit>
+       <trans-unit id="HYT_to" datatype="html">
+        <source>To</source>
       </trans-unit>
     </body>
   </file>

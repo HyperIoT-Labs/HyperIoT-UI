@@ -21,6 +21,7 @@ import { ProjectAlarmsFormComponent } from '../project-forms/project-alarms-form
 import { SummaryList } from './generic-summary-list/generic-summary-list.component';
 import { DashboardConfigService } from 'widgets';
 import {AreasFormComponent} from "../project-forms/areas-form/areas-form.component";
+import { PreviousRouteService } from 'src/app/services/previous-route.service';
 
 enum TreeStatusEnum {
   Ready,
@@ -137,6 +138,8 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
   currentPacket: number = null;
   currentDeviceName = '';
 
+  dashBackButton: boolean;
+
   constructor(
     private hProjectService: HProjectService,
     private hDeviceService: HDevicesService,
@@ -147,7 +150,8 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
     private dialog: DialogService,
     private cdRef:ChangeDetectorRef,
     private enrichmentsService: EnrichmentsService,
-    private loggerService: LoggerService
+    private loggerService: LoggerService,
+    private previousRouteService: PreviousRouteService
   ) {
     // Init Logger
     this.logger = new Logger(this.loggerService);
@@ -172,6 +176,10 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
       this.logger.debug('Current Packet ID', packetID);
       this.currentPacket = packetID;
     });
+
+    /* change button if you arrive to edit projecy page from dashboard */
+    if (this.previousRouteService.previousUrl === "/dashboards" ||
+      this.previousRouteService.previousUrl === this.previousRouteService.currentUrl) this.dashBackButton = true;
 
   }
 
@@ -720,8 +728,7 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
   /*
   / Method to verify if you can save or not the alarm
   */
-  isDisableProjectAlarmsFormComponent(e: any){
-    this.logger.debug('isDisableProjectAlarmsFormComponent', e);
+  isDisableProjectAlarmsFormComponent(e: any) {
     if ((e instanceof ProjectAlarmsFormComponent) === false) return true;
     else if (e.form.touched == false) return true;
     else if (e.form.status == 'VALID') return false;

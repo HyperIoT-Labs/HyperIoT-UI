@@ -1,5 +1,5 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import {CommonModule, KeyValuePipe} from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { ProjectsComponent } from './projects.component';
 import { ComponentsModule } from 'components';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -31,6 +31,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -78,10 +79,7 @@ import {MatListModule} from '@angular/material/list';
 import { DynamicMapUserConfiguratorComponent } from './project-forms/areas-form/dynamic-map-user-configurator/dynamic-map-user-configurator.component';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatSliderModule } from '@angular/material/slider';
-import {MatFormFieldModule} from "@angular/material/form-field";
-import {
-  ComputeFieldRuleComponent
-} from "./project-forms/packet-enrichment-form/compute-field-rule/compute-field-rule.component";
+import { ComputeFieldRuleComponent } from './project-forms/packet-enrichment-form/compute-field-rule/compute-field-rule.component';
 
 @NgModule({
   declarations: [
@@ -131,7 +129,7 @@ import {
     EventComponentContainerComponent,
     EventMqttCommandComponent ,
     AlarmEventsTableComponent,
-    ComputeFieldRuleComponent
+    ComputeFieldRuleComponent,
   ],
   imports: [
     ColorPickerModule,
@@ -163,7 +161,7 @@ import {
     MatButtonToggleModule,
     MatSliderModule,
     MatBadgeModule,
-    MatFormFieldModule,
+    MatFormFieldModule
   ],
   entryComponents: [
     AddTagModalComponent,

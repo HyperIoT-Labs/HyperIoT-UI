@@ -1,11 +1,11 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { DialogService, TimeStep } from 'components';
-import {HProjectService } from 'core';
+import { HProjectService } from 'core';
 import * as moment_ from 'moment';
 import 'moment-precise-range-plugin';
 import { TimeAxisComponent } from './time-axis/time-axis.component';
 import { DashboardEventService } from '../services/dashboard-event.service';
-import { DataExport } from './models/data-export.model';
+import { DataExport } from './models/data-export,model';
 import { DataExportComponent } from './data-export/data-export.component';
 
 const moment = moment_;

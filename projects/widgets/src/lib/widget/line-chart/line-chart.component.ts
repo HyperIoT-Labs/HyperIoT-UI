@@ -218,7 +218,7 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
     asyncScheduler.schedule(() => {
       this.setTimeSeries();
       this.setTimeChartLayout();
-    });
+    });  
   }
 
   subscribeAndInit() {
@@ -423,7 +423,7 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
 
   regressionLine(data: any, fieldName: string) {
     const regressionData: [number, number][] = data.map(d => [
-          d.timestamp.getTime(),
+          d.timestamp.getTime(),          
           parseFloat(d[fieldName])
         ]);
 
@@ -675,7 +675,7 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
 
     // Here you ONLY DRAW the trend values into chart
     if (this.widget.config.trend && this.widget.config.trend.trendActive) {
-      this.logger.debug("addTrendToChart");
+      this.logger.debug("addTrendToChart");    
       this.addTrendToChart(this.trend, this.trendValues);
     }
 

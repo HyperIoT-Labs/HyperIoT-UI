@@ -1,12 +1,11 @@
 :host {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 gridster {
-
-  background: transparent!important;
+  background-color: transparent !important;
 
   &.fixed {
     overflow: visible;
@@ -17,31 +16,30 @@ gridster {
   }
 
   gridster-item {
-    background: transparent;
+    background-color: transparent;
     box-shadow: rgb(0, 0, 0) 0px 0px 11px -4px;
     border-radius: 4px;
   }
-
 }
 
 label {
-    padding: 4px;
+  padding: 4px;
 }
 
-#no-widgets-container{
-    color: gainsboro;
+#no-widgets-container {
+  color: gainsboro;
 }
 
 #no-widgets-container .fa {
-    font-size: 6em;
-    margin-bottom: 20px;
+  font-size: 6em;
+  margin-bottom: 20px;
 }
 
 #dashbaord-changes-unsaved-label {
-    padding-bottom: 2px;
-    border-radius: 8px;
-    padding-top: 2px;
-    background-color: #ffd7005c;
+  padding-bottom: 2px;
+  border-radius: 8px;
+  padding-top: 2px;
+  background-color: #ffd7005c;
 }
 
 .loader,
@@ -54,7 +52,7 @@ label {
   height: 4em;
 }
 .loader {
-  color: #0956B6;
+  color: #0956b6;
   text-indent: -9999em;
   margin: 216px auto 0px auto;
   position: relative;
@@ -69,7 +67,7 @@ label {
 .loader:after {
   position: absolute;
   top: 0;
-  content: '';
+  content: "";
 }
 .loader:before {
   left: -1.5em;

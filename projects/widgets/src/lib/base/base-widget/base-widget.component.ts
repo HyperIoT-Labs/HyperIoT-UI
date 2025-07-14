@@ -140,23 +140,29 @@ export abstract class BaseWidgetComponent implements OnChanges, OnInit, OnDestro
           case 'INTEGER':
           case 'DOUBLE':
           case 'FLOAT': {
+
+            if (!convertOldValues) {
+              return;
+            }
+
             // TODO: inserire qui la conversione dei valori con expression
             const unitConversion = this.widget.config.fieldUnitConversions[fieldId];
-            // temp fix. packet values shouldn't be forcibly converted            
+            // temp fix. packet values shouldn't be forcibly converted
 
             if (!isNaN(parseFloat(pd[packetKey]))) {
               pd[packetKey] = parseFloat(pd[packetKey]);
             }
+
             if (unitConversion && typeof pd[packetKey] === 'number') {
               // applying unit conversion
               if (unitConversion.convertFrom !== unitConversion.convertTo) {
-                if (convertOldValues) {
-                  pd[packetKey] = convert(pd[packetKey])
-                    .from(unitConversion.convertFrom)
-                    .to(unitConversion.convertTo);
-                }
+                pd[packetKey] = convert(pd[packetKey])
+                  .from(unitConversion.convertFrom)
+                  .to(unitConversion.convertTo);
               }
+
               pd[packetKey] = +pd[packetKey];
+
               // applying approximation
               try {
                 pd[packetKey] = pd[packetKey].toFixed(unitConversion.decimals);
@@ -164,20 +170,23 @@ export abstract class BaseWidgetComponent implements OnChanges, OnInit, OnDestro
               catch (error) {
                 this.logger.error(error);
               }
+
               try {
-                if (this.widget.config.fieldCustomConversions
+                if (
+                  this.widget.config.fieldCustomConversions
                   && this.widget.config.fieldCustomConversions[fieldId]
                   && this.widget.config.fieldCustomConversions[fieldId].expression
-                  && this.widget.config.fieldCustomConversions[fieldId].expression.trim() !== '') {
+                  && this.widget.config.fieldCustomConversions[fieldId].expression.trim() !== ''
+                ) {
                   let expression: string = this.widget.config.fieldCustomConversions[fieldId].expression;
-                  for (let operator of DataSimulatorSettings.Utils
-                    .expressionOperators) {
+                  for (const operator of DataSimulatorSettings.Utils.expressionOperators) {
                     expression = expression.replace(
                       operator.regex,
                       operator.function
                     );
                   }
-                  pd[packetKey] = eval(expression.replace(/\$val/g, pd[packetKey]));
+                  const expressionAsString = expression.replace(/\$val/g, pd[packetKey]);
+                  pd[packetKey] = new Function(`return ${expressionAsString}`)();
                 }
               } catch (error) {
                 this.logger.error(error);

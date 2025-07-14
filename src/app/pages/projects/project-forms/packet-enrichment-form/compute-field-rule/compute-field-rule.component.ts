@@ -2,8 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { HPacket, HPacketField, HPacketService, HProject, Logger, LoggerService } from 'core';
 import { EnrichmentType } from '../enrichment-type.enum';
+import { DataSimulatorSettings } from 'widgets'
 import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
-import {DataSimulatorSettings} from "widgets";
 
 type Field = {
   field: Pick<HPacketField, 'id' | 'name'>;
