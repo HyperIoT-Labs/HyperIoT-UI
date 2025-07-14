@@ -34,7 +34,7 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy, OnChanges 
     thresholdActive: boolean = false;
     thresholdsForm: FormArray = this.fb.array([]);
     collapseThresold: boolean = false;
-    
+
     collapsedThresholdValues: any = {};
 
     trendActive: boolean = false;
@@ -200,7 +200,7 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy, OnChanges 
         this.selectedFields = fields;
         this.trendFields = fields;
 
-            // check content of the 2 selectsAdd commentMore actions
+        // check content of the 2 selects
         if (!this.trendSelectedFields.some(itemId => this.selectedFields.some(field => field.id === itemId))) this.trendSelectedFields = [];
     }
 
@@ -232,7 +232,7 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy, OnChanges 
                     color: control.get('line.color').value,
                     thickness: control.get('line.thickness').value,
                     type: control.get('line.type').value
-                } 
+                }
             }
         });
 
@@ -263,14 +263,14 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy, OnChanges 
         }
 
         //if collapsed, i have to assign previos values
-        else this.widget.config.threshold = this.collapsedThresholdValues;     
+        else this.widget.config.threshold = this.collapsedThresholdValues;
 
     }
 
     isChecked() {
         // if collapsed save previous values
         if (!this.thresholdActive) this.collapsedThresholdValues = this.widget.config.threshold;
-        
+
         // collapse or not
         this.collapseThresold = this.thresholdActive;
 
@@ -408,7 +408,7 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy, OnChanges 
                 thresholdFormGroup.get('line.type')?.setValue(singleRule ? LineTypes.Linear : null);
             }
         }
-        
+
         this.filterThresholds();
         if (Object.keys(this.filteredThresholds).length > 0 && !this.emptyControlFound()) {
             this.addThresholdToForm({
