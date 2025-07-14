@@ -5,7 +5,7 @@
         [useSpinner]="useSpinner" [customSettingsStatus]="pageStatus"></hyperiot-packet-select>
 
     <!-- TREND Settings -->
-     <div id="time-chart-settings" class="pt-10" *ngIf="packetPageStatus === 1 && pageStatus === 1">
+     <div id="time-chart-settings" class="pt-10" *ngIf="checkbox && pageStatus === 1 && pageStatus === 1">
             <div class="box-fields-customization-title">
                 <h3 id="title-thresholds">Trend</h3>
             </div>
