@@ -4,7 +4,7 @@ import { Area, AreaDevice, Area_Service, Logger, LoggerService } from 'core';
 import { PageStatus } from '../../../models/pageStatus';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { HytTreeViewProjectComponent, MapItemAction, MapTypeKey } from 'components';
+import { HytTreeViewProjectComponent, MapTypeKey, MapItemAction } from 'components';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
