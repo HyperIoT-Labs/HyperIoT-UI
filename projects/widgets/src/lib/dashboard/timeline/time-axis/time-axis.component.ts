@@ -266,7 +266,8 @@ export class TimeAxisComponent implements AfterViewInit {
       .append('svg')
       .attr('id', 'containerSvg')
       .attr('width', this.contentWidth + this.margin.left + this.margin.right)
-      .attr('height', this.contentHeight + this.margin.top + this.margin.bottom + 50);
+      .attr('height', this.contentHeight + this.margin.top + this.margin.bottom + 50)
+      .style('user-select', 'none');
 
     const xAxis = g => {
       this.svgAxis = g

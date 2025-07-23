@@ -2,7 +2,7 @@ import { Component, Injector, OnDestroy, OnInit, Optional } from '@angular/core'
 import { BaseGenericComponent } from '../../base/base-generic/base-generic.component';
 import { PlotlyService } from 'angular-plotly.js';
 import { LoggerService, Logger, DataChannel, DataPacketFilter, PacketData } from 'core';
-import { asyncScheduler, bufferTime, filter, map, Subscription } from 'rxjs';
+import { asyncScheduler, bufferTime, concatMap, filter, map, reduce, scan, startWith, Subject, Subscription, switchMap, withLatestFrom } from 'rxjs';
 import { WidgetAction } from '../../base/base-widget/model/widget.model';
 import { linearRegression } from 'simple-statistics';
 import { DashboardEventService } from '../../dashboard/services/dashboard-event.service';
@@ -45,7 +45,7 @@ export class TrendGaugeChartComponent extends BaseGenericComponent implements On
 
   private offControllerSubscription: Subscription;
 
-  get plotyInstance() {
+  get plotlyInstance() {
     return this.plotly.getInstanceByDivId(`widget-${this.widget.id}${this.isToolbarVisible}`);
   }
 
@@ -75,6 +75,8 @@ export class TrendGaugeChartComponent extends BaseGenericComponent implements On
 
   protected logger: Logger;
 
+  readonly accumulator = [];
+
   constructor(
     injector: Injector,
     public plotly: PlotlyService,
@@ -103,10 +105,16 @@ export class TrendGaugeChartComponent extends BaseGenericComponent implements On
 
   ngOnDestroy(): void {
     this.offControllerSubscription?.unsubscribe();
+
+    this.dataSubscription?.unsubscribe();
+    this.dataService?.removeDataChannel(this.channelId);
+
+    this.ngOnDestroy();
   }
 
   private async reset(): Promise<void> {
     this.lastValue = undefined;
+    this.accumulator.length = 0;
     await this.renderData(this.lastValue);
   }
 
@@ -162,7 +170,6 @@ export class TrendGaugeChartComponent extends BaseGenericComponent implements On
    */
   private slope(packetData: PacketData[]): number {
     const regressionData = packetData
-      .filter((datum) => datum[this.field])
       .map((datum, index) => [
         index,
         parseFloat(datum[this.field])
@@ -178,7 +185,7 @@ export class TrendGaugeChartComponent extends BaseGenericComponent implements On
    * @param packetData
    */
   private async renderData(value: number | string): Promise<void> {
-    const graph = this.plotyInstance;
+    const graph = this.plotlyInstance;
     if (graph) {
       const Plotly = await this.plotly.getPlotly();
 
@@ -193,7 +200,7 @@ export class TrendGaugeChartComponent extends BaseGenericComponent implements On
           symbol = '< ';
         }
 
-        this.lastValue = symbol + this.decimalPipe.transform(currentValue, '1.1-1');
+        this.lastValue = symbol + this.decimalPipe.transform(currentValue, '1.1-2');
         if (this.lastValue === 'null') {
           this.lastValue = 'ND';
         }
@@ -229,7 +236,7 @@ export class TrendGaugeChartComponent extends BaseGenericComponent implements On
       value: undefined,
       title: {
         text: (() => {
-          const title = this.widget.config.title.text || this.labelField;
+          const title = this.labelField;
           return title.charAt(0).toUpperCase() + title.slice(1);
         })(),
         font: {
@@ -287,7 +294,7 @@ export class TrendGaugeChartComponent extends BaseGenericComponent implements On
     this.subscribeDataChannel();
 
     const resizeObserver = new ResizeObserver((entries) => {
-      const graph = this.plotyInstance;
+      const graph = this.plotlyInstance;
       if (graph) {
         this.plotly.resize(graph);
 
@@ -300,7 +307,7 @@ export class TrendGaugeChartComponent extends BaseGenericComponent implements On
       }
     });
 
-    resizeObserver.observe(this.plotyInstance);
+    resizeObserver.observe(this.plotlyInstance);
   }
 
   private subscribeDataChannel(): void {
@@ -328,11 +335,22 @@ export class TrendGaugeChartComponent extends BaseGenericComponent implements On
         map((dataChunk) => dataChunk.data),
         bufferTime(this.widget.config.refreshIntervalMillis || 0),
         filter((data) => data.length !== 0),
-        map((data) => [].concat.apply([], data))
+        map((data) => [].concat.apply([], data)),
+        withLatestFrom(this.dataChannel.controller.$totalCount),
       ).subscribe({
-        next: async (eventData) => {
-          this.loadingOfflineData = false;
-          await this.computePacketData(eventData);
+        next: async ([eventData, totalCount]) => {
+          this.loadingOfflineData = true;
+
+          this.accumulator.push(...eventData);
+
+          if (totalCount === this.accumulator.length) {
+            this.loadingOfflineData = false;
+
+            const filtered = this.accumulator.filter((datum) => datum?.[this.field]);
+            await this.computePacketData(filtered);
+
+            this.accumulator.length = 0;
+          }
         }
       });
 
@@ -340,7 +358,7 @@ export class TrendGaugeChartComponent extends BaseGenericComponent implements On
       this.logger.debug("subscribeAndInit - OFFLINE Service");
       this.offControllerSubscription = this.dataChannel.controller.$totalCount
         .subscribe({
-          next: async (res) => {
+          next: async (res: number) => {
             if (this.isToolbarVisible) {
               if (res > 0) {
                 this.dataService.loadAllRangeData(this.channelId);

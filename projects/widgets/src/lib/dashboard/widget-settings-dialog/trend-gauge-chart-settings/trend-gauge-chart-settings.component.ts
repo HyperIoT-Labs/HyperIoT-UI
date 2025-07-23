@@ -25,7 +25,7 @@ export class TrendGaugeChartSettingsComponent implements OnInit, OnDestroy {
   } as const;
 
   subscription: any;
-  selectedFields = [];
+  selectedFields;
 
   gaugeForm: FormGroup;
 
@@ -136,6 +136,9 @@ export class TrendGaugeChartSettingsComponent implements OnInit, OnDestroy {
     });
 
     this.widget.config.steps = steps;
+
+    const field = this.selectedFields[0];
+    this.widget.config.packetFields = [{[field.id]: field.name}]
 
     const { text, fontSize } = this.title.value;
     this.widget.config.title = { text, fontSize };

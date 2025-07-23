@@ -28,7 +28,7 @@ export interface ConfigModel {
     internalConfig?: InternalConfigModel;
     svgImage?: string;
     packetId?: number; // TODO più pacchetti???
-    packetFields?: string[];  // TODO FIX use proper type (correct type should be { [fieldId: number]: string; })
+    packetFields?: any[];  // TODO FIX use proper type (correct type should be { [fieldId: number]: string; })
     fieldAliases?: FieldAliases;
     fieldTypes?: FieldTypes;
     fieldFileMimeTypes?: FieldFileMimeTypes;

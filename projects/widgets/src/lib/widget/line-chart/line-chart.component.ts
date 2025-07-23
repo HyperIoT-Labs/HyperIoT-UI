@@ -1,10 +1,11 @@
 import {
   Component,
   Injector,
+  OnDestroy,
   OnInit,
   Optional,
   ViewChild,
-} from "@angular/core";
+} from '@angular/core';
 import {
   DataChannel,
   DataPacketFilter,
@@ -12,38 +13,43 @@ import {
   LoggerService,
   PacketData,
   RuleEngineService,
-} from "core";
-import { PlotlyComponent, PlotlyService } from "angular-plotly.js";
+} from 'core';
+import { PlotlyComponent, PlotlyService } from 'angular-plotly.js';
 import {
   Subscription,
   asyncScheduler,
   bufferTime,
   filter,
   map,
-} from "rxjs";
+  withLatestFrom,
+} from 'rxjs';
 
-import { BaseChartComponent } from "../../base/base-chart/base-chart.component";
-import { ConfigButtonWidget, Threshold, Trend, WidgetAction } from "../../base/base-widget/model/widget.model";
-import { TimeSeries } from "../../data/time-series";
-import { ServiceType } from "../../service/model/service-type";
-import { DashboardEventService } from "../../dashboard/services/dashboard-event.service";
-import { DashboardEvent } from "../../dashboard/services/dashboard-event.model";
+import { BaseChartComponent } from '../../base/base-chart/base-chart.component';
+import { ConfigButtonWidget, Threshold, Trend, WidgetAction } from '../../base/base-widget/model/widget.model';
+import { TimeSeries } from '../../data/time-series';
+import { ServiceType } from '../../service/model/service-type';
+import { DashboardEventService } from '../../dashboard/services/dashboard-event.service';
+import { DashboardEvent } from '../../dashboard/services/dashboard-event.model';
 
 import { linearRegression, linearRegressionLine } from 'simple-statistics';
 
+type TrendField = {
+  index: number;
+  trendValue: number;
+}
+
 @Component({
-  selector: "hyperiot-line-chart",
-  templateUrl: "./line-chart.component.html",
+  selector: 'hyperiot-line-chart',
+  templateUrl: './line-chart.component.html',
   styleUrls: [
-    "../../../../../../src/assets/widgets/styles/widget-commons.css",
-    "./line-chart.component.css",
+    '../../../../../../src/assets/widgets/styles/widget-commons.css',
+    './line-chart.component.css',
   ],
 })
-export class LineChartComponent extends BaseChartComponent implements OnInit {
-  @ViewChild("lineChartPlotly") lineChartPlotly: PlotlyComponent;
+export class LineChartComponent extends BaseChartComponent implements OnInit, OnDestroy {
+  @ViewChild('lineChartPlotly') lineChartPlotly: PlotlyComponent;
   lowerBound = 0;
   sideMarginGap = 0.12;
-  totalLength = 0;
   fieldsName: any[] = [];
   get initToolbarConfig(): ConfigButtonWidget {
     return {
@@ -69,22 +75,20 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
 
   thresholds: Threshold[] = [];
   trend: Trend = null;
-  trendValues: any;
+  trendValues: TrendField[] = [];
   trendIndex: number;
-
-  shapeIndices: number[] = [];
 
   protected logger: Logger;
 
   private _chartConfig = {
     scrollZoom: true,
-    displayModeBar: "hover",
+    displayModeBar: 'hover',
     displaylogo: false,
     modeBarButtonsToRemove: [
-      "hoverClosestCartesian",
-      "hoverCompareCartesian",
-      "toggleSpikelines",
-      "autoScale2d",
+      'hoverClosestCartesian',
+      'hoverCompareCartesian',
+      'toggleSpikelines',
+      'autoScale2d',
     ],
     modeBarButtonsToAdd: [],
     editable: false,
@@ -94,6 +98,8 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
   get chartConfig() {
     return this._chartConfig;
   }
+
+  readonly accumulator = [];
 
   constructor(
     injector: Injector,
@@ -116,8 +122,8 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
         this._chartConfig.modeBarButtonsToAdd.push({
           name: $localize`:@@HYT_plotly_fit_to_timeline:Fit to timeline`,
           icon: plotly.Icons.autoscale,
-          click: (el) => {
-            this.fitToTimeline(plotly, el);
+          click: async (el) => {
+            await this.fitToTimeline(plotly, el);
           },
         });
       });
@@ -130,67 +136,66 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
 
         if (res == DashboardEvent.Timeline.NEW_RANGE) {
           this.reset();
-          this.newRange();
+          await this.newRange();
         }
 
         if (res == DashboardEvent.Timeline.REFRESH) {
           this.reset();
-          this.newRange();
+          await this.newRange();
         }
       });
     }
   }
 
-  async fitToTimeline(plotly?: any, element?: PlotlyComponent) {
-    if (!plotly) {
-      const plotly = await this.plotly.getPlotly();
-      const graph = this.plotly.getInstanceByDivId(
-        `widget-${this.widget.id}${this.isToolbarVisible}`
-      );
+  ngOnDestroy(): void {
+    this.offControllerSubscription?.unsubscribe();
+    
+    this.dataSubscription?.unsubscribe();
+    this.dataService?.removeDataChannel(this.channelId);
 
-      plotly.relayout(graph, {
-        "xaxis.autorange": true,
-        "yaxis.autorange": true,
-      });
-      if (!this.dataChannel.controller.rangeLoaded) {
-        this.dataService.loadAllRangeData(this.channelId);
-      }
-    } else {
+    this.ngOnDestroy();
+  }
+
+  private async fitToTimeline(plotly?: any, element?: PlotlyComponent): Promise<void> {
+    if (plotly) {
       plotly.relayout(element, {
-        "xaxis.autorange": true,
-        "yaxis.autorange": true,
+        'xaxis.autorange': true,
+        'yaxis.autorange': true,
       });
-      if (!this.dataChannel.controller.rangeLoaded) {
-        this.dataService.loadAllRangeData(this.channelId);
-      }
+    } else {
+      await this.newRange();
+    }
+
+    if (!this.dataChannel.controller.rangeLoaded) {
+      this.dataService.loadAllRangeData(this.channelId);
     }
   }
 
-  reset() {
+  private reset() {
     this.lastOfflineDate = null;
     this.lastRequestedDate = null;
     this.allData = [];
   }
 
-  async newRange() {
+  private async newRange(): Promise<void> {
     const plotly = await this.plotly.getPlotly();
     const graph = this.plotly.getInstanceByDivId(
       `widget-${this.widget.id}${this.isToolbarVisible}`
     );
     plotly?.relayout(graph, {
-      "xaxis.autorange": true,
-      "yaxis.autorange": true,
+      'xaxis.autorange': true,
+      'yaxis.autorange': true,
     });
   }
 
-  configure() {
+  configure(): void {
     this.graph.layout = {};
     this.graph.data = [];
     this.allData = [];
 
     super.removeSubscriptionsAndDataChannels();
     if (!this.serviceType) {
-      this.logger.error("TYPE SERVICE UNDEFINED");
+      this.logger.error('TYPE SERVICE UNDEFINED');
       return;
     }
 
@@ -209,7 +214,7 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
     }
     this.isConfigured = true;
 
-    if (this.widget.config.threshold && this.widget.config.threshold.thresholdActive) {
+    if (this.widget.config.threshold?.thresholdActive) {
       this.thresholds = this.widget.config.threshold.thresholds;
       this.retrieveThresholds();
     }
@@ -218,14 +223,16 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
     asyncScheduler.schedule(() => {
       this.setTimeSeries();
       this.setTimeChartLayout();
-    });  
+    });
   }
 
-  subscribeAndInit() {
-    this.logger.debug("subscribeAndInit");
+  async subscribeAndInit(): Promise<void> {
+    this.logger.debug('subscribeAndInit');
+
     this.subscribeDataChannel();
+
     if (this.serviceType === ServiceType.ONLINE) {
-      this.computePacketData(this.initData, this.isToolbarVisible);
+      await this.computePacketData(this.initData, this.isToolbarVisible);
     }
 
     const resizeObserver = new ResizeObserver((entries) => {
@@ -243,8 +250,8 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
     );
   }
 
-  subscribeDataChannel() {
-    this.logger.debug("subscribeDataChannel");
+  private subscribeDataChannel(): void {
+    this.logger.debug('subscribeDataChannel');
     const dataPacketFilter = new DataPacketFilter(
       this.widget.config.packetId,
       this.widget.config.packetFields,
@@ -262,43 +269,79 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
       this.dataChannel = this.dataService.copyDataChannel(this.channelId, -this.channelId);
     }
 
-    this.dataSubscription = this.dataChannel.subject
-      .pipe(
-        map((dataChunk) => dataChunk.data),
-        bufferTime(this.widget.config.refreshIntervalMillis || 0),
-        filter((data) => data.length !== 0),
-        map((data) => [].concat.apply([], data))
-      )
-      .subscribe((eventData) => {
-        this.computePacketData(eventData);
-      });
+    if (this.widget.config.trend?.trendActive) {
+      this.dataSubscription = this.dataChannel.subject
+        .pipe(
+          map((dataChunk) => dataChunk.data),
+          bufferTime(this.widget.config.refreshIntervalMillis || 0),
+          filter((data) => data.length !== 0),
+          map((data) => [].concat.apply([], data)),
+          withLatestFrom(this.dataChannel.controller.$totalCount),
+        ).subscribe({
+          next: async ([eventData, totalCount]) => {
+            this.loadingOfflineData = true;
 
-    if (this.serviceType === ServiceType.OFFLINE) {
-      this.logger.debug("subscribeAndInit - OFFLINE Service");
-      this.offControllerSubscription =
-        this.dataChannel.controller.$totalCount.subscribe((res) => {
-          this.totalLength = res;
-          if (this.isToolbarVisible) {
-            this.allData = [];
-            this.graph.data.forEach((tsd) => {
-              (tsd.x = []), (tsd.y = []);
-            });
-            if (res !== 0) {
-              if (this.widget.config.fitToTimeline) {
-                this.fitToTimeline();
-              } else {
-                this.dataRequest();
-              }
+            this.accumulator.push(...eventData);
+
+            if (totalCount === this.accumulator.length) {
+              this.loadingOfflineData = false;
+
+              const filteredEvent = this.accumulator.filter(obj => {
+                return Object.values(this.widget.config.packetFields).some(prop => obj.hasOwnProperty(prop));
+              });
+
+              await this.computePacketData(filteredEvent);
+
+              this.accumulator.length = 0;
             }
-          } else { // if fullscreen
-            this.computePacketData(this.initData, this.isToolbarVisible);
           }
         });
+    } else {
+      this.dataSubscription = this.dataChannel.subject
+        .pipe(
+          map((dataChunk) => dataChunk.data),
+          bufferTime(this.widget.config.refreshIntervalMillis || 0),
+          filter((data) => data.length !== 0),
+          map((data) => [].concat.apply([], data))
+        )
+        .subscribe(async (eventData: PacketData[]) => {
+          const filteredEvent = eventData.filter(obj => {
+            return Object.values(this.widget.config.packetFields).some(prop => obj.hasOwnProperty(prop));
+          });
+
+          await this.computePacketData(filteredEvent);
+        });
+    }
+
+    if (this.serviceType === ServiceType.OFFLINE) {
+      this.logger.debug('subscribeAndInit - OFFLINE Service');
+      this.offControllerSubscription =
+        this.dataChannel.controller.$totalCount
+          .subscribe(async (res: number) => {
+            if (this.isToolbarVisible) {
+              if (res > 0) {
+                this.allData = [];
+
+                this.graph.data.forEach((tsd) => {
+                  tsd.x = [];
+                  tsd.y = [];
+                });
+
+                if (this.widget.config.fitToTimeline || this.widget.config.trend?.trendActive) {
+                  await this.fitToTimeline();
+                } else {
+                  this.dataRequest();
+                }
+              }
+            } else { // if fullscreen
+              await this.computePacketData(this.initData, this.isToolbarVisible);
+            }
+          });
     }
   }
 
-  async computePacketData(packetData: PacketData[], convertOldValues = true) {
-    this.logger.debug("computePacketData", packetData);
+  async computePacketData(packetData: PacketData[], convertOldValues = true): Promise<void> {
+    this.logger.debug('computePacketData', packetData);
 
     if (packetData.length === 0) {
       return;
@@ -309,11 +352,12 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
     super.computePacketData(packetData, convertOldValues);
 
     // Here you ONLY CALCULATE the trend values
-    if (this.widget.config.trend && this.widget.config.trend.trendActive) {
+    if (this.widget.config.trend?.trendActive) {
       this.trend = this.widget.config.trend.trend;
       this.calculateTrend(this.allData);
     }
 
+    this.logger.debug('convertAndBufferData');
     packetData.forEach((datum) => {
       if (
         new Date(datum.timestamp) > this.lastOfflineDate ||
@@ -321,6 +365,7 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
       ) {
         this.lastOfflineDate = new Date(datum.timestamp);
       }
+
       this.convertAndBufferData(datum);
     });
 
@@ -328,6 +373,8 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
     this.loadingOfflineData = false;
     if (this.serviceType === ServiceType.OFFLINE) {
       this.lowerBound++;
+
+      this.logger.debug('updateDataRequest');
       this.updateDataRequest();
     }
   }
@@ -335,14 +382,17 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
   /*
     Retrive each threshold and save the corresponding rule
   */
-  retrieveThresholds() {
-    this.shapeIndices = [];
+  private retrieveThresholds(): void {
     this.thresholds.forEach(threshold => {
       this.ruleService.findRule(parseInt(threshold.id)).subscribe({
         next: (data) => {
           threshold.rule = data.ruleDefinition;
-          if (!threshold.rule) return;
-          const ruleDefinition = threshold.rule.replace(/"/g, '').trim();
+
+          if (!threshold.rule) {
+            return;
+          }
+
+          const ruleDefinition = threshold.rule.replace(/'/g, '').trim();
           const ruleArray: string[] = ruleDefinition.match(/[^AND|OR]+(AND|OR)?/g).map(x => x.trim());
           this.addThresholdToChart(threshold, ruleArray, data.name);
         },
@@ -353,8 +403,8 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
     });
   }
 
-  setTimeChartLayout() {
-    this.logger.debug("setTimeChartLayout");
+  private setTimeChartLayout(): void {
+    this.logger.debug('setTimeChartLayout');
     this.chartData.forEach((timeSeries, i) => {
       const fieldName = timeSeries.label;
       const a = i + 1;
@@ -367,36 +417,39 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
         this.graph.layout[`yaxis${a}`] = {
           title: fieldName,
           autorange: true,
-          anchor: "free",
-          overlaying: "y",
-          side: "right",
+          anchor: 'free',
+          overlaying: 'y',
+          side: 'right',
           position: 1 - i * this.sideMarginGap,
         };
       }
+
       const tsd = {
         name: fieldName,
         x: [],
         y: [],
-        yaxis: "y" + (i + 1),
-        type: "",
+        yaxis: 'y' + (i + 1),
+        type: '',
       };
+
       Object.assign(tsd, this.defaultSeriesConfig);
       this.graph.data.push(tsd);
     });
 
     // Set up legend and other layout settings
     this.graph.layout.showlegend = true;
+
     this.graph.layout.legend = {
-      orientation: "h",
+      orientation: 'h',
       x: 0.25,
       y: 1,
-      traceorder: "normal",
+      traceorder: 'normal',
       font: {
-        family: "sans-serif",
+        family: 'sans-serif',
         size: 10,
-        color: "#000",
+        color: '#000',
       },
-      bgcolor: "#FFFFFF85",
+      bgcolor: '#FFFFFF85',
       borderwidth: 0,
     };
 
@@ -404,9 +457,13 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
       size: 9,
     };
     this.graph.layout.title = null;
-    this.graph.layout.dragmode = "pan";
+
+    this.graph.layout.dragmode = 'pan';
+
     this.graph.layout.responsive = true;
+
     this.graph.layout.autosize = true;
+
     this.graph.layout.margin = {
       l: 24,
       r: 24,
@@ -414,89 +471,92 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
       t: 0,
       pad: 0,
     };
+
     this.graph.layout.xaxis = {
-      type: "date",
+      type: 'date',
       showgrid: false,
       range: [],
     };
   }
 
-  regressionLine(data: any, fieldName: string) {
-    const regressionData: [number, number][] = data.map(d => [
-          d.timestamp.getTime(),          
-          parseFloat(d[fieldName])
-        ]);
+  private regressionLine(data: PacketData[], fieldName: string): TrendField[] {
+    const regressionData = data
+      .map((datum, index) => [
+        index,
+        parseFloat(datum[fieldName])
+      ]);
 
     const lr = linearRegression(regressionData); // { m, b }
     const line = linearRegressionLine(lr);
     const regressionLinePoints: [number, number][] = regressionData.map(([x]) => [x, line(x)]);
-    const readableLine = regressionLinePoints.map(([x, y]) => ({
-      timestamp: new Date(x),
+
+    return regressionLinePoints.map(([x, y]) => ({
+      index: x,
       trendValue: y
     }));
-
-    return readableLine
   }
 
-  calculateTrend(data: any) {
+  private calculateTrend(data: PacketData[]): void {
     this.trendValues = this.regressionLine(data, this.trend.fieldName);
   }
 
-  addTrendToChart(trend: Trend, trendData: any) {
-    // Through any two points, there is exactly one straight line
-    let y0 = trendData[0].trendValue;
-    let y1 = trendData[1].trendValue;
-
-    if (!this.graph.layout.shapes) this.graph.layout.shapes = [];
+  private addTrendToChart(trend: Trend, trendData: TrendField[]): void {
+    if (!this.graph.layout.shapes) {
+      this.graph.layout.shapes = [];
+    }
 
     //rimuovo vecchio trend
     this.graph.layout.shapes.splice(this.trendIndex, 1);
 
-    this.graph.layout.shapes.push(
-          {
-            type: "line",
-            xref: "paper",
-            x0: 0,
-            x1: 1,
-            yref: "y",
-            y0: y0,
-            y1: y1,
-            line: {
-              color: trend.line.color,
-              width: trend.line.thickness,
-              dash: this.getLineDash(trend.line.type)
-            },
-          }
-        );
+    this.graph.layout.shapes.push({
+      type: 'line',
+      xref: 'paper',
+
+      // Through any two points, there is exactly one straight line        
+      x0: 0,
+      y0: trendData[0].trendValue,
+
+      x1: 1,
+      y1: trendData[1].trendValue,
+
+      yref: 'y',
+      line: {
+        color: trend.line.color,
+        width: trend.line.thickness,
+        dash: this.getLineDash(trend.line.type)
+      },
+    });
 
     // update current index
     this.trendIndex = this.graph.layout.shapes.length - 1;
   }
 
-  addThresholdToChart(threshold: Threshold, ruleArray: string[], ruleName: string) {
+  private addThresholdToChart(threshold: Threshold, ruleArray: string[], ruleName: string): void {
     if (!this.graph.layout.shapes) this.graph.layout.shapes = [];
     /* TODO atm we only handle  */
-    if (ruleArray.length > 2) return;
+    if (ruleArray.length > 2) {
+      return;
+    }
+
     if (ruleArray.length === 1) {
       this.addSingleThreshold(ruleArray[0], threshold);
     } else if (ruleArray.length === 2 && ruleArray[0].includes('AND')) {
-      let values = [];
+      const values = [];
+
       ruleArray.forEach(rule => {
-        const tempSplitted = rule.split(' ').filter(i => i);
-        const value = tempSplitted.length > 1 ? tempSplitted[2].toLowerCase() : "";
-        if (value === "") return;
-        values.push(value);
-      })
+        this.retrieveRuleValues(rule, values);
+      });
 
       this.graph.layout.shapes.push(
         {
-          type: "rect",
-          xref: "paper",
+          type: 'rect',
+          xref: 'paper',
           x0: 0,
-          x1: 1,
-          yref: "y",
           y0: values[0],
+
+          x1: 1,
           y1: values[1],
+          yref: 'y',
           fillcolor: threshold.line.color,
           line: {
             width: 0,
@@ -505,119 +565,130 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
       );
     } else {
       for (let i = 0; i < ruleArray.length; i++) {
-        if (ruleArray[i].includes('OR') || !(ruleArray[i].includes('OR') && ruleArray[i].includes('AND'))) {
+        if (
+          ruleArray[i].includes('OR') ||
+          !(ruleArray[i].includes('OR') && ruleArray[i].includes('AND'))
+        ) {
           this.addSingleThreshold(ruleArray[i], threshold);
         } else {
-          let values = [];
+          const values: number[] = [];
+
           this.retrieveRuleValues(ruleArray[i], values);
           this.retrieveRuleValues(ruleArray[i++], values);
 
           this.graph.layout.shapes.push(
             {
-              type: "rect",
-              xref: "paper",
+              type: 'rect',
+              xref: 'paper',
               x0: 0,
-              x1: 1,
-              yref: "y",
               y0: values[0],
+
+              x1: 1,
               y1: values[1],
+              yref: 'y',
               fillcolor: threshold.line.color,
               line: {
                 width: 0,
               },
             }
           );
-
-          const shapeIndex: number = this.graph.layout.shapes.length;
-          this.shapeIndices.push(shapeIndex);
         }
       }
     }
     //this.addScatterTrace(threshold, ruleName);
   }
 
-  addScatterTrace(threshold: Threshold, ruleName: string) {
+  private addScatterTrace(threshold: Threshold, ruleName: string): void {
     this.graph.data.push({
       x: [null],
       y: [null],
-      mode: "markers",
+      mode: 'markers',
       marker: {
         color: threshold.line.color,
         size: 12
       },
       name: ruleName,
       showlegend: true,
-      hoverinfo: 'skip',
-      shapeIndices: this.shapeIndices
+      hoverinfo: 'skip'
     });
   }
 
-  retrieveRuleValues(rule, values) {
-    const tempSplitted = rule.split(' ').filter(i => i);
-    const value = tempSplitted.length > 1 ? tempSplitted[2].toLowerCase() : "";
-    if (value === "") return;
-    values.push(value);
-  }
+  private retrieveRuleValues(rule: string, values: number[]): void {
+    const tempSplitted = rule.split(' ');
 
+    const value = tempSplitted.length > 1
+      ? parseFloat(tempSplitted[2].replace(/"/g, ''))
+      : undefined;
 
-  addSingleThreshold(rule, threshold: Threshold) {
-    const tempSplitted = rule.split(' ').filter(i => i);
-    const value = tempSplitted.length > 1 ? tempSplitted[2].toLowerCase() : "";
-    if (value === "") return;
-    this.graph.layout.shapes.push(
-      {
-        type: "line",
-        xref: "paper",
-        x0: 0,
-        x1: 1,
-        yref: "y",
-        y0: value,
-        y1: value,
-        line: {
-          color: threshold.line.color,
-          width: threshold.line.thickness,
-          dash: this.getLineDash(threshold.line.type)
-        },
-      }
-    );
-    const shapeIndex: number = this.graph.layout.shapes.length;
-    this.shapeIndices.push(shapeIndex);
-  }
-
-  getLineDash(lineType: string): string {
-    switch (lineType) {
-      case "linear":
-        return "solid";
-      case "dash":
-        return "dash";
-      case "dot":
-        return "dot";
-      default:
-        return "solid";
+    if (value) {
+      values.push(value);
     }
   }
 
-  setTimeSeries(): void {
-    this.logger.debug("setTimeSeries");
-    this.chartData = [];
-    Object.keys(this.widget.config.packetFields).forEach((fieldId) => {
-      this.chartData.push(
-        new TimeSeries(this.widget.config.packetFields[fieldId], this.widget.config.fieldAliases[fieldId])
+  private addSingleThreshold(rule, threshold: Threshold): void {
+    const tempSplitted = rule.split(' ');
+
+    const value = tempSplitted.length > 1
+      ? parseFloat(tempSplitted[2].replace(/"/g, ''))
+      : undefined;
+
+    if (value) {
+      this.graph.layout.shapes.push(
+        {
+          type: 'line',
+          xref: 'paper',
+          x0: 0,
+          y0: value,
+
+          x1: 1,
+          y1: value,
+          yref: 'y',
+          line: {
+            color: threshold.line.color,
+            width: threshold.line.thickness,
+            dash: this.getLineDash(threshold.line.type)
+          },
+        }
       );
-    });
+    }
   }
 
-  async renderBufferedData() {
-    this.logger.debug("renderBufferedData");
+  private getLineDash(lineType: string): string {
+    switch (lineType) {
+      case 'dash':
+        return 'dash';
+
+      case 'dot':
+        return 'dot';
+
+      case 'linear':
+      default:
+        return 'solid';
+    }
+  }
+
+  private setTimeSeries(): void {
+    this.logger.debug('setTimeSeries');
+    this.chartData = Object
+      .keys(this.widget.config.packetFields)
+      .map((fieldId) => {
+        return new TimeSeries(this.widget.config.packetFields[fieldId], this.widget.config.fieldAliases[fieldId])
+      });
+  }
+
+  private async renderBufferedData(): Promise<void> {
+    this.logger.debug('renderBufferedData');
     const Plotly = await this.plotly.getPlotly();
     const graph = this.plotly.getInstanceByDivId(
       `widget-${this.widget.id}${this.isToolbarVisible}`
     ); // TODO change isToolbarVisible
     if (graph) {
       if (this.serviceType === ServiceType.OFFLINE) {
-        graph.on("plotly_relayout", (eventdata) => {
-          if (eventdata["xaxis.range[1]"]) {
-            this.lastRequestedDate = new Date(eventdata["xaxis.range[1]"]);
+        graph.on('plotly_relayout', (eventdata) => {
+          if (eventdata['xaxis.range[1]']) {
+            this.lastRequestedDate = new Date(eventdata['xaxis.range[1]']);
+
+            this.logger.debug('updateDataRequest');
             this.updateDataRequest();
           }
         });
@@ -626,56 +697,49 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
     }
   }
 
-  convertAndBufferData(ed: PacketData) {
-    this.logger.debug("convertAndBufferData");
-    Object.keys(ed).forEach((k) => {
-      if (k !== "timestamp") {
-        if (this.chartData.some((x) => x.name === k)) {
-          this.bufferData(
-            this.chartData.find((x) => x.name === k),
-            ed.timestamp,
-            ed[k]
-          );
-        }
+  private convertAndBufferData(packetData: PacketData): void {
+    Object.keys(packetData).forEach((key) => {
+      if (key !== 'timestamp' && this.chartData.some(({ name }) => name === key)) {
+        this.bufferData(
+          this.chartData.find(({ name }) => name === key),
+          packetData.timestamp,
+          packetData[key]
+        );
       }
     });
   }
 
   // OFFLINE
-  dataRequest() {
-    this.logger.debug("dataRequest");
+  private dataRequest(): void {
+    this.logger.debug('dataRequest');
     if (this.loadingOfflineData || this.dataChannel?.controller.rangeLoaded) {
       return;
     }
-    this.logger.debug("dataRequest triggered");
+    this.logger.debug('dataRequest triggered');
     this.loadingOfflineData = true;
 
     this.dataService.loadNextData(this.channelId);
   }
 
-  isLoadingData() {
+  isLoadingData(): boolean {
     if (this.dataChannel?.controller.rangeLoaded) {
       return false;
     }
-    return (
-      this.dataChannel?.controller.isLoadAllRangeDataRunning ||
-      this.loadingOfflineData
-    );
+    return this.dataChannel?.controller.isLoadAllRangeDataRunning
+      || this.loadingOfflineData;
   }
 
-  noRangeSelected() {
+  noRangeSelected(): boolean {
     return (
       this.serviceType === ServiceType.OFFLINE &&
-      !this.dataService["isRangeSelected"]
+      !this.dataService['isRangeSelected']
     );
   }
 
-  updateDataRequest() {
-    this.logger.debug("updateDataRequest");
-
+  private updateDataRequest(): void {
     // Here you ONLY DRAW the trend values into chart
-    if (this.widget.config.trend && this.widget.config.trend.trendActive) {
-      this.logger.debug("addTrendToChart");    
+    if (this.widget.config.trend?.trendActive && this.trendValues.length > 0) {
+      this.logger.debug('addTrendToChart');
       this.addTrendToChart(this.trend, this.trendValues);
     }
 
@@ -691,37 +755,30 @@ export class LineChartComponent extends BaseChartComponent implements OnInit {
   }
 
   play(): void {
-    this.logger.debug("play");
+    this.logger.debug('play');
     this.dataChannel.controller.play();
   }
 
   pause(): void {
-    this.logger.debug("pause");
+    this.logger.debug('pause');
     this.dataChannel.controller.pause();
   }
 
-  onToolbarAction(action: string) {
+  onToolbarAction(action: string): void {
     const widgetAction: WidgetAction = { widget: this.widget, action };
     switch (action) {
-      case "toolbar:play":
+      case 'toolbar:play':
         this.play();
         break;
-      case "toolbar:pause":
+      case 'toolbar:pause':
         this.pause();
         break;
-      case "toolbar:fullscreen":
+      case 'toolbar:fullscreen':
         widgetAction.value = [...this.allData];
         break;
     }
 
     this.widgetAction.emit(widgetAction);
-  }
-
-  removeSubscriptionsAndDataChannels() {
-    if (this.dataSubscription && this.dataService) {
-      this.dataSubscription.unsubscribe();
-      this.dataService.removeDataChannel(this.channelId);
-    }
   }
 
 }
