@@ -212,7 +212,7 @@ export class PacketSelectComponent implements OnInit, OnChanges {
         const field = this.hPacketFieldsHandlerService.findFieldFromPacketFieldsTree(this.selectedPacket, pf.id);
         this.widget.config.fieldTypes[field.id] = field.type;
       });
-      this.logger.debug('Saving widget congiguration:', this.widget.config);
+      this.logger.debug('Saving widget configuration:', this.widget.config);
     }
   }
 

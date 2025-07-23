@@ -149,7 +149,7 @@ export class LineChartComponent extends BaseChartComponent implements OnInit, On
 
   ngOnDestroy(): void {
     this.offControllerSubscription?.unsubscribe();
-    
+
     this.dataSubscription?.unsubscribe();
     this.dataService?.removeDataChannel(this.channelId);
 
@@ -384,22 +384,30 @@ export class LineChartComponent extends BaseChartComponent implements OnInit, On
   */
   private retrieveThresholds(): void {
     this.thresholds.forEach(threshold => {
-      this.ruleService.findRule(parseInt(threshold.id)).subscribe({
-        next: (data) => {
-          threshold.rule = data.ruleDefinition;
+      if (!threshold.rule) {
+        return;
+      }
 
-          if (!threshold.rule) {
-            return;
-          }
+      const ruleDefinition = threshold.rule.replace(/'/g, '').trim();
+      const ruleArray: string[] = ruleDefinition.match(/[^AND|OR]+(AND|OR)?/g).map(x => x.trim());
+      this.addThresholdToChart(threshold, ruleArray);
 
-          const ruleDefinition = threshold.rule.replace(/'/g, '').trim();
-          const ruleArray: string[] = ruleDefinition.match(/[^AND|OR]+(AND|OR)?/g).map(x => x.trim());
-          this.addThresholdToChart(threshold, ruleArray, data.name);
-        },
-        error: (err) => {
-          console.error('Error retrieving thresholds', err);
-        }
-      })
+      // this.ruleService.findRule(parseInt(threshold.id)).subscribe({
+      //   next: (data) => {
+      //     threshold.rule = data.ruleDefinition;
+
+      //     if (!threshold.rule) {
+      //       return;
+      //     }
+
+      //     const ruleDefinition = threshold.rule.replace(/'/g, '').trim();
+      //     const ruleArray: string[] = ruleDefinition.match(/[^AND|OR]+(AND|OR)?/g).map(x => x.trim());
+      //     this.addThresholdToChart(threshold, ruleArray, data.name);
+      //   },
+      //   error: (err) => {
+      //     console.error('Error retrieving thresholds', err);
+      //   }
+      // })
     });
   }
 
@@ -506,7 +514,9 @@ export class LineChartComponent extends BaseChartComponent implements OnInit, On
     }
 
     //rimuovo vecchio trend
-    this.graph.layout.shapes.splice(this.trendIndex, 1);
+    if (this.trendIndex) {
+      this.graph.layout.shapes.splice(this.trendIndex, 1);
+    }
 
     this.graph.layout.shapes.push({
       type: 'line',
@@ -531,12 +541,15 @@ export class LineChartComponent extends BaseChartComponent implements OnInit, On
     this.trendIndex = this.graph.layout.shapes.length - 1;
   }
 
-  private addThresholdToChart(threshold: Threshold, ruleArray: string[], ruleName: string): void {
-    if (!this.graph.layout.shapes) this.graph.layout.shapes = [];
-    /* TODO atm we only handle  */
-    if (ruleArray.length > 2) {
-      return;
+  private addThresholdToChart(threshold: Threshold, ruleArray: string[]): void {
+    if (!this.graph.layout.shapes) {
+      this.graph.layout.shapes = [];
     }
+
+    /* TODO atm we only handle  */
+    // if (ruleArray.length > 2) {
+    //   return;
+    // }
 
     if (ruleArray.length === 1) {
       this.addSingleThreshold(ruleArray[0], threshold);
@@ -625,7 +638,7 @@ export class LineChartComponent extends BaseChartComponent implements OnInit, On
     }
   }
 
-  private addSingleThreshold(rule, threshold: Threshold): void {
+  private addSingleThreshold(rule: string, threshold: Threshold): void {
     const tempSplitted = rule.split(' ');
 
     const value = tempSplitted.length > 1
@@ -633,23 +646,21 @@ export class LineChartComponent extends BaseChartComponent implements OnInit, On
       : undefined;
 
     if (value) {
-      this.graph.layout.shapes.push(
-        {
-          type: 'line',
-          xref: 'paper',
-          x0: 0,
-          y0: value,
+      this.graph.layout.shapes.push({
+        type: 'line',
+        xref: 'paper',
+        x0: 0,
+        y0: value,
 
-          x1: 1,
-          y1: value,
-          yref: 'y',
-          line: {
-            color: threshold.line.color,
-            width: threshold.line.thickness,
-            dash: this.getLineDash(threshold.line.type)
-          },
-        }
-      );
+        x1: 1,
+        y1: value,
+        yref: 'y',
+        line: {
+          color: threshold.line.color,
+          width: threshold.line.thickness,
+          dash: this.getLineDash(threshold.line.type)
+        },
+      });
     }
   }
 
