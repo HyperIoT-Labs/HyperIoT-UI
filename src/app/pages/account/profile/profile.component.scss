@@ -1,288 +1,263 @@
 @import "src/assets/styles/abstracts/_variables.scss";
-@import '../../../../assets/styles/abstracts/mixins';
+@import "../../../../assets/styles/abstracts/mixins";
 
 #container-profile {
-    // border: 1px solid antiquewhite;
-    margin-top: 50px;
+  // border: 1px solid antiquewhite;
+  margin-top: 50px;
 
+  .title-box {
+    font-size: 1.6em;
+    border-bottom: 1px solid $primary-color;
+  }
+
+  .row-box {
+    border: 1px solid antiquewhite;
+    margin-bottom: 30px;
+  }
+
+  #row-box-photo {
+    #container-box-photo {
+      text-align: center;
+
+      #img-box {
+        position: relative;
+        height: 200px;
+        width: 200px;
+        @include css3-prefix("border-radius", "100px");
+        @include box-shadow(1px, 1px, 26px, -13px, #000);
+        margin: 0px auto 10px auto;
+        overflow: hidden;
+        /* BACKGROUND IMAGE */
+        background-image: url("./../../../../assets/images/account/dummy-profile.png");
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: 60%;
+        background-color: #e7e7e7;
+
+        img {
+          width: 100%;
+        }
+
+        #mod-photo {
+          position: absolute;
+          bottom: 0px;
+          width: 100%;
+          padding: 13px 0px;
+          background-color: rgba(178, 178, 178, 0.68);
+          text-align: center;
+          cursor: pointer;
+          display: none;
+
+          img#edit-photo {
+            width: 27px;
+            color: #fff;
+          }
+        }
+
+        &:hover {
+          #mod-photo {
+            display: block;
+          }
+        }
+      }
+
+      #box-upload-photo {
+        position: relative;
+        width: 200px;
+        @include css3-prefix("border-radius", "50%");
+        margin: 0px auto;
+
+        #upload-photo {
+          width: 35px;
+          height: 35px;
+          @include css3-prefix("border-radius", "50%");
+          background-color: antiquewhite;
+          position: absolute;
+          top: -202px;
+          right: 9px;
+          background-image: url("./../../../../assets/images/account/photo-upload.svg");
+          background-position: center center;
+          background-repeat: no-repeat;
+          background-size: 20px;
+          cursor: pointer;
+        }
+      }
+
+      h3#name-profile {
+        font-size: 2.6em;
+        margin-bottom: 0px;
+        text-transform: capitalize;
+        color: $primary-color-dark-unsaturated;
+      }
+
+      h4#username-profile {
+        font-size: 1.4em;
+        font-style: italic;
+        color: $secondary-color-dark;
+      }
+    }
+  }
+
+  #row-box-company {
     .title-box {
-        font-size: 1.6em;
-        border-bottom: 1px solid $primary-color;
+      img.title-icon {
+        margin-right: 20px;
+        margin-left: 10px;
+
+        &#icon-company-section {
+          width: 35px;
+        }
+      }
     }
 
-    .row-box {
-        border: 1px solid antiquewhite;
-        margin-bottom: 30px;
+    #info-company {
+      margin-top: 25px;
+      margin-bottom: 5px;
+      font-size: 1.4em;
+      font-weight: 400;
+    }
+  }
+
+  #row-box-plan {
+    .title-box {
+      img.title-icon {
+        margin-right: 20px;
+        margin-left: 10px;
+
+        &#icon-plan-section {
+          width: 35px;
+        }
+      }
     }
 
-    #row-box-photo {
+    #container-box-plan {
+      #current-plan,
+      #current-role {
+        font-size: 1.4em;
+        font-weight: 400;
 
-        #container-box-photo {
-            text-align: center;
-
-            #img-box {
-                position: relative;
-                height: 200px;
-                width: 200px;
-                @include css3-prefix('border-radius', '100px');
-                @include box-shadow(1px, 1px, 26px, -13px, #000);
-                margin: 0px auto 10px auto;
-                overflow: hidden;
-                /* BACKGROUND IMAGE */
-                background-image: url('./../../../../assets/images/account/dummy-profile.png');
-                background-position: center center;
-                background-repeat: no-repeat;
-                background-size: 60%;
-                background-color: #e7e7e7;
-
-                img {
-                    width: 100%;
-                }
-
-                #mod-photo {
-                    position: absolute;
-                    bottom: 0px;
-                    width: 100%;
-                    padding: 13px 0px;
-                    background-color: rgba(178, 178, 178, .68);
-                    text-align: center;
-                    cursor: pointer;
-                    display: none;
-
-                    img#edit-photo {
-                        width: 27px;
-                        color: #fff;
-                    }
-                }
-
-                &:hover {
-                    #mod-photo {
-                        display: block;
-                    }
-                }
-
-            }
-
-            #box-upload-photo {
-                position: relative;
-                width: 200px;
-                @include css3-prefix('border-radius', '50%');
-                margin: 0px auto;
-
-                #upload-photo {
-                    width: 35px;
-                    height: 35px;
-                    @include css3-prefix('border-radius', '50%');
-                    background-color: antiquewhite;
-                    position: absolute;
-                    top: -202px;
-                    right: 9px;
-                    background-image: url('./../../../../assets/images/account/photo-upload.svg');
-                    background-position: center center;
-                    background-repeat: no-repeat;
-                    background-size: 20px;
-                    cursor: pointer;
-                }
-            }
-
-            h3#name-profile {
-                font-size: 2.6em;
-                margin-bottom: 0px;
-                text-transform: capitalize;
-                color: $primary-color-dark-unsaturated;
-            }
-
-            h4#username-profile {
-                font-size: 1.4em;
-                font-style: italic;
-                color: $secondary-color-dark;
-            }
-
+        span {
+          &.name-plan,
+          &.name-role {
+            margin-left: 15px;
+            font-style: italic;
+            font-weight: bold;
+            color: $secondary-color-dark;
+          }
         }
+      }
 
-    }
+      #current-role {
+        margin-top: 25px;
+        margin-bottom: 25px;
+      }
 
-    #row-box-company {
-
-        .title-box {
-
-            img.title-icon {
-                margin-right: 20px;
-                margin-left: 10px;
-
-                &#icon-company-section {
-                    width: 35px;
-                }
-            }
-
-        }
-
-        #info-company {
-            margin-top: 25px;
-            margin-bottom: 5px;
-            font-size: 1.4em;
-            font-weight: 400;
-        }
-
-    }
-
-    #row-box-plan {
-
-        .title-box {
-
-            img.title-icon {
-                margin-right: 20px;
-                margin-left: 10px;
-
-                &#icon-plan-section {
-                    width: 35px;
-                }
-            }
-
-        }
-        
-        #container-box-plan {
-            
-            #current-plan,
-            #current-role {
-                font-size: 1.4em;
-                font-weight: 400;
-
-                span {
-
-                    &.name-plan, 
-                    &.name-role {
-                        margin-left: 15px;
-                        font-style: italic;
-                        font-weight: bold;
-                        color: $secondary-color-dark;
-                    }
-
-                }
-
-            }
-
-            #current-role {
-                margin-top: 25px;
-                margin-bottom: 25px;
-            }
-
-            /* #current-plan {
+      /* #current-plan {
                 margin-bottom: 25px;
             } */
 
-            #title-summary-plan {
-                font-style: italic;
-                font-size: 1.1em;
-                margin-bottom: 40px;
-                color: #4c4c4c;
+      #title-summary-plan {
+        font-style: italic;
+        font-size: 1.1em;
+        margin-bottom: 40px;
+        color: #4c4c4c;
 
-                span.info-current-plan {
-                    background-color: #d6ecff;
-                    padding: 2px 10px;
-                    @include css3-prefix('border-radius', '50%');
-                    font-style: initial;
-                    text-align: center;
-                    cursor: pointer;
-                    font-size: .8em;
-                    margin-right: 10px;
-                }
-            }
+        span.info-current-plan {
+          background-color: #d6ecff;
+          padding: 2px 10px;
+          @include css3-prefix("border-radius", "50%");
+          font-style: initial;
+          text-align: center;
+          cursor: pointer;
+          font-size: 0.8em;
+          margin-right: 10px;
+        }
+      }
 
-            #row-summary-plan {
-                text-align: center;
-                margin-bottom: 45px;
+      #row-summary-plan {
+        text-align: center;
+        margin-bottom: 45px;
 
-                .icon-obj-plan {
-                    text-align: center;
+        .icon-obj-plan {
+          text-align: center;
 
-                    img {
-                        width: 50px
-                    }
+          img {
+            width: 50px;
+          }
 
-                    span {
-                        font-size: 50px;
-                    }
-                }
-
-                .txt-obj-plan {
-                    display: flex;
-                    gap: 15px;
-                    text-align: left;
-                    font-size: 1.5em;
-                    font-weight: 400;
-                    line-height: 50px;
-
-                    .one-of {
-                        font-size: 1.2em;
-
-                        .firstNumber {
-                            font-weight: bold;
-                            color: $secondary-color-dark;
-                        }
-
-                        .slash {
-                            font-size: .8em;
-                        }
-
-                        .secondNumber {
-                            font-size: .6em;
-                            color: #00428b;
-                            font-weight: bold;
-                        }
-
-                    }
-
-                }
-
-            }
-
-            #row-upgrade-plan {
-                margin-bottom: 15px;
-
-                #info-msg-upgrade {
-                    padding: 10px 20px;
-                    background-color: #82a1bc;
-                    color: #ffffff;
-                    max-width: 80%;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    @include css3-prefix('border-radius', '5px');
-                    margin-left: auto;
-                    margin-right: auto;
-
-                    hyt-button {
-                        
-                        &#upgrade-plane-btn {
-                            margin-left: auto;
-                            
-                            button {
-                                background-color: $primary-color-dark-unsaturated;
-                                color: #fff;
-                                font-family: "Exo";
-                                font-size: 1em;
-                                font-weight: 200;
-
-                                &:hover {
-                                    background-color: $primary-color-light;
-                                    box-shadow: none;
-                                }
-                            }
-
-                        }
-
-                    }
-
-                }
-
-            }
-
+          span {
+            font-size: 50px;
+          }
         }
 
-    }
+        .txt-obj-plan {
+          display: flex;
+          gap: 15px;
+          text-align: left;
+          font-size: 1.5em;
+          font-weight: 400;
+          line-height: 50px;
 
-    /* #row-box-branding {
+          .one-of {
+            font-size: 1.2em;
+
+            .firstNumber {
+              font-weight: bold;
+              color: $secondary-color-dark;
+            }
+
+            .slash {
+              font-size: 0.8em;
+            }
+
+            .secondNumber {
+              font-size: 0.6em;
+              color: #00428b;
+              font-weight: bold;
+            }
+          }
+        }
+      }
+
+      #row-upgrade-plan {
+        margin-bottom: 15px;
+
+        #info-msg-upgrade {
+          padding: 10px 20px;
+          background-color: #82a1bc;
+          color: #ffffff;
+          max-width: 80%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          @include css3-prefix("border-radius", "5px");
+          margin-left: auto;
+          margin-right: auto;
+
+          hyt-button {
+            &#upgrade-plane-btn {
+              margin-left: auto;
+
+              button {
+                background-color: $primary-color-dark-unsaturated;
+                color: #fff;
+                font-family: "Exo";
+                font-size: 1em;
+                font-weight: 200;
+
+                &:hover {
+                  background-color: $primary-color-light;
+                  box-shadow: none;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /* #row-box-branding {
 
         .title-box {
 
@@ -296,7 +271,7 @@
             }
 
         }
-        
+
         #container-box-branding {
             #logo-uplaod,
             #logo-preview {
@@ -308,130 +283,123 @@
 
     } */
 
+  #row-box-branding,
+  #row-box-details {
+    border: 1px solid antiquewhite;
 
-    #row-box-branding,
-    #row-box-details {
-        border: 1px solid antiquewhite;
+    .title-box {
+      img.title-icon {
+        margin-right: 20px;
+        margin-left: 10px;
 
-        .title-box {
-
-            img.title-icon {
-                margin-right: 20px;
-                margin-left: 10px;
-
-                &#icon-details-section,
-                &#icon-branding-section  {
-                    width: 35px;
-                }
-    
-                &#icon-password-section {
-                    height: 25px;
-                }
-            }
-
+        &#icon-details-section,
+        &#icon-branding-section {
+          width: 35px;
         }
 
-        #container-form-details,
-        #container-form-password,
-        #container-form-logo {
-
-            form#form-details,
-            form#form-password,
-            form#form-logo-branding {
-                margin-top: 40px;
-
-                .row-field-details,
-                .row-field-password,
-                .row-field-branding {
-
-                    .container-form-field,
-                    .container-form-field {
-                        margin-bottom: 15px;
-
-                        input {
-
-                            &.hyt-input {
-                                font-family: "Exo";
-                                font-size: 1em;
-                            }
-
-                            &:-webkit-autofill,
-                            &:-webkit-autofill:hover,
-                            &:-webkit-autofill:focus {
-                                box-shadow: 0 0 0px 1000px #ffffff inset;
-                            }
-                            
-                        }
-
-                        &.btn-form-account {
-                            text-align: right;
-
-                            hyt-button {
-
-                                button.mat-raised-button {
-                                    background-color: $primary-color-dark-unsaturated;
-                                    color: #fff;
-                                    font-family: "Exo";
-                                    font-size: 1em;
-                                    font-weight: 200;
-                                    text-transform: uppercase;
-
-                                    &:hover {
-                                        background-color: $primary-color-light;
-                                        box-shadow: none;
-                                    }
-
-                                    &:disabled {
-                                        background-color: #bcbcbc;
-                                        cursor: not-allowed;
-                                    }
-                                }
-
-                            }
-                        }
-
-                        span {
-                            
-                            &.mat-form-field-label-wrapper {
-
-                                label {
-                                    font-family: "Exo";
-                                }
-
-                            }
-
-                        }
-
-                        mat-error {
-
-                            &.mat-error.ng-star-inserted {
-                                font-family: "Exo";
-                            }
-
-                        }
-
-                        .btn-group {
-                            display: flex;
-                            column-gap: 20px;
-                        }
-
-                        #upload-logo-text {
-                            margin-right: 15px;
-                        }
-
-                        #logo-error-container {
-                            color: red;
-                            border: 1px solid red;
-                            border-radius: 4px;
-                            padding: 10px;
-                        }
-
-                    }
-                }
-            }
-
+        &#icon-password-section {
+          height: 25px;
         }
-
+      }
     }
 
+    #container-form-details,
+    #container-form-password,
+    #container-form-logo {
+      form#form-details,
+      form#form-password,
+      form#form-logo-branding {
+        margin-top: 40px;
+
+        .row-field-details,
+        .row-field-password,
+        .row-field-branding {
+          .container-form-field,
+          .container-form-field {
+            margin-bottom: 15px;
+
+            input {
+              &.hyt-input {
+                font-family: "Exo";
+                font-size: 1em;
+              }
+
+              &:-webkit-autofill,
+              &:-webkit-autofill:hover,
+              &:-webkit-autofill:focus {
+                box-shadow: 0 0 0px 1000px #ffffff inset;
+              }
+            }
+
+            &.btn-form-account {
+              text-align: right;
+
+              hyt-button {
+                button.mat-raised-button {
+                  background-color: $primary-color-dark-unsaturated;
+                  color: #fff;
+                  font-family: "Exo";
+                  font-size: 1em;
+                  font-weight: 200;
+                  text-transform: uppercase;
+
+                  &:hover {
+                    background-color: $primary-color-light;
+                    box-shadow: none;
+                  }
+
+                  &:disabled {
+                    background-color: #bcbcbc;
+                    cursor: not-allowed;
+                  }
+                }
+              }
+            }
+
+            span {
+              &.mat-form-field-label-wrapper {
+                label {
+                  font-family: "Exo";
+                }
+              }
+            }
+
+            mat-error {
+              &.mat-error.ng-star-inserted {
+                font-family: "Exo";
+              }
+            }
+
+            .btn-group {
+              display: flex;
+              column-gap: 20px;
+            }
+
+            #upload-logo-text {
+              margin-right: 15px;
+            }
+
+            #logo-error-container {
+              color: red;
+              border: 1px solid red;
+              border-radius: 4px;
+              padding: 10px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .mat-button-toggle-checked {
+    background-color: $primary-color;
+
+    .mat-button-toggle-button {
+      color: white;
+    }
+  }
+
+  .mat-button-toggle-button {
+    color: gray;
+  }
 }

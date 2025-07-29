@@ -1,11 +1,11 @@
-import { Component, OnInit, ViewEncapsulation,ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { HUserService, HUser, HDevicesService, Area_Service, HProjectService, BrandingService, BrandingActions, BrandingSelectors } from 'core';
+import { HUserService, HUser, HDevicesService, Area_Service, HProjectService, BrandingService, BrandingActions, BrandingSelectors, Dashboard, UserSiteSettingSelectors, UserSiteSettingActions } from 'core';
 import { AuthenticationHttpErrorHandlerService } from '../../../services/errorHandler/authentication-http-error-handler.service';
 import { HYTError } from 'src/app/services/errorHandler/models/models';
 import { Router } from '@angular/router';
 import { HyperiotLogoMobilePath, HyperiotLogoPath } from 'src/app/constants';
-import { forkJoin, map, } from 'rxjs';
+import { forkJoin, map, take, } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 @Component({
@@ -15,6 +15,8 @@ import { Store } from '@ngrx/store';
   encapsulation: ViewEncapsulation.None
 })
 export class ProfileComponent implements OnInit {
+
+  DashboardTypeEnum = Dashboard.DashboardTypeEnum;
 
   errors: HYTError[] = [];
 
@@ -33,6 +35,8 @@ export class ProfileComponent implements OnInit {
 
   initialBrandingForm: FormGroup;
   brandingForm: FormGroup;
+
+  defaultDashboardSettings: FormGroup;
 
   generalError = 0;
 
@@ -61,9 +65,9 @@ export class ProfileComponent implements OnInit {
    */
   errMsg = $localize`:@@HYT_generic_error:Something went wrong`;
 
- /**
-  * This variable contains the string to display when the personal information update is successful.
-  */
+  /**
+   * This variable contains the string to display when the personal information update is successful.
+   */
   successMsg = $localize`:@@HYT_user_updated:Personal information updated correctly`;
 
   /**
@@ -155,11 +159,52 @@ export class ProfileComponent implements OnInit {
    */
   ngOnInit(): void {
     this.personalInfoForm = this.fb.group({});
+
     this.changePasswordForm = this.fb.group({});
+
     this.brandingForm = this.fb.group({
       primaryColor: [''],
       secondaryColor: [''],
     });
+
+    this.store.select(UserSiteSettingSelectors.selectUserSiteSetting)
+      .pipe(
+        take(1)
+      )
+      .subscribe(({
+        defaultProjectsDashboardDataSource,
+        defaultAreasDashboardDataSource,
+      }) => {
+        this.defaultDashboardSettings = this.fb.group({
+          defaultProjectsDashboardDataSource,
+          defaultAreasDashboardDataSource
+        });
+      });
+
+    this.defaultDashboardSettings.controls.defaultProjectsDashboardDataSource
+      .valueChanges
+      .subscribe((defaultProjectsDashboardDataSource) => {
+        this.store.dispatch(
+          UserSiteSettingActions.updatePartialSettings({
+            userSiteSetting: {
+              defaultProjectsDashboardDataSource,
+            }
+          })
+        );
+      });
+
+    this.defaultDashboardSettings.controls.defaultAreasDashboardDataSource
+      .valueChanges
+      .subscribe((defaultAreasDashboardDataSource) => {
+        this.store.dispatch(
+          UserSiteSettingActions.updatePartialSettings({
+            userSiteSetting: {
+              defaultAreasDashboardDataSource,
+            }
+          })
+        );
+      });
+
     if (localStorage.getItem('user') !== null) {
       this.user = JSON.parse(localStorage.getItem('user'));
       this.userId = this.user.id;
@@ -356,7 +401,7 @@ export class ProfileComponent implements OnInit {
     });
 
     this.brandingService.logoPath$.subscribe({
-      next: ({standard, mobile}) => {
+      next: ({ standard, mobile }) => {
         this.initialLogoPath = standard;
         this.initialLogoMobilePath = mobile;
         this.logoPath = standard;
