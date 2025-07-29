@@ -13,6 +13,20 @@ $hyt-badge-color: var(--alarm-badge-color);
   margin-left: -32px;
   margin-top: -32px;
 
+  .remove-button {
+    outline: none;
+    position: absolute;
+    right: -12px;
+    top: -12px;
+    font-size: 12px;
+    font-weight: bolder;
+    background-color: red;
+    color: white;
+    border-radius: 12px;
+    width: 24px;
+    height: 24px;
+  }
+
   &.menu-enabled {
     cursor: pointer;
   }
@@ -54,19 +68,6 @@ $hyt-badge-color: var(--alarm-badge-color);
     min-height: 1px;
   }
 
-  .remove-button {
-    outline: none;
-    position: absolute;
-    right: -12px;
-    top: -12px;
-    font-size: 12px;
-    font-weight: bolder;
-    background-color: red;
-    color: white;
-    border-radius: 12px;
-    width: 24px;
-    height: 24px;
-  }
 }
 
 .mat-menu-panel {
