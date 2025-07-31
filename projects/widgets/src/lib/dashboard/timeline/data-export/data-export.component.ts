@@ -81,7 +81,7 @@ export class DataExportComponent implements OnInit, AfterViewInit, OnDestroy {
     return this.form.controls.startTime as FormControl;
   }
 
-  private get endTime(): FormControl {
+  get endTime(): FormControl {
     return this.form.controls.endTime as FormControl;
   }
 

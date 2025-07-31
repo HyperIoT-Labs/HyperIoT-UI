@@ -10,7 +10,11 @@
       <fieldset [disabled]="exportInProgress">
         <div class="row row-cols-2">
           <div class="d-flex flex-column p-2">
-            <mat-form-field id="startTimePicker" appearance="fill">
+            <mat-form-field
+              id="startTimePicker"
+              appearance="fill"
+              [ngClass]="{ 'mat-form-field-invalid': startTime.invalid }"
+            >
               <mat-label i18n="@@HYT_start_time">Start Time</mat-label>
               <input
                 matInput
@@ -64,7 +68,11 @@
           </div>
 
           <div class="d-flex flex-column p-2">
-            <mat-form-field id="endTimePicker" appearance="fill">
+            <mat-form-field
+              id="endTimePicker"
+              appearance="fill"
+              [ngClass]="{ 'mat-form-field-invalid': endTime?.invalid }"
+            >
               <mat-label i18n="@@HYT_end_time">End Time</mat-label>
               <input
                 matInput
@@ -82,6 +90,12 @@
               <ngx-mat-datetime-picker #endTimePicker [showSeconds]="true">
               </ngx-mat-datetime-picker>
             </mat-form-field>
+            <mat-error
+              *ngIf="endTime?.invalid"
+              [ngClass]="{ 'mat-h4 mt-n3': endTime?.invalid }"
+            >
+              The date entered is invalid
+            </mat-error>
 
             <mat-form-field appearance="fill">
               <mat-label>Export Name</mat-label>

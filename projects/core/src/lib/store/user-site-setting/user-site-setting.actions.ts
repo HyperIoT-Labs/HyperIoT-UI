@@ -12,7 +12,7 @@ export namespace UserSiteSettingActions {
         props<{ userSiteSetting: UserSiteSettingStore.State }>()
     );
     export const updatePartialSettings = createAction(
-        '[UserSiteSetting] Update All Settings',
+        '[UserSiteSetting] Update Partial Settings',
         props<{ userSiteSetting: UserSiteSettingStore.State }>()
     );
     export const updateSetting = createAction(

@@ -153,7 +153,7 @@ export class LineChartComponent extends BaseChartComponent implements OnInit, On
     this.dataSubscription?.unsubscribe();
     this.dataService?.removeDataChannel(this.channelId);
 
-    this.ngOnDestroy();
+    super.ngOnDestroy();
   }
 
   private async fitToTimeline(plotly?: any, element?: PlotlyComponent): Promise<void> {
