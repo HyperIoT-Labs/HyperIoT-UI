@@ -1,9 +1,7 @@
 <div id="container-profile" class="container">
-
-    <div id="row-box-photo" class="row row-box">
-        <div id="container-box-photo" class="col-12">
-
-            <!-- <div
+  <div id="row-box-photo" class="row row-box">
+    <div id="container-box-photo" class="col-12">
+      <!-- <div
                 id="img-box"
                 style="
                     background-image: url('./../../../../assets/images/account/user-default.svg');
@@ -24,133 +22,127 @@
                 </div>
             </div> -->
 
-            <h3 id="name-profile">{{user.name}} {{user.lastname}}</h3>
-            <h4 id="username-profile">{{user.username}}</h4>
-        </div>
-    </div> <!-- End Row Box Photo -->
+      <h3 id="name-profile">{{ user.name }} {{ user.lastname }}</h3>
+      <h4 id="username-profile">{{ user.username }}</h4>
+    </div>
+  </div>
+  <!-- End Row Box Photo -->
 
-    <div id="row-box-company" class="row row-box" *ngIf="isCompany; else rowBoxPlan">
+  <div
+    id="row-box-company"
+    class="row row-box"
+    *ngIf="isCompany; else rowBoxPlan"
+  >
+    <div id="container-box-company" class="col-12">
+      <div class="title-box">
+        <img
+          src="./../../../../assets/images/account/personal-info-icon.svg"
+          class="title-icon"
+          id="icon-company-section"
+          alt="Icon Company Section"
+        />
+        <p i18n="@@HYT_company_info">Company Info</p>
+      </div>
 
-        <div id="container-box-company" class="col-12">
+      <div id="info-company">
+        Qui Inseriremo i dati relativi all'Azienda
+        <!--TODO-->
+      </div>
+    </div>
+  </div>
+  <!--End Row Box Company -->
 
-            <div class="title-box">
-                <img
-                    src="./../../../../assets/images/account/personal-info-icon.svg"
-                    class="title-icon"
-                    id="icon-company-section"
-                    alt="Icon Company Section"
-                >
-                <p i18n="@@HYT_company_info">Company Info</p>
-            </div>
+  <ng-template #rowBoxPlan>
+    <div class="row row-box" style="display: none">
+      <div class="col-12" id="ciccio">
+        DA MODIFICARE
+        <!--TODO-->
+      </div>
+    </div>
+  </ng-template>
 
-            <div id="info-company">
-                Qui Inseriremo i dati relativi all'Azienda
-                <!--TODO-->
-            </div>
+  <div id="row-box-plan" class="row row-box">
+    <div id="container-box-plan" class="col-12">
+      <div class="title-box">
+        <img
+          src="./../../../../assets/images/account/personal-info-icon.svg"
+          class="title-icon"
+          id="icon-plan-section"
+          alt="Icon Personal Info Section"
+        />
+        <p i18n="@@HYT_general_info">General Info</p>
+      </div>
 
-        </div>
+      <div id="current-role">
+        <ng-container i18n="@@HYT_your_role_is">Your role is</ng-container>:
+        <span class="name-role">Administrator</span>
+        <!--TODO-->
+      </div>
 
-    </div> <!--End Row Box Company -->
-
-    <ng-template #rowBoxPlan>
-        <div class="row row-box" style="display: none;">
-            <div class="col-12" id="ciccio">
-                DA MODIFICARE
-                <!--TODO-->
-            </div>
-        </div>
-    </ng-template>
-
-
-    <div id="row-box-plan" class="row row-box">
-
-        <div id="container-box-plan" class="col-12">
-
-            <div class="title-box">
-                <img
-                    src="./../../../../assets/images/account/personal-info-icon.svg"
-                    class="title-icon"
-                    id="icon-plan-section"
-                    alt="Icon Personal Info Section"
-                >
-                <p i18n="@@HYT_general_info">General Info</p>
-            </div>
-
-            <div id="current-role">
-                <ng-container i18n="@@HYT_your_role_is">Your role is</ng-container>:
-                <span class="name-role">Administrator</span>
-                <!--TODO-->
-            </div>
-
-            <!-- <div id="current-plan">
+      <!-- <div id="current-plan">
                 <ng-container i18n="@@HYT_your_current_plan_is">Your current plan is:</ng-container>:
                 <span class="name-plan">Plan Exclusive</span>
             </div> -->
 
-            <div id="title-summary-plan">
-                <span class="info-current-plan">i</span>
-                <ng-container i18n="@@HYT_you_have_access_to">You have access to</ng-container>:
+      <div id="title-summary-plan">
+        <span class="info-current-plan">i</span>
+        <ng-container i18n="@@HYT_you_have_access_to"
+          >You have access to</ng-container
+        >:
+      </div>
+
+      <div id="row-summary-plan" class="row">
+        <div id="projects" class="col-4">
+          <div class="row">
+            <div class="col-6 icon-obj-plan">
+              <img
+                src="./../../../../assets/images/account/projects.svg"
+                alt="Projects"
+              />
+            </div>
+            <div class="col-6 txt-obj-plan">
+              <p i18n="@@HYT_projects">Projects</p>
+              <span class="one-of">
+                <span class="firstNumber">{{ platformCounters.projects }}</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div id="devices" class="col-4">
+          <div class="row">
+            <div class="col-6 icon-obj-plan">
+              <!-- <img src="./../../../../assets/images/account/projects.svg" alt="Projects"> -->
+              <span class="hyt-icon icon-hyt_device"></span>
+            </div>
+            <div class="col-6 txt-obj-plan">
+              <p i18n="@@HYT_devices">Devices</p>
+              <span class="one-of">
+                <span class="firstNumber">{{ platformCounters.devices }}</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div id="areas" class="col-4">
+          <div class="row">
+            <div class="col-6 icon-obj-plan">
+              <!-- <img src="./../../../../assets/images/account/projects.svg" alt="Projects"> -->
+              <span class="hyt-icon icon-hyt_map"></span>
             </div>
 
-            <div id="row-summary-plan" class="row">
-
-                <div id="projects" class="col-4">
-                    <div class="row">
-                        <div class="col-6 icon-obj-plan">
-                            <img src="./../../../../assets/images/account/projects.svg" alt="Projects">
-                        </div>
-                        <div class="col-6 txt-obj-plan">
-                            <p i18n="@@HYT_projects">Projects</p>
-                            <span class="one-of">
-                                <span class="firstNumber">{{platformCounters.projects}}</span>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="devices" class="col-4">
-                    <div class="row">
-                        <div class="col-6 icon-obj-plan">
-                            <!-- <img src="./../../../../assets/images/account/projects.svg" alt="Projects"> -->
-                            <span class="hyt-icon icon-hyt_device"></span>
-                        </div>
-                        <div class="col-6 txt-obj-plan">
-                            <p i18n="@@HYT_devices">Devices</p>
-                            <span class="one-of">
-                                <span class="firstNumber">{{platformCounters.devices}}</span>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="areas" class="col-4">
-
-                    <div class="row">
-
-                        <div class="col-6 icon-obj-plan">
-
-                            <!-- <img src="./../../../../assets/images/account/projects.svg" alt="Projects"> -->
-                            <span class="hyt-icon icon-hyt_map"></span>
-
-                        </div>
-
-                        <div class="col-6 txt-obj-plan">
-
-                            <p i18n="@@HYT_areas">Areas</p>
-                            <span class="one-of">
-                                <span class="firstNumber">{{platformCounters.areas}}</span>
-                            </span>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
+            <div class="col-6 txt-obj-plan">
+              <p i18n="@@HYT_areas">Areas</p>
+              <span class="one-of">
+                <span class="firstNumber">{{ platformCounters.areas }}</span>
+              </span>
             </div>
-            <!-- End Row Summary Plan -->
+          </div>
+        </div>
+      </div>
+      <!-- End Row Summary Plan -->
 
-            <!-- <div id="row-upgrade-plan" class="row">
+      <!-- <div id="row-upgrade-plan" class="row">
 
                 <div id="info-msg-upgrade" class="col-12">
                     You can upgrade your plan at any time
@@ -162,370 +154,392 @@
                 </div>
 
             </div> End Row Upgrade Plan -->
-
-        </div>
-
-    </div> <!-- End Row Box Plan -->
-
-    <div id="row-box-branding" class="row row-box">
-
-        <div id="container-box-branding" class="col-12">
-
-            <div class="title-box">
-                <img
-                    src="./../../../../assets/images/account/personal-info-icon.svg"
-                    class="title-icon"
-                    id="icon-branding-section"
-                    alt="Icon Branding Section"
-                >
-                <p i18n="@@HYT_theme_customization">Theme customization</p>
-            </div>
-
-            <div id="container-form-logo" class="col-12">
-
-                <form id="form-logo-branding" #pif="ngForm" [formGroup]="brandingForm">
-
-                    <div class="row row-field-branding">
-                        <div class="col-12">
-                            <h3 i18n="@@HYT_logo">Logo</h3>
-                            <p *ngIf="!isBrandedTheme && !fileToUpload" style="color: red; font-size:small;" i18n="@@HYT_logo_is_required_for_the_first_theme_customization">
-                                * Logo is required for the first theme customization
-                            </p>
-                        </div>
-                        <div class="container-form-field col-12">
-                            <span i18n="@@HYT_upload_your_logo" id="upload-logo-text">Upload your logo</span>
-                            <input #logoFileInput type="file" id="logo-file-input" name="logo" accept="image/png, image/jpeg" (change)="handleLogoInput($event.target.files)" hidden />
-                            <hyt-button (clickFn)="initUpload()">
-                                <ng-container i18n="@@HYT_upload">Upload</ng-container>
-                            </hyt-button>
-                            <ng-container *ngIf="fileToUpload != null">
-                                <button mat-icon-button aria-label="reset logo button" (click)="resetLogo(logoFileInput)">
-                                    <mat-icon>clear</mat-icon>
-                                </button>
-                            </ng-container>
-                        </div>
-                        <div *ngIf="fileToUpload != null" class="container-form-field col-12">
-                            <p i18n="@@HYT_preview">Preview</p>
-                            <hyt-topbar [preview-mode]="true" [logoPath]="logoPath" [logoMobilePath]="logoMobilePath"></hyt-topbar>
-                        </div>
-
-                        <div class="container-form-field col-12">
-                            <hr>
-                        </div>
-
-                        <div class="col-12">
-                            <h3 i18n="@@HYT_color_schema">Color Schema</h3>
-                        </div>
-                        <div class="container-form-field col-3">
-                            <mat-form-field>
-                                <mat-label i18n="@@HYT_primary_color">Primary Color</mat-label>
-                                <input matInput formControlName="primaryColor" type="color">
-                            </mat-form-field>
-                        </div>
-                        <div class="container-form-field col-3">
-                            <mat-form-field>
-                                <mat-label i18n="@@HYT_secondary_color">Secondary Color</mat-label>
-                                <input matInput formControlName="secondaryColor" type="color">
-                            </mat-form-field>
-                        </div>
-
-                        <ng-container *ngIf="this.brandingForm.dirty">
-                            <button mat-icon-button aria-label="reset logo button" (click)="resetColorSchema()">
-                                <mat-icon>clear</mat-icon>
-                            </button>
-                        </ng-container>
-
-                        <div class="container-form-field col-12">
-                            <div class="btn-group">
-
-                                <!-- [isDisabled]="!fileToUpload" -->
-                                <hyt-button
-                                    id ="save-logo-btn"
-                                    [isDisabled]="canNotSaveTheme"
-                                    (clickFn)="saveTheme()"
-                                    type="submit"
-                                >
-                                    <ng-container i18n="@@HYT_save">Save</ng-container>
-                                </hyt-button>
-
-                                <hyt-button
-                                    id ="reset-logo-btn"
-                                    (clickFn)="restoreDefaultTheme(logoFileInput)"
-                                    [isDisabled]="!isBrandedTheme"
-                                    type="submit"
-                                >
-                                    <ng-container i18n="@@HYT_restore_default">Restore default</ng-container>
-                                </hyt-button>
-                            </div>
-
-                        </div>
-
-                        <ng-container *ngIf="logoErrorMessage.showError">
-                            <div class="container-form-field col-12">
-                                <div id="logo-error-container">
-                                    {{logoErrorMessage.message}}
-                                </div>
-                            </div>
-                        </ng-container>
-                    </div>
-
-                </form>
-
-            </div>
-        </div>
     </div>
+  </div>
+  <!-- End Row Box Plan -->
 
-    <div *ngIf="defaultDashboardSettings" class="row row-box">
-        <div class="col-12 mt-2">
-            <div class="title-box">
-                <p i18n="@@HYT_default_dashboard_settings">
-                  Configurazioni di default delle Dashboard
-                </p>
-            </div>
+  <div id="row-box-branding" class="row row-box">
+    <div id="container-box-branding" class="col-12">
+      <div class="title-box">
+        <img
+          src="./../../../../assets/images/account/personal-info-icon.svg"
+          class="title-icon"
+          id="icon-branding-section"
+          alt="Icon Branding Section"
+        />
+        <p i18n="@@HYT_theme_customization">Theme customization</p>
+      </div>
+
+      <div id="container-form-logo" class="col-12">
+        <form id="form-logo-branding" #pif="ngForm" [formGroup]="brandingForm">
+          <div class="row row-field-branding">
             <div class="col-12">
-              <section [formGroup]="defaultDashboardSettings" class="d-flex flex-column my-3">
-                <div class="row col-6 align-items-baseline justify-content-between">
-                  <label for="">Dashboard Progetto</label>
-                  <mat-button-toggle-group formControlName="defaultProjectsDashboardDataSource">
-                    <mat-button-toggle
-                      [value]="DashboardTypeEnum.REALTIME"
-                      i18n="@@HYT_default_realtime"
-                    >
-                      Real-Time
-                    </mat-button-toggle>
-                    <mat-button-toggle
-                      [value]="DashboardTypeEnum.OFFLINE"
-                      i18n="@@HYT_default_offline"
-                    >
-                      Offline
-                    </mat-button-toggle>
-                  </mat-button-toggle-group>
-                </div>
-                <div class="row col-6 align-items-baseline justify-content-between">
-                  <label for="">Dashboard Area</label>
-                  <mat-button-toggle-group formControlName="defaultAreasDashboardDataSource">
-                    <mat-button-toggle
-                      [value]="DashboardTypeEnum.REALTIME"
-                      i18n="@@HYT_default_realtime"
-                    >
-                      Real-Time
-                    </mat-button-toggle>
-                    <mat-button-toggle
-                      [value]="DashboardTypeEnum.OFFLINE"
-                      i18n="@@HYT_default_offline"
-                    >
-                      Offline
-                    </mat-button-toggle>
-                  </mat-button-toggle-group>
-                </div>
-              </section>
+              <h3 i18n="@@HYT_logo">Logo</h3>
+              <p
+                *ngIf="!isBrandedTheme && !fileToUpload"
+                style="color: red; font-size: small"
+                i18n="@@HYT_logo_is_required_for_the_first_theme_customization"
+              >
+                * Logo is required for the first theme customization
+              </p>
             </div>
-        </div>
-    </div>
-
-    <div *ngIf="wentWrong" class="row" (click)="updatePassword()">
-        <p style="color:red;">{{errMsg}}</p>
-    </div>
-
-    <div *ngIf="passwordChanged" class="row" (click)="updatePassword()">
-        <p style="color:green;">{{succesMsgPwd}}</p>
-    </div>
-
-    <div *ngIf="personalInfoUpdated" class="row" (click)="updatePersonalInfo()">
-        <p style="color:green;">{{successMsg}}</p>
-    </div>
-
-    <div id="row-box-details" class="row row-box">
-
-        <div id="container-box-details" class="col-6">
-
-            <div class="title-box">
-               <img
-                src="./../../../../assets/images/account/personal-info-icon.svg"
-                class="title-icon"
-                id="icon-details-section"
-                alt="Icon Personal Info Section"
-               >
-               <p i18n="@@HYT_personal_info">Personal Info</p>
-            </div>
-
-            <div id="row-form-details" class="row">
-
-                <div id="container-form-details" class="col-12">
-
-                    <form #pif="ngForm" id="form-details" [formGroup]="personalInfoForm" (ngSubmit)="updatePersonalInfo()" (keydown)="keyDownFunction($event)">
-
-                        <div class="row row-field-details">
-
-                            <div class="container-form-field col-12">
-
-                                <hyt-input-text
-                                    [form]="personalInfoForm"
-                                    formControlName="username"
-                                    name="username"
-                                    [isRequired]="true"
-                                    placeholder="Username"
-                                    [fieldValue]="user.username"
-
-                                >
-                                </hyt-input-text>
-                                <!-- [injectedErrorMsg]="error" -->
-
-                            </div> <!-- Field Username -->
-
-                            <div class="container-form-field col-12">
-
-                                <hyt-input-text
-                                    [form]="personalInfoForm"
-                                    formControlName="email"
-                                    name="email"
-                                    [isEmail]="true"
-                                    [isRequired]="true"
-                                    placeholder="Email"
-                                    [fieldValue]="user.email"
-                                >
-                                </hyt-input-text>
-                                <!-- [injectedErrorMsg]="error" -->
-
-                            </div> <!-- End Field Email -->
-
-                            <div class="container-form-field col-12">
-
-                                <hyt-input-text
-                                    [form]="personalInfoForm"
-                                    formControlName="name"
-                                    name="name"
-                                    [isRequired]="true"
-                                    placeholder="Name"
-                                    [fieldValue]="user.name"
-                                >
-                                </hyt-input-text>
-                                <!-- [injectedErrorMsg]="error" -->
-
-                            </div> <!-- End Field Name -->
-
-                            <div class="container-form-field col-12">
-
-                                <hyt-input-text
-                                    [form]="personalInfoForm"
-                                    formControlName="lastname"
-                                    name="lastname"
-                                    [isRequired]="true"
-                                    placeholder="Lastname"
-                                    [fieldValue]="user.lastname"
-                                >
-                                </hyt-input-text>
-                                <!-- [injectedErrorMsg]="error" -->
-
-                            </div> <!-- End Field Lastame -->
-
-                            <div class="container-form-field col-12 btn-form-account">
-                                <hyt-button
-                                    id="update-info-btn"
-                                    type="submit"
-                                    [isDisabled]="notValidPif() || loading "
-                                >
-                                <ng-container i18n="@@HYT_update_personal_info">Update Personal Info</ng-container>
-                                </hyt-button>
-                            </div> <!-- Container Update Details Button -->
-
-                        </div> <!-- End Row Field -->
-
-                    </form>
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <div id="container-box-password" class="col-6">
-
-            <div class="title-box">
-                <img
-                    src="./../../../../assets/images/account/change-password-icon.svg"
-                    class="title-icon"
-                    id="icon-password-section"
-                    alt="Icon Password Section"
+            <div class="container-form-field col-12">
+              <span i18n="@@HYT_upload_your_logo" id="upload-logo-text"
+                >Upload your logo</span
+              >
+              <input
+                #logoFileInput
+                type="file"
+                id="logo-file-input"
+                name="logo"
+                accept="image/png, image/jpeg"
+                (change)="handleLogoInput($event.target.files)"
+                hidden
+              />
+              <hyt-button (clickFn)="initUpload()">
+                <ng-container i18n="@@HYT_upload">Upload</ng-container>
+              </hyt-button>
+              <ng-container *ngIf="fileToUpload != null">
+                <button
+                  mat-icon-button
+                  aria-label="reset logo button"
+                  (click)="resetLogo(logoFileInput)"
                 >
-                <p i18n="@@HYT_change_password">Change password</p>
+                  <mat-icon>clear</mat-icon>
+                </button>
+              </ng-container>
+            </div>
+            <div
+              *ngIf="fileToUpload != null"
+              class="container-form-field col-12"
+            >
+              <p i18n="@@HYT_preview">Preview</p>
+              <hyt-topbar
+                [preview-mode]="true"
+                [logoPath]="logoPath"
+                [logoMobilePath]="logoMobilePath"
+              ></hyt-topbar>
             </div>
 
-            <div id="row-form-password" class="row">
+            <div class="container-form-field col-12">
+              <hr />
+            </div>
 
-                <div id="container-form-password" class="col-12">
+            <div class="col-12">
+              <h3 i18n="@@HYT_color_schema">Color Schema</h3>
+            </div>
+            <div class="container-form-field col-3">
+              <mat-form-field>
+                <mat-label i18n="@@HYT_primary_color">Primary Color</mat-label>
+                <input matInput formControlName="primaryColor" type="color" />
+              </mat-form-field>
+            </div>
+            <div class="container-form-field col-3">
+              <mat-form-field>
+                <mat-label i18n="@@HYT_secondary_color"
+                  >Secondary Color</mat-label
+                >
+                <input matInput formControlName="secondaryColor" type="color" />
+              </mat-form-field>
+            </div>
 
-                    <form #cpf="ngForm" id="form-password" [formGroup]="changePasswordForm" (ngSubmit)="updatePassword()" (keydown)="keyDownFunction($event)">
-                    <!--form id="form-password"-->
+            <ng-container *ngIf="this.brandingForm.dirty">
+              <button
+                mat-icon-button
+                aria-label="reset logo button"
+                (click)="resetColorSchema()"
+              >
+                <mat-icon>clear</mat-icon>
+              </button>
+            </ng-container>
 
-                        <div class="row row-field-password">
+            <div class="container-form-field col-12">
+              <div class="btn-group">
+                <!-- [isDisabled]="!fileToUpload" -->
+                <hyt-button
+                  id="save-logo-btn"
+                  [isDisabled]="canNotSaveTheme"
+                  (clickFn)="saveTheme()"
+                  type="submit"
+                >
+                  <ng-container i18n="@@HYT_save">Save</ng-container>
+                </hyt-button>
 
-                            <div class="container-form-field col-12">
+                <hyt-button
+                  id="reset-logo-btn"
+                  (clickFn)="restoreDefaultTheme(logoFileInput)"
+                  [isDisabled]="!isBrandedTheme"
+                  type="submit"
+                >
+                  <ng-container i18n="@@HYT_restore_default"
+                    >Restore default</ng-container
+                  >
+                </hyt-button>
+              </div>
+            </div>
 
-                                <hyt-input-text
-                                    [form]="changePasswordForm"
-                                    formControlName="oldPassword"
-                                    name="oldPassword"
-                                    [isRequired]="true"
-                                    placeholder="Old Password"
-                                    [injectedErrorMsg]="error"
-                                    type="password"
-                                    [isPassword]="true"
-                                >
-                                </hyt-input-text>
-
-                            </div> <!-- Field Old Password -->
-
-                            <div class="container-form-field col-12">
-
-                                <hyt-input-text
-                                    [form]="changePasswordForm"
-                                    formControlName="newPassword"
-                                    name="newPassword"
-                                    [isPassword]="true"
-                                    type="password"
-                                    [isRequired]="true"
-                                    placeholder="New Password"
-                                    errorPosition="bottom"
-                                >
-                                </hyt-input-text>
-
-                            </div> <!-- Field New Password -->
-
-                            <div class="container-form-field col-12">
-
-                                <hyt-input-text
-                                    [form]="changePasswordForm"
-                                    formControlName="confirmPassword"
-                                    name="confirmPassword"
-                                    confirmPassword="newPassword"
-                                    type="password"
-                                    [isRequired]="true"
-                                    placeholder="Confirm password"
-                                >
-                                </hyt-input-text>
-
-                            </div> <!-- Field Confirm Password -->
-
-                            <div class="container-form-field col-12 btn-form-account">
-                                <hyt-button
-                                    id ="change-password-btn"
-                                    type="submit"
-                                    [isDisabled]="notValidCpf() || loading || passwordChanged"
-                                >
-                                    <ng-container i18n="@@HYT_change_password">Change password</ng-container>
-                                </hyt-button>
-                            </div> <!-- Container Change Password Button -->
-
-                        </div>
-
-                    </form>
-
+            <ng-container *ngIf="logoErrorMessage.showError">
+              <div class="container-form-field col-12">
+                <div id="logo-error-container">
+                  {{ logoErrorMessage.message }}
                 </div>
+              </div>
+            </ng-container>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 
+  <div *ngIf="defaultDashboardSettings" class="row row-box">
+    <div class="col-12 mt-2">
+      <div class="title-box">
+        <p i18n="@@HYT_default_dashboard_settings">
+          Configurazioni di default delle Dashboard
+        </p>
+      </div>
+      <div class="col-12">
+        <section
+          [formGroup]="defaultDashboardSettings"
+          class="d-flex flex-column my-3"
+        >
+          <div class="row col-6 align-items-baseline justify-content-between">
+            <label for="">Dashboard Progetto</label>
+            <mat-button-toggle-group
+              formControlName="defaultProjectsDashboardDataSource"
+            >
+              <mat-button-toggle
+                [value]="DashboardTypeEnum.REALTIME"
+                i18n="@@HYT_default_realtime"
+              >
+                Real-Time
+              </mat-button-toggle>
+              <mat-button-toggle
+                [value]="DashboardTypeEnum.OFFLINE"
+                i18n="@@HYT_default_offline"
+              >
+                Offline
+              </mat-button-toggle>
+            </mat-button-toggle-group>
+          </div>
+          <div class="row col-6 align-items-baseline justify-content-between">
+            <label for="">Dashboard Area</label>
+            <mat-button-toggle-group
+              formControlName="defaultAreasDashboardDataSource"
+            >
+              <mat-button-toggle
+                [value]="DashboardTypeEnum.REALTIME"
+                i18n="@@HYT_default_realtime"
+              >
+                Real-Time
+              </mat-button-toggle>
+              <mat-button-toggle
+                [value]="DashboardTypeEnum.OFFLINE"
+                i18n="@@HYT_default_offline"
+              >
+                Offline
+              </mat-button-toggle>
+            </mat-button-toggle-group>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="wentWrong" class="row" (click)="updatePassword()">
+    <p style="color: red">{{ errMsg }}</p>
+  </div>
+
+  <div *ngIf="passwordChanged" class="row" (click)="updatePassword()">
+    <p style="color: green">{{ succesMsgPwd }}</p>
+  </div>
+
+  <div *ngIf="personalInfoUpdated" class="row" (click)="updatePersonalInfo()">
+    <p style="color: green">{{ successMsg }}</p>
+  </div>
+
+  <div id="row-box-details" class="row row-box">
+    <div id="container-box-details" class="col-6">
+      <div class="title-box">
+        <img
+          src="./../../../../assets/images/account/personal-info-icon.svg"
+          class="title-icon"
+          id="icon-details-section"
+          alt="Icon Personal Info Section"
+        />
+        <p i18n="@@HYT_personal_info">Personal Info</p>
+      </div>
+
+      <div id="row-form-details" class="row">
+        <div id="container-form-details" class="col-12">
+          <form
+            #pif="ngForm"
+            id="form-details"
+            [formGroup]="personalInfoForm"
+            (ngSubmit)="updatePersonalInfo()"
+            (keydown)="keyDownFunction($event)"
+          >
+            <div class="row row-field-details">
+              <div class="container-form-field col-12">
+                <hyt-input-text
+                  [form]="personalInfoForm"
+                  formControlName="username"
+                  name="username"
+                  [isRequired]="true"
+                  placeholder="Username"
+                  [fieldValue]="user.username"
+                >
+                </hyt-input-text>
+                <!-- [injectedErrorMsg]="error" -->
+              </div>
+              <!-- Field Username -->
+
+              <div class="container-form-field col-12">
+                <hyt-input-text
+                  [form]="personalInfoForm"
+                  formControlName="email"
+                  name="email"
+                  [isEmail]="true"
+                  [isRequired]="true"
+                  placeholder="Email"
+                  [fieldValue]="user.email"
+                >
+                </hyt-input-text>
+                <!-- [injectedErrorMsg]="error" -->
+              </div>
+              <!-- End Field Email -->
+
+              <div class="container-form-field col-12">
+                <hyt-input-text
+                  [form]="personalInfoForm"
+                  formControlName="name"
+                  name="name"
+                  [isRequired]="true"
+                  placeholder="Name"
+                  [fieldValue]="user.name"
+                >
+                </hyt-input-text>
+                <!-- [injectedErrorMsg]="error" -->
+              </div>
+              <!-- End Field Name -->
+
+              <div class="container-form-field col-12">
+                <hyt-input-text
+                  [form]="personalInfoForm"
+                  formControlName="lastname"
+                  name="lastname"
+                  [isRequired]="true"
+                  placeholder="Lastname"
+                  [fieldValue]="user.lastname"
+                >
+                </hyt-input-text>
+                <!-- [injectedErrorMsg]="error" -->
+              </div>
+              <!-- End Field Lastame -->
+
+              <div class="container-form-field col-12 btn-form-account">
+                <hyt-button
+                  id="update-info-btn"
+                  type="submit"
+                  [isDisabled]="notValidPif() || loading"
+                >
+                  <ng-container i18n="@@HYT_update_personal_info"
+                    >Update Personal Info</ng-container
+                  >
+                </hyt-button>
+              </div>
+              <!-- Container Update Details Button -->
             </div>
-
+            <!-- End Row Field -->
+          </form>
         </div>
-    </div> <!-- End Row Box Details -->
+      </div>
+    </div>
 
+    <div id="container-box-password" class="col-6">
+      <div class="title-box">
+        <img
+          src="./../../../../assets/images/account/change-password-icon.svg"
+          class="title-icon"
+          id="icon-password-section"
+          alt="Icon Password Section"
+        />
+        <p i18n="@@HYT_change_password">Change password</p>
+      </div>
+
+      <div id="row-form-password" class="row">
+        <div id="container-form-password" class="col-12">
+          <form
+            #cpf="ngForm"
+            id="form-password"
+            [formGroup]="changePasswordForm"
+            (ngSubmit)="updatePassword()"
+            (keydown)="keyDownFunction($event)"
+          >
+            <!--form id="form-password"-->
+
+            <div class="row row-field-password">
+              <div class="container-form-field col-12">
+                <hyt-input-text
+                  [form]="changePasswordForm"
+                  formControlName="oldPassword"
+                  name="oldPassword"
+                  [isRequired]="true"
+                  placeholder="Old Password"
+                  [injectedErrorMsg]="error"
+                  type="password"
+                  [isPassword]="true"
+                >
+                </hyt-input-text>
+              </div>
+              <!-- Field Old Password -->
+
+              <div class="container-form-field col-12">
+                <hyt-input-text
+                  [form]="changePasswordForm"
+                  formControlName="newPassword"
+                  name="newPassword"
+                  [isPassword]="true"
+                  type="password"
+                  [isRequired]="true"
+                  placeholder="New Password"
+                  errorPosition="bottom"
+                >
+                </hyt-input-text>
+              </div>
+              <!-- Field New Password -->
+
+              <div class="container-form-field col-12">
+                <hyt-input-text
+                  [form]="changePasswordForm"
+                  formControlName="confirmPassword"
+                  name="confirmPassword"
+                  confirmPassword="newPassword"
+                  type="password"
+                  [isRequired]="true"
+                  placeholder="Confirm password"
+                >
+                </hyt-input-text>
+              </div>
+              <!-- Field Confirm Password -->
+
+              <div class="container-form-field col-12 btn-form-account">
+                <hyt-button
+                  id="change-password-btn"
+                  type="submit"
+                  [isDisabled]="notValidCpf() || loading || passwordChanged"
+                >
+                  <ng-container i18n="@@HYT_change_password"
+                    >Change password</ng-container
+                  >
+                </hyt-button>
+              </div>
+              <!-- Container Change Password Button -->
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Row Box Details -->
 </div>

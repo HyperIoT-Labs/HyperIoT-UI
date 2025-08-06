@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { asyncScheduler, BehaviorSubject, catchError, expand, map, Observable, Subject, Subscription, takeWhile, throwError } from 'rxjs';
-import { HprojectsService } from '../../hyperiot-client/h-project-client/api-module';
+import {HProjectService} from '../../hyperiot-client/hyt-api/api-module';
 import { BaseDataService } from '../base-data.service';
 import { DataChannel } from '../models/data-channel';
 import { DataPacketFilter } from '../models/data-packet-filter';
@@ -36,7 +36,7 @@ export class OfflineDataService extends BaseDataService {
   private _initDataEmitted = false;
 
   constructor(
-    private hprojectsService: HprojectsService,
+    private hprojectsService: HProjectService,
     private dateFormatterService: DateFormatterService
   ) {
     super();
@@ -160,7 +160,7 @@ export class OfflineDataService extends BaseDataService {
       Object.values(this.dataChannels).forEach(dataChannel => {
         allPacketsId = [...new Set([...allPacketsId, ...dataChannel.getPacketIds()])];
       });
-      this.hprojectsService.scanHProject(this.hProjectId, this.dashboardTimeBounds.lower, this.dashboardTimeBounds.upper, this.DEFAULT_CHUNK_LENGTH, allPacketsId.toString(), '', '').subscribe(
+      this.hprojectsService.scanHProject1(this.hProjectId, this.dashboardTimeBounds.lower, this.dashboardTimeBounds.upper, this.DEFAULT_CHUNK_LENGTH, allPacketsId.toString(), '', '').subscribe(
         res => {
           this.initDataSubject.next(res);
           this.initDataSubject.complete();
@@ -208,9 +208,9 @@ export class OfflineDataService extends BaseDataService {
     const packetIds = dataChannel.packetFilterList.map(packetFilter => packetFilter.packetId);
 
     // optimization. First time data is fetched in a single request for all packets
-    const packetDataObs = lowerBound === this.dashboardTimeBounds.lower && !this._initDataEmitted ? 
+    const packetDataObs = lowerBound === this.dashboardTimeBounds.lower && !this._initDataEmitted ?
       this.initDataSubject.pipe(map(res => res = res.filter(x => packetIds.some(y => y === x.hPacketId)))) :
-      this.hprojectsService.scanHProject(this.hProjectId, lowerBound, this.dashboardTimeBounds.upper, chunkLength, packetIds.toString(), deviceId, alarmState);
+      this.hprojectsService.scanHProject1(this.hProjectId, lowerBound, this.dashboardTimeBounds.upper, chunkLength, packetIds.toString(), deviceId, alarmState);
 
     return packetDataObs.pipe(
       map(res => {

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DialogService, TreeNodeCategory } from 'components';
-import { AssetCategory, AssetscategoriesService, HPacket, HProject } from 'core';
+import { AssetCategory, AssetCategoriesService, HPacket, HProject } from 'core';
 import { Observable, Subscription } from 'rxjs';
 import { DeleteConfirmDialogComponent } from 'src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
 import { LoadStatus } from 'src/app/models/loadStatus';
@@ -36,7 +36,7 @@ export class AssetCategoryComponent implements OnInit {
   assetRequest: Subscription;
 
   constructor(
-    private assetCategoriesService: AssetscategoriesService,
+    private assetCategoriesService: AssetCategoriesService,
     private dialogService: DialogService,
   ) { }
 

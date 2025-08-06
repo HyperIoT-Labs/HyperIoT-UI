@@ -5,7 +5,7 @@ import { Observable, Subscription } from 'rxjs';
 
 import { Option, SelectOption } from 'components';
 
-import { Algorithm, AlgorithmConfig, AlgorithmsService, HProject, HProjectAlgorithm, HProjectAlgorithmConfig, HprojectalgorithmsService } from 'core';
+import { Algorithm, AlgorithmConfig, AlgorithmService, HProject, HProjectAlgorithm, HProjectAlgorithmConfig, HProjectAlgorithmsService } from 'core';
 
 import { ProjectFormEntity, LoadingStatusEnum } from '../project-form-entity';
 import { CronOptions } from 'components';
@@ -112,8 +112,8 @@ export class ProjectStatisticsFormComponent
 
   constructor(
     injector: Injector,
-    private algorithmsService: AlgorithmsService,
-    private hProjectAlgorithmsService: HprojectalgorithmsService,
+    private algorithmsService: AlgorithmService,
+    private hProjectAlgorithmsService: HProjectAlgorithmsService,
     private activatedRoute: ActivatedRoute,
     private cdr: ChangeDetectorRef
   ) {

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
-import { AlarmsService } from '../../hyperiot-client/alarms-client/api-module';
+import { AlarmsService } from '../../hyperiot-client/hyt-api/api-module';
 import { HytAlarm } from '../../models/hyperiot-alarm.model';
 import { RealtimeDataService } from '../../hyperiot-base/realtime-data-service/realtime-data.service';
 import { from, of } from 'rxjs';
@@ -46,18 +46,16 @@ export class LiveAlarmsEffects {
             alarms => from(alarms).pipe(
                 concatLatestFrom(
                     (alarm: any) => {
-                        const firedEvents = alarm.alarmEvents.filter(x => x.fired);
-                        const maxSeverityEvent = firedEvents.reduce((maxSeverityEvt, evt) => {
+                        const maxSeverityEvent = alarm.alarmEvents.reduce((maxSeverityEvt, evt) => {
                             return evt.severity > maxSeverityEvt.severity ? evt : maxSeverityEvt;
-                        }, firedEvents[0]);
+                        }, alarm.alarmEvents[0]);
                         return this.store.select(HDeviceSelectors.selectHDevcicesByRuleId({ ruleId: maxSeverityEvent.ruleId }));
                     }
                 ),
                 map(([alarm, devices]) => {
-                    const firedEvents = alarm.alarmEvents.filter(x => x.fired);
-                    const maxSeverityEvent = firedEvents.reduce((maxSeverityEvt, evt) => {
+                    const maxSeverityEvent = alarm.alarmEvents.reduce((maxSeverityEvt, evt) => {
                         return evt.severity > maxSeverityEvt.severity ? evt : maxSeverityEvt;
-                    }, firedEvents[0]);
+                    }, alarm.alarmEvents[0]);
                     const liveAlarm: HytAlarm.LiveAlarm = {
                         alarmId: alarm.alarmId,
                         alarmName: alarm.alarmName,

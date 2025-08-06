@@ -1,10 +1,10 @@
 import { createReducer, on } from "@ngrx/store";
-import { HDevice } from "../../hyperiot-client/models/hDevice";
+import { HDevice } from "../../hyperiot-client/hyt-api/api-module";
 import { createEntityAdapter, EntityAdapter, EntityState } from "@ngrx/entity";
 import { HDeviceActions } from "./hDevices.actions";
 
 export namespace HDeviceStore {
-  
+
   export const key = 'hDevices';
 
   export interface State extends EntityState<HDevice> {

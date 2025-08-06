@@ -13,7 +13,7 @@ import { ActivatedRoute } from "@angular/router";
 
 import { Subscription } from "rxjs";
 
-import { HPacket, HpacketsService, HDevice } from "core";
+import { HPacket, HPacketService, HDevice } from "core";
 import { Option } from "components";
 
 import { ProjectFormEntity, LoadingStatusEnum } from "../project-form-entity";
@@ -146,7 +146,7 @@ export class PacketFormComponent
 
   constructor(
     injector: Injector,
-    private hPacketService: HpacketsService,
+    private hPacketService: HPacketService,
     private activatedRoute: ActivatedRoute,
     private cdr: ChangeDetectorRef
   ) {
@@ -217,11 +217,11 @@ export class PacketFormComponent
 
   hpacketTypeChange(event) {
     this.entity.type = event;
-    
+
     let optionFormatText = this.formatOptions.find(
         (opt) => opt.value === HPacket.FormatEnum.TEXT
     );
-    
+
     if (this.entity.type === "OUTPUT" && this.entity.serialization !== 'AVRO') {
       optionFormatText.disabled = false;
     } else {

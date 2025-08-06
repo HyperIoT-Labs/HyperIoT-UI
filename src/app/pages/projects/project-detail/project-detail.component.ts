@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, zip, Observer, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { HprojectsService, HProject, HdevicesService, HDevice, HpacketsService, HPacket, Rule, Logger, LoggerService } from 'core';
+import { HProjectService, HProject, HDevicesService, HDevice, HPacketService, HPacket, Rule, Logger, LoggerService } from 'core';
 import { TreeDataNode, HytConfirmRecordingActionComponent, DialogService } from 'components';
 
 import { HytTreeViewProjectComponent } from 'components';
@@ -141,9 +141,9 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
   dashBackButton: boolean;
 
   constructor(
-    private hProjectService: HprojectsService,
-    private hDeviceService: HdevicesService,
-    private packetService: HpacketsService,
+    private hProjectService: HProjectService,
+    private hDeviceService: HDevicesService,
+    private packetService: HPacketService,
     private dashboardConfigService: DashboardConfigService,
     private activatedRoute: ActivatedRoute,
     private router: Router,

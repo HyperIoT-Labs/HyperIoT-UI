@@ -5,7 +5,7 @@
         [useSpinner]="useSpinner" [customSettingsStatus]="pageStatus"></hyperiot-packet-select>
 
     <!-- TREND Settings -->
-     <div id="time-chart-settings" class="pt-10" *ngIf="packetPageStatus === 1 && pageStatus === 1">
+     <div id="time-chart-settings" class="pt-10" *ngIf="checkbox && pageStatus === 1 && pageStatus === 1">
             <div class="box-fields-customization-title">
                 <h3 id="title-thresholds">Trend</h3>
             </div>
@@ -50,19 +50,19 @@
                                                         <div class="line-option"
                                                             [ngClass]="trendControl.get('line.type').value"></div>
                                                     </mat-select-trigger>
-    
+
                                                     <mat-option *ngFor="let lineType of lineTypeOptions"
                                                         [value]="lineType">
                                                         <div class="line-option" [ngClass]="lineType"></div>
                                                     </mat-option>
                                                 </mat-select>
                                             </mat-form-field>
-    
+
                                             <!-- Thickness Input -->
                                             <ng-template #empty>
                                                 <div></div>
                                             </ng-template>
-                                            
+
                                             <input class="thickness" matInput type="number" formControlName="thickness" min="1" max="5"
                                                 placeholder="Thickness" />
                                         </div>
@@ -157,20 +157,20 @@
                                                         <div class="line-option"
                                                             [ngClass]="thresholdControl.get('line.type').value"></div>
                                                     </mat-select-trigger>
-    
+
                                                     <mat-option *ngFor="let lineType of lineTypeOptions"
                                                         [value]="lineType">
                                                         <div class="line-option" [ngClass]="lineType"></div>
                                                     </mat-option>
                                                 </mat-select>
                                             </mat-form-field>
-    
+
                                             <!-- Thickness Input -->
                                             <ng-template #empty>
                                                 <div></div>
                                             </ng-template>
-                                            
-                                            <input [ngClass]="{ 
+
+                                            <input [ngClass]="{
                                                     'thickness': thresholdControl.get('line.type').value && thresholdControl.get('line.type').value !== null,
                                                     'no-thickness': !thresholdControl.get('line.type').value || thresholdControl.get('line.type').value === null
                                                 }" matInput type="number" formControlName="thickness" min="1" max="5"

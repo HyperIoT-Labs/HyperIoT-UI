@@ -1,126 +1,126 @@
 {
   "/hyperiot/authentication/*": {
-    "target": "http://localhost:8181",
+    "target": "http://microservices-coll.hyperiot.cloud",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
   },
   "/hyperiot/husers/*": {
-    "target": "http://localhost:8181",
+    "target": "http://microservices-coll.hyperiot.cloud",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
   },
   "/hyperiot/roles/*": {
-    "target": "http://localhost:8181",
+    "target": "http://microservices-coll.hyperiot.cloud",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
   },
   "/hyperiot/permissions/*": {
-    "target": "http://localhost:8181",
+    "target": "http://microservices-coll.hyperiot.cloud",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
   },
   "/hyperiot/hprojects/*": {
-    "target": "http://localhost:8181",
+    "target": "http://microservices-coll.hyperiot.cloud",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
   },
   "/hyperiot/hdevices/*": {
-    "target": "http://localhost:8181",
+    "target": "http://microservices-coll.hyperiot.cloud",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
   },
   "/hyperiot/hpackets/*": {
-    "target": "http://localhost:8181",
+    "target": "http://microservices-coll.hyperiot.cloud",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
   },
   "/hyperiot/rules/*": {
-    "target": "http://localhost:8181",
+    "target": "http://microservices-coll.hyperiot.cloud",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
   },
   "/hyperiot/alarms/*": {
-    "target": "http://localhost:8181",
+    "target": "http://microservices-coll.hyperiot.cloud",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
-  }, 
+  },
   "/hyperiot/alarmevents/*": {
-    "target": "http://localhost:8181",
+    "target": "http://microservices-coll.hyperiot.cloud",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
   },
   "/hyperiot/dashboards/*": {
-    "target": "http://localhost:8181",
+    "target": "http://microservices-coll.hyperiot.cloud",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
   },
   "/hyperiot/dashboardwidgets/*": {
-    "target": "http://localhost:8181",
+    "target": "http://microservices-coll.hyperiot.cloud",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
   },
   "/hyperiot/assets/*": {
-    "target": "http://localhost:8181",
+    "target": "http://microservices-coll.hyperiot.cloud",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
   },
   "/hyperiot/widgets/*": {
-    "target": "http://localhost:8181",
+    "target": "http://microservices-coll.hyperiot.cloud",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
   },
   "/hyperiot/ws/*": {
-    "target": "http://localhost:8181",
+    "target": "http://microservices-coll.hyperiot.cloud",
     "secure": false,
     "logLevel": "debug",
     "ws": true
   },
   "/hyperiot/storm/*": {
-    "target": "http://localhost:8181",
+    "target": "http://microservices-coll.hyperiot.cloud",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
   },
   "/hyperiot/areas/*": {
-    "target": "http://localhost:8181",
+    "target": "http://microservices-coll.hyperiot.cloud",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
   },
   "/hyperiot/hbaseconnectors/*": {
-    "target": "http://localhost:8181",
+    "target": "http://microservices-coll.hyperiot.cloud",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
   },
   "/hyperiot/algorithms/*": {
-    "target": "http://localhost:8181",
+    "target": "http://microservices-coll.hyperiot.cloud",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
   },
   "/hyperiot/hprojectalgorithms/*": {
-    "target": "http://localhost:8181",
+    "target": "http://microservices-coll.hyperiot.cloud",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
   },
   "/hyperiot/services/*": {
-    "target": "http://localhost:8181",
+    "target": "http://microservices-coll.hyperiot.cloud",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true

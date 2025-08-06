@@ -3,7 +3,7 @@ import { HYTError } from 'src/app/services/errorHandler/models/models';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { SelectOption } from 'components';
 import { PageStatusEnum } from '../model/pageStatusEnum';
-import { RulesService, HPacket } from 'core';
+import { RuleEngineService, HPacket } from 'core';
 
 @Component({
   selector: 'hyt-statistics-step',
@@ -60,7 +60,7 @@ export class StatisticsStepComponent implements OnInit {
   assetCategories: number[] = [];
 
   constructor(
-    private rulesService: RulesService,
+    private rulesService: RuleEngineService,
     private fb: FormBuilder
   ) { }
 

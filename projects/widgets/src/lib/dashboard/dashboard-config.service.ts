@@ -5,15 +5,13 @@ import { map, catchError, tap } from 'rxjs/operators';
 import { Subject, forkJoin, of, mergeMap, Observable } from 'rxjs';
 
 import {
-    DashboardwidgetsService,
+    DashboardWidgetsService,
     DashboardsService,
     DashboardWidget,
-    HprojectsService,
-    AreasService,
+    HProjectService,
     Dashboard,
     StormService,
 } from 'core';
-import { DashboardWidgetPlus } from 'components';
 import { WidgetConfig } from '../base/base-widget/model/widget.model';
 import { IGNORE_ERROR_NOTIFY } from 'core';
 
@@ -26,9 +24,8 @@ export class DashboardConfigService {
 
     constructor(
         private dashboardService: DashboardsService,
-        private dashboardWidgetService: DashboardwidgetsService,
-        private hProjectService: HprojectsService,
-        private areaService: AreasService,
+        private dashboardWidgetService: DashboardWidgetsService,
+        private hProjectService: HProjectService,
         private stormService: StormService,
         private http: HttpClient
     ) { }

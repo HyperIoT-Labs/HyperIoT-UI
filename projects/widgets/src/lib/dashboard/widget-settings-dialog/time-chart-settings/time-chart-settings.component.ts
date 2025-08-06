@@ -4,7 +4,7 @@ import { ControlContainer, FormArray, FormBuilder, NgForm, Validators } from '@a
 import { Subject } from 'rxjs';
 
 import { ActivatedRoute } from "@angular/router";
-import { Rule, RulesService } from 'core';
+import { Rule, RuleEngineService } from 'core';
 import { Threshold } from '../../../base/base-widget/model/widget.model';
 import { LineTypes } from '../../model/line.model';
 import { PageStatus } from '../models/page-status';
@@ -34,7 +34,7 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy, OnChanges 
     thresholdActive: boolean = false;
     thresholdsForm: FormArray = this.fb.array([]);
     collapseThresold: boolean = false;
-    
+
     collapsedThresholdValues: any = {};
 
     trendActive: boolean = false;
@@ -80,7 +80,7 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy, OnChanges 
 
     constructor(public settingsForm: NgForm,
         private activatedRoute: ActivatedRoute,
-        private ruleService: RulesService,
+        private ruleService: RuleEngineService,
         private fb: FormBuilder
     ) { }
 
@@ -147,7 +147,7 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy, OnChanges 
         return this.packetPageStatus === PageStatus.Loading || this.pageStatus === PageStatus.Loading
             || this.pageStatus === PageStatus.Error && this.packetPageStatus === PageStatus.Error;
     }
-    
+
     updateModalApplyIsLoading(value: boolean) {
         const dataToSend = { isLoading: value };
         this.modalApply.next(dataToSend);
@@ -199,6 +199,9 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy, OnChanges 
     onSelectedFieldsChange(fields) {
         this.selectedFields = fields;
         this.trendFields = fields;
+
+        // check content of the 2 selects
+        if (!this.trendSelectedFields.some(itemId => this.selectedFields.some(field => field.id === itemId))) this.trendSelectedFields = [];
     }
 
     onSelectedPacketChange(packet) {
@@ -229,12 +232,12 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy, OnChanges 
                     color: control.get('line.color').value,
                     thickness: control.get('line.thickness').value,
                     type: control.get('line.type').value
-                } 
+                }
             }
         });
 
         this.widget.config.trend = {
-            trendActive: this.trendActive,
+            trendActive: this.trendSelectedFields.length !== 0 ? this.trendActive : false,
             trend: trend[0]
         };
     }
@@ -260,14 +263,14 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy, OnChanges 
         }
 
         //if collapsed, i have to assign previos values
-        else this.widget.config.threshold = this.collapsedThresholdValues;     
+        else this.widget.config.threshold = this.collapsedThresholdValues;
 
     }
 
     isChecked() {
         // if collapsed save previous values
         if (!this.thresholdActive) this.collapsedThresholdValues = this.widget.config.threshold;
-        
+
         // collapse or not
         this.collapseThresold = this.thresholdActive;
 
@@ -405,7 +408,7 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy, OnChanges 
                 thresholdFormGroup.get('line.type')?.setValue(singleRule ? LineTypes.Linear : null);
             }
         }
-        
+
         this.filterThresholds();
         if (Object.keys(this.filteredThresholds).length > 0 && !this.emptyControlFound()) {
             this.addThresholdToForm({

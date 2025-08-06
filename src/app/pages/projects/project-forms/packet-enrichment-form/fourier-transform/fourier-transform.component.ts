@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
-import { HPacket, HProject, HpacketsService, HPacketField } from 'core';
+import { HPacket, HProject, HPacketService, HPacketField } from 'core';
 import { EnrichmentType } from '../enrichment-type.enum';
 
 @Component({
@@ -22,7 +22,7 @@ export class FourierTransformComponent implements OnInit {
   //   transformType: new FormControl(),
   //   inputField: new FormControl(),
   //   outputField: new FormControl(),
-  // }) ; 
+  // }) ;
 
   form: FormGroup = this.fb.group({});
 
@@ -57,7 +57,7 @@ export class FourierTransformComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private hpacketService: HpacketsService,
+    private hpacketService: HPacketService,
     private cd: ChangeDetectorRef
   ) { }
 

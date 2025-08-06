@@ -1,6 +1,6 @@
 import { EntityMap, EntityMapOne, Predicate, Update } from "@ngrx/entity";
 import { createAction, props } from "@ngrx/store";
-import { HDevice } from "../../hyperiot-client/models/hDevice";
+import { HDevice } from "../../hyperiot-client/hyt-api/api-module";
 
 export namespace HDeviceActions {
     export const loadHDevices = createAction('[HDevice/API] Load HDevices');
@@ -20,5 +20,5 @@ export namespace HDeviceActions {
     export const deleteHDevice = createAction('[HDevice/API] Delete HDevice', props<{ id: number }>());
     export const deleteHDevices = createAction('[HDevice/API] Delete HDevices', props<{ ids: number[] }>());
     export const deleteHDevicesByPredicate = createAction('[HDevice/API] Delete HDevices By Predicate', props<{ predicate: Predicate<HDevice> }>());
-    export const clearHDevices = createAction('[HDevice/API] Clear HDevices');    
+    export const clearHDevices = createAction('[HDevice/API] Clear HDevices');
 }

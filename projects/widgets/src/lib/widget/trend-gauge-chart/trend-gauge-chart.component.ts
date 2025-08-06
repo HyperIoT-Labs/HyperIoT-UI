@@ -2,7 +2,7 @@ import { Component, Injector, OnDestroy, OnInit, Optional } from '@angular/core'
 import { BaseGenericComponent } from '../../base/base-generic/base-generic.component';
 import { PlotlyService } from 'angular-plotly.js';
 import { LoggerService, Logger, DataChannel, DataPacketFilter, PacketData } from 'core';
-import { asyncScheduler, bufferTime, filter, map, Subscription } from 'rxjs';
+import { asyncScheduler, bufferTime, concatMap, filter, map, reduce, scan, startWith, Subject, Subscription, switchMap, withLatestFrom } from 'rxjs';
 import { WidgetAction } from '../../base/base-widget/model/widget.model';
 import { linearRegression } from 'simple-statistics';
 import { DashboardEventService } from '../../dashboard/services/dashboard-event.service';
@@ -23,18 +23,20 @@ import { DecimalPipe } from '@angular/common';
 export class TrendGaugeChartComponent extends BaseGenericComponent implements OnInit, OnDestroy {
 
   /**
+   * Container for the graph specifics
+   */
+  graph: any = {};
+
+  loadingOfflineData = false;
+
+  /**
    * DataChannel to subscribe to retrieve data
    */
   private dataChannel: DataChannel;
 
   /**
-   * Container for the graph specifics
-   */
-  graph: any = {};
-
-  /**
    * Field selected in configuration
-   */
+  */
   private field: string;
 
   private labelField: string;
@@ -42,6 +44,10 @@ export class TrendGaugeChartComponent extends BaseGenericComponent implements On
   private channelId: number;
 
   private offControllerSubscription: Subscription;
+
+  get plotlyInstance() {
+    return this.plotly.getInstanceByDivId(`widget-${this.widget.id}${this.isToolbarVisible}`);
+  }
 
   readonly gauge = {
     axis: {
@@ -69,11 +75,11 @@ export class TrendGaugeChartComponent extends BaseGenericComponent implements On
 
   protected logger: Logger;
 
-  loadingOfflineData = false;
+  readonly accumulator = [];
 
   constructor(
     injector: Injector,
-    @Optional() public plotly: PlotlyService,
+    public plotly: PlotlyService,
     private dashboardEvent: DashboardEventService,
     private decimalPipe: DecimalPipe,
     protected loggerService: LoggerService
@@ -88,19 +94,28 @@ export class TrendGaugeChartComponent extends BaseGenericComponent implements On
 
     this.configure();
 
-    this.dashboardEvent.timelineEvent.subscribe(async (res) => {
-      this.loadingOfflineData = false;
-      this.reset();
-    });
+    this.dashboardEvent.timelineEvent
+      .subscribe({
+        next: async (res) => {
+          this.loadingOfflineData = false;
+          await this.reset();
+        }
+      })
   }
 
   ngOnDestroy(): void {
     this.offControllerSubscription?.unsubscribe();
+
+    this.dataSubscription?.unsubscribe();
+    this.dataService?.removeDataChannel(this.channelId);
+
+    this.ngOnDestroy();
   }
 
-  private reset() {
+  private async reset(): Promise<void> {
     this.lastValue = undefined;
-    this.renderData(this.lastValue);
+    this.accumulator.length = 0;
+    await this.renderData(this.lastValue);
   }
 
   /**
@@ -142,32 +157,23 @@ export class TrendGaugeChartComponent extends BaseGenericComponent implements On
    * Compute packetData and buffer it to be structure in the right way and to be passed to renderData
    * @param packetData
    */
-  computePacketData(packetData: PacketData[]) {
+  async computePacketData(packetData: PacketData[]) {
     this.logger.debug('computePacketData -> packetData: ', packetData);
 
     const value = this.slope([...packetData]);
 
-    let currentValue = value;
-    if (value === Infinity) {
-      currentValue = 1;
-    } else if (value === -Infinity) {
-      currentValue = -1;
-    } else if (value > 1 || value < -1) {
-      currentValue = undefined;
-    }
-
-    this.lastValue = this.decimalPipe.transform(currentValue, '1.1-1');
-    this.renderData(this.lastValue);
+    await this.renderData(value);
   }
 
   /**
    * Slope in mathematics refers to the measure of the steepness or incline of a line
    */
-  private slope(packetData: PacketData[]) {
-    const regressionData = packetData.map((datum, index) => [
-      index,
-      parseFloat(datum[this.field])
-    ]);
+  private slope(packetData: PacketData[]): number {
+    const regressionData = packetData
+      .map((datum, index) => [
+        index,
+        parseFloat(datum[this.field])
+      ]);
 
     const lr = linearRegression(regressionData);
     return lr.m;
@@ -178,10 +184,29 @@ export class TrendGaugeChartComponent extends BaseGenericComponent implements On
    * The commented part is left there in case we'll want to add the arrow indicator
    * @param packetData
    */
-  private async renderData(value: string): Promise<void> {
-    const graph = this.plotly.getInstanceByDivId(`widget-${this.widget.id}${this.isToolbarVisible}`);
+  private async renderData(value: number | string): Promise<void> {
+    const graph = this.plotlyInstance;
     if (graph) {
       const Plotly = await this.plotly.getPlotly();
+
+      if (typeof value === 'number') {
+        let currentValue = value;
+        let symbol = '';
+        if (value === Infinity || value > 1) {
+          currentValue = 1;
+          symbol = '> ';
+        } else if (value === -Infinity || value < -1) {
+          currentValue = -1;
+          symbol = '< ';
+        }
+
+        this.lastValue = symbol + this.decimalPipe.transform(currentValue, '1.1-2');
+        if (this.lastValue === 'null') {
+          this.lastValue = 'ND';
+        }
+      } else {
+        this.lastValue = value ? value : 'ND';
+      }
 
       const gauge = this.gauge;
       gauge.threshold.value = value;
@@ -189,11 +214,15 @@ export class TrendGaugeChartComponent extends BaseGenericComponent implements On
       Plotly.update(
         graph,
         {
-          value,
           gauge
         },
         this.graph.layout
       );
+
+      const oldValueOnlyNumber = graph.querySelector(".indicatorlayer .numbers text");
+      if (oldValueOnlyNumber) {
+        oldValueOnlyNumber.textContent = this.lastValue;
+      }
     }
   }
 
@@ -207,7 +236,7 @@ export class TrendGaugeChartComponent extends BaseGenericComponent implements On
       value: undefined,
       title: {
         text: (() => {
-          const title = this.widget.config.title.text || this.labelField;
+          const title = this.labelField;
           return title.charAt(0).toUpperCase() + title.slice(1);
         })(),
         font: {
@@ -228,18 +257,6 @@ export class TrendGaugeChartComponent extends BaseGenericComponent implements On
       font: {
         color: this.widget.config.textColor,
         family: 'Exo'
-      },
-      xaxis: {
-        showgrid: false,
-        automargin: true,
-        zeroline: false,
-        visible: false
-      },
-      yaxis: {
-        showgrid: false,
-        automargin: true,
-        zeroline: false,
-        visible: false
       },
       showlegend: false,
       autosize: true,
@@ -277,18 +294,20 @@ export class TrendGaugeChartComponent extends BaseGenericComponent implements On
     this.subscribeDataChannel();
 
     const resizeObserver = new ResizeObserver((entries) => {
-      const graph = this.plotly.getInstanceByDivId(
-        `widget-${this.widget.id}${this.isToolbarVisible}`
-      );
-
+      const graph = this.plotlyInstance;
       if (graph) {
         this.plotly.resize(graph);
+
+        setTimeout(() => {
+          const oldValueOnlyNumber = graph.querySelector(".indicatorlayer .numbers text");
+          if (oldValueOnlyNumber) {
+            oldValueOnlyNumber.textContent = this.lastValue;
+          }
+        }, 100);
       }
     });
 
-    resizeObserver.observe(
-      document.querySelector(`#widget-${this.widget.id}${this.isToolbarVisible}`)
-    );
+    resizeObserver.observe(this.plotlyInstance);
   }
 
   private subscribeDataChannel(): void {
@@ -316,48 +335,48 @@ export class TrendGaugeChartComponent extends BaseGenericComponent implements On
         map((dataChunk) => dataChunk.data),
         bufferTime(this.widget.config.refreshIntervalMillis || 0),
         filter((data) => data.length !== 0),
-        map((data) => [].concat.apply([], data))
-      )
-      .subscribe((eventData) => {
-        this.loadingOfflineData = false;
-        this.computePacketData(eventData);
+        map((data) => [].concat.apply([], data)),
+        withLatestFrom(this.dataChannel.controller.$totalCount),
+      ).subscribe({
+        next: async ([eventData, totalCount]) => {
+          this.loadingOfflineData = true;
+
+          this.accumulator.push(...eventData);
+
+          if (totalCount === this.accumulator.length) {
+            this.loadingOfflineData = false;
+
+            const filtered = this.accumulator.filter((datum) => datum?.[this.field]);
+            await this.computePacketData(filtered);
+
+            this.accumulator.length = 0;
+          }
+        }
       });
 
     if (this.serviceType === ServiceType.OFFLINE) {
       this.logger.debug("subscribeAndInit - OFFLINE Service");
-      this.offControllerSubscription =
-        this.dataChannel.controller.$totalCount.subscribe((res) => {
-          if (this.isToolbarVisible) {
-            this.graph.data.forEach((tsd) => {
-              (tsd.x = []), (tsd.y = []);
-            });
-
-            if (res !== 0) {
-              this.dataRequest();
+      this.offControllerSubscription = this.dataChannel.controller.$totalCount
+        .subscribe({
+          next: async (res: number) => {
+            if (this.isToolbarVisible) {
+              if (res > 0) {
+                this.dataService.loadAllRangeData(this.channelId);
+              } else {
+                await this.renderData(undefined);
+              }
+            } else { // if fullscreen
+              await this.renderData(this.initData);
             }
-          } else { // if fullscreen   
-            this.lastValue = this.initData;         
-            this.renderData(this.lastValue);
           }
         });
     }
   }
 
-  // OFFLINE
-  private dataRequest(): void {
-    this.logger.debug("dataRequest");
-    if (this.loadingOfflineData || this.dataChannel?.controller.rangeLoaded) {
-      return;
-    }
-    this.logger.debug("dataRequest triggered");
-    this.loadingOfflineData = true;
-
-    this.dataService.loadNextData(this.channelId);
-  }
 
   /**
    * Called when one of the toolbar options is pressed and emits the correct event
-   * @param action 
+   * @param action
    */
   onToolbarAction(action: string): void {
     const widgetAction: WidgetAction = { widget: this.widget, action };

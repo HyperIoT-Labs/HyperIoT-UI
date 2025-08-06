@@ -9,7 +9,7 @@ import { Router } from "@angular/router";
 import { PageStatus } from "./models/pageStatus";
 import {
   HProject,
-  HprojectsService,
+  HProjectService,
   HProjectSharingInfo,
   LoggerService,
   Logger,
@@ -68,7 +68,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
-    private hProjectService: HprojectsService,
+    private hProjectService: HProjectService,
     private fb: FormBuilder,
     private projectsService: ProjectsService,
     private notificationManagerService: NotificationManagerService,

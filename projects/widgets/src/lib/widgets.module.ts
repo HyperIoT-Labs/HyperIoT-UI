@@ -84,7 +84,7 @@ import { TrendGaugeChartComponent } from './widget/trend-gauge-chart/trend-gauge
     MatTableModule,
     MatPaginatorModule,
     MatTooltipModule,
-    BrowserModule, 
+    BrowserModule,
     BrowserAnimationsModule,
     MomentModule.forRoot({
       relativeTimeThresholdOptions: {

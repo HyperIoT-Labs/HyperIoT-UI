@@ -1,6 +1,6 @@
 import { EntityMap, EntityMapOne, Predicate, Update } from "@ngrx/entity";
 import { createAction, props } from "@ngrx/store";
-import { HProject } from "../../hyperiot-client/models/hProject";
+import { HProject } from "../../hyperiot-client/hyt-api/api-module/model/hProject";
 
 export namespace HProjectActions {
 

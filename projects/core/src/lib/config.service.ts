@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { RulesService } from './hyperiot-client/rule-client/api-module/api/rules.service';
+import { RuleEngineService } from './hyperiot-client/hyt-api/api-module';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +12,7 @@ export class CoreConfig {
   public ruleNodes;
 
   constructor(
-    private rulesService: RulesService,
+    private rulesService: RuleEngineService,
   ) { }
 
   fetchAvailableOperations() {

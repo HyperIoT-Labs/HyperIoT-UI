@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { SubmissionStatus } from '../models/pageStatus';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { HusersService, LoggerService, Logger } from 'core';
+import { HUserService, LoggerService, Logger } from 'core';
 import { AuthenticationHttpErrorHandlerService } from 'src/app/services/errorHandler/authentication-http-error-handler.service';
 import { HYTError } from 'src/app/services/errorHandler/models/models';
 
@@ -41,7 +41,7 @@ export class PasswordRecoveryComponent implements OnInit {
    * class constructor
    */
   constructor(
-    private hUserService: HusersService,
+    private hUserService: HUserService,
     private httperrorHandler: AuthenticationHttpErrorHandlerService,
     private fb: FormBuilder,
     private loggerService: LoggerService
@@ -63,7 +63,7 @@ export class PasswordRecoveryComponent implements OnInit {
    */
   recoveryRequest() {
     this.recoverMailStatus = SubmissionStatus.Default;
-    this.hUserService.resetPasswordRequest(this.recoverMailForm.value.email).subscribe(
+    this.hUserService.resetPasswordRequest1(this.recoverMailForm.value.email).subscribe(
       res => {
         this.logger.debug('email address:', res);
         this.recoverMailStatus = SubmissionStatus.Submitted;

@@ -1,14 +1,14 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 
 import { HDeviceStore } from './hDevices.reducer'
-import { HDevice } from '../../hyperiot-client/models/hDevice';
+import { HDevice } from '../../hyperiot-client/hyt-api/api-module';
 import { RuleSelectors } from '../rules/rules.selectors';
 import { HPacketSelectors } from '../hPackets/hPackets.selectors';
 
 export namespace HDeviceSelectors {
 
   export const selectHDeviceState = createFeatureSelector<HDeviceStore.State>(HDeviceStore.key);
-    
+
   export const selectHDeviceIds = createSelector(
     selectHDeviceState,
     HDeviceStore.selectHDeviceIds // shorthand for usersState => HDeviceStore.selectHDeviceIds(usersState)

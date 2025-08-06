@@ -1,7 +1,7 @@
 import { Component, OnInit, Injector, ViewChild, ViewEncapsulation,ChangeDetectorRef } from '@angular/core';
 import { ProjectFormEntity } from '../project-form-entity';
 import { ElementRef } from '@angular/core';
-import { AssetTag, AssetstagsService } from 'core';
+import { AssetTag, AssetTagsService } from 'core';
 import { FormGroup } from '@angular/forms';
 import { SelectOption } from 'components';
 import { Router } from '@angular/router';
@@ -51,7 +51,7 @@ export class TagsFormComponent extends ProjectFormEntity implements OnInit {
   constructor(
     injector: Injector,
     private router: Router,
-    private assetsTagService: AssetstagsService,
+    private assetsTagService: AssetTagsService,
     private cdr:ChangeDetectorRef
   ) {
     super(injector,cdr);

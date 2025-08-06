@@ -2,7 +2,7 @@ import { Component, OnDestroy, ElementRef, ViewChild, Input, Injector, AfterView
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 
-import { HdevicesService, HDevice, HProject } from 'core';
+import { HDevicesService, HDevice, HProject } from 'core';
 
 import { ProjectFormEntity, LoadingStatusEnum } from '../project-form-entity';
 import { Validators } from '@angular/forms';
@@ -61,7 +61,7 @@ export class ApplicationFormComponent extends ProjectFormEntity implements After
 
   constructor(
     injector: Injector,
-    private hDeviceService: HdevicesService,
+    private hDeviceService: HDevicesService,
     private activatedRoute: ActivatedRoute,
     private cdr: ChangeDetectorRef,
   ) {

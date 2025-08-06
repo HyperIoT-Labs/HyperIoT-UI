@@ -1,6 +1,6 @@
 import { createReducer, on } from "@ngrx/store";
 import { UserSiteSettingActions } from "./user-site-setting.actions";
-import { Dashboard } from "../../hyperiot-client/models/dashboard";
+import { Dashboard } from "../../hyperiot-client/hyt-api/api-module/model/dashboard";
 
 export namespace UserSiteSettingStore {
 

@@ -2,20 +2,20 @@ import { ComponentFixture, TestBed, waitForAsync as  } from '@angular/core/testi
 
 import { PacketSelectComponent } from './packet-select.component';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
-import { HpacketsService } from '@hyperiot/core';
+import { HPacketService } from '@hyperiot/core';
 import { NgForm } from '@angular/forms';
 
 describe('PacketSelectComponent', () => {
   let component: PacketSelectComponent;
   let fixture: ComponentFixture<PacketSelectComponent>;
-  let packetService: HpacketsService;
+  let packetService: HPacketService;
   let settingsForm: NgForm;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ PacketSelectComponent ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
-      providers: [{provide: HpacketsService, useValue: packetService}, {provide: NgForm, useValue: settingsForm}]
+      providers: [{provide: HPacketService, useValue: packetService}, {provide: NgForm, useValue: settingsForm}]
     })
     .compileComponents();
   }));

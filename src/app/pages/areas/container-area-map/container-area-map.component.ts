@@ -1,10 +1,10 @@
 import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { CdkDragEnd } from '@angular/cdk/drag-drop';
-import { Area, AreaDevice, AreasService, Logger, LoggerService } from 'core';
+import { Area, AreaDevice, Area_Service, Logger, LoggerService } from 'core';
 import { PageStatus } from '../../../models/pageStatus';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { HytTreeViewProjectComponent, MapItemAction, MapTypeKey } from 'components';
+import { HytTreeViewProjectComponent, MapTypeKey, MapItemAction } from 'components';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
@@ -114,7 +114,7 @@ export class ContainerAreaMapComponent implements OnInit, OnChanges, OnDestroy {
   protected ngUnsubscribe: Subject<void> = new Subject<void>();
 
   constructor(
-    private areaService: AreasService,
+    private areaService: Area_Service,
     private httpClient: HttpClient,
     private router: Router,
     private loggerService: LoggerService

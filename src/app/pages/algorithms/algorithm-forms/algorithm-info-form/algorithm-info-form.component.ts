@@ -2,7 +2,7 @@ import { Component, ViewChild, ElementRef, Injector, ChangeDetectorRef, ViewEnca
 
 import { Subject, PartialObserver } from 'rxjs';
 
-import { AlgorithmsService, Algorithm } from 'core';
+import { AlgorithmService, Algorithm } from 'core';
 
 import { AlgorithmFormEntity, LoadingStatusEnum } from '../algorithm-form-entity';
 
@@ -49,7 +49,7 @@ export class AlgorithmInfoFormComponent extends AlgorithmFormEntity implements A
   }
 
   constructor(
-    private algorithmsService: AlgorithmsService,
+    private algorithmsService: AlgorithmService,
     injector: Injector,
     private cdr: ChangeDetectorRef
   ) {
@@ -96,7 +96,7 @@ export class AlgorithmInfoFormComponent extends AlgorithmFormEntity implements A
     this.loadingStatus = LoadingStatusEnum.Loading;
     this.cdr.detectChanges();
     /******* VALUE LOADING OVERLAY *******/
-    this.divHeight = this.overlayHeight.nativeElement.clientHeight;  
+    this.divHeight = this.overlayHeight.nativeElement.clientHeight;
     /******* END VALUE LOADING OVERLAY *******/
 
     this.entity = this.algorithm;

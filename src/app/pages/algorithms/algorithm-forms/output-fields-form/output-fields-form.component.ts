@@ -2,7 +2,7 @@ import { Component, ViewChild, ElementRef, Injector, ViewEncapsulation, ChangeDe
 
 import { Observable, Subject, PartialObserver } from 'rxjs';
 
-import { AlgorithmsService, Algorithm, AlgorithmIOField } from 'core';
+import { AlgorithmService, Algorithm, AlgorithmIOField } from 'core';
 import { AlgorithmFormEntity, LoadingStatusEnum } from '../algorithm-form-entity';
 
 import { Option } from 'components';
@@ -82,7 +82,7 @@ export class OutputFieldsFormComponent extends AlgorithmFormEntity implements On
 
   constructor(
     injector: Injector,
-    private algorithmsService: AlgorithmsService,
+    private algorithmsService: AlgorithmService,
     private cdr: ChangeDetectorRef
   ) {
     super(injector,cdr);

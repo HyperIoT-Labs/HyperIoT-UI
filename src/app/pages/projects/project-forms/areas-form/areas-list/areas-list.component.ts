@@ -19,7 +19,7 @@
  */
 
 import {Component, EventEmitter, Input, OnChanges, OnDestroy, Output, SimpleChanges, ViewEncapsulation} from '@angular/core';
-import {Area, AreasService, HprojectsService, Logger, LoggerService} from 'core';
+import {Area, Area_Service, HProjectService, Logger, LoggerService} from 'core';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 import {PageStatus} from '../../../../../models/pageStatus';
@@ -77,8 +77,8 @@ export class AreasListComponent implements OnChanges, OnDestroy {
   */
   private logger: Logger;
   constructor(
-    private projectService: HprojectsService,
-    private areaService: AreasService,
+    private projectService: HProjectService,
+    private areaService: Area_Service,
     private loggerService: LoggerService
   ) {
     // Init Logger

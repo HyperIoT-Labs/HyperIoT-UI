@@ -118,6 +118,8 @@ export { CoordinatesType } from './lib/hyt-map/models/coordinates-type';
 export * from './lib/hyt-map/models/area-icons';
 export { GenericMap } from './lib/hyt-map/models/generic-map';
 export { MapDefaultConfiguration } from './lib/hyt-map/map-configuration';
+export { MapTypeKey } from './lib/hyt-map/models/map-type-key';
+export { MapItemAction } from './lib/hyt-map/models/map-item-action';
 export { DeviceActions } from './lib/hyt-map/models/device-actions';
 
 export { RuleDefinitionComponent } from './lib/rule-definition/rule-definition.component';

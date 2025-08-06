@@ -56,3 +56,6 @@ localhost.key
 compose/data/
 proxy-config.json
 proxy-coll.config.json
+
+# Claude Code
+CLAUDE.md

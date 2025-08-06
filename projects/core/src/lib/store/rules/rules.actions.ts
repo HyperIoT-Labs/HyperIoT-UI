@@ -1,6 +1,6 @@
 import { EntityMap, EntityMapOne, Predicate, Update } from "@ngrx/entity";
 import { createAction, props } from "@ngrx/store";
-import { Rule } from "../../hyperiot-client/models/rule";
+import { Rule } from "../../hyperiot-client/hyt-api/api-module";
 
 export namespace RuleActions {
 

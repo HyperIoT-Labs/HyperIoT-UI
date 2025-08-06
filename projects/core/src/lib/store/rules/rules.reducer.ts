@@ -1,10 +1,10 @@
 import { createReducer, on, Store } from "@ngrx/store";
-import { Rule } from "../../hyperiot-client/models/rule";
+import { Rule } from "../../hyperiot-client/hyt-api/api-module";
 import { createEntityAdapter, EntityAdapter, EntityState } from "@ngrx/entity";
 import { RuleActions } from "./rules.actions";
 
 export namespace RuleStore {
-    
+
   export const key = 'rules';
 
   export const adapter: EntityAdapter<Rule> = createEntityAdapter<Rule>();
@@ -13,12 +13,12 @@ export namespace RuleStore {
     // additional entities state properties
     selectedRuleId: string | null;
   }
-  
+
   export const initialState: State = adapter.getInitialState({
     // additional entity state properties
     selectedRuleId: null,
   });
-  
+
   export const reducer = createReducer(
     initialState,
     on(RuleActions.loadRules, (state) => {
@@ -73,9 +73,9 @@ export namespace RuleStore {
       return adapter.removeAll({ ...state, selectedRuleId: null });
     })
   );
-  
+
   export const getSelectedRuleId = (state: State) => state.selectedRuleId;
-  
+
   // get the selectors
   const {
     selectIds,
@@ -83,16 +83,16 @@ export namespace RuleStore {
     selectAll,
     selectTotal,
   } = adapter.getSelectors();
-  
+
   // select the array of liveAlarm ids
   export const selectRuleIds = selectIds;
-  
+
   // select the dictionary of liveAlarm entities
   export const selectRuleEntities = selectEntities;
-  
+
   // select the array of liveAlarms
   export const selectAllRules = selectAll;
-  
+
   // select the total liveAlarm count
   export const selectRuleTotal = selectTotal;
 

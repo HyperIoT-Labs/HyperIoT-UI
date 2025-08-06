@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
-import { HdevicesService, HDevice, HProject } from 'core';
+import { HDevicesService, HDevice, HProject } from 'core';
 
 import { ProjectFormEntity, LoadingStatusEnum } from '../project-form-entity';
 import { HttpErrorHandlerService } from 'src/app/services/errorHandler/http-error-handler.service';
@@ -86,7 +86,7 @@ export class DeviceFormComponent extends ProjectFormEntity implements AfterViewI
 
   constructor(
     injector: Injector,
-    private hDeviceService: HdevicesService,
+    private hDeviceService: HDevicesService,
     private activatedRoute: ActivatedRoute,
     private cdr: ChangeDetectorRef,
     private fb: FormBuilder,
@@ -114,7 +114,7 @@ export class DeviceFormComponent extends ProjectFormEntity implements AfterViewI
 
   ngAfterViewInit(): void {
     super.ngAfterViewInit();
-    
+
   }
 
   ngOnDestroy() {
@@ -190,7 +190,7 @@ export class DeviceFormComponent extends ProjectFormEntity implements AfterViewI
     this.changePasswordForm = this.fb.group({});
     this.cdr.detectChanges();
   }
-  
+
   cancelPasswordChange(event){
     this.changePasswordForm.reset();
     this.devicePasswordChangeEnabled = false;
@@ -201,7 +201,7 @@ export class DeviceFormComponent extends ProjectFormEntity implements AfterViewI
    * errors.
    */
    updatePassword(): void {
-    
+
     let oldPassword = this.changePasswordForm.value.oldPassword;
     let newPassword = this.changePasswordForm.value.newPassword;
     let confirmPassword = this.changePasswordForm.value.confirmPassword;

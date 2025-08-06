@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { DialogService, TimeStep } from 'components';
-import { HprojectsService } from 'core';
+import { HProjectService } from 'core';
 import * as moment_ from 'moment';
 import 'moment-precise-range-plugin';
 import { TimeAxisComponent } from './time-axis/time-axis.component';
@@ -110,7 +110,7 @@ export class TimelineComponent implements OnChanges {
    * @param hprojectsService service to require data for the timeline
    */
   constructor(
-    private hprojectsService: HprojectsService,
+    private hprojectsService: HProjectService,
     private dashboardEvent: DashboardEventService,
     private dialogService: DialogService
   ) {

@@ -1,5 +1,5 @@
 import { Component, Injector } from '@angular/core';
-import { Logger, LoggerService, HytAlarm, HpacketsService, LiveAlarmSelectors } from 'core';
+import { Logger, LoggerService, HytAlarm, HPacketService, LiveAlarmSelectors } from 'core';
 import { BaseWidgetComponent } from '../../base/base-widget/base-widget.component';
 import { Option } from 'components';
 import { animate, group, query, style, transition, trigger } from '@angular/animations';
@@ -29,7 +29,7 @@ import { BehaviorSubject, combineLatest, map, Observable } from 'rxjs';
   ],
 })
 export class AlarmsWidgetComponent extends BaseWidgetComponent {
-  protected logger: Logger;  
+  protected logger: Logger;
   hPacketIdList = [];
   /**
    * Show form for filter the alarm
@@ -61,9 +61,9 @@ export class AlarmsWidgetComponent extends BaseWidgetComponent {
   filterChanges$: BehaviorSubject<string[]> = new BehaviorSubject(this.filteringSev);
 
   constructor(
-    injector: Injector, 
+    injector: Injector,
     protected loggerService: LoggerService,
-    private hPacketsService: HpacketsService,
+    private hPacketsService: HPacketService,
     private store: Store
   ) {
     super(injector, loggerService);
@@ -86,7 +86,7 @@ export class AlarmsWidgetComponent extends BaseWidgetComponent {
       })
     )
   }
-  
+
   ngAfterViewInit() {
     this.configure();
     this.hPacketsService.findAllHPacketByProjectId(this.widget.projectId).subscribe(
