@@ -29,7 +29,7 @@ import { Configuration }                                     from '../configurat
 @Injectable()
 export class HProjectAlgorithmsService {
 
-    protected basePath = 'https://localhost/hyperiot';
+    protected basePath = '/hyperiot/hprojectalgorithms';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 
@@ -559,3 +559,4 @@ export class HProjectAlgorithmsService {
     }
 
 }
+
