@@ -328,11 +328,13 @@ export class ProjectStatisticsFormComponent
     const baseConfig: AlgorithmConfig = JSON.parse(
       this.selectedAlgorithm.baseConfig
     );
+    const timezoneId = Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC';
     this.config.output = baseConfig.output;
 
     hProjectAlgorithm.config = JSON.stringify(this.config);
     hProjectAlgorithm.cronExpression = this.cronExpression;
     hProjectAlgorithm.name = this.form.get("hprojectalgorithm-name").value;
+    hProjectAlgorithm.timezoneId = timezoneId;
     hProjectAlgorithm.active = this.form.get("active").value;
 
     const wasNew = this.isNew();
