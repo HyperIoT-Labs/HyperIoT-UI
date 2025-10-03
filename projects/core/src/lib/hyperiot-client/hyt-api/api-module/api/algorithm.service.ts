@@ -262,7 +262,7 @@ export class AlgorithmService {
     /**
      * /hyperiot/algorithms/{id}
      * Service for finding algorithm
-     * @param id 
+     * @param id
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -309,7 +309,7 @@ export class AlgorithmService {
     /**
      * /hyperiot/algorithms/{algorithmType}/all
      * Service for finding all algorithm entities
-     * @param algorithmType The algorithm type 
+     * @param algorithmType The algorithm type
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -356,9 +356,9 @@ export class AlgorithmService {
     /**
      * /hyperiot/{type}/algorithms
      * Service for finding all algorithm entities
-     * @param algorithmType The algorithm type 
-     * @param delta 
-     * @param page 
+     * @param algorithmType The algorithm type
+     * @param delta
+     * @param page
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -463,7 +463,7 @@ export class AlgorithmService {
     /**
      * /hyperiot/algorithms
      * Service for adding a new algorithm entity
-     * @param body Algorithm entity which must be saved 
+     * @param body Algorithm entity which must be saved
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -516,7 +516,7 @@ export class AlgorithmService {
     /**
      * /hyperiot/algorithms
      * Service for updating a algorithm entity
-     * @param body Algorithm entity which must be updated 
+     * @param body Algorithm entity which must be updated
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -571,14 +571,14 @@ export class AlgorithmService {
      * Service for updating algorithm source file
      * @param algorithmId Algorithm ID which updates source file for
      * @param mainClassname Classname containing main method
-     * @param body Algorithm source file 
+     * @param body Algorithm source file
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public updateAlgorithmFile(algorithmId: number, mainClassname: string, body: Blob, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
-    public updateAlgorithmFile(algorithmId: number, mainClassname: string, body: Blob, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
-    public updateAlgorithmFile(algorithmId: number, mainClassname: string, body: Blob, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
-    public updateAlgorithmFile(algorithmId: number, mainClassname: string, body: Blob, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
+    public updateAlgorithmFile(algorithmId: number, mainClassname: string, body: Blob|null, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public updateAlgorithmFile(algorithmId: number, mainClassname: string, body: Blob|null, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public updateAlgorithmFile(algorithmId: number, mainClassname: string, body: Blob|null, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public updateAlgorithmFile(algorithmId: number, mainClassname: string, body: Blob|null, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
 
         if (algorithmId === null || algorithmId === undefined) {
             throw new Error('Required parameter algorithmId was null or undefined when calling updateAlgorithmFile.');
@@ -588,7 +588,7 @@ export class AlgorithmService {
             throw new Error('Required parameter mainClassname was null or undefined when calling updateAlgorithmFile.');
         }
 
-        if (body === null || body === undefined) {
+        if (body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling updateAlgorithmFile.');
         }
 
