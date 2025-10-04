@@ -169,6 +169,9 @@ export class AlgorithmJarFormComponent extends AlgorithmFormEntity implements On
       successCallback && successCallback(res);
     };
     p.entityVersion = 1;
+    if(!this.jarToUpload) {
+      this.jarToUpload = null;
+    }
     this.algorithmsService.updateAlgorithmFile(p.id, p.mainClassname, this.jarToUpload).subscribe(responseHandler, (err) => {
       this.setErrors(err);
       errorCallback && errorCallback(err);
