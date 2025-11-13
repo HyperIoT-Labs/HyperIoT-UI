@@ -175,9 +175,11 @@ export class LineChartComponent extends BaseChartComponent implements OnInit, On
     this.lastOfflineDate = null;
     this.lastRequestedDate = null;
     this.allData = [];
+    this.removeOldTrend(this.trendIndex)
   }
 
   private async newRange(): Promise<void> {
+    this.removeOldTrend(this.trendIndex)
     const plotly = await this.plotly.getPlotly();
     const graph = this.plotly.getInstanceByDivId(
       `widget-${this.widget.id}${this.isToolbarVisible}`
@@ -186,6 +188,10 @@ export class LineChartComponent extends BaseChartComponent implements OnInit, On
       'xaxis.autorange': true,
       'yaxis.autorange': true,
     });
+  }
+
+  removeOldTrend(index): void {
+      if (index && this.graph.layout.shapes) this.graph.layout.shapes.splice(index, 1);
   }
 
   configure(): void {
