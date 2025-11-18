@@ -12,7 +12,7 @@
 import { AreaMapInfo } from './areaMapInfo';
 
 
-export interface Area { 
+export interface Area {
     id?: number;
     entityVersion: number;
     readonly entityCreateDate?: Date;
@@ -24,6 +24,7 @@ export interface Area {
     mapInfo?: AreaMapInfo;
     parentArea?: Area;
     innerArea?: Array<Area>;
+    project?: { id: number|string };
 }
 export namespace Area {
     export type AreaViewTypeEnum = 'MAP' | 'BIM_XKT' | 'BIM_IFC' | 'IMAGE';
