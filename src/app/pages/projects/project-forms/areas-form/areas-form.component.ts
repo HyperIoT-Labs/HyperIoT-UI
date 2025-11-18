@@ -1399,7 +1399,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
   saveMapAreaConfiguration = (mapSettings: GenericMap) => {
     this.loadingStatus = LoadingStatusEnum.Loading;
     const parentAreaId = this.getParentAreaId();
-    const updatedArea: any = {
+    const updatedArea: Area = {
       ...this.entity,
       areaConfiguration: JSON.stringify(mapSettings),
       project: { id: this.projectId },
