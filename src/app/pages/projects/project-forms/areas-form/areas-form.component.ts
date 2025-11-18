@@ -1402,8 +1402,7 @@ export class AreasFormComponent extends ProjectFormEntity implements OnInit, Aft
     const updatedArea: Area = {
       ...this.entity,
       areaConfiguration: JSON.stringify(mapSettings),
-      //! TODO project doesn't exist on Area type
-      // project: { id: this.projectId },
+      project: { id: this.projectId },
       parentArea: parentAreaId ? { id: parentAreaId, entityVersion: null } as Area : null,
     };
     this.mapComponent.getImage().then((blob) => {
