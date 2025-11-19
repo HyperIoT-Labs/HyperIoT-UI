@@ -34,7 +34,7 @@ import { DashboardEvent } from '../../dashboard/services/dashboard-event.model';
 import { linearRegression, linearRegressionLine } from 'simple-statistics';
 
 type TrendField = {
-  index: number;
+  timestamp: Date;
   trendValue: number;
 }
 
@@ -494,12 +494,11 @@ export class LineChartComponent extends BaseChartComponent implements OnInit, On
   }
 
   private regressionLine(data: PacketData[], fieldName: string): TrendField[] {
-
     const regressionData = data
       .sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime())
       .filter(datum => datum[fieldName] != null)
-      .map((datum, index) => [
-        index,                                // x = ordine temporale crescente
+      .map((datum) => [
+        datum.timestamp.getTime(),            // x = ordine temporale crescente
         parseFloat(datum[fieldName])          // y = valore
     ]);
 
@@ -508,9 +507,9 @@ export class LineChartComponent extends BaseChartComponent implements OnInit, On
     const regressionLinePoints: [number, number][] = regressionData.map(([x]) => [x, line(x)]);
 
     return regressionLinePoints.map(([x, y]) => ({
-      index: x,
+      timestamp: new Date(x),
       trendValue: y
-    }));
+    })); 
   }
 
   private calculateTrend(data: PacketData[]): void {
@@ -527,24 +526,33 @@ export class LineChartComponent extends BaseChartComponent implements OnInit, On
       this.graph.layout.shapes.splice(this.trendIndex, 1);
     }
 
+    if (trendData.length < 2) {
+      console.warn('Trend data insufficient to draw a line.');
+      return;
+    }
+
+    // Estremo min/max dei timestamp per normalizzare X
+    const xMin = trendData[0].timestamp.getTime();
+    const xMax = trendData[trendData.length - 1].timestamp.getTime();
+    const normalizeX = (x: number) => (x - xMin) / (xMax - xMin);
+
     this.graph.layout.shapes.push({
-      type: 'line',
-      xref: 'paper',
+        type: 'line',
+        xref: 'paper',  // X normalizzato tra 0 e 1
+        yref: 'y',      // Y reale
 
-      // Through any two points, there is exactly one straight line        
-      x0: 0,
-      y0: trendData[0].trendValue,
+        x0: normalizeX(trendData[0].timestamp.getTime()),
+        y0: trendData[0].trendValue,
 
-      x1: 1,
-      y1: trendData[1].trendValue,
+        x1: normalizeX(trendData[trendData.length - 1].timestamp.getTime()),
+        y1: trendData[trendData.length - 1].trendValue,
 
-      yref: 'y',
-      line: {
-        color: trend.line.color,
-        width: trend.line.thickness,
-        dash: this.getLineDash(trend.line.type)
-      },
-    });
+        line: {
+          color: trend.line.color,
+          width: trend.line.thickness,
+          dash: this.getLineDash(trend.line.type)
+        },
+      });
 
     // update current index
     this.trendIndex = this.graph.layout.shapes.length - 1;
