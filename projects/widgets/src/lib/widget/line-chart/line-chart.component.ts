@@ -494,11 +494,14 @@ export class LineChartComponent extends BaseChartComponent implements OnInit, On
   }
 
   private regressionLine(data: PacketData[], fieldName: string): TrendField[] {
+
     const regressionData = data
+      .sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime())
+      .filter(datum => datum[fieldName] != null)
       .map((datum, index) => [
-        index,
-        parseFloat(datum[fieldName])
-      ]);
+        index,                                // x = ordine temporale crescente
+        parseFloat(datum[fieldName])          // y = valore
+    ]);
 
     const lr = linearRegression(regressionData); // { m, b }
     const line = linearRegressionLine(lr);
