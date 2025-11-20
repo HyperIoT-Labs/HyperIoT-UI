@@ -536,10 +536,13 @@ export class LineChartComponent extends BaseChartComponent implements OnInit, On
     const xMax = trendData[trendData.length - 1].timestamp.getTime();
     const normalizeX = (x: number) => (x - xMin) / (xMax - xMin);
 
+    // Recupero asse corretto su cui disegnare
+    const yref_ = this.getAxisByField(this.graph.layout, this.trend.fieldName);
+
     this.graph.layout.shapes.push({
         type: 'line',
         xref: 'paper',  // X normalizzato tra 0 e 1
-        yref: 'y',      // Y reale
+        yref: yref_,      // Y reale
 
         x0: normalizeX(trendData[0].timestamp.getTime()),
         y0: trendData[0].trendValue,
@@ -556,6 +559,19 @@ export class LineChartComponent extends BaseChartComponent implements OnInit, On
 
     // update current index
     this.trendIndex = this.graph.layout.shapes.length - 1;
+  }
+
+  private getAxisByField(layout, fieldName) {
+    for (const key in layout) {
+      if (key.startsWith("yaxis")) {
+        const axis = layout[key];
+        if (axis.title && axis.title.text === fieldName) {
+          // yaxis → "y", yaxis2 → "y2", yaxis3 → "y3" …
+          return key.replace("axis", "");
+        }
+      }
+    }
+    return null;
   }
 
   private addThresholdToChart(threshold: Threshold, ruleArray: string[]): void {
