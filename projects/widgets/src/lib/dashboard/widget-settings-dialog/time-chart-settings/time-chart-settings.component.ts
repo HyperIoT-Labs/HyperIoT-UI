@@ -246,7 +246,7 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy, OnChanges 
         const thresholds: Threshold[] = this.thresholdsForm.controls.map(control => {
             return {
                 id: control.get('id').value,
-                rule: control.get('rule')?.value,
+                rule: this.findThresholdRule(control.get('id').value)?.ruleDefinition, // control.get('rule')?.value,
                 line: {
                     color: control.get('line.color').value,
                     thickness: control.get('line.thickness').value,
