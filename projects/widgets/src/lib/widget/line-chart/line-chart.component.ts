@@ -191,7 +191,7 @@ export class LineChartComponent extends BaseChartComponent implements OnInit, On
   }
 
   removeOldTrend(index): void {
-      if (index && this.graph.layout.shapes) this.graph.layout.shapes.splice(index, 1);
+      if (index !== undefined && this.graph.layout.shapes) this.graph.layout.shapes.splice(index, 1);
   }
 
   configure(): void {
@@ -522,7 +522,7 @@ export class LineChartComponent extends BaseChartComponent implements OnInit, On
     }
 
     //rimuovo vecchio trend
-    if (this.trendIndex) {
+    if (this.trendIndex !== undefined) {
       this.graph.layout.shapes.splice(this.trendIndex, 1);
     }
 
