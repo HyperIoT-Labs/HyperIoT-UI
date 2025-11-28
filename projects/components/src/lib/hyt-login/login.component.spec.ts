@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
-import { LoginComponent } from './login.component';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
+import {LoginComponent} from "../../../../../src/app/pages/authentication/login/login.component";
 
 describe('LoginComponent', () => {
   let component: LoginComponent;

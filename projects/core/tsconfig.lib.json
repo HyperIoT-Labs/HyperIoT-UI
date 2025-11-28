@@ -7,7 +7,7 @@
     "declaration": true,
     "declarationMap": true,
     "inlineSources": true,
-    "types": [ "node" ],
+    "types": [ "node", "@angular/localize" ],
     "lib": [
       "dom",
       "es2018"

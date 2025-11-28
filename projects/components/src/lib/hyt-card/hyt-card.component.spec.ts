@@ -1,20 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-
-import { HCardComponent } from './h-card.component';
+import {HytCardComponent} from "components";
 
 describe('HCardComponent', () => {
-  let component: HCardComponent;
-  let fixture: ComponentFixture<HCardComponent>;
+  let component: HytCardComponent;
+  let fixture: ComponentFixture<HytCardComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ HCardComponent ]
+      declarations: [ HytCardComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(HCardComponent);
+    fixture = TestBed.createComponent(HytCardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
