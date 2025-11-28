@@ -1,20 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-
-import { HCheckboxComponent } from './hyt-checkbox.component';
+import {HytCheckboxComponent} from "components";
 
 describe('HCheckboxComponent', () => {
-  let component: HCheckboxComponent;
-  let fixture: ComponentFixture<HCheckboxComponent>;
+  let component: HytCheckboxComponent;
+  let fixture: ComponentFixture<HytCheckboxComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [HCheckboxComponent]
+      declarations: [HytCheckboxComponent]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(HCheckboxComponent);
+    fixture = TestBed.createComponent(HytCheckboxComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

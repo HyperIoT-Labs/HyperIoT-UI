@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import {HytRadioButtonComponent} from "components";
 
-import { HRadioButtonComponent } from './h-radio-button.component';
 
 describe('HRadioButtonComponent', () => {
-  let component: HRadioButtonComponent;
-  let fixture: ComponentFixture<HRadioButtonComponent>;
+  let component: HytRadioButtonComponent;
+  let fixture: ComponentFixture<HytRadioButtonComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ HRadioButtonComponent ]
+      declarations: [ HytRadioButtonComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(HRadioButtonComponent);
+    fixture = TestBed.createComponent(HytRadioButtonComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

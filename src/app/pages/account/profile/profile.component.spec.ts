@@ -3,9 +3,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ProfileComponent } from './profile.component';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { HUserService } from 'core';
+import {MatFormFieldModule} from "@angular/material/form-field";
 
 describe('ProfileComponent', () => {
   let component: ProfileComponent;

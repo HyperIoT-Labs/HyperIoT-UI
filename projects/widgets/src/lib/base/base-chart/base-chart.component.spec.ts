@@ -1,10 +1,13 @@
-import { ComponentFixture, TestBed, waitForAsync as  } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { BaseChartComponent } from './base-chart.component';
+import {
+  AreasFormComponent
+} from "../../../../../../src/app/pages/projects/project-forms/areas-form/areas-form.component";
 
 describe('BaseChartComponent', () => {
-  let component: BaseChartComponent;
-  let fixture: ComponentFixture<BaseChartComponent>;
+  let component: AreasFormComponent;
+  let fixture: ComponentFixture<AreasFormComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
@@ -14,7 +17,7 @@ describe('BaseChartComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(BaseChartComponent);
+    fixture = TestBed.createComponent(AreasFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
