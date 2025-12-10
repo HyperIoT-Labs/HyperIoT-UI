@@ -160,6 +160,8 @@ $hyt-badge-color: var(--alarm-badge-color);
   .draggable-item {
     width: 54px;
     height: 54px;
+    margin-left: -27px;
+    margin-top: -27px;
   }
 }
 
@@ -167,6 +169,8 @@ $hyt-badge-color: var(--alarm-badge-color);
   .draggable-item {
     width: 44px;
     height: 44px;
+    margin-left: -22px;
+    margin-top: -22px;
   }
 }
 
@@ -174,13 +178,17 @@ $hyt-badge-color: var(--alarm-badge-color);
   .draggable-item {
     width: 40px;
     height: 40px;
+    margin-left: -20px;
+    margin-top: -20px;
   }
 }
 
 @media (max-width: 700px) {
   .draggable-item {
-    width: 35px;
-    height: 35px;
+    width: 34px;
+    height: 34px;
+    margin-left: -17px;
+    margin-top: -17px;
   }
 }
 
