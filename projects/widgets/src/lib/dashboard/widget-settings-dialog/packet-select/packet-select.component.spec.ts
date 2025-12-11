@@ -1,9 +1,9 @@
-import { ComponentFixture, TestBed, waitForAsync as  } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { PacketSelectComponent } from './packet-select.component';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
-import { HPacketService } from '@hyperiot/core';
 import { NgForm } from '@angular/forms';
+import {HPacketService} from "core";
 
 describe('PacketSelectComponent', () => {
   let component: PacketSelectComponent;

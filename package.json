@@ -1,6 +1,6 @@
 {
   "name": "hyperiot",
-  "version": "2.12.2",
+  "version": "2.12.3",
   "scripts": {
     "ng": "node_modules/.bin/ng",
     "ng-high-memory": "node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng",
@@ -14,7 +14,7 @@
     "components:watch": "ng build components --watch",
     "widgets:watch": "ng build widgets --watch",
     "libs:watch": "npm run components:watch && npm run widgets:watch",
-    "test": "ng test",
+    "test": "ng test  --watch=false --browsers=ChromeHeadless --code-coverage",
     "compodoc": "npx compodoc -p src/tsconfig.app.json",
     "postinstall": "patch-package"
   },
@@ -91,6 +91,7 @@
     "karma": "~6.3.20",
     "karma-chrome-launcher": "~3.1.0",
     "karma-coverage": "~2.0.3",
+    "karma-coverage-istanbul-reporter": "^3.0.3",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "~1.7.0",
     "ng-packagr": "^12.2.7",

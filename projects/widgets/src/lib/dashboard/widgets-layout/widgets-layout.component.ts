@@ -613,6 +613,7 @@ export class WidgetsDashboardLayoutComponent implements OnInit, OnDestroy {
           element.y !== element2.y ||
           element.cols !== element2.cols ||
           element.rows !== element2.rows ||
+          element.name !== element2.name ||
           JSON.stringify(element.config) !== JSON.stringify(element2.oldConfig)
         ) {
           updateConfig = true;

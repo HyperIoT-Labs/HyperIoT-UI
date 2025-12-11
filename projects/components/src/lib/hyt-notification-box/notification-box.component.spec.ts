@@ -1,20 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-
-import { NotificationBoxComponent } from './notification-box.component';
+import {HytNotificationBoxComponent} from "components";
 
 describe('NotificationBoxComponent', () => {
-  let component: NotificationBoxComponent;
-  let fixture: ComponentFixture<NotificationBoxComponent>;
+  let component: HytNotificationBoxComponent;
+  let fixture: ComponentFixture<HytNotificationBoxComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ NotificationBoxComponent ]
+      declarations: [ HytNotificationBoxComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NotificationBoxComponent);
+    fixture = TestBed.createComponent(HytNotificationBoxComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
