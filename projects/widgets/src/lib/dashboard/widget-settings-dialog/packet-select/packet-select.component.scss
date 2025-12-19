@@ -65,21 +65,22 @@
         .section-title {
           color: #0856b6;
           display: flex;
+        }
 
-          &.key-value-mapping {
+        .section-input {
+          margin-left: 24px;
+          margin-top: 8px;
+          display: flex;
+          gap: 32px;
+
+          &.section-input-col {
             flex-direction: column;
+            gap: 0;
           }
 
-          .section-input {
-            margin-left: 24px;
-            margin-top: 8px;
-            display: flex;
-            gap: 32px;
-
-            hyt-select-template,
-            hyt-input-template {
-              width: 30%;
-            }
+          hyt-select-template,
+          hyt-input-template {
+            width: 30%;
           }
         }
       }

@@ -133,14 +133,11 @@
                             </div>
                         </div>
 
-                        <div class="customization-container-section value-status-map"
-                            *ngIf="widget.type === 'multi-status'">
-                            <div class="key-value-mapping">
-                                <span class="section-title" i18n="@@HYT_unit_conversion_title">Value Mapping</span>
-                                <div class="section-input">
-                                    <hyperiot-widget-value-mapping name="hpacketfield-value-map-{{field.id}}"
-                                        [(ngModel)]="fieldValuesMapList[field.id]"></hyperiot-widget-value-mapping>
-                                </div>
+                        <div class="customization-container-section value-status-map" *ngIf="widget.type === 'multi-status'">
+                            <span class="section-title" i18n="@@HYT_unit_conversion_title">Value Mapping</span>
+                            <div class="section-input">
+                                <hyperiot-widget-value-mapping name="hpacketfield-value-map-{{field.id}}"
+                                    [(ngModel)]="fieldValuesMapList[field.id]"></hyperiot-widget-value-mapping>
                             </div>
                         </div>
 
@@ -170,7 +167,7 @@
                             <div class="section-title">
                                 <span i18n="@@HYT_expressions_title">Expressions</span>
                             </div>
-                            <div class="section-input">
+                            <div class="section-input section-input-col">
                                 <ng-container>
                                     <div class="rule-info">
                                         Emit a value computed through an expression.
