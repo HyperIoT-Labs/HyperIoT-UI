@@ -438,12 +438,21 @@ export class LineChartComponent extends BaseChartComponent implements OnInit, On
         };
       }
 
+      const lineSettings = this.widget.config?.fieldLineSettings?.[timeSeries.id];
+
       const tsd = {
         name: fieldName,
         x: [],
         y: [],
         yaxis: 'y' + (i + 1),
         type: '',
+        line: {
+          color: lineSettings?.color,
+          width: lineSettings?.thickness,
+          dash: this.getLineDash(lineSettings?.type),
+          simplify: false,
+          smoothing: 1.3,
+        }
       };
 
       Object.assign(tsd, this.defaultSeriesConfig);
@@ -716,7 +725,7 @@ export class LineChartComponent extends BaseChartComponent implements OnInit, On
     this.chartData = Object
       .keys(this.widget.config.packetFields)
       .map((fieldId) => {
-        return new TimeSeries(this.widget.config.packetFields[fieldId], this.widget.config.fieldAliases[fieldId])
+        return new TimeSeries(+fieldId, this.widget.config.packetFields[fieldId], this.widget.config.fieldAliases[fieldId])
       });
   }
 

@@ -59,7 +59,7 @@ export abstract class BaseChartComponent extends BaseWidgetComponent {
   public defaultSeriesConfig = {
     type: 'scatter',
     mode: 'lines',
-    line: { simplify: false, width: 2, smoothing: 1.3 },
+    // line: { simplify: false, width: 2, smoothing: 1.3 },
     connectgaps: true
   };
 
