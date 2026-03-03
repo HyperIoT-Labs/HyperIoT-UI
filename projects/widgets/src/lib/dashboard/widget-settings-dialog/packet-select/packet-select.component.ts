@@ -13,9 +13,10 @@ import { SelectOption, SelectOptionGroup, UnitConversionService } from 'componen
 import { LoggerService, Logger, HPacketFieldsHandlerService } from 'core';
 import { HPacket, HPacketField, HPacketService, Area_Service, AreaDevice, HDevice, HDevicesService } from 'core';
 import { mimeTypeList } from './MIMETypes';
-import { FieldAliases, FieldFileMimeTypes, FieldTypes, FieldUnitConversion, FieldValuesMapList } from '../../../base/base-widget/model/widget.model';
+import { FieldAliases, FieldFileMimeTypes, FieldLineSettings, FieldTypes, FieldUnitConversion, FieldValuesMapList } from '../../../base/base-widget/model/widget.model';
 import { DataSimulatorSettings } from "../data-simulator-settings/data-simulator.models";
 import { PageStatus } from '../models/page-status';
+import { DEFAULT_LINE_COLORS, LineTypes } from '../../model/line.model';
 
 @Component({
   selector: 'hyperiot-packet-select',
@@ -63,6 +64,7 @@ export class PacketSelectComponent implements OnInit, OnChanges {
   fieldTypes: FieldTypes;
   fieldFileMimeTypes: FieldFileMimeTypes;
   fieldUnitConversions: FieldUnitConversion;
+  fieldLineSettings: FieldLineSettings;
   conversionDecimalsOptions = [
     { label: '0', value: 0 },
     { label: '1', value: 1 },
@@ -75,6 +77,10 @@ export class PacketSelectComponent implements OnInit, OnChanges {
 
   aliasesDescription = $localize`:@@HYT_aliases_description:Enter an alternative name to be displayed in the widget. If the alias is empty, the field name will be displayed.`;
   dynamicLabelDescription = $localize`:@@HYT_dynamic_label_description:Dynamic Label: The registered value of this label will be displayed beneath the main field label.`;
+
+  get lineTypeOptions() {
+      return Object.values(LineTypes);
+  }
 
   allMIMETypesOptions: string[] = mimeTypeList;
   filteredMIMETypesOptions: string[];
@@ -179,6 +185,7 @@ export class PacketSelectComponent implements OnInit, OnChanges {
     this.syncUnitsConversion();
     // field custom conversion
     this.syncFieldCustomConversion();
+    this.syncLineSettings();
     this.selectedFieldsChange.emit(this.selectedFields);
   }
 
@@ -196,6 +203,7 @@ export class PacketSelectComponent implements OnInit, OnChanges {
       this.widget.config.fieldFileMimeTypes = this.fieldFileMimeTypes;
       this.widget.config.fieldTypes = {};
       this.widget.config.fieldUnitConversions = this.fieldUnitConversions;
+      this.widget.config.fieldLineSettings = this.fieldLineSettings;
       this.widget.config.fieldValuesMapList = this.fieldValuesMapList;
       this.widget.config.dynamicLabels = {
         packet: this.dynamicLabelSelectedPacket,
@@ -227,6 +235,8 @@ export class PacketSelectComponent implements OnInit, OnChanges {
       JSON.parse(JSON.stringify(this.widget.config.fieldFileMimeTypes)) : {};
     this.fieldUnitConversions = this.widget.config.fieldUnitConversions ?
       JSON.parse(JSON.stringify(this.widget.config.fieldUnitConversions)) : {};
+    this.fieldLineSettings = this.widget.config.fieldLineSettings ?
+      JSON.parse(JSON.stringify(this.widget.config.fieldLineSettings)) : {};
     this.fieldValuesMapList = this.widget.config.fieldValuesMapList ?
       JSON.parse(JSON.stringify(this.widget.config.fieldValuesMapList)) : {};
     this.fieldRules = this.widget.config.fieldCustomConversions ?
@@ -299,6 +309,7 @@ export class PacketSelectComponent implements OnInit, OnChanges {
                     });
                     packet.fields.sort((a, b) => a.name < b.name ? -1 : 1);
                     this.syncUnitsConversion();
+                    this.syncLineSettings();
                   }
                 },
                 error: (error) => {
@@ -340,6 +351,18 @@ export class PacketSelectComponent implements OnInit, OnChanges {
     };
     this.selectedFields.filter(field => field.type === 'INTEGER' || field.type === 'FLOAT' || field.type === 'DOUBLE').map((pf: HPacketField) => {
       addFieldConversion(pf);
+    });
+  }
+
+  private syncLineSettings() {
+    this.selectedFields.forEach((field, i) => {
+      if (!this.fieldLineSettings[field.id]) {
+        this.fieldLineSettings[field.id] = {
+          color: DEFAULT_LINE_COLORS[i % DEFAULT_LINE_COLORS.length],
+          thickness: 2,
+          type: LineTypes.Linear,
+        }
+      }
     });
   }
 

@@ -4,6 +4,10 @@
  */
 export class TimeSeries {
     /**
+     * Serie id
+     */
+    id: number;
+    /**
      * Serie name
      */
     name: string;
@@ -24,7 +28,8 @@ export class TimeSeries {
 
     lastBufferIndexUpdated: number;
 
-    constructor(name: string, label?: string) {
+    constructor(id: number, name: string, label?: string) {
+        this.id = id;
         this.name = name;
         this.label = label || name;
         this.x = [];
