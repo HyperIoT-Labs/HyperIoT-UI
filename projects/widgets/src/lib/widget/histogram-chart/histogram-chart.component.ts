@@ -205,7 +205,7 @@ export class HistogramChartComponent extends BaseGenericComponent implements OnI
   setTimeSeries(): void {
     Object.keys(this.widget.config.packetFields).forEach((fieldId) => {
       this.chartData.push(
-        new TimeSeries(this.widget.config.packetFields[fieldId])
+        new TimeSeries(+fieldId, this.widget.config.packetFields[fieldId])
       );
     });
   }

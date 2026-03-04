@@ -19,54 +19,68 @@
                                 <div class="input-button-row">
                                     <div class="input-row">
 
-                                        <!-- Select dell'input -->
-                                        <hyt-inner-field-select
-                                            [fields]="trendFields"
-                                            [selectedFieldsIds]="trendSelectedFields"
-                                            [isMultiSelect]="false"
-                                            (fieldSelectionChanged)="onPacketFieldTrendChange($event)"
-                                            >
-                                        </hyt-inner-field-select>
+                                        <div class="edit-row">
 
-                                        <!-- Line settings (color, thickness, type) -->
-                                        <div>
-                                            <!-- Color Picker -->
-                                            <input class="colorPicker"
-                                            [style.backgroundColor]="trendControl.get('line.color').value || defaultColor"
-                                            [cpAlphaChannel]="'disabled'" [cpOutputFormat]="'rgba'"
-                                            [(colorPicker)]="trendControl.get('line.color').value"
-                                            (colorPickerChange)="setThresholdColor(trendControl.get('line.color'),$event)" />
-                                        </div>
-                                        <hyt-info class="lh1" i18n-text="@@HYT_colorpicker_description" text="Choose the color that you want for the threshold line." style="color: #0856b6;"></hyt-info>
-
-                                        <div formGroupName="line" class="line-config"
-                                            [ngClass]="{ 'thickness-only': trendControl.get('line.type').value === null }">
-                                            <!-- Type Input (e.g., linear, dashed) -->
-                                            <mat-form-field style="width: 40% !important;"
+                                            <!-- Select dell'input -->
+                                            <hyt-inner-field-select
+                                                [fields]="trendFields"
+                                                [selectedFieldsIds]="trendSelectedFields"
+                                                [isMultiSelect]="false"
+                                                (fieldSelectionChanged)="onPacketFieldTrendChange($event)"
                                                 >
-                                                <mat-select formControlName="type"
-                                                    [ngClass]="!!trendControl.get('line.type').value">
-                                                    <mat-select-trigger>
-                                                        <div class="line-option"
-                                                            [ngClass]="trendControl.get('line.type').value"></div>
-                                                    </mat-select-trigger>
+                                            </hyt-inner-field-select>
 
-                                                    <mat-option *ngFor="let lineType of lineTypeOptions"
-                                                        [value]="lineType">
-                                                        <div class="line-option" [ngClass]="lineType"></div>
-                                                    </mat-option>
-                                                </mat-select>
-                                            </mat-form-field>
+                                            <!-- Line settings (color, thickness, type) -->
+                                            <div class="line-settings" formGroupName="line">
 
-                                            <!-- Thickness Input -->
-                                            <ng-template #empty>
-                                                <div></div>
-                                            </ng-template>
+                                                <div class="line-color">
+                                                    <!-- Color Picker -->
+                                                    <input class="colorPicker" readonly
+                                                    [style.backgroundColor]="trendControl.get('line.color').value || defaultColor"
+                                                    [cpAlphaChannel]="'disabled'" [cpOutputFormat]="'rgba'"
+                                                    [(colorPicker)]="trendControl.get('line.color').value"
+                                                    (colorPickerChange)="setThresholdColor(trendControl.get('line.color'),$event)" />
 
-                                            <input class="thickness" matInput type="number" formControlName="thickness" min="1" max="5"
-                                                placeholder="Thickness" />
+                                                    <hyt-info class="lh1" i18n-text="@@HYT_colorpicker_description" text="Choose the color that you want for the threshold line." style="color: #0856b6;"></hyt-info>
+                                                </div>
+
+                                                <div class="line-type"
+                                                    [ngClass]="{ 'thickness-only': trendControl.get('line.type').value === null }">
+                                                    <!-- Type Input (e.g., linear, dashed) -->
+                                                    <mat-form-field>
+                                                        <mat-select formControlName="type" placeholder="Type"
+                                                            [ngClass]="!!trendControl.get('line.type').value">
+                                                            <mat-select-trigger>
+                                                                <div class="line-option"
+                                                                    [ngClass]="trendControl.get('line.type').value"></div>
+                                                            </mat-select-trigger>
+
+                                                            <mat-option *ngFor="let lineType of lineTypeOptions"
+                                                                [value]="lineType">
+                                                                <div class="line-option" [ngClass]="lineType"></div>
+                                                            </mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                </div>
+                                                
+                                                <!-- Thickness Input -->
+                                                <ng-template #empty>
+                                                    <div></div>
+                                                </ng-template>
+
+                                                <div class="line-thickness">
+                                                    <mat-form-field>
+                                                        <input class="thickness" matInput type="number" formControlName="thickness" min="1" max="5"
+                                                            placeholder="Thickness" />
+                                                    </mat-form-field>
+
+                                                    <hyt-info class="lh1" i18n-text="@@HYT_line_description" text="Choose the type and thickness of the threshold line." style="color: #0856b6;"></hyt-info>
+                                                </div>
+
+                                            </div>
+
                                         </div>
-                                        <hyt-info class="lh1" i18n-text="@@HYT_line_description" text="Choose the type and thickness of the threshold line." style="color: #0856b6;"></hyt-info>
+
                                     </div>
                                 </div>
                             </div>
@@ -113,70 +127,85 @@
                             <div *ngIf="thresholdControl.get('id').value !== null">
                                 <div class="input-button-row">
                                     <div class="input-row">
-                                        <mat-form-field *ngIf="thresholdControl">
-                                            <mat-select formControlName="id" placeholder="Select rule" [defaultValue]="null"
-                                                (selectionChange)="onThresholdSelected(thresholdControl.get('id').value, true)">
-                                                <mat-select-trigger>
-                                                    {{ getSelectedThresholdName(thresholdControl.get('id').value) ||
-                                                    "Select threshold" }}
-                                                </mat-select-trigger>
-                                                <mat-optgroup *ngFor="let group of thresholds | keyvalue"
-                                                    [label]="group.key">
-                                                    <mat-option *ngFor="let rule of group.value" [value]="rule.id"
-                                                        [disabled]="disabledThresholdOption(rule)" style="white-space: normal; word-wrap: break-word; height: auto !important;">
-                                                        <div>{{ rule.name }}</div>
-                                                        <div style="font-size: 12px; color: gray;">
-                                                            {{ rule.rulePrettyDefinition ?
-                                                            formatRulePrettyDefinition(rule.rulePrettyDefinition) : ''
-                                                            }}
-                                                        </div>
-                                                    </mat-option>
-                                                </mat-optgroup>
-                                            </mat-select>
-                                        </mat-form-field>
 
-                                        <!-- Line settings (color, thickness, type) -->
-                                        <div>
-                                            <!-- Color Picker -->
-                                            <input class="colorPicker"
-                                            [style.backgroundColor]="thresholdControl.get('line.color').value || defaultColor"
-                                            [cpAlphaChannel]="'disabled'" [cpOutputFormat]="'rgba'"
-                                            [(colorPicker)]="thresholdControl.get('line.color').value"
-                                            (colorPickerChange)="setThresholdColor(thresholdControl.get('line.color'),$event)" />
-                                        </div>
-                                        <hyt-info class="lh1" i18n-text="@@HYT_colorpicker_description" text="Choose the color that you want for the threshold line." style="color: #0856b6;"></hyt-info>
+                                        <div class="edit-row">
 
-                                        <div *ngIf="thresholdControl.get('id').value" formGroupName="line" class="line-config"
-                                            [ngClass]="{ 'thickness-only': thresholdControl.get('line.type').value === null }">
-                                            <!-- Type Input (e.g., linear, dashed) -->
-                                            <mat-form-field style="width: 40% !important;"
-                                                *ngIf="thresholdControl.get('line.type').value && thresholdControl.get('line.type').value !== null; else empty">
-                                                <mat-select formControlName="type"
-                                                    [ngClass]="!!thresholdControl.get('line.type').value">
+                                            <mat-form-field *ngIf="thresholdControl">
+                                                <mat-select formControlName="id" placeholder="Select rule" [defaultValue]="null"
+                                                    (selectionChange)="onThresholdSelected(thresholdControl.get('id').value, true)">
                                                     <mat-select-trigger>
-                                                        <div class="line-option"
-                                                            [ngClass]="thresholdControl.get('line.type').value"></div>
+                                                        {{ getSelectedThresholdName(thresholdControl.get('id').value) ||
+                                                        "Select threshold" }}
                                                     </mat-select-trigger>
-
-                                                    <mat-option *ngFor="let lineType of lineTypeOptions"
-                                                        [value]="lineType">
-                                                        <div class="line-option" [ngClass]="lineType"></div>
-                                                    </mat-option>
+                                                    <mat-optgroup *ngFor="let group of thresholds | keyvalue"
+                                                        [label]="group.key">
+                                                        <mat-option *ngFor="let rule of group.value" [value]="rule.id"
+                                                            [disabled]="disabledThresholdOption(rule)" style="white-space: normal; word-wrap: break-word; height: auto !important;">
+                                                            <div>{{ rule.name }}</div>
+                                                            <div style="font-size: 12px; color: gray;">
+                                                                {{ rule.rulePrettyDefinition ?
+                                                                formatRulePrettyDefinition(rule.rulePrettyDefinition) : ''
+                                                                }}
+                                                            </div>
+                                                        </mat-option>
+                                                    </mat-optgroup>
                                                 </mat-select>
                                             </mat-form-field>
 
-                                            <!-- Thickness Input -->
-                                            <ng-template #empty>
-                                                <div></div>
-                                            </ng-template>
+                                            <!-- Line settings (color, thickness, type) -->
+                                            <div class="line-settings" formGroupName="line">
 
-                                            <input [ngClass]="{
-                                                    'thickness': thresholdControl.get('line.type').value && thresholdControl.get('line.type').value !== null,
-                                                    'no-thickness': !thresholdControl.get('line.type').value || thresholdControl.get('line.type').value === null
-                                                }" matInput type="number" formControlName="thickness" min="1" max="5"
-                                                placeholder="Thickness" />
+                                                <div class="line-color">
+                                                    <!-- Color Picker -->
+                                                    <input class="colorPicker" readonly
+                                                    [style.backgroundColor]="thresholdControl.get('line.color').value || defaultColor"
+                                                    [cpAlphaChannel]="'disabled'" [cpOutputFormat]="'rgba'"
+                                                    [(colorPicker)]="thresholdControl.get('line.color').value"
+                                                    (colorPickerChange)="setThresholdColor(thresholdControl.get('line.color'),$event)" />
+
+                                                    <hyt-info class="lh1" i18n-text="@@HYT_colorpicker_description" text="Choose the color that you want for the threshold line." style="color: #0856b6;"></hyt-info>
+                                                </div>
+
+                                                <div *ngIf="thresholdControl.get('id').value" class="line-type"
+                                                    [ngClass]="{ 'thickness-only': thresholdControl.get('line.type').value === null }">
+                                                    <!-- Type Input (e.g., linear, dashed) -->
+                                                    <mat-form-field
+                                                        *ngIf="thresholdControl.get('line.type').value && thresholdControl.get('line.type').value !== null; else empty">
+                                                        <mat-select formControlName="type" placeholder="Type"
+                                                            [ngClass]="!!thresholdControl.get('line.type').value">
+                                                            <mat-select-trigger>
+                                                                <div class="line-option"
+                                                                    [ngClass]="thresholdControl.get('line.type').value"></div>
+                                                            </mat-select-trigger>
+
+                                                            <mat-option *ngFor="let lineType of lineTypeOptions"
+                                                                [value]="lineType">
+                                                                <div class="line-option" [ngClass]="lineType"></div>
+                                                            </mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                </div>
+
+                                                <!-- Thickness Input -->
+                                                <ng-template #empty>
+                                                    <div></div>
+                                                </ng-template>
+
+                                                <div class="line-thickness">
+                                                    <mat-form-field>
+                                                        <input [ngClass]="{
+                                                                'thickness': thresholdControl.get('line.type').value && thresholdControl.get('line.type').value !== null,
+                                                                'no-thickness': !thresholdControl.get('line.type').value || thresholdControl.get('line.type').value === null
+                                                            }" matInput type="number" formControlName="thickness" min="1" max="5"
+                                                            placeholder="Thickness" />
+                                                    </mat-form-field>
+                                                    
+                                                    <hyt-info class="lh1" i18n-text="@@HYT_line_description" text="Choose the type and thickness of the threshold line." style="color: #0856b6;"></hyt-info>
+                                                </div>
+
+                                            </div>
+
                                         </div>
-                                        <hyt-info class="lh1" i18n-text="@@HYT_line_description" text="Choose the type and thickness of the threshold line." style="color: #0856b6;"></hyt-info>
 
                                         <!-- Delete button (Existing selected thresholds) -->
                                         <div *ngIf="thresholdControl.get('id').value">

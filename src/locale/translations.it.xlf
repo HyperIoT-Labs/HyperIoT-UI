@@ -2645,6 +2645,14 @@
         <source>To</source>
         <target>A</target>
       </trans-unit>
+      <trans-unit id="HYT_line_settings" datatype="html">
+        <source>Line Settings</source>
+        <target>Impostazioni Linea</target>
+      </trans-unit>
+      <trans-unit id="HYT_Thickness" datatype="html">
+        <source>Thickness</source>
+        <target>Spessore</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

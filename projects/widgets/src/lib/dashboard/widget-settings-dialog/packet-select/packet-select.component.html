@@ -133,14 +133,11 @@
                             </div>
                         </div>
 
-                        <div class="customization-container-section value-status-map"
-                            *ngIf="widget.type === 'multi-status'">
-                            <div class="key-value-mapping">
-                                <span class="section-title" i18n="@@HYT_unit_conversion_title">Value Mapping</span>
-                                <div class="section-input">
-                                    <hyperiot-widget-value-mapping name="hpacketfield-value-map-{{field.id}}"
-                                        [(ngModel)]="fieldValuesMapList[field.id]"></hyperiot-widget-value-mapping>
-                                </div>
+                        <div class="customization-container-section value-status-map" *ngIf="widget.type === 'multi-status'">
+                            <span class="section-title" i18n="@@HYT_unit_conversion_title">Value Mapping</span>
+                            <div class="section-input">
+                                <hyperiot-widget-value-mapping name="hpacketfield-value-map-{{field.id}}"
+                                    [(ngModel)]="fieldValuesMapList[field.id]"></hyperiot-widget-value-mapping>
                             </div>
                         </div>
 
@@ -170,7 +167,7 @@
                             <div class="section-title">
                                 <span i18n="@@HYT_expressions_title">Expressions</span>
                             </div>
-                            <div class="section-input">
+                            <div class="section-input section-input-col">
                                 <ng-container>
                                     <div class="rule-info">
                                         Emit a value computed through an expression.
@@ -192,6 +189,42 @@
                                 </ng-container>
                             </div>
                         </div>
+
+                        <div class="customization-container-section line-settings" *ngIf="widget.type === 'time-chart'">
+
+                            <div class="section-title">
+                                <span i18n="@@HYT_line_settings">Line Settings</span>
+                            </div>
+
+                            <div class="section-input">
+
+                                <input class="color" matInput type="color" [(ngModel)]="fieldLineSettings[field.id].color"
+                                    name="hpacketfield-line-color-{{field.id}}">
+
+                                <mat-form-field>
+                                    <mat-select [(value)]="fieldLineSettings[field.id].type"
+                                        i18n-placeholder="@@HYT_type" placeholder="Type">
+                                        <mat-select-trigger>
+                                            <div class="line-option"
+                                                [ngClass]="fieldLineSettings[field.id].type"></div>
+                                        </mat-select-trigger>
+
+                                        <mat-option *ngFor="let lineType of lineTypeOptions"
+                                            [value]="lineType">
+                                            <div class="line-option" [ngClass]="lineType"></div>
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+
+                                <mat-form-field>
+                                    <input class="thickness" matInput type="number" [(ngModel)]="fieldLineSettings[field.id].thickness" min="1" max="5"
+                                        i18n-placeholder="@@HYT_Thickness" placeholder="Thickness" name="hpacketfield-line-thickness-{{field.id}}">
+                                </mat-form-field>
+
+                            </div>
+
+                        </div>
+
                     </div>
                 </mat-expansion-panel>
             </mat-accordion>

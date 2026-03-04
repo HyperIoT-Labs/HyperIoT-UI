@@ -183,4 +183,8 @@ export class DashboardConfigService {
         return this.stormService.getTopology(projectId);
     }
 
+    getTopologyStatus(projectId: number): Observable<any> | Observable<HttpResponse<any>> | Observable<HttpEvent<any>> | any {
+      return this.stormService.getTopologyActiveInfo(projectId);
+    }
+
 }

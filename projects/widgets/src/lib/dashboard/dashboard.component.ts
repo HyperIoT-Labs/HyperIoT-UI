@@ -285,7 +285,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   private async initIdProjectSelected() {
     const projectId = +this.activatedRoute.snapshot.params.projectId;
-
     if (this.showAreas || this.showHDevice) {
       this.idProjectSelected = projectId;
     } else {
@@ -402,7 +401,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   updateTopologyStatus() {
-    this.subTopologyStatus = this.dashboardConfigService.getRecordingStatus(this.idProjectSelected)
+    this.subTopologyStatus = this.dashboardConfigService.getTopologyStatus(this.idProjectSelected)
       .pipe(
         delay(0),
         takeUntil(this.ngUnsubscribe)
@@ -412,7 +411,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
           this.dataRecordingIsOn = true;
           this.dataRecordingStatus = (this.dataRecordingStatus === 2) ? TopologyStatus.On : TopologyStatus.Activated;
           if (res.uptimeSecs) {
-            let seconds = res.upTimeSec;
+            let seconds = res.uptimeSecs;
             const days = Math.floor(seconds / (3600 * 24));
             seconds -= days * 3600 * 24;
             const hrs = Math.floor(seconds / 3600);

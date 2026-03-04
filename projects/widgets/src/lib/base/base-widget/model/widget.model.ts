@@ -6,6 +6,7 @@ import { DataSimulatorSettings } from '../../../dashboard/widget-settings-dialog
 import { ProductionTargetSettings } from '../../../dashboard/widget-settings-dialog/production-target-settings/production-target.model';
 import FieldRules = DataSimulatorSettings.FieldRules;
 import { ComponentRef } from '@angular/core';
+import { LineTypes } from '../../../dashboard/model/line.model';
 
 export interface WidgetConfig extends GridsterItem {
     id?: number
@@ -31,6 +32,7 @@ export interface ConfigModel {
     packetFields?: any[];  // TODO FIX use proper type (correct type should be { [fieldId: number]: string; })
     fieldAliases?: FieldAliases;
     fieldTypes?: FieldTypes;
+    fieldLineSettings?: FieldLineSettings;
     fieldFileMimeTypes?: FieldFileMimeTypes;
     fieldUnitConversions?: FieldUnitConversion;
     fieldCustomConversions?: FieldRules;
@@ -142,6 +144,16 @@ export class FieldValueMap {
         bgcolor?: string;
         icon?: string;
     }
+}
+
+export class LineSettings {
+    color: string;
+    thickness: number;
+    type: LineTypes;
+}
+
+export interface FieldLineSettings {
+    [fieldId: number]: LineSettings;
 }
 
 export interface SeriesConfigModel {

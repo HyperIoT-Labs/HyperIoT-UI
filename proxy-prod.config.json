@@ -1,0 +1,138 @@
+{
+  "/hyperiot/authentication/*": {
+    "target": "https://dashboard.hyperiot.cloud",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/hyperiot/husers/*": {
+    "target": "https://dashboard.hyperiot.cloud",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/hyperiot/roles/*": {
+    "target": "https://dashboard.hyperiot.cloud",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/hyperiot/permissions/*": {
+    "target": "https://dashboard.hyperiot.cloud",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/hyperiot/hprojects/*": {
+    "target": "https://dashboard.hyperiot.cloud",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/hyperiot/hdevices/*": {
+    "target": "https://dashboard.hyperiot.cloud",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/hyperiot/hpackets/*": {
+    "target": "https://dashboard.hyperiot.cloud",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/hyperiot/rules/*": {
+    "target": "https://dashboard.hyperiot.cloud",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/hyperiot/alarms/*": {
+    "target": "https://dashboard.hyperiot.cloud",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/hyperiot/alarmevents/*": {
+    "target": "https://dashboard.hyperiot.cloud",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/hyperiot/dashboards/*": {
+    "target": "https://dashboard.hyperiot.cloud",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/hyperiot/dashboardwidgets/*": {
+    "target": "https://dashboard.hyperiot.cloud",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/hyperiot/assets/*": {
+    "target": "https://dashboard.hyperiot.cloud",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/hyperiot/widgets/*": {
+    "target": "https://dashboard.hyperiot.cloud",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/hyperiot/ws/*": {
+    "target": "https://dashboard.hyperiot.cloud",
+    "secure": false,
+    "logLevel": "debug",
+    "ws": true,
+    "changeOrigin": true
+  },
+  "/hyperiot/storm/*": {
+    "target": "https://dashboard.hyperiot.cloud",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/hyperiot/areas/*": {
+    "target": "https://dashboard.hyperiot.cloud",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/hyperiot/hbaseconnectors/*": {
+    "target": "https://dashboard.hyperiot.cloud",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/hyperiot/algorithms/*": {
+    "target": "https://dashboard.hyperiot.cloud",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/hyperiot/hprojectalgorithms/*": {
+    "target": "https://dashboard.hyperiot.cloud",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/hyperiot/services/*": {
+    "target": "https://dashboard.hyperiot.cloud",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/hyperiot/llm/ws/*": {
+    "target": "ws://localhost:1865",
+    "secure": false,
+    "logLevel": "debug",
+    "ws": true,
+    "pathRewrite": {
+      "^/hyperiot/llm/ws/": "/ws/"
+    }
+  }
+}
