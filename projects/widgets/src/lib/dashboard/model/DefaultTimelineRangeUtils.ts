@@ -71,10 +71,10 @@ export const CustomTimeLineRangeHandler: DefaultTimeLineRangeHandler<DefaultTime
     return [new Date(range.startDate), new Date(refDate)];
   },
   getConfirmMessage: (range) => {
-    const start = moment(range.startDate).format('DD-MM-YYYY HH:mm:ss');
+    const start = moment(range.startDate).format('DD/MM/YYYY HH:mm:ss');
     const end = range.endDateCurrentTime 
       ? $localize`:@@HYT_current_time:Current Time` 
-      : moment(range.endDate).format('DD-MM-YYYY HH:mm:ss');
+      : moment(range.endDate).format('DD/MM/YYYY HH:mm:ss');
     return 'Custom (' + start + ' - ' + end + ')';
   },
 }
