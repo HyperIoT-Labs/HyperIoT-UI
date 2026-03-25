@@ -211,13 +211,20 @@ export class TimeAxisComponent implements AfterViewInit {
     const mode = d3.event.detail.mode;
 
     if (selection) {
-      if (mode !== 'code') {
+      if (mode !== 'code' && mode !== 'out-released') {
         this.timeInterval = selection.map(d => this.axisInterval.round(this.axisScale.invert(d)));
         this.dashboardEvent.selectedDateIntervalForExport.next(this.defaultExportInterval);
       }
-      if (mode === 'code-released') {
+      if (mode === 'code-released' || mode === 'out-released') {
         this.dashboardEvent.timelineEvent.next(DashboardEvent.Timeline.NEW_RANGE);
         this.dashboardEvent.selectedDateIntervalForExport.next(this.defaultExportInterval);
+          /* show reset selection button */
+          const elSelectionRender = document.querySelector('#brush-group .selection').getAttribute('style');
+          if (!elSelectionRender) {
+            this.controlButtons.nativeElement.style.display = 'flex';
+            /* hide text tip */
+            this.selectionInitialTip.nativeElement.style.display = 'none';
+          }
         this.dataTimeSelectionChanged.emit(this.timeInterval);
       }
       this.rect?.attr('fill', (d) =>
@@ -311,7 +318,11 @@ export class TimeAxisComponent implements AfterViewInit {
    * @param domain the updated domain
    * @param interval the updated interval
    */
-  updateAxis(data: HYTData[], domain: (number | Date)[], interval: TimeStep) {
+  updateAxis(data: HYTData[], domain: (number | Date)[], interval: TimeStep, timeInterval?) {
+
+    if (timeInterval) {
+      this.timeInterval = timeInterval;
+    }
 
     this.domain = domain;
     this.axisInterval = this.timeStepMap[interval];
@@ -342,18 +353,25 @@ export class TimeAxisComponent implements AfterViewInit {
         .call(d3.axisBottom(this.axisScale).ticks(this.axisInterval));
     }
 
-    this.setBrush();
+    this.setBrush(!!timeInterval);
 
   }
 
   /**
    * setBrush() is used to programmatically set the brush
    */
-  setBrush() {
+  setBrush(updateOut) {
     if (this.timeInterval[0] && this.timeInterval[1]) {
       // ? TODO variable instead of select() ?
       if (this.timeInterval[1] > this.timeInterval[0]) {
-        this.setSelection(this.timeInterval.map(this.axisScale), d3.select('#brush-group'));
+        this.selectionSvg.attr('style', '');
+        this.selectionRenderSvg.attr('style', '');
+        if (updateOut) {
+          this.setSelection(this.timeInterval.map(this.axisScale), d3.select('#brush-group'), { type: 'brush', mode: 'out-released' });
+        } else {
+          this.setSelection(this.timeInterval.map(this.axisScale), d3.select('#brush-group'));
+        }
+        
       } else {
         this.resetSelection();
       }
@@ -559,13 +577,6 @@ export class TimeAxisComponent implements AfterViewInit {
         .on('end', (d) => {
           g.attr('pointer-events', 'all');
           g.dispatch('end', { detail: { selection: this.selectionPx, mode: 'container' } });
-          /* show reset selection button */
-          const elSelectionRender = document.querySelector('#brush-group .selection').getAttribute('style');
-          if (!elSelectionRender) {
-            this.controlButtons.nativeElement.style.display = 'flex';
-            /* hide text tip */
-            this.selectionInitialTip.nativeElement.style.display = 'none';
-          }
 
 
         })

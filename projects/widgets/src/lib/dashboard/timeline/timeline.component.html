@@ -51,6 +51,20 @@
               </button>
             </div>
 
+            <div id="default-timeline-range">
+                <mat-form-field>
+                    <mat-label i18n="@@HYT_timeline_default_range_label">Select a default time slot</mat-label>
+                    <mat-select [(ngModel)]="defaultTimelineRange" (selectionChange)="onDefaultTimelineRangeChange($event)">
+                        <mat-option
+                            *ngFor="let option of defaultTimelineRangeOptions"
+                            [value]="option.value"
+                            [disabled]="option.disabled">
+                            {{ option.label }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
         </div>
 
         <div id="container-timeline-arrows-right">

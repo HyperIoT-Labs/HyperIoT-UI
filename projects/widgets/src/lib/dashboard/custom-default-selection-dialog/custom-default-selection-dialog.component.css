@@ -1,0 +1,16 @@
+.custom-default-selection-dialog .range-selection {
+    display: flex;
+    gap: 12px;
+}
+
+.custom-default-selection-dialog .range-selection .time-stop {
+    display: flex;
+    flex-direction: column;
+}
+
+.custom-default-selection-dialog .invalid-range-error{
+  background-color: #ff00005c;
+  padding: 1em;
+  margin: 0.5em;
+  border-radius: 0.4em;
+}

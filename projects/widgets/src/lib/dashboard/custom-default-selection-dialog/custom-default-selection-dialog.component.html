@@ -1,0 +1,68 @@
+<div hyt-dialog>
+    <div hyt-dialog-header>
+        <span i18n="@@HYT_custom_default_selection">Custom Default Slot Selection</span>
+    </div>
+    <div hyt-dialog-content class="custom-default-selection-dialog">
+
+        <form [formGroup]="customRangeForm">
+
+            <div class="range-selection">
+
+                <div class="time-start">
+                    <mat-form-field appearance="fill">
+                        <mat-label i18n="@@HYT_start_time">Start Time</mat-label>
+                        <input
+                            matInput
+                            [ngxMatDatetimePicker]="startTimePicker"
+                            placeholder="Choose a date"
+                            (click)="startTimePicker.open()"
+                            formControlName="startTime"
+                        />
+                        <mat-datepicker-toggle matSuffix [for]="startTimePicker">
+                        </mat-datepicker-toggle>
+                        <ngx-mat-datetime-picker #startTimePicker [showSeconds]="true">
+                        </ngx-mat-datetime-picker>
+                    </mat-form-field>
+                </div>
+
+                <div class="time-stop">
+
+                    <mat-form-field appearance="fill">
+                        <mat-label i18n="@@HYT_end_time">End Time</mat-label>
+                        <input
+                            matInput
+                            [ngxMatDatetimePicker]="endTimePicker"
+                            placeholder="Choose a date"
+                            (click)="endTimePicker.open()"
+                            formControlName="endTime"
+                        />
+                        <mat-datepicker-toggle matSuffix [for]="endTimePicker">
+                        </mat-datepicker-toggle>
+                        <ngx-mat-datetime-picker #endTimePicker [showSeconds]="true">
+                        </ngx-mat-datetime-picker>
+                    </mat-form-field>
+                    
+                    <mat-checkbox formControlName="endTimeCurrentTime" i18n="@@HYT_end_time_current_time">End Date must be current time</mat-checkbox>
+
+                </div>
+
+            </div>
+
+            <div *ngIf="customRangeForm.errors?.['timeRangeInvalid'] && customRangeForm.touched" class="invalid-range-error" i18n="@@HYT_custom_default_selection_invalid_range">
+                End time must be after start time
+            </div>
+
+        </form>
+
+    </div>
+    <div hyt-dialog-footer>
+        <hyt-button [color]="'hyt-base-white'" (clickFn)="cancel()">
+            <ng-container i18n="@@HYT_cancel">Cancel</ng-container>
+            <span class="hyt-icon icon-hyt_cancel"></span>
+        </hyt-button>
+        <hyt-button [color]="'hyt-base-white'" (clickFn)="confirm()" [isDisabled]="customRangeForm.invalid">
+            <ng-container i18n="@@HYT_area_confirm_btn_confirm">Confirm</ng-container>
+            <span class="hyt-icon icon-hyt_arrowRight"></span>
+        </hyt-button>
+    </div>
+</div>

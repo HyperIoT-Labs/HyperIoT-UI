@@ -22,6 +22,7 @@ export interface Dashboard {
     dashboardType?: Dashboard.DashboardTypeEnum;
     readonly widgets?: Array<DashboardWidget>;
     deviceId?: number;
+    dashboardConfiguration?: string;
     hproject?: HProject;
 }
 export namespace Dashboard {

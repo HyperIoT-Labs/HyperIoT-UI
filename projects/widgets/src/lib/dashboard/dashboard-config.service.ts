@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpContext, HttpEvent, HttpResponse } from '@angular/common/http';
 
 import { map, catchError, tap } from 'rxjs/operators';
-import { Subject, forkJoin, of, mergeMap, Observable } from 'rxjs';
+import { Subject, forkJoin, of, mergeMap, Observable, throwError } from 'rxjs';
 
 import {
     DashboardWidgetsService,
@@ -14,6 +14,7 @@ import {
 } from 'core';
 import { WidgetConfig } from '../base/base-widget/model/widget.model';
 import { IGNORE_ERROR_NOTIFY } from 'core';
+import { DefaultTimelineRange } from './model/dashboardTimelineDefaultRange';
 
 @Injectable()
 export class DashboardConfigService {
@@ -185,6 +186,41 @@ export class DashboardConfigService {
 
     getTopologyStatus(projectId: number): Observable<any> | Observable<HttpResponse<any>> | Observable<HttpEvent<any>> | any {
       return this.stormService.getTopologyActiveInfo(projectId);
+    }
+
+    getDefaultRangeFromDashboard(dashboard: Dashboard): DefaultTimelineRange | null {
+        if (!dashboard.dashboardConfiguration) {
+            return null;
+        }
+
+        try {
+            const jsonConfig = JSON.parse(dashboard.dashboardConfiguration);
+            return (jsonConfig as DefaultTimelineRange) ?? null;
+        } catch (error) {
+            return null;
+        }
+    }
+
+    updateDashboardDefaultTimelineRange(dashboard: Dashboard, newDefaultTimelineRange: DefaultTimelineRange): Observable<any> {
+        const tempDashboard = { ...dashboard };
+        let currentConfig = {}
+
+        if (dashboard.dashboardConfiguration) {
+            try {
+                currentConfig = JSON.parse(dashboard.dashboardConfiguration);
+            } catch (error) {
+                return throwError(() => new Error(error));
+            }
+        }
+
+        const updatedConfig = {
+            ...currentConfig,
+            ...newDefaultTimelineRange,
+        };
+
+        tempDashboard.dashboardConfiguration = JSON.stringify(updatedConfig);
+
+        return this.dashboardService.updateDashboard(tempDashboard);
     }
 
 }
