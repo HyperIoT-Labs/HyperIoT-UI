@@ -58,6 +58,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatChipsModule } from '@angular/material/chips';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { TrendGaugeChartSettingsComponent } from './widget-settings-dialog/trend-gauge-chart-settings/trend-gauge-chart-settings.component';
+import { CustomDefaultSelectionDialogComponent } from './custom-default-selection-dialog/custom-default-selection-dialog.component';
 
 @NgModule({
   declarations: [
@@ -91,6 +92,7 @@ import { TrendGaugeChartSettingsComponent } from './widget-settings-dialog/trend
     WidgetsDashboardLayoutComponent,
     WidgetSettingsDialogComponent,
     WidgetValueMappingComponent,
+    CustomDefaultSelectionDialogComponent,
   ],
   imports: [
     ColorPickerModule,

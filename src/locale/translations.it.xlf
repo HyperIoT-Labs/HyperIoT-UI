@@ -2653,6 +2653,66 @@
         <source>Thickness</source>
         <target>Spessore</target>
       </trans-unit>
+      <trans-unit id="HYT_timeline_default_range_label" datatype="html">
+        <source>Select a default time slot</source>
+        <target>Seleziona un time slot di default</target>
+      </trans-unit>
+      <trans-unit id="HYT_custom_default_selection" datatype="html">
+        <source>Custom Default Slot Selection</source>
+        <target>Selezione Slot Custom</target>
+      </trans-unit>
+      <trans-unit id="HYT_custom_default_selection_invalid_range" datatype="html">
+        <source>End time must be after start time</source>
+        <target>La data di fine deve essere successiva a quella di inizio</target>
+      </trans-unit>
+      <trans-unit id="HYT_end_time_current_time" datatype="html">
+        <source>End Date must be current time</source>
+        <target>Data Fine deve essere la data attuale</target>
+      </trans-unit>
+      <trans-unit id="HYT_default_timeline_range_none" datatype="html">
+        <source>No Default</source>
+        <target>No Default</target>
+      </trans-unit>
+      <trans-unit id="HYT_default_timeline_range_lastWeek" datatype="html">
+        <source>Last Week</source>
+        <target>Ultima Settimana</target>
+      </trans-unit>
+      <trans-unit id="HYT_default_timeline_range_lastMonth" datatype="html">
+        <source>Last Month</source>
+        <target>Ultimo Mese</target>
+      </trans-unit>
+      <trans-unit id="HYT_default_timeline_range_custom" datatype="html">
+        <source>Custom</source>
+        <target>Custom</target>
+      </trans-unit>
+      <trans-unit id="HYT_default_timeline_range_confirm_header" datatype="html">
+        <source>Set Default Timeline Selection</source>
+        <target>Imposta Selezione Timeline di Default</target>
+      </trans-unit>
+      <trans-unit id="HYT_default_timeline_range_confirm_text" datatype="html">
+        <source>Attention! Proceeding with this action will set the default time range for this dashboard to: <x id="INTERPOLATION" equiv-text="${selectionMessage}"/></source>
+        <target>Attenzione! Procedendo con questa azione imposterai l'intervallo temporale predefinito per questa dashboard a: <x id="INTERPOLATION" equiv-text="${selectionMessage}"/></target>
+      </trans-unit>
+      <trans-unit id="HYT_success_saving_default_timeline_range" datatype="html">
+        <source>Default timeline range saved successfully</source>
+        <target>Range timeline di default aggiornato con successo</target>
+      </trans-unit>
+      <trans-unit id="HYT_error_saving_default_timeline_range" datatype="html">
+        <source>Error saving default timeline range</source>
+        <target>Errore nel salvataggio del range timeline di default</target>
+      </trans-unit>
+      <trans-unit id="HYT_current_time" datatype="html">
+        <source>Current Time</source>
+        <target>Data Attuale</target>
+      </trans-unit>
+      <trans-unit id="HYT_reload_dashboard" datatype="html">
+        <source>Reload Dashboard</source>
+        <target>Ricarica Dashboard</target>
+      </trans-unit>
+      <trans-unit id="HYT_close_message" datatype="html">
+        <source>Close Message</source>
+        <target>Chiudi messaggio</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

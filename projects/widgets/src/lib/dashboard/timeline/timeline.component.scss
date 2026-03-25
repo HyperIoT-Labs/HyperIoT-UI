@@ -89,6 +89,13 @@
         height: 35px;
       }
 
+      #default-timeline-range {
+        margin-left: 16px;
+        mat-form-field {
+          width: 424px;
+        }
+      }
+
     }
 
   }

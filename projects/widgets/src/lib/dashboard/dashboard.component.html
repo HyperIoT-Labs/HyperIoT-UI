@@ -145,7 +145,8 @@
             <div *ngIf="!signalIsOn" class="timeline-container">
 
                 <hyperiot-timeline [projectId]="idProjectSelected"
-                    [dashboardPackets]="packetsInDashboard" (dateOutput)="timeLineSelection($event)">
+                    [dashboardPackets]="packetsInDashboard" (dateOutput)="timeLineSelection($event)"
+                    [defaultRange]="timelineDefaultRange" (defaultRangeChanged)="onDefaultRangeChanged($event)">
                 </hyperiot-timeline>
             </div>
             <!-- Standard -->

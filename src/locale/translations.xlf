@@ -1981,6 +1981,51 @@
       <trans-unit id="HYT_Thickness" datatype="html">
         <source>Thickness</source>
       </trans-unit>
+      <trans-unit id="HYT_timeline_default_range_label" datatype="html">
+        <source>Select a default time slot</source>
+      </trans-unit>
+      <trans-unit id="HYT_custom_default_selection" datatype="html">
+        <source>Custom Default Slot Selection</source>
+      </trans-unit>
+      <trans-unit id="HYT_custom_default_selection_invalid_range" datatype="html">
+        <source>End time must be after start time</source>
+      </trans-unit>
+      <trans-unit id="HYT_end_time_current_time" datatype="html">
+        <source>End Date must be current time</source>
+      </trans-unit>
+      <trans-unit id="HYT_default_timeline_range_none" datatype="html">
+        <source>No Default</source>
+      </trans-unit>
+      <trans-unit id="HYT_default_timeline_range_lastWeek" datatype="html">
+        <source>Last Week</source>
+      </trans-unit>
+      <trans-unit id="HYT_default_timeline_range_lastMonth" datatype="html">
+        <source>Last Month</source>
+      </trans-unit>
+      <trans-unit id="HYT_default_timeline_range_custom" datatype="html">
+        <source>Custom</source>
+      </trans-unit>
+      <trans-unit id="HYT_default_timeline_range_confirm_header" datatype="html">
+        <source>Set Default Timeline Selection</source>
+      </trans-unit>
+      <trans-unit id="HYT_default_timeline_range_confirm_text" datatype="html">
+        <source>Attention! Proceeding with this action will set the default time range for this dashboard to: <x id="INTERPOLATION" equiv-text="${selectionMessage}"/></source>
+      </trans-unit>
+      <trans-unit id="HYT_success_saving_default_timeline_range" datatype="html">
+        <source>Default timeline range saved successfully</source>
+      </trans-unit>
+      <trans-unit id="HYT_error_saving_default_timeline_range" datatype="html">
+        <source>Error saving default timeline range</source>
+      </trans-unit>
+      <trans-unit id="HYT_current_time" datatype="html">
+        <source>Current Time</source>
+      </trans-unit>
+      <trans-unit id="HYT_reload_dashboard" datatype="html">
+        <source>Reload Dashboard</source>
+      </trans-unit>
+      <trans-unit id="HYT_close_message" datatype="html">
+        <source>Close Message</source>
+      </trans-unit>
     </body>
   </file>
 </xliff>

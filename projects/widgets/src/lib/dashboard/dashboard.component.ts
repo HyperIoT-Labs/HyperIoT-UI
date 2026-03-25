@@ -9,7 +9,7 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DialogService } from 'components';
+import { ConfirmDialogService, DialogService } from 'components';
 import {
   AlgorithmOfflineDataService,
   Area,
@@ -25,7 +25,7 @@ import {
   UserSiteSettingActions,
   UserSiteSettingSelectors
 } from 'core';
-import { debounceTime, delay, firstValueFrom, Subject, Subscription, takeUntil } from 'rxjs';
+import { debounceTime, delay, firstValueFrom, PartialObserver, Subject, Subscription, takeUntil, tap } from 'rxjs';
 import { AddWidgetDialogComponent } from './add-widget-dialog/add-widget-dialog.component';
 import { DashboardConfigService } from './dashboard-config.service';
 import { DashboardViewComponent } from './dashboard-view/dashboard-view.component';
@@ -34,6 +34,7 @@ import { DashboardEventService } from './services/dashboard-event.service';
 import { DashboardEvent } from './services/dashboard-event.model';
 import ExtractDataFromUrl = DashboardEvent.ExtractDataFromUrl;
 import { Store } from '@ngrx/store';
+import { DefaultTimelineRange } from './model/dashboardTimelineDefaultRange';
 
 enum PageStatus {
   Loading = 0,
@@ -66,6 +67,8 @@ const { REALTIME, OFFLINE } = Dashboard.DashboardTypeEnum;
 export class DashboardComponent implements OnInit, OnDestroy {
   @ViewChild(DashboardViewComponent)
   dashboardView: DashboardViewComponent;
+
+  timelineDefaultRange: DefaultTimelineRange = null;
 
   widgetLayoutReady = false;
 
@@ -182,6 +185,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     private areaService: Area_Service,
     private hDeviceService: HDevicesService,
     private dialogService: DialogService,
+    private confirmDialogService: ConfirmDialogService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private cd: ChangeDetectorRef,
@@ -517,6 +521,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   private getOfflineDashboard() {
     const responseHandler = (res: Dashboard[]) => {
       this.currentDashboard = res[0];
+      this.timelineDefaultRange = this.dashboardConfigService.getDefaultRangeFromDashboard(this.currentDashboard);
       this.currentDashboardId = this.currentDashboard?.id;
       this.widgetLayoutReady = false;
       // debounce 500ms to handle multiple packetsInDashboard update
@@ -558,6 +563,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     const responseHandler = (dashboardRes: Dashboard[]) => {
       try {
         this.currentDashboard = dashboardRes[0];
+        this.timelineDefaultRange = null; // set null timelineDefaultRange for realtime dashboard
         this.currentDashboardId = this.currentDashboard.id;
         this.pageStatus = PageStatus.Standard;
       } catch (error) {
@@ -598,5 +604,23 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   getCurrentProjectData(idProjectSelected: number, name: string): any {
     return this.hProjectList.find(el => el.id === idProjectSelected)[name];
+  }
+
+  onDefaultRangeChanged({ defaultTimelineRange, responseHandler }: { defaultTimelineRange: DefaultTimelineRange, responseHandler: PartialObserver<any> }) {
+    this.dashboardConfigService.updateDashboardDefaultTimelineRange(this.currentDashboard, defaultTimelineRange)
+      .pipe(tap(()=>{
+        const dialogRef = this.confirmDialogService.open({
+          header: $localize`:@@HYT_success:Success`,
+          text:  $localize`:@@HYT_success_saving_default_timeline_range:Default timeline range saved successfully`,
+          confirmLabel: $localize`:@@HYT_reload_dashboard:Reload Dashboard`,
+          rejectLabel:  $localize`:@@HYT_close_message:Close Message`,
+        });
+        dialogRef.dialogRef.afterClosed().subscribe(res => {
+          if(res && res.result === 'accept') {
+            this.loadDashboardByDatasource(Dashboard.DashboardTypeEnum.OFFLINE);
+          }
+        });
+      }))
+      .subscribe(responseHandler);
   }
 }

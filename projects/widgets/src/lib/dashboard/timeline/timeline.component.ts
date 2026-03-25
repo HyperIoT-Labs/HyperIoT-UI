@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
-import { DialogService, TimeStep } from 'components';
+import { ConfirmDialogService, DialogService, SelectOption, TimeStep } from 'components';
 import { HProjectService } from 'core';
 import * as moment_ from 'moment';
 import 'moment-precise-range-plugin';
@@ -7,6 +7,12 @@ import { TimeAxisComponent } from './time-axis/time-axis.component';
 import { DashboardEventService } from '../services/dashboard-event.service';
 import { DataExport } from './models/data-export,model';
 import { DataExportComponent } from './data-export/data-export.component';
+import { MatSelectChange } from '@angular/material/select';
+import { DefaultTimelineCustomRange, DefaultTimelineRange, DefaultTimelineRangeType, DefaultTimelineRangeTypeUtilsMap } from '../model/dashboardTimelineDefaultRange';
+import { CustomDefaultSelectionDialogComponent } from '../custom-default-selection-dialog/custom-default-selection-dialog.component';
+import { asyncScheduler, PartialObserver, Subscription } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
+import { CustomTimeLineRangeHandler, LastMonthTimeLineRangeHandler, LastWeekTimeLineRangeHandler, NoneTimeLineRangeHandler } from '../model/DefaultTimelineRangeUtils';
 
 const moment = moment_;
 
@@ -33,6 +39,9 @@ export class TimelineComponent implements OnChanges {
    */
   @Input()
   dashboardPackets: number[];
+
+  @Input()
+  defaultRange: DefaultTimelineRange;
 
   /**
    * Map to domain is used to convert a time step to his next step
@@ -73,6 +82,8 @@ export class TimelineComponent implements OnChanges {
    */
   @Output() dateOutput = new EventEmitter<any>();
 
+  @Output() defaultRangeChanged = new EventEmitter<{ defaultTimelineRange: DefaultTimelineRange, responseHandler: PartialObserver<any> }>();
+
   /**
    * domainInterval is the current domain step interval
    */
@@ -105,11 +116,22 @@ export class TimelineComponent implements OnChanges {
     { label: 'Months', value: 'month' }
   ];
 
+  defaultTimelineRange: DefaultTimelineRangeType = 'none';
+  lastDefaultTimelineRange: DefaultTimelineRangeType = 'none';
+  defaultTimelineRangeOptions: (Omit<SelectOption, 'value'> & { value: DefaultTimelineRangeType })[] = [
+    { value: 'none', label: NoneTimeLineRangeHandler.label },
+    { value: 'lastWeek', label: LastWeekTimeLineRangeHandler.label },
+    { value: 'lastMonth', label: LastMonthTimeLineRangeHandler.label },
+    { value: 'custom', label: CustomTimeLineRangeHandler.label },
+  ];
+
   /**
    * TimelineComponent constructor
    * @param hprojectsService service to require data for the timeline
    */
   constructor(
+    private confirmDialogService: ConfirmDialogService,
+    private toastr: ToastrService,
     private hprojectsService: HProjectService,
     private dashboardEvent: DashboardEventService,
     private dialogService: DialogService
@@ -126,7 +148,14 @@ export class TimelineComponent implements OnChanges {
   }
 
   ngAfterViewInit() {
-    this.updateTimeline();
+    asyncScheduler.schedule(() => {
+      if (this.defaultRange) {
+        this.updateDefaultTimelineRangeSelection();
+        this.updateDefaultTimelineRangeOptions();
+      } else {
+        this.updateTimeline();
+      }
+    }, 0);
   }
 
   updateTimeline(): void {
@@ -181,6 +210,7 @@ export class TimelineComponent implements OnChanges {
     }
   }
 
+  timelineRequest: Subscription;
   /**
    * This function is called to download the timeline data
    */
@@ -193,7 +223,11 @@ export class TimelineComponent implements OnChanges {
       // TODO send message (toast?) to tell the user to add packet in dashboard
     }
 
-    this.hprojectsService.timelineScan(
+    if (this.timelineRequest) {
+      this.timelineRequest.unsubscribe();
+    }
+
+    this.timelineRequest = this.hprojectsService.timelineScan(
       `timeline_hproject_${this.projectId}`,
       this.domainInterval,
       this.domainStart.getTime(),
@@ -262,6 +296,94 @@ export class TimelineComponent implements OnChanges {
         height: '600px',
         width: '600px',
         backgroundClosable: true,
+      }
+    );
+  }
+
+  updateDefaultTimelineRangeOptions() {
+    const customOption = this.defaultTimelineRangeOptions.find(x => x.value === 'custom');
+    if (!customOption) {
+      return;
+    }
+    if (this.defaultRange && this.defaultRange.type === 'custom') {
+      customOption.label = CustomTimeLineRangeHandler.getConfirmMessage(this.defaultRange);
+    } else {
+      customOption.label = CustomTimeLineRangeHandler.label;
+    }
+  }
+
+  updateDefaultTimelineRangeSelection() {
+    if (!this.defaultRange) {
+      this.updateTimeline();
+      return;
+    }
+
+    this.defaultTimelineRange = this.defaultRange.type;
+    this.lastDefaultTimelineRange = this.defaultTimelineRange;
+
+    if (this.defaultRange.type === 'none') {
+      this.updateTimeline();
+      return;
+    }
+
+    const timelineRangeUtils = DefaultTimelineRangeTypeUtilsMap.get(this.defaultRange.type);
+    const timeInterval: [Date, Date] = timelineRangeUtils.buildInterval(this.defaultRange);
+    this.domainInterval = timelineRangeUtils.domainInterval(this.defaultRange);
+
+    this.domainStart = moment(timeInterval[1]).startOf(this.mapToDomain[this.domainInterval] as any).toDate();
+    this.domainStop = moment(this.domainStart).add(1, this.mapToDomain[this.domainInterval] as any).toDate();
+    this.timelineDataRequest();
+    this.timeAxis.updateAxis(this.timeLineData, [this.domainStart, this.domainStop], this.domainInterval, timeInterval);
+    this.dataTimeSelectionChanged(timeInterval);
+  }
+
+  onDefaultTimelineRangeChange(event: MatSelectChange) {
+    const selectedOption = this.defaultTimelineRangeOptions.find(x => x.value === this.defaultTimelineRange);
+    if (!selectedOption || !selectedOption.value) {
+      return;
+    } else if (selectedOption.value === 'custom') {
+      const customRangeDialogRef = this.dialogService.open<CustomDefaultSelectionDialogComponent, undefined, DefaultTimelineCustomRange>(CustomDefaultSelectionDialogComponent);
+      customRangeDialogRef.dialogRef.afterClosed().subscribe(
+        res => {
+          if (res) {
+            this.defaultTimelineRangeChangeConfirm(res);
+          } else {
+            this.defaultTimelineRange = this.lastDefaultTimelineRange;
+          }
+        }
+      );
+    } else {
+      this.defaultTimelineRangeChangeConfirm({ type: selectedOption.value });
+    }
+  }
+
+  defaultTimelineRangeChangeConfirm(newDefaultTimelineRange: DefaultTimelineRange) {
+    const timelineRangeUtils = DefaultTimelineRangeTypeUtilsMap.get(newDefaultTimelineRange.type);
+    let selectionMessage = timelineRangeUtils.getConfirmMessage(newDefaultTimelineRange);
+
+    const dialogRef = this.confirmDialogService.open({
+      header: $localize`:@@HYT_default_timeline_range_confirm_header:Set Default Timeline Selection`,
+      text:  $localize`:@@HYT_default_timeline_range_confirm_text:Attention! Proceeding with this action will set the default time range for this dashboard to: ${selectionMessage}`,
+    });
+    dialogRef.dialogRef.afterClosed().subscribe(
+      res => {
+        if (res && res.result === 'accept') {
+          const responseHandler: PartialObserver<any> = {
+            next: res => {
+              this.lastDefaultTimelineRange = this.defaultTimelineRange;
+              this.defaultRange = newDefaultTimelineRange;
+              this.updateDefaultTimelineRangeOptions();
+              this.toastr.success($localize`:@@HYT_success_saving_default_timeline_range:Default timeline range saved successfully`, $localize`:@@HYT_error:Success`);
+            },
+            error: err => {
+              this.defaultTimelineRange = this.lastDefaultTimelineRange;
+              this.toastr.error($localize`:@@HYT_error_saving_default_timeline_range:Error saving default timeline range`, $localize`:@@HYT_error:Error`);
+            }
+          };
+          this.defaultRangeChanged.emit({defaultTimelineRange: newDefaultTimelineRange, responseHandler});
+        } else {
+          this.defaultTimelineRange = this.lastDefaultTimelineRange;
+        }
       }
     );
   }
