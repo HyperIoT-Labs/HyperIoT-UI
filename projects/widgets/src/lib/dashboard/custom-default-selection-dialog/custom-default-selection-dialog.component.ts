@@ -4,6 +4,9 @@ import { DIALOG_DATA, DialogRef } from 'components';
 import { CustomDefaultSelectionDialogConfig } from './custom-default-selection-dialog.model';
 import { DefaultTimelineCustomRange } from '../model/dashboardTimelineDefaultRange';
 import * as moment_ from 'moment';
+import { MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { NgxMatDateAdapter } from '@angular-material-components/datetime-picker';
+import { NGX_MAT_MOMENT_DATE_ADAPTER_OPTIONS, NGX_MAT_MOMENT_FORMATS, NgxMatMomentAdapter } from '@angular-material-components/moment-adapter';
 
 const moment = moment_;
 
@@ -21,7 +24,13 @@ export const timeRangeValidator: ValidatorFn = (control: AbstractControl): Valid
 @Component({
   selector: 'hyperiot-custom-default-selection-dialog',
   templateUrl: './custom-default-selection-dialog.component.html',
-  styleUrls: ['./custom-default-selection-dialog.component.css']
+  styleUrls: ['./custom-default-selection-dialog.component.css'],
+    providers: [
+      { provide: MAT_DATE_LOCALE, useValue: 'it-IT' },
+      { provide: NgxMatDateAdapter, useClass: NgxMatMomentAdapter, deps: [MAT_DATE_LOCALE] },
+      { provide: MAT_DATE_FORMATS, useValue: NGX_MAT_MOMENT_FORMATS },
+      { provide: NGX_MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } },
+    ],
 })
 export class CustomDefaultSelectionDialogComponent implements OnInit {
 
