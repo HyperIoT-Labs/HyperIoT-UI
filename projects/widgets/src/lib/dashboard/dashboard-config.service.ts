@@ -202,8 +202,7 @@ export class DashboardConfigService {
     }
 
     updateDashboardDefaultTimelineRange(dashboard: Dashboard, newDefaultTimelineRange: DefaultTimelineRange): Observable<any> {
-        const tempDashboard = { ...dashboard };
-        let currentConfig = {}
+        let currentConfig = {};
 
         if (dashboard.dashboardConfiguration) {
             try {
@@ -218,9 +217,7 @@ export class DashboardConfigService {
             ...newDefaultTimelineRange,
         };
 
-        tempDashboard.dashboardConfiguration = JSON.stringify(updatedConfig);
-
-        return this.dashboardService.updateDashboard(tempDashboard);
+        return this.dashboardService.setDashboardConf(dashboard.id, JSON.stringify(updatedConfig));
     }
 
 }
