@@ -381,6 +381,53 @@ export class DashboardsService {
     }
 
     /**
+     * /hyperiot/dashboards/configuration/{dashboardId}
+     * Get dashboard configuration
+     * @param dashboardId dashboard id from which configuration will retrieve
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public findDashboardConf(dashboardId: number, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public findDashboardConf(dashboardId: number, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public findDashboardConf(dashboardId: number, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public findDashboardConf(dashboardId: number, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
+
+        if (dashboardId === null || dashboardId === undefined) {
+            throw new Error('Required parameter dashboardId was null or undefined when calling findDashboardConf.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (jwt-auth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["AUTHORIZATION"]) {
+            headers = headers.set('AUTHORIZATION', this.configuration.apiKeys["AUTHORIZATION"]);
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.get<any>(`${this.basePath}/dashboards/configuration/${encodeURIComponent(String(dashboardId))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                context: context,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
      * /hyperiot/dashboards/hdevice/{deviceId}/offline
      * Service for finding offline dashboard related to a specific device
      * @param deviceId The device id 
@@ -612,6 +659,70 @@ export class DashboardsService {
         return this.httpClient.post<any>(`${this.basePath}/dashboards`,
             body,
             {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                context: context,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * /hyperiot/dashboards/configuration
+     * Service for updating a dashboard configuration
+     * @param dashboardId dashboard id from which configuration will saved
+     * @param body new dashboard configuration in JSON format
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public setDashboardConf(dashboardId: number, body: string, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public setDashboardConf(dashboardId: number, body: string, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public setDashboardConf(dashboardId: number, body: string, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public setDashboardConf(dashboardId: number, body: string, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
+
+        if (dashboardId === null || dashboardId === undefined) {
+            throw new Error('Required parameter dashboardId was null or undefined when calling setDashboardConf.');
+        }
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling setDashboardConf.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (dashboardId !== undefined && dashboardId !== null) {
+            queryParameters = queryParameters.set('dashboardId', <any>dashboardId);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (jwt-auth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["AUTHORIZATION"]) {
+            headers = headers.set('AUTHORIZATION', this.configuration.apiKeys["AUTHORIZATION"]);
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.put<any>(`${this.basePath}/dashboards/configuration`,
+            body,
+            {
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
