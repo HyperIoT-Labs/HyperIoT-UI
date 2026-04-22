@@ -253,6 +253,14 @@ const hyperiotRoutes: Routes = [
     }
   },
   {
+    path: 'dashboards/:projectId',
+    component: DashComponent,
+    canActivate: [LoggedInGuard],
+    data: {
+      showToolBar: true,
+    },
+  },
+  {
     path: 'areas',
     component: AreasViewComponent,
     canActivate: [LoggedInGuard],

@@ -622,7 +622,7 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
 
   goToDashboard() {
     this.logger.debug('goToDashboard');
-    this.router.navigate(['/dashboards'], { queryParams: { projectId: this.projectId } });
+    this.router.navigate(['/dashboards', this.projectId]);
   }
 
   /**
