@@ -17,15 +17,13 @@ import {
   Dashboard, HDevice,
   HDevicesService,
   HProject,
-  HProjectActions,
-  HProjectSelectors,
   Logger,
   LoggerService,
   OfflineDataService,
   UserSiteSettingActions,
   UserSiteSettingSelectors
 } from 'core';
-import { debounceTime, delay, firstValueFrom, PartialObserver, Subject, Subscription, takeUntil, tap } from 'rxjs';
+import { debounceTime, delay, PartialObserver, Subject, Subscription, takeUntil, tap } from 'rxjs';
 import { AddWidgetDialogComponent } from './add-widget-dialog/add-widget-dialog.component';
 import { DashboardConfigService } from './dashboard-config.service';
 import { DashboardViewComponent } from './dashboard-view/dashboard-view.component';
@@ -198,11 +196,16 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.logger.registerClass(DashboardComponent.name);
   }
 
-  async ngOnInit() {
+  ngOnInit() {
     this.showAreas = this.activatedRoute.snapshot.routeConfig.path.startsWith('areas/');
     this.showHDevice = this.activatedRoute.snapshot.routeConfig.path.startsWith('hdevice/');
 
-    await this.initIdProjectSelected();
+    this.idProjectSelected = +this.activatedRoute.snapshot.params.projectId;
+
+    // For project dashboard, try to restore last selected project id from localStorage if idProjectSelected is null
+    if (!this.idProjectSelected && !this.showAreas && !this.showHDevice) {
+      this.idProjectSelected = +localStorage.getItem('last-dashboard-project') || null;
+    }
 
     this.offlineDataService.countEventSubject.subscribe(res => {
       this.offlineWidgetStatus = res;
@@ -284,25 +287,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.ngUnsubscribe.next();
     }
 
-    this.store.dispatch(HProjectActions.setSelectedHProjectId({ id: null }));
-  }
-
-  private async initIdProjectSelected() {
-    const projectId = +this.activatedRoute.snapshot.params.projectId;
-    if (this.showAreas || this.showHDevice) {
-      this.idProjectSelected = projectId;
-    } else {
-      this.idProjectSelected = projectId || await firstValueFrom(this.store.select(HProjectSelectors.selectCurrentHProjectId));
-
-      if (!this.idProjectSelected) {
-        this.hProjectListOptions = await firstValueFrom(this.dashboardConfigService.getProjectsList());
-        if (this.hProjectListOptions.length > 0) {
-          this.idProjectSelected = this.hProjectListOptions[0].id;
-        }
-      }
-    }
-
-    this.store.dispatch(HProjectActions.setSelectedHProjectId({ id: this.idProjectSelected }));
   }
 
   private loadDashboardByDatasource(defaultDatasource: Dashboard.DashboardTypeEnum) {
@@ -348,8 +332,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.idProjectSelected = event.value;
     this.recordStateInLoading = true;
     clearInterval(this.updateRecordingInterval);
-
-    this.store.dispatch(HProjectActions.setSelectedHProjectId({ id: this.idProjectSelected }));
 
     if (this.signalIsOn) {
       this.updateTopologyStatus();
@@ -497,6 +479,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
             });
 
             if (this.hProjectListOptions.length > 0) {
+              if (!this.idProjectSelected || !this.hProjectList.some(hProject => hProject.id === this.idProjectSelected)) {
+                // Fallback to first available project id if idProjectSelected is null or no project matches that id
+                this.idProjectSelected = this.hProjectListOptions[0].id;
+              }
               this.store.select(UserSiteSettingSelectors.selectDefaultProjectsDashboardDataSource)
                 .subscribe((defaultDatasource) => {
                   this.loadDashboardByDatasource(defaultDatasource);
@@ -580,6 +566,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
         .pipe(takeUntil(this.ngUnsubscribe))
         .subscribe(responseHandler, errorHandler);
     } else {
+      // Update last visited project id in localStorage
+      localStorage.setItem('last-dashboard-project', String(this.idProjectSelected));
+      // Sync project ID in URL
+      this.router.navigate(['dashboards', this.idProjectSelected], { replaceUrl: true });
       // load project realtime Dashboard
       this.dashboardConfigService.getRealtimeDashboardFromProject(this.idProjectSelected)
         .pipe(takeUntil(this.ngUnsubscribe))

@@ -21,17 +21,6 @@ export namespace HProjectSelectors {
     selectHProjectState,
     HProjectStore.selectHProjectTotal
   );
-  export const selectCurrentHProjectId = createSelector(
-    selectHProjectState,
-    HProjectStore.getSelectedHProjectId
-  );
-  
-  export const selectCurrentHProject = createSelector(
-    selectHProjectEntities,
-    selectCurrentHProjectId,
-    (alarmEnetities, userId) => userId && alarmEnetities[userId]
-  );
-  
   export const selectHProjectById = (props: {id: number}) => createSelector(
     selectHProjectEntities,
     (hProjectEnetities) => props.id && hProjectEnetities[props.id]

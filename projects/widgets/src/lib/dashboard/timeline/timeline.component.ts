@@ -291,6 +291,7 @@ export class TimelineComponent implements OnChanges {
       DataExportComponent,
       {
         data: {
+          projectId: this.projectId,
           timeInterval: this.timeSelection
         },
         height: '600px',
