@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, ValidationErrors, Validators } from '@angular/forms';
 import { DialogRef, DIALOG_DATA, SelectOptionGroup, HytSelectComponent } from 'components';
-import { DataExport } from '../models/data-export,model';
+import { DataExport } from '../models/data-export.model';
 import { Store } from '@ngrx/store';
 import {
   DataExportNotificationActions,
