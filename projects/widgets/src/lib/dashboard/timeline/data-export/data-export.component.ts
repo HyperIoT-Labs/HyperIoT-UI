@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, ValidationErrors, Validators } from '@angular/forms';
 import { DialogRef, DIALOG_DATA, SelectOptionGroup, HytSelectComponent } from 'components';
-import { DataExport } from '../models/data-export,model';
+import { DataExport } from '../models/data-export.model';
 import { Store } from '@ngrx/store';
 import {
   DataExportNotificationActions,
@@ -9,8 +9,6 @@ import {
   HDeviceSelectors,
   HPacket,
   HPacketSelectors,
-  HProject,
-  HProjectSelectors,
   HProjectService,
   Logger,
   LoggerService,
@@ -106,7 +104,7 @@ export class DataExportComponent implements OnInit, AfterViewInit, OnDestroy {
   hPacketList: HPacket[] = [];
   hPacketListSelected: HPacket[] = [];
 
-  private hProject: HProject;
+  private currentProjectId: number;
 
   private logger: Logger;
 
@@ -151,18 +149,17 @@ export class DataExportComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       });
 
-    this.store.select(HProjectSelectors.selectCurrentHProject)
-      .pipe(
-        tap((hProject) => this.hProject = hProject),
-        switchMap((hProject) => combineLatest({
-          hDeviceList: this.store.select(HDeviceSelectors.selectAllHDevices)
-            .pipe(
-              map((res) => res.filter(({ project }) => project.id === hProject.id)),
-            ),
-          hPacketList: this.store.select(HPacketSelectors.selectAllHPackets)
-        })),
-        take(1)
-      ).subscribe({
+    this.currentProjectId = 'exportParams' in this.data
+      ? this.data.exportParams.hProjectId
+      : this.data.projectId;
+
+    combineLatest({
+      hDeviceList: this.store.select(HDeviceSelectors.selectAllHDevices)
+        .pipe(
+          map((res) => res.filter(({ project }) => project.id === this.currentProjectId)),
+        ),
+      hPacketList: this.store.select(HPacketSelectors.selectAllHPackets)
+    }).pipe(take(1)).subscribe({
         next: ({ hDeviceList, hPacketList }) => {
           this.hPacketList = hPacketList;
 
@@ -293,8 +290,7 @@ export class DataExportComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.exportErrorList = [];
 
-    const hProject = this.hProject;
-    const hProjectId = hProject.id;
+    const hProjectId = this.currentProjectId;
     const exportName: string = this.exportName.value;
 
     const startTime = this.startTime.value;
@@ -377,7 +373,7 @@ export class DataExportComponent implements OnInit, AfterViewInit, OnDestroy {
               const notification: DataExportNotificationStore.DataExportNotification = {
                 exportParams: {
                   exportId,
-                  hProject,
+                  hProjectId,
                   hPacket,
                   hPacketFormat,
                   exportName,

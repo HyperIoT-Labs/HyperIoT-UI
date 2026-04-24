@@ -8,16 +8,11 @@ export namespace HProjectStore {
   export const key = 'hProjects';
 
   export interface State extends EntityState<HProject> {
-    // additional entities state properties
-    selectedHProjectId: number | null;
   }
 
   export const adapter: EntityAdapter<HProject> = createEntityAdapter<HProject>();
 
-  export const initialState: State = adapter.getInitialState({
-    // additional entity state properties
-    selectedHProjectId: null,
-  });
+  export const initialState: State = adapter.getInitialState({});
 
   export const reducer = createReducer(
     initialState,
@@ -25,10 +20,7 @@ export namespace HProjectStore {
       return { ...state };
     }),
     on(HProjectActions.loadHProjectsSuccess, (state, { hProjects }) => {
-      return adapter.setAll(hProjects, {
-        ...state,
-        // selectedHProjectId: null
-      });
+      return adapter.setAll(hProjects, state);
     }),
     on(HProjectActions.loadHProjectsFailure, (state, { error }) => {
       return { ...state };
@@ -72,18 +64,10 @@ export namespace HProjectStore {
     on(HProjectActions.setHProjects, (state, { hProjects }) => {
       return adapter.setMany(hProjects, state);
     }),
-    on(HProjectActions.setSelectedHProjectId, (state, { id }) => {
-      return {
-        ...state,
-        selectedHProjectId: id
-      };
-    }),
     on(HProjectActions.clearHProjects, state => {
-      return adapter.removeAll({ ...state, selectedHProjectId: null });
+      return adapter.removeAll(state);
     })
   );
-
-  export const getSelectedHProjectId = (state: State) => state.selectedHProjectId;
 
   // get the selectors
   const {

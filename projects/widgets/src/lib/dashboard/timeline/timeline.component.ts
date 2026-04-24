@@ -5,7 +5,7 @@ import * as moment_ from 'moment';
 import 'moment-precise-range-plugin';
 import { TimeAxisComponent } from './time-axis/time-axis.component';
 import { DashboardEventService } from '../services/dashboard-event.service';
-import { DataExport } from './models/data-export,model';
+import { DataExport } from './models/data-export.model';
 import { DataExportComponent } from './data-export/data-export.component';
 import { MatSelectChange } from '@angular/material/select';
 import { DefaultTimelineCustomRange, DefaultTimelineRange, DefaultTimelineRangeType, DefaultTimelineRangeTypeUtilsMap } from '../model/dashboardTimelineDefaultRange';
@@ -291,6 +291,7 @@ export class TimelineComponent implements OnChanges {
       DataExportComponent,
       {
         data: {
+          projectId: this.projectId,
           timeInterval: this.timeSelection
         },
         height: '600px',
