@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { ConfirmDialogService, DialogService, SelectOption, TimeStep } from 'components';
 import { HProjectService } from 'core';
-import * as moment_ from 'moment';
+import moment from 'moment';
 import 'moment-precise-range-plugin';
 import { TimeAxisComponent } from './time-axis/time-axis.component';
 import { DashboardEventService } from '../services/dashboard-event.service';
@@ -14,7 +14,6 @@ import { asyncScheduler, PartialObserver, Subscription } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { CustomTimeLineRangeHandler, LastMonthTimeLineRangeHandler, LastWeekTimeLineRangeHandler, NoneTimeLineRangeHandler } from '../model/DefaultTimelineRangeUtils';
 
-const moment = moment_;
 
 /**
  * TimelineComponent is an HyperIoT component. It is used by DashboardComponent.

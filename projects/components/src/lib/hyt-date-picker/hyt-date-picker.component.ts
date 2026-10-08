@@ -1,6 +1,5 @@
 import { Component, Input, OnInit, Output, EventEmitter, OnChanges, ViewEncapsulation } from '@angular/core';
-import * as moment_ from 'moment';
-const moment = moment_;
+import moment from 'moment';
 
 export type TimeStep = 'year' | 'month' | 'day' | 'hour' | 'minute' | 'second' | 'millisecond';
 
@@ -153,7 +152,7 @@ export class HytDatePickerComponent implements OnInit, OnChanges {
    * Close the pop up and set the date value
    * @param event
    */
-  setDate(event: moment_.Moment) {
+  setDate(event: moment.Moment) {
     this.showPopup = false;
     this.date = event.toDate();
     this.dateString = moment(this.date).format(TimeFormat[this.minStep].momentFormat);

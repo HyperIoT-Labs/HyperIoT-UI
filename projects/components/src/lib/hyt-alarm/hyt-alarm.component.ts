@@ -1,7 +1,6 @@
 import { Component, Input, Output, EventEmitter, Inject, LOCALE_ID, ChangeDetectorRef } from "@angular/core";
 import { HytAlarm, Logger, LoggerService } from "core";
-import * as moment_ from 'moment';
-const moment = moment_;
+import moment from 'moment';
 
 export enum AlarmBtnClicked {
   UPDATE= "update",

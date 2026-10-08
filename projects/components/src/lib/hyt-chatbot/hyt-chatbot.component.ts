@@ -5,8 +5,7 @@ import { Subject, takeUntil } from "rxjs";
 import { PageStatus } from "./models/page-status";
 import { CookieService } from 'ngx-cookie-service';
 import { CatClient } from 'ccat-api'
-import * as moment_ from 'moment';
-const moment = moment_;
+import moment from 'moment';
 
 @Component({
   selector: "hyt-chatbot",

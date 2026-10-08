@@ -10,8 +10,7 @@ import {
 } from '@angular/core';
 import { FileHandlerService, HPacketField, HProjectService } from 'core';
 import { Subject } from 'rxjs';
-import * as moment_ from 'moment';
-const moment = moment_;
+import moment from 'moment';
 
 export interface TableHeader {
   value: string;

@@ -23,12 +23,12 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { RouterModule } from '@angular/router';
-import { InlineSVGModule } from "ng-inline-svg";
 import { ToastrModule } from 'ngx-toastr';
 import { BaseWidgetTemplateComponent } from './base/base-widget-template/base-widget-template.component';
 import { DefaultWidgetComponent } from './default-widget/default-widget.component';
 import { AlgorithmTableComponent } from './widget/algorithm-table/algorithm-table.component';
 import { BodymapComponent } from "./widget/bodymap/bodymap.component";
+import { InlineSvgDirective } from "./widget/bodymap/inline-svg.directive";
 import { EcgComponent } from "./widget/ecg/ecg.component";
 import { ErrorTableComponent } from './widget/error-table/error-table.component';
 import { EventTableComponent } from './widget/event-table/event-table.component';
@@ -54,6 +54,7 @@ import { TrendGaugeChartComponent } from './widget/trend-gauge-chart/trend-gauge
     HpacketTableComponent,
     EcgComponent,
     BodymapComponent,
+    InlineSvgDirective,
     DefaultWidgetComponent,
     LineChartComponent,
     SensorValueComponent,
@@ -101,7 +102,6 @@ import { TrendGaugeChartComponent } from './widget/trend-gauge-chart/trend-gauge
     RouterModule,
     MatProgressBarModule,
     MatIconModule,
-    InlineSVGModule.forRoot(),
     MatButtonToggleModule,
     MatProgressSpinnerModule,
   ],

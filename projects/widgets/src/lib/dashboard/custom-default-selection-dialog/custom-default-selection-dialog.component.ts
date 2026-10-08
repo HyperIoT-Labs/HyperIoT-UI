@@ -3,12 +3,11 @@ import { FormBuilder, FormControl, Validators, ValidatorFn, AbstractControl, Val
 import { DIALOG_DATA, DialogRef } from 'components';
 import { CustomDefaultSelectionDialogConfig } from './custom-default-selection-dialog.model';
 import { DefaultTimelineCustomRange } from '../model/dashboardTimelineDefaultRange';
-import * as moment_ from 'moment';
+import moment from 'moment';
 import { MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { NgxMatDateAdapter } from '@angular-material-components/datetime-picker';
 import { NGX_MAT_MOMENT_DATE_ADAPTER_OPTIONS, NGX_MAT_MOMENT_FORMATS, NgxMatMomentAdapter } from '@angular-material-components/moment-adapter';
 
-const moment = moment_;
 
 export const timeRangeValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
   const start = control.get('startTime')?.value;

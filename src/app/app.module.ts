@@ -97,98 +97,85 @@ export function apiConfigFactory(): Configuration {
 }
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    NotFoundComponent,
-    SidebarComponent,
-    TopbarComponent,
-    AccountButtonComponent,
-    NotificationButtonComponent,
-    ProfileComponent,
-    SaveChangesDialogComponent,
-    PendingChangesDialogComponent,
-    DeleteConfirmDialogComponent,
-    NotificationDialogComponent,
-    HomeComponent,
-    NotificationbarComponent,
-    AreasViewComponent,
-    PromptComponent,
-    DashComponent,
-    InfoComponent,
-    ContainerAreaMapComponent,
-    DataExportNotificationButtonComponent,
-    DataExportNotificationDialogComponent
-  ],
-  // dynamically created components
-  entryComponents: [
-    SaveChangesDialogComponent,
-    PendingChangesDialogComponent,
-    DeleteConfirmDialogComponent,
-    NotificationDialogComponent,
-    WizardDeactivationModalComponent,
-    WizardOptionsModalComponent,
-    WizardReportModalComponent,
-    AddWidgetDialogComponent,
-    WidgetSettingsDialogComponent
-  ],
-  imports: [
-    DragDropModule,
-    RouterModule,
-    BrowserModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    MatIconModule,
-    MatButtonModule,
-    MatDialogModule,
-    MatTabsModule,
-    MatCardModule,
-    MatButtonToggleModule,
-    MatProgressSpinnerModule,
-    MatTooltipModule,
-    CustomMaterialModule,
-    DashboardModule,
-    ReactiveFormsModule,
-    HytRoutingModule,
-    AuthenticationModule,
-    ComponentsModule,
-    AlgorithmsModule,
-    ProjectsModule,
-    WidgetsModule,
-    ApiModule.forRoot(apiConfigFactory),
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production, registrationStrategy: 'registerImmediately' }),
-    ToastrModule.forRoot(),
-    ScrollingModule,
-    CoreModule,
-    BrowserModule,
-    BrowserAnimationsModule,
-    MatInputModule,
-    StoreModule.forRoot(HyperiotStore.Reducers),
-    StoreDevtoolsModule.instrument({
-      maxAge: 25, // Retains last 25 states
-      logOnly: environment.production, // Restrict extension to log-only mode
-      autoPause: true, // Pauses recording actions and state changes when the extension window is not open
-    }),
-    EffectsModule.forRoot(HyperiotStore.Effects),
-    MomentModule
-  ],
-  providers: [
-    // ActivatedRouteSnapshot,
-    { provide: UrlSerializer, useClass: MyUrlSerializer },
-    {
-      provide: LoggerService,
-      useFactory: () => {
-        return new LoggerService(environment.logLevel, environment.logRegistry);
-      }
-    },
-    CanDeactivateGuard,
-    CookieService,
-    { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: true } },
-    { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
-    { provide: ErrorHandler, useClass: GlobalErrorHandlerService },
-    BrandingService,
-
-  ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        NotFoundComponent,
+        SidebarComponent,
+        TopbarComponent,
+        AccountButtonComponent,
+        NotificationButtonComponent,
+        ProfileComponent,
+        SaveChangesDialogComponent,
+        PendingChangesDialogComponent,
+        DeleteConfirmDialogComponent,
+        NotificationDialogComponent,
+        HomeComponent,
+        NotificationbarComponent,
+        AreasViewComponent,
+        PromptComponent,
+        DashComponent,
+        InfoComponent,
+        ContainerAreaMapComponent,
+        DataExportNotificationButtonComponent,
+        DataExportNotificationDialogComponent
+    ],
+    imports: [
+        DragDropModule,
+        RouterModule,
+        BrowserModule,
+        BrowserAnimationsModule,
+        HttpClientModule,
+        MatIconModule,
+        MatButtonModule,
+        MatDialogModule,
+        MatTabsModule,
+        MatCardModule,
+        MatButtonToggleModule,
+        MatProgressSpinnerModule,
+        MatTooltipModule,
+        CustomMaterialModule,
+        DashboardModule,
+        ReactiveFormsModule,
+        HytRoutingModule,
+        AuthenticationModule,
+        ComponentsModule,
+        AlgorithmsModule,
+        ProjectsModule,
+        WidgetsModule,
+        ApiModule.forRoot(apiConfigFactory),
+        ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production, registrationStrategy: 'registerImmediately' }),
+        ToastrModule.forRoot(),
+        ScrollingModule,
+        CoreModule,
+        BrowserModule,
+        BrowserAnimationsModule,
+        MatInputModule,
+        StoreModule.forRoot(HyperiotStore.Reducers),
+        StoreDevtoolsModule.instrument({
+            maxAge: 25,
+            logOnly: environment.production,
+            autoPause: true, // Pauses recording actions and state changes when the extension window is not open
+        }),
+        EffectsModule.forRoot(HyperiotStore.Effects),
+        MomentModule
+    ],
+    providers: [
+        // ActivatedRouteSnapshot,
+        { provide: UrlSerializer, useClass: MyUrlSerializer },
+        {
+            provide: LoggerService,
+            useFactory: () => {
+                return new LoggerService(environment.logLevel, environment.logRegistry);
+            }
+        },
+        CanDeactivateGuard,
+        CookieService,
+        { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: true } },
+        { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
+        { provide: ErrorHandler, useClass: GlobalErrorHandlerService },
+        BrandingService,
+    ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

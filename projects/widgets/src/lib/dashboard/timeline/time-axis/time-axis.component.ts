@@ -1,13 +1,12 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { TimeStep } from 'components';
 import * as d3 from 'd3';
-import * as moment_ from 'moment';
+import moment from 'moment';
 import { HYTData } from "../models/timeline.model";
 import { DashboardEventService } from '../../services/dashboard-event.service';
 import { DashboardEvent } from '../../services/dashboard-event.model';
 import { DialogService } from 'components';
 
-const moment = moment_;
 const animation = false;
 
 // ! IMPORTANT

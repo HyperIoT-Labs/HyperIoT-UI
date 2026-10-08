@@ -1,11 +1,10 @@
 import { AfterViewInit, Component, Injector, OnInit, ViewChild } from '@angular/core';
 import { AlgorithmOfflineDataService, HPacketService, LoggerService, PacketData } from 'core';
-import * as moment_ from 'moment';
+import moment from 'moment';
 import { Subject, Subscription, lastValueFrom } from 'rxjs';
 import { BaseTableComponent } from '../../base/base-table/base-table.component';
 import { WidgetAction } from '../../base/base-widget/model/widget.model';
 
-const moment = moment_;
 
 @Component({
   selector: 'hyperiot-algorithm-table',
