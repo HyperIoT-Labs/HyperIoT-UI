@@ -8,7 +8,7 @@ import { ProjectFormEntity, LoadingStatusEnum } from '../project-form-entity';
 import { Option, RuleDefinitionComponent } from 'components';
 import { SummaryListItem } from '../../project-detail/generic-summary-list/generic-summary-list.component';
 import { TagStatus } from '../packet-enrichment-form/asset-tag/asset-tag.component';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { EventComponentContainerComponent } from './event-component-container/event-component-container.component';
 import { EventComponentType } from './event-component-type.enum';
 import {MatAutocomplete, MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
@@ -58,7 +58,7 @@ export class ProjectEventsFormComponent extends ProjectFormEntity implements OnI
   tagStatus: TagStatus = TagStatus.Default;
   allTags: AssetTag[];
   selectedTags: AssetTag[];  // remember, at the moment one entry at most, btw here it is an array to support more than one
-  tagCtrl = new FormControl();
+  tagCtrl = new UntypedFormControl();
 
   isActive: boolean; // TODO bind this property to RuleAction object
 
@@ -87,7 +87,7 @@ export class ProjectEventsFormComponent extends ProjectFormEntity implements OnI
   }
 
   ngOnInit() {
-    this.form.addControl('ruleDefinition', new FormControl(''));
+    this.form.addControl('ruleDefinition', new UntypedFormControl(''));
     this.getAssetTags();
   }
 

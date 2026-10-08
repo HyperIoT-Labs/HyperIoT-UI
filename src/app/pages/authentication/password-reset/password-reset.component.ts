@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { HUserService, HUserPasswordReset, Logger, LoggerService } from 'core';
 import { ActivatedRoute } from '@angular/router';
 import { HYTError } from 'src/app/services/errorHandler/models/models';
@@ -31,7 +31,7 @@ export class PasswordResetComponent implements OnInit {
   /**
    * recoverPassForm stores the password-reset form
    */
-  recoverPassForm: FormGroup;
+  recoverPassForm: UntypedFormGroup;
 
   /**
    * pwdResetStatus is used to handle the template view when the user is making the password-reset request
@@ -66,7 +66,7 @@ export class PasswordResetComponent implements OnInit {
    */
   ngOnInit() {
 
-    this.recoverPassForm = new FormGroup({});
+    this.recoverPassForm = new UntypedFormGroup({});
 
     this.route.paramMap.subscribe(
       (p) => {

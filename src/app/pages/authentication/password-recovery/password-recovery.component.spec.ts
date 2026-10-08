@@ -4,14 +4,14 @@ import { PasswordRecoveryComponent } from './password-recovery.component';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { HUserService, LoggerService } from 'core';
 import { AuthenticationHttpErrorHandlerService } from 'src/app/services/errorHandler/authentication-http-error-handler.service';
-import { FormBuilder } from '@angular/forms';
+import { UntypedFormBuilder } from '@angular/forms';
 
 describe('PasswordRecoveryComponent', () => {
   let component: PasswordRecoveryComponent;
   let fixture: ComponentFixture<PasswordRecoveryComponent>;
   let hUserService: HUserService;
   let httperrorHandler: AuthenticationHttpErrorHandlerService;
-  let fb: FormBuilder;
+  let fb: UntypedFormBuilder;
   let loggerService: LoggerService;
 
   beforeEach(async(() => {
@@ -20,7 +20,7 @@ describe('PasswordRecoveryComponent', () => {
       schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
       providers: [{provide: HUserService, useValue: hUserService},
         {provide: AuthenticationHttpErrorHandlerService, useValue: httperrorHandler},
-        {provide: FormBuilder, useValue: fb},
+        {provide: UntypedFormBuilder, useValue: fb},
         {provide: LoggerService, useValue: loggerService}]
     })
       .compileComponents();

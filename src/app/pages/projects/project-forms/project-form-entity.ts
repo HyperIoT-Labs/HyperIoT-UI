@@ -1,4 +1,4 @@
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
 
 import { Observable } from 'rxjs';
 
@@ -29,7 +29,7 @@ export abstract class ProjectFormEntity implements OnInit, AfterViewInit {
     entityFormMap: any;
     formTitle = 'Project Form Entity';
 
-    form: FormGroup;
+    form: UntypedFormGroup;
     // formAlarm :  FormGroup;
     private originalValue = '{}';
     protected validationError = [];
@@ -52,7 +52,7 @@ export abstract class ProjectFormEntity implements OnInit, AfterViewInit {
 
     @Output() clickedTab: EventEmitter<any> = new EventEmitter();
 
-    protected formBuilder: FormBuilder;
+    protected formBuilder: UntypedFormBuilder;
     protected dialog: DialogService;
     protected entitiesService: EntitiesService;
     protected projectsService: ProjectsService;
@@ -61,7 +61,7 @@ export abstract class ProjectFormEntity implements OnInit, AfterViewInit {
         injector: Injector,
         private cd: ChangeDetectorRef
     ) {
-        this.formBuilder = injector.get(FormBuilder);
+        this.formBuilder = injector.get(UntypedFormBuilder);
         this.entitiesService = injector.get(EntitiesService);
         this.dialog = injector.get(DialogService);
         this.form = this.formBuilder.group({});

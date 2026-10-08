@@ -1,6 +1,6 @@
 import { Component, OnChanges, Input, EventEmitter, Output, ViewEncapsulation } from '@angular/core';
 import { HDevice } from 'core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { SelectOption } from 'components';
 
 @Component({
@@ -13,14 +13,14 @@ export class DeviceSelectComponent implements OnChanges {
 
   @Input() hDevices: HDevice[];
 
-  selectForm: FormGroup;
+  selectForm: UntypedFormGroup;
 
   devicesOptions: SelectOption[] = [];
 
   @Output() selectedDevice = new EventEmitter<HDevice>();
 
   constructor(
-    private fb: FormBuilder
+    private fb: UntypedFormBuilder
   ) {
     this.selectForm = this.fb.group({});
   }

@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, ValidationErrors, Validators } from '@angular/forms';
+import { AbstractControl, UntypedFormBuilder, UntypedFormControl, ValidationErrors, Validators } from '@angular/forms';
 import { DialogRef, DIALOG_DATA, SelectOptionGroup, HytSelectComponent } from 'components';
 import { DataExport } from '../models/data-export.model';
 import { Store } from '@ngrx/store';
@@ -75,20 +75,20 @@ export class DataExportComponent implements OnInit, AfterViewInit, OnDestroy {
 
   readonly hPacketFormatEnum = HPacket.FormatEnum;
 
-  get startTime(): FormControl {
-    return this.form.controls.startTime as FormControl;
+  get startTime(): UntypedFormControl {
+    return this.form.controls.startTime as UntypedFormControl;
   }
 
-  get endTime(): FormControl {
-    return this.form.controls.endTime as FormControl;
+  get endTime(): UntypedFormControl {
+    return this.form.controls.endTime as UntypedFormControl;
   }
 
-  private get hPacketFormat(): FormControl {
-    return this.form.controls.hPacketFormat as FormControl;
+  private get hPacketFormat(): UntypedFormControl {
+    return this.form.controls.hPacketFormat as UntypedFormControl;
   }
 
-  get exportName(): FormControl {
-    return this.form.controls.exportName as FormControl;
+  get exportName(): UntypedFormControl {
+    return this.form.controls.exportName as UntypedFormControl;
   }
 
   private initialFormValue = {
@@ -115,7 +115,7 @@ export class DataExportComponent implements OnInit, AfterViewInit, OnDestroy {
   readonly exportDownloadError = (hPacketId: number) => $localize`:@@HYT_export_download_error:An error occurred while downloading the packet ${hPacketId}`;
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private store: Store,
     public dialogRef: DialogRef<any>,
     private hProjectsService: HProjectService,

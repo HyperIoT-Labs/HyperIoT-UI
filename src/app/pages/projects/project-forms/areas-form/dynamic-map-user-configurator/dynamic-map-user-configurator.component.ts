@@ -1,5 +1,5 @@
 import {AfterViewInit, ChangeDetectorRef, Component, Host, Input, OnInit, Optional} from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import {MatButtonToggleChange} from "@angular/material/button-toggle";
 import { CoordinatesType, GenericMap, MapComponent, MapDefaultConfiguration } from 'components';
 import {Logger, LoggerService} from "core";
@@ -25,14 +25,14 @@ export class DynamicMapUserConfiguratorComponent implements OnInit, AfterViewIni
   // geoSearchProvider = new OpenStreetMapProvider();
 
   addressList: Observable<any>; // Observable<SearchResult<RawResult>[]>;
-  geoSearchForm = new FormGroup({
-    address: new FormControl(''),
+  geoSearchForm = new UntypedFormGroup({
+    address: new UntypedFormControl(''),
   });
 
-  latLongForm = new FormGroup({
-    latitude:  new FormControl('', Validators.required),
-    longitude:  new FormControl('', Validators.required),
-    zoom:  new FormControl('', [
+  latLongForm = new UntypedFormGroup({
+    latitude:  new UntypedFormControl('', Validators.required),
+    longitude:  new UntypedFormControl('', Validators.required),
+    zoom:  new UntypedFormControl('', [
       Validators.required,
       Validators.min(this.mapConfiguration.minZoom),
       Validators.max(this.mapConfiguration.maxZoom),

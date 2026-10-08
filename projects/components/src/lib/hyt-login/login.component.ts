@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { AuthenticationService, LoggerService, Logger } from 'core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
@@ -35,7 +35,7 @@ export class HytLoginComponent implements OnInit {
   /**
    * loginForm stores the login form
    */
-  loginForm: FormGroup =  new FormGroup({
+  loginForm: UntypedFormGroup =  new UntypedFormGroup({
 
   });
 

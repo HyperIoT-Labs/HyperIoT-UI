@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { SubmissionStatus } from '../models/pageStatus';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
 import { HUserService, LoggerService, Logger } from 'core';
 import { AuthenticationHttpErrorHandlerService } from 'src/app/services/errorHandler/authentication-http-error-handler.service';
 import { HYTError } from 'src/app/services/errorHandler/models/models';
@@ -20,7 +20,7 @@ export class PasswordRecoveryComponent implements OnInit {
   /**
    * recoverMailForm stores the recover-mail form
    */
-  recoverMailForm: FormGroup;
+  recoverMailForm: UntypedFormGroup;
 
   /**
    * recoverMailStatus is used to handle the template view when the user is making the password-recovery request
@@ -43,7 +43,7 @@ export class PasswordRecoveryComponent implements OnInit {
   constructor(
     private hUserService: HUserService,
     private httperrorHandler: AuthenticationHttpErrorHandlerService,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private loggerService: LoggerService
   ) {
     this.logger = new Logger(this.loggerService);

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
 import { HUserService, HUser, LoggerService, Logger } from 'core';
 import { AuthenticationHttpErrorHandlerService } from 'src/app/services/errorHandler/authentication-http-error-handler.service';
 import { HYTError } from 'src/app/services/errorHandler/models/models';
@@ -25,7 +25,7 @@ export class RegistrationComponent implements OnInit {
   /**
    * registrationForm stores the registration form
    */
-  registrationForm: FormGroup;
+  registrationForm: UntypedFormGroup;
 
   /**
    * registrationStatus is used to handle the template view when the user is creating an account
@@ -44,7 +44,7 @@ export class RegistrationComponent implements OnInit {
    */
   constructor(
     private hUserService: HUserService,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private httperrorHandler: AuthenticationHttpErrorHandlerService,
     private loggerService: LoggerService
   ) {

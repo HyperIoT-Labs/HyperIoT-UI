@@ -15,7 +15,7 @@ import {
   Logger,
   NotificationManagerService
 } from "core";
-import { FormGroup, FormBuilder } from "@angular/forms";
+import { UntypedFormGroup, UntypedFormBuilder } from "@angular/forms";
 import {
   CardDetailOnHover,
   CardEmittedValue,
@@ -44,7 +44,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
 
   hProjectsFiltered: HProject[] = [...this.hProjects];
 
-  filteringForm: FormGroup;
+  filteringForm: UntypedFormGroup;
 
   /**
    * this variariable is used to set scrollToTop div on show or hide
@@ -69,7 +69,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private hProjectService: HProjectService,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private projectsService: ProjectsService,
     private notificationManagerService: NotificationManagerService,
     private dialog: DialogService,

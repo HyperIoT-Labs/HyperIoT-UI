@@ -2,7 +2,7 @@ import { Component, OnInit, AfterViewInit, ViewEncapsulation, ChangeDetectorRef,
 import { DIALOG_DATA, DialogRef } from 'components';
 import { PageStatus } from 'src/app/pages/projects/models/pageStatus';
 import { AssetCategoriesService } from 'core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
 import { HttpErrorHandlerService } from 'src/app/services/errorHandler/http-error-handler.service';
 import { interval } from 'rxjs';
 import { take} from 'rxjs/operators';
@@ -17,7 +17,7 @@ export class AddCetegoryModalComponent implements OnInit, AfterViewInit {
 
   pageStatus: PageStatus = PageStatus.Standard;
 
-  categoryForm: FormGroup;
+  categoryForm: UntypedFormGroup;
 
   nameError: string;
 
@@ -36,7 +36,7 @@ export class AddCetegoryModalComponent implements OnInit, AfterViewInit {
 
   constructor(
     private assetCategoryService: AssetCategoriesService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private errorHandler: HttpErrorHandlerService,
     private cd: ChangeDetectorRef,
     private dialogRef: DialogRef<any>,

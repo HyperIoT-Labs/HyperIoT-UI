@@ -1,8 +1,7 @@
 import { TimeStep } from 'components';
 import { DefaultTimelineCustomRange, DefaultTimelineRange } from './dashboardTimelineDefaultRange';
-import * as moment_ from 'moment';
+import moment from 'moment';
 
-const moment = moment_;
 
 export interface DefaultTimeLineRangeHandler<T extends DefaultTimelineRange> {
   readonly label: string;

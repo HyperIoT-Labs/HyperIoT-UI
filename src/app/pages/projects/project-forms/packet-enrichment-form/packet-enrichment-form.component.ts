@@ -12,7 +12,7 @@ import { AssetCategoryComponent } from './asset-category/asset-category.componen
 import { AssetTagComponent } from './asset-tag/asset-tag.component';
 import { EnrichmentType } from './enrichment-type.enum';
 import { FourierTransformComponent } from './fourier-transform/fourier-transform.component';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { ComputeFieldRuleComponent } from './compute-field-rule/compute-field-rule.component';
 
 @Component({
@@ -102,7 +102,7 @@ export class PacketEnrichmentFormComponent extends ProjectFormEntity implements 
   }
 
   ngOnInit() {
-    this.form.addControl('ruleDefinition', new FormControl(''));
+    this.form.addControl('ruleDefinition', new UntypedFormControl(''));
     this.activatedRouteSubscription = this.activatedRoute.params.subscribe(routeParams => {
       this.packetId = +(this.activatedRoute.snapshot.params.packetId);
       if (this.packetId) {

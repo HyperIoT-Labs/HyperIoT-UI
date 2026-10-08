@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild, ElementRef, forwardRef, Output, EventEmitter } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormControl, Validators, FormGroupDirective, NgForm, FormGroup } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, UntypedFormControl, Validators, FormGroupDirective, NgForm, UntypedFormGroup } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 
 /**
@@ -15,7 +15,7 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
  * Error when invalid control is dirty, touched, or submitted
  */
 export class CustomErrorStateMatcherArea implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+  isErrorState(control: UntypedFormControl | null, form: FormGroupDirective | NgForm | null): boolean {
     const isSubmitted = form && form.submitted;
     return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
   }
@@ -31,8 +31,8 @@ export class HytTextAreaComponent implements OnInit, ControlValueAccessor {
   /**
    * Binding variables with text area element
    */
-  @Input() formControl: FormControl;
-  @Input() form: FormGroup;
+  @Input() formControl: UntypedFormControl;
+  @Input() form: UntypedFormGroup;
   @Input() placeholder: any = "";
   @Input() fieldValue: string;
   @Input() type: string;
@@ -84,7 +84,7 @@ export class HytTextAreaComponent implements OnInit, ControlValueAccessor {
       this.errMsgRequired = this.errorMsgRequired;
     }
 
-    this.formControl = new FormControl("", Validators.compose(validators));
+    this.formControl = new UntypedFormControl("", Validators.compose(validators));
     if (this.fieldValue) {
       this.formControl.setValue(this.fieldValue);
     }

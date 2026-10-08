@@ -10,8 +10,8 @@ import {
 import {
   ControlValueAccessor,
   NG_VALUE_ACCESSOR,
-  FormControl,
-  FormGroup,
+  UntypedFormControl,
+  UntypedFormGroup,
   Validators,
   FormGroupDirective,
   NgForm,
@@ -58,10 +58,10 @@ export class HytRadioButtonComponent implements OnInit, ControlValueAccessor {
   private innerValue: any = "";
 
   /** FormGroup */
-  @Input() form: FormGroup;
+  @Input() form: UntypedFormGroup;
 
   /** FormControl */
-  @Input() formControl: FormControl;
+  @Input() formControl: UntypedFormControl;
 
   /** Element name, connected to the formcontrol */
   @Input() name = "";
@@ -114,7 +114,7 @@ export class HytRadioButtonComponent implements OnInit, ControlValueAccessor {
       validators.push(Validators.required);
     }
 
-    this.formControl = new FormControl("", Validators.compose(validators));
+    this.formControl = new UntypedFormControl("", Validators.compose(validators));
 
     // set checked option
     for (const option of this.options) {

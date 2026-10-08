@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, forwardRef, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
-import { FormControl, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { UntypedFormControl, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
@@ -28,7 +28,7 @@ export class HytAutocompleteComponent implements OnInit {
   @Output() optionSelected: EventEmitter<any> = new EventEmitter();
 
   /** FormControl */
-  @Input() formControl: FormControl;
+  @Input() formControl: UntypedFormControl;
 
   @Input() input: any;
 

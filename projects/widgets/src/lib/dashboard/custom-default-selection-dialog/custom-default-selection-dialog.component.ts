@@ -1,14 +1,13 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, Validators, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, Validators, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 import { DIALOG_DATA, DialogRef } from 'components';
 import { CustomDefaultSelectionDialogConfig } from './custom-default-selection-dialog.model';
 import { DefaultTimelineCustomRange } from '../model/dashboardTimelineDefaultRange';
-import * as moment_ from 'moment';
+import moment from 'moment';
 import { MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { NgxMatDateAdapter } from '@angular-material-components/datetime-picker';
 import { NGX_MAT_MOMENT_DATE_ADAPTER_OPTIONS, NGX_MAT_MOMENT_FORMATS, NgxMatMomentAdapter } from '@angular-material-components/moment-adapter';
 
-const moment = moment_;
 
 export const timeRangeValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
   const start = control.get('startTime')?.value;
@@ -35,9 +34,9 @@ export const timeRangeValidator: ValidatorFn = (control: AbstractControl): Valid
 export class CustomDefaultSelectionDialogComponent implements OnInit {
 
   customRangeForm = this.fb.group({
-    startTime: new FormControl(null, Validators.required),
-    endTime: new FormControl(null, Validators.required),
-    endTimeCurrentTime: new FormControl(false),
+    startTime: new UntypedFormControl(null, Validators.required),
+    endTime: new UntypedFormControl(null, Validators.required),
+    endTimeCurrentTime: new UntypedFormControl(false),
   }, { validators: timeRangeValidator });
 
   updateEndTimeCurrentTime;
@@ -45,7 +44,7 @@ export class CustomDefaultSelectionDialogComponent implements OnInit {
   constructor(
     private dialogRef: DialogRef<DefaultTimelineCustomRange>,
     @Inject(DIALOG_DATA) public data: CustomDefaultSelectionDialogConfig,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
   ) { }
 
   ngOnInit(): void {

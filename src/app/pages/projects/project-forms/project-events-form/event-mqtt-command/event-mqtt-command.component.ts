@@ -1,5 +1,5 @@
 import { Component, Input, OnInit,ChangeDetectorRef } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { Option, SelectOption } from 'components';
 import { HPacket, HPacketField, HPacketService } from 'core';
 import { environment } from 'src/environments/environment';
@@ -16,7 +16,7 @@ export class EventMqttCommandComponent implements OnInit,EventComponent {
   @Input()
   currentProjectId;
 
-  mqttFieldsFormGroup :FormGroup =  new FormGroup({
+  mqttFieldsFormGroup :UntypedFormGroup =  new UntypedFormGroup({
 
   });
 
@@ -156,7 +156,7 @@ export class EventMqttCommandComponent implements OnInit,EventComponent {
       this.fieldsOptions = this.buildFieldOptions(packet);
       this.fieldsOptions.forEach(field => {
         if(!this.mqttFieldsFormGroup.get(field.label)){
-          this.mqttFieldsFormGroup.addControl(field.label,new FormControl());
+          this.mqttFieldsFormGroup.addControl(field.label,new UntypedFormControl());
         }
         if(data){
             //converting option value to string (it can be also boolean or number)

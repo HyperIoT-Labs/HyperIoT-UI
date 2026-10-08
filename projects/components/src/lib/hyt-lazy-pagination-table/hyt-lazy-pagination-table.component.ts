@@ -2,8 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } fro
 import { FileHandlerService, HPacketField, HProjectService } from 'core';
 import { Observable, Subject } from 'rxjs';
 import { SelectOption } from '../hyt-select/hyt-select.component';
-import * as moment_ from 'moment';
-const moment = moment_;
+import moment from 'moment';
 
 export type TableRowIndexes = [number, number];
 

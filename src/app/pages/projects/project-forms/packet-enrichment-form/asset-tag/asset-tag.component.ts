@@ -1,5 +1,5 @@
 import { Component, OnInit, ElementRef, ViewChild, Input } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { AssetTag, AssetTagsService, HProject } from 'core';
 import { startWith, map } from 'rxjs/operators';
@@ -28,7 +28,7 @@ export class AssetTagComponent implements OnInit {
 
   tagStatus: TagStatus = TagStatus.Default;
 
-  tagCtrl = new FormControl();
+  tagCtrl = new UntypedFormControl();
   filteredTags: Observable<AssetTag[]>;
   tags: AssetTag[] = [];
   allTags: AssetTag[];

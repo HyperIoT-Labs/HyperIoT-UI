@@ -3,7 +3,7 @@ import { SelectOption } from 'components';
 import { Observable } from 'rxjs';
 import { PacketSelectComponent } from '../packet-select/packet-select.component';
 import { ConfigModel, Step, WidgetConfig } from '../../../base/base-widget/model/widget.model';
-import { FormArray, FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { UntypedFormArray, UntypedFormBuilder, UntypedFormGroup, NgForm, Validators } from '@angular/forms';
 
 @Component({
   selector: 'hyperiot-trend-gauge-chart-settings',
@@ -27,14 +27,14 @@ export class TrendGaugeChartSettingsComponent implements OnInit, OnDestroy {
   subscription: any;
   selectedFields;
 
-  gaugeForm: FormGroup;
+  gaugeForm: UntypedFormGroup;
 
-  get stepList(): FormArray {
-    return this.gaugeForm.get('stepList') as FormArray;
+  get stepList(): UntypedFormArray {
+    return this.gaugeForm.get('stepList') as UntypedFormArray;
   }
 
-  get title(): FormGroup {
-    return this.gaugeForm.get('title') as FormGroup;
+  get title(): UntypedFormGroup {
+    return this.gaugeForm.get('title') as UntypedFormGroup;
   }
 
   private defaultConfig: Pick<ConfigModel, 'textColor' | 'bgColor' | 'title' | 'steps'> = {
@@ -80,7 +80,7 @@ export class TrendGaugeChartSettingsComponent implements OnInit, OnDestroy {
   ];
 
   constructor(
-    private fb: FormBuilder
+    private fb: UntypedFormBuilder
   ) {
 
   }

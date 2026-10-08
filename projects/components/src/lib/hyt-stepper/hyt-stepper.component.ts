@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, TemplateRef, ViewChild, ElementRef, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 
 @Component({
   selector: 'hyt-stepper',
@@ -24,7 +24,7 @@ export class HytStepperComponent implements OnInit {
 
   @Input() labelArray: string[];
 
-  @Input() controlArray: FormGroup[];
+  @Input() controlArray: UntypedFormGroup[];
 
   completed: string[];
 
@@ -37,7 +37,7 @@ export class HytStepperComponent implements OnInit {
    * constructor
    * @param fb FormBuilder
    */
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: UntypedFormBuilder) { }
 
   /**
    * ngOnInit
