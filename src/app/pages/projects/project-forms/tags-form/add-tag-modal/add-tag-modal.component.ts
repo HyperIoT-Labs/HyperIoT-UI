@@ -2,7 +2,7 @@ import { Component, OnInit, AfterViewInit, ViewEncapsulation,ChangeDetectorRef, 
 import { DIALOG_DATA, DialogRef } from 'components';
 import { PageStatus } from 'src/app/pages/projects/models/pageStatus';
 import { AssetTagsService } from 'core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
 import { HttpErrorHandlerService } from 'src/app/services/errorHandler/http-error-handler.service';
 
 @Component({
@@ -15,7 +15,7 @@ export class AddTagModalComponent implements OnInit,AfterViewInit {
 
   pageStatus: PageStatus = PageStatus.Standard;
 
-  tagForm: FormGroup;
+  tagForm: UntypedFormGroup;
 
   nameError: string;
 
@@ -38,7 +38,7 @@ export class AddTagModalComponent implements OnInit,AfterViewInit {
 
   constructor(
     private assetTagService: AssetTagsService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private errorHandler: HttpErrorHandlerService,
     private cd : ChangeDetectorRef,
     private dialogRef: DialogRef<any>,

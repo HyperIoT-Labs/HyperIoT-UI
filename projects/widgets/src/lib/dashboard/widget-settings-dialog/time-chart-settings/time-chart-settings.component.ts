@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
-import { ControlContainer, FormArray, FormBuilder, NgForm, Validators } from '@angular/forms';
+import { ControlContainer, UntypedFormArray, UntypedFormBuilder, NgForm, Validators } from '@angular/forms';
 
 import { Subject } from 'rxjs';
 
@@ -32,13 +32,13 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy, OnChanges 
     filteredThresholds: any = {};
     thresholdsIds: number[] = [];
     thresholdActive: boolean = false;
-    thresholdsForm: FormArray = this.fb.array([]);
+    thresholdsForm: UntypedFormArray = this.fb.array([]);
     collapseThresold: boolean = false;
 
     collapsedThresholdValues: any = {};
 
     trendActive: boolean = false;
-    trendForm: FormArray = this.fb.array([]);
+    trendForm: UntypedFormArray = this.fb.array([]);
     trendFields = [];
     trendSelectedFields = [];
 
@@ -81,7 +81,7 @@ export class TimeChartSettingsComponent implements OnInit, OnDestroy, OnChanges 
     constructor(public settingsForm: NgForm,
         private activatedRoute: ActivatedRoute,
         private ruleService: RuleEngineService,
-        private fb: FormBuilder
+        private fb: UntypedFormBuilder
     ) { }
 
     ngOnInit() {

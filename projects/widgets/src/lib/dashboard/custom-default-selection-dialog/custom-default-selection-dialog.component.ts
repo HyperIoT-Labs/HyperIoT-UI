@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, Validators, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, Validators, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 import { DIALOG_DATA, DialogRef } from 'components';
 import { CustomDefaultSelectionDialogConfig } from './custom-default-selection-dialog.model';
 import { DefaultTimelineCustomRange } from '../model/dashboardTimelineDefaultRange';
@@ -34,9 +34,9 @@ export const timeRangeValidator: ValidatorFn = (control: AbstractControl): Valid
 export class CustomDefaultSelectionDialogComponent implements OnInit {
 
   customRangeForm = this.fb.group({
-    startTime: new FormControl(null, Validators.required),
-    endTime: new FormControl(null, Validators.required),
-    endTimeCurrentTime: new FormControl(false),
+    startTime: new UntypedFormControl(null, Validators.required),
+    endTime: new UntypedFormControl(null, Validators.required),
+    endTimeCurrentTime: new UntypedFormControl(false),
   }, { validators: timeRangeValidator });
 
   updateEndTimeCurrentTime;
@@ -44,7 +44,7 @@ export class CustomDefaultSelectionDialogComponent implements OnInit {
   constructor(
     private dialogRef: DialogRef<DefaultTimelineCustomRange>,
     @Inject(DIALOG_DATA) public data: CustomDefaultSelectionDialogConfig,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
   ) { }
 
   ngOnInit(): void {

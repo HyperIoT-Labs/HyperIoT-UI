@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, ElementRef, Injector, Input, OnChanges, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatAutocomplete, MatAutocompleteSelectedEvent, MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { ActivatedRoute } from '@angular/router';
@@ -89,7 +89,7 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity implements OnI
   ];
 
   private activatedRouteSubscription: Subscription;
-  formEvent: FormGroup;
+  formEvent: UntypedFormGroup;
   @Input()
   currentProject: HProject;
 
@@ -103,7 +103,7 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity implements OnI
   tagStatus: TagStatus = TagStatus.Default;
   allTags: AssetTag[];
   selectedTags: AssetTag[];  // it is an array to support more tags (in the future)
-  tagCtrl = new FormControl();
+  tagCtrl = new UntypedFormControl();
 
   isActive: boolean; // TODO bind this property to RuleAction object
   addEventMode = false;
@@ -144,7 +144,7 @@ export class ProjectAlarmsFormComponent extends ProjectFormEntity implements OnI
   }
 
   ngOnInit(): void {
-    this.formEvent.addControl('ruleDefinition', new FormControl(''));
+    this.formEvent.addControl('ruleDefinition', new UntypedFormControl(''));
     this.eventListMap = new Map<number, any>();
     this.selectedId = 0;
     this.logger.debug('Current Project', this.currentProject)

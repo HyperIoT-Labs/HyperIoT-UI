@@ -2,14 +2,14 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PacketFieldsFormComponent } from './packet-fields-form.component';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { UntypedFormBuilder } from '@angular/forms';
 import { HPacketService } from 'core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 describe('PacketFieldsFormComponent', () => {
   let component: PacketFieldsFormComponent;
   let fixture: ComponentFixture<PacketFieldsFormComponent>;
-  let formBuilder: FormBuilder;
+  let formBuilder: UntypedFormBuilder;
   let hPacketService: HPacketService;
   let activatedRoute: ActivatedRoute;
   let router: Router;
@@ -18,7 +18,7 @@ describe('PacketFieldsFormComponent', () => {
     TestBed.configureTestingModule({
       declarations: [PacketFieldsFormComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
-      providers: [{provide: FormBuilder, useValue: formBuilder},
+      providers: [{provide: UntypedFormBuilder, useValue: formBuilder},
         {provide: HPacketService, useValue: hPacketService},
         {provide: ActivatedRoute, useValue: activatedRoute},
         {provide: Router, useValue: router}]

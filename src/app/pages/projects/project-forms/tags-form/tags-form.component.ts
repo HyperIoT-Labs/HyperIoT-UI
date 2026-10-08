@@ -2,7 +2,7 @@ import { Component, OnInit, Injector, ViewChild, ViewEncapsulation,ChangeDetecto
 import { ProjectFormEntity } from '../project-form-entity';
 import { ElementRef } from '@angular/core';
 import { AssetTag, AssetTagsService } from 'core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { SelectOption } from 'components';
 import { Router } from '@angular/router';
 import { AddTagModalComponent } from './add-tag-modal/add-tag-modal.component';
@@ -33,7 +33,7 @@ export class TagsFormComponent extends ProjectFormEntity implements OnInit {
 
   filteredTags: AssetTag[] = [];
 
-  filteringForm: FormGroup;
+  filteringForm: UntypedFormGroup;
 
   sortOptions: SelectOption[] = [
     { value: 'none', label: $localize`:@@HYT_none:None` },

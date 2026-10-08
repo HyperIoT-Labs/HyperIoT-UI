@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, ViewEncapsulation, forwardRef } from '@angular/core';
-import { ControlValueAccessor, FormArray, FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
+import { ControlValueAccessor, UntypedFormArray, UntypedFormControl, UntypedFormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
 import { CoreConfig, HPacket, HPacketFieldsHandlerService } from 'core';
 import {FieldType, IRulePart} from './rule-part/rule-part.interface';
 import {SelectOption, SelectOptionGroup} from '../hyt-select/hyt-select.component';
@@ -47,8 +47,8 @@ export class RuleDefinitionComponent implements ControlValueAccessor, OnChanges 
   ruleDefinitionError = false;
 
   ruleRows: RuleRow[] = [];
-  ruleForm = new FormGroup({
-    ruleRowsArray: new FormArray([]),
+  ruleForm = new UntypedFormGroup({
+    ruleRowsArray: new UntypedFormArray([]),
   });
 
   value: { ruleDefinition: string; rulePrettyDefinition: string };
@@ -114,7 +114,7 @@ export class RuleDefinitionComponent implements ControlValueAccessor, OnChanges 
       prettify: selectedIPart.prettify,
     });
 
-    this.getRowFormGroup(ruleRowIndex).addControl('rule-part-' + (rulePartIndex + 1), new FormControl('', selectedIPart.validators));
+    this.getRowFormGroup(ruleRowIndex).addControl('rule-part-' + (rulePartIndex + 1), new UntypedFormControl('', selectedIPart.validators));
 
   }
 
@@ -134,9 +134,9 @@ export class RuleDefinitionComponent implements ControlValueAccessor, OnChanges 
         }],
       });
 
-      this.ruleRowsFormArray.push(new FormGroup({
-        'rule-part-0': new FormControl('', packetRulePart.validators),
-        'ruleJoin': new FormControl(''),
+      this.ruleRowsFormArray.push(new UntypedFormGroup({
+        'rule-part-0': new UntypedFormControl('', packetRulePart.validators),
+        'ruleJoin': new UntypedFormControl(''),
       }));
 
       if (this.currentPacket) {
@@ -259,15 +259,15 @@ export class RuleDefinitionComponent implements ControlValueAccessor, OnChanges 
   }
 
   get ruleRowsFormArray() {
-    return this.ruleForm.controls.ruleRowsArray as FormArray;
+    return this.ruleForm.controls.ruleRowsArray as UntypedFormArray;
   }
 
-  getRowFormGroup(index): FormGroup {
-    return this.ruleRowsFormArray.at(index) as FormGroup;
+  getRowFormGroup(index): UntypedFormGroup {
+    return this.ruleRowsFormArray.at(index) as UntypedFormGroup;
   }
 
   getFormControl(rowIndex, partIndex) {
-    return this.ruleForm.get('ruleRowsArray.' + rowIndex + '.rule-part-' + partIndex) as FormControl;
+    return this.ruleForm.get('ruleRowsArray.' + rowIndex + '.rule-part-' + partIndex) as UntypedFormControl;
   }
 
 }

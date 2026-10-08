@@ -1,5 +1,5 @@
 import { Component, OnInit, OnChanges, Input,ChangeDetectorRef } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { DialogService, SelectOption } from 'components';
 import { Algorithm, HPacket, HPacketField, HPacketService, HProject, HProjectAlgorithmConfig, HProjectAlgorithmInputField } from 'core';
 import { resolve } from 'dns';
@@ -8,7 +8,7 @@ import { StatisticInputErrorComponent } from './statistic-input-error/statistic-
 import { ScrollStrategyOptions } from '@angular/cdk/overlay';
 
 interface StatisticInputForm {
-  form: FormGroup;
+  form: UntypedFormGroup;
   leafFieldList: HPacketField[];
 }
 
@@ -47,7 +47,7 @@ export class StatisticInputDefinitionComponent implements OnInit {
 
   constructor(
     private hPacketsService: HPacketService,
-    public fb: FormBuilder,
+    public fb: UntypedFormBuilder,
     private dialogService: DialogService,
     private scrollStrategyOptions: ScrollStrategyOptions,
     private cd: ChangeDetectorRef

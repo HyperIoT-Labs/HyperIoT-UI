@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { UntypedFormArray, UntypedFormBuilder, UntypedFormControl, Validators } from '@angular/forms';
 import { HPacket, HPacketField, HPacketService, HProject, Logger, LoggerService } from 'core';
 import { EnrichmentType } from '../enrichment-type.enum';
 import { DataSimulatorSettings } from 'widgets'
@@ -116,12 +116,12 @@ export class ComputeFieldRuleComponent implements OnInit {
     type: ['', Validators.required]
   });
 
-  get formulaFormControl(): FormControl {
-    return this.output.get('formula') as FormControl;
+  get formulaFormControl(): UntypedFormControl {
+    return this.output.get('formula') as UntypedFormControl;
   }
 
-  get constantList(): FormArray {
-    return this.output.get('constants') as FormArray;
+  get constantList(): UntypedFormArray {
+    return this.output.get('constants') as UntypedFormArray;
   }
 
   readonly variablesFormArray = this.fb.array([]);
@@ -143,7 +143,7 @@ export class ComputeFieldRuleComponent implements OnInit {
   errorCreationOutputField: string;
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private hPacketService: HPacketService,
     private loggerService: LoggerService,
   ) {

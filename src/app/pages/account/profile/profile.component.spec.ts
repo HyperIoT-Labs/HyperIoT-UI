@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ProfileComponent } from './profile.component';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormBuilder, FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, UntypedFormBuilder, FormsModule } from '@angular/forms';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { HUserService } from 'core';
 import {MatFormFieldModule} from "@angular/material/form-field";
@@ -10,7 +10,7 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 describe('ProfileComponent', () => {
   let component: ProfileComponent;
   let fixture: ComponentFixture<ProfileComponent>;
-  const formBuilder: FormBuilder = new FormBuilder();
+  const formBuilder: UntypedFormBuilder = new UntypedFormBuilder();
   let hUserService: HUserService;
 
   beforeEach(async(() => {
@@ -18,7 +18,7 @@ describe('ProfileComponent', () => {
       declarations: [ ProfileComponent ],
       imports: [CommonModule, ReactiveFormsModule, MatFormFieldModule, FormsModule],
       providers: [
-        { provide: FormBuilder, useValue: formBuilder },
+        { provide: UntypedFormBuilder, useValue: formBuilder },
         { provide: HUserService, useValue: hUserService}
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]

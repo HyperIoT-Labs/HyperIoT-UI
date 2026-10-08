@@ -1,6 +1,6 @@
 import { Component, OnDestroy, ElementRef, ViewChild, Input, Injector, OnInit, OnChanges, AfterViewInit, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 
 import { Option, SelectOption } from 'components';
@@ -93,8 +93,8 @@ export class ProjectStatisticsFormComponent
 
   private activatedRouteSubscription: Subscription;
 
-  form = new FormGroup({
-    cronExpressionFC: new FormControl({
+  form = new UntypedFormGroup({
+    cronExpressionFC: new UntypedFormControl({
       value: this.cronExpression,
       disabled: this.isCronDisabled,
     })

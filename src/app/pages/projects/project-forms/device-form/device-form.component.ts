@@ -1,6 +1,6 @@
 import { Component, OnDestroy, ElementRef, ViewChild, Input, Injector, AfterViewInit, ViewEncapsulation, ChangeDetectorRef, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 import { HDevicesService, HDevice, HProject } from 'core';
@@ -20,7 +20,7 @@ export class DeviceFormComponent extends ProjectFormEntity implements AfterViewI
   private overlayHeight: ElementRef;
   showPreloader: boolean;
   divHeight: number;
-  changePasswordForm: FormGroup;
+  changePasswordForm: UntypedFormGroup;
   devicePasswordChangeEnabled: boolean = false;
   typeApplication: boolean = true;
 
@@ -89,7 +89,7 @@ export class DeviceFormComponent extends ProjectFormEntity implements AfterViewI
     private hDeviceService: HDevicesService,
     private activatedRoute: ActivatedRoute,
     private cdr: ChangeDetectorRef,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private httperrorHandler:HttpErrorHandlerService
   ) {
     super(injector,cdr);

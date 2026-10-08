@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, forwardRef, ViewEncapsulation, Output, EventEmitter, OnChanges, ViewChild } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormControl, Validators, FormGroup } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, UntypedFormControl, Validators, UntypedFormGroup } from '@angular/forms';
 
 /** Interface for select option element */
 export interface SelectOption {
@@ -43,10 +43,10 @@ export class HytSelectComponent
   @Input() selected: any;
 
   /** FormGroup */
-  @Input() form: FormGroup;
+  @Input() form: UntypedFormGroup;
 
   /** formControl */
-  @Input() formControl: FormControl;
+  @Input() formControl: UntypedFormControl;
 
   /** Element name, connected to the formcontrol */
   @Input() name = "";
@@ -211,7 +211,7 @@ export class HytSelectComponent
       validators.push(Validators.required);
       this.label += " *";
     }
-    this.formControl = new FormControl("", Validators.compose(validators));
+    this.formControl = new UntypedFormControl("", Validators.compose(validators));
     if (this.disabled) {
       this.formControl.disable();
     }

@@ -2,7 +2,7 @@ import { Component, OnInit, ViewEncapsulation, OnDestroy } from "@angular/core";
 import { Router } from "@angular/router";
 import { PageStatus } from "./models/pageStatus";
 import { Algorithm, AlgorithmService } from "core";
-import { FormGroup, FormBuilder } from "@angular/forms";
+import { UntypedFormGroup, UntypedFormBuilder } from "@angular/forms";
 import { CardEmittedValue, DialogService, SelectOption } from "components";
 import { AlgorithmService as AlgorithmsService } from "src/app/services/algorithms/algorithm.service";
 import { DeleteConfirmDialogComponent } from "src/app/components/dialogs/delete-confirm-dialog/delete-confirm-dialog.component";
@@ -20,7 +20,7 @@ export class AlgorithmsComponent implements OnInit {
 
   algorithmsFiltered: Algorithm[] = [...this.algorithms];
 
-  filteringForm: FormGroup;
+  filteringForm: UntypedFormGroup;
 
   sortOptions: SelectOption[] = [
     { value: "none", label: $localize`:@@HYT_none:None` },
@@ -38,7 +38,7 @@ export class AlgorithmsComponent implements OnInit {
   constructor(
     private router: Router,
     private algorithmsService: AlgorithmService,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private dialog: DialogService,
     private algorithmService: AlgorithmsService
   ) {}

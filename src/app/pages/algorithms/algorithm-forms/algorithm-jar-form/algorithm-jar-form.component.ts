@@ -5,7 +5,7 @@ import { Subject, PartialObserver } from 'rxjs';
 import { AlgorithmService, Algorithm } from 'core';
 
 import { AlgorithmFormEntity, LoadingStatusEnum } from '../algorithm-form-entity';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 
 @Component({
   selector: 'hyt-algorithm-jar-form',
@@ -69,8 +69,8 @@ export class AlgorithmJarFormComponent extends AlgorithmFormEntity implements On
 
   }
 
-  form = new FormGroup({
-    algorithmFileName: new FormControl('')
+  form = new UntypedFormGroup({
+    algorithmFileName: new UntypedFormControl('')
   });
 
   constructor(

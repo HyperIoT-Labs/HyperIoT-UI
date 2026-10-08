@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
 import { HUserService, HUser, HDevicesService, Area_Service, HProjectService, BrandingService, BrandingActions, BrandingSelectors, Dashboard, UserSiteSettingSelectors, UserSiteSettingActions } from 'core';
 import { AuthenticationHttpErrorHandlerService } from '../../../services/errorHandler/authentication-http-error-handler.service';
 import { HYTError } from 'src/app/services/errorHandler/models/models';
@@ -30,13 +30,13 @@ export class ProfileComponent implements OnInit {
    */
   loading = false;
 
-  personalInfoForm: FormGroup;
-  changePasswordForm: FormGroup;
+  personalInfoForm: UntypedFormGroup;
+  changePasswordForm: UntypedFormGroup;
 
-  initialBrandingForm: FormGroup;
-  brandingForm: FormGroup;
+  initialBrandingForm: UntypedFormGroup;
+  brandingForm: UntypedFormGroup;
 
-  defaultDashboardSettings: FormGroup;
+  defaultDashboardSettings: UntypedFormGroup;
 
   generalError = 0;
 
@@ -142,7 +142,7 @@ export class ProfileComponent implements OnInit {
    */
   constructor(
     private hUserService: HUserService,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private httperrorHandler: AuthenticationHttpErrorHandlerService,
     private router: Router,
     private cd: ChangeDetectorRef,

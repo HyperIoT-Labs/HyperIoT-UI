@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, forwardRef } from '@angular/core';
-import { ControlValueAccessor, FormArray, FormControl, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, UntypedFormArray, UntypedFormControl, UntypedFormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { HPacketField } from 'core';
 import { FieldValuesMap } from '../../../../base/base-widget/model/widget.model';
 
@@ -21,9 +21,9 @@ export class WidgetValueMappingComponent implements ControlValueAccessor, OnInit
 
   value: FieldValuesMap;
 
-  valuesMapForm = new FormGroup({
-    defaultValue: new FormControl('UNKNOWN'), // Validators.required
-    valuesMap: new FormArray([]),
+  valuesMapForm = new UntypedFormGroup({
+    defaultValue: new UntypedFormControl('UNKNOWN'), // Validators.required
+    valuesMap: new UntypedFormArray([]),
   });
 
   onChange: any = () => { };
@@ -44,13 +44,13 @@ export class WidgetValueMappingComponent implements ControlValueAccessor, OnInit
     this.valuesMapForm.controls.defaultValue.patchValue(value.defaultValue);
     this.valuesMapFormArray.clear();
     value.valuesMap.forEach(valueMap => {
-      this.valuesMapFormArray.push(new FormGroup({
-        value: new FormControl(valueMap.value),// Validators.required
-        output: new FormGroup({
-          mappedValue: new FormControl(valueMap.output.mappedValue),// Validators.required
-          color: new FormControl(valueMap.output.color),
-          bgcolor: new FormControl(valueMap.output.bgcolor),
-          icon: new FormControl(valueMap.output.icon),
+      this.valuesMapFormArray.push(new UntypedFormGroup({
+        value: new UntypedFormControl(valueMap.value),// Validators.required
+        output: new UntypedFormGroup({
+          mappedValue: new UntypedFormControl(valueMap.output.mappedValue),// Validators.required
+          color: new UntypedFormControl(valueMap.output.color),
+          bgcolor: new UntypedFormControl(valueMap.output.bgcolor),
+          icon: new UntypedFormControl(valueMap.output.icon),
         }),
       }));
     });
@@ -67,13 +67,13 @@ export class WidgetValueMappingComponent implements ControlValueAccessor, OnInit
   }
 
   addValueMap() {
-    this.valuesMapFormArray.push(new FormGroup({
-      value: new FormControl(''),// Validators.required
-      output: new FormGroup({
-        mappedValue: new FormControl(''),// Validators.required
-        color: new FormControl('#212529'),
-        bgcolor: new FormControl('#e4e4e4'),
-        icon: new FormControl(''),
+    this.valuesMapFormArray.push(new UntypedFormGroup({
+      value: new UntypedFormControl(''),// Validators.required
+      output: new UntypedFormGroup({
+        mappedValue: new UntypedFormControl(''),// Validators.required
+        color: new UntypedFormControl('#212529'),
+        bgcolor: new UntypedFormControl('#e4e4e4'),
+        icon: new UntypedFormControl(''),
       }),
     }));
   }
@@ -83,7 +83,7 @@ export class WidgetValueMappingComponent implements ControlValueAccessor, OnInit
   }
 
   get valuesMapFormArray() {
-    return this.valuesMapForm.controls.valuesMap as FormArray;
+    return this.valuesMapForm.controls.valuesMap as UntypedFormArray;
   }
 
 }

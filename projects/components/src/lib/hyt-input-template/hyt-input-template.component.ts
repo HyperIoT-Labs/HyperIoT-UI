@@ -12,7 +12,7 @@ import {
   NG_VALUE_ACCESSOR,
   FormGroupDirective,
   NgForm,
-  FormControl,
+  UntypedFormControl,
   Validators,
   FormGroup
 } from '@angular/forms';
@@ -33,7 +33,7 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR_INPUT_TEMPLATE: any = {
  * Error when invalid control is dirty, touched, or submitted
  */
 export class CustomErrorStateMatcherInputTemplate implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+  isErrorState(control: UntypedFormControl | null, form: FormGroupDirective | NgForm | null): boolean {
     const isSubmitted = form && form.submitted;
     return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
   }

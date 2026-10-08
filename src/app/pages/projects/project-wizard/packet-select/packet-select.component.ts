@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, Input, ViewEncapsulation } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
 import { SelectOption } from 'components';
 import { HDevice, HPacket } from 'core';
 
@@ -16,7 +16,7 @@ export class PacketSelectComponent implements OnInit {
 
   @Input() packetSelectId: number;
 
-  selectForm: FormGroup;
+  selectForm: UntypedFormGroup;
 
   devicesOptions: SelectOption[] = [];
   packetsOptions: SelectOption[] = [];
@@ -31,7 +31,7 @@ export class PacketSelectComponent implements OnInit {
   
 
   constructor(
-    private fb: FormBuilder
+    private fb: UntypedFormBuilder
   ) {
     this.selectForm = this.fb.group({});
    }

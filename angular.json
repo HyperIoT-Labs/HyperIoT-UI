@@ -239,7 +239,6 @@
       }
     }
   },
-  "defaultProject": "hyperiot",
   "cli": {
     "analytics": false
   }

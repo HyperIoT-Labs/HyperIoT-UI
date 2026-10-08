@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { Option } from 'components';
 import { EventComponent } from '../event-component';
 import { EventComponentType } from '../event-component-type.enum';
@@ -12,7 +12,7 @@ import { SelectableText } from './selectableText';
 })
 export class EventMailComponent implements OnInit,EventComponent {
 
-  mailForm: FormGroup;
+  mailForm: UntypedFormGroup;
 
   private originalFormsValues = '';
 
@@ -31,7 +31,7 @@ export class EventMailComponent implements OnInit,EventComponent {
   ];
 
   constructor(
-    private fb: FormBuilder
+    private fb: UntypedFormBuilder
   ) {
 
    }

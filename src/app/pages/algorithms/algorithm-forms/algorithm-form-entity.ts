@@ -1,4 +1,4 @@
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
 
 import { Observable } from 'rxjs';
 
@@ -25,7 +25,7 @@ export abstract class AlgorithmFormEntity implements OnInit, AfterViewInit {
 
     entity: any = {};
     entityFormMap: any;
-    form: FormGroup;
+    form: UntypedFormGroup;
     formTitle = 'Algorithm Form Entity';
     private originalValue = '{}';
     protected validationError = [];
@@ -45,7 +45,7 @@ export abstract class AlgorithmFormEntity implements OnInit, AfterViewInit {
 
     unsavedChangesCallback;
 
-    protected formBuilder: FormBuilder;
+    protected formBuilder: UntypedFormBuilder;
     protected dialog: DialogService;
     protected entitiesService: EntitiesService;
 	protected algorithmService: AlgorithmService;
@@ -54,7 +54,7 @@ export abstract class AlgorithmFormEntity implements OnInit, AfterViewInit {
         injector: Injector,
         private cd: ChangeDetectorRef
     ) {
-        this.formBuilder = injector.get(FormBuilder);
+        this.formBuilder = injector.get(UntypedFormBuilder);
         this.entitiesService = injector.get(EntitiesService);
         this.dialog = injector.get(DialogService);
         this.form = this.formBuilder.group({});

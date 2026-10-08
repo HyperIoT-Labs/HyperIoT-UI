@@ -14,9 +14,9 @@ import {
   NG_VALUE_ACCESSOR,
   FormGroupDirective,
   NgForm,
-  FormControl,
+  UntypedFormControl,
   Validators,
-  FormGroup,
+  UntypedFormGroup,
 } from "@angular/forms";
 import { ErrorStateMatcher } from "@angular/material/core";
 
@@ -37,7 +37,7 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR_INPUT: any = {
  */
 export class CustomErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(
-    control: FormControl | null,
+    control: UntypedFormControl | null,
     form: FormGroupDirective | NgForm | null
   ): boolean {
     const isSubmitted = form && form.submitted;
@@ -70,10 +70,10 @@ export class HytInputComponent implements OnInit, ControlValueAccessor {
   private logger: Logger;
 
   /** FormGroup */
-  @Input() form: FormGroup;
+  @Input() form: UntypedFormGroup;
 
   /** FormControl */
-  @Input() formControl: FormControl;
+  @Input() formControl: UntypedFormControl;
 
   /** Foloating label of the input */
   @Input() placeholder: any = "";
@@ -216,7 +216,7 @@ export class HytInputComponent implements OnInit, ControlValueAccessor {
 
     let confirmPasswordSelector;
 
-    function validateUperCase(c: FormControl) {
+    function validateUperCase(c: UntypedFormControl) {
       const PASS_REGEX: RegExp = new RegExp("^(?=.*[a-z])(?=.*[A-Z]).*$");
       return PASS_REGEX.test(c.value) || !c.value || c.value.length === 0
         ? null
@@ -226,7 +226,7 @@ export class HytInputComponent implements OnInit, ControlValueAccessor {
             },
           };
     }
-    function validateNumber(c: FormControl) {
+    function validateNumber(c: UntypedFormControl) {
       const PASS_REGEX: RegExp = new RegExp("^(?=.*[a-z])(?=.*[0-9]).*$");
       return PASS_REGEX.test(c.value) || !c.value || c.value.length === 0
         ? null
@@ -236,7 +236,7 @@ export class HytInputComponent implements OnInit, ControlValueAccessor {
             },
           };
     }
-    function validateSpecialChar(c: FormControl) {
+    function validateSpecialChar(c: UntypedFormControl) {
       const PASS_REGEX: RegExp = new RegExp("[^A-Za-z0-9]");
       return PASS_REGEX.test(c.value) || !c.value || c.value.length === 0
         ? null
@@ -247,7 +247,7 @@ export class HytInputComponent implements OnInit, ControlValueAccessor {
           };
     }
 
-    function validatePassword(c: FormControl) {
+    function validatePassword(c: UntypedFormControl) {
       if (c.dirty) {
         const field = self.password ? self.password : self.confirmPassword;
         const passwordForm = self.form.get(field);
@@ -303,7 +303,7 @@ export class HytInputComponent implements OnInit, ControlValueAccessor {
       this.errorMap.validateInjectedError = this.injectedErrorMsg;
     }
 
-    this.formControl = new FormControl(
+    this.formControl = new UntypedFormControl(
       { value: "", disabled: this.isDisabled },
       Validators.compose(validators)
     );

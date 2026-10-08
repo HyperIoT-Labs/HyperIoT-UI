@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { Area, AreaDevice } from 'core';
 import { AREA_ICONS_OPTIONS } from '../../models/area-icons';
 
@@ -21,10 +21,10 @@ export class MapDeviceEditComponent implements OnInit {
 
   private _originalFormValue;
   editMode = false;
-  itemInfoForm = new FormGroup({
-    deviceIcon: new FormControl('', Validators.required),
-    latitude: new FormControl('', Validators.required),
-    longitude: new FormControl('', Validators.required),
+  itemInfoForm = new UntypedFormGroup({
+    deviceIcon: new UntypedFormControl('', Validators.required),
+    latitude: new UntypedFormControl('', Validators.required),
+    longitude: new UntypedFormControl('', Validators.required),
   });
 
   constructor(

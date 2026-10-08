@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { HYTError } from 'src/app/services/errorHandler/models/models';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
 import { SelectOption } from 'components';
 import { PageStatusEnum } from '../model/pageStatusEnum';
 import { RuleEngineService, HPacket } from 'core';
@@ -15,7 +15,7 @@ export class StatisticsStepComponent implements OnInit {
 
   currentPacket: HPacket;
 
-  statisticsForm: FormGroup;
+  statisticsForm: UntypedFormGroup;
 
   PageStatus = PageStatusEnum;
   pageStatus: PageStatusEnum = PageStatusEnum.Default;
@@ -61,7 +61,7 @@ export class StatisticsStepComponent implements OnInit {
 
   constructor(
     private rulesService: RuleEngineService,
-    private fb: FormBuilder
+    private fb: UntypedFormBuilder
   ) { }
 
   ngOnInit() {
