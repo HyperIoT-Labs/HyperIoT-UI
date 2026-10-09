@@ -1,7 +1,20 @@
 <div class="loader" *ngIf="pageStatus == 0"></div>
 
-<gridster *ngIf="pageStatus == 1" [options]="options">
-  <gridster-item [item]="item" *ngFor="let item of dashboard">
+<gridstack
+  *ngIf="pageStatus == 1"
+  class="dashboard-grid"
+  [class.show-grid]="showGrid"
+  [options]="gridOptions"
+  (changeCB)="onGridChange()"
+  (addedCB)="onGridChange()"
+  (removedCB)="onGridChange()"
+  (dragStartCB)="onDragStart($event)"
+  (dragStopCB)="onDragStop($event)"
+>
+  <gridstack-item
+    *ngFor="let item of dashboard; trackBy: trackByWidgetId"
+    [options]="getGridNode(item)"
+  >
     <hyperiot-dynamic-widget
       [serviceType]="
         dashboardValue.dashboardType === 'REALTIME'
@@ -11,8 +24,8 @@
       [widget]="item"
       (widgetAction)="onWidgetAction($event)"
     ></hyperiot-dynamic-widget>
-  </gridster-item>
-</gridster>
+  </gridstack-item>
+</gridstack>
 
 <div
   *ngIf="dashboard.length == 0 && pageStatus == 1"
