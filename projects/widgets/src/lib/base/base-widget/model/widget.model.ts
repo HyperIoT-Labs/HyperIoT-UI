@@ -1,4 +1,3 @@
-import { GridsterItem } from 'angular-gridster2';
 import { BodyMap, BodyMapAssociation } from '../../../dashboard/widget-settings-dialog/bodymap-settings/bodymap.model';
 import { DefibrillatorSettings } from '../../../dashboard/widget-settings-dialog/defibrillator-settings/defibrillator-settings.model';
 import { HPacket, HPacketField } from 'core';
@@ -8,8 +7,14 @@ import FieldRules = DataSimulatorSettings.FieldRules;
 import { ComponentRef } from '@angular/core';
 import { LineTypes } from '../../../dashboard/model/line.model';
 
-export interface WidgetConfig extends GridsterItem {
+export interface WidgetConfig {
     id?: number
+    entityVersion?: number;
+    // layout on the dashboard grid (columns/rows units)
+    x: number;
+    y: number;
+    cols: number;
+    rows: number;
     projectId?: number;
     name?: string;
     type?: string;
@@ -17,7 +22,6 @@ export interface WidgetConfig extends GridsterItem {
     dataTableUrl?: string;
     packetId?: number;
     config?: ConfigModel;
-    resizeCallback?: (gridsterItem, gridsterItemComponent) => void;
     instance?: ComponentRef<any>
 }
 

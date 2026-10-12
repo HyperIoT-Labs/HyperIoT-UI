@@ -3,7 +3,7 @@ import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { ComponentsModule, HytRadioButtonComponent} from 'components';
-import { GridsterModule } from 'angular-gridster2';
+import { GridstackModule } from 'gridstack/dist/angular';
 import { AddWidgetDialogComponent } from './add-widget-dialog/add-widget-dialog.component';
 import { DashboardConfigService } from './dashboard-config.service';
 import { DashboardsListComponent } from './dashboards-list/dashboards-list.component';
@@ -100,7 +100,7 @@ import { CustomDefaultSelectionDialogComponent } from './custom-default-selectio
     ComponentsModule,
     DragDropModule,
     FormsModule,
-    GridsterModule,
+    GridstackModule,
     MatAutocompleteModule,
     MatButtonModule,
     MatButtonToggleModule,

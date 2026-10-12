@@ -4,21 +4,26 @@
   align-items: center;
 }
 
-gridster {
-  background-color: transparent !important;
+// 10 columns of ~160px plus margins, centered on wider screens
+.dashboard-grid {
+  width: 100%;
+  max-width: 1666px;
+  background-color: transparent;
 
-  &.fixed {
-    overflow: visible;
+  // cell lines, using the sizes gridstack sets on the grid (updated on every column change)
+  &.show-grid {
+    background-image:
+      linear-gradient(to right, rgba(127, 127, 127, 0.35) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(127, 127, 127, 0.35) 1px, transparent 1px);
+    background-size: var(--gs-column-width) var(--gs-cell-height);
+    box-shadow: inset -1px -1px 0 rgba(127, 127, 127, 0.35);
   }
 
-  &.mobile {
-    overflow-y: hidden;
-  }
-
-  gridster-item {
+  gridstack-item ::ng-deep > .grid-stack-item-content {
     background-color: transparent;
     box-shadow: rgb(0, 0, 0) 0px 0px 11px -4px;
     border-radius: 4px;
+    overflow: hidden;
   }
 }
 
