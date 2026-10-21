@@ -2026,6 +2026,30 @@
       <trans-unit id="HYT_close_message" datatype="html">
         <source>Close Message</source>
       </trans-unit>
+      <trans-unit id="HYT_algorithm_history_executed_at" datatype="html">
+        <source>Executed at</source>
+      </trans-unit>
+      <trans-unit id="HYT_algorithm_history_results" datatype="html">
+        <source>Results</source>
+      </trans-unit>
+      <trans-unit id="HYT_algorithm_history_results_count" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{ row.table.rows.length }}"/> results</source>
+      </trans-unit>
+      <trans-unit id="HYT_algorithm_history_no_results" datatype="html">
+        <source>No results</source>
+      </trans-unit>
+      <trans-unit id="HYT_algorithm_history_select_range" datatype="html">
+        <source>Select a time range on the timeline</source>
+      </trans-unit>
+      <trans-unit id="HYT_algorithm_history_loading" datatype="html">
+        <source>Loading</source>
+      </trans-unit>
+      <trans-unit id="HYT_algorithm_history_error" datatype="html">
+        <source>Error loading data</source>
+      </trans-unit>
+      <trans-unit id="HYT_algorithm_history_no_data" datatype="html">
+        <source>No data to show</source>
+      </trans-unit>
     </body>
   </file>
 </xliff>

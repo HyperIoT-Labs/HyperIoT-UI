@@ -450,8 +450,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
   timeLineSelection(event: Date[]) {
     if (event[0] && event[1]) {
       this.offlineDataService.getEventCount(event[0].getTime(), event[1].getTime());
+      this.algorithmOfflineDataService.setTimeRange(event[0].getTime(), event[1].getTime());
     } else {
       this.offlineDataService.getEventCountEmpty();
+      this.algorithmOfflineDataService.clearTimeRange();
     }
   }
 

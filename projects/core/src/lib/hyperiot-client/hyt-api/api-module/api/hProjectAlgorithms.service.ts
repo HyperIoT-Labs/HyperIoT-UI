@@ -395,6 +395,76 @@ export class HProjectAlgorithmsService {
     }
 
     /**
+     * /hyperiot/hprojects/algorithms/project/{projectId}/algorithm/{hProjectAlgorithmId}/timerange/{startTime}/{endTime}
+     * Return outputs of algorithm which have been defined for a project, within a time range
+     * @param projectId ID of project
+     * @param hProjectAlgorithmId ID of HProjectAlgorithm
+     * @param startTime Start time of the window (epoch millis, inclusive)
+     * @param endTime End time of the window (epoch millis, inclusive)
+     * @param asRowResult 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getAlgorithmOutputs1(projectId: number, hProjectAlgorithmId: number, startTime: number, endTime: number, asRowResult?: boolean, observe?: 'body', reportProgress?: boolean, context?: HttpContext): Observable<any>;
+    public getAlgorithmOutputs1(projectId: number, hProjectAlgorithmId: number, startTime: number, endTime: number, asRowResult?: boolean, observe?: 'response', reportProgress?: boolean, context?: HttpContext): Observable<HttpResponse<any>>;
+    public getAlgorithmOutputs1(projectId: number, hProjectAlgorithmId: number, startTime: number, endTime: number, asRowResult?: boolean, observe?: 'events', reportProgress?: boolean, context?: HttpContext): Observable<HttpEvent<any>>;
+    public getAlgorithmOutputs1(projectId: number, hProjectAlgorithmId: number, startTime: number, endTime: number, asRowResult?: boolean, observe: any = 'body', reportProgress: boolean = false, context = new HttpContext()): Observable<any> {
+
+        if (projectId === null || projectId === undefined) {
+            throw new Error('Required parameter projectId was null or undefined when calling getAlgorithmOutputs.');
+        }
+
+        if (hProjectAlgorithmId === null || hProjectAlgorithmId === undefined) {
+            throw new Error('Required parameter hProjectAlgorithmId was null or undefined when calling getAlgorithmOutputs.');
+        }
+
+        if (startTime === null || startTime === undefined) {
+            throw new Error('Required parameter startTime was null or undefined when calling getAlgorithmOutputs.');
+        }
+
+        if (endTime === null || endTime === undefined) {
+            throw new Error('Required parameter endTime was null or undefined when calling getAlgorithmOutputs.');
+        }
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (asRowResult !== undefined && asRowResult !== null) {
+            queryParameters = queryParameters.set('asRowResult', <any>asRowResult);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (jwt-auth) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["AUTHORIZATION"]) {
+            headers = headers.set('AUTHORIZATION', this.configuration.apiKeys["AUTHORIZATION"]);
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.get<any>(`${this.basePath}/hprojects/algorithms/project/${encodeURIComponent(String(projectId))}/algorithm/${encodeURIComponent(String(hProjectAlgorithmId))}/timerange/${encodeURIComponent(String(startTime))}/${encodeURIComponent(String(endTime))}`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                context: context,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
      * /hyperiot/hprojects/algorithms
      * Service for adding a new hprojectalgorithm entity
      * @param body HProjectAlgorithm entity which must be saved 

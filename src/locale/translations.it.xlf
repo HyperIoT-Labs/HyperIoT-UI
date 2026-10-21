@@ -2713,6 +2713,38 @@
         <source>Close Message</source>
         <target>Chiudi messaggio</target>
       </trans-unit>
+      <trans-unit id="HYT_algorithm_history_executed_at" datatype="html">
+        <source>Executed at</source>
+        <target>Eseguita il</target>
+      </trans-unit>
+      <trans-unit id="HYT_algorithm_history_results" datatype="html">
+        <source>Results</source>
+        <target>Risultati</target>
+      </trans-unit>
+      <trans-unit id="HYT_algorithm_history_results_count" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{ row.table.rows.length }}"/> results</source>
+        <target><x id="INTERPOLATION" equiv-text="{{ row.table.rows.length }}"/> risultati</target>
+      </trans-unit>
+      <trans-unit id="HYT_algorithm_history_no_results" datatype="html">
+        <source>No results</source>
+        <target>Nessun risultato</target>
+      </trans-unit>
+      <trans-unit id="HYT_algorithm_history_select_range" datatype="html">
+        <source>Select a time range on the timeline</source>
+        <target>Seleziona un intervallo sulla timeline</target>
+      </trans-unit>
+      <trans-unit id="HYT_algorithm_history_loading" datatype="html">
+        <source>Loading</source>
+        <target>Caricamento</target>
+      </trans-unit>
+      <trans-unit id="HYT_algorithm_history_error" datatype="html">
+        <source>Error loading data</source>
+        <target>Errore nel caricamento dei dati</target>
+      </trans-unit>
+      <trans-unit id="HYT_algorithm_history_no_data" datatype="html">
+        <source>No data to show</source>
+        <target>Nessun dato da mostrare</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
