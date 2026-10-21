@@ -11,6 +11,7 @@ export { HpacketTableComponent } from './lib/widget/hpacket-table/hpacket-table.
 export { LineChartComponent } from './lib/widget/line-chart/line-chart.component';
 export { SensorValueComponent } from './lib/widget/sensor-value/sensor-value.component';
 export { AlgorithmTableComponent } from './lib/widget/algorithm-table/algorithm-table.component';
+export { AlgorithmHistoryTableComponent } from './lib/widget/algorithm-history-table/algorithm-history-table.component';
 export { BodymapComponent } from './lib/widget/bodymap/bodymap.component';
 export { EventsLogComponent } from './lib/widget/events-log/events-log.component';
 export { ErrorTableComponent } from './lib/widget/error-table/error-table.component';

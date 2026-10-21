@@ -27,6 +27,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { BaseWidgetTemplateComponent } from './base/base-widget-template/base-widget-template.component';
 import { DefaultWidgetComponent } from './default-widget/default-widget.component';
 import { AlgorithmTableComponent } from './widget/algorithm-table/algorithm-table.component';
+import { AlgorithmHistoryTableComponent } from './widget/algorithm-history-table/algorithm-history-table.component';
 import { BodymapComponent } from "./widget/bodymap/bodymap.component";
 import { InlineSvgDirective } from "./widget/bodymap/inline-svg.directive";
 import { EcgComponent } from "./widget/ecg/ecg.component";
@@ -62,6 +63,7 @@ import { TrendGaugeChartComponent } from './widget/trend-gauge-chart/trend-gauge
     ErrorTableComponent,
     EventTableComponent,
     AlgorithmTableComponent,
+    AlgorithmHistoryTableComponent,
     GaugeChartComponent,
     TrendGaugeChartComponent,
     HistogramChartComponent,
@@ -111,6 +113,7 @@ import { TrendGaugeChartComponent } from './widget/trend-gauge-chart/trend-gauge
     CommonToolbarComponent,
     LoaderComponent,
     AlgorithmTableComponent,
+    AlgorithmHistoryTableComponent,
     BodymapComponent,
     DataSimulatorComponent,
     DefibrillatorComponent,

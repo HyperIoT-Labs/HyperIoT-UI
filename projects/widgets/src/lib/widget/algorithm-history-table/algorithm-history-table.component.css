@@ -1,0 +1,114 @@
+.algorithm-history-table {
+    position: relative;
+    height: 100%;
+}
+
+.algorithm-history-table .table-wrapper {
+    height: calc(100% - 40px);
+    overflow-y: auto;
+}
+
+.algorithm-history-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.algorithm-history-table thead th {
+    position: sticky;
+    top: 0;
+    background-color: white;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.algorithm-history-table tr {
+    border-bottom: 1px solid lightgrey;
+}
+
+.algorithm-history-table td {
+    padding: 2px 5px;
+}
+
+.algorithm-history-table .toggle-col {
+    width: 16px;
+    color: grey;
+}
+
+.algorithm-history-table .timestamp-col {
+    width: 160px;
+    white-space: nowrap;
+}
+
+.algorithm-history-table .execution-row {
+    cursor: pointer;
+}
+
+.algorithm-history-table .execution-row:hover,
+.algorithm-history-table .execution-row.expanded {
+    background-color: #f5f5f5;
+}
+
+/* max-width: 0 lets the cell fill the remaining width and truncate its content */
+.algorithm-history-table .summary-col {
+    max-width: 0;
+}
+
+.algorithm-history-table .summary-single {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+}
+
+.algorithm-history-table .summary-output {
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+.algorithm-history-table .summary-single .summary-grouping {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.algorithm-history-table .summary-grouping,
+.algorithm-history-table .summary-count {
+    color: grey;
+    font-size: 0.9em;
+}
+
+.algorithm-history-table .detail-row > td {
+    padding-bottom: 6px;
+}
+
+.algorithm-history-table .results-table thead th {
+    position: static;
+    font-weight: normal;
+    color: grey;
+}
+
+.algorithm-history-table .results-table tr:last-child {
+    border-bottom: none;
+}
+
+.algorithm-history-table .results-table .grouping-cell {
+    color: grey;
+}
+
+.algorithm-history-table .table-message {
+    padding: 8px 5px;
+}
+
+.algorithm-history-table .table-navigation {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 4px;
+    background-color: white;
+}

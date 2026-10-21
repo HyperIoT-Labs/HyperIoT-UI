@@ -1,0 +1,96 @@
+<hyperiot-base-widget-template>
+
+    <header-widget>
+        <hyperiot-common-toolbar
+            #toolbar
+            widgetName="{{widget.name}}"
+            (action)="onToolbarAction($event)"
+            [toolbarIsVisible]="isToolbarVisible"
+            [config]="{
+                showClose: true,
+                showSettings: true,
+                showPlay: false,
+                showRefresh: false,
+                showTable: false
+            }">
+        </hyperiot-common-toolbar>
+    </header-widget>
+
+    <content-widget>
+        <div *ngIf="!isConfigured; else configured" class="configure-notice">
+          <strong i18n="@@HYT_common_not_configured">Click 'Settings' button to configure.</strong>
+        </div>
+        <ng-template #configured>
+            <div class="algorithm-history-table">
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="toggle-col"></th>
+                                <th class="timestamp-col" i18n="@@HYT_algorithm_history_executed_at">Executed at</th>
+                                <th i18n="@@HYT_algorithm_history_results">Results</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngIf="status === tableStatus.Ready">
+                            <ng-container *ngFor="let row of pageRows; trackBy: trackByRowKey">
+                                <tr class="execution-row" [class.expanded]="expandedRows.has(row.rowKey)" (click)="toggleRow(row)">
+                                    <td class="toggle-col">{{ expandedRows.has(row.rowKey) ? '▾' : '▸' }}</td>
+                                    <td class="timestamp-col">{{ row.timestampLabel }}</td>
+                                    <td class="summary-col">
+                                        <ng-container *ngIf="row.table.rows.length === 1; else manyResults">
+                                            <div class="summary-single">
+                                                <span class="summary-output">{{ row.summaryOutput }}</span>
+                                                <span class="summary-grouping" *ngIf="row.summaryGrouping" [title]="row.summaryGrouping">{{ row.summaryGrouping }}</span>
+                                            </div>
+                                        </ng-container>
+                                        <ng-template #manyResults>
+                                            <span class="summary-count" i18n="@@HYT_algorithm_history_results_count">{{ row.table.rows.length }} results</span>
+                                        </ng-template>
+                                    </td>
+                                </tr>
+                                <tr *ngIf="expandedRows.has(row.rowKey)" class="detail-row">
+                                    <td></td>
+                                    <td colspan="2">
+                                        <table *ngIf="row.table.rows.length > 0; else noResults" class="results-table">
+                                            <thead>
+                                                <tr>
+                                                    <th *ngFor="let column of row.table.groupingColumns" class="grouping-cell">{{ column.label }}</th>
+                                                    <th *ngFor="let column of row.table.outputColumns">{{ column.label }}</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let result of row.table.rows">
+                                                    <td *ngFor="let value of result.grouping" class="grouping-cell">{{ value }}</td>
+                                                    <td *ngFor="let value of result.outputs">{{ value }}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <ng-template #noResults>
+                                            <span class="summary-grouping" i18n="@@HYT_algorithm_history_no_results">No results</span>
+                                        </ng-template>
+                                    </td>
+                                </tr>
+                            </ng-container>
+                        </tbody>
+                    </table>
+                    <div class="table-message" *ngIf="status !== tableStatus.Ready || executionRows.length === 0" [ngSwitch]="status">
+                        <ng-container *ngSwitchCase="tableStatus.NoRange" i18n="@@HYT_algorithm_history_select_range">Select a time range on the timeline</ng-container>
+                        <ng-container *ngSwitchCase="tableStatus.Loading" i18n="@@HYT_algorithm_history_loading">Loading</ng-container>
+                        <ng-container *ngSwitchCase="tableStatus.Error" i18n="@@HYT_algorithm_history_error">Error loading data</ng-container>
+                        <ng-container *ngSwitchCase="tableStatus.Ready" i18n="@@HYT_algorithm_history_no_data">No data to show</ng-container>
+                    </div>
+                </div>
+                <div class="table-navigation" *ngIf="executionRows.length > PAGE_SIZE">
+                    <span>{{ pageIndex * PAGE_SIZE + 1 }}-{{ pageIndex * PAGE_SIZE + pageRows.length }} / {{ executionRows.length }}</span>
+                    <hyt-button [color]="'hyt-base-icon-only'" [isDisabled]="pageIndex <= 0" (clickFn)="changePage(pageIndex - 1)">
+                        &lt;
+                    </hyt-button>
+                    <hyt-button [color]="'hyt-base-icon-only'" [isDisabled]="pageIndex >= lastPageIndex" (clickFn)="changePage(pageIndex + 1)">
+                        &gt;
+                    </hyt-button>
+                </div>
+            </div>
+        </ng-template>
+    </content-widget>
+
+</hyperiot-base-widget-template>

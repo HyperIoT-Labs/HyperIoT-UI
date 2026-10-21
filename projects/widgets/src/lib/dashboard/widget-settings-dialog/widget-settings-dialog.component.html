@@ -104,6 +104,11 @@
                             [settingsForm]="settingsForm">
                         </hyperiot-algorithm-settings>
                     </div>
+                    <div *ngSwitchCase="'algorithm-history-table'">
+                        <hyperiot-algorithm-settings [widget]="widget" [hDeviceId]="hDeviceId" [modalApply]="modalApply.asObservable()"
+                            [settingsForm]="settingsForm">
+                        </hyperiot-algorithm-settings>
+                    </div>
                     <div *ngSwitchCase="'data-simulator'">
                         <hyperiot-data-simulator-settings [widget]="widget" [areaId]="areaId" [modalApply]="modalApply.asObservable()"
                             [settingsForm]="settingsForm"></hyperiot-data-simulator-settings>

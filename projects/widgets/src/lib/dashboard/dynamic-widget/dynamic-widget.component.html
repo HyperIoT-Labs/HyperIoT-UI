@@ -109,6 +109,15 @@
   >
   </hyperiot-algorithm-table>
 
+  <hyperiot-algorithm-history-table
+    *ngSwitchCase="'algorithm-history-table'"
+    [widget]="widget"
+    [initData]="initData"
+    [isToolbarVisible]="isToolbarVisible"
+    (widgetAction)="onWidgetAction($event)"
+  >
+  </hyperiot-algorithm-history-table>
+
   <hyperiot-event-table
     *ngSwitchCase="'event-offline-table'"
     [widget]="widget"
