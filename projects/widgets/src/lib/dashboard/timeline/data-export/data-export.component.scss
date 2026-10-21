@@ -12,6 +12,13 @@ fieldset {
   }
 }
 
+.packets-loading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 52px;
+}
+
 .mat-chip-list-wrapper {
   width: 100%;
   min-height: 145px;

@@ -52,7 +52,15 @@
               </mat-select>
             </mat-form-field>
 
+            <div *ngIf="loadingHPackets" class="packets-loading">
+              <mat-spinner strokeWidth="3" diameter="24"></mat-spinner>
+              <span i18n="@@HYT_loading_packets">Loading packets</span>
+            </div>
+            <mat-error *ngIf="hPacketsLoadError" i18n="@@HYT_loading_packets_error">
+              Error loading packets
+            </mat-error>
             <hyt-select
+              [hidden]="loadingHPackets"
               #selectPackets
               class="hyt-select-full-width"
               [name]="'packetSelect'"

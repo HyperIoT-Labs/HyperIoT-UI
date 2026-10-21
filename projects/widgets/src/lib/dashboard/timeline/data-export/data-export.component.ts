@@ -6,15 +6,14 @@ import { Store } from '@ngrx/store';
 import {
   DataExportNotificationActions,
   DataExportNotificationStore,
-  HDeviceSelectors,
   HPacket,
-  HPacketSelectors,
+  HPacketService,
   HProjectService,
   Logger,
   LoggerService,
   NotificationManagerService
 } from 'core';
-import { BehaviorSubject, catchError, combineLatest, concatMap, filter, forkJoin, interval, map, Observable, of, Subject, Subscription, switchMap, take, takeWhile, tap, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, concatMap, filter, finalize, forkJoin, interval, Observable, of, Subject, Subscription, switchMap, takeWhile, tap, throwError } from 'rxjs';
 import { MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { NgxMatDateAdapter, NgxMatDatetimePicker, } from '@angular-material-components/datetime-picker';
 import { NgxMatMomentAdapter, NGX_MAT_MOMENT_DATE_ADAPTER_OPTIONS, NGX_MAT_MOMENT_FORMATS } from '@angular-material-components/moment-adapter';
@@ -101,8 +100,10 @@ export class DataExportComponent implements OnInit, AfterViewInit, OnDestroy {
 
   hPacketListSelectOption: SelectOptionGroup[] = [];
 
-  hPacketList: HPacket[] = [];
   hPacketListSelected: HPacket[] = [];
+
+  loadingHPackets = false;
+  hPacketsLoadError = false;
 
   private currentProjectId: number;
 
@@ -119,6 +120,7 @@ export class DataExportComponent implements OnInit, AfterViewInit, OnDestroy {
     private store: Store,
     public dialogRef: DialogRef<any>,
     private hProjectsService: HProjectService,
+    private hPacketService: HPacketService,
     private httpClient: HttpClient,
     private notificationManagerService: NotificationManagerService,
     @Inject(DIALOG_DATA) data: DataExport | DataExportNotificationStore.DataExportNotification,
@@ -153,32 +155,7 @@ export class DataExportComponent implements OnInit, AfterViewInit, OnDestroy {
       ? this.data.exportParams.hProjectId
       : this.data.projectId;
 
-    combineLatest({
-      hDeviceList: this.store.select(HDeviceSelectors.selectAllHDevices)
-        .pipe(
-          map((res) => res.filter(({ project }) => project.id === this.currentProjectId)),
-        ),
-      hPacketList: this.store.select(HPacketSelectors.selectAllHPackets)
-    }).pipe(take(1)).subscribe({
-        next: ({ hDeviceList, hPacketList }) => {
-          this.hPacketList = hPacketList;
-
-          this.hPacketListSelectOption = hDeviceList.map((device) => ({
-            name: device.deviceName,
-            icon: 'icon-hyt_device',
-            options: hPacketList
-              .filter((hPacket) => hPacket.device.id === device.id)
-              .map((hPacket) => ({
-                value: hPacket,
-                label: hPacket.name,
-                icon: 'icon-hyt_packets',
-              })),
-          }));
-        },
-        error: (err) => {
-          console.error(err);
-        }
-      });
+    this.loadHPackets();
 
     const data = this.data;
     if ('timeInterval' in data) {
@@ -417,6 +394,43 @@ export class DataExportComponent implements OnInit, AfterViewInit, OnDestroy {
     return processedRecords >= totalRecords
       ? 100
       : Math.round((processedRecords / totalRecords) * 100);
+  }
+
+  private loadHPackets() {
+    this.loadingHPackets = true;
+    this.hPacketsLoadError = false;
+
+    this.hPacketService.findAllHPacketByProjectIdAndType(this.currentProjectId, 'INPUT,IO')
+      .pipe(finalize(() => this.loadingHPackets = false))
+      .subscribe({
+        next: (hPacketList: HPacket[]) => {
+          // one group for each device, in the order returned by the BE
+          const groups = new Map<number, SelectOptionGroup>();
+          hPacketList.forEach((hPacket) => {
+            const { device } = hPacket;
+            if (!device) {
+              return;
+            }
+            if (!groups.has(device.id)) {
+              groups.set(device.id, {
+                name: device.deviceName,
+                icon: 'icon-hyt_device',
+                options: [],
+              });
+            }
+            groups.get(device.id).options.push({
+              value: hPacket,
+              label: hPacket.name,
+              icon: 'icon-hyt_packets',
+            });
+          });
+          this.hPacketListSelectOption = [...groups.values()];
+        },
+        error: (err) => {
+          this.logger.error('findAllHPacketByProjectIdAndType:', err);
+          this.hPacketsLoadError = true;
+        }
+      });
   }
 
   addPacketSelectedList(hPacket: HPacket) {

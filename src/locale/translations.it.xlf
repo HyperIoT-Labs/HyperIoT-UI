@@ -2745,6 +2745,14 @@
         <source>No data to show</source>
         <target>Nessun dato da mostrare</target>
       </trans-unit>
+      <trans-unit id="HYT_loading_packets" datatype="html">
+        <source>Loading packets</source>
+        <target>Caricamento pacchetti</target>
+      </trans-unit>
+      <trans-unit id="HYT_loading_packets_error" datatype="html">
+        <source>Error loading packets</source>
+        <target>Errore nel caricamento dei pacchetti</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

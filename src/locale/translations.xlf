@@ -2050,6 +2050,12 @@
       <trans-unit id="HYT_algorithm_history_no_data" datatype="html">
         <source>No data to show</source>
       </trans-unit>
+      <trans-unit id="HYT_loading_packets" datatype="html">
+        <source>Loading packets</source>
+      </trans-unit>
+      <trans-unit id="HYT_loading_packets_error" datatype="html">
+        <source>Error loading packets</source>
+      </trans-unit>
     </body>
   </file>
 </xliff>
